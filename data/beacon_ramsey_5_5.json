@@ -4,7 +4,7 @@
     "proof_hash": "9d220d1a44658ebfcd5d5182a59d66ac4de939a00d1e0d1a1948c3d1ac8fa22d",
     "doi": "10.5281/zenodo.17315719",
     "f0": 141.7001,
-    "timestamp": "2025-11-16T12:30:34.345531Z",
+    "timestamp": "2025-11-16T12:34:15.090753Z",
     "additional": {
       "author": "José Manuel Mota Burruezo Ψ ✧ ∞³",
       "institution": "Instituto de Conciencia Cuántica (ICQ)",
@@ -12,7 +12,7 @@
       "framework": "QCAL ∞³"
     }
   },
-  "hash": "3b63aa1e7b4e514535470eb2335f07876337175f4ebef647bf22e90b5527872c",
-  "signature": "304502201a0dd739283ec46295ae6ee91cc4e71896b78cd4258fac7e19767fbd16724db5022100c59c7f1dfad37b501e4854859e7533bb6f852207db40df0b7b4646a12d4ad6d4",
-  "public_key": "a0fd4aba90c6860921395daf8944e6dca359e6d9f344d120520c27a64bac25ba8ecf3c7d881842406448c76d7c86ccfe5be2aa25b7d8076865f64da6bc88e50f"
+  "hash": "331975f479a9c6a1227b9dde0575177566ee6936563bb797b68dc2d4ad9b0a59",
+  "signature": "304402204f99b4770f0b42a32f741b832701003458074bd2d56f0c02991b430b6045c6f6022038ceba3ef695885fb591f706ca0017144d7d12c6a6b4779ab58679bcad74748c",
+  "public_key": "e17ba91329ac15c0d55deaaaa35e38bf2e5433059413a417c36c6612791a7b171aae6de2a477fd97b8ce2234a3c70420bd85d15aabb62fa5434439c2829172aa"
 }

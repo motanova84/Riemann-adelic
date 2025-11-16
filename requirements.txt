@@ -76,6 +76,9 @@ sparse>=0.14.0  # Sparse multi-dimensional arrays
 # Optimization and root finding
 nlopt>=2.7.1  # Nonlinear optimization library
 
+# Cryptography for AIK Beacons
+ecdsa>=0.18.0  # ECDSA signatures for mathematical proof certification
+
 # Development and code quality tools
 flake8>=6.0.0
 black>=23.0.0
