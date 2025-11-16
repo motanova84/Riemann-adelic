@@ -79,12 +79,32 @@ python3 aik_beacon.py
 python3 example_aik_beacon_usage.py
 ```
 
+### Uso del CLI
+
+```bash
+# Crear un beacon desde la línea de comandos
+python3 aik_cli.py create --theorem "Rψ(5,5) ≤ 16" \
+                          --proof proofs/RamseyRpsi_5_5.lean \
+                          --doi "10.5281/zenodo.17315719" \
+                          --output beacon.json \
+                          --author "José Manuel Mota Burruezo Ψ ✧ ∞³" \
+                          --framework "QCAL ∞³"
+
+# Verificar un beacon
+python3 aik_cli.py verify --beacon beacon.json -v
+
+# Ver información del beacon
+python3 aik_cli.py info --beacon beacon.json
+```
+
 ## 📁 Estructura de Archivos
 
 ```
 Riemann-adelic/
 ├── aik_beacon.py              # Módulo principal del sistema
+├── aik_cli.py                 # Herramienta CLI para beacon generation/verificación
 ├── example_aik_beacon_usage.py # Script de ejemplo completo
+├── AIK_BEACON_README.md       # Documentación completa
 ├── proofs/
 │   └── RamseyRpsi_5_5.lean    # Prueba formal del teorema Rψ(5,5) ≤ 16
 ├── data/
@@ -246,6 +266,10 @@ b = beacon.create_beacon(
 - **Integridad**: Cualquier modificación de los datos invalida la firma
 - **Autenticidad**: Solo el poseedor de la clave privada puede generar beacons válidos
 - **No Repudio**: La firma ECDSA garantiza la autoría del beacon
+
+### Nota de Seguridad sobre la Curva secp256k1
+
+Este sistema utiliza la curva **secp256k1** (no P-256), que es la misma curva usada en Bitcoin y otras criptomonedas. Esta curva no está afectada por el ataque de temporización Minerva que afecta a P-256 en algunas versiones de python-ecdsa. La curva secp256k1 ha sido extensamente auditada y es considerada criptográficamente segura para aplicaciones de firma digital.
 
 ### Detección de Manipulación
 
