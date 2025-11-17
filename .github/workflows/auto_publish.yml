@@ -24,6 +24,8 @@ jobs:
     
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: main  # Explicitly checkout main branch for scheduled runs
 
       - name: Set up Python
         uses: actions/setup-python@v4
