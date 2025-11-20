@@ -4,6 +4,14 @@
 -- Core axioms and lemmas
 import RiemannAdelic.axioms_to_lemmas
 
+-- NEW: Core modules for solid D(s) foundation (V5.3+)
+-- Module 1: Functional equation for D(s) (classical definition)
+import RiemannAdelic.core.analytic.functional_equation
+-- Module 2: Trace class operator structure
+import RiemannAdelic.core.operator.trace_class
+-- Module 3: D(s) as spectral determinant (constructive)
+import RiemannAdelic.core.formal.D_as_det
+
 -- Constructive D(s) definition (V5.2+)
 import RiemannAdelic.schwartz_adelic
 import RiemannAdelic.D_explicit
@@ -65,6 +73,10 @@ def main : IO Unit := do
   IO.println ""
   IO.println "Modules included:"
   IO.println "  • Core axioms and lemmas"
+  IO.println "  • NEW: Core D(s) foundation modules (V5.3+)"
+  IO.println "    - Module 1: Functional equation (classical)"
+  IO.println "    - Module 2: Trace class operator structure"
+  IO.println "    - Module 3: D(s) as spectral determinant"
   IO.println "  • Schwartz functions on adeles (constructive)"
   IO.println "  • Explicit D(s) construction"
   IO.println "  • Operator-theoretic formulation (Hε with oscillatory potential)"
