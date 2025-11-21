@@ -8,6 +8,7 @@
 - `selberg_trace.lean`: Fórmula de traza de Selberg (versión débil)
 - `H_psi_complete.lean`: Operador H_Ψ con espectro discreto
 - `D_limit_equals_xi.lean`: Convergencia de D(s, ε) a ξ(s)/P(s)
+- `spectral_convergence_from_kernel.lean`: Convergencia del lado espectral desde el núcleo de calor
 - `lakefile.lean`, `lean-toolchain`, `CITATION.cff`
 
 ## Compilación
@@ -42,6 +43,15 @@ Convergencia del producto regularizado:
 - D(s, ε) → ξ(s)/P(s) cuando ε → 0⁺
 - Convergencia uniforme en subconjuntos compactos
 - Establece la representación espectral de ζ(s)
+
+### 5. Spectral Convergence from Kernel (`spectral_convergence_from_kernel.lean`)
+Convergencia del lado espectral hacia la suma continua + corrección aritmética:
+- Estructura TestFunction: funciones de prueba suaves con decaimiento rápido
+- spectral_side: suma discreta truncada con deformación ε
+- spectral_limit: valor continuo exacto ∫h(t) + suma sobre primos
+- Teorema principal: convergencia cuando N → ∞ y ε → 0⁺
+- Usa el resultado del núcleo de calor como hipótesis clave
+- Proporciona el puente entre espectro discreto y análisis integral
 
 ## QCAL Framework Integration
 
