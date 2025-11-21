@@ -63,8 +63,8 @@ Each milestone mirrors the feedback items P1--P4 highlighted by reviewers.
   - Riemann-Adelic (espectral base) ✅
   - Adelic-BSD (geometría aritmética) ✅
   - 141Hz (fundamento cuántico-consciente) ✅
-  - P-NP (límites informacionales) ⚡
-  - Navier-Stokes (marco continuo) 🔄
+  - P-NP (límites informacionales) 🔄 En desarrollo teórico
+  - Navier-Stokes (marco continuo) 🔄 En conexión teórica
   - Documentación: `FIVE_FRAMEWORKS_UNIFIED.md`
   - Demo: `demo_five_frameworks.py`
 

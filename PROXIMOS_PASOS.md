@@ -102,7 +102,7 @@ Este documento describe los próximos pasos y desarrollos futuros del proyecto R
 ### 4. Extensión a L-Functions y Conjeturas Relacionadas
 
 #### 4.1 Birch-Swinnerton-Dyer (BSD)
-- **Estado**: ✅ Reducción completa en repositorio `adelic-bsd`
+- **Estado**: ✅ Reducción completa en repositorio [`adelic-bsd`](https://github.com/motanova84/adelic-bsd)
 - **Acciones**:
   - [ ] Integración formal con Riemann-Adelic
   - [ ] Validación numérica para curvas elípticas de rango bajo
