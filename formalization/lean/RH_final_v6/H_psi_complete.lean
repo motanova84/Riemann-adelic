@@ -76,7 +76,7 @@ with compact support in (0, ∞).
 -/
 
 -- Dense domain definition
-structure DenseDomnin where
+structure DenseDomain where
   ψ : ℝ → ℂ
   smooth : Differentiable ℝ ψ
   support_positive : ∀ x, ψ x ≠ 0 → x > 0
@@ -85,7 +85,7 @@ structure DenseDomnin where
 
 -- Symmetry of H_Ψ (formally)
 theorem H_psi_symmetric :
-    ∀ (ψ φ : DenseDomnin), 
+    ∀ (ψ φ : DenseDomain), 
     True := by  -- Placeholder for ⟨ψ|H_Ψ φ⟩ = ⟨H_Ψ ψ|φ⟩
   intro ψ φ
   trivial

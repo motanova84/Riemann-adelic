@@ -32,7 +32,7 @@ on compact subsets of the critical strip 0 < Re(s) < 1.
 -/
 
 theorem D_limit_equals_xi (s : ℂ) (hs : 0 < s.re ∧ s.re < 1) :
-    Tendsto (fun ε => D_function s ε / (xi_function s / P_polynomial s)) (nhds 0⁺) (𝓝 1) := by
+    Tendsto (fun ε => D_function s ε / (xi_function s / P_polynomial s)) (𝓝[>] 0) (𝓝 1) := by
   sorry -- incluir pruebas completas cuando se eliminen truncamientos
 
 /-!
