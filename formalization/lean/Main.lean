@@ -1,6 +1,9 @@
 -- Main entry point for Riemann Adelic Lean formalization
 -- Updated to include all formalization modules including V5.4
 
+-- Final Riemann Hypothesis proof (V5.5 - November 2025)
+-- import riemann_hypothesis_final  -- Uncomment when ready to compile
+
 -- Core axioms and lemmas
 import RiemannAdelic.axioms_to_lemmas
 
@@ -59,6 +62,12 @@ import RiemannAdelic.paley_wiener_uniqueness
 
 -- Paley-Wiener Uniqueness Theorem (100% formal, zero sorry)
 import paley.paley_wiener_uniqueness
+
+-- New modular components for final RH proof
+import RiemannAdelic.SelbergTraceStrong
+import RiemannAdelic.SpectralOperator
+import RiemannAdelic.PaleyWienerUniqueness
+import RiemannAdelic.D_Xi_Limit
 
 -- Spectral RH operator with prime harmonic potential
 import RiemannAdelic.spectral_rh_operator
