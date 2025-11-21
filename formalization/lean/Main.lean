@@ -76,6 +76,8 @@ import RiemannAdelic.spectral_rh_operator
 import RiemannAdelic.spectral_RH_operator
 -- Berry-Keating operator H_Ψ (complete formalization)
 import RiemannAdelic.berry_keating_operator
+-- Spectral zeta function ζ_HΨ(s) and zeta-regularized determinant
+import RiemannAdelic.spectral_zeta_function
 
 -- Purge axioms modules (purge_axioms branch)
 import RiemannAdelic.Hadamard
@@ -130,6 +132,7 @@ def main : IO Unit := do
   IO.println "  • Critical line proof via spectral operators"
   IO.println "  • Spectral RH operator H_ε"
   IO.println "  • Berry-Keating operator H_Ψ (complete formalization)"
+  IO.println "  • Spectral zeta function ζ_HΨ(s) and zeta-regularized determinant"
   IO.println "  • Hadamard factorization (purge_axioms branch)"
   IO.println "  • Kernel positivity (purge_axioms branch)"
   IO.println "  • Gamma trivial exclusion (purge_axioms branch)"
