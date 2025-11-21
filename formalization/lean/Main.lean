@@ -45,6 +45,9 @@ import RiemannAdelic.critical_line_proof
 import RiemannAdelic.pw_two_lines
 import RiemannAdelic.lengths_derived
 
+-- Paley-Wiener Uniqueness Theorem (100% formal, zero sorry)
+import paley.paley_wiener_uniqueness
+
 -- Spectral RH operator with prime harmonic potential
 import RiemannAdelic.spectral_rh_operator
 -- Spectral RH operator H_ε
@@ -77,6 +80,7 @@ def main : IO Unit := do
   IO.println "  • Zero localization and uniqueness"
   IO.println "  • Critical line proof via spectral operators"
   IO.println "  • Paley-Wiener theory"
+  IO.println "  • Paley-Wiener Uniqueness (100% formal - ZERO sorry)"
   IO.println "  • Spectral RH operator (H_ε with prime harmonic potential)"
   IO.println "  • Critical line proof via spectral operators"
   IO.println "  • Spectral RH operator H_ε"
