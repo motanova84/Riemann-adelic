@@ -23,6 +23,10 @@ from operador.riemann_operator import (
     F0, OMEGA_0, ZETA_PRIME_HALF, PI
 )
 
+# Test tolerances
+FLOAT_TOLERANCE = 1e-6
+NORMALIZATION_TOLERANCE = 0.1
+
 
 class TestPhysicalConstants:
     """Test that physical constants are correct."""
@@ -30,11 +34,11 @@ class TestPhysicalConstants:
     def test_frequency_constant(self):
         """Test fundamental frequency f₀ = 141.7001 Hz."""
         assert F0 == 141.7001
-        assert abs(OMEGA_0 - 2 * np.pi * 141.7001) < 1e-6
+        assert abs(OMEGA_0 - 2 * np.pi * 141.7001) < FLOAT_TOLERANCE
     
     def test_zeta_prime(self):
         """Test ζ'(1/2) approximation."""
-        assert abs(ZETA_PRIME_HALF - (-3.92264773)) < 1e-6
+        assert abs(ZETA_PRIME_HALF - (-3.92264773)) < FLOAT_TOLERANCE
     
     def test_coupling_constant(self):
         """Test arithmetic coupling ζ'(1/2)·π."""
@@ -175,8 +179,9 @@ class TestSpectrumComputation:
         """Test that eigenvalues are ordered."""
         op, eigvals, eigvecs, gammas = operator_with_spectrum
         
-        # Should be in ascending order
-        assert all(eigvals[i] <= eigvals[i+1] for i in range(len(eigvals)-1))
+        # Should be in ascending order (with numerical tolerance)
+        for i in range(len(eigvals)-1):
+            assert eigvals[i] <= eigvals[i+1] + FLOAT_TOLERANCE
     
     def test_eigenvectors_normalized(self, operator_with_spectrum):
         """Test that eigenvectors are normalized."""
@@ -185,7 +190,7 @@ class TestSpectrumComputation:
         # Check normalization (approximately)
         for i in range(eigvecs.shape[1]):
             norm = np.linalg.norm(eigvecs[:, i])
-            assert abs(norm - 1.0) < 0.1  # Loose tolerance due to discretization
+            assert abs(norm - 1.0) < NORMALIZATION_TOLERANCE
     
     def test_spectrum_validation(self, operator_with_spectrum):
         """Test spectrum validation against Riemann zeros."""

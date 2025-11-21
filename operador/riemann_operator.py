@@ -31,6 +31,13 @@ OMEGA_0 = 2 * np.pi * F0  # rad/s ≈ 890.33
 ZETA_PRIME_HALF = -3.92264773  # ζ'(1/2) aproximado
 PI = np.pi
 
+# Constantes numéricas para algoritmos
+EIGENVALUE_BUFFER = 2  # Buffer para eigsh (requiere k < N-2)
+PROGRESS_REPORT_INTERVAL = 1000  # Intervalo para reportes de progreso
+
+# Validación de constantes físicas
+assert abs(OMEGA_0 - 890.33) < 1.0, "OMEGA_0 debe ser ≈ 890.33 rad/s"
+
 
 class RiemannOperator:
     """
@@ -179,8 +186,8 @@ class RiemannOperator:
         print(f"Dimensión del espacio: {self.n}")
         print(f"Rango x: [{self.x_min:.2e}, {self.x_max:.2e}]")
         
-        # Ajustar n_eigenvalues si es necesario
-        n_eigs = min(n_eigenvalues, self.n - 2)
+        # Ajustar n_eigenvalues si es necesario (eigsh requiere k < N-2)
+        n_eigs = min(n_eigenvalues, self.n - EIGENVALUE_BUFFER)
         
         # Usar eigsh para matrices simétricas dispersas
         # H es hermitiano = simétrico si es real
@@ -287,7 +294,7 @@ def load_riemann_zeros(max_zeros: int = 10000, zeros_file: Optional[str] = None)
             
             gammas = []
             for n in range(1, max_zeros + 1):
-                if n % 1000 == 0:
+                if n % PROGRESS_REPORT_INTERVAL == 0:
                     print(f"  Progreso: {n}/{max_zeros}")
                 
                 # Calcular n-ésimo cero
