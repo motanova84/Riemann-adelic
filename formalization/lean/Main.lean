@@ -52,6 +52,8 @@ import RiemannAdelic.critical_line_proof
 
 -- Paley-Wiener and derived lengths
 import RiemannAdelic.pw_two_lines
+import RiemannAdelic.paley_wiener_uniqueness
+import RiemannAdelic.D_limit_equals_xi
 import RiemannAdelic.lengths_derived
 import RiemannAdelic.paley_wiener_uniqueness
 
@@ -103,6 +105,9 @@ def main : IO Unit := do
   IO.println "  • Kernel positivity (quotient module approach)"
   IO.println "  • Zero localization and uniqueness"
   IO.println "  • Critical line proof via spectral operators"
+  IO.println "  • Paley-Wiener theory and uniqueness"
+  IO.println "  • D(s,ε) limit theorem"
+  IO.println "  • Spectral RH operator H_ε (with prime harmonic potential)"
   IO.println "  • Paley-Wiener theory"
   IO.println "  • Paley-Wiener uniqueness theorem"
   IO.println "  • Paley-Wiener Uniqueness (100% formal - ZERO sorry)"
