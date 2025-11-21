@@ -19,6 +19,7 @@ import RiemannAdelic.V54_Consolidated
 
 -- Operator-theoretic formulation (V5.3+)
 import RiemannAdelic.RiemannOperator
+import RiemannAdelic.BerryKeatingOperator
 
 -- Entire function theory
 import RiemannAdelic.entire_order
@@ -94,6 +95,7 @@ def main : IO Unit := do
   IO.println "  • Schwartz functions on adeles (constructive)"
   IO.println "  • Explicit D(s) construction"
   IO.println "  • Operator-theoretic formulation (Hε with oscillatory potential)"
+  IO.println "  • Berry-Keating operator H_Ψ on L²(ℝ⁺, dx/x)"
   IO.println "  • Entire function and Hadamard theory"
   IO.println "  • Hadamard factorization and quotient analysis"
   IO.println "  • Functional equation and Poisson symmetry"
