@@ -83,6 +83,8 @@ jobs:
         file: ./coverage.xml
         flags: unittests
         name: codecov-umbrella
+        # Note: Token is optional as organization supports tokenless uploads
+        # Administrators manage token configuration globally
         
   validate-ml-enhanced:
     name: ML-Enhanced Zero Analysis
