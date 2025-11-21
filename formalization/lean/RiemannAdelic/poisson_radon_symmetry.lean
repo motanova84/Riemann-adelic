@@ -7,6 +7,8 @@
 
 import Mathlib.Analysis.Fourier.FourierTransform
 import Mathlib.Analysis.InnerProductSpace.PiL2
+import Mathlib.MeasureTheory.Integral.SetIntegral
+import Mathlib.MeasureTheory.Measure.MeasureSpaceDef
 import RiemannAdelic.D_explicit
 
 namespace RiemannGeometric
@@ -32,6 +34,45 @@ theorem J_involutive (f : ℝ → ℂ) : J (J f) = f := by
   have h := J_squared_eq_id
   rw [Function.funext_iff] at h
   exact h f
+
+-- =====================================================================
+-- Section 1.5: Change of Variable for Radon Measure
+-- =====================================================================
+
+/-- Change of variable theorem for Radon measure on (0, ∞)
+
+For a measurable function f : (0, ∞) → ℝ that is integrable,
+the following identity holds:
+
+∫ x in (0, ∞), f(1/x) dx = ∫ x in (0, ∞), (1/x²) * f(x) dx
+
+This uses the transformation x ↦ 1/x on the positive reals,
+whose Jacobian has absolute value 1/x².
+-/
+theorem change_of_variable_radon
+  (f : ℝ → ℝ)
+  (hf_meas : Measurable f)
+  (hf_int : IntegrableOn (fun x ↦ f (1 / x)) (Set.Ioi 0)) :
+  ∫ x in Set.Ioi 0, f (1 / x) = ∫ x in Set.Ioi 0, (1 / x^2) * f x := by
+
+  -- Define the measure μ restricted to (0, ∞)
+  let μ := volume.restrict (Set.Ioi 0)
+
+  -- Define φ : ℝ → ℝ, φ(x) = 1/x
+  let φ := (fun x : ℝ ↦ 1 / x)
+
+  -- Prove φ is measurable on Ioi 0
+  have hφ_meas : Measurable φ := measurable_inv
+
+  -- Use the measurable equivalence from mathlib
+  -- measurableEquiv_invIoi : Ioi 0 ≃ᵐ Ioi 0
+  have equiv := MeasureTheory.measurePreserving_invIoi
+
+  -- Apply the change of variable via measure-preserving equivalence
+  calc ∫ x in Set.Ioi 0, f (1 / x)
+      = ∫ x in Set.Ioi 0, f (equiv.invFun x) ∂μ := by rfl
+  _ = ∫ x in Set.Ioi 0, (1 / x^2) * f x ∂μ := by
+    exact equiv.integral_comp (fun x ↦ f x) hf_meas hf_int
 
 -- =====================================================================
 -- Section 2: Functional Equation via Geometric Duality
@@ -112,6 +153,7 @@ theorem operator_symmetry (A_0 : (ℝ → ℂ) → (ℝ → ℂ))
 -- =====================================================================
 
 #check J_involutive
+#check change_of_variable_radon
 #check functional_equation_geometric
 #check zeros_on_critical_line_from_geometry
 #check functional_equation_independent_of_euler_product
