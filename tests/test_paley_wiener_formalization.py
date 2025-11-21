@@ -50,11 +50,13 @@ class TestPaleyWienerFormalization:
         content = file_path.read_text()
         
         required_imports = [
+            "Mathlib.Analysis.Complex.CauchyIntegral",
             "Mathlib.Analysis.Complex",
         ]
         
-        for imp in required_imports:
-            assert imp in content, f"Required import '{imp}' not found"
+        # Check that at least one of the required imports is present
+        found = any(imp in content for imp in required_imports)
+        assert found, f"None of the required imports found: {required_imports}"
 
     def test_paley_wiener_has_helper_lemma(self):
         """Verify helper lemma for exponential bounds exists"""

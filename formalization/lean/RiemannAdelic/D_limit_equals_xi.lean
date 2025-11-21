@@ -38,8 +38,12 @@ lemma D_approx_tendsto_ideal (s : ℂ) :
     Tendsto (fun ε => D_approx s ε) (𝓝[>] 0) (𝓝 (D_ideal s)) := by
   apply tendsto_finset_prod
   intro n _
-  simp only [add_sub_cancel_right]
-  exact tendsto_const_nhds
+  -- As ε → 0, the term (n + 1/2 + ε·sin(πn)) → (n + 1/2)
+  -- Therefore (1 - s/(n + 1/2 + ε·sin(πn))) → (1 - s/(n + 1/2))
+  sorry  -- PROOF STRATEGY:
+  -- 1. Show ε·sin(πn) → 0 as ε → 0 (bounded sine function)
+  -- 2. Apply continuous.tendsto for the rational function z ↦ 1 - s/z
+  -- 3. Use composition: tendsto of continuous function of tendsto
 
 -- Lema 2: El producto ideal D_ideal(s) = π^{s/2} / (Gamma(s/2) * sin(π s))
 

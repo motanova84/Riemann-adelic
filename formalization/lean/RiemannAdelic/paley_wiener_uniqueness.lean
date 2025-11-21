@@ -24,10 +24,11 @@ open Complex Filter Topology Set MeasureTheory
 structure EntireOrderOne where
   f : ℂ → ℂ
   entire : Differentiable ℂ f
-  order_one : ∃ A B : ℝ, B > 0 ∧ ∀ z, ‖f z‖ ≤ A * Real.exp (B * ‖z‖)
+  order_one : ∃ A B : ℝ, A ≥ 0 ∧ B > 0 ∧ ∀ z, ‖f z‖ ≤ A * Real.exp (B * ‖z‖)
 
 -- Helper lemma for exponential growth bounds
-lemma add_exp_le_max_exp_mul {A1 A2 B1 B2 z : ℝ} (hB1 : 0 ≤ B1) (hB2 : 0 ≤ B2) :
+lemma add_exp_le_max_exp_mul {A1 A2 B1 B2 z : ℝ} (hA1 : 0 ≤ A1) (hA2 : 0 ≤ A2) 
+    (hB1 : 0 ≤ B1) (hB2 : 0 ≤ B2) :
     A1 * Real.exp (B1 * z) + A2 * Real.exp (B2 * z) ≤ 
     (A1 + A2) * Real.exp (max B1 B2 * z) := by
   by_cases h : B1 ≤ B2
@@ -36,7 +37,7 @@ lemma add_exp_le_max_exp_mul {A1 A2 B1 B2 z : ℝ} (hB1 : 0 ≤ B1) (hB2 : 0 ≤
     calc A1 * Real.exp (B1 * z) + A2 * Real.exp (B2 * z)
         ≤ A1 * Real.exp (B2 * z) + A2 * Real.exp (B2 * z) := by
           apply add_le_add_right
-          apply mul_le_mul_of_nonneg_left _ (by linarith : 0 ≤ A1)
+          apply mul_le_mul_of_nonneg_left _ hA1
           apply Real.exp_le_exp.mpr
           apply mul_le_mul_of_nonneg_right (le_max_left B1 B2)
           exact abs_nonneg z
@@ -48,7 +49,7 @@ lemma add_exp_le_max_exp_mul {A1 A2 B1 B2 z : ℝ} (hB1 : 0 ≤ B1) (hB2 : 0 ≤
     calc A1 * Real.exp (B1 * z) + A2 * Real.exp (B2 * z)
         ≤ A1 * Real.exp (B1 * z) + A2 * Real.exp (B1 * z) := by
           apply add_le_add_left
-          apply mul_le_mul_of_nonneg_left _ (by linarith : 0 ≤ A2)
+          apply mul_le_mul_of_nonneg_left _ hA2
           apply Real.exp_le_exp.mpr
           apply mul_le_mul_of_nonneg_right (le_max_right B1 B2)
           exact abs_nonneg z
@@ -77,8 +78,8 @@ theorem paley_wiener_uniqueness
   -- Paso 1: Consideramos h = f - g
   let h : ℂ → ℂ := fun z => f.f z - g.f z
   have h_entire : Differentiable ℂ h := f.entire.sub g.entire
-  obtain ⟨A1, B1, hB1, hA1⟩ := f.order_one
-  obtain ⟨A2, B2, hB2, hA2⟩ := g.order_one
+  obtain ⟨A1, B1, hA1_nonneg, hB1, hA1⟩ := f.order_one
+  obtain ⟨A2, B2, hA2_nonneg, hB2, hA2⟩ := g.order_one
   let A := A1 + A2
   let B := max B1 B2
   have h_order : ∃ A B : ℝ, B > 0 ∧ ∀ z, ‖h z‖ ≤ A * Real.exp (B * ‖z‖) := by
@@ -92,6 +93,8 @@ theorem paley_wiener_uniqueness
                   add_le_add (hA1 z) (hA2 z)
               _ ≤ A * Real.exp (B * ‖z‖) := by
                   apply add_exp_le_max_exp_mul
+                  exact hA1_nonneg
+                  exact hA2_nonneg
                   exact le_of_lt hB1
                   exact le_of_lt hB2
   
