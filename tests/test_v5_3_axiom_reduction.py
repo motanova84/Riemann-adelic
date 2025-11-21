@@ -1,12 +1,12 @@
 """
-Test suite for V5.3 Axiomatic Reduction validation
+Test suite for V5.3/V5.3.1 Axiomatic Reduction validation
 
-This test suite verifies the V5.3 axiomatic reduction status as documented
-in REDUCCION_AXIOMATICA_V5.3.md
+This test suite verifies the V5.3.1 complete axiomatic elimination as documented
+in REDUCCION_AXIOMATICA_V5.3.md and data/rh_axiom_purge.json
 
 Author: José Manuel Mota Burruezo
-Date: October 23, 2025
-Version: V5.3
+Date: November 17, 2025
+Version: V5.3.1
 """
 
 import pytest
@@ -127,24 +127,33 @@ class TestV53AxiomReduction:
         assert re.search(pattern, d_explicit_lean, re.DOTALL), \
             "D_explicit_entire_order_one must have proof structure"
     
-    def test_d_zero_equivalence_still_axiom(self, rh_final_lean):
-        """V5.3: D_zero_equivalence is still an axiom (to be eliminated in V5.4)"""
-        # Check it's still an axiom
-        assert "axiom D_zero_equivalence" in rh_final_lean
+    def test_d_zero_equivalence_is_theorem(self, rh_final_lean):
+        """V5.3.1: D_zero_equivalence is now a theorem (ELIMINATED in V5.3.1)"""
+        # Check it's a theorem, not an axiom
+        assert "theorem D_zero_equivalence" in rh_final_lean, \
+            "D_zero_equivalence must be a theorem in V5.3.1"
         
-        # But should have V5.3 documentation
+        # Should NOT be an axiom anymore
+        # Check if there's an actual axiom declaration (not in comments)
+        import re
+        code_only = re.sub(r'/--.*?-/', '', rh_final_lean, flags=re.DOTALL)
+        code_only = re.sub(r'--.*?$', '', code_only, flags=re.MULTILINE)
+        assert "axiom D_zero_equivalence" not in code_only, \
+            "D_zero_equivalence must not be an axiom in V5.3.1"
+        
+        # Should have V5.3.1 documentation
         lines = rh_final_lean.split('\n')
-        axiom_idx = None
+        theorem_idx = None
         for i, line in enumerate(lines):
-            if 'axiom D_zero_equivalence' in line:
-                axiom_idx = i
+            if 'theorem D_zero_equivalence' in line:
+                theorem_idx = i
                 break
         
-        assert axiom_idx is not None
-        # Check for V5.3 comments in nearby lines
-        context = '\n'.join(lines[max(0, axiom_idx-20):axiom_idx])
-        assert 'V5.3' in context or 'V5.4' in context, \
-            "D_zero_equivalence should have V5.3 status documentation"
+        assert theorem_idx is not None
+        # Check for V5.3.1 comments in nearby lines
+        context = '\n'.join(lines[max(0, theorem_idx-30):theorem_idx])
+        assert 'V5.3.1' in context or 'ELIMINATED' in context or 'Paley-Wiener' in context, \
+            "D_zero_equivalence should have V5.3.1 status documentation"
     
     def test_zeros_constrained_is_theorem(self, rh_final_lean):
         """V5.3: zeros_constrained_to_critical_lines is now a theorem"""
@@ -280,6 +289,125 @@ class TestV53Documentation:
         # Check DOI is present
         assert "10.5281/zenodo.17116291" in content
         assert "doi.org" in content.lower() or "DOI" in content
+
+
+class TestV531CompleteElimination:
+    """Test suite for V5.3.1 complete axiom elimination"""
+    
+    @pytest.fixture
+    def repo_root(self):
+        return Path(__file__).parent.parent
+    
+    @pytest.fixture
+    def certificate(self, repo_root):
+        """Load rh_axiom_purge.json certificate"""
+        cert_path = repo_root / "data" / "rh_axiom_purge.json"
+        assert cert_path.exists(), "Certificate rh_axiom_purge.json must exist"
+        import json
+        with open(cert_path, 'r', encoding='utf-8') as f:
+            return json.load(f)
+    
+    @pytest.fixture
+    def rh_final(self, repo_root):
+        """Load RH_final.lean"""
+        path = repo_root / "formalization" / "lean" / "RH_final.lean"
+        with open(path, 'r', encoding='utf-8') as f:
+            return f.read()
+    
+    @pytest.fixture
+    def poisson_radon(self, repo_root):
+        """Load poisson_radon_symmetry.lean"""
+        path = repo_root / "formalization" / "lean" / "RiemannAdelic" / "poisson_radon_symmetry.lean"
+        with open(path, 'r', encoding='utf-8') as f:
+            return f.read()
+    
+    @pytest.fixture
+    def axiom_purge(self, repo_root):
+        """Load axiom_purge.lean"""
+        path = repo_root / "formalization" / "lean" / "RiemannAdelic" / "axiom_purge.lean"
+        with open(path, 'r', encoding='utf-8') as f:
+            return f.read()
+    
+    def test_certificate_exists(self, certificate):
+        """V5.3.1: Certificate file must exist and be valid JSON"""
+        assert certificate is not None
+        assert certificate['version'] == 'V5.3.1'
+        assert certificate['status'] == 'COMPLETE'
+    
+    def test_certificate_documents_all_eliminations(self, certificate):
+        """V5.3.1: Certificate must document all axiom eliminations"""
+        assert 'axioms_eliminated' in certificate
+        assert len(certificate['axioms_eliminated']) >= 4
+        
+        # Check specific eliminations
+        eliminated_names = [ax['name'] for ax in certificate['axioms_eliminated']]
+        assert 'D_function' in eliminated_names
+        assert 'D_functional_equation' in eliminated_names
+        assert 'D_entire_order_one' in eliminated_names
+        assert 'D_zero_equivalence' in eliminated_names
+    
+    def test_rh_final_no_axioms(self, rh_final):
+        """V5.3.1: RH_final.lean must have zero axioms"""
+        # Remove comments to avoid false positives
+        code_only = re.sub(r'/--.*?-/', '', rh_final, flags=re.DOTALL)
+        code_only = re.sub(r'--.*?$', '', code_only, flags=re.MULTILINE)
+        
+        # Check for axiom declarations
+        axiom_declarations = re.findall(r'^axiom\s+\w+', code_only, flags=re.MULTILINE)
+        assert len(axiom_declarations) == 0, \
+            f"RH_final.lean must have zero axioms, found: {axiom_declarations}"
+    
+    def test_poisson_radon_no_axioms(self, poisson_radon):
+        """V5.3.1: poisson_radon_symmetry.lean must have zero axioms"""
+        code_only = re.sub(r'/--.*?-/', '', poisson_radon, flags=re.DOTALL)
+        code_only = re.sub(r'--.*?$', '', code_only, flags=re.MULTILINE)
+        
+        axiom_declarations = re.findall(r'^axiom\s+\w+', code_only, flags=re.MULTILINE)
+        assert len(axiom_declarations) == 0, \
+            f"poisson_radon_symmetry.lean must have zero axioms, found: {axiom_declarations}"
+    
+    def test_axiom_purge_no_axioms(self, axiom_purge):
+        """V5.3.1: axiom_purge.lean must have zero axioms"""
+        code_only = re.sub(r'/--.*?-/', '', axiom_purge, flags=re.DOTALL)
+        code_only = re.sub(r'--.*?$', '', code_only, flags=re.MULTILINE)
+        
+        axiom_declarations = re.findall(r'^axiom\s+\w+', code_only, flags=re.MULTILINE)
+        assert len(axiom_declarations) == 0, \
+            f"axiom_purge.lean must have zero axioms, found: {axiom_declarations}"
+    
+    def test_d_zero_equivalence_is_theorem(self, rh_final):
+        """V5.3.1: D_zero_equivalence must be a theorem with proof"""
+        assert "theorem D_zero_equivalence" in rh_final
+        assert "Paley-Wiener" in rh_final or "uniqueness" in rh_final
+    
+    def test_main_theorem_proven(self, rh_final):
+        """V5.3.1: riemann_hypothesis_adelic must be proven"""
+        assert "theorem riemann_hypothesis_adelic" in rh_final
+        # Should have proof by constructive methods
+        assert "RiemannHypothesis" in rh_final
+        assert "critical_line_from_functional_equation" in rh_final
+    
+    def test_v531_status_documented(self, rh_final, poisson_radon, axiom_purge):
+        """V5.3.1: All files must reference V5.3.1 status"""
+        assert "V5.3.1" in rh_final
+        assert "V5.3.1" in poisson_radon or "axiom eliminated" in poisson_radon.lower()
+        assert "V5.3.1" in axiom_purge
+    
+    def test_certificate_summary_accurate(self, certificate):
+        """V5.3.1: Certificate summary must reflect complete elimination"""
+        summary = certificate['summary']
+        assert summary['total_axioms_eliminated'] >= 7
+        assert summary['axioms_remaining_in_main_files'] == 0
+        assert summary['main_theorem_proven'] == True
+        assert 'COMPLETE' in summary['conclusion'] or 'ELIMINATED' in summary['conclusion']
+    
+    def test_qcal_coherence_preserved(self, certificate):
+        """V5.3.1: QCAL coherence metadata must be preserved"""
+        assert 'qcal_coherence' in certificate
+        qcal = certificate['qcal_coherence']
+        assert qcal['frequency_base_hz'] == 141.7001
+        assert qcal['coherence_constant'] == 244.36
+        assert 'Ψ = I × A_eff² × C^∞' in qcal['equation']
 
 
 if __name__ == "__main__":

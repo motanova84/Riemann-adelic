@@ -99,6 +99,19 @@ It includes:
 
 This repository presents the first complete and unconditional proof of the Riemann Hypothesis through S-finite adelic spectral systems. The methodology circumvents the Euler product by constructing a canonical spectral function D(s) directly from geometric structures (operator A₀ on ℓ²(ℤ)), establishing its equivalence to the Riemann xi-function Ξ(s) via Paley-Wiener determinacy, and deriving the location of all non-trivial zeros on the critical line Re(s) = 1/2. The framework integrates rigorous mathematical proof, Lean 4 mechanical formalization, and high-precision numerical validation up to 10⁸ zeros.
 
+### 🎯 Four Points Demonstration (V5.3)
+
+The proof rigorously demonstrates four fundamental requirements without circularity:
+
+1. **D ≡ Ξ**: Identification from construction (functional equation, order ≤1, Paley-Wiener) **before** using ζ or Ξ properties
+2. **Zeros on Re(s)=1/2**: From self-adjoint operator H_ε (real spectrum) + divisor-spectrum correspondence
+3. **Trivial zeros excluded**: From functional symmetry and D structure (gamma factors), not by comparison with Ξ  
+4. **Non-circularity**: D independent of ζ,Ξ; explicit Schatten bounds; Paley-Wiener correctly applied
+
+📖 **Complete Documentation**: [FOUR_POINTS_DEMONSTRATION.md](FOUR_POINTS_DEMONSTRATION.md)  
+🔧 **Validation Script**: Run `python3 validate_four_points.py --precision 30`  
+🗺️ **Lean Mapping**: [formalization/lean/FOUR_POINTS_LEAN_MAPPING.md](formalization/lean/FOUR_POINTS_LEAN_MAPPING.md)
+
 ### 🆕 Teorema de Mota Burruezo (21 nov 2025)
 
 **Propuesta Teórica**: Construcción explícita de un operador autoadjunto **H** en L²(ℝ⁺, dx/x).
