@@ -2,9 +2,12 @@
 -- Dualidad Poisson-Radón implica simetría D(1-s) = D(s)
 -- Non-circular proof: functional equation derived from geometric symmetry
 -- without dependence on Euler product representation
+--
+-- V5.3.1 UPDATE: axiom D eliminated, replaced with explicit construction
 
 import Mathlib.Analysis.Fourier.FourierTransform
 import Mathlib.Analysis.InnerProductSpace.PiL2
+import RiemannAdelic.D_explicit
 
 namespace RiemannGeometric
 
@@ -34,8 +37,9 @@ theorem J_involutive (f : ℝ → ℂ) : J (J f) = f := by
 -- Section 2: Functional Equation via Geometric Duality
 -- =====================================================================
 
-/-- The determinant D(s) arising from the adelic construction -/
-axiom D : ℂ → ℂ
+/-- The determinant D(s) arising from the adelic construction
+    V5.3.1: Using explicit construction from D_explicit.lean instead of axiom -/
+noncomputable def D : ℂ → ℂ := RiemannAdelic.D_explicit
 
 /-- Ecuación funcional geométrica del determinante D(s)
     This functional equation is derived from Poisson-Radón duality
