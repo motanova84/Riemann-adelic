@@ -41,6 +41,11 @@ try:
 except ImportError:
     from discrete_symmetry_operator import DiscreteSymmetryOperator
 
+# Constants for connection validation
+MAX_BASIS_SIZE = 100  # Maximum basis size for spectrum computation
+BASIS_RATIO = 10      # Ratio of n_points to n_basis
+COERCIVITY_FACTOR = 1.5  # Factor for coercivity threshold check
+
 
 class OperatorConnection:
     """
@@ -108,8 +113,10 @@ class OperatorConnection:
         )
         
         # Compute H_DS spectrum
-        spectrum = self.H_DS.compute_spectrum(R_range=(R_range[0], R_range[1]), 
-                                              n_basis=min(100, n_points // 10))
+        spectrum = self.H_DS.compute_spectrum(
+            R_range=(R_range[0], R_range[1]), 
+            n_basis=min(MAX_BASIS_SIZE, n_points // BASIS_RATIO)
+        )
         H_DS_matrix = spectrum['H_DS_matrix']
         
         # Validate H_DS is Hermitian
@@ -228,7 +235,7 @@ class OperatorConnection:
         # Check coercivity
         E_min_val = np.min(E_vac)
         E_at_boundaries = [E_vac[0], E_vac[-1]]
-        is_coercive = all(E > E_min_val * 1.5 for E in E_at_boundaries)
+        is_coercive = all(E > E_min_val * COERCIVITY_FACTOR for E in E_at_boundaries)
         
         # Find minima
         dE = np.gradient(E_vac, R_vals)

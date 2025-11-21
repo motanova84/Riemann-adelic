@@ -40,6 +40,9 @@ F0 = 141.7001    # Fundamental frequency (Hz)
 LOG_PI = np.log(np.pi)  # Period in log-space
 ZETA_PRIME_HALF = -1.46035450880958681  # ζ'(1/2)
 
+# Numerical stability constants
+EPSILON = 1e-10  # Small value to avoid log(0) and division by zero
+
 
 class DiscreteSymmetryOperator:
     """
@@ -102,7 +105,7 @@ class DiscreteSymmetryOperator:
         Returns:
             Amplitude A(R_Ψ) at each point
         """
-        log_R = np.log(np.abs(R_psi) + 1e-10)  # Avoid log(0)
+        log_R = np.log(np.abs(R_psi) + EPSILON)  # Avoid log(0)
         return np.sin(log_R / LOG_PI)**2
     
     def vacuum_energy(self, R_psi: np.ndarray) -> np.ndarray:
@@ -117,7 +120,7 @@ class DiscreteSymmetryOperator:
         Returns:
             Vacuum energy E_vac(R_Ψ)
         """
-        R_psi = np.abs(R_psi) + 1e-10  # Avoid division by zero
+        R_psi = np.abs(R_psi) + EPSILON  # Avoid division by zero
         
         # UV term (Casimir-like)
         E_uv = self.alpha / R_psi**4

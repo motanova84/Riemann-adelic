@@ -21,6 +21,9 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
 from operators.discrete_symmetry_operator import DiscreteSymmetryOperator
 from operators.operator_connection import OperatorConnection
 
+# Test constants
+CONVERGENCE_TOLERANCE_FACTOR = 2  # Tolerance factor for convergence tests
+
 
 class TestDiscreteSymmetryOperator:
     """Test suite for H_DS operator."""
@@ -367,7 +370,8 @@ class TestIntegration:
         differences = np.abs(np.diff(first_eigenvalues))
         
         # Differences should decrease (convergence)
-        assert differences[1] < differences[0] * 2  # Allow some variation
+        # Allow some variation due to discretization effects
+        assert differences[1] < differences[0] * CONVERGENCE_TOLERANCE_FACTOR
 
 
 class TestNumericalStability:
