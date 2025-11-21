@@ -77,6 +77,12 @@ import RiemannAdelic.spectral_RH_operator
 -- Berry-Keating operator H_Ψ (complete formalization)
 import RiemannAdelic.berry_keating_operator
 
+-- Heat kernel convergence lemmas (Selberg trace spectral convergence)
+import RiemannAdelic.heat_kernel_to_delta_plus_primes
+import RiemannAdelic.tendsto_integral_kernel_to_delta
+import RiemannAdelic.convergence_arithmetic_correction
+import RiemannAdelic.tendsto_integral_shifted_kernel
+
 -- Purge axioms modules (purge_axioms branch)
 import RiemannAdelic.Hadamard
 import RiemannAdelic.KernelPositivity
@@ -129,6 +135,10 @@ def main : IO Unit := do
   IO.println "  • Spectral RH operator (H_ε with prime harmonic potential)"
   IO.println "  • Critical line proof via spectral operators"
   IO.println "  • Spectral RH operator H_ε"
+  IO.println "  • H_ε foundation (eigenvalues and D(s) definitions)"
+  IO.println "  • Selberg trace formula (spectral-arithmetic connection)"
+  IO.println "  • Heat kernel convergence lemmas (Selberg spectral convergence)"
+  IO.println "  • H_ε foundation (logarithmic Hilbert space, Hermite basis, p-adic potential)"
   IO.println "  • Berry-Keating operator H_Ψ (complete formalization)"
   IO.println "  • Hadamard factorization (purge_axioms branch)"
   IO.println "  • Kernel positivity (purge_axioms branch)"
