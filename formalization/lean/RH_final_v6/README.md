@@ -8,6 +8,7 @@
 - `selberg_trace.lean`: Fórmula de traza de Selberg (versión débil)
 - `H_psi_complete.lean`: Operador H_Ψ con espectro discreto
 - `D_limit_equals_xi.lean`: Convergencia de D(s, ε) a ξ(s)/P(s)
+- `spectrum_Hψ_equals_zeta_zeros.lean`: Equivalencia espectral Spec(H_Ψ) = {γ | ζ(1/2+iγ)=0}
 - `lakefile.lean`, `lean-toolchain`, `CITATION.cff`
 
 ## Compilación
@@ -42,6 +43,15 @@ Convergencia del producto regularizado:
 - D(s, ε) → ξ(s)/P(s) cuando ε → 0⁺
 - Convergencia uniforme en subconjuntos compactos
 - Establece la representación espectral de ζ(s)
+
+### 5. Spectral Equivalence (`spectrum_Hψ_equals_zeta_zeros.lean`)
+Teorema fundamental que establece la equivalencia espectral:
+- **Teorema principal**: Spec(H_Ψ) = {γ ∈ ℝ | ζ(1/2 + iγ) = 0}
+- Operador H_Ψ en L²((0,∞), dx/x) con potencial resonante V(x) = π·ζ'(1/2)·log(x)
+- Dominio: funciones C^∞ con soporte compacto en (0,∞)
+- Axiomas condicionales para autoadjunticidad y equivalencia espectral
+- Corolarios: espectro real, discreto y simétrico
+- Conexión con la formulación espectral de RH
 
 ## QCAL Framework Integration
 
