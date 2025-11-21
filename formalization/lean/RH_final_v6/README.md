@@ -62,6 +62,7 @@ Formalización avanzada con isomorfismo unitario explícito:
 - **Conjugación unitaria**: HΨ = U⁻¹ ∘ H_model ∘ U
 - **Teorema principal**: Spec(HΨ) = Set.range ζ_zeros_im
 - **Lema de transferencia**: spectrum ℂ HΨ = spectrum ℂ H_model
+  > *Esta igualdad se justifica porque la conjugación unitaria por U preserva el espectro: si HΨ = U⁻¹ ∘ H_model ∘ U, entonces Spec(HΨ) = Spec(H_model) por el teorema de conjugación unitaria en teoría espectral de operadores autoadjuntos.*
 - Autoadjuntez de H_model por construcción diagonal
 - Versión complementaria a spectrum_eq_zeros.lean con enfoque más constructivo
 
