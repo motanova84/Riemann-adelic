@@ -48,13 +48,13 @@ and "non-trivial" zeros in the critical strip 0 < Re(s) < 1.
 def trivial_zero (s : ℂ) : Prop :=
   ∃ (n : ℕ), s = -2 * ↑n
 
+-- Note: The name is kept for compatibility, but the statement is corrected
 theorem zeta_ne_zero_at_negative_even
     (s : ℂ) (hs : trivial_zero s) :
-    zeta s ≠ 0 := by
+    zeta s = 0 := by
   sorry
-  -- Actually, zeta has zeros at negative even integers (trivial zeros)
-  -- This should be: zeta s = 0, not ≠ 0
-  -- Correcting the logic here
+  -- Zeta has zeros at negative even integers (trivial zeros)
+  -- These are s = -2, -4, -6, ...
 
 theorem nontrivial_zero_decomposition
     {ρ : ℂ} (hρ : zeta ρ = 0) (hntriv : ¬trivial_zero ρ) :
