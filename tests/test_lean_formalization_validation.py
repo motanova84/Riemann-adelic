@@ -83,6 +83,7 @@ class TestLeanFormalizationStructure:
             "RiemannAdelic.uniqueness_without_xi",
             "RiemannAdelic.pw_two_lines",
             "RiemannAdelic.lengths_derived",
+            "RiemannAdelic.paley_wiener_uniqueness",
         ]
         
         for imp in required_imports:
@@ -134,6 +135,7 @@ class TestLeanFormalizationStructure:
             "RiemannAdelic/pw_two_lines.lean",
             "RiemannAdelic/lengths_derived.lean",
             "RiemannAdelic/doi_positivity.lean",
+            "RiemannAdelic/paley_wiener_uniqueness.lean",
         ]
         
         for module in required_modules:
