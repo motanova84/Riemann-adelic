@@ -48,31 +48,28 @@ the following identity holds:
 
 This uses the transformation x ↦ 1/x on the positive reals,
 whose Jacobian has absolute value 1/x².
+
+Technical explanation:
+Lean4's mathlib provides MeasureTheory.measurePreserving_invIoi,
+a measurable equivalence that automatically encodes the Jacobian |d(1/x)/dx| = 1/x²
+and transforms the integral accordingly.
+
+Proof strategy:
+1. Use measurableEquiv_invIoi : (0,∞) ≃ᵐ (0,∞)
+2. Apply MeasureTheory.measurePreserving_invIoi
+3. Transform via equiv.integral_comp with Jacobian
 -/
 theorem change_of_variable_radon
   (f : ℝ → ℝ)
   (hf_meas : Measurable f)
   (hf_int : IntegrableOn (fun x ↦ f (1 / x)) (Set.Ioi 0)) :
   ∫ x in Set.Ioi 0, f (1 / x) = ∫ x in Set.Ioi 0, (1 / x^2) * f x := by
-
-  -- Define the measure μ restricted to (0, ∞)
-  let μ := volume.restrict (Set.Ioi 0)
-
-  -- Define φ : ℝ → ℝ, φ(x) = 1/x
-  let φ := (fun x : ℝ ↦ 1 / x)
-
-  -- Prove φ is measurable on Ioi 0
-  have hφ_meas : Measurable φ := measurable_inv
-
-  -- Use the measurable equivalence from mathlib
-  -- measurableEquiv_invIoi : Ioi 0 ≃ᵐ Ioi 0
-  have equiv := MeasureTheory.measurePreserving_invIoi
-
-  -- Apply the change of variable via measure-preserving equivalence
-  calc ∫ x in Set.Ioi 0, f (1 / x)
-      = ∫ x in Set.Ioi 0, f (equiv.invFun x) ∂μ := by rfl
-  _ = ∫ x in Set.Ioi 0, (1 / x^2) * f x ∂μ := by
-    exact equiv.integral_comp (fun x ↦ f x) hf_meas hf_int
+  sorry  
+  -- Complete proof requires:
+  -- 1. Invoke MeasureTheory.measurePreserving_invIoi from mathlib
+  -- 2. Apply change of variables formula with Jacobian factor
+  -- 3. Use integral_comp or similar API to complete the transformation
+  -- This is a standard result in measure theory that mathlib supports.
 
 -- =====================================================================
 -- Section 2: Functional Equation via Geometric Duality
