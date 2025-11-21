@@ -9,3 +9,4 @@ lean_lib RHFinal where
   roots := #[`paley_wiener_uniqueness, `selberg_trace, `H_psi_complete, `D_limit_equals_xi, 
              `SpectralIdentification, `Operator.Hψ, `PaleyWiener.Unicity, 
              `Spectral.MellinIdentification, `Zeta.FunctionalEquation]
+  roots := #[`paley_wiener_uniqueness, `selberg_trace, `H_psi_complete, `D_limit_equals_xi, `spectrum_eq_zeros]

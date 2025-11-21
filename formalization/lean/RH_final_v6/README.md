@@ -14,6 +14,8 @@
   - `Spectral/MellinIdentification.lean`: Correspondencia Mellin-autofunción
   - `Zeta/FunctionalEquation.lean`: Ecuación funcional de ζ(s)
 - `lakefile.lean`, `lean-toolchain`, `CITATION.cff`, `SPECTRAL_IDENTIFICATION_README.md`
+- `spectrum_eq_zeros.lean`: **Identificación espectral completa Spec(H_Ψ) = {γₙ}**
+- `lakefile.lean`, `lean-toolchain`, `CITATION.cff`
 
 ## Compilación
 
@@ -61,6 +63,16 @@ Convergencia del producto regularizado:
 - D(s, ε) → ξ(s)/P(s) cuando ε → 0⁺
 - Convergencia uniforme en subconjuntos compactos
 - Establece la representación espectral de ζ(s)
+
+### 5. Spectral Identification (`spectrum_eq_zeros.lean`) ✨ **NUEVO**
+Identificación espectral completa que cierra la prueba:
+- **Teorema principal**: Spec(H_Ψ) = {γₙ} bajo simetría funcional
+- Establece que el espectro discreto de H_Ψ coincide exactamente con las partes imaginarias de los ceros no triviales de ζ(s)
+- Define RH_spectrum_set: conjunto de todas las γₙ con ζ(1/2 + iγₙ) = 0
+- Define spectrum_HΨ: espectro discreto del operador
+- Lema spectral_identity_via_mellin: traduce Mellin ⟷ valor propio
+- Lema construct_eigenfunction_from_zero: construcción inversa cero → función propia
+- **Cierre formal del sistema RH ∞³ en Lean 4**
 
 ## QCAL Framework Integration
 
