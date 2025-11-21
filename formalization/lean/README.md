@@ -99,6 +99,8 @@ The goal is to **mechanize the proof** in Lean with **constructive definitions**
 - **`critical_line_proof.lean`** 🆕  
   Spectral operator framework with Fredholm determinant construction
 
+- **`H_psi.lean`** 🆕 🔥  
+  Berry-Keating operator H_Ψ on L²(ℝ⁺, dt/t) - Hermitian proof via logarithmic change of variable
 - **`RiemannAdelic/H_epsilon_foundation.lean`** 🆕  
   Foundation for H_ε spectral operator with eigenvalue approximations
 

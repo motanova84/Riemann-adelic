@@ -69,6 +69,9 @@ import RiemannAdelic.spectral_RH_operator
 -- HΨ operator Hermitian property
 import RiemannAdelic.H_psi_hermitian
 
+-- Berry-Keating operator H_Ψ on L²(ℝ⁺, dt/t)
+import RiemannAdelic.H_psi
+
 -- Purge axioms modules (purge_axioms branch)
 import RiemannAdelic.Hadamard
 import RiemannAdelic.KernelPositivity
@@ -114,6 +117,10 @@ def main : IO Unit := do
   IO.println "  • Spectral RH operator (H_ε with prime harmonic potential)"
   IO.println "  • Critical line proof via spectral operators"
   IO.println "  • Spectral RH operator H_ε"
+  IO.println "  • Berry-Keating operator H_Ψ on L²(ℝ⁺, dt/t) - Hermitian proof"
+  IO.println "  • H_ε foundation (eigenvalues and D(s) definitions)"
+  IO.println "  • Selberg trace formula (spectral-arithmetic connection)"
+  IO.println "  • H_ε foundation (logarithmic Hilbert space, Hermite basis, p-adic potential)"
   IO.println "  • HΨ operator Hermitian property proof"
   IO.println "  • Hadamard factorization (purge_axioms branch)"
   IO.println "  • Kernel positivity (purge_axioms branch)"
