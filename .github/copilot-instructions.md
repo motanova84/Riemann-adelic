@@ -625,6 +625,8 @@ When working with Lean4 code:
 - Ensure changes pass all CI/CD workflows
 - Monitor GitHub Actions for validation results
 - Check codecov reports for test coverage
+- **Use Codecov AI for automated reviews**: Add `@codecov-ai-reviewer review` or `@codecov-ai-reviewer test` in PR comments
+  - See [.github/CODECOV_AI.md](.github/CODECOV_AI.md) for complete usage instructions
 - Verify that new code doesn't break existing workflows
 
 ### 15. Security and Integrity
