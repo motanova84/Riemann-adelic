@@ -9,6 +9,7 @@
 - `H_psi_complete.lean`: Operador H_Ψ con espectro discreto
 - `D_limit_equals_xi.lean`: Convergencia de D(s, ε) a ξ(s)/P(s)
 - `spectrum_eq_zeros.lean`: **Identificación espectral completa Spec(H_Ψ) = {γₙ}**
+- `spectrum_HΨ_equals_zeta_zeros.lean`: **Version A - Advanced formalization with explicit unitary isomorphism**
 - `lakefile.lean`, `lean-toolchain`, `CITATION.cff`
 
 ## Compilación
@@ -53,6 +54,16 @@ Identificación espectral completa que cierra la prueba:
 - Lema spectral_identity_via_mellin: traduce Mellin ⟷ valor propio
 - Lema construct_eigenfunction_from_zero: construcción inversa cero → función propia
 - **Cierre formal del sistema RH ∞³ en Lean 4**
+
+### 6. Spectral Identification Version A (`spectrum_HΨ_equals_zeta_zeros.lean`) ✨ **ADVANCED**
+Formalización avanzada con isomorfismo unitario explícito:
+- **Construcción explícita**: Isometría unitaria U : L²(ℝ) → ℓ²(ℂ)
+- **Operador modelo**: H_model actúa diagonalmente en ℓ²(ℂ) con eigenvalores γₙ
+- **Conjugación unitaria**: HΨ = U⁻¹ ∘ H_model ∘ U
+- **Teorema principal**: Spec(HΨ) = Set.range ζ_zeros_im
+- **Lema de transferencia**: spectrum ℂ HΨ = spectrum ℂ H_model
+- Autoadjuntez de H_model por construcción diagonal
+- Versión complementaria a spectrum_eq_zeros.lean con enfoque más constructivo
 
 ## QCAL Framework Integration
 
