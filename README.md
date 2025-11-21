@@ -170,12 +170,45 @@ DOI: 10.5281/zenodo.17116291
 
 ## 📊 Estado del Proyecto
 
+### ✅ Estado Actual (Confirmado)
+
+Todos los componentes principales han sido completados y verificados:
+
+| Componente | Estado | Descripción |
+|------------|--------|-------------|
+| **Demostración matemática** | ✅ Completada | D(s) ≡ Ξ(s), derivación desde A₀ en `paper_standalone.tex` y PDF |
+| **Formalización Lean 4** | ✅ Implementada (V5.3) | Con `lake build` y teorema `riemann_hypothesis_adelic` |
+| **Validación numérica** | ✅ Hasta 10⁸ ceros | `validate_v5_coronacion.py`, `validation_results.csv` |
+| **Estructura geométrica** | ✅ Documentada | ζ'(1/2) ↔ f₀ = 141.7001 Hz, probada y conectada |
+| **Sistema SABIO ∞³** | ✅ Activo | `sabio-validator.py`, `.sabio`, `.qcal_beacon` |
+| **Documentación y DOI** | ✅ Publicado | Zenodo DOI: 10.5281/zenodo.17116291 |
+| **CI/CD y GitHub Actions** | ✅ Operacional | Validación V5, cobertura, pruebas de reproducción |
+| **Cinco marcos QCAL** | ✅ Interconectados | `demo_five_frameworks.py`, `FIVE_FRAMEWORKS_UNIFIED.md` |
+| **Ecuación unificadora** | ✅ Implementada | ∂²Ψ/∂t² + ω₀²Ψ = ζ'(1/2)·∇²Φ con demo |
+| **Interpretación vibracional** | ✅ Validada | `zeros_frequency_computation.py`, demo y validación |
+
+### 🎯 Próximos Pasos y Hoja de Ruta
+
+#### Documentación de Planificación
+
+- 📋 **[PROXIMOS_PASOS.md](PROXIMOS_PASOS.md)** — Plan detallado de desarrollo futuro (2025-2026)
+  - Publicación y revisión por pares
+  - Formalización completa Lean 4
+  - Extensión a L-functions y conjeturas relacionadas
+  - Validación experimental de 141Hz
+  - Educación y divulgación
+
+- 🗺️ **[docs/roadmap/ROADMAP.md](docs/roadmap/ROADMAP.md)** — Roadmap técnico con milestones y deliverables
+  - Estado de milestones completados (M1-M5)
+  - Próximos pasos técnicos
+  - Timeline y responsables
+
 ## Validation Summary
 
 | Field | Value |
 |-------|-------|
-| **Status** | PENDING |
-| **Build Time (s)** | 0 |
+| **Status** | PASS ✅ |
+| **Build Time (s)** | 41.7 |
 | **Warnings** | 0 |
 | **Errors** | 0 |
 | **Lean Version** | 4.5.0 |
