@@ -36,8 +36,8 @@ theorem integral_radon_symmetry_ae
   (hsymm : ∀ᵐ x ∂(volume.restrict (Ioi 0)), f x = (1 / x) * f (1 / x)) :
   ∫ x in Ioi 0, f x = ∫ x in Ioi 0, radon_symm f x := by
   refine setIntegral_congr_ae measurableSet_Ioi ?_
-  filter_upwards [hsymm] with x hx using by
-    rw [radon_symm, hx]
+  filter_upwards [hsymm] with x hx
+  rw [radon_symm, hx]
 
 -- =====================================================================
 -- Section 3: Change of variable formula
