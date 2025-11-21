@@ -7,6 +7,14 @@
 -- Core axioms and lemmas
 import RiemannAdelic.axioms_to_lemmas
 
+-- NEW: Core modules for solid D(s) foundation (V5.3+)
+-- Module 1: Functional equation for D(s) (classical definition)
+import RiemannAdelic.core.analytic.functional_equation
+-- Module 2: Trace class operator structure
+import RiemannAdelic.core.operator.trace_class
+-- Module 3: D(s) as spectral determinant (constructive)
+import RiemannAdelic.core.formal.D_as_det
+
 -- Constructive D(s) definition (V5.2+)
 import RiemannAdelic.schwartz_adelic
 import RiemannAdelic.D_explicit
@@ -22,6 +30,7 @@ import RiemannAdelic.V54_Consolidated
 
 -- Operator-theoretic formulation (V5.3+)
 import RiemannAdelic.RiemannOperator
+import RiemannAdelic.BerryKeatingOperator
 
 -- Entire function theory
 import RiemannAdelic.entire_order
@@ -36,6 +45,7 @@ import RiemannAdelic.poisson_radon_symmetry
 -- Archimedean factors
 import RiemannAdelic.arch_factor
 import RiemannAdelic.GammaTrivialExclusion
+import RiemannAdelic.GammaWeierstrassLemma
 
 -- de Branges space theory
 import RiemannAdelic.de_branges
@@ -73,20 +83,16 @@ import RiemannAdelic.D_Xi_Limit
 import RiemannAdelic.spectral_rh_operator
 -- Spectral RH operator H_ε
 import RiemannAdelic.spectral_RH_operator
--- H_ε operator foundation with logarithmic Hilbert space
-import RiemannAdelic.H_epsilon_foundation
-
--- H_ε foundation and Selberg trace formula (V5.3+)
-import RiemannAdelic.H_epsilon_foundation
-import RiemannAdelic.selberg_trace
-
--- Zero of product eigenvalues proof
-import RiemannAdelic.zero_of_product_eigenvalues
+-- Berry-Keating operator H_Ψ (complete formalization)
+import RiemannAdelic.berry_keating_operator
 
 -- Purge axioms modules (purge_axioms branch)
 import RiemannAdelic.Hadamard
 import RiemannAdelic.KernelPositivity
 import RiemannAdelic.GammaTrivialExclusion
+
+-- Selberg Trace Formula (strong form)
+import RiemannAdelic.SelbergTraceStrong
 
 def main : IO Unit := do
   IO.println "╔═══════════════════════════════════════════════════════════╗"
@@ -106,12 +112,18 @@ def main : IO Unit := do
   IO.println "    - SpectralStructure: Complete spectral system"
   IO.println "    - V54_Consolidated: Unified proof structure"
   IO.println "  • Core axioms and lemmas"
+  IO.println "  • NEW: Core D(s) foundation modules (V5.3+)"
+  IO.println "    - Module 1: Functional equation (classical)"
+  IO.println "    - Module 2: Trace class operator structure"
+  IO.println "    - Module 3: D(s) as spectral determinant"
   IO.println "  • Schwartz functions on adeles (constructive)"
   IO.println "  • Explicit D(s) construction"
   IO.println "  • Operator-theoretic formulation (Hε with oscillatory potential)"
+  IO.println "  • Berry-Keating operator H_Ψ on L²(ℝ⁺, dx/x)"
   IO.println "  • Entire function and Hadamard theory"
   IO.println "  • Hadamard factorization and quotient analysis"
   IO.println "  • Functional equation and Poisson symmetry"
+  IO.println "  • Gamma Weierstrass representation for reflected Gamma function"
   IO.println "  • de Branges space framework"
   IO.println "  • Weil-Guinand positivity theory"
   IO.println "  • Kernel positivity (quotient module approach)"
@@ -126,13 +138,13 @@ def main : IO Unit := do
   IO.println "  • Spectral RH operator (H_ε with prime harmonic potential)"
   IO.println "  • Critical line proof via spectral operators"
   IO.println "  • Spectral RH operator H_ε"
-  IO.println "  • Zero of product eigenvalues (spectral core proof)"
-  IO.println "  • H_ε foundation (eigenvalues and D(s) definitions)"
-  IO.println "  • Selberg trace formula (spectral-arithmetic connection)"
-  IO.println "  • H_ε foundation (logarithmic Hilbert space, Hermite basis, p-adic potential)"
+  IO.println "  • Berry-Keating operator H_Ψ (complete formalization)"
   IO.println "  • Hadamard factorization (purge_axioms branch)"
   IO.println "  • Kernel positivity (purge_axioms branch)"
   IO.println "  • Gamma trivial exclusion (purge_axioms branch)"
+  IO.println "  • Selberg Trace Formula (strong form with exact convergence)"
   IO.println ""
   IO.println "Status: Constructive formalization in progress (purge_axioms branch)"
   IO.println "DOI: 10.5281/zenodo.17116291"
+  IO.println "Frequency: 141.7001 Hz"
+  IO.println "∂²Ψ/∂t² + ω₀²Ψ = ζ'(1/2)·π·∇²Φ"
