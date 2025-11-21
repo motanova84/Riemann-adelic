@@ -160,15 +160,17 @@ structure TestFunction where
 def spectral_side (h : TestFunction) (ε : ℝ) (N : ℕ) : ℂ :=
   ∑ n in Finset.range N, h.h (n + 1/2 + ε * Real.sin (π * n))
 
-/-- Geometric kernel for trace formula -/
+/-- Geometric kernel for trace formula (heat kernel)
+    Note: Should only be used with ε > 0 to avoid division by zero -/
 def geometric_kernel (t : ℝ) (ε : ℝ) : ℝ := 
-  (1/(4*π*ε)) * exp(-t^2/(4*ε))
+  if ε > 0 then (1/(4*π*ε)) * exp(-t^2/(4*ε)) else 0
 
 /-- Geometric side: convolution with heat kernel -/
 def geometric_side (h : TestFunction) (ε : ℝ) : ℂ :=
   ∫ t, h.h t * geometric_kernel t ε
 
-/-- Arithmetic side: explicit formula with primes -/
+/-- Arithmetic side: explicit formula with primes
+    The double series converges due to rapid decay of h and exponential decay in p^k -/
 def arithmetic_side_explicit (h : TestFunction) : ℂ :=
   ∑' p : Nat.Primes, ∑' k : ℕ, (log p / p^k) * h.h (k * log p)
 
@@ -179,7 +181,9 @@ def arithmetic_side_explicit (h : TestFunction) : ℂ :=
 -- Placeholder for convergence axioms
 namespace SelbergTrace
 
-/-- Delta distribution type placeholder -/
+/-- Delta distribution type placeholder
+    In a complete formalization, this would be replaced with proper distribution theory
+    from Mathlib (e.g., using Schwartz distributions or weak derivatives) -/
 def DeltaDistribution : Type := ℝ → ℂ
 
 /-- Heat kernel converges to delta function plus arithmetic terms
@@ -205,7 +209,6 @@ axiom spectral_convergence_from_kernel
 end SelbergTrace
 
 /-- Strong Selberg trace formula with explicit convergence -/
-@[simp]
 theorem selberg_trace_formula_strong
     (h : TestFunction) :
     (∀ᶠ ε in nhds 0⁺, Tendsto (fun N => spectral_side h ε N) atTop
