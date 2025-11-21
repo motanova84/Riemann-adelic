@@ -10,6 +10,7 @@
 - `D_limit_equals_xi.lean`: Convergencia de D(s, ε) a ξ(s)/P(s)
 - `spectrum_eq_zeros.lean`: **Identificación espectral completa Spec(H_Ψ) = {γₙ}**
 - `spectrum_HΨ_equals_zeta_zeros.lean`: **Versión A - Prueba formal sin axiomas vía operador espectral modelo**
+- `spectrum_HΨ_equals_zeta_zeros.lean`: **Versión avanzada con Fourier conjugation y operador explícito** ✨ NEW
 - `lakefile.lean`, `lean-toolchain`, `CITATION.cff`
 
 ## Compilación
@@ -45,7 +46,7 @@ Convergencia del producto regularizado:
 - Convergencia uniforme en subconjuntos compactos
 - Establece la representación espectral de ζ(s)
 
-### 5. Spectral Identification (`spectrum_eq_zeros.lean`) ✨ **NUEVO**
+### 5. Spectral Identification (`spectrum_eq_zeros.lean`)
 Identificación espectral completa que cierra la prueba:
 - **Teorema principal**: Spec(H_Ψ) = {γₙ} bajo simetría funcional
 - Establece que el espectro discreto de H_Ψ coincide exactamente con las partes imaginarias de los ceros no triviales de ζ(s)
