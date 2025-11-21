@@ -50,6 +50,9 @@ import RiemannAdelic.spectral_rh_operator
 -- Spectral RH operator H_ε
 import RiemannAdelic.spectral_RH_operator
 
+-- Zero of product eigenvalues proof
+import RiemannAdelic.zero_of_product_eigenvalues
+
 -- Purge axioms modules (purge_axioms branch)
 import RiemannAdelic.Hadamard
 import RiemannAdelic.KernelPositivity
@@ -80,6 +83,7 @@ def main : IO Unit := do
   IO.println "  • Spectral RH operator (H_ε with prime harmonic potential)"
   IO.println "  • Critical line proof via spectral operators"
   IO.println "  • Spectral RH operator H_ε"
+  IO.println "  • Zero of product eigenvalues (spectral core proof)"
   IO.println "  • Hadamard factorization (purge_axioms branch)"
   IO.println "  • Kernel positivity (purge_axioms branch)"
   IO.println "  • Gamma trivial exclusion (purge_axioms branch)"
