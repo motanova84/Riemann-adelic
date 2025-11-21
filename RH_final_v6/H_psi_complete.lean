@@ -1,3 +1,22 @@
+/-!
+# Completeness of H_ψ Space
+
+This file proves that the H_ψ Hilbert space is complete, meaning every Cauchy
+sequence converges.
+
+## Main Results
+- `H_psi_complete`: Every Cauchy sequence in H_ψ has a limit in H_ψ
+
+## Implementation Notes
+The proof uses `sorry` for technical steps that would require:
+- Pointwise convergence using completeness of ℂ
+- Showing the limit function belongs to H_ψ (growth bounds)
+- Norm convergence from pointwise convergence
+
+These are standard functional analysis techniques that would be developed
+in a complete formalization using existing Mathlib results about Hilbert spaces.
+-/
+
 import Mathlib.Analysis.NormedSpace.HahnBanach
 import Mathlib.Analysis.InnerProductSpace.Projection
 import Mathlib.Topology.MetricSpace.Completion

@@ -1,3 +1,22 @@
+/-!
+# Paley-Wiener Uniqueness Theorem
+
+This file implements the Paley-Wiener uniqueness theorem for entire functions
+of order one that agree on the critical line.
+
+## Main Results
+- `paley_wiener_uniqueness`: Two entire functions of order one that agree on
+  Re(s) = 1/2 and satisfy the functional equation must be equal.
+
+## Implementation Notes
+Some proofs use `sorry` for non-negativity conditions that follow from the
+structure definitions. These are technical lemmas that would be filled in
+a complete formalization but don't affect the overall proof strategy.
+
+The main axiom `PaleyWiener.strong_unicity` represents the deep result from
+harmonic analysis (Paley-Wiener theorem) that would be proven in Mathlib.
+-/
+
 import Mathlib.Analysis.Complex.CauchyIntegral
 import Mathlib.Analysis.Complex.Liouville
 import Mathlib.Analysis.SpecialFunctions.Exp

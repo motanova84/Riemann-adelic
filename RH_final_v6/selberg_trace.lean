@@ -1,3 +1,23 @@
+/-!
+# Selberg Trace Formula
+
+This file implements the weak form of the Selberg trace formula, which relates
+the spectral side (zeros), geometric side (heat kernel), and arithmetic side (primes).
+
+## Main Results
+- `selberg_trace_formula_weak`: Establishes error bounds for the trace formula
+
+## Implementation Notes
+The proof uses `sorry` placeholders for the three main components. In a complete
+formalization, these would involve:
+- Spectral side: Analysis of the distribution of zeros
+- Geometric side: Heat kernel estimates on hyperbolic surfaces
+- Arithmetic side: Prime number theory and explicit formulas
+
+These represent deep results from spectral theory and would require substantial
+development beyond the scope of this outline.
+-/
+
 import Mathlib.Analysis.Fourier.FourierTransform
 import Mathlib.NumberTheory.PrimeCounting
 import Mathlib.MeasureTheory.Integral.IntervalIntegral
