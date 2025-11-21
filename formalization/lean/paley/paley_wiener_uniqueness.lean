@@ -182,78 +182,13 @@ lemma symmetric_vanishing_function_is_zero
       rw [← h_sym_at_s]
       exact h_1ms_zero
     
-    · -- Both Re(s) ≠ 1/2 and Re(1-s) ≠ 1/2
-      -- We have: Re(1-s) = 1 - Re(s)
-      have re_1ms : (1 - s).re = 1 - s.re := by simp [Complex.sub_re, Complex.one_re]
-      
-      -- From the assumptions:
-      -- Re(s) ≠ 1/2  (hs_re)
-      -- Re(1-s) ≠ 1/2  (h_one_minus)
-      -- But Re(1-s) = 1 - Re(s)
-      -- So: 1 - Re(s) ≠ 1/2
-      -- Which means: Re(s) ≠ 1/2  (consistent with hs_re)
-      
-      -- But this creates a contradiction:
-      -- If Re(s) ≠ 1/2, then Re(1-s) = 1 - Re(s)
-      -- For Re(1-s) to also ≠ 1/2, we need 1 - Re(s) ≠ 1/2
-      -- This is equivalent to Re(s) ≠ 1/2, which we already have
-      
-      -- However, note that Re(s) = 1/2 iff Re(1-s) = 1/2
-      -- (since Re(1-s) = 1 - Re(s) = 1 - 1/2 = 1/2)
-      
-      -- So if h_one_minus is false (Re(1-s) ≠ 1/2), then we must have
-      -- Re(s) ≠ 1/2, which is exactly hs_re
-      
-      -- But this means we're in a case where BOTH endpoints of the symmetry
-      -- are off the critical line. Let's prove this is impossible given our hypotheses.
-      
-      -- Key insight: Re(1-s) = 1/2 ↔ 1 - Re(s) = 1/2 ↔ Re(s) = 1/2
-      -- So exactly one of the following holds:
-      --   (a) Re(s) = 1/2 AND Re(1-s) = 1/2 (same point, covered by case 1)
-      --   (b) Re(s) ≠ 1/2 AND Re(1-s) ≠ 1/2 (both off critical line, this case)
-      
-      -- Wait, that's not right. Let me reconsider:
-      -- Re(1-s) = 1 - Re(s)
-      -- If Re(s) = 1/2, then Re(1-s) = 1 - 1/2 = 1/2 ✓
-      -- If Re(s) ≠ 1/2, then Re(1-s) = 1 - Re(s) ≠ 1/2 iff Re(s) ≠ 1/2 ✓
-      
-      -- So actually, Re(s) = 1/2 iff Re(1-s) = 1/2
-      -- And Re(s) ≠ 1/2 iff Re(1-s) ≠ 1/2
-      
-      -- In the current case, we have:
-      -- Re(s) ≠ 1/2 (from hs_re)
-      -- Re(1-s) ≠ 1/2 (from h_one_minus)
-      -- These are consistent.
-      
-      -- But wait, we also have h(s) = h(1-s) by symmetry
-      -- And neither s nor 1-s is on the critical line
-      
-      -- However, let me check the logic again:
-      -- Re(1-s) = 1 - Re(s)
-      -- If Re(s) = 1/2, then Re(1-s) = 1 - 1/2 = 1/2
-      -- Contrapositive: If Re(1-s) ≠ 1/2, then Re(s) ≠ 1/2
-      
-      -- But we're in the case where Re(s) ≠ 1/2 (by hs_re)
-      -- And we're checking whether Re(1-s) = 1/2
-      -- If Re(s) ≠ 1/2, what does that tell us about Re(1-s)?
-      
-      -- Re(1-s) = 1 - Re(s)
-      -- For Re(1-s) = 1/2: need 1 - Re(s) = 1/2, i.e., Re(s) = 1/2
-      -- So: Re(1-s) = 1/2 iff Re(s) = 1/2
-      
-      -- Therefore:
-      -- hs_re : Re(s) ≠ 1/2
-      -- implies: Re(1-s) ≠ 1/2
-      
-      -- So h_one_minus should always be FALSE in this branch!
-      -- We can derive a contradiction from h_one_minus being true.
-      
-      -- Proof of contradiction:
+    · -- This branch assumes Re(1-s) ≠ 1/2, but this contradicts Re(s) ≠ 1/2
+      -- Key: Re(1-s) = 1 - Re(s), so Re(1-s) = 1/2 iff Re(s) = 1/2
+      have re_1ms : (1 - s).re = 1 - s.re := by simp
       rw [re_1ms] at h_one_minus
-      -- Now h_one_minus : 1 - s.re = 1/2
-      -- This gives us: s.re = 1/2
-      -- But hs_re : s.re ≠ 1/2
+      -- h_one_minus now states: 1 - s.re = 1/2, which implies s.re = 1/2
       have : s.re = 1/2 := by linarith
+      -- But this contradicts hs_re : s.re ≠ 1/2
       contradiction
 
 /-!
