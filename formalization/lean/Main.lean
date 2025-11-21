@@ -77,6 +77,10 @@ import RiemannAdelic.spectral_RH_operator
 -- Berry-Keating operator H_Ψ (complete formalization)
 import RiemannAdelic.berry_keating_operator
 
+-- Stage 2: Spectral Coincidence - Spectrum H_Ψ = Zeta Zeros
+import RiemannAdelic.spectrum_Hpsi_definition
+import RiemannAdelic.spectrum_Hpsi_stage2
+
 -- Purge axioms modules (purge_axioms branch)
 import RiemannAdelic.Hadamard
 import RiemannAdelic.KernelPositivity
