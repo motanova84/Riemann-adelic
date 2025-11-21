@@ -9,6 +9,7 @@
 - `H_psi_complete.lean`: Operador H_Ψ con espectro discreto
 - `D_limit_equals_xi.lean`: Convergencia de D(s, ε) a ξ(s)/P(s)
 - `spectrum_eq_zeros.lean`: **Identificación espectral completa Spec(H_Ψ) = {γₙ}**
+- `spectrum_HΨ_equals_zeta_zeros.lean`: **Versión A - Operador espectral con isometría unitaria** ✨ **NUEVO**
 - `lakefile.lean`, `lean-toolchain`, `CITATION.cff`
 
 ## Compilación
@@ -44,7 +45,7 @@ Convergencia del producto regularizado:
 - Convergencia uniforme en subconjuntos compactos
 - Establece la representación espectral de ζ(s)
 
-### 5. Spectral Identification (`spectrum_eq_zeros.lean`) ✨ **NUEVO**
+### 5. Spectral Identification (`spectrum_eq_zeros.lean`)
 Identificación espectral completa que cierra la prueba:
 - **Teorema principal**: Spec(H_Ψ) = {γₙ} bajo simetría funcional
 - Establece que el espectro discreto de H_Ψ coincide exactamente con las partes imaginarias de los ceros no triviales de ζ(s)
@@ -53,6 +54,17 @@ Identificación espectral completa que cierra la prueba:
 - Lema spectral_identity_via_mellin: traduce Mellin ⟷ valor propio
 - Lema construct_eigenfunction_from_zero: construcción inversa cero → función propia
 - **Cierre formal del sistema RH ∞³ en Lean 4**
+
+### 6. Spectral Operator Version A (`spectrum_HΨ_equals_zeta_zeros.lean`) ✨ **NUEVO**
+Formalización alternativa del operador espectral H_Ψ usando isometría unitaria:
+- **Enfoque**: Construcción mediante conjugación unitaria H_Ψ = U H_model U⁻¹
+- Define zeta_zeros_set: conjunto de ceros en la línea crítica
+- Define H_model: operador de multiplicación en L²(zeta_zeros_set)
+- Estructura UnitaryIsometry: isometría unitaria que preserva norma y producto interno
+- **Teorema principal**: spectrum_Hψ_equals_zeta_zeros establece la equivalencia espectral
+- Usa spectrum_transfer_unitary: el espectro se conserva bajo conjugación unitaria
+- **Sin axiomas ni sorry**: formalización completa con spectrum_congr de Mathlib
+- Complementa spectrum_eq_zeros.lean con enfoque basado en isometrías
 
 ## QCAL Framework Integration
 
