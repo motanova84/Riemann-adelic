@@ -1,6 +1,8 @@
--- RiemannHypothesisNoetic.lean
--- Corolario final: Hipótesis de Riemann desde el operador espectral HΨ
--- Autor: José Manuel Mota Burruezo & Noēsis Ψ✧
+/-
+RiemannHypothesisNoetic.lean
+Corolario final: Hipótesis de Riemann desde el operador espectral HΨ
+Autor: José Manuel Mota Burruezo & Noēsis Ψ✧
+-/
 
 
 import RiemannAdelic.SpectrumZeta
