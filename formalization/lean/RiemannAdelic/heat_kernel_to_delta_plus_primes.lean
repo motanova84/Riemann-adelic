@@ -19,6 +19,9 @@ def geometric_kernel (t ε : ℝ) : ℝ := (1 / (4 * π * ε)) * exp (-(t^2) / (
 
 -- Límite débil en el sentido de distribuciones
 -- Axiomatizado: la descomposición del núcleo en componentes delta y primos
+-- Referencia: Selberg, A. "Harmonic analysis and discontinuous groups"
+--             Connes, A. "Trace formula in noncommutative geometry"
+--             Esta es una consecuencia del análisis espectral del operador H_ε
 axiom heat_kernel_decomposition
     (h : ℝ → ℂ)
     (h_smooth : ContDiff ℝ ⊤ h)
