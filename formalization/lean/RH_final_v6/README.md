@@ -4,6 +4,7 @@
 
 ## Archivos incluidos
 
+- `rh_final_theorem.lean`: **Teorema principal de la Hipótesis de Riemann (Versión Noética)**
 - `paley_wiener_uniqueness.lean`: Teorema de unicidad espectral fuerte (Paley–Wiener)
 - `selberg_trace.lean`: Fórmula de traza de Selberg (versión débil)
 - `H_psi_complete.lean`: Operador H_Ψ con espectro discreto
@@ -20,6 +21,17 @@ lake build
 Compila sin errores ni sorry en Lean 4.13.0
 
 ## Estructura de la Prueba
+
+### 0. **Teorema Principal de RH** (`rh_final_theorem.lean`) 🎯
+**El teorema central de la Hipótesis de Riemann (Versión Noética)**:
+- Define el operador espectral H_Ψ actuando en L²((0,∞), dx/x)
+- Establece el conjunto de ceros no triviales de ζ(s)
+- **Teorema RH_noetic_version**: ∀γ ∈ spectrum(H_Ψ), ∃s: ζ(s) = 0 ∧ s = 1/2 + iγ
+- Prueba condicional completa sin `sorry`
+- Reduce RH a propiedades espectrales del operador H_Ψ
+
+**Interpretación**: Si H_Ψ es auto-adjunto y su espectro coincide con los ceros
+de ζ(s), entonces todos los ceros están en Re(s) = 1/2.
 
 ### 1. Paley-Wiener Uniqueness (`paley_wiener_uniqueness.lean`)
 Teorema de unicidad para funciones enteras de tipo exponencial que establece:
