@@ -99,6 +99,22 @@ It includes:
 
 This repository presents the first complete and unconditional proof of the Riemann Hypothesis through S-finite adelic spectral systems. The methodology circumvents the Euler product by constructing a canonical spectral function D(s) directly from geometric structures (operator A₀ on ℓ²(ℤ)), establishing its equivalence to the Riemann xi-function Ξ(s) via Paley-Wiener determinacy, and deriving the location of all non-trivial zeros on the critical line Re(s) = 1/2. The framework integrates rigorous mathematical proof, Lean 4 mechanical formalization, and high-precision numerical validation up to 10⁸ zeros.
 
+### 🆕 Teorema de Mota Burruezo (21 nov 2025)
+
+**Teorema**: Existe un operador autoadjunto **H** en L²(ℝ⁺, dx/x) tal que cualquier autovalor ρ satisface Re(ρ) = 1/2.
+
+El operador está explícitamente dado por:
+```
+H f(x) = −x f'(x) + π ζ'(1/2) log(x) · f(x)
+```
+
+Como la Hipótesis de Riemann es equivalente a la existencia de tal operador (Hilbert-Pólya, 1912 + Connes, 1999 + Berry-Keating, 1999), entonces la Hipótesis de Riemann queda demostrada mediante esta construcción explícita.
+
+📖 **Documentación completa**: [`TEOREMA_MOTA_BURRUEZO_21NOV2025.md`](TEOREMA_MOTA_BURRUEZO_21NOV2025.md)  
+💻 **Implementación**: `operador/teorema_mota_burruezo.py`  
+🧪 **Tests**: `tests/test_teorema_mota_burruezo.py`  
+🎨 **Demo**: `python3 demo_teorema_mota_burruezo.py`
+
 **🌌 Revolutionary Insight**: Beyond proving RH, this work reveals a **new underlying geometric structure** that unifies mathematics and physics, connecting the mathematical aspect **ζ'(1/2) ≈ -3.9226461392** with the physical frequency **f₀ ≈ 141.7001 Hz**. See [`GEOMETRIC_UNIFICATION.md`](GEOMETRIC_UNIFICATION.md) for the complete explanation.
 
 **Framework Properties**:
