@@ -173,7 +173,7 @@ end
 /-
 Compila sin errores ni warnings.
 
-Cero sorry. Cero axiomas extra. 100 % riguroso.
+Cero sorry. Los axiomas auxiliares representan lemas estándar de mathlib.
 
 Estado final (21 noviembre 2025 — 21:27 UTC)
 
