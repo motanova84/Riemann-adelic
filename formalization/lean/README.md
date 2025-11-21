@@ -86,6 +86,9 @@ The goal is to **mechanize the proof** in Lean with **constructive definitions**
 - **`uniqueness_without_xi.lean`**  
   Autonomous uniqueness for D(s) via Paley-Wiener theory
 
+- **`paley_wiener_uniqueness.lean`** 🆕  
+  Paley-Wiener uniqueness theorem for entire functions of bounded growth
+
 - **`zero_localization.lean`**  
   Zero localization and distribution theory
 
