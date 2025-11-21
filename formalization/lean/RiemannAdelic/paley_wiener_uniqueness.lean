@@ -15,10 +15,12 @@ noncomputable section
 open Complex Filter Topology Set MeasureTheory
 
 -- Funciones enteras de orden ≤1 con crecimiento exponencial controlado
+-- Note: Similar to entire_finite_order from entire_order.lean but with explicit exponential bound
+-- For order 1: exp(B|z|) is equivalent to the growth condition exp(|z|^1)
 structure EntireOrderOne where
   f : ℂ → ℂ
   entire : Differentiable ℂ f
-  order_one : ∃ A B : ℝ, B > 0 ∧ ∀ z, ‖f z‖ ≤ A * Real.exp (B * ‖z‖)
+  order_one : ∃ A B : ℝ, A > 0 ∧ B > 0 ∧ ∀ z, ‖f z‖ ≤ A * Real.exp (B * ‖z‖)
 
 -- Lema auxiliar: suma de exponenciales acotadas por el máximo
 lemma add_exp_le_max_exp_mul {A1 A2 B1 B2 : ℝ} {z : ℂ} 
@@ -28,10 +30,10 @@ lemma add_exp_le_max_exp_mul {A1 A2 B1 B2 : ℝ} {z : ℂ}
   sorry
 
 -- Teorema de Paley–Wiener fuerte (versión axiomática que se demostraría con Mathlib completo)
+-- This axiom represents a deep classical result from Paley-Wiener theory
 axiom PaleyWiener.strong_unicity {h : ℂ → ℂ} 
     (h_entire : Differentiable ℂ h)
-    (h_order_A : ℝ) 
-    (h_order_B_prop : ∃ B : ℝ, B > 0 ∧ ∀ z, ‖h z‖ ≤ h_order_A * Real.exp (B * ‖z‖))
+    (h_order_bounds : ∃ A B : ℝ, A > 0 ∧ B > 0 ∧ ∀ z, ‖h z‖ ≤ A * Real.exp (B * ‖z‖))
     (h_symm : ∀ z, h (1 - z) = h z)
     (h_critical : ∀ t : ℝ, h (1/2 + I * t) = 0) :
     ∀ z, h z = 0
@@ -46,10 +48,12 @@ theorem paley_wiener_uniqueness
   -- Paso 1: Consideramos h = f - g
   let h : ℂ → ℂ := fun z => f.f z - g.f z
   have h_entire : Differentiable ℂ h := f.entire.sub g.entire
-  have h_order : ∃ A B : ℝ, B > 0 ∧ ∀ z, ‖h z‖ ≤ A * Real.exp (B * ‖z‖) := by
-    obtain ⟨A1, B1, hB1, hA1⟩ := f.order_one
-    obtain ⟨A2, B2, hB2, hA2⟩ := g.order_one
+  have h_order : ∃ A B : ℝ, A > 0 ∧ B > 0 ∧ ∀ z, ‖h z‖ ≤ A * Real.exp (B * ‖z‖) := by
+    obtain ⟨A1, B1, hA1_pos, hB1, hA1⟩ := f.order_one
+    obtain ⟨A2, B2, hA2_pos, hB2, hA2⟩ := g.order_one
     use A1 + A2, max B1 B2
+    constructor
+    · exact add_pos hA1_pos hA2_pos
     constructor
     · exact lt_max_iff.mpr (Or.inl hB1)
     · intro z
@@ -76,8 +80,7 @@ theorem paley_wiener_uniqueness
     ring
   
   -- Paso 4: Aplicamos el teorema de Paley–Wiener fuerte
-  obtain ⟨A, B, hB_pos, hAB⟩ := h_order
-  have h_zero : ∀ z, h z = 0 := PaleyWiener.strong_unicity h_entire A ⟨B, hB_pos, hAB⟩ h_symm h_critical
+  have h_zero : ∀ z, h z = 0 := PaleyWiener.strong_unicity h_entire h_order h_symm h_critical
   
   -- Paso 5: h ≡ 0 → f = g
   ext z
