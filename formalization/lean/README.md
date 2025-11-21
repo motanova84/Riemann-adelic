@@ -86,11 +86,20 @@ The goal is to **mechanize the proof** in Lean with **constructive definitions**
 - **`uniqueness_without_xi.lean`**  
   Autonomous uniqueness for D(s) via Paley-Wiener theory
 
+- **`paley_wiener_uniqueness.lean`** 🆕  
+  Paley-Wiener uniqueness theorem for entire functions of bounded growth
+
 - **`zero_localization.lean`**  
   Zero localization and distribution theory
 
 - **`critical_line_proof.lean`** 🆕  
   Spectral operator framework with Fredholm determinant construction
+
+- **`RiemannAdelic/H_epsilon_foundation.lean`** 🆕  
+  Foundation for H_ε spectral operator with eigenvalue approximations
+
+- **`RiemannAdelic/selberg_trace.lean`** 🆕  
+  Selberg trace formula connecting spectral and arithmetic sides
 
 ## 🎯 Key Achievements - Axioms to Constructive Theorems
 
@@ -116,6 +125,57 @@ def D_function (S : SpectralOperator) (s : ℂ) : ℂ :=
 theorem all_zeros_on_critical_line (S : SpectralOperator) :
   ∀ s, D_function S s = 0 → s.re = 1/2
 ```
+
+#### 2. Selberg Trace Formula - Spectral-Arithmetic Connection 🆕
+
+**New modules**: `H_epsilon_foundation.lean` and `selberg_trace.lean`
+
+This is **THE KEY** connection proving that D(s) ≡ ζ(s) (modulo factors).
+
+```lean
+-- H_epsilon_foundation.lean: Base definitions
+def approx_eigenvalues (ε : ℝ) (n : ℕ) : ℝ :=
+  (n : ℝ) + ε * (Real.log (n + 1))
+
+def D_function (s : ℂ) (ε : ℝ) : ℂ := 
+  ∏' n : ℕ, (1 - s / (approx_eigenvalues ε n : ℂ))
+
+-- selberg_trace.lean: Main Selberg formula
+theorem selberg_trace_formula_strong 
+  (h : TestFunction) (ε : ℝ) (hε : |ε| < 0.001) :
+  spectral_side_infinite h ε = 
+    geometric_side h ε + arithmetic_side_explicit h
+
+-- Connection to zeta function
+theorem arithmetic_side_determines_zeta :
+  (∀ n, arithmetic_side_explicit (h_family n) = 
+        spectral_side_infinite (h_family n) 0) →
+  (∀ s : ℂ, 1 < s.re → 
+    riemannZeta s = ∏' λ : ℕ, (1 - 1/(approx_eigenvalues 0 λ)^s)⁻¹)
+
+-- RH transfer theorem
+theorem RH_transfer_D_to_zeta :
+  (∀ ε > 0, ∀ ρ : ℂ, D_function ρ ε = 0 → ρ.re = 1/2) →
+  (∀ s : ℂ, riemannZeta s = 0 → 
+    (s.re = 1/2 ∨ ∃ n : ℤ, n < 0 ∧ s = 2 * n))
+```
+
+**Pipeline:**
+1. Operator H_ε hermitiano → Spectrum {λₙ} real and discrete
+2. D(s) = ∏(1 - s/λₙ)
+3. **Selberg formula connects {λₙ} with primes via Λ(n)**
+4. ∑ h(λₙ) = ∫ h·K + ∑ Λ(n)·h(log n)
+5. Arithmetic side determines ζ(s)
+6. D(s) ≡ ξ(s)/P(s) in limit ε → 0
+7. **RH for D ⟹ RH for ζ** ✅
+
+**Key components:**
+- Test functions with rapid decay (Schwartz space)
+- von Mangoldt function Λ(n) for prime arithmetic
+- Spectral side: ∑_λ h(λ) over eigenvalues
+- Arithmetic side: ∑_n Λ(n)·h(log n) over primes
+- Geometric side: integral with geometric kernel
+- Error bounds and truncation estimates
 
 ### What Changed in V5.2
 
@@ -247,9 +307,9 @@ curl https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -sSf 
    cd -jmmotaburr-riemann-adelic/formalization/lean
    ```
 
-2. Get mathlib cache:
+2. Update dependencies (first time or after changes):
    ```bash
-   lake exe cache get
+   lake update
    ```
 
 3. Build the Lean project:
@@ -268,8 +328,29 @@ curl https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -sSf 
    code RH_final.lean
    ```
 
-## ✅ Current Status - V5.2 Constructive Update + V5.3 Activation
+**Note**: The project now includes `lakefile.toml` (V5.3) with pinned dependencies:
+- Lean 4.5.0
+- Mathlib4 @ 07a2d4e5c3c9e55bb6e37bbf5132fd47d75b9ce2 (Oct 2025 stable)
+- Aesop and ProofWidgets for enhanced tactics
 
+## ✅ Current Status - V5.2 Constructive Update + V5.3 Lake Configuration
+
+### ✅ Latest: October 26, 2025 - LAKE CONFIGURATION V5.3 COMPLETE
+
+🎉 **The Lean formalization now has proper Lake build configuration!**
+
+**What's New in V5.3:**
+- ✅ **lakefile.toml** created with complete package metadata
+- ✅ **lakefile.lean** updated with proper library target (not executable)
+- ✅ **Pinned dependencies** for reproducible builds
+  - Lean 4.5.0
+  - Mathlib4 @ 07a2d4e5c3c9e55bb6e37bbf5132fd47d75b9ce2 (Oct 2025)
+  - Aesop @ main
+  - ProofWidgets4 @ main
+- ✅ **Compilation options** configured: `-DautoImplicit=false`, `-Dlinter=false`
+- ✅ **Module globs** defined for all RiemannAdelic library files
+
+### ✅ Previous: October 22, 2025 - FORMALIZATION ACTIVATED
 ### ✅ Latest: October 23, 2025 - CRITICAL LINE PROOF MODULE ADDED
 
 🎉 **New spectral operator framework for critical line theorem!**

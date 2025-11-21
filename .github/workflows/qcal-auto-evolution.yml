@@ -19,6 +19,8 @@ jobs:
     # 1️⃣ Obtención del código fuente
     - name: 🧠 Clonar repositorio
       uses: actions/checkout@v4
+      with:
+        ref: main  # Explicitly checkout main branch for scheduled runs
 
     # 2️⃣ Configuración del entorno Python + Lean
     - name: 🔧 Configurar entorno base

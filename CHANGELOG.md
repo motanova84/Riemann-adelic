@@ -1,5 +1,10 @@
 # Changelog
 
+## [V5.1] - 2025-09-25
+### Cambiado
+- Simplificado el proceso de validación: ahora basta con ejecutar `python3 validar_v5_coronacion.py`.
+- Eliminados comandos que pedían permisos de sistema (`find`, `cat` sobre rutas externas).
+- Documentación del README actualizada para máxima claridad y seguridad.
 ## V5.2 - Acto II: Corrección Adélica Fractal — October 2025
 ### Added
 - **Nueva Ecuación del Vacío Cuántico**: Implementación de E_vac(R_Ψ) que emerge de compactificación toroidal con simetría log-π
