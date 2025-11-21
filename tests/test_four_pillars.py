@@ -12,7 +12,7 @@ from pillars.pilar1_spectral_inversion import (
 )
 from pillars.pilar2_poisson_radon import (
     poisson_radon_duality, self_dual_lagrangian, verify_self_duality,
-    TestFunction, verify_functional_equation
+    SchwartzTestFunction, verify_functional_equation
 )
 from pillars.pilar3_uniqueness import (
     verify_uniqueness, weil_pairing, PaleyWienerFunction,
@@ -119,9 +119,9 @@ class TestPilar2PoissonRadon:
         assert is_self_dual  # Should be self-dual by construction
     
     def test_test_function_class(self):
-        """Test TestFunction wrapper class."""
+        """Test SchwartzTestFunction wrapper class."""
         gaussian = lambda x, xi: np.exp(-np.pi * (x**2 + xi**2))
-        test_func = TestFunction(gaussian)
+        test_func = SchwartzTestFunction(gaussian)
         
         # Test evaluation
         val = test_func(1.0, 1.0)
@@ -135,7 +135,7 @@ class TestPilar2PoissonRadon:
     def test_poisson_radon_duality_basic(self):
         """Test basic Poisson-Radón duality verification."""
         gaussian = lambda x, xi: np.exp(-np.pi * (x**2 + xi**2))
-        test_func = TestFunction(gaussian)
+        test_func = SchwartzTestFunction(gaussian)
         lattice = self_dual_lagrangian(n=3)
         
         is_verified, info = poisson_radon_duality(test_func, lattice)
@@ -148,7 +148,7 @@ class TestPilar2PoissonRadon:
     def test_verify_functional_equation(self):
         """Test functional equation verification."""
         gaussian = lambda x, xi: np.exp(-np.pi * (x**2 + xi**2))
-        test_func = TestFunction(gaussian)
+        test_func = SchwartzTestFunction(gaussian)
         s_values = [0.5 + 0.0j, 2.0 + 0.0j]
         
         result = verify_functional_equation(s_values, test_func)
@@ -330,7 +330,7 @@ class TestIntegration:
         """Test consistency of functional equation between Pilar 2 and 3."""
         # Define test function
         gaussian = lambda x, xi: np.exp(-np.pi * (x**2 + xi**2))
-        test_func_p2 = TestFunction(gaussian)
+        test_func_p2 = SchwartzTestFunction(gaussian)
         
         # Pilar 2: Verify via Poisson-Radón
         lattice = self_dual_lagrangian(n=3)
@@ -354,7 +354,7 @@ class TestIntegration:
         
         # Pilar 2
         gaussian = lambda x, xi: np.exp(-np.pi * (x**2 + xi**2))
-        tf = TestFunction(gaussian)
+        tf = SchwartzTestFunction(gaussian)
         lattice = self_dual_lagrangian(n=2)
         verified, info = poisson_radon_duality(tf, lattice)
         assert np.isfinite(info['difference'])

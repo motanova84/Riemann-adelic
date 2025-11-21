@@ -16,7 +16,16 @@ lean_lib RiemannAdelic where
     "de_branges",
     "entire_order",
     "positivity",
-    "RH_final"
+    "RH_final",
+    -- FASE OMEGA modules
+    "H_epsilon_hermitian",
+    "D_function_fredholm",
+    "selberg_trace_formula",
+    "functional_equation_D",
+    "hadamard_connection",
+    "RH_from_positivity",
+    "RH_final_connection",
+    "FaseOmega"
   ]
 package riemannAdelic
 
