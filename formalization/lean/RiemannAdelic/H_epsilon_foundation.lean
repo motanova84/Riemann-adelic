@@ -79,13 +79,18 @@ def D_function_truncated (s : ℂ) (ε : ℝ) (N : ℕ) : ℂ :=
 /-- Función D(s) completa (límite N → ∞)
     
     Para la fórmula de Selberg, usamos la forma convergente:
-    D(s) = ∏_{n=0}^∞ (1 - s/λₙ)
+    D(s, ε) = ∏_{n=0}^∞ (1 - s/λₙ(ε))
     
-    Esta es la misma que D_function en spectral_RH_operator
-    pero expresada en términos de eigenvalores aproximados
+    donde λₙ(ε) son los eigenvalores aproximados de H_ε.
+    
+    Nota: Para ε = 0, esto coincide con la definición base.
 -/
 def D_function (s : ℂ) (ε : ℝ) : ℂ :=
-  -- Usar la definición existente de spectral_RH_operator
+  -- Producto infinito sobre eigenvalores aproximados
+  -- En una implementación completa, esto sería:
+  -- ∏' n : ℕ, (1 - s / (approx_eigenvalues ε n : ℂ))
+  -- Por ahora, usamos la definición base de spectral_RH_operator
+  -- que corresponde al caso ε = 0
   RiemannAdelic.SpectralOperator.D_function s
 
 -- ══════════════════════════════════════════════════════════════════════

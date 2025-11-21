@@ -60,10 +60,17 @@ def gaussian_test (σ : ℝ) : TestFunction where
 -- SECCIÓN 2: FUNCIÓN DE VON MANGOLDT Λ(n)
 -- ══════════════════════════════════════════════════════════════════════
 
-/-- Función de von Mangoldt: Λ(n) = log p si n = p^k, 0 sino -/
+/-- Función de von Mangoldt: Λ(n) = log p si n = p^k, 0 sino 
+    
+    Para n = p^k (potencia de primo), devuelve log(p).
+    Para otros n, devuelve 0.
+-/
 def vonMangoldt (n : ℕ) : ℝ :=
-  if h : ∃ p k, Nat.Prime p ∧ n = p^k 
-  then log (Classical.choose h)
+  if h : ∃ p k, Nat.Prime p ∧ k > 0 ∧ n = p^k 
+  then 
+    -- Extraer p de la prueba existencial
+    let ⟨p, k, hp, hk, hn⟩ := Classical.choice h
+    log p
   else 0
 
 notation "Λ(" n ")" => vonMangoldt n
@@ -122,7 +129,7 @@ notation "S_arith[" h "](" M ")" => arithmetic_side h M
 def arithmetic_side_explicit (h : TestFunction) : ℂ :=
   ∑' p : Nat.Primes, ∑' k : ℕ, 
     let pk := p.val ^ (k + 1)
-    (log (p.val : ℝ) : ℂ) * h.h (log pk) / sqrt (pk : ℝ)
+    (log (p.val : ℝ) : ℂ) * h.h (log pk)
 
 -- Teorema: Equivalencia de las dos formas
 theorem arithmetic_sides_equivalent (h : TestFunction) :
@@ -288,8 +295,8 @@ def spectral_truncation_error (h : TestFunction) (ε : ℝ) (N : ℕ) : ℝ :=
 /-- Bound del error espectral -/
 theorem spectral_error_bound (h : TestFunction) (ε : ℝ) (N : ℕ)
   (hε : |ε| < 0.01) :
-  spectral_truncation_error h ε N < 
-    (∃ C M, C * N^(-M : ℤ)) := by
+  ∃ C M : ℝ, C > 0 ∧ M > 0 ∧ 
+  spectral_truncation_error h ε N < C * N^(-M) := by
   sorry -- Rapid decay de h
 
 /-- Error de truncación en lado aritmético -/
@@ -298,8 +305,8 @@ def arithmetic_truncation_error (h : TestFunction) (M : ℕ) : ℝ :=
 
 /-- Bound del error aritmético (usa PNT) -/
 theorem arithmetic_error_bound (h : TestFunction) (M : ℕ) :
-  arithmetic_truncation_error h M < 
-    (∃ C, C * M / log M) := by
+  ∃ C : ℝ, C > 0 ∧ 
+  arithmetic_truncation_error h M < C * M / log M := by
   sorry -- Usa Teorema del Número Primo
 
 -- ══════════════════════════════════════════════════════════════════════
