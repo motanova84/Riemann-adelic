@@ -12,7 +12,7 @@ import RiemannAdelic.tendsto_integral_shifted_kernel
 noncomputable section
 open Real Nat Complex Filter Topology
 
--- Kernel gaussiano centrado (usado en shifted kernel)
+-- Kernel gaussiano centrado (compartido con otros módulos)
 def geometric_kernel (t ε : ℝ) : ℝ := (1 / (4 * π * ε)) * exp (-(t^2) / (4 * ε))
 
 theorem convergence_arithmetic_correction

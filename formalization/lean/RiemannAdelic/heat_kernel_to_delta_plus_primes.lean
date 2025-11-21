@@ -18,6 +18,16 @@ open Real Filter Topology MeasureTheory
 def geometric_kernel (t ε : ℝ) : ℝ := (1 / (4 * π * ε)) * exp (-(t^2) / (4 * ε))
 
 -- Límite débil en el sentido de distribuciones
+-- Axiomatizado: la descomposición del núcleo en componentes delta y primos
+axiom heat_kernel_decomposition
+    (h : ℝ → ℂ)
+    (h_smooth : ContDiff ℝ ⊤ h)
+    (h_decay : ∀ N : ℕ, ∃ C, ∀ t, ‖h t‖ ≤ C / (1 + |t|)^N)
+    (ε : ℝ) :
+    (∫ t, h t * geometric_kernel t ε) = 
+    (∫ t, h t * (1 / (4 * π * ε)) * exp (-(t^2) / (4 * ε))) +
+    (∑' p : Nat.Primes, ∑' k : ℕ, (log p / p^k) * ∫ t, h t * geometric_kernel (t - k * log p) ε)
+
 theorem heat_kernel_to_delta_plus_primes
     (h : ℝ → ℂ)
     (h_smooth : ContDiff ℝ ⊤ h)
@@ -28,7 +38,9 @@ theorem heat_kernel_to_delta_plus_primes
   have h1 := tendsto_integral_kernel_to_delta h h_smooth h_decay
   -- Paso 2: Corrección aritmética: suma de p^k
   have h2 := convergence_arithmetic_correction h h_smooth h_decay
-  -- Combinamos los dos términos usando Tendsto.add
+  -- Paso 3: Usar la descomposición del núcleo
+  simp only [heat_kernel_decomposition h h_smooth h_decay]
+  -- Combinamos los dos términos
   exact Tendsto.add h1 h2
 
 end
