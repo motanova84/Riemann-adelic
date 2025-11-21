@@ -8,6 +8,7 @@
 - `selberg_trace.lean`: Fórmula de traza de Selberg (versión débil)
 - `H_psi_complete.lean`: Operador H_Ψ con espectro discreto
 - `D_limit_equals_xi.lean`: Convergencia de D(s, ε) a ξ(s)/P(s)
+- `D_spectral.lean`: Determinante ζ-regularizado del operador H_Ψ
 - `lakefile.lean`, `lean-toolchain`, `CITATION.cff`
 
 ## Compilación
@@ -42,6 +43,13 @@ Convergencia del producto regularizado:
 - D(s, ε) → ξ(s)/P(s) cuando ε → 0⁺
 - Convergencia uniforme en subconjuntos compactos
 - Establece la representación espectral de ζ(s)
+
+### 5. Spectral Zeta Determinant (`D_spectral.lean`)
+Determinante ζ-regularizado del operador H_Ψ:
+- Definición formal: D(s) = exp(-∑' n, log(1 - s/λₙ) + s/λₙ)
+- Convergencia absoluta para espectro con crecimiento lineal
+- Holomorfía fuera del espectro {λₙ}
+- Localización de ceros y conexión con función Ξ(s)
 
 ## QCAL Framework Integration
 
