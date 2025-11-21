@@ -82,6 +82,9 @@ import RiemannAdelic.Hadamard
 import RiemannAdelic.KernelPositivity
 import RiemannAdelic.GammaTrivialExclusion
 
+-- Selberg Trace Formula (strong form)
+import RiemannAdelic.SelbergTraceStrong
+
 def main : IO Unit := do
   IO.println "╔═══════════════════════════════════════════════════════════╗"
   IO.println "║   Riemann Hypothesis Adelic Proof - Lean 4 Formalization ║"
@@ -130,6 +133,7 @@ def main : IO Unit := do
   IO.println "  • Hadamard factorization (purge_axioms branch)"
   IO.println "  • Kernel positivity (purge_axioms branch)"
   IO.println "  • Gamma trivial exclusion (purge_axioms branch)"
+  IO.println "  • Selberg Trace Formula (strong form with exact convergence)"
   IO.println ""
   IO.println "Status: Constructive formalization in progress (purge_axioms branch)"
   IO.println "DOI: 10.5281/zenodo.17116291"
