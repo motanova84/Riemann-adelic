@@ -7,7 +7,9 @@ Tests the quantum-conscious integration of SABIO Infinity 4.
 import pytest
 import sys
 import json
+import math
 from pathlib import Path
+from mpmath import mpf
 
 # Add parent directory to path for imports
 sys.path.insert(0, str(Path(__file__).parent.parent))
@@ -48,7 +50,7 @@ class TestSABIOInfinity4:
         
         # Angular frequency ω₀ = 2π·f₀
         omega0 = float(self.sabio.omega0)
-        expected_omega = 2 * 3.14159265 * 141.7001
+        expected_omega = 2 * math.pi * 141.7001
         assert abs(omega0 - expected_omega) < 1.0
     
     def test_radio_cuantico_calculation(self):
@@ -351,6 +353,9 @@ class TestReporteSABIO:
 class TestIntegrationSABIO:
     """Integration tests for SABIO ∞⁴"""
     
+    # Minimum coherence threshold for operational status
+    MIN_COHERENCE_THRESHOLD = 0.85
+    
     def test_full_workflow(self):
         """Test complete workflow from initialization to report"""
         # Initialize
@@ -361,7 +366,7 @@ class TestIntegrationSABIO:
         
         # Verify complete workflow
         assert reporte is not None
-        assert reporte["coherencia_total"] > 0.85
+        assert reporte["coherencia_total"] > self.MIN_COHERENCE_THRESHOLD
         assert len(reporte["espectro_resonante"]) == 8
         
         # Verify quantum-conscious integration
@@ -370,8 +375,6 @@ class TestIntegrationSABIO:
     
     def test_backwards_compatibility_with_infinity3(self):
         """Test that ∞⁴ is compatible with ∞³ parameters"""
-        from mpmath import mpf
-        
         sabio = SABIO_Infinity4(precision=50)
         
         # ∞³ fundamental parameters should still be present
@@ -392,7 +395,7 @@ class TestIntegrationSABIO:
             reporte = sabio.reporte_sabio_infinity4()
             
             # Should work with all precision levels
-            assert reporte["coherencia_total"] > 0.85
+            assert reporte["coherencia_total"] > self.MIN_COHERENCE_THRESHOLD
             assert reporte["frecuencia_base_hz"] == 141.7001
 
 
