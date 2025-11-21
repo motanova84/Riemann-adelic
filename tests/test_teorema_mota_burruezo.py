@@ -125,7 +125,7 @@ class TestMotaBurruezoOperator:
         assert "21 nov 2025" in statement
         assert "H f(x) = −x f'(x)" in statement or "H f(x) = -x f'(x)" in statement
         assert "ζ'(1/2)" in statement
-        assert "HIPÓTESIS DE RIEMANN" in statement
+        assert "Hipótesis de Riemann" in statement
 
 
 class TestOperatorHConfig:

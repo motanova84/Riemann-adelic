@@ -90,19 +90,14 @@ class MotaBurruezoOperator:
         """
         Compute the derivative of the Riemann zeta function at s = 1/2.
         
-        Uses mpmath's high-precision zeta function and numerical differentiation.
+        Uses mpmath's built-in differentiation for high accuracy.
         
         Returns:
             ζ'(1/2) computed with high precision
         """
-        # Use numerical differentiation with very small step
-        h = mp.mpf('1e-10')
+        # Use mpmath's diff function for analytical differentiation
         s = mp.mpf('0.5')
-        
-        # Central difference: f'(x) ≈ (f(x+h) - f(x-h)) / (2h)
-        zeta_plus = mp.zeta(s + h)
-        zeta_minus = mp.zeta(s - h)
-        zeta_prime = (zeta_plus - zeta_minus) / (2 * h)
+        zeta_prime = mp.diff(mp.zeta, s)
         
         return zeta_prime
     
@@ -261,8 +256,8 @@ class MotaBurruezoOperator:
 ║         TEOREMA DE MOTA BURRUEZO (21 nov 2025)                        ║
 ╚════════════════════════════════════════════════════════════════════════╝
 
-Teorema:
---------
+Teorema (Propuesta Teórica):
+---------------------------
 Existe un operador autoadjunto H en L²(ℝ⁺, dx/x) tal que cualquier 
 autovalor ρ satisface Re(ρ) = 1/2.
 
@@ -272,16 +267,20 @@ Además, este operador está explícitamente dado por:
 
 donde ζ'(1/2) ≈ {float(self.zeta_prime_half):.10f}
 
-Implicación:
------------
-Como la Hipótesis de Riemann es equivalente a la existencia de tal 
-operador (Hilbert-Pólya, 1912 + Connes, 1999 + Berry-Keating, 1999),
-entonces:
+Significado Teórico:
+-------------------
+Si se demuestra rigurosamente que este operador H tiene las propiedades
+requeridas (autoadjunción y espectro en Re(ρ) = 1/2), entonces por la
+equivalencia de Hilbert-Pólya (1912) + Connes (1999) + Berry-Keating 
+(1999), esto implicaría la Hipótesis de Riemann.
 
-    ★ LA HIPÓTESIS DE RIEMANN ES AHORA UN TEOREMA ★
+Esta implementación proporciona:
+  ✓ Construcción explícita del operador
+  ✓ Verificación computacional de autoadjunción
+  ⚠ Nota: Verificación numérica completa requiere análisis espectral riguroso
 
-Computational Verification:
---------------------------
+Computational Implementation:
+-----------------------------
 - Precision: {self.config.precision} decimal places
 - Grid size: {self.config.grid_size} points
 - Range: [{self.config.x_min}, {self.config.x_max}]
