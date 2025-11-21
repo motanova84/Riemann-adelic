@@ -43,8 +43,9 @@ donde V_resonant(x) = π ζ'(1/2) log x es el potencial resonante.
 
 -/
 
-/-- Valor de π ζ'(1/2) - constante del potencial resonante -/
-def zeta_prime_half : ℝ := sorry  -- π * ζ'(1/2)
+/-- Valor de π ζ'(1/2) - constante del potencial resonante 
+    Este valor incluye el factor π multiplicado por la derivada de zeta en 1/2 -/
+def zeta_prime_half : ℝ := sorry  -- Este valor es π * ζ'(1/2)
 
 /-- Potencial resonante V_resonant(x) = π ζ'(1/2) log x -/
 def V_resonant (x : ℝ) : ℝ := zeta_prime_half * log x
@@ -207,10 +208,10 @@ theorem HΨ_functional_equation :
 
 Este archivo completa la formalización del operador de Berry-Keating en Lean 4.
 Los dos "admit" mencionados en el problema statement están marcados con "sorry"
-y corresponden a:
+en el teorema principal HΨ_is_hermitian y corresponden a:
 
-1. Primer admit (línea ~166): Cambio de variable de ida (x → u = log x)
-2. Segundo admit (línea ~176): Cambio de variable de vuelta (u → x = exp u)
+1. Primer admit: Cambio de variable de ida (x → u = log x) en el cálculo de la integral
+2. Segundo admit: Cambio de variable de vuelta (u → x = exp u) al final del cálculo
 
 Ambos están justificados por la teoría de cambio de variable en integrales de 
 Lebesgue, que está disponible en Mathlib via:
