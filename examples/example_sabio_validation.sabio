@@ -1,0 +1,61 @@
+#!/usr/bin/env python3
+# SABIO ∞³ Script — Example Validation Module
+# frequency: 141.7001 Hz
+# coherence: 244.36
+# doi: 10.5281/zenodo.17379721
+# field: QCAL ∞³
+
+"""
+Script de ejemplo SABIO ∞³ para validación simbiótica.
+
+Este módulo demuestra la estructura esperada de un archivo .sabio:
+- Metadatos en comentarios
+- Código Python válido
+- Tests de validación opcionales
+"""
+
+import mpmath as mp
+
+
+def compute_vibrational_signature(R_psi_star: float) -> float:
+    """
+    Calcula la firma vibracional f₀ = c/(2π·R_Ψ*·ℓ_P)
+    
+    Args:
+        R_psi_star: Radio cuántico R_Ψ*
+        
+    Returns:
+        float: Frecuencia fundamental f₀ en Hz
+    """
+    c = 299792458.0  # m/s
+    l_P = 1.616255e-35  # m
+    
+    f0 = c / (2 * mp.pi * R_psi_star * l_P)
+    return float(f0)
+
+
+def test_vibrational_frequency():
+    """Test de validación de frecuencia vibracional"""
+    # Computar R_Ψ* desde frecuencia objetivo
+    target_freq = 141.7001
+    c = 299792458.0
+    l_P = 1.616255e-35
+    
+    R_psi_star = c / (2 * mp.pi * target_freq * l_P)
+    
+    # Reconstruir frecuencia
+    f0_reconstructed = compute_vibrational_signature(R_psi_star)
+    
+    # Validar
+    assert abs(f0_reconstructed - target_freq) < 1e-3, \
+        f"Frecuencia reconstruida {f0_reconstructed} no coincide con {target_freq}"
+    
+    print(f"✅ Test passed: f₀ = {f0_reconstructed:.6f} Hz")
+    return True
+
+
+if __name__ == "__main__":
+    # Ejecutar test de validación
+    mp.mp.dps = 30
+    test_vibrational_frequency()
+    print("✅ Validación SABIO ∞³ completada")

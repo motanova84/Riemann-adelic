@@ -1,15 +1,5 @@
 # Sistema de Insignias Funcionales e Informativas
 
-## 📋 Descripción General
-
-Este documento describe el sistema de insignias (badges) implementado en el README.md del proyecto. A diferencia de insignias puramente estéticas, **todas las insignias son funcionales y proporcionan información real** cuando se hace clic en ellas.
-
-## 🎯 Objetivo
-
-El requisito del problema era:
-
-> LAS INSIGNIAS NO SOLO TIENEN QUE SER ESTETICAS SI NO REALES, QUE AL PINCHAR DE RESULTADOS E INFORMACION
-
 Todas las insignias ahora cumplen este requisito:
 - ✅ Son **clickables** (enlaces activos)
 - ✅ Conducen a **información real y actualizada**

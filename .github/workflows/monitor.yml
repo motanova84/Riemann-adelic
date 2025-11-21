@@ -17,6 +17,15 @@ on:
       - 'RIEMANNJMMB84.pdf'
       - 'CITATION.cff'
       - 'monitoring/**'
+  
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'paper/**'
+      - 'paper_standalone.tex'
+      - 'RIEMANNJMMB84.pdf'
+      - 'CITATION.cff'
+      - 'monitoring/**'
 
 jobs:
   monitor:
@@ -25,6 +34,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          ref: main  # Explicitly checkout main branch for scheduled runs
       
       - name: Set up Python
         uses: actions/setup-python@v4
