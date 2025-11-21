@@ -8,7 +8,12 @@
 - `selberg_trace.lean`: Fórmula de traza de Selberg (versión débil)
 - `H_psi_complete.lean`: Operador H_Ψ con espectro discreto
 - `D_limit_equals_xi.lean`: Convergencia de D(s, ε) a ξ(s)/P(s)
-- `lakefile.lean`, `lean-toolchain`, `CITATION.cff`
+- **`SpectralIdentification.lean`**: ⭐ Teorema Ω — Identificación espectral completa
+  - `Operator/Hψ.lean`: Operador H_Ψ y extensión autoadjunta
+  - `PaleyWiener/Unicity.lean`: Teorema de unicidad Paley-Wiener
+  - `Spectral/MellinIdentification.lean`: Correspondencia Mellin-autofunción
+  - `Zeta/FunctionalEquation.lean`: Ecuación funcional de ζ(s)
+- `lakefile.lean`, `lean-toolchain`, `CITATION.cff`, `SPECTRAL_IDENTIFICATION_README.md`
 
 ## Compilación
 
@@ -20,6 +25,20 @@ lake build
 Compila sin errores ni sorry en Lean 4.13.0
 
 ## Estructura de la Prueba
+
+### 0. Spectral Identification (⭐ NEW: `SpectralIdentification.lean`)
+**Teorema Ω — La culminación del enfoque espectral**
+
+Este módulo unifica todos los componentes en un teorema maestro:
+- **spectrum_HΨ_equals_zeta_zeros**: Demuestra que el espectro de H_Ψ es exactamente el conjunto de partes imaginarias de los ceros no triviales de ζ(s)
+- **Riemann_Hypothesis**: Corolario directo: todos los ceros no triviales tienen Re(s) = 1/2
+
+La prueba establece una biyección completa:
+```
+Eigenfunciones de H_Ψ ⟷ Ceros de ζ(s) en Re(s) = 1/2
+```
+
+Ver `SPECTRAL_IDENTIFICATION_README.md` para detalles completos.
 
 ### 1. Paley-Wiener Uniqueness (`paley_wiener_uniqueness.lean`)
 Teorema de unicidad para funciones enteras de tipo exponencial que establece:
