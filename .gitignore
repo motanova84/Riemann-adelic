@@ -35,6 +35,9 @@ htmlcov/
 coverage.xml
 *.cover
 
+# SABIO ∞⁴ generated reports
+sabio_infinity4_report_*.json
+
 # Virtual environments
 venv/
 env/
