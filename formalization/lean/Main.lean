@@ -66,16 +66,8 @@ import paley.paley_wiener_uniqueness
 import RiemannAdelic.spectral_rh_operator
 -- Spectral RH operator H_ε
 import RiemannAdelic.spectral_RH_operator
--- HΨ operator Hermitian property
-import RiemannAdelic.H_psi_hermitian
-
--- Berry-Keating operator H_Ψ on L²(ℝ⁺, dt/t)
-import RiemannAdelic.H_psi
-
--- Riemann Hypothesis proof structure (Hilbert-Pólya approach)
-import RiemannAdelic.H_epsilon_foundation
-import RiemannAdelic.selberg_trace
-import RiemannAdelic.riemann_hypothesis_proof
+-- Berry-Keating operator H_Ψ (complete formalization)
+import RiemannAdelic.berry_keating_operator
 
 -- Purge axioms modules (purge_axioms branch)
 import RiemannAdelic.Hadamard
@@ -122,14 +114,7 @@ def main : IO Unit := do
   IO.println "  • Spectral RH operator (H_ε with prime harmonic potential)"
   IO.println "  • Critical line proof via spectral operators"
   IO.println "  • Spectral RH operator H_ε"
-  IO.println "  • H_epsilon foundation (Hermitian operator and D(s) function)"
-  IO.println "  • Selberg trace formula (spectrum ↔ primes connection)"
-  IO.println "  • Riemann Hypothesis proof (Hilbert-Pólya spectral approach)"
-  IO.println "  • Berry-Keating operator H_Ψ on L²(ℝ⁺, dt/t) - Hermitian proof"
-  IO.println "  • H_ε foundation (eigenvalues and D(s) definitions)"
-  IO.println "  • Selberg trace formula (spectral-arithmetic connection)"
-  IO.println "  • H_ε foundation (logarithmic Hilbert space, Hermite basis, p-adic potential)"
-  IO.println "  • HΨ operator Hermitian property proof"
+  IO.println "  • Berry-Keating operator H_Ψ (complete formalization)"
   IO.println "  • Hadamard factorization (purge_axioms branch)"
   IO.println "  • Kernel positivity (purge_axioms branch)"
   IO.println "  • Gamma trivial exclusion (purge_axioms branch)"
