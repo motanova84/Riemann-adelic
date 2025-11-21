@@ -29,7 +29,7 @@ theorem positivity_implies_critical_line
 A structure representing a positive definite kernel with:
 - `K : ℝ → ℝ → ℂ` - The kernel function
 - `herm : ∀ x y, K x y = conj (K y x)` - Hermiticity property
-- `pos : ∀ (f : ℝ → ℂ), HasCompactSupport f → (∑ᶠ x, ∑ᶠ y, conj (f x) * K x y * f y).re ≥ 0` - Positivity condition
+- `pos : ∀ (f : ℝ → ℂ) (support : Finset ℝ), (∑ x in support, ∑ y in support, conj (f x) * K x y * f y).re ≥ 0` - Positivity condition on finite supports
 
 ### spectral_form
 
