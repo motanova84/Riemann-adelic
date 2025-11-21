@@ -37,8 +37,9 @@ Este operador actúa en el espacio de Hilbert L²((0,∞), dx/x).
 
 -- Operador espectral definido previamente
 -- Nota: deriv es la derivada de Fréchet en Mathlib
+-- La derivada de riemannZeta se obtiene con deriv riemannZeta aplicado en 1/2
 def HΨ (f : ℝ → ℂ) (x : ℝ) : ℂ :=
-  -x * deriv f x + π * riemannZeta' (1/2) * log x * f x
+  -x * deriv f x + π * (deriv riemannZeta (1/2)) * log x * f x
 
 /-!
 # Espacio de Hilbert L²_adélico
