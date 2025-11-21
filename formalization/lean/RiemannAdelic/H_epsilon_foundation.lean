@@ -72,7 +72,8 @@ theorem H_epsilon_is_hermitian (ε : ℝ) (N : ℕ) :
   · simp [h]
   · simp [h]
     ring_nf
-    sorry  -- Simetría bajo conjugación
+    sorry  -- Necesita probar: H[i,j] = conj(H[j,i])
+           -- Para i≠j: ε/((i-j)² + 1) es real, por tanto auto-conjugado
 
 /-- Autovalores aproximados de H_ε -/
 def approx_eigenvalues (ε : ℝ) (n : ℕ) : ℝ :=
