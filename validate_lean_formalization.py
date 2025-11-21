@@ -110,6 +110,17 @@ def validate_file_structure(lean_dir: Path) -> Tuple[bool, Dict]:
         'RiemannAdelic/uniqueness_without_xi.lean',
     ]
     
+    # V5.4 modules (optional but recommended)
+    v54_modules = [
+        'RiemannAdelic/OperatorH.lean',
+        'RiemannAdelic/PoissonRadon.lean',
+        'RiemannAdelic/PositivityV54.lean',
+        'RiemannAdelic/Symmetry.lean',
+        'RiemannAdelic/Zeros.lean',
+        'RiemannAdelic/SpectralStructure.lean',
+        'RiemannAdelic/V54_Consolidated.lean',
+    ]
+    
     all_valid = True
     stats = {'files_found': 0, 'files_missing': 0}
     
@@ -134,6 +145,25 @@ def validate_file_structure(lean_dir: Path) -> Tuple[bool, Dict]:
             print_error(f"Missing module: {module_path}")
             stats['files_missing'] += 1
             all_valid = False
+    
+    # Check V5.4 modules (optional)
+    print_info("\nV5.4 Modular Components (optional):")
+    v54_found = 0
+    for module_path in v54_modules:
+        full_path = lean_dir / module_path
+        if full_path.exists():
+            print_success(f"Found V5.4 module: {module_path}")
+            stats['files_found'] += 1
+            v54_found += 1
+        else:
+            print_warning(f"V5.4 module not found: {module_path}")
+    
+    if v54_found == len(v54_modules):
+        print_success(f"\n✓ All {len(v54_modules)} V5.4 modules present!")
+    elif v54_found > 0:
+        print_warning(f"\n⚠ Partial V5.4 installation: {v54_found}/{len(v54_modules)} modules")
+    else:
+        print_info("\nℹ V5.4 modules not installed (using V5.3)")
     
     return all_valid, stats
 

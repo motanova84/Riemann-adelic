@@ -1,5 +1,5 @@
 -- Main entry point for Riemann Adelic Lean formalization
--- Updated to include all formalization modules
+-- Updated to include all formalization modules including V5.4
 
 -- Core axioms and lemmas
 import RiemannAdelic.axioms_to_lemmas
@@ -7,6 +7,15 @@ import RiemannAdelic.axioms_to_lemmas
 -- Constructive D(s) definition (V5.2+)
 import RiemannAdelic.schwartz_adelic
 import RiemannAdelic.D_explicit
+
+-- V5.4 Modular Components (New)
+import RiemannAdelic.OperatorH
+import RiemannAdelic.PoissonRadon
+import RiemannAdelic.PositivityV54
+import RiemannAdelic.Symmetry
+import RiemannAdelic.Zeros
+import RiemannAdelic.SpectralStructure
+import RiemannAdelic.V54_Consolidated
 
 -- Operator-theoretic formulation (V5.3+)
 import RiemannAdelic.RiemannOperator
@@ -63,12 +72,20 @@ import RiemannAdelic.GammaTrivialExclusion
 def main : IO Unit := do
   IO.println "╔═══════════════════════════════════════════════════════════╗"
   IO.println "║   Riemann Hypothesis Adelic Proof - Lean 4 Formalization ║"
-  IO.println "║   José Manuel Mota Burruezo (V5.2+, unconditional)       ║"
+  IO.println "║   José Manuel Mota Burruezo (V5.4, unconditional)        ║"
   IO.println "╚═══════════════════════════════════════════════════════════╝"
   IO.println ""
   IO.println "✓ All formalization modules loaded successfully!"
   IO.println ""
   IO.println "Modules included:"
+  IO.println "  • V5.4 Modular Components (NEW):"
+  IO.println "    - OperatorH: Spectral operator definitions"
+  IO.println "    - PoissonRadon: Poisson-Radon symmetry"
+  IO.println "    - PositivityV54: Positivity theory"
+  IO.println "    - Symmetry: Functional equation theorems"
+  IO.println "    - Zeros: Zero localization"
+  IO.println "    - SpectralStructure: Complete spectral system"
+  IO.println "    - V54_Consolidated: Unified proof structure"
   IO.println "  • Core axioms and lemmas"
   IO.println "  • Schwartz functions on adeles (constructive)"
   IO.println "  • Explicit D(s) construction"
