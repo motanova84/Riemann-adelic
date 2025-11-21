@@ -80,6 +80,9 @@ The goal is to **mechanize the proof** in Lean with **constructive definitions**
 - **`GammaTrivialExclusion.lean`**  
   Exclusion of trivial zeros via Γ-factor separation
 
+- **`GammaWeierstrassLemma.lean`** 🆕  
+  Weierstrass representation for reflected Gamma function: ∏(1 - s/(n+1/2)) = (π/sin(πs))^(1/2)
+
 - **`poisson_radon_symmetry.lean`**  
   Geometric duality and non-circular functional equation
 

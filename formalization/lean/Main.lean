@@ -33,6 +33,7 @@ import RiemannAdelic.poisson_radon_symmetry
 -- Archimedean factors
 import RiemannAdelic.arch_factor
 import RiemannAdelic.GammaTrivialExclusion
+import RiemannAdelic.GammaWeierstrassLemma
 
 -- de Branges space theory
 import RiemannAdelic.de_branges
@@ -96,6 +97,7 @@ def main : IO Unit := do
   IO.println "  • Entire function and Hadamard theory"
   IO.println "  • Hadamard factorization and quotient analysis"
   IO.println "  • Functional equation and Poisson symmetry"
+  IO.println "  • Gamma Weierstrass representation for reflected Gamma function"
   IO.println "  • de Branges space framework"
   IO.println "  • Weil-Guinand positivity theory"
   IO.println "  • Kernel positivity (quotient module approach)"
