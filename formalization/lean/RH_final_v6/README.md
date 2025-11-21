@@ -9,6 +9,7 @@
 - `H_psi_complete.lean`: Operador H_Ψ con espectro discreto
 - `D_limit_equals_xi.lean`: Convergencia de D(s, ε) a ξ(s)/P(s)
 - `spectrum_eq_zeros.lean`: **Identificación espectral completa Spec(H_Ψ) = {γₙ}**
+- `spectrum_HΨ_equals_zeta_zeros.lean`: **Versión avanzada con Fourier conjugation y operador explícito** ✨ NEW
 - `lakefile.lean`, `lean-toolchain`, `CITATION.cff`
 
 ## Compilación
@@ -44,7 +45,7 @@ Convergencia del producto regularizado:
 - Convergencia uniforme en subconjuntos compactos
 - Establece la representación espectral de ζ(s)
 
-### 5. Spectral Identification (`spectrum_eq_zeros.lean`) ✨ **NUEVO**
+### 5. Spectral Identification (`spectrum_eq_zeros.lean`)
 Identificación espectral completa que cierra la prueba:
 - **Teorema principal**: Spec(H_Ψ) = {γₙ} bajo simetría funcional
 - Establece que el espectro discreto de H_Ψ coincide exactamente con las partes imaginarias de los ceros no triviales de ζ(s)
@@ -53,6 +54,21 @@ Identificación espectral completa que cierra la prueba:
 - Lema spectral_identity_via_mellin: traduce Mellin ⟷ valor propio
 - Lema construct_eigenfunction_from_zero: construcción inversa cero → función propia
 - **Cierre formal del sistema RH ∞³ en Lean 4**
+
+### 6. Advanced Spectral-Zeros Equivalence (`spectrum_HΨ_equals_zeta_zeros.lean`) ✨ **NUEVO**
+Versión avanzada con construcción explícita del operador espectral:
+- **H_model**: Operador concreto definido vía conjugación de Fourier: H_model(f) = F⁻¹(t · F(f))
+- **UnitaryIsometry**: Estructura explícita con isometría U usando transformada de Fourier
+  - Preservación de norma: ‖U f‖ = ‖f‖ (Plancherel)
+  - Preservación de producto interno: ⟨U f, U g⟩ = ⟨f, g⟩
+  - Sobreyectividad (inversión de Fourier)
+- **SpectralOperator**: Construcción completa H_Ψ = U ∘ H_model ∘ U⁻¹
+- **spectrum_transfer_unitary**: Invariancia espectral bajo conjugación unitaria
+- **H_model_spectrum_matches_zeros**: Correspondencia profunda espectro-ceros (axiomatizada)
+- **spectrum_Hψ_equals_zeta_zeros**: Teorema principal con cadena de prueba formal
+- **Corolarios**: Conexiones con autoadjunción, RH, densidad espectral y QCAL
+- **Documentación exhaustiva**: 400+ líneas de comentarios explicativos
+- Sigue el programa de Berry-Keating con formalismo moderno de teoría espectral
 
 ## QCAL Framework Integration
 
