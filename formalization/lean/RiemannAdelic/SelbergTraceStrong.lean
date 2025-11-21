@@ -38,7 +38,7 @@ def spectral_side (h : TestFunction) (ε : ℝ) (N : ℕ) : ℂ :=
 def vonMangoldt (n : ℕ) : ℝ :=
   if h : ∃ p k, Nat.Prime p ∧ k > 0 ∧ n = p^k 
   then 
-    let ⟨p, _, _, _, _⟩ := Classical.choose_spec h
+    let ⟨p, k, _, _, _⟩ := Classical.choose_spec h
     log p
   else 0
 

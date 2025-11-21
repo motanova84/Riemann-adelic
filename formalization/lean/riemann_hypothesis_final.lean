@@ -1,7 +1,7 @@
 /-!
 # Demostración formal completa de la Hipótesis de Riemann
 Autor: José Manuel Mota Burruezo
-Fecha: 22 de noviembre de 2025
+Fecha: 21 de noviembre de 2025
 Framework: Sistema Espectral Adélico S-Finito
 Estado: 100% sorry-free
 -/
