@@ -81,6 +81,7 @@ It includes:
   <a href="https://github.com/motanova84/-jmmotaburr-riemann-adelic/actions/workflows/lean.yml"><img src="https://github.com/motanova84/-jmmotaburr-riemann-adelic/actions/workflows/lean.yml/badge.svg" alt="Formalización Lean"></a>
   <a href="https://doi.org/10.5281/zenodo.17116291"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.17116291.svg" alt="DOI"></a>
   <a href="https://codecov.io/gh/motanova84/-jmmotaburr-riemann-adelic"><img src="https://codecov.io/gh/motanova84/-jmmotaburr-riemann-adelic/branch/main/graph/badge.svg" alt="Coverage"></a>
+  <a href=".github/CODECOV_AI.md"><img src="https://img.shields.io/badge/Codecov_AI-Enabled-blue?style=flat-square&logo=ai" alt="Codecov AI"></a>
   <a href="https://doi.org/10.5281/zenodo.17116291"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.17116291.svg" alt="DOI"></a>
   <a href="data/validation_results.csv"><img src="https://img.shields.io/badge/✓-Validated-green?style=flat-square" alt="Validation"></a>
   <a href="formalization/lean/"><img src="https://img.shields.io/badge/Lean-Formalized-blue?logo=lean&style=flat-square" alt="Lean Formalization"></a>
@@ -247,6 +248,10 @@ Todas las insignias son **funcionales y clickables**. Al hacer clic, proporciona
   - Informe detallado por archivo
   - Líneas cubiertas y no cubiertas
   - Reporte XML para Codecov
+  - **🤖 Codecov AI**: Asistente de IA para revisión de código y generación de tests
+    - Usa `@codecov-ai-reviewer review` en PRs para revisión automática
+    - Usa `@codecov-ai-reviewer test` para generación de tests
+    - Ver [.github/CODECOV_AI.md](.github/CODECOV_AI.md) para detalles de instalación y uso
 
 - **Reproducibilidad**: Documentación completa sobre:
   - Dependencias con versiones bloqueadas (requirements-lock.txt)
