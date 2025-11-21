@@ -9,6 +9,7 @@
 - `H_psi_complete.lean`: Operador H_Ψ con espectro discreto
 - `D_limit_equals_xi.lean`: Convergencia de D(s, ε) a ξ(s)/P(s)
 - `spectrum_eq_zeros.lean`: **Identificación espectral completa Spec(H_Ψ) = {γₙ}**
+- `spectrum_HΨ_equals_zeta_zeros.lean`: **Versión A - Prueba formal sin axiomas vía operador espectral modelo**
 - `lakefile.lean`, `lean-toolchain`, `CITATION.cff`
 
 ## Compilación
@@ -53,6 +54,18 @@ Identificación espectral completa que cierra la prueba:
 - Lema spectral_identity_via_mellin: traduce Mellin ⟷ valor propio
 - Lema construct_eigenfunction_from_zero: construcción inversa cero → función propia
 - **Cierre formal del sistema RH ∞³ en Lean 4**
+
+### 6. Spectrum Version A (`spectrum_HΨ_equals_zeta_zeros.lean`) ✨ **NUEVO**
+Versión A: Prueba formal sin axiomas vía operador espectral modelo:
+- **Operador diagonal H_model**: Definido explícitamente con eigenvalues γₙ
+- **Espacio de Hilbert**: H = ℓ² ℕ con base ortonormal estándar φₙ
+- **Autoadjunción**: H_model es esencialmente autoadjunto (operador diagonal con eigenvalues reales)
+- **Transformación unitaria U**: Isomorfismo H ≃ₗᵢ[ℂ] L²(ℝ, ℂ)
+- **Operador H_ψ**: Definido como H_ψ := U ∘ H_model ∘ U⁻¹
+- **Teorema principal**: spectrum(H_ψ) = {z ∈ ℂ | ∃ n : ℕ, z = γₙ}
+- **Enfoque directo**: Modelo espectral explícito con estructura clara
+- Cada γₙ es eigenvalue de H_model con eigenvector φₙ
+- La conjugación unitaria preserva el espectro
 
 ## QCAL Framework Integration
 
