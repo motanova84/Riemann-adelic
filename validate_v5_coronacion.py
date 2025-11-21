@@ -29,7 +29,6 @@ from datetime import datetime
 from pathlib import Path
 
 import mpmath as mp
-import numpy as np
 
 # Add the current directory to Python path for imports
 sys.path.append('.')

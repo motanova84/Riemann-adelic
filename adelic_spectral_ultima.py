@@ -8,7 +8,6 @@ for Riemann Hypothesis validation as specified in the problem statement.
 import numpy as np
 from scipy.special import roots_hermitenorm
 from mpmath import mp
-import math
 from sympy import primepi, prime
 
 
