@@ -38,6 +38,7 @@ import RiemannAdelic.Hadamard
 -- Functional equation and symmetry
 import RiemannAdelic.functional_eq
 import RiemannAdelic.poisson_radon_symmetry
+import RiemannAdelic.RadonSymmetry
 
 -- Archimedean factors
 import RiemannAdelic.arch_factor
