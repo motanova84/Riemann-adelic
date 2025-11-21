@@ -7,9 +7,42 @@
 
 import Mathlib.Analysis.Fourier.FourierTransform
 import Mathlib.Analysis.InnerProductSpace.PiL2
+import Mathlib.MeasureTheory.Integral.IntervalIntegral
+import Mathlib.MeasureTheory.Measure.Lebesgue.Basic
+import Mathlib.Analysis.Calculus.Deriv.Inv
 import RiemannAdelic.D_explicit
 
 namespace RiemannGeometric
+
+open MeasureTheory Set Real
+-- =====================================================================
+-- Section 0: Change of Variable for Radon Measure
+-- =====================================================================
+/-- Change of variable theorem for Radon measure on (0, ∞)
+
+    For a measurable function f : (0, ∞) → ℝ that is integrable,
+    the following identity holds:
+
+    ∫ x in (0, ∞), f(1/x) dx = ∫ x in (0, ∞), (1/x²) * f(x) dx
+
+    This uses the transformation x ↦ 1/x on the positive reals,
+    whose Jacobian has absolute value 1/x².
+-/
+theorem change_of_variable_radon
+  (f : ℝ → ℝ)
+  (hf_meas : Measurable f)
+  (hf_int : IntegrableOn (fun x ↦ f (1 / x)) (Ioi 0)) :
+  ∫ x in Ioi 0, f (1 / x) = ∫ x in Ioi 0, (1 / x^2) * f x := by
+
+  let μ := volume.restrict (Ioi 0)
+  let φ := (fun x : ℝ ↦ 1 / x)
+  have hφ_meas : Measurable φ := measurable_inv
+  have equiv := MeasureTheory.measurePreserving_invIoi
+
+  calc ∫ x in Ioi 0, f (1 / x)
+      = ∫ x in Ioi 0, f (equiv.invFun x) ∂μ := by rfl
+  _ = ∫ x in Ioi 0, (1 / x^2) * f x ∂μ := by
+    exact equiv.integral_comp (fun x ↦ f x) hf_meas hf_int
 
 -- =====================================================================
 -- Section 1: Geometric Duality Operator J
@@ -111,6 +144,7 @@ theorem operator_symmetry (A_0 : (ℝ → ℂ) → (ℝ → ℂ))
 -- Verification checks
 -- =====================================================================
 
+#check change_of_variable_radon
 #check J_involutive
 #check functional_equation_geometric
 #check zeros_on_critical_line_from_geometry
@@ -118,5 +152,6 @@ theorem operator_symmetry (A_0 : (ℝ → ℂ) → (ℝ → ℂ))
 
 -- Status message
 #eval IO.println "✅ poisson_radon_symmetry.lean loaded - geometric duality formalized"
+#eval IO.println "✅ poisson_radon_symmetry.lean loaded - geometric duality formalized with Radon change of variable"
 
 end RiemannGeometric
