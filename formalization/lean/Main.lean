@@ -71,6 +71,9 @@ import RiemannAdelic.H_epsilon_foundation
 import RiemannAdelic.H_epsilon_foundation
 import RiemannAdelic.selberg_trace
 
+-- Zero of product eigenvalues proof
+import RiemannAdelic.zero_of_product_eigenvalues
+
 -- Purge axioms modules (purge_axioms branch)
 import RiemannAdelic.Hadamard
 import RiemannAdelic.KernelPositivity
@@ -114,6 +117,7 @@ def main : IO Unit := do
   IO.println "  • Spectral RH operator (H_ε with prime harmonic potential)"
   IO.println "  • Critical line proof via spectral operators"
   IO.println "  • Spectral RH operator H_ε"
+  IO.println "  • Zero of product eigenvalues (spectral core proof)"
   IO.println "  • H_ε foundation (eigenvalues and D(s) definitions)"
   IO.println "  • Selberg trace formula (spectral-arithmetic connection)"
   IO.println "  • H_ε foundation (logarithmic Hilbert space, Hermite basis, p-adic potential)"
