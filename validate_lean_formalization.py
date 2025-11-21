@@ -108,6 +108,7 @@ def validate_file_structure(lean_dir: Path) -> Tuple[bool, Dict]:
         'RiemannAdelic/poisson_radon_symmetry.lean',
         'RiemannAdelic/zero_localization.lean',
         'RiemannAdelic/uniqueness_without_xi.lean',
+        'RiemannAdelic/berry_keating_operator.lean',
     ]
     
     all_valid = True
