@@ -6,7 +6,7 @@
 
 A **100% sorry-free** implementation of the Berry-Keating operator H_Ψ in Lean 4, providing a rigorous formalization with zero placeholders.
 
-**File**: `formalization/lean/operators/operator_H_ψ.lean` (5,529 characters)
+**File**: `formalization/lean/operators/operator_H_ψ.lean` (6,123 characters)
 
 **Key Features**:
 - Complete operator definition: `H_Ψ f(x) = -x f'(x) + π ζ'(1/2) log x · f(x)`
