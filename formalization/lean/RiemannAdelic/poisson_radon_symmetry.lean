@@ -35,8 +35,22 @@ theorem change_of_variable_radon
   (hf_meas : Measurable f)
   (hf_int : IntegrableOn (fun x ↦ f (1 / x)) (Ioi 0)) :
   ∫ x in Ioi 0, f (1 / x) = ∫ x in Ioi 0, (1 / x^2) * f x := by
-  -- The proof uses measurableEquiv_invIoi which provides the change of variable
-  -- formula for the transformation x ↦ 1/x on (0, ∞)
+  -- Proof sketch:
+  -- We use measurableEquiv_invIoi which provides the change of variable
+  -- for the transformation φ(x) = 1/x on (0, ∞).
+  --
+  -- Key steps:
+  -- 1. Define μ := volume.restrict (Ioi (0 : ℝ))
+  -- 2. Let φ := (fun x : ℝ ↦ 1 / x)
+  -- 3. Show φ is measurable: φ_meas : Measurable φ
+  -- 4. Show φ is involutive: φ(φ(x)) = x almost everywhere on μ
+  -- 5. Show derivative: HasDerivAt φ (-1 / x^2) x
+  -- 6. Apply integral_map_equiv with measurableEquiv_invIoi
+  -- 7. The Jacobian determinant |dφ/dx| = |-1/x²| = 1/x²
+  -- 8. Simplify to obtain the result
+  --
+  -- The transformation x ↦ 1/x preserves the support in Ioi 0,
+  -- and the measure transforms by the Jacobian factor 1/x².
   sorry
 
 -- =====================================================================
