@@ -88,9 +88,9 @@ Check coverage workflow status:
 
 ## Additional Resources
 
-- [Codecov AI Documentation](https://docs.codecov.com/docs/codecov-ai)
-- [Codecov Dashboard](https://app.codecov.io/gh/motanova84/Riemann-adelic)
-- Codecov AI is developed by Codecov at Sentry
+- [Codecov AI Documentation](https://docs.codecov.com/docs/codecov-ai) - Official Codecov AI guide
+- [Codecov Dashboard](https://app.codecov.io/gh/motanova84/Riemann-adelic) - Repository coverage dashboard
+- [About Codecov AI](https://sentry.io/) - Codecov AI is developed by Codecov at Sentry
 
 ## Support
 
