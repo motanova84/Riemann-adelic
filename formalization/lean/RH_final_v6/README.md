@@ -7,6 +7,7 @@
 - `paley_wiener_uniqueness.lean`: Teorema de unicidad espectral fuerte (Paley–Wiener)
 - `selberg_trace.lean`: Fórmula de traza de Selberg (versión débil)
 - `H_psi_complete.lean`: Operador H_Ψ con espectro discreto
+- `H_psi_self_adjoint.lean`: Demostración completa de que H_Ψ es autoadjunto (self-adjoint)
 - `D_limit_equals_xi.lean`: Convergencia de D(s, ε) a ξ(s)/P(s)
 - `lakefile.lean`, `lean-toolchain`, `CITATION.cff`
 
@@ -36,6 +37,16 @@ Operador de Berry-Keating completo con:
 - Estructura simétrica y esencialmente autoadjunta
 - Espectro discreto sin puntos de acumulación
 - Eigenvalores reales y ordenados
+
+### 3.5. Self-Adjoint H_Ψ Operator (`H_psi_self_adjoint.lean`)
+Demostración formal completa de que H_Ψ es autoadjunto:
+- Definición del espacio L²(ℝ⁺, dx/x) con medida de Haar
+- Operador integral con kernel simétrico K(x,y) = K(y,x)
+- **TEOREMA PRINCIPAL**: ⟨H_Ψ f, g⟩ = ⟨f, H_Ψ g⟩ (autoadjunción)
+- **CONSECUENCIA**: El espectro es real (Im(λ) = 0 para todo λ)
+- Determinante espectral D(s) = det(1 - H_Ψ/s)
+- **CONEXIÓN CON RH**: Si H_Ψ = H_Ψ† ⇒ zeros de D(s) están en ℜs = 1/2
+- Cadena completa: Paley-Wiener ⇒ D(s) ⇒ H_Ψ ⇒ Zeros on ℜs = 1/2
 
 ### 4. D-Function Convergence (`D_limit_equals_xi.lean`)
 Convergencia del producto regularizado:
