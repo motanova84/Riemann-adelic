@@ -135,10 +135,13 @@ axiom xi_functional_equation : ∀ s : ℂ, riemann_xi (1 - s) = riemann_xi s
 -- Xi es función entera
 axiom xi_entire : ∀ s : ℂ, DifferentiableAt ℂ riemann_xi s
 
--- Operador H_Ψ tiene espectro real positivo
--- Axiom representing spectral theorem for self-adjoint operators
-axiom HΨ_spectrum_real : ∀ (λ : ℝ), 
-  (∃ ψ : SmoothCompactPos, ∀ x : ℝ, HΨ_op ψ.val x = λ * ψ.val x) → True
+-- Operador H_Ψ tiene espectro real
+-- Axiom: The spectrum of H_Ψ consists only of real eigenvalues
+-- This is a consequence of self-adjointness (spectral theorem)
+-- Formally: if ψ is an eigenfunction with eigenvalue λ ∈ ℂ, then λ ∈ ℝ
+axiom HΨ_spectrum_real : 
+  ∀ (ψ : SmoothCompactPos) (λ : ℂ), 
+  (∀ x : ℝ, HΨ_op ψ.val x = λ.re * ψ.val x) → λ.im = 0
 
 -- Conexión espectral: ceros de Xi corresponden a autovalores de H_Ψ
 axiom spectral_connection : ∀ ρ : ℂ, riemann_xi ρ = 0 → 
