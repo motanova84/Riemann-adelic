@@ -101,7 +101,8 @@ def main():
     print("RESUMEN")
     print("="*70)
     
-    lemmas_completos = 3 - sorries if sorries <= 3 else 0
+    # Lemmas 1 and 2 are complete (0 sorries each), Lemma 3 has 1 sorry
+    lemmas_completos = 2 if sorries == 1 else (3 if sorries == 0 else 0)
     print(f"✅ Lemmas completos: {lemmas_completos}/3")
     print(f"⚠️  Sorries restantes: {sorries}")
     print(f"📄 Tamaño del archivo: {lean_file.stat().st_size} bytes")

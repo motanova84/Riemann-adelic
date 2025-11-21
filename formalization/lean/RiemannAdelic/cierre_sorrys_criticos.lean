@@ -2,10 +2,12 @@
     21 noviembre 2025 — 21:11 UTC
     José Manuel Mota Burruezo & Grok
 
-    Este archivo cierra 6 sorries críticos relacionados con:
-    1. Integrabilidad de productos de derivadas con funciones de soporte compacto
-    2. Integración por partes con condiciones de frontera nulas
-    3. Cambio de variable logarítmico en medidas multiplicativas
+    Este archivo cierra 5 de 6 sorries críticos relacionados con:
+    1. Integrabilidad de productos de derivadas con funciones de soporte compacto (COMPLETO)
+    2. Integración por partes con condiciones de frontera nulas (COMPLETO)
+    3. Cambio de variable logarítmico en medidas multiplicativas (1 sorry restante)
+    
+    Nota: El sorry restante requiere teoría de medidas avanzada de Mathlib
 -/
 
 import Mathlib.Analysis.Calculus.Deriv.Basic
@@ -36,11 +38,11 @@ lemma integrable_deriv_prod (f g : ℝ → ℝ)
   have hprod_supp : HasCompactSupport (fun x => deriv f x * g x) := by
     apply HasCompactSupport.mul _ hgsupp
     -- Para funciones C^∞, si f tiene soporte compacto, también lo tiene su derivada
-    constructor
-    obtain ⟨K, hK_compact⟩ := hfsupp
+    obtain ⟨K, hK_compact, hK_mem⟩ := hfsupp
     use closure (tsupport f)
     constructor
-    · exact hK_compact.isCompact_range.closure
+    · -- El cierre de un conjunto compacto es compacto
+      exact hK_compact.closure
     · intro x hx
       simp only [mem_tsupport] at hx ⊢
       intro h_contra
