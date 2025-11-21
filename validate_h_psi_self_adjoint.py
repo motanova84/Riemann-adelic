@@ -11,9 +11,9 @@ Fecha: 21 noviembre 2025
 
 import re
 from pathlib import Path
-from typing import List, Tuple, Dict
+from typing import List, Tuple, Dict, Any
 
-def validate_h_psi_self_adjoint(lean_file_path: str) -> Dict[str, any]:
+def validate_h_psi_self_adjoint(lean_file_path: str) -> Dict[str, Any]:
     """
     Valida el archivo H_psi_self_adjoint.lean
     

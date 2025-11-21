@@ -105,7 +105,8 @@ theorem spectrum_real (T : (ℝ → ℂ) →ₗ[ℂ] (ℝ → ℂ))
 
 ```lean
 def spectral_determinant (T : (ℝ → ℂ) →ₗ[ℂ] (ℝ → ℂ)) (s : ℂ) : ℂ :=
-  ∏ₙ (1 - λₙ/s)  -- Producto sobre autovalores
+  sorry -- Mathematical notation: ∏ₙ (1 - λₙ/s) (product over eigenvalues)
+        -- Requires infinite product formalism for proper implementation
 
 theorem spectral_determinant_zeros
     (T : (ℝ → ℂ) →ₗ[ℂ] (ℝ → ℂ))

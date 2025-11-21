@@ -111,10 +111,10 @@ theorem Hpsi_self_adjoint
   -- LHS = ∫ x, (∫ y, K(x,y) f(y)/y dy) g(x)/x dx
   --     = ∫ x, ∫ y, K(x,y) f(y) g(x) / (xy) dy dx
   
-  -- Aplicamos Fubini (permitido por las hipótesis de integrabilidad)
+  -- Apply Fubini theorem (allowed by integrability hypotheses)
   have fubini_lhs : ∫ x in Ioi 0, (∫ y in Ioi 0, K x y * f y / y) * g x / x = 
                     ∫ y in Ioi 0, ∫ x in Ioi 0, K x y * f y * g x / (x * y) := by
-    sorry -- Teorema de Fubini de Mathlib
+    sorry -- Fubini theorem from Mathlib: MeasureTheory.integral_prod
   
   rw [fubini_lhs]
   
@@ -133,14 +133,14 @@ theorem Hpsi_self_adjoint
   
   rw [symm_apply]
   
-  -- Intercambiamos variables x ↔ y
+  -- Exchange variables x ↔ y
   have exchange_vars : ∫ y in Ioi 0, ∫ x in Ioi 0, K y x * f y * g x / (x * y) =
                        ∫ x in Ioi 0, ∫ y in Ioi 0, K x y * g x * f y / (y * x) := by
-    sorry -- Cambio de variables en integral doble
+    sorry -- Variable exchange in double integral: MeasureTheory.Measure.map
   
   rw [exchange_vars]
   
-  -- Reordenamos: g(x) f(y) = f(y) g(x) y simplificamos y*x = x*y
+  -- Reorder: g(x) f(y) = f(y) g(x) and simplify y*x = x*y
   have reorder : ∫ x in Ioi 0, ∫ y in Ioi 0, K x y * g x * f y / (y * x) =
                  ∫ x in Ioi 0, ∫ y in Ioi 0, K x y * f y * g x / (x * y) := by
     congr 1
@@ -151,14 +151,14 @@ theorem Hpsi_self_adjoint
   
   rw [reorder]
   
-  -- Aplicamos Fubini en el orden inverso
+  -- Apply Fubini in reverse order
   have fubini_rhs : ∫ x in Ioi 0, ∫ y in Ioi 0, K x y * f y * g x / (x * y) =
                     ∫ x in Ioi 0, f x * (∫ y in Ioi 0, K x y * g y / y) / x := by
-    sorry -- Teorema de Fubini de Mathlib (orden inverso)
+    sorry -- Fubini theorem from Mathlib (reverse order): MeasureTheory.integral_prod
   
   rw [fubini_rhs]
   
-  -- Por definición de Hpsi, esto es exactamente el RHS
+  -- By definition of Hpsi, this is exactly the RHS
   simp only [Hpsi]
 
 /-!
@@ -227,9 +227,11 @@ Si todos los λₙ son reales y corresponden a ρₙ = 1/2 + iγₙ, entonces:
     ℜ(ρₙ) = 1/2 ⟺ Los ceros están en la línea crítica
 -/
 
-/-- Definición formal del determinante espectral (versión simplificada) -/
+/-- Formal definition of spectral determinant (simplified version)
+    Mathematical notation: ∏ₙ (1 - λₙ/s)
+    This requires advanced spectral theory for proper implementation -/
 def spectral_determinant (T : (ℝ → ℂ) →ₗ[ℂ] (ℝ → ℂ)) (s : ℂ) : ℂ :=
-  sorry -- Producto sobre autovalores: ∏ₙ (1 - λₙ/s)
+  sorry -- Product over eigenvalues: Would need infinite product formalism from Mathlib
 
 /-- Los ceros del determinante espectral son los autovalores -/
 theorem spectral_determinant_zeros
