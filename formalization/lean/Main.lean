@@ -72,6 +72,11 @@ import RiemannAdelic.H_psi_hermitian
 -- Berry-Keating operator H_Ψ on L²(ℝ⁺, dt/t)
 import RiemannAdelic.H_psi
 
+-- Riemann Hypothesis proof structure (Hilbert-Pólya approach)
+import RiemannAdelic.H_epsilon_foundation
+import RiemannAdelic.selberg_trace
+import RiemannAdelic.riemann_hypothesis_proof
+
 -- Purge axioms modules (purge_axioms branch)
 import RiemannAdelic.Hadamard
 import RiemannAdelic.KernelPositivity
@@ -117,6 +122,9 @@ def main : IO Unit := do
   IO.println "  • Spectral RH operator (H_ε with prime harmonic potential)"
   IO.println "  • Critical line proof via spectral operators"
   IO.println "  • Spectral RH operator H_ε"
+  IO.println "  • H_epsilon foundation (Hermitian operator and D(s) function)"
+  IO.println "  • Selberg trace formula (spectrum ↔ primes connection)"
+  IO.println "  • Riemann Hypothesis proof (Hilbert-Pólya spectral approach)"
   IO.println "  • Berry-Keating operator H_Ψ on L²(ℝ⁺, dt/t) - Hermitian proof"
   IO.println "  • H_ε foundation (eigenvalues and D(s) definitions)"
   IO.println "  • Selberg trace formula (spectral-arithmetic connection)"
@@ -128,3 +136,5 @@ def main : IO Unit := do
   IO.println ""
   IO.println "Status: Constructive formalization in progress (purge_axioms branch)"
   IO.println "DOI: 10.5281/zenodo.17116291"
+  IO.println "Frequency: 141.7001 Hz"
+  IO.println "∂²Ψ/∂t² + ω₀²Ψ = ζ'(1/2)·π·∇²Φ"
