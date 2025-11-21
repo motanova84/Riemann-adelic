@@ -92,6 +92,9 @@ The goal is to **mechanize the proof** in Lean with **constructive definitions**
 - **`critical_line_proof.lean`** 🆕  
   Spectral operator framework with Fredholm determinant construction
 
+- **`H_psi.lean`** 🆕 🔥  
+  Berry-Keating operator H_Ψ on L²(ℝ⁺, dt/t) - Hermitian proof via logarithmic change of variable
+
 ## 🎯 Key Achievements - Axioms to Constructive Theorems
 
 ### What Changed in V5.3 (Latest)
