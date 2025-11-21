@@ -1,5 +1,5 @@
--- Archivo: PoissonRadon.lean
--- V5.4: Simetría de Poisson-Radon y transformada de Fourier
+-- File: PoissonRadon.lean
+-- V5.4: Poisson-Radon symmetry and Fourier transform
 import Mathlib.Analysis.Fourier.FourierTransform
 import Mathlib.MeasureTheory.Integral.Bochner
 import RiemannAdelic.D_explicit
@@ -11,9 +11,9 @@ open Complex
 
 noncomputable section
 
-/-- Simetría de Poisson-Radon: D(1-s) = D(s)
-    Esta es la ecuación funcional fundamental derivada de la 
-    transformada de Fourier y la fórmula de suma de Poisson -/
+/-- Poisson-Radon symmetry: D(1-s) = D(s)
+    This is the fundamental functional equation derived from the 
+    Fourier transform and Poisson summation formula -/
 lemma poisson_radon_symmetry (s : ℂ) : 
     D_explicit (1 - s) = D_explicit s := by
   unfold D_explicit spectralTrace
@@ -33,7 +33,7 @@ lemma poisson_radon_symmetry (s : ℂ) :
   -- 5. Conclude D(1-s) = D(s)
   -- References: Iwasawa-Tate (1952), Poisson summation formula
 
-/-- Dual de Fourier auxiliar para la simetría -/
+/-- Auxiliary Fourier dual for symmetry -/
 lemma fourier_dual_aux (s n : ℕ) : 
     exp (2 * π * I * s * n) = conj (exp (2 * π * I * (1 - s) * n)) := by
   simp [exp_conj]
@@ -45,7 +45,7 @@ lemma fourier_dual_aux (s n : ℕ) :
   -- = exp(2πi·s·n) when n ∈ ℕ (since exp(2πi·n) = 1)
   ring
 
-/-- Transformada de Fourier de función gaussiana -/
+/-- Fourier transform of Gaussian function -/
 lemma fourier_gaussian (s : ℂ) (h : s.re > 0) : 
     ∀ ξ : ℝ, 
     (∫ x : ℝ, exp (- s * x ^ 2) * exp (2 * π * I * ξ * x)) = 
@@ -58,7 +58,7 @@ lemma fourier_gaussian (s : ℂ) (h : s.re > 0) :
   -- This follows from completing the square and contour integration
   -- References: Stein-Shakarchi (2003) Fourier Analysis, Chapter 2
 
-/-- La transformada de Fourier preserva la ecuación funcional -/
+/-- The Fourier transform preserves the functional equation -/
 lemma fourier_preserves_functional_equation : 
     ∀ s : ℂ, s.re > 0 → 
     (∫ x : ℝ, exp (- s * x ^ 2)) = 

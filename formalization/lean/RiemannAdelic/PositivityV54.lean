@@ -1,5 +1,5 @@
--- Archivo: PositivityV54.lean
--- V5.4: Positividad mejorada con pruebas completas
+-- File: PositivityV54.lean
+-- V5.4: Enhanced positivity with complete proofs
 import Mathlib.Analysis.NormedSpace.OperatorNorm
 import Mathlib.LinearAlgebra.Matrix.PosDef
 import RiemannAdelic.D_explicit
@@ -11,11 +11,11 @@ open Complex
 
 noncomputable section
 
-/-- Núcleo positivo explícito K(x,y) = exp(-‖x-y‖²/Im(s)) -/
+/-- Explicit positive kernel K(x,y) = exp(-‖x-y‖²/Im(s)) -/
 def kernel_positive_explicit (s : ℂ) : ℝ → ℝ → ℂ := 
   fun x y => exp (-Complex.ofReal ((x - y) ^ 2) / s.im)
 
-/-- El núcleo explícito es positivo definido -/
+/-- The explicit kernel is positive definite -/
 lemma kernel_positive_definite (s : ℂ) (h : 0 < s.im) :
     ∀ (f : ℝ → ℂ) (support : Finset ℝ),
     0 ≤ (∑ x in support, ∑ y in support, 
@@ -30,13 +30,13 @@ lemma kernel_positive_definite (s : ℂ) (h : 0 < s.im) :
   -- 4. For Gaussian kernel, eigenvalues are positive (Mehler's formula)
   -- References: Steinwart-Christmann (2008) "Support Vector Machines"
 
-/-- Clase de traza: operadores con traza finita -/
+/-- Trace class: operators with finite trace -/
 structure TraceClass where
   eigenvals : ℕ → ℝ
   eigenvals_nonneg : ∀ n, 0 ≤ eigenvals n
   trace_finite : ∑' n, eigenvals n < ∞
 
-/-- El operador asociado al núcleo gaussiano es de clase traza -/
+/-- The operator associated with the Gaussian kernel is trace class -/
 lemma trace_class_pos (s : ℂ) (h : 0 < s.re) : 
     ∃ T : TraceClass, ∀ n, T.eigenvals n = Real.exp (-s.re * n ^ 2) := by
   -- Los valores propios del operador gaussiano decaen exponencialmente
@@ -54,7 +54,7 @@ lemma trace_class_pos (s : ℂ) (h : 0 < s.re) :
   intro n
   rfl
 
-/-- Teorema de positividad implica línea crítica -/
+/-- Positivity theorem implies critical line -/
 theorem positivity_implies_critical (ρ : ℂ) (h : D_explicit ρ = 0) : 
     ρ.re = 1/2 := by
   -- Este es el teorema central que conecta positividad con la línea crítica
@@ -68,7 +68,7 @@ theorem positivity_implies_critical (ρ : ℂ) (h : D_explicit ρ = 0) :
   -- 6. This contradicts positivity, therefore Re(ρ) = 1/2
   -- References: Weil (1952) Acta Math, Bombieri (1992) Bourbaki
 
-/-- Forma cuadrática de Weil-Guinand -/
+/-- Weil-Guinand quadratic form -/
 noncomputable def weil_guinand_quadratic (f : ℝ → ℂ) : ℝ :=
   -- Q(f) = ∑_{ρ ceros} |ℳ(f)(ρ)|² - ∫ |f(x)|²·W(x) dx
   -- donde ℳ es transformada de Mellin y W es peso
@@ -76,7 +76,7 @@ noncomputable def weil_guinand_quadratic (f : ℝ → ℂ) : ℝ :=
   -- In practice, this requires integration over test functions
   -- and summation over zeros of D
 
-/-- La forma cuadrática es positiva si y solo si RH es verdadera -/
+/-- The quadratic form is positive if and only if RH is true -/
 theorem weil_guinand_iff_rh :
     (∀ f : ℝ → ℂ, weil_guinand_quadratic f ≥ 0) ↔ 
     (∀ ρ : ℂ, D_explicit ρ = 0 → ρ.re = 1/2) := by

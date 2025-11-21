@@ -1,5 +1,5 @@
--- Archivo: SpectralStructure.lean
--- V5.4: Estructura espectral completa y teorema principal de RH
+-- File: SpectralStructure.lean
+-- V5.4: Complete spectral structure and main RH theorem
 import RiemannAdelic.D_explicit
 import RiemannAdelic.OperatorH
 import RiemannAdelic.PositivityV54
@@ -12,27 +12,27 @@ open Complex
 
 noncomputable section
 
-/-- Estructura espectral adélica: (Operador H, Función D, Núcleo K) -/
+/-- Adelic spectral structure: (Operator H, Function D, Kernel K) -/
 def SpectralAdelic (s : ℂ) := 
   (OperatorH s 0, D_explicit s, kernel_positive_explicit s)
 
-/-- Sistema espectral completo -/
+/-- Complete spectral system -/
 structure SpectralSystem where
-  /-- Operador de Hilbert -/
+  /-- Hilbert operator -/
   H : ∀ s : ℂ, ∀ n : ℕ, (ℂ → ℂ) →L[ℂ] (ℂ → ℂ)
-  /-- Función determinante espectral -/
+  /-- Spectral determinant function -/
   D : ℂ → ℂ
-  /-- Núcleo positivo -/
+  /-- Positive kernel -/
   K : ℂ → ℝ → ℝ → ℂ
-  /-- Ecuación funcional -/
+  /-- Functional equation -/
   functional_eq : ∀ s : ℂ, D (1 - s) = D s
-  /-- Orden entero -/
+  /-- Entire order -/
   entire_order : ∃ M : ℝ, M > 0 ∧ 
     ∀ s : ℂ, Complex.abs (D s) ≤ M * Real.exp (Complex.abs s.im)
-  /-- Positividad del núcleo -/
+  /-- Kernel positivity -/
   kernel_pos : ∀ s : ℂ, ∀ x y : ℝ, 0 ≤ (K s x y).re
 
-/-- Sistema espectral canónico para RH -/
+/-- Canonical spectral system for RH -/
 def canonical_spectral_system : SpectralSystem where
   H := OperatorH
   D := D_explicit
@@ -45,25 +45,25 @@ def canonical_spectral_system : SpectralSystem where
     simp [Complex.ofReal_re]
     apply Real.exp_pos.le
 
-/-- Teorema Principal: Hipótesis de Riemann (formulación adélica) -/
+/-- Main Theorem: Riemann Hypothesis (adelic formulation) -/
 theorem riemann_hypothesis_adelic : 
     ∀ ρ : ℂ, D_explicit ρ = 0 → ρ.re = 1/2 := by
   intro ρ h
   exact positivity_implies_critical ρ h
 
-/-- Formulación alternativa usando la estructura espectral -/
+/-- Alternative formulation using spectral structure -/
 theorem main_adelic_proof : 
     ∀ ρ : ℂ, canonical_spectral_system.D ρ = 0 → ρ.re = 1/2 := by
   intro ρ h
   unfold canonical_spectral_system at h
   exact riemann_hypothesis_adelic ρ h
 
-/-- Corolario: Todos los ceros no triviales están en la línea crítica -/
+/-- Corollary: All non-trivial zeros are on the critical line -/
 theorem all_nontrivial_zeros_critical :
     ∀ ρ : ℂ, non_trivial_zero ρ → ρ.re = 1/2 := 
   all_zeros_critical
 
-/-- Teorema de completitud: El sistema espectral es completo -/
+/-- Completeness theorem: The spectral system is complete -/
 theorem spectral_system_complete : 
     ∀ s : ℂ, 
     (canonical_spectral_system.D s = 0 → 
@@ -80,7 +80,7 @@ theorem spectral_system_complete :
     simp
     exact hε
 
-/-- Verificación: Todos los componentes son consistentes -/
+/-- Verification: All components are consistent -/
 theorem spectral_components_consistent :
     ∀ s : ℂ, 
     canonical_spectral_system.D (1 - s) = canonical_spectral_system.D s ∧
@@ -91,21 +91,21 @@ theorem spectral_components_consistent :
   · exact canonical_spectral_system.functional_eq s
   · exact canonical_spectral_system.entire_order
 
-/-- Teorema final: RH es equivalente a la positividad espectral -/
+/-- Final theorem: RH is equivalent to spectral positivity -/
 theorem rh_equivalent_spectral_positivity :
     (∀ ρ : ℂ, D_explicit ρ = 0 → ρ.re = 1/2) ↔
     (∀ s : ℂ, ∀ x y : ℝ, 0 ≤ (kernel_positive_explicit s x y).re) := by
   constructor
   · intro h_rh s x y
-    -- Si RH es verdadera, el núcleo es positivo
+    -- If RH is true, the kernel is positive
     unfold kernel_positive_explicit
     simp [Complex.ofReal_re]
     apply Real.exp_pos.le
   · intro h_pos ρ hρ
-    -- Si el núcleo es positivo, RH es verdadera
+    -- If the kernel is positive, RH is true
     exact positivity_implies_critical ρ hρ
 
--- Imprime mensaje de éxito al cargar
+-- Print success message on load
 #eval IO.println "✅ SpectralStructure.lean V5.4 loaded successfully"
 #eval IO.println "✅ Main adelic proof of Riemann Hypothesis complete"
 

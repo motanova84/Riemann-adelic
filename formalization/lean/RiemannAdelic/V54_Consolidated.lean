@@ -21,7 +21,7 @@ open Complex
 noncomputable section
 
 /-! 
-# SECCIÓN 1: OPERADOR H Y ESTRUCTURA ESPECTRAL
+# SECTION 1: OPERATOR H AND SPECTRAL STRUCTURE
 -/
 
 variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℂ E]
@@ -38,10 +38,10 @@ noncomputable def SpectralTrace (s : ℂ) : ℂ :=
 def D_explicit (s : ℂ) : ℂ := SpectralTrace s
 
 /-!
-# SECCIÓN 2: PROPIEDADES DEL OPERADOR H
+# SECTION 2: PROPIEDADES DEL OPERADOR H
 -/
 
-/-- El operador H es autoadjunto (simplified version without full proof) -/
+/-- Operator H is self-adjoint (simplified version without full proof) -/
 lemma OperatorH_self_adjoint (s : ℂ) : 
     IsSelfAdjoint (OperatorH s 0 : E →L[ℂ] E) := by
   -- En una implementación completa, esto requiere mostrar que
@@ -60,7 +60,7 @@ lemma kernel_positive_nonneg (s : ℂ) :
   exact Real.exp_pos.le
 
 /-!
-# SECCIÓN 3: SIMETRÍA DE POISSON-RADON
+# SECTION 3: SIMETRÍA DE POISSON-RADON
 -/
 
 /-- Ecuación funcional: D(1-s) = D(s) vía simetría de Poisson-Radon -/
@@ -83,7 +83,7 @@ lemma fourier_dual_aux (s n : ℕ) :
   ring
 
 /-!
-# SECCIÓN 4: PROPIEDADES DE FUNCIÓN ENTERA
+# SECTION 4: PROPIEDADES DE FUNCIÓN ENTERA
 -/
 
 /-- D es entera de orden 1 -/
@@ -107,10 +107,10 @@ lemma D_entire_order_one (s : ℂ) :
       _ ≤ 2 * Real.exp (Complex.abs s.im) := by linarith [Real.exp_pos (Complex.abs s.im)]
 
 /-!
-# SECCIÓN 5: POSITIVIDAD Y CLASE DE TRAZA
+# SECTION 5: POSITIVIDAD Y CLASE DE TRAZA
 -/
 
-/-- Núcleo positivo explícito -/
+/-- Explicit positive kernel -/
 def kernel_positive_explicit (s : ℂ) : ℝ → ℝ → ℂ := 
   fun x y => exp (-ofReal ((x - y) ^ 2) / s.im)
 
@@ -125,12 +125,12 @@ theorem positivity_implies_critical (ρ : ℂ) (h : D_explicit ρ = 0) :
     ρ.re = 1/2 := by
   -- Este es el resultado central basado en:
   -- 1. Ecuación funcional D(ρ) = D(1-ρ)
-  -- 2. Teoría de formas cuadráticas de Weil-Guinand
+  -- 2. Weil-Guinand quadratic form theory
   -- 3. Positividad del núcleo gaussiano
   sorry
 
 /-!
-# SECCIÓN 6: ECUACIÓN FUNCIONAL Y SIMETRÍA
+# SECTION 6: ECUACIÓN FUNCIONAL Y SIMETRÍA
 -/
 
 /-- Ecuación funcional principal -/
@@ -142,7 +142,7 @@ lemma functional_equation (s : ℂ) :
 lemma paley_wiener_uniqueness (f g : ℂ → ℂ) 
     (h : ∀ t : ℝ, f (1/2 + t * I) = g (1/2 + t * I)) : 
     f = g := by
-  -- Si dos funciones enteras de orden ≤ 1 coinciden en la línea crítica,
+  -- If two entire functions of order ≤ 1 agree on the critical line,
   -- son idénticas (teorema de Carlson/Paley-Wiener)
   sorry
 
@@ -154,7 +154,7 @@ lemma functional_equation_zeros (s : ℂ) :
   exact h
 
 /-!
-# SECCIÓN 7: LOCALIZACIÓN DE CEROS
+# SECTION 7: LOCALIZACIÓN DE CEROS
 -/
 
 /-- Definición de cero no trivial -/
@@ -176,7 +176,7 @@ noncomputable def N (T : ℝ) : ℝ :=
   (T / (2 * Real.pi)) * Real.log (T / (2 * Real.pi)) - T / (2 * Real.pi)
 
 /-!
-# SECCIÓN 8: ESTRUCTURA ESPECTRAL Y TEOREMA PRINCIPAL
+# SECTION 8: ESTRUCTURA ESPECTRAL Y TEOREMA PRINCIPAL
 -/
 
 /-- Estructura espectral adélica completa -/

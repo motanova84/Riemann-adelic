@@ -1,5 +1,5 @@
--- Archivo: Symmetry.lean
--- V5.4: Ecuación funcional y teoremas de unicidad
+-- File: Symmetry.lean
+-- V5.4: Functional equation and uniqueness theorems
 import RiemannAdelic.D_explicit
 import RiemannAdelic.PoissonRadon
 
@@ -9,13 +9,13 @@ open Complex
 
 noncomputable section
 
-/-- Ecuación funcional principal: D(1-s) = D(s) -/
+/-- Main functional equation: D(1-s) = D(s) -/
 lemma functional_equation (s : ℂ) : 
     D_explicit (1 - s) = D_explicit s := 
   poisson_radon_symmetry s
 
-/-- Unicidad de Paley-Wiener: Si dos funciones coinciden en la 
-    línea crítica, entonces son iguales en todo el plano -/
+/-- Paley-Wiener uniqueness: If two functions agree on the 
+    critical line, then they are equal on the entire plane -/
 lemma paley_wiener_uniqueness (f g : ℂ → ℂ) 
     (h_entire_f : ∀ s : ℂ, ∃ r : ℝ, r > 0 ∧ 
       Complex.abs (f s) ≤ r * Real.exp (Complex.abs s.im))
@@ -34,14 +34,14 @@ lemma paley_wiener_uniqueness (f g : ℂ → ℂ)
   -- 5. Therefore f ≡ g everywhere
   -- References: Paley-Wiener (1934), Boas (1954) "Entire Functions"
 
-/-- Si D es cero en un punto, también lo es en su simétrico -/
+/-- If D is zero at a point, it is also zero at its symmetric point -/
 lemma functional_equation_zeros (s : ℂ) :
     D_explicit s = 0 → D_explicit (1 - s) = 0 := by
   intro h
   rw [functional_equation]
   exact h
 
-/-- La ecuación funcional implica simetría de ceros -/
+/-- The functional equation implies zero symmetry -/
 lemma zero_symmetry (s : ℂ) :
     D_explicit s = 0 ↔ D_explicit (1 - s) = 0 := by
   constructor
@@ -51,8 +51,8 @@ lemma zero_symmetry (s : ℂ) :
     simp at this
     exact this
 
-/-- Si una función entera satisface f(s) = f(1-s) y tiene un cero,
-    entonces el cero debe estar en Re(s) = 1/2 o ser simétrico -/
+/-- If an entire function satisfies f(s) = f(1-s) and has a zero,
+    then the zero must be at Re(s) = 1/2 or be symmetric -/
 lemma symmetric_function_zeros (f : ℂ → ℂ) 
     (h_sym : ∀ s : ℂ, f s = f (1 - s))
     (h_zero : f s = 0) :
@@ -66,7 +66,7 @@ lemma symmetric_function_zeros (f : ℂ → ℂ)
     · rw [← h_sym]
       exact h_zero
 
-/-- Lema auxiliar: Re(1-s) = 1 - Re(s) -/
+/-- Auxiliary lemma: Re(1-s) = 1 - Re(s) -/
 lemma re_one_minus (s : ℂ) : (1 - s).re = 1 - s.re := by
   simp [Complex.re]
   ring
