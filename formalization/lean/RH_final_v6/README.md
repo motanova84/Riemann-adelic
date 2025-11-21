@@ -45,7 +45,7 @@ Convergencia del producto regularizado:
 - Convergencia uniforme en subconjuntos compactos
 - Establece la representación espectral de ζ(s)
 
-### 5. Spectral Identification (`spectrum_eq_zeros.lean`) ✨ **NUEVO**
+### 5. Spectral Identification (`spectrum_eq_zeros.lean`) ✨
 Identificación espectral completa que cierra la prueba:
 - **Teorema principal**: Spec(H_Ψ) = {γₙ} bajo simetría funcional
 - Establece que el espectro discreto de H_Ψ coincide exactamente con las partes imaginarias de los ceros no triviales de ζ(s)
