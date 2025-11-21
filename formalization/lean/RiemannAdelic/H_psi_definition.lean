@@ -54,7 +54,8 @@ def Hψ (f : ℝ → ℂ) (x : ℝ) : ℂ :=
   -x * deriv f x + π * Zeta.special (1 / 2) * log x * f x
 
 -- Dominio de definición: funciones suaves con soporte compacto en (0,∞)
--- (Definido en términos de Hψ para evitar duplicación)
+-- Nota: Este alias se mantiene por compatibilidad con la especificación original
+-- del problema statement, aunque funcionalmente es equivalente a Hψ
 def domain_H : (ℝ → ℂ) → ℝ → ℂ := fun f ↦ Hψ f
 
 -- Dominio denso: funciones de Schwartz en (0,∞)
