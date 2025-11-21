@@ -51,6 +51,7 @@ import RiemannAdelic.de_branges
 import RiemannAdelic.positivity
 import RiemannAdelic.doi_positivity
 import RiemannAdelic.KernelPositivity
+import RiemannAdelic.positivity_implies_critical
 
 -- Zero localization and uniqueness
 import RiemannAdelic.zero_localization
@@ -118,6 +119,7 @@ def main : IO Unit := do
   IO.println "  • de Branges space framework"
   IO.println "  • Weil-Guinand positivity theory"
   IO.println "  • Kernel positivity (quotient module approach)"
+  IO.println "  • Positivity implies critical line (Hilbert-Pólya threshold)"
   IO.println "  • Zero localization and uniqueness"
   IO.println "  • Critical line proof via spectral operators"
   IO.println "  • Paley-Wiener theory and uniqueness"
