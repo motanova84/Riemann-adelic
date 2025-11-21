@@ -23,8 +23,7 @@ from sympy import bernoulli
 from scipy.linalg import eigh
 from utils.mellin import truncated_gaussian, mellin_transform
 from scipy.linalg import schur, eigh
-from sympy import bernoulli, S, integrate, exp
-import matplotlib.pyplot as plt
+from sympy import bernoulli
 
 try:  # pragma: no cover - optional acceleration
     import jax.numpy as jnp
@@ -372,24 +371,8 @@ def zero_sum_limited(f, filename, max_zeros, lim_u=5, progress_chunks=None):
 def evaluate_xi_batch(gamma_values):
     """Vectorised computation of the Xi function on the critical line."""
 
-    # Check if JAX has the required functions
-    jax_available = jnp is not None and hasattr(jnp, 'gamma') and hasattr(jnp, 'zeta')
-    
-    if not jax_available:
-        return [mp.re(mp.pi ** (-0.5 * (0.5 + 1j * g)) * mp.gamma(0.25 + 0.5j * g) * mp.zeta(0.5 + 1j * g)) for g in gamma_values]
-
-    gamma_array = jnp.array(gamma_values, dtype=jnp.float64)
-
-    @jit  # type: ignore[arg-type]
-    def xi_single(g):
-        return jnp.real(
-            jnp.pi ** (-0.5 * (0.5 + 1j * g))
-            * jnp.gamma(0.25 + 0.5j * g)
-            * jnp.zeta(0.5 + 1j * g)
-        )
-
-    xi_vals = vmap(xi_single)(gamma_array)
-    return np.asarray(xi_vals)
+    # JAX doesn't have gamma/zeta functions, use mpmath fallback
+    return [mp.re(mp.pi ** (-0.5 * (0.5 + 1j * g)) * mp.gamma(0.25 + 0.5j * g) * mp.zeta(0.5 + 1j * g)) for g in gamma_values]
 
 
 def accelerated_prime_sum(primes, f, prime_limit=100):
@@ -400,7 +383,7 @@ def accelerated_prime_sum(primes, f, prime_limit=100):
     else:
         selected_primes = list(itertools.islice(primes, prime_limit))
     
-    # Try to use CuPy if available, but gracefully fall back on errors
+    # Try GPU path with CuPy if available
     if cp is not None and selected_primes:
         try:
             cp_primes = cp.asarray(selected_primes, dtype=cp.float64)
@@ -419,9 +402,10 @@ def accelerated_prime_sum(primes, f, prime_limit=100):
                 total += contrib
             return total
         except Exception:
-            # Fall back to CPU implementation if GPU fails
+            # Fall back to CPU if GPU fails
             pass
 
+    # CPU fallback
     total = mp.mpf('0')
     for p in selected_primes:
         log_p = mp.log(p)

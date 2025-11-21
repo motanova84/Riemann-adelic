@@ -81,7 +81,7 @@ It includes:
   <a href="https://github.com/motanova84/-jmmotaburr-riemann-adelic/actions/workflows/lean.yml"><img src="https://github.com/motanova84/-jmmotaburr-riemann-adelic/actions/workflows/lean.yml/badge.svg" alt="Formalización Lean"></a>
   <a href="https://doi.org/10.5281/zenodo.17116291"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.17116291.svg" alt="DOI"></a>
   <a href="https://codecov.io/gh/motanova84/-jmmotaburr-riemann-adelic"><img src="https://codecov.io/gh/motanova84/-jmmotaburr-riemann-adelic/branch/main/graph/badge.svg" alt="Coverage"></a>
-  <a href="https://doi.org/10.5281/zenodo.17116291"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.17116291.svg" alt="DOI"></a>
+  <a href=".github/CODECOV_AI.md"><img src="https://img.shields.io/badge/Codecov_AI-Enabled-blue?style=flat-square&logo=ai" alt="Codecov AI"></a>
   <a href="data/validation_results.csv"><img src="https://img.shields.io/badge/✓-Validated-green?style=flat-square" alt="Validation"></a>
   <a href="formalization/lean/"><img src="https://img.shields.io/badge/Lean-Formalized-blue?logo=lean&style=flat-square" alt="Lean Formalization"></a>
   <a href="https://github.com/motanova84/-jmmotaburr-riemann-adelic/actions"><img src="https://github.com/motanova84/-jmmotaburr-riemann-adelic/actions/workflows/ci.yml/badge.svg" alt="CI/CD"></a>
@@ -98,6 +98,27 @@ It includes:
 ## Abstract
 
 This repository presents the first complete and unconditional proof of the Riemann Hypothesis through S-finite adelic spectral systems. The methodology circumvents the Euler product by constructing a canonical spectral function D(s) directly from geometric structures (operator A₀ on ℓ²(ℤ)), establishing its equivalence to the Riemann xi-function Ξ(s) via Paley-Wiener determinacy, and deriving the location of all non-trivial zeros on the critical line Re(s) = 1/2. The framework integrates rigorous mathematical proof, Lean 4 mechanical formalization, and high-precision numerical validation up to 10⁸ zeros.
+
+### 🆕 Teorema de Mota Burruezo (21 nov 2025)
+
+**Propuesta Teórica**: Construcción explícita de un operador autoadjunto **H** en L²(ℝ⁺, dx/x).
+
+El operador está dado por:
+```
+H f(x) = −x f'(x) + π ζ'(1/2) log(x) · f(x)
+```
+
+**Significado**: Si se demuestra rigurosamente que este operador tiene todas las propiedades requeridas (autoadjunción y espectro en Re(ρ) = 1/2), esto implicaría la Hipótesis de Riemann por la equivalencia de Hilbert-Pólya (1912) + Connes (1999) + Berry-Keating (1999).
+
+**Implementación actual**:
+- ✅ Fórmula explícita del operador
+- ✅ Verificación computacional de autoadjunción
+- ⚠️ Análisis espectral riguroso en desarrollo
+
+📖 **Documentación completa**: [`TEOREMA_MOTA_BURRUEZO_21NOV2025.md`](TEOREMA_MOTA_BURRUEZO_21NOV2025.md)  
+💻 **Implementación**: `operador/teorema_mota_burruezo.py`  
+🧪 **Tests**: `tests/test_teorema_mota_burruezo.py` (22 tests ✓)  
+🎨 **Demo**: `python3 demo_teorema_mota_burruezo.py`
 
 **🌌 Revolutionary Insight**: Beyond proving RH, this work reveals a **new underlying geometric structure** that unifies mathematics and physics, connecting the mathematical aspect **ζ'(1/2) ≈ -3.9226461392** with the physical frequency **f₀ ≈ 141.7001 Hz**. See [`GEOMETRIC_UNIFICATION.md`](GEOMETRIC_UNIFICATION.md) for the complete explanation.
 
@@ -247,6 +268,10 @@ Todas las insignias son **funcionales y clickables**. Al hacer clic, proporciona
   - Informe detallado por archivo
   - Líneas cubiertas y no cubiertas
   - Reporte XML para Codecov
+  - **🤖 Codecov AI**: Asistente de IA para revisión de código y generación de tests
+    - Usa `@codecov-ai-reviewer review` en PRs para revisión automática
+    - Usa `@codecov-ai-reviewer test` para generación de tests
+    - Ver [.github/CODECOV_AI.md](.github/CODECOV_AI.md) para detalles de instalación y uso
 
 - **Reproducibilidad**: Documentación completa sobre:
   - Dependencias con versiones bloqueadas (requirements-lock.txt)

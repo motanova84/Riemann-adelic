@@ -15,6 +15,15 @@ Mathematical Context:
     If the spectral measure μ_ε ≈ measure of zeros ν, this provides
     numerical evidence for the spectral interpretation of RH.
 
+Lean Formalization:
+    See formalization/lean/RiemannAdelic/H_epsilon_foundation.lean
+    for the rigorous mathematical framework including:
+    - L²(ℝ⁺, dt/t) Hilbert space with logarithmic measure
+    - Hermite logarithmic orthonormal basis
+    - V(t) potential with p-adic corrections
+    - H_ε hermitian operator and spectral analysis
+    - D(s) function and connection to Riemann zeta
+
 Usage:
     python demo_operador_H_epsilon.py [--N 200] [--T 20] [--epsilon 0.01]
 """
