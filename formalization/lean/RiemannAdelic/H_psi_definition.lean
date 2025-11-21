@@ -47,13 +47,17 @@ donde:
 
 -- Dominio de definición: funciones suaves con soporte compacto en (0,∞)
 def domain_H : (ℝ → ℂ) → ℝ → ℂ := 
-  fun f ↦ fun x ↦ -x * deriv f x + π * (Zeta.special 1 / 2) * log x * f x
+  fun f ↦ fun x ↦ -x * deriv f x + π * Zeta.special (1 / 2) * log x * f x
 
 -- Operador H_Ψ como operador diferencial formal
 def Hψ (f : ℝ → ℂ) (x : ℝ) : ℂ :=
   -x * deriv f x + π * Zeta.special (1 / 2) * log x * f x
 
 -- Dominio denso: funciones de Schwartz en (0,∞)
+-- Note: We use ℝ → ℂ instead of Set.Ioi 0 → ℂ to work with Mathlib's
+-- differentiability and integration infrastructure, which expects functions
+-- on ℝ. The Schwartz condition ensures f decays rapidly, and in practice
+-- f is only evaluated on (0,∞) in all theorems and integrals.
 def Schwartz_Rpos := 
   { f : ℝ → ℂ // ContDiff ℝ ⊤ f ∧ 
     (∀ n : ℕ, ∃ C, ∀ x > 0, ‖f x‖ ≤ C / x^n) }
