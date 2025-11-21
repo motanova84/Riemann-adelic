@@ -153,7 +153,7 @@ def mpmath_load_zeros(n_zeros: int, dps: int = 25) -> np.ndarray:
 
     for i in range(1, n_zeros + 1):
         zero = mpmath.zetazero(i)
-        # Extraer parte imaginaria (real part es 0.5)
+        # Extraer parte imaginaria (parte real es 0.5)
         gamma = float(zero.imag)
         zeros.append(gamma)
 

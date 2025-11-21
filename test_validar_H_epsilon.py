@@ -56,7 +56,7 @@ class TestCouplingFunctions:
             c_down = coupling_down(n, m)
             c_up = coupling_up(m, n)
             assert_allclose(
-                c_down, np.conj(c_up), rtol=1e-10,
+                c_up, np.conj(c_down), rtol=1e-10,
                 err_msg=f"Hermiticity violated at n={n}, m={m}")
 
     def test_coupling_bounded(self):
