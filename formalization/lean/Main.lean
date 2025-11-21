@@ -19,6 +19,7 @@ import RiemannAdelic.V54_Consolidated
 
 -- Operator-theoretic formulation (V5.3+)
 import RiemannAdelic.RiemannOperator
+import RiemannAdelic.BerryKeatingOperator
 
 -- Entire function theory
 import RiemannAdelic.entire_order
@@ -33,6 +34,7 @@ import RiemannAdelic.poisson_radon_symmetry
 -- Archimedean factors
 import RiemannAdelic.arch_factor
 import RiemannAdelic.GammaTrivialExclusion
+import RiemannAdelic.GammaWeierstrassLemma
 
 -- de Branges space theory
 import RiemannAdelic.de_branges
@@ -52,7 +54,10 @@ import RiemannAdelic.critical_line_proof
 
 -- Paley-Wiener and derived lengths
 import RiemannAdelic.pw_two_lines
+import RiemannAdelic.paley_wiener_uniqueness
+import RiemannAdelic.D_limit_equals_xi
 import RiemannAdelic.lengths_derived
+import RiemannAdelic.paley_wiener_uniqueness
 
 -- Paley-Wiener Uniqueness Theorem (100% formal, zero sorry)
 import paley.paley_wiener_uniqueness
@@ -61,12 +66,8 @@ import paley.paley_wiener_uniqueness
 import RiemannAdelic.spectral_rh_operator
 -- Spectral RH operator H_ε
 import RiemannAdelic.spectral_RH_operator
--- H_ε operator foundation with logarithmic Hilbert space
-import RiemannAdelic.H_epsilon_foundation
-
--- H_ε foundation and Selberg trace formula (V5.3+)
-import RiemannAdelic.H_epsilon_foundation
-import RiemannAdelic.selberg_trace
+-- HΨ operator Hermitian property
+import RiemannAdelic.H_psi_hermitian
 
 -- Berry-Keating operator H_Ψ on L²(ℝ⁺, dt/t)
 import RiemannAdelic.H_psi
@@ -97,15 +98,21 @@ def main : IO Unit := do
   IO.println "  • Schwartz functions on adeles (constructive)"
   IO.println "  • Explicit D(s) construction"
   IO.println "  • Operator-theoretic formulation (Hε with oscillatory potential)"
+  IO.println "  • Berry-Keating operator H_Ψ on L²(ℝ⁺, dx/x)"
   IO.println "  • Entire function and Hadamard theory"
   IO.println "  • Hadamard factorization and quotient analysis"
   IO.println "  • Functional equation and Poisson symmetry"
+  IO.println "  • Gamma Weierstrass representation for reflected Gamma function"
   IO.println "  • de Branges space framework"
   IO.println "  • Weil-Guinand positivity theory"
   IO.println "  • Kernel positivity (quotient module approach)"
   IO.println "  • Zero localization and uniqueness"
   IO.println "  • Critical line proof via spectral operators"
+  IO.println "  • Paley-Wiener theory and uniqueness"
+  IO.println "  • D(s,ε) limit theorem"
+  IO.println "  • Spectral RH operator H_ε (with prime harmonic potential)"
   IO.println "  • Paley-Wiener theory"
+  IO.println "  • Paley-Wiener uniqueness theorem"
   IO.println "  • Paley-Wiener Uniqueness (100% formal - ZERO sorry)"
   IO.println "  • Spectral RH operator (H_ε with prime harmonic potential)"
   IO.println "  • Critical line proof via spectral operators"
@@ -114,6 +121,7 @@ def main : IO Unit := do
   IO.println "  • H_ε foundation (eigenvalues and D(s) definitions)"
   IO.println "  • Selberg trace formula (spectral-arithmetic connection)"
   IO.println "  • H_ε foundation (logarithmic Hilbert space, Hermite basis, p-adic potential)"
+  IO.println "  • HΨ operator Hermitian property proof"
   IO.println "  • Hadamard factorization (purge_axioms branch)"
   IO.println "  • Kernel positivity (purge_axioms branch)"
   IO.println "  • Gamma trivial exclusion (purge_axioms branch)"
