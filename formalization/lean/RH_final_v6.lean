@@ -13,9 +13,11 @@ import Mathlib.NumberTheory.ZetaFunction
 noncomputable section
 open Complex Filter Topology Set MeasureTheory
 
--- Operador espectral HΨ
-variable (HΨ : ℕ → ℝ) -- simplificado como espectro discreto
+-- Spectral operator HΨ
+variable (HΨ : ℕ → ℝ) -- simplified as discrete spectrum
 
+-- Logarithmic derivative of zeta function via spectral sum
+-- Note: Convergence requires s not in spectrum {HΨ n} and appropriate growth of HΨ
 def zeta_HΨ_deriv (HΨ : ℕ → ℝ) (s : ℂ) : ℂ :=
   ∑' n : ℕ, (1 : ℂ) / (s - HΨ n)
 
