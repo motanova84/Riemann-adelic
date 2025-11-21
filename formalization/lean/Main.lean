@@ -52,6 +52,8 @@ import paley.paley_wiener_uniqueness
 import RiemannAdelic.spectral_rh_operator
 -- Spectral RH operator H_ε
 import RiemannAdelic.spectral_RH_operator
+-- H_ε operator foundation with logarithmic Hilbert space
+import RiemannAdelic.H_epsilon_foundation
 
 -- Purge axioms modules (purge_axioms branch)
 import RiemannAdelic.Hadamard
@@ -84,6 +86,7 @@ def main : IO Unit := do
   IO.println "  • Spectral RH operator (H_ε with prime harmonic potential)"
   IO.println "  • Critical line proof via spectral operators"
   IO.println "  • Spectral RH operator H_ε"
+  IO.println "  • H_ε foundation (logarithmic Hilbert space, Hermite basis, p-adic potential)"
   IO.println "  • Hadamard factorization (purge_axioms branch)"
   IO.println "  • Kernel positivity (purge_axioms branch)"
   IO.println "  • Gamma trivial exclusion (purge_axioms branch)"
