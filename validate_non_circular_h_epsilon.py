@@ -14,9 +14,8 @@ Objetivo: Error < 10⁻¹⁰ en primeros 10⁸ ceros
 
 import numpy as np
 from scipy.linalg import eigh
-from scipy.special import hermite, factorial
 import mpmath
-from typing import List, Tuple
+from typing import Tuple
 import time
 
 # Configuración de precisión
@@ -110,23 +109,15 @@ def load_riemann_zeros_lmfdb(n_zeros: int = 100) -> np.ndarray:
 # SECCIÓN 2: CONSTRUCCIÓN DE H_ε DESDE PRIMEROS PRINCIPIOS
 # ══════════════════════════════════════════════════════════════════════
 
-def hermite_polynomial(n: int, x: float) -> float:
-    """
-    Polinomio de Hermite (físico) de orden n.
-    Hₙ(x) = (-1)ⁿ exp(x²) dⁿ/dxⁿ exp(-x²)
-    """
-    # Usar scipy.special para eficiencia
-    H = hermite(n)
-    return H(x)
-
 def p_adic_correction_term(n: int, primes_count: int = 20) -> complex:
     """
-    Corrección p-ádica al elemento diagonal.
+    Corrección p-ádica al elemento diagonal (usado por tests).
     
     δₙ = ∑_{p primo} (1/p²) · exp(iπn/√p)
     
-    Esta fórmula codifica información aritmética (distribución de primos)
-    en el operador sin usar los ceros.
+    Esta fórmula codifica información aritmética (distribución de primos).
+    Nota: No se usa directamente en construct_H_epsilon_theory, pero se mantiene
+    para compatibilidad con tests y como referencia teórica.
     """
     primes = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 
               43, 47, 53, 59, 61, 67, 71][:primes_count]
@@ -139,13 +130,14 @@ def p_adic_correction_term(n: int, primes_count: int = 20) -> complex:
 
 def coupling_coefficient(n: int, m: int, eps: float) -> complex:
     """
-    Coeficiente de acoplamiento entre niveles n y m.
+    Coeficiente de acoplamiento entre niveles n y m (usado por tests).
     
     Para |n-m| = 1: representa acoplamiento débil entre estados adyacentes.
+    Nota: No se usa directamente en construct_H_epsilon_theory, pero se mantiene
+    para compatibilidad con tests y como referencia teórica.
     """
     if abs(n - m) == 1:
         # Acoplamiento débil proporcional a eps
-        # Positivo para mantener matriz definida positiva
         return eps * 0.01
     else:
         return 0.0
@@ -225,8 +217,9 @@ def construct_H_epsilon_theory(
     
     # Elementos off-diagonales (acoplamiento muy débil)
     for n in range(N-1):
-        # Acoplamiento simétrico débil
-        coupling = eps * 0.001 * np.sqrt(E_n)
+        # Acoplamiento simétrico débil proporcional a la energía diagonal
+        E_avg = (H[n, n] + H[n+1, n+1]) / 2.0
+        coupling = eps * 0.001 * np.sqrt(abs(E_avg))
         H[n, n+1] = coupling
         H[n+1, n] = coupling
     
