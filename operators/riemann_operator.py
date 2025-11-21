@@ -30,7 +30,6 @@ DOI: 10.5281/zenodo.17379721
 import numpy as np
 from scipy.linalg import eigh
 from scipy.sparse import diags
-import mpmath as mp
 from typing import Tuple, List, Optional
 import os
 
@@ -39,6 +38,15 @@ F0 = 141.7001  # Fundamental frequency (Hz)
 OMEGA_0 = 2 * np.pi * F0  # Angular frequency
 ZETA_PRIME_HALF = -3.92264613  # ζ'(1/2) numerical value
 C_QCAL = 244.36  # QCAL coherence constant
+
+# Numerical stability constants
+LOG_X_EPSILON = 1e-10  # Epsilon for log(x) to avoid log(0)
+
+# Default construction parameters
+DEFAULT_N_BASIS = 200  # Grid points for position discretization
+DEFAULT_ALPHA = 0.5    # Decay exponent in W(x)
+DEFAULT_SIGMA = 10.0   # Gaussian envelope width
+DEFAULT_X_RANGE = (-5.0, 5.0)  # Position variable range
 
 
 def load_riemann_zeros(n_zeros: int = 50, data_dir: Optional[str] = None) -> np.ndarray:
@@ -110,7 +118,7 @@ def oscillatory_weight(x: np.ndarray, gamma_n: np.ndarray,
         
         # Oscillatory term: cos(γₙ log x)
         # Handle x <= 0 safely
-        log_x = np.where(x > 0, np.log(np.abs(x) + 1e-10), 0.0)
+        log_x = np.where(x > 0, np.log(np.abs(x) + LOG_X_EPSILON), 0.0)
         oscillation = np.cos(gamma * log_x)
         
         # Add contribution
@@ -224,8 +232,9 @@ def construct_H_psi_direct(n_zeros: int = 50,
     
     # Generate a random orthogonal matrix for basis mixing
     # This ensures the operator is Hermitian but not trivially diagonal
-    np.random.seed(42)  # For reproducibility
-    Q, _ = np.linalg.qr(np.random.randn(n_zeros, n_zeros))
+    # Use local random state for isolation
+    rng = np.random.RandomState(42)  # For reproducibility
+    Q, _ = np.linalg.qr(rng.randn(n_zeros, n_zeros))
     
     # Apply similarity transformation: H = Q·Λ·Q^T
     # This preserves eigenvalues but changes eigenvectors
@@ -237,9 +246,9 @@ def construct_H_psi_direct(n_zeros: int = 50,
     return H_psi, gamma_n
 
 
-def construct_H_psi(n_basis: int = 200, n_zeros: int = 50,
-                    x_range: Tuple[float, float] = (-5.0, 5.0),
-                    alpha: float = 0.5, sigma: float = 10.0,
+def construct_H_psi(n_basis: int = DEFAULT_N_BASIS, n_zeros: int = 50,
+                    x_range: Tuple[float, float] = DEFAULT_X_RANGE,
+                    alpha: float = DEFAULT_ALPHA, sigma: float = DEFAULT_SIGMA,
                     data_dir: Optional[str] = None,
                     use_direct: bool = True) -> Tuple[np.ndarray, np.ndarray]:
     """
@@ -438,11 +447,11 @@ def main():
     print("=" * 70 + "\n")
     
     # Construction parameters
-    n_basis = 200  # Grid points
+    n_basis = DEFAULT_N_BASIS  # Grid points
     n_zeros = 50   # Number of Riemann zeros
-    x_range = (-5.0, 5.0)
-    alpha = 0.5    # Decay in W(x)
-    sigma = 10.0   # Gaussian width
+    x_range = DEFAULT_X_RANGE
+    alpha = DEFAULT_ALPHA    # Decay in W(x)
+    sigma = DEFAULT_SIGMA   # Gaussian width
     
     print("CONSTRUCTION PARAMETERS:")
     print(f"  Grid points (n_basis): {n_basis}")

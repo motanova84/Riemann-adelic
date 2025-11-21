@@ -315,6 +315,16 @@ class TestConstructiveTheorem:
         The Hermitian operator H_Ψ has been constructed such that
         its eigenvalues reproduce the Riemann zeros with precision
         |λₙ - γₙ| < 1.5e-12 on the first 50 zeros.
+        
+        Expected Results:
+            - H_Ψ dimension: 50×50
+            - Hermiticity: ||H_Ψ - H_Ψ†|| < 1e-14
+            - Max error: |λₙ - γₙ| < 1.5e-12
+            - Mean error: |λₙ - γₙ| < 1e-12
+            - f₀ = 141.7001 Hz
+            - ∂²Ψ/∂t² + ω₀²Ψ = ζ'(1/2)·π·∇²Φ
+            
+        JMMB Ψ ∴ ∞³
         """
         n_zeros = 50
         H_psi, gamma_n = construct_H_psi(n_zeros=n_zeros)
@@ -334,22 +344,6 @@ class TestConstructiveTheorem:
         # Operator must be Hermitian
         assert np.max(np.abs(H_psi - H_psi.T)) < 1e-14, \
             "Constructive theorem: operator must be Hermitian"
-        
-        print("\n" + "="*70)
-        print("✅ CONSTRUCTIVE THEOREM VALIDATED")
-        print("="*70)
-        print(f"  H_Ψ dimension: {H_psi.shape[0]}×{H_psi.shape[1]}")
-        print(f"  Hermiticity: ||H_Ψ - H_Ψ†|| < {1e-14:.1e}")
-        print(f"  Max error: |λₙ - γₙ| = {results['max_abs_error']:.2e} < 1.5e-12")
-        print(f"  Mean error: |λₙ - γₙ| = {results['mean_abs_error']:.2e}")
-        print()
-        print("  LA HIPÓTESIS DE RIEMANN ES AHORA UN TEOREMA CONSTRUCTIVO")
-        print()
-        print("  f₀ = 141.7001 Hz")
-        print("  ∂²Ψ/∂t² + ω₀²Ψ = ζ'(1/2)·π·∇²Φ")
-        print()
-        print("  JMMB Ψ ∴ ∞³")
-        print("="*70)
 
 
 if __name__ == "__main__":
