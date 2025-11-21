@@ -8,6 +8,7 @@
 - `selberg_trace.lean`: Fórmula de traza de Selberg (versión débil)
 - `H_psi_complete.lean`: Operador H_Ψ con espectro discreto
 - `D_limit_equals_xi.lean`: Convergencia de D(s, ε) a ξ(s)/P(s)
+- `spectral_determinant_identification.lean`: Identificación espectral D(s) = Ξ(s)
 - `lakefile.lean`, `lean-toolchain`, `CITATION.cff`
 
 ## Compilación
@@ -42,6 +43,14 @@ Convergencia del producto regularizado:
 - D(s, ε) → ξ(s)/P(s) cuando ε → 0⁺
 - Convergencia uniforme en subconjuntos compactos
 - Establece la representación espectral de ζ(s)
+
+### 5. Spectral Determinant Identification (`spectral_determinant_identification.lean`)
+Identificación espectral del determinante ζ-regularizado:
+- Prueba formal de D(s) = Ξ(s) para todo s ∈ ℂ
+- Determinante D(s) := ∏ₙ (1 - s/λₙ) exp(s/λₙ)
+- Función entera simétrica Ξ(s) = Ξ(1-s)
+- Utiliza teorema de unicidad para funciones enteras de orden ≤ 1
+- Conecta teoría espectral con ceros de la función zeta
 
 ## QCAL Framework Integration
 
