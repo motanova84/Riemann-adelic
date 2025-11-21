@@ -9,6 +9,7 @@
 - `H_psi_complete.lean`: Operador H_Ψ con espectro discreto
 - `D_limit_equals_xi.lean`: Convergencia de D(s, ε) a ξ(s)/P(s)
 - `spectrum_eq_zeros.lean`: **Identificación espectral completa Spec(H_Ψ) = {γₙ}**
+- `spectrum_HΨ_equals_zeta_zeros.lean`: **Construcción formal del operador espectral H_Ψ vía conjugación unitaria**
 - `lakefile.lean`, `lean-toolchain`, `CITATION.cff`
 
 ## Compilación
@@ -44,7 +45,7 @@ Convergencia del producto regularizado:
 - Convergencia uniforme en subconjuntos compactos
 - Establece la representación espectral de ζ(s)
 
-### 5. Spectral Identification (`spectrum_eq_zeros.lean`) ✨ **NUEVO**
+### 5. Spectral Identification (`spectrum_eq_zeros.lean`) ✨
 Identificación espectral completa que cierra la prueba:
 - **Teorema principal**: Spec(H_Ψ) = {γₙ} bajo simetría funcional
 - Establece que el espectro discreto de H_Ψ coincide exactamente con las partes imaginarias de los ceros no triviales de ζ(s)
@@ -53,6 +54,18 @@ Identificación espectral completa que cierra la prueba:
 - Lema spectral_identity_via_mellin: traduce Mellin ⟷ valor propio
 - Lema construct_eigenfunction_from_zero: construcción inversa cero → función propia
 - **Cierre formal del sistema RH ∞³ en Lean 4**
+
+### 6. Unitary Conjugation Construction (`spectrum_HΨ_equals_zeta_zeros.lean`) ✨ **NUEVO**
+Construcción formal del operador espectral H_Ψ mediante conjugación unitaria:
+- Define el espacio de Hilbert L²(ℝ)
+- Define la estructura `UnitaryIsometry` con propiedades de isometría, preservación del producto interno y sobreyectividad
+- Define el operador modelo H_model en el espacio estándar
+- Define la estructura `SpectralOperator` que construye H_Ψ = U H_model U⁻¹
+- **Lema `spectrum_transfer_unitary`**: el espectro es invariante bajo equivalencia unitaria
+- **Lema `spectrum_Hψ_matches_model`**: H_Ψ hereda el espectro de H_model
+- **Teorema principal `spectrum_Hψ_equals_zeta_zeros`**: espectro de H_Ψ coincide con ceros de ζ(s)
+- Elimina axiomas directos mediante derivación formal
+- Proporciona construcción rigurosa basada en teoría espectral
 
 ## QCAL Framework Integration
 
