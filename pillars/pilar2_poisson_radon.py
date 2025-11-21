@@ -17,7 +17,7 @@ from typing import Callable, List, Tuple
 import mpmath as mp
 
 
-class TestFunction:
+class SchwartzTestFunction:
     """
     Clase para funciones test con transformada de Fourier.
     """
@@ -121,7 +121,7 @@ def verify_self_duality(lattice: List[Tuple[float, float]],
     return True
 
 
-def poisson_radon_duality(test_function: TestFunction,
+def poisson_radon_duality(test_function: SchwartzTestFunction,
                          lattice: List[Tuple[float, float]] = None,
                          tolerance: float = 1e-10) -> Tuple[bool, dict]:
     """
@@ -143,7 +143,7 @@ def poisson_radon_duality(test_function: TestFunction,
         - info_dict: Diccionario con información detallada
         
     Example:
-        >>> f = TestFunction(lambda x, xi: np.exp(-np.pi*(x**2 + xi**2)))
+        >>> f = SchwartzTestFunction(lambda x, xi: np.exp(-np.pi*(x**2 + xi**2)))
         >>> is_verified, info = poisson_radon_duality(f)
         >>> assert is_verified
     """
@@ -189,7 +189,7 @@ def poisson_radon_duality(test_function: TestFunction,
 
 
 def verify_functional_equation(s_values: List[complex],
-                               test_function: TestFunction) -> dict:
+                               test_function: SchwartzTestFunction) -> dict:
     """
     Verifica que la dualidad de Poisson implica D(s) = D(1-s).
     
@@ -263,7 +263,7 @@ def construct_geometric_functional_equation() -> dict:
     def gaussian_test(x: float, xi: float) -> complex:
         return np.exp(-np.pi * (x**2 + xi**2))
     
-    test_func = TestFunction(gaussian_test)
+    test_func = SchwartzTestFunction(gaussian_test)
     steps['step2_test_function'] = {
         'description': 'Función test gaussiana f(x,ξ) = exp(-π(x² + ξ²))'
     }
@@ -295,7 +295,7 @@ if __name__ == '__main__':
     def gaussian(x: float, xi: float) -> complex:
         return np.exp(-np.pi * (x**2 + xi**2))
     
-    test_func = TestFunction(gaussian)
+    test_func = SchwartzTestFunction(gaussian)
     print("   f(x,ξ) = exp(-π(x² + ξ²))\n")
     
     # Verificar dualidad de Poisson
