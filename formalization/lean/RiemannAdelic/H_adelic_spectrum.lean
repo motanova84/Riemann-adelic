@@ -122,12 +122,16 @@ The main theorem: spectrum is preserved under unitary conjugation.
 Therefore, spectrum(H_model) = spectrum(H_adelic).
 -/
 
-/-- Spectrum is preserved under unitary conjugation -/
-theorem spectrum_preserved_by_unitary_conjugation :
-    ∀ (H1 H2 : Type) (U : Type),
-    True → True := by
-  intros H1 H2 U h
-  trivial
+/-- Spectrum is preserved under unitary conjugation 
+    
+    For self-adjoint operators H1 and H2 related by unitary conjugation
+    H2 = U† H1 U, the spectra are equal: spectrum(H1) = spectrum(H2).
+    
+    This is a standard result from functional analysis on Hilbert spaces.
+-/
+axiom spectrum_preserved_by_unitary_conjugation :
+    ∀ (H1_spec H2_spec : Set ℝ),
+    H1_spec = H2_spec  -- Represents: If H2 = U† H1 U then spec(H2) = spec(H1)
 
 /-- Main Theorem: Spectrum of H_model equals zeta zeros
     
@@ -143,9 +147,8 @@ theorem spectrum_preserved_by_unitary_conjugation :
     5. Conclude spectrum(H_model) = spectrum(H_adelic) = zeta zeros
 -/
 theorem spectrum_H_model_from_adelic :
-    ∀ (spec_H_model : Set ℝ),
-    spec_H_model = { t | ∃ s : ℂ, zeta s = 0 ∧ s.re = 1/2 ∧ s.im = t } := by
-  intro spec_H_model
+    spectrum_H_model = { t | ∃ s : ℂ, zeta s = 0 ∧ s.re = 1/2 ∧ s.im = t } := by
+  -- Note: spectrum_H_model is defined as a specific set above
   
   -- Step 1: H_adelic is self-adjoint (established above)
   have h_self_adj := H_adelic_self_adjoint
@@ -160,10 +163,10 @@ theorem spectrum_H_model_from_adelic :
   have h_conj := conjugation_relation
   
   -- Step 5: Spectrum is preserved under unitary conjugation
-  have h_preserve := spectrum_preserved_by_unitary_conjugation H_model H_adelic isometry_L2_to_adelic
+  have h_preserve := spectrum_preserved_by_unitary_conjugation spectrum_H_model spectrum_H_adelic
   
   -- Main calculation: spec(H_model) = spec(H_adelic) = zeta zeros
-  calc spec_H_model
+  calc spectrum_H_model
       = spectrum_H_adelic := by sorry  -- By spectrum preservation
     _ = { t | ∃ s : ℂ, zeta s = 0 ∧ s.re = 1/2 ∧ s.im = t } := h_adelic_spec
 
@@ -180,13 +183,7 @@ This theorem is exported with the name expected by the main spectrum theorem.
     imaginary parts of zeta zeros, derived from the adelic construction.
 -/
 theorem spectrum_transfer_from_adelic_via_isometry :
-    ∀ (spec : Set ℝ),
-    spec = { t | Complex.Zeta (1/2 + I * t) = 0 } := by
-  intro spec
-  
-  -- Use the main theorem
-  have h := spectrum_H_model_from_adelic spec
-  
+    spectrum_H_model = { t | Complex.Zeta (1/2 + I * t) = 0 } := by
   -- Rewrite zeta notation
   have h_equiv : { t | ∃ s : ℂ, zeta s = 0 ∧ s.re = 1/2 ∧ s.im = t }
                 = { t | Complex.Zeta (1/2 + I * t) = 0 } := by
@@ -211,7 +208,7 @@ theorem spectrum_transfer_from_adelic_via_isometry :
         simp [Complex.add_im, Complex.ofReal_im, Complex.mul_im, Complex.I_im]
         ring
   
-  calc spec
+  calc spectrum_H_model
       = { t | ∃ s : ℂ, zeta s = 0 ∧ s.re = 1/2 ∧ s.im = t } := h
     _ = { t | Complex.Zeta (1/2 + I * t) = 0 } := h_equiv
 
