@@ -16,6 +16,7 @@ lean_lib RiemannAdelic where
     "de_branges",
     "entire_order",
     "positivity",
+    "paley_wiener_uniqueness",
     "RH_final"
   ]
 package riemannAdelic

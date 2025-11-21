@@ -43,6 +43,7 @@ import RiemannAdelic.critical_line_proof
 
 -- Paley-Wiener and derived lengths
 import RiemannAdelic.pw_two_lines
+import RiemannAdelic.paley_wiener_uniqueness
 import RiemannAdelic.lengths_derived
 
 -- Spectral RH operator with prime harmonic potential
