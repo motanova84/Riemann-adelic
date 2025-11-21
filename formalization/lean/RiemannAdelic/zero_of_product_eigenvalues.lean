@@ -27,8 +27,9 @@ abbrev lambda (n : ℕ) (ε : ℝ) : ℝ := n + 1/2 + ε * Real.sin (π * n)
 
 -- Definición de D(s, ε) como producto sobre autovalores
 -- Esta versión es truncada para fines computables (pero suficiente para prueba analítica)
+-- Nota: lambda n ε nunca es cero porque sin(πn) = 0 para todo n ∈ ℕ, por lo que λₙ = n + 1/2 > 0
 def D (s : ℂ) (ε : ℝ) (N : ℕ) : ℂ :=
-  ∏ n in Finset.range N, (1 - s / (lambda n ε))
+  ∏ n in Finset.range N, (1 - s / ↑(lambda n ε))
 
 
 -- Supongamos s₀ es raíz de D(s, ε), es decir, D(s₀, ε) = 0
@@ -37,7 +38,7 @@ def D (s : ℂ) (ε : ℝ) (N : ℕ) : ℂ :=
 
 theorem zero_of_D_eq_lambda
     {ε : ℝ} (hε : 0 < ε) {N : ℕ} (s₀ : ℂ) (hD : D s₀ ε N = 0) :
-    ∃ n < N, s₀ = lambda n ε := by
+    ∃ n < N, s₀ = ↑(lambda n ε) := by
   rw [D] at hD
   -- Un producto finito es cero sii algún factor es cero
   simp only [Finset.prod_eq_zero_iff] at hD
