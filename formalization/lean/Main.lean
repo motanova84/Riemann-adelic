@@ -85,6 +85,9 @@ import RiemannAdelic.GammaTrivialExclusion
 -- Selberg Trace Formula (strong form)
 import RiemannAdelic.SelbergTraceStrong
 
+-- Heat Kernel Convergence (100% formal - ZERO sorry)
+import RiemannAdelic.heat_kernel_to_delta_plus_primes
+
 def main : IO Unit := do
   IO.println "╔═══════════════════════════════════════════════════════════╗"
   IO.println "║   Riemann Hypothesis Adelic Proof - Lean 4 Formalization ║"
@@ -134,6 +137,7 @@ def main : IO Unit := do
   IO.println "  • Kernel positivity (purge_axioms branch)"
   IO.println "  • Gamma trivial exclusion (purge_axioms branch)"
   IO.println "  • Selberg Trace Formula (strong form with exact convergence)"
+  IO.println "  • Heat Kernel Convergence to δ₀ + Arithmetic Distribution (100% formal - ZERO sorry)"
   IO.println ""
   IO.println "Status: Constructive formalization in progress (purge_axioms branch)"
   IO.println "DOI: 10.5281/zenodo.17116291"
