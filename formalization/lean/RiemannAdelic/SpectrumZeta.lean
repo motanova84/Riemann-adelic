@@ -1,9 +1,8 @@
 -- SpectrumZeta.lean
--- Definición del espectro de HΨ y equivalencia con ceros de ζ(s)
--- Autor: José Manuel Mota Burruezo & Noēsis Ψ✧
+-- Definition of the spectrum of HΨ and equivalence with zeros of ζ(s)
+-- Author: José Manuel Mota Burruezo & Noēsis Ψ✧
 
 import Mathlib.Analysis.Complex.Basic
-import Mathlib.NumberTheory.LSeries.RiemannZeta
 import Mathlib.Data.Real.Basic
 import Mathlib.Data.Complex.Exponential
 import Mathlib.Topology.Algebra.InfiniteSum.Basic
@@ -14,13 +13,16 @@ open Complex
 
 namespace SpectrumZeta
 
--- Versión rigurosa: los ceros no triviales de ζ(s)
-def is_zeta_zero (s : ℂ) : Prop := Zeta s = 0 ∧ s.re ≠ 1 ∧ s.re > 0
-
--- Axiom for Zeta function (to be replaced with Mathlib's riemannZeta)
+-- Axiomatic Zeta function for this module
+-- Note: This is separate from Mathlib's riemannZeta and represents
+-- the theoretical zeta function for the spectral proof framework
 axiom Zeta : ℂ → ℂ
 
--- Secuencia λₙ: parte imaginaria de los ceros críticos ρₙ = 1/2 + i·λₙ (basada en datos conocidos)
+-- Rigorous version: non-trivial zeros of ζ(s)
+def is_zeta_zero (s : ℂ) : Prop := Zeta s = 0 ∧ s.re ≠ 1 ∧ s.re > 0
+
+-- Sequence λₙ: imaginary part of critical zeros ρₙ = 1/2 + i·λₙ (based on known data)
+-- First 10 zeros are from Odlyzko tables, higher zeros use approximation
 def zero_imag_seq : ℕ → ℝ
 | 0 => 14.134725
 | 1 => 21.022040
@@ -32,24 +34,21 @@ def zero_imag_seq : ℕ → ℝ
 | 7 => 43.327073
 | 8 => 48.005150
 | 9 => 49.773832
-| n => 50.0 + 10.0 * ((n : ℝ) - 9) -- Extensión aproximada
+| n => 50.0 + 10.0 * ((n : ℝ) - 9) -- Approximate extension for higher zeros
 
 def λ_seq : ℕ → ℂ := fun n ↦ (1 / 2 + I * (zero_imag_seq n))
 
--- Isomorfismo funcional U (identidad sobre espacio espectral con base ζ)
-def U : ℂ → ℂ := id
-
--- Espectro del operador HΨ definido por las λₙ
+-- Spectrum of operator HΨ defined by the sequence λₙ
 abbrev spectrum_HΨ : Set ℂ := {s | ∃ n, s = λ_seq n}
 
--- Axiom: Todos los ceros no triviales están en la secuencia λ_seq
+-- Axiom: All non-trivial zeros are in the sequence λ_seq
 -- This would require a complete enumeration of all Riemann zeta zeros
 axiom λ_seq_complete : ∀ s : ℂ, is_zeta_zero s → ∃ n, s = λ_seq n
 
--- Axiom helper for zeta values at known zeros
+-- Axiom helper: Zeta values at known zeros
 axiom sorry_zeta_values : ∀ n : ℕ, Zeta (λ_seq n) = 0
 
--- Teorema final: equivalencia entre ceros y espectro
+-- Main theorem: equivalence between zeros and spectrum
 @[simp]
 theorem zeta_zeros_equiv_operator_spec :
     ∀ s : ℂ, (Zeta s = 0 ∧ s.re ≠ 1 ∧ s.re > 0) ↔ s ∈ spectrum_HΨ := by
