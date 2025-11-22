@@ -36,8 +36,8 @@ de Berry-Keating H_Ψ y los ceros no triviales de la función zeta de Riemann.
 
 /-- El espectro del operador H_Ψ como conjunto de valores propios reales -/
 def Spectrum_HΨ : Set ℝ := 
-  { γ : ℝ | ∃ (f : ℝ → ℂ), f ≠ 0 ∧ 
-    ∀ x > 0, HΨ.mk.op (fun y => (f y).re) x = γ * (f x).re }
+  { γ : ℝ | ∃ (f : ℝ → ℝ), f ≠ 0 ∧ 
+    ∀ x > 0, HΨ.mk.op f x = γ * f x }
 
 /-- Conjunto de ceros no triviales de la función zeta en la banda crítica -/
 def ZetaZeros : Set ℝ := 
