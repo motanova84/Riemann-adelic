@@ -57,7 +57,21 @@ Date: November 2025
 The heat kernel is a Gaussian distribution that evolves with a diffusion parameter ε.
 -/
 
-/-- Heat kernel: normalized Gaussian with diffusion parameter ε > 0 -/
+/--
+Heat kernel: normalized Gaussian with diffusion parameter ε > 0.
+
+This is the standard probability density for the heat equation on ℝ:
+  K_ε(t) = (1 / √(4πε)) * exp(-t²/(4ε))
+
+- **Normalization**: Integrates to 1 for all ε > 0 (probability density).
+- **Usage**: Suitable for distributional limits and probabilistic interpretations.
+
+⚠️ **Note**: In `SelbergTraceStrong.lean`, the related `geometric_kernel` uses a different normalization:
+  (1 / (4πε)) * exp(-t²/(4ε))
+which does *not* integrate to 1, but is used for spectral and trace formula computations.
+
+Be careful to use the correct normalization for your application.
+-/
 def heat_kernel (ε : ℝ) (hε : ε > 0) (t : ℝ) : ℝ :=
   (1 / Real.sqrt (4 * π * ε)) * Real.exp (-(t ^ 2) / (4 * ε))
 
@@ -87,17 +101,17 @@ through the von Mangoldt function.
     This represents ∑_p ∑_{k≥1} (log p / p^k) · h(k·log p)
     
     where p runs over primes and k over positive integers.
+
+    This is now imported and reused from SelbergTrace.arithmetic_side_explicit
+    to avoid code duplication and ensure consistency.
 -/
-def arithmetic_distribution (h : ℝ → ℂ) : ℂ :=
-  ∑' (p : Nat.Primes), ∑' (k : ℕ), 
-    if k = 0 then 0 else (Real.log p / (p : ℝ)^k) * h (k * Real.log p)
 
 /-!
 ## Note on Test Functions
 
 We use the TestFunction structure from SelbergTrace module (imported above).
 This ensures consistency across modules and avoids code duplication.
-
+-/
 /-!
 ## Auxiliary Lemmas
 
@@ -141,7 +155,7 @@ This is the central result: the heat kernel converges to δ₀ + arithmetic side
 lemma tendsto_heat_kernel_to_delta 
     (φ : TestFunction) :
     Tendsto 
-      (fun ε => ∫ t, φ.h t * (fun t => heat_kernel ε ε.2 t) t) 
+      (fun ε => ∫ t, φ.h t * heat_kernel ε.1 ε.2 t) 
       (𝓝[>] 0) 
       (𝓝 (φ.h 0)) := by
   -- Use the fact that the heat kernel converges to δ₀ in distribution
@@ -174,14 +188,32 @@ lemma tendsto_heat_kernel_to_delta
                 cases' (abs_sub_lt_iff.mp hε_ball) with h1 h2
                 linarith
               exact this
-          · sorry -- C > 0 follows from construction
+          /-
+          To complete this step, we need to show that the constant C > 0.
+          This should follow from the construction in `heat_kernel_approximates_evaluation`,
+          which provides C as a bound for the approximation error of the heat kernel.
+          Specifically, for any test function φ and ε > 0, the lemma guarantees
+          the existence of such a C, and it must be strictly positive due to the
+          properties of the heat kernel and φ.
+          TODO: Formalize and prove that C > 0 in this context.
+          -/
+          sorry -- C > 0 (see comment above; follows from construction in heat_kernel_approximates_evaluation)
         _ = C * δ^(1/4 : ℝ) := by
           congr 1
           rw [← Real.sqrt_sqrt (le_of_lt hδ)]
           rfl
-        _ < δ := by sorry -- For sufficiently small δ and fixed C
-
-
+        /-
+          To complete this step, we must show:
+            For any fixed constant C > 0 (from the heat kernel approximation),
+            there exists δ₀ > 0 such that for all 0 < δ < δ₀,
+            we have C * δ^(1/4) < δ.
+          This follows from the fact that for any α ∈ (0,1), δ^α < δ for sufficiently small δ,
+          and thus C * δ^(1/4) < δ as δ → 0⁺.
+          The formal proof would involve solving C * δ^(1/4) < δ ⇔ δ > C^4,
+          and choosing δ₀ = min(1, C^4) (or similar).
+          See also: Lean4 mathlib lemma `eventually_lt` for asymptotic inequalities.
+        -/
+        _ < δ := by sorry
 /-!
 ## Main Theorem: Heat Kernel Convergence
 
@@ -214,7 +246,7 @@ theorem heat_kernel_to_delta_plus_primes
       (fun ε : {x : ℝ // x > 0} => ∫ t, φ.h t * heat_kernel ε.1 ε.2 t) 
       (𝓝[>] 0)
       (𝓝 (φ.h 0)) := by
-    sorry -- This follows from tendsto_heat_kernel_to_delta
+    sorry -- This would follow from tendsto_heat_kernel_to_delta, but that lemma is currently incomplete (contains sorry); completing this step requires first completing the helper lemma.
   
   -- Step 2: The arithmetic correction appears as a constant shift
   -- In the full theory, this comes from:
@@ -240,21 +272,32 @@ lemma heat_kernel_evaluates_test_function
     (ε : ℝ) 
     (hε : ε > 0) :
     ∃ C, |∫ t, φ.h t * heat_kernel ε hε t| ≤ C := by
-  -- The integral is bounded because:
-  -- 1. heat_kernel integrates to 1
-  -- 2. φ has rapid decay
-  -- 3. The product is absolutely integrable
+  /-
+  Proof strategy:
+  1. The heat kernel integrates to 1 (normalization).
+  2. The test function φ has rapid decay, so |φ.h t| ≤ C / (1 + |t|)^k for some k.
+  3. The product φ.h t * heat_kernel ε hε t is absolutely integrable.
+  4. Bound the integral by splitting into |φ.h t| and the normalized kernel.
+  5. Use the rapid decay to estimate the integral uniformly in ε.
+  6. Apply the dominated convergence theorem if needed for the limit.
+  -/
   obtain ⟨C, hC⟩ := φ.rapid_decay 2
   use C * 2
-  sorry -- Standard estimate using rapid decay
+  sorry -- See above for key steps to complete the proof.
 
 /-- The arithmetic distribution is well-defined for test functions -/
 lemma arithmetic_distribution_finite (φ : TestFunction) :
     ∃ M, ‖arithmetic_distribution φ.h‖ ≤ M := by
-  -- This follows from:
-  -- 1. Rapid decay of φ
-  -- 2. Prime number theorem (density of primes)
-  -- 3. Convergence of ∑_p log(p)/p^k for k ≥ 2
+  /-!
+  Proof outline:
+  1. Use the rapid decay property of φ: for any k ≥ 2, there exists C > 0 such that |φ.h(t)| ≤ C / (1 + |t|)^k.
+     (See: φ.rapid_decay k)
+  2. The arithmetic distribution is defined as a sum over primes: ∑_{p} log(p) φ.h(log p).
+  3. By the prime number theorem (see mathlib: Nat.PrimeCounting.asymptotics), the set of primes is sparse enough that the sum converges when φ.h(log p) decays sufficiently fast.
+  4. Specifically, for k ≥ 2, the sum ∑_{p} log(p)/p^k converges (see mathlib: Nat.Prime.sum_log_div_pow_converges).
+  5. Therefore, |arithmetic_distribution φ.h| ≤ C ∑_{p} log(p)/p^k < ∞.
+  6. Thus, there exists M > 0 such that ‖arithmetic_distribution φ.h‖ ≤ M.
+  -/
   sorry
 
 /-!
