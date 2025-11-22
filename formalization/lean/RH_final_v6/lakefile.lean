@@ -15,5 +15,9 @@ lean_lib RHFinal where
     `SelbergTraceStrong,
     `D_limit_equals_xi,
     `zeta_operator_D,
+    `RiemannSiegel,
+    `NoExtraneousEigenvalues,
+    `DeterminantFredholm,
+    `RH_complete_proof,
     `Riemann_Hypothesis_noetic
   ]
