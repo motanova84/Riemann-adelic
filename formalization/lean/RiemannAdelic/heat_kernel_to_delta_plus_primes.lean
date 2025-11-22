@@ -190,10 +190,6 @@ lemma tendsto_heat_kernel_to_delta
           rfl
         _ < δ := by sorry -- For sufficiently small δ and fixed C
 
-/-- Arithmetic correction term is constant in ε (it doesn't depend on ε) -/
-lemma arithmetic_distribution_constant (h : ℝ → ℂ) (ε₁ ε₂ : ℝ) :
-    arithmetic_distribution h = arithmetic_distribution h := by
-  rfl
 
 /-!
 ## Main Theorem: Heat Kernel Convergence
