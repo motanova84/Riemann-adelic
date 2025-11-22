@@ -13,7 +13,7 @@ This identity is central to proving the Riemann Hypothesis via operator theory, 
 ## Files
 
 ### FredholmDetEqualsXi.lean
-**Status: ✅ 0 sorrys, 10 theorems, 1 axiom**
+**Status: ✅ 0 sorrys, 10 theorems, 3 axioms (plus 18 imported from NuclearityExplicit.lean)**
 
 Main module establishing the Fredholm determinant identity.
 
