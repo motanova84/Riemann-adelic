@@ -81,9 +81,9 @@ import RiemannAdelic.berry_keating_operator
 import RiemannAdelic.spectrum_Hpsi_definition
 import RiemannAdelic.spectrum_Hpsi_stage2
 
--- NEW: Adelic Spectrum Module (replaces axiom H_model_spectrum)
-import RiemannAdelic.H_adelic_spectrum
-import RiemannAdelic.spectrum_HΨ_equals_zeta_zeros
+-- Spectrum Zeta Module and Noetic Proof
+import RiemannAdelic.SpectrumZeta
+import RiemannAdelic.RiemannHypothesisNoetic
 
 -- Purge axioms modules (purge_axioms branch)
 import RiemannAdelic.Hadamard
@@ -149,6 +149,8 @@ def main : IO Unit := do
   IO.println "  • Kernel positivity (purge_axioms branch)"
   IO.println "  • Gamma trivial exclusion (purge_axioms branch)"
   IO.println "  • Selberg Trace Formula (strong form with exact convergence)"
+  IO.println "  • SpectrumZeta: Spectral operator HΨ connection to zeta zeros"
+  IO.println "  • RiemannHypothesisNoetic: Final corollary from spectral analysis"
   IO.println ""
   IO.println "Status: Constructive formalization in progress (purge_axioms branch)"
   IO.println "DOI: 10.5281/zenodo.17116291"
