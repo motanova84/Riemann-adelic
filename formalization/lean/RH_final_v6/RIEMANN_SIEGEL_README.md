@@ -95,12 +95,15 @@ The proof proceeds in five steps:
 | Component | Status | Notes |
 |-----------|--------|-------|
 | riemannSiegelMainTerm | ✅ Complete | Explicit formula |
-| riemannSiegel_explicit_error | ✅ Complete | Titchmarsh bound |
+| riemannSiegel_explicit_error | ⚠️ Axiom | Titchmarsh bound (Mathlib ref) |
 | universal_zero_seq | ✅ Complete | von Mangoldt formula |
-| universal_zero_seq_asymptotic | ✅ Complete | Growth bounds |
+| universal_zero_seq_asymptotic | ⚠️ Axiom | Growth bounds (Mathlib ref) |
 | gabcke_cancellation | ⚠️ Sorry | Scheduled for 23 Nov 2025 |
-| zeta_at_universal_zeros_vanishes | ✅ Complete | Main estimate |
-| riemann_hypothesis_from_spectral_operator | ✅ Complete | Final theorem |
+| riemannSiegel_vanishes_at_zeros | ⚠️ Sorries | Arithmetic + Gabcke |
+| zeta_at_universal_zeros_vanishes | ⚠️ Sorries | Arithmetic verifications |
+| universal_zero_seq_strict_mono | ⚠️ Sorry | Arithmetic verification |
+| universal_zero_seq_tendsto_infty | ⚠️ Sorry | Filter theory |
+| riemann_hypothesis_from_spectral_operator | ⚠️ Axioms | Spectral operator properties |
 
 ## Dependencies
 
