@@ -298,7 +298,7 @@ Axiomas → Lemas → Archimedean → Paley-Wiener → Zero localization → **O
 
 **Referencias Principales:**
 
-- Berry & Keating (1999): "H = xp and the Riemann zeros"
+- Berry, M. V., & Keating, J. P. (1999). "The Riemann Zeros and Eigenvalue Asymptotics". SIAM Review, 41(2), 236-266.
 - Conrey (1989): "More than two fifths of the zeros of the Riemann zeta function are on the critical line"
 - Selberg (1956): "Harmonic analysis and discontinuous groups"
 - de Branges (1986): "The convergence of Euler products"
