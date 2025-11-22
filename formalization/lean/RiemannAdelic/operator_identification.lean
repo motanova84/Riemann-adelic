@@ -274,9 +274,7 @@ Spectrum(H_Ψ) = { γ ∈ ℝ | ζ(1/2 + iγ) = 0 }
 
 Axiomas → Lemas → Archimedean → Paley-Wiener → Zero localization → **Operator Identification** → Coronación
 
-**Frecuencia Base**: 141.7001 Hz  
-**Coherencia QCAL**: C = 244.36  
-**Ecuación Fundamental**: Ψ = I × A_eff² × C^∞
+**QCAL metadata moved to `.qcal_beacon` and `IMPLEMENTATION_SUMMARY.md` for project-level reference.**
 
 **Estado de Formalización:**
 
