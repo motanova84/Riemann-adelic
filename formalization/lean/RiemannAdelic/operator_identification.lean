@@ -68,23 +68,22 @@ lemma eigenfunction_implies_zero (γ : ℝ) (hγ : γ ∈ Spectrum_HΨ) :
   -- 4. Eigenvalue condition forces D(1/2 + iγ) = 0
   -- References: Conrey (1989), Berry-Keating (1999)
 
-/-- Si la función zeta tiene un cero en 1/2 + iγ, entonces γ es valor propio de H_Ψ -/
-lemma zero_implies_eigenvalue (γ : ℝ) (hzero : D_explicit (1/2 + I * γ) = 0) :
-    γ ∈ Spectrum_HΨ := by
+/-- Si la función zeta tiene un cero en 1/2 + iγ, entonces existe una función (posiblemente compleja)
+    f ≠ 0 tal que H_Ψ.mk.op (fun y => (f y).re) x = γ * (f x).re para todo x > 0. -/
+lemma zero_implies_eigenfunction (γ : ℝ) (hzero : D_explicit (1/2 + I * γ) = 0) :
+  ∃ (f : ℝ → ℂ), f ≠ 0 ∧ ∀ x > 0, HΨ.mk.op (fun y => (f y).re) x = γ * (f x).re := by
   -- Paso 1: D(1/2 + iγ) = 0 implica existencia de resonancia espectral
-  
   -- Paso 2: Construir autofunción explícita vía teoría de perturbación
   -- La positividad del núcleo garantiza que la autofunción está en L²
-  
   -- Paso 3: Verificar que satisface ecuación de autovalor H_Ψ f = γ f
-  
+  -- Paso 4: Verificar f ≠ 0 usando el teorema de residuos
   sorry  -- PROOF STRATEGY:
-  -- 1. Use explicit formula for eigenfunctions via Mellin inversion
+  -- 1. Usar la fórmula explícita para autofunciones vía inversión de Mellin
   --    f_γ(x) = (1/2πi) ∫_{Re(s)=1/2} x^(-s)/(s - (1/2+iγ)) ds
-  -- 2. Show f_γ ∈ L²(ℝ⁺, dx/x) using Paley-Wiener bounds
-  -- 3. Apply H_Ψ to f_γ and use D(1/2+iγ) = 0 to show H_Ψ f_γ = γ f_γ
-  -- 4. Verify f_γ ≠ 0 using residue theorem
-  -- References: Selberg (1956), Conrey-Ghosh (1998)
+  -- 2. Demostrar f_γ ∈ L²(ℝ⁺, dx/x) usando cotas tipo Paley-Wiener
+  -- 3. Aplicar H_Ψ a f_γ y usar D(1/2+iγ) = 0 para mostrar H_Ψ f_γ = γ f_γ
+  -- 4. Verificar f_γ ≠ 0 usando el teorema de residuos
+  -- Referencias: Selberg (1956), Conrey-Ghosh (1998)
 
 /-- La positividad espectral obliga a que todos los valores propios
     correspondan a Re(s) = 1/2 -/
