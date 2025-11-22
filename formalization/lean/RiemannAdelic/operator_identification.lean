@@ -103,7 +103,7 @@ lemma paley_wiener_excludes_off_line_zeros :
   
   -- Paso 2: La ecuación funcional D(s) = D(1-s) implica D(1-s) = 0
   have h_reflected : D_explicit (1 - s) = 0 := by
-    rw [← functional_equation s]
+    rw [← D_explicit_functional_equation s]
     exact h_zero
   
   -- Paso 3: Si Re(s) ≠ 1/2, entonces Re(s) ≠ Re(1-s)
