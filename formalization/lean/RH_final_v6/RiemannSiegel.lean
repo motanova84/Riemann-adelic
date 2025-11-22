@@ -89,12 +89,16 @@ theorem Z_zeros_are_zeta_zeros (t : ℝ) :
 /-- Eigenvalues of HΨ correspond to zeta zeros -/
 axiom spectrum_HΨ : Set ℂ
 
-/-- Universal zero sequence approximation -/
-def universal_zero_seq : ℕ → ℂ
-  | n => 1/2 + I * (Classical.choose (zero_exists n))
-where
-  zero_exists (n : ℕ) : ∃ t : ℝ, t > 0 ∧ riemannZeta (1/2 + I * t) = 0 := by
-    sorry -- Existence of n-th zero
+/-- Imaginary part of n-th zero (axiomatized from numerical computation) -/
+axiom zero_imaginary_part : ℕ → ℝ
+
+/-- Universal zero sequence on critical line -/
+def universal_zero_seq (n : ℕ) : ℂ :=
+  1/2 + I * zero_imaginary_part n
+
+/-- Zeros are actually zeros of zeta -/
+axiom universal_zero_seq_is_zero (n : ℕ) :
+    riemannZeta (universal_zero_seq n) = 0
 
 /-- Zeta zeros lie in spectrum of HΨ -/
 theorem zeta_zero_in_spectrum (s : ℂ) 

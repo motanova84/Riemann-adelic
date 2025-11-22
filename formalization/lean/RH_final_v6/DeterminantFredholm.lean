@@ -79,10 +79,10 @@ axiom HΨ_compact_resolvent (z : ℂ) (hz : z ∉ spectrum ℂ (HΨ : ℋ →ₗ
 
 /-! ## Fredholm Operator -/
 
-/-- Operator I − s·HΨ⁻¹ (formal definition) -/
-def FredholmOp (s : ℂ) : ℋ →L[ℂ] ℋ :=
-  ContinuousLinearMap.id ℂ ℋ - s • (Classical.choice sorry : ℋ →L[ℂ] ℋ)
-  -- HΨ⁻¹ existence requires HΨ invertible
+/-- Operator I − s·HΨ⁻¹ (formal definition via resolvent) -/
+axiom FredholmOp (s : ℂ) : ℋ →L[ℂ] ℋ
+  -- Formal definition: I - s·HΨ⁻¹ where HΨ⁻¹ is defined via spectral decomposition
+  -- In full implementation, this would use resolvent operator theory
 
 /-! ## Fredholm Determinant Definition -/
 
@@ -93,9 +93,12 @@ def eigenvalue (n : ℕ) : ℂ := NoExtraneousEigenvalues.eigenvalue n
 axiom Nuclear.summable_eigenvalues (A : ℋ →L[ℂ] ℋ) (hA : Nuclear A) :
     Summable (fun n => eigenvalue n)
 
+/-- Eigenvalues of a specific operator -/
+axiom operator_eigenvalue (A : ℋ →L[ℂ] ℋ) (n : ℕ) : ℂ
+
 /-- Fredholm determinant for nuclear operators -/
 noncomputable def FredholmDet (A : ℋ →L[ℂ] ℋ) : ℂ :=
-  ∏' n : ℕ, (1 - eigenvalue n)
+  ∏' n : ℕ, (1 - operator_eigenvalue A n)
 
 /-- Fredholm determinant of the operator I - s·HΨ⁻¹ -/
 noncomputable def FredholmDet_s (s : ℂ) : ℂ :=

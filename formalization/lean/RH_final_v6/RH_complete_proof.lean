@@ -48,7 +48,7 @@ theorem riemann_hypothesis (s : ℂ)
   have hcrit : s.re ∈ Set.Ioo 0 1 := ⟨h1, h2⟩
   
   -- Step 2: By NoExtraneousEigenvalues, s is in spectrum of HΨ
-  have hs : s ∈ spectrum ℂ (NoExtraneousEigenvalues.HΨ : _ →ₗ[ℂ] _) := by
+  have hs : s ∈ spectrum ℂ NoExtraneousEigenvalues.HΨ.toLinearMap := by
     rw [NoExtraneousEigenvalues.spectrum_HΨ_eq_zeta_zeros]
     exact ⟨hz, hcrit⟩
   
@@ -70,7 +70,7 @@ theorem xi_zeros_are_zeta_zeros (s : ℂ) :
 
 /-- Spectrum equals zero set of Ξ -/
 theorem spectrum_equals_xi_zeros :
-    spectrum ℂ (NoExtraneousEigenvalues.HΨ : _ →ₗ[ℂ] _) = 
+    spectrum ℂ NoExtraneousEigenvalues.HΨ.toLinearMap = 
     {s : ℂ | FredholmDeterminant.Xi s = 0} :=
   FredholmDeterminant.spectrum_eq_Xi_zeros
 
@@ -90,7 +90,7 @@ theorem critical_line_only_zeros :
 /-- Operator HΨ completely determines the Riemann zeta zeros -/
 theorem operator_determines_zeros :
     {s : ℂ | riemannZeta s = 0 ∧ s.re ∈ Set.Ioo 0 1} =
-    spectrum ℂ (NoExtraneousEigenvalues.HΨ : _ →ₗ[ℂ] _) := by
+    spectrum ℂ NoExtraneousEigenvalues.HΨ.toLinearMap := by
   rw [NoExtraneousEigenvalues.spectrum_HΨ_eq_zeta_zeros]
 
 end RiemannHypothesisComplete
