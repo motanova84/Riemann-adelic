@@ -14,13 +14,28 @@ import re
 
 
 def count_sorries_in_file(filepath: Path) -> int:
-    """Count sorry occurrences in a single Lean file."""
+    """Count sorry occurrences in a single Lean file.
+    
+    Uses word boundary regex to match:
+    - Standalone sorry statements
+    - Sorry in assignments (= sorry)
+    - Sorry in expressions ((sorry), f sorry, etc.)
+    
+    Excludes:
+    - Sorries in comments (-- sorry, /- sorry -/)
+    - Sorry as part of other identifiers
+    """
     try:
         with open(filepath, 'r', encoding='utf-8') as f:
             content = f.read()
         
-        # Count sorry using a single comprehensive pattern to avoid double-counting
-        # Matches: standalone sorry, assignment, parentheses, etc.
+        # Remove comments to avoid counting sorries in comments
+        # Remove line comments (-- ...)
+        content = re.sub(r'--.*?$', '', content, flags=re.MULTILINE)
+        # Remove block comments (/- ... -/)
+        content = re.sub(r'/-.*?-/', '', content, flags=re.DOTALL)
+        
+        # Count sorry with word boundaries
         pattern = r'\bsorry\b'
         count = len(re.findall(pattern, content))
         

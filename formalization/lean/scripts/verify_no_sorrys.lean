@@ -12,9 +12,21 @@ open System IO
 /-- Count sorries in a lean file -/
 def countSorriesInFile (path : FilePath) : IO Nat := do
   let content ← FS.readFile path
-  -- Count occurrences of the word "sorry" to avoid double-counting
-  let sorryCount := (content.splitOn "sorry").length - 1
-  return sorryCount
+  let lines := content.splitOn "\n"
+  
+  -- Count sorries, excluding those in comments
+  let mut count := 0
+  for line in lines do
+    -- Skip if line is a comment (starts with --)
+    let trimmed := line.trim
+    if !trimmed.startsWith "--" then
+      -- Count 'sorry' occurrences in non-comment lines
+      -- This is a simple heuristic that works for most cases
+      let parts := line.splitOn "sorry"
+      if parts.length > 1 then
+        count := count + (parts.length - 1)
+  
+  return count
 
 /-- Check if a file is a Lean source file -/
 def isLeanFile (path : FilePath) : Bool :=
@@ -79,9 +91,19 @@ def main : IO UInt32 := do
     for (file, count) in filesWithSorries do
       IO.println s!"  - {file}: {count} sorry(ies)"
     IO.println ""
+    -- Dynamic formatting with padding
+    let boxWidth := 63
     IO.println "╔═══════════════════════════════════════════════════════════╗"
     IO.println "║  ⚠️  Verification incomplete - sorries detected            ║"
-    IO.println s!"║     Total sorries: {totalSorries}                         ║"
-    IO.println s!"║     Files affected: {filesWithSorries.size}                           ║"
+    
+    let sorriesLine := s!"║     Total sorries: {totalSorries}"
+    let filesLine := s!"║     Files affected: {filesWithSorries.size}"
+    
+    -- Pad to box width
+    let sorryPadding := String.mk (List.replicate (boxWidth - sorriesLine.length + 1) ' ')
+    let filesPadding := String.mk (List.replicate (boxWidth - filesLine.length + 1) ' ')
+    
+    IO.println (sorriesLine ++ sorryPadding ++ "║")
+    IO.println (filesLine ++ filesPadding ++ "║")
     IO.println "╚═══════════════════════════════════════════════════════════╝"
     return 1
