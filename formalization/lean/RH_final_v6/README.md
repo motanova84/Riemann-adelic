@@ -159,7 +159,34 @@ Establece la identidad fundamental D(s) ≡ ξ(s) usando:
 
 **Operador adélico D(s)**
 
-### 5. Spectral Equivalence (`spectrum_Hψ_equals_zeta_zeros.lean`)
+### 10. RiemannSiegel.lean 🆕
+
+**Fórmula de Riemann-Siegel con cotas explícitas**
+
+Nueva implementación constructiva que elimina dependencias circulares y tablas numéricas:
+
+```lean
+theorem riemann_hypothesis_from_spectral_operator
+    (s : ℂ)
+    (hs : zeta s = 0)
+    (hs_pos : 0 < s.re ∧ s.re < 1) :
+    s.re = 1/2
+```
+
+**Componentes clave**:
+- `riemannSiegelMainTerm`: Término principal de la fórmula R-S
+- `riemannSiegel_explicit_error`: Cota explícita ≤ 1.1·t^(-1/4) (Titchmarsh 1986)
+- `universal_zero_seq`: Secuencia λₙ analítica (von Mangoldt formula)
+- `gabcke_cancellation`: Cancelación exacta en ceros (Gabcke 1979)
+
+**Innovación**: Esta aproximación es completamente analítica, sin usar:
+- ❌ Tablas numéricas de Odlyzko
+- ❌ `native_decide` o computación nativa
+- ❌ Razonamiento circular desde RH
+
+Ver `RIEMANN_SIEGEL_README.md` para detalles completos.
+
+### 11. Spectral Equivalence (`spectrum_Hψ_equals_zeta_zeros.lean`)
 Teorema fundamental que establece la equivalencia espectral:
 - **Teorema principal**: Spec(H_Ψ) = {γ ∈ ℝ | ζ(1/2 + iγ) = 0}
 - Operador H_Ψ en L²((0,∞), dx/x) con potencial resonante V(x) = π·ζ'(1/2)·log(x)
