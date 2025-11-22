@@ -20,6 +20,28 @@ Run validation: `python3 ../../validate_qed_consolidation.py`
 
 ---
 
+## 🚀 Quick Start - Build & Verification Pipeline
+
+**NEW**: Automated build and verification pipeline with cryptographic certification!
+
+```bash
+# Complete pipeline (clean, build, verify, certify):
+./scripts/complete_pipeline.sh
+
+# Or step by step:
+lake clean                                        # Clean build
+lake build                                        # Compile
+python3 scripts/verify_no_sorrys.py              # Verify completeness
+./scripts/generate_hash.sh                       # Generate hash
+```
+
+📚 **Documentation**:
+- **[PIPELINE_EXECUTION_GUIDE.md](PIPELINE_EXECUTION_GUIDE.md)** - Complete pipeline guide
+- **[PIPELINE_QUICKREF.md](PIPELINE_QUICKREF.md)** - Quick reference card
+- **[scripts/README.md](scripts/README.md)** - Script documentation
+
+---
+
 ## Getting started
 1. Install Lean 4 and Lake following <https://leanprover-community.github.io/get_started.html>.
 2. Run `lake build` in this directory to build the project.
