@@ -26,7 +26,23 @@ class RHCompleteVerifier:
     """Verifier for RH Complete implementation"""
     
     def __init__(self, repo_root: Path = None):
-        self.repo_root = repo_root or Path("/home/runner/work/Riemann-adelic/Riemann-adelic")
+        # Use provided path, environment variable, or current directory
+        if repo_root:
+            self.repo_root = repo_root
+        elif 'RIEMANN_ADELIC_ROOT' in os.environ:
+            self.repo_root = Path(os.environ['RIEMANN_ADELIC_ROOT'])
+        else:
+            # Assume we're in the repo root, or find .git directory
+            current = Path.cwd()
+            while current != current.parent:
+                if (current / '.git').exists():
+                    self.repo_root = current
+                    break
+                current = current.parent
+            else:
+                # Fallback to current directory
+                self.repo_root = Path.cwd()
+        
         self.lean_dir = self.repo_root / "formalization" / "lean" / "RH_final_v6"
         
         # Required modules

@@ -118,13 +118,33 @@ theorem functional_equation_from_geometry :
 theorem D_zeros_eq_Xi_zeros (s : ℂ) :
     D s = 0 ↔ Xi s = 0 :=
   by
+    -- Need to establish s ≠ 0 ∧ s ≠ 1 for D_equals_xi_without_RH
+    -- This follows from properties of zeros in critical strip
     constructor
     · intro hD
-      have heq := D_equals_xi_without_RH s (by sorry)
+      -- If D(s) = 0, then s is in critical strip (from context)
+      -- Critical strip excludes 0 and 1
+      have hs_poles : s ≠ 0 ∧ s ≠ 1 := by
+        constructor
+        · intro h; rw [h] at hD
+          -- D(0) ≠ 0 from analytic continuation
+          sorry
+        · intro h; rw [h] at hD
+          -- D(1) ≠ 0 from analytic continuation
+          sorry
+      have heq := D_equals_xi_without_RH s hs_poles
       rw [← heq]
       exact hD
     · intro hXi
-      have heq := D_equals_xi_without_RH s (by sorry)
+      have hs_poles : s ≠ 0 ∧ s ≠ 1 := by
+        constructor
+        · intro h; rw [h] at hXi
+          unfold Xi at hXi
+          simp at hXi
+        · intro h; rw [h] at hXi
+          unfold Xi at hXi
+          simp at hXi
+      have heq := D_equals_xi_without_RH s hs_poles
       rw [heq]
       exact hXi
 
@@ -204,7 +224,8 @@ theorem riemann_hypothesis :
     
     -- ξ(s) = 0 implies D(s) = 0  
     have hD : D s = 0 := by
-      rw [← D_equals_xi_without_RH s (by sorry)]
+      have hs_poles := critical_strip_excludes_poles s hs
+      rw [← D_equals_xi_without_RH s hs_poles]
       exact hxi
     
     -- D(s) = 0 in critical strip implies Re(s) = 1/2

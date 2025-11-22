@@ -46,7 +46,9 @@ namespace NuclearOperator
 /-- The Hilbert space L²(ℝ₊, dx/x) -/
 def HilbertSpace : Type := { f : ℝ → ℂ // Integrable (fun x => ‖f x‖^2 / x) }
 
-/-- Inner product on L²(ℝ₊, dx/x) -/
+/-- Inner product on L²(ℝ₊, dx/x)
+    Mathematical formula: ⟨f,g⟩ = ∫₀^∞ f(x) conj(g(x)) dx/x
+    This defines the L² structure with the invariant measure dx/x -/
 def inner_product (f g : HilbertSpace) : ℂ := sorry
 
 instance : InnerProductSpace ℂ HilbertSpace where

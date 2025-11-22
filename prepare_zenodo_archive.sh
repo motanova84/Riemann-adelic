@@ -12,7 +12,15 @@ echo "════════════════════════�
 echo ""
 
 # Configuration
-REPO_ROOT="/home/runner/work/Riemann-adelic/Riemann-adelic"
+# Use environment variable if set, otherwise find git root, or use pwd
+if [ -n "$RIEMANN_ADELIC_ROOT" ]; then
+    REPO_ROOT="$RIEMANN_ADELIC_ROOT"
+elif git rev-parse --show-toplevel > /dev/null 2>&1; then
+    REPO_ROOT="$(git rev-parse --show-toplevel)"
+else
+    REPO_ROOT="$(pwd)"
+fi
+
 ARCHIVE_NAME="rh_complete_v5_coronacion_$(date +%Y%m%d)"
 ARCHIVE_DIR="${REPO_ROOT}/zenodo_archive"
 TARBALL="${ARCHIVE_DIR}/${ARCHIVE_NAME}.tar.gz"
