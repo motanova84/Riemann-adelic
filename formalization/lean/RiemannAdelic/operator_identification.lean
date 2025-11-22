@@ -220,7 +220,7 @@ theorem spectrum_discrete_and_real :
     -- Los ceros de funciones enteras no idénticamente nulas son aislados
     rw [operator_spectrum_equals_zeros] at hγ
     unfold ZetaZeros at hγ
-    sorry  -- PROOF: Use zeros_discrete from Zeros.lean
+    sorry  -- PROOF: Discretitud sigue de la identificación Spectrum_HΨ = ZetaZeros (ver operator_spectrum_equals_zeros) y la discreción de los ceros de D_explicit (ver zeros_discrete en Zeros.lean). Se requiere aplicar ambos resultados para transferir la propiedad de ceros aislados al espectro.
   · -- Realidad: por definición de Spectrum_HΨ
     intro γ hγ
     trivial
