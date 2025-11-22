@@ -139,11 +139,9 @@ theorem operator_spectrum_equals_zeros :
     
     -- Paso 1: H_Ψ es esencialmente auto-adjunto → espectro real
     -- Ya probado en H_psi_hermitian.lean
-    have h_hermitian : ∀ (f g : ℝ → ℝ), 
-      ∫ x in Set.Ioi 0, (HΨ.mk.op f x) * g x / x = 
-      ∫ x in Set.Ioi 0, f x * (HΨ.mk.op g x) / x := by
-      intros f g
-      sorry  -- References HΨ_is_hermitian from H_psi.lean
+    have h_hermitian : ∀ (f g : DomainHΨ), 
+      ⟪HΨ.op f, g⟫ = ⟪f, HΨ.op g⟫ := by
+      exact HΨ_is_hermitian
     
     -- Paso 2: Cada γ en el espectro corresponde a valor propio simple
     -- La autofunción f_γ existe por definición de Spectrum_HΨ
