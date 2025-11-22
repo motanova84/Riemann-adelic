@@ -280,7 +280,7 @@ theorem D_functional_equation : ... := D_explicit_functional_equation
 **Current Statistics (November 2025):**
 - 625 theorems formalized
 - 186 axioms remaining (mostly for deep classical results)
-- ~24% completeness toward fully constructive proof
+- 24% completeness toward fully constructive proof
 - 14 modules with 0 sorries (fully complete)
 - Key modules: axioms_to_lemmas.lean, SpectralStructure.lean, zero_of_product_eigenvalues.lean
 
