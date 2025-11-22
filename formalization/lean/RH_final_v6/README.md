@@ -9,7 +9,7 @@
 - `H_psi_complete.lean`: Operador H_Ψ con espectro discreto
 - `D_limit_equals_xi.lean`: Convergencia de D(s, ε) a ξ(s)/P(s)
 - `spectrum_eq_zeros.lean`: **Identificación espectral completa Spec(H_Ψ) = {γₙ}**
-- `spectrum_HΨ_equals_zeta_zeros.lean`: **Versión avanzada con Fourier conjugation y operador explícito** ✨ NEW
+- `spectrum_HΨ_equals_zeta_zeros.lean`: **Version A - Advanced formalization with explicit unitary isomorphism**
 - `lakefile.lean`, `lean-toolchain`, `CITATION.cff`
 
 ## Compilación
@@ -45,7 +45,7 @@ Convergencia del producto regularizado:
 - Convergencia uniforme en subconjuntos compactos
 - Establece la representación espectral de ζ(s)
 
-### 5. Spectral Identification (`spectrum_eq_zeros.lean`)
+### 5. Spectral Identification (`spectrum_eq_zeros.lean`) ✨
 Identificación espectral completa que cierra la prueba:
 - **Teorema principal**: Spec(H_Ψ) = {γₙ} bajo simetría funcional
 - Establece que el espectro discreto de H_Ψ coincide exactamente con las partes imaginarias de los ceros no triviales de ζ(s)
@@ -55,20 +55,16 @@ Identificación espectral completa que cierra la prueba:
 - Lema construct_eigenfunction_from_zero: construcción inversa cero → función propia
 - **Cierre formal del sistema RH ∞³ en Lean 4**
 
-### 6. Advanced Spectral-Zeros Equivalence (`spectrum_HΨ_equals_zeta_zeros.lean`) ✨ **NUEVO**
-Versión avanzada con construcción explícita del operador espectral:
-- **H_model**: Operador concreto definido vía conjugación de Fourier: H_model(f) = F⁻¹(t · F(f))
-- **UnitaryIsometry**: Estructura explícita con isometría U usando transformada de Fourier
-  - Preservación de norma: ‖U f‖ = ‖f‖ (Plancherel)
-  - Preservación de producto interno: ⟨U f, U g⟩ = ⟨f, g⟩
-  - Sobreyectividad (inversión de Fourier)
-- **SpectralOperator**: Construcción completa H_Ψ = U ∘ H_model ∘ U⁻¹
-- **spectrum_transfer_unitary**: Invariancia espectral bajo conjugación unitaria
-- **H_model_spectrum_matches_zeros**: Correspondencia profunda espectro-ceros (axiomatizada)
-- **spectrum_Hψ_equals_zeta_zeros**: Teorema principal con cadena de prueba formal
-- **Corolarios**: Conexiones con autoadjunción, RH, densidad espectral y QCAL
-- **Documentación exhaustiva**: 400+ líneas de comentarios explicativos
-- Sigue el programa de Berry-Keating con formalismo moderno de teoría espectral
+### 6. Spectral Identification Version A (`spectrum_HΨ_equals_zeta_zeros.lean`) ✨ **ADVANCED**
+Formalización avanzada con isomorfismo unitario explícito:
+- **Construcción explícita**: Isometría unitaria U : L²(ℝ) → ℓ²(ℂ)
+- **Operador modelo**: H_model actúa diagonalmente en ℓ²(ℂ) con eigenvalores γₙ
+- **Conjugación unitaria**: HΨ = U⁻¹ ∘ H_model ∘ U
+- **Teorema principal**: Spec(HΨ) = Set.range ζ_zeros_im
+- **Lema de transferencia**: spectrum ℂ HΨ = spectrum ℂ H_model
+  > *Esta igualdad se justifica porque la conjugación unitaria por U preserva el espectro: si HΨ = U⁻¹ ∘ H_model ∘ U, entonces Spec(HΨ) = Spec(H_model) por el teorema de conjugación unitaria en teoría espectral de operadores autoadjuntos.*
+- Autoadjuntez de H_model por construcción diagonal
+- Versión complementaria a spectrum_eq_zeros.lean con enfoque más constructivo
 
 ## QCAL Framework Integration
 
