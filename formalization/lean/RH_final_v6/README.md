@@ -17,12 +17,8 @@
 - `selberg_trace.lean`: Fórmula de traza de Selberg (versión débil)
 - `H_psi_complete.lean`: Operador H_Ψ con espectro discreto
 - `D_limit_equals_xi.lean`: Convergencia de D(s, ε) a ξ(s)/P(s)
-- `spectrum_Hψ_equals_zeta_zeros.lean`: Equivalencia espectral Spec(H_Ψ) = {γ | ζ(1/2+iγ)=0}
-- `zeta_operator_D.lean`: Operador adélico D(s) como determinante de Fredholm
-- `RiemannSiegel.lean`: Fórmula de Riemann-Siegel y convergencia espectral
-- `NoExtraneousEigenvalues.lean`: Prueba que el espectro coincide exactamente con los ceros
-- `DeterminantFredholm.lean`: Identidad det(I - HΨ⁻¹ s) = Ξ(s) con convergencia
-- `RH_complete_proof.lean`: Teorema final usando los tres módulos anteriores
+- `spectrum_eq_zeros.lean`: **Identificación espectral completa Spec(H_Ψ) = {γₙ}**
+- `spectrum_HΨ_equals_zeta_zeros.lean`: **Prueba formal sin axiomas vía operador espectral modelo, incluyendo versión avanzada con Fourier conjugation y operador explícito** ✨ NEW
 - `lakefile.lean`, `lean-toolchain`, `CITATION.cff`
 
 ## 🔁 Comando CI/CD de verificación
