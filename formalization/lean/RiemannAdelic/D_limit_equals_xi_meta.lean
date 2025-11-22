@@ -129,18 +129,32 @@ theorem D_limit_unique
   -- Aplicamos H₁ y H₂ con este δ
   obtain ⟨ε₁, hε₁, h_conv₁⟩ := H₁ (‖L₁ - L₂‖ / 3) hδ
   obtain ⟨ε₂, hε₂, h_conv₂⟩ := H₂ (‖L₁ - L₂‖ / 3) hδ
-  -- Tomamos ε = min(ε₁, ε₂)
-  let ε := min ε₁ ε₂
+  -- Tomamos ε = min(ε₁, ε₂) / 2 para asegurar ε < ε₁ y ε < ε₂
+  let ε := min ε₁ ε₂ / 2
   have hε_pos : 0 < ε := by
-    apply lt_min <;> assumption
+    apply div_pos
+    apply min_pos; exact hε₁; exact hε₂
+    norm_num
   have hε_bound₁ : ε < ε₁ := by
-    calc ε = min ε₁ ε₂ := rfl
-      _ ≤ ε₁ := min_le_left _ _
-      _ < ε₁ + ε₁ := by linarith [hε₁]
+    have hmin_le : min ε₁ ε₂ ≤ ε₁ := min_le_left _ _
+    have hmin_lt : min ε₁ ε₂ < ε₁ := by
+      cases lt_or_le ε₁ ε₂ with hlt hle
+      · rw min_eq_left hlt; exact hlt
+      · rw min_eq_right hle; linarith
+    calc ε = min ε₁ ε₂ / 2 := rfl
+      _ < ε₁ / 2 := by
+        apply div_lt_div_of_lt; norm_num; exact hmin_lt
+      _ < ε₁ := by linarith [hε₁]
   have hε_bound₂ : ε < ε₂ := by
-    calc ε = min ε₁ ε₂ := rfl
-      _ ≤ ε₂ := min_le_right _ _
-      _ < ε₂ + ε₂ := by linarith [hε₂]
+    have hmin_le : min ε₁ ε₂ ≤ ε₂ := min_le_right _ _
+    have hmin_lt : min ε₁ ε₂ < ε₂ := by
+      cases lt_or_le ε₂ ε₁ with hlt hle
+      · rw min_eq_left hlt; exact hlt
+      · rw min_eq_right hle; linarith
+    calc ε = min ε₁ ε₂ / 2 := rfl
+      _ < ε₂ / 2 := by
+        apply div_lt_div_of_lt; norm_num; exact hmin_lt
+      _ < ε₂ := by linarith [hε₂]
   -- Aplicamos las convergencias
   have h₁ := h_conv₁ ε ⟨hε_pos, hε_bound₁⟩
   have h₂ := h_conv₂ ε ⟨hε_pos, hε_bound₂⟩
