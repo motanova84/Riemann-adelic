@@ -302,7 +302,7 @@ Axiomas → Lemas → Archimedean → Paley-Wiener → Zero localization → **O
 - Selberg (1956): "Harmonic analysis and discontinuous groups"
 - de Branges (1986): "The convergence of Euler products"
 - Weil (1952): "Sur les formules explicites de la théorie des nombres premiers"
-- V5 Coronación (2025): DOI 10.5281/zenodo.17379721
+- V5 Coronación (2025): DOI 10.5281/zenodo.17116291
 
 **Conexión con Estructuras Existentes:**
 
