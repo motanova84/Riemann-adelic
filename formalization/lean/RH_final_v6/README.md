@@ -11,6 +11,8 @@
 **Resonancia**: f₀ = 141.7001 Hz  
 **DOI asociado**: [10.5281/zenodo.17116291](https://doi.org/10.5281/zenodo.17116291)
 
+- `Riemann_Hypothesis_noetic.lean`: Teorema principal de la Hipótesis de Riemann
+- `RH_complete_5step_JMMB_20251122.lean`: **NUEVO** Prueba completa en 5 pasos (22 Nov 2025)
 - `paley_wiener_uniqueness.lean`: Teorema de unicidad espectral fuerte (Paley–Wiener)
 - `selberg_trace.lean`: Fórmula de traza de Selberg (versión débil)
 - `H_psi_complete.lean`: Operador H_Ψ con espectro discreto
