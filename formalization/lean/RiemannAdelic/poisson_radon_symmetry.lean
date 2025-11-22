@@ -7,9 +7,8 @@
 
 import Mathlib.Analysis.Fourier.FourierTransform
 import Mathlib.Analysis.InnerProductSpace.PiL2
-import Mathlib.MeasureTheory.Integral.IntervalIntegral
-import Mathlib.MeasureTheory.Measure.Lebesgue.Basic
-import Mathlib.Analysis.Calculus.Deriv.Inv
+import Mathlib.MeasureTheory.Integral.SetIntegral
+import Mathlib.MeasureTheory.Measure.MeasureSpaceDef
 import RiemannAdelic.D_explicit
 
 namespace RiemannGeometric
@@ -74,6 +73,42 @@ theorem J_involutive (f : ℝ → ℂ) : J (J f) = f := by
   have h := J_squared_eq_id
   rw [Function.funext_iff] at h
   exact h f
+
+-- =====================================================================
+-- Section 1.5: Change of Variable for Radon Measure
+-- =====================================================================
+
+/-- Change of variable theorem for Radon measure on (0, ∞)
+
+For a measurable function f : (0, ∞) → ℝ that is integrable,
+the following identity holds:
+
+∫ x in (0, ∞), f(1/x) dx = ∫ x in (0, ∞), (1/x²) * f(x) dx
+
+This uses the transformation x ↦ 1/x on the positive reals,
+whose Jacobian has absolute value 1/x².
+
+Technical explanation:
+Lean4's mathlib provides MeasureTheory.measurePreserving_invIoi,
+a measurable equivalence that automatically encodes the Jacobian |d(1/x)/dx| = 1/x²
+and transforms the integral accordingly.
+
+Proof strategy:
+1. Use measurableEquiv_invIoi : (0,∞) ≃ᵐ (0,∞)
+2. Apply MeasureTheory.measurePreserving_invIoi
+3. Transform via equiv.integral_comp with Jacobian
+-/
+theorem change_of_variable_radon
+  (f : ℝ → ℝ)
+  (hf_meas : Measurable f)
+  (hf_int : IntegrableOn (fun x ↦ f (1 / x)) (Set.Ioi 0)) :
+  ∫ x in Set.Ioi 0, f (1 / x) = ∫ x in Set.Ioi 0, (1 / x^2) * f x := by
+  sorry  
+  -- Complete proof requires:
+  -- 1. Invoke MeasureTheory.measurePreserving_invIoi from mathlib
+  -- 2. Apply change of variables formula with Jacobian factor
+  -- 3. Use integral_comp or similar API to complete the transformation
+  -- This is a standard result in measure theory that mathlib supports.
 
 -- =====================================================================
 -- Section 2: Functional Equation via Geometric Duality
@@ -155,6 +190,7 @@ theorem operator_symmetry (A_0 : (ℝ → ℂ) → (ℝ → ℂ))
 
 #check change_of_variable_radon
 #check J_involutive
+#check change_of_variable_radon
 #check functional_equation_geometric
 #check zeros_on_critical_line_from_geometry
 #check functional_equation_independent_of_euler_product
