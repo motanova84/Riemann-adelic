@@ -56,7 +56,7 @@ noncomputable def FredholmDet (A : (ℝ → ℂ) →L[ℂ] (ℝ → ℂ)) : ℂ 
 
 /-- Lidskii's identity: trace equals sum of eigenvalues for nuclear operators -/
 theorem Lidskii_identity (A : (ℝ → ℂ) →L[ℂ] (ℝ → ℂ)) (hA : IsNuclear A) :
-  trace A = ∑' n, eigenvalue A n := by
+  trace A hA = ∑' n, eigenvalue A n := by
   exact Nuclear.trace_eq_tsum_eigenvalues hA
 
 /-- Eigenvalue summability from nuclearity -/
