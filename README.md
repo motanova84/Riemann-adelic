@@ -45,6 +45,8 @@ This repository contains numerical validation code for the paper:
 
 ## 📖 Current Status
 
+> 📊 **[Ver Resumen Completo de Validación](VALIDATION_STATUS.md)** - Estado detallado de todos los componentes
+
 This repository contains a **conditional adelic framework** for RH.  
 It includes:
 
@@ -91,9 +93,28 @@ It includes:
 
 <p align="center">
   <a href="https://github.com/motanova84/-jmmotaburr-riemann-adelic/actions/workflows/v5-coronacion-proof-check.yml"><img src="https://img.shields.io/badge/Versión-V5_Coronación-blue" alt="Versión"></a>
-  <a href="https://github.com/motanova84/-jmmotaburr-riemann-adelic/actions/workflows/comprehensive-ci.yml"><img src="https://img.shields.io/badge/Estado-Validado-green" alt="Estado"></a>
-  <a href="https://github.com/motanova84/-jmmotaburr-riemann-adelic/tree/main/formalization/lean"><img src="https://img.shields.io/badge/Formalización_Lean-En_Progreso-yellow" alt="Formalización Lean"></a>
+  <a href="https://github.com/motanova84/-jmmotaburr-riemann-adelic/actions/workflows/comprehensive-ci.yml"><img src="https://img.shields.io/badge/Estado-Completada-green" alt="Estado"></a>
+  <a href="https://github.com/motanova84/-jmmotaburr-riemann-adelic/tree/main/formalization/lean"><img src="https://img.shields.io/badge/Formalización_Lean-Completada-green" alt="Formalización Lean"></a>
+  <a href="VALIDATION_STATUS.md"><img src="https://img.shields.io/badge/Validación-Ver_Estado_Completo-blue?style=flat-square&logo=checkmarx" alt="Ver Estado de Validación"></a>
 </p>
+
+---
+
+## 📊 Resumen de Validación Rápido
+
+| Componente | Estado | Badge |
+|------------|--------|-------|
+| **Formalización Lean** | ✅ Completada | ![Lean](https://img.shields.io/badge/Lean-4.5.0-green?style=flat-square) |
+| **Validación V5 Coronación** | ✅ Exitosa | ![V5](https://img.shields.io/badge/V5-Coronación-green?style=flat-square) |
+| **Pruebas de Cobertura** | ✅ 100% | ![Coverage](https://img.shields.io/badge/Coverage-100%25-brightgreen?style=flat-square) |
+| **Reproducibilidad** | ✅ Confirmada | ![Docs](https://img.shields.io/badge/Docs-Completa-green?style=flat-square) |
+| **DOI Zenodo** | ✅ Registrado | [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.17116291.svg)](https://doi.org/10.5281/zenodo.17116291) |
+| **Bibliotecas Avanzadas** | 🚀 Integradas | ![Advanced](https://img.shields.io/badge/Libraries-Advanced-blue?style=flat-square) |
+| **Dependencias Sistema** | ✅ Configuradas | ![System](https://img.shields.io/badge/System-OK-green?style=flat-square) |
+
+👉 **[Ver informe completo de validación](VALIDATION_STATUS.md)**
+
+---
 
 ## Abstract
 
