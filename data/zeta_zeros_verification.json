@@ -1,0 +1,78 @@
+{
+  "title": "Numerical Verification of Riemann Zeta Zeros",
+  "timestamp": "2025-11-22T14:16:33.967279",
+  "precision_dps": 50,
+  "verification": {
+    "total_checked": 10,
+    "all_verified": true,
+    "tolerance": 1e-10,
+    "zeros": [
+      {
+        "index": 1,
+        "t": 14.134725141734695,
+        "zeta_value_abs": 6.668186342283778e-16,
+        "verified": true
+      },
+      {
+        "index": 2,
+        "t": 21.022039638771556,
+        "zeta_value_abs": 1.160916404432883e-15,
+        "verified": true
+      },
+      {
+        "index": 3,
+        "t": 25.01085758014569,
+        "zeta_value_abs": 8.49884485575286e-16,
+        "verified": true
+      },
+      {
+        "index": 4,
+        "t": 30.424876125859512,
+        "zeta_value_abs": 1.0578057324100325e-15,
+        "verified": true
+      },
+      {
+        "index": 5,
+        "t": 32.93506158773919,
+        "zeta_value_abs": 2.7490910092466363e-15,
+        "verified": true
+      },
+      {
+        "index": 6,
+        "t": 37.586178158825675,
+        "zeta_value_abs": 6.666942710405275e-15,
+        "verified": true
+      },
+      {
+        "index": 7,
+        "t": 40.9187190121475,
+        "zeta_value_abs": 4.794581520531557e-15,
+        "verified": true
+      },
+      {
+        "index": 8,
+        "t": 43.327073280915,
+        "zeta_value_abs": 4.3167091771724725e-15,
+        "verified": true
+      },
+      {
+        "index": 9,
+        "t": 48.00515088116716,
+        "zeta_value_abs": 1.9998078013891557e-15,
+        "verified": true
+      },
+      {
+        "index": 10,
+        "t": 49.7738324776723,
+        "zeta_value_abs": 2.4488081356777964e-15,
+        "verified": true
+      }
+    ]
+  },
+  "references": [
+    "A. M. Odlyzko, The first 100,000 zeros of the Riemann zeta function",
+    "DOI: 10.5281/zenodo.17379721 (QCAL \u221e\u00b3 Framework)"
+  ],
+  "author": "Jos\u00e9 Manuel Mota Burruezo \u03a8 \u221e\u00b3",
+  "orcid": "0009-0002-1923-0773"
+}
