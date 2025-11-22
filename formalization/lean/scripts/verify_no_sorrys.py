@@ -19,16 +19,10 @@ def count_sorries_in_file(filepath: Path) -> int:
         with open(filepath, 'r', encoding='utf-8') as f:
             content = f.read()
         
-        # Count various forms of sorry
-        patterns = [
-            r'\bsorry\b',  # standalone sorry
-            r'= sorry',     # assignment to sorry
-            r'\(sorry\)',   # sorry in parentheses
-        ]
-        
-        count = 0
-        for pattern in patterns:
-            count += len(re.findall(pattern, content))
+        # Count sorry using a single comprehensive pattern to avoid double-counting
+        # Matches: standalone sorry, assignment, parentheses, etc.
+        pattern = r'\bsorry\b'
+        count = len(re.findall(pattern, content))
         
         return count
     except Exception as e:
@@ -97,8 +91,11 @@ def main():
         print()
         print("╔═══════════════════════════════════════════════════════════╗")
         print("║  ⚠️  Verification incomplete - sorries detected            ║")
-        print(f"║     Total sorries: {total_sorries:>4}                             ║")
-        print(f"║     Files affected: {len(files_with_sorries):>3}                            ║")
+        # Dynamic formatting to handle varying number lengths
+        sorries_line = f"║     Total sorries: {total_sorries}"
+        files_line = f"║     Files affected: {len(files_with_sorries)}"
+        print(f"{sorries_line:<63}║")
+        print(f"{files_line:<63}║")
         print("╚═══════════════════════════════════════════════════════════╝")
         return 1
 

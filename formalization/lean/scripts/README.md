@@ -150,7 +150,7 @@ python3 scripts/verify_no_sorrys.py
 ╚═══════════════════════════════════════════════════════════╝
 ```
 
-### Build with Sorries (incomplete proof)
+### Build with Sorries (incomplete proof - example)
 ```
 ╔═══════════════════════════════════════════════════════════╗
 ║  ⚠️  Verification incomplete - sorries detected            ║
@@ -158,6 +158,7 @@ python3 scripts/verify_no_sorrys.py
 ║     Files affected:  84                            ║
 ╚═══════════════════════════════════════════════════════════╝
 ```
+*Note: Actual numbers will vary as the proof is completed. Run the verification script for current status.*
 
 ### Hash Generation (always succeeds)
 ```
@@ -192,13 +193,20 @@ Or for quick verification without full build:
     python3 scripts/verify_no_sorrys.py
 ```
 
-## 📊 Current Status
+## 📊 Status Tracking
 
-As of the latest run:
+To get current status, run:
+```bash
+python3 scripts/verify_no_sorrys.py
+```
+
+**Example metrics** (November 2025):
 - **Total Lean files**: 101
 - **Files with sorries**: 84
 - **Total sorries**: 618
 - **Proof completion**: ~38% (625 theorems formalized, 186 strategic axioms)
+
+*These are example values from a specific point in time. Run the verification script for up-to-date statistics.*
 
 ## 🎓 Understanding Sorries
 

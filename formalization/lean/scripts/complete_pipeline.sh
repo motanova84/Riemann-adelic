@@ -74,8 +74,12 @@ echo "━━━━━━━━━━━━━━━━━━━━━━━━�
 mkdir -p build
 
 # Get current git commit hash
-COMMIT_HASH=$(git rev-parse HEAD 2>/dev/null || echo "no-git-repository")
-echo "$COMMIT_HASH" > build/rh_proof.hash
+if COMMIT_HASH=$(git rev-parse HEAD 2>/dev/null); then
+    echo "$COMMIT_HASH" > build/rh_proof.hash
+else
+    COMMIT_HASH="no-git-repository"
+    echo "$COMMIT_HASH" > build/rh_proof.hash
+fi
 
 # Generate SHA256 checksum
 if command -v sha256sum &> /dev/null; then

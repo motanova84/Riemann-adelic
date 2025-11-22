@@ -12,13 +12,9 @@ open System IO
 /-- Count sorries in a lean file -/
 def countSorriesInFile (path : FilePath) : IO Nat := do
   let content ← FS.readFile path
-  let lines := content.splitOn "\n"
-  let sorryLines := lines.filter (fun line => 
-    line.trim.startsWith "sorry" || 
-    line.contains " sorry" ||
-    line.contains "(sorry)" ||
-    line.contains "= sorry")
-  return sorryLines.length
+  -- Count occurrences of the word "sorry" to avoid double-counting
+  let sorryCount := (content.splitOn "sorry").length - 1
+  return sorryCount
 
 /-- Check if a file is a Lean source file -/
 def isLeanFile (path : FilePath) : Bool :=
@@ -85,7 +81,7 @@ def main : IO UInt32 := do
     IO.println ""
     IO.println "╔═══════════════════════════════════════════════════════════╗"
     IO.println "║  ⚠️  Verification incomplete - sorries detected            ║"
-    IO.println s!"║     Total sorries: {totalSorries}                                    ║"
-    IO.println s!"║     Files affected: {filesWithSorries.size}                                  ║"
+    IO.println s!"║     Total sorries: {totalSorries}                         ║"
+    IO.println s!"║     Files affected: {filesWithSorries.size}                           ║"
     IO.println "╚═══════════════════════════════════════════════════════════╝"
     return 1

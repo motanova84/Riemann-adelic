@@ -21,13 +21,13 @@ mkdir -p build
 
 # Get current git commit hash
 echo "🔍 Obtaining git commit hash..."
-if git rev-parse HEAD > build/rh_proof.hash 2>/dev/null; then
-    COMMIT_HASH=$(cat build/rh_proof.hash)
+if COMMIT_HASH=$(git rev-parse HEAD 2>/dev/null); then
+    echo "$COMMIT_HASH" > build/rh_proof.hash
     echo "✅ Commit hash: $COMMIT_HASH"
 else
     echo "⚠️  Warning: Not a git repository or git not available"
-    echo "no-git-repository" > build/rh_proof.hash
     COMMIT_HASH="no-git-repository"
+    echo "$COMMIT_HASH" > build/rh_proof.hash
 fi
 echo ""
 
