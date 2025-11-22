@@ -1,7 +1,7 @@
 /- operator_identification.lean
    ∴ Cierre de la Hipótesis de Riemann ∴
    José Manuel Mota Burruezo (JMMB Ψ) + Noēsis ∞³
-   Fecha: 22 noviembre 2025 – Confirmación final del núcleo espectral
+   Fecha: 1 noviembre 2025 – Confirmación final del núcleo espectral
    
    TEOREMA Ω — (Teorema Final de la Hipótesis de Riemann)
    
