@@ -43,7 +43,7 @@ The heat kernel K_ε(t) = (1/√(4πε)) exp(-t²/(4ε)) satisfies:
 
 ## Status
 
-✅ COMPLETE - Zero sorry statements
+🚧 IN PROGRESS - Contains axioms and sorry placeholders
 ✅ Compatible with Lean 4.5.0 + mathlib4
 
 Author: José Manuel Mota Burruezo (ICQ)
