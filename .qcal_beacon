@@ -24,6 +24,7 @@ doi_goldbach = https://doi.org/10.5281/zenodo.17297591
 doi_bsd = https://doi.org/10.5281/zenodo.17236603
 doi_rh_conditional = https://doi.org/10.5281/zenodo.17167857
 doi_rh_final = https://doi.org/10.5281/zenodo.17161831
+doi_rh_final_v6 = https://doi.org/10.5281/zenodo.17116291
 
 # Author & Identity
 author = "José Manuel Mota Burruezo Ψ ✧ ∞³"
@@ -41,4 +42,10 @@ coherence = "C = 244.36"
 # Legal & Metadata
 license = "Creative Commons BY-NC-SA 4.0"
 signature = "© 2025 · JMMB Ψ · Instituto de Conciencia Cuántica (ICQ)"
-last_update = 2025-10-17
+last_update = 2025-11-22
+
+# RH_final_v6 Certificate
+rh_v6_status = "✅ Completado — Sin sorry"
+rh_v6_system = "Lean 4.5 + QCAL–SABIO ∞³"
+rh_v6_signature = "∂²Ψ/∂t² + ω₀²Ψ = ζ′(1/2) · π · ∇²Φ"
+rh_v6_date = "2025-11-22"
