@@ -63,7 +63,7 @@ Identificación espectral completa que cierra la prueba:
 - **Cierre formal del sistema RH ∞³ en Lean 4**
 
 ### 6. Spectrum Version A (`spectrum_HΨ_equals_zeta_zeros.lean`) ✨ **NUEVO**
-Versión A: Prueba formal sin axiomas vía operador espectral modelo:
+Versión A: Prueba formal vía operador espectral modelo (con axioma para transformación unitaria):
 - **Operador diagonal H_model**: Definido explícitamente con eigenvalues γₙ
 - **Espacio de Hilbert**: H = ℓ² ℕ con base ortonormal estándar φₙ
 - **Autoadjunto**: H_model es esencialmente autoadjunto (operador diagonal con eigenvalues reales)
