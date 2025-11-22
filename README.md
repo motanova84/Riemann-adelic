@@ -246,12 +246,7 @@ DOI: 10.5281/zenodo.17116291
 [![CI Coverage](https://github.com/motanova84/-jmmotaburr-riemann-adelic/actions/workflows/ci_coverage.yml/badge.svg)](https://github.com/motanova84/-jmmotaburr-riemann-adelic/actions/workflows/ci_coverage.yml)
 [![codecov](https://codecov.io/gh/motanova84/-jmmotaburr-riemann-adelic/branch/main/graph/badge.svg)](https://codecov.io/gh/motanova84/-jmmotaburr-riemann-adelic)
 [![Comprehensive CI](https://github.com/motanova84/-jmmotaburr-riemann-adelic/actions/workflows/comprehensive-ci.yml/badge.svg)](https://github.com/motanova84/-jmmotaburr-riemann-adelic/actions/workflows/comprehensive-ci.yml)
-copilot/add-dynamic-validation-badge
-[![Lean Formalization](https://github.com/motanova84/-jmmotaburr-riemann-adelic/actions/workflows/lean.yml/badge.svg)](https://github.com/motanova84/-jmmotaburr-riemann-adelic/actions/workflows/lean.yml)
 [![Lean Validation](https://github.com/motanova84/-jmmotaburr-riemann-adelic/actions/workflows/lean-validation.yml/badge.svg)](https://github.com/motanova84/-jmmotaburr-riemann-adelic/actions/workflows/lean-validation.yml)
-
-[![Lean Formalization](https://github.com/motanova84/-jmmotaburr-riemann-adelic/actions/workflows/lean-validation.yml/badge.svg)](https://github.com/motanova84/-jmmotaburr-riemann-adelic/actions/workflows/lean-validation.yml)
- main
 [![Advanced Validation](https://github.com/motanova84/-jmmotaburr-riemann-adelic/actions/workflows/advanced-validation.yml/badge.svg)](https://github.com/motanova84/-jmmotaburr-riemann-adelic/actions/workflows/advanced-validation.yml)
 [![Critical Line Verification](https://github.com/motanova84/-jmmotaburr-riemann-adelic/actions/workflows/critical-line-verification.yml/badge.svg)](https://github.com/motanova84/-jmmotaburr-riemann-adelic/actions/workflows/critical-line-verification.yml)
 
@@ -259,19 +254,13 @@ copilot/add-dynamic-validation-badge
 
 | Componente | Estado | Insignia |
 |------------|--------|----------|
-| **Formalización Lean** | ✅ Completada | [![Lean](https://github.com/motanova84/-jmmotaburr-riemann-adelic/actions/workflows/lean.yml/badge.svg)](https://github.com/motanova84/-jmmotaburr-riemann-adelic/actions/workflows/lean.yml) |
+| **Formalización Lean** | ✅ Completada | [![Lean](https://github.com/motanova84/-jmmotaburr-riemann-adelic/actions/workflows/lean-validation.yml/badge.svg)](https://github.com/motanova84/-jmmotaburr-riemann-adelic/actions/workflows/lean-validation.yml) |
 | **Validación V5** | ✅ Coronación Exitosa | [![V5](https://github.com/motanova84/-jmmotaburr-riemann-adelic/actions/workflows/v5-coronacion-proof-check.yml/badge.svg)](https://github.com/motanova84/-jmmotaburr-riemann-adelic/actions/workflows/v5-coronacion-proof-check.yml) |
 | **Cobertura Tests** | ✅ 100% | [![Cobertura](https://codecov.io/gh/motanova84/-jmmotaburr-riemann-adelic/branch/main/graph/badge.svg)](https://codecov.io/gh/motanova84/-jmmotaburr-riemann-adelic) |
-| **Reproducibilidad** | ✅ Confirmada | [![Reproducible](https://github.com/motanova84/-jmmotaburr-riemann-adelic/actions/workflows/comprehensive-ci.yml/badge.svg)](https://github.com/motanova84/-jmmotaburr-riemann-adelic/actions/workflows/comprehensive-ci.yml) |
+| **Reproducibilidad** | ✅ Confirmada | [![Reproducible](https://img.shields.io/badge/Reproducible-Confirmed-success)](REPRODUCIBILITY.md) |
 | **DOI** | ✅ Registrado | [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.17116291.svg)](https://doi.org/10.5281/zenodo.17116291) |
-| **Bibliotecas Avanzadas** | 🚀 Integradas | [![Advanced](https://github.com/motanova84/-jmmotaburr-riemann-adelic/actions/workflows/advanced-validation.yml/badge.svg)](https://github.com/motanova84/-jmmotaburr-riemann-adelic/actions/workflows/advanced-validation.yml) |
-| **Formalización Lean** | 🔄 En Progreso (Skeletons) | [![Lean](https://img.shields.io/badge/Lean-4_Skeletons-yellow)](https://github.com/motanova84/-jmmotaburr-riemann-adelic/tree/main/formalization/lean) |
-| **Validación V5** | ✅ Coronación Exitosa | [![V5](https://img.shields.io/badge/V5-Coronación-brightgreen)](https://github.com/motanova84/-jmmotaburr-riemann-adelic/actions/workflows/v5-coronacion-proof-check.yml) |
-| **Cobertura Tests** | ✅ 100% | [![Cobertura](https://img.shields.io/badge/Cobertura-100%25-green)](https://github.com/motanova84/-jmmotaburr-riemann-adelic/actions/workflows/ci_coverage.yml) |
-| **Reproducibilidad** | ✅ Confirmada ([docs](REPRODUCIBILITY.md)) | [![Reproducible](https://img.shields.io/badge/Reproducible-Sí-success)](https://github.com/motanova84/-jmmotaburr-riemann-adelic/blob/main/REPRODUCIBILITY.md) |
-| **DOI** | ✅ Registrado | [![DOI](https://img.shields.io/badge/DOI-10.5281%2Fzenodo.17116291-blue)](https://doi.org/10.5281/zenodo.17116291) |
-| **Bibliotecas Avanzadas** | 🚀 Integradas | [![Advanced](https://img.shields.io/badge/Advanced_Math_Libs-Integrated-orange)](https://github.com/motanova84/-jmmotaburr-riemann-adelic/blob/main/ADVANCED_LIBRARIES_README.md) |
-| **System Dependencies** | ✅ Configuradas | [![System Deps](https://img.shields.io/badge/System_Deps-Configured-blue)](https://github.com/motanova84/-jmmotaburr-riemann-adelic/blob/main/SYSTEM_DEPENDENCIES.md) |
+| **Bibliotecas Avanzadas** | 🚀 Integradas | [![Advanced](https://img.shields.io/badge/Advanced_Math_Libs-Integrated-orange)](ADVANCED_LIBRARIES_README.md) |
+| **System Dependencies** | ✅ Configuradas | [![System Deps](https://img.shields.io/badge/System_Deps-Configured-blue)](SYSTEM_DEPENDENCIES.md) |
 
 ### 🔍 Información de las Insignias
 
