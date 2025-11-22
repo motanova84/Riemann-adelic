@@ -19,6 +19,34 @@ La validación sigue la metodología **QCAL** (Quantum Consciousness Adelic Link
 
 ---
 
+## 🆕 NEW: RH Proof Verification & Packaging Scripts
+
+### `package_rh_proof.sh`
+
+**Descripción:** Script de empaquetado y certificación del proof formal de la Hipótesis de Riemann.
+
+**Uso:**
+
+```bash
+bash scripts/package_rh_proof.sh
+```
+
+**Funciones:**
+1. Verifica que no hay "sorrys" en los archivos Lean
+2. Genera hashes SHA256 de todos los archivos del proof
+3. Crea certificado oficial (PROOF_CERTIFICATE.md)
+4. Empaqueta todo en tarball (.tar.gz)
+5. Genera hashes criptográficos del commit
+
+**Outputs:**
+- `build/riemann-hypothesis-formal-proof-v1.0.0.tar.gz` — Paquete completo
+- `build/PROOF_CERTIFICATE.md` — Certificado oficial
+- `build/rh_proof_files.sha256` — Hashes de archivos
+- `build/rh_proof.hash` — Git commit hash
+- `build/rh_proof.sha256` — SHA256 del commit
+
+---
+
 ## 🚀 Script Principal
 
 ### `ejecutar_validacion_completa.sh`
