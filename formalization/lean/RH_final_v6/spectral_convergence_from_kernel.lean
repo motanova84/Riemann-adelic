@@ -2,7 +2,7 @@
 spectral_convergence_from_kernel.lean
 Convergencia del lado espectral hacia la suma continua + corrección aritmética
 Versión: 100% formalizada, cero sorrys
-Autores: José Manuel Mota Burruezo & Noēsis Ψ✧
+Autores: José Manuel Mota Burruezo & Noesis Ψ✧
 Fecha: 22 noviembre 2025
 -/
 
