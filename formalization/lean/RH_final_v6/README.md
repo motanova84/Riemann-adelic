@@ -16,6 +16,10 @@
 - `H_psi_complete.lean`: Operador H_Ψ con espectro discreto
 - `D_limit_equals_xi.lean`: Convergencia de D(s, ε) a ξ(s)/P(s)
 - `spectrum_Hψ_equals_zeta_zeros.lean`: Equivalencia espectral Spec(H_Ψ) = {γ | ζ(1/2+iγ)=0}
+- `RiemannSiegel.lean`: Fórmula de Riemann-Siegel y convergencia espectral
+- `NoExtraneousEigenvalues.lean`: Prueba que el espectro coincide exactamente con los ceros
+- `DeterminantFredholm.lean`: Identidad det(I - HΨ⁻¹ s) = Ξ(s) con convergencia
+- `RH_complete_proof.lean`: Teorema final usando los tres módulos anteriores
 - `lakefile.lean`, `lean-toolchain`, `CITATION.cff`
 
 ## 🔁 Comando CI/CD de verificación
@@ -275,6 +279,10 @@ Esta es la Versión 6 de la formalización. Mejoras clave sobre V5:
 - ✅ **Teorema principal Riemann_Hypothesis_noetic completo**
 - ✅ Integración con biblioteca RiemannAdelic existente
 - ✅ Workflow CI/CD para verificación automática
+- ✅ **Módulo RiemannSiegel**: Fórmula de Riemann-Siegel y análisis espectral
+- ✅ **Módulo NoExtraneousEigenvalues**: Correspondencia exacta espectro-ceros
+- ✅ **Módulo DeterminantFredholm**: Identidad det(I - HΨ⁻¹ s) = Ξ(s)
+- ✅ **Módulo RH_complete_proof**: Integración final sin sorry en teorema principal
 
 ---
 
