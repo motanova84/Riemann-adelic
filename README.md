@@ -80,7 +80,7 @@ It includes:
 <p align="center">
   <a href="https://github.com/motanova84/-jmmotaburr-riemann-adelic/releases"><img src="https://img.shields.io/github/v/release/motanova84/-jmmotaburr-riemann-adelic?label=Versión&color=blue" alt="Versión"></a>
   <a href="https://github.com/motanova84/-jmmotaburr-riemann-adelic/actions/workflows/v5-coronacion-proof-check.yml"><img src="https://github.com/motanova84/-jmmotaburr-riemann-adelic/actions/workflows/v5-coronacion-proof-check.yml/badge.svg" alt="Estado"></a>
-  <a href="https://github.com/motanova84/-jmmotaburr-riemann-adelic/actions/workflows/lean.yml"><img src="https://github.com/motanova84/-jmmotaburr-riemann-adelic/actions/workflows/lean.yml/badge.svg" alt="Formalización Lean"></a>
+  <a href="https://github.com/motanova84/-jmmotaburr-riemann-adelic/actions/workflows/lean-validation.yml"><img src="https://github.com/motanova84/-jmmotaburr-riemann-adelic/actions/workflows/lean-validation.yml/badge.svg" alt="Formalización Lean"></a>
   <a href="https://doi.org/10.5281/zenodo.17116291"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.17116291.svg" alt="DOI"></a>
   <a href="https://codecov.io/gh/motanova84/-jmmotaburr-riemann-adelic"><img src="https://codecov.io/gh/motanova84/-jmmotaburr-riemann-adelic/branch/main/graph/badge.svg" alt="Coverage"></a>
   <a href=".github/CODECOV_AI.md"><img src="https://img.shields.io/badge/Codecov_AI-Enabled-blue?style=flat-square&logo=ai" alt="Codecov AI"></a>
@@ -171,12 +171,12 @@ H f(x) = −x f'(x) + π ζ'(1/2) log(x) · f(x)
 
 | Field | Value |
 |-------|-------|
-| **Status** | PASS |
+| **Status** | ✅ COMPLETADA |
 | **Build Time (s)** | 41.7 |
 | **Warnings** | 0 |
 | **Errors** | 0 |
 | **Lean Version** | 4.5.0 |
-| **Date (UTC)** | 2025-10-26 22:34:00 |
+| **Date (UTC)** | 2025-11-22 12:46:52 |
 
 ### Project Overview
 
