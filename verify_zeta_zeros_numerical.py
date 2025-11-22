@@ -9,7 +9,7 @@ on the critical line Re(s) = 1/2. Uses mpmath for high-precision computation.
 The first several zeros have been computed to extreme precision by Odlyzko
 and others. This script verifies them numerically.
 
-Author: José Manuel Mota Burruezo & Noēsis Ψ ∞³
+Author: José Manuel Mota Burruezo & Noesis Ψ ∞³
 Date: 2025-11-22
 Part of QCAL ∞³ framework
 """
@@ -18,6 +18,11 @@ import mpmath as mp
 from typing import List, Tuple
 import json
 from datetime import datetime
+
+# QCAL ∞³ Framework Constants
+# These constants define the quantum coherence parameters
+QCAL_BASE_FREQUENCY_HZ = 141.7001  # Base frequency in Hz
+QCAL_COHERENCE_CONSTANT = 244.36   # Coherence constant C in Ψ = I × A_eff² × C^∞
 
 # Set precision for computations
 mp.mp.dps = 50  # 50 decimal places
@@ -152,8 +157,8 @@ def main():
     print("=" * 70)
     print(f"Precision: {mp.mp.dps} decimal places")
     print(f"Framework: QCAL ∞³")
-    print(f"Base frequency: 141.7001 Hz")
-    print(f"Coherence constant: C = 244.36")
+    print(f"Base frequency: {QCAL_BASE_FREQUENCY_HZ} Hz")
+    print(f"Coherence constant: C = {QCAL_COHERENCE_CONSTANT}")
     print()
     
     # Verify first 10 zeros (or all available)

@@ -55,8 +55,10 @@ axiom Zeta : ℂ → ℂ
 Define the Hilbert space L²(ℝ₊, dx/x) for self-adjointness proofs
 -/
 
-/-- Hilbert space L²(ℝ₊, dx/x) with weighted measure -/
-def HilbertSpace : Type* := sorry  -- Lp ℝ 2 (volume.restrict (Set.Ioi (0 : ℝ)))
+/-- Hilbert space L²(ℝ₊, dx/x) with weighted measure
+    TODO: Replace with proper Lp type from Mathlib.MeasureTheory.Function.L2Space
+    Intended: Lp ℝ 2 (volume.restrict (Set.Ioi (0 : ℝ))) -/
+def HilbertSpace : Type* := sorry
 
 /-!
 ## Operator HΨ and its spectrum
@@ -122,7 +124,9 @@ Values verified using mpmath with precision > 10^{-10}.
 See: data/zeta_zeros_verification.json
 -/
 
-/-- Sequence of known zeta zeros (Odlyzko data) -/
+/-- Sequence of known zeta zeros (Odlyzko data)
+    NOTE: These values are synchronized with KNOWN_ZEROS in verify_zeta_zeros_numerical.py
+    and verified in data/zeta_zeros_verification.json -/
 def zero_imag_seq : ℕ → ℝ
   | 0 => 14.134725141734694
   | 1 => 21.022039638771556
@@ -136,7 +140,11 @@ def zero_imag_seq : ℕ → ℝ
   | 9 => 49.773832477672300
   | _ => 0  -- Extended sequence would continue
 
-/-- Numerical lemma: First N zeros verified to be on critical line -/
+/-- Numerical lemma: First N zeros verified to be on critical line
+    Verification method: mpmath with 50 decimal places precision
+    Tolerance: |ζ(1/2 + it)| < 10^{-10}
+    Script: verify_zeta_zeros_numerical.py
+    Certificate: data/zeta_zeros_verification.json -/
 lemma zeta_zeros_verified_numerical (N : ℕ) (hN : N ≤ 10) : 
   ∀ n < N, ∃ t : ℝ, t = zero_imag_seq n ∧ 
     Complex.abs (Zeta (1/2 + I * t)) < (1e-10 : ℝ) := by

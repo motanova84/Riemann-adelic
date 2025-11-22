@@ -169,9 +169,12 @@ class TestSpectrumZetaVerification:
     
     def test_first_zero_known_value(self):
         """Test that first zero matches well-known value."""
-        # First zero is approximately 14.134725
-        assert abs(KNOWN_ZEROS[0] - 14.134725) < 0.001, \
-            f"First zero should be ~14.134725, got {KNOWN_ZEROS[0]}"
+        # First zero from Odlyzko tables (to 6 decimal places)
+        FIRST_ZERO_APPROX = 14.134725
+        TOLERANCE = 0.001  # Allow 0.1% error for approximate comparison
+        
+        assert abs(KNOWN_ZEROS[0] - FIRST_ZERO_APPROX) < TOLERANCE, \
+            f"First zero should be ~{FIRST_ZERO_APPROX}, got {KNOWN_ZEROS[0]}"
 
 
 class TestQCALIntegration:
