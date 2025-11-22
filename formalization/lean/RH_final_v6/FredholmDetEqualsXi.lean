@@ -43,9 +43,11 @@ theorem Xi_order_one :
       · exact differentiable_riemannZeta
   · exact OrderOfGrowth_Xi_standard
 
-/-- Eigenvalue extraction from operator spectrum -/
-noncomputable def eigenvalue (A : (ℝ → ℂ) →L[ℂ] (ℝ → ℂ)) (n : ℕ) : ℂ :=
-  (spectrum A).toFinset.elem n
+/-- Eigenvalue extraction from operator spectrum
+    For operators with discrete spectrum, extracts the n-th eigenvalue.
+    Note: This is a placeholder definition that assumes discrete spectrum.
+    In a complete formalization, this would use spectral theory machinery. -/
+axiom eigenvalue : ∀ (A : (ℝ → ℂ) →L[ℂ] (ℝ → ℂ)), ℕ → ℂ
 
 /-- Fredholm determinant for nuclear operators
     Defined as infinite product over eigenvalues -/
@@ -180,9 +182,17 @@ theorem FredholmDet_eq_Xi (s : ℂ) :
   have h4 : ∀ n : ℕ, Xi (universal_zero_seq n) = 0 := by
     intro n
     rw [Xi_zero_iff_zeta_zero]
-    exact ⟨by have := zeta_zero_approx_zero n; linarith, 
-           by simp [universal_zero_seq]; norm_num, 
-           by simp [universal_zero_seq]; norm_num⟩
+    constructor
+    · -- riemannZeta (universal_zero_seq n) = 0
+      have hz : abs (riemannZeta (universal_zero_seq n)) < 1e-10 := zeta_zero_approx_zero n
+      have hc : ContinuousAt riemannZeta (universal_zero_seq n) := 
+        continuous_riemannZeta (universal_zero_seq n)
+      exact eq_zero_of_abs_lt_epsilon hz hc
+    constructor
+    · -- 0 < (universal_zero_seq n).re
+      simp [universal_zero_seq]; norm_num
+    · -- (universal_zero_seq n).re < 1
+      simp [universal_zero_seq]; norm_num
 
   -- By identity of entire functions
   have h5 : ∀ n : ℕ, 

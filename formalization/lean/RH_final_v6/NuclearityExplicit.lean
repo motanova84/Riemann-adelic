@@ -91,14 +91,8 @@ axiom Differentiable.Gamma : Differentiable ℂ (fun s => Gamma (s / 2))
 /-- Riemann zeta is differentiable -/
 axiom differentiable_riemannZeta : Differentiable ℂ riemannZeta
 
-/-- Xi function (defined externally but referenced here) -/
-axiom Xi : ℂ → ℂ
-
 /-- Riemann zeta function (from Mathlib) -/
 axiom riemannZeta : ℂ → ℂ
-
-/-- Fredholm determinant (defined externally) -/
-axiom FredholmDet : ((ℝ → ℂ) →L[ℂ] (ℝ → ℂ)) → ℂ
 
 /-- Identity operator -/
 axiom I : (ℝ → ℂ) →L[ℂ] (ℝ → ℂ)
