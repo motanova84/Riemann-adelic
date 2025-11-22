@@ -8,6 +8,7 @@ Date: 2025-11-22
 """
 
 import sys
+import re
 from pathlib import Path
 import re
 
