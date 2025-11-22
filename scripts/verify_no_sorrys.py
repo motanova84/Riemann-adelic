@@ -33,7 +33,7 @@ def count_sorrys(file_path: Path) -> int:
     
     content = file_path.read_text(encoding='utf-8')
     
-    # Remove block comments /-  -/
+    # Remove block comments /- ... -/
     content = re.sub(r'/-.*?-/', '', content, flags=re.DOTALL)
     
     # Remove line comments --
