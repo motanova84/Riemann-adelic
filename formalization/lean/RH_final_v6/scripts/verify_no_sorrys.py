@@ -77,6 +77,7 @@ class SorryVerifier:
         """Verify all target files"""
         results = {}
         all_passed = True
+        files_exist = True
         
         for filename in self.target_files:
             filepath = self.base_path / filename
@@ -85,8 +86,13 @@ class SorryVerifier:
             
             if not result['exists']:
                 all_passed = False
+                files_exist = False
             elif result['sorrys'] > 0:
                 all_passed = False
+        
+        # Fail if any files are missing
+        if not files_exist:
+            all_passed = False
         
         return results, all_passed
     
@@ -134,8 +140,9 @@ class SorryVerifier:
             print("   All theorems proven")
             print("   Ready for certification")
         elif existing_files < len(self.target_files):
-            print("⚠️  VERIFICATION WARNING: Some files not found")
+            print("❌ VERIFICATION FAILED: Some files not found")
             print(f"   {len(self.target_files) - existing_files} file(s) missing")
+            print("   All required files must exist for verification to pass")
         else:
             print(f"❌ VERIFICATION FAILED: {total_sorrys} sorry statement(s) found")
             print(f"   {files_with_sorrys} file(s) need completion")

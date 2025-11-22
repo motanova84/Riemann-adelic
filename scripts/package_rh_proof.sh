@@ -15,6 +15,14 @@
 
 set -e  # Exit on error
 
+# Constants
+AUTHOR_NAME="José Manuel Mota Burruezo (JMMB Ψ✧)"
+AUTHOR_ORCID="0009-0002-1923-0773"
+DOI_ZENODO="10.5281/zenodo.17379721"
+BASE_FREQUENCY="141.7001 Hz"
+COHERENCE_FACTOR="C = 244.36"
+TRACE_BOUND="‖HΨ‖₁ ≤ 888"
+
 # Color codes for output
 RED='\033[0;31m'
 GREEN='\033[0;32m'
@@ -108,20 +116,19 @@ echo ""
 # Step 4: Generate PROOF_CERTIFICATE.md
 echo -e "${YELLOW}📄 Step 4: Generating proof certificate...${NC}"
 
-cat > "$BUILD_DIR/PROOF_CERTIFICATE.md" << 'EOF'
+cat > "$BUILD_DIR/PROOF_CERTIFICATE.md" << EOF
 # Riemann Hypothesis — Formal Proof Certificate
 
 ## Verification Details
 - **Theorem**: Riemann Hypothesis  
 - **Statement**: All non-trivial zeros of ζ(s) lie on Re(s) = 1/2  
 - **Proof System**: Lean 4.13.0 + Mathlib4  
+- **Date**: $CURRENT_DATE  
+- **Author**: $AUTHOR_NAME  
+- **ORCID**: $AUTHOR_ORCID  
 EOF
 
-echo "- **Date**: $CURRENT_DATE  " >> "$BUILD_DIR/PROOF_CERTIFICATE.md"
-echo "- **Author**: José Manuel Mota Burruezo (JMMB Ψ✧)  " >> "$BUILD_DIR/PROOF_CERTIFICATE.md"
-echo "- **ORCID**: 0009-0002-1923-0773  " >> "$BUILD_DIR/PROOF_CERTIFICATE.md"
-
-cat >> "$BUILD_DIR/PROOF_CERTIFICATE.md" << 'EOF'
+cat >> "$BUILD_DIR/PROOF_CERTIFICATE.md" << EOF
 
 ## Module Structure
 1. **NuclearityExplicit.lean** – Nuclear operator construction  
@@ -134,11 +141,11 @@ cat >> "$BUILD_DIR/PROOF_CERTIFICATE.md" << 'EOF'
 - **Sorry statements**: **0**  
 - **Compilation errors**: 0  
 - **Proof strategy**: Geometric-spectral via QCAL framework  
-- **Base frequency**: **141.7001 Hz**  
-- **Trace bound**: ‖HΨ‖₁ ≤ 888  
+- **Base frequency**: **$BASE_FREQUENCY**  
+- **Trace bound**: $TRACE_BOUND  
 
 ## Verification Commands
-```bash
+\`\`\`bash
 # Verify no sorrys
 python3 scripts/verify_no_sorrys.py
 
@@ -148,23 +155,23 @@ lake clean && lake build
 
 # Check SHA256 integrity
 sha256sum -c build/rh_proof_files.sha256
-```
+\`\`\`
 
 ## QCAL ∞³ Framework
 This proof uses the Quantum Coherence Adelic Lattice framework:
-- **Coherence factor**: C = 244.36
+- **Coherence factor**: $COHERENCE_FACTOR
 - **Base equation**: Ψ = I × A_eff² × C^∞
 - **Integration domain**: [-888, 888]
 
 ## DOI and Citation
-- **DOI**: 10.5281/zenodo.17379721
+- **DOI**: $DOI_ZENODO
 - **Repository**: github.com/motanova84/Riemann-adelic
 EOF
 
 echo "- **Certificate issued**: $CURRENT_DATE" >> "$BUILD_DIR/PROOF_CERTIFICATE.md"
 echo "- **Git commit**: $GIT_SHORT_COMMIT" >> "$BUILD_DIR/PROOF_CERTIFICATE.md"
 
-cat >> "$BUILD_DIR/PROOF_CERTIFICATE.md" << 'EOF'
+cat >> "$BUILD_DIR/PROOF_CERTIFICATE.md" << EOF
 
 ## Status
 - **Status**: COMPLETE ✅
@@ -172,10 +179,10 @@ cat >> "$BUILD_DIR/PROOF_CERTIFICATE.md" << 'EOF'
 - **♾️³ QCAL coherence**: maintained
 
 ## File Integrity
+\`\`\`
 EOF
 
 # Add SHA256 hashes to certificate
-echo '```' >> "$BUILD_DIR/PROOF_CERTIFICATE.md"
 cat "$BUILD_DIR/rh_proof_files.sha256" >> "$BUILD_DIR/PROOF_CERTIFICATE.md"
 echo '```' >> "$BUILD_DIR/PROOF_CERTIFICATE.md"
 
@@ -242,18 +249,18 @@ Commit: $GIT_SHORT_COMMIT
 - \`rh_proof.sha256\` - SHA256 of git commit
 
 ## Verification
-\`\`\`bash
+\\\`\\\`\\\`bash
 # Verify file integrity
 sha256sum -c rh_proof_files.sha256
 
 # Verify no sorrys
 cd lean
 python3 ../scripts/verify_no_sorrys.py
-\`\`\`
+\\\`\\\`\\\`
 
 ## Citation
-DOI: 10.5281/zenodo.17379721
-Author: José Manuel Mota Burruezo (ORCID: 0009-0002-1923-0773)
+DOI: $DOI_ZENODO
+Author: $AUTHOR_NAME (ORCID: $AUTHOR_ORCID)
 
 ♾️³ QCAL coherence maintained
 EOF

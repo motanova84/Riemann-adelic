@@ -186,9 +186,9 @@ else
     exit 1
 fi
 
-# Verify SHA256 format (64 hex characters)
+# Verify SHA256 format (64 hex characters, case-insensitive)
 sha256_content=$(cat build/rh_proof.sha256)
-if [[ $sha256_content =~ ^[a-f0-9]{64}$ ]]; then
+if [[ $sha256_content =~ ^[a-fA-F0-9]{64}$ ]]; then
     echo -e "   ${GREEN}✓${NC} SHA256 format valid: $sha256_content"
 else
     echo -e "   ${RED}✗${NC} SHA256 format invalid"
