@@ -47,7 +47,7 @@ The heat kernel K_ε(t) = (1/√(4πε)) exp(-t²/(4ε)) satisfies:
 ✅ Compatible with Lean 4.5.0 + mathlib4
 
 Author: José Manuel Mota Burruezo (ICQ)
-Date: 21 nov 2025
+Date: November 2025
 -/
 
 /-!
