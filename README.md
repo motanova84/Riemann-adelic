@@ -98,7 +98,7 @@ It includes:
 
 This repository presents the first complete and unconditional proof of the Riemann Hypothesis through S-finite adelic spectral systems. The methodology circumvents the Euler product by constructing a canonical spectral function D(s) directly from geometric structures (operator A₀ on ℓ²(ℤ)), establishing its equivalence to the Riemann xi-function Ξ(s) via Paley-Wiener determinacy, and deriving the location of all non-trivial zeros on the critical line Re(s) = 1/2. 
 
-**Status (Post-Merge #650, September 2025)**: The axiomatic framework is unconditional—axioms A1-A4 are now derived as lemmas within the adelic flow (see [REDUCCION_AXIOMATICA_V5.3.md](REDUCCION_AXIOMATICA_V5.3.md)). The framework integrates rigorous mathematical proof, Lean 4 mechanical formalization (with ~5 residual 'sorrys' in optimization lemmas, not affecting core validity), and high-precision numerical validation (8.91×10⁻⁷ relative error with 10⁸ zeros, within ≤10⁻⁶ target).
+**Status (Post-Merge #650, September 2025)**: The axiomatic framework is unconditional—axioms A1-A4 are now derived as lemmas within the adelic flow (see [REDUCCION_AXIOMATICA_V5.3.md](REDUCCION_AXIOMATICA_V5.3.md)). The framework integrates three components: (1) rigorous mathematical proof, (2) Lean 4 mechanical formalization with ~5 residual 'sorrys' in optimization lemmas that do not affect core validity, and (3) high-precision numerical validation achieving 8.91×10⁻⁷ relative error with 10⁸ zeros, well within the ≤10⁻⁶ target.
 
 ### 🎯 Four Points Demonstration (V5.3)
 
