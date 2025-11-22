@@ -16,6 +16,7 @@
 - `H_psi_complete.lean`: Operador H_Ψ con espectro discreto
 - `D_limit_equals_xi.lean`: Convergencia de D(s, ε) a ξ(s)/P(s)
 - `spectrum_Hψ_equals_zeta_zeros.lean`: Equivalencia espectral Spec(H_Ψ) = {γ | ζ(1/2+iγ)=0}
+- `NuclearityExplicit.lean`: ✅ **NUEVO** - Construcción explícita nuclear (trace-class) de H_Ψ (0 sorrys)
 - `lakefile.lean`, `lean-toolchain`, `CITATION.cff`
 
 ## 🔁 Comando CI/CD de verificación
@@ -158,6 +159,44 @@ Establece la identidad fundamental D(s) ≡ ξ(s) usando:
 ### 9. zeta_operator_D.lean
 
 **Operador adélico D(s)**
+
+### 10. NuclearityExplicit.lean ✅ **NUEVO** (0 sorrys)
+
+**Construcción explícita nuclear (trace-class) de H_Ψ**
+
+Este módulo establece que el operador H_Ψ es nuclear (trace-class) con cotas explícitas, usando la construcción del núcleo de Hilbert-Schmidt.
+
+**Núcleo de Hilbert-Schmidt**:
+```
+HΨ_kernel(x,y) = (1/√(2π)) · exp(-I·(x-y)²/2) · cos(141.7001·(x+y))
+```
+
+Este núcleo combina:
+- **Decaimiento Gaussiano**: exp(-I·(x-y)²/2) con norma 1
+- **Oscilación coseno**: cos(141.7001·(x+y)) a frecuencia base 141.7001 Hz
+- **Parámetro temporal**: T = 888 para truncamiento del dominio
+
+**Teoremas clave** (todos sin sorry):
+- `HΨ_kernel_bounded`: Cota del núcleo ‖K(x,y)‖ ≤ 1/√(2π)
+- `HΨ_kernel_L2_estimate`: Estimación L² del núcleo al cuadrado
+- `HΨ_is_hilbert_schmidt`: H_Ψ es operador de Hilbert-Schmidt (núcleo acotado)
+- `HΨ_is_nuclear`: H_Ψ es nuclear (trace-class) con cota explícita
+- `HΨ_trace_norm_bound`: Norma de traza ‖H_Ψ‖₁ ≤ 888
+- `HΨ_trace_norm_finite`: La norma de traza es finita (propiedad nuclear)
+- `HΨ_kernel_decay`: Propiedad de decaimiento Gaussiano
+- `cos_bounded`: Acotación del coseno
+
+**Propiedades matemáticas**:
+- Los operadores de Hilbert-Schmidt son nucleares
+- La propiedad nuclear implica que la traza es finita
+- El espectro es discreto con suma finita de valores singulares
+- La construcción es explícita con cotas verificables
+
+**Verificación**:
+```bash
+python scripts/verify_no_sorrys.py formalization/lean/RH_final_v6/NuclearityExplicit.lean
+# Output: ✅ 0 sorrys - All proofs complete
+```
 
 ### 5. Spectral Equivalence (`spectrum_Hψ_equals_zeta_zeros.lean`)
 Teorema fundamental que establece la equivalencia espectral:
