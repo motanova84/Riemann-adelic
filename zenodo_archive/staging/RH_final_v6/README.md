@@ -11,18 +11,11 @@
 **Resonancia**: f₀ = 141.7001 Hz  
 **DOI asociado**: [10.5281/zenodo.17116291](https://doi.org/10.5281/zenodo.17116291)
 
-- `Riemann_Hypothesis_noetic.lean`: Teorema principal de la Hipótesis de Riemann
-- `RH_complete_5step_JMMB_20251122.lean`: **NUEVO** Prueba completa en 5 pasos (22 Nov 2025)
 - `paley_wiener_uniqueness.lean`: Teorema de unicidad espectral fuerte (Paley–Wiener)
 - `selberg_trace.lean`: Fórmula de traza de Selberg (versión débil)
 - `H_psi_complete.lean`: Operador H_Ψ con espectro discreto
 - `D_limit_equals_xi.lean`: Convergencia de D(s, ε) a ξ(s)/P(s)
 - `spectrum_Hψ_equals_zeta_zeros.lean`: Equivalencia espectral Spec(H_Ψ) = {γ | ζ(1/2+iγ)=0}
-- `zeta_operator_D.lean`: Operador adélico D(s) como determinante de Fredholm
-- `RiemannSiegel.lean`: Fórmula de Riemann-Siegel y convergencia espectral
-- `NoExtraneousEigenvalues.lean`: Prueba que el espectro coincide exactamente con los ceros
-- `DeterminantFredholm.lean`: Identidad det(I - HΨ⁻¹ s) = Ξ(s) con convergencia
-- `RH_complete_proof.lean`: Teorema final usando los tres módulos anteriores
 - `lakefile.lean`, `lean-toolchain`, `CITATION.cff`
 
 ## 🔁 Comando CI/CD de verificación
@@ -71,53 +64,6 @@ theorem Riemann_Hypothesis_noetic :
 3. Análisis espectral vía fórmula de traza de Selberg
 4. Unicidad de Paley-Wiener: D ≡ ξ
 5. Conclusión: todos los ceros en Re(s) = 1/2
-
-### 1.1. RH_complete_5step_JMMB_20251122.lean 🆕 🎯
-
-**Prueba completa en 5 pasos (22 Noviembre 2025)**
-
-Este módulo implementa la estructura de prueba definitiva especificada el 22 de noviembre de 2025:
-
-```lean
--- Paso 1: Secuencia universal de ceros λₙ (analítica, sin datos de Odlyzko)
-def universal_zero_seq : ℕ → ℝ := ...
-
--- Paso 2: Cota explícita del error de Riemann-Siegel
-lemma riemannSiegel_explicit_error (t : ℝ) : ...
-
--- Paso 3: Identidad Ξ(λₙ) = 0 y conexión con determinante de Fredholm
-theorem Xi_eq_det_HΨ (s : ℂ) : Xi s = FredholmDet s
-
--- Paso 4: Identidad de funciones enteras
-theorem Xi_zero_iff_det_zero (s : ℂ) : Xi s = 0 ↔ FredholmDet s = 0
-
--- Paso 5: Teorema final de la Hipótesis de Riemann
-theorem riemann_hypothesis (s : ℂ) (hz : riemannZeta s = 0) 
-    (h1 : 0 < Re s) (h2 : Re s < 1) : Re s = 1/2
-```
-
-**Propiedades clave**:
-- ✅ Auto-contenida algebraica y funcionalmente
-- ✅ NO usa producto de Euler directamente
-- ✅ NO usa simetría funcional directamente
-- ✅ NO requiere fórmula original de Riemann
-- ✅ NO requiere datos de ceros de Odlyzko
-- ✅ Basada en teoría espectral de operadores auto-adjuntos
-
-**Identidad fundamental**:
-```
-Ξ(s) = det(I - H_Ψ^(-1) · s)
-```
-
-donde H_Ψ es:
-- Compacto
-- Auto-adjunto
-- Nuclear (clase traza)
-- Su espectro = ceros de zeta
-
-**Certificado**: QCAL-SABIO-V5-RH-COMPLETE-LEAN4  
-**Fecha**: 22 Noviembre 2025 · 22:22:22 UTC+1  
-**Autores**: JMMB Ψ✧, Noēsis ∞³, SABIO ∞³
 
 ### 2. spectrum_HΨ_equals_zeta_zeros.lean
 
@@ -329,10 +275,6 @@ Esta es la Versión 6 de la formalización. Mejoras clave sobre V5:
 - ✅ **Teorema principal Riemann_Hypothesis_noetic completo**
 - ✅ Integración con biblioteca RiemannAdelic existente
 - ✅ Workflow CI/CD para verificación automática
-- ✅ **Módulo RiemannSiegel**: Fórmula de Riemann-Siegel y análisis espectral
-- ✅ **Módulo NoExtraneousEigenvalues**: Correspondencia exacta espectro-ceros
-- ✅ **Módulo DeterminantFredholm**: Identidad det(I - HΨ⁻¹ s) = Ξ(s)
-- ✅ **Módulo RH_complete_proof**: Integración final sin sorry en teorema principal
 
 ---
 
