@@ -40,7 +40,7 @@ noncomputable def eigenvalue (A : E →L[ℂ] E) (n : ℕ) : ℂ := by
   sorry  -- Requires spectral theory implementation
 
 /-- The trace of a nuclear operator -/
-noncomputable def trace {A : E →L[ℂ] E} (hA : IsNuclear A) : ℂ := by
+noncomputable def trace (A : E →L[ℂ] E) (hA : IsNuclear A) : ℂ := by
   exact ∑' n, eigenvalue A n
 
 /-- HΨ integral operator (spectral operator from spectrum theory) -/
