@@ -7,6 +7,7 @@ Autores: José Manuel Mota Burruezo & Noēsis Ψ✧
 Fecha: 21 noviembre 2025 — Versión A del sistema RH ∞³
 -/
 
+
 import Mathlib.Analysis.InnerProductSpace.Spectrum
 import Mathlib.Analysis.Fourier.FourierTransform
 import Mathlib.Topology.MetricSpace.IsCompact
