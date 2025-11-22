@@ -286,13 +286,6 @@ Axiomas → Lemas → Archimedean → Paley-Wiener → Zero localization → **O
 - ✅ Formulación completa de RH
 - ⏳ Lemas auxiliares requieren completar detalles técnicos (marcados con sorry)
 
-**Próximos Pasos Técnicos:**
-
-1. Completar eigenfunction_implies_zero usando teoría de transformada de Mellin
-2. Completar zero_implies_eigenvalue con construcción explícita de autofunciones
-3. Completar paley_wiener_excludes_off_line_zeros usando teorema de unicidad
-4. Cerrar los sorry restantes con referencias a teoremas de Mathlib
-
 **Referencias Principales:**
 
 - Berry, M. V., & Keating, J. P. (1999). "The Riemann Zeros and Eigenvalue Asymptotics". SIAM Review, 41(2), 236-266.
