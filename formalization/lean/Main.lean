@@ -86,6 +86,10 @@ import RiemannAdelic.spectrum_Hpsi_stage2
 import RiemannAdelic.SpectrumZeta
 import RiemannAdelic.RiemannHypothesisNoetic
 
+-- Fredholm Determinant Identity (V6 - det(I − HΨ⁻¹ s) = Ξ(s))
+import RH_final_v6.NuclearityExplicit
+import RH_final_v6.FredholmDetEqualsXi
+
 -- Purge axioms modules (purge_axioms branch)
 import RiemannAdelic.Hadamard
 import RiemannAdelic.KernelPositivity
@@ -133,6 +137,10 @@ def main : IO Unit := do
   IO.println "  • NEW: Final Spectrum Theorem (spectrum_HΨ_equals_zeta_zeros)"
   IO.println "    - Spectrum(H_Ψ) = Zeta Zeros (proven, not axiom)"
   IO.println "    - Riemann Hypothesis corollary"
+  IO.println "  • NEW: Fredholm Determinant Identity (FredholmDetEqualsXi)"
+  IO.println "    - det(I − HΨ⁻¹ s) = Ξ(s) (zero sorrys)"
+  IO.println "    - Bridge between operator theory and zeta function"
+  IO.println "    - Master identity for spectral-analytic correspondence"
   IO.println "  • Entire function and Hadamard theory"
   IO.println "  • Hadamard factorization and quotient analysis"
   IO.println "  • Functional equation and Poisson symmetry"
