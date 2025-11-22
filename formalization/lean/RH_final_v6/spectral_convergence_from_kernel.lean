@@ -100,10 +100,12 @@ This is the target of convergence for the spectral side.
 The prime sum represents the arithmetic contribution to the spectrum.
 -/
 
-theorem spectral_limit_well_defined (h : TestFunction) :
-    ∃ L : ℂ, spectral_limit h = L := by
-  use spectral_limit h
-  rfl
+/-- 
+The spectral limit is well-defined: the integral and the infinite sums converge for any test function.
+-/
+theorem spectral_limit_convergent (h : TestFunction) :
+    Integrable h.h ∧ Summable (fun p : Nat.Primes => ∑' k : ℕ, ‖(Real.log p / p^k) * h.h (k * Real.log p)‖) := by
+  sorry
 
 -- Teorema de convergencia del lado espectral
 theorem spectral_convergence_from_kernel
