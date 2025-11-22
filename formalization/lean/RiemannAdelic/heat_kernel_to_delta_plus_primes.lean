@@ -1,7 +1,7 @@
 /-
 heat_kernel_to_delta_plus_primes.lean
 Límite del núcleo de calor hacia δ₀ + lado aritmético (suma sobre primos)
-Versión: 100% sorry-free
+Versión: In progress - contains axioms and sorry placeholders
 Autor: José Manuel Mota Burruezo & Noēsis Ψ✧
 
 This module formalizes the key distributional convergence result:
@@ -16,9 +16,10 @@ import Mathlib.MeasureTheory.Function.L2Space
 import Mathlib.Topology.MetricSpace.Basic
 import Mathlib.NumberTheory.PrimeCounting
 import Mathlib.Analysis.Calculus.ContDiff.Defs
+import RiemannAdelic.SelbergTraceStrong
 
 noncomputable section
-open Real Filter Topology MeasureTheory
+open Real Filter Topology MeasureTheory SelbergTrace
 
 namespace HeatKernelConvergence
 
@@ -92,20 +93,10 @@ def arithmetic_distribution (h : ℝ → ℂ) : ℂ :=
     if k = 0 then 0 else (Real.log p / (p : ℝ)^k) * h (k * Real.log p)
 
 /-!
-## Test Function Structure
+## Note on Test Functions
 
-Test functions are smooth functions with rapid decay, essential for 
-the convergence theory.
--/
-
-/-- Test function: smooth with rapid decay -/
-structure TestFunction where
-  /-- The underlying function from ℝ to ℂ -/
-  h : ℝ → ℂ
-  /-- Infinitely differentiable -/
-  smooth : ContDiff ℝ ⊤ h
-  /-- Rapid decay: faster than any polynomial -/
-  decay : ∀ N : ℕ, ∃ C, ∀ t, ‖h t‖ ≤ C / (1 + |t|)^N
+We use the TestFunction structure from SelbergTrace module (imported above).
+This ensures consistency across modules and avoids code duplication.
 
 /-!
 ## Auxiliary Lemmas
@@ -253,7 +244,7 @@ lemma heat_kernel_evaluates_test_function
   -- 1. heat_kernel integrates to 1
   -- 2. φ has rapid decay
   -- 3. The product is absolutely integrable
-  obtain ⟨C, hC⟩ := φ.decay 2
+  obtain ⟨C, hC⟩ := φ.rapid_decay 2
   use C * 2
   sorry -- Standard estimate using rapid decay
 

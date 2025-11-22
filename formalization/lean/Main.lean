@@ -93,7 +93,7 @@ import RiemannAdelic.GammaTrivialExclusion
 -- Selberg Trace Formula (strong form)
 import RiemannAdelic.SelbergTraceStrong
 
--- Heat Kernel Convergence (100% formal - ZERO sorry)
+-- Heat Kernel Convergence (formalization in progress)
 import RiemannAdelic.heat_kernel_to_delta_plus_primes
 
 def main : IO Unit := do
