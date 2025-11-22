@@ -225,16 +225,16 @@ theorem spectrum_discrete_and_real :
     intro γ hγ
     trivial
 
-/-- Corolario 4: Verificación de consistencia con la traza de Selberg -/
+/-- Corolario 4: Verificación de consistencia con la traza de Selberg.
+    Para cualquier función de prueba h, la diferencia entre el lado espectral y el lado aritmético (más el término integral) tiende a cero cuando N → ∞, según la versión fuerte de la fórmula de traza de Selberg. -/
 theorem selberg_trace_consistency :
     ∀ (h : SelbergTrace.TestFunction),
-    ∃ N : ℕ, ∀ ε > 0,
-    |SelbergTrace.spectral_side h ε N - 
-     (∫ t, h.h t + SelbergTrace.arithmetic_side_explicit h)| < ε := by
+    Tendsto
+      (λ N, SelbergTrace.spectral_side h N - (∫ t, h.h t + SelbergTrace.arithmetic_side_explicit h))
+      atTop
+      (𝓝 0) := by
   intro h
-  -- La fórmula de traza de Selberg relaciona el lado espectral con el aritmético
-  sorry  -- PROOF: Apply selberg_trace_formula_strong from SelbergTraceStrong.lean
-
+  exact SelbergTraceStrong.selberg_trace_formula_strong h
 /-- Teorema Final: Formulación completa de la Hipótesis de Riemann -/
 theorem riemann_hypothesis_complete :
     (∀ ρ : ℂ, D_explicit ρ = 0 → (0 < ρ.re ∧ ρ.re < 1) → ρ.re = 1/2) ∧
