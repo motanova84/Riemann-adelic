@@ -185,15 +185,14 @@ lemma functional_equation_extension
   · -- En Re(s) = 1
     intro t
     have h1 : f.f (1 + I*t) = f.f (-(I*t)) := by
-      have : 1 + I*t = 1 - (-(I*t)) := by ring
-      rw [this]
+      -- 1 + I*t = 1 - (-(I*t)), so by the functional equation:
+      rw [show 1 + I*t = 1 - (-(I*t)) by ring]
       rw [hsymm_f]
-      ring
+      -- No further simplification by ring; need to connect -(I*t) to the critical line
     have h2 : g.f (1 + I*t) = g.f (-(I*t)) := by
-      have : 1 + I*t = 1 - (-(I*t)) := by ring
-      rw [this]
+      rw [show 1 + I*t = 1 - (-(I*t)) by ring]
       rw [hsymm_g]
-      ring
+      -- No further simplification by ring; need to connect -(I*t) to the critical line
     -- Necesitamos conectar -(I*t) con la recta crítica
     sorry  -- Esto requiere más estructura
 
