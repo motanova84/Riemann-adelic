@@ -15,7 +15,7 @@
 - `selberg_trace.lean`: Fórmula de traza de Selberg (versión débil)
 - `H_psi_complete.lean`: Operador H_Ψ con espectro discreto
 - `D_limit_equals_xi.lean`: Convergencia de D(s, ε) a ξ(s)/P(s)
-- `spectrum_Hψ_equals_zeta_zeros.lean`: Equivalencia espectral Spec(H_Ψ) = {γ | ζ(1/2+iγ)=0}
+- `spectral_determinant_identification.lean`: Identificación espectral D(s) = Ξ(s)
 - `lakefile.lean`, `lean-toolchain`, `CITATION.cff`
 
 ## 🔁 Comando CI/CD de verificación
@@ -167,6 +167,14 @@ Teorema fundamental que establece la equivalencia espectral:
 - Axiomas condicionales para autoadjunticidad y equivalencia espectral
 - Corolarios: espectro real, discreto y simétrico
 - Conexión con la formulación espectral de RH
+
+### 5. Spectral Determinant Identification (`spectral_determinant_identification.lean`)
+Identificación espectral del determinante ζ-regularizado:
+- Prueba formal de D(s) = Ξ(s) para todo s ∈ ℂ
+- Determinante D(s) := ∏ₙ (1 - s/λₙ) exp(s/λₙ)
+- Función entera simétrica Ξ(s) = Ξ(1-s)
+- Utiliza teorema de unicidad para funciones enteras de orden ≤ 1
+- Conecta teoría espectral con ceros de la función zeta
 
 ## QCAL Framework Integration
 
