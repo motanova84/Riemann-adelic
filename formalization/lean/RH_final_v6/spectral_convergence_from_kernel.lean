@@ -152,9 +152,7 @@ theorem spectral_convergence_uniform
     (h : TestFunction)
     (ε₀ : ℝ)
     (hε₀ : 0 < ε₀)
-    (kernel_conv : ∀ ε, 0 < ε → ε < ε₀ → 
-      Tendsto (fun ε => ∫ t, h.h t * ((1 / Real.sqrt (4 * π * ε)) * Real.exp (-(t^2)/(4 * ε)))) (nhds 0⁺)
-        (𝓝 (spectral_limit h))) :
+    (kernel_conv : Tendsto (fun ε => ∫ t, h.h t * ((1 / Real.sqrt (4 * π * ε)) * Real.exp (-(t^2)/(4 * ε)))) (nhdsWithin 0 (Ioo 0 ε₀)) (𝓝 (spectral_limit h))) :
     ∀ δ > 0, ∃ N₀, ∀ N ≥ N₀, ∀ ε, 0 < ε → ε < ε₀ → 
       ‖spectral_side h ε N - spectral_limit h‖ < δ := by
   sorry -- Uniform convergence in both N and ε
