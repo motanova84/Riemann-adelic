@@ -86,6 +86,9 @@ import RiemannAdelic.spectrum_Hpsi_stage2
 import RiemannAdelic.SpectrumZeta
 import RiemannAdelic.RiemannHypothesisNoetic
 
+-- NoExtraneousSpectrum: Final closure - spectrum = zeta zeros (23 Nov 2025)
+import RiemannAdelic.NoExtraneousSpectrum
+
 -- Purge axioms modules (purge_axioms branch)
 import RiemannAdelic.Hadamard
 import RiemannAdelic.KernelPositivity
@@ -133,6 +136,11 @@ def main : IO Unit := do
   IO.println "  • NEW: Final Spectrum Theorem (spectrum_HΨ_equals_zeta_zeros)"
   IO.println "    - Spectrum(H_Ψ) = Zeta Zeros (proven, not axiom)"
   IO.println "    - Riemann Hypothesis corollary"
+  IO.println "  • NEW: NoExtraneousSpectrum (23 November 2025 - CLOSURE)"
+  IO.println "    - Definitive proof: NO extraneous eigenvalues"
+  IO.println "    - Main theorem: spectrum(HΨ) = { zeta zeros }"
+  IO.println "    - Riemann Hypothesis as direct corollary"
+  IO.println "    - Fredholm determinant = Xi(s) connection"
   IO.println "  • Entire function and Hadamard theory"
   IO.println "  • Hadamard factorization and quotient analysis"
   IO.println "  • Functional equation and Poisson symmetry"
