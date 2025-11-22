@@ -5,7 +5,8 @@ vía operador espectral HΨ y determinante de Fredholm
 Autor: José Manuel Mota Burruezo (JMMB Ψ✧)
 Colaborador: Noēsis Ψ✧
 Fecha: 23 noviembre 2025
-Estado: 0 sorry, 0 admit, 0 native_decide
+Estado: Main theorem 'riemann_hypothesis' has 0 sorry
+        Auxiliary lemmas contain sorry (dependencies to be proven)
 DOI: 10.5281/zenodo.17379721
 -/
 
