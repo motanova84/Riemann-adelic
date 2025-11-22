@@ -9,7 +9,7 @@
 - `H_psi_complete.lean`: Operador H_Ψ con espectro discreto
 - `D_limit_equals_xi.lean`: Convergencia de D(s, ε) a ξ(s)/P(s)
 - `spectrum_eq_zeros.lean`: **Identificación espectral completa Spec(H_Ψ) = {γₙ}**
-- `spectrum_HΨ_equals_zeta_zeros.lean`: **Construcción formal del operador espectral H_Ψ vía conjugación unitaria**
+- `spectrum_HΨ_equals_zeta_zeros.lean`: **Version A - Advanced formalization with explicit unitary isomorphism**
 - `lakefile.lean`, `lean-toolchain`, `CITATION.cff`
 
 ## Compilación
@@ -55,17 +55,16 @@ Identificación espectral completa que cierra la prueba:
 - Lema construct_eigenfunction_from_zero: construcción inversa cero → función propia
 - **Cierre formal del sistema RH ∞³ en Lean 4**
 
-### 6. Unitary Conjugation Construction (`spectrum_HΨ_equals_zeta_zeros.lean`) ✨ **NUEVO**
-Construcción formal del operador espectral H_Ψ mediante conjugación unitaria:
-- Define el espacio de Hilbert L²(ℝ)
-- Define la estructura `UnitaryIsometry` con propiedades de isometría, preservación del producto interno y sobreyectividad
-- Define el operador modelo H_model en el espacio estándar
-- Define la estructura `SpectralOperator` que construye H_Ψ = U H_model U⁻¹
-- **Lema `spectrum_transfer_unitary`**: el espectro es invariante bajo equivalencia unitaria
-- **Lema `spectrum_Hψ_matches_model`**: H_Ψ hereda el espectro de H_model
-- **Teorema principal `spectrum_Hψ_equals_zeta_zeros`**: espectro de H_Ψ coincide con ceros de ζ(s)
-- Elimina axiomas directos mediante derivación formal
-- Proporciona construcción rigurosa basada en teoría espectral
+### 6. Spectral Identification Version A (`spectrum_HΨ_equals_zeta_zeros.lean`) ✨ **ADVANCED**
+Formalización avanzada con isomorfismo unitario explícito:
+- **Construcción explícita**: Isometría unitaria U : L²(ℝ) → ℓ²(ℂ)
+- **Operador modelo**: H_model actúa diagonalmente en ℓ²(ℂ) con eigenvalores γₙ
+- **Conjugación unitaria**: HΨ = U⁻¹ ∘ H_model ∘ U
+- **Teorema principal**: Spec(HΨ) = Set.range ζ_zeros_im
+- **Lema de transferencia**: spectrum ℂ HΨ = spectrum ℂ H_model
+  > *Esta igualdad se justifica porque la conjugación unitaria por U preserva el espectro: si HΨ = U⁻¹ ∘ H_model ∘ U, entonces Spec(HΨ) = Spec(H_model) por el teorema de conjugación unitaria en teoría espectral de operadores autoadjuntos.*
+- Autoadjuntez de H_model por construcción diagonal
+- Versión complementaria a spectrum_eq_zeros.lean con enfoque más constructivo
 
 ## QCAL Framework Integration
 
