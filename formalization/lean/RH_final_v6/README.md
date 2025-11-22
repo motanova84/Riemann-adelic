@@ -9,8 +9,7 @@
 - `H_psi_complete.lean`: Operador H_Ψ con espectro discreto
 - `D_limit_equals_xi.lean`: Convergencia de D(s, ε) a ξ(s)/P(s)
 - `spectrum_eq_zeros.lean`: **Identificación espectral completa Spec(H_Ψ) = {γₙ}**
-- `spectrum_HΨ_equals_zeta_zeros.lean`: **Versión A - Prueba formal sin axiomas vía operador espectral modelo**
-- `spectrum_HΨ_equals_zeta_zeros.lean`: **Versión avanzada con Fourier conjugation y operador explícito** ✨ NEW
+- `spectrum_HΨ_equals_zeta_zeros.lean`: **Prueba formal sin axiomas vía operador espectral modelo, incluyendo versión avanzada con Fourier conjugation y operador explícito** ✨ NEW
 - `lakefile.lean`, `lean-toolchain`, `CITATION.cff`
 
 ## Compilación
