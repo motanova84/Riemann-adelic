@@ -212,10 +212,13 @@ class TestZetaZerosAccuracy:
         max_errors = []
         
         for start, end in ranges:
+            # Validate range
+            assert start >= 1, f"start must be >= 1, got {start}"
+            
             zeros = get_high_precision_zeros(end, dps=50)
             zeros_compare = get_high_precision_zeros(end, dps=30)
             
-            # Compare only the range
+            # Compare only the range (convert to 0-based indexing)
             profile = compute_error_profile(
                 zeros_compare[start-1:end],
                 zeros[start-1:end]

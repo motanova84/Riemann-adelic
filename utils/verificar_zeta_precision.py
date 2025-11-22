@@ -139,6 +139,7 @@ def compute_error_profile(computed_zeros: List[float],
             'below_1e-7': sum(1 for e in relative_errors if e < 1e-7),
             'below_1e-8': sum(1 for e in relative_errors if e < 1e-8),
             'below_1e-9': sum(1 for e in relative_errors if e < 1e-9),
+            'below_1e-10': sum(1 for e in relative_errors if e < 1e-10),
         }
     }
     
@@ -214,10 +215,11 @@ def verificar_precision(n_zeros: int = 10000,
     )
     
     # Add metadata
+    from datetime import datetime
     error_profile['metadata'] = {
         'computation_precision_dps': dps,
         'zeros_file': zeros_file,
-        'verification_date': mp.ctx_mp_python.ctx_mp_python._timestamp() if hasattr(mp.ctx_mp_python, '_timestamp') else 'unknown',
+        'verification_date': datetime.now().isoformat(),
         'author': 'José Manuel Mota Burruezo Ψ ∞³',
         'doi': '10.5281/zenodo.17379721',
         'qcal_frequency': '141.7001 Hz',
