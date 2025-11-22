@@ -59,7 +59,7 @@ theorem zeta_zeros_equiv_operator_spec :
     exact ⟨n, hn⟩
   · rintro ⟨n, rfl⟩
     constructor
-    · -- Usamos valores conocidos de Zeta en ceros críticos
+    · -- Use known Zeta values at critical zeros
       exact sorry_zeta_values n
     constructor
     · -- Re(λ_seq n) = 1/2 ≠ 1
