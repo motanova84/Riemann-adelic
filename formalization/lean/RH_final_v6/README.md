@@ -66,7 +66,7 @@ Identificación espectral completa que cierra la prueba:
 Versión A: Prueba formal sin axiomas vía operador espectral modelo:
 - **Operador diagonal H_model**: Definido explícitamente con eigenvalues γₙ
 - **Espacio de Hilbert**: H = ℓ² ℕ con base ortonormal estándar φₙ
-- **Autoadjunción**: H_model es esencialmente autoadjunto (operador diagonal con eigenvalues reales)
+- **Autoadjunto**: H_model es esencialmente autoadjunto (operador diagonal con eigenvalues reales)
 - **Transformación unitaria U**: Isomorfismo H ≃ₗᵢ[ℂ] L²(ℝ, ℂ)
 - **Operador H_ψ**: Definido como H_ψ := U ∘ H_model ∘ U⁻¹
 - **Teorema principal**: spectrum(H_ψ) = {z ∈ ℂ | ∃ n : ℕ, z = γₙ}
