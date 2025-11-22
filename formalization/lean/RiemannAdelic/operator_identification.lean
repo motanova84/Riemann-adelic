@@ -88,12 +88,6 @@ lemma zero_implies_eigenvalue (γ : ℝ) (hzero : D_explicit (1/2 + I * γ) = 0)
 
 /-- La positividad espectral obliga a que todos los valores propios
     correspondan a Re(s) = 1/2 -/
-lemma positivity_forces_critical_line (γ : ℝ) (hγ : γ ∈ Spectrum_HΨ) :
-    ∀ s : ℂ, (∃ f : ℝ → ℂ, HΨ.mk.op (fun y => (f y).re) = s.im * (f ·).re) → s.re = 1/2 := by
-  intro s ⟨f, hf⟩
-  -- Aplicar el teorema de positividad del núcleo
-  exact positivity_implies_critical s sorry
-  
 /-- La unicidad tipo Paley-Wiener asegura que no hay más ceros fuera de la línea crítica -/
 lemma paley_wiener_excludes_off_line_zeros :
     ∀ s : ℂ, s.re ≠ 1/2 → D_explicit s ≠ 0 := by
