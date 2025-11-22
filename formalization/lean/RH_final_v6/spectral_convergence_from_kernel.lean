@@ -83,7 +83,7 @@ theorem spectral_side_monotone (h : TestFunction) (ε : ℝ) :
     Monotone (fun N => ‖spectral_side h ε N‖) := by
   intro n m hnm
   unfold spectral_side
-  sorry -- Monotonicity follows from adding positive terms
+  sorry -- Monotonicity follows from the triangle inequality for norms: adding more terms to the sum cannot decrease its norm.
 
 -- Lado continuo + aritmético
 def spectral_limit (h : TestFunction) : ℂ :=
