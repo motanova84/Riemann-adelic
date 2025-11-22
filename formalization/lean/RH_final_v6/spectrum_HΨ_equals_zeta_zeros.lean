@@ -9,6 +9,11 @@ Fecha: 21 noviembre 2025 — Versión A del sistema RH ∞³
 
 
 import Mathlib.Analysis.InnerProductSpace.Spectrum
+import Mathlib.Analysis.InnerProductSpace.Compact
+import Mathlib.Topology.MetricSpace.Compact
+import Mathlib.Data.Real.Basic
+import Mathlib.Data.Complex.Basic
+import Mathlib.LinearAlgebra.Symmetric
 import Mathlib.Analysis.Fourier.FourierTransform
 import Mathlib.Topology.MetricSpace.IsCompact
 import Mathlib.Data.Complex.Exponential
