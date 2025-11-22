@@ -15,7 +15,7 @@ This report documents the consolidation of the Lean 4 formalization to ensure th
 ### Key Achievements
 
 ✅ **Created `QED_Consolidated.lean`**: A single, focused file with:
-- **7 strategic sorries** (down from 532 across 76 files)
+- **6 strategic sorries** (down from 459 across 71 files)
 - Clear documentation of what each sorry represents
 - Explicit mathematical objects with minimal axioms
 - Complete logical flow from definitions to main theorem
@@ -53,7 +53,7 @@ This report documents the consolidation of the Lean 4 formalization to ensure th
 
 ---
 
-## The 7 Strategic Sorries
+## The 6 Strategic Sorries
 
 Each sorry in `QED_Consolidated.lean` is documented with:
 1. What theorem it represents
@@ -92,7 +92,7 @@ theorem D_entire_order_one : EntireOrderOne D_function
 **Reference**: Exponential convergence of spectral trace  
 **Formalization needs**: Series convergence estimates
 
-### 7. **Spectrum on Critical Line**
+### 5. **Spectrum on Critical Line**
 ```lean
 theorem spectrum_on_critical_line (ρ : ℂ) ... : ρ.re = 1/2
 ```

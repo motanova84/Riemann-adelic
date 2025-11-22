@@ -169,8 +169,9 @@ def main():
     """Main validation routine."""
     print_header("Q.E.D. CONSOLIDATION VALIDATION")
     
-    # Paths
-    root = Path("/home/runner/work/Riemann-adelic/Riemann-adelic")
+    # Paths - use script directory as base for portability
+    script_dir = Path(__file__).parent.resolve()
+    root = script_dir
     lean_dir = root / "formalization" / "lean"
     qed_file = lean_dir / "RiemannAdelic" / "QED_Consolidated.lean"
     report_file = lean_dir / "QED_CONSOLIDATION_REPORT.md"

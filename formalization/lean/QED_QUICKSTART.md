@@ -7,7 +7,7 @@
 ## 🎯 What is This?
 
 The **QED_Consolidated.lean** file provides a single, focused formalization of the Riemann Hypothesis proof that:
-- Reduces 463 sorries across 93 files to just **6 strategic sorries**
+- Reduces 459 sorries across 71 files to just **6 strategic sorries**
 - Documents every assumption with clear mathematical references
 - Provides complete logical flow from definitions to main theorem
 - Ensures the Q.E.D. ("quod erat demonstrandum") withstands global scrutiny
