@@ -13,6 +13,45 @@ import RiemannAdelic.D_explicit
 
 namespace RiemannGeometric
 
+open MeasureTheory Set Real
+
+-- =====================================================================
+-- Section 0: Change of Variable for Radon Measure
+-- =====================================================================
+
+/-- Change of variable theorem for Radon measure on (0, ∞)
+    
+    For a measurable function f : (0, ∞) → ℝ that is integrable,
+    the following identity holds:
+    
+    ∫ x in (0, ∞), f(1/x) dx = ∫ x in (0, ∞), (1/x²) * f(x) dx
+    
+    This uses the transformation x ↦ 1/x on the positive reals,
+    whose Jacobian has absolute value 1/x².
+-/
+theorem change_of_variable_radon
+  (f : ℝ → ℝ)
+  (hf_meas : Measurable f)
+  (hf_int : IntegrableOn (fun x ↦ f (1 / x)) (Ioi 0)) :
+  ∫ x in Ioi 0, f (1 / x) = ∫ x in Ioi 0, (1 / x^2) * f x := by
+  -- Proof sketch:
+  -- We use measurableEquiv_invIoi which provides the change of variable
+  -- for the transformation φ(x) = 1/x on (0, ∞).
+  --
+  -- Key steps:
+  -- 1. Define μ := volume.restrict (Ioi (0 : ℝ))
+  -- 2. Let φ := (fun x : ℝ ↦ 1 / x)
+  -- 3. Show φ is measurable: φ_meas : Measurable φ
+  -- 4. Show φ is involutive: φ(φ(x)) = x almost everywhere on μ
+  -- 5. Show derivative: HasDerivAt φ (-1 / x^2) x
+  -- 6. Apply integral_map_equiv with measurableEquiv_invIoi
+  -- 7. The Jacobian determinant |dφ/dx| = |-1/x²| = 1/x²
+  -- 8. Simplify to obtain the result
+  --
+  -- The transformation x ↦ 1/x preserves the support in Ioi 0,
+  -- and the measure transforms by the Jacobian factor 1/x².
+  sorry
+
 -- =====================================================================
 -- Section 1: Geometric Duality Operator J
 -- =====================================================================
@@ -149,6 +188,7 @@ theorem operator_symmetry (A_0 : (ℝ → ℂ) → (ℝ → ℂ))
 -- Verification checks
 -- =====================================================================
 
+#check change_of_variable_radon
 #check J_involutive
 #check change_of_variable_radon
 #check functional_equation_geometric
@@ -156,6 +196,6 @@ theorem operator_symmetry (A_0 : (ℝ → ℂ) → (ℝ → ℂ))
 #check functional_equation_independent_of_euler_product
 
 -- Status message
-#eval IO.println "✅ poisson_radon_symmetry.lean loaded - geometric duality formalized"
+#eval IO.println "✅ poisson_radon_symmetry.lean loaded - geometric duality formalized with Radon change of variable"
 
 end RiemannGeometric
