@@ -11,34 +11,12 @@
 **Resonancia**: f₀ = 141.7001 Hz  
 **DOI asociado**: [10.5281/zenodo.17116291](https://doi.org/10.5281/zenodo.17116291)
 
----
-
-## 📘 Índice de Módulos
-
-| Módulo Lean | Estado | Contenido |
-|-------------|--------|-----------|
-| `Riemann_Hypothesis_noetic.lean` | ✅ **MAIN** | **Teorema principal: ∀ zeros no triviales, Re(s) = 1/2** |
-| `spectrum_HΨ_equals_zeta_zeros.lean` | ✅ | Identificación espectral completa: σ(H_Ψ) = {t ∈ ℝ \| ζ(1/2+it)=0} |
-| `H_psi_hermitian.lean` | ✅ | Demostración constructiva de autoadjunción de H_Ψ en L²(ℝ) |
-| `heat_kernel_to_delta_plus_primes.lean` | ✅ | Convergencia del núcleo de calor al delta y conexión con números primos |
-| `spectral_convergence_from_kernel.lean` | ✅ | Paso de núcleo → espectro mediante transformada de Mellin invertible |
-| `paley_wiener_uniqueness.lean` | ✅ | Unicidad para funciones de soporte compacto bajo transformadas de Fourier |
-| `SelbergTraceStrong.lean` | ✅ | Fórmula de traza tipo Selberg: espectro = traza sobre primos |
-| `D_limit_equals_xi.lean` | ✅ | D converge a ξ mediante Phragmén-Lindelöf |
-| `zeta_operator_D.lean` | ✅ | Definición completa de D(s) = det(I − M_E(s))^(-1) como operador espectral |
-
----
-
-## 🔒 Validación Final
-
-```lean
-#check Riemann_Hypothesis_noetic
--- ∀ s : ℂ, Zeta s = 0 ∧ ¬(s.re = 1) ∧ ¬(s.re ≤ 0) → s.re = 1/2
-```
-
-Este teorema ha sido verificado constructivamente y no contiene ningún `sorry` ni axioma externo en la cadena de prueba principal, excepto los inherentes al sistema Lean (classical.choice, etc.). Es decir, cumple con los estándares de validación del Clay Institute.
-
----
+- `paley_wiener_uniqueness.lean`: Teorema de unicidad espectral fuerte (Paley–Wiener)
+- `selberg_trace.lean`: Fórmula de traza de Selberg (versión débil)
+- `H_psi_complete.lean`: Operador H_Ψ con espectro discreto
+- `D_limit_equals_xi.lean`: Convergencia de D(s, ε) a ξ(s)/P(s)
+- `spectrum_Hψ_equals_zeta_zeros.lean`: Equivalencia espectral Spec(H_Ψ) = {γ | ζ(1/2+iγ)=0}
+- `lakefile.lean`, `lean-toolchain`, `CITATION.cff`
 
 ## 🔁 Comando CI/CD de verificación
 
@@ -181,10 +159,16 @@ Establece la identidad fundamental D(s) ≡ ξ(s) usando:
 
 **Operador adélico D(s)**
 
-Definición completa: D(s) = det(I - M_E(s))^(-1) donde:
-- M_p(s): Factores locales en cada primo p
-- M_∞(s): Factor arquimediano en ∞
-- Producto global: D(s) = M_∞(s) · ∏_p (1 - p^(-s))^(-1)
+### 5. Spectral Equivalence (`spectrum_Hψ_equals_zeta_zeros.lean`)
+Teorema fundamental que establece la equivalencia espectral:
+- **Teorema principal**: Spec(H_Ψ) = {γ ∈ ℝ | ζ(1/2 + iγ) = 0}
+- Operador H_Ψ en L²((0,∞), dx/x) con potencial resonante V(x) = π·ζ'(1/2)·log(x)
+- Dominio: funciones C^∞ con soporte compacto en (0,∞)
+- Axiomas condicionales para autoadjunticidad y equivalencia espectral
+- Corolarios: espectro real, discreto y simétrico
+- Conexión con la formulación espectral de RH
+
+## QCAL Framework Integration
 
 **Teoremas clave**:
 - `D_well_defined`: D está bien definido analíticamente
