@@ -67,11 +67,12 @@ theorem H_Ψ_is_trace_class :
 -- Singular value decay
 axiom singular_values : NuclearOperator → Nat → Real
 axiom sv_decay_rate : Real
-axiom singular_value_decay_axiom : ∀ n : Nat, singular_values H_Ψ n ≤ sv_decay_rate / (n : Real)
+-- Axiom for n > 0 only (avoids division by zero)
+axiom singular_value_decay_axiom : ∀ n : Nat, n > 0 → singular_values H_Ψ n ≤ sv_decay_rate / (n : Real)
 
-theorem singular_value_decay (n : Nat) :
+theorem singular_value_decay (n : Nat) (h : n > 0) :
   singular_values H_Ψ n ≤ sv_decay_rate / (n : Real) := 
-  -- Explicit decay rate from kernel analysis
-  singular_value_decay_axiom n
+  -- Explicit decay rate from kernel analysis (n > 0 only)
+  singular_value_decay_axiom n h
 
 end QCAL

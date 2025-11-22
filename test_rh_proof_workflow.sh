@@ -29,23 +29,26 @@ echo "Command: cd formalization/lean/RH_final_v6 && python3 scripts/verify_no_so
 echo ""
 
 cd formalization/lean/RH_final_v6
-if python3 scripts/verify_no_sorrys.py > /tmp/verify_output.txt 2>&1; then
+VERIFY_TMP=$(mktemp)
+if python3 scripts/verify_no_sorrys.py > "$VERIFY_TMP" 2>&1; then
     echo -e "${GREEN}✅ Test 1 PASSED${NC}"
     # Check specific outputs
-    if grep -q "0 sorrys" /tmp/verify_output.txt; then
+    if grep -q "0 sorrys" "$VERIFY_TMP"; then
         echo -e "   ${GREEN}✓${NC} All files have 0 sorrys"
     fi
-    if grep -q "VERIFICATION PASSED" /tmp/verify_output.txt; then
+    if grep -q "VERIFICATION PASSED" "$VERIFY_TMP"; then
         echo -e "   ${GREEN}✓${NC} Verification status: PASSED"
     fi
-    if grep -q "Proof Status: COMPLETE" /tmp/verify_output.txt; then
+    if grep -q "Proof Status: COMPLETE" "$VERIFY_TMP"; then
         echo -e "   ${GREEN}✓${NC} Proof status: COMPLETE"
     fi
 else
     echo -e "${RED}❌ Test 1 FAILED${NC}"
-    cat /tmp/verify_output.txt
+    cat "$VERIFY_TMP"
+    rm -f "$VERIFY_TMP"
     exit 1
 fi
+rm -f "$VERIFY_TMP"
 echo ""
 
 # Test 2: Package and generate certificate
@@ -54,7 +57,8 @@ echo -e "${YELLOW}📦 Test 2: Package RH Proof${NC}"
 echo "Command: bash scripts/package_rh_proof.sh"
 echo ""
 
-if bash scripts/package_rh_proof.sh > /tmp/package_output.txt 2>&1; then
+PACKAGE_TMP=$(mktemp)
+if bash scripts/package_rh_proof.sh > "$PACKAGE_TMP" 2>&1; then
     echo -e "${GREEN}✅ Test 2 PASSED${NC}"
     
     # Verify outputs exist
@@ -94,9 +98,11 @@ if bash scripts/package_rh_proof.sh > /tmp/package_output.txt 2>&1; then
     fi
 else
     echo -e "${RED}❌ Test 2 FAILED${NC}"
-    cat /tmp/package_output.txt
+    cat "$PACKAGE_TMP"
+    rm -f "$PACKAGE_TMP"
     exit 1
 fi
+rm -f "$PACKAGE_TMP"
 echo ""
 
 # Test 3: Verify certificate content

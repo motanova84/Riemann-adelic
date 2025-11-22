@@ -13,7 +13,7 @@ import argparse
 import re
 import sys
 from pathlib import Path
-from typing import Dict, List, Tuple
+from typing import Any, Dict, List, Tuple
 
 
 class SorryVerifier:
@@ -51,7 +51,7 @@ class SorryVerifier:
         axioms = re.findall(r'\baxiom\b', code_content)
         return len(axioms)
     
-    def verify_file(self, filepath: Path) -> Dict[str, any]:
+    def verify_file(self, filepath: Path) -> Dict[str, Any]:
         """Verify a single Lean file"""
         if not filepath.exists():
             return {

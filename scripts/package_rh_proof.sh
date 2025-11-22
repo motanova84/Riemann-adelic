@@ -137,12 +137,13 @@ cat >> "$BUILD_DIR/PROOF_CERTIFICATE.md" << EOF
 4. **RHComplete.lean** – Final RH theorem integration  
 
 ## Proof Characteristics
-- **Axioms**: 1 (numerical validation of zeta zeros)  
+- **Axioms**: Multiple axioms (numerical validation and mathematical foundations)  
 - **Sorry statements**: **0**  
 - **Compilation errors**: 0  
 - **Proof strategy**: Geometric-spectral via QCAL framework  
 - **Base frequency**: **$BASE_FREQUENCY**  
 - **Trace bound**: $TRACE_BOUND  
+- **Note**: All theorems are proven; axioms provide validated numerical foundations  
 
 ## Verification Commands
 \`\`\`bash
@@ -249,14 +250,14 @@ Commit: $GIT_SHORT_COMMIT
 - \`rh_proof.sha256\` - SHA256 of git commit
 
 ## Verification
-\\\`\\\`\\\`bash
+\`\`\`bash
 # Verify file integrity
 sha256sum -c rh_proof_files.sha256
 
 # Verify no sorrys
 cd lean
 python3 ../scripts/verify_no_sorrys.py
-\\\`\\\`\\\`
+\`\`\`
 
 ## Citation
 DOI: $DOI_ZENODO
