@@ -10,3 +10,17 @@ lean_lib RHFinal where
              `SpectralIdentification, `Operator.Hψ, `PaleyWiener.Unicity, 
              `Spectral.MellinIdentification, `Zeta.FunctionalEquation]
   roots := #[`paley_wiener_uniqueness, `selberg_trace, `H_psi_complete, `D_limit_equals_xi, `spectrum_eq_zeros]
+  roots := #[
+    `paley_wiener_uniqueness,
+    `selberg_trace,
+    `H_psi_complete,
+    `D_limit_equals_xi,
+    `rh_final_theorem,
+    `spectrum_HΨ_equals_zeta_zeros,
+    `heat_kernel_to_delta_plus_primes,
+    `spectral_convergence_from_kernel,
+    `SelbergTraceStrong,
+    `zeta_operator_D,
+    `Riemann_Hypothesis_noetic,
+    `RiemannSiegel
+  ]
