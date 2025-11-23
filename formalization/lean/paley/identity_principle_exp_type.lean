@@ -34,7 +34,7 @@ lemma identity_principle_exp_line
   ∀ z : ℂ, f z = 0 := by
   -- Paso 1: f es entera y acotada en bandas horizontales
   obtain ⟨M, Mpos, hM⟩ := hexp
-  have hf_entire : AnalyticOn ℂ f univ := hf.analyticOn
+  -- f is entire (differentiable everywhere) with exponential growth bound
   -- Paso 2: el conjunto {1/2 + I·t | t ∈ ℝ} tiene punto de acumulación en ℂ
   let L := {z : ℂ | ∃ t : ℝ, z = 1/2 + I * t}
   have hL : ∀ z ∈ L, f z = 0 := by
