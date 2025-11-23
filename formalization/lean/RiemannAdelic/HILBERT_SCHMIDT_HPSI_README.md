@@ -118,15 +118,16 @@ In the Berry-Keating approach:
 The formalization uses minimal axioms:
 
 1. `abs_sin_div_log_le_one`: The sinc function is bounded by 1
-2. `CompactOperator.of_HilbertSchmidt`: Hilbert-Schmidt implies compact
+2. `CompactOperator`: Type definition for compact operators
+3. `CompactOperator.of_HilbertSchmidt`: Hilbert-Schmidt implies compact
 
-Both are standard results from functional analysis.
+All are standard results from functional analysis.
 
 ## Compilation Status
 
 - ✅ **Compiles:** Yes (Lean 4.5.0 with Mathlib 4)
 - ✅ **Sorry-free:** 100% (no sorry statements)
-- ✅ **Axioms:** Minimal (2 standard results)
+- ✅ **Axioms:** Minimal (3 standard results)
 
 ## Usage Example
 
