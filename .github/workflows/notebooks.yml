@@ -1,6 +1,8 @@
 name: Jupyter Validation
 
 on:
+  pull_request:
+    branches: [ main ]
   workflow_dispatch:
   schedule:
     - cron: "0 6 * * 1"  # Monday at 6 am UTC
@@ -13,6 +15,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: main  # Explicitly checkout main branch for scheduled runs
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'

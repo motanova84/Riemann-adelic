@@ -35,6 +35,9 @@ htmlcov/
 coverage.xml
 *.cover
 
+# SABIO ∞⁴ generated reports
+sabio_infinity4_report_*.json
+
 # Virtual environments
 venv/
 env/
@@ -50,13 +53,24 @@ ENV/
 
 # OS files
 .DS_Store
+Thumbs.db__pycache__/
 Thumbs.db
 
 # Generated validation results (keep structure but not data)
-data/validation_results*.csv
+data/validation_results_*.csv
 data/validation_output*.csv
 data/temp_*
 data/*.tmp
+data/validation/results/*
+data/validation/certificates/*
+!data/validation/results/.gitkeep
+!data/validation/certificates/.gitkeep
+!data/validation_results.csv
+
+# Generated 141.7 Hz validation outputs
+resultados/*.json
+resultados/certificates/
+!resultados/.gitkeep
 
 # Generated HTML output  
 docs/validation*.html
@@ -69,6 +83,10 @@ zeros/*.tmp
 zeros/*.gz
 logs/*.log
 logs/temp_*
+logs/validation/*
+logs/performance/benchmark_results_*.json
+logs/performance/benchmark_results_*_report.md
+!logs/validation/.gitkeep
 
 # CI/CD artifacts
 artifacts/
@@ -113,6 +131,13 @@ dmypy.json
 # Node.js dependencies
 node_modules/
 package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Next.js build output
+.next/
+out/
+next-env.d.ts
 
 # Build artifacts
 dist/
@@ -127,3 +152,30 @@ monitoring/evidence/
 monitoring/alerts/*.json
 !monitoring/alerts/.gitkeep
 examples/__pycache__/
+
+# SABIO ∞³ validation artifacts
+sabio_validation_report.json
+quantum_radio_validation_results.json
+test.sabio
+*.sabio.tmp
+
+# Lean validation reports (generated during CI)
+# Lean4 validation artifacts
+formalization/lean/validation_report.json
+
+# Lean4 build artifacts
+.lake/
+lake-packages/
+*.olean
+*.trace
+formalization/lean/validation_report.json
+
+# SageMath build artifacts
+*.sage.py
+.sage/
+
+# Demo H_epsilon generated plots
+demo_H_epsilon*.png
+operador_H_epsilon_comparison.png
+validation_report.json
+*.backup

@@ -15,11 +15,19 @@ by José Manuel Mota Burruezo.
 
 from .adelic_determinant import AdelicCanonicalDeterminant
 from .critical_line_checker import CriticalLineChecker
+from .dilation_operator import (
+    PrimePotentialConfig,
+    build_dilation_operator,
+    build_prime_potential,
+)
 from .performance_monitor import PerformanceMonitor, PerformanceMetrics
 
 __all__ = [
     'AdelicCanonicalDeterminant',
-    'CriticalLineChecker', 
+    'CriticalLineChecker',
+    'PrimePotentialConfig',
+    'build_dilation_operator',
+    'build_prime_potential',
     'PerformanceMonitor',
     'PerformanceMetrics'
 ]

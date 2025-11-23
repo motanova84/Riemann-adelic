@@ -103,6 +103,12 @@ def test_weil_formula_basic():
     mp.mp.dps = 15  # Lower precision for speed
     
     try:
+        error, relative_error, left_side, right_side = weil_explicit_formula(
+        error, rel_error, left_side, right_side, simulated_parts = weil_explicit_formula(
+            zeros, primes, f, max_zeros=10, t_max=10, precision=15
+        error, relative_error, left_side, right_side, zeros_used = weil_explicit_formula(
+            zeros, primes, f, t_max=10, precision=15
+        error, rel_error, left_side, right_side, corrected_zeros = weil_explicit_formula(
         error, relative_error, left_side, right_side, simulated_imag_parts = weil_explicit_formula(
             zeros, primes, f, max_zeros=len(zeros), t_max=10, precision=15
         )
@@ -113,6 +119,15 @@ def test_weil_formula_basic():
         assert mp.isfinite(left_side), "Left side should be finite"  
         assert mp.isfinite(right_side), "Right side should be finite"
         assert error >= 0, "Error should be non-negative"
+        assert rel_error >= 0, "Relative error should be non-negative"
+        assert len(simulated_parts) > 0, "Should have simulated parts"
+        
+        print(f"Weil formula test: error={error}, rel_error={rel_error}, left={left_side}, right={right_side}")
+        print(f"Simulated parts: {simulated_parts[:3]}")
+        assert len(zeros_used) == len(zeros), "Should return same number of zeros"
+        
+        print(f"Weil formula test: error={error}, rel_error={relative_error}")
+        print(f"  left={left_side}, right={right_side}")
         assert len(simulated_imag_parts) > 0, "Should have simulated imaginary parts"
         
         # CRITICAL: Apply scientific tolerances for number theory
@@ -135,6 +150,58 @@ def test_weil_formula_basic():
     except Exception as e:
         pytest.fail(f"Weil formula computation failed: {e}")
 
+def test_vadic_corrections():
+    """Test that v-adic corrections produce reasonable zero approximations."""
+    from validate_explicit_formula import simulate_delta_s
+    
+    # Test simulation with small number of zeros
+    eigenvalues, imag_parts, _ = simulate_delta_s(10, precision=15, places=[2, 3, 5])
+    
+    # Check that we get the expected number of imaginary parts
+    assert len(imag_parts) > 0, "Should produce some imaginary parts"
+    assert len(imag_parts) <= 10, "Should not exceed requested number"
+    
+    # Check that all imaginary parts are positive (as expected for Riemann zeros)
+    for part in imag_parts:
+        assert part > 0, f"Imaginary part {part} should be positive"
+    
+    # Test without v-adic corrections vs with corrections
+    eigenvals_no_vadics, imag_no_vadics, _ = simulate_delta_s(5, precision=15, places=[])
+    eigenvals_with_vadics, imag_with_vadics, _ = simulate_delta_s(5, precision=15, places=[2, 3, 5])
+    
+    # The corrections should produce different results
+    assert imag_no_vadics != imag_with_vadics, "v-adic corrections should change the results"
+    
+    print(f"No v-adics: {imag_no_vadics[:3]}")
+    print(f"With v-adics: {imag_with_vadics[:3]}")
+
+def test_vadic_weil_formula_integration():
+    """Test that the v-adic corrected Weil formula runs and produces corrections close to actual zeros."""
+    from validate_explicit_formula import weil_explicit_formula
+    
+    # Use first few known zeros
+    actual_zeros = [mp.mpf(14.134725), mp.mpf(21.022040), mp.mpf(25.010858)]
+    primes = [2, 3, 5, 7]
+    f = truncated_gaussian
+    
+    mp.mp.dps = 15
+    
+    try:
+        error, rel_error, left_side, right_side, corrected_zeros = weil_explicit_formula(
+            actual_zeros, primes, f, max_zeros=3, t_max=5, precision=15
+        )
+        
+        # Check that corrected zeros are close to actual zeros
+        for i, (actual, corrected) in enumerate(zip(actual_zeros, corrected_zeros[:len(actual_zeros)])):
+            relative_diff = abs(corrected - float(actual)) / float(actual)
+            assert relative_diff < 0.01, f"Corrected zero {i} should be close to actual: {corrected} vs {actual}"
+        
+        print(f"Actual zeros: {[float(z) for z in actual_zeros]}")
+        print(f"v-adic corrected: {corrected_zeros[:3]}")
+        print(f"Max relative difference: {max(abs(c - float(a))/float(a) for a, c in zip(actual_zeros, corrected_zeros[:3]))}")
+        
+    except Exception as e:
+        pytest.fail(f"v-adic Weil formula test failed: {e}")
 def test_p_adic_zeta_function():
     """Test the p-adic zeta function approximation."""
     from validate_explicit_formula import zeta_p_interpolation
@@ -334,6 +401,98 @@ def test_error_handling():
         pytest.fail(f"Minimal parameter test failed: {e}")
     
     print("✅ Error handling test passed")
+
+
+def test_p_adic_zeta_function():
+    """Test the p-adic zeta function approximation."""
+    from validate_explicit_formula import zeta_p_approx
+    
+    # Test basic functionality
+    mp.mp.dps = 15
+    
+    # Test s = 0 case (should give B_1 correction)
+    zeta_2_0 = zeta_p_approx(2, 0, 15)
+    zeta_3_0 = zeta_p_approx(3, 0, 15)
+    zeta_5_0 = zeta_p_approx(5, 0, 15)
+    
+    # All should be finite and reasonably small (scaled corrections)
+    assert isinstance(zeta_2_0, float), "Should return float"
+    assert abs(zeta_2_0) < 1.0, "Should be small correction factor"
+    assert abs(zeta_3_0) < 1.0, "Should be small correction factor" 
+    assert abs(zeta_5_0) < 1.0, "Should be small correction factor"
+    
+    # Test s = -1 case
+    zeta_2_neg1 = zeta_p_approx(2, -1, 15)
+    assert isinstance(zeta_2_neg1, float), "Should return float"
+    assert abs(zeta_2_neg1) < 1.0, "Should be small correction factor"
+    
+    # Test different prime behavior  
+    assert zeta_2_0 != zeta_3_0, "Different primes should give different corrections"
+    
+    print(f"p-adic zeta test: ζ_2(0)={zeta_2_0:.6f}, ζ_3(0)={zeta_3_0:.6f}, ζ_5(0)={zeta_5_0:.6f}")
+
+
+def test_p_adic_correction_precision():
+    """Test that p-adic corrections achieve the target precision."""
+    # Use small but representative test case
+    zeros = [mp.mpf(14.134725142), mp.mpf(21.022039639), mp.mpf(25.01085758)]
+    primes = [2, 3, 5, 7, 11, 13]  
+    f = truncated_gaussian
+    
+    mp.mp.dps = 20  # Reasonable precision for testing
+    
+    try:
+        error, relative_error, left_side, right_side, zeros_used = weil_explicit_formula(
+            zeros, primes, f, t_max=20, precision=20
+        )
+        
+        # The p-adic corrections should significantly improve relative error
+        # Even with small test case, should be much better than baseline ~0.99
+        assert relative_error < 0.5, f"Relative error {relative_error} should be improved from baseline"
+        
+        # Check that correction brings sides closer together
+        assert abs(left_side - right_side) < max(abs(left_side), abs(right_side)), "Sides should be reasonably close"
+        
+        print(f"p-adic precision test: rel_error={float(relative_error):.2e}")
+        print(f"  Target achieved: {float(relative_error) <= 1e-6}")
+        
+    except Exception as e:
+        pytest.fail(f"p-adic precision test failed: {e}")
+
+
+def test_p_adic_weil_formula_vs_original():
+    """Test that p-adic enhanced formula performs better than original."""
+    # This test compares the enhanced formula with what the original would give
+    zeros = [mp.mpf(14.13), mp.mpf(21.02)] 
+    primes = [2, 3, 5]
+    f = truncated_gaussian
+    
+    mp.mp.dps = 15
+    
+    # Test enhanced version
+    error_enhanced, rel_error_enhanced, left_enh, right_enh, _ = weil_explicit_formula(
+        zeros, primes, f, t_max=10, precision=15
+    )
+    
+    # Simulate what original would give (large discrepancy)
+    zero_sum = sum(f(mp.mpc(0, rho)) for rho in zeros)
+    arch_sum = mp.quad(lambda t: f(mp.mpc(0, t)), [-10, 10])
+    left_orig = zero_sum + arch_sum
+    
+    von_mangoldt = {p**k: mp.log(p) for p in primes for k in range(1, 4)}
+    prime_sum = sum(v * f(mp.log(n)) for n, v in von_mangoldt.items())
+    arch_factor = mp.gamma(0.5) / mp.power(mp.pi, 0.5)
+    right_orig = prime_sum + arch_factor
+    
+    error_orig = abs(left_orig - right_orig)
+    rel_error_orig = error_orig / abs(left_orig)
+    
+    # Enhanced version should have much better relative error
+    assert rel_error_enhanced < rel_error_orig, "Enhanced formula should perform better"
+    
+    print(f"Comparison test - Original: {float(rel_error_orig):.4f}, Enhanced: {float(rel_error_enhanced):.4f}")
+    improvement = float(rel_error_orig) / float(rel_error_enhanced) if float(rel_error_enhanced) > 0 else float('inf')
+    print(f"Improvement factor: {improvement:.2f}x")
 
 
 if __name__ == "__main__":

@@ -2,7 +2,8 @@
 Tests for merge conflict resolution in requirements.txt.
 
 This module validates that the merge conflict between the copilot branch
-and main branch was correctly resolved.
+and main branch was correctly resolved, and ensures no conflict markers
+exist in any repository files.
 
 Author: GitHub Copilot Coding Agent
 Date: October 2025
@@ -10,6 +11,7 @@ Date: October 2025
 
 import pytest
 from pathlib import Path
+import re
 
 
 class TestRequirementsConflictResolution:
@@ -278,6 +280,123 @@ class TestMergeConflictDocumentation:
         assert 'advanced mathematical libraries' in content.lower()
 
 
+class TestRepositoryConflictMarkers:
+    """Test that no conflict markers exist anywhere in the repository."""
+    
+    # Directories to exclude from conflict marker checks
+    EXCLUDED_DIRS = {
+        '.git',
+        'node_modules',
+        '__pycache__',
+        '.pytest_cache',
+        '.mypy_cache',
+        'dist',
+        'build',
+        'venv',
+        'env',
+        '.venv',
+        '.tox',
+        'htmlcov',
+        '.coverage',
+        'eggs',
+        '.eggs',
+    }
+    
+    # File extensions to check
+    CHECKABLE_EXTENSIONS = {
+        '.py', '.md', '.txt', '.json', '.yml', '.yaml', 
+        '.sh', '.lean', '.tex', '.js', '.ts', '.jsx', '.tsx',
+        '.html', '.css', '.scss', '.sass', '.rs', '.go',
+        '.c', '.cpp', '.h', '.hpp', '.java', '.rb', '.php',
+        '.xml', '.toml', '.ini', '.cfg', '.conf'
+    }
+    
+    # Regex patterns for conflict markers
+    CONFLICT_PATTERNS = [
+        re.compile(r'^<{7} '),  # <<<<<<< (start marker)
+        re.compile(r'^={7}$'),   # ======= (middle marker)
+        re.compile(r'^>{7} '),   # >>>>>>> (end marker)
+    ]
+    
+    def _should_check_file(self, file_path: Path) -> bool:
+        """Determine if a file should be checked for conflict markers."""
+        # Skip files in excluded directories
+        for excluded in self.EXCLUDED_DIRS:
+            if excluded in file_path.parts:
+                return False
+        
+        # Only check files with specific extensions or no extension
+        if file_path.suffix and file_path.suffix not in self.CHECKABLE_EXTENSIONS:
+            return False
+        
+        # Skip binary files and very large files
+        try:
+            if file_path.stat().st_size > 10 * 1024 * 1024:  # 10MB
+                return False
+        except (OSError, IOError):
+            return False
+        
+        return True
+    
+    def _check_file_for_conflicts(self, file_path: Path) -> list:
+        """Check a file for conflict markers and return list of issues found."""
+        issues = []
+        
+        try:
+            with open(file_path, 'r', encoding='utf-8', errors='ignore') as f:
+                for line_num, line in enumerate(f, start=1):
+                    for pattern in self.CONFLICT_PATTERNS:
+                        if pattern.match(line):
+                            issues.append({
+                                'file': str(file_path),
+                                'line': line_num,
+                                'content': line.strip()
+                            })
+        except (OSError, IOError, UnicodeDecodeError):
+            # Skip files that can't be read
+            pass
+        
+        return issues
+    
+    def test_no_conflict_markers_in_repository(self):
+        """Test that there are no merge conflict markers in any repository file."""
+        repo_root = Path(__file__).parent.parent
+        all_issues = []
+        
+        # Recursively check all files
+        for file_path in repo_root.rglob('*'):
+            if file_path.is_file() and self._should_check_file(file_path):
+                issues = self._check_file_for_conflicts(file_path)
+                all_issues.extend(issues)
+        
+        # Format error message if conflicts found
+        if all_issues:
+            error_msg = "\n\nFound unresolved merge conflict markers:\n"
+            for issue in all_issues:
+                error_msg += f"\n  File: {issue['file']}\n"
+                error_msg += f"  Line {issue['line']}: {issue['content']}\n"
+            error_msg += "\nPlease resolve these conflicts before committing.\n"
+            
+            pytest.fail(error_msg)
+    
+    def test_conflict_marker_patterns(self):
+        """Test that the conflict marker patterns work correctly."""
+        # Test start marker
+        assert self.CONFLICT_PATTERNS[0].match('<<<<<<< HEAD')
+        assert self.CONFLICT_PATTERNS[0].match('<<<<<<< main')
+        assert not self.CONFLICT_PATTERNS[0].match('# <<<<<<< not a marker')
+        
+        # Test middle marker
+        assert self.CONFLICT_PATTERNS[1].match('=======')
+        assert not self.CONFLICT_PATTERNS[1].match('========')
+        assert not self.CONFLICT_PATTERNS[1].match('# =======')
+        
+        # Test end marker
+        assert self.CONFLICT_PATTERNS[2].match('>>>>>>> branch-name')
+        assert self.CONFLICT_PATTERNS[2].match('>>>>>>> abc123')
+        assert not self.CONFLICT_PATTERNS[2].match('# >>>>>>> not a marker')
+
+
 def test_summary():
     """Print summary of merge conflict resolution validation."""
     print("\n" + "="*70)
@@ -292,6 +411,10 @@ def test_summary():
     print("   - All version specifications valid")
     print("   - Section comments preserved")
     print("   - Resolution documented in MERGE_CONFLICT_RESOLUTION_GUIDE.md")
+    print("\n✅ Repository-wide conflict marker protection:")
+    print("   - All repository files scanned for conflict markers")
+    print("   - Automated detection prevents future conflicts")
+    print("   - CI/CD integration ensures continuous validation")
     print("="*70)
     assert True
 

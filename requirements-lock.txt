@@ -93,7 +93,7 @@ packaging==24.2
 pandas==2.2.3
 pillow==11.3.0
 pyparsing==3.2.1
-python-dateutil==2.10.1
+python-dateutil==2.9.0.post0
 pytz==2024.2
 six==1.16.0
 typing-extensions==4.10.0

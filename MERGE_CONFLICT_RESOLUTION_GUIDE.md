@@ -103,6 +103,40 @@ A validation script (`/tmp/validate_requirements.py`) was created to programmati
 - Confirms joblib appears only once
 - Reports comprehensive validation results
 
+## Repository-Wide Conflict Marker Protection
+
+To prevent future merge conflicts from being accidentally committed, a comprehensive test suite has been implemented in `tests/test_merge_conflict_resolution.py`:
+
+### Automated Detection
+The `TestRepositoryConflictMarkers` class scans the entire repository for conflict markers:
+- **Markers Detected**: `<<<<<<<`, `=======`, `>>>>>>>`
+- **File Types Checked**: `.py`, `.md`, `.txt`, `.json`, `.yml`, `.yaml`, `.sh`, `.lean`, `.tex`, `.js`, `.ts`, `.jsx`, `.tsx`, `.html`, `.css`, `.scss`, `.sass`, `.rs`, `.go`, `.c`, `.cpp`, `.h`, `.hpp`, `.java`, `.rb`, `.php`, `.xml`, `.toml`, `.ini`, `.cfg`, `.conf`
+- **Excluded Areas**: `.git`, `node_modules`, `__pycache__`, build artifacts
+
+### How It Works
+1. **Recursive Scanning**: Traverses all repository files recursively
+2. **Smart Filtering**: Only checks text-based files, skips binaries and large files (>10MB)
+3. **Regex Matching**: Uses precise regex patterns to detect conflict markers at line starts
+4. **Clear Reporting**: If markers are found, reports exact file path and line number
+
+### CI/CD Integration
+The conflict marker check runs automatically in CI/CD:
+- Triggered by `pytest -v` in `.github/workflows/tests.yml`
+- Runs on every push to `main` and on all pull requests
+- Fails the build if any conflict markers are detected
+
+### Testing the Detection
+The test suite includes verification that the detection works correctly:
+```bash
+pytest tests/test_merge_conflict_resolution.py::TestRepositoryConflictMarkers -v
+```
+
+### Benefits
+- ✅ Prevents accidental commits of unresolved conflicts
+- ✅ Catches conflicts in any file type, not just requirements.txt
+- ✅ Provides early warning in CI before merge
+- ✅ Maintains repository integrity and code quality
+
 ---
 
 **Resolution Status**: ✅ Complete and Validated
