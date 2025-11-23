@@ -86,6 +86,7 @@ import RiemannAdelic.spectrum_Hpsi_stage2
 -- Spectrum Zeta Module and Noetic Proof
 import RiemannAdelic.SpectrumZeta
 import RiemannAdelic.RiemannHypothesisNoetic
+import RiemannAdelic.riemann_hypothesis_proof
 
 -- NoExtraneousSpectrum: Final closure - spectrum = zeta zeros (23 Nov 2025)
 import RiemannAdelic.NoExtraneousSpectrum
