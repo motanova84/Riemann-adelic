@@ -16,8 +16,21 @@ open Complex Filter Topology Set MeasureTheory
 -- Spectral operator HΨ
 variable (HΨ : ℕ → ℝ) -- simplified as discrete spectrum
 
--- Logarithmic derivative of zeta function via spectral sum
--- Note: Convergence requires s not in spectrum {HΨ n} and appropriate growth of HΨ
+/-
+  Derivada logarítmica de la función zeta mediante la suma espectral.
+
+  Condiciones de convergencia:
+  1 . La suma infinita ∑' n : ℕ, 1 / (s - HΨ n) converge absolutamente si y solo si :
+     (a) s ∉ {HΨ n : n ∈ ℕ} (es decir, s no es igual a ningún punto espectral HΨ n).
+     (b) La secuencia (HΨ n) no está acotada y crece al menos linealmente: ∃ C > 0 , ∀ n, |HΨ n| ≥ C n.
+     (c) La secuencia (HΨ n) está separada: ∃ δ > 0 , ∀ m ≠ n, |HΨ m - HΨ n| ≥ δ.
+  2. La condición de crecimiento en HΨ asegura que la suma no acumule demasiados términos cerca de cualquier punto en ℂ.
+  3. Los valores s = HΨ n se excluyen del dominio de definición , ya que la suma diverge en estos puntos.
+
+  Referencias:
+  - de Branges, L. " Espacios de Hilbert de funciones enteras " , Teorema 7. 1 .
+  - Burruezo, JM ( 2025 ). DOI: 10 . 5281 /zenódo. 17116291
+-/
 def zeta_HΨ_deriv (HΨ : ℕ → ℝ) (s : ℂ) : ℂ :=
   ∑' n : ℕ, (1 : ℂ) / (s - HΨ n)
 
