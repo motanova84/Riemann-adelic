@@ -126,11 +126,11 @@ Esta versión de la demostración establece:
 
 ✅ Estructura completa de la prueba establecida
 ✅ Teorema principal formulado sin sorry en el nivel superior
-⚠️ Lemas técnicos auxiliares requieren teoría analítica completa de Mathlib
+⚠️ La prueba es condicional respecto a ciertos axiomas técnicos (no lemas con sorrys); requiere teoría analítica completa de Mathlib para eliminar estos axiomas.
 
 Esta formalización representa la estructura lógica completa de la demostración,
-con los lemas técnicos (como la diferenciabilidad y las propiedades de crecimiento)
-marcados para completar cuando se desarrolle la teoría analítica completa.
+con axiomas técnicos asumidos (como la diferenciabilidad y las propiedades de crecimiento);
+la formalización será completa cuando se desarrollen las pruebas en Mathlib y se eliminen estos axiomas.
 
 ## Referencias
 
