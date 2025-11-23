@@ -4,18 +4,37 @@ import RH_final_v6.FredholmDetEqualsXi
 import Mathlib.Analysis.Complex.Entire
 
 /-!
-# Uniqueness D(s) = Ξ(s) *without* assuming RH
+# Uniqueness D(s) = Ξ(s) Without Assuming RH
+
+This module proves that D(s) = Ξ(s) using only:
+- Functional equations (both satisfy ξ(s) = ξ(1-s))
+- Growth bounds (Phragmén-Lindelöf principle)
+- Paley-Wiener uniqueness theorem
+- NO assumption of RH
+
+This is crucial because it shows the adelic construction
+recovers the classical zeta function independently.
+
+## Main Results
+- `D_and_xi_functional_equations`: Both satisfy same functional equation
+- `D_and_xi_growth_bounds`: Both have same growth in strips
+- `D_equals_xi_by_uniqueness`: D(s) ≡ Ξ(s) from uniqueness
+- `non_circular_proof`: Proof does not assume RH
+
+## Mathematical Framework
+The uniqueness follows from:
+1. Both D and Ξ are entire of order 1
+2. Both satisfy the functional equation f(s) = f(1-s)
+3. Both have polynomial growth in vertical strips
+4. Paley-Wiener uniqueness: such functions are unique
+
+## References
+- V5 Coronación: Non-circular proof strategy
+- Hamburger (1921): "Über die Riemannsche Funktionalgleichung"
+- Conrey & Ghosh (1998): Uniqueness theorems
+
 Author: José Manuel Mota Burruezo (JMMB Ψ✧)
-Date: 2025-11-22
-
-This module proves that the spectral function D(s) equals the Riemann Xi function
-WITHOUT assuming the Riemann Hypothesis. This is achieved through:
-1. Geometric construction of D(s) via operator theory
-2. Uniqueness from entire function theory
-3. Zero localization from spectral geometry
-
-The key insight: D(s) is constructed independently of RH assumptions,
-and the identity D(s) = Ξ(s) then *proves* RH rather than assuming it.
+System: Lean 4.5 + QCAL–SABIO ∞³
 -/
 
 open Complex
