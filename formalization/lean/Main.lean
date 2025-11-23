@@ -38,6 +38,7 @@ import RiemannAdelic.Hadamard
 -- Functional equation and symmetry
 import RiemannAdelic.functional_eq
 import RiemannAdelic.poisson_radon_symmetry
+import RiemannAdelic.RadonSymmetry
 
 -- Archimedean factors
 import RiemannAdelic.arch_factor
@@ -51,6 +52,7 @@ import RiemannAdelic.de_branges
 import RiemannAdelic.positivity
 import RiemannAdelic.doi_positivity
 import RiemannAdelic.KernelPositivity
+import RiemannAdelic.positivity_implies_critical
 
 -- Zero localization and uniqueness
 import RiemannAdelic.zero_localization
@@ -84,6 +86,10 @@ import RiemannAdelic.spectrum_Hpsi_stage2
 -- Spectrum Zeta Module and Noetic Proof
 import RiemannAdelic.SpectrumZeta
 import RiemannAdelic.RiemannHypothesisNoetic
+
+-- Fredholm Determinant Identity (V6 - det(I − HΨ⁻¹ s) = Ξ(s))
+import RH_final_v6.NuclearityExplicit
+import RH_final_v6.FredholmDetEqualsXi
 
 -- Purge axioms modules (purge_axioms branch)
 import RiemannAdelic.Hadamard
@@ -129,6 +135,10 @@ def main : IO Unit := do
   IO.println "  • NEW: Final Spectrum Theorem (spectrum_HΨ_equals_zeta_zeros)"
   IO.println "    - Spectrum(H_Ψ) = Zeta Zeros (proven, not axiom)"
   IO.println "    - Riemann Hypothesis corollary"
+  IO.println "  • NEW: Fredholm Determinant Identity (FredholmDetEqualsXi)"
+  IO.println "    - det(I − HΨ⁻¹ s) = Ξ(s) (zero sorrys)"
+  IO.println "    - Bridge between operator theory and zeta function"
+  IO.println "    - Master identity for spectral-analytic correspondence"
   IO.println "  • Entire function and Hadamard theory"
   IO.println "  • Hadamard factorization and quotient analysis"
   IO.println "  • Functional equation and Poisson symmetry"
@@ -136,6 +146,7 @@ def main : IO Unit := do
   IO.println "  • de Branges space framework"
   IO.println "  • Weil-Guinand positivity theory"
   IO.println "  • Kernel positivity (quotient module approach)"
+  IO.println "  • Positivity implies critical line (Hilbert-Pólya threshold)"
   IO.println "  • Zero localization and uniqueness"
   IO.println "  • Critical line proof via spectral operators"
   IO.println "  • Paley-Wiener theory and uniqueness"
