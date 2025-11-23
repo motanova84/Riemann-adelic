@@ -16,8 +16,5 @@ lean_lib RHFinal where
     `D_limit_equals_xi,
     `zeta_operator_D,
     `Riemann_Hypothesis_noetic,
-    `NuclearityExplicit,
-    `FredholmDetEqualsXi,
-    `UniquenessWithoutRH,
-    `RHComplete
+    `RiemannSiegel
   ]
