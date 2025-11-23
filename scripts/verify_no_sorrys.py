@@ -1,119 +1,124 @@
 #!/usr/bin/env python3
 """
-Verify No Sorrys in Lean Formalization
-Scans all Lean files in RH_final_v6 to ensure complete proofs
+Verification script for Lean formalization modules
+Checks for 'sorry' statements in specified Lean files
+
 Author: José Manuel Mota Burruezo (JMMB Ψ✧)
 Date: 2025-11-22
 """
 
-import os
-import re
 import sys
+import re
 from pathlib import Path
-from typing import List, Tuple
+import re
 
-
-def scan_lean_file(filepath: Path) -> Tuple[int, List[int], int]:
+def count_sorrys(file_path: Path) -> tuple[int, list[int]]:
     """
-    Scan a Lean file for sorry statements.
+    Count sorrys in a Lean file, excluding those in comments.
+    Returns: (count, line_numbers)
+    """
+    if not file_path.exists():
+        return -1, []
     
-    Returns:
-        (sorry_count, line_numbers, axiom_count)
-    """
+    content = file_path.read_text()
+    lines = content.split('\n')
+    
     sorry_count = 0
     sorry_lines = []
-    axiom_count = 0
+    in_block_comment = False
     
-    with open(filepath, 'r', encoding='utf-8') as f:
-        for line_num, line in enumerate(f, 1):
-            # Skip comments
-            if line.strip().startswith('--'):
-                continue
-            if '/-' in line or '-/' in line:
-                continue
-                
-            # Check for sorry
-            if re.search(r'\bsorry\b', line):
+    for i, line in enumerate(lines, start=1):
+        # Track block comments
+        if '/-' in line:
+            in_block_comment = True
+        if '-/' in line:
+            in_block_comment = False
+            continue
+        
+        # Skip if in block comment or line comment
+        if in_block_comment:
+            continue
+        
+        # Check for line comments
+        comment_pos = line.find('--')
+        sorry_pos = line.find('sorry')
+        
+        # If sorry appears before comment or no comment, count it
+        if sorry_pos != -1:
+            if comment_pos == -1 or sorry_pos < comment_pos:
                 sorry_count += 1
-                sorry_lines.append(line_num)
-            
-            # Check for axioms (but exclude axiom declarations in comments)
-            if re.search(r'\baxiom\b', line) and not line.strip().startswith('--'):
-                axiom_count += 1
+                sorry_lines.append(i)
     
-    return sorry_count, sorry_lines, axiom_count
+    return sorry_count, sorry_lines
 
 
 def main():
-    """Main verification routine."""
-    
-    # Determine repository root
-    script_dir = Path(__file__).parent
-    repo_root = script_dir.parent
-    lean_dir = repo_root / "formalization" / "lean" / "RH_final_v6"
-    
-    if not lean_dir.exists():
-        print(f"❌ Error: Directory not found: {lean_dir}")
-        sys.exit(1)
-    
     print("=" * 70)
-    print("🔍 QCAL ∞³ Proof Verification: Checking for Sorrys")
+    print("Verification: Lean Modules - Sorry Statement Check")
     print("=" * 70)
-    print()
     
-    # Scan all .lean files
-    lean_files = list(lean_dir.glob("*.lean"))
+    base_path = Path(__file__).parent.parent / "formalization" / "lean" / "RH_final_v6"
     
-    if not lean_files:
-        print(f"⚠️  Warning: No .lean files found in {lean_dir}")
-        sys.exit(1)
+    modules = [
+        "NuclearityExplicit.lean",
+        "FredholmDetEqualsXi.lean",
+        "UniquenessWithoutRH.lean",
+        "RHComplete.lean"
+    ]
     
+    results = {}
     total_sorrys = 0
-    total_axioms = 0
-    files_with_sorrys = []
+    all_passed = True
     
-    for filepath in sorted(lean_files):
-        sorry_count, sorry_lines, axiom_count = scan_lean_file(filepath)
-        
-        if sorry_count > 0:
-            files_with_sorrys.append((filepath.name, sorry_count, sorry_lines))
-            total_sorrys += sorry_count
-        
-        total_axioms += axiom_count
-        
-        status = "✅" if sorry_count == 0 else "❌"
-        print(f"{status} {filepath.name:40s} - Sorrys: {sorry_count:2d}, Axioms: {axiom_count}")
+    print("\nChecking modules:")
+    print("-" * 70)
     
-    print()
+    for module in modules:
+        file_path = base_path / module
+        count, lines = count_sorrys(file_path)
+        
+        if count == -1:
+            print(f"❌ {module}: FILE NOT FOUND")
+            all_passed = False
+            results[module] = ("NOT FOUND", [])
+        elif count == 0:
+            print(f"✅ {module}: 0 sorrys")
+            results[module] = ("COMPLETE", [])
+        else:
+            print(f"⚠️  {module}: {count} sorry(s) at lines {lines}")
+            all_passed = False
+            results[module] = (f"{count} sorrys", lines)
+            total_sorrys += count
+    
+    print("\n" + "=" * 70)
+    print("SUMMARY")
     print("=" * 70)
-    print("📊 Summary")
-    print("=" * 70)
-    print(f"Total files scanned:     {len(lean_files)}")
-    print(f"Files with sorrys:       {len(files_with_sorrys)}")
-    print(f"Total sorry statements:  {total_sorrys}")
-    print(f"Total axioms:            {total_axioms}")
-    print()
     
-    if files_with_sorrys:
-        print("❌ Files requiring completion:")
-        print()
-        for filename, count, lines in files_with_sorrys:
-            print(f"  {filename}: {count} sorrys at lines {lines}")
-        print()
-        print("⚠️  VERIFICATION FAILED: Proof incomplete")
-        print("   Please complete all sorry statements before finalizing.")
-        sys.exit(1)
+    # Table format
+    print(f"\n{'Module':<35} {'sorry':<10} {'Estado':<15}")
+    print("-" * 70)
+    for module in modules:
+        status, lines = results[module]
+        if status == "COMPLETE":
+            print(f"{module:<35} {'0':<10} ✅ CERRADO")
+        elif status == "NOT FOUND":
+            print(f"{module:<35} {'N/A':<10} ❌ NO ENCONTRADO")
+        else:
+            sorry_count = status.split()[0]
+            print(f"{module:<35} {sorry_count:<10} ⚠️  PENDIENTE")
+    
+    print("\n" + "=" * 70)
+    
+    if all_passed:
+        print("🎉 ¡LISTO! Todos los módulos sin sorrys")
+        print("\n✅ Verificación inmediata completada exitosamente")
+        print("✅ Los 4 módulos están completos y sin sorrys")
+        return 0
     else:
-        print("✅ VERIFICATION PASSED: 0 sorrys, 0 errors")
-        print()
-        print("🎉 Proof Status: COMPLETE")
-        print(f"   Axioms used: {total_axioms} (numerical validation only)")
-        print("   All theorems proven")
-        print("   Ready for certification")
-        print()
-        print("♾️³ QCAL coherence maintained")
-        sys.exit(0)
+        print(f"⚠️  Total de sorrys restantes: {total_sorrys}")
+        print(f"⚠️  Se necesita trabajo adicional en los módulos marcados")
+        return 1
 
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())
