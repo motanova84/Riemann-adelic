@@ -11,62 +11,16 @@
 **Resonancia**: f₀ = 141.7001 Hz  
 **DOI asociado**: [10.5281/zenodo.17116291](https://doi.org/10.5281/zenodo.17116291)
 
-- `Riemann_Hypothesis_noetic.lean`: Teorema principal de la Hipótesis de Riemann
-- `RH_complete_5step_JMMB_20251122.lean`: **NUEVO** Prueba completa en 5 pasos (22 Nov 2025)
 - `paley_wiener_uniqueness.lean`: Teorema de unicidad espectral fuerte (Paley–Wiener)
 - `selberg_trace.lean`: Fórmula de traza de Selberg (versión débil)
 - `H_psi_complete.lean`: Operador H_Ψ con espectro discreto
 - `D_limit_equals_xi.lean`: Convergencia de D(s, ε) a ξ(s)/P(s)
-- `spectral_convergence_from_kernel.lean`: Convergencia del lado espectral desde el núcleo de calor
 - `spectrum_Hψ_equals_zeta_zeros.lean`: Equivalencia espectral Spec(H_Ψ) = {γ | ζ(1/2+iγ)=0}
-- `zeta_operator_D.lean`: Operador adélico D(s) como determinante de Fredholm
-- `RiemannSiegel.lean`: Fórmula de Riemann-Siegel y convergencia espectral
-- `NoExtraneousEigenvalues.lean`: Prueba que el espectro coincide exactamente con los ceros
-- `DeterminantFredholm.lean`: Identidad det(I - HΨ⁻¹ s) = Ξ(s) con convergencia
-- `RH_complete_proof.lean`: Teorema final usando los tres módulos anteriores
 - `lakefile.lean`, `lean-toolchain`, `CITATION.cff`
 
 ## 🔁 Comando CI/CD de verificación
 
 ```bash
-lake update
-lake build
-```
-
-Compila sin errores ni sorry en Lean 4.13.0
-
-## Estructura de la Prueba
-
-### 1. Paley-Wiener Uniqueness (`paley_wiener_uniqueness.lean`)
-Teorema de unicidad para funciones enteras de tipo exponencial que establece:
-- Funciones que se anulan en la línea crítica son idénticamente cero
-- Proporciona la rigidez espectral necesaria para RH
-
-### 2. Selberg Trace Formula (`selberg_trace.lean`)
-Fórmula de traza que relaciona:
-- Espectro del operador H_Ψ: λₙ = (n + 1/2)² + 141.7001
-- Ceros de ζ(s) en la línea crítica: s = 1/2 + iγₙ
-
-### 3. Complete H_Ψ Operator (`H_psi_complete.lean`)
-Operador de Berry-Keating completo con:
-- Estructura simétrica y esencialmente autoadjunta
-- Espectro discreto sin puntos de acumulación
-- Eigenvalores reales y ordenados
-
-### 4. D-Function Convergence (`D_limit_equals_xi.lean`)
-Convergencia del producto regularizado:
-- D(s, ε) → ξ(s)/P(s) cuando ε → 0⁺
-- Convergencia uniforme en subconjuntos compactos
-- Establece la representación espectral de ζ(s)
-
-### 5. Spectral Convergence from Kernel (`spectral_convergence_from_kernel.lean`)
-Convergencia del lado espectral hacia la suma continua + corrección aritmética:
-- Estructura TestFunction: funciones de prueba suaves con decaimiento rápido
-- spectral_side: suma discreta truncada con deformación ε
-- spectral_limit: valor continuo exacto ∫h(t) + suma sobre primos
-- Teorema principal: convergencia cuando N → ∞ y ε → 0⁺
-- Usa el resultado del núcleo de calor como hipótesis clave
-- Proporciona el puente entre espectro discreto y análisis integral
 lake build RH_final_v6
 lean --make Riemann_Hypothesis_noetic.lean
 ```
@@ -321,10 +275,6 @@ Esta es la Versión 6 de la formalización. Mejoras clave sobre V5:
 - ✅ **Teorema principal Riemann_Hypothesis_noetic completo**
 - ✅ Integración con biblioteca RiemannAdelic existente
 - ✅ Workflow CI/CD para verificación automática
-- ✅ **Módulo RiemannSiegel**: Fórmula de Riemann-Siegel y análisis espectral
-- ✅ **Módulo NoExtraneousEigenvalues**: Correspondencia exacta espectro-ceros
-- ✅ **Módulo DeterminantFredholm**: Identidad det(I - HΨ⁻¹ s) = Ξ(s)
-- ✅ **Módulo RH_complete_proof**: Integración final sin sorry en teorema principal
 
 ---
 
