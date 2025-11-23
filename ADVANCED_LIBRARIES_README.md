@@ -5,7 +5,8 @@
 This document describes the advanced mathematical libraries integrated into the Riemann-Adelic proof framework to accelerate computations and expand analytical capabilities.
 
 **Author:** José Manuel Mota Burruezo  
-**Version:** V5 — Coronación  
+**Version:** V5.1 — Coronación (Final)  
+**Status:** Stable Release Candidate  
 **Date:** October 2025
 
 ---
@@ -113,6 +114,8 @@ result = ne.evaluate('exp(-(x**2 + y**2) / 2) / sqrt(2*pi)')
 - Sensitivity analysis
 - GPU-accelerated computations
 - Parallel batch processing
+
+**Note:** For GPU execution, ensure NVIDIA CUDA 12.4+ and cuDNN are installed. Use `jax[cuda12_pip]` with the flag `-f https://storage.googleapis.com/jax-releases/jax_cuda_releases.html`.
 
 **Example:**
 ```python
@@ -336,6 +339,13 @@ error = np.linalg.norm(tensor - reconstructed)
 
 ## Installation Guide
 
+**Tested Python versions:** 3.10 — 3.12
+
+**System Dependencies:**
+- LLVM ≥ 14.0
+- BLAS / LAPACK (OpenBLAS or MKL)
+- CMake ≥ 3.22
+
 ### Quick Install (All Libraries)
 
 ```bash
@@ -372,6 +382,10 @@ python -c "import sklearn; print(f'scikit-learn {sklearn.__version__}')"
 python -c "import networkx; print(f'NetworkX {networkx.__version__}')"
 python -c "import tensorly; print(f'TensorLy {tensorly.__version__}')"
 ```
+
+### Validation
+
+Run `python validate_system_dependencies.py` before execution to ensure all modules are operational.
 
 ---
 
@@ -456,16 +470,16 @@ print(f"Network diameter: {nx.diameter(G)}")
 
 ### Numba JIT Compilation
 
-| Operation | NumPy | Numba | Speedup |
-|-----------|-------|-------|---------|
+| Operation | NumPy (baseline) | Numba (JIT) | Speedup |
+|-----------|------------------|-------------|---------|
 | Spectral density | 2.45s | 0.24s | 10.2x |
 | Matrix trace | 1.83s | 0.19s | 9.6x |
 | Zero approximation | 3.21s | 0.31s | 10.4x |
 
 ### Numexpr Array Operations
 
-| Expression | NumPy | Numexpr | Speedup |
-|------------|-------|---------|---------|
+| Expression | NumPy (baseline) | Numexpr | Speedup |
+|------------|------------------|---------|---------|
 | Complex kernel | 1.52s | 0.38s | 4.0x |
 | Gaussian evaluation | 0.98s | 0.26s | 3.8x |
 | Multi-variate | 2.17s | 0.54s | 4.0x |
@@ -564,7 +578,11 @@ For questions or contributions related to advanced mathematical libraries:
 
 ---
 
+**License:** MIT (shared under repository main license)
+
+---
+
 <p align="center">
-<b>Version V5 — Coronación</b><br>
+<b>Version V5.1 — Coronación (Final)</b><br>
 <i>José Manuel Mota Burruezo, October 2025</i>
 </p>

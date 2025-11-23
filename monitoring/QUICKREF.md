@@ -33,7 +33,8 @@ python3 monitoring/check_url_similarity.py https://suspicious-url.com
 - `paper/main.pdf` - Main paper PDF
 - `paper/main.tex` - LaTeX source
 - `paper_standalone.tex` - Standalone paper
-- `RIEMANNJMMB84.pdf` - Research document
+- `trabajos/riemann_adelic_approach_jmmb84.pdf` - Adelic approach document
+- All PDFs in `trabajos/` folder - Organized research works
 
 ### Key Snippets Tracked
 - Vacuum energy equation

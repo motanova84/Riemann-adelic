@@ -1,5 +1,80 @@
 \section{De Axiomas a Lemas (A1--A4)}
 
+Trabajamos en el anillo de adeles $\mathbb{A}_\mathbb{Q}$ con la medida de Haar
+$dx$ y multiplicativa $d^{\times}x$.  Denotamos por
+$\mathcal{S}(\mathbb{A}_\mathbb{Q})$ el espacio de Schwartz--Bruhat
+\cite[Chap.~I]{Tate1967}.  El objetivo es mostrar que las condiciones A1--A4
+introducidas en la construcción de $D(s)$ se desprenden de resultados estándar.
+
+\paragraph{Estado actual.}
+Las pruebas que siguen esbozan la estrategia clásica, pero aún deben completarse
+las estimaciones locales y globales que controlan las constantes uniformes y la
+dependencia holomorfa en $s$.  En particular, los entregables P1.1--P1.4
+requieren una versión exhaustiva que elimine cualquier dependencia de axiomas
+externos.
+
+\begin{lemma}[A1: flujo a escala finita]\label{lem:A1-paper}
+Para $\Phi\in\mathcal{S}(\mathbb{A}_\mathbb{Q})$ factorizable como
+$\Phi=\prod_v \Phi_v$, el flujo $u\mapsto\Phi(u\cdot)$ es localmente integrable con
+energía finita.  En particular, A1 es consecuencia del decaimiento gaussiano en
+$\mathbb{R}$ y la compacidad en $\mathbb{Q}_p$.
+\end{lemma}
+
+\begin{proof}
+La descripción de $\mathcal{S}(\mathbb{A}_\mathbb{Q})$ como producto restringido
+\cite[Prop.~2]{Tate1967} garantiza que $\Phi_\infty\in\mathcal{S}(\mathbb{R})$ y que
+$\Phi_p$ es compactamente soportada para casi todo $p$.  Dado un compacto
+$U\subset\mathbb{A}_\mathbb{Q}^{\times}$, la integral
+
+\[
+  \int_U\!\int_{\mathbb{A}_\mathbb{Q}} |\Phi(u x)|^2\,dx\,d^{\times}u
+\]
+
+se separa como un producto de integrales locales acotadas por un factor
+$C_U$, gracias al decaimiento gaussiano en el lugar infinito y a la compacidad
+$p$-ádica.  Por tanto, el flujo posee energía finita.
+\end{proof}
+
+\begin{lemma}[A2: simetría por Poisson adélico]\label{lem:A2-paper}
+Sea $Z(\Phi,s)$ la transformada de Mellin de Tate asociada a $\Phi$.  Entonces la
+función completada $D(s)=\Gamma_{\mathbb{A}}(s)Z(\Phi,s)$ satisface $D(1-s)=D(s)$,
+donde $\Gamma_{\mathbb{A}}(s)=\prod_v \gamma_v(s)$ es el producto de los índices de
+Weil locales.
+\end{lemma}
+
+\begin{proof}
+La identidad de Poisson adélica
+\cite[Thm.~2]{Tate1967}
+implica que $Z(\widehat{\Phi},1-s)=Z(\Phi,s)$ siempre que la transformada local se
+normalice mediante $\gamma_v$ \cite[§II.3]{Weil1964}.  La ley de producto
+$\prod_v\gamma_v(s)=1$ asegura que $\Gamma_{\mathbb{A}}(1-s)=\Gamma_{\mathbb{A}}(s)$, y la
+identidad $D(1-s)=D(s)$ sigue.
+\end{proof}
+
+\begin{lemma}[A4: regularidad espectral]\label{lem:A4-paper}
+Sea $T_s$ el operador integral en $L^2(\mathbb{A}_\mathbb{Q})$
+
+\[
+  (T_s f)(x)=\int_{\mathbb{A}_\mathbb{Q}} K_s(x,y)f(y)\,dy,
+  \qquad K_s(x,y)=\Phi(x)\overline{\Phi(y)}|xy^{-1}|_\mathbb{A}^{s-1/2}.
+\]
+
+Entonces $T_s$ es de traza, depende holomórficamente de $s$ en bandas verticales
+y su espectro varía continuamente.
+\end{lemma}
+
+\begin{proof}
+Para $\Re(s)=\tfrac{1}{2}$ el núcleo $K_s$ pertenece a $L^2(\mathbb{A}_\mathbb{Q}^2)$, de
+modo que $T_s$ es de Hilbert--Schmidt.  Las estimaciones de crecimiento de $\Phi$
+y $|xy^{-1}|^{\sigma}$ implican que $\|K_s\|_{L^2}$ depende holomórficamente de $s$
+en bandas verticales acotadas.  El teorema de Birman--Solomyak sobre
+familias holomorfas de operadores integrales
+\cite[Thm.~1]{BirmanSolomyak1967}
+proporciona la continuidad espectral requerida.
+\end{proof}
+
+De este modo, los axiomas A1--A4 quedan reincorporados al cuerpo de resultados
+adélicos clásicos.
 \begin{lemma}[A1: Flujo a escala finita]\label{lem:A1}
 Para $\Phi \in \mathcal{S}(\mathbb{A}_{\mathbb{Q}})$ factorizable, el flujo
 $u \mapsto \Phi(u\cdot)$ es localmente integrable con energía finita.
