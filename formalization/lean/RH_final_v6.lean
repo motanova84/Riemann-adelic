@@ -59,24 +59,24 @@ axiom strong_spectral_uniqueness
     (h_agree : ∀ t : ℝ, f (1/2 + I * t) = g (1/2 + I * t)) :
     ∀ s, f s = g s
 
--- Axiom: det_zeta is entire (differentiable everywhere)
-axiom det_zeta_differentiable (HΨ : ℕ → ℝ) : Differentiable ℂ (det_zeta HΨ)
+--  Estructura que agrupa las propiedades clave de det_zeta
+estructura DetZetaProperties (HΨ : ℕ → ℝ) donde 
+  diferenciable: Diferenciable ℂ (det_zeta HΨ)
+  crecimiento: ∃ M: ℝ, M > 0 ∧ ∀ z: ℂ, Complex.abs ( det_zeta HΨ z) ≤ M * Real. exp (Complex.abs z.im )
+  funcional_eq : ∀ s, det_zeta HΨ ( 1 - s) = det_zeta HΨ s
 
--- Axiom: det_zeta has exponential growth bounded by exp(|Im(s)|)
-axiom det_zeta_growth (HΨ : ℕ → ℝ) : 
-  ∃ M : ℝ, M > 0 ∧ ∀ z : ℂ, Complex.abs (det_zeta HΨ z) ≤ M * Real.exp (Complex.abs z.im)
+-- Axioma: det_zeta satisface todas las propiedades incluidas
+axioma det_zeta_props (HΨ : ℕ → ℝ) : DetZetaProperties HΨ 
 
--- Axiom: det_zeta satisfies functional equation D(s) = D(1-s)
-axiom det_zeta_functional_eq (HΨ : ℕ → ℝ) : ∀ s, det_zeta HΨ (1 - s) = det_zeta HΨ s
-
--- Teorema Paley–Wiener de unicidad espectral fuerte
-lemma D_eq_Xi : ∀ s, det_zeta HΨ s = Ξ s := by
-  apply strong_spectral_uniqueness
-  · exact det_zeta_differentiable HΨ
-  · exact hΞ
-  · exact det_zeta_growth HΨ
-  · exact hgrowth
-  · exact det_zeta_functional_eq HΨ
+-- Teorema Paley–Wiener de unidad espectral fuerte
+lema D_eq_Xi : ∀ s, det_zeta HΨ s = Ξ s := por 
+  dejar accesorios := det_zeta_props HΨ
+  aplicar fuerte unicidad espectral
+  · accesorios exactos.diferenciables
+  · hΞ exacta
+· crecimiento de apoyos   exactos
+  · crecimiento exacto
+  · propiedades exactas.ecuación_funcional
   · exact hsymm
   · exact hcrit
 
