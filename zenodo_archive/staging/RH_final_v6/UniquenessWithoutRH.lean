@@ -143,11 +143,11 @@ theorem same_growth_exponent :
   by
     use 2  -- Both have order 1, so growth exponent ≤ 2
     constructor
-    · obtain ⟨C, _M, hbound⟩ := D_growth_in_strips 0 1 (by norm_num)
+    · obtain ⟨C, M, hbound⟩ := D_growth_in_strips 0 1 (by norm_num)
       use C, 0, 1, by norm_num
       intro s hs
       sorry
-    · obtain ⟨C, _M, hbound⟩ := Xi_growth_in_strips 0 1 (by norm_num)
+    · obtain ⟨C, M, hbound⟩ := Xi_growth_in_strips 0 1 (by norm_num)
       use C, 0, 1, by norm_num
       intro s hs
       sorry
