@@ -38,7 +38,7 @@ import RiemannAdelic.Hadamard
 -- Functional equation and symmetry
 import RiemannAdelic.functional_eq
 import RiemannAdelic.poisson_radon_symmetry
-import RiemannAdelic.RadonSymmetry
+import RiemannAdelic.J_composition_theorem
 
 -- Archimedean factors
 import RiemannAdelic.arch_factor
@@ -143,6 +143,7 @@ def main : IO Unit := do
   IO.println "  • Entire function and Hadamard theory"
   IO.println "  • Hadamard factorization and quotient analysis"
   IO.println "  • Functional equation and Poisson symmetry"
+  IO.println "  • J operator composition theorem (J ∘ J = id)"
   IO.println "  • Gamma Weierstrass representation for reflected Gamma function"
   IO.println "  • de Branges space framework"
   IO.println "  • Weil-Guinand positivity theory"
