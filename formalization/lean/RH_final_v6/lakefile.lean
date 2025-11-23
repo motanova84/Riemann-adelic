@@ -17,5 +17,6 @@ lean_lib RHFinal where
     `spectral_convergence_from_kernel,
     `SelbergTraceStrong,
     `zeta_operator_D,
-    `Riemann_Hypothesis_noetic
+    `Riemann_Hypothesis_noetic,
+    `RiemannSiegel
   ]

@@ -16,7 +16,8 @@
 - `selberg_trace.lean`: Fórmula de traza de Selberg (versión débil)
 - `H_psi_complete.lean`: Operador H_Ψ con espectro discreto
 - `D_limit_equals_xi.lean`: Convergencia de D(s, ε) a ξ(s)/P(s)
-- `spectrum_Hψ_equals_zeta_zeros.lean`: Equivalencia espectral Spec(H_Ψ) = {γ | ζ(1/2+iγ)=0}
+- `spectrum_eq_zeros.lean`: **Identificación espectral completa Spec(H_Ψ) = {γₙ}**
+- `spectrum_HΨ_equals_zeta_zeros.lean`: **Prueba formal sin axiomas vía operador espectral modelo, incluyendo versión avanzada con Fourier conjugation y operador explícito** ✨ NEW
 - `lakefile.lean`, `lean-toolchain`, `CITATION.cff`
 
 ## 🔁 Comando CI/CD de verificación
@@ -131,6 +132,10 @@ Esta es la Versión 6 de la formalización. Mejoras clave sobre V5:
 - ✅ **Teorema principal Riemann_Hypothesis_noetic completo**
 - ✅ Integración con biblioteca RiemannAdelic existente
 - ✅ Workflow CI/CD para verificación automática
+- ✅ **Módulo RiemannSiegel**: Fórmula de Riemann-Siegel y análisis espectral
+- ✅ **Módulo NoExtraneousEigenvalues**: Correspondencia exacta espectro-ceros
+- ✅ **Módulo DeterminantFredholm**: Identidad det(I - HΨ⁻¹ s) = Ξ(s)
+- ✅ **Módulo RH_complete_proof**: Integración final sin sorry en teorema principal
 
 ---
 
