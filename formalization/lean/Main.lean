@@ -31,6 +31,8 @@ import RiemannAdelic.BerryKeatingOperator
 
 -- Entire function theory
 import RiemannAdelic.entire_order
+-- Entire functions of exponential type (foundational support for Paley-Wiener)
+import entire_exponential_growth
 
 -- Hadamard factorization and quotient analysis
 import RiemannAdelic.Hadamard
@@ -141,6 +143,7 @@ def main : IO Unit := do
   IO.println "    - Riemann Hypothesis as direct corollary"
   IO.println "    - Fredholm determinant = Xi(s) connection"
   IO.println "  • Entire function and Hadamard theory"
+  IO.println "  • Entire functions of exponential type (foundational support)"
   IO.println "  • Hadamard factorization and quotient analysis"
   IO.println "  • Functional equation and Poisson symmetry"
   IO.println "  • J operator composition theorem (J ∘ J = id)"
