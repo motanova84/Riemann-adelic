@@ -15,7 +15,7 @@ noncomputable section
 open Complex Filter Topology Set MeasureTheory
 
 
--- Definimos condiciones espectrales estructurales sobre HΨ
+-- Define structural spectral conditions on HΨ eigenvalues
 class SpectralConditions (HΨ : ℕ → ℝ) : Prop where
   linear_growth : ∃ C > 0, ∀ n, |HΨ n| ≥ C * n
   separation : ∃ δ > 0, ∀ m ≠ n, |HΨ m - HΨ n| ≥ δ
@@ -24,47 +24,40 @@ class SpectralConditions (HΨ : ℕ → ℝ) : Prop where
 variable {HΨ : ℕ → ℝ} [hHΨ : SpectralConditions HΨ]
 
 
--- Definimos la derivada logarítmica de la función zeta espectral
-noncomputable def zeta_HΨ_deriv (s : ℂ) : ℂ := ∑' n : ℕ, 1 / (s - HΨ n)
+-- Define logarithmic derivative of spectral zeta function
+-- Series starts at n=1 to avoid potential singularities at n=0
+noncomputable def zeta_HΨ_deriv (s : ℂ) : ℂ := ∑' n : ℕ+, 1 / (s - HΨ n)
 
 
 noncomputable def det_zeta (s : ℂ) : ℂ := Complex.exp (- zeta_HΨ_deriv s)
 
 
-lemma det_zeta_differentiable : Differentiable ℂ det_zeta :=
-  Complex.differentiable_exp.comp (differentiable_sum (λ n, differentiable_const.div (differentiable_id.sub differentiable_const)))
+-- Differentiability requires convergence of the series and term-by-term differentiation
+-- This is a deep result that depends on spectral conditions ensuring proper convergence
+lemma det_zeta_differentiable : Differentiable ℂ det_zeta := by
+  sorry -- Requires: uniform convergence on compact sets + Weierstrass M-test
 
 
-lemma det_zeta_growth : ∃ M > 0, ∀ z : ℂ, |det_zeta z| ≤ M * Real.exp (Complex.abs z.im) :=
-  by
-    obtain ⟨C, Cpos, hC⟩ := hHΨ.linear_growth
-    have : ∃ M > 0, ∀ z : ℂ, |zeta_HΨ_deriv z| ≤ M * Real.exp (Complex.abs z.im),
-    {
-      -- Cotas por dominación de la serie ∑ 1 / (|s - HΨ n|)
-      let M := 10.0,
-      use [M, by norm_num],
-      intro z,
-      have bound : ∑' n, |1 / (z - HΨ n)| ≤ ∑' n, 1 / (C * n - |z|),
-      {
-        sorry -- requiere estimación integral
-      },
-      sorry
-    },
-    obtain ⟨M, Mpos, hM⟩ := this,
-    use [Real.exp M, Real.exp_pos.2 Mpos],
-    intro z,
-    simp only [det_zeta, Complex.abs_exp, Complex.abs_neg],
-    exact le_trans (Real.exp_le_exp.mpr (hM z)) (le_refl _)
+-- Growth bound requires careful analysis of the infinite product/sum
+-- The linear growth of HΨ ensures proper convergence and bounds
+lemma det_zeta_growth : ∃ M > 0, ∀ z : ℂ, |det_zeta z| ≤ M * Real.exp (Complex.abs z.im) := by
+  obtain ⟨C, Cpos, hC⟩ := hHΨ.linear_growth
+  -- The proof requires:
+  -- 1. Estimating |zeta_HΨ_deriv z| via comparison with ∑ 1/n²
+  -- 2. Using linear growth: |HΨ n| ≥ C·n ensures proper decay
+  -- 3. Applying exponential bound from exp(-zeta_HΨ_deriv)
+  sorry -- Requires: Weierstrass factorization + product bounds
 
 
-lemma det_zeta_functional_eq : ∀ s, det_zeta (1 - s) = det_zeta s :=
-  by
-    intro s
-    -- asumimos simetría espectral como hipótesis
-    sorry -- depende de propiedad estructural de HΨ
+-- Functional equation requires spectral symmetry property
+lemma det_zeta_functional_eq : ∀ s, det_zeta (1 - s) = det_zeta s := by
+  intro s
+  -- Proof requires: spectral symmetry HΨ(-n) related to HΨ(n)
+  -- This is a structural property inherited from the Riemann zeta function
+  sorry -- Requires: spectral reflection formula
 
 
--- Definimos función Ξ
+-- Define Xi function (Riemann's completed zeta function)
 variable (Ξ : ℂ → ℂ)
 variable (hΞ : Differentiable ℂ Ξ)
 variable (hsymm : ∀ s, Ξ (1 - s) = Ξ s)
@@ -72,7 +65,9 @@ variable (hcrit : ∀ t : ℝ, Ξ (1/2 + I * t) = det_zeta (1/2 + I * t))
 variable (hgrowth : ∃ M > 0, ∀ z, |Ξ z| ≤ M * Real.exp (Complex.abs z.im))
 
 
--- Teorema de unicidad tipo Paley-Wiener
+-- Paley-Wiener type uniqueness theorem
+-- If two entire functions with exponential growth agree on the critical line
+-- and satisfy the same functional equation, they must be identical everywhere
 lemma strong_spectral_uniqueness
   (f g : ℂ → ℂ)
   (hf_diff : Differentiable ℂ f)
@@ -82,7 +77,14 @@ lemma strong_spectral_uniqueness
   (hf_symm : ∀ s, f (1 - s) = f s)
   (hg_symm : ∀ s, g (1 - s) = g s)
   (h_agree : ∀ t : ℝ, f (1/2 + I * t) = g (1/2 + I * t)) :
-  ∀ s, f s = g s := sorry -- requiere formalización completa del teorema Paley–Wiener
+  ∀ s, f s = g s := by
+  -- Proof outline:
+  -- 1. Let h = f - g, which is entire with exponential growth
+  -- 2. h vanishes on Re(s) = 1/2 (the critical line)
+  -- 3. h satisfies h(1-s) = h(s) (functional equation)
+  -- 4. By Phragmén-Lindelöf + Identity theorem: h ≡ 0
+  -- 5. Therefore f = g everywhere
+  sorry -- Requires: complete Paley-Wiener formalization
 
 
 lemma D_eq_Xi : ∀ s, det_zeta s = Ξ s :=
