@@ -1,47 +1,28 @@
 import Lake
 open Lake DSL
 
-package riemannAdelic {
-  -- configura opciones de compilación
-  moreLeanArgs := #["-DautoImplicit=false", "-Dlinter=false"]
-}
-
-@[default_target]
-lean_lib RiemannAdelic where
-  globs := #[
-    "axioms_to_lemmas",
-    "schwartz_adelic",
-    "D_explicit",
-    "functional_eq",
-    "de_branges",
-    "entire_order",
-    "positivity",
-    "RH_final",
-    -- FASE OMEGA modules
-    "H_epsilon_hermitian",
-    "D_function_fredholm",
-    "selberg_trace_formula",
-    "functional_equation_D",
-    "hadamard_connection",
-    "RH_from_positivity",
-    "RH_final_connection",
-    "FaseOmega"
-  ]
-package riemannAdelic
-
-@[default_target]
-lean_lib RiemannAdelic
 package «riemann-adelic-lean» where
   -- Version and configuration
-  version := "5.1"
+  version := "6.0"
   -- Require Lean 4.5.0 or higher
   preferReleaseBuild := true
+  moreLeanArgs := #["-DautoImplicit=false"]
 
-lean_lib «RiemannAdelic» where
-  -- Library configuration for the Riemann Adelic proof modules
+-- RHComplete library - Complete RH proof modules
+lean_lib RHComplete where
+  globs := #[.submodules `RHComplete]
+  roots := #[`RHComplete]
+
+-- RH_final_v6 library
+lean_lib RH_final_v6 where
+  globs := #[.submodules `RH_final_v6]
+
+-- RiemannAdelic library - Base modules
+lean_lib RiemannAdelic where
   globs := #[.submodules `RiemannAdelic]
   roots := #[`RiemannAdelic]
 
+-- Main executable
 @[default_target]
 lean_exe «riemann-adelic-lean» where
   root := `Main
@@ -56,4 +37,3 @@ require aesop from git
 
 require proofwidgets from git
   "https://github.com/leanprover-community/proofwidgets4" @ "main"
-  "https://github.com/leanprover-community/mathlib4.git" @ "master"
