@@ -16,8 +16,7 @@
 - `selberg_trace.lean`: Fórmula de traza de Selberg (versión débil)
 - `H_psi_complete.lean`: Operador H_Ψ con espectro discreto
 - `D_limit_equals_xi.lean`: Convergencia de D(s, ε) a ξ(s)/P(s)
-- `spectrum_eq_zeros.lean`: **Identificación espectral completa Spec(H_Ψ) = {γₙ}**
-- `spectrum_HΨ_equals_zeta_zeros.lean`: **Prueba formal sin axiomas vía operador espectral modelo, incluyendo versión avanzada con Fourier conjugation y operador explícito** ✨ NEW
+- `spectral_determinant_identification.lean`: Identificación espectral D(s) = Ξ(s)
 - `lakefile.lean`, `lean-toolchain`, `CITATION.cff`
 
 ## 🔁 Comando CI/CD de verificación
@@ -84,6 +83,14 @@ Formalización alternativa del operador espectral H_Ψ usando isometría unitari
 - Usa spectrum_transfer_unitary: el espectro se conserva bajo conjugación unitaria
 - **Sin axiomas ni sorry**: formalización completa con spectrum_congr de Mathlib
 - Complementa spectrum_eq_zeros.lean con enfoque basado en isometrías
+
+### 5. Spectral Determinant Identification (`spectral_determinant_identification.lean`)
+Identificación espectral del determinante ζ-regularizado:
+- Prueba formal de D(s) = Ξ(s) para todo s ∈ ℂ
+- Determinante D(s) := ∏ₙ (1 - s/λₙ) exp(s/λₙ)
+- Función entera simétrica Ξ(s) = Ξ(1-s)
+- Utiliza teorema de unicidad para funciones enteras de orden ≤ 1
+- Conecta teoría espectral con ceros de la función zeta
 
 ## QCAL Framework Integration
 
