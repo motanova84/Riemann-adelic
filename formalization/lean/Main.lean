@@ -52,6 +52,7 @@ import RiemannAdelic.de_branges
 import RiemannAdelic.positivity
 import RiemannAdelic.doi_positivity
 import RiemannAdelic.KernelPositivity
+import RiemannAdelic.positivity_implies_critical
 
 -- Zero localization and uniqueness
 import RiemannAdelic.zero_localization
@@ -97,11 +98,8 @@ import RiemannAdelic.GammaTrivialExclusion
 -- Selberg Trace Formula (strong form)
 import RiemannAdelic.SelbergTraceStrong
 
--- Meta-theorems (100% rigorous, zero sorry)
-import RiemannAdelic.selberg_trace_meta
-import RiemannAdelic.D_limit_equals_xi_meta
-import RiemannAdelic.spectrum_equals_zeros_meta
-import RiemannAdelic.paley_wiener_uniqueness_meta
+-- Heat Kernel Convergence (formalization in progress)
+import RiemannAdelic.heat_kernel_to_delta_plus_primes
 
 def main : IO Unit := do
   IO.println "╔═══════════════════════════════════════════════════════════╗"
@@ -148,6 +146,7 @@ def main : IO Unit := do
   IO.println "  • de Branges space framework"
   IO.println "  • Weil-Guinand positivity theory"
   IO.println "  • Kernel positivity (quotient module approach)"
+  IO.println "  • Positivity implies critical line (Hilbert-Pólya threshold)"
   IO.println "  • Zero localization and uniqueness"
   IO.println "  • Critical line proof via spectral operators"
   IO.println "  • Paley-Wiener theory and uniqueness"
@@ -164,11 +163,7 @@ def main : IO Unit := do
   IO.println "  • Kernel positivity (purge_axioms branch)"
   IO.println "  • Gamma trivial exclusion (purge_axioms branch)"
   IO.println "  • Selberg Trace Formula (strong form with exact convergence)"
-  IO.println "  • Meta-theorems (NEW - 100% rigorous, zero sorry):"
-  IO.println "    - Selberg trace meta-theorem (implication formalization)"
-  IO.println "    - D(s,ε) limit meta-theorem (convergence implications)"
-  IO.println "    - Spectrum = zeros meta-theorem (spectral correspondence)"
-  IO.println "    - Paley-Wiener uniqueness meta-theorem (analytic continuation)"
+  IO.println "  • Heat Kernel Convergence to δ₀ + Arithmetic Distribution (formalization in progress; contains sorry/axiom)"
   IO.println ""
   IO.println "Status: Constructive formalization in progress (purge_axioms branch)"
   IO.println "DOI: 10.5281/zenodo.17116291"
