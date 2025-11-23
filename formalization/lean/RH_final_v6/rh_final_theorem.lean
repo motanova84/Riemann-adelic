@@ -56,8 +56,8 @@ Este espacio tiene una estructura de producto interno:
 -/
 
 -- Espacio de Hilbert en el que HΨ actúa
--- Lp con p=2 sobre ℝ con medida volume.withDensity (1/x)
-def L2_adelic := Lp ℝ 2 (volume.withDensity fun x => 1 / x)
+-- Lp con p=2 sobre ℂ con medida volume.withDensity (1/x)
+def L2_adelic := Lp ℂ 2 (volume.withDensity fun x => 1 / x)
 
 /-!
 # Conjunto de ceros no triviales
