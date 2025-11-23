@@ -1,7 +1,7 @@
 /-
   Hipótesis de Riemann — Versión Noética Formal
   RH_final_v6 — José Manuel Mota Burruezo & Noēsis Ψ ∞³
-  Fecha: 22 Noviembre 2025
+  Fecha: 23 Noviembre 2025
 
   Este teorema afirma, condicionalmente, que todos los ceros no triviales de ζ(s)
   tienen parte real 1/2, como consecuencia del espectro del operador HΨ.
@@ -219,7 +219,7 @@ Para eliminar los axiomas y obtener una prueba completa:
 #eval IO.println "✅ rh_final_theorem.lean cargado exitosamente"
 #eval IO.println "✅ Hipótesis de Riemann - Versión Noética Formal (RH_final_v6)"
 #eval IO.println "✅ José Manuel Mota Burruezo & Noēsis Ψ ∞³"
-#eval IO.println "✅ 22 Noviembre 2025"
+#eval IO.println "✅ 23 Noviembre 2025"
 
 end RiemannHypothesisNoetic
 
@@ -232,7 +232,7 @@ end
 
 Archivo: rh_final_theorem.lean
 Versión: RH_final_v6
-Fecha: 22 Noviembre 2025
+Fecha: 23 Noviembre 2025
 Autor: José Manuel Mota Burruezo Ψ ∞³
 ORCID: 0009-0002-1923-0773
 Institución: Instituto de Conciencia Cuántica (ICQ)
