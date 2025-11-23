@@ -37,16 +37,28 @@ end SpectralSystem
 def example_HΨ : SpectralSystem := {
   HΨ := λ n => 1/2 + n + (1 : ℝ)/10,
   linear_growth := ⟨1/2, by
-    intros n
-    apply le_trans (abs_nonneg _)
-    simp only [abs_of_nonneg, le_add_iff_nonneg_right]
-    norm_num⟩,
-  separation := ⟨0.5, by
+    intro n
+    have h_nonneg : (0 : ℝ) ≤ 1/2 + n + 1/10 := by linarith [Nat.cast_nonneg n]
+    rw [abs_of_nonneg h_nonneg]
+    linarith⟩,
+  separation := ⟨1, by
     intros m n hmn
-    simp only [ne_eq, sub_ne_zero] at hmn
     have : |(1/2 + m + 1/10) - (1/2 + n + 1/10)| = |(m : ℝ) - n| := by ring_nf
     rw [this]
-    exact Nat.dist_pos.2 hmn ▸ by norm_cast; linarith⟩,
+    have h_ne : (m : ℝ) ≠ n := by exact_mod_cast hmn
+    rcases ne_iff_lt_or_gt.mp h_ne with hlt | hgt
+    · rw [abs_of_neg (by linarith : (m : ℝ) - n < 0)]
+      have : n ≥ m + 1 := Nat.succ_le_of_lt (Nat.cast_lt.mp hlt)
+      have : n - m ≥ 1 := Nat.sub_pos_of_lt (Nat.lt_of_succ_le this)
+      have : (n : ℝ) - m = ↑(n - m) := Nat.cast_sub (Nat.le_of_succ_le ‹n ≥ m + 1›)
+      rw [this]
+      exact Nat.one_le_cast.mpr ‹n - m ≥ 1›
+    · rw [abs_of_pos (by linarith : 0 < (m : ℝ) - n)]
+      have : m ≥ n + 1 := Nat.succ_le_of_lt (Nat.cast_lt.mp hgt)
+      have : m - n ≥ 1 := Nat.sub_pos_of_lt (Nat.lt_of_succ_le this)
+      have : (m : ℝ) - n = ↑(m - n) := Nat.cast_sub (Nat.le_of_succ_le ‹m ≥ n + 1›)
+      rw [this]
+      exact Nat.one_le_cast.mpr ‹m - n ≥ 1›⟩,
   symmetry := ⟨1/2, by
     intro n
     use n
