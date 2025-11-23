@@ -109,7 +109,7 @@ This formalization integrates with:
 - Square-integrability proof
 - Compactness theorem
 - **100% sorry-free**
-- **Minimal axioms** (2 standard results)
+- **Minimal axioms** (3 standard results)
 
 ✅ **Compilation Status**:
 - Compiles with Lean 4.5.0
