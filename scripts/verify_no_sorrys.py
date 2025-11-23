@@ -1,117 +1,123 @@
 #!/usr/bin/env python3
 """
-Verification script to check for 'sorry' statements in Lean files.
+Verification script for Lean formalization modules
+Checks for 'sorry' statements in specified Lean files
 
-This script verifies that specific Lean modules have zero sorry statements,
-indicating complete formal proofs.
-
-Usage:
-    python scripts/verify_no_sorrys.py [file_path]
-    
-If no file path is provided, checks FredholmDetEqualsXi.lean by default.
+Author: José Manuel Mota Burruezo (JMMB Ψ✧)
+Date: 2025-11-22
 """
 
 import sys
 import re
 from pathlib import Path
+import re
 
-
-def count_sorrys(file_path: Path) -> int:
+def count_sorrys(file_path: Path) -> tuple[int, list[int]]:
     """
-    Count the number of 'sorry' statements in a Lean file.
-    Excludes comments and string literals.
-    
-    Args:
-        file_path: Path to the Lean file
-        
-    Returns:
-        Number of sorry statements found
+    Count sorrys in a Lean file, excluding those in comments.
+    Returns: (count, line_numbers)
     """
     if not file_path.exists():
-        print(f"❌ Error: File not found: {file_path}")
-        return -1
+        return -1, []
     
-    content = file_path.read_text(encoding='utf-8')
-    
-    # Remove block comments /- ... -/
-    content = re.sub(r'/-.*?-/', '', content, flags=re.DOTALL)
-    
-    # Remove line comments --
+    content = file_path.read_text()
     lines = content.split('\n')
-    code_lines = []
-    for line in lines:
-        # Remove everything after --
-        if '--' in line:
-            line = line[:line.index('--')]
-        code_lines.append(line)
     
-    code_content = '\n'.join(code_lines)
+    sorry_count = 0
+    sorry_lines = []
+    in_block_comment = False
     
-    # Count sorry statements (word boundary to avoid 'nosorry' etc)
-    sorries = len(re.findall(r'\bsorry\b', code_content))
-    
-    return sorries
-
-
-def verify_file(file_path: Path) -> bool:
-    """
-    Verify a Lean file has zero sorrys.
-    
-    Args:
-        file_path: Path to the Lean file
+    for i, line in enumerate(lines, start=1):
+        # Track block comments
+        if '/-' in line:
+            in_block_comment = True
+        if '-/' in line:
+            in_block_comment = False
+            continue
         
-    Returns:
-        True if file has 0 sorrys, False otherwise
-    """
-    print(f"Checking: {file_path}")
+        # Skip if in block comment or line comment
+        if in_block_comment:
+            continue
+        
+        # Check for line comments
+        comment_pos = line.find('--')
+        sorry_pos = line.find('sorry')
+        
+        # If sorry appears before comment or no comment, count it
+        if sorry_pos != -1:
+            if comment_pos == -1 or sorry_pos < comment_pos:
+                sorry_count += 1
+                sorry_lines.append(i)
     
-    if not file_path.exists():
-        print(f"❌ File not found: {file_path}")
-        return False
-    
-    sorry_count = count_sorrys(file_path)
-    
-    if sorry_count < 0:
-        return False
-    
-    file_size = file_path.stat().st_size
-    print(f"   Size: {file_size} bytes")
-    print(f"   Sorrys: {sorry_count}")
-    
-    if sorry_count == 0:
-        print(f"✅ {file_path.name}: ✅ 0 sorrys")
-        return True
-    else:
-        print(f"❌ {file_path.name}: ⚠️  {sorry_count} sorrys found")
-        return False
+    return sorry_count, sorry_lines
 
 
 def main():
-    """Main entry point for the verification script."""
+    print("=" * 70)
+    print("Verification: Lean Modules - Sorry Statement Check")
+    print("=" * 70)
     
-    # Determine which file to check
-    if len(sys.argv) > 1:
-        file_path = Path(sys.argv[1])
+    base_path = Path(__file__).parent.parent / "formalization" / "lean" / "RH_final_v6"
+    
+    modules = [
+        "NuclearityExplicit.lean",
+        "FredholmDetEqualsXi.lean",
+        "UniquenessWithoutRH.lean",
+        "RHComplete.lean"
+    ]
+    
+    results = {}
+    total_sorrys = 0
+    all_passed = True
+    
+    print("\nChecking modules:")
+    print("-" * 70)
+    
+    for module in modules:
+        file_path = base_path / module
+        count, lines = count_sorrys(file_path)
+        
+        if count == -1:
+            print(f"❌ {module}: FILE NOT FOUND")
+            all_passed = False
+            results[module] = ("NOT FOUND", [])
+        elif count == 0:
+            print(f"✅ {module}: 0 sorrys")
+            results[module] = ("COMPLETE", [])
+        else:
+            print(f"⚠️  {module}: {count} sorry(s) at lines {lines}")
+            all_passed = False
+            results[module] = (f"{count} sorrys", lines)
+            total_sorrys += count
+    
+    print("\n" + "=" * 70)
+    print("SUMMARY")
+    print("=" * 70)
+    
+    # Table format
+    print(f"\n{'Module':<35} {'sorry':<10} {'Estado':<15}")
+    print("-" * 70)
+    for module in modules:
+        status, lines = results[module]
+        if status == "COMPLETE":
+            print(f"{module:<35} {'0':<10} ✅ CERRADO")
+        elif status == "NOT FOUND":
+            print(f"{module:<35} {'N/A':<10} ❌ NO ENCONTRADO")
+        else:
+            sorry_count = status.split()[0]
+            print(f"{module:<35} {sorry_count:<10} ⚠️  PENDIENTE")
+    
+    print("\n" + "=" * 70)
+    
+    if all_passed:
+        print("🎉 ¡LISTO! Todos los módulos sin sorrys")
+        print("\n✅ Verificación inmediata completada exitosamente")
+        print("✅ Los 4 módulos están completos y sin sorrys")
+        return 0
     else:
-        # Default to FredholmDetEqualsXi.lean
-        file_path = Path("formalization/lean/RH_final_v6/FredholmDetEqualsXi.lean")
-    
-    print("=" * 70)
-    print("VERIFICATION: Lean Sorry Counter")
-    print("=" * 70)
-    print()
-    
-    success = verify_file(file_path)
-    
-    print()
-    print("=" * 70)
-    if success:
-        print("✅ VERIFICATION PASSED: No sorrys found!")
-    else:
-        print("❌ VERIFICATION FAILED: Sorrys detected or file error")
-    print("=" * 70)
-    
-    return 0 if success else 1
+        print(f"⚠️  Total de sorrys restantes: {total_sorrys}")
+        print(f"⚠️  Se necesita trabajo adicional en los módulos marcados")
+        return 1
 
 
 if __name__ == "__main__":
