@@ -89,6 +89,12 @@ It includes:
 </p>
 
 <p align="center">
+  <img src="https://github.com/motanova84/-jmmotaburr-riemann-adelic/actions/workflows/ci.yml/badge.svg?branch=main" alt="CI">
+  <img src="https://github.com/motanova84/-jmmotaburr-riemann-adelic/actions/workflows/proof-check.yml/badge.svg?branch=main" alt="Proof Check">
+  <img src="https://img.shields.io/codecov/c/github/motanova84/-jmmotaburr-riemann-adelic/main?logo=codecov&logoColor=white" alt="Coverage">
+  <img src="https://github.com/motanova84/-jmmotaburr-riemann-adelic/actions/workflows/nightly.yml/badge.svg" alt="Nightly">
+</p>
+
   <a href="https://github.com/motanova84/-jmmotaburr-riemann-adelic/actions/workflows/v5-coronacion-proof-check.yml"><img src="https://img.shields.io/badge/Versión-V5_Coronación-blue" alt="Versión"></a>
   <a href="https://github.com/motanova84/-jmmotaburr-riemann-adelic/actions/workflows/comprehensive-ci.yml"><img src="https://img.shields.io/badge/Estado-Completada-green" alt="Estado"></a>
   <a href="https://github.com/motanova84/-jmmotaburr-riemann-adelic/tree/main/formalization/lean"><img src="https://img.shields.io/badge/Formalización_Lean-Completada-green" alt="Formalización Lean"></a>
@@ -253,6 +259,14 @@ DOI: 10.5281/zenodo.17116291
 
 | Componente | Estado | Insignia |
 |------------|--------|----------|
+| **CI/CD** | ✅ Completo | ![CI](https://github.com/motanova84/-jmmotaburr-riemann-adelic/actions/workflows/ci.yml/badge.svg?branch=main) |
+| **Formalización Lean** | 🔄 En Progreso (Skeletons) | ![Proof Check](https://github.com/motanova84/-jmmotaburr-riemann-adelic/actions/workflows/proof-check.yml/badge.svg?branch=main) |
+| **Cobertura Tests** | ✅ Alta | ![Coverage](https://img.shields.io/codecov/c/github/motanova84/-jmmotaburr-riemann-adelic/main?logo=codecov&logoColor=white) |
+| **Validación V5** | ✅ Coronación Exitosa | ![V5](https://img.shields.io/badge/V5-Coronación-brightgreen) |
+| **Reproducibilidad** | ✅ Confirmada | ![Reproducible](https://img.shields.io/badge/Reproducible-Sí-success) |
+| **DOI** | ✅ Registrado | ![DOI](https://img.shields.io/badge/DOI-10.5281%2Fzenodo.17116291-blue) |
+| **Bibliotecas Avanzadas** | 🚀 Integradas | ![Advanced](https://img.shields.io/badge/Advanced_Math_Libs-Integrated-orange) |
+| **Nightly Tests** | 🌙 Activo | ![Nightly](https://github.com/motanova84/-jmmotaburr-riemann-adelic/actions/workflows/nightly.yml/badge.svg) |
 | **Formalización Lean** | ✅ Completada | [![Lean](https://github.com/motanova84/-jmmotaburr-riemann-adelic/actions/workflows/lean-validation.yml/badge.svg)](https://github.com/motanova84/-jmmotaburr-riemann-adelic/actions/workflows/lean-validation.yml) |
 | **Validación V5** | ✅ Coronación Exitosa | [![V5](https://github.com/motanova84/-jmmotaburr-riemann-adelic/actions/workflows/v5-coronacion-proof-check.yml/badge.svg)](https://github.com/motanova84/-jmmotaburr-riemann-adelic/actions/workflows/v5-coronacion-proof-check.yml) |
 | **Cobertura Tests** | ✅ 100% | [![Cobertura](https://codecov.io/gh/motanova84/-jmmotaburr-riemann-adelic/branch/main/graph/badge.svg)](https://codecov.io/gh/motanova84/-jmmotaburr-riemann-adelic) |
@@ -939,7 +953,48 @@ Salida esperada:
 
 ### 🔬 Workflows de CI/CD
 
-Nuevos workflows de GitHub Actions para validación avanzada:
+El repositorio incluye workflows completos de GitHub Actions para garantizar calidad, seguridad y reproducibilidad:
+
+#### Workflows Principales
+
+- **CI** (`.github/workflows/ci.yml`)
+  - Tests automáticos en Python 3.10, 3.11, 3.12
+  - Linting con flake8, black, isort
+  - Ejecución en cada push y pull request
+  - Cache de dependencias para velocidad
+
+- **Coverage** (`.github/workflows/coverage.yml`)
+  - Medición de cobertura de tests
+  - Integración con Codecov
+  - Reportes detallados de cobertura
+
+- **Proof Check** (`.github/workflows/proof-check.yml`)
+  - Verificación formal en Lean 4
+  - Compilación de formalizaciones
+  - Cache de builds de Lean
+
+- **Property Tests** (`.github/workflows/property-tests.yml`)
+  - Tests basados en propiedades con Hypothesis
+  - Búsqueda automática de casos límite
+  - Validación de invariantes matemáticas
+
+- **Dependency Review** (`.github/workflows/dependency-review.yml`)
+  - Análisis de seguridad de dependencias
+  - Detección de vulnerabilidades con Safety y Bandit
+  - Revisión automática en pull requests
+
+- **Release** (`.github/workflows/release.yml`)
+  - Creación automática de releases en tags v*.*.*
+  - Empaquetado de distribuciones
+  - Extracción de notas de CHANGELOG.md
+
+- **Nightly** (`.github/workflows/nightly.yml`)
+  - Ejecución diaria a las 02:00 UTC
+  - Tests con últimas versiones de dependencias
+  - Detección temprana de incompatibilidades
+  - Notificación automática de fallos
+
+#### Workflows Especializados
 
 - **CI Simbiótico SABIO ∞³** (`.github/workflows/ci.yml`)  
   📡 [Ver documentación completa](CI_SIMBIOTICO_SABIO_README.md)
@@ -959,6 +1014,17 @@ Nuevos workflows de GitHub Actions para validación avanzada:
   - Análisis de redes de números primos
   - Análisis espectral basado en tensores
 
+#### Configuración Requerida
+
+Para aprovechar todos los workflows, configura estos secretos en GitHub:
+
+- `CODECOV_TOKEN` - Solo si el repositorio es privado (opcional para públicos)
+- `PYPI_TOKEN` - Para publicación automática en PyPI (opcional)
+
+Todos los workflows están optimizados con:
+- Cache de dependencias para ejecución rápida
+- Timeouts apropiados para operaciones largas
+- Continue-on-error para checks no críticos
 ## GitHub REST API
 
 Este repositorio proporciona acceso completo a través de la **GitHub REST API** para automatización, monitoreo y integración con sistemas externos.
