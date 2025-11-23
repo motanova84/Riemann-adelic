@@ -101,13 +101,13 @@ la función zeta.
 axiom SelfAdjointOperator : (ℝ → ℂ) → Prop
 
 -- Función espectro de un operador
-axiom spectrum : ∀ {f : ℝ → ℂ}, SelfAdjointOperator f → Set ℝ
+axiom spectrum : (f : ℝ → ℂ) → SelfAdjointOperator f → Set ℝ
 
 -- Supuesto: el operador HΨ es esencialmente auto-adjunto
 axiom HΨ_selfAdjoint : SelfAdjointOperator HΨ
 
 -- Supuesto: su espectro coincide con los ceros de ζ(s)
-axiom spectrum_eq_zeros : spectrum HΨ_selfAdjoint = zetaZeros
+axiom spectrum_eq_zeros : spectrum HΨ HΨ_selfAdjoint = zetaZeros
 
 /-!
 # Teorema Principal: Hipótesis de Riemann (Versión Noética)
