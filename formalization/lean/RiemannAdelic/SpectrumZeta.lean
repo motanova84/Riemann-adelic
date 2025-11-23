@@ -14,6 +14,7 @@
   - Odlyzko (2001): Tables of zeros of the Riemann zeta function
   - V5 Coronación: DOI 10.5281/zenodo.17379721
   - QCAL Framework: C = 244.36, base frequency = 141.7001 Hz
+  - Numerical verification: data/zeta_zeros_verification.json
 -/
 
 import Mathlib.Analysis.SpecialFunctions.Log.Basic
@@ -28,6 +29,19 @@ noncomputable section
 open Complex MeasureTheory Real Set
 
 namespace SpectrumZeta
+
+/-- Espacio de Hilbert L²(ℝ⁺, dx/x) -/
+def HilbertSpace : Type* := MeasureTheory.Lp ℝ 2 (volume.restrict (Set.Ioi (0 : ℝ)))
+
+/-- Placeholder for Riemann zeta function -/
+axiom riemannZeta : ℂ → ℂ
+
+/-- Placeholder for derivative of zeta -/
+axiom riemannZeta' : ℂ → ℂ
+
+/-- Operador HΨ := -x ∂/∂x + π ζ′(1/2) log x (definido en funciones smooth compacto) -/
+noncomputable def HΨ (f : ℝ → ℝ) (x : ℝ) : ℝ :=
+  - x * deriv f x + π * (riemannZeta' (1 / 2)).re * Real.log x * f x
 
 /-!
 ## Espacio de Hilbert L²(ℝ⁺, dx/x)
