@@ -46,8 +46,6 @@ axiom noetic_operator_selfadjoint : True
 /-- The noetic operator is compact -/
 axiom noetic_operator_compact : True
 
-
-
 /-- Eigenvalues of the noetic operator ℕ_Ψ -/
 axiom H_eigenvalues : ℕ → ℂ
 
@@ -65,9 +63,6 @@ def riemann_xi (s : ℂ) : ℂ :=
     D(s) = ∏ₙ (1 - s·λₙ) -/
 def D (s : ℂ) : ℂ :=
   ∏' (n : ℕ), (1 - s * H_eigenvalues n)
-
-/-- The Fredholm determinant as regularized product -/
-axiom fredholm_det : ∀ s : ℂ, D s = ∏' (n : ℕ), (1 - s * H_eigenvalues n)
 
 /-- Product equals zero iff one factor equals zero -/
 axiom prod_eq_zero_iff : ∀ {s : ℂ}, D s = 0 ↔ ∃ n : ℕ, (1 - s * H_eigenvalues n) = 0
@@ -143,13 +138,9 @@ lemma zero_equiv_spectrum (s : ℂ) : D s = 0 ↔ riemann_xi s = 0 := by
   have h1 : D s = 0 ↔ ∃ n, H_eigenvalues n ≠ 0 ∧ s = 1 / H_eigenvalues n := 
     D_zero_iff_inv_eigenvalue s
 
-  -- Paso 2: λₙ ∈ ℝ ⇒ 1/λₙ ∈ ℝ (salvo si λₙ = 0)
-  have h2 : ∀ n, ∃ r : ℝ, H_eigenvalues n = r :=
-    H_eigenvalues_real
-
-  -- Paso 3: Por construcción espectral, {1/λₙ} = {zeros de ξ}
+  -- Paso 2: Por construcción espectral, {1/λₙ} = {zeros de ξ}
   -- Esto se demuestra usando la correspondencia espectral
-  have h3 : {s : ℂ | ∃ n, H_eigenvalues n ≠ 0 ∧ s = 1 / H_eigenvalues n} = 
+  have h2 : {s : ℂ | ∃ n, H_eigenvalues n ≠ 0 ∧ s = 1 / H_eigenvalues n} = 
             {s : ℂ | riemann_xi s = 0} :=
     spectral_correspondence
 
@@ -160,12 +151,12 @@ lemma zero_equiv_spectrum (s : ℂ) : D s = 0 ↔ riemann_xi s = 0 := by
     have : s ∈ {s : ℂ | ∃ n, H_eigenvalues n ≠ 0 ∧ s = 1 / H_eigenvalues n} := by
       simp
       exact ⟨n, hn⟩
-    rw [←h3] at this
+    rw [←h2] at this
     simp at this
     exact this
   · intro hxi
     have : s ∈ {s : ℂ | riemann_xi s = 0} := by simp; exact hxi
-    rw [h3] at this
+    rw [h2] at this
     simp at this
     exact this
 
