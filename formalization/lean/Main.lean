@@ -38,7 +38,7 @@ import RiemannAdelic.Hadamard
 -- Functional equation and symmetry
 import RiemannAdelic.functional_eq
 import RiemannAdelic.poisson_radon_symmetry
-import RiemannAdelic.J_composition_theorem
+import RiemannAdelic.radon_integral_symmetry
 
 -- Archimedean factors
 import RiemannAdelic.arch_factor
@@ -71,6 +71,8 @@ import RiemannAdelic.paley_wiener_uniqueness
 
 -- Paley-Wiener Uniqueness Theorem (100% formal, zero sorry)
 import paley.paley_wiener_uniqueness
+-- Identity Principle for Exponential Type Functions
+import paley.identity_principle_exp_type
 
 -- Spectral RH operator with prime harmonic potential
 import RiemannAdelic.spectral_rh_operator
@@ -145,7 +147,7 @@ def main : IO Unit := do
   IO.println "  • Entire function and Hadamard theory"
   IO.println "  • Hadamard factorization and quotient analysis"
   IO.println "  • Functional equation and Poisson symmetry"
-  IO.println "  • J operator composition theorem (J ∘ J = id)"
+  IO.println "  • Radon-Poisson integral functional symmetry"
   IO.println "  • Gamma Weierstrass representation for reflected Gamma function"
   IO.println "  • de Branges space framework"
   IO.println "  • Weil-Guinand positivity theory"
@@ -159,6 +161,7 @@ def main : IO Unit := do
   IO.println "  • Paley-Wiener theory"
   IO.println "  • Paley-Wiener uniqueness theorem"
   IO.println "  • Paley-Wiener Uniqueness (100% formal - ZERO sorry)"
+  IO.println "  • Identity Principle for Exponential Type Functions"
   IO.println "  • Spectral RH operator (H_ε with prime harmonic potential)"
   IO.println "  • Critical line proof via spectral operators"
   IO.println "  • Spectral RH operator H_ε"
