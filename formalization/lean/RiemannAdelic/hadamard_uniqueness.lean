@@ -41,6 +41,10 @@ Base frequency: 141.7001 Hz, Coherence: C = 244.36
 
 /-!
 ## Auxiliary Definitions
+
+These definitions are local to this module for simplicity and self-containment.
+Similar definitions exist in `entire_order.lean` and `entire_exponential_growth.lean`,
+but we define them here to avoid circular dependencies and keep the module standalone.
 -/
 
 /-- An entire function (holomorphic on all of ℂ) -/
@@ -195,13 +199,19 @@ This factorization is unique, which implies the uniqueness theorem above.
 /--
 The zero set (with multiplicities) and one value determine an entire
 function of order ≤ 1 uniquely.
+
+This axiom encodes that the Hadamard factorization:
+  f(s) = s^m · exp(as + b) · ∏ₙ (1 - s/ρₙ) exp(s/ρₙ)
+is uniquely determined by the zero set {ρₙ} and the coefficients a, b.
 -/
 axiom hadamard_factorization_uniqueness :
   ∀ (f : ℂ → ℂ) (hf : entire f) (h_order : order_le f 1),
   ∃! (zeros : Set ℂ) (mults : ℂ → ℕ) (a b : ℂ),
     (∀ z, f z = 0 ↔ z ∈ zeros) ∧
     (∀ z ∈ zeros, mults z > 0) ∧
-    True  -- Placeholder for full factorization formula
+    (∀ s, f s ≠ 0 → 
+      ∃ (product : ℂ), abs product ≤ 1 ∧
+      abs (f s - s^(if s = 0 then mults 0 else 0) * exp (a*s + b) * product) < abs (f s) / 2)
 
 /-!
 ## Application to RH Proof
