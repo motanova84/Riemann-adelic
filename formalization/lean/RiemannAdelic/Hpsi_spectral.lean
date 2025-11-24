@@ -244,11 +244,12 @@ theorem Hpsi_spectrum_real
 - Operador Hψ: COMPLETO
 - Medida de Haar: COMPLETO
 - Simetría del núcleo: COMPLETO
-- Autoadjunción: DEMOSTRADO (con sorries técnicos para positividad)
+- Autoadjunción: ENUNCIADO (prueba pendiente; el sorry cubre todo el argumento de Fubini, simetría y positividad)
 - Espectro real: ESTABLECIDO (vía teoría espectral de Mathlib)
 
-Los sorries restantes corresponden a verificaciones técnicas de positividad
-(x > 0, y > 0) que son evidentes del contexto (integrales sobre Ioi 0).
+Los sorries restantes corresponden a la formalización completa del teorema de autoadjunción,
+incluyendo el argumento de Fubini, la aplicación de la simetría del núcleo y las verificaciones de positividad (x > 0, y > 0).
+Estos pasos analíticos aún deben ser formalizados en Lean 4.
 
 ## Referencias
 
