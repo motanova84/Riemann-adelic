@@ -1,7 +1,7 @@
 # Operador J Involutivo - Documentación Completa
 
 **Autor:** José Manuel Mota Burruezo Ψ ✧ ∞³  
-**Fecha:** 21 noviembre 2025  
+**Date:** 21 noviembre 2025  
 **DOI:** [10.5281/zenodo.17379721](https://doi.org/10.5281/zenodo.17379721)
 
 ---
