@@ -30,10 +30,11 @@ import Mathlib.Analysis.Analytic.Basic
 import Mathlib.Data.Complex.Basic
 import Mathlib.NumberTheory.ZetaFunction
 
-noncomputable section
 open Complex
 
 namespace RiemannAdelic
+
+noncomputable section
 
 /-! ## Definition -/
 
@@ -101,9 +102,9 @@ theorem xi_real_on_critical_line (t : ℝ) :
   -- and the reflection principle
   sorry
 
-end RiemannAdelic
-
 end
+
+end RiemannAdelic
 
 /-
 ═══════════════════════════════════════════════════════════════
