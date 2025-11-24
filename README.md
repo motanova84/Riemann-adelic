@@ -1116,6 +1116,69 @@ Error relativo:             [< 1e-6 para alta precisión]
 
 Los resultados completos y certificados se guardan en `data/validation_results.csv`.
 
+## Spectral Framework - Marco Espectral
+
+Se ha implementado un **marco espectral completo** para el análisis de la Hipótesis de Riemann, demostrando cómo los ceros de ζ(s) codifican información sobre primos a través de operadores espectrales.
+
+### Módulos Implementados
+
+1. **`inversion/`** - Inversión espectral desde ceros
+   - Reconstruye medida de primos desde ceros de ζ(s)
+   - Kernel espectral K_D(x,y) con regularización gaussiana
+
+2. **`operador/`** - Construcción del operador H
+   - Operador autoadjunto con espectro en la línea crítica
+   - Valores propios λ relacionados con ceros: λ = 1/4 + γ²
+
+3. **`dualidad/`** - Dualidad Poisson-Radón
+   - Involución J que fuerza ecuación funcional s↔(1-s)
+   - Verificación geométrica de simetría
+
+4. **`unicidad/`** - Unicidad de Paley-Wiener
+   - Funciones test de banda limitada
+   - Determina D(s) únicamente desde condiciones internas
+
+### Uso Rápido
+
+```bash
+# Demo completo con visualizaciones
+python3 demo_spectral_framework.py
+
+# Tests (13 tests unitarios)
+python3 -m pytest tests/test_spectral_framework.py -v
+
+# Test de integración completo
+python3 test_spectral_integration.py
+```
+
+### Ejemplo de Código
+
+```python
+from inversion import prime_measure_from_zeros
+import numpy as np
+
+# Definir ceros (formato 1/2 + i*gamma)
+zeros = [0.5 + 14.1347j, 0.5 - 14.1347j]
+
+# Reconstruir medida de primos
+X = np.linspace(0, 4, 200)
+measure = prime_measure_from_zeros(zeros, X)
+```
+
+### Documentación
+
+- **[Guía Rápida](SPECTRAL_QUICKSTART.md)** - Ejemplos de uso y referencia rápida
+- **[README Completo](SPECTRAL_FRAMEWORK_README.md)** - Fundamentos matemáticos y API
+- **[Resumen de Implementación](SPECTRAL_IMPLEMENTATION_SUMMARY.md)** - Detalles técnicos
+
+### Resultados
+
+✅ **827 líneas** de código Python  
+✅ **13 tests unitarios** (todos pasan)  
+✅ **1 test de integración** (verificado)  
+✅ **4 visualizaciones** generadas  
+✅ Compatible con ceros de Odlyzko y código existente
+
 ## Papel Científico y Formalización
 
 - **Artículo principal (standalone)**: `paper_standalone.tex` - Versión completa y autocontenida del paper
