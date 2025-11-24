@@ -15,6 +15,7 @@ lean_lib RHFinal where
     `selberg_trace,
     `H_psi_complete,
     `D_limit_equals_xi,
+    `D_equals_Xi,
     `rh_final_theorem,
     `spectrum_HΨ_equals_zeta_zeros,
     `heat_kernel_to_delta_plus_primes,
@@ -24,3 +25,4 @@ lean_lib RHFinal where
     `Riemann_Hypothesis_noetic,
     `RiemannSiegel
   ]
+  roots := #[`paley_wiener_uniqueness, `selberg_trace, `H_psi_complete, `D_limit_equals_xi, `spectral_convergence_from_kernel]

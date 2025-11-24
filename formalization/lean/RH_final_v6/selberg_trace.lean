@@ -42,7 +42,20 @@ theorem selberg_trace_weak
     (f : TraceTestFunction) :
     ∑' n : ℕ, f.h (H_psi_spectrum n) = 
     ∑' γ : {γ : ℝ // zeta ⟨1/2, γ⟩ = 0}, f.h (γ.val^2 / 4 + 1/4) := by
-  sorry -- Full proof requires spectral theory and zeta function analysis
+  -- PROOF STRATEGY:
+  -- 1. Apply trace formula: Tr(f(H_Ψ)) = ∑_λ f(λ) where λ are eigenvalues
+  -- 2. Use spectral theorem: H_Ψ self-adjoint ⟹ spectral decomposition exists
+  -- 3. Eigenvalues λₙ = (n + 1/2)² + 141.7001 from harmonic oscillator structure
+  -- 4. Selberg formula relates to zeta zeros: γₙ such that ζ(1/2 + iγₙ) = 0
+  -- 5. Connection: λₙ = γₙ²/4 + 1/4 + 141.7001 (QCAL base frequency)
+  -- 6. For test function f with compact support, both sums converge
+  -- 7. Equality follows from spectral-arithmetic correspondence
+  -- Full proof requires:
+  --   - Spectral theory of self-adjoint operators (Mathlib.Analysis.InnerProductSpace)
+  --   - Trace class theory (nuclear operators)
+  --   - Explicit formula for ζ(s) connecting zeros to primes
+  --   - Asymptotic analysis showing λₙ ~ γₙ²/4 as n → ∞
+  sorry
 
 /-!
 ## Spectral Measure and Zeta Zeros
@@ -56,7 +69,20 @@ theorem spectral_measure_at_zeros :
     ∃ (N : ℕ), ∀ (n : ℕ), n ≥ N →
     ∃ (γ : ℝ), zeta ⟨1/2, γ⟩ = 0 ∧ 
     abs (H_psi_spectrum n - (γ^2 / 4 + 1/4)) < ε := by
-  sorry -- Follows from trace formula asymptotic analysis
+  intro ε hε
+  -- PROOF STRATEGY:
+  -- 1. Use Weyl's law: eigenvalue asymptotics λₙ ~ (n + 1/2)² + C
+  -- 2. Use zero density theorem: N(T) ~ (T/2π)log(T/2π) zeros up to height T
+  -- 3. Match asymptotics: λₙ corresponds to γₙ²/4 + 1/4 for large n
+  -- 4. Error term O(log n) from both sides gives convergence
+  -- 5. For any ε > 0, choose N large enough that error < ε
+  -- Key steps:
+  --   - Eigenvalue counting: #{λ ≤ T} ~ √T from Dirichlet eigenvalue problem
+  --   - Zero counting: N(T) = #{γ : |γ| ≤ T, ζ(1/2+iγ)=0} ~ T log T / (2π)
+  --   - Rescaling: match via λₙ = (γₙ/√(4π))² + baseline
+  --   - QCAL constant 141.7001 is the baseline shift
+  -- Requires: Riemann-von Mangoldt formula for N(T), Weyl's law
+  sorry
 
 /-!
 ## Connection to QCAL Framework
