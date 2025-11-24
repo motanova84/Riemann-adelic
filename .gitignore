@@ -93,7 +93,7 @@ artifacts/
 reports/
 .pytest_cache/
 
-# LaTeX build files (for paper directory)
+# LaTeX build files (for paper directories)
 paper/*.aux
 paper/*.log
 paper/*.out
@@ -108,6 +108,22 @@ paper/*.run.xml
 paper/*.nav
 paper/*.snm
 paper/*.vrb
+
+# LaTeX build files (for docs/paper directory)
+docs/paper/*.aux
+docs/paper/*.log
+docs/paper/*.out
+docs/paper/*.fdb_latexmk
+docs/paper/*.fls
+docs/paper/*.synctex.gz
+docs/paper/*.toc
+docs/paper/*.bbl
+docs/paper/*.blg
+docs/paper/*.bcf
+docs/paper/*.run.xml
+docs/paper/*.nav
+docs/paper/*.snm
+docs/paper/*.vrb
 
 # Temporary computational files
 *.tmp
@@ -145,37 +161,6 @@ build/
 
 # Disabled workflow files
 *.disabled
-*.png
 
-# Monitoring system - evidence and sensitive data
-monitoring/evidence/
-monitoring/alerts/*.json
-!monitoring/alerts/.gitkeep
-examples/__pycache__/
-
-# SABIO ∞³ validation artifacts
-sabio_validation_report.json
-quantum_radio_validation_results.json
-test.sabio
-*.sabio.tmp
-
-# Lean validation reports (generated during CI)
-# Lean4 validation artifacts
-formalization/lean/validation_report.json
-
-# Lean4 build artifacts
-.lake/
-lake-packages/
-*.olean
-*.trace
-formalization/lean/validation_report.json
-
-# SageMath build artifacts
-*.sage.py
-.sage/
-
-# Demo H_epsilon generated plots
-demo_H_epsilon*.png
-operador_H_epsilon_comparison.png
-validation_report.json
-*.backup
+# Spectral framework demo images
+*_demo.png
