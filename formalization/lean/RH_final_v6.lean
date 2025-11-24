@@ -88,23 +88,21 @@ References: Weierstrass M-test, Morera's theorem, Mathlib.Analysis.Complex
 -/
 lemma det_zeta_differentiable : Differentiable ℂ det_zeta := by
   unfold det_zeta zeta_HΨ_deriv
-  -- exp is differentiable
+  -- exp is differentiable (entire)
   apply Complex.differentiable_exp.comp
   -- The sum zeta_HΨ_deriv is differentiable by Weierstrass M-test
   -- Each term 1/(s - HΨ n) is holomorphic away from HΨ n
   -- Uniform convergence on compacts: |1/(s - HΨ n)| ≤ C/n² for |s| ≤ R, n large
   -- This follows from HΨ n ~ C₁·n (spectral growth condition)
   -- Therefore the infinite sum is differentiable everywhere
-  apply Differentiable.tsum
-  · intro n
-    apply Differentiable.div
-    · exact differentiable_const
-    · apply Differentiable.sub
-      · exact differentiable_id'
-      · exact differentiable_const
-    · intro s; simp; intro h; exact absurd h (ne_of_gt (hHΨ.pos n))
-  · -- Summability: ∑|1/(s - HΨ n)| converges by spectral growth
-    sorry  -- Requires detailed analysis of spectral sum convergence
+  -- 
+  -- Detailed proof strategy:
+  -- 1. For each n, 1/(s - HΨ n) is differentiable on ℂ \ {HΨ n}
+  -- 2. The series ∑ 1/(s - HΨ n) converges uniformly on compact subsets K ⊂ ℂ \ {HΨ n : n ∈ ℕ}
+  -- 3. By Weierstrass M-test: if |s - HΨ n| ≥ δ for all n, then |1/(s - HΨ n)| ≤ 1/δ
+  -- 4. For |s| ≤ R, only finitely many terms have |s - HΨ n| < δ
+  -- 5. Uniform convergence + differentiability of each term → differentiability of sum
+  sorry  -- Requires Weierstrass M-test from Mathlib or detailed measure-theoretic proof
 
 /--
 det_zeta has exponential type.

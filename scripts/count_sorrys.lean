@@ -26,21 +26,18 @@ This module searches for various proof placeholders:
 - `trivial`: Potentially oversimplified proofs
 -/
 
-structure ProofStats where
-  sorryCount : Nat
-  axiomCount : Nat
-  todoCount : Nat
-  admitCount : Nat
-  trivialCount : Nat
-
 def countSorrysInExpr (e : Expr) : Nat :=
   e.fold 0 fun acc subExpr =>
     if subExpr.isSorry then acc + 1 else acc
 
-def countAxiomsInExpr (e : Expr) : Nat :=
-  -- This would need to check for axiom declarations
-  -- In a full implementation, inspect the declaration kind
-  0
+/-
+Note: Full implementation would include:
+- Traversing the environment to count axiom declarations
+- Parsing source files to count TODO comments
+- Detecting admit and trivial patterns in proofs
+
+For now, this script provides structural verification of the main proof chain.
+-/
 
 /-!
 ## Main Verification Function
