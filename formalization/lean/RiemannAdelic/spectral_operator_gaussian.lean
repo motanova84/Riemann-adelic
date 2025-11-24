@@ -131,17 +131,25 @@ where the integral is taken over a suitable domain. For technical reasons,
 we initially define this over a bounded interval and then extend.
 -/
 
+/-- Lower bound for the integration domain. This technical cutoff is used to ensure
+    convergence in the preliminary definition. The full operator will be extended
+    to the entire real line in determinant_function.lean. -/
+def integration_lower_bound : ℝ := -1000
+
 /-- The spectral operator H_Ψ as an integral operator with Gaussian kernel.
     
     For a function f ∈ H_Ψ, we define:
       (H_Ψ f)(x) = ∫ K(x,y) f(y) dy
     
-    The integration domain is initially restricted to ensure convergence.
+    The integration domain starts at `integration_lower_bound` to ensure convergence
+    in this preliminary definition. The full extension to ℝ will be established
+    in determinant_function.lean.
+    
     The proof that this operator is well-defined and bounded will be
     provided in the determinant_function module.
 -/
 def H_op (f : H_Psi) : H_Psi := 
-  ⟨fun x => ∫ y in Set.Ioi (-1000 : ℝ), kernel x y * f y, 
+  ⟨fun x => ∫ y in Set.Ioi integration_lower_bound, kernel x y * f y, 
    sorry  -- Proof of integrability: this will be established in determinant_function.lean
           -- where we show:
           -- 1. The kernel operator is Hilbert-Schmidt (hence bounded)
@@ -164,13 +172,15 @@ These properties will be proven in subsequent modules:
 
 -/
 
-/-- The operator H_Ψ is bounded (statement only, proof in determinant_function) -/
-axiom H_op_bounded : ∃ C : ℝ, C > 0 ∧ ∀ f : H_Psi, 
-  (∫ x, ‖ℋ_Ψ f x‖^2 * w x) ≤ C^2 * (∫ x, ‖f x‖^2 * w x)
+/-- The operator H_Ψ is bounded (proof deferred to determinant_function.lean) -/
+theorem H_op_bounded : ∃ C : ℝ, C > 0 ∧ ∀ f : H_Psi, 
+  (∫ x, ‖ℋ_Ψ f x‖^2 * w x) ≤ C^2 * (∫ x, ‖f x‖^2 * w x) := by
+  sorry  -- Proof to be completed in determinant_function.lean
 
-/-- The kernel operator is Hilbert-Schmidt (statement only) -/
-axiom kernel_hilbert_schmidt : 
-  ∫ x, ∫ y, ‖kernel x y‖^2 * w x * w y < ∞
+/-- The kernel operator is Hilbert-Schmidt (proof deferred to determinant_function.lean) -/
+theorem kernel_hilbert_schmidt : 
+  ∫ x, ∫ y, ‖kernel x y‖^2 * w x * w y < ∞ := by
+  sorry  -- Proof to be completed in determinant_function.lean
 
 /-!
 ## Documentation and References
