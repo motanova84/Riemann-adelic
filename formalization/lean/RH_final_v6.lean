@@ -87,13 +87,13 @@ axioma det_zeta_props (HΨ : ℕ → ℝ) : DetZetaProperties HΨ
 
 -- Teorema Paley–Wiener de unicidad espectral fuerte
 lema D_eq_Xi : ∀ s, det_zeta HΨ s = Ξ s := por 
-  dejar accesorios := det_zeta_props HΨ
-  aplicar fuerte unicidad espectral
-  · accesorios exactos.diferenciables
-  · hΞ exacta
-· crecimiento de apoyos   exactos
-  · crecimiento exacto
-  · propiedades exactas.ecuación_funcional
+  let props := det_zeta_props HΨ
+  apply strong_spectral_uniqueness
+  · exact props.diferenciable
+  · exact hΞ
+  · exact props.crecimiento
+  · exact hgrowth
+  · exact props.funcional_eq
   · exact hsymm
   · exact hcrit
 
