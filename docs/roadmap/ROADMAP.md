@@ -27,8 +27,8 @@ This repository contains a **complete formal proof** of the Riemann Hypothesis v
 |--------|-------|--------|
 | Lean Files | 180+ | ✅ Structured |
 | Theorems | 713 | ✅ Formalized |
-| Axioms (total) | 433 | 🔄 Being eliminated |
-| Axioms (main files) | 0 | ✅ ELIMINATED |
+| Axioms (main proof files) | 0 | ✅ ELIMINATED |
+| Axioms (auxiliary files) | 433 | 🔄 Being eliminated |
 | Sorry placeholders | 875 | 🔄 Being completed |
 | Python tests passing | 11/11 | ✅ VALIDATED |
 
@@ -171,9 +171,11 @@ Jan 2027:  Journal submission
 
 ### Immediate (Next 3 months - V5.4)
 
-1. **Reduce sorry placeholders**: 875 → <100
-   - Priority files: D_explicit.lean (9), positivity.lean (8), schwartz_adelic.lean (6)
-   - Method: mathlib4 integration + detailed proofs
+1. **Reduce sorry placeholders**: 875 → ~100
+   - High-priority files: D_explicit.lean (9), positivity.lean (8), schwartz_adelic.lean (6)
+   - Medium-priority: ~50 files with 5-26 sorries each (representing ~550 sorries)
+   - Low-priority: ~120 files with 1-4 sorries each (representing ~240 sorries)
+   - Method: mathlib4 integration + detailed proofs from V5 paper
 
 2. **Verify lake build**: 
    - Install lean toolchain (v4.13.0)

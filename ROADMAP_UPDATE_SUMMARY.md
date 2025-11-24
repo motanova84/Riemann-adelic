@@ -221,7 +221,7 @@ Executed validation with precision=15:
 ✅ Proof Certificate Generation: PASSED
 ```
 
-**Result**: 10/10 tests passing (1 integration test skipped due to missing sympy dependency)
+**Result**: 10/11 total tests (10 core tests passing, 1 integration test skipped due to missing optional dependency)
 
 ---
 
