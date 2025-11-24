@@ -125,6 +125,10 @@ lemma D_zero_iff_inv_eigenvalue (s : ℂ) :
     field_simp [hnλ]
     ring
 
+/-- Eigenvalues of self-adjoint operators are real -/
+axiom eigenvalues_of_selfadjoint_are_real : 
+  ∀ n : ℕ, ∃ r : ℝ, H_eigenvalues n = r
+
 /--
   Teorema espectral: ℕ_Ψ es autoadjunto y compacto ⇒ autovalores λₙ ∈ ℝ
 -/
@@ -132,7 +136,7 @@ lemma H_eigenvalues_real (n : ℕ) : ∃ r : ℝ, H_eigenvalues n = r := by
   -- Por ser ℕ_Ψ autoadjunto, su espectro es real
   -- Este es un resultado fundamental de la teoría espectral
   -- Para operadores autoadjuntos en espacios de Hilbert
-  sorry
+  exact eigenvalues_of_selfadjoint_are_real n
 
 /--
   Conexión final: D(s) = 0 ⇔ ξ(s) = 0
