@@ -1,0 +1,154 @@
+name: Plagiarism Monitoring
+
+on:
+  schedule:
+    # Run daily at 02:00 UTC
+    - cron: '0 2 * * *'
+  
+  workflow_dispatch:
+    # Allow manual trigger
+  
+  push:
+    branches:
+      - main
+    paths:
+      - 'paper/**'
+      - 'paper_standalone.tex'
+      - 'RIEMANNJMMB84.pdf'
+      - 'CITATION.cff'
+      - 'monitoring/**'
+  
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'paper/**'
+      - 'paper_standalone.tex'
+      - 'RIEMANNJMMB84.pdf'
+      - 'CITATION.cff'
+      - 'monitoring/**'
+
+jobs:
+  monitor:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: main  # Explicitly checkout main branch for scheduled runs
+      
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip==24.3.1
+          pip install requests
+      
+      - name: Generate fingerprints
+        run: |
+          python monitoring/fingerprints_create.py
+      
+      - name: Run GitHub monitoring
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          python monitoring/search_github.py || true
+      
+      - name: Run Crossref monitoring
+        run: |
+          python monitoring/search_crossref.py || true
+      
+      - name: Run full monitoring report
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          python monitoring/run_monitor.py
+      
+      - name: Upload monitoring artifacts
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: monitoring-reports
+          path: |
+            monitoring/fingerprints.json
+            monitoring/alerts/*.json
+          retention-days: 90
+      
+      - name: Check for high severity alerts
+        id: check_alerts
+        run: |
+          if [ -f "monitoring/alerts/monitoring_report_"*.json ]; then
+            # Get the most recent report
+            LATEST_REPORT=$(ls -t monitoring/alerts/monitoring_report_*.json | head -1)
+            HIGH_SEVERITY=$(python -c "import json; data=json.load(open('$LATEST_REPORT')); print(data['summary']['high_severity'])")
+            echo "high_severity=$HIGH_SEVERITY" >> $GITHUB_OUTPUT
+            
+            if [ "$HIGH_SEVERITY" -gt 0 ]; then
+              echo "⚠️ HIGH SEVERITY ALERTS DETECTED: $HIGH_SEVERITY"
+              exit 1
+            fi
+          fi
+      
+      - name: Create issue on high severity alert
+        if: failure() && steps.check_alerts.outputs.high_severity > 0
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const fs = require('fs');
+            const reports = fs.readdirSync('monitoring/alerts')
+              .filter(f => f.startsWith('monitoring_report_'))
+              .sort()
+              .reverse();
+            
+            if (reports.length > 0) {
+              const reportPath = `monitoring/alerts/${reports[0]}`;
+              const report = JSON.parse(fs.readFileSync(reportPath, 'utf8'));
+              
+              const body = `## 🚨 High Severity Plagiarism Alert
+              
+              The automated monitoring system has detected potential high-severity plagiarism.
+              
+              **Summary:**
+              - Total Alerts: ${report.summary.total_alerts}
+              - High Severity: ${report.summary.high_severity}
+              - Medium Severity: ${report.summary.medium_severity}
+              - Low Severity: ${report.summary.low_severity}
+              
+              **Timestamp:** ${report.timestamp}
+              
+              Please review the monitoring report artifact for details.
+              
+              ### Next Steps
+              1. Review the alert details in the artifacts
+              2. Verify the findings manually
+              3. Collect evidence if confirmed
+              4. Take appropriate action (contact, DMCA, etc.)
+              
+              ---
+              *This issue was automatically created by the plagiarism monitoring system.*`;
+              
+              github.rest.issues.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                title: '🚨 High Severity Plagiarism Alert Detected',
+                body: body,
+                labels: ['security', 'plagiarism-alert', 'high-priority']
+              });
+            }
+      
+      - name: Summary
+        if: always()
+        run: |
+          echo "### Monitoring Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          if [ -f "monitoring/alerts/monitoring_report_"*.json ]; then
+            LATEST_REPORT=$(ls -t monitoring/alerts/monitoring_report_*.json | head -1)
+            echo "📊 Latest Report: \`$(basename $LATEST_REPORT)\`" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            python -c "import json; data=json.load(open('$LATEST_REPORT')); print(f\"- Total Alerts: {data['summary']['total_alerts']}\n- High Severity: {data['summary']['high_severity']}\n- Medium Severity: {data['summary']['medium_severity']}\n- Low Severity: {data['summary']['low_severity']}\")" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "No monitoring report generated" >> $GITHUB_STEP_SUMMARY
+          fi

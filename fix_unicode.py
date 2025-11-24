@@ -27,10 +27,10 @@ def fix_unicode_chars(file_path):
             '≥': '>=',    # Greater than or equal
             '–': '-',     # En dash
             '—': '-',     # Em dash
-            ''': "'",     # Left single quotation mark
-            ''': "'",     # Right single quotation mark
-            '"': '"',     # Left double quotation mark
-            '"': '"',     # Right double quotation mark
+            '‘': "'",     # Left single quotation mark
+            '’': "'",     # Right single quotation mark
+            '“': '"',     # Left double quotation mark
+            '”': '"',     # Right double quotation mark
             '…': '...',   # Horizontal ellipsis
         }
         

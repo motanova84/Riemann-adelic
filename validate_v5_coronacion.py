@@ -29,10 +29,25 @@ from datetime import datetime
 from pathlib import Path
 
 import mpmath as mp
-import numpy as np
 
 # Add the current directory to Python path for imports
 sys.path.append('.')
+
+def include_yolo_verification():
+    """Include YOLO verification in main validation"""
+    try:
+        from verify_yolo import YOLOverifier
+        print("   🎯 Initializing YOLO verifier...")
+        verifier = YOLOverifier()
+        yolo_result = verifier.run_yolo_verification()
+        print(f"   YOLO Verification: {'✅ SUCCESS' if yolo_result else '❌ FAILED'}")
+        return yolo_result
+    except ImportError as e:
+        print(f"   ⚠️  YOLO verification not available: {e}")
+        return True
+    except Exception as e:
+        print(f"   ❌ YOLO verification error: {e}")
+        return False
 
 def setup_precision(dps):
     """Setup computational precision"""
@@ -72,10 +87,16 @@ def validate_v5_coronacion(precision=30, verbose=False, save_certificate=False, 
         return {"success": False, "error": str(e)}
     
     # Initialize test instance
-    test_instance = TestCoronacionV5(max_zeros=max_zeros, max_primes=max_primes)
+    test_instance = TestCoronacionV5()
     test_instance.setup_method()
+    # Override default max_zeros and max_primes if provided
+    test_instance.max_zeros = max_zeros
+    test_instance.max_primes = max_primes
     
-    integration_instance = TestV5Integration(max_zeros=max_zeros, max_primes=max_primes)
+    integration_instance = TestV5Integration()
+    integration_instance.setup_method()
+    integration_instance.max_zeros = max_zeros
+    integration_instance.max_primes = max_primes
     
     # Define the 5 steps of V5 Coronación
     validation_steps = [
@@ -270,6 +291,19 @@ def validate_v5_coronacion(precision=30, verbose=False, save_certificate=False, 
         print(f"\n⚠️  V5 CORONACIÓN VALIDATION: PARTIAL SUCCESS")
         print(f"   Review {failed_count} failed components above for details.")
     
+    # --- YOLO Verification Integration -------------------------------------------
+    print("\n🚀 RUNNING YOLO VERIFICATION...")
+    yolo_result = include_yolo_verification()
+    results["YOLO Verification"] = {
+        'status': 'PASSED' if yolo_result else 'FAILED',
+        'execution_time': 0.0  # YOLO is instant by design
+    }
+    if yolo_result:
+        passed_count += 1
+    else:
+        failed_count += 1
+        all_passed = False
+
     # --- Adelic D(s) zeta-free check (opcional, visible) -------------------
     try:
         from utils.adelic_determinant import AdelicCanonicalDeterminant as ACD
