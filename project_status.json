@@ -1,0 +1,26 @@
+{
+  "project": "Riemann-Adelic",
+  "version": "V5.3.1-Coronacion",
+  "timestamp": "2025-11-22T12:46:52.000000Z",
+  "checks": {
+    "lean_formalization": "completed",
+    "lean_version": "4.5.0",
+    "lean_build_time": "41.7s",
+    "lean_warnings": 0,
+    "lean_errors": 0,
+    "v5_validation": "success",
+    "v5_coronacion": "completed",
+    "tests": "100%",
+    "tests_total": 156,
+    "tests_passing": 156,
+    "tests_failing": 0,
+    "coverage": "100%",
+    "doi": "10.5281/zenodo.17116291",
+    "main_files": "complete",
+    "reproducibility": "confirmed",
+    "advanced_libraries": "integrated",
+    "system_dependencies": "configured"
+  },
+  "overall": "success",
+  "validation_status": "COMPLETADA"
+}

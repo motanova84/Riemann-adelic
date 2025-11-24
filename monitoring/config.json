@@ -1,0 +1,35 @@
+{
+  "monitoring": {
+    "enabled": true,
+    "github": true,
+    "crossref": true,
+    "web_search": false
+  },
+  "thresholds": {
+    "exact_match": 100,
+    "high_similarity": 80,
+    "medium_similarity": 50,
+    "low_similarity": 30
+  },
+  "search_queries": {
+    "github": [
+      "10.5281/zenodo.17116291",
+      "Evac R_Psi alpha",
+      "adelic operator Riemann",
+      "discrete symmetry vacuum energy",
+      "José Manuel Mota Burruezo",
+      "Mota Burruezo Riemann",
+      "S-Finite Adelic Spectral",
+      "Coronación V5"
+    ]
+  },
+  "notifications": {
+    "enabled": false,
+    "email": null,
+    "slack_webhook": null
+  },
+  "rate_limits": {
+    "github_delay_seconds": 2,
+    "max_queries_per_run": 10
+  }
+}
