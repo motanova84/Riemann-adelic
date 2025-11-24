@@ -85,7 +85,7 @@ estructura DetZetaProperties (HΨ : ℕ → ℝ) donde
 -- Axioma: det_zeta satisface todas las propiedades incluidas
 axioma det_zeta_props (HΨ : ℕ → ℝ) : DetZetaProperties HΨ 
 
--- Teorema Paley–Wiener de unidad espectral fuerte
+-- Teorema Paley–Wiener de unicidad espectral fuerte
 lema D_eq_Xi : ∀ s, det_zeta HΨ s = Ξ s := por 
   dejar accesorios := det_zeta_props HΨ
   aplicar fuerte unicidad espectral
