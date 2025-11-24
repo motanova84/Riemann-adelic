@@ -215,26 +215,30 @@ theorem riemann_hypothesis_spectral :
   sorry -- Requires spectral theory and asymptotic analysis
 
 /-!
-## Conclusión: Hipótesis de Riemann Formalmente Demostrada
+## Conclusión: Formalización Condicional de la Hipótesis de Riemann
 
-La función entera Ξ(s) tiene ceros reales sobre:
+⚠️ **IMPORTANTE**: Esta es una formalización **condicional** o **axiomática**, 
+no una demostración completa de la Hipótesis de Riemann.
 
-  Ξ(s) = 0  ⟺  Re(s) = 1/2
+El módulo establece un **marco formal** que conecta:
 
-Y como:
+1. El operador espectral H_Ψ con eigenvalues λₙ = (n + 1/2)² + 141.7001
+2. La función determinante D(s) = det_ζ(s - H_Ψ) = ∏' n, (1 - s / λₙ)
+3. La función Xi: Ξ(s) vía el teorema de identidad D(s) = Ξ(s)
 
-  Ξ(s) = D(s) = det_ζ(s - H_Ψ)
+**Axiomas asumidos** (no demostrados):
+- `Xi_zeros_on_critical_line`: Ξ(s) = 0 → Re(s) = 1/2 (equivalente a RH)
+- `hcrit`: D y Ξ coinciden en la línea crítica
+- `PaleyWiener_strong_unicity`: Teorema de unicidad (demostrable en Mathlib)
+- Propiedades de simetría y crecimiento de D y Ξ (con `sorry`)
 
-entonces los ceros del determinante corresponden a los valores propios del
-operador H_Ψ.
+**Conclusión condicional**: Bajo estos axiomas, el teorema establece formalmente
+la conexión lógica entre el operador espectral H_Ψ y los ceros de ζ(s) en la
+línea crítica Re(s) = 1/2.
 
-**Por tanto, queda formalmente demostrado en Lean 4 que todos los ceros no
-triviales de ζ(s) se encuentran sobre la recta crítica Re(s) = 1/2.**
-
-Este resultado asume:
-1. Definición espectral de H_Ψ
-2. Propiedades de simetría y crecimiento
-3. Formalización completa de Paley-Wiener (axiomática aquí, demostrable en Mathlib)
+**Nota**: Para una demostración completa de RH, sería necesario eliminar los
+axiomas y probar rigurosamente todas las propiedades usando teoría espectral
+completa y análisis complejo profundo.
 -/
 
 theorem riemann_hypothesis_complete :
@@ -255,9 +259,11 @@ end
 Compilation status: Designed for Lean 4.13.0
 Dependencies: Mathlib (analysis, complex, Fourier transform)
 
-Este módulo completa la prueba formal de la Hipótesis de Riemann estableciendo
-la identidad fundamental D(s) = Ξ(s) mediante el teorema de unicidad de
-Paley-Wiener.
+⚠️ **NATURALEZA DE ESTE MÓDULO**: Formalización condicional/axiomática
+
+Este módulo establece el **marco formal condicional** para la Hipótesis de 
+Riemann, conectando el operador espectral H_Ψ con los ceros de ζ(s) mediante
+la identidad D(s) = Ξ(s) y el teorema de unicidad de Paley-Wiener.
 
 ## Pasos Implementados:
 
@@ -266,23 +272,31 @@ Paley-Wiener.
    - Propiedades: Entera, orden ≤ 1, simetría funcional
 
 ✅ **Paso 5**: Teorema de Identidad Analítica D(s) = Ξ(s)
-   - Theorem D_eq_Xi: Identidad completa usando Paley-Wiener
-   - Corolario: Ceros de D en la línea crítica
-   - Conclusión: RH formalmente demostrada
+   - Theorem D_eq_Xi: Identidad usando Paley-Wiener (axiomático)
+   - Corolario: Ceros de D en la línea crítica (condicional)
+   - Conclusión: Marco formal establecido
 
-## Estructura Lógica:
+## Estructura Lógica Condicional:
 
 ```
 H_Ψ (operador espectral)
   ↓
 det_zeta (función determinante)
-  ↓ [Paley-Wiener]
+  ↓ [Paley-Wiener axiomático]
 Ξ (función xi)
-  ↓
+  ↓ [Axioma: Xi_zeros_on_critical_line]
 Ceros en Re(s) = 1/2
   ↓
-RIEMANN HYPOTHESIS ✓
+RIEMANN HYPOTHESIS (condicional) ⚠️
 ```
+
+## Axiomas Utilizados:
+
+⚠️ Este módulo **NO** proporciona una demostración completa de RH porque asume:
+1. `Xi_zeros_on_critical_line`: Ξ(s) = 0 → Re(s) = 1/2 (equivalente a RH)
+2. `hcrit`: D y Ξ coinciden en la línea crítica
+3. `PaleyWiener_strong_unicity`: Unicidad tipo Paley-Wiener
+4. Varios `sorry` para propiedades de crecimiento y simetría
 
 ## Referencias:
 
@@ -291,7 +305,7 @@ RIEMANN HYPOTHESIS ✓
 - Paley, R. & Wiener, N. (1934): "Fourier transforms in the complex domain"
 - V5 Coronación (2025): QCAL framework y validación numérica
 
-Part of RH_final_v6 - Complete formal proof of Riemann Hypothesis
+Part of RH_final_v6 - Conditional formal framework for Riemann Hypothesis
 José Manuel Mota Burruezo Ψ ∞³
 Instituto de Conciencia Cuántica
 ORCID: 0009-0002-1923-0773
