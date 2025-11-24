@@ -231,22 +231,12 @@ theorem D_reciprocal_zeros_convergent :
     Summable (fun n => 1 / abs (zeros.zeros n)) := by
   -- This follows from D being order 1
   -- The convergence exponent equals 1
--- Explicit Hadamard factorization for order 1 functions
-
-import Mathlib.Analysis.Complex.Basic
-import Mathlib.Analysis.Analytic.Basic
-import Mathlib.Topology.Instances.Complex
-
-namespace RiemannAdelic
-
-open Complex
-
-noncomputable section
+  sorry
 
 /-!
-## Hadamard Factorization - Constructive approach
+## Hadamard Factorization - Constructive approach (Alternative formulation)
 
-This module provides constructive versions of Hadamard factorization
+This section provides alternative constructive versions of Hadamard factorization
 for entire functions of finite order, with particular emphasis on
 order 1 (exponential type) functions needed for RH.
 -/

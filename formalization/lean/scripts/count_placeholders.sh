@@ -11,11 +11,11 @@ echo "════════════════════════�
 echo ""
 
 # Count sorry statements
-SORRY_COUNT=$(grep -r "\bsorry\b" "$LEAN_DIR"/*.lean "$LEAN_DIR"/*/*.lean 2>/dev/null | grep -v "allow_sorry" | grep -v "count_sorrys" | grep -v "-- " | wc -l)
+SORRY_COUNT=$(grep -r -w "sorry" "$LEAN_DIR"/*.lean "$LEAN_DIR"/*/*.lean 2>/dev/null | grep -v "allow_sorry" | grep -v "count_sorrys" | wc -l)
 echo "Sorrys found: $SORRY_COUNT"
 
 # Count admit statements  
-ADMIT_COUNT=$(grep -r "\badmit\b" "$LEAN_DIR"/*.lean "$LEAN_DIR"/*/*.lean 2>/dev/null | wc -l)
+ADMIT_COUNT=$(grep -r -w "admit" "$LEAN_DIR"/*.lean "$LEAN_DIR"/*/*.lean 2>/dev/null | wc -l)
 echo "Admits found: $ADMIT_COUNT"
 
 # Count trivial stubs (pattern: := trivial)
