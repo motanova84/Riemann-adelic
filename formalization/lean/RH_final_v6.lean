@@ -80,7 +80,7 @@ axiom strong_spectral_uniqueness
 estructura DetZetaProperties (HΨ : ℕ → ℝ) donde 
   diferenciable: Diferenciable ℂ (det_zeta HΨ)
   crecimiento: ∃ M: ℝ, M > 0 ∧ ∀ z: ℂ, Complex.abs ( det_zeta HΨ z) ≤ M * Real. exp (Complex.abs z.im )
-  funcional_eq : ∀ s, det_zeta HΨ ( 1 - s) = det_zeta HΨ s
+  funcional_eq : ∀ s, det_zeta HΨ (1 - s) = det_zeta HΨ s
 
 -- Axioma: det_zeta satisface todas las propiedades incluidas
 axioma det_zeta_props (HΨ : ℕ → ℝ) : DetZetaProperties HΨ 
