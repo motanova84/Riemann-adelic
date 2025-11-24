@@ -40,7 +40,7 @@ import RiemannAdelic.Hadamard
 -- Functional equation and symmetry
 import RiemannAdelic.functional_eq
 import RiemannAdelic.poisson_radon_symmetry
-import RiemannAdelic.J_composition_theorem
+import RiemannAdelic.radon_integral_symmetry
 
 -- Archimedean factors
 import RiemannAdelic.arch_factor
@@ -80,6 +80,8 @@ import RiemannAdelic.spectral_rh_operator
 import RiemannAdelic.spectral_RH_operator
 -- Berry-Keating operator H_Ψ (complete formalization)
 import RiemannAdelic.berry_keating_operator
+-- Spectral zeta function ζ_HΨ(s) and zeta-regularized determinant
+import RiemannAdelic.spectral_zeta_function
 
 -- Stage 2: Spectral Coincidence - Spectrum H_Ψ = Zeta Zeros
 import RiemannAdelic.spectrum_Hpsi_definition
@@ -146,7 +148,7 @@ def main : IO Unit := do
   IO.println "  • Entire functions of exponential type (foundational support)"
   IO.println "  • Hadamard factorization and quotient analysis"
   IO.println "  • Functional equation and Poisson symmetry"
-  IO.println "  • J operator composition theorem (J ∘ J = id)"
+  IO.println "  • Radon-Poisson integral functional symmetry"
   IO.println "  • Gamma Weierstrass representation for reflected Gamma function"
   IO.println "  • de Branges space framework"
   IO.println "  • Weil-Guinand positivity theory"
@@ -164,6 +166,7 @@ def main : IO Unit := do
   IO.println "  • Critical line proof via spectral operators"
   IO.println "  • Spectral RH operator H_ε"
   IO.println "  • Berry-Keating operator H_Ψ (complete formalization)"
+  IO.println "  • Spectral zeta function ζ_HΨ(s) and zeta-regularized determinant"
   IO.println "  • Hadamard factorization (purge_axioms branch)"
   IO.println "  • Kernel positivity (purge_axioms branch)"
   IO.println "  • Gamma trivial exclusion (purge_axioms branch)"
