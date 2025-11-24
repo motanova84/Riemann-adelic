@@ -24,7 +24,7 @@ theorem spectrum_HΨ_equals_zeta_zeros :
     -- f eigenfunction → its Mellin transform has pole/zero at s = 1/2 + iλ
     have h_mellin := Spectral.mellin_eigenfunction_correspondence 
       (by use fun x => if x > 0 then f x else 0) hf_ne
-    -- Por identificación D(s) ≡ ξ(s)/P(s) (ya probada)
+    -- By identification D(s) ≡ ξ(s)/P(s) (already proven)
     have h_D := Spectral.D_xi_identification (1/2 + I*λ)
     -- D(s) = 0 → ξ(s) = 0 → ζ(s) = 0
     obtain ⟨s, hs_re, hs_im, _⟩ := h_mellin
