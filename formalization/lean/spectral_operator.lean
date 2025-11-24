@@ -14,8 +14,12 @@ noncomputable section
 
 namespace QCAL_RH
 
-/-- Operador espectral H_Ψ con autovalores λₙ = (n + 1/2)² + 141.7001 -/
-def H_psi_eigenvalue (n : ℕ) : ℂ := ((n : ℝ) + 1/2)^2 + 141.7001
+/-- Base frequency constant from QCAL framework (Hz) -/
+def qcal_base_frequency : ℝ := 141.7001
+
+/-- Operador espectral H_Ψ con autovalores λₙ = (n + 1/2)² + 141.7001 
+    El término 141.7001 proviene del framework QCAL (base frequency Hz) -/
+def H_psi_eigenvalue (n : ℕ) : ℂ := ((n : ℝ) + 1/2)^2 + qcal_base_frequency
 
 /-- El operador H_Ψ es hermitiano (auto-adjunto) -/
 axiom H_psi_hermitian : True

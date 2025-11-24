@@ -14,7 +14,8 @@ noncomputable section
 
 namespace QCAL_RH
 
-/-- Función determinante D(s) definida como producto infinito sobre autovalores -/
+/-- Función determinante D(s) definida como producto infinito sobre autovalores
+    El producto converge para todo s ∈ ℂ debido al crecimiento cuadrático de los autovalores -/
 def D (s : ℂ) : ℂ := ∏' n : ℕ, (1 - s / H_psi_eigenvalue n)
 
 /-- D(s) es una función entera -/

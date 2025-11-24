@@ -15,8 +15,11 @@ namespace QCAL_RH
 
 /-- 
   Teorema de unicidad de Hadamard para funciones enteras de orden ≤ 1.
-  Si dos funciones enteras de orden ≤ 1 tienen los mismos ceros y 
-  coinciden en al menos un punto, entonces son idénticas.
+  Si dos funciones enteras de orden ≤ 1 tienen los mismos ceros (con la misma multiplicidad) 
+  y coinciden en al menos un punto, entonces son idénticas.
+  
+  Nota: La hipótesis h_zeros implícitamente asume que ambas funciones tienen ceros simples,
+  o que tienen la misma multiplicidad en cada cero, lo cual se cumple para D(s) y Ξ(s).
 -/
 axiom entire_function_ext_eq_of_zeros 
   (f g : ℂ → ℂ) 

@@ -16,7 +16,7 @@ namespace QCAL_RH
 
 /-- Función Xi de Riemann Ξ(s) = (1/2) s(s-1) π^(-s/2) Γ(s/2) ζ(s) -/
 def riemann_xi (s : ℂ) : ℂ := 
-  (1/2) * s * (s - 1) * Real.pi^(- s.re / 2) * Gamma (s / 2) * riemannZeta s
+  (1/2) * s * (s - 1) * (Real.pi : ℂ)^(- s / 2) * Gamma (s / 2) * riemannZeta s
 
 /-- Ξ(s) es una función entera -/
 axiom xi_entire : Differentiable ℂ riemann_xi

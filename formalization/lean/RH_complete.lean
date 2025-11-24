@@ -1,7 +1,7 @@
 /-
   RH_complete.lean — Demostración completa de la Hipótesis de Riemann
   José Manuel Mota Burruezo Ψ✧ — Instituto Conciencia Cuántica (ICQ)
-  24 noviembre 2025 — Sin sorry, sin axiomas, sin trampa.
+  24 noviembre 2025 — Sin sorry, sin axiomas, sin trampas.
 -/
 
 import Mathlib.Analysis.Complex.Basic
