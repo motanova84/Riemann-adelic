@@ -19,7 +19,7 @@ variable (K_δ : H →L[ℂ] H)
 
 /-- Adjoint composition representing B* ∘ B factorization -/
 noncomputable def adjoint_composition (B : H →L[ℂ] H) : H →L[ℂ] H :=
-  -- Composición B*.adjoint ∘ B, representando factorización de operador positivo
+  -- Composición B* ∘ B (donde B* = B.adjoint), representando factorización de operador positivo
   -- En espacios de Hilbert, todo operador positivo admite tal factorización
   -- por el teorema espectral y construcción de raíz cuadrada
   B.adjoint.comp B
@@ -49,7 +49,9 @@ noncomputable def D_from_operator (K_δ : H →L[ℂ] H) : ℂ → ℂ :=
     -- Determinante de Fredholm bien definido cuando K_δ es trace-class
     -- ||K_δ||_1 < ∞ por Schatten bounds => convergencia absoluta
     -- Referencias: Gohberg-Krein "Introduction to Fredholm Theory" §IV.1
-    1  -- Placeholder: representa det(I + K_δ(A_0 - s)^{-1})
+    -- NOTA: Este es un placeholder para la implementación completa
+    -- que requiere teoría de determinantes de Fredholm de Mathlib
+    sorry
 
 /-- Composición adjunta para hipótesis de positividad -/
 def is_positive_operator (K : H →L[ℂ] H) : Prop :=
