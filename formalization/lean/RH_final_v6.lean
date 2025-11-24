@@ -25,7 +25,7 @@ variable (HΨ : ℕ → ℝ) -- simplified as discrete spectrum
      (b) La secuencia (HΨ n) no está acotada y crece al menos linealmente: ∃ C > 0 , ∀ n, |HΨ n| ≥ C n.
      (c) La secuencia (HΨ n) está separada: ∃ δ > 0 , ∀ m ≠ n, |HΨ m - HΨ n| ≥ δ.
   2. La condición de crecimiento en HΨ asegura que la suma no acumule demasiados términos cerca de cualquier punto en ℂ.
-  3. Los valores s = HΨ n se excluyen del dominio de definición , ya que la suma diverge en estos puntos.
+  3. Los valores s = HΨ n se excluyen del dominio de definición, ya que la suma diverge en estos puntos.
 
   Referencias:
   - de Branges, L. " Espacios de Hilbert de funciones enteras " , Teorema 7. 1 .
