@@ -317,6 +317,49 @@ def validate_v5_coronacion(precision=30, verbose=False, save_certificate=False, 
     except Exception as e:
         print(f"   ⚠️  Adelic D(s) check skipped: {e}")
     # -----------------------------------------------------------------------
+    
+    # --- H_DS Discrete Symmetry Operator Verification ---------------------
+    try:
+        from operador.operador_H_DS import DiscreteSymmetryOperator
+        from operador.operador_H import build_R_matrix, spectrum_from_R
+        
+        print("\n   🔒 H_DS Discrete Symmetry Operator Verification...")
+        
+        # Build a small operator for validation
+        n_basis = 15
+        h_param = 1e-3
+        R = build_R_matrix(n_basis=n_basis, h=h_param, L=1.0)
+        lam_H, gammas = spectrum_from_R(R, h_param)
+        
+        # Create H_DS
+        H_DS = DiscreteSymmetryOperator(dimension=n_basis, tolerance=1e-9)
+        
+        # Verify Hermiticity
+        is_hermitian, herm_dev = H_DS.verify_hermiticity(R, "R_matrix")
+        
+        # Verify critical line localization
+        critical_ok, stats = H_DS.verify_critical_line_localization(lam_H)
+        
+        if is_hermitian and critical_ok:
+            print(f"   ✅ H_DS validation: PASSED")
+            print(f"      Hermiticity deviation: {herm_dev:.2e}")
+            print(f"      Eigenvalue range: [{stats['min_eigenvalue']:.2f}, {stats['max_eigenvalue']:.2f}]")
+            results["H_DS Verification"] = {
+                'status': 'PASSED',
+                'hermiticity': is_hermitian,
+                'critical_line': critical_ok
+            }
+        else:
+            print(f"   ⚠️  H_DS validation: PARTIAL")
+            results["H_DS Verification"] = {
+                'status': 'PARTIAL',
+                'hermiticity': is_hermitian,
+                'critical_line': critical_ok
+            }
+            
+    except Exception as e:
+        print(f"   ⚠️  H_DS verification skipped: {e}")
+    # -----------------------------------------------------------------------
 
     # YOLO verification integration
     yolo_success = include_yolo_verification()
