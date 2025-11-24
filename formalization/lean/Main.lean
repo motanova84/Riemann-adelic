@@ -82,6 +82,8 @@ import RiemannAdelic.spectral_RH_operator
 import RiemannAdelic.berry_keating_operator
 -- Spectral zeta function ζ_HΨ(s) and zeta-regularized determinant
 import RiemannAdelic.spectral_zeta_function
+-- Spectral correspondence theorem - Berry-Keating eigenvalues and zeta zeros
+import RiemannAdelic.spectral_correspondence
 
 -- Stage 2: Spectral Coincidence - Spectrum H_Ψ = Zeta Zeros
 import RiemannAdelic.spectrum_Hpsi_definition
