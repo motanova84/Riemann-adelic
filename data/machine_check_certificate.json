@@ -1,7 +1,7 @@
 {
   "certificate_type": "QCAL \u221e\u00b3 Machine-Check Verification",
   "version": "V5 Coronaci\u00f3n",
-  "timestamp": "2025-11-24T19:23:49.751025",
+  "timestamp": "2025-11-24T19:30:10.931319",
   "author": "Jos\u00e9 Manuel Mota Burruezo \u03a8 \u2727 \u221e\u00b3",
   "institution": "Instituto de Conciencia Cu\u00e1ntica (ICQ)",
   "doi_reference": "10.5281/zenodo.17379721",
@@ -12,7 +12,7 @@
     "equation": "\u03a8 = I \u00d7 A_eff\u00b2 \u00d7 C^\u221e"
   },
   "verification_results": {
-    "timestamp": "2025-11-24T19:23:49.750995",
+    "timestamp": "2025-11-24T19:30:10.931304",
     "precision": 30,
     "qcal_config": {
       "base_frequency": 141.7001,
@@ -80,27 +80,27 @@
         "steps": {
           "Step 1: Axioms \u2192 Lemmas": {
             "status": "PASSED",
-            "execution_time": 5.9604644775390625e-06
+            "execution_time": 5.0067901611328125e-06
           },
           "Step 2: Archimedean Rigidity": {
             "status": "PASSED",
-            "execution_time": 0.00013375282287597656
+            "execution_time": 0.0001385211944580078
           },
           "Step 3: Paley-Wiener Uniqueness": {
             "status": "PASSED",
-            "execution_time": 4.0531158447265625e-06
+            "execution_time": 2.6226043701171875e-06
           },
           "Step 4A: de Branges Localization": {
             "status": "PASSED",
-            "execution_time": 0.000476837158203125
+            "execution_time": 0.0005495548248291016
           },
           "Step 4B: Weil-Guinand Localization": {
             "status": "PASSED",
-            "execution_time": 2.6226043701171875e-06
+            "execution_time": 1.6689300537109375e-06
           },
           "Step 5: Coronaci\u00f3n Integration": {
             "status": "PASSED",
-            "execution_time": 0.00016164779663085938
+            "execution_time": 0.0001418590545654297
           }
         },
         "total_passed": 6,
@@ -153,7 +153,7 @@
         "error": "unterminated triple-quoted string literal (detected at line 426) (verify_yolo.py, line 338)"
       }
     },
-    "execution_time": 0.058640241622924805
+    "execution_time": 0.06087446212768555
   },
   "riemann_hypothesis_status": "PASSED",
   "certification_statement": "This certificate verifies that the Riemann Hypothesis proof via S-Finite Adelic Systems (V5 Coronaci\u00f3n) has been validated through comprehensive machine-check verification.",
