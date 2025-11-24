@@ -70,6 +70,11 @@ El producto infinito converge absolutamente porque la serie de logaritmos
 /--
 Lema técnico: Para |x| < 1/2, tenemos |log(1-x)| ≤ 2|x|.
 Esta cota es esencial para demostrar la convergencia del producto de Fredholm.
+
+La constante 2 proviene de la serie de Taylor:
+  log(1-x) = -x - x²/2 - x³/3 - ...
+Para |x| < 1/2, la serie geométrica da |log(1-x) - (-x)| ≤ |x|²/(1-|x|) ≤ |x|² / (1/2) = 2|x|²
+Por tanto |log(1-x)| ≤ |x| + 2|x|² ≤ |x| + |x| = 2|x| para |x| ≤ 1/2.
 -/
 lemma norm_log_one_sub_le {x : ℂ} (hx : abs x < 1/2) :
     ‖log (1 - x)‖ ≤ 2 * ‖x‖ := by
@@ -97,14 +102,18 @@ lemma fredholm_det_converges (s : ℂ) :
   -- Definimos una cota superior K·|s|/n² donde K depende de c
   have h_bound : ∃ K > 0, ∀ n : ℕ, n ≥ 1 → 
       ‖log (1 - s * H_eigenvalues n)‖ ≤ K * abs s / ((n : ℝ) ^ 2) := by
-    -- Para n grande, |s·λₙ| < 1/2, entonces aplicamos norm_log_one_sub_le
+    -- Para n suficientemente grande, |s·λₙ| < 1/2
+    -- ya que λₙ = 1/(n+1)² → 0
+    -- Existe N tal que para n ≥ N, tenemos |s·λₙ| ≤ |s|/(n+1)² < 1/2
     use 2 * c
     constructor
     · linarith [c_pos]
     · intro n hn
-      -- Aplicamos el lema norm_log_one_sub_le
-      have small : abs (s * H_eigenvalues n) < 1 := by
+      -- Para n grande, aplicamos el lema norm_log_one_sub_le
+      have small : abs (s * H_eigenvalues n) < 1/2 := by
         simp [H_eigenvalues]
+        -- Para n suficientemente grande, 1/(n+1)² * |s| < 1/2
+        -- Esto se cumple cuando (n+1)² > 2|s|
         sorry
       apply le_trans (norm_log_one_sub_le small)
       simp [H_eigenvalues]
@@ -131,9 +140,16 @@ El producto de Fredholm es entero porque converge uniformemente en compactos.
 Teorema de convergencia uniforme para productos de Weierstrass.
 Si el producto ∏(1 + aₙ) tiene ∑|aₙ| convergente uniformemente en compactos,
 entonces el producto define una función entera.
+
+Hipótesis refinada: Requiere convergencia uniforme en compactos, no solo puntual.
+El teorema completo en Mathlib requeriría demostrar que la convergencia
+de ∑ log(1 - s·λₙ) es uniforme en conjuntos compactos K ⊂ ℂ.
 -/
 axiom differentiable_on_Weierstrass_prod {f : ℂ → ℂ} 
-    (hconv : ∀ s : ℂ, Summable (fun n => log (f s))) :
+    (hconv : ∀ s : ℂ, Summable (fun n => log (f s)))
+    (hunif : ∀ K : Set ℂ, IsCompact K → 
+      ∀ ε > 0, ∃ N : ℕ, ∀ n ≥ N, ∀ s ∈ K, 
+        ‖∑' m : ℕ, if m ≥ n then log (f s) else 0‖ < ε) :
     DifferentiableOn ℂ (fun s => ∏' n, f s) Set.univ
 
 /--
@@ -209,12 +225,16 @@ Los ceros de D(s) corresponden exactamente a s = 1/λₙ.
 
 Si λₙ es un autovalor de ℋ_Ψ, entonces D(1/λₙ) = 0.
 Esto establece la conexión entre el espectro del operador y los ceros de D.
+
+Nota: Dado que H_eigenvalues n = 1/(n+1)², tenemos 1/λₙ = (n+1)² > 0,
+por lo que el dominio está bien definido. Los ceros están en ℝ⁺.
 -/
 theorem D_zeros_at_reciprocal_eigenvalues (n : ℕ) :
     D (1 / H_eigenvalues n) = 0 := by
   unfold D fredholm_det
   -- El producto tiene un factor (1 - (1/λₙ)·λₙ) = (1 - 1) = 0
   -- Por tanto, el producto completo es 0
+  -- Note: 1/λₙ = (n+1)² es finito y positivo para todo n
   sorry
 
 /--
