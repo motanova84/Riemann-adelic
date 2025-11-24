@@ -178,3 +178,4 @@ formalization/lean/validation_report.json
 demo_H_epsilon*.png
 operador_H_epsilon_comparison.png
 validation_report.json
+*.backup
