@@ -9,7 +9,7 @@ Where J is defined as:
     J(f)(x) = (1/x) * f(1/x)
 
 Author: José Manuel Mota Burruezo Ψ ✧ ∞³
-Date: 21 noviembre 2025
+Date: 21 November 2025
 Reference: DOI 10.5281/zenodo.17379721
 """
 
