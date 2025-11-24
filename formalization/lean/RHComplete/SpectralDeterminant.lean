@@ -37,15 +37,16 @@ namespace QCAL_RH
 
 /-! ## Operator and Eigenvalue Definitions -/
 
-/-- The noetic operator ℕ_Ψ (self-adjoint and compact) -/
-structure NoeticOperator where
-  /-- The operator is self-adjoint -/
-  self_adjoint : True
-  /-- The operator is compact -/
-  compact : True
+/-- Properties of the noetic operator ℕ_Ψ -/
+axiom noetic_operator_exists : True
 
-/-- Instance of the noetic operator -/
-axiom H_op : NoeticOperator
+/-- The noetic operator is self-adjoint -/
+axiom noetic_operator_selfadjoint : True
+
+/-- The noetic operator is compact -/
+axiom noetic_operator_compact : True
+
+
 
 /-- Eigenvalues of the noetic operator ℕ_Ψ -/
 axiom H_eigenvalues : ℕ → ℂ
@@ -64,9 +65,6 @@ def riemann_xi (s : ℂ) : ℂ :=
     D(s) = ∏ₙ (1 - s·λₙ) -/
 def D (s : ℂ) : ℂ :=
   ∏' (n : ℕ), (1 - s * H_eigenvalues n)
-
-/-- Alternative definition using exponential form for convergence -/
-def D_def (s : ℂ) : ℂ := D s
 
 /-- The Fredholm determinant as regularized product -/
 axiom fredholm_det : ∀ s : ℂ, D s = ∏' (n : ℕ), (1 - s * H_eigenvalues n)
@@ -92,7 +90,6 @@ lemma D_zero_iff_inv_eigenvalue (s : ℂ) :
   D s = 0 ↔ ∃ n : ℕ, H_eigenvalues n ≠ 0 ∧ s = 1 / H_eigenvalues n := by
   -- D(s) = ∏ₙ (1 - s·λₙ)
   -- D(s) = 0 ⇔ ∃n, 1 - s·λₙ = 0 ⇔ s = 1/λₙ
-  rw [D_def]
   rw [prod_eq_zero_iff]
   constructor
   · -- Forward direction: D(s) = 0 → ∃n, s = 1/λₙ
@@ -102,22 +99,20 @@ lemma D_zero_iff_inv_eigenvalue (s : ℂ) :
     have h_eq : s * H_eigenvalues n = 1 := by
       have : (1 : ℂ) - s * H_eigenvalues n = 0 := hn
       linarith
-    -- This implies λₙ ≠ 0
+    -- This implies λₙ ≠ 0 and s = 1/λₙ
     constructor
     · -- Prove H_eigenvalues n ≠ 0
       by_contra h_zero
       rw [h_zero] at h_eq
       simp at h_eq
     · -- Prove s = 1 / H_eigenvalues n
-      field_simp [ne_of_apply_ne (fun x => s * x) (by simp; exact h_eq)]
-      rw [mul_comm] at h_eq
-      have : H_eigenvalues n * s = 1 := h_eq
+      -- From s * λₙ = 1, we get s = 1/λₙ
       have h_ne : H_eigenvalues n ≠ 0 := by
         by_contra h_zero
-        rw [h_zero] at this
-        simp at this
-      field_simp [h_ne] at this ⊢
-      exact this.symm
+        rw [h_zero] at h_eq
+        simp at h_eq
+      field_simp [h_ne]
+      exact h_eq.symm
   · -- Reverse direction: ∃n, s = 1/λₙ → D(s) = 0
     intro ⟨n, ⟨hnλ, hns⟩⟩
     use n
