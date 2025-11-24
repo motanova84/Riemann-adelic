@@ -32,10 +32,10 @@ def Xi_at_half : ℂ :=
 -/
 theorem D_half_eq_Xi_half : D_at_half = Xi_at_half := by
   -- Paso 1: evaluamos D(1/2) usando el producto infinito
-  have hD : D_at_half = ∏' n, (1 - (1/2) * H_eigenvalues n) := D_def (1/2)
+  have hD : D_at_half = ∏' n, (1 - (1/2) * H_eigenvalues n) := rfl
 
   -- Paso 2: evaluamos Ξ(1/2) usando la fórmula explícita
-  have hXi : Xi_at_half = (1/2) * (1/2) * (1/2) * π ^ ((-1/4 : ℝ) : ℂ) * Gamma (1/4 : ℂ) * riemannZeta (1/2) := rfl
+  have hXi : Xi_at_half = (1/2) * (1/2) * (1 - 1/2) * π ^ ((-1/4 : ℝ) : ℂ) * Gamma (1/4 : ℂ) * riemannZeta (1/2) := rfl
 
   -- Paso 3: usamos la correspondencia espectral
   -- Los autovalores λₙ están construidos para que el producto ∏(1 - (1/2)λₙ)

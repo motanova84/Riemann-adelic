@@ -24,9 +24,6 @@ def D (s : ℂ) : ℂ :=
 /-- D(s) is well-defined as the infinite product converges -/
 axiom D_convergent : ∀ s : ℂ, ∃ v : ℂ, D s = v
 
-/-- D(s) has a product representation in terms of eigenvalues -/
-axiom D_def (s : ℂ) : D s = ∏' n : ℕ, (1 - s * H_eigenvalues n)
-
 /-- D(s) is an entire function -/
 axiom D_entire : Differentiable ℂ D
 
