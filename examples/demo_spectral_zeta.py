@@ -16,84 +16,13 @@ Date: 2025-11-21
 import numpy as np
 from typing import Callable
 
-
-def berry_keating_eigenvalues(n: int) -> float:
-    """
-    Berry-Keating eigenvalue model for H_Ψ operator
-    
-    λₙ = (n + 1/2)² + 141.7001
-    
-    This corresponds to the QCAL framework with base frequency 141.7001 Hz.
-    
-    Args:
-        n: Index (n ≥ 1)
-    
-    Returns:
-        Eigenvalue λₙ
-    """
-    return (n + 0.5) ** 2 + 141.7001
-
-
-def compute_spectral_zeta(eigenvalues: Callable[[int], float], 
-                         s: complex, 
-                         n_terms: int = 100) -> complex:
-    """
-    Compute spectral zeta function ζ_HΨ(s) = ∑ₙ λₙ⁻ˢ
-    
-    Args:
-        eigenvalues: Function n -> λₙ
-        s: Complex number
-        n_terms: Number of terms to sum
-    
-    Returns:
-        Approximation of ζ_HΨ(s)
-    """
-    result = 0.0 + 0.0j
-    for n in range(1, n_terms + 1):
-        lamb = eigenvalues(n)
-        result += lamb ** (-s)
-    return result
-
-
-def compute_spectral_zeta_derivative(eigenvalues: Callable[[int], float],
-                                    s: complex,
-                                    n_terms: int = 100) -> complex:
-    """
-    Compute derivative ζ'_HΨ(s) = ∑ₙ -log(λₙ) · λₙ⁻ˢ
-    
-    Args:
-        eigenvalues: Function n -> λₙ
-        s: Complex number
-        n_terms: Number of terms to sum
-    
-    Returns:
-        Approximation of ζ'_HΨ(s)
-    """
-    result = 0.0 + 0.0j
-    for n in range(1, n_terms + 1):
-        lamb = eigenvalues(n)
-        result += -np.log(lamb) * (lamb ** (-s))
-    return result
-
-
-def compute_det_zeta(eigenvalues: Callable[[int], float],
-                    s: complex,
-                    n_terms: int = 100) -> complex:
-    """
-    Compute zeta-regularized determinant det_ζ(s) = exp(-ζ'_HΨ(s))
-    
-    Args:
-        eigenvalues: Function n -> λₙ
-        s: Complex number
-        n_terms: Number of terms
-    
-    Returns:
-        Approximation of det_ζ(s)
-    """
-    zeta_deriv = compute_spectral_zeta_derivative(eigenvalues, s, n_terms)
-    return np.exp(-zeta_deriv)
-
-
+# Import shared spectral zeta computation functions
+from utils.spectral_zeta_computation import (
+    berry_keating_eigenvalues,
+    compute_spectral_zeta,
+    compute_spectral_zeta_derivative,
+    compute_det_zeta,
+)
 def main():
     """Main demonstration"""
     print("=" * 70)

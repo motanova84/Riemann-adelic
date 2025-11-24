@@ -18,7 +18,7 @@ Date: 2025-11-21
 
 import pytest
 import numpy as np
-from typing import Callable, List
+from typing import Callable
 
 
 class SpectralZetaTest:
