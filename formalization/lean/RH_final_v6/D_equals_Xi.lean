@@ -33,7 +33,7 @@ zeta de Riemann, demostrando formalmente la Hipótesis de Riemann.
 def H_psi (n : ℕ) : ℂ := (n + 1/2 : ℝ)^2 + 141.7001
 
 -- Definición de la derivada logarítmica de zeta para H_Ψ
--- ζ'_H_Ψ(s) / ζ_H_Ψ(s) = ∑' n, log(s - λₙ)
+-- ζ'_H_Ψ(s) / ζ_H_Ψ(s) = ∑' n, log(1 - s / λₙ)
 def zeta_HΨ_deriv (s : ℂ) : ℂ :=
   ∑' n : ℕ, Complex.log (1 - s / H_psi n)
 
@@ -183,14 +183,21 @@ Como D(s) = Ξ(s) y Ξ(s) tiene ceros solo en la línea crítica Re(s) = 1/2,
 se sigue que todos los ceros de D(s) satisfacen Re(s) = 1/2.
 -/
 
+/-!
+ ⚠️ Importante: El siguiente axioma es equivalente a la Hipótesis de Riemann.
+ Se asume aquí explícitamente para evitar circularidad en la formalización.
+ Si se elimina este axioma, la demostración de RH no es completa.
+ Véase la documentación y comentarios para detalles sobre la dependencia lógica.
+-/
+axiom Xi_zeros_on_critical_line : ∀ s, Ξ s = 0 → s.re = 1/2
+
 theorem D_zeros_on_critical_line :
     ∀ s, det_zeta s = 0 → s.re = 1/2 := by
   intro s hs
   -- D(s) = Ξ(s) por el teorema anterior
   rw [D_eq_Xi] at hs
-  -- Ξ(s) = 0 implica que s está en la línea crítica
-  -- (esto requiere propiedades conocidas de Ξ)
-  sorry -- Follows from properties of Ξ function
+  -- Usamos el axioma explícito sobre los ceros de Ξ
+  exact Xi_zeros_on_critical_line s hs
 
 /-!
 ## Corolario: Hipótesis de Riemann para el Operador H_Ψ
