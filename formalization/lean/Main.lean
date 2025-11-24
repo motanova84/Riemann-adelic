@@ -71,6 +71,8 @@ import RiemannAdelic.paley_wiener_uniqueness
 
 -- Paley-Wiener Uniqueness Theorem (100% formal, zero sorry)
 import paley.paley_wiener_uniqueness
+-- Identity Principle for Exponential Type Functions
+import paley.identity_principle_exp_type
 
 -- Spectral RH operator with prime harmonic potential
 import RiemannAdelic.spectral_rh_operator
@@ -159,6 +161,7 @@ def main : IO Unit := do
   IO.println "  • Paley-Wiener theory"
   IO.println "  • Paley-Wiener uniqueness theorem"
   IO.println "  • Paley-Wiener Uniqueness (100% formal - ZERO sorry)"
+  IO.println "  • Identity Principle for Exponential Type Functions"
   IO.println "  • Spectral RH operator (H_ε with prime harmonic potential)"
   IO.println "  • Critical line proof via spectral operators"
   IO.println "  • Spectral RH operator H_ε"
