@@ -29,7 +29,7 @@ variable (HΨ : ℕ → ℝ) -- simplified as discrete spectrum
 
   Referencias:
   - de Branges, L. " Espacios de Hilbert de funciones enteras " , Teorema 7. 1 .
-  - Burruezo, JM ( 2025 ). DOI: 10 . 5281 /zenódo. 17116291
+  - Burruezo, JM (2025). DOI: 10.5281/zenodo.17116291
 -/
 def zeta_HΨ_deriv (HΨ : ℕ → ℝ) (s : ℂ) : ℂ :=
   ∑' n : ℕ, (1 : ℂ) / (s - HΨ n)
