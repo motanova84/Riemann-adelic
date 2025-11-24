@@ -79,11 +79,11 @@ theorem zeta_zero_from_D_zero
   -- If D(s) = 0 and Re(s) = 1/2, then ξ(s) = 0, hence ζ(s) = 0
 
 -- Import operator definition for proper type
-axiom H_Ψ_selfAdjoint : (ℂ → ℂ) → (ℂ → ℂ)
+
 
 theorem eigenfunction_from_D_zero
     {λ : ℝ} (hD : D_function ⟨1/2, λ⟩ = 0) :
-    ∃ (f : ℂ → ℂ), f ≠ 0 ∧ H_Ψ_selfAdjoint f = fun z => λ • f z := by
+    ∃ (f : ℂ → ℂ), f ≠ 0 ∧ Operator.H_Ψ_selfAdjoint f = fun z => λ • f z := by
   sorry
   -- D(1/2 + iλ) = 0 implies existence of eigenfunction with eigenvalue λ
   -- This follows from spectral theory: zeros of characteristic function
