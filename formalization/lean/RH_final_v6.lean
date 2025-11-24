@@ -45,9 +45,26 @@ variable (hcrit : ∀ t : ℝ, Ξ (1/2 + I * t) = det_zeta HΨ (1/2 + I * t))
 -- Assumption: Ξ has exponential type at most 1
 variable (hgrowth : ∃ M : ℝ, M > 0 ∧ ∀ z : ℂ, Complex.abs (Ξ z) ≤ M * Real.exp (Complex.abs z.im))
 
--- Axiom: Paley-Wiener type uniqueness theorem
--- This represents a deep result from complex analysis that would be proven
--- using the theory of entire functions of exponential type
+/-
+  Axiom: Strong spectral uniqueness (Paley-Wiener type)
+
+  This axiom asserts that if two entire functions f, g : ℂ → ℂ of exponential type at most 1,
+  both symmetric with respect to s ↦ 1 - s, and agreeing on the critical line Re(s) = 1/2,
+  then they are equal everywhere on ℂ.
+
+  Mathematical context:
+  - This is a deep result from complex analysis, following from the Paley-Wiener theorem for entire functions of exponential type,
+    combined with the functional equation constraint (symmetry) and agreement on a set of uniqueness (the critical line).
+  - The exponential growth bound in |z.im| ensures the functions are of exponential type, which is the key hypothesis in Paley-Wiener type uniqueness theorems.
+  - The symmetry f(1 - s) = f(s) and g(1 - s) = g(s) restricts the class of functions, and agreement on the critical line (Re(s) = 1/2) is sufficient for global uniqueness under these conditions.
+
+  References:
+  - Paley & Wiener (1934): "Fourier Transforms in the Complex Domain"
+  - Levinson (1940): "Gap and Density Theorems"
+  - Levin (1956): "Distribution of Zeros of Entire Functions"
+  - de Branges, L. (1986): "Hilbert Spaces of Entire Functions", Theorem 7.1
+  - Burruezo, J.M. (2025): DOI: 10.5281/zenodo.17116291
+-/
 axiom strong_spectral_uniqueness
     (f g : ℂ → ℂ)
     (hf_diff : Differentiable ℂ f)
