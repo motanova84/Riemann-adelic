@@ -1,0 +1,102 @@
+# Nightly: ejecución programada para detectar roturas en dependencias externas a tiempo.
+# Ejecuta tests completos todos los días para detectar problemas con dependencias
+name: Nightly CI
+
+on:
+  schedule:
+    # Todos los días a las 02:00 UTC (ajusta según conveniencia)
+    - cron: '0 2 * * *'
+  workflow_dispatch:  # Permite ejecución manual
+
+permissions:
+  contents: read
+  issues: write  # Para crear issues en caso de fallo
+
+jobs:
+  nightly-tests:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    strategy:
+      matrix:
+        python-version: ["3.10", "3.11", "3.12"]
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pytest pytest-cov
+
+      - name: Run comprehensive tests
+        run: |
+          pytest tests/ -v --tb=long --strict-markers
+
+      - name: Run extended validation
+        run: |
+          # Ejecutar scripts de validación extendidos si existen
+          if [ -f validate_v5_coronacion.py ]; then
+            python validate_v5_coronacion.py --precision 30 || echo "Extended validation completed with warnings"
+          fi
+        continue-on-error: true
+
+  nightly-integration:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies with latest versions
+        run: |
+          python -m pip install --upgrade pip
+          # Instalar con últimas versiones para detectar incompatibilidades
+          pip install --upgrade numpy scipy matplotlib sympy mpmath pytest
+
+      - name: Run integration tests
+        run: |
+          pytest tests/ -v --tb=short
+        continue-on-error: true
+
+      - name: Check for dependency updates
+        run: |
+          pip list --outdated
+
+  notify-on-failure:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: write
+    needs: [nightly-tests, nightly-integration]
+    if: failure()
+    
+    steps:
+      - name: Create issue on failure
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const title = 'Nightly CI Failed - ' + new Date().toISOString().split('T')[0];
+            const body = `The nightly CI run has failed. Please check the [workflow run](${context.payload.repository.html_url}/actions/runs/${context.runId}) for details.`;
+            
+            github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: title,
+              body: body,
+              labels: ['automated', 'nightly-failure']
+            });

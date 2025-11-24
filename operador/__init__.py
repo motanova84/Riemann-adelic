@@ -15,6 +15,7 @@ This module implements spectral operators for the Riemann Hypothesis:
    - Enforces functional equation symmetry ζ(s) = χ(s)ζ(1-s)
    - Verifies involutivity, commutation, domain stability, spectral symmetry
 """
+from .operador_H import K_t, R_t_matrix, approximate_spectrum
 
 from .operador_H import (
     K_gauss,
