@@ -204,8 +204,6 @@ theorem main_RH_result (h_zeros_on_critical : ∀ s, Ξ s = 0 → s.re = 1/2) :
 /-- QCAL base frequency (Hz) -/
 def qcal_frequency : ℝ := 141.7001
 
-/-- QCAL coherence constant -/
-def qcal_coherence : ℝ := 244.36
 
 /-- 
 QCAL spectral equation: Ψ = I × A_eff² × C^∞
