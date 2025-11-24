@@ -147,7 +147,19 @@ Identificación espectral del determinante ζ-regularizado:
 - Utiliza teorema de unicidad para funciones enteras de orden ≤ 1
 - Conecta teoría espectral con ceros de la función zeta
 
-### 5. Spectral Zeta Determinant (`D_spectral.lean`)
+### 6. Explicit Evaluation at s=1/2 (`D_at_half_eq_Xi_at_half.lean`) ✨ **NUEVO**
+Evaluación explícita del determinante y función Xi en el punto crítico s=1/2:
+- **D_at_half**: Evaluación explícita de D(1/2) usando producto infinito de Fredholm
+- **Xi_at_half**: Evaluación explícita de Ξ(1/2) usando fórmula clásica con Γ y ζ
+- **Teorema principal D_half_eq_Xi_half**: D(1/2) = Ξ(1/2)
+- Fija la constante de proporcionalidad entre D(s) y Ξ(s)
+- Utiliza spectral_normalization para establecer la igualdad
+- Módulos de soporte:
+  - `spectral_operator.lean`: Define H_eigenvalues y axiomas del operador H_Ψ
+  - `determinant_function.lean`: Define D(s) como producto de Fredholm
+  - `equivalence_xi.lean`: Establece spectral_normalization axiom
+
+### 7. Spectral Zeta Determinant (`D_spectral.lean`)
 Determinante ζ-regularizado del operador H_Ψ:
 - Definición formal: D(s) = exp(-∑' n, log(1 - s/λₙ) + s/λₙ)
 - Convergencia absoluta para espectro con crecimiento lineal
