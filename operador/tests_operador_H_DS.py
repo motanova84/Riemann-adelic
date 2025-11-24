@@ -121,10 +121,16 @@ class TestInvolutivityProperty:
         f = lambda x: x * np.exp(-x**2/2)
         x_test = np.array([0.5, 1.0, 2.0])
         
+        # Helper function to create interpolated version
+        def make_interpolated_function(x_points, y_values):
+            """Create an interpolated function from discrete points."""
+            return lambda y: np.interp(y, x_points, y_values)
+        
         # Apply H_DS 4 times
         result = f(x_test)
         for _ in range(4):
-            result = H_DS.apply(lambda y: np.interp(y, x_test, result), x_test)
+            interpolated_f = make_interpolated_function(x_test, result)
+            result = H_DS.apply(interpolated_f, x_test)
         
         expected = f(x_test)
         error = np.max(np.abs(result - expected))

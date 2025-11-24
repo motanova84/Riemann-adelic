@@ -28,7 +28,7 @@ References:
 
 import numpy as np
 import mpmath as mp
-from typing import Callable, Optional, Tuple, Union
+from typing import Callable, Optional, Tuple, Union, List
 from numpy.typing import NDArray
 
 
@@ -54,8 +54,12 @@ class DiscreteSymmetryOperator:
         """
         self.precision = precision
         self.epsilon = epsilon
-        if mp:
-            mp.mp.dps = precision
+        # Set mpmath precision if available
+        try:
+            if mp is not None:
+                mp.mp.dps = precision
+        except Exception:
+            pass  # mpmath not available or precision setting failed
     
     def apply(self, f: Callable[[Union[float, np.ndarray]], Union[float, np.ndarray]], 
               x: Union[float, np.ndarray]) -> Union[float, np.ndarray]:
@@ -302,13 +306,16 @@ class DiscreteSymmetryOperator:
         """
         result = self.apply(f, x)
         
+        # Decay verification threshold
+        DECAY_THRESHOLD = 1000.0  # Tolerance factor for Schwartz decay verification
+        
         if check_decay and isinstance(x, np.ndarray):
             # Verify rapid decay at infinity
             large_x = x[np.abs(x) > 10.0]
             if len(large_x) > 0:
                 decay_vals = np.abs(result[np.abs(x) > 10.0])
                 polynomial_bound = 1.0 / (1.0 + large_x**2)
-                if not np.all(decay_vals < 1000 * polynomial_bound):
+                if not np.all(decay_vals < DECAY_THRESHOLD * polynomial_bound):
                     import warnings
                     warnings.warn(
                         "Transformed function may not satisfy Schwartz decay conditions"
@@ -317,7 +324,7 @@ class DiscreteSymmetryOperator:
         return result
     
     def matrix_representation(self, 
-                             basis_functions: list[Callable],
+                             basis_functions: List[Callable],
                              integration_points: NDArray[np.float64],
                              integration_weights: NDArray[np.float64]) -> NDArray[np.float64]:
         """
