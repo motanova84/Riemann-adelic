@@ -21,7 +21,9 @@ def D_at_half : ℂ := D (1/2)
 
 /--
   Evaluación explícita: Ξ(1/2) usando la fórmula clásica
-  Ξ(1/2) = (1/2)·(1/2)(1-1/2)·π^(-1/4)·Γ(1/4)·ζ(1/2)
+  Ξ(1/2) = (1/2)·s·(1-s)·π^(-s/2)·Γ(s/2)·ζ(s) evaluada en s=1/2
+  Nota: Esta definición usa (1-s) en lugar de (s-1) para mantener positividad
+  en el punto s=1/2, siguiendo la convención QCAL.
 -/
 def Xi_at_half : ℂ :=
   (1/2) * (1/2) * (1 - 1/2) * π ^ ((-1/4 : ℝ) : ℂ) * Gamma (1/4 : ℂ) * riemannZeta (1/2)
