@@ -123,18 +123,18 @@ The Hadamard uniqueness theorem is crucial for the Riemann Hypothesis proof beca
 
 ### What's Pending (Sorry Statements)
 
-The file contains 3 `sorry` statements:
+The file contains 1 `sorry` statement:
 
-1. **Main theorem proof**: Requires full Hadamard factorization machinery
+1. **Main theorem proof**: `entire_function_ext_eq_of_zeros`
+   - Requires full Hadamard factorization machinery
    - This is a well-established classical result
    - References: Hadamard (1893), Titchmarsh (1939), Boas (1954)
 
-2. **Corollary proofs**: Follow directly from main theorem
-   - These are straightforward once the main result is proven
+Note: The corollary theorems (`entire_determined_by_zeros_and_value` and `application_to_spectral_uniqueness`) do not contain sorry statements as they directly apply the main theorem.
 
 ### Mathematical Justification
 
-The sorry statements represent theorems that are:
+The sorry statement represents a theorem that is:
 - **Well-established** in complex analysis literature
 - **Mathematically rigorous** with classical proofs
 - **Beyond current Mathlib scope** but could be formalized with effort
@@ -208,7 +208,7 @@ The uniqueness principle ensures that the spectral construction of the determina
 ✓ File: RiemannAdelic/hadamard_uniqueness.lean
 ✓ Theorems: 15
 ✓ Axioms: 1 (Hadamard factorization uniqueness - standard result)
-⚠ Sorries: 3 (deep classical results from complex analysis)
+⚠ Sorries: 1 (deep classical result from complex analysis - main theorem proof)
 ✓ Syntax: Valid Lean 4
 ✓ Imports: Valid
 ✓ Namespace: RiemannAdelic

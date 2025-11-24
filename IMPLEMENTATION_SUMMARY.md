@@ -32,7 +32,7 @@ See **`HADAMARD_UNIQUENESS_THEOREM.md`** for:
 ✅ Theorem properly stated in Lean 4  
 ✅ Comprehensive documentation provided  
 ✅ Integration with QCAL framework  
-⚠️ Contains 3 sorry statements (representing well-established classical results)
+⚠️ Contains 1 sorry statement (representing well-established classical result from Hadamard factorization theory)
 
 ---
 

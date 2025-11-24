@@ -1,7 +1,7 @@
 /-
   hadamard_uniqueness.lean
   Hadamard uniqueness theorem for entire functions
-  José Manuel Mota Burruezo · 24 noviembre 2025 · QCAL ∞³
+  José Manuel Mota Burruezo · 24 November 2025 · QCAL ∞³
 -/
 
 import Mathlib.Analysis.Complex.Basic
