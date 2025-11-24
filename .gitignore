@@ -93,7 +93,7 @@ artifacts/
 reports/
 .pytest_cache/
 
-# LaTeX build files (for paper directory)
+# LaTeX build files (for paper directories)
 paper/*.aux
 paper/*.log
 paper/*.out
@@ -108,6 +108,22 @@ paper/*.run.xml
 paper/*.nav
 paper/*.snm
 paper/*.vrb
+
+# LaTeX build files (for docs/paper directory)
+docs/paper/*.aux
+docs/paper/*.log
+docs/paper/*.out
+docs/paper/*.fdb_latexmk
+docs/paper/*.fls
+docs/paper/*.synctex.gz
+docs/paper/*.toc
+docs/paper/*.bbl
+docs/paper/*.blg
+docs/paper/*.bcf
+docs/paper/*.run.xml
+docs/paper/*.nav
+docs/paper/*.snm
+docs/paper/*.vrb
 
 # Temporary computational files
 *.tmp
