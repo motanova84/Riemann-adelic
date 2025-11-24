@@ -16,10 +16,13 @@ open Complex
 
 namespace QCAL_RH
 
+/-- Base frequency from QCAL framework (Hz) -/
+def base_frequency : ℝ := 141.7001
+
 /-- Eigenvalues of the operator H_Ψ
     Construction based on QCAL framework with base frequency 141.7001 Hz -/
 def H_eigenvalues (n : ℕ) : ℂ :=
-  ((n : ℝ) + 1/2)^2 + 141.7001
+  ((n : ℝ) + 1/2)^2 + base_frequency
 
 /-- The spectral operator H_Ψ is self-adjoint
     This ensures all eigenvalues are real -/

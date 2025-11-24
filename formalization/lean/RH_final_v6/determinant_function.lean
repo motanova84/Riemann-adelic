@@ -8,11 +8,12 @@
 
 import Mathlib.Analysis.Complex.Basic
 import Mathlib.Analysis.SpecialFunctions.Complex.Log
+import Mathlib.Topology.Algebra.InfiniteSum.Basic
 import RH_final_v6.spectral_operator
 
 noncomputable section
 
-open Complex BigOperators
+open Complex
 
 namespace QCAL_RH
 

@@ -3,6 +3,7 @@ import Mathlib.Analysis.SpecialFunctions.Complex.Log
 import Mathlib.NumberTheory.ZetaFunction
 import Mathlib.Data.Real.Basic
 import Mathlib.Data.Complex.Exponential
+import Mathlib.Topology.Algebra.InfiniteSum.Basic
 import RH_final_v6.spectral_operator
 import RH_final_v6.determinant_function
 import RH_final_v6.equivalence_xi
