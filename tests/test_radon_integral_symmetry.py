@@ -113,11 +113,6 @@ def test_integral_symmetry_exact_case():
     # Define f(x) = x^(-1/2) on (0, ∞)
     # Then Jf(x) = (1/x) * (1/x)^(-1/2) = (1/x) * x^(1/2) = x^(-1/2) = f(x)
     
-    def f(x):
-        if x <= 0:
-            return 0.0
-        return x**(-0.5)
-    
     # Both integrals diverge, so let's use a cutoff version
     def f_cutoff(x, a=0.01, b=100):
         if x < a or x > b:
