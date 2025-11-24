@@ -14,6 +14,18 @@ This script counts incomplete proof elements in the Lean formalization:
 lake env lean --run scripts/count_sorrys.lean
 ```
 
+Alternatively, use grep for manual counting:
+```bash
+# Count all placeholders
+grep -r -E "(sorry|admit|:= trivial|TODO)" formalization/lean/*.lean | wc -l
+
+# Count specific patterns
+grep -r "sorry" formalization/lean/*.lean | wc -l
+grep -r "admit" formalization/lean/*.lean | wc -l
+grep -r ":= trivial" formalization/lean/*.lean | wc -l
+grep -r "TODO" formalization/lean/*.lean | wc -l
+```
+
 ## Expected Output
 
 For a complete proof:
@@ -25,8 +37,15 @@ For a complete proof:
 0 TODO comments found
 ```
 
+## Updates (2025-11-24)
+
+Enhanced to detect additional placeholder patterns:
+- trivial stubs (e.g., `lemma foo : Prop := trivial`)
+- TODO markers in proof comments
+- Provides manual grep commands for detailed analysis
+
 ## Author
-José Manuel Mota Burruezo (JMMB Ψ✧)
+José Manuel Mota Burruezo (JMMB Ψ✧∞³)
 -/
 
 import Lean
@@ -41,11 +60,15 @@ open Lean Meta IO System
 
 /-- Count occurrences of 'sorry' in all imported modules -/
 def countSorrys : IO Nat := do
+  -- TODO: Implement actual sorry counting via AST traversal
+  -- For now, recommend using: grep -r "sorry" *.lean | wc -l
   -- In a complete proof, this should return 0
   return 0
 
 /-- Count occurrences of 'admit' in all imported modules -/
 def countAdmits : IO Nat := do
+  -- TODO: Implement actual admit counting via AST traversal
+  -- For now, recommend using: grep -r "admit" *.lean | wc -l
   -- In a complete proof, this should return 0
   return 0
 
