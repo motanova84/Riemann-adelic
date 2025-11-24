@@ -230,6 +230,15 @@ jobs:
         run: |
           pytest tests/ -v --tb=short
 
+      - name: Validate metadata
+        run: |
+          python tools/verify_metadata.py schema/metadata_example.jsonld
+
+      - name: Test converter
+        run: |
+          python tools/convert_example.py tests/examples/example_lean.lean
+
+      - name: Run tests
           echo "🌌 Validación extendida (modo ∞³, VALIDATION_LEVEL=$VALIDATION_LEVEL)"
           pytest tests/ --maxfail=10 --disable-warnings
       
