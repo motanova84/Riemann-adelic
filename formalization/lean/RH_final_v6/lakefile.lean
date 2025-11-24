@@ -6,6 +6,7 @@ package rh_final_v6 where
   leanOptions := #[⟨`relaxedAutoImplicit, false⟩]
 
 lean_lib RHFinal where
+  roots := #[`paley_wiener_uniqueness, `selberg_trace, `H_psi_complete, `D_limit_equals_xi, `H_psi_self_adjoint]
   roots := #[
     `paley_wiener_uniqueness,
     `selberg_trace,
