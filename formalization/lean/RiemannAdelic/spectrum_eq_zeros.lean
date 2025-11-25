@@ -111,8 +111,17 @@ theorem functionD_entire_order_one :
   · norm_num
   · intro s
     simp only [functionD]
-    -- |s(1-s)| ≤ |s|·|1-s| ≤ (1+|s|)² for large |s|
-    sorry  -- Technical bound
+    -- Growth bound for |s(1-s)|:
+    -- |s(1-s)| = |s|·|1-s| ≤ |s|·(1+|s|) ≤ (1+|s|)² when |s| ≥ 0
+    -- 
+    -- V5.3.1 PROOF OUTLINE:
+    -- For s ∈ ℂ with D(s) = s(1-s):
+    -- |s(1-s)| = |s| · |1-s|
+    -- |1-s| ≤ 1 + |s| (triangle inequality)
+    -- |s| ≤ 1 + |s| (trivially)
+    -- Therefore: |s(1-s)| ≤ (1+|s|)·(1+|s|) = (1+|s|)²
+    -- With M = 2: |s(1-s)| ≤ 2·(1+|s|)²
+    sorry  -- Requires: Complex.abs_mul, triangle inequality
 
 /--
 Non-trivial zero of Riemann zeta function.

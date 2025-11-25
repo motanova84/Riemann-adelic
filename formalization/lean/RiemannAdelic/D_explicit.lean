@@ -152,7 +152,12 @@ theorem D_explicit_functional_equation :
   funext n
   -- For each term: exp(-(1-s)·n²) transforms to exp(-s·n²) 
   -- under the theta functional equation modulo normalization
-  sorry  -- Technical: Requires full Poisson summation machinery from mathlib
+  --
+  -- V5.3.1: Required Mathlib theorems for full proof:
+  -- - Analysis.Fourier.PoissonSummation.tsum_eq (Poisson summation)
+  -- - Analysis.SpecialFunctions.Gamma.Basic (Gamma function properties)
+  -- - NumberTheory.ModularForms.JacobiTheta.TwoVariable (theta transformation)
+  sorry  -- Requires: Poisson summation from Mathlib.Analysis.Fourier
 
 /-- D is entire of order 1 
     

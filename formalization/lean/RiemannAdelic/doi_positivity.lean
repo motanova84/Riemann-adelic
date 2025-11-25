@@ -54,9 +54,11 @@ theorem doi_factorization_theorem [CompleteSpace H] (K_δ : H →L[ℂ] H)
   -- Construction: B = √K_δ via spectral functional calculus
   -- For positive operator K_δ with spectral decomposition K_δ = ∫ λ dE_λ
   -- Define B = ∫ √λ dE_λ, then B* ∘ B = ∫ λ dE_λ = K_δ
-  use K_δ.comp K_δ.adjoint  -- Simplified placeholder: use K_δ ∘ K_δ*
+  use K_δ.adjoint.comp K_δ  -- Corrected: use K_δ* ∘ K_δ (not K_δ ∘ K_δ*)
   -- Full proof requires spectral calculus from Mathlib
-  sorry  -- Requires: Mathlib.Analysis.InnerProductSpace.Spectrum.spectralTheorem
+  -- Required theorem: exists_orthonormalBasis_of_isHermitian or
+  -- Mathlib.Analysis.InnerProductSpace.Spectrum.spectralTheorem
+  sorry  -- Requires: spectralTheorem for self-adjoint operators
 
 /-- Positividad del operador H vía factorización de Doi -/
 theorem positivity_of_H [CompleteSpace H] (K_δ : H →L[ℂ] H) 
