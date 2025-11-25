@@ -9,7 +9,13 @@ This module implements spectral operators for the Riemann Hypothesis:
 2. operador_H_epsilon.py: Perturbed spectral operator H_ε with oscillatory potential
    - Implements H_ε = H₀ + λM_{Ω_{ε,R}}
    - Compares spectral measure with Riemann zeta zeros
+
+3. operador_H_DS.py: Discrete Symmetry Operator H_DS
+   - Implements the inversion operator (H_DS f)(x) = f(1/x)
+   - Enforces functional equation symmetry ζ(s) = χ(s)ζ(1-s)
+   - Verifies involutivity, commutation, domain stability, spectral symmetry
 """
+from .operador_H import K_t, R_t_matrix, approximate_spectrum
 
 from .operador_H import (
     K_gauss,
@@ -32,6 +38,11 @@ from .operador_H_epsilon import (
     plot_spectral_comparison
 )
 
+from .operador_H_DS import (
+    DiscreteSymmetryOperator,
+    demonstrate_h_ds_properties
+)
+
 __all__ = [
     # operador_H exports
     'K_gauss',
@@ -40,14 +51,17 @@ __all__ = [
     'build_R_matrix',
     'spectrum_from_R',
     'fourier_eigs_H',
+    'hermite_basis',
+    'K_gauss_rigorous',
+    'rigorous_H_construction',
+    'validate_convergence_bounds',
     # operador_H_epsilon exports
     'compute_oscillatory_potential',
     'build_H_epsilon_operator',
     'compute_spectral_measure',
     'load_riemann_zeros',
-    'plot_spectral_comparison'
-    'hermite_basis',
-    'K_gauss_rigorous',
-    'rigorous_H_construction',
-    'validate_convergence_bounds'
+    'plot_spectral_comparison',
+    # operador_H_DS exports
+    'DiscreteSymmetryOperator',
+    'demonstrate_h_ds_properties'
 ]
