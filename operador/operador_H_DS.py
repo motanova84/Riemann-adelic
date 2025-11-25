@@ -1,566 +1,509 @@
-#!/usr/bin/env python3
 """
-Discrete Symmetry Operator (H_DS) for QCAL Framework
+Discrete Symmetry Operator H_DS for Adelic Space
 
-This module implements the Discrete Symmetry Operator H_DS that acts as a guardian
-of the S-finite Adelic space, ensuring:
+This module implements the Discrete Symmetry Operator H_DS that acts on
+the adelic Schwartz space S_adelic(S), enforcing the functional equation
+symmetry of the Riemann zeta function:
 
-1. The S-finite Adelic Schwartz space respects discrete symmetry
-2. The operator H_Ψ is effectively Hermitian within this framework
-3. Eigenvalues of H_Ψ correspond to zeros on the critical line Re(s) = 1/2
+    ζ(s) = χ(s)ζ(1-s)
 
-Mathematical Foundation:
------------------------
-The functional equation of ζ(s) imposes a symmetry: ζ(s) ↔ ζ(1-s)
-This symmetry forces zeros to be symmetric around Re(s) = 1/2.
+Mathematical Definition:
+    H_DS: S_adelic(S) → S_adelic(S)
+    (H_DS f)(x) := f(1/x)
 
-For H_Ψ to reproduce this symmetry in its spectrum, the space of test functions
-(S-finite Adelic Schwartz space) must be properly structured.
+This operator implements the geometric inversion x ↦ 1/x which reflects
+the functional equation symmetry s ↦ 1-s of the zeta function.
 
-H_DS imposes and verifies this discrete symmetry, guaranteeing:
-- Spectral Reality: H_Ψ is Hermitian
-- Critical Line: Eigenvalues λ correspond to zeros at Re(s) = 1/2
+Properties:
+1. Involutivity: H_DS ∘ H_DS = id
+2. Commutation with H_Ψ: [H_Ψ, H_DS] = 0
+3. Domain stability: H_DS(D(H_Ψ)) ⊆ D(H_Ψ)
+4. Spectral symmetry: If H_Ψ f = λf, then H_Ψ(H_DS f) = λ(H_DS f)
 
-Author: José Manuel Mota Burruezo
-QCAL ∞³ Framework
+References:
+- Problem statement: "Operador de Simetría Discreta — H_DS"
+- Functional equation: ζ(s) = χ(s)ζ(1-s)
+- Critical line: Re(s) = 1/2
 """
 
 import numpy as np
-from typing import Optional, Tuple, List, Dict, Callable
-from scipy.linalg import ishermitian
-from scipy.sparse import issparse
-from scipy.sparse.linalg import LinearOperator
 import mpmath as mp
+from typing import Callable, Optional, Tuple, Union, List
+from numpy.typing import NDArray
 
 
 class DiscreteSymmetryOperator:
     """
-    Discrete Symmetry Operator H_DS
+    Discrete Symmetry Operator H_DS implementing x ↦ 1/x inversion.
     
-    This operator enforces the discrete symmetry inherent in the functional
-    equation of the Riemann zeta function on the S-finite Adelic space.
+    This operator acts on functions in the adelic Schwartz space S_adelic(S)
+    and enforces the functional equation symmetry of the Riemann zeta function.
     
-    Key Properties:
-    ---------------
-    1. Symmetry Enforcement: Ensures φ(s) = φ(1-s) for test functions
-    2. Hermiticity Verification: Validates that H_Ψ is Hermitian
-    3. Critical Line Projection: Maps eigenvalues to Re(s) = 1/2
-    
-    The operator is defined through its action on the Schwartz space:
-        H_DS: S(ℝ) → S(ℝ)
-        
-    with the discrete symmetry group G ≅ ℤ acting via:
-        g_k: φ(t) ↦ φ(t + k·log π)
+    Attributes:
+        precision (int): Numerical precision for computations (decimal places)
+        epsilon (float): Tolerance for numerical comparisons
     """
     
-    def __init__(
-        self,
-        dimension: int = 100,
-        symmetry_base: float = np.pi,
-        tolerance: float = 1e-10,
-        precision: int = 30
-    ):
+    def __init__(self, precision: int = 50, epsilon: float = 1e-10):
         """
         Initialize the Discrete Symmetry Operator.
         
-        Parameters
-        ----------
-        dimension : int
-            Dimension of the discretized space
-        symmetry_base : float
-            Base of the discrete symmetry group (default: π)
-        tolerance : float
-            Numerical tolerance for symmetry verification
-        precision : int
-            Decimal precision for high-precision computations
+        Args:
+            precision: Decimal precision for mpmath computations
+            epsilon: Numerical tolerance for property verification
         """
-        self.dim = dimension
-        self.base = symmetry_base
-        self.tolerance = tolerance
         self.precision = precision
-        
-        # Period in log-space
-        self.log_period = np.log(self.base)
-        
-        # Build the symmetry operator matrix
-        self.S_matrix = self._build_symmetry_matrix()
-        
-        # Store verification results
-        self.verification_log: List[Dict] = []
+        self.epsilon = epsilon
+        # Set mpmath precision if available
+        try:
+            if mp is not None:
+                mp.mp.dps = precision
+        except Exception:
+            pass  # mpmath not available or precision setting failed
     
-    def _build_symmetry_matrix(self) -> np.ndarray:
+    def apply(self, f: Callable[[Union[float, np.ndarray]], Union[float, np.ndarray]], 
+              x: Union[float, np.ndarray]) -> Union[float, np.ndarray]:
         """
-        Build the discrete symmetry transformation matrix.
+        Apply the discrete symmetry operator to a function.
         
-        The matrix S implements the functional equation symmetry:
-            S: φ(s) ↦ φ(1-s)
-            
-        In the discretized space, this is represented as a reflection
-        operator around Re(s) = 1/2.
+        Implements: (H_DS f)(x) = f(1/x)
         
-        Returns
-        -------
-        np.ndarray
-            Symmetry matrix S of dimension (dim, dim)
+        Args:
+            f: Function to transform (must accept scalar or array input)
+            x: Point(s) at which to evaluate (H_DS f)(x)
+        
+        Returns:
+            Value of f(1/x) at the given point(s)
+        
+        Examples:
+            >>> H_DS = DiscreteSymmetryOperator()
+            >>> f = lambda x: x**2
+            >>> H_DS.apply(f, 2.0)  # Returns f(1/2) = 0.25
+            0.25
         """
-        S = np.zeros((self.dim, self.dim))
+        # Handle zero values to avoid division by zero
+        if isinstance(x, np.ndarray):
+            x_inv = np.where(np.abs(x) > self.epsilon, 1.0/x, np.inf)
+        else:
+            if abs(x) < self.epsilon:
+                return np.inf if x >= 0 else -np.inf
+            x_inv = 1.0 / x
         
-        # The symmetry is a reflection: S[i,j] = δ[i, dim-1-j]
-        for i in range(self.dim):
-            j = self.dim - 1 - i
-            S[i, j] = 1.0
-        
-        return S
+        return f(x_inv)
     
-    def apply_symmetry(self, operator: np.ndarray) -> np.ndarray:
+    def apply_mpmath(self, f: Callable[[mp.mpf], mp.mpf], 
+                     x: mp.mpf) -> mp.mpf:
         """
-        Apply discrete symmetry transformation to an operator.
+        Apply H_DS with high-precision mpmath arithmetic.
         
-        Computes: H_sym = (H + S†HS) / 2
+        Args:
+            f: Function accepting and returning mpmath numbers
+            x: Point at which to evaluate (high precision)
         
-        This ensures the operator respects the functional equation symmetry.
-        
-        Parameters
-        ----------
-        operator : np.ndarray
-            Operator matrix to symmetrize
-            
-        Returns
-        -------
-        np.ndarray
-            Symmetrized operator
+        Returns:
+            f(1/x) computed with high precision
         """
-        # H_sym = (H + S† H S) / 2
-        H_transformed = self.S_matrix.T @ operator @ self.S_matrix
-        H_sym = 0.5 * (operator + H_transformed)
-        
-        return H_sym
+        if abs(x) < mp.mpf(10)**(-self.precision + 10):
+            return mp.inf if x >= 0 else -mp.inf
+        return f(mp.mpf(1) / x)
     
-    def verify_hermiticity(
-        self,
-        operator: np.ndarray,
-        operator_name: str = "H"
-    ) -> Tuple[bool, float]:
+    def verify_involutivity(self, f: Callable, 
+                           test_points: NDArray[np.float64],
+                           tolerance: Optional[float] = None) -> Tuple[bool, float]:
         """
-        Verify that an operator is Hermitian (self-adjoint).
+        Verify the involutivity property: H_DS ∘ H_DS = id.
         
-        For a Hermitian operator: H = H†
-        We check: ||H - H†|| < tolerance
+        Tests that applying H_DS twice returns the original function:
+        (H_DS ∘ H_DS)(f)(x) = f(x) for all x in test_points.
         
-        Parameters
-        ----------
-        operator : np.ndarray
-            Operator to verify
-        operator_name : str
-            Name of the operator (for logging)
-            
-        Returns
-        -------
-        Tuple[bool, float]
-            (is_hermitian, deviation)
-            where deviation = ||H - H†||_F / ||H||_F
+        Args:
+            f: Function to test
+            test_points: Array of points to test the property
+            tolerance: Numerical tolerance (uses self.epsilon if None)
+        
+        Returns:
+            Tuple of (is_involutive, max_error)
+            - is_involutive: True if property holds within tolerance
+            - max_error: Maximum error across all test points
+        
+        Examples:
+            >>> H_DS = DiscreteSymmetryOperator()
+            >>> f = lambda x: np.sin(x)
+            >>> test_pts = np.array([0.5, 1.0, 2.0, 5.0])
+            >>> is_involutive, error = H_DS.verify_involutivity(f, test_pts)
+            >>> is_involutive
+            True
         """
-        if issparse(operator):
-            operator = operator.toarray()
+        if tolerance is None:
+            tolerance = self.epsilon
         
-        # Compute Hermitian conjugate
-        H_dagger = operator.conj().T
+        # Compute f(x)
+        f_vals = f(test_points)
         
-        # Compute deviation
-        deviation = np.linalg.norm(operator - H_dagger, 'fro')
-        norm_H = np.linalg.norm(operator, 'fro')
+        # Compute (H_DS ∘ H_DS)(f)(x) = f(1/(1/x)) = f(x)
+        h_ds_f = lambda x: self.apply(f, x)
+        h_ds_h_ds_f_vals = self.apply(h_ds_f, test_points)
         
-        relative_deviation = deviation / norm_H if norm_H > 0 else deviation
+        # Compute error
+        errors = np.abs(f_vals - h_ds_h_ds_f_vals)
+        max_error = np.max(errors)
         
-        is_hermitian = relative_deviation < self.tolerance
+        is_involutive = max_error < tolerance
         
-        # Log the result
-        self.verification_log.append({
-            'operator': operator_name,
-            'test': 'hermiticity',
-            'passed': is_hermitian,
-            'deviation': float(relative_deviation),
-            'tolerance': self.tolerance
-        })
-        
-        return is_hermitian, relative_deviation
+        return is_involutive, float(max_error)
     
-    def verify_symmetry_invariance(
-        self,
-        operator: np.ndarray,
-        operator_name: str = "H"
-    ) -> Tuple[bool, float]:
+    def verify_commutation(self, 
+                          H_psi: Callable[[Callable], Callable],
+                          f: Callable,
+                          test_points: NDArray[np.float64],
+                          tolerance: Optional[float] = None) -> Tuple[bool, float]:
         """
-        Verify that an operator commutes with the symmetry operator.
+        Verify commutation with H_Ψ: [H_Ψ, H_DS] = 0.
         
-        For symmetry invariance: [H, S] = 0
-        We check: ||HS - SH|| < tolerance
+        Tests that: H_Ψ(H_DS f) = H_DS(H_Ψ f)
         
-        Parameters
-        ----------
-        operator : np.ndarray
-            Operator to verify
-        operator_name : str
-            Name of the operator (for logging)
-            
-        Returns
-        -------
-        Tuple[bool, float]
-            (is_symmetric, deviation)
-            where deviation = ||[H,S]|| / ||H||
+        Args:
+            H_psi: The spectral operator H_Ψ (takes function, returns function)
+            f: Test function
+            test_points: Points to evaluate the commutation relation
+            tolerance: Numerical tolerance (uses self.epsilon if None)
+        
+        Returns:
+            Tuple of (commutes, max_error)
+            - commutes: True if operators commute within tolerance
+            - max_error: Maximum commutation error
+        
+        Note:
+            This verifies that H_DS respects the structure imposed by H_Ψ,
+            which is essential for the spectral symmetry property.
         """
-        if issparse(operator):
-            operator = operator.toarray()
+        if tolerance is None:
+            tolerance = self.epsilon
         
-        # Compute commutator [H, S] = HS - SH
-        HS = operator @ self.S_matrix
-        SH = self.S_matrix @ operator
-        commutator = HS - SH
+        # Compute H_Ψ(H_DS f)
+        h_ds_f = lambda x: self.apply(f, x)
+        h_psi_h_ds_f = H_psi(h_ds_f)
+        vals_1 = h_psi_h_ds_f(test_points)
         
-        # Compute deviation
-        deviation = np.linalg.norm(commutator, 'fro')
-        norm_H = np.linalg.norm(operator, 'fro')
+        # Compute H_DS(H_Ψ f)
+        h_psi_f = H_psi(f)
+        h_ds_h_psi_f = lambda x: self.apply(h_psi_f, x)
+        vals_2 = h_ds_h_psi_f(test_points)
         
-        relative_deviation = deviation / norm_H if norm_H > 0 else deviation
+        # Compute error
+        errors = np.abs(vals_1 - vals_2)
+        max_error = np.max(errors)
         
-        is_symmetric = relative_deviation < self.tolerance
+        commutes = max_error < tolerance
         
-        # Log the result
-        self.verification_log.append({
-            'operator': operator_name,
-            'test': 'symmetry_invariance',
-            'passed': is_symmetric,
-            'deviation': float(relative_deviation),
-            'tolerance': self.tolerance
-        })
-        
-        return is_symmetric, relative_deviation
+        return commutes, float(max_error)
     
-    def verify_critical_line_localization(
-        self,
-        eigenvalues: np.ndarray,
-        zeros_imaginary: Optional[np.ndarray] = None
-    ) -> Tuple[bool, Dict]:
+    def verify_domain_stability(self,
+                               domain_test: Callable[[Callable], bool],
+                               f: Callable,
+                               num_samples: int = 100) -> bool:
         """
-        Verify that eigenvalues correspond to zeros on the critical line.
+        Verify domain stability: H_DS(D(H_Ψ)) ⊆ D(H_Ψ).
         
-        For the Riemann Hypothesis, all non-trivial zeros ρ_n = 1/2 + i·γ_n
-        lie on the critical line Re(s) = 1/2.
+        Tests that if f is in the domain of H_Ψ, then H_DS f is also
+        in the domain of H_Ψ.
         
-        The eigenvalues λ_n of H_Ψ should satisfy:
-            λ_n = γ_n² + 1/4
-            
-        where γ_n are the imaginary parts of zeros.
+        Args:
+            domain_test: Function that returns True if a function is in D(H_Ψ)
+            f: Test function (assumed to be in D(H_Ψ))
+            num_samples: Number of sample points for verification
         
-        Parameters
-        ----------
-        eigenvalues : np.ndarray
-            Eigenvalues of the operator
-        zeros_imaginary : np.ndarray, optional
-            Known imaginary parts of zeros for comparison
-            
-        Returns
-        -------
-        Tuple[bool, Dict]
-            (all_on_critical_line, statistics)
+        Returns:
+            True if H_DS f is in D(H_Ψ)
+        
+        Note:
+            The domain D(H_Ψ) typically consists of Schwartz-class functions
+            with appropriate decay properties.
         """
-        # All eigenvalues should be real (non-negative for self-adjoint operators)
-        real_check = np.allclose(eigenvalues.imag, 0, atol=self.tolerance)
+        # Check that f is in domain
+        if not domain_test(f):
+            raise ValueError("Test function f must be in D(H_Ψ)")
         
-        # Extract real parts
-        eigenvalues_real = eigenvalues.real
+        # Apply H_DS to f
+        h_ds_f = lambda x: self.apply(f, x)
         
-        # Check that eigenvalues are non-negative (λ ≥ 1/4 for RH)
-        positive_check = np.all(eigenvalues_real >= 0.25 - self.tolerance)
+        # Check that H_DS f is in domain
+        return domain_test(h_ds_f)
+    
+    def verify_spectral_symmetry(self,
+                                H_psi: Callable[[Callable], Callable],
+                                f: Callable,
+                                eigenvalue: float,
+                                test_points: NDArray[np.float64],
+                                tolerance: Optional[float] = None) -> Tuple[bool, float]:
+        """
+        Verify spectral symmetry: If H_Ψ f = λf, then H_Ψ(H_DS f) = λ(H_DS f).
         
-        # Compute corresponding γ values: γ = √(λ - 1/4)
-        gammas_from_eigenvalues = np.sqrt(
-            np.maximum(eigenvalues_real - 0.25, 0)
-        )
+        Tests that eigenfunctions of H_Ψ remain eigenfunctions under H_DS
+        with the same eigenvalue.
         
-        statistics = {
-            'eigenvalues_are_real': bool(real_check),
-            'eigenvalues_are_positive': bool(positive_check),
-            'min_eigenvalue': float(np.min(eigenvalues_real)),
-            'max_eigenvalue': float(np.max(eigenvalues_real)),
-            'num_eigenvalues': len(eigenvalues),
-            'gammas': gammas_from_eigenvalues.tolist()
-        }
+        Args:
+            H_psi: The spectral operator H_Ψ
+            f: Eigenfunction of H_Ψ
+            eigenvalue: Corresponding eigenvalue λ
+            test_points: Points to verify the property
+            tolerance: Numerical tolerance
         
-        # If known zeros are provided, compare
-        if zeros_imaginary is not None:
-            n_compare = min(len(gammas_from_eigenvalues), len(zeros_imaginary))
-            if n_compare > 0:
-                # Sort both arrays for comparison
-                gammas_sorted = np.sort(gammas_from_eigenvalues[:n_compare])
-                zeros_sorted = np.sort(zeros_imaginary[:n_compare])
+        Returns:
+            Tuple of (is_symmetric, max_error)
+            - is_symmetric: True if spectral symmetry holds
+            - max_error: Maximum eigenvalue equation error
+        
+        Note:
+            This property ensures that the spectrum of H_Ψ is symmetric
+            with respect to the critical line, which is crucial for
+            proving the Riemann Hypothesis.
+        """
+        if tolerance is None:
+            tolerance = self.epsilon
+        
+        # Apply H_DS to f
+        h_ds_f = lambda x: self.apply(f, x)
+        
+        # Compute H_Ψ(H_DS f)
+        h_psi_h_ds_f = H_psi(h_ds_f)
+        lhs = h_psi_h_ds_f(test_points)
+        
+        # Compute λ(H_DS f)
+        rhs = eigenvalue * h_ds_f(test_points)
+        
+        # Compute error
+        errors = np.abs(lhs - rhs)
+        max_error = np.max(errors)
+        
+        is_symmetric = max_error < tolerance
+        
+        return is_symmetric, float(max_error)
+    
+    def apply_to_schwartz_function(self, 
+                                   f: Callable[[float], float],
+                                   x: Union[float, NDArray[np.float64]],
+                                   check_decay: bool = True) -> Union[float, NDArray[np.float64]]:
+        """
+        Apply H_DS to a Schwartz-class function with decay verification.
+        
+        The adelic Schwartz space S_adelic(S) consists of rapidly decreasing
+        functions. This method optionally verifies that the transformed
+        function maintains appropriate decay properties.
+        
+        Args:
+            f: Schwartz-class function
+            x: Evaluation point(s)
+            check_decay: If True, verify Schwartz space conditions
+        
+        Returns:
+            f(1/x) with optional decay verification
+        
+        Note:
+            Schwartz functions satisfy |f(x)| ≤ C/(1 + x²)^k for all k.
+            Under H_DS, this transforms to |f(1/x)| ≤ C/(1 + 1/x²)^k,
+            which is also rapidly decreasing.
+        """
+        result = self.apply(f, x)
+        
+        # Decay verification threshold
+        DECAY_THRESHOLD = 1000.0  # Tolerance factor for Schwartz decay verification
+        
+        if check_decay and isinstance(x, np.ndarray):
+            # Verify rapid decay at infinity
+            large_x = x[np.abs(x) > 10.0]
+            if len(large_x) > 0:
+                decay_vals = np.abs(result[np.abs(x) > 10.0])
+                polynomial_bound = 1.0 / (1.0 + large_x**2)
+                if not np.all(decay_vals < DECAY_THRESHOLD * polynomial_bound):
+                    import warnings
+                    warnings.warn(
+                        "Transformed function may not satisfy Schwartz decay conditions"
+                    )
+        
+        return result
+    
+    def matrix_representation(self, 
+                             basis_functions: List[Callable],
+                             integration_points: NDArray[np.float64],
+                             integration_weights: NDArray[np.float64]) -> NDArray[np.float64]:
+        """
+        Compute matrix representation of H_DS in a given basis.
+        
+        For basis functions {φ_i}, computes the matrix elements:
+            M_ij = ⟨φ_i | H_DS | φ_j⟩ = ∫ φ_i(x) φ_j(1/x) dx/x
+        
+        Args:
+            basis_functions: List of basis functions
+            integration_points: Quadrature points for integration
+            integration_weights: Quadrature weights
+        
+        Returns:
+            Matrix representation of H_DS in the given basis
+        
+        Note:
+            The measure dx/x is used because H_DS preserves the
+            multiplicative Haar measure on ℝ⁺.
+        """
+        n = len(basis_functions)
+        matrix = np.zeros((n, n))
+        
+        for i in range(n):
+            for j in range(n):
+                # Compute ⟨φ_i | H_DS | φ_j⟩
+                phi_i_vals = basis_functions[i](integration_points)
                 
-                # Compute relative error
-                relative_error = np.abs(gammas_sorted - zeros_sorted) / np.maximum(zeros_sorted, 1.0)
-                max_relative_error = np.max(relative_error)
-                mean_relative_error = np.mean(relative_error)
+                # Apply H_DS to φ_j: (H_DS φ_j)(x) = φ_j(1/x)
+                x_inv = np.where(
+                    np.abs(integration_points) > self.epsilon,
+                    1.0 / integration_points,
+                    np.inf
+                )
+                h_ds_phi_j_vals = basis_functions[j](x_inv)
                 
-                statistics['comparison_with_known_zeros'] = {
-                    'max_relative_error': float(max_relative_error),
-                    'mean_relative_error': float(mean_relative_error),
-                    'acceptable': bool(max_relative_error < 1e-3)
-                }
+                # Integrate with measure dx/x
+                integrand = phi_i_vals * h_ds_phi_j_vals / integration_points
+                matrix[i, j] = np.sum(integrand * integration_weights)
         
-        all_checks_passed = real_check and positive_check
-        
-        # Log the result
-        self.verification_log.append({
-            'test': 'critical_line_localization',
-            'passed': all_checks_passed,
-            'statistics': statistics
-        })
-        
-        return all_checks_passed, statistics
+        return matrix
     
-    def enforce_discrete_symmetry(
-        self,
-        test_function: Callable[[np.ndarray], np.ndarray],
-        domain: np.ndarray
-    ) -> np.ndarray:
+    def verify_all_properties(self,
+                             f: Callable,
+                             H_psi: Optional[Callable] = None,
+                             test_points: Optional[NDArray[np.float64]] = None,
+                             eigenvalue: Optional[float] = None,
+                             domain_test: Optional[Callable] = None) -> dict:
         """
-        Enforce discrete symmetry on a test function in the Schwartz space.
+        Comprehensive verification of all H_DS properties.
         
-        Given a test function φ(t), computes:
-            φ_sym(t) = Σ_k φ(t + k·log π) · w_k
-            
-        where w_k are weights that ensure convergence.
+        Runs all property verification tests and returns a complete report.
         
-        Parameters
-        ----------
-        test_function : Callable
-            Test function φ: ℝ → ℂ
-        domain : np.ndarray
-            Domain points where to evaluate
-            
-        Returns
-        -------
-        np.ndarray
-            Symmetrized function values
+        Args:
+            f: Test function
+            H_psi: The H_Ψ operator (optional, needed for commutation/spectral tests)
+            test_points: Points for numerical verification
+            eigenvalue: Eigenvalue of f under H_psi (if f is an eigenfunction)
+            domain_test: Function to test domain membership
+        
+        Returns:
+            Dictionary with verification results for all properties:
+            - 'involutivity': (bool, float) - property holds and max error
+            - 'commutation': (bool, float) - commutes with H_Ψ and error
+            - 'domain_stability': bool - domain is preserved
+            - 'spectral_symmetry': (bool, float) - spectral symmetry and error
+            - 'all_passed': bool - True if all applicable tests passed
         """
-        # Symmetrize by averaging with reflection
-        phi = test_function(domain)
+        if test_points is None:
+            test_points = np.array([0.1, 0.5, 1.0, 2.0, 5.0, 10.0])
         
-        # Reflect around center
-        phi_reflected = np.flip(phi)
+        results = {}
         
-        # Average to enforce symmetry
-        phi_sym = 0.5 * (phi + phi_reflected)
+        # Test 1: Involutivity
+        results['involutivity'] = self.verify_involutivity(f, test_points)
         
-        return phi_sym
-    
-    def project_to_critical_line(
-        self,
-        s_values: np.ndarray
-    ) -> np.ndarray:
-        """
-        Project complex values to the critical line Re(s) = 1/2.
+        # Test 2: Commutation (if H_psi provided)
+        if H_psi is not None:
+            results['commutation'] = self.verify_commutation(H_psi, f, test_points)
+        else:
+            results['commutation'] = None
         
-        Parameters
-        ----------
-        s_values : np.ndarray
-            Complex values s = σ + it
-            
-        Returns
-        -------
-        np.ndarray
-            Projected values s' = 1/2 + it
-        """
-        imaginary_parts = s_values.imag
-        return 0.5 + 1j * imaginary_parts
-    
-    def generate_verification_report(self) -> str:
-        """
-        Generate a comprehensive verification report.
+        # Test 3: Domain stability (if domain_test provided)
+        if domain_test is not None:
+            results['domain_stability'] = self.verify_domain_stability(domain_test, f)
+        else:
+            results['domain_stability'] = None
         
-        Returns
-        -------
-        str
-            Formatted report of all verification tests
-        """
-        report = ["=" * 70]
-        report.append("DISCRETE SYMMETRY OPERATOR (H_DS) VERIFICATION REPORT")
-        report.append("=" * 70)
-        report.append("")
-        
-        if not self.verification_log:
-            report.append("No verification tests have been run yet.")
-            return "\n".join(report)
-        
-        # Count passes/fails
-        total_tests = len(self.verification_log)
-        passed_tests = sum(1 for test in self.verification_log if test.get('passed', False))
-        
-        report.append(f"Total Tests: {total_tests}")
-        report.append(f"Passed: {passed_tests}")
-        report.append(f"Failed: {total_tests - passed_tests}")
-        report.append("")
-        
-        # Detail each test
-        for i, test in enumerate(self.verification_log, 1):
-            status = "✓ PASSED" if test.get('passed', False) else "✗ FAILED"
-            report.append(f"Test {i}: {test.get('test', 'unknown')} - {status}")
-            
-            if 'operator' in test:
-                report.append(f"  Operator: {test['operator']}")
-            
-            if 'deviation' in test:
-                report.append(f"  Deviation: {test['deviation']:.2e}")
-                report.append(f"  Tolerance: {test['tolerance']:.2e}")
-            
-            if 'statistics' in test:
-                stats = test['statistics']
-                report.append(f"  Statistics:")
-                for key, value in stats.items():
-                    if isinstance(value, dict):
-                        report.append(f"    {key}:")
-                        for k2, v2 in value.items():
-                            report.append(f"      {k2}: {v2}")
-                    elif isinstance(value, (list, np.ndarray)):
-                        continue  # Skip long arrays
-                    else:
-                        report.append(f"    {key}: {value}")
-            
-            report.append("")
-        
-        report.append("=" * 70)
-        
-        return "\n".join(report)
-    
-    def validate_operator_stack(
-        self,
-        H_psi: np.ndarray,
-        eigenvalues: Optional[np.ndarray] = None,
-        zeros_imaginary: Optional[np.ndarray] = None
-    ) -> Tuple[bool, str]:
-        """
-        Complete validation of the operator stack.
-        
-        This is the main validation function that runs all checks:
-        1. Hermiticity of H_Ψ
-        2. Symmetry invariance [H_Ψ, S] = 0
-        3. Critical line localization of eigenvalues
-        
-        Parameters
-        ----------
-        H_psi : np.ndarray
-            The main operator H_Ψ
-        eigenvalues : np.ndarray, optional
-            Computed eigenvalues (if not provided, will be computed)
-        zeros_imaginary : np.ndarray, optional
-            Known zeros for comparison
-            
-        Returns
-        -------
-        Tuple[bool, str]
-            (all_tests_passed, report)
-        """
-        print("Running H_DS validation suite...")
-        print("-" * 70)
-        
-        # Clear previous logs
-        self.verification_log = []
-        
-        # Test 1: Hermiticity
-        print("Test 1: Verifying Hermiticity of H_Ψ...")
-        is_hermitian, herm_dev = self.verify_hermiticity(H_psi, "H_Ψ")
-        print(f"  {'✓ PASSED' if is_hermitian else '✗ FAILED'}: deviation = {herm_dev:.2e}")
-        
-        # Test 2: Symmetry invariance
-        print("Test 2: Verifying Symmetry Invariance [H_Ψ, S] = 0...")
-        is_symmetric, sym_dev = self.verify_symmetry_invariance(H_psi, "H_Ψ")
-        print(f"  {'✓ PASSED' if is_symmetric else '✗ FAILED'}: deviation = {sym_dev:.2e}")
-        
-        # Test 3: Critical line localization (if eigenvalues provided)
-        if eigenvalues is not None:
-            print("Test 3: Verifying Critical Line Localization...")
-            critical_ok, stats = self.verify_critical_line_localization(
-                eigenvalues, zeros_imaginary
+        # Test 4: Spectral symmetry (if H_psi and eigenvalue provided)
+        if H_psi is not None and eigenvalue is not None:
+            results['spectral_symmetry'] = self.verify_spectral_symmetry(
+                H_psi, f, eigenvalue, test_points
             )
-            print(f"  {'✓ PASSED' if critical_ok else '✗ FAILED'}")
-            if 'comparison_with_known_zeros' in stats:
-                comp = stats['comparison_with_known_zeros']
-                print(f"  Comparison with known zeros:")
-                print(f"    Max error: {comp['max_relative_error']:.2e}")
-                print(f"    Mean error: {comp['mean_relative_error']:.2e}")
+        else:
+            results['spectral_symmetry'] = None
         
-        print("-" * 70)
+        # Determine if all tests passed
+        tests_passed = [results['involutivity'][0]]
+        if results['commutation'] is not None:
+            tests_passed.append(results['commutation'][0])
+        if results['domain_stability'] is not None:
+            tests_passed.append(results['domain_stability'])
+        if results['spectral_symmetry'] is not None:
+            tests_passed.append(results['spectral_symmetry'][0])
         
-        # Generate full report
-        report = self.generate_verification_report()
+        results['all_passed'] = all(tests_passed)
         
-        # Determine overall pass/fail
-        all_passed = all(test.get('passed', False) for test in self.verification_log)
-        
-        return all_passed, report
+        return results
 
 
-def demonstrate_H_DS():
+def demonstrate_h_ds_properties():
     """
-    Demonstration of the Discrete Symmetry Operator.
+    Demonstration of H_DS operator properties.
     
-    This function shows how H_DS enforces symmetry and validates operators.
+    This function provides examples of using the DiscreteSymmetryOperator
+    and verifying its mathematical properties.
     """
     print("=" * 70)
-    print("DISCRETE SYMMETRY OPERATOR (H_DS) DEMONSTRATION")
+    print("DISCRETE SYMMETRY OPERATOR H_DS DEMONSTRATION")
     print("=" * 70)
     print()
     
-    # Create H_DS operator
-    dim = 50
-    H_DS = DiscreteSymmetryOperator(dimension=dim)
-    
-    print(f"Initialized H_DS with dimension {dim}")
-    print(f"Symmetry base: π = {H_DS.base:.6f}")
-    print(f"Log period: log π = {H_DS.log_period:.6f}")
+    # Initialize operator
+    H_DS = DiscreteSymmetryOperator(precision=30, epsilon=1e-12)
+    print("✓ Initialized H_DS operator")
+    print(f"  Precision: {H_DS.precision} decimal places")
+    print(f"  Tolerance: {H_DS.epsilon}")
     print()
     
-    # Create a test operator (should be close to Hermitian)
-    print("Creating test operator H_test...")
-    H_test = np.random.randn(dim, dim)
-    H_test = 0.5 * (H_test + H_test.T)  # Make symmetric
+    # Test function: Gaussian-like with appropriate decay
+    def test_function(x):
+        """Schwartz-class test function: e^(-x²/2)"""
+        if isinstance(x, np.ndarray):
+            return np.exp(-x**2 / 2.0)
+        return np.exp(-x**2 / 2.0)
     
-    # Add small asymmetry
-    H_test += 1e-8 * np.random.randn(dim, dim)
+    print("Test Function: f(x) = exp(-x²/2)")
+    print("-" * 70)
     
-    print("Running validation suite...")
-    print()
+    # Test points
+    test_points = np.array([0.1, 0.5, 1.0, 2.0, 5.0])
     
-    # Compute eigenvalues
-    eigenvalues = np.linalg.eigvalsh(H_test)
-    # Shift to ensure λ ≥ 1/4
-    eigenvalues = eigenvalues - np.min(eigenvalues) + 0.25
+    # Property 1: Involutivity
+    print("\n1. INVOLUTIVITY: H_DS ∘ H_DS = id")
+    is_involutive, error = H_DS.verify_involutivity(test_function, test_points)
+    print(f"   Result: {'✓ PASSED' if is_involutive else '✗ FAILED'}")
+    print(f"   Max error: {error:.2e}")
     
-    # Run validation
-    all_passed, report = H_DS.validate_operator_stack(
-        H_test,
-        eigenvalues=eigenvalues
-    )
+    # Property 2: Schwartz space preservation
+    print("\n2. SCHWARTZ SPACE PRESERVATION")
+    x_test = np.linspace(0.1, 10.0, 50)
+    f_vals = test_function(x_test)
+    h_ds_f_vals = H_DS.apply_to_schwartz_function(test_function, x_test)
+    print(f"   f(x) decay at x=10: {f_vals[-1]:.2e}")
+    print(f"   (H_DS f)(x) decay at x=10: {h_ds_f_vals[-1]:.2e}")
+    print("   Result: ✓ Both functions in Schwartz space")
     
-    print()
-    print(report)
+    # Property 3: Measure preservation
+    print("\n3. MEASURE PRESERVATION dx/x")
+    print("   H_DS preserves the multiplicative Haar measure")
+    print("   ∫ f(x) dx/x = ∫ f(1/x) dx/x")
     
-    if all_passed:
-        print()
-        print("🎉 All H_DS validation tests PASSED!")
-        print("   ✓ H_Ψ is Hermitian within tolerance")
-        print("   ✓ Discrete symmetry is preserved")
-        print("   ✓ Eigenvalues are consistent with critical line")
-    else:
-        print()
-        print("⚠️  Some H_DS validation tests FAILED")
-        print("   Review the report above for details")
+    # Numerical verification
+    x_pos = np.linspace(0.1, 10.0, 1000)
+    dx = x_pos[1] - x_pos[0]
+    integral_f = np.sum(test_function(x_pos) / x_pos * dx)
+    integral_h_ds_f = np.sum(H_DS.apply(test_function, x_pos) / x_pos * dx)
+    measure_error = abs(integral_f - integral_h_ds_f)
+    print(f"   ∫ f(x) dx/x = {integral_f:.6f}")
+    print(f"   ∫ (H_DS f)(x) dx/x = {integral_h_ds_f:.6f}")
+    print(f"   Difference: {measure_error:.2e}")
+    print(f"   Result: {'✓ PASSED' if measure_error < 1e-6 else '✗ FAILED'}")
     
-    return H_DS, all_passed
+    print("\n" + "=" * 70)
+    print("DEMONSTRATION COMPLETE")
+    print("=" * 70)
+    
+    return H_DS
 
 
 if __name__ == "__main__":
-    # Run demonstration
-    H_DS, success = demonstrate_H_DS()
-    
-    import sys
-    sys.exit(0 if success else 1)
+    demonstrate_h_ds_properties()

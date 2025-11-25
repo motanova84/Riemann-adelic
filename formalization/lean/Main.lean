@@ -31,6 +31,7 @@ import RiemannAdelic.BerryKeatingOperator
 
 -- Entire function theory
 import RiemannAdelic.entire_order
+import RiemannAdelic.xi_entire_proof
 
 -- Hadamard factorization and quotient analysis
 import RiemannAdelic.Hadamard

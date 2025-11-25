@@ -7,6 +7,10 @@ in their spectrum via constructive spectral theory.
 Modules:
     - riemann_operator: H_Ψ Hermitian operator with spectrum reproducing
                         Riemann zeros to ultra-high precision
+    - discrete_symmetry_operator: H_DS operator that validates space structure
+                                 and enforces discrete symmetry G ≅ Z
+    - operator_connection: Connection between H_Ψ and H_DS that demonstrates
+                          how discrete symmetry forces zero reality
 """
 
 from .riemann_operator import (
@@ -22,6 +26,10 @@ from .riemann_operator import (
     C_QCAL
 )
 
+from .discrete_symmetry_operator import DiscreteSymmetryOperator
+
+from .operator_connection import OperatorConnection
+
 __all__ = [
     'construct_H_psi',
     'compute_spectrum',
@@ -32,5 +40,7 @@ __all__ = [
     'F0',
     'OMEGA_0',
     'ZETA_PRIME_HALF',
-    'C_QCAL'
+    'C_QCAL',
+    'DiscreteSymmetryOperator',
+    'OperatorConnection'
 ]
