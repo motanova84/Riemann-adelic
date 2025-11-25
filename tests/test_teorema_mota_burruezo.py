@@ -161,11 +161,13 @@ class TestQCALConstants:
     
     def test_fundamental_frequency_value(self):
         """Test QCAL fundamental frequency value."""
-        assert QCAL_FUNDAMENTAL_FREQUENCY == 141.7001
+        # Using tolerance-based comparison for numerical stability
+        assert abs(QCAL_FUNDAMENTAL_FREQUENCY - 141.7001) < 1e-10
     
     def test_zeta_prime_half_expected_value(self):
         """Test expected ζ'(1/2) value."""
-        assert abs(ZETA_PRIME_HALF_EXPECTED + 3.9226461392) < 1e-8
+        # Use tolerance-based comparison against the known value
+        assert abs(ZETA_PRIME_HALF_EXPECTED - (-3.9226461392)) < 1e-8
     
     def test_frequency_zeta_connection(self):
         """Test the connection between ζ'(1/2) and the fundamental frequency."""

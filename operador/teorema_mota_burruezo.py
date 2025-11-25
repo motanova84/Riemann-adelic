@@ -27,7 +27,7 @@ satisface Re(ρ) = 1/2.
 El operador está explícitamente dado por:
     H f(x) = −x f'(x) + π ζ'(1/2) log x · f(x)
 
-If its real spectrum is proven rigorously (analysis in development, 22 tests 
+If its real spectrum is proven rigorously (analysis in development, 28 tests 
 passing), this implies RH via Hilbert-Pólya/Connes/Berry-Keating.
 
 Physics Unification: Number Theory ↔ Quantum Physics
