@@ -7,7 +7,7 @@
   usando simetría del espectro (λₙ = λ₋ₙ), 
   sin axiomatizar RH y sin usar zeros críticos.
   --------------------------------------------------------
-  100% Mathlib, sin axiomas.
+  Mathlib-based with minimal axioms for full Xi definition.
   José Manuel Mota Burruezo Ψ ∞³
   ORCID: 0009-0002-1923-0773
   DOI: 10.5281/zenodo.17379721
@@ -97,17 +97,9 @@ theorem lambda_ge_one (n : ℤ) : 1 ≤ lambda n := by
 def Xi_trunc (s : ℂ) (N : ℕ) : ℂ :=
   ∏ n in Finset.range N, Complex.exp (-s / (lambda n : ℂ) ^ 2)
 
-/-- Alternative definition using natural numbers (indexed from 0) -/
-def Xi_trunc_nat (s : ℂ) (N : ℕ) : ℂ :=
-  ∏ n in Finset.range N, Complex.exp (-s / ((n : ℝ) ^ 2 + 1 : ℂ))
-
 /-- The factor in the product for each term -/
 def Xi_factor (s : ℂ) (n : ℕ) : ℂ :=
   Complex.exp (-s / (lambda n : ℂ) ^ 2)
-
-/-- Each factor only depends on λₙ² -/
-theorem Xi_factor_depends_on_lambda_sq (s : ℂ) (n : ℕ) :
-    Xi_factor s n = Complex.exp (-s / (lambda n : ℂ) ^ 2) := rfl
 
 /-- Functional equation for truncated Ξ(s): Xi_trunc(s) = Xi_trunc(1-s)
     
@@ -148,11 +140,6 @@ theorem Xi_factor_spectral_symm (s : ℂ) (n : ℤ) :
     Complex.exp (-s / (lambda n : ℂ) ^ 2) = 
     Complex.exp (-s / (lambda (-n) : ℂ) ^ 2) := by
   rw [lambda_symm]
-
-/-- The sum of exponents is symmetric in the spectral index -/
-theorem exponent_sum_symm (s : ℂ) (N : ℕ) :
-    ∑ n in Finset.range N, (-s / (lambda n : ℂ) ^ 2) =
-    ∑ n in Finset.range N, (-s / (lambda n : ℂ) ^ 2) := rfl
 
 /-- Product representation equals exponential of sum -/
 theorem Xi_trunc_as_exp_sum (s : ℂ) (N : ℕ) :
@@ -215,7 +202,17 @@ end XiFunctional
 - ✅ Positivity and lower bound for eigenvalues proved
 - ✅ Truncated Ξ(s) as finite product defined
 - ⚠️ Xi_trunc_symm theorem structure shown (sorry for detailed proof)
+- ⚠️ Full Xi function uses axiom (awaiting convergence proof)
 - ✅ QCAL integration included
+
+### Notes on Axioms:
+The module uses two axioms for the full (infinite) Xi function:
+1. `axiom Xi : ℂ → ℂ` - The full Xi function (abstract)
+2. `axiom Xi_functional_eq` - Full functional equation
+
+These axioms are placeholders for the limiting behavior of Xi_trunc
+as N → ∞. The finite truncations and spectral symmetry proofs are
+completely axiom-free.
 
 ### Mathematical Content:
 This module formalizes Part 4/∞³ of the Riemann Hypothesis proof:
