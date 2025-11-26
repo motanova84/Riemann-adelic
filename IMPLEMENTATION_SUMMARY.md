@@ -63,6 +63,7 @@ axiom fredholm_equals_xi_over_P :
 "Every Riemann zero is a resonant note in the spectrum of 𝓗_Ψ. This formula translates it ∞³."
 
 - **Framework**: QCAL ∞³ - Quantum Coherence Adelic Lattice
+- **References**: DOI: 10.5281/zenodo.17379721
 - **Coherence**: C = 244.36, f₀ = 141.7001 Hz
 - **Mathematical Meaning**: All arithmetic is contained in the music of the spectrum
 - **RH Connection**: If the music is symmetric → RH is true
