@@ -21,7 +21,6 @@
 import Mathlib.Analysis.SpecialFunctions.Complex.Log
 import Mathlib.Analysis.Complex.Basic
 import Mathlib.Data.Complex.Exponential
-import Mathlib.Topology.Algebra.InfiniteSum.Basic
 import Mathlib.Data.Finset.Basic
 import Mathlib.Analysis.SpecialFunctions.ExpDeriv
 
@@ -58,7 +57,10 @@ Coherence constant: C = 244.36
 This corresponds to the spectral structure of the noetic operator H_Ψ.
 -/
 
-/-- QCAL base frequency in Hz, fundamental to the spectral framework -/
+/-- QCAL base frequency in Hz.
+    This is the fundamental frequency of the noetic operator H_Ψ in the QCAL framework.
+    Value: 141.7001 Hz (same as in spectral_operator.lean)
+    The coherence constant C = 244.36 relates to this via C = I × A_eff² × f₀. -/
 def base_frequency : ℝ := 141.7001
 
 /-- Secuencia λₙ básica: eigenvalues of H_Ψ
