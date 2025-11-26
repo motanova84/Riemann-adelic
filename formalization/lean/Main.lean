@@ -1,6 +1,9 @@
 -- Main entry point for Riemann Adelic Lean formalization
 -- Updated to include all formalization modules including V5.4
 
+-- Final Riemann Hypothesis proof (V5.5 - November 2025)
+-- import riemann_hypothesis_final  -- Uncomment when ready to compile
+
 -- Core axioms and lemmas
 import RiemannAdelic.axioms_to_lemmas
 
@@ -42,6 +45,8 @@ import RiemannAdelic.Hadamard
 import RiemannAdelic.functional_eq
 import RiemannAdelic.poisson_radon_symmetry
 import RiemannAdelic.radon_integral_symmetry
+-- Xi functional equation from spectral symmetry (Part 4/∞³)
+import RiemannAdelic.Xi_functional_eq
 
 -- Archimedean factors
 import RiemannAdelic.arch_factor
@@ -76,6 +81,12 @@ import RiemannAdelic.paley_wiener_uniqueness
 import paley.paley_wiener_uniqueness
 -- Identity Principle for Exponential Type Functions
 import paley.identity_principle_exp_type
+
+-- New modular components for final RH proof
+import RiemannAdelic.SelbergTraceStrong
+import RiemannAdelic.SpectralOperator
+import RiemannAdelic.PaleyWienerUniqueness
+import RiemannAdelic.D_Xi_Limit
 
 -- Spectral RH operator with prime harmonic potential
 import RiemannAdelic.spectral_rh_operator
@@ -114,8 +125,8 @@ import RiemannAdelic.SelbergTraceStrong
 -- Heat Kernel Convergence (formalization in progress)
 import RiemannAdelic.heat_kernel_to_delta_plus_primes
 
--- Fredholm Determinant D(s) = det(I - s·ℋ_Ψ) (November 2025)
-import determinant_function
+-- Fredholm Determinant and ζ(s) Reconstruction (Part 11/∞³)
+import RiemannAdelic.fredholm_determinant_zeta
 
 def main : IO Unit := do
   IO.println "╔═══════════════════════════════════════════════════════════╗"
@@ -143,6 +154,12 @@ def main : IO Unit := do
   IO.println "  • Explicit D(s) construction"
   IO.println "  • Operator-theoretic formulation (Hε with oscillatory potential)"
   IO.println "  • Berry-Keating operator H_Ψ on L²(ℝ⁺, dx/x)"
+  IO.println "  • NEW: Noetic Operator H_Ψ (spectral/operator_hpsi.lean - 26 Nov 2025)"
+  IO.println "    - Hilbert space HΨ_space with inner product structure"
+  IO.println "    - Self-adjoint operator H_Ψ axiom (von Neumann type I)"
+  IO.println "    - Spectrum = Ξ(s) zeros correspondence"
+  IO.println "    - RH_iff_HΨ_spectrum_critical_line theorem"
+  IO.println "    - QCAL integration: 141.7001 Hz base frequency"
   IO.println "  • NEW: Adelic Spectrum Module (H_adelic_spectrum)"
   IO.println "    - Eliminates axiom H_model_spectrum"
   IO.println "    - Proves spectrum transfer from adelic via isometry"
@@ -164,6 +181,11 @@ def main : IO Unit := do
   IO.println "  • Hadamard factorization and quotient analysis"
   IO.println "  • Functional equation and Poisson symmetry"
   IO.println "  • Radon-Poisson integral functional symmetry"
+  IO.println "  • NEW: Xi functional equation from spectral symmetry (Part 4/∞³)"
+  IO.println "    - Spectral eigenvalue λₙ = √(n² + 1)"
+  IO.println "    - Spectral symmetry: λₙ = λ₋ₙ proved"
+  IO.println "    - Truncated Ξ(s) product representation"
+  IO.println "    - Functional equation Ξ(s) = Ξ(1-s) via symmetry"
   IO.println "  • Gamma Weierstrass representation for reflected Gamma function"
   IO.println "  • de Branges space framework"
   IO.println "  • Weil-Guinand positivity theory"
@@ -188,11 +210,11 @@ def main : IO Unit := do
   IO.println "  • Gamma trivial exclusion (purge_axioms branch)"
   IO.println "  • Selberg Trace Formula (strong form with exact convergence)"
   IO.println "  • Heat Kernel Convergence to δ₀ + Arithmetic Distribution (formalization in progress; contains sorry/axiom)"
-  IO.println "  • NEW: Fredholm Determinant Function (24 November 2025)"
-  IO.println "    - D(s) = det(I - s·ℋ_Ψ) as infinite product"
-  IO.println "    - Convergence theorem for all s ∈ ℂ"
-  IO.println "    - Entire function property proven"
-  IO.println "    - Order ≤ 1 established"
+  IO.println "  • NEW: Fredholm Determinant and ζ(s) Reconstruction (Part 11/∞³)"
+  IO.println "    - K_Ψ(s) integral operator on ℓ²(ℕ)"
+  IO.println "    - det(I − K_Ψ(s)) = ζ(s) identity"
+  IO.println "    - Functional equation from spectral symmetry"
+  IO.println "    - log ζ(s) expansion from discrete spectrum"
   IO.println ""
   IO.println "Status: Constructive formalization in progress (purge_axioms branch)"
   IO.println "DOI: 10.5281/zenodo.17116291"
