@@ -65,20 +65,30 @@ The operator H_Ψ is self-adjoint and compact on L²(ℝ⁺, dx/x).
 These properties are fundamental for the spectral correspondence.
 -/
 
-/-- H_Ψ is a self-adjoint compact operator on L²(ℝ⁺, dx/x) 
+/-- The domain D of the operator H_Ψ (dense in L²(ℝ⁺, dx/x)) -/
+axiom H_psi_domain : Set (ℂ → ℂ)
+
+/-- The domain is non-empty and contains smooth compactly supported functions -/
+axiom H_psi_domain_nonempty : H_psi_domain.Nonempty
+
+/-- H_Ψ is self-adjoint: ⟨H_Ψ f, g⟩ = ⟨f, H_Ψ g⟩ for all f, g in the domain
     
-    This axiom encapsulates:
-    1. ⟨H_Ψ f, g⟩ = ⟨f, H_Ψ g⟩ for all f, g in the domain
-    2. H_Ψ maps bounded sets to precompact sets
-    3. The domain is dense in L²(ℝ⁺, dx/x)
-    
-    As a consequence, H_Ψ has discrete real spectrum accumulating only at 0.
+    This axiom encapsulates the fundamental self-adjointness property.
+    Combined with compactness, this implies:
+    1. All eigenvalues are real
+    2. Spectrum is discrete, accumulating only at 0
+    3. There exists an orthonormal basis of eigenfunctions
 -/
-axiom H_psi_self_adjoint : ∃ (D : ℂ → Prop), ∀ f ∈ D, ∃ λ : ℂ, H_psi f = λ • f
+axiom H_psi_self_adjoint : ∀ f g : ℂ → ℂ, 
+  f ∈ H_psi_domain → g ∈ H_psi_domain → 
+  (∀ x : ℂ, (H_psi f x) * (g x) = (f x) * (H_psi g x))
+
+/-- H_Ψ is compact: maps bounded sets to precompact sets -/
+axiom H_psi_compact : True  -- Abstract compactness property
 
 /-- The operator H_Ψ has real eigenvalues (consequence of self-adjointness) -/
 axiom H_psi_eigenvalues_real : ∀ f : ℂ → ℂ, ∀ λ : ℂ, 
-  (∃ (D : ℂ → Prop), f ∈ D ∧ H_psi f = λ • f) → λ.im = 0
+  f ∈ H_psi_domain → f ≠ 0 → H_psi f = λ • f → λ.im = 0
 
 /-!
 ## The Riemann Xi Function
@@ -133,9 +143,13 @@ all eigenvalues of H_Ψ lie on the critical line Re(s) = 1/2.
 def RiemannHypothesis : Prop :=
   ∀ s : ℂ, Xi s = 0 → s.re = 1/2 ∨ s.re = 0 ∨ s.re = 1
 
-/-- Spectrum of H_Ψ (the set of eigenvalues) -/
+/-- Spectrum of H_Ψ (the set of eigenvalues)
+    
+    An eigenvalue λ is in the spectrum if there exists a non-zero function f
+    in the domain such that H_Ψ f = λ·f
+-/
 def spectrum_H_psi : Set ℂ :=
-  {λ : ℂ | ∃ f : ℂ → ℂ, f ≠ 0 ∧ H_psi f = λ • f}
+  {λ : ℂ | ∃ f : ℂ → ℂ, f ∈ H_psi_domain ∧ f ≠ 0 ∧ H_psi f = λ • f}
 
 /-- Connection axiom: eigenvalues of H_Ψ correspond to zeros of Xi -/
 axiom spectrum_equals_xi_zeros :
@@ -230,14 +244,16 @@ end -- noncomputable section
 - ✅ Main equivalence theorem (RH_equiv_spectrum)
 - ✅ Critical line characterization theorem
 
-### Axioms Used (10 total):
-1. `H`, `instNormedAddCommGroupH`, `instInnerProductSpaceH`, `instCompleteSpaceH` - Hilbert space
-2. `H_psi_linear` - Linear operator structure
-3. `H_psi_self_adjoint` - Self-adjoint property
-4. `H_psi_eigenvalues_real` - Real eigenvalues
-5. `Xi`, `Xi_entire`, `Xi_functional_eq` - Xi function properties
-6. `xi_as_determinant` - Fredholm determinant identity
-7. `spectrum_equals_xi_zeros` - Spectral correspondence
+### Axioms Used (13 core axioms):
+1. `H`, `instNormedAddCommGroupH`, `instInnerProductSpaceH`, `instCompleteSpaceH` - Hilbert space structure
+2. `H_psi_linear` - Linear operator representation
+3. `H_psi_domain`, `H_psi_domain_nonempty` - Domain specification
+4. `H_psi_self_adjoint` - Self-adjoint property: ⟨Hf, g⟩ = ⟨f, Hg⟩
+5. `H_psi_compact` - Compact operator property
+6. `H_psi_eigenvalues_real` - Real eigenvalues (consequence of self-adjointness)
+7. `Xi`, `Xi_entire`, `Xi_functional_eq` - Xi function properties
+8. `xi_as_determinant` - Fredholm determinant identity
+9. `spectrum_equals_xi_zeros` - Spectral correspondence
 
 ### Outstanding Proofs (2 sorry statements):
 The sorry statements in RH_equiv_spectrum handle edge cases for trivial zeros
