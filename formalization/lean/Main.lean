@@ -109,6 +109,10 @@ import RiemannAdelic.SelbergTraceStrong
 -- Heat Kernel Convergence (formalization in progress)
 import RiemannAdelic.heat_kernel_to_delta_plus_primes
 
+-- Weil Explicit Formula (spectral derivation)
+import spectral.Fredholm_Det_Xi
+import spectral.Weil_explicit
+
 def main : IO Unit := do
   IO.println "╔═══════════════════════════════════════════════════════════╗"
   IO.println "║   Riemann Hypothesis Adelic Proof - Lean 4 Formalization ║"
@@ -175,6 +179,10 @@ def main : IO Unit := do
   IO.println "  • Gamma trivial exclusion (purge_axioms branch)"
   IO.println "  • Selberg Trace Formula (strong form with exact convergence)"
   IO.println "  • Heat Kernel Convergence to δ₀ + Arithmetic Distribution (formalization in progress; contains sorry/axiom)"
+  IO.println "  • NEW: Weil Explicit Formula (spectral derivation from H_Ψ)"
+  IO.println "    - Connects zeta zeros with prime distribution via spectrum"
+  IO.println "    - ∑g(λₙ) + g(-λₙ) - ∫g(t)K(t)dt = ∑g(Im ρ)"
+  IO.println "    - Fredholm determinant ↔ Xi function connection"
   IO.println ""
   IO.println "Status: Constructive formalization in progress (purge_axioms branch)"
   IO.println "DOI: 10.5281/zenodo.17116291"
