@@ -45,6 +45,8 @@ import RiemannAdelic.Hadamard
 import RiemannAdelic.functional_eq
 import RiemannAdelic.poisson_radon_symmetry
 import RiemannAdelic.radon_integral_symmetry
+-- Xi functional equation from spectral symmetry (Part 4/∞³)
+import RiemannAdelic.Xi_functional_eq
 
 -- Archimedean factors
 import RiemannAdelic.arch_factor
@@ -172,6 +174,11 @@ def main : IO Unit := do
   IO.println "  • Hadamard factorization and quotient analysis"
   IO.println "  • Functional equation and Poisson symmetry"
   IO.println "  • Radon-Poisson integral functional symmetry"
+  IO.println "  • NEW: Xi functional equation from spectral symmetry (Part 4/∞³)"
+  IO.println "    - Spectral eigenvalue λₙ = √(n² + 1)"
+  IO.println "    - Spectral symmetry: λₙ = λ₋ₙ proved"
+  IO.println "    - Truncated Ξ(s) product representation"
+  IO.println "    - Functional equation Ξ(s) = Ξ(1-s) via symmetry"
   IO.println "  • Gamma Weierstrass representation for reflected Gamma function"
   IO.println "  • de Branges space framework"
   IO.println "  • Weil-Guinand positivity theory"
