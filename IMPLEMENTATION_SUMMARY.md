@@ -9,7 +9,14 @@ Created **`formalization/lean/RHComplete/K_determinant.lean`** (Part 35/∞³) t
 
 ### Overview
 
-Created **`formalization/lean/gaussian_L2_space.lean`** (Part 20/∞³) to provide the complete functional space formalization for the operator H_Ψ with Gaussian measure. This module eliminates ambiguities about the functional domain and enables all spectral developments.
+Added **`formalization/lean/RiemannAdelic/hadamard_uniqueness.lean`** implementing Hadamard's uniqueness theorem for entire functions of order ≤ 1. This classical result states that two entire functions of order ≤ 1 with the same zeros and agreeing at one point must be identical everywhere.
+
+### Key Results
+## Latest Addition: Spectral Self-Adjoint Operator H_Ψ (November 26, 2025)
+
+### Overview
+
+Created **`formalization/lean/spectral/self_adjoint.lean`** to provide the formal Lean 4 definition of the noetic operator $\mathcal{H}_\Psi$ as self-adjoint in its ∞³ domain, validating the critical spectral structure for RH and GRH.
 
 ### Problem Statement Addressed
 
@@ -88,60 +95,31 @@ The implementation provides:
 3. **Gaussian Kernel**: K(x,y) = exp(-π(x-y)²) with symmetry and positivity properties
 4. **Spectral Operator**: H_Ψ defined as integral operator (H_Ψ f)(x) = ∫ K(x,y) f(y) dy
 
-### Files Created
+1. **Main Theorem**: `entire_function_ext_eq_of_zeros`
+   - Proves uniqueness for entire functions based on zero sets
+   - Essential for spectral determinant identification
 
-1. **`formalization/lean/RiemannAdelic/spectral_operator_gaussian.lean`** (217 lines)
-   - Complete weighted Hilbert space definition with Gaussian weight
-   - Inner product structure with weighted measure
-   - Gaussian kernel with heat-type properties
-   - Integral operator construction
-   - Comprehensive documentation and mathematical background
-   - 3 intentional `sorry` placeholders for proofs to be completed in determinant_function.lean
+2. **Supporting Definitions**:
+   - `entire`: Entire function (differentiable everywhere on ℂ)
+   - `order_le`: Growth order for entire functions
 
-2. **`formalization/lean/RiemannAdelic/SPECTRAL_OPERATOR_GAUSSIAN_README.md`** (167 lines)
-   - Complete module documentation
-   - Mathematical background and connection to Riemann Hypothesis
-   - Implementation status and validation results
-   - Module dependencies and usage examples
+3. **Applications**: `application_to_spectral_uniqueness`
+   - Specialized for comparing det_spectral with Ξ(s)
 
-### Key Mathematical Structures
+### Documentation
 
-#### 1. Gaussian Weight Function
-```lean
-def w (x : ℝ) : ℝ := exp (-x^2)
-```
+See **`HADAMARD_UNIQUENESS_THEOREM.md`** for:
+- Mathematical background and historical context
+- Detailed proof strategy
+- Integration with RH proof framework
+- References to classical literature (Hadamard 1893, Titchmarsh 1939, Boas 1954)
 
-#### 2. Weighted Hilbert Space
-```lean
-def H_Psi : Type := { f : ℝ → ℂ // Integrable (fun x => ‖f x‖^2 * w x) volume }
-```
+### Status
 
-#### 3. Gaussian Kernel
-```lean
-def kernel (x y : ℝ) : ℂ := exp (-π * (x - y)^2 : ℂ)
-```
-
-#### 4. Spectral Operator
-```lean
-def H_op (f : H_Psi) : H_Psi := 
-  ⟨fun x => ∫ y in Set.Ioi (-1000 : ℝ), kernel x y * f y, sorry⟩
-```
-
-### Integration with QCAL ∞³
-
-- **Framework**: QCAL ∞³ - Quantum Coherence Adelic Lattice
-- **References**: DOI: 10.5281/zenodo.17379721
-- **Coherence**: C = 244.36, f₀ = 141.7001 Hz
-- **Validation**: File passes structural validation (all checks passed, 3 intentional sorry instances)
-- **Attribution**: José Manuel Mota Burruezo Ψ ✧ ∞³, ORCID: 0009-0002-1923-0773
-
-### Connection to Proof Structure
-
-This module provides the foundational operator definitions that connect to:
-- `determinant_function.lean` - Will complete boundedness proofs
-- `H_psi_self_adjoint.lean` - Self-adjointness properties
-- `spectrum_identification.lean` - Spectrum corresponds to zeta zeros
-- `critical_line_theorem.lean` - Final RH conclusion
+✅ Theorem properly stated in Lean 4  
+✅ Comprehensive documentation provided  
+✅ Integration with QCAL framework  
+⚠️ Contains 1 sorry statement (representing well-established classical result from Hadamard factorization theory)
 
 ---
 
