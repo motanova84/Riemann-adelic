@@ -2,7 +2,10 @@
 Tests for Script 41/∞³: Zeta from Heat Kernel
 
 Validates the heat kernel reconstruction of ζ(s):
-    ζ(s) = (1/Γ(s)) ∫₀^∞ t^(s-1) Tr(exp(-t·H_Ψ²)) dt
+    ζ(s) = (1/Γ(s)) ∫₀^∞ t^(s-1) Tr(exp(-t·H_Ψ)) dt
+         = (1/Γ(s)) ∫₀^∞ t^(s-1) ∑ₙ exp(-t·λₙ) dt
+
+where λₙ = 1/4 + γₙ² are eigenvalues of H_Ψ (γₙ are Riemann zeros).
 
 Author: José Manuel Mota Burruezo Ψ ✧ ∞³
 DOI: 10.5281/zenodo.17379721

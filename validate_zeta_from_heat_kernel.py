@@ -144,11 +144,14 @@ def zeta_from_heat_kernel(s: complex, eigenvalues: np.ndarray,
     """
     Compute ζ(s) from heat kernel via Mellin transform.
     
-    ζ(s) = (1/Γ(s)) ∫₀^∞ t^(s-1) · Tr(exp(-t·H_Ψ²)) dt
+    ζ(s) = (1/Γ(s)) ∫₀^∞ t^(s-1) · Tr(exp(-t·H_Ψ)) dt
+         = (1/Γ(s)) ∫₀^∞ t^(s-1) · ∑ₙ exp(-t·λₙ) dt
+    
+    Note: The eigenvalues λₙ = 1/4 + γₙ² already encode the squared structure.
     
     Args:
         s: Complex parameter (Re(s) > 1 required)
-        eigenvalues: Array of λₙ values
+        eigenvalues: Array of λₙ values (λₙ = 1/4 + γₙ²)
         t_max: Upper integration limit
         n_points: Number of quadrature points
         

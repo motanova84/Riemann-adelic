@@ -47,20 +47,26 @@ namespace SpectralQCAL
 # Reconstruction of ζ(s) from Heat Kernel of H_Ψ²
 
 This module establishes the spectral reconstruction of the Riemann zeta function
-from the heat kernel of the squared Berry-Keating operator H_Ψ².
+from the heat kernel of the Berry-Keating operator H_Ψ.
 
 ## Main Results
 
 1. **heat_kernel_trace**: The heat kernel trace as spectral sum
-   Tr(exp(-t·H_Ψ²)) = ∑ₙ exp(-t·λₙ²)
+   Tr(exp(-t·H_Ψ)) = ∑ₙ exp(-t·λₙ)
+   
+   Note: The eigenvalues λₙ = 1/4 + γₙ² already encode the squared structure
+   from the Riemann zeros γₙ.
 
 2. **zeta_from_heat**: Mellin transform reconstruction
-   ζ(s) = (1/Γ(s)) ∫₀^∞ t^(s-1) · Tr(exp(-t·H_Ψ²)) dt
+   ζ(s) = (1/Γ(s)) ∫₀^∞ t^(s-1) · Tr(exp(-t·H_Ψ)) dt
 
 3. **spectral_reconstruction_zeta**: Identity for Re(s) > 1
    This reconstruction coincides with the Riemann zeta function
 
 ## Mathematical Background
+
+The Berry-Keating operator H_Ψ has eigenvalues λₙ = 1/4 + γₙ² where γₙ are
+the imaginary parts of the Riemann zeros ρₙ = 1/2 + iγₙ.
 
 The heat kernel of a self-adjoint operator H with discrete spectrum {λₙ} is:
   K_t = exp(-tH)
@@ -68,11 +74,12 @@ The heat kernel of a self-adjoint operator H with discrete spectrum {λₙ} is:
 Its trace is:
   Tr(K_t) = ∑ₙ exp(-t·λₙ)
 
-For the squared operator H_Ψ², we have:
-  Tr(exp(-t·H_Ψ²)) = ∑ₙ exp(-t·λₙ²)
+Since the eigenvalues λₙ = 1/4 + γₙ² already incorporate the squared structure,
+we use exp(-t·λₙ) directly:
+  Tr(exp(-t·H_Ψ)) = ∑ₙ exp(-t·λₙ) = ∑ₙ exp(-t·(1/4 + γₙ²))
 
 The Mellin transform of this trace recovers ζ(s):
-  ζ(s) = (1/Γ(s)) ∫₀^∞ t^(s-1) Tr(exp(-t·H_Ψ²)) dt
+  ζ(s) = (1/Γ(s)) ∫₀^∞ t^(s-1) Tr(exp(-t·H_Ψ)) dt
 
 This is the spectral zeta function approach to reconstructing ζ(s).
 
@@ -155,7 +162,8 @@ The Riemann zeta function is recovered via Mellin transform of the heat kernel t
 /--
 Reconstruction of ζ(s) from heat kernel via Mellin transform.
 
-ζ(s) = (1/Γ(s)) ∫₀^∞ t^(s-1) · Tr(exp(-t·H_Ψ²)) dt
+ζ(s) = (1/Γ(s)) ∫₀^∞ t^(s-1) · Tr(exp(-t·H_Ψ)) dt
+     = (1/Γ(s)) ∫₀^∞ t^(s-1) · ∑ₙ exp(-t·λₙ) dt
 
 This integral converges for Re(s) > 1 due to:
 - Exponential decay at t → ∞ (from heat kernel)
