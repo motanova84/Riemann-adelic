@@ -82,6 +82,81 @@ This module provides trace formula connections to:
 
 ### Overview
 
+Added **`formalization/lean/RiemannAdelic/hadamard_uniqueness.lean`** implementing Hadamard's uniqueness theorem for entire functions of order ≤ 1. This classical result states that two entire functions of order ≤ 1 with the same zeros and agreeing at one point must be identical everywhere.
+
+### Key Results
+## Latest Addition: Spectral Self-Adjoint Operator H_Ψ (November 26, 2025)
+
+### Overview
+
+Created **`formalization/lean/spectral/self_adjoint.lean`** to provide the formal Lean 4 definition of the noetic operator $\mathcal{H}_\Psi$ as self-adjoint in its ∞³ domain, validating the critical spectral structure for RH and GRH.
+
+### Problem Statement Addressed
+
+The implementation provides:
+
+1. **Integral Kernel K(x,y)**: Motivated by Mellin transforms and convolution operators
+2. **Compact Operator K(s)**: Formal axioms for compactness and nuclearity
+3. **Fredholm Determinant**: D(s) = det(I - K(s)) via infinite product over eigenvalues
+4. **Spectral Correspondence**: D(s) = 0 ⟺ 1 ∈ spectrum(K(s))
+5. **Connection to Ξ(s)**: Ξ(s) = c · det(I - K(s)) determinantal formulation
+
+### Files Created
+
+1. **`formalization/lean/RHComplete/K_determinant.lean`** (~160 lines)
+   - K_kernel definition as integral kernel
+   - D(s) Fredholm determinant construction
+   - zeros_equiv_spectrum theorem
+   - Xi_zero_iff_D_zero theorem connecting to zeta zeros
+   - spectrum_implies_critical_line theorem for RH approach
+
+### Key Mathematical Structures
+
+#### 1. Integral Kernel
+```lean
+def K_kernel (s : ℂ) (x y : ℝ) : ℂ :=
+  Complex.exp (-π * (x + y)) * 
+  ((x * y : ℝ) : ℂ)^((-1 : ℂ)/2) * 
+  (x : ℂ)^s * 
+  (y : ℂ)^(1 - s)
+```
+
+#### 2. Fredholm Determinant
+```lean
+def D (s : ℂ) : ℂ :=
+  ∏' (n : ℕ), (1 - K_eigenvalues s n)
+```
+
+#### 3. Main Theorem
+```lean
+theorem zeros_equiv_spectrum (s : ℂ) : D s = 0 ↔ ∃ n : ℕ, K_eigenvalues s n = 1
+```
+
+### Integration with QCAL ∞³
+
+- **Framework**: QCAL ∞³ - Quantum Coherence Adelic Lattice
+- **Part**: 35/∞³ — Operador K(s) y determinante de Fredholm
+- **References**: DOI: 10.5281/zenodo.17379721
+- **Attribution**: José Manuel Mota Burruezo Ψ ∞³, ORCID: 0009-0002-1923-0773
+
+### Connection to Proof Structure
+
+This module activates:
+- The Fredholm–Hilbert–Pólya approach
+- Direct connection between K(s) spectrum and zeta zeros
+- Formalization of Ξ(s) as determinantal function: Ξ(s) = c · det(I - K(s))
+
+Related modules:
+- `RHComplete/SpectralDeterminant.lean` - Spectral determinant D(s) = det(I - s·ℕ_Ψ)
+- `RHComplete/FredholmDetEqualsXi.lean` - Fredholm determinant identity
+- `RHComplete/UniquenessWithoutRH.lean` - Spectral uniqueness
+
+---
+
+## Previous Addition: Spectral Operator with Gaussian Kernel (November 24, 2025)
+
+### Overview
+
 Created **`formalization/lean/RiemannAdelic/spectral_operator_gaussian.lean`** to provide the formal Lean 4 definition of the spectral operator H_Ψ with Gaussian kernel, which is fundamental to the adelic spectral proof of the Riemann Hypothesis.
 
 ### Problem Statement Addressed
