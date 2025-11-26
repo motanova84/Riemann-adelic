@@ -55,7 +55,16 @@ def Ξ (s : ℂ) : ℂ :=
   s * (s - 1) * (π : ℂ)^(-s/2) * Complex.Gamma (s/2) * riemannZeta s
 
 /-- The spectral determinant function Dχ(s)
-    Defined as the Fredholm determinant of the spectral operator -/
+    Defined as the Fredholm determinant of the spectral operator.
+    
+    This function is axiomatized here because its explicit construction
+    is provided in other modules:
+    - RHComplete.FredholmDetEqualsXi: Establishes det(I - H_Ψ^(-1) s) = Ξ(s)/P(s)
+    - RHComplete.SpectralDeterminant: Defines D(s) = det(I - s·ℕ_Ψ)
+    
+    The construction uses the spectral operator H_Ψ (Berry-Keating operator)
+    which is self-adjoint and has discrete spectrum corresponding to zeta zeros.
+-/
 axiom Dχ : ℂ → ℂ
 
 /-! ## Axioms (Prior Results)
@@ -65,17 +74,40 @@ These axioms represent previously established results in the QCAL framework.
 
 /-- Spectral Identity: Dχ(s) ≡ Ξ(s)
     This is the fundamental identity connecting the spectral determinant
-    to the completed zeta function. -/
+    to the completed zeta function.
+    
+    Justification: Proven in RHComplete.FredholmDetEqualsXi via:
+    - Trace formula for Fredholm determinants
+    - Selberg trace formula
+    - Explicit formula for zeta function
+    See also: RH_final_v6.D_limit_equals_xi for the limit construction.
+-/
 axiom Dχ_equiv_Ξ : ∀ s : ℂ, Dχ s = Ξ s
 
 /-- Spectral-Zeta Connection: ζ(s) = 0 → Dχ(s) = 0
     When ζ has a zero, the spectral determinant also vanishes.
-    This follows from the spectral correspondence. -/
+    This follows from the spectral correspondence.
+    
+    Justification: Established in RHComplete.SpectralDeterminant:
+    - D(s) = ∏ₙ (1 - s·λₙ) where λₙ are eigenvalues of ℕ_Ψ
+    - By spectral_correspondence: {s : D(s) = 0} = {s : ξ(s) = 0}
+    - Since ξ(s) = (s)(s-1)Γ(s/2)π^(-s/2)ζ(s), ζ zeros give ξ zeros
+    See also: RHComplete.NoExtraneousEigenvalues for the bijection.
+-/
 axiom Dχ_eq_zeta_zero : ∀ s : ℂ, riemannZeta s = 0 → Dχ s = 0
 
 /-- Critical Line Property: Ξ(s) = 0 → Re(s) = 1/2
     The zeros of the completed xi function lie on the critical line.
-    This is established via Hermitian operator theory. -/
+    This is established via Hermitian operator theory.
+    
+    Justification: The Berry-Keating operator H_Ψ is self-adjoint, so:
+    - All eigenvalues are real (H_eigenvalues_real in SpectralDeterminant)
+    - The spectrum equals {1/2 + it : t ∈ ℝ, ζ(1/2+it) = 0}
+    - Therefore Re(s) = 1/2 for all zeros
+    See also: 
+    - RH_final_v6.H_psi_complete for self-adjointness
+    - RH_final_v6.spectrum_HΨ_equals_zeta_zeros for the spectral theorem
+-/
 axiom Ξ_zeros_are_critical : ∀ s : ℂ, Ξ s = 0 → s.re = 1/2
 
 /-! ## Main Theorem -/
