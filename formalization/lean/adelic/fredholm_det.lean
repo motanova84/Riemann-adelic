@@ -67,9 +67,11 @@ structure AdelicSpace where
     K_χ(s) = ∑_{n=1}^∞ χ(n) · φ(s + log n)
     
     Este kernel conecta el carácter de Dirichlet con la evolución
-    dinámica a través de la función test φ. -/
+    dinámica a través de la función test φ.
+    
+    Nota: La suma empieza en n=1 para evitar log(0) = -∞. -/
 def adelic_kernel (χ : ℕ → ℂ) (φ : ℂ → ℂ) (s : ℂ) : ℂ :=
-  ∑' n : ℕ, χ n * φ (s + Real.log n)
+  ∑' n : ℕ, if n = 0 then 0 else χ n * φ (s + Real.log n)
 
 /-! ## Fredholm Determinant D_χ -/
 
@@ -79,9 +81,11 @@ def adelic_kernel (χ : ℕ → ℂ) (φ : ℂ → ℂ) (s : ℂ) : ℂ :=
     Esta definición captura la estructura espectral del operador
     adélico asociado al carácter χ. La exponencial negativa de la
     suma ponderada por 1/n produce las propiedades de determinante
-    requeridas para la conexión con funciones L. -/
+    requeridas para la conexión con funciones L.
+    
+    Nota: La suma empieza en n=1 para evitar log(0) y división por cero. -/
 def D_χ (χ : ℕ → ℂ) (φ : ℂ → ℂ) : ℂ → ℂ :=
-  fun s ↦ exp (-∑' n : ℕ, χ n * φ (s + Real.log n) / n)
+  fun s ↦ exp (-∑' n : ℕ, if n = 0 then 0 else χ n * φ (s + Real.log n) / n)
 
 /-! ## Holomorphy Axiom -/
 
@@ -129,9 +133,9 @@ theorem D_χ_trivial_char (φ : ℂ → ℂ) (s : ℂ) :
     D_χ (fun _ => 0) φ s = 1 := by
   simp [D_χ, exp_zero]
 
-/-- D_χ nunca es cero (propiedad del determinante de Fredholm) -/
-theorem D_χ_nonzero (χ : ℕ → ℂ) (φ : ℂ → ℂ) (s : ℂ)
-    (h : ∀ n, ‖∑' k : ℕ, χ k * φ (s + Real.log k) / k‖ < Real.pi) :
+/-- D_χ nunca es cero (propiedad del determinante de Fredholm).
+    Esto se sigue de que exp nunca es cero. -/
+theorem D_χ_nonzero (χ : ℕ → ℂ) (φ : ℂ → ℂ) (s : ℂ) :
     D_χ χ φ s ≠ 0 := by
   simp only [D_χ, ne_eq]
   exact exp_ne_zero _
