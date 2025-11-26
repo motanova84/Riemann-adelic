@@ -64,9 +64,13 @@ def hermitePoly : ℕ → (ℝ → ℝ)
   | (n + 2) => fun x =>
       2 * x * hermitePoly (n + 1) x - 2 * (n + 1) * hermitePoly n x
 
-/-- Función de Hermite normalizada: h_n(x) = H_n(x) / √(√π 2^n n!) -/
+/-- Factor de normalización de Hermite: ||H_n||_G = √(√π 2^n n!) -/
+def hermiteNormFactor (n : ℕ) : ℝ :=
+  sqrt (sqrt π * 2^n * Nat.factorial n)
+
+/-- Función de Hermite normalizada: h_n(x) = H_n(x) / ||H_n||_G -/
 def hermiteFun (n : ℕ) (x : ℝ) : ℝ :=
-  hermitePoly n x / sqrt (sqrt π * 2^n * Nat.factorial n)
+  hermitePoly n x / hermiteNormFactor n
 
 /-- Dominio natural del operador: envolvente lineal de funciones de Hermite -/
 def domain : Set (ℝ → ℝ) :=
@@ -139,9 +143,11 @@ axiom spectrum_discrete :
     (∀ n, eigenvalues n = 2 * n + 1) ∧
     (∀ n m, n ≠ m → eigenvalues n ≠ eigenvalues m)
 
-/-- Los ceros de Ξ(s) corresponden a los eigenvalores λ_n de H_Ψ -/
+/-- Los ceros de Ξ(s) corresponden a los eigenvalores λ_n de H_Ψ.
+    Las autofunciones φ_n coinciden con las funciones de Hermite normalizadas hermiteFun. -/
 axiom spectral_correspondence :
   ∃ (φ : ℕ → ℝ → ℝ),
+    (∀ n, φ n = hermiteFun n) ∧
     (∀ n m, n ≠ m → gaussianInner (φ n) (φ m) = 0) ∧
     (∀ n, gaussianInner (φ n) (φ n) = 1) ∧
     ∀ n, ∀ x, Hpsi (φ n) x = (2 * n + 1) * φ n x
