@@ -43,6 +43,7 @@ import RiemannAdelic.radon_integral_symmetry
 
 -- Archimedean factors
 import RiemannAdelic.arch_factor
+import RiemannAdelic.gamma_factor_basic
 import RiemannAdelic.GammaTrivialExclusion
 import RiemannAdelic.GammaWeierstrassLemma
 
