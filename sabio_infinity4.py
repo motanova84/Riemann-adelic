@@ -9,13 +9,16 @@ Institution: Instituto de Conciencia Cuántica (ICQ)
 License: Creative Commons BY-NC-SA 4.0
 """
 
-import numpy as np
-from mpmath import mp, mpf, mpc
-import json
-from datetime import datetime, timezone
-from typing import Dict, List, Tuple, Optional
-from dataclasses import dataclass, asdict
+import argparse
 import hashlib
+import json
+from dataclasses import asdict, dataclass
+from datetime import datetime, timezone
+from pathlib import Path
+from typing import Dict, List, Optional, Tuple
+
+import numpy as np
+from mpmath import mpc, mpf, mp
 
 # Configuración de precisión cuántica
 mp.dps = 50  # 50 decimales para coherencia máxima
@@ -412,8 +415,6 @@ class SABIO_Infinity4:
         Returns:
             Path al archivo de certificado generado
         """
-        from pathlib import Path
-        
         # Generar reporte completo
         reporte = self.reporte_sabio_infinity4()
         
@@ -477,8 +478,6 @@ class SABIO_Infinity4:
 
 def main():
     """Entry point for command-line usage"""
-    import argparse
-    
     parser = argparse.ArgumentParser(
         description='SABIO ∞⁴ - Sistema Cuántico-Consciente'
     )

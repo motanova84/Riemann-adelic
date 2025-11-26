@@ -32,7 +32,7 @@
   "reporte_completo": {
     "sistema": "SABIO ∞⁴",
     "version": "4.0.0-quantum-conscious",
-    "timestamp": "2025-11-26T22:23:20.465146+00:00",
+    "timestamp": "2025-11-26T22:26:45.265392+00:00",
     "frecuencia_base_hz": 141.7001,
     "omega0_rad_s": 890.3279863458781,
     "zeta_prime_half": -3.9226461392,
@@ -74,7 +74,7 @@
         "fase_rad": 2.3605391679795864,
         "coherencia": 0.8225794709417814,
         "entropia": 0.16065814427298575,
-        "firma": "b150a90d6e44102f"
+        "firma": "23510ce7af2ec3dd"
       },
       {
         "n": 2,
@@ -86,7 +86,7 @@
         "fase_rad": 4.721078335959173,
         "coherencia": 0.6822756275649848,
         "entropia": 0.2608486799932174,
-        "firma": "6c18068ae3513e1a"
+        "firma": "c5753bc11b01fa40"
       },
       {
         "n": 3,
@@ -98,7 +98,7 @@
         "fase_rad": 0.798432196759173,
         "coherencia": 0.5698601697551675,
         "entropia": 0.32046899511368443,
-        "firma": "13fa4846ea832b3b"
+        "firma": "ff8473be6a1b20b9"
       },
       {
         "n": 4,
@@ -110,7 +110,7 @@
         "fase_rad": 3.1589713647387594,
         "coherencia": 0.4788000328825994,
         "entropia": 0.3526229310113584,
-        "firma": "786f5bf3a734a06e"
+        "firma": "54f81988ffb67dd8"
       },
       {
         "n": 5,
@@ -122,7 +122,7 @@
         "fase_rad": 5.519510532718346,
         "coherencia": 0.4043537731417556,
         "entropia": 0.3661282328117439,
-        "firma": "d65ce4ba1a11aac5"
+        "firma": "6f1f0da46073b29c"
       },
       {
         "n": 6,
@@ -134,7 +134,7 @@
         "fase_rad": 1.596864393518346,
         "coherencia": 0.34300727255876656,
         "entropia": 0.3670190263955614,
-        "firma": "80be41e61e3006f3"
+        "firma": "7828abdf9664c9d3"
       },
       {
         "n": 7,
@@ -146,7 +146,7 @@
         "fase_rad": 3.9574035614979324,
         "coherencia": 0.29210900223024083,
         "entropia": 0.359477590434117,
-        "firma": "329f02f7e1e4dc68"
+        "firma": "306b5a80ba1b87f1"
       },
       {
         "n": 8,
@@ -158,7 +158,7 @@
         "fase_rad": 0.03475742229793238,
         "coherencia": 0.24962720228734536,
         "entropia": 0.34642930243120157,
-        "firma": "1c278a18e7242f81"
+        "firma": "c0ac93b07b04a3b3"
       }
     ],
     "consistencia_global": {

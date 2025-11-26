@@ -427,7 +427,7 @@ class TestCertificateGeneration:
         assert Path(cert_path).exists()
         
         # Verify content
-        with open(cert_path, 'r') as f:
+        with open(cert_path, 'r', encoding='utf-8') as f:
             cert = json.load(f)
         
         # Check header
@@ -457,7 +457,7 @@ class TestCertificateGeneration:
         sabio = SABIO_Infinity4(precision=50)
         cert_path = sabio.generar_certificado_validacion(output_dir=str(tmp_path))
         
-        with open(cert_path, 'r') as f:
+        with open(cert_path, 'r', encoding='utf-8') as f:
             cert = json.load(f)
         
         # Should contain full report
