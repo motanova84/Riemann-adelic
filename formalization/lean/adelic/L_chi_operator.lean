@@ -46,10 +46,35 @@ This extends the Berry-Keating operator H_Ψ to include character twists.
 /-- Dirichlet character modulus k -/
 variable {k : ℕ} [NeZero k]
 
-/-- Abstract type for Dirichlet character mod k (pending Mathlib integration) -/
+/-- Abstract type for Dirichlet character mod k.
+    
+    This axiom represents a Dirichlet character χ: (ℤ/kℤ)* → ℂ*
+    as an abstract type pending full Mathlib integration.
+    
+    In Mathlib, this would correspond to `DirichletCharacter ℂ k`
+    from `NumberTheory.DirichletCharacter.Basic`.
+    
+    Properties:
+    - χ is completely multiplicative: χ(mn) = χ(m)χ(n)
+    - χ(1) = 1
+    - χ(n) = 0 if gcd(n, k) > 1
+    - χ has finite order dividing φ(k)
+-/
 axiom DirichletChar (k : ℕ) : Type
 
-/-- The spectral operator H_{Ψ,χ} associated to character χ -/
+/-- The spectral operator H_{Ψ,χ} associated to character χ.
+    
+    H_{Ψ,χ} is a self-adjoint operator on L²(ℝ⁺, dx/x) defined as
+    a character twist of the Berry-Keating operator H_Ψ.
+    
+    Formally:
+      H_{Ψ,χ} = -x(d/dx) + V_χ(x)
+    
+    where V_χ(x) is a character-dependent potential that incorporates
+    the Dirichlet character χ into the spectral structure.
+    
+    The spectrum of H_{Ψ,χ} encodes the zeros of L(s, χ).
+-/
 axiom H_psi_chi (χ : DirichletChar k) : Type
 
 /-!
@@ -74,7 +99,19 @@ axiom H_psi_chi_self_adjoint (χ : DirichletChar k) : True
 The spectrum of H_{Ψ,χ} is discrete with real eigenvalues.
 -/
 
-/-- Eigenvalue function: λₙ^χ gives the n-th eigenvalue for character χ -/
+/-- Eigenvalue function: λₙ^χ gives the n-th eigenvalue for character χ.
+    
+    For a Dirichlet character χ mod k, λₙ^χ denotes the n-th eigenvalue
+    of the self-adjoint operator H_{Ψ,χ}, ordered by magnitude:
+    
+      λ₁^χ ≤ λ₂^χ ≤ λ₃^χ ≤ ...
+    
+    These eigenvalues are real (from self-adjointness) and satisfy
+    growth bounds that ensure the heat kernel trace converges.
+    
+    The eigenvalues encode the zeros of L(s, χ) via the spectral
+    correspondence: if L(1/2 + it, χ) = 0, then t is an eigenvalue.
+-/
 axiom λₙ_χ (χ : DirichletChar k) (n : ℕ) : ℝ
 
 /-- Axiom: H_{Ψ,χ} has discrete real spectrum
@@ -124,7 +161,21 @@ via a Mellin-type integral:
 This is the spectral interpretation of L-functions.
 -/
 
-/-- Dirichlet L-function (abstract representation) -/
+/-- Dirichlet L-function (abstract representation).
+    
+    L(s, χ) is the Dirichlet L-function associated to character χ mod k,
+    defined for ℜ(s) > 1 by the absolutely convergent series:
+    
+      L(s, χ) = ∑_{n=1}^∞ χ(n)/n^s
+    
+    This can be extended to all of ℂ via analytic continuation, with
+    a possible simple pole at s = 1 only for the principal character.
+    
+    The L-function satisfies a functional equation relating L(s, χ)
+    to L(1-s, χ̄) via Gamma factors.
+    
+    In Mathlib, this corresponds to `DirichletCharacter.LFunction`.
+-/
 axiom L_function (χ : DirichletChar k) (s : ℂ) : ℂ
 
 /-- Integral reconstruction of L(s, χ) from heat kernel (Mellin-type transform)
@@ -170,7 +221,25 @@ The spectral reconstruction is compatible with the functional equation
 of Dirichlet L-functions.
 -/
 
-/-- Completed L-function Λ(s, χ) with Gamma factors -/
+/-- Completed L-function Λ(s, χ) with Gamma factors.
+    
+    The completed L-function is defined as:
+    
+      Λ(s, χ) = (k/π)^((s+a)/2) Γ((s+a)/2) L(s, χ)
+    
+    where:
+    - k is the modulus of χ
+    - a = 0 if χ(-1) = 1 (even character)
+    - a = 1 if χ(-1) = -1 (odd character)
+    
+    This completed function is entire except possibly for simple poles
+    at s = 0, 1 for the principal character.
+    
+    It satisfies the symmetric functional equation:
+      Λ(s, χ) = ε(χ) Λ(1-s, χ̄)
+    
+    where ε(χ) is the root number (Gauss sum ratio) with |ε(χ)| = 1.
+-/
 axiom completed_L_function (χ : DirichletChar k) (s : ℂ) : ℂ
 
 /-- Functional equation for completed L-function -/
@@ -184,7 +253,22 @@ For the principal character χ₀, the eigenvalues λₙ^χ₀ correspond to
 the imaginary parts of the zeros of ζ(s) on the critical line.
 -/
 
-/-- Principal character mod k -/
+/-- Principal character mod k.
+    
+    The principal (trivial) character χ₀ mod k is defined as:
+    
+      χ₀(n) = 1  if gcd(n, k) = 1
+      χ₀(n) = 0  if gcd(n, k) > 1
+    
+    It is the unique Dirichlet character mod k that takes only
+    the values 0 and 1, and it is the identity element of the
+    character group (ℤ/kℤ)*.
+    
+    The L-function L(s, χ₀) differs from ζ(s) only by finitely many
+    Euler factors corresponding to primes dividing k:
+    
+      L(s, χ₀) = ζ(s) ∏_{p|k} (1 - p^{-s})
+-/
 axiom principal_char (k : ℕ) [NeZero k] : DirichletChar k
 
 /-- For principal character, L(s, χ₀) relates to ζ(s) -/
