@@ -12,7 +12,7 @@ This module formalizes:
 
 - `xi_zeros_spec`: The zeros of Ξ(s) coincide with the spectrum of H_Ψ
 - `xi_hadamard`: Ξ(s) is completely determined by its zeros via Hadamard factorization
-- `zero_eigenvalue_bijection`: Bijective correspondence between zeros and eigenvalues
+- `zeros_equal_spectrum`: The set of zeros equals the spectrum
 
 ## Mathematical Background
 
@@ -148,12 +148,16 @@ def qcal_base_frequency : ℝ := 141.7001
 
 /-! ## Spectral Determinant Connection -/
 
+/-- All eigenvalues are non-zero (first eigenvalue is positive) -/
+axiom eigenvalues_nonzero : ∀ n : ℕ, Λ n ≠ 0
+
 /-- The spectral determinant D(s) equals Ξ(s) up to normalization -/
 theorem spectral_determinant_equals_xi :
     ∀ s, ∃ (C : ℂ), C ≠ 0 ∧ 
     (∏' n, (1 - s * (1 / Λ n))) = C * xi s := by
   intro s
   -- From xi_hadamard and the relationship between zeros and eigenvalues
+  -- Division by Λ n is well-defined since eigenvalues_nonzero
   sorry
 
 /-! ## Functional Equation Preservation -/
@@ -170,14 +174,16 @@ theorem hadamard_functional_equation :
 
 /-! ## Growth Estimates -/
 
-/-- Hadamard product converges absolutely -/
+/-- Hadamard product converges absolutely for s not a zero -/
 axiom hadamard_product_convergent : 
-    ∀ s, Summable (fun n => Complex.log (1 - s / (1/2 + I * Λ n)))
+    ∀ s, (∀ n, s ≠ 1/2 + I * Λ n) → 
+    Summable (fun n => Complex.log (1 - s / (1/2 + I * Λ n)))
 
-/-- Weyl asymptotic for eigenvalue counting -/
+/-- Weyl asymptotic for eigenvalue counting 
+    N(T) ~ (T/2π) log(T/2π) with explicit error term -/
 axiom weyl_asymptotic :
-    ∃ (N : ℝ → ℕ), ∀ T : ℝ, T > 0 →
-    (N T : ℝ) = (T / (2 * π)) * Real.log (T / (2 * π)) + O(Real.log T)
+    ∃ (N : ℝ → ℕ) (C : ℝ), C > 0 ∧ ∀ T : ℝ, T > 1 →
+    |(N T : ℝ) - (T / (2 * π)) * Real.log (T / (2 * π))| ≤ C * Real.log T
 
 /-! ## Verification -/
 
