@@ -42,14 +42,15 @@ Esta función es entera y satisface la ecuación funcional Ξ(s) = Ξ(1-s).
 Los ceros de Ξ(s) coinciden con los ceros no triviales de ζ(s).
 -/
 
-/-- Función Xi completada de Riemann -/
+/-- Función Xi completada de Riemann 
+    Ξ(s) = s(s-1)/2 · π^(-s/2) · Γ(s/2) · ζ(s) -/
 def xi (s : ℂ) : ℂ :=
-  s * (s - 1) * π^(-s/2) * Complex.Gamma (s/2) * riemannZeta s
+  s * (s - 1) / 2 * π^(-s/2) * Complex.Gamma (s/2) * riemannZeta s
 
 /-- Conjunto de ceros no triviales de Ξ(s) 
-    Excluimos los ceros triviales en Re(s) = 0 y Re(s) = 1 -/
+    Los ceros no triviales están en la banda crítica 0 < Re(s) < 1 -/
 def zero_set : Set ℂ := 
-  { ρ : ℂ | xi ρ = 0 ∧ ρ.re ∉ ({0, 1} : Set ℝ) }
+  { ρ : ℂ | xi ρ = 0 ∧ 0 < ρ.re ∧ ρ.re < 1 }
 
 /-!
 ## Simetría Espectral
@@ -70,7 +71,19 @@ axiom xi_functional_equation : ∀ s : ℂ, xi s = xi (1 - s)
 /-- La simetría se deriva de la ecuación funcional -/
 theorem symmetry_from_functional_eq (ρ : ℂ) (h : ρ ∈ zero_set) : 
     (1 - ρ) ∈ zero_set := by
-  exact spectral_symmetry ρ h
+  -- Derivamos la simetría de la ecuación funcional
+  obtain ⟨hzero, hre_pos, hre_lt⟩ := h
+  constructor
+  · -- xi(1-ρ) = xi(ρ) = 0 por la ecuación funcional
+    rw [xi_functional_equation (1 - ρ)]
+    simp [hzero]
+  constructor
+  · -- 0 < (1-ρ).re = 1 - ρ.re
+    simp only [sub_re, one_re]
+    linarith
+  · -- (1-ρ).re < 1, i.e., 1 - ρ.re < 1
+    simp only [sub_re, one_re]
+    linarith
 
 /-!
 ## Ceros Simples
