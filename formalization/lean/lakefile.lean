@@ -22,6 +22,11 @@ lean_lib RiemannAdelic where
   globs := #[.submodules `RiemannAdelic]
   roots := #[`RiemannAdelic]
 
+-- RHOperator library - K operator and Xi derivation
+lean_lib RHOperator where
+  globs := #[.submodules `RHOperator]
+  roots := #[`RHOperator]
+
 -- Main executable
 @[default_target]
 lean_exe «riemann-adelic-lean» where
