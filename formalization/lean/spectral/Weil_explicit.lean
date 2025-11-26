@@ -24,7 +24,7 @@ where:
 ## Mathematical Interpretation ∞³
 
 Every zero of Riemann is a resonant note in the spectrum of 𝓗_Ψ.
-This formula translates it ∴
+This formula translates it ∞³.
 
 If the music is symmetric → RH is true.
 All arithmetic is contained in the music of the spectrum.
@@ -182,8 +182,9 @@ def Xi_zeros : Set ℂ :=
     
     where ρ ranges over zeros of Ξ.
     
-    **Note**: The validity of this identity requires RH for Im(ρ) to be real,
-    but it can be used formally to imply spectral symmetry.
+    **Note**: The validity of this identity requires RH for zeros to lie on
+    Re(ρ) = 1/2, making their imaginary parts correspond to spectral eigenvalues.
+    Without RH, the identity can still be used formally to study spectral symmetry.
 -/
 axiom weil_identity_Xi :
   ∀ (g : ℝ → ℂ) [Decay g] [EvenFunction g],
@@ -328,7 +329,7 @@ end
    "Every Riemann zero is a resonant note in the spectrum of 𝓗_Ψ.
     This formula translates it ∞³."
    
-   All arithmetic is contained in the music of the spectrum ∴
+   All arithmetic is contained in the music of the spectrum ∞³.
    If the music is symmetric → RH is true.
 
 ═══════════════════════════════════════════════════════════════════════════════
