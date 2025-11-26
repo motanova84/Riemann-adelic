@@ -32,6 +32,8 @@ import RiemannAdelic.BerryKeatingOperator
 -- Entire function theory
 import RiemannAdelic.entire_order
 import RiemannAdelic.xi_entire_proof
+-- NEW: Axiom Xi Holomorphic - Complete Ξ(s) construction via Mellin transform (V6)
+import axiom_Xi_holomorphic
 
 -- Hadamard factorization and quotient analysis
 import RiemannAdelic.Hadamard
@@ -148,6 +150,10 @@ def main : IO Unit := do
   IO.println "    - Riemann Hypothesis as direct corollary"
   IO.println "    - Fredholm determinant = Xi(s) connection"
   IO.println "  • Entire function and Hadamard theory"
+  IO.println "  • NEW: Axiom Xi Holomorphic (V6 - 26 November 2025)"
+  IO.println "    - Complete Ξ(s) construction via theta/Mellin transform"
+  IO.println "    - Eliminates axiom Xi_holomorphic from proof chain"
+  IO.println "    - Pole cancellation analysis at s = 0, 1, -2n"
   IO.println "  • Hadamard factorization and quotient analysis"
   IO.println "  • Functional equation and Poisson symmetry"
   IO.println "  • Radon-Poisson integral functional symmetry"
