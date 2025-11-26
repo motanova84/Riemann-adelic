@@ -22,6 +22,11 @@ lean_lib RiemannAdelic where
   globs := #[.submodules `RiemannAdelic]
   roots := #[`RiemannAdelic]
 
+-- Adelic library - L-function spectral reconstruction
+lean_lib adelic where
+  globs := #[.submodules `adelic]
+  roots := #[`adelic]
+
 -- Main executable
 @[default_target]
 lean_exe «riemann-adelic-lean» where
