@@ -22,6 +22,17 @@ import pytest
 import numpy as np
 from typing import Callable, List
 import cmath
+from pathlib import Path
+
+# Constants for numerical tolerance
+TOLERANCE_SMALL = 1e-10
+TOLERANCE_MEDIUM = 1e-6
+TOLERANCE_LARGE = 0.01
+
+# Project paths
+PROJECT_ROOT = Path(__file__).parent.parent
+FORMALIZATION_DIR = PROJECT_ROOT / "formalization" / "lean"
+RIEMANN_ADELIC_DIR = FORMALIZATION_DIR / "RiemannAdelic"
 
 
 class FredholmDeterminantTest:
@@ -67,7 +78,7 @@ class FredholmDeterminantTest:
         result = 0.0 + 0.0j
         for n in range(1, n_terms + 1):
             lamb = self.eigenvalues(n, s)
-            if abs(1 - lamb) > 1e-10:
+            if abs(1 - lamb) > TOLERANCE_SMALL:
                 result += cmath.log(1 - lamb)
         return result
     
@@ -385,34 +396,16 @@ class TestModuleExists:
     
     def test_lean_module_exists(self):
         """Test that fredholm_determinant_zeta.lean exists"""
-        import os
+        lean_file = RIEMANN_ADELIC_DIR / "fredholm_determinant_zeta.lean"
         
-        lean_file = os.path.join(
-            os.path.dirname(__file__),
-            "..",
-            "formalization",
-            "lean",
-            "RiemannAdelic",
-            "fredholm_determinant_zeta.lean"
-        )
-        
-        assert os.path.exists(lean_file), \
-            "fredholm_determinant_zeta.lean should exist"
+        assert lean_file.exists(), \
+            f"fredholm_determinant_zeta.lean should exist at {lean_file}"
     
     def test_main_includes_module(self):
         """Test that Main.lean imports the new module"""
-        import os
+        main_file = FORMALIZATION_DIR / "Main.lean"
         
-        main_file = os.path.join(
-            os.path.dirname(__file__),
-            "..",
-            "formalization",
-            "lean",
-            "Main.lean"
-        )
-        
-        with open(main_file, 'r') as f:
-            content = f.read()
+        content = main_file.read_text()
         
         assert "fredholm_determinant_zeta" in content, \
             "Main.lean should import fredholm_determinant_zeta"

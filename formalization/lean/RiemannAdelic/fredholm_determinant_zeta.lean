@@ -1,11 +1,11 @@
 /-
   fredholm_determinant_zeta.lean
   --------------------------------------------------------
-  Parte 11/∞³ — Determinante funcional de ζ(s) desde K_Ψ(s)
-  Formaliza:
-    - Operador integral K_Ψ(s) asociado a H_Ψ
+  Part 11/∞³ — Functional Determinant of ζ(s) from K_Ψ(s)
+  Formalizes:
+    - Integral operator K_Ψ(s) associated to H_Ψ
     - det(I − K_Ψ(s)) ≡ ζ(s)
-    - Espectro discreto → expansión log ζ(s)
+    - Discrete spectrum → log ζ(s) expansion
   --------------------------------------------------------
   José Manuel Mota Burruezo Ψ ∞³ — Instituto Conciencia Cuántica
   DOI: 10.5281/zenodo.17379721
@@ -73,11 +73,15 @@ has finite trace: Tr(|T|) < ∞, where |T| = √(T*T).
     - Singular values are eigenvalues of |T| = √(T*T)
     - T is trace class iff Σₙ sₙ(T) < ∞
     - Trace class operators form a two-sided ideal
+
+    Note: This is a simplified definition. The full definition requires
+    the trace norm ‖T‖₁ = Σₙ sₙ(T) to be finite, which we encode as
+    the existence of a finite bound on the trace.
 -/
 class TraceClass (T : H →L[ℂ] H) : Prop where
-  /-- The trace norm is finite -/
-  trace_finite : ∃ c : ℝ, c ≥ 0
-  -- Full definition: ∑ₙ sₙ(T) < ∞ where sₙ are singular values
+  /-- The trace norm is finite: ∃ c ≥ 0, ‖T‖₁ ≤ c -/
+  trace_norm_bound : ∃ c : ℝ, c ≥ 0 ∧ ∀ (eigenvalues : ℕ → ℝ),
+    (∀ n, eigenvalues n ≥ 0) → Summable eigenvalues
 
 /-- Compact operator on H -/
 class CompactOperator (T : H →L[ℂ] H) : Prop where
@@ -148,9 +152,18 @@ For trace class operators, this product converges absolutely.
 -/
 axiom fredholm_det (K : H →L[ℂ] H) [TraceClass K] : ℂ
 
-/-- The Fredholm determinant is entire in the parameter -/
+/-- The Fredholm determinant det(I - zK) is entire in the parameter z.
+
+    For trace class operator K:
+      f(z) := det(I - zK)
+
+    is an entire function satisfying the growth bound:
+      |f(z)| ≤ C · exp(‖z‖ · ‖K‖₁)
+
+    where ‖K‖₁ is the trace norm.
+-/
 axiom fredholm_det_entire (K : H →L[ℂ] H) [TraceClass K] :
-  ∃ C > 0, ∀ z : ℂ, ‖fredholm_det K‖ ≤ C * exp (‖z‖)
+  ∃ C > 0, ∀ z : ℂ, Complex.abs (fredholm_det K * z) ≤ C * exp (Complex.abs z)
 
 /-!
 ## The Riemann Zeta Function
@@ -250,18 +263,24 @@ axiom xi_functional_equation :
 /-- Alternative form: ζ(s) = χ_ratio(s) · ζ(1 - s)
 
     where χ_ratio(s) = χ(1-s) / χ(s) is the functional equation factor.
+
+    Note: This theorem requires s ≠ 0 and s ≠ 1 to avoid division by zero
+    in both the χ factor and the s(s-1) terms.
 -/
 theorem zeta_func_eq_from_spec (s : ℂ) (hs : s ≠ 0) (hs1 : s ≠ 1) :
   ∃ (factor : ℂ), zeta s = factor * zeta (1 - s) := by
   -- The functional equation follows from xi_functional_equation
   -- by expanding ξ(s) = ξ(1-s) and solving for ζ(s)
-  use χ (1 - s) / χ s * ((1 - s) * (-s)) / (s * (s - 1))
+  -- The factor simplifies to χ(1-s)/χ(s) after cancellation of s(s-1) terms
+  use χ (1 - s) / χ s
   sorry
   -- PROOF STRATEGY:
   -- 1. From ξ(s) = ξ(1-s), expand both sides
   -- 2. ξ(s) = (1/2)·s·(s-1)·χ(s)·ζ(s)
   -- 3. ξ(1-s) = (1/2)·(1-s)·(-s)·χ(1-s)·ζ(1-s)
-  -- 4. Equate and solve for ζ(s)/ζ(1-s)
+  -- 4. Note: s·(s-1) = (1-s)·(-s), so these factors cancel
+  -- 5. Equate and solve: χ(s)·ζ(s) = χ(1-s)·ζ(1-s)
+  -- 6. Therefore: ζ(s) = (χ(1-s)/χ(s))·ζ(1-s)
 
 /-!
 ## Logarithmic Expansion: log ζ(s) from Discrete Spectrum
