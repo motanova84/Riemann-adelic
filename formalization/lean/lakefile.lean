@@ -22,6 +22,15 @@ lean_lib RiemannAdelic where
   globs := #[.submodules `RiemannAdelic]
   roots := #[`RiemannAdelic]
 
+-- Operator library - Spectral operators and H_Ψ core
+lean_lib Operator where
+  globs := #[.submodules `Operator]
+  roots := #[`Operator.H_psi_core]
+
+-- Hpsi_selfadjoint - Part 34/∞³ self-adjointness module
+lean_lib Hpsi where
+  roots := #[`Hpsi_selfadjoint]
+
 -- Main executable
 @[default_target]
 lean_exe «riemann-adelic-lean» where
