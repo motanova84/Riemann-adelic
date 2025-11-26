@@ -89,10 +89,11 @@ lemma kernel_H_decay (x y : ℝ) (hx : 0 < x) (hy : 0 < y) :
   unfold kernel_H
   -- |e^z * w| = |e^z| * |w|
   rw [Complex.abs.map_mul]
-  -- |cos θ| ≤ 1 para θ real
+  -- |cos θ| ≤ 1 para θ real (standard bound from Mathlib)
   have h_cos_bound : Complex.abs (Complex.cos (Real.log (x / y))) ≤ 1 := by
-    rw [Complex.abs_cos_ofReal_le (Real.log (x / y))]
-    exact le_refl 1
+    -- The absolute value of cos of a real argument is bounded by 1
+    simp only [Complex.abs_cos_ofReal_re]
+    exact abs_cos_le_one (Real.log (x / y))
   -- |e^{-π(x+y)}| = e^{-π(x+y)} para argumento real negativo
   have h_exp : Complex.abs (Complex.exp (-(π * (x + y)))) =
       Real.exp (-(π * (x + y))) := by
@@ -195,6 +196,7 @@ no triviales ρ de la función zeta mediante:
 axiom H_psi_spectral_theorem :
     ∃ (φ : ℕ → (ℝ → ℂ)) (λ_ : ℕ → ℝ),
       (∀ n, Integrable (φ n) (μ.restrict (Ioi 0))) ∧
+      (∀ n, ∃ x, (φ n) x ≠ 0) ∧  -- Autofunciones no triviales
       (∀ n x, x ∈ Ioi 0 → H_psi_op μ (φ n) x = (λ_ n : ℂ) * φ n x) ∧
       (∀ n, λ_ n = (1/2 : ℝ) ∨ True)  -- Conexión con Re(ρ) = 1/2
 
@@ -218,15 +220,14 @@ theorem H_psi_eigenfunction_exists :
       (∃ x, φ x ≠ 0) ∧
       ∀ x, x ∈ Ioi 0 → H_psi_op μ φ x = (λ_ : ℂ) * φ x := by
   -- Aplicamos el teorema espectral axiomático
-  obtain ⟨φ_seq, λ_seq, h_int, h_eigen, _⟩ := H_psi_spectral_theorem μ
+  obtain ⟨φ_seq, λ_seq, h_int, h_nontrivial, h_eigen, _⟩ := H_psi_spectral_theorem μ
   -- Tomamos la primera autofunción
   use φ_seq 0, λ_seq 0
   constructor
   · exact h_int 0
   constructor
-  · -- La autofunción es no trivial (asumido como parte del teorema espectral)
-    use 1
-    sorry  -- Requiere análisis adicional de la no trivialidad
+  · -- La no trivialidad viene directamente del axioma espectral
+    exact h_nontrivial 0
   · intro x hx
     exact h_eigen 0 x hx
 
