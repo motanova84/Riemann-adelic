@@ -116,15 +116,20 @@ La demostración completa requiere:
 2. Aplicación del teorema de Fubini
 3. Simetría del kernel gaussiano
 
-Estado: Estructura del lema establecida, prueba pendiente de
-        formalización completa con teoremas de Mathlib.
+Estado: Estructura del lema establecida. El 'sorry' indica que la prueba
+        depende de teoremas de Mathlib para productos internos en espacios L².
+        Este es un patrón común en formalizaciones Lean donde la estructura
+        matemática es correcta pero los detalles técnicos de Mathlib requieren
+        trabajo adicional. Ver H_psi_hermitian.lean para implementación alternativa.
 -/
 lemma H_Ψ_symmetric :
     ∀ f g : ℝ → ℂ, 
     (∀ x, f x ∈ H_space) → 
     (∀ x, g x ∈ H_space) → 
     ∫ x, conj (H_Ψ f x) * g x = ∫ x, conj (f x) * H_Ψ g x := by
-  sorry -- requiere formalización completa de producto interno ∞³
+  -- La prueba usa: simetría del kernel, Fubini, y propiedades del producto interno
+  -- Ver formalization/lean/operators/operator_H_ψ_symmetric.lean para prueba completa en otro contexto
+  sorry -- Pendiente: formalización completa con inner products de Mathlib
 
 /-!
 ## 4. Autoadjunción de H_Ψ
@@ -196,11 +201,27 @@ Esto es equivalente a la Hipótesis de Riemann.
 -/
 
 /-- 
-Definición placeholder para la función Xi de Riemann.
-En una formalización completa, esto sería importado de 
-la biblioteca de funciones especiales de Mathlib.
+Placeholder definition for the Riemann Xi function.
+
+The Xi function Ξ(s) is defined as:
+  Ξ(s) = ξ(1/2 + is)
+
+where ξ(s) = (1/2)s(s-1)π^(-s/2)Γ(s/2)ζ(s) is the completed xi function.
+
+In a complete formalization, this would be imported from Mathlib's 
+special functions library. Currently Mathlib does not have a complete
+formalization of the Riemann Xi function, so this serves as a placeholder.
+
+Properties of Ξ:
+1. Ξ is an entire function
+2. Ξ(s) = Ξ(-s) (symmetry)
+3. Ξ(t) ∈ ℝ for t ∈ ℝ
+4. The zeros of Ξ correspond to ρ = 1/2 + iγ with ζ(ρ) = 0
+
+See: formalization/lean/RH_final_v6/spectrum_HΨ_equals_zeta_zeros.lean
+     for alternative implementations using Mathlib zeta stubs.
 -/
-def Ξ (s : ℂ) : ℂ := sorry -- Función Xi de Riemann: Ξ(s) = ξ(1/2 + is)
+def Ξ (s : ℂ) : ℂ := sorry -- Placeholder: Riemann Xi function, pending Mathlib formalization
 
 /-- 
 Definición del espectro de un operador (simplificada).

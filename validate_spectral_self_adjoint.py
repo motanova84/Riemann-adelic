@@ -35,7 +35,7 @@ def validate_spectral_self_adjoint(lean_file_path: str) -> Dict[str, Any]:
     if not file_path.exists():
         return {
             "success": False,
-            "error": f"Archivo no encontrado: {lean_file_path}"
+            "error": f"File not found: {lean_file_path}"
         }
     
     with open(file_path, 'r', encoding='utf-8') as f:
