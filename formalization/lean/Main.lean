@@ -32,6 +32,8 @@ import RiemannAdelic.BerryKeatingOperator
 -- Entire function theory
 import RiemannAdelic.entire_order
 import RiemannAdelic.xi_entire_proof
+-- Script 4: Holomorphy of Ξ(s) = D(s) as entire function
+import RiemannAdelic.Xi_holomorphic
 
 -- Hadamard factorization and quotient analysis
 import RiemannAdelic.Hadamard
@@ -74,6 +76,11 @@ import RiemannAdelic.paley_wiener_uniqueness
 import paley.paley_wiener_uniqueness
 -- Identity Principle for Exponential Type Functions
 import paley.identity_principle_exp_type
+
+-- NEW: Spectral Operator H_Ψ symbolic construction (26 Nov 2025)
+-- Noetic operator H_Ψ with spectrum corresponding to Ξ(s) zeros
+import spectral.functional_equation
+import spectral.operator_hpsi
 
 -- Spectral RH operator with prime harmonic potential
 import RiemannAdelic.spectral_rh_operator
@@ -138,6 +145,12 @@ def main : IO Unit := do
   IO.println "  • Explicit D(s) construction"
   IO.println "  • Operator-theoretic formulation (Hε with oscillatory potential)"
   IO.println "  • Berry-Keating operator H_Ψ on L²(ℝ⁺, dx/x)"
+  IO.println "  • NEW: Noetic Operator H_Ψ (spectral/operator_hpsi.lean - 26 Nov 2025)"
+  IO.println "    - Hilbert space HΨ_space with inner product structure"
+  IO.println "    - Self-adjoint operator H_Ψ axiom (von Neumann type I)"
+  IO.println "    - Spectrum = Ξ(s) zeros correspondence"
+  IO.println "    - RH_iff_HΨ_spectrum_critical_line theorem"
+  IO.println "    - QCAL integration: 141.7001 Hz base frequency"
   IO.println "  • NEW: Adelic Spectrum Module (H_adelic_spectrum)"
   IO.println "    - Eliminates axiom H_model_spectrum"
   IO.println "    - Proves spectrum transfer from adelic via isometry"
@@ -151,6 +164,7 @@ def main : IO Unit := do
   IO.println "    - Riemann Hypothesis as direct corollary"
   IO.println "    - Fredholm determinant = Xi(s) connection"
   IO.println "  • Entire function and Hadamard theory"
+  IO.println "  • Script 4: Xi_holomorphic (Ξ(s) = D(s) as entire function)"
   IO.println "  • Hadamard factorization and quotient analysis"
   IO.println "  • Functional equation and Poisson symmetry"
   IO.println "  • Radon-Poisson integral functional symmetry"
