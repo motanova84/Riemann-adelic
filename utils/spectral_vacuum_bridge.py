@@ -19,7 +19,7 @@ License: Creative Commons BY-NC-SA 4.0
 """
 
 import numpy as np
-from typing import Dict, Optional, Tuple, List
+from typing import Any, Dict, Optional, Tuple, List
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
 
@@ -433,7 +433,7 @@ def derive_f0_mathematical() -> float:
     return f0
 
 
-def validate_physical_consistency() -> Dict[str, any]:
+def validate_physical_consistency() -> Dict[str, Any]:
     """
     Validate the physical consistency of the spectral-vacuum framework.
     
