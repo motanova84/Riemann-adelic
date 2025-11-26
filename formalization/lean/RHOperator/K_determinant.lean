@@ -51,8 +51,16 @@ axiom K_op : ℂ → (H →L[ℂ] H)
 /-- K(s) is compact for all s -/
 axiom K_compact (s : ℂ) : IsCompact (Set.range (K_op s))
 
-/-- K(s) is trace class (nuclear) for Re(s) > 0 -/
-axiom K_trace_class (s : ℂ) (hs : s.re > 0) : True  -- Simplified axiom for nuclearity
+/-- K(s) is trace class (nuclear) for Re(s) > 0
+    
+    TODO: In a complete formalization, this should use Mathlib's trace class predicate.
+    The full statement would be: 
+    ∀ (T : H →L[ℂ] H), IsTraceClass T ↔ ∑ₙ (singularValue T n) < ∞
+    
+    For the operator K(s), trace class holds when Re(s) > 0 due to the 
+    exponential decay of the kernel in the spectral representation.
+-/
+axiom K_trace_class (s : ℂ) (hs : s.re > 0) : True  -- Placeholder for TraceClass (K_op s)
 
 /-- K(s) depends holomorphically on s -/
 axiom K_holomorphic : Differentiable ℂ K_op
@@ -98,13 +106,23 @@ axiom D_functional_equation : ∀ s : ℂ, D s = D (1 - s)
 /-- Eigenvalues of K(s) -/
 axiom K_eigenvalues : ℂ → ℕ → ℂ
 
-/-- D(s) = 0 iff some eigenvalue of K(s) equals 1 -/
+/-- D(s) = 0 iff some eigenvalue of K(s) equals 1
+    
+    TODO: Complete this proof using:
+    1. fredholmDet_zero_iff: det(T) = 0 ⟺ 1 ∈ spectrum(T)
+    2. Spectral theorem: 1 ∈ spectrum(T) ⟺ ∃ eigenvalue λ = 1
+    3. Eigenvalue enumeration: K_eigenvalues encodes all eigenvalues
+    
+    The technical difficulty lies in connecting the abstract spectrum
+    to the concrete enumerated eigenvalues.
+-/
 theorem D_zero_iff_eigenvalue_one (s : ℂ) :
     D s = 0 ↔ ∃ n : ℕ, K_eigenvalues s n = 1 := by
   rw [D_equals_det_K]
   rw [fredholmDet_zero_iff]
   -- The spectrum condition translates to eigenvalue condition
-  sorry -- Technical proof using spectral theory
+  -- This requires the spectral theorem for compact operators
+  sorry
 
 /-- The zeros of D(s) lie on the critical line Re(s) = 1/2
     (This is equivalent to RH) -/

@@ -62,9 +62,15 @@ def Xi (s : ℂ) : ℂ :=
     Xi(s) = Xi(1 - s)
     
     La simetría proviene de:
-    1. La simetría del determinante D(s) = D(1-s)
-    2. La ecuación funcional de Γ(s)
+    1. La simetría del determinante D(s) = D(1-s) (axioma D_functional_equation)
+    2. La ecuación funcional de Γ(s): Γ(s)·Γ(1-s) = π/sin(πs)
     3. La propiedad π^(-s/2) · π^(-(1-s)/2) = π^(-1/2)
+    
+    NOTE: In principle this could be proven from D_functional_equation combined with
+    the reflection formula for Gamma. The technical difficulty lies in showing that
+    Xi_norm(s) · D(s) = Xi_norm(1-s) · D(1-s) using these identities.
+    For now we state it as an axiom since the full proof requires careful
+    handling of the normalization constants.
 -/
 axiom Xi_symmetry : ∀ s : ℂ, Xi s = Xi (1 - s)
 
@@ -142,16 +148,6 @@ theorem Xi_zeros_on_critical_line (s : ℂ) (h : Xi s = 0) (hNorm : Xi_norm s �
     exact this h
   -- Aplicamos el axioma de ceros en línea crítica
   exact zeros_on_critical_line s hD
-
-/-! ## Verification Checks -/
-
-#check Xi
-#check Xi_norm
-#check Xi_symmetry
-#check zeros_symmetry
-#check Xi_determinantal_identity
-#check Xi_zeros_spectral
-#check Xi_zeros_on_critical_line
 
 end RHOperator
 
