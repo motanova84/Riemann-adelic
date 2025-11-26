@@ -64,8 +64,9 @@ lemma continuous_half : Continuous fun s : ℂ => s / 2 :=
   Continuous.div_const continuous_id 2
 
 /-- Lema: La función s ↦ -s/2 es diferenciable en todo punto. -/
-lemma differentiableAt_neg_half (s : ℂ) : DifferentiableAt ℂ (fun s => -s / 2) s := 
-  DifferentiableAt.div_const (differentiableAt_neg.comp s differentiableAt_id) 2
+lemma differentiableAt_neg_half (s : ℂ) : DifferentiableAt ℂ (fun s => -s / 2) s := by
+  apply DifferentiableAt.div_const
+  exact DifferentiableAt.neg differentiableAt_id
 
 /-- Lema: La función s ↦ s/2 es diferenciable en todo punto. -/
 lemma differentiableAt_half (s : ℂ) : DifferentiableAt ℂ (fun s => s / 2) s := 
@@ -150,7 +151,12 @@ lemma gammaFactor_at_two : gammaFactor 2 = (Real.pi : ℂ)⁻¹ := by
 
 /-- El factor gamma satisface γ(s) = π^(-s/2) · Γ(s/2) por definición.
     
-    Este lema expone la estructura interna del factor.
+    Este lema expone la estructura interna del factor, permitiendo
+    reescrituras en pruebas que necesitan acceder a los factores individuales.
+    Es útil para aplicar lemas sobre cpow y Complex.Gamma por separado.
+    
+    Nota: Este módulo proporciona la implementación completa del factor gamma.
+    El archivo arch_factor.lean contiene solo un placeholder stub.
 -/
 lemma gammaFactor_eq (s : ℂ) : 
     gammaFactor s = (Real.pi : ℂ) ^ (-s / 2) * Complex.Gamma (s / 2) := rfl
