@@ -32,6 +32,8 @@ import RiemannAdelic.BerryKeatingOperator
 -- Entire function theory
 import RiemannAdelic.entire_order
 import RiemannAdelic.xi_entire_proof
+-- Script 4: Holomorphy of Ξ(s) = D(s) as entire function
+import RiemannAdelic.Xi_holomorphic
 
 -- Hadamard factorization and quotient analysis
 import RiemannAdelic.Hadamard
@@ -151,6 +153,7 @@ def main : IO Unit := do
   IO.println "    - Riemann Hypothesis as direct corollary"
   IO.println "    - Fredholm determinant = Xi(s) connection"
   IO.println "  • Entire function and Hadamard theory"
+  IO.println "  • Script 4: Xi_holomorphic (Ξ(s) = D(s) as entire function)"
   IO.println "  • Hadamard factorization and quotient analysis"
   IO.println "  • Functional equation and Poisson symmetry"
   IO.println "  • Radon-Poisson integral functional symmetry"
