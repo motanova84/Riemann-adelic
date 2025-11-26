@@ -82,10 +82,22 @@ def symmetricKernel (K : ℝ → ℝ → ℝ) : Prop :=
 def H_psi_integral (K : ℝ → ℝ → ℝ) (f : ℝ → ℝ) (x : ℝ) : ℝ :=
   ∫ y in Ioi 0, K x y * f y / y
 
-/-- The core H_Ψ operator as a continuous linear map on the domain -/
+/-- The core H_Ψ operator as a continuous linear map on the domain
+    
+    TODO: This construction requires showing that H_psi_action preserves 
+    Schwarz space and is continuous in the Schwarz topology. The full
+    implementation requires:
+    1. Proof that -x·f'(x) is in Schwarz space when f is
+    2. Continuity estimates in the Schwarz seminorm topology
+    3. Linearity is immediate from the definition
+    
+    In a complete Mathlib-based implementation, this would use:
+    - `LinearMap.mkContinuous` for the continuous linear map construction
+    - Schwarz space preservation under differentiation and multiplication -/
 def H_psi_core : (SchwarzSpace ℂ) →L[ℂ] (SchwarzSpace ℂ) := by
   -- Construction requires showing H_psi_action preserves Schwarz space
   -- and is continuous in the Schwarz topology
+  -- Reference: Mathlib.Analysis.Distribution.SchwartzSpace
   sorry
 
 /-!
