@@ -22,7 +22,7 @@ The implementation provides:
 
 ### Files Created
 
-1. **`formalization/lean/operator_H_psi.lean`** (185 lines)
+1. **`formalization/lean/operator_H_psi.lean`** (187 lines)
    - Complete Von Neumann framework for self-adjoint operators
    - Hilbert space L²(ℝ, ℂ) definition
    - H_psi_struct with domain, operator, self-adjointness, and density
@@ -50,7 +50,7 @@ structure H_psi_struct where
 #### 3. Formal Operator Definition
 ```lean
 def H_psi_formal (f : ℝ → ℂ) : ℝ → ℂ :=
-  fun x ↦ - (deriv (deriv f)) x + (↑(log (|x| + 1)) : ℂ) * f x
+  fun x ↦ - (deriv (deriv f)) x + (↑(log (abs x + 1)) : ℂ) * f x
 ```
 
 ### Integration with QCAL ∞³
