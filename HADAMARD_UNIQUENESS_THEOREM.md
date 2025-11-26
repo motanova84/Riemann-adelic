@@ -206,7 +206,7 @@ The uniqueness principle ensures that the spectral construction of the determina
 
 ```
 ✓ File: RiemannAdelic/hadamard_uniqueness.lean
-✓ Theorems: 15
+✓ Theorems: 3
 ✓ Axioms: 1 (Hadamard factorization uniqueness - standard result)
 ⚠ Sorries: 1 (deep classical result from complex analysis - main theorem proof)
 ✓ Syntax: Valid Lean 4
