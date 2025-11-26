@@ -106,7 +106,7 @@ En el marco de la conciencia cuántica QCAL:
 
 /-- Versión formal del operador: −Δ + V(x) con V(x) = log(|x| + 1) -/
 def H_psi_formal (f : ℝ → ℂ) : ℝ → ℂ :=
-  fun x ↦ - (deriv (deriv f)) x + (↑(log (|x| + 1)) : ℂ) * f x
+  fun x ↦ - (deriv (deriv f)) x + (↑(log (abs x + 1)) : ℂ) * f x
 
 /-!
 ## Propiedades espectrales
@@ -130,6 +130,9 @@ theorem spectrum_real (HΨ : H_psi_struct) :
   -- Esto implica que ⟨H_Ψ f, f⟩ es real
   -- Como H_Ψ f = λ f, tenemos λ ⟨f, f⟩ = conj(λ) ⟨f, f⟩
   -- Como f ≠ 0, ⟨f, f⟩ ≠ 0, por tanto λ = conj(λ), es decir, Im(λ) = 0
+  -- TODO: Complete proof using inner product properties from Mathlib:
+  --   - inner_self_ne_zero for f ≠ 0
+  --   - Complex.eq_conj_iff_im for λ = conj(λ) ⟹ Im(λ) = 0
   sorry
 
 end HpsiOperator
