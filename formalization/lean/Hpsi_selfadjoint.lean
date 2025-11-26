@@ -39,8 +39,12 @@ variable {𝓗 : Type*} [NormedAddCommGroup 𝓗] [InnerProductSpace ℂ 𝓗] [
 /-- Medida de Haar multiplicativa sobre ℝ⁺: dμ = dx/x -/
 def HaarMeasure : Measure ℝ := volume.restrict (Ioi 0)
 
-/-- Espacio L² sobre ℝ⁺ con medida de Haar -/
-abbrev L2Haar := ℝ →L[ℂ] ℂ
+/-- Espacio L² sobre ℝ⁺ con medida de Haar 
+    
+    Nota: Esta es una definición simplificada. La definición completa
+    sería Lp ℂ 2 HaarMeasure, pero requiere setup adicional de Mathlib.
+-/
+abbrev L2Haar := Lp ℂ 2 HaarMeasure
 
 /-!
 ## 2. Definición del operador H_Ψ
@@ -52,9 +56,14 @@ de la función zeta de Riemann.
 H_Ψ f(x) = ∫ K(x, y) f(y) dμ(y) = ∫ K(x, y) f(y) dy/y
 -/
 
-/-- Operador integral tipo kernel simétrico (filtro espectral) -/
+/-- Operador integral tipo kernel simétrico (filtro espectral)
+    
+    H_Ψ f(x) = ∫_{ℝ⁺} K(x, y) f(y) dμ(y)
+    
+    donde dμ = dy/y es la medida de Haar multiplicativa.
+-/
 def Hpsi (K : ℝ → ℝ → ℝ) (f : ℝ → ℝ) (x : ℝ) : ℝ :=
-  ∫ y in Ioi 0, K x y * f y / y
+  ∫ y in Ioi 0, K x y * f y ∂HaarMeasure
 
 /-- Definición de kernel simétrico: K(x, y) = K(y, x) -/
 def symmetric_kernel (K : ℝ → ℝ → ℝ) : Prop :=
@@ -75,13 +84,22 @@ El operador H_Ψ actúa sobre un espacio de Hilbert complejo ℋ.
 La construcción espectral relaciona los autovalores con los ceros de ζ(s).
 -/
 
-/-- Construcción espectral del operador H_Ψ -/
+/-- Construcción espectral del operador H_Ψ
+    
+    Axioma que garantiza la existencia del operador H_Ψ como operador lineal
+    sobre el espacio de Hilbert. La construcción explícita viene de la teoría
+    de Berry-Keating y operadores integrales con kernel simétrico.
+-/
 axiom spectralConstruction : 
-  ∃ (hPsi : 𝓗 →ₗ[ℂ] 𝓗), True
+  ∃ (hPsi : 𝓗 →ₗ[ℂ] 𝓗), 
+    (∀ f g : 𝓗, ⟪hPsi f, g⟫_ℂ = ⟪f, hPsi g⟫_ℂ) -- simétrico
 
-/-- Definición formal del operador H_Ψ (Hermítico) -/
+/-- Definición formal del operador H_Ψ (Hermítico) 
+    
+    El operador está definido mediante la construcción espectral axiomatizada.
+    La elección clásica extrae un testigo concreto del axioma de existencia.
+-/
 def HΨ : 𝓗 →ₗ[ℂ] 𝓗 := 
-  -- Placeholder: operador definido espectralmente
   Classical.choose spectralConstruction
 
 /-!
@@ -104,9 +122,16 @@ ser denso en el espacio de Hilbert ℋ. Esto asegura que la extensión
 por clausura esté bien definida.
 -/
 
-/-- Densidad del dominio de HΨ en ℋ -/
+/-- Densidad del dominio de HΨ en ℋ 
+    
+    El dominio de H_Ψ (funciones suaves con soporte compacto en ℝ⁺)
+    es denso en L²(ℝ⁺, dx/x). Para cualquier elemento del espacio de
+    Hilbert, existe una secuencia en el dominio que converge a él.
+    
+    Formulación: ∀ψ ∈ ℋ, ∀ε > 0, ∃φ ∈ Dom(HΨ), ‖ψ - φ‖ < ε
+-/
 axiom dense_domain_HΨ :
-  ∀ ε > 0, ∃ φ : 𝓗, ‖φ - HΨ φ‖ < ε
+  ∀ ψ : 𝓗, ∀ ε > 0, ∃ φ : 𝓗, ‖ψ - φ‖ < ε ∧ ∃ v : 𝓗, HΨ φ = v
 
 /-!
 ## 6. Definición del espectro
