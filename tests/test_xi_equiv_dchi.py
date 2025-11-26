@@ -34,8 +34,8 @@ class TestXiEquivDchiFormalization:
         assert "axiom xi_eq_dchi" in content, \
             "Main axiom 'xi_eq_dchi' not found"
         
-        # Check for proper structure
-        assert "Xi s = Dχ s" in content or "Xi s = Dχ s" in content, \
+        # Check for proper structure - look for the equivalence in the axiom
+        assert "Xi s = Dχ s" in content, \
             "Equivalence statement not found"
 
     def test_xi_equiv_dchi_has_trace_equiv(self):
