@@ -37,4 +37,4 @@ lean_lib RHFinal where
     `Riemann_Hypothesis_noetic,
     `NuclearityExplicit
   ]
-  roots := #[`paley_wiener_uniqueness, `selberg_trace, `H_psi_complete, `D_limit_equals_xi, `spectral_convergence_from_kernel]
+  roots := #[`paley_wiener_uniqueness, `selberg_trace, `H_psi_complete, `D_limit_equals_xi, `spectral_convergence_from_kernel, `zeros_xi_structure]
