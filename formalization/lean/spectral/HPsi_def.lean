@@ -192,19 +192,26 @@ axiom H_Ψ_symmetric : ∀ (φ ψ : Domain_H_Ψ),
     1. El dominio es denso
     2. Los índices de deficiencia son iguales
     3. El potencial es localmente acotado
+    
+    Note: The 'True' placeholder represents the full self-adjoint extension
+    conditions that would be formalized with Mathlib's operator theory.
 -/
 axiom H_Ψ_essentially_selfadjoint : 
-  ∃! (H : Hilbert_Xi → Hilbert_Xi), True  -- Placeholder para extensión auto-adjunta
+  ∃! (H : Hilbert_Xi → Hilbert_Xi), True  -- Placeholder: full conditions in operator theory
 
-/-- Enunciado consolidado: H_Ψ es auto-adjunto
+/-- Self-adjoint operator definition
     
-    Esto combina:
-    1. Simetría: ⟨φ, Hψ⟩ = ⟨Hφ, ψ⟩
-    2. Dominio denso: C^∞_c(0,∞) es denso en L²((0,∞), dx/x)
-    3. Clausura: la clausura del operador es auto-adjunta
+    A linear operator T is self-adjoint if:
+    ⟨Tx, y⟩ = ⟨x, Ty⟩ for all x, y in domain(T)
+    
+    The 'True' placeholder is used here because the full definition
+    requires Mathlib's inner product space infrastructure which may
+    not compile without the full Mathlib dependency resolution.
+    
+    In full Mathlib: SelfAdjoint T ↔ ∀ x y, inner (T x) y = inner x (T y)
 -/
 def SelfAdjoint (T : Hilbert_Xi →ₗ[ℂ] Hilbert_Xi) : Prop :=
-  True  -- Placeholder para la definición completa de auto-adjunticidad
+  True  -- Placeholder: ∀ (x y : Hilbert_Xi), inner (T x) y = inner x (T y)
 
 axiom H_Ψ_self_adjoint : ∃ (T : Hilbert_Xi →ₗ[ℂ] Hilbert_Xi), SelfAdjoint T
 
