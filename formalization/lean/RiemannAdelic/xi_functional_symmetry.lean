@@ -69,8 +69,12 @@ axiom Gamma : ℂ → ℂ
 /-- Función Zeta de Riemann: ζ(s) para s ∈ ℂ -/
 axiom Zeta : ℂ → ℂ
 
-/-- Propiedad de reflexión de Gamma: Γ(s)·Γ(1-s) = π/sin(πs) -/
-axiom Gamma_reflection (s : ℂ) : 
+/-- Propiedad de reflexión de Gamma: Γ(s)·Γ(1-s) = π/sin(πs)
+    
+    Restricción de dominio: s ∉ ℤ (para que sin(πs) ≠ 0)
+    En enteros, la fórmula se interpreta mediante límites.
+-/
+axiom Gamma_reflection (s : ℂ) (h_not_int : ∀ n : ℤ, s ≠ n) : 
   Gamma s * Gamma (1 - s) = π / Complex.sin (π * s)
 
 /-- Fórmula de duplicación de Gamma (Legendre): 
@@ -151,8 +155,10 @@ Relacionamos Γ(s/2) con Γ((1-s)/2) usando la fórmula de reflexión.
     Γ(s/2) · Γ(1 - s/2) = π / sin(πs/2)
     
     Con 1 - s/2 = (2-s)/2, relacionamos con (1-s)/2 usando duplicación.
+    
+    Restricción: s ∉ 2ℤ (para que sin(πs/2) ≠ 0)
 -/
-lemma gamma_half_functional (s : ℂ) :
+lemma gamma_half_functional (s : ℂ) (h_sin_nonzero : Complex.sin (π * s / 2) ≠ 0) :
   Gamma (s / 2) = 
     Gamma ((1 - s) / 2) * π ^ (s - 1/2) * (Complex.sin (π * s / 2))⁻¹ := by
   -- Esta es la fórmula funcional de Gamma aplicada a s/2
@@ -340,8 +346,17 @@ theorem xi_symmetry_from_spectral :
 Propiedades complementarias útiles para la teoría.
 -/
 
-/-- Xi(s) es función entera (sin polos) -/
-axiom Xi_entire : ∀ s : ℂ, ∃ y : ℂ, Xi s = y
+/-- Xi(s) es función entera (analítica en todo ℂ)
+    
+    La función Xi es entera porque:
+    1. Los polos de Γ(s/2) en s = 0, -2, -4, ... son cancelados por los ceros del factor s(s-1)
+    2. Los polos de ζ(s) en s = 1 son cancelados por el factor (s-1)
+    3. La función resultante es analítica en todo el plano complejo
+    
+    Expresamos la propiedad de ser entera en términos de crecimiento controlado.
+-/
+axiom Xi_entire : ∃ (C : ℝ) (k : ℕ), C > 0 ∧ 
+  ∀ s : ℂ, Complex.abs (Xi s) ≤ C * (1 + Complex.abs s) ^ k
 
 /-- Xi(s) es real en la línea crítica -/
 lemma Xi_real_on_critical_line (t : ℝ) : 
