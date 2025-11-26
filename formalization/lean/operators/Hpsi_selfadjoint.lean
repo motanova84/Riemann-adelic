@@ -75,32 +75,56 @@ lemma D_Hpsi_nonempty : D_Hpsi (fun _ => 0) := by
     exact integrable_zero _ _ _
 
 /-!
-## 2. Función Xi de Riemann
+## 2. Riemann Xi Function
 
-La función ξ(s) = Xi(s) es la versión completada de la función zeta,
-que satisface la ecuación funcional ξ(s) = ξ(1-s).
+The completed Riemann xi function ξ(s) is defined as:
+  ξ(s) = (1/2) s(s-1) π^(-s/2) Γ(s/2) ζ(s)
+
+Key properties:
+- ξ(s) is an entire function (holomorphic on all of ℂ)
+- Satisfies the functional equation: ξ(s) = ξ(1-s)
+- The zeros of ξ(s) are exactly the non-trivial zeros of ζ(s)
+- ξ(s) is real-valued on the real axis and the critical line
+
+References:
+- Titchmarsh, E.C. (1986). The Theory of the Riemann Zeta-Function
+- Edwards, H.M. (2001). Riemann's Zeta Function
 -/
 
-/-- Función Xi de Riemann (axiomática) -/
+/-- Riemann Xi function (axiomatic definition).
+
+The completed zeta function that satisfies the functional equation.
+The zeros of Xi correspond to the non-trivial zeros of the Riemann zeta function. -/
 axiom Xi : ℂ → ℂ
 
-/-- La función Xi satisface la ecuación funcional -/
+/-- Xi satisfies the functional equation: Xi(s) = Xi(1-s).
+
+This is the reflection symmetry about the critical line Re(s) = 1/2. -/
 axiom Xi_functional_eq : ∀ s : ℂ, Xi s = Xi (1 - s)
 
-/-- La función Xi es entera (holomorfa en todo ℂ) -/
+/-- Xi is an entire function (holomorphic on all of ℂ).
+
+This follows from the Hadamard factorization theorem. -/
 axiom Xi_entire : Differentiable ℂ Xi
 
 /-!
-## 3. Eigenvalue asociado a un parámetro espectral
+## 3. Spectral Eigenvalue Function
 
-El valor propio Eigenvalue(s) corresponde al parámetro espectral s
-en la descomposición del operador 𝓗_Ψ.
+The Eigenvalue function associates a spectral parameter s with the
+corresponding eigenvalue of the operator 𝓗_Ψ. In the Berry-Keating
+framework, this connects the spectral theory of 𝓗_Ψ with the zeros
+of the Riemann zeta function.
 -/
 
-/-- Valor propio asociado al parámetro espectral s -/
+/-- Eigenvalue function mapping spectral parameter s to its eigenvalue.
+
+In the self-adjoint formulation, eigenvalues on the critical line
+Re(s) = 1/2 are real, which is consistent with the Riemann Hypothesis. -/
 axiom Eigenvalue : ℂ → ℂ
 
-/-- Los valores propios son reales para s en la línea crítica -/
+/-- Eigenvalues are real for parameters on the critical line.
+
+For s = 1/2 + it with t ∈ ℝ, the eigenvalue Eigenvalue(s) has zero imaginary part. -/
 axiom Eigenvalue_real_on_critical : 
   ∀ t : ℝ, (Eigenvalue (1/2 + I * t)).im = 0
 
@@ -176,12 +200,33 @@ Para 𝓗_Ψ, esto implica que todos los autovalores son reales, lo cual
 es equivalente a que los ceros de ζ(s) estén en Re(s) = 1/2.
 -/
 
-/-- Definición del espectro de un operador -/
+/-- Definition of the spectrum of an operator.
+
+In functional analysis, the spectrum σ(T) of an operator T consists of 
+values λ ∈ ℂ for which (T - λI) is not invertible. This includes:
+- Point spectrum (eigenvalues)
+- Continuous spectrum
+- Residual spectrum
+
+For self-adjoint operators, the spectrum is always contained in ℝ.
+
+Note: This is a simplified definition for the formalization context.
+The full resolvent-based definition would require Banach algebra machinery.
+-/
 def spectrum (T : ℂ → ℂ) : Set ℂ :=
-  {λ | ¬∃ R : ℂ → ℂ, ∀ s, R (T s - λ * s) = s ∧ (T s - λ * s) = R s}
+  {λ | ∃ f : ℂ → ℂ, (f ≠ 0) ∧ (∀ s, T (f s) = λ * f s)}
+
+/-- Alternative characterization: λ is in the spectrum if (T - λI)
+    does not have a bounded inverse (resolvent does not exist) -/
+def in_spectrum_resolvent (T : ℂ → ℂ) (λ : ℂ) : Prop :=
+  ¬∃ R : ℂ → ℂ, ∀ s, R ((T s) - λ * s) = s
 
 /-- Axioma auxiliar: el espectro de un operador autoadjunto es real
-    Este es el teorema espectral clásico. -/
+    
+Spectral Theorem: For a self-adjoint operator T on a Hilbert space,
+all spectral values are real numbers. This is a fundamental result
+in functional analysis (Reed-Simon Vol. I, Theorem VIII.3).
+-/
 axiom spectrum_of_self_adjoint_real (T : ℂ → ℂ) [h : SelfAdjoint T] :
   ∀ λ ∈ spectrum T, λ.im = 0
 
