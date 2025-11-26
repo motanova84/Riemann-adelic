@@ -80,15 +80,16 @@ The Hadamard product representation for Ξ(s):
 
 where:
 - A, B are constants (A = log(2π)/2, B = ... from explicit calculation)
-- The product runs over all zeros ρ of Ξ(s) (i.e., non-trivial zeros of ζ(s))
+- The product runs over all non-zero zeros ρ of Ξ(s) (i.e., non-trivial zeros of ζ(s))
 - The product converges absolutely due to the order 1 property
+- Note: ρ ≠ 0 is required to avoid division by zero in the factors
 
 The use of ∏' (tprod - infinite product in Mathlib) is consistent with
 the conventions for convergent infinite products in Mathlib.
 -/
 axiom Xi_order_one :
   ∃ (A B : ℂ), ∀ s : ℂ,
-    Xi s = exp (A * s + B) * ∏' (ρ : ℂ) in {ρ | Xi ρ = 0}, (1 - s / ρ) * exp (s / ρ)
+    Xi s = exp (A * s + B) * ∏' (ρ : ℂ) in {ρ | Xi ρ = 0 ∧ ρ ≠ 0}, (1 - s / ρ) * exp (s / ρ)
 
 /-!
 ## Observations and Consequences

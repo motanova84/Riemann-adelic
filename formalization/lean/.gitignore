@@ -23,3 +23,5 @@ build/rh_proof.metadata
 # OS files
 .DS_Store
 Thumbs.db
+# Validation report - auto-generated
+validation_report.json
