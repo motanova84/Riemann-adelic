@@ -116,8 +116,8 @@ import RiemannAdelic.SelbergTraceStrong
 -- Heat Kernel Convergence (formalization in progress)
 import RiemannAdelic.heat_kernel_to_delta_plus_primes
 
--- Fredholm Determinant D(s) = det(I - s·ℋ_Ψ) (November 2025)
-import determinant_function
+-- Fredholm Determinant and ζ(s) Reconstruction (Part 11/∞³)
+import RiemannAdelic.fredholm_determinant_zeta
 
 def main : IO Unit := do
   IO.println "╔═══════════════════════════════════════════════════════════╗"
@@ -192,11 +192,11 @@ def main : IO Unit := do
   IO.println "  • Gamma trivial exclusion (purge_axioms branch)"
   IO.println "  • Selberg Trace Formula (strong form with exact convergence)"
   IO.println "  • Heat Kernel Convergence to δ₀ + Arithmetic Distribution (formalization in progress; contains sorry/axiom)"
-  IO.println "  • NEW: Fredholm Determinant Function (24 November 2025)"
-  IO.println "    - D(s) = det(I - s·ℋ_Ψ) as infinite product"
-  IO.println "    - Convergence theorem for all s ∈ ℂ"
-  IO.println "    - Entire function property proven"
-  IO.println "    - Order ≤ 1 established"
+  IO.println "  • NEW: Fredholm Determinant and ζ(s) Reconstruction (Part 11/∞³)"
+  IO.println "    - K_Ψ(s) integral operator on ℓ²(ℕ)"
+  IO.println "    - det(I − K_Ψ(s)) = ζ(s) identity"
+  IO.println "    - Functional equation from spectral symmetry"
+  IO.println "    - log ζ(s) expansion from discrete spectrum"
   IO.println ""
   IO.println "Status: Constructive formalization in progress (purge_axioms branch)"
   IO.println "DOI: 10.5281/zenodo.17116291"
