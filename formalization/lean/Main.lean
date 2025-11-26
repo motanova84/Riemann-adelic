@@ -125,8 +125,10 @@ import RiemannAdelic.SelbergTraceStrong
 -- Heat Kernel Convergence (formalization in progress)
 import RiemannAdelic.heat_kernel_to_delta_plus_primes
 
--- Fredholm Determinant and ζ(s) Reconstruction (Part 11/∞³)
-import RiemannAdelic.fredholm_determinant_zeta
+-- Script 41/∞³: Zeta from Heat Kernel (NEW - 26 November 2025)
+-- Reconstruction of ζ(s) from heat kernel of H_Ψ²
+import spectral.H_psi_spectrum
+import spectral.zeta_from_heat_kernel
 
 def main : IO Unit := do
   IO.println "╔═══════════════════════════════════════════════════════════╗"
@@ -210,11 +212,11 @@ def main : IO Unit := do
   IO.println "  • Gamma trivial exclusion (purge_axioms branch)"
   IO.println "  • Selberg Trace Formula (strong form with exact convergence)"
   IO.println "  • Heat Kernel Convergence to δ₀ + Arithmetic Distribution (formalization in progress; contains sorry/axiom)"
-  IO.println "  • NEW: Fredholm Determinant and ζ(s) Reconstruction (Part 11/∞³)"
-  IO.println "    - K_Ψ(s) integral operator on ℓ²(ℕ)"
-  IO.println "    - det(I − K_Ψ(s)) = ζ(s) identity"
-  IO.println "    - Functional equation from spectral symmetry"
-  IO.println "    - log ζ(s) expansion from discrete spectrum"
+  IO.println "  • NEW: Script 41/∞³ - Zeta from Heat Kernel (26 November 2025)"
+  IO.println "    - spectral/H_psi_spectrum: Eigenvalue sequence λₙ of H_Ψ"
+  IO.println "    - spectral/zeta_from_heat_kernel: ζ(s) reconstruction via Mellin transform"
+  IO.println "    - heat_kernel_trace: Tr(exp(-t·H_Ψ²)) = ∑ₙ exp(-t·λₙ²)"
+  IO.println "    - zeta_from_heat: ζ(s) = (1/Γ(s)) ∫ t^(s-1) Tr(K_t) dt"
   IO.println ""
   IO.println "Status: Constructive formalization in progress (purge_axioms branch)"
   IO.println "DOI: 10.5281/zenodo.17116291"
