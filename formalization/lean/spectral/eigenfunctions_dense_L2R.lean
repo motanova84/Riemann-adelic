@@ -241,7 +241,7 @@ theorem HΨ_eigenfunctions_dense
   (hSA : IsSelfAdjoint H_Ψ)
   (hC : IsCompactOperator H_Ψ) :
   ∃ (e : ℕ → H), Orthonormal ℂ e ∧ 
-    (⊤ : Submodule ℂ H) = Submodule.span ℂ (Set.range e) := by
+    Submodule.span ℂ (Set.range e) = ⊤ := by
   exact eigenfunctions_span_total H_Ψ hSA hC
 
 /-!
