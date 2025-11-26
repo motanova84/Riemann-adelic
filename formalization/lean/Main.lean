@@ -98,6 +98,9 @@ import RiemannAdelic.riemann_hypothesis_proof
 -- NoExtraneousSpectrum: Final closure - spectrum = zeta zeros (23 Nov 2025)
 import RiemannAdelic.NoExtraneousSpectrum
 
+-- RHSpectralProof: Spectral form of RH with Dχ(s) ≡ Ξ(s) identity
+-- import RHComplete.RHSpectralProof  -- Now imported via RHComplete module
+
 -- Purge axioms modules (purge_axioms branch)
 import RiemannAdelic.Hadamard
 import RiemannAdelic.KernelPositivity
@@ -147,6 +150,10 @@ def main : IO Unit := do
   IO.println "    - Main theorem: spectrum(HΨ) = { zeta zeros }"
   IO.println "    - Riemann Hypothesis as direct corollary"
   IO.println "    - Fredholm determinant = Xi(s) connection"
+  IO.println "  • NEW: RHSpectralProof - Spectral Identity Dχ(s) ≡ Ξ(s)"
+  IO.println "    - Spectral determinant equals completed xi function"
+  IO.println "    - RH_spectral_form: ζ(s) = 0 → Re(s) = 1/2"
+  IO.println "    - Non-circular proof via spectral operators"
   IO.println "  • Entire function and Hadamard theory"
   IO.println "  • Hadamard factorization and quotient analysis"
   IO.println "  • Functional equation and Poisson symmetry"
