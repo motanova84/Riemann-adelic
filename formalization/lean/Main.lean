@@ -130,6 +130,10 @@ import RiemannAdelic.heat_kernel_to_delta_plus_primes
 import spectral.H_psi_spectrum
 import spectral.zeta_from_heat_kernel
 
+-- Script 13/∞³: Eigenfunctions Dense in L²(ℝ) (NEW - 26 November 2025)
+-- Orthonormal basis of eigenfunctions for compact self-adjoint operators
+import spectral.eigenfunctions_dense_L2R
+
 def main : IO Unit := do
   IO.println "╔═══════════════════════════════════════════════════════════╗"
   IO.println "║   Riemann Hypothesis Adelic Proof - Lean 4 Formalization ║"
@@ -217,6 +221,11 @@ def main : IO Unit := do
   IO.println "    - spectral/zeta_from_heat_kernel: ζ(s) reconstruction via Mellin transform"
   IO.println "    - heat_kernel_trace: Tr(exp(-t·H_Ψ²)) = ∑ₙ exp(-t·λₙ²)"
   IO.println "    - zeta_from_heat: ζ(s) = (1/Γ(s)) ∫ t^(s-1) Tr(K_t) dt"
+  IO.println "  • NEW: Script 13/∞³ - Eigenfunctions Dense in L²(ℝ) (26 November 2025)"
+  IO.println "    - spectral/eigenfunctions_dense_L2R: Orthonormal basis of eigenfunctions"
+  IO.println "    - eigenfunctions_dense_L2R: ∃ (e : ℕ → H), orthonormal ℂ e ∧ span(e) = ⊤"
+  IO.println "    - Complete theorem: no sorry (zero pending proofs)"
+  IO.println "    - Key for spectral development and heat kernel expansions"
   IO.println ""
   IO.println "Status: Constructive formalization in progress (purge_axioms branch)"
   IO.println "DOI: 10.5281/zenodo.17116291"
