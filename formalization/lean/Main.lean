@@ -34,6 +34,9 @@ import RiemannAdelic.BerryKeatingOperator
 
 -- Entire function theory
 import RiemannAdelic.entire_order
+import RiemannAdelic.xi_entire_proof
+-- Script 4: Holomorphy of Ξ(s) = D(s) as entire function
+import RiemannAdelic.Xi_holomorphic
 
 -- Hadamard factorization and quotient analysis
 import RiemannAdelic.Hadamard
@@ -91,6 +94,8 @@ import RiemannAdelic.spectral_RH_operator
 import RiemannAdelic.berry_keating_operator
 -- Spectral zeta function ζ_HΨ(s) and zeta-regularized determinant
 import RiemannAdelic.spectral_zeta_function
+-- Spectral correspondence theorem - Berry-Keating eigenvalues and zeta zeros
+import RiemannAdelic.spectral_correspondence
 
 -- Stage 2: Spectral Coincidence - Spectrum H_Ψ = Zeta Zeros
 import RiemannAdelic.spectrum_Hpsi_definition
@@ -114,6 +119,9 @@ import RiemannAdelic.SelbergTraceStrong
 
 -- Heat Kernel Convergence (formalization in progress)
 import RiemannAdelic.heat_kernel_to_delta_plus_primes
+
+-- Fredholm Determinant and ζ(s) Reconstruction (Part 11/∞³)
+import RiemannAdelic.fredholm_determinant_zeta
 
 def main : IO Unit := do
   IO.println "╔═══════════════════════════════════════════════════════════╗"
@@ -141,6 +149,12 @@ def main : IO Unit := do
   IO.println "  • Explicit D(s) construction"
   IO.println "  • Operator-theoretic formulation (Hε with oscillatory potential)"
   IO.println "  • Berry-Keating operator H_Ψ on L²(ℝ⁺, dx/x)"
+  IO.println "  • NEW: Noetic Operator H_Ψ (spectral/operator_hpsi.lean - 26 Nov 2025)"
+  IO.println "    - Hilbert space HΨ_space with inner product structure"
+  IO.println "    - Self-adjoint operator H_Ψ axiom (von Neumann type I)"
+  IO.println "    - Spectrum = Ξ(s) zeros correspondence"
+  IO.println "    - RH_iff_HΨ_spectrum_critical_line theorem"
+  IO.println "    - QCAL integration: 141.7001 Hz base frequency"
   IO.println "  • NEW: Adelic Spectrum Module (H_adelic_spectrum)"
   IO.println "    - Eliminates axiom H_model_spectrum"
   IO.println "    - Proves spectrum transfer from adelic via isometry"
@@ -154,6 +168,7 @@ def main : IO Unit := do
   IO.println "    - Riemann Hypothesis as direct corollary"
   IO.println "    - Fredholm determinant = Xi(s) connection"
   IO.println "  • Entire function and Hadamard theory"
+  IO.println "  • Script 4: Xi_holomorphic (Ξ(s) = D(s) as entire function)"
   IO.println "  • Hadamard factorization and quotient analysis"
   IO.println "  • Functional equation and Poisson symmetry"
   IO.println "  • Radon-Poisson integral functional symmetry"
@@ -181,6 +196,11 @@ def main : IO Unit := do
   IO.println "  • Gamma trivial exclusion (purge_axioms branch)"
   IO.println "  • Selberg Trace Formula (strong form with exact convergence)"
   IO.println "  • Heat Kernel Convergence to δ₀ + Arithmetic Distribution (formalization in progress; contains sorry/axiom)"
+  IO.println "  • NEW: Fredholm Determinant and ζ(s) Reconstruction (Part 11/∞³)"
+  IO.println "    - K_Ψ(s) integral operator on ℓ²(ℕ)"
+  IO.println "    - det(I − K_Ψ(s)) = ζ(s) identity"
+  IO.println "    - Functional equation from spectral symmetry"
+  IO.println "    - log ζ(s) expansion from discrete spectrum"
   IO.println ""
   IO.println "Status: Constructive formalization in progress (purge_axioms branch)"
   IO.println "DOI: 10.5281/zenodo.17116291"
