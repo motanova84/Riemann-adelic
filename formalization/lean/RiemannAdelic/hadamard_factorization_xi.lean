@@ -121,18 +121,20 @@ The axiom Xi_order_one will be justified constructively via the development in:
 
 -- Observación: El conjunto de ceros está simétricamente distribuido y cumple la ecuación funcional.
 
+/-- The functional equation for Xi -/
+axiom Xi_functional_equation (s : ℂ) : Xi (1 - s) = Xi s
+
 /-- The zeros of Xi satisfy the functional equation symmetry -/
 theorem Xi_zeros_symmetric (ρ : ℂ) :
     Xi ρ = 0 → Xi (1 - ρ) = 0 := by
   intro h_zero
-  -- This follows from Ξ(s) = Ξ(1-s)
-  -- Proof sketch: If Ξ(ρ) = 0 and Ξ(1-s) = Ξ(s), then Ξ(1-ρ) = Ξ(ρ) = 0
-  sorry
+  -- This follows directly from the functional equation Ξ(s) = Ξ(1-s)
+  -- If Ξ(ρ) = 0, then Ξ(1-ρ) = Ξ(ρ) = 0
+  rw [Xi_functional_equation]
+  exact h_zero
 
-/-- The functional equation for Xi -/
-axiom Xi_functional_equation (s : ℂ) : Xi (1 - s) = Xi s
-
-/-- Immediate corollary: zeros are symmetric about s = 1/2 -/
+/-- Immediate corollary: zeros are symmetric about s = 1/2
+    (Alternative proof using the same method) -/
 theorem Xi_zeros_symmetric_from_functional_eq (ρ : ℂ) :
     Xi ρ = 0 → Xi (1 - ρ) = 0 := by
   intro h
@@ -192,6 +194,7 @@ This module establishes:
 ✅ Axiom that Ξ(s) is entire (from xi_entire_proof.lean)
 ✅ Axiom for the Hadamard factorization with order 1 representation
 ✅ Functional equation symmetry and its consequences for zeros
+✅ `Xi_zeros_symmetric`: Proven (no sorry) - zeros symmetric under s ↦ 1-s
 ✅ Foundation for the spectral interpretation via zero distribution
 ✅ `xi_hadamard_prod`: Proven (no sorry) - existence of entire function equal to Ξ
 
