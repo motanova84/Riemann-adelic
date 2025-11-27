@@ -57,12 +57,6 @@ def riemann_xi (s : ℂ) : ℂ :=
 
 /-! ## Auxiliary Lemmas -/
 
-/-- The factor s(1-s) vanishes at s = 1 -/
-lemma factor_vanishes_at_one : (1 : ℂ) * (1 - 1) = 0 := by ring
-
-/-- The factor s(1-s) vanishes at s = 0 -/  
-lemma factor_vanishes_at_zero : (0 : ℂ) * (1 - 0) = 0 := by ring
-
 /-- Symmetry of the s(1-s) factor under s ↦ 1-s -/
 lemma factor_symmetric (s : ℂ) : s * (1 - s) = (1 - s) * (1 - (1 - s)) := by ring
 
@@ -126,7 +120,7 @@ theorem xi_entire : ∀ s : ℂ, AnalyticAt ℂ riemann_xi s := by
     -- At s = 1: the expression 1 * (1 - 1) = 0, so the product is 0
     -- regardless of other factors (even if some would be undefined).
     -- A function that is identically 0 near a point is analytic there.
-    simp only [sub_self, mul_zero, zero_mul]
+    simp only [sub_self, mul_zero]
     exact analyticAt_const
   case neg =>
     -- Case s ≠ 1: Apply classical result (no sorry needed)
@@ -139,18 +133,14 @@ theorem xi_vanishes_at_one : riemann_xi 1 = 0 := by
   unfold riemann_xi
   -- At s = 1, we have 1 * (1 - 1) = 1 * 0 = 0
   -- Therefore the entire product is 0
-  simp only [sub_self, mul_zero, zero_mul]
+  simp only [sub_self, mul_zero]
 
 /-- The Xi function vanishes at s = 0 -/
 theorem xi_vanishes_at_zero : riemann_xi 0 = 0 := by
   unfold riemann_xi
   -- At s = 0, we have 0 * (1 - 0) = 0 * 1 = 0
   -- Therefore the entire product is 0
-  simp only [mul_comm, zero_mul]
-
-/-- The s(1-s) factor is symmetric under s ↦ 1-s -/
-lemma s_factor_symmetric (s : ℂ) : s * (1 - s) = (1 - s) * (1 - (1 - s)) := by
-  ring
+  simp only [zero_mul]
 
 /-- The Xi function satisfies the functional equation Ξ(s) = Ξ(1-s) 
 
