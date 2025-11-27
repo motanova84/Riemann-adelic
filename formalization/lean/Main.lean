@@ -40,6 +40,8 @@ import RiemannAdelic.Xi_holomorphic
 
 -- Hadamard factorization and quotient analysis
 import RiemannAdelic.Hadamard
+-- Hadamard product theorem for ξ(s) (Riemann Xi function)
+import RiemannAdelic.hadamard_product_xi
 
 -- Functional equation and symmetry
 import RiemannAdelic.functional_eq
@@ -208,6 +210,11 @@ def main : IO Unit := do
   IO.println "  • Berry-Keating operator H_Ψ (complete formalization)"
   IO.println "  • Spectral zeta function ζ_HΨ(s) and zeta-regularized determinant"
   IO.println "  • Hadamard factorization (purge_axioms branch)"
+  IO.println "  • NEW: Hadamard Product for ξ(s) (hadamard_product_xi.lean)"
+  IO.println "    - Main theorem: ξ(s) = e^{A+Bs} ∏_ρ (1-s/ρ)e^{s/ρ}"
+  IO.println "    - Connection to spectral interpretation (Ξ-HΨ model)"
+  IO.println "    - Weierstrass elementary factors for order 1 functions"
+  IO.println "    - Functional equation ξ(s) = ξ(1-s) and zero symmetry"
   IO.println "  • Kernel positivity (purge_axioms branch)"
   IO.println "  • Gamma trivial exclusion (purge_axioms branch)"
   IO.println "  • Selberg Trace Formula (strong form with exact convergence)"
