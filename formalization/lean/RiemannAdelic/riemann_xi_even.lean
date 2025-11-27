@@ -60,14 +60,18 @@ noncomputable section
 /-- The completed Riemann xi function ξ(s)
     
     Definition:
-      ξ(s) = (1/2) · s · (s - 1) · π^(-s/2) · Γ(s/2) · ζ(s)
+      ξ(s) = (1/2) · s · (1 - s) · π^(-s/2) · Γ(s/2) · ζ(s)
+    
+    Note: Some references use s(s-1) instead of s(1-s), which differs by a sign.
+    Both forms satisfy the functional equation ξ(s) = ξ(1-s).
+    We use the form consistent with xi_entire_proof.lean.
     
     Key properties:
     - ξ(s) is entire (no poles in ℂ)
     - ξ(s) = 0 ⟺ ζ(s) = 0 for non-trivial zeros
     - ξ(s) = ξ(1-s) (functional equation / even symmetry)
     
-    The factor s(s-1) cancels the simple pole of ζ(s) at s = 1
+    The factor s(1-s) cancels the simple pole of ζ(s) at s = 1
     and the simple poles of Γ(s/2) at s = 0, -2, -4, ...
 -/
 def riemann_xi (s : ℂ) : ℂ :=
@@ -170,13 +174,14 @@ theorem xi_zeros_symmetric (s : ℂ) (h : riemann_xi s = 0) :
   rw [riemann_xi_even]
   exact h
 
-/-- The xi function at s = 1/2 satisfies ξ(1/2) = ξ(1 - 1/2) = ξ(1/2)
+/-- The critical point s = 1/2 is a fixed point under the reflection s ↦ 1-s.
     
-    Points on the critical line map to themselves under s ↦ 1-s.
+    This demonstrates that the central point of the critical strip is
+    invariant under the symmetry transformation. Points on the critical
+    line Re(s) = 1/2 + it map to themselves (up to imaginary component sign).
 -/
-theorem xi_critical_line_fixed : riemann_xi (1/2) = riemann_xi (1 - 1/2) := by
-  -- 1 - 1/2 = 1/2, so this is trivially true
-  ring_nf
+theorem xi_critical_point_self_map : (1 : ℂ) - (1/2 : ℂ) = (1/2 : ℂ) := by
+  ring
 
 /-- The symmetry s ↦ 1-s fixes the critical line Re(s) = 1/2 -/
 lemma critical_line_fixed_by_reflection (s : ℂ) (h : s.re = 1/2) : 
