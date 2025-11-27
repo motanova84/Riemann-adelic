@@ -31,18 +31,8 @@ On-Chain Integration:
 import argparse
 import json
 import sys
-from aik_beacon import AIKBeacon
-
-
-# On-chain contract configuration (Base Mainnet)
-ONCHAIN_CONFIG = {
-    "network": "Base Mainnet",
-    "chain_id": 8453,
-    "contract_name": "AIKBeaconsProofOfMath",
-    "symbol": "AIK∞³",
-    "opensea_collection": "https://opensea.io/collection/aik-beacons-proof-of-math",
-    "base_frequency_hz": 141.7001,
-}
+from typing import Optional
+from aik_beacon import AIKBeacon, ONCHAIN_CONFIG
 
 
 def cmd_create(args):
@@ -144,7 +134,7 @@ def cmd_verify(args):
         sys.exit(1)
 
 
-def _lookup_onchain_token(beacon_hash: str) -> int | None:
+def _lookup_onchain_token(beacon_hash: str) -> Optional[int]:
     """
     Lookup a beacon hash on-chain to find its token ID.
 
