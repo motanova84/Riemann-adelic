@@ -151,8 +151,8 @@ This property is crucial for:
 -/
 theorem xi_real_vals_real (s : ℝ) : (riemann_xi (s : ℂ)).im = 0 := by
   -- Step 1: Use the conjugation symmetry of riemann_xi
-  have h₁ : conj (riemann_xi (s : ℂ)) = riemann_xi (conj (s : ℂ)) := riemann_xi_conj s
-  -- Step 2: For real s, conj(s) = s
+  have h₁ : conj (riemann_xi s) = riemann_xi (conj s) := riemann_xi_conj s
+  -- Step 2: For real s, conj(s) = s (Lean coerces ℝ → ℂ automatically)
   have h₂ : conj (s : ℂ) = s := conj_ofReal s
   -- Step 3: Combine to get conj(Ξ(s)) = Ξ(s)
   rw [h₂] at h₁
