@@ -96,6 +96,12 @@ class TestSchrodingerOperatorAxiom:
         assert "def spectrum_Ĥ_Ψ" in self.content, \
             "spectrum_Ĥ_Ψ definition not found"
     
+    def test_spectrum_real_theorem(self):
+        """Test that spectrum realness theorems exist."""
+        assert "theorem spectrum_inherently_real" in self.content or \
+               "theorem spectrum_is_real" in self.content, \
+            "Spectrum realness theorem not found"
+    
     def test_eigenvector_orthogonality(self):
         """Test that eigenvector orthogonality theorem exists."""
         assert "theorem eigenvectors_orthogonal" in self.content, \
