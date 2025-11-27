@@ -88,6 +88,43 @@ def qcal_frequency : ℝ := 141.7001
 /-- QCAL coherence constant -/
 def qcal_coherence : ℝ := 244.36
 
+/-!
+## The riemann_xi function ξ(s)
+
+An alternative formulation of the completed zeta function with the factor s(s-1)/2:
+  ξ(s) = (s(s - 1)/2) π^(-s/2) Γ(s/2) ζ(s)
+
+This definition is equivalent to Ξ(s) up to a polynomial factor.
+-/
+
+/-- The riemann_xi function: ξ(s) = (s(s-1)/2) π^(-s/2) Γ(s/2) ζ(s) 
+    This is an alternative formulation of the completed zeta function. -/
+def riemann_xi (s : ℂ) : ℂ := (s * (s - 1) / 2) * piPower s * GammaFn (s / 2) * ζ s
+
+/-- Axiom: riemann_xi satisfies the functional equation ξ(s) = ξ(1 - s)
+    
+    This is the classical functional symmetry property of the Riemann xi function.
+    It follows from the functional equation of ζ(s) and properties of Γ(s/2).
+    
+    References:
+    - Titchmarsh, "The Theory of the Riemann Zeta-function"
+    - Riemann, "Über die Anzahl der Primzahlen unter einer gegebenen Größe" (1859)
+-/
+axiom riemann_xi_functional_equation : ∀ s : ℂ, riemann_xi s = riemann_xi (1 - s)
+
+/--
+Simetría funcional de la función ξ(s), definida como:
+  ξ(s) = (s(s - 1)/2) π^(-s/2) Γ(s/2) ζ(s)
+
+Entonces, se cumple: ξ(s) = ξ(1 - s)
+
+This theorem is proven using the established functional equation axiom,
+which is justified by Titchmarsh and Riemann's classical results.
+-/
+theorem xi_symmetry_property (s : ℂ) :
+  riemann_xi s = riemann_xi (1 - s) :=
+  riemann_xi_functional_equation s
+
 end ΞFunctional
 
 end
