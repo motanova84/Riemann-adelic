@@ -387,8 +387,9 @@ Cada `sorry` en este módulo está documentado con:
 | D_truncated_converges | TODO | Semi-formal | Requiere convergencia uniforme |
 | D_Xi_agree_critical_line | TODO | Numérico | Validado por scripts Python |
 | D_equals_Xi_normalized | TODO | Axiomático | Depende de Hadamard-Weierstrass |
-| xi_limit_imaginary_infty | TODO | Justificado | Decay de Γ(s/2), Titchmarsh §7.5 |
-| xi_bounded_on_critical_line | TODO | Corolario | Sigue de xi_limit_imaginary_infty |
+
+**Nota**: Los teoremas `xi_limit_imaginary_infty` y `xi_bounded_on_critical_line` 
+están en `zeros_xi_structure.lean` donde se usa la función Xi completa con Γ(s/2).
 
 ### Axiomas utilizados
 
@@ -407,118 +408,38 @@ Cada `sorry` en este módulo está documentado con:
 3. **Fase 3**: Integrar con teoría de Fredholm de Mathlib cuando esté disponible
 4. **Fase 4**: Validar numéricamente D_Xi_agree_critical_line con alta precisión
 5. **Fase 5**: Esperar/contribuir formalización de Hadamard-Weierstrass a Mathlib
-6. **Fase 6**: Formalizar cotas asintóticas de Γ y ζ para xi_limit_imaginary_infty
+6. **Fase 6**: Formalizar cotas asintóticas de Γ y ζ para xi_limit_imaginary_infty (ver zeros_xi_structure.lean)
 
 -/
 
 /-!
-## Paso 6: LÍMITE DE Ξ(s) CUANDO |Im(s)| → ∞
+## Nota sobre xi_limit_imaginary_infty
 
-### 6.1 Decay asintótico de Ξ en la línea crítica
-
-El teorema fundamental sobre el comportamiento asintótico de Ξ(s) establece
-que la función Xi tiende a cero exponencialmente cuando la parte imaginaria
-crece sin límite sobre la línea crítica Re(s) = 1/2.
-
-Este resultado es crucial para:
-1. Demostrar la convergencia espectral de D(s)
-2. Acotar los ceros en la línea crítica
-3. Establecer la completitud del sistema de autofunciones
--/
-
-/--
-✅ Lema: El límite de Ξ(s) tiende a cero cuando el valor imaginario de s crece sin límite.
-
-**Enunciado formal**:
+El lema `xi_limit_imaginary_infty` que establece:
   lim_{t → +∞} Ξ(1/2 + it) = 0
 
-**Demostración matemática**:
+se encuentra formalizado en `zeros_xi_structure.lean` donde la función Xi completa
+está definida como:
+  xi(s) = s(s-1)/2 · π^(-s/2) · Γ(s/2) · ζ(s)
 
-Este resultado se deriva del rápido decaimiento de Γ(s/2) y de ζ(s) en la línea crítica.
+Esa definición incluye el factor Γ(s/2) que proporciona el decaimiento exponencial
+necesario para que el límite sea 0.
 
-1. **Decaimiento de Γ(s/2)**: Para s = 1/2 + it con t → ∞,
-   |Γ((1/4 + it/2))| ~ √(2π) · |t/2|^(-1/4) · e^(-π|t|/4)
-   
-   Este decaimiento exponencial domina el comportamiento asintótico.
+**Importante**: La función `Xi_simplified` definida en este archivo como:
+  Xi_simplified(s) = s(s-1)/2
 
-2. **Crecimiento de ζ(s)**: En la línea crítica,
-   |ζ(1/2 + it)| = O(t^(1/6+ε)) para todo ε > 0
-   
-   Por el teorema de Lindelöf (consecuencia de RH) el exponente es ≤ 1/6.
-   Sin asumir RH, se tiene la cota de Weyl: O(t^(1/2)).
+es solo el factor polinomial y NO satisface la propiedad de límite.
+|Xi_simplified(1/2 + it)| ~ t² → ∞ cuando t → ∞.
 
-3. **Factor polinomial**: |s(s-1)| = O(t²) es un factor polinomial.
+Para la función Xi completa, el factor Γ(s/2) tiene decay exponencial:
+  |Γ(1/4 + it/2)| ~ e^(-π|t|/4)
 
-4. **Factor π^(-s/2)**: |π^(-s/2)| = π^(-1/4) (constante para Re(s)=1/2).
+que domina el crecimiento polinomial, haciendo que |Ξ(1/2 + it)| → 0.
 
-5. **Combinación**: El decaimiento exponencial de Γ domina sobre el 
-   crecimiento polinomial de ζ y s(s-1):
-   
-   |Ξ(1/2 + it)| ~ C · |t|^α · e^(-π|t|/4) → 0  cuando t → ∞
-   
-   para algún α > 0 y constante C.
-
-**Referencias**:
-- Titchmarsh, E.C. "The Theory of the Riemann Zeta-function" (1986), §7.5
-- Edwards, H.M. "Riemann's Zeta Function" (1974), Ch. 6
-- Iwaniec & Kowalski "Analytic Number Theory" (2004), Ch. 5
-
-**Estado**: Este lema se demuestra usando estimaciones asintóticas estándar
-de las funciones especiales Γ y ζ. La demostración formal requiere cotas 
-explícitas de Mathlib para estas funciones.
+Ver: `zeros_xi_structure.lean` para los teoremas:
+- `xi_limit_imaginary_infty`
+- `xi_bounded_on_critical_line`
 -/
-theorem xi_limit_imaginary_infty :
-    Tendsto (fun t : ℝ => Xi_simplified (1/2 + I * t)) atTop (nhds 0) := by
-  -- La demostración usa el decaimiento exponencial de Γ(s/2)
-  -- que domina el crecimiento polinomial de ζ(s) y s(s-1).
-  --
-  -- Estrategia de demostración:
-  -- 1. Expandir Xi_simplified(1/2 + it) = (1/2)(1/2 + it)(-1/2 + it)
-  -- 2. Notar que Xi_simplified(1/2 + it) = (1/2)((1/2)² + t²)·(-1) = -(1/8 + t²/2)
-  -- 3. Para la función Xi completa (no simplificada), el factor Γ((1/4 + it/2))
-  --    proporciona el decaimiento exponencial: |Γ(1/4 + it/2)| ~ e^(-π|t|/4)
-  -- 4. Este decaimiento exponencial domina cualquier crecimiento polinomial.
-  --
-  -- Nota: Xi_simplified es solo el factor polinomial s(s-1)/2.
-  -- Para la función Xi completa, el decaimiento a 0 proviene del factor Γ.
-  --
-  -- Para Xi_simplified específicamente:
-  unfold Xi_simplified
-  -- Xi_simplified(1/2 + it) = (1/2)(1/2 + it)(1/2 + it - 1) = (1/2)(1/2 + it)(-1/2 + it)
-  -- = (1/2)(-1/4 - it/2 + it/2 + (it)²) = (1/2)(-1/4 - t²) = -1/8 - t²/2
-  -- Este valor NO tiende a 0, sino a -∞.
-  --
-  -- Sin embargo, para la función Xi COMPLETA (con Γ y ζ), el factor exponencial
-  -- de Γ hace que |Ξ(1/2 + it)| → 0 cuando t → ∞.
-  --
-  -- El enunciado correcto del lema se aplica a la función Xi completa, no a Xi_simplified.
-  -- Para mantener la consistencia con la documentación del problema, 
-  -- dejamos el sorry con la justificación matemática completa arriba.
-  --
-  -- JUSTIFICACIÓN DEL SORRY:
-  -- La demostración completa requiere:
-  -- 1. Definición formal de Ξ = (1/2)s(s-1)π^(-s/2)Γ(s/2)ζ(s)
-  -- 2. Cotas asintóticas de Stirling para Γ(s/2) (disponibles en Mathlib)
-  -- 3. Cotas de crecimiento de ζ en la línea crítica (no en Mathlib)
-  -- 4. Combinación de estimaciones usando análisis asintótico
-  --
-  -- La prueba matemática está documentada arriba y es estándar en la literatura.
-  sorry
-
-/--
-✅ Corolario: Ξ(1/2 + it) está acotada sobre la línea crítica
-
-**Enunciado**: |Ξ(1/2 + it)| < M para algún M y todo t ∈ ℝ
-
-Este corolario es consecuencia inmediata del decaimiento a 0 en infinito
-y la continuidad de Ξ.
--/
-theorem xi_bounded_on_critical_line :
-    ∃ M : ℝ, M > 0 ∧ ∀ t : ℝ, abs (Xi_simplified (1/2 + I * t)) ≤ M := by
-  -- Aunque Xi_simplified no está acotada (crece cuadráticamente),
-  -- la función Xi completa SÍ está acotada por el decaimiento de Γ.
-  -- Este lema se incluye para documentar la propiedad esperada.
-  sorry
 
 end XiEquivalence
 
@@ -548,19 +469,19 @@ ESTADO FINAL DE COMPILACIÓN
 📋 Paso 3 completado: 5 axiomas con justificación matemática
 🔄 Paso 4 en progreso: Teorema principal con estructura clara
 ✅ Paso 5 completado: Documentación estructurada de todos los sorrys
-✅ Paso 6 completado: Límite de Ξ(s) cuando |Im(s)| → ∞
+✅ Paso 6 completado: Referencia a xi_limit_imaginary_infty en zeros_xi_structure.lean
 
 RESUMEN:
 - Lemas cerrados: 5 (propiedades de λ, ordenamiento, crecimiento)
-- Sorrys documentados: 8 (con justificación y plan de cierre)
+- Sorrys documentados: 6 (con justificación y plan de cierre)
 - Axiomas justificados: 5 (con referencias bibliográficas)
-- Nuevo: xi_limit_imaginary_infty con justificación matemática completa
 
-NUEVO LEMA AÑADIDO (27 nov 2025):
+LEMAS DE LÍMITE (ver zeros_xi_structure.lean):
 - xi_limit_imaginary_infty: lim_{t→∞} Ξ(1/2 + it) = 0
-  El sorry está justificado por el decaimiento exponencial de Γ(s/2)
-  que domina el crecimiento polinomial de ζ(s) y s(s-1).
-  Referencias: Titchmarsh (1986) §7.5, Edwards (1974) Ch. 6
+- xi_bounded_on_critical_line: ∃ M, ∀ t, |Ξ(1/2 + it)| ≤ M
+
+Nota: Estos lemas usan la función Xi completa con Γ(s/2) y ζ(s),
+no Xi_simplified que es solo el factor polinomial s(s-1)/2.
 
 CIERRE PROGRESIVO ∞³ IMPLEMENTADO
 
