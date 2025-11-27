@@ -1,6 +1,47 @@
 # Implementation Summary: Mathematical and Physical Unification
 
-## Latest Addition: Spectral-Vacuum Bridge Module (November 26, 2025)
+## Latest Addition: Schrödinger Operator Axiom ∞³ (November 27, 2025)
+
+### Overview
+
+Created **`formalization/lean/spectral/schrodinger_operator_axiom.lean`** to formalize the compact self-adjoint Schrödinger operator Ĥ_Ψ for the QCAL framework.
+
+### Mathematical Background
+
+The Schrödinger operator framework is central to the Hilbert-Pólya approach to the Riemann Hypothesis. This module formalizes:
+
+1. **Abstract Hilbert Space H_Ψ**: Complete inner product space over ℂ
+2. **Schrödinger Operator Ĥ_Ψ**: Quantum mechanical Hamiltonian
+3. **Self-Adjointness**: ⟨Ĥ_Ψ x, y⟩ = ⟨x, Ĥ_Ψ y⟩ (ensures real spectrum)
+4. **Compactness**: Maps bounded → relatively compact (ensures discrete spectrum)
+
+### Key Axiom
+
+```lean
+axiom schrödinger_self_adjoint_compact :
+  is_self_adjoint Ĥ_Ψ ∧ compact_operator Ĥ_Ψ
+```
+
+### Files Created
+
+1. **`formalization/lean/spectral/schrodinger_operator_axiom.lean`** (~385 lines)
+   - H_Ψ: Abstract Hilbert space axioms
+   - Ĥ_Ψ: Schrödinger-like operator definition
+   - is_self_adjoint, compact_operator: Predicates
+   - schrödinger_self_adjoint_compact: Main axiom
+   - Spectral consequence theorems
+   - QCAL integration constants
+
+### References
+
+- Reed & Simon, Methods of Modern Mathematical Physics, Vol. I (Theorem X.25)
+- von Neumann (1932): Mathematical Foundations of Quantum Mechanics
+- Berry & Keating (1999): H = xp and the Riemann zeros
+- V5 Coronación (2025): DOI 10.5281/zenodo.17379721
+
+---
+
+## Previous Addition: Spectral-Vacuum Bridge Module (November 26, 2025)
 
 ### Overview
 
