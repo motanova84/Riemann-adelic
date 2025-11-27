@@ -49,6 +49,8 @@ import RiemannAdelic.poisson_radon_symmetry
 import RiemannAdelic.radon_integral_symmetry
 -- Xi functional equation from spectral symmetry (Part 4/∞³)
 import RiemannAdelic.Xi_functional_eq
+-- Φ(x) Fourier self-dual and Ξ(s) functional equation (NEW - 27 Nov 2025)
+import RiemannAdelic.phi_fourier_self_dual
 
 -- Archimedean factors
 import RiemannAdelic.arch_factor
@@ -190,6 +192,12 @@ def main : IO Unit := do
   IO.println "    - Spectral symmetry: λₙ = λ₋ₙ proved"
   IO.println "    - Truncated Ξ(s) product representation"
   IO.println "    - Functional equation Ξ(s) = Ξ(1-s) via symmetry"
+  IO.println "  • NEW: Φ(x) Fourier Self-Dual (phi_fourier_self_dual.lean - 27 Nov 2025)"
+  IO.println "    - Jacobi theta modular transform: θ(1/t) = √t·θ(t)"
+  IO.println "    - PhiFunction structure with Schwartz properties"
+  IO.println "    - Main theorem: ∃ Φ, ℱ[Φ](ξ) = Φ(ξ) (self-duality)"
+  IO.println "    - Connection to Ξ(s) = Ξ(1-s) via Mellin transform"
+  IO.println "    - Gaussian exp(-πx²) as explicit eigenfunction"
   IO.println "  • Gamma Weierstrass representation for reflected Gamma function"
   IO.println "  • de Branges space framework"
   IO.println "  • Weil-Guinand positivity theory"
