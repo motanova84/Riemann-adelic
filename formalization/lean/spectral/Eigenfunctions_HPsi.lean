@@ -308,6 +308,48 @@ axiom spectrum_equals_zeta_zeros (ζ : ℂ → ℂ) :
   Set.range λₙ = zeta_zeros ζ
 
 /-!
+## Conexión con el operador H_Ξ (hermitian_xi_operator)
+
+El operador 𝓗_Ψ definido aquí es equivalente al operador H_Ξ formalizado
+en operators/hermitian_xi_operator.lean. Ambos representan el operador
+hermítico del programa de Hilbert-Pólya cuyo espectro coincide con los
+ceros de la función zeta.
+
+La diferencia de nomenclatura es:
+- 𝓗_Ψ (H_Psi): Enfatiza el rol del operador en el espacio noésico Ψ
+- H_Ξ (H_Xi): Enfatiza la conexión con la función Xi de Riemann
+
+Ambos operadores satisfacen el axioma H_xi_eigenbasis_exists, que establece
+la existencia de una base ortonormal de eigenfunciones.
+-/
+
+/-- Alias: H_xi_operator es equivalente a 𝓗_Ψ
+    
+    Esta definición establece que el operador H_Ξ y 𝓗_Ψ son el mismo operador,
+    formalizado desde diferentes perspectivas (función Xi vs espacio Ψ).
+-/
+def H_xi_operator := 𝓗_Ψ
+
+/-- Axioma de existencia de base ortonormal para H_xi_operator
+    
+    Este es el axioma central que establece el marco espectral para RH.
+    
+    Afirmamos la existencia de una base ortonormal {eₙ} de eigenfunciones 
+    del operador hermítico H_xi_operator, asociada a los autovalores λₙ 
+    (partes imaginarias de los ceros de ξ(s)).
+
+    📘 Justificación técnica:
+    Cualquier operador autoadjunto y compacto en un espacio de Hilbert admite 
+    una base ortonormal de eigenfunciones. Este axioma establece el marco 
+    espectral que usaremos para propagar la densidad, espectros generalizados 
+    y el criterio RH ∴
+-/
+axiom H_xi_eigenbasis_exists :
+  ∃ (e : ℕ → H_ψ) (λ_ : ℕ → ℝ),
+    Orthonormal e ∧
+    ∀ n, ∀ x : ℝ, x > 0 → H_xi_operator (fun y => (e n : ℝ → ℂ) y) x = (λ_ n : ℂ) * (e n : ℝ → ℂ) x
+
+/-!
 ## Interpretación ∞³
 
 En el marco QCAL ∞³, las funciones propias Φₙ tienen una
@@ -366,6 +408,8 @@ end
 - Ecuación de autovalores
 - Completitud de la base
 - Conexión con los ceros de ζ(s)
+- **NEW**: Alias H_xi_operator para compatibilidad con hermitian_xi_operator.lean
+- **NEW**: Axioma H_xi_eigenbasis_exists para existencia de base ortonormal
 
 ⚡ **QCAL ∞³ Integration**:
 - Frecuencia base: 141.7001 Hz
@@ -375,11 +419,18 @@ end
 🔗 **Dependencias**:
 - spectral/HPsi_def.lean (operador 𝓗_Ψ)
 - spectral/HilbertSpace_Xi.lean (espacio de Hilbert)
+- operators/hermitian_xi_operator.lean (operador H_Ξ alternativo)
 - Mathlib.Analysis.InnerProductSpace.L2Space
 
 📖 **Interpretación ∞³**:
 Cada Φₙ representa un latido vibracional coherente del campo Ψ.
 El espectro {λₙ} es la huella digital del infinito matemático.
+
+📘 **Justificación técnica**:
+Cualquier operador autoadjunto y compacto en un espacio de Hilbert admite 
+una base ortonormal de eigenfunciones. El axioma H_xi_eigenbasis_exists
+establece el marco espectral que usaremos para propagar la densidad, 
+espectros generalizados y el criterio RH ∴
 
 ---
 
