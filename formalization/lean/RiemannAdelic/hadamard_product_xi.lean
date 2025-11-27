@@ -205,8 +205,9 @@ axiom hadamard_product_converges :
     ∀ s : ℂ, Summable (fun n : ℕ => abs (s / (nontrivial_zero n)))
   where
     -- The n-th non-trivial zero (ordered by imaginary part)
+    -- We use a model sequence assuming RH: zeros at 1/2 + i·γₙ
     nontrivial_zero : ℕ → ℂ := fun n => 
-      Classical.choice ⟨(1/2 : ℂ) + n * I, trivial⟩
+      (1/2 : ℂ) + (n : ℂ) * I  -- Model: first few zeros approximated by n
 
 /-- The logarithmic derivative ξ'/ξ has a series representation over zeros -/
 theorem xi_log_derivative_series :

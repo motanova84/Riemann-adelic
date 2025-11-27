@@ -419,7 +419,13 @@ class TestModuleExists:
         """Test that Main.lean imports the new module"""
         main_file = FORMALIZATION_DIR / "Main.lean"
         
-        content = main_file.read_text()
+        assert main_file.exists(), \
+            f"Main.lean should exist at {main_file}"
+        
+        try:
+            content = main_file.read_text(encoding='utf-8')
+        except (FileNotFoundError, IOError) as e:
+            pytest.fail(f"Failed to read Main.lean: {e}")
         
         assert "hadamard_product_xi" in content, \
             "Main.lean should import hadamard_product_xi"
@@ -428,7 +434,13 @@ class TestModuleExists:
         """Test that hadamard_product_xi.lean has correct structure"""
         lean_file = RIEMANN_ADELIC_DIR / "hadamard_product_xi.lean"
         
-        content = lean_file.read_text()
+        assert lean_file.exists(), \
+            f"hadamard_product_xi.lean should exist at {lean_file}"
+        
+        try:
+            content = lean_file.read_text(encoding='utf-8')
+        except (FileNotFoundError, IOError) as e:
+            pytest.fail(f"Failed to read hadamard_product_xi.lean: {e}")
         
         # Check for key definitions and theorems
         assert "riemann_xi" in content, \
