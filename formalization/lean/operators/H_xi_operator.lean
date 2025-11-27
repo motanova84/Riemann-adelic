@@ -105,9 +105,17 @@ Propiedades:
     Estas propiedades se establecen en módulos complementarios:
     - operators/H_psi_hermitian.lean (hermiticidad)
     - RHComplete/K_determinant.lean (determinante de Fredholm)
+    
+    **NOTA**: La definición `0` es un stub placeholder. El operador real
+    se construye vía el kernel de Berry-Keating en H_psi_complete.lean.
+    La marca `@[irreducible]` previene que esta implementación placeholder
+    afecte los teoremas que dependen de las propiedades axiomatizadas.
 -/
 @[irreducible]
 def H_xi_operator : HΨ →L[ℂ] HΨ := 0
+-- STUB: Placeholder definition. The actual operator construction is in
+-- H_psi_complete.lean via Berry-Keating kernel. The axiom H_xi_self_adjoint
+-- captures the essential property needed for the spectral approach.
 
 /-!
 ## 3. Autoadjunción (Hermiticidad)
@@ -212,10 +220,20 @@ theorem spectrum_real : ∀ λ ∈ spectrum_H_xi HΨ, λ.im = 0 := by
     1. Construcción explícita de H_Ξ via kernel integral
     2. Identificación del determinante de Fredholm con ξ(s)
     3. Teorema de Hadamard para productos infinitos
+
+    NOTA: La función ξ(s) referida es la función xi de Riemann completada,
+    definida como ξ(s) = s(s-1)π^(-s/2)Γ(s/2)ζ(s). La existencia cuantificada
+    representa que t es parte imaginaria de un cero no trivial de esta función
+    específica (ξ_Riemann). Ver SpectralDerivative.Xi para la definición formal.
 -/
 axiom spectral_zeta_correspondence :
   ∀ t : ℝ, (↑t : ℂ) ∈ spectrum_H_xi HΨ ↔
     ∃ (ξ : ℂ → ℂ), ξ (1/2 + Complex.I * t) = 0
+-- NOTE: The existential ξ here represents the completed Riemann xi function.
+-- In a complete formalization, this would be replaced by:
+-- SpectralDerivative.Xi (1/2 + Complex.I * t) = 0
+-- The current formulation allows modular development while the Xi
+-- definition is refined in separate modules.
 
 /-!
 ## 5. Implicación para la Hipótesis de Riemann

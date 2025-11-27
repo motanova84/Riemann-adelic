@@ -18,8 +18,21 @@ import pytest
 from pathlib import Path
 
 
-# Path to the Lean file
-LEAN_FILE = Path("/home/runner/work/Riemann-adelic/Riemann-adelic/formalization/lean/operators/H_xi_operator.lean")
+# Get repository root dynamically
+def get_repo_root():
+    """Get the repository root directory dynamically."""
+    current = Path(__file__).resolve().parent
+    # Walk up to find the repository root (contains .git or formalization directory)
+    while current != current.parent:
+        if (current / ".git").exists() or (current / "formalization").exists():
+            return current
+        current = current.parent
+    # Fallback to parent of tests directory
+    return Path(__file__).resolve().parent.parent
+
+
+REPO_ROOT = get_repo_root()
+LEAN_FILE = REPO_ROOT / "formalization" / "lean" / "operators" / "H_xi_operator.lean"
 
 
 class TestHXiOperatorFile:
