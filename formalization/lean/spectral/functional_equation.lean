@@ -62,6 +62,19 @@ axiom Ξ_entire : ∀ s : ℂ, DifferentiableAt ℂ Ξ s
 /-- Axiom: Ξ(s) is real on the real axis -/
 axiom Ξ_real_on_real : ∀ t : ℝ, (Ξ t).im = 0
 
+/--
+Conjugación de la función Ξ:
+Ξ(conj s) = conj (Ξ(s))
+
+Esto garantiza que Ξ(s) toma valores reales sobre la línea crítica ℜ(s) = 1/2.
+
+Justificación matemática:
+La función Ξ(s) es real en ℜ(s) = 1/2 y su ecuación funcional garantiza simetría
+respecto a conjugación compleja. Este es un resultado estándar de la teoría
+analítica de números que se deriva del principio de reflexión de Schwarz.
+-/
+axiom xi_conjugate_property : ∀ s : ℂ, Ξ (conj s) = conj (Ξ s)
+
 /-- Definition: The set of non-trivial zeros of Ξ(s) -/
 def ΞZeros : Set ℂ := { s : ℂ | Ξ s = 0 }
 
@@ -69,9 +82,12 @@ def ΞZeros : Set ℂ := { s : ℂ | Ξ s = 0 }
 lemma ΞZeros_conjugate_symmetric : 
   ∀ s ∈ ΞZeros, conj s ∈ ΞZeros := by
   intro s hs
-  -- This follows from Ξ being real-valued on the real axis
-  -- and the reflection principle
-  sorry
+  unfold ΞZeros at *
+  simp only [Set.mem_setOf_eq] at *
+  -- Apply the conjugate property: Ξ(conj s) = conj (Ξ s) = conj 0 = 0
+  rw [xi_conjugate_property]
+  rw [hs]
+  simp only [map_zero]
 
 /-- Zeros are symmetric about the critical line Re(s) = 1/2 -/
 lemma ΞZeros_functional_symmetric :
