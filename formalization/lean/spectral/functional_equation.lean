@@ -113,13 +113,16 @@ def riemann_xi (s : ℂ) : ℂ := (s * (s - 1) / 2) * piPower s * GammaFn (s / 2
 axiom riemann_xi_functional_equation : ∀ s : ℂ, riemann_xi s = riemann_xi (1 - s)
 
 /--
-Simetría funcional de la función ξ(s), definida como:
+Functional symmetry of the xi function ξ(s), defined as:
   ξ(s) = (s(s - 1)/2) π^(-s/2) Γ(s/2) ζ(s)
 
-Entonces, se cumple: ξ(s) = ξ(1 - s)
+Then, it holds: ξ(s) = ξ(1 - s)
 
 This theorem is proven using the established functional equation axiom,
 which is justified by Titchmarsh and Riemann's classical results.
+
+Note: This theorem provides a named interface for the functional equation
+as required by the QCAL framework, allowing clear references in proofs.
 -/
 theorem xi_symmetry_property (s : ℂ) :
   riemann_xi s = riemann_xi (1 - s) :=
