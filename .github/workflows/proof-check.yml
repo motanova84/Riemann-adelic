@@ -5,6 +5,8 @@ name: Proof Check
 on:
   push:
     branches: [ main ]
+  pull_request:
+    branches: [ main ]
     paths:
       - 'formalization/lean/**'
       - '.github/workflows/proof-check.yml'
@@ -18,6 +20,13 @@ permissions:
   contents: read
 
 jobs:
+  lean-verification:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
   lean-build:
     runs-on: ubuntu-latest
     
@@ -48,6 +57,12 @@ jobs:
         uses: leanprover/lean-action@v1
         with:
           lean-version: "leanprover/lean4:latest"
+      
+      - name: Check Lean installation
+        run: |
+          lean --version
+          lake --version
+      
 
       - name: Cache Lean build
         uses: actions/cache@v4
@@ -63,11 +78,21 @@ jobs:
         run: |
           cd formalization/lean
           lake update
+      
 
       - name: Build Lean formalization
         run: |
           cd formalization/lean
           lake build
+      
+      - name: Verify Lean proofs
+        run: |
+          cd formalization/lean
+          lake exe cache get || echo "Cache not available, building from source"
+          # Check individual Lean files for verification
+          lean RH_final.lean
+          lean axiomas_a_lemas.lean
+          echo "✓ Lean proofs verified successfully"
 
       - name: Run Lean check on RH_final.lean
         run: |
