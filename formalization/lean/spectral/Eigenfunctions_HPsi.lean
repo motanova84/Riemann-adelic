@@ -330,19 +330,21 @@ la existencia de una base ortonormal de eigenfunciones.
 -/
 def H_xi_operator := 𝓗_Ψ
 
-/-- Axioma de existencia de base ortonormal para H_xi_operator
-    
-    Este es el axioma central que establece el marco espectral para RH.
-    
-    Afirmamos la existencia de una base ortonormal {eₙ} de eigenfunciones 
-    del operador hermítico H_xi_operator, asociada a los autovalores λₙ 
-    (partes imaginarias de los ceros de ξ(s)).
+/--
+Afirmamos la existencia de una base ortonormal {eₙ} de eigenfunciones del 
+operador hermítico `H_xi_operator`, asociada a los autovalores λₙ 
+(partes imaginarias de los ceros de ξ(s)).
 
-    📘 Justificación técnica:
-    Cualquier operador autoadjunto y compacto en un espacio de Hilbert admite 
-    una base ortonormal de eigenfunciones. Este axioma establece el marco 
-    espectral que usaremos para propagar la densidad, espectros generalizados 
-    y el criterio RH ∴
+Note: This axiom uses the local `Orthonormal` definition from this file,
+which is specialized for H_ψ and implicitly uses complex scalars.
+See operators/hermitian_xi_operator.lean for the version using Mathlib's
+`Orthonormal ℂ e` notation.
+
+📘 Justificación técnica:
+Cualquier operador autoadjunto y compacto en un espacio de Hilbert admite 
+una base ortonormal de eigenfunciones. Este axioma establece el marco 
+espectral que usaremos para propagar la densidad, espectros generalizados 
+y el criterio RH ∴
 -/
 axiom H_xi_eigenbasis_exists :
   ∃ (e : ℕ → H_ψ) (λ_ : ℕ → ℝ),
