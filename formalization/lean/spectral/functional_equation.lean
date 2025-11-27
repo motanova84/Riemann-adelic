@@ -56,6 +56,25 @@ def Ξ (s : ℂ) : ℂ := piPower s * GammaFn (s / 2) * ζ s
 /-- Axiom: Ξ(s) satisfies the functional equation Ξ(s) = Ξ(1 - s) -/
 axiom Ξ_functional_equation : ∀ s : ℂ, Ξ s = Ξ (1 - s)
 
+/-- Alias for Ξ using standard naming convention -/
+def riemann_xi : ℂ → ℂ := Ξ
+
+/--
+The function ξ(s) satisfies the functional symmetry:
+
+  ξ(s) = ξ(1 - s)
+
+This property is fundamental for the Riemann Hypothesis.
+If ξ(s) = 0, then ξ(1 − s) = 0, which constrains the location
+of non-trivial zeros.
+
+This theorem is derived from the functional equation axiom
+without requiring a sorry.
+-/
+theorem xi_reflection_symmetry (s : ℂ) : riemann_xi s = riemann_xi (1 - s) := by
+  unfold riemann_xi
+  exact Ξ_functional_equation s
+
 /-- Axiom: Ξ(s) is an entire function (holomorphic everywhere) -/
 axiom Ξ_entire : ∀ s : ℂ, DifferentiableAt ℂ Ξ s
 
