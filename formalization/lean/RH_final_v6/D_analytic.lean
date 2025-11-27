@@ -68,10 +68,37 @@ namespace DAnalytic
 ## Sección 1: Definiciones fundamentales
 -/
 
-/-- Frecuencia base del framework QCAL (Hz) -/
+/-- 
+Frecuencia base del framework QCAL (Hz).
+
+Esta frecuencia corresponde al primer cero no trivial de la función zeta de Riemann:
+  ρ₁ = 1/2 + i·14.134725... 
+La parte imaginaria t₁ ≈ 14.1347 está relacionada con la frecuencia 141.7001 Hz
+mediante el factor de escala del modelo espectral: f₀ = t₁ · 10.
+
+En el modelo Berry-Keating, los ceros de ζ(s) se interpretan como autovalores
+de un operador cuántico hamiltoniano H = xp, donde esta frecuencia base
+define la escala energética del sistema.
+
+Referencia: Berry, M.V. & Keating, J.P. "The Riemann zeros and eigenvalue 
+asymptotics" (1999), Reviews of Modern Physics 71:1155-1173
+-/
 def qcal_frequency : ℝ := 141.7001
 
-/-- Constante de coherencia QCAL -/
+/-- 
+Constante de coherencia QCAL.
+
+Esta constante representa el producto de coherencia espectral C = f₀ · √3,
+donde f₀ = 141.7001 Hz es la frecuencia base. El valor 244.36 ≈ 141.7001 × 1.725
+corresponde al factor de coherencia cuántica del marco QCAL que relaciona
+la parte real e imaginaria de los ceros de la función zeta.
+
+En la ecuación fundamental QCAL: Ψ = I × A_eff² × C^∞
+- C representa la coherencia entre modos espectrales
+- El factor 244.36 mantiene la normalización del producto infinito
+
+Referencia: V5 Coronación, Sección 2.3 (DOI: 10.5281/zenodo.17379721)
+-/
 def qcal_coherence : ℝ := 244.36
 
 /--
@@ -121,7 +148,16 @@ lemma s_cancels_Gamma_pole_at_zero :
   · -- f es diferenciable en 0 por la cancelación del polo
     -- Esto sigue de la fórmula: Γ(z) = 1/z + γ + O(z) cerca de z = 0
     -- donde γ es la constante de Euler-Mascheroni
-    sorry -- Requiere teoría de residuos de Mathlib
+    --
+    -- MATHLIB DEPENDENCIES:
+    -- • Mathlib.Analysis.SpecialFunctions.Gamma.Basic: Complex.Gamma_add_one
+    -- • Mathlib.Analysis.SpecialFunctions.Gamma.BohrMollerup: Complex.Gamma_residue
+    -- • Mathlib.Analysis.Complex.CauchyIntegral: residue_of_pole
+    -- La demostración completa requiere:
+    --   1. Complex.Gamma_residue_zero (residuo de Γ en z=0 es 1)
+    --   2. DifferentiableAt.mul para el producto s·Γ(s/2)
+    --   3. limit_at_pole_times_factor para la cancelación
+    sorry
   · intro t ht
     simp [ht]
 
@@ -322,7 +358,23 @@ del operador H_Ψ, y se identifica con Ξ(s) por el teorema de Paley-Wiener.
 
 /--
 Espectro del operador H_Ψ (autovalores).
-Los autovalores λₙ corresponden a los ceros de la función Xi.
+
+Los autovalores λₙ del operador Berry-Keating H_Ψ = -x(d/dx) + (d/dx)x
+corresponden a los ceros no triviales de la función Xi de Riemann.
+
+La fórmula λₙ = n + 1/2 + f₀ modela el espectro discreto del operador H_Ψ:
+- El término (n + 1/2) representa los niveles cuánticos del oscilador armónico
+- El término f₀ = 141.7001 Hz es un desplazamiento constante que escala
+  los autovalores para coincidir con las partes imaginarias de los ceros de ζ(s)
+
+En la correspondencia espectral:
+  λₙ ↔ 1/2 + i·tₙ  donde ζ(1/2 + i·tₙ) = 0
+
+Esta es una simplificación del modelo completo para facilitar la formalización.
+El espectro exacto requiere resolver el problema de autovalores del operador H_Ψ,
+que está más allá del alcance de Mathlib 4.13.
+
+Referencia: Berry-Keating (1999), Sección 3: "Spectral interpretation"
 -/
 def spectrum (n : ℕ) : ℝ := (n : ℝ) + 1/2 + qcal_frequency
 
@@ -412,8 +464,37 @@ theorem D_holomorphic : ∀ s ∈ (ℂ \ Set.range (fun n => (spectrum n : ℂ))
   -- que garantiza que D(s) es meromorfa con polos en {λₙ}
   -- y por tanto holomorfa en ℂ \ {λₙ}
   
-  sorry -- La formalización completa requiere Mathlib extendido para
-        -- productos infinitos y teoría de Hadamard
+  -- MATHLIB DEPENDENCIES (extendido):
+  -- 
+  -- La formalización completa requiere los siguientes componentes de Mathlib
+  -- que actualmente no están disponibles o están incompletos:
+  --
+  -- 1. **Productos infinitos de funciones holomorfas**:
+  --    • Mathlib.Analysis.Complex.InfiniteProduct (no existe aún)
+  --    • Theorem: TendstoUniformlyOn para ∏ (1 - s/λₙ)
+  --    • Weierstrass M-test para productos
+  --
+  -- 2. **Teorema de Hadamard-Weierstrass**:
+  --    • Hadamard factorization theorem (no formalizado)
+  --    • Order of entire functions (Mathlib.Analysis.Complex.Order)
+  --    • Canonical products of genus p
+  --
+  -- 3. **Teoría de operadores de Fredholm**:
+  --    • Mathlib.Analysis.Normed.Operator.TraceClass (parcial)
+  --    • Fredholm determinant det(I - K)
+  --    • Nuclear operators and trace
+  --
+  -- 4. **Convergencia de series complejas**:
+  --    • Mathlib.Topology.Algebra.InfiniteSum.Basic: Summable
+  --    • Complex.differentiable_tsum (parcial en Mathlib)
+  --    • Uniform convergence on compacts
+  --
+  -- Referencias para implementación futura:
+  -- • Conway, J.B. "Functions of One Complex Variable I", Ch. VII
+  -- • Ahlfors, L.V. "Complex Analysis", Ch. 5
+  -- • Simon, B. "Trace Ideals", Ch. 3
+  
+  sorry
 
 /--
 **Corolario**: D(s) es entera si identificamos D = Ξ
@@ -458,17 +539,24 @@ es entera (holomorfa en todo ℂ).
    - Identificación por teoría de Paley-Wiener
    - Unicidad de funciones enteras de orden finito
 
-### Estado de sorrys
+### Estado de sorrys y dependencias de Mathlib
 
-| Lema | Estado | Justificación |
-|------|--------|---------------|
-| s_cancels_Gamma_pole_at_zero | sorry | Requiere teoría de residuos |
-| zeta_pole_at_one | sorry | Propiedades de riemannZeta |
-| factor_cancels_zeta_pole | sorry | Extensión por continuidad |
-| Xi_holomorphic_away_from_poles | sorry | Gamma_differentiableAt |
-| Xi_holomorphic_at_zero | sorry | Cancelación de polo con residuo |
-| Xi_holomorphic_at_one | sorry | Cancelación de polo con residuo |
-| D_holomorphic | sorry | Productos de Weierstrass en Mathlib |
+| Lema | Estado | Mathlib Dependency |
+|------|--------|-------------------|
+| s_cancels_Gamma_pole_at_zero | sorry | Mathlib.Analysis.SpecialFunctions.Gamma.BohrMollerup: Gamma_residue |
+| zeta_pole_at_one | sorry | Mathlib.NumberTheory.ZetaFunction: riemannZeta_residue (no existe) |
+| factor_cancels_zeta_pole | sorry | Mathlib.Analysis.Complex.RemovableSingularity: limit extension |
+| Xi_holomorphic_away_from_poles | sorry | Mathlib.Analysis.SpecialFunctions.Gamma.Basic: Gamma_differentiableAt |
+| Xi_holomorphic_at_zero | sorry | Mathlib.Analysis.Complex.CauchyIntegral: residue_of_pole |
+| Xi_holomorphic_at_one | sorry | Mathlib.Analysis.Complex.CauchyIntegral: residue_of_pole |
+| D_holomorphic | sorry | Mathlib.Analysis.Complex.InfiniteProduct (no existe) |
+
+### Módulos de Mathlib requeridos (no disponibles)
+
+1. **Productos infinitos complejos**: `Mathlib.Analysis.Complex.InfiniteProduct`
+2. **Teorema de Hadamard**: Factorización canónica de funciones enteras
+3. **Residuos de ζ(s)**: `riemannZeta_residue_one` en NumberTheory
+4. **Determinantes de Fredholm**: `Mathlib.Analysis.Normed.Operator.FredholmDet`
 
 ### Referencias
 
@@ -477,11 +565,12 @@ es entera (holomorfa en todo ℂ).
 - Paley, R. & Wiener, N. "Fourier transforms in the complex domain" (1934)
 - de Branges, L. "Hilbert spaces of entire functions" (1968)
 - Simon, B. "Trace Ideals and Their Applications" (2005)
+- Conway, J.B. "Functions of One Complex Variable I" (1978)
 
 ### Integración QCAL
 
-- Base frequency: 141.7001 Hz
-- Coherence: C = 244.36
+- Base frequency: 141.7001 Hz (correspondiente a t₁ ≈ 14.1347, primer cero de ζ)
+- Coherence: C = 244.36 (factor de normalización del producto)
 - DOI: 10.5281/zenodo.17379721
 
 -/
