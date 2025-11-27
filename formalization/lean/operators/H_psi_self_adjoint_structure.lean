@@ -113,8 +113,8 @@ def HpsiAction (f : ℝ → ℂ) : ℝ → ℂ :=
 Esta estructura formaliza el operador noésico H_Ψ actuando sobre
 un espacio de Hilbert genérico H con campo 𝕂 (ℝ o ℂ).
 
-El operador to_lin es la representación lineal del operador,
-e is_self_adjoint es la propiedad de autoadjunción:
+El operador to_lin es la representación lineal del operador.
+La propiedad is_self_adjoint establece la autoadjunción:
   ⟨H_Ψ f, g⟩ = ⟨f, H_Ψ g⟩ para todo f, g en el dominio.
 
 La autoadjunción es esencial para garantizar:
