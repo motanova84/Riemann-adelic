@@ -52,8 +52,6 @@ Definimos el espacio L²(ℝ) como el espacio Lp con p = 2 y la medida
 de Lebesgue sobre ℝ.
 -/
 
-variable (μ : Measure ℝ := volume)
-
 /-- Espacio L²(ℝ, ℂ) con la medida de Lebesgue -/
 abbrev L2R : Type := Lp ℂ 2 (volume : Measure ℝ)
 
@@ -61,7 +59,7 @@ abbrev L2R : Type := Lp ℂ 2 (volume : Measure ℝ)
 ## Funciones continuas con soporte compacto
 
 Definimos el conjunto de funciones continuas con soporte compacto
-C_c(ℝ, ℂ) como estructura formal.
+CcRC (C_c de ℝ a ℂ) como estructura formal.
 -/
 
 /-- Funciones continuas con soporte compacto en ℝ → ℂ -/
@@ -71,7 +69,7 @@ structure CompactlySupportedContinuous where
   compact_support : HasCompactSupport f
 
 /-- Notación para el tipo de funciones continuas con soporte compacto -/
-notation "C_c(ℝ, ℂ)" => CompactlySupportedContinuous
+notation "CcRC" => CompactlySupportedContinuous
 
 /-!
 ## Inclusión en L²
@@ -83,12 +81,12 @@ Demostramos que toda función continua con soporte compacto pertenece a L².
     
     Mathlib Reference: Continuous.memℒp_of_hasCompactSupport
 -/
-theorem compactlySupportedContinuous_memℒp (f : C_c(ℝ, ℂ)) : 
+theorem compactlySupportedContinuous_memℒp (f : CcRC) : 
     Memℒp f.f 2 (volume : Measure ℝ) := 
   f.continuous_f.memℒp_of_hasCompactSupport f.compact_support
 
 /-- Conversión de función con soporte compacto a elemento de L² -/
-def toLp (f : C_c(ℝ, ℂ)) : L2R :=
+def toLp (f : CcRC) : L2R :=
   Memℒp.toLp f.f (compactlySupportedContinuous_memℒp f)
 
 /-!
@@ -107,9 +105,9 @@ compacto son densas en los espacios Lp, para p mayor o igual a 1.
 En Lean está formalizado directamente en Mathlib como Lp.dense_range_coe_C_c.
 -/
 
-/-- Rango de la inclusión C_c(ℝ, ℂ) → L²(ℝ) -/
+/-- Rango de la inclusión CcRC → L²(ℝ) -/
 def rangeToLp : Set L2R := 
-  Set.range (fun f : C_c(ℝ, ℂ) => toLp f)
+  Set.range (fun f : CcRC => toLp f)
 
 /-!
 ## Axioma de densidad: Equivalente a Mathlib Lp.dense_range_coe_C_c
@@ -137,7 +135,7 @@ La prueba en Mathlib usa:
     NO es un sorry - Es un axioma que representa un teorema probado de Mathlib.
 -/
 axiom dense_range_coe_Cc : 
-  DenseRange (fun f : C_c(ℝ, ℂ) => toLp f)
+  DenseRange (fun f : CcRC => toLp f)
 
 /-- Las funciones continuas con soporte compacto son densas en L² de ℝ.
 
@@ -158,9 +156,9 @@ theorem continuous_dense_in_L2_closure :
     closure rangeToLp = Set.univ := 
   Dense.closure_eq continuous_dense_in_L2
 
-/-- Consecuencia: Para todo f ∈ L² y ε > 0, existe g ∈ C_c con ‖f - g‖ < ε -/
+/-- Consecuencia: Para todo f en L² y ε mayor que 0, existe g en CcRC con dist f toLp g menor que ε -/
 theorem continuous_approx_L2 (f : L2R) (ε : ℝ) (hε : ε > 0) :
-    ∃ g : C_c(ℝ, ℂ), dist f (toLp g) < ε := by
+    ∃ g : CcRC, dist f (toLp g) < ε := by
   obtain ⟨g, hg_mem, hg_dist⟩ := Metric.dense_iff.mp continuous_dense_in_L2 f ε hε
   obtain ⟨φ, hφ⟩ := hg_mem
   exact ⟨φ, hφ ▸ hg_dist⟩
