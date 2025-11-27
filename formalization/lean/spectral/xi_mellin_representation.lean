@@ -1,17 +1,17 @@
 /-!
 # Xi Mellin Representation
 
-Formalización de la representación integral de Ξ(s) mediante la transformada de Mellin.
+Formalization of the integral representation of Ξ(s) via the Mellin transform.
 
 ## Main Result
 
-Representación integral de Ξ(s) mediante la transformada de Mellin:
+Integral representation of Ξ(s) via the Mellin transform:
 
 \[
 \Xi(s) = \int_0^\infty \Phi(x) x^{s - 1} dx
 \]
 
-donde \(\Phi(x)\) es una función rápida decreciente derivada de \(\theta(x)\).
+where \(\Phi(x)\) is a rapidly decreasing function derived from \(\theta(x)\).
 
 ## Mathematical Background
 
@@ -262,11 +262,11 @@ axiom Phi_mellin_integrable_axiom (s : ℂ) (hs : s ∈ criticalStrip) :
 
 /-- **Xi Mellin Representation Theorem** (Main Result)
     
-    Representación integral de Ξ(s) mediante la transformada de Mellin:
+    Integral representation of Ξ(s) via the Mellin transform:
     
     Ξ(s) = ∫₀^∞ Φ(x) x^{s-1} dx
     
-    donde Φ(x) es la función rápidamente decreciente derivada de θ(x).
+    where Φ(x) is the rapidly decreasing function derived from θ(x).
     
     This establishes that Ξ(s) is the Mellin transform of Φ.
     

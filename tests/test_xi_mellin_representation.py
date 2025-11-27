@@ -302,9 +302,25 @@ class TestQCALIntegration:
 class TestFormalizationCompleteness:
     """Test that formalization eliminates sorry statements."""
     
+    @staticmethod
+    def _get_lean_file_path():
+        """Get the path to the Lean file, handling different environments."""
+        import os
+        # Try multiple possible paths
+        possible_paths = [
+            os.path.join(os.path.dirname(os.path.dirname(__file__)), 
+                        "formalization/lean/spectral/xi_mellin_representation.lean"),
+            "/home/runner/work/Riemann-adelic/Riemann-adelic/formalization/lean/spectral/xi_mellin_representation.lean",
+            "formalization/lean/spectral/xi_mellin_representation.lean"
+        ]
+        for path in possible_paths:
+            if os.path.exists(path):
+                return path
+        return possible_paths[0]  # Return first as default
+    
     def test_no_sorry_in_lean_file(self):
         """Verify the Lean file has no sorry statements in proofs."""
-        lean_file = "/home/runner/work/Riemann-adelic/Riemann-adelic/formalization/lean/spectral/xi_mellin_representation.lean"
+        lean_file = self._get_lean_file_path()
         
         try:
             with open(lean_file, 'r') as f:
@@ -349,7 +365,7 @@ class TestFormalizationCompleteness:
     
     def test_axioms_are_justified(self):
         """Test that axioms have mathematical justification."""
-        lean_file = "/home/runner/work/Riemann-adelic/Riemann-adelic/formalization/lean/spectral/xi_mellin_representation.lean"
+        lean_file = self._get_lean_file_path()
         
         try:
             with open(lean_file, 'r') as f:
