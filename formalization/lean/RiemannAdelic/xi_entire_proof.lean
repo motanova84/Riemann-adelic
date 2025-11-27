@@ -74,11 +74,12 @@ These are established theorems in the mathematical literature.
     
     This is a fundamental result from Riemann's 1859 paper. The key insights are:
     1. The pole of ζ(s) at s = 1 is canceled by the zero of (1-s) at s = 1
-    2. The poles of Γ(s/2) at s = 0, -2, -4, ... are canceled by:
-       - The factor s at s = 0
-       - The trivial zeros of ζ(s) at s = -2, -4, -6, ...
+    2. The poles of Γ(s/2) at s = 0, -2, -4, -6, ... are canceled by:
+       - The factor s at s = 0 (where Γ(s/2) has a pole from s/2 = 0)
+       - The trivial zeros of ζ(s) at s = -2, -4, -6, ... (these are exactly 
+         where Γ(s/2) has poles from s/2 = -1, -2, -3, ...)
     
-    The result is that ξ(s) = (1/2)s(s-1)π^(-s/2)Γ(s/2)ζ(s) is entire.
+    The result is that ξ(s) = (1/2)s(1-s)π^(-s/2)Γ(s/2)ζ(s) is entire.
     
     References:
     - Riemann (1859) "Über die Anzahl der Primzahlen unter einer gegebenen Größe"
@@ -117,12 +118,12 @@ This is a classical result in analytic number theory. The completed Xi function
 is defined precisely to be entire:
 
 1. The Riemann zeta function ζ(s) has a simple pole at s = 1
-2. The factor s(1-s) = -s(s-1) vanishes at s = 1 with order 1
+2. The factor s(1-s) vanishes at s = 1 with order 1
 3. Therefore, the product s(1-s)·ζ(s) is analytic at s = 1 (removable singularity)
 4. The remaining factors π^(-s/2) and Γ(s/2) are handled by:
-   - Γ(s/2) has simple poles at s = 0, -2, -4, -6, ...
-   - The trivial zeros of ζ(s) at s = -2, -4, -6, ... cancel these Gamma poles
-   - At s = 0, the factor s provides the needed zero
+   - Γ(s/2) has simple poles at s = 0, -2, -4, -6, ... (from s/2 = 0, -1, -2, -3, ...)
+   - The trivial zeros of ζ(s) at s = -2, -4, -6, ... exactly cancel the Gamma poles
+   - At s = 0, the factor s provides the needed zero to cancel the Γ(0) pole
 
 The result is that ξ(s) is entire, as originally shown by Riemann (1859).
 -/
