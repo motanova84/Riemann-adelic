@@ -14,7 +14,11 @@ This implies symmetry about the critical line ℜ(s) = 1/2.
 ## Mathematical Background
 
 The completed Riemann Xi function is defined as:
-  ξ(s) = (1/2) s (s-1) π^(-s/2) Γ(s/2) ζ(s)
+  ξ(s) = (1/2) s (1-s) π^(-s/2) Γ(s/2) ζ(s)
+
+Note: Some references use (s-1) instead of (1-s), but both are equivalent
+up to sign since s(s-1) = -s(1-s). We use (1-s) to emphasize the symmetry
+around s = 1/2.
 
 The functional equation ξ(1-s) = ξ(s) is fundamental in the study of
 non-trivial zeros of ζ(s) through ξ(s).
@@ -46,6 +50,9 @@ noncomputable section
 
 The completed Riemann Xi function ξ(s) is defined as:
   ξ(s) = (1/2) s (1-s) π^(-s/2) Γ(s/2) ζ(s)
+
+Note: The factor (1-s) is used instead of (s-1) to emphasize the 
+symmetry about s = 1/2. Both conventions appear in the literature.
 
 This function is entire (holomorphic everywhere on ℂ) and satisfies
 the functional equation ξ(1-s) = ξ(s).
@@ -132,6 +139,15 @@ unless they lie on the critical line.
     The functional equation of ξ(s) guarantees this symmetry.
     This is fundamental in the study of non-trivial zeros of ζ(s)
     through ξ(s).
+    
+    **Design Note**:
+    This lemma is intentionally a direct application of the functional
+    equation axiom. The name emphasizes the geometric interpretation:
+    the functional equation ξ(1-s) = ξ(s) is equivalent to saying that
+    ξ is symmetric about the vertical line Re(s) = 1/2 in the complex plane.
+    
+    This matches the issue specification which requires:
+    `riemann_xi (1 - s) = riemann_xi s := riemann_xi.functional_equation s`
 -/
 lemma xi_symmetric_about_critical_line (s : ℂ) :
     riemann_xi (1 - s) = riemann_xi s :=
