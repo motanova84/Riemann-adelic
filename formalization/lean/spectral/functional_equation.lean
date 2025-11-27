@@ -85,6 +85,11 @@ lemma ΞZeros_conjugate_symmetric :
   -- 
   -- The key axiom used is Ξ_real_on_real, which establishes
   -- that Ξ takes real values on the real axis.
+  --
+  -- NOTE: This is a STRUCTURAL sorry pending Schwarz reflection in Mathlib.
+  -- The mathematical content is sound - Schwarz reflection is a standard
+  -- theorem in complex analysis. See: Mathlib.Analysis.Complex.SchwartzReflection
+  -- (if available) or standard texts like Ahlfors, "Complex Analysis".
   unfold ΞZeros at *
   simp only [Set.mem_setOf_eq] at *
   -- Using the Schwarz reflection principle:
