@@ -28,6 +28,33 @@ Defines the operator $\mathcal{H}_\Psi$ as self-adjoint in its ∞³ domain, val
 | `spectrum_HΨ_equals_zeros_Ξ` | Axiom | Spectral correspondence with Xi zeros |
 | `riemann_hypothesis_from_spectral` | Theorem | Proved from axioms |
 
+### `spectral_decomposition.lean`
+
+Formalizes the spectral decomposition theorem (von Neumann) for self-adjoint operators on Hilbert spaces. Since the complete formalization is not yet available in Mathlib, this is introduced as an accepted axiom for continuity of the RH development.
+
+#### Key Definitions
+
+| Definition | Description |
+|------------|-------------|
+| `is_self_adjoint` | Predicate: T is self-adjoint if ⟨Tx, y⟩ = ⟨x, Ty⟩ for all x, y |
+| `SpectralMeasure` | Structure representing a projection-valued measure over ℝ |
+
+#### Key Results
+
+| Result | Type | Status |
+|--------|------|--------|
+| `spectral_decomposition_selfadjoint` | Axiom | Accepted axiom (von Neumann, Reed & Simon) |
+| `spectrum_real_from_decomposition` | Theorem | ✅ Proved (no sorry) |
+| `eigenvectors_orthogonal` | Theorem | ✅ Proved (no sorry) |
+
+#### Mathematical Statement
+
+Every densely defined self-adjoint operator T on a Hilbert space admits a spectral decomposition through a projection-valued measure E such that:
+
+$$T = \int_{\mathbb{R}} \lambda \, dE(\lambda)$$
+
+This is a central theorem in the spectral theory of self-adjoint operators on Hilbert spaces (see: von Neumann, Reed & Simon).
+
 ### `HΨ_has_real_spectrum.lean`
 
 Proves that self-adjoint operators on complex Hilbert spaces have real spectrum (Im(λ) = 0). This is a fundamental property for the Hilbert-Pólya formulation of the Riemann Hypothesis.
