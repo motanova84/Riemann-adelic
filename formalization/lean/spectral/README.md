@@ -28,6 +28,44 @@ Defines the operator $\mathcal{H}_\Psi$ as self-adjoint in its ∞³ domain, val
 | `spectrum_HΨ_equals_zeros_Ξ` | Axiom | Spectral correspondence with Xi zeros |
 | `riemann_hypothesis_from_spectral` | Theorem | Proved from axioms |
 
+### `xi_mellin_representation.lean` 🆕
+
+Formalizes the Mellin transform representation of Ξ(s) as:
+
+$$\Xi(s) = \int_0^\infty \Phi(x) x^{s-1} dx$$
+
+where Φ(x) is a rapidly decreasing function derived from the Jacobi theta function θ(x).
+
+#### Key Definitions
+
+| Definition | Description |
+|------------|-------------|
+| `jacobi_theta` | Jacobi theta function θ(x) = Σ exp(-πn²x) |
+| `Phi` | Mellin kernel derived from theta |
+| `criticalStrip` | The set {s ∈ ℂ : 0 < Re(s) < 1} |
+| `mellinTransform` | Mellin transform ∫₀^∞ f(x)x^{s-1}dx |
+| `riemann_Xi` | Riemann Xi function |
+
+#### Key Results
+
+| Result | Type | Status |
+|--------|------|--------|
+| `theta_functional_equation` | Axiom | θ(1/x) = √x · θ(x) |
+| `Phi_rapid_decay` | Axiom | Schwartz-like decay of Φ |
+| `Phi_mellin_integrable` | Theorem | ✅ Integrability in critical strip |
+| `xi_mellin_representation` | Theorem | ✅ Main theorem (no sorry) |
+| `mellin_zeros_spectral` | Theorem | ✅ Connection to zeros |
+
+#### Mathematical Background
+
+The classical Mellin representation of Ξ(s) connects:
+- Jacobi theta function and modular transformations
+- Schwartz function theory (rapid decay)
+- Analytic continuation of zeta function
+- Spectral interpretation of zeros
+
+**References**: Titchmarsh (1986), Edwards (1974), DOI: 10.5281/zenodo.17379721
+
 ### `HΨ_has_real_spectrum.lean`
 
 Proves that self-adjoint operators on complex Hilbert spaces have real spectrum (Im(λ) = 0). This is a fundamental property for the Hilbert-Pólya formulation of the Riemann Hypothesis.
