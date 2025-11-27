@@ -60,13 +60,13 @@ axiom Ξ_functional_equation : ∀ s : ℂ, Ξ s = Ξ (1 - s)
 def riemann_xi : ℂ → ℂ := Ξ
 
 /--
-The function ξ(s) satisfies the functional symmetry:
+The function riemann_xi(s) satisfies the functional symmetry:
 
-  ξ(s) = ξ(1 - s)
+  riemann_xi(s) = riemann_xi(1 - s)
 
 This property is fundamental for the Riemann Hypothesis.
-If ξ(s) = 0, then ξ(1 − s) = 0, which constrains the location
-of non-trivial zeros.
+If riemann_xi(s) = 0, then riemann_xi(1 − s) = 0, which constrains
+the location of non-trivial zeros.
 
 This theorem is derived from the functional equation axiom
 without requiring a sorry.
