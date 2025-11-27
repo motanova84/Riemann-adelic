@@ -112,13 +112,12 @@ axiom riemann_xi_functional_eq : ∀ s : ℂ, riemann_xi s = riemann_xi (1 - s)
 La función ξ(s) es par: ξ(s) = ξ(1 - s)
 
 Este lema establece la simetría de ξ respecto a la línea crítica ℜ(s) = 1/2.
-Se utiliza la ecuación funcional de ξ, ya integrada en Mathlib como functional_eq.
 La propiedad de paridad es central para demostrar simetría espectral.
 
-**Justificación**: Se utiliza la ecuación funcional de ξ (riemann_xi_functional_eq).
-La propiedad de paridad es central para demostrar simetría espectral.
+**Justificación**: Se utiliza la ecuación funcional de ξ axiomatizada como 
+`riemann_xi_functional_eq`, que representa el resultado clásico de Riemann (1859).
 
-**Prueba sin sorry**: Este lema usa riemann_xi.functional_eq para proporcionar
+**Prueba sin sorry**: Este lema usa `riemann_xi_functional_eq` para proporcionar
 una prueba directa de la propiedad de paridad sin usar sorry.
 -/
 lemma xi_even_property (s : ℂ) : riemann_xi s = riemann_xi (1 - s) :=
