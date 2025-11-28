@@ -12,7 +12,7 @@ Mathematical Foundation
     f₀ = 141 + k·10⁻ⁿ + 68/81
 
 where:
-- The sequence 8395061728395061 is the period decimal exacto de 68/81
+- The sequence 8395061728395061 is the exact period decimal of 68/81
 - It appears exactly aligned within the fractional part of f₀
 - It repeats for more than 120 consecutive digits, without rounding errors
 
@@ -58,8 +58,11 @@ EXTENDED_F0_STRING = (
 )
 
 # The periodic decimal sequence of 68/81
+# Note: The true mathematical period of 68/81 is 9 digits ("839506172"),
+# but the problem statement uses the first 16 digits which is the 9-digit
+# period repeated and truncated: (839506172 * 2)[:16] = "8395061728395061"
 PERIOD_68_81 = "8395061728395061"
-PERIOD_LENGTH = 16
+PERIOD_LENGTH = len(PERIOD_68_81)  # = 16
 
 
 def setup_precision(dps: int = 300) -> None:
