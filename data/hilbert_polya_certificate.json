@@ -1,15 +1,15 @@
 {
   "title": "Hilbert-P\u00f3lya Numerical Proof Certificate",
   "operator": "H_\u03a8",
-  "timestamp": "2025-11-28T22:19:48.626141",
+  "timestamp": "2025-11-28T22:28:49.402889",
   "configuration": {
-    "N": 1000,
+    "N": 500,
     "k": 20,
-    "n_test_functions": 10000
+    "n_test_functions": 1000
   },
   "results": {
     "self_adjoint": true,
-    "max_self_adjoint_error": 1.1920928955078125e-06,
+    "max_self_adjoint_error": 4.76837158203125e-07,
     "spectrum_real": true,
     "max_imaginary": 0.0,
     "matrix_symmetric": true
