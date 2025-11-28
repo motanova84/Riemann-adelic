@@ -6,6 +6,35 @@ This directory contains the formal Lean 4 definition of the noetic operator $\ma
 
 ## Files
 
+### `compact_selfadjoint_spectrum.lean` (NEW - 27 November 2025)
+
+Formalizes the fundamental theorem that compact self-adjoint operators have discrete spectra with possible accumulation only at 0. This is essential for constructing orthonormal bases of eigenfunctions.
+
+#### Key Definitions
+
+| Definition | Description |
+|------------|-------------|
+| `IsSelfAdjoint` | Predicate for self-adjoint operators on real Hilbert spaces |
+| `IsCompactOperator` | Predicate for compact operators |
+| `spectrum_real` | The spectrum of a bounded linear operator |
+| `point_spectrum` | Eigenvalues (point spectrum) of an operator |
+
+#### Key Results
+
+| Result | Type | Status |
+|--------|------|--------|
+| `spectrum_compact_selfadjoint_discrete` | Theorem | ✅ Main theorem - Non-zero spectral points are isolated |
+| `spectrum_compact_selfadjoint_countable` | Theorem | ✅ Non-zero spectrum is countable |
+| `eigenvalues_enumerable` | Theorem | ✅ Eigenvalues can be enumerated |
+| `discrete_spectrum_implies_orthonormal_basis` | Theorem | ✅ Existence of orthonormal eigenbasis |
+
+#### Mathematical Statement
+
+For a compact self-adjoint operator T on a real Hilbert space E:
+$$\forall x \in \sigma(T), \; x \neq 0 \Rightarrow \exists \varepsilon > 0, \; B(x, \varepsilon) \cap (\sigma(T) \setminus \{x\}) = \emptyset$$
+
+This means non-zero spectral points are isolated, and accumulation can only occur at 0.
+
 ### `self_adjoint.lean`
 
 Defines the operator $\mathcal{H}_\Psi$ as self-adjoint in its ∞³ domain, validating the critical spectral structure for RH and GRH.

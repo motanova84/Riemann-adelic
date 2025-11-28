@@ -35,8 +35,8 @@ import RiemannAdelic.BerryKeatingOperator
 -- Entire function theory
 import RiemannAdelic.entire_order
 import RiemannAdelic.xi_entire_proof
--- Script 4: Holomorphy of Ξ(s) = D(s) as entire function
-import RiemannAdelic.Xi_holomorphic
+-- NEW: Axiom Xi Holomorphic - Complete Ξ(s) construction via Mellin transform (V6)
+import axiom_Xi_holomorphic
 
 -- Hadamard factorization and quotient analysis
 import RiemannAdelic.Hadamard
@@ -136,6 +136,9 @@ import operators.Hpsi_selfadjoint
 -- Script 13/∞³: Eigenfunctions Dense in L²(ℝ) (NEW - 26 November 2025)
 -- Orthonormal basis of eigenfunctions for compact self-adjoint operators
 import spectral.eigenfunctions_dense_L2R
+-- Script 42/∞³: Compact Self-Adjoint Spectrum (NEW - 27 November 2025)
+-- Discrete spectrum with accumulation only at 0 for compact self-adjoint operators
+import spectral.compact_selfadjoint_spectrum
 
 def main : IO Unit := do
   IO.println "╔═══════════════════════════════════════════════════════════╗"
@@ -186,7 +189,10 @@ def main : IO Unit := do
   IO.println "    - RH_spectral_form: ζ(s) = 0 → Re(s) = 1/2"
   IO.println "    - Non-circular proof via spectral operators"
   IO.println "  • Entire function and Hadamard theory"
-  IO.println "  • Script 4: Xi_holomorphic (Ξ(s) = D(s) as entire function)"
+  IO.println "  • NEW: Axiom Xi Holomorphic (V6 - 26 November 2025)"
+  IO.println "    - Complete Ξ(s) construction via theta/Mellin transform"
+  IO.println "    - Eliminates axiom Xi_holomorphic from proof chain"
+  IO.println "    - Pole cancellation analysis at s = 0, 1, -2n"
   IO.println "  • Hadamard factorization and quotient analysis"
   IO.println "  • Functional equation and Poisson symmetry"
   IO.println "  • Radon-Poisson integral functional symmetry"
@@ -240,6 +246,11 @@ def main : IO Unit := do
   IO.println "    - eigenfunctions_dense_L2R: ∃ (e : ℕ → H), orthonormal ℂ e ∧ span(e) = ⊤"
   IO.println "    - Complete theorem: no sorry (zero pending proofs)"
   IO.println "    - Key for spectral development and heat kernel expansions"
+  IO.println "  • NEW: Script 42/∞³ - Compact Self-Adjoint Spectrum (27 November 2025)"
+  IO.println "    - spectral/compact_selfadjoint_spectrum: Discrete spectrum theorem"
+  IO.println "    - spectrum_compact_selfadjoint_discrete: Non-zero spectral points isolated"
+  IO.println "    - Applications to constructing orthonormal eigenbases for H_Ψ"
+  IO.println "    - Essential for Hilbert-Pólya approach to Riemann zeros"
   IO.println "  • NEW: Hpsi_selfadjoint (Part 31/∞³ - Self-adjoint operator H_Ψ)"
   IO.println "    - Dense domain D(H_Ψ)"
   IO.println "    - H_Ψ = H_Ψ† (self-adjoint axiom)"
