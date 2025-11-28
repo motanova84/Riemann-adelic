@@ -63,8 +63,9 @@ jobs:
           black --check --line-length=120 . || true
 
       - name: Run tests with pytest
+        continue-on-error: true
         run: |
-          pytest tests/ -v --tb=short --timeout=300 || echo "Some tests may have failed"
+          pytest tests/ -v --tb=short --timeout=300
 
   validate-metadata:
     name: Validate metadata

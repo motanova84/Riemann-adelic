@@ -97,21 +97,28 @@ jobs:
           ERRORS=$(grep -ci "error" build_output.txt || echo 0)
         fi
         
-        cat > validation_report.json <<EOF
-        {
-          "timestamp": "$DATE",
-          "build_time_sec": ${BUILD_TIME:-0},
-          "build_exit_code": ${BUILD_EXIT:-1},
-          "warnings": $WARNINGS,
-          "errors": $ERRORS,
-          "summary": {
-            "status": "$STATUS",
-            "lean_version": "4.5.0",
-            "files_count": $LEAN_FILES
-          },
-          "note": "Skeleton proofs with axioms - full verification pending"
-        }
-        EOF
+        # Use jq for safe JSON construction
+        jq -n \
+          --arg timestamp "$DATE" \
+          --argjson build_time "${BUILD_TIME:-0}" \
+          --argjson build_exit "${BUILD_EXIT:-1}" \
+          --argjson warnings "$WARNINGS" \
+          --argjson errors "$ERRORS" \
+          --arg status "$STATUS" \
+          --argjson files_count "$LEAN_FILES" \
+          '{
+            timestamp: $timestamp,
+            build_time_sec: $build_time,
+            build_exit_code: $build_exit,
+            warnings: $warnings,
+            errors: $errors,
+            summary: {
+              status: $status,
+              lean_version: "4.5.0",
+              files_count: $files_count
+            },
+            note: "Skeleton proofs with axioms - full verification pending"
+          }' > validation_report.json
         
         echo "Validation report:"
         cat validation_report.json
