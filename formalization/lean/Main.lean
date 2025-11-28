@@ -149,6 +149,11 @@ import spectral.eigenfunctions_dense_L2R
 -- Discrete spectrum with accumulation only at 0 for compact self-adjoint operators
 import spectral.compact_selfadjoint_spectrum
 
+-- ⚠️ THEORETICAL FRAMEWORK (Not imported - doesn't compile)
+-- RiemannAdelic.PsiNSE_CompleteLemmas_WithInfrastructure
+-- This is a skeleton formalization connecting NSE with QCAL infrastructure
+-- See formalization/lean/RiemannAdelic/PSI_NSE_README.md for details
+
 def main : IO Unit := do
   IO.println "╔═══════════════════════════════════════════════════════════╗"
   IO.println "║   Riemann Hypothesis Adelic Proof - Lean 4 Formalization ║"
@@ -273,6 +278,13 @@ def main : IO Unit := do
   IO.println "    - H_Ψ = H_Ψ† (self-adjoint axiom)"
   IO.println "    - Spectrum(H_Ψ) ⊆ ℝ (spectral theorem compatible)"
   IO.println ""
+  IO.println "Theoretical frameworks (documented but not compiled):"
+  IO.println "  • Ψ-NSE with QCAL infrastructure (f₀ = 141.7001 Hz)"
+  IO.println "  • P≠NP treewidth connections"
+  IO.println "  • Adelic spectral coherence system"
+  IO.println ""
+  IO.println "Status: Constructive formalization in progress"
+  IO.println "DOI: 10.5281/zenodo.17116291"
   IO.println "Status: Constructive formalization in progress (purge_axioms branch)"
   IO.println "DOI: 10.5281/zenodo.17116291"
   IO.println "Frequency: 141.7001 Hz"
