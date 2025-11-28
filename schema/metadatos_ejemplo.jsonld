@@ -1,0 +1,24 @@
+{
+  "@context": "https://schema.org/",
+  "@type": "SoftwareSourceCode",
+  "name": "QCAL Universal Kernel Example",
+  "description": "Ejemplo de metadatos para el verificador universal QCAL",
+  "programmingLanguage": "Lean 4",
+  "version": "1.0.0",
+  "author": {
+    "@type": "Person",
+    "name": "QCAL System"
+  },
+  "dateCreated": "2025-10-19",
+  "license": "MIT",
+  "keywords": [
+    "formal verification",
+    "quantum computing",
+    "adelic structures",
+    "coherence verification"
+  ],
+  "codeRepository": "https://github.com/motanova84/-jmmotaburr-riemann-adelic",
+  "runtimePlatform": "Lean 4",
+  "applicationCategory": "Mathematical Software",
+  "operatingSystem": "Cross-platform"
+}

@@ -14,6 +14,11 @@ This module implements spectral operators for the Riemann Hypothesis:
    - Implements the inversion operator (H_DS f)(x) = f(1/x)
    - Enforces functional equation symmetry ζ(s) = χ(s)ζ(1-s)
    - Verifies involutivity, commutation, domain stability, spectral symmetry
+
+4. hilbert_polya_operator.py: Hilbert-Pólya Operator
+   - Implements H = -x(d/dx) + πζ'(1/2)log x
+   - Self-adjoint operator in L²(ℝ⁺, dx/x)
+   - Connects to Hilbert-Pólya conjecture and Berry-Keating approach
 """
 from .operador_H import K_t, R_t_matrix, approximate_spectrum
 
@@ -43,6 +48,15 @@ from .operador_H_DS import (
     demonstrate_h_ds_properties
 )
 
+from .hilbert_polya_operator import (
+    apply_hilbert_polya,
+    HilbertPolyaOperator,
+    HilbertPolyaConfig,
+    ZETA_PRIME_HALF,
+    QCAL_FUNDAMENTAL_FREQUENCY,
+    demonstrate_hilbert_polya
+)
+
 __all__ = [
     # operador_H exports
     'K_gauss',
@@ -63,5 +77,12 @@ __all__ = [
     'plot_spectral_comparison',
     # operador_H_DS exports
     'DiscreteSymmetryOperator',
-    'demonstrate_h_ds_properties'
+    'demonstrate_h_ds_properties',
+    # hilbert_polya_operator exports
+    'apply_hilbert_polya',
+    'HilbertPolyaOperator',
+    'HilbertPolyaConfig',
+    'ZETA_PRIME_HALF',
+    'QCAL_FUNDAMENTAL_FREQUENCY',
+    'demonstrate_hilbert_polya'
 ]

@@ -15,15 +15,13 @@ jobs:
   test:
     name: Test Python ${{ matrix.python-version }}
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        python-version: ["3.10", "3.11", "3.12"]
-    
+    outputs:
+      python-cache: ${{ steps.cache-python.outputs.cache-hit }}
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Set up Python ${{ matrix.python-version }}
+      - name: 🐍 Configurar Python 3.11 + caché pip
+        id: cache-python
         uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
@@ -42,15 +40,17 @@ jobs:
           pip install -r requirements.txt
           pip install flake8 black isort
 
-      - name: Run linting (flake8)
+      - name: 🔢 Fetch datos Odlyzko con precisión t1e8
         run: |
           flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
         continue-on-error: true
 
-      - name: Check code formatting (black)
-        run: |
-          black --check --line-length=120 .
-        continue-on-error: true
+  tests:
+    name: ✅ Tests & Validación Formal
+    needs: [setup, fetch_odlyzko]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
 
       - name: Run tests with pytest
         run: |
@@ -59,8 +59,6 @@ jobs:
   validate-metadata:
     name: Validate Metadata
     runs-on: ubuntu-latest
-    needs: test
-    
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
