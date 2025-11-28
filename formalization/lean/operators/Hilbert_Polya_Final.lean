@@ -108,7 +108,7 @@ El dominio D(H_Ψ) consiste en funciones φ : ℝ⁺ → ℂ que son:
 /-- Espacio de funciones en el dominio del operador H_Ψ -/
 def DomainHPsi (φ : ℝ → ℂ) : Prop :=
   ContDiff ℝ ⊤ φ ∧ 
-  (∀ x > 0, φ x = φ x) ∧  -- Real-valued for x > 0
+  (∀ x > 0, (φ x).im = 0) ∧  -- Real-valued for x > 0
   (∃ C : ℝ, C > 0 ∧ ∀ x > 0, Complex.abs (φ x) ≤ C * Real.exp (-x))  -- Decay
 
 /-- El dominio es no vacío -/

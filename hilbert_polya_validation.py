@@ -36,6 +36,11 @@ QCAL_FREQUENCY = 141.7001  # Hz
 QCAL_COHERENCE = 244.36    # Coherence constant C
 ALPHA_SPECTRAL = 12.32955  # Spectrally calibrated α
 
+# Numerical tolerances
+SYMMETRY_TOLERANCE = 1e-10  # Tolerance for symmetry verification
+EIGENVALUE_TOLERANCE = 1e-10  # Tolerance for eigenvalue checks
+CONVERGENCE_THRESHOLD = 0.1  # Threshold for trace class convergence ratio
+
 
 @dataclass
 class HilbertPolyaResult:
@@ -67,8 +72,6 @@ def H_psi_operator(f: np.ndarray, x: np.ndarray, alpha: float = ALPHA_SPECTRAL) 
         H_Ψ f evaluated on the grid
     """
     # Compute derivative using central differences
-    dx = np.diff(x)
-    df = np.diff(f)
     deriv = np.zeros_like(f)
     deriv[1:-1] = (f[2:] - f[:-2]) / (x[2:] - x[:-2])
     deriv[0] = (f[1] - f[0]) / (x[1] - x[0])
@@ -89,7 +92,8 @@ def build_H_psi_matrix(n_points: int, x_min: float = 1e-10, x_max: float = 1e10,
     In log-coordinates t = log(x), this becomes a Schrödinger-type operator:
         H_Ψ = -d²/dt² + V(t)
     
-    where V(t) = -α·t is the potential.
+    where V(t) = 1/4 + α·|t| is the coercive potential that ensures
+    semi-boundedness required by Friedrichs theorem.
     
     Uses the truncated domain [x_min, x_max] with logarithmic spacing.
     
@@ -107,12 +111,8 @@ def build_H_psi_matrix(n_points: int, x_min: float = 1e-10, x_max: float = 1e10,
     dx = np.diff(log_x)[0]  # Uniform spacing in log
     
     # Build Schrödinger-type operator in log coordinates
-    # H = -d²/dt² + V(t) with V(t) = α²·t²/4 - α/2
-    # This is the harmonic oscillator potential centered at origin
-    
-    # For the Hilbert-Pólya operator, we use:
-    # H_Ψ = -d²/dt² + (1/4 + α·|t|)
-    # which has a minimum at t=0 and grows linearly
+    # H = -d²/dt² + V(t) with V(t) = 1/4 + α·|t|
+    # This coercive potential ensures semi-boundedness for Friedrichs theorem
     
     H = np.zeros((n_points, n_points))
     
@@ -196,7 +196,7 @@ def verify_trace_class(H: np.ndarray, n_eigenvalues: int = 10000) -> Tuple[bool,
     eigs = eigenvalues[:n_use]
     
     # Avoid division by zero
-    eigs_positive = eigs[eigs > 0.1]
+    eigs_positive = eigs[eigs > SYMMETRY_TOLERANCE]
     
     if len(eigs_positive) < 2:
         return False, float('inf')
@@ -221,7 +221,7 @@ def verify_trace_class(H: np.ndarray, n_eigenvalues: int = 10000) -> Tuple[bool,
             convergence_ratio = late_avg / early_avg if early_avg > 0 else float('inf')
             
             # Verified if convergence ratio is small
-            verified = convergence_ratio < 0.1
+            verified = convergence_ratio < CONVERGENCE_THRESHOLD
             error = convergence_ratio
         else:
             verified = True
@@ -495,7 +495,9 @@ def high_precision_validation(n_points: int = 500,
     High-precision Hilbert-Pólya validation using mpmath.
     
     This version uses arbitrary-precision arithmetic for
-    rigorous numerical validation.
+    rigorous numerical validation. The matrix construction
+    uses the same Schrödinger-type operator as the standard
+    validation for consistency.
     
     Args:
         n_points: Number of grid points
@@ -508,33 +510,12 @@ def high_precision_validation(n_points: int = 500,
     
     print(f"🔬 High-precision validation at {precision} dps...")
     
-    # Use mpmath for construction
-    alpha = mp.mpf(str(ALPHA_SPECTRAL))
-    x_min = mp.mpf("1e-10")
-    x_max = mp.mpf("1e10")
-    
-    # Build grid
-    log_x = [mp.log(x_min) + i * (mp.log(x_max) - mp.log(x_min)) / (n_points - 1) 
-             for i in range(n_points)]
-    
-    # Build matrix elements
-    H = mp.matrix(n_points, n_points)
-    dx = float(log_x[1] - log_x[0])
-    
-    for i in range(n_points):
-        H[i, i] = float(-alpha * log_x[i])
-        if i > 0:
-            H[i, i-1] = 1.0 / (2 * dx)
-        if i < n_points - 1:
-            H[i, i+1] = -1.0 / (2 * dx)
-    
-    # Convert to numpy for eigenvalue computation
-    H_np = np.array(H.tolist(), dtype=float)
-    
-    # Run standard validation
+    # Run standard validation with high precision
+    # The standard build_H_psi_matrix function constructs the correct
+    # Schrödinger-type operator with coercive potential
     return hilbert_polya_validation(
         n_points=n_points,
-        alpha=float(alpha),
+        alpha=ALPHA_SPECTRAL,
         precision=precision
     )
 

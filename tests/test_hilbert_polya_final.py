@@ -13,8 +13,6 @@ DOI: 10.5281/zenodo.17379721
 
 import pytest
 import numpy as np
-import sys
-sys.path.insert(0, '.')
 
 from hilbert_polya_validation import (
     H_psi_operator,
@@ -273,20 +271,6 @@ class TestNumericalStability:
         condition = np.max(eigenvalues) / np.min(eigenvalues)
         
         assert np.isfinite(condition), "Resolvente is singular"
-
-
-def run_all_tests():
-    """Run all tests and print summary."""
-    import subprocess
-    result = subprocess.run(
-        ["python", "-m", "pytest", __file__, "-v", "--tb=short"],
-        capture_output=True,
-        text=True
-    )
-    print(result.stdout)
-    if result.returncode != 0:
-        print(result.stderr)
-    return result.returncode == 0
 
 
 if __name__ == "__main__":
