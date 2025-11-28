@@ -22,19 +22,8 @@ except ImportError:
 # Add the current directory to Python path for imports
 sys.path.append('.')
 
-class YOLOverifier:
-    """YOLO (You Only Look Once) verification system for Riemann Hypothesis"""
-    
-    def __init__(self):
-        self.results = {}
-        self.test_zeros = [14.134725142, 21.022039639, 25.010857580, 30.424876126]
-You Only Look Once - Single-Pass Verification Framework
-"""
-import os
-import sys
 import time
 import json
-from datetime import datetime
 from pathlib import Path
 
 class YOLOverifier:
@@ -237,7 +226,6 @@ class YOLOverifier:
             ("Spectral System", self.verify_spectral_system),
             ("Critical Line", self.verify_critical_line),
             ("Explicit Formula", self.verify_explicit_formula),
-            ("Lean Formalization", self.verify_lean_formalization)
             ("Lean Formalization", self.verify_lean_formalization),
             ("V5 Integration", self.verify_v5_integration)
         ]
@@ -295,17 +283,6 @@ class YOLOverifier:
         certificate = {
             "yolo_verification": {
                 "timestamp": timestamp,
-                "method": "Single-Pass Complete Validation",
-                "author": "José Manuel Mota Burruezo",
-                "contact": "institutoconsciencia@proton.me"
-            },
-            "verification_results": self.results,
-            "test_zeros_analyzed": len(self.test_zeros),
-            "mathematical_validity": "REAL" if all(self.results.values()) else "PENDING",
-            "yolo_principle": "You only need to look once when you have the complete picture"
-        certificate = {
-            "yolo_verification": {
-                "timestamp": datetime.now().isoformat(),
                 "execution_time": time.time() - self.start_time,
                 "method": "Single-Pass Verification",
                 "approach": "You Only Look Once (YOLO)",
@@ -335,7 +312,7 @@ def main():
     print("Author: José Manuel Mota Burruezo")
     print("Contact: institutoconsciencia@proton.me")
     print()
-    """Main YOLO verification entry point"""
+    # Main YOLO verification entry point
     print("=" * 60)
     print("🎯 YOLO VERIFICATION FOR RIEMANN HYPOTHESIS")
     print("   You Only Look Once - Single Pass Framework")
