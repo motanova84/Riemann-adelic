@@ -224,9 +224,10 @@ class AdelicAritmology:
         results["checks"]["numerator_factorization"] = f"68 = 4 × 17"
         results["checks"]["prime_17_position"] = f"φ¹⁷ ≈ {float(get_phi_17()):.2f}"
         
-        # Check 5: 1/81 missing-9 property
+        # Check 5: 1/81 "missing 8" property
         one_81 = self.compute_1_81_decimal(27)
-        # 1/81 = 0.012345679... (0,1,2,3,4,5,6,7,9 - no 8!)
+        # 1/81 = 0.012345679... where digit 8 is missing in the first cycle
+        # The first 9 positions contain 0,1,2,3,4,5,6,7,9 but NOT 8
         has_missing_digit = "8" not in one_81[:9]  # First 9 digits should not have 8
         results["checks"]["1_81_missing_digit_property"] = has_missing_digit
         results["checks"]["1_81_expansion"] = f"0.{one_81[:27]}..."
