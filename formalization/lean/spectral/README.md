@@ -39,6 +39,28 @@ This means non-zero spectral points are isolated, and accumulation can only occu
 
 Defines the operator $\mathcal{H}_\Psi$ as self-adjoint in its ∞³ domain, validating the critical spectral structure for RH and GRH.
 
+### `eigenfunctions_dense_L2R.lean` (Script 13/∞³)
+
+Proves that for a compact self-adjoint operator T on a complex Hilbert space H, there exists an orthonormal basis of eigenfunctions that is total in H.
+
+#### Key Theorem
+
+```lean
+theorem eigenfunctions_dense_L2R
+  (T : H →ₗ[ℂ] H)
+  (hSA : IsSelfAdjoint T)
+  (hC : IsCompactOperator T) :
+  ∃ (e : ℕ → H), Orthonormal ℂ e ∧ 
+    (⊤ : Submodule ℂ H) = ⊤ ⊓ (Submodule.span ℂ (Set.range e))
+```
+
+**Status**: Complete (0 sorry)
+
+**Applications**:
+- T can be H_Ψ (Berry-Keating operator)
+- Foundation for spectral expansions and heat kernel representations
+- Key for subsequent spectral development in RH approaches
+
 #### Key Definitions
 
 | Definition | Description |
