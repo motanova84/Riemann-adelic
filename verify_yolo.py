@@ -32,6 +32,9 @@ class YOLOverifier:
     def __init__(self):
         self.results = {}
         self.start_time = time.time()
+        # First four non-trivial zeros of the Riemann zeta function (imaginary parts)
+        # Source: Andrew Odlyzko's tables of Riemann zeta zeros
+        # These are the imaginary parts of 1/2 + i*t where ζ(1/2 + i*t) = 0
         self.test_zeros = [14.134725142, 21.022039639, 25.010857580, 30.424876126]
         
     def verify_spectral_system(self):

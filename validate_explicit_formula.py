@@ -416,12 +416,15 @@ def accelerated_prime_sum(primes, f, prime_limit=100):
             total += log_p * f(k * log_p)
     return total
 
+# Default chunk size for zero processing
+DEFAULT_CHUNK_SIZE = 1000
+
 def zero_sum_limited(f, filename, max_zeros, lim_u=5):
     """Compute zero sum using only first max_zeros from file."""
     total = mp.mpf('0')
     count = 0
     # Adaptive chunking with safeguard for max_zeros=0
-    chunk_size = min(10000, max(1000, max_zeros // 100)) if max_zeros > 0 else 1000
+    chunk_size = min(10000, max(DEFAULT_CHUNK_SIZE, max_zeros // 100)) if max_zeros > 0 else DEFAULT_CHUNK_SIZE
     
     print(f"Processing up to {max_zeros} zeros in chunks of {chunk_size}...")
     
