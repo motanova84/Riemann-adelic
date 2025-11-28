@@ -1824,13 +1824,12 @@ ___
 
 | Property | Value |
 |----------|-------|
-| **Status** | - |
-| **Build Time (s)** | - |
-| **Warnings** | - |
-| **Errors** | - |
-| **Lean Version** | - |
-| **Date (UTC)** | - |
-
+| **Status** | CHECK |
+| **Build Time (s)** | null |
+| **Warnings** | null |
+| **Errors** | null |
+| **Lean Version** | null |
+| **Date (UTC)** | 2025-11-28 17:58:10Z |
 ___
 
 ## License
