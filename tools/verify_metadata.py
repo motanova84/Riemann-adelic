@@ -10,10 +10,6 @@ This script validates mathematical archive metadata files to ensure:
 Usage:
     python tools/verify_metadata.py schema/metadata_example.jsonld
     python tools/verify_metadata.py schema/*.jsonld
-#!/usr/bin/env python3
-"""
-Verify JSON-LD metadata schema files.
-This script validates that a JSON-LD file is well-formed and contains required fields.
 """
 
 import json
