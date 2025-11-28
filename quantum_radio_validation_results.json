@@ -1,0 +1,9 @@
+{
+  "overall_valid": true,
+  "R_psi": 2.083343089591025e+40,
+  "R_psi_valid": true,
+  "coherence": 1.2889940569965908e+75,
+  "precision_dps": 15,
+  "fallback_mode": true,
+  "note": "Using Python fallback (mpmath). For full validation, install SageMath."
+}

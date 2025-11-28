@@ -10,6 +10,8 @@ Contact: institutoconsciencia@proton.me
 """
 import sys
 import os
+import time
+import json
 from datetime import datetime
 
 # Try to import optional dependencies, fallback to basic implementations
@@ -23,25 +25,11 @@ except ImportError:
 sys.path.append('.')
 
 class YOLOverifier:
-    """YOLO (You Only Look Once) verification system for Riemann Hypothesis"""
+    """YOLO (You Only Look Once) verification system for Riemann Hypothesis."""
     
     def __init__(self):
         self.results = {}
         self.test_zeros = [14.134725142, 21.022039639, 25.010857580, 30.424876126]
-You Only Look Once - Single-Pass Verification Framework
-"""
-import os
-import sys
-import time
-import json
-from datetime import datetime
-from pathlib import Path
-
-class YOLOverifier:
-    """YOLO (You Only Look Once) Verification System for Riemann Hypothesis"""
-    
-    def __init__(self):
-        self.results = {}
         self.start_time = time.time()
         
     def verify_spectral_system(self):
@@ -237,7 +225,6 @@ class YOLOverifier:
             ("Spectral System", self.verify_spectral_system),
             ("Critical Line", self.verify_critical_line),
             ("Explicit Formula", self.verify_explicit_formula),
-            ("Lean Formalization", self.verify_lean_formalization)
             ("Lean Formalization", self.verify_lean_formalization),
             ("V5 Integration", self.verify_v5_integration)
         ]
@@ -289,26 +276,17 @@ class YOLOverifier:
         return all_passed
 
     def generate_yolo_certificate(self):
-        """Generate YOLO verification certificate"""
+        """Generate YOLO verification certificate."""
         timestamp = datetime.now().isoformat()
         
         certificate = {
             "yolo_verification": {
                 "timestamp": timestamp,
-                "method": "Single-Pass Complete Validation",
-                "author": "José Manuel Mota Burruezo",
-                "contact": "institutoconsciencia@proton.me"
-            },
-            "verification_results": self.results,
-            "test_zeros_analyzed": len(self.test_zeros),
-            "mathematical_validity": "REAL" if all(self.results.values()) else "PENDING",
-            "yolo_principle": "You only need to look once when you have the complete picture"
-        certificate = {
-            "yolo_verification": {
-                "timestamp": datetime.now().isoformat(),
                 "execution_time": time.time() - self.start_time,
                 "method": "Single-Pass Verification",
                 "approach": "You Only Look Once (YOLO)",
+                "author": "José Manuel Mota Burruezo",
+                "contact": "institutoconsciencia@proton.me",
                 "components": self.results,
                 "overall_status": "CONFIRMED" if all(self.results.values()) else "PARTIAL",
                 "riemann_hypothesis": "VERIFIED" if all(self.results.values()) else "PENDING"
@@ -324,18 +302,20 @@ class YOLOverifier:
                 "zeros_method": "Direct spectral extraction",
                 "critical_line": "All zeros at Re(s) = 1/2",
                 "completeness": "Single comprehensive pass"
-            }
+            },
+            "test_zeros_analyzed": len(self.test_zeros),
+            "mathematical_validity": "REAL" if all(self.results.values()) else "PENDING",
+            "yolo_principle": "You only need to look once when you have the complete picture"
         }
         
         return certificate
 
 def main():
-    """Main entry point for YOLO verification"""
+    """Main entry point for YOLO verification."""
     print("🚀 YOLO Riemann Hypothesis Verification")
     print("Author: José Manuel Mota Burruezo")
     print("Contact: institutoconsciencia@proton.me")
     print()
-    """Main YOLO verification entry point"""
     print("=" * 60)
     print("🎯 YOLO VERIFICATION FOR RIEMANN HYPOTHESIS")
     print("   You Only Look Once - Single Pass Framework")
@@ -346,39 +326,6 @@ def main():
     
     # Generate certificate
     certificate = verifier.generate_yolo_certificate()
-    
-    # Write results to file
-    try:
-        with open("YOLO_RESULTS.md", "w") as f:
-            f.write("# YOLO Verification Results\n\n")
-            f.write(f"**Date**: {datetime.now().isoformat()}\n")
-            f.write(f"**Overall Result**: {'SUCCESS' if success else 'FAILED'}\n")
-            f.write(f"**Method**: Single-Pass Complete Validation\n")
-            f.write(f"**Author**: José Manuel Mota Burruezo\n")
-            f.write(f"**Contact**: institutoconsciencia@proton.me\n\n")
-            
-            f.write("## Component Results\n\n")
-            for check, result in verifier.results.items():
-                status = '✅' if result else '❌'
-                f.write(f"- **{check}**: {status}\n")
-                
-            f.write("\n## YOLO Principle\n\n")
-            f.write("> *\"You only need to look once when you have the complete picture.\"*\n\n")
-            
-            if success:
-                f.write("## 🎉 Conclusion\n\n")
-                f.write("**YOLO VERIFICATION SUCCESS** 🎯\n\n")
-                f.write("The Riemann Hypothesis has been verified through a single, comprehensive ")
-                f.write("analysis. No iterative refinement or multiple passes were required - the ")
-                f.write("proof emerges directly from the complete mathematical structure.\n")
-            else:
-                f.write("## ⚠️ Status\n\n")
-                f.write("YOLO verification incomplete. Some components require attention.\n")
-        
-        print(f"\n📄 Results written to YOLO_RESULTS.md")
-        
-    except Exception as e:
-        print(f"⚠️  Could not write results file: {e}")
     
     results_file = "YOLO_RESULTS.md"
     try:
