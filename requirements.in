@@ -1,5 +1,5 @@
 # High-level dependencies for QCAL Riemann Hypothesis validation framework
-# Generated from requirements.txt for pip-compile
+# Created from analysis of requirements.txt to define direct project dependencies
 # Use: pip-compile requirements.in --output-file=requirements-lock.txt --resolver=backtracking
 
 # Core computational dependencies
