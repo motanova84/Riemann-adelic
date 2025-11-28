@@ -133,6 +133,10 @@ import RiemannAdelic.heat_kernel_to_delta_plus_primes
 -- Formalizes: Dense domain D(H_Ψ), H_Ψ = H_Ψ† (self-adjoint), spectrum ⊆ ℝ
 import operators.Hpsi_selfadjoint
 
+-- Script 42/∞³: Compact Self-Adjoint Spectrum (NEW - 27 November 2025)
+-- Discrete spectrum with accumulation only at 0 for compact self-adjoint operators
+import spectral.compact_selfadjoint_spectrum
+
 def main : IO Unit := do
   IO.println "╔═══════════════════════════════════════════════════════════╗"
   IO.println "║   Riemann Hypothesis Adelic Proof - Lean 4 Formalization ║"
@@ -226,6 +230,16 @@ def main : IO Unit := do
   IO.println "  • Gamma trivial exclusion (purge_axioms branch)"
   IO.println "  • Selberg Trace Formula (strong form with exact convergence)"
   IO.println "  • Heat Kernel Convergence to δ₀ + Arithmetic Distribution (formalization in progress; contains sorry/axiom)"
+  IO.println "  • NEW: Script 41/∞³ - Zeta from Heat Kernel (26 November 2025)"
+  IO.println "    - spectral/H_psi_spectrum: Eigenvalue sequence λₙ of H_Ψ"
+  IO.println "    - spectral/zeta_from_heat_kernel: ζ(s) reconstruction via Mellin transform"
+  IO.println "    - heat_kernel_trace: Tr(exp(-t·H_Ψ²)) = ∑ₙ exp(-t·λₙ²)"
+  IO.println "    - zeta_from_heat: ζ(s) = (1/Γ(s)) ∫ t^(s-1) Tr(K_t) dt"
+  IO.println "  • NEW: Script 42/∞³ - Compact Self-Adjoint Spectrum (27 November 2025)"
+  IO.println "    - spectral/compact_selfadjoint_spectrum: Discrete spectrum theorem"
+  IO.println "    - spectrum_compact_selfadjoint_discrete: Non-zero spectral points isolated"
+  IO.println "    - Applications to constructing orthonormal eigenbases for H_Ψ"
+  IO.println "    - Essential for Hilbert-Pólya approach to Riemann zeros"
   IO.println "  • NEW: Hpsi_selfadjoint (Part 31/∞³ - Self-adjoint operator H_Ψ)"
   IO.println "    - Dense domain D(H_Ψ)"
   IO.println "    - H_Ψ = H_Ψ† (self-adjoint axiom)"
