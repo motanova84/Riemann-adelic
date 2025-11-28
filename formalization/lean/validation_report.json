@@ -1,9 +1,9 @@
 {
-  "timestamp": "2025-11-28T18:05:34.760224+00:00",
+  "timestamp": "2025-11-28T18:14:24.701153+00:00",
   "project": "Riemann-Adelic Formalization V5.3",
   "lean_version": "Lean (version 4.5.0, commit 1a3021f98e55, Release)",
   "build_success": false,
-  "build_time_sec": 0.03,
+  "build_time_sec": 0.02,
   "warnings": 0,
   "errors": 1,
   "modules": {
@@ -14,7 +14,7 @@
     },
     "de_branges.lean": {
       "exists": true,
-      "sorries": 7,
+      "sorries": 1,
       "verified": false
     },
     "schwartz_adelic.lean": {
