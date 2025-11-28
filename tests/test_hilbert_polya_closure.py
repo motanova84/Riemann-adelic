@@ -54,6 +54,7 @@ class TestGaussianKernel:
     
     def test_kernel_symmetry(self):
         """Test that kernel is symmetric: K(t,s) = K(s,t)."""
+        # Use 20x20 grid for faster test execution while maintaining coverage
         t = np.linspace(-2, 2, 20)
         s = np.linspace(-2, 2, 20)
         

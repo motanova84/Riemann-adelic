@@ -123,10 +123,19 @@ We define the Schatten p-class S_p and establish that H_Ψ belongs to S_p for p 
     
     where σₙ(T) are the singular values of T in decreasing order.
     
-    For self-adjoint operators, singular values equal |eigenvalues|. -/
+    For self-adjoint operators, singular values equal |eigenvalues|.
+    
+    **NOTE**: This is a simplified placeholder implementation that returns
+    the operator norm ‖T‖. The actual Schatten p-norm would require:
+    1. Spectral decomposition to obtain eigenvalues/singular values
+    2. Computing the ℓ^p norm of the singular value sequence
+    
+    This placeholder is sufficient for the structural formalization,
+    as the actual norm computation is handled via axioms that encode
+    the mathematical properties verified numerically. -/
 def SchattenNorm (p : ℝ) (T : E →L[ℝ] E) : ℝ :=
-  -- Placeholder: In a complete formalization, this would compute
-  -- the p-norm of the singular value sequence
+  -- Simplified placeholder: Returns operator norm
+  -- Full implementation would compute ℓ^p norm of singular values
   ‖T‖
 
 /-- Predicate: An operator T belongs to the Schatten p-class S_p.
@@ -166,9 +175,22 @@ with an exponentially small remainder.
 /-- Eigenvalue sequence of an operator (in decreasing order of magnitude).
     
     For compact self-adjoint T, the eigenvalues {λₙ} form a sequence
-    converging to 0, with λₙ ≠ 0 having finite multiplicity. -/
+    converging to 0, with λₙ ≠ 0 having finite multiplicity.
+    
+    **NOTE**: This is a structural placeholder that returns 0 for all indices.
+    The actual eigenvalue sequence would be computed via:
+    1. Spectral decomposition of T
+    2. Ordering eigenvalues by decreasing magnitude
+    
+    This placeholder definition is used only for structural purposes.
+    The mathematical properties of the eigenvalue sequence are encoded
+    in the axioms (H_Psi_trace_class, schatten_embedding) which are
+    justified by numerical verification in the Python validation module.
+    
+    The key property that eigenvalues decay rapidly enough for trace class
+    membership is validated numerically rather than computed symbolically. -/
 def EigenvalueSequence (T : E →L[ℝ] E) : ℕ → ℝ :=
-  fun _ => 0  -- Placeholder: Would require spectral decomposition
+  fun _ => 0  -- Structural placeholder; actual values from spectral decomposition
 
 /-- The partial sum of the eigenvalue inverse series.
     

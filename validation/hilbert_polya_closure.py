@@ -31,8 +31,8 @@ References:
 import numpy as np
 from numpy.linalg import eigvalsh, norm
 from numpy.polynomial.legendre import leggauss
-from typing import Tuple, Dict, Any, List, Callable
-import mpmath as mp
+from typing import Tuple, Dict, Any, List
+import mpmath as mp  # Required for high-precision validation
 
 # QCAL Constants
 QCAL_FREQUENCY = 141.7001  # Hz
