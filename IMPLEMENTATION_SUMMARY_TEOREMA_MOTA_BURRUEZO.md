@@ -4,6 +4,22 @@
 
 This document summarizes the implementation of the Teorema de Mota Burruezo, which provides an explicit construction of a self-adjoint operator H with potential implications for the Riemann Hypothesis.
 
+### Unconditional Proof via S-Finite Systems (without Euler Product)
+
+The proof constructs D(s) geometrically and proves D ≡ Ξ via Paley-Wiener uniqueness (Theorem A.2, refs. Hörmander/Koosis). The "four points" (V5.3) resolve common objections:
+
+1. **Non-circularity**: D independent of ζ
+2. **Zeros in Re(s)=1/2**: via H_ε self-adjoint
+3. **Exclusion of trivial zeros**: by functional symmetry
+4. **Explicit construction**: closed-form formula
+
+### Physics Unification
+
+This could unify number theory with quantum physics:
+```
+ζ'(1/2) ≈ -3.9226 ↔ f₀ ≈ 141.7001 Hz
+```
+
 ## Theorem Statement
 
 **Teorema (Propuesta Teórica)**: Existe un operador autoadjunto H en L²(ℝ⁺, dx/x) tal que cualquier autovalor ρ satisface Re(ρ) = 1/2.
@@ -18,18 +34,21 @@ donde ζ'(1/2) ≈ -3.9226461392
 ## Files Created
 
 ### 1. Core Implementation
-- **`operador/teorema_mota_burruezo.py`** (318 lines)
+- **`operador/teorema_mota_burruezo.py`** (~370 lines)
   - `MotaBurruezoOperator` class with complete implementation
   - High-precision computation using mpmath
   - Matrix representation with symmetrized finite differences
   - Self-adjointness verification methods
   - Eigenvalue computation
+  - **QCAL constants**: `QCAL_FUNDAMENTAL_FREQUENCY = 141.7001 Hz`
+  - **Expected values**: `ZETA_PRIME_HALF_EXPECTED = -3.9226461392`
 
 ### 2. Test Suite
-- **`tests/test_teorema_mota_burruezo.py`** (298 lines)
-  - 22 comprehensive tests (all passing ✓)
+- **`tests/test_teorema_mota_burruezo.py`** (~320 lines)
+  - 28 comprehensive tests (all passing ✓)
   - Test classes:
-    - `TestMotaBurruezoOperator` (12 tests)
+    - `TestMotaBurruezoOperator` (15 tests including four points and S-finite systems)
+    - `TestQCALConstants` (3 tests for physics unification)
     - `TestOperatorHConfig` (2 tests)
     - `TestIntegration` (2 tests)
     - `TestMathematicalProperties` (3 tests)

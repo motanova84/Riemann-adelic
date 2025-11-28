@@ -38,6 +38,9 @@ coverage.xml
 # SABIO ∞⁴ generated reports
 sabio_infinity4_report_*.json
 
+# Lean validation reports
+formalization/lean/validation_report.json
+
 # Virtual environments
 venv/
 env/
@@ -63,6 +66,7 @@ data/temp_*
 data/*.tmp
 data/validation/results/*
 data/validation/certificates/*
+data/qcal_validation_certificate.json
 !data/validation/results/.gitkeep
 !data/validation/certificates/.gitkeep
 !data/validation_results.csv
@@ -162,5 +166,19 @@ build/
 # Disabled workflow files
 *.disabled
 
+# Monitoring system - evidence and sensitive data
+monitoring/evidence/
+monitoring/alerts/*.json
+!monitoring/alerts/.gitkeep
+examples/__pycache__/
+
+# QCAL auto-generated state files
+tools/qcal_state.json
 # Spectral framework demo images
 *_demo.png
+
+# Validation notebook generated images
+evac_zeta_visualization.png
+convexity_gamma_visualization.png
+validation_summary.png
+validation_summary.txt
