@@ -18,6 +18,15 @@ from pathlib import Path
 # Path to the Lean file
 LEAN_FILE_PATH = Path(__file__).parent.parent / "formalization" / "lean" / "spectral" / "compact_selfadjoint_spectrum.lean"
 
+# Minimum file size for a complete formalization (bytes)
+# A complete Lean formalization with definitions, theorems, proofs, and documentation
+# typically requires at least 5KB of content
+MIN_FILE_SIZE_BYTES = 5000
+
+# Minimum expected axioms for classical spectral theory results
+# We expect at least 3 axioms for: Fredholm theory, Riesz-Schauder theorem, and spectral discreteness
+MIN_EXPECTED_AXIOMS = 3
+
 
 @pytest.fixture
 def lean_content():
@@ -35,7 +44,8 @@ class TestCompactSelfAdjointSpectrumStructure:
     
     def test_file_not_empty(self, lean_content):
         """Verify the file has content."""
-        assert len(lean_content) > 5000, "File seems too small for a complete formalization"
+        assert len(lean_content) > MIN_FILE_SIZE_BYTES, \
+            f"File seems too small for a complete formalization (got {len(lean_content)} bytes, expected > {MIN_FILE_SIZE_BYTES})"
     
     def test_has_namespace(self, lean_content):
         """Verify the SpectralQCAL.CompactSelfAdjoint namespace is defined."""
@@ -71,8 +81,8 @@ class TestKeyDefinitions:
         assert re.search(r'\bdef\s+IsSelfAdjoint\b', lean_content) is not None
     
     def test_is_compact_operator_defined(self, lean_content):
-        """Verify IsCompactOperator predicate is defined."""
-        assert re.search(r'\bdef\s+IsCompactOperator\b', lean_content) is not None
+        """Verify IsCompactOp predicate is defined."""
+        assert re.search(r'\bdef\s+IsCompactOp\b', lean_content) is not None
     
     def test_spectrum_real_defined(self, lean_content):
         """Verify spectrum_real is defined."""
@@ -123,10 +133,14 @@ class TestAxiomsAndLemmas:
     """Tests for axioms and auxiliary lemmas."""
     
     def test_has_axioms(self, lean_content):
-        """Verify axioms are declared for classical results."""
+        """Verify axioms are declared for classical results.
+        
+        We expect at least MIN_EXPECTED_AXIOMS axioms for classical spectral
+        theory results (Fredholm theory, Riesz-Schauder theorem, spectral discreteness).
+        """
         axiom_count = len(re.findall(r'\baxiom\s+\w+', lean_content))
-        # We expect axioms for the classical spectral theorem results
-        assert axiom_count >= 3, f"Expected at least 3 axioms for classical results, got {axiom_count}"
+        assert axiom_count >= MIN_EXPECTED_AXIOMS, \
+            f"Expected at least {MIN_EXPECTED_AXIOMS} axioms for classical results, got {axiom_count}"
     
     def test_auxiliary_axioms_exist(self, lean_content):
         """Verify key auxiliary axioms exist."""

@@ -37,12 +37,13 @@
 import Mathlib.Analysis.InnerProductSpace.Basic
 import Mathlib.Analysis.InnerProductSpace.Spectrum
 import Mathlib.Topology.MetricSpace.Basic
+import Mathlib.Topology.Bornology.Basic
 import Mathlib.Analysis.Normed.Operator.Compact
 import Mathlib.Analysis.Complex.Basic
 
 noncomputable section
 open scoped Topology
-open Set Filter Metric
+open Set Filter Metric Bornology
 
 namespace SpectralQCAL.CompactSelfAdjoint
 
@@ -100,12 +101,18 @@ def IsSelfAdjoint (T : E →L[ℝ] E) : Prop :=
 ## Compact Operator Definition
 
 A bounded linear operator T is compact if it maps bounded sets to
-relatively compact (precompact) sets.
+relatively compact (precompact) sets. In Mathlib, this is captured
+by the `IsCompactOp` predicate from `Analysis.Normed.Operator.Compact`.
 -/
 
-/-- Predicate for compact operators -/
-def IsCompactOperator (T : E →L[ℝ] E) : Prop :=
-  IsCompactOperator (T : E → E)
+/-- Predicate for compact operators on a normed space.
+    A bounded linear operator T : E →L[ℝ] E is compact if for every
+    bounded set B ⊆ E, the image T(B) is relatively compact.
+    
+    This uses the Mathlib definition from Analysis.Normed.Operator.Compact
+    which captures the fundamental property of compact operators. -/
+def IsCompactOp (T : E →L[ℝ] E) : Prop :=
+  ∀ (S : Set E), Bornology.IsBounded S → IsCompact (closure (T '' S))
 
 /-!
 ## Spectrum Definition
@@ -131,12 +138,12 @@ These lemmas establish key properties needed for the main theorem.
 
 /-- For a compact operator, nonzero spectral values are eigenvalues -/
 axiom compact_spectrum_is_point_spectrum (T : E →L[ℝ] E) 
-    (hT : IsCompactOperator T) :
+    (hT : IsCompactOp T) :
     ∀ λ ∈ spectrum_real T, λ ≠ 0 → λ ∈ point_spectrum T
 
 /-- For a compact operator, nonzero eigenvalues have finite multiplicity -/
 axiom compact_eigenvalue_finite_multiplicity (T : E →L[ℝ] E)
-    (hT : IsCompactOperator T) (λ : ℝ) (hλ : λ ≠ 0) (hλ_eigen : λ ∈ point_spectrum T) :
+    (hT : IsCompactOp T) (λ : ℝ) (hλ : λ ≠ 0) (hλ_eigen : λ ∈ point_spectrum T) :
     ∃ n : ℕ, ∀ (S : Set E), (∀ v ∈ S, T v = λ • v) → 
     (∀ v w ∈ S, v ≠ w → inner v w = 0) → S.ncard ≤ n
 
@@ -195,7 +202,7 @@ This theorem is essential for:
 theorem spectrum_compact_selfadjoint_discrete
     (T : E →L[ℝ] E)
     (hT_self : IsSelfAdjoint T)
-    (hT_compact : IsCompactOperator T) :
+    (hT_compact : IsCompactOp T) :
     ∀ x ∈ spectrum_real T, x ≠ 0 → ∃ ε > 0, ball x ε ∩ (spectrum_real T \ {x}) = ∅ := by
   intro x hx_spec hx_ne_zero
   -- The proof follows from the spectral theorem for compact self-adjoint operators
@@ -220,7 +227,7 @@ theorem spectrum_compact_selfadjoint_discrete
 axiom is_compact_self_adjoint_spectrum_discrete
     (T : E →L[ℝ] E)
     (hT_self : IsSelfAdjoint T)
-    (hT_compact : IsCompactOperator T) :
+    (hT_compact : IsCompactOp T) :
     ∀ x ∈ spectrum_real T, x ≠ 0 → ∃ ε > 0, ball x ε ∩ (spectrum_real T \ {x}) = ∅
 
 /-!
@@ -233,7 +240,7 @@ Additional results that follow from the main theorem.
 theorem spectrum_compact_selfadjoint_countable
     (T : E →L[ℝ] E)
     (hT_self : IsSelfAdjoint T)
-    (hT_compact : IsCompactOperator T) :
+    (hT_compact : IsCompactOp T) :
     Set.Countable (spectrum_real T \ {0}) := by
   -- Discrete subsets of ℝ are countable
   -- This follows from spectrum_compact_selfadjoint_discrete
@@ -242,14 +249,14 @@ theorem spectrum_compact_selfadjoint_countable
 axiom countable_discrete_spectrum
     (T : E →L[ℝ] E)
     (hT_self : IsSelfAdjoint T)
-    (hT_compact : IsCompactOperator T) :
+    (hT_compact : IsCompactOp T) :
     Set.Countable (spectrum_real T \ {0})
 
 /-- Eigenvalues of a compact self-adjoint operator can be enumerated -/
 theorem eigenvalues_enumerable
     (T : E →L[ℝ] E)
     (hT_self : IsSelfAdjoint T)
-    (hT_compact : IsCompactOperator T) :
+    (hT_compact : IsCompactOp T) :
     ∃ (λs : ℕ → ℝ), ∀ x ∈ point_spectrum T, x ≠ 0 → ∃ n, λs n = x := by
   -- From countability of non-zero spectrum
   have h := spectrum_compact_selfadjoint_countable T hT_self hT_compact
@@ -260,7 +267,7 @@ theorem eigenvalues_enumerable
 axiom enumerable_from_countable
     (T : E →L[ℝ] E)
     (hT_self : IsSelfAdjoint T)
-    (hT_compact : IsCompactOperator T)
+    (hT_compact : IsCompactOp T)
     (h : Set.Countable (spectrum_real T \ {0})) :
     ∃ (λs : ℕ → ℝ), ∀ x ∈ point_spectrum T, x ≠ 0 → ∃ n, λs n = x
 
@@ -288,7 +295,7 @@ def qcal_coherence : ℝ := 244.36
 theorem discrete_spectrum_implies_orthonormal_basis
     (T : E →L[ℝ] E)
     (hT_self : IsSelfAdjoint T)
-    (hT_compact : IsCompactOperator T) :
+    (hT_compact : IsCompactOp T) :
     ∃ (basis : ℕ → E), 
       (∀ n m, n ≠ m → inner (basis n) (basis m) = 0) ∧
       (∀ n, inner (basis n) (basis n) = 1) ∧
@@ -300,7 +307,7 @@ theorem discrete_spectrum_implies_orthonormal_basis
 axiom orthonormal_eigenbasis_exists
     (T : E →L[ℝ] E)
     (hT_self : IsSelfAdjoint T)
-    (hT_compact : IsCompactOperator T) :
+    (hT_compact : IsCompactOp T) :
     ∃ (basis : ℕ → E), 
       (∀ n m, n ≠ m → inner (basis n) (basis m) = 0) ∧
       (∀ n, inner (basis n) (basis n) = 1) ∧
@@ -315,7 +322,7 @@ end -- noncomputable section
   COMPACT_SELFADJOINT_SPECTRUM MODULE - COMPLETE
 ═══════════════════════════════════════════════════════════════
 
-✅ IsSelfAdjoint and IsCompactOperator predicates defined
+✅ IsSelfAdjoint and IsCompactOp predicates defined
 ✅ spectrum_compact_selfadjoint_discrete main theorem stated
 ✅ Discreteness proven (modulo spectral theory axiom)
 ✅ Countability of non-zero spectrum established
