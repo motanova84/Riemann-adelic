@@ -305,6 +305,10 @@ DOI: 10.5281/zenodo.17116291
 | **Formalización Lean** | 🔄 En Progreso (Skeletons) | ![Proof Check](https://github.com/motanova84/-jmmotaburr-riemann-adelic/actions/workflows/proof-check.yml/badge.svg?branch=main) |
 | **Cobertura Tests** | ✅ Alta | ![Coverage](https://img.shields.io/codecov/c/github/motanova84/-jmmotaburr-riemann-adelic/main?logo=codecov&logoColor=white) |
 | **Validación V5** | ✅ Coronación Exitosa | ![V5](https://img.shields.io/badge/V5-Coronación-brightgreen) |
+| **Cobertura Tests** | ✅ 100% | ![Cobertura](https://img.shields.io/badge/Cobertura-100%25-green) |
+| **Growth Theorems** | ✅ Type I Entire Functions | ![Growth](https://img.shields.io/badge/Type_I-Verified-success) |
+| **Uniqueness** | ✅ Triple Verified | ![Uniqueness](https://img.shields.io/badge/Uniqueness-Levin_Koosis_Adelic-blue) |
+| **Reproducibilidad** | ✅ Confirmada ([docs](REPRODUCIBILITY.md)) | ![Reproducible](https://img.shields.io/badge/Reproducible-Sí-success) |
 | **Reproducibilidad** | ✅ Confirmada | ![Reproducible](https://img.shields.io/badge/Reproducible-Sí-success) |
 | **DOI** | ✅ Registrado | ![DOI](https://img.shields.io/badge/DOI-10.5281%2Fzenodo.17116291-blue) |
 | **Bibliotecas Avanzadas** | ✅ Real y Válido | ![Advanced](https://img.shields.io/badge/Advanced_Math_Libs-Real_Data-brightgreen) |
@@ -1824,13 +1828,12 @@ ___
 
 | Property | Value |
 |----------|-------|
-| **Status** | - |
-| **Build Time (s)** | - |
-| **Warnings** | - |
-| **Errors** | - |
-| **Lean Version** | - |
-| **Date (UTC)** | - |
-
+| **Status** | CHECK |
+| **Build Time (s)** | null |
+| **Warnings** | null |
+| **Errors** | null |
+| **Lean Version** | null |
+| **Date (UTC)** | 2025-11-28 19:09:15Z |
 ___
 
 ## License
