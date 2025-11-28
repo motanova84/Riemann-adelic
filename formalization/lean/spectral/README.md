@@ -79,32 +79,43 @@ theorem eigenfunctions_dense_L2R
 | `spectrum_HΨ_equals_zeros_Ξ` | Axiom | Spectral correspondence with Xi zeros |
 | `riemann_hypothesis_from_spectral` | Theorem | Proved from axioms |
 
-### `spectral_decomposition.lean`
+### `xi_mellin_representation.lean` 🆕
 
-Formalizes the spectral decomposition theorem (von Neumann) for self-adjoint operators on Hilbert spaces. Since the complete formalization is not yet available in Mathlib, this is introduced as an accepted axiom for continuity of the RH development.
+Formalizes the Mellin transform representation of Ξ(s) as:
+
+$$\Xi(s) = \int_0^\infty \Phi(x) x^{s-1} dx$$
+
+where Φ(x) is a rapidly decreasing function derived from the Jacobi theta function θ(x).
 
 #### Key Definitions
 
 | Definition | Description |
 |------------|-------------|
-| `is_self_adjoint` | Predicate: T is self-adjoint if ⟨Tx, y⟩ = ⟨x, Ty⟩ for all x, y |
-| `SpectralMeasure` | Structure representing a projection-valued measure over ℝ |
+| `jacobi_theta` | Jacobi theta function θ(x) = Σ exp(-πn²x) |
+| `Phi` | Mellin kernel derived from theta |
+| `criticalStrip` | The set {s ∈ ℂ : 0 < Re(s) < 1} |
+| `mellinTransform` | Mellin transform ∫₀^∞ f(x)x^{s-1}dx |
+| `riemann_Xi` | Riemann Xi function |
 
 #### Key Results
 
 | Result | Type | Status |
 |--------|------|--------|
-| `spectral_decomposition_selfadjoint` | Axiom | Accepted axiom (von Neumann, Reed & Simon) |
-| `spectrum_real_from_decomposition` | Theorem | ✅ Proved (no sorry) |
-| `eigenvectors_orthogonal` | Theorem | ✅ Proved (no sorry) |
+| `theta_functional_equation` | Axiom | θ(1/x) = √x · θ(x) |
+| `Phi_rapid_decay` | Axiom | Schwartz-like decay of Φ |
+| `Phi_mellin_integrable` | Theorem | ✅ Integrability in critical strip |
+| `xi_mellin_representation` | Theorem | ✅ Main theorem (no sorry) |
+| `mellin_zeros_spectral` | Theorem | ✅ Connection to zeros |
 
-#### Mathematical Statement
+#### Mathematical Background
 
-Every densely defined self-adjoint operator T on a Hilbert space admits a spectral decomposition through a projection-valued measure E such that:
+The classical Mellin representation of Ξ(s) connects:
+- Jacobi theta function and modular transformations
+- Schwartz function theory (rapid decay)
+- Analytic continuation of zeta function
+- Spectral interpretation of zeros
 
-$$T = \int_{\mathbb{R}} \lambda \, dE(\lambda)$$
-
-This is a central theorem in the spectral theory of self-adjoint operators on Hilbert spaces (see: von Neumann, Reed & Simon).
+**References**: Titchmarsh (1986), Edwards (1974), DOI: 10.5281/zenodo.17379721
 
 ### `HΨ_has_real_spectrum.lean`
 
