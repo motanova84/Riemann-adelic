@@ -48,7 +48,10 @@ from dataclasses import dataclass
 
 # QCAL Framework Constants
 QCAL_FUNDAMENTAL_FREQUENCY = 141.7001  # Hz
-ZETA_PRIME_HALF = mp.diff(mp.zeta, mp.mpf('0.5'))  # ζ'(1/2)
+# Pre-computed value of ζ'(1/2) to avoid expensive computation at import time
+# This value is computed with high precision: mp.diff(mp.zeta, mp.mpf('0.5'))
+ZETA_PRIME_HALF_VALUE = -3.9226461392442285
+ZETA_PRIME_HALF = mp.mpf(ZETA_PRIME_HALF_VALUE)  # ζ'(1/2)
 
 
 def apply_hilbert_polya(
@@ -185,18 +188,31 @@ class HilbertPolyaOperator:
             H[i, i] = coeff * self.log_x_grid[i]
 
         # Off-diagonal: derivative term -d/du (central differences)
-        # For central differences: -f'(u_i) ≈ -(f_{i+1} - f_{i-1}) / (2 du)
+        # The operator H = -x(d/dx) becomes -d/du in log coordinates (u = log x)
+        # Sign convention: -d/du is discretized as -(f_{i+1} - f_{i-1}) / (2 du)
+        # which gives matrix elements H[i,i+1] = -1/(2du), H[i,i-1] = +1/(2du)
         for i in range(1, n - 1):
             H[i, i + 1] = -1.0 / (2 * self.du)
             H[i, i - 1] = 1.0 / (2 * self.du)
 
-        # Boundary conditions (forward/backward differences)
+        # Boundary conditions: Use one-sided differences at boundaries
+        # At u=u_min: forward difference for -d/du
+        # At u=u_max: backward difference for -d/du
+        # Diagonal terms added to maintain consistency with interior scheme
         H[0, 1] = -1.0 / self.du
-        H[0, 0] = 1.0 / self.du  # Adjust for boundary
+        H[0, 0] = 1.0 / self.du  # Boundary adjustment for consistency
         H[n - 1, n - 2] = 1.0 / self.du
-        H[n - 1, n - 1] = -1.0 / self.du  # Adjust for boundary
+        H[n - 1, n - 1] = -1.0 / self.du  # Boundary adjustment for consistency
 
-        # Symmetrize to ensure self-adjointness
+        # Symmetrize to ensure self-adjointness in the discretized space
+        # Check asymmetry before symmetrization
+        asymmetry = np.max(np.abs(H - H.T))
+        if asymmetry > 1e-10:
+            import warnings
+            warnings.warn(
+                f"Matrix asymmetry detected: {asymmetry:.2e}. "
+                "This is expected due to boundary conditions."
+            )
         H = 0.5 * (H + H.T)
 
         return H

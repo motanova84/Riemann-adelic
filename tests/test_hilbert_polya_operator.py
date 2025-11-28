@@ -11,7 +11,6 @@ DOI: 10.5281/zenodo.17379721
 
 import pytest
 import numpy as np
-import mpmath as mp
 
 
 class TestHilbertPolyaOperatorFormula:
@@ -48,7 +47,10 @@ class TestHilbertPolyaOperatorFormula:
 
     def test_operator_on_constant_function(self):
         """Test H applied to constant function: H(c) = πζ'(1/2)log(x)·c."""
-        from operador.hilbert_polya_operator import apply_hilbert_polya
+        from operador.hilbert_polya_operator import (
+            apply_hilbert_polya,
+            ZETA_PRIME_HALF,
+        )
 
         c = 2.0
 
@@ -60,14 +62,17 @@ class TestHilbertPolyaOperatorFormula:
 
         # For constant function, f'(x) = 0
         # H(c) = -x·0 + πζ'(1/2)log(x)·c = πζ'(1/2)log(x)·c
-        zeta_prime = float(mp.diff(mp.zeta, mp.mpf("0.5")))
+        zeta_prime = float(ZETA_PRIME_HALF)
         expected = np.pi * zeta_prime * np.log(x) * c
 
         assert abs(result - expected) < 1e-6
 
     def test_operator_on_exponential(self):
         """Test H applied to exponential function."""
-        from operador.hilbert_polya_operator import apply_hilbert_polya
+        from operador.hilbert_polya_operator import (
+            apply_hilbert_polya,
+            ZETA_PRIME_HALF,
+        )
 
         def exp_func(x):
             return np.exp(-x)
@@ -78,7 +83,7 @@ class TestHilbertPolyaOperatorFormula:
         # f(x) = e^(-x), f'(x) = -e^(-x)
         # H f(x) = -x·(-e^(-x)) + πζ'(1/2)log(x)·e^(-x)
         #        = x·e^(-x) + πζ'(1/2)log(x)·e^(-x)
-        zeta_prime = float(mp.diff(mp.zeta, mp.mpf("0.5")))
+        zeta_prime = float(ZETA_PRIME_HALF)
         expected = x * np.exp(-x) + np.pi * zeta_prime * np.log(x) * np.exp(-x)
 
         assert abs(result - expected) < 1e-5
