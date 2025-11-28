@@ -54,9 +54,11 @@ xgboost==3.1.0
 threadpoolctl==3.6.0
 
 # Automatic differentiation and GPU acceleration
-# Note: Using jax 0.4.30 for numpy<2.0 compatibility with numba, nlopt, and other packages
-jax==0.4.30
-jaxlib==0.4.30
+jax==0.8.0
+jaxlib==0.8.0
+ml_dtypes==0.5.4
+jax==0.4.38
+jaxlib==0.4.38
 opt-einsum==3.4.0
 
 # Advanced numerical methods
