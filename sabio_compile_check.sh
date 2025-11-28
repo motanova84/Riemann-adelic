@@ -156,6 +156,10 @@ validate_sabio_file() {
         return 0
     else
         echo -e "${RED}❌ COMPILACIÓN FALLIDA: ${file} (${errors} advertencias/errores)${NC}"
+        return 1
+    fi
+}
+
 PURPLE='\033[0;35m'
 CYAN='\033[0;36m'
 NC='\033[0m' # No Color
@@ -351,8 +355,6 @@ compile_sabio_file() {
     fi
 }
 
-# Función para validar todos los archivos .sabio
-validate_all_sabio() {
 # Function to compile all SABIO files in directory
 compile_all_sabio() {
     local dir="${1:-.}"
@@ -402,11 +404,6 @@ EOF
     
     echo -e "${BLUE}🔍 Buscando archivos .sabio...${NC}\n"
     
-    # Buscar archivos .sabio en el directorio actual y subdirectorios
-    while IFS= read -r -d '' file; do
-        ((total++))
-        echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-        if validate_sabio_file "$file"; then
     # Compile each file
     for file in $sabio_files; do
         ((total++))
@@ -417,7 +414,7 @@ EOF
             ((failed++))
         fi
         echo ""
-    done < <(find . -name "*.sabio" -print0)
+    done
     
     if [[ $total -eq 0 ]]; then
         echo -e "${YELLOW}⚠️  No se encontraron archivos .sabio${NC}"
@@ -456,46 +453,13 @@ main() {
     fi
     
     if [[ "$1" == "--all" ]]; then
-        validate_all_sabio
+        compile_all_sabio
         exit $?
     fi
     
     # Validar archivo específico
     validate_sabio_file "$1"
     exit $?
-}
-
-# Ejecutar main con todos los argumentos
-        
-        echo ""
-    done
-    
-    # Summary
-    echo -e "${PURPLE}═══════════════════════════════════════════════════════════════════════${NC}"
-    echo -e "${PURPLE}SABIO COMPILATION SUMMARY${NC}"
-    echo -e "${PURPLE}═══════════════════════════════════════════════════════════════════════${NC}"
-    echo -e "${BLUE}Total files: $total${NC}"
-    echo -e "${GREEN}Passed: $passed${NC}"
-    echo -e "${RED}Failed: $failed${NC}"
-    echo -e "${PURPLE}═══════════════════════════════════════════════════════════════════════${NC}"
-    
-    return $([ $failed -eq 0 ] && echo 0 || echo 1)
-}
-
-# Main script logic
-main() {
-    if [ $# -eq 0 ]; then
-        echo -e "${YELLOW}Usage: $0 <file.sabio> | --all${NC}"
-        echo -e "${YELLOW}  <file.sabio>  Compile specific SABIO file${NC}"
-        echo -e "${YELLOW}  --all         Compile all .sabio files in current directory${NC}"
-        exit 1
-    fi
-    
-    if [ "$1" = "--all" ] || [ "$1" = "-a" ]; then
-        compile_all_sabio
-    else
-        compile_sabio_file "$1"
-    fi
 }
 
 # Run main function
