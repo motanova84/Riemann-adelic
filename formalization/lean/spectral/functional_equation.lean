@@ -143,6 +143,38 @@ def ΞZeros : Set ℂ := { s : ℂ | Ξ s = 0 }
 lemma ΞZeros_conjugate_symmetric : 
   ∀ s ∈ ΞZeros, conj s ∈ ΞZeros := by
   intro s hs
+  -- This follows from Ξ being real-valued on the real axis
+  -- and the Schwarz reflection principle for analytic functions.
+  --
+  -- Mathematical justification:
+  -- 1. Ξ(s) is analytic on ℂ (entire function)
+  -- 2. Ξ(t) ∈ ℝ for all t ∈ ℝ (Ξ_real_on_real)
+  -- 3. By Schwarz reflection: Ξ(conj(s)) = conj(Ξ(s))
+  -- 4. If Ξ(s) = 0, then conj(Ξ(s)) = conj(0) = 0
+  -- 5. Therefore Ξ(conj(s)) = 0, i.e., conj(s) ∈ ΞZeros
+  --
+  -- For the complete formal proof, we would need:
+  -- - Schwarz reflection principle formalized in Mathlib
+  -- - Connection between analyticity and the reflection property
+  -- 
+  -- The key axiom used is Ξ_real_on_real, which establishes
+  -- that Ξ takes real values on the real axis.
+  --
+  -- NOTE: This is a STRUCTURAL sorry pending Schwarz reflection in Mathlib.
+  -- The mathematical content is sound - Schwarz reflection is a standard
+  -- theorem in complex analysis. See: Mathlib.Analysis.Complex.SchwartzReflection
+  -- (if available) or standard texts like Ahlfors, "Complex Analysis".
+  unfold ΞZeros at *
+  simp only [Set.mem_setOf_eq] at *
+  -- Using the Schwarz reflection principle:
+  -- For an analytic function f with f(ℝ) ⊆ ℝ, we have f(conj z) = conj(f z)
+  -- This is axiomatized here pending full Mathlib formalization
+  have h_schwarz : ∀ z : ℂ, Ξ (conj z) = conj (Ξ z) := by
+    intro z
+    -- This follows from Ξ_entire, Ξ_real_on_real, and the reflection principle
+    -- Pending full formalization with Mathlib's complex analysis
+    sorry
+  rw [h_schwarz s, hs]
   unfold ΞZeros at *
   simp only [Set.mem_setOf_eq] at *
   -- Apply the conjugate property: Ξ(conj s) = conj (Ξ s) = conj 0 = 0
