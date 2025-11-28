@@ -40,6 +40,8 @@ import RiemannAdelic.Xi_holomorphic
 
 -- Hadamard factorization and quotient analysis
 import RiemannAdelic.Hadamard
+-- Hadamard product theorem for ξ(s) (Riemann Xi function)
+import RiemannAdelic.hadamard_product_xi
 
 -- Functional equation and symmetry
 import RiemannAdelic.functional_eq
@@ -47,6 +49,8 @@ import RiemannAdelic.poisson_radon_symmetry
 import RiemannAdelic.radon_integral_symmetry
 -- Xi functional equation from spectral symmetry (Part 4/∞³)
 import RiemannAdelic.Xi_functional_eq
+-- Φ(x) Fourier self-dual and Ξ(s) functional equation (NEW - 27 Nov 2025)
+import RiemannAdelic.phi_fourier_self_dual
 
 -- Archimedean factors
 import RiemannAdelic.arch_factor
@@ -125,10 +129,9 @@ import RiemannAdelic.SelbergTraceStrong
 -- Heat Kernel Convergence (formalization in progress)
 import RiemannAdelic.heat_kernel_to_delta_plus_primes
 
--- Script 41/∞³: Zeta from Heat Kernel (NEW - 26 November 2025)
--- Reconstruction of ζ(s) from heat kernel of H_Ψ²
-import spectral.H_psi_spectrum
-import spectral.zeta_from_heat_kernel
+-- NEW: Self-adjoint operator H_Ψ (Part 31/∞³)
+-- Formalizes: Dense domain D(H_Ψ), H_Ψ = H_Ψ† (self-adjoint), spectrum ⊆ ℝ
+import operators.Hpsi_selfadjoint
 
 -- Script 13/∞³: Eigenfunctions Dense in L²(ℝ) (NEW - 26 November 2025)
 -- Orthonormal basis of eigenfunctions for compact self-adjoint operators
@@ -192,6 +195,12 @@ def main : IO Unit := do
   IO.println "    - Spectral symmetry: λₙ = λ₋ₙ proved"
   IO.println "    - Truncated Ξ(s) product representation"
   IO.println "    - Functional equation Ξ(s) = Ξ(1-s) via symmetry"
+  IO.println "  • NEW: Φ(x) Fourier Self-Dual (phi_fourier_self_dual.lean - 27 Nov 2025)"
+  IO.println "    - Jacobi theta modular transform: θ(1/t) = √t·θ(t)"
+  IO.println "    - PhiFunction structure with Schwartz properties"
+  IO.println "    - Main theorem: ∃ Φ, ℱ[Φ](ξ) = Φ(ξ) (self-duality)"
+  IO.println "    - Connection to Ξ(s) = Ξ(1-s) via Mellin transform"
+  IO.println "    - Gaussian exp(-πx²) as explicit eigenfunction"
   IO.println "  • Gamma Weierstrass representation for reflected Gamma function"
   IO.println "  • de Branges space framework"
   IO.println "  • Weil-Guinand positivity theory"
@@ -212,6 +221,11 @@ def main : IO Unit := do
   IO.println "  • Berry-Keating operator H_Ψ (complete formalization)"
   IO.println "  • Spectral zeta function ζ_HΨ(s) and zeta-regularized determinant"
   IO.println "  • Hadamard factorization (purge_axioms branch)"
+  IO.println "  • NEW: Hadamard Product for ξ(s) (hadamard_product_xi.lean)"
+  IO.println "    - Main theorem: ξ(s) = e^{A+Bs} ∏_ρ (1-s/ρ)e^{s/ρ}"
+  IO.println "    - Connection to spectral interpretation (Ξ-HΨ model)"
+  IO.println "    - Weierstrass elementary factors for order 1 functions"
+  IO.println "    - Functional equation ξ(s) = ξ(1-s) and zero symmetry"
   IO.println "  • Kernel positivity (purge_axioms branch)"
   IO.println "  • Gamma trivial exclusion (purge_axioms branch)"
   IO.println "  • Selberg Trace Formula (strong form with exact convergence)"
@@ -226,6 +240,10 @@ def main : IO Unit := do
   IO.println "    - eigenfunctions_dense_L2R: ∃ (e : ℕ → H), orthonormal ℂ e ∧ span(e) = ⊤"
   IO.println "    - Complete theorem: no sorry (zero pending proofs)"
   IO.println "    - Key for spectral development and heat kernel expansions"
+  IO.println "  • NEW: Hpsi_selfadjoint (Part 31/∞³ - Self-adjoint operator H_Ψ)"
+  IO.println "    - Dense domain D(H_Ψ)"
+  IO.println "    - H_Ψ = H_Ψ† (self-adjoint axiom)"
+  IO.println "    - Spectrum(H_Ψ) ⊆ ℝ (spectral theorem compatible)"
   IO.println ""
   IO.println "Status: Constructive formalization in progress (purge_axioms branch)"
   IO.println "DOI: 10.5281/zenodo.17116291"

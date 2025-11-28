@@ -33,10 +33,14 @@ jobs:
       - name: ⚙️ Install Lean 4
         run: |
           curl https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -sSf | sh -s -- -y
-          echo "$HOME/.elan/bin" >> $GITHUB_PATH
+          export PATH="$HOME/.elan/bin:$PATH"
+          if ! command -v elan &> /dev/null; then
+            echo "❌ Elan no está en el PATH"; exit 1
+          fi
           elan toolchain install leanprover/lean4:v4.13.0
           elan default leanprover/lean4:v4.13.0
           lean --version
+          echo "$HOME/.elan/bin" >> $GITHUB_PATH
       
       # Navigate to formalization directory
       - name: 📂 Setup Lean project
