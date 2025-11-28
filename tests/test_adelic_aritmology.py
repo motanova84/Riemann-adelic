@@ -9,19 +9,17 @@ Author: José Manuel Mota Burruezo
 Date: November 2025
 """
 
-import pytest
 import sys
-import mpmath as mp
-
-# Ensure module path is available
 sys.path.insert(0, '.')
+
+import pytest
+import mpmath as mp
 
 from utils.adelic_aritmology import (
     AdelicAritmology,
     verify_68_81_is_unique_solution,
     get_qcal_frequency,
     get_phi,
-    get_phi_17,
     PERIOD_DECIMAL,
     PERIOD_LENGTH,
     QCAL_FREQUENCY_STRING,
@@ -53,14 +51,11 @@ class TestAdelicAritmology:
         """Test the decimal expansion of 68/81."""
         decimal = self.calc.compute_68_81_decimal(50)
         assert decimal.startswith(PERIOD_DECIMAL)
-        # The period is 16 digits, so positions 0-15 and 16-31 should be equal
-        # But we need to account for the fact that 68/81 starts at position 0
-        # with the period 8395061728395061 and then repeats
+        # The period is 16 digits, so positions 0-15 should equal the expected period
         first_period = decimal[0:16]
-        second_occurrence = decimal[16:32]
         # The period repeats cyclically
         assert first_period == PERIOD_DECIMAL
-    
+
     def test_1_81_missing_9_property(self):
         """Test that 1/81 has the 'missing 9' property (actually missing 8)."""
         decimal = self.calc.compute_1_81_decimal(27)
