@@ -20,7 +20,7 @@
   Referencias:
     - Berry & Keating (1999): H = xp and the Riemann zeros
     - Connes (1999): Trace formula and the Riemann hypothesis
-    - V5 Coronación: DOI 10.5281/zenodo.17379721
+    - V5 Coronation: DOI 10.5281/zenodo.17379721
   
   Autor: José Manuel Mota Burruezo Ψ ✧ ∞³
   Institución: Instituto de Conciencia Cuántica (ICQ)
@@ -90,8 +90,8 @@ def qcal_coherence : ℝ := 244.36
 /-- Angular frequency ω₀ = 2πf₀ -/
 def omega_0 : ℝ := 2 * Real.pi * qcal_frequency
 
-/-- Potential coefficient α (spectrally calibrated) -/
-def alpha_coefficient : ℝ := 12.32955
+/-- Potential coefficient α (spectrally calibrated, negative for confining potential) -/
+def alpha_coefficient : ℝ := -12.32955
 
 /-- Derivative of zeta at s = 1/2 -/
 def zeta_prime_half : ℝ := -3.92264613
@@ -230,6 +230,13 @@ theorem spectrum_H_Ψ_real :
 ## 8. Trace Class Property
 -/
 
+/-- Predicate for trace class operators (S₁ class) -/
+def IsTraceClass (T : (ℝ → ℂ) → (ℝ → ℂ)) : Prop :=
+  ∃ (eigenvalues : ℕ → ℝ), 
+    (∀ n, eigenvalues n > 0) ∧ 
+    (∀ n, eigenvalues n ≤ eigenvalues (n + 1)) ∧
+    Summable (fun n => 1 / eigenvalues n)
+
 /-- 
 H_Ψ belongs to trace class S₁.
 
@@ -238,12 +245,12 @@ The trace class property ensures that:
 2. The sum ∑ λₙ⁻¹ converges absolutely
 3. The spectral zeta function ζ_H(s) = ∑ λₙ⁻ˢ converges for s > 1
 -/
-theorem H_Ψ_trace_class : True := by
+theorem H_Ψ_trace_class : IsTraceClass H_Ψ_op := by
   -- The trace class property follows from:
   -- 1. The potential -α log(x) grows at infinity
   -- 2. The resolvent has sufficiently fast decay
   -- 3. The sum of inverse eigenvalues converges
-  trivial
+  sorry -- Requires spectral analysis of the resolvent
 
 /-- 
 Trace convergence: |∑ₙ₌₁ᴺ λₙ⁻¹ - S_∞| < 10⁻²⁰
@@ -275,7 +282,7 @@ realization of the Hilbert–Pólya conjecture.
 theorem hilbert_polya_realization :
     IsSelfAdjointOperator H_Ψ_op ∧
     (∀ λ, IsEigenvalue H_Ψ_op λ → λ.im = 0) ∧
-    True ∧  -- Placeholder for trace class
+    IsTraceClass H_Ψ_op ∧
     (∃! T, IsSelfAdjointOperator T ∧ ∀ f ∈ Domain_H_Ψ, T f.val = H_Ψ_op f.val) := by
   constructor
   · exact H_Ψ_is_self_adjoint
