@@ -58,6 +58,9 @@ jax>=0.4.20
 jaxlib>=0.4.20
 opt-einsum>=3.3.0
 ml_dtypes>=0.3.0
+jax==0.4.38
+jaxlib==0.4.38
+opt-einsum==3.4.0
 
 # Advanced numerical methods
 numexpr>=2.8.0
