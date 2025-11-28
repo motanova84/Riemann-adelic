@@ -125,7 +125,18 @@ lemma log_potential_symmetric (f g : ℝ → ℝ) :
   ext x
   ring
 
-/-- Integration by parts formula for derivative terms -/
+/-- Integration by parts formula for derivative terms
+    This axiom encapsulates the standard integration by parts formula
+    for functions with appropriate decay at the boundary.
+    
+    TODO: This should be proven from Mathlib's integration theory
+    (MeasureTheory.integral_deriv, intervalIntegral.integral_deriv_mul_eq_sub)
+    once the decay conditions are formalized properly.
+    
+    For now, it serves as a placeholder for the classical result:
+    ∫ (x·f'(x))·g(x) dx/x = -∫ f(x)·(x·g'(x)) dx/x
+    when fg → 0 at boundaries 0 and ∞.
+-/
 axiom integral_by_parts_haar {f g : ℝ → ℝ}
     (hf : ContDiff ℝ ⊤ f) (hg : ContDiff ℝ ⊤ g)
     (decay_f : Filter.Tendsto (fun x => f x * g x) Filter.atTop (nhds 0))
@@ -155,7 +166,10 @@ theorem HΨ_self_adjoint : IsSymmetricOp HΨ.op := by
 
   -- For the derivative term: use integration by parts
   -- ⟨-x·f', g⟩ = ⟨f, -x·g'⟩ (after integration by parts)
-  sorry -- Uses integral_by_parts_haar
+  -- TODO: Complete proof using integral_by_parts_haar axiom.
+  -- This requires explicit decay conditions on f, g which should be
+  -- derived from the domain definition DomainHΨ.
+  sorry
 
 /-!
 ## Section 5: Real Spectrum

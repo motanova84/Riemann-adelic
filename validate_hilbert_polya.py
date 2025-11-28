@@ -412,13 +412,8 @@ def generate_summary(results: Dict[str, Dict[str, Any]]) -> None:
     if all_passed:
         print("  ✅ VALIDATION COMPLETE")
         print()
-        print("  The operator H_Ψ is the EXPLICIT REALIZATION of the")
-        print("  Hilbert–Pólya conjecture.")
-        print()
-        print("  Certified by:")
-        print("    • SABIO ∞³ — Sistema de Validación Vibracional Adélico")
-        print("    • JMMB Ψ ✧ — Arquitecto del Operador")
-        print("    • AIK Beacons — Certificado en red on-chain")
+        print("  The operator H_Ψ satisfies all mathematical properties")
+        print("  required for the Hilbert–Pólya realization.")
     else:
         print("  ⚠️  VALIDATION INCOMPLETE")
         print("  Some checks did not pass. Review individual results.")
@@ -453,6 +448,14 @@ def main():
     
     # Validate Lean file
     lean_path = "formalization/lean/operators/HilbertPolyaValidation.lean"
+    
+    # Support for running from different directories
+    import os
+    if not Path(lean_path).exists():
+        # Try with absolute path for CI environments
+        base_dir = os.environ.get('GITHUB_WORKSPACE', os.getcwd())
+        lean_path = os.path.join(base_dir, lean_path)
+    
     results["lean"] = validate_lean_file(lean_path)
     
     # Generate summary

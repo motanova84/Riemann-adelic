@@ -252,20 +252,29 @@ class TestRHConnection:
 class TestLeanFormalization:
     """Test Lean 4 formalization file structure."""
     
+    @staticmethod
+    def _find_file(relative_path: str) -> Path:
+        """Find file trying multiple base directories."""
+        import os
+        paths_to_try = [
+            Path(relative_path),
+            Path.cwd() / relative_path,
+            Path(os.environ.get('GITHUB_WORKSPACE', '')) / relative_path,
+            Path(__file__).parent.parent / relative_path,
+        ]
+        for p in paths_to_try:
+            if p.exists():
+                return p
+        return Path(relative_path)  # Return original for error message
+    
     def test_lean_file_exists(self):
         """Check HilbertPolyaValidation.lean exists."""
-        lean_path = Path("formalization/lean/operators/HilbertPolyaValidation.lean")
-        # Allow test to pass if running from different directory
-        if not lean_path.exists():
-            lean_path = Path("/home/runner/work/Riemann-adelic/Riemann-adelic/formalization/lean/operators/HilbertPolyaValidation.lean")
-        
+        lean_path = self._find_file("formalization/lean/operators/HilbertPolyaValidation.lean")
         assert lean_path.exists(), f"Lean file not found at {lean_path}"
     
     def test_lean_file_has_required_elements(self):
         """Check Lean file contains required theorems."""
-        lean_path = Path("formalization/lean/operators/HilbertPolyaValidation.lean")
-        if not lean_path.exists():
-            lean_path = Path("/home/runner/work/Riemann-adelic/Riemann-adelic/formalization/lean/operators/HilbertPolyaValidation.lean")
+        lean_path = self._find_file("formalization/lean/operators/HilbertPolyaValidation.lean")
         
         if not lean_path.exists():
             pytest.skip("Lean file not found")
@@ -286,19 +295,29 @@ class TestLeanFormalization:
 class TestDocumentation:
     """Test documentation files."""
     
+    @staticmethod
+    def _find_file(relative_path: str) -> Path:
+        """Find file trying multiple base directories."""
+        import os
+        paths_to_try = [
+            Path(relative_path),
+            Path.cwd() / relative_path,
+            Path(os.environ.get('GITHUB_WORKSPACE', '')) / relative_path,
+            Path(__file__).parent.parent / relative_path,
+        ]
+        for p in paths_to_try:
+            if p.exists():
+                return p
+        return Path(relative_path)  # Return original for error message
+    
     def test_markdown_doc_exists(self):
         """Check hilbert_polya_final.md exists."""
-        doc_path = Path("docs/operators/hilbert_polya_final.md")
-        if not doc_path.exists():
-            doc_path = Path("/home/runner/work/Riemann-adelic/Riemann-adelic/docs/operators/hilbert_polya_final.md")
-        
+        doc_path = self._find_file("docs/operators/hilbert_polya_final.md")
         assert doc_path.exists(), f"Documentation not found at {doc_path}"
     
     def test_markdown_doc_structure(self):
         """Check documentation has required sections."""
-        doc_path = Path("docs/operators/hilbert_polya_final.md")
-        if not doc_path.exists():
-            doc_path = Path("/home/runner/work/Riemann-adelic/Riemann-adelic/docs/operators/hilbert_polya_final.md")
+        doc_path = self._find_file("docs/operators/hilbert_polya_final.md")
         
         if not doc_path.exists():
             pytest.skip("Documentation not found")
