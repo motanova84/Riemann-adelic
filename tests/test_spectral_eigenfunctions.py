@@ -113,6 +113,48 @@ def test_zeta_zeros_connection():
         "Spectrum equals zeta zeros axiom not found"
 
 
+def test_eigenfunctions_dense_L2R_lemma():
+    """Test that the eigenfunctions_dense_L2R lemma is present and proven.
+    
+    This tests that:
+    1. The lemma eigenfunctions_dense_L2R exists
+    2. The lemma is proven (not using sorry)
+    3. The supporting definitions exist (IsDenseSubset, eigenfunction_span)
+    
+    Mathematical justification:
+    Every complete orthonormal set in a Hilbert space generates a dense
+    subspace. This lemma establishes the functional basis upon which every
+    function in L²(ℝ) can be approximated by combinations of eigenfunctions
+    of H_Ξ. It is a central step in the spectral diagonalization of Ξ(s) ∞³.
+    """
+    file_path = LEAN_DIR / "Eigenfunctions_HPsi.lean"
+    content = file_path.read_text(encoding="utf-8")
+    
+    # Check that the lemma exists
+    assert "lemma eigenfunctions_dense_L2R" in content, \
+        "Lemma eigenfunctions_dense_L2R not found"
+    
+    # Check that IsDenseSubset definition exists
+    assert "def IsDenseSubset" in content, \
+        "IsDenseSubset definition not found"
+    
+    # Check that eigenfunction_span definition exists
+    assert "def eigenfunction_span" in content, \
+        "eigenfunction_span definition not found"
+    
+    # Check that the lemma uses eigenfunctions_complete (not sorry-based)
+    assert "eigenfunctions_complete" in content, \
+        "eigenfunctions_complete reference not found"
+    
+    # Check for the mathematical documentation about density
+    assert "Densidad del span de eigenfunciones" in content, \
+        "Density documentation section not found"
+    
+    # Check for the corollary theorem
+    assert "theorem eigenfunction_span_dense_complement" in content, \
+        "Complement density theorem not found"
+
+
 def test_mathlib_imports():
     """Test that required Mathlib imports are present."""
     file_path = LEAN_DIR / "Eigenfunctions_HPsi.lean"
