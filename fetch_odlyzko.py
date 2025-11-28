@@ -20,8 +20,10 @@ import sys
 import os
 import importlib.util
 
-# Import the fetch_odlyzko module directly to avoid triggering utils/__init__.py
-# which has additional dependencies
+# Import the fetch_odlyzko module directly using importlib to avoid triggering
+# utils/__init__.py which imports heavy dependencies like numpy and scipy that
+# are not needed for the zeros fetching functionality. This allows the fetch
+# script to run with minimal dependencies (only requests and standard library).
 _script_dir = os.path.dirname(os.path.abspath(__file__))
 _module_path = os.path.join(_script_dir, 'utils', 'fetch_odlyzko.py')
 

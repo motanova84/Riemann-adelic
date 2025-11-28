@@ -89,12 +89,10 @@ jobs:
         run: |
           coverage run -m pytest tests/
           coverage report --fail-under=95  # ⚠️ exigir ≥95% cobertura
-        continue-on-error: true
 
   smoke_validation:
     name: 🔦 Validación mínima (rápida)
     if: github.event_name == 'schedule'
-    needs: [setup, fetch_odlyzko]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -110,7 +108,11 @@ jobs:
           pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: 🧮 Validación ligera (30 ceros)
+      - name: 🔢 Fetch datos Odlyzko para validación
+        run: |
+          python fetch_odlyzko.py --precision t1e8
+
+      - name: 🧮 Validación ligera (precisión 30 dps)
         run: |
           python validate_v5_coronacion.py --precision 30
 
