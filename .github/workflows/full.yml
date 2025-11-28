@@ -4,7 +4,10 @@ name: 🔬 Full Validation CI
 # For research and publication-quality results
 # Parameters: max_primes=500, max_zeros=500, precision_dps=40, integration_t=50
 
-on: [workflow_dispatch]  # Solo manual o en release
+on:
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:  # Solo manual o en release
 
 env:
   # high_accuracy parameters for publication-quality results

@@ -1,0 +1,116 @@
+name: QCAL Production Cycle
+
+on:
+  schedule:
+    # Run every 4 hours
+    - cron: "0 */4 * * *"
+  workflow_dispatch:
+    inputs:
+      precision:
+        description: 'Validation precision (decimal places)'
+        required: false
+        default: '30'
+        type: string
+      publish_results:
+        description: 'Publish results to HuggingFace'
+        required: false
+        default: false
+        type: boolean
+
+jobs:
+  build-validate-deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: main  # Explicitly checkout main branch for scheduled runs
+      
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+          cache: 'pip'
+      
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      
+      - name: Validate core with V5 Coronación
+        run: |
+          PRECISION=${{ github.event.inputs.precision || '30' }}
+          echo "🔬 Running validation with precision ${PRECISION}"
+          python3 validate_v5_coronacion.py --precision ${PRECISION}
+      
+      - name: Aggregate results
+        run: |
+          echo "📊 Aggregating validation results..."
+          python3 scripts/aggregate_results.py --data-dir data --output-dir results --format both
+      
+      - name: Upload aggregated results as artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: qcal-production-results-${{ github.run_number }}
+          path: |
+            results/
+            data/validation/results/
+          retention-days: 90
+      
+      - name: Publish dataset to HuggingFace
+        if: ${{ (github.event.inputs.publish_results == 'true') || (github.event_name == 'schedule') }}
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        run: |
+          if [ -z "$HF_TOKEN" ]; then
+            echo "⚠️  HF_TOKEN not set, skipping HuggingFace upload"
+            exit 0
+          fi
+          
+          # Install huggingface-cli if not already available
+          pip install -U "huggingface_hub[cli]"
+          
+          # Upload datasets and results to HuggingFace Hub
+          echo "📤 Uploading to HuggingFace Hub..."
+          huggingface-cli upload motanova84/qcal-cloud ./results/ results/ --repo-type=dataset || echo "⚠️  Upload failed or repository doesn't exist"
+      
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      
+      - name: Log in to Docker Hub
+        if: ${{ secrets.DOCKERHUB_TOKEN != null && secrets.DOCKERHUB_USERNAME != null }}
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      
+      - name: Build Docker image
+        run: |
+          echo "🐳 Building Docker image..."
+          docker build -t ${{ secrets.DOCKERHUB_USERNAME || 'qcal' }}/production:${{ github.run_number }} -t ${{ secrets.DOCKERHUB_USERNAME || 'qcal' }}/production:latest .
+      
+      - name: Push image to Docker Hub
+        if: ${{ secrets.DOCKERHUB_TOKEN != '' && secrets.DOCKERHUB_USERNAME != '' }}
+        run: |
+          echo "📤 Pushing Docker image to registry..."
+          docker push ${{ secrets.DOCKERHUB_USERNAME || 'qcal' }}/production:${{ github.run_number }}
+          docker push ${{ secrets.DOCKERHUB_USERNAME || 'qcal' }}/production:latest
+      
+      - name: Summary
+        if: always()
+        run: |
+          echo "## 🎯 QCAL Production Cycle Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- **Run Number:** ${{ github.run_number }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Precision:** ${{ github.event.inputs.precision || '30' }} decimal places" >> $GITHUB_STEP_SUMMARY
+          echo "- **Trigger:** ${{ github.event_name }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          
+          if [ -f "results/aggregated_results.json" ]; then
+            echo "### Aggregated Results" >> $GITHUB_STEP_SUMMARY
+            cat results/aggregated_results.json >> $GITHUB_STEP_SUMMARY
+          fi
