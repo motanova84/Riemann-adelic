@@ -54,6 +54,7 @@ import RiemannAdelic.phi_fourier_self_dual
 
 -- Archimedean factors
 import RiemannAdelic.arch_factor
+import RiemannAdelic.gamma_factor_basic
 import RiemannAdelic.GammaTrivialExclusion
 import RiemannAdelic.GammaWeierstrassLemma
 
