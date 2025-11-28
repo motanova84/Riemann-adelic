@@ -56,6 +56,7 @@ threadpoolctl==3.6.0
 # Automatic differentiation and GPU acceleration
 jax==0.8.0
 jaxlib==0.8.0
+ml_dtypes==0.5.4
 opt-einsum==3.4.0
 
 # Advanced numerical methods
