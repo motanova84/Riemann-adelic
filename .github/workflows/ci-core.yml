@@ -44,20 +44,22 @@ jobs:
           pip install -r requirements-core.txt
           echo "✅ Core Python dependencies installed"
 
-      - name: ⚙️ Install Lean 4 toolchain (elan)
-        run: |
-          curl https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -sSf | sh -s -- -y
-          echo "$HOME/.elan/bin" >> $GITHUB_PATH
+      - name: ⚙️ Install Lean 4 toolchain
+        uses: leanprover/lean-action@v1
+        with:
+          lean-version: "leanprover/lean4:v4.5.0"
 
       - name: 🔧 Setup Lean project
+        id: setup
+        continue-on-error: true
         working-directory: formalization/lean
         run: |
           echo "📂 Lean project structure:"
           ls -la
           echo ""
           echo "🔧 Fetching dependencies with lake..."
-          ~/.elan/bin/lake update || echo "⚠️ Lake update had issues, continuing..."
-          ~/.elan/bin/lake exe cache get || echo "⚠️ Cache not available, will build from source"
+          lake update
+          lake exe cache get
 
       - name: 🔨 Build Lean project
         id: build
@@ -67,7 +69,7 @@ jobs:
           echo "🔨 Building Lean project..."
           START_TIME=$(date +%s)
           BUILD_EXIT=0
-          ~/.elan/bin/lake build 2>&1 | tee build_output.txt || BUILD_EXIT=$?
+          lake build 2>&1 | tee build_output.txt || BUILD_EXIT=$?
           END_TIME=$(date +%s)
           BUILD_TIME=$((END_TIME - START_TIME))
           echo "build_time=$BUILD_TIME" >> $GITHUB_OUTPUT
@@ -157,6 +159,5 @@ jobs:
           echo "🐍 Python core dependencies: ✅ Installed"
           echo "🔧 Build status: ${{ steps.build.outputs.status }}"
           echo ""
-          echo "QCAL ∞³ coherence preserved"
-          echo "Frequency: 141.7001 Hz"
+          echo "DOI: 10.5281/zenodo.17379721"
           echo "=========================================="
