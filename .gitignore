@@ -166,6 +166,14 @@ build/
 # Disabled workflow files
 *.disabled
 
+# Monitoring system - evidence and sensitive data
+monitoring/evidence/
+monitoring/alerts/*.json
+!monitoring/alerts/.gitkeep
+examples/__pycache__/
+
+# QCAL auto-generated state files
+tools/qcal_state.json
 # Spectral framework demo images
 *_demo.png
 

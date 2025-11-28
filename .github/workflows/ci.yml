@@ -371,6 +371,16 @@ jobs:
           pip install -r requirements.txt
       - name: Run conversion smoke test
         run: |
+          pytest -q
+      
+      - name: Compile FFI bridge
+        run: |
+          cd formalization/lean/QCAL/FFI
+          clang -shared -fPIC -I/usr/include/python3.12 -lpython3.12 -o libbridge.so libbridge.c
+      
+      - name: Universal Coherence (FFI)
+        run: |
+          python3 tools/universal_kernel.py schema/metadatos_ejemplo.jsonld formalization/lean/Main.lean
           # Ejemplo: intenta convertir un ejemplo pequeño de Lean a intermedio
           python tools/convert_example.py tests/examples/example_lean.lean
         else
