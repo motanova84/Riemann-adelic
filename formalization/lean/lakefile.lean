@@ -2,6 +2,8 @@ import Lake
 open Lake DSL
 
 package «riemann-adelic-lean» where
+  -- add package configuration options here
+  precompileModules := true
   -- Require Lean 4.5.0 or higher
   preferReleaseBuild := true
   moreLeanArgs := #["-DautoImplicit=false"]
@@ -10,6 +12,10 @@ package «riemann-adelic-lean» where
 lean_lib RHComplete where
   globs := #[.submodules `RHComplete]
   roots := #[`RHComplete]
+
+lean_lib «QCAL» where
+  -- QCAL library for universal verification
+  roots := #[`QCAL]
 
 -- RH_final_v6 library
 lean_lib RH_final_v6 where
