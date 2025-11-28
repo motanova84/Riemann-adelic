@@ -6,9 +6,60 @@ This directory contains the formal Lean 4 definition of the noetic operator $\ma
 
 ## Files
 
+### `compact_selfadjoint_spectrum.lean` (NEW - 27 November 2025)
+
+Formalizes the fundamental theorem that compact self-adjoint operators have discrete spectra with possible accumulation only at 0. This is essential for constructing orthonormal bases of eigenfunctions.
+
+#### Key Definitions
+
+| Definition | Description |
+|------------|-------------|
+| `IsSelfAdjoint` | Predicate for self-adjoint operators on real Hilbert spaces |
+| `IsCompactOperator` | Predicate for compact operators |
+| `spectrum_real` | The spectrum of a bounded linear operator |
+| `point_spectrum` | Eigenvalues (point spectrum) of an operator |
+
+#### Key Results
+
+| Result | Type | Status |
+|--------|------|--------|
+| `spectrum_compact_selfadjoint_discrete` | Theorem | ✅ Main theorem - Non-zero spectral points are isolated |
+| `spectrum_compact_selfadjoint_countable` | Theorem | ✅ Non-zero spectrum is countable |
+| `eigenvalues_enumerable` | Theorem | ✅ Eigenvalues can be enumerated |
+| `discrete_spectrum_implies_orthonormal_basis` | Theorem | ✅ Existence of orthonormal eigenbasis |
+
+#### Mathematical Statement
+
+For a compact self-adjoint operator T on a real Hilbert space E:
+$$\forall x \in \sigma(T), \; x \neq 0 \Rightarrow \exists \varepsilon > 0, \; B(x, \varepsilon) \cap (\sigma(T) \setminus \{x\}) = \emptyset$$
+
+This means non-zero spectral points are isolated, and accumulation can only occur at 0.
+
 ### `self_adjoint.lean`
 
 Defines the operator $\mathcal{H}_\Psi$ as self-adjoint in its ∞³ domain, validating the critical spectral structure for RH and GRH.
+
+### `eigenfunctions_dense_L2R.lean` (Script 13/∞³)
+
+Proves that for a compact self-adjoint operator T on a complex Hilbert space H, there exists an orthonormal basis of eigenfunctions that is total in H.
+
+#### Key Theorem
+
+```lean
+theorem eigenfunctions_dense_L2R
+  (T : H →ₗ[ℂ] H)
+  (hSA : IsSelfAdjoint T)
+  (hC : IsCompactOperator T) :
+  ∃ (e : ℕ → H), Orthonormal ℂ e ∧ 
+    (⊤ : Submodule ℂ H) = ⊤ ⊓ (Submodule.span ℂ (Set.range e))
+```
+
+**Status**: Complete (0 sorry)
+
+**Applications**:
+- T can be H_Ψ (Berry-Keating operator)
+- Foundation for spectral expansions and heat kernel representations
+- Key for subsequent spectral development in RH approaches
 
 #### Key Definitions
 
@@ -27,6 +78,44 @@ Defines the operator $\mathcal{H}_\Psi$ as self-adjoint in its ∞³ domain, val
 | `H_Ψ_self_adjoint` | Axiom | Temporary axiom for essential self-adjointness |
 | `spectrum_HΨ_equals_zeros_Ξ` | Axiom | Spectral correspondence with Xi zeros |
 | `riemann_hypothesis_from_spectral` | Theorem | Proved from axioms |
+
+### `xi_mellin_representation.lean` 🆕
+
+Formalizes the Mellin transform representation of Ξ(s) as:
+
+$$\Xi(s) = \int_0^\infty \Phi(x) x^{s-1} dx$$
+
+where Φ(x) is a rapidly decreasing function derived from the Jacobi theta function θ(x).
+
+#### Key Definitions
+
+| Definition | Description |
+|------------|-------------|
+| `jacobi_theta` | Jacobi theta function θ(x) = Σ exp(-πn²x) |
+| `Phi` | Mellin kernel derived from theta |
+| `criticalStrip` | The set {s ∈ ℂ : 0 < Re(s) < 1} |
+| `mellinTransform` | Mellin transform ∫₀^∞ f(x)x^{s-1}dx |
+| `riemann_Xi` | Riemann Xi function |
+
+#### Key Results
+
+| Result | Type | Status |
+|--------|------|--------|
+| `theta_functional_equation` | Axiom | θ(1/x) = √x · θ(x) |
+| `Phi_rapid_decay` | Axiom | Schwartz-like decay of Φ |
+| `Phi_mellin_integrable` | Theorem | ✅ Integrability in critical strip |
+| `xi_mellin_representation` | Theorem | ✅ Main theorem (no sorry) |
+| `mellin_zeros_spectral` | Theorem | ✅ Connection to zeros |
+
+#### Mathematical Background
+
+The classical Mellin representation of Ξ(s) connects:
+- Jacobi theta function and modular transformations
+- Schwartz function theory (rapid decay)
+- Analytic continuation of zeta function
+- Spectral interpretation of zeros
+
+**References**: Titchmarsh (1986), Edwards (1974), DOI: 10.5281/zenodo.17379721
 
 ### `HΨ_has_real_spectrum.lean`
 
