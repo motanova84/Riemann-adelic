@@ -2,8 +2,6 @@ import Lake
 open Lake DSL
 
 package «riemann-adelic-lean» where
-  -- Version and configuration
-  version := "6.0"
   -- Require Lean 4.5.0 or higher
   preferReleaseBuild := true
   moreLeanArgs := #["-DautoImplicit=false"]
@@ -22,14 +20,10 @@ lean_lib RiemannAdelic where
   globs := #[.submodules `RiemannAdelic]
   roots := #[`RiemannAdelic]
 
--- Operator library - Spectral operators and H_Ψ core
-lean_lib Operator where
-  globs := #[.submodules `Operator]
-  roots := #[`Operator.H_psi_core]
-
--- Hpsi_selfadjoint - Part 34/∞³ self-adjointness module
-lean_lib Hpsi where
-  roots := #[`Hpsi_selfadjoint]
+-- Adelic library - L-function spectral reconstruction
+lean_lib adelic where
+  globs := #[.submodules `adelic]
+  roots := #[`adelic]
 
 -- Main executable
 @[default_target]
