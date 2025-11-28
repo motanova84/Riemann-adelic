@@ -1,0 +1,16 @@
+[
+  {
+    "node_id": "reference-coordinator",
+    "timestamp": "2024-01-01T00:00:00Z",
+    "relative_error": 8.2e-07,
+    "precision": 25,
+    "evac_frequency": 1.0
+  },
+  {
+    "node_id": "gpu-lab-node",
+    "timestamp": "2024-01-02T12:00:00Z",
+    "relative_error": 6.4e-07,
+    "precision": 30,
+    "evac_frequency": 0.5
+  }
+]

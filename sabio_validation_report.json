@@ -1,0 +1,27 @@
+{
+  "fundamental_frequency": {
+    "valid": true,
+    "expected": 141.7001,
+    "beacon": 141.7001,
+    "delta": 0.0
+  },
+  "coherence": {
+    "valid": true,
+    "expected": 244.36,
+    "beacon": 244.36
+  },
+  "doi_references": {
+    "valid": true,
+    "required": 6,
+    "found": 6,
+    "missing": []
+  },
+  "pulsation": {
+    "period_ms": 7.057158040114298,
+    "angular_frequency": 890.327986345878,
+    "wavelength_m": 2115682.755340328
+  },
+  "vibrational_hash": "028553703897751e2810c02d0690b5f1c3960d2704275cf679ec7ce2b2f71da2",
+  "overall_valid": true,
+  "timestamp": "2025-10-21T22:14:20.984800"
+}

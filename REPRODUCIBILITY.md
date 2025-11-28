@@ -148,6 +148,95 @@ Results are stored as artifacts with appropriate retention periods:
 - Validation reports: 30 days
 - Consolidated reports: 90 days
 
+## Formal Proof Reproducibility
+
+### Makefile `proof` Target
+
+The repository provides a `proof` Makefile target that builds and verifies all Lean 4 formal content:
+
+```bash
+make proof
+```
+
+This target:
+- Builds all Lean 4 formalization files in `formalization/lean/`
+- Verifies type correctness and proof validity
+- Uses Lake (Lean's build system) for compilation
+
+### Docker-Based Reproducible Verification
+
+For guaranteed reproducibility across different environments, use the provided Dockerfile:
+
+```bash
+# Build the Docker image
+docker build -t riemann-adelic-proof .
+
+# Run proof verification in container
+docker run --rm riemann-adelic-proof
+
+# Or mount source for development
+docker run --rm -v "$PWD":/work -w /work leanprovercommunity/lean:4.5.0 /bin/bash -lc "make proof"
+```
+
+**Pinned Versions:**
+- Lean 4: `v4.5.0` (specified in `formalization/lean/lean-toolchain`)
+- Base Image: `leanprovercommunity/lean:4.5.0`
+
+### Nix Flake for Reproducible Environments
+
+For Nix users, a `flake.nix` is provided for fully reproducible builds:
+
+```bash
+# Enter development shell with Lean 4
+nix develop
+
+# Build and verify proofs
+nix develop --command make proof
+
+# Build as a Nix package
+nix build
+```
+
+**Pinned Versions in flake.nix:**
+- Lean 4: `github:leanprover/lean4/v4.5.0`
+- nixpkgs: `nixos-23.11`
+
+### Lake Configuration
+
+The Lean 4 project uses Lake (Lean's build system) with dependencies specified in `formalization/lean/lakefile.lean`:
+
+- **mathlib**: Pinned via git commit in `lake-manifest.json` (auto-generated)
+- **Lean version**: Pinned in `formalization/lean/lean-toolchain`
+
+### Reproducibility Guarantees
+
+1. **Version Pinning**: All dependencies (Lean, mathlib) are pinned to specific versions
+2. **Containerization**: Docker provides OS-level isolation and reproducibility
+3. **Declarative Builds**: Nix flake ensures bit-for-bit reproducible builds
+4. **CI Integration**: GitHub Actions workflow (`.github/workflows/lean.yml`) verifies builds
+
+### Manual Verification Steps
+
+To manually verify the formal proofs without Docker/Nix:
+
+1. Install Lean 4 (version 4.5.0):
+   ```bash
+   curl https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -sSf | sh
+   elan install leanprover/lean4:v4.5.0
+   ```
+
+2. Build the project:
+   ```bash
+   cd formalization/lean
+   lake build
+   ```
+
+3. Check specific files:
+   ```bash
+   lake exe cache get  # Download mathlib cache
+   lean --check RiemannAdelic/axioms_to_lemmas.lean
+   ```
+
 ## Verification
 
 To verify reproducibility:

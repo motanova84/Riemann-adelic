@@ -99,6 +99,46 @@ def test_comprehensive_ci_uses_standard_ci_params():
     assert "'10'" in content, "comprehensive-ci.yml should use standard_ci integration_t=10 as default"
 
 
+def test_comprehensive_ci_input_type_is_string():
+    """Test that run_full_validation input type is string (not boolean)"""
+    workflow_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), 
+                                  '.github', 'workflows', 'comprehensive-ci.yml')
+    
+    if not os.path.exists(workflow_path):
+        return  # Skip if workflow doesn't exist
+    
+    with open(workflow_path, 'r') as f:
+        workflow = yaml.safe_load(f)
+    
+    # Get the inputs section - handle both 'on' and True keys (YAML boolean conversion)
+    on_section = workflow.get('on') or workflow.get(True)
+    assert on_section is not None, "workflow 'on' section not found"
+    
+    inputs = on_section.get('workflow_dispatch', {}).get('inputs', {})
+    run_full_validation = inputs.get('run_full_validation', {})
+    
+    # Verify the input is defined
+    assert run_full_validation, "run_full_validation input not found"
+    
+    # Verify the type is string (not boolean) to match string comparisons in env vars
+    input_type = run_full_validation.get('type')
+    assert input_type == 'string', \
+        f"run_full_validation type should be 'string' to match string comparisons, got '{input_type}'"
+    
+    # Verify default value is 'false' as string
+    default_value = run_full_validation.get('default')
+    assert default_value == 'false', \
+        f"run_full_validation default should be 'false' (string), got '{default_value}'"
+    
+    # Verify the env vars use string comparison
+    with open(workflow_path, 'r') as f:
+        content = f.read()
+    
+    # Check that comparisons use == 'true' (string comparison)
+    assert "== 'true'" in content, \
+        "Environment variables should use string comparison (== 'true')"
+
+
 def test_workflow_files_are_valid_yaml():
     """Test that all modified workflow files are valid YAML"""
     workflows_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), 
