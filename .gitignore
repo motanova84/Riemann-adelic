@@ -35,6 +35,12 @@ htmlcov/
 coverage.xml
 *.cover
 
+# SABIO ∞⁴ generated reports
+sabio_infinity4_report_*.json
+
+# Lean validation reports
+formalization/lean/validation_report.json
+
 # Virtual environments
 venv/
 env/
@@ -50,17 +56,25 @@ ENV/
 
 # OS files
 .DS_Store
+Thumbs.db__pycache__/
 Thumbs.db
 
 # Generated validation results (keep structure but not data)
-data/validation_results*.csv
+data/validation_results_*.csv
 data/validation_output*.csv
 data/temp_*
 data/*.tmp
 data/validation/results/*
 data/validation/certificates/*
+data/qcal_validation_certificate.json
 !data/validation/results/.gitkeep
 !data/validation/certificates/.gitkeep
+!data/validation_results.csv
+
+# Generated 141.7 Hz validation outputs
+resultados/*.json
+resultados/certificates/
+!resultados/.gitkeep
 
 # Generated HTML output  
 docs/validation*.html
@@ -74,6 +88,8 @@ zeros/*.gz
 logs/*.log
 logs/temp_*
 logs/validation/*
+logs/performance/benchmark_results_*.json
+logs/performance/benchmark_results_*_report.md
 !logs/validation/.gitkeep
 
 # CI/CD artifacts
@@ -81,7 +97,7 @@ artifacts/
 reports/
 .pytest_cache/
 
-# LaTeX build files (for paper directory)
+# LaTeX build files (for paper directories)
 paper/*.aux
 paper/*.log
 paper/*.out
@@ -96,6 +112,22 @@ paper/*.run.xml
 paper/*.nav
 paper/*.snm
 paper/*.vrb
+
+# LaTeX build files (for docs/paper directory)
+docs/paper/*.aux
+docs/paper/*.log
+docs/paper/*.out
+docs/paper/*.fdb_latexmk
+docs/paper/*.fls
+docs/paper/*.synctex.gz
+docs/paper/*.toc
+docs/paper/*.bbl
+docs/paper/*.blg
+docs/paper/*.bcf
+docs/paper/*.run.xml
+docs/paper/*.nav
+docs/paper/*.snm
+docs/paper/*.vrb
 
 # Temporary computational files
 *.tmp
@@ -133,7 +165,6 @@ build/
 
 # Disabled workflow files
 *.disabled
-*.png
 
 # Monitoring system - evidence and sensitive data
 monitoring/evidence/
@@ -141,24 +172,13 @@ monitoring/alerts/*.json
 !monitoring/alerts/.gitkeep
 examples/__pycache__/
 
-# SABIO ∞³ validation artifacts
-sabio_validation_report.json
-quantum_radio_validation_results.json
-test.sabio
-*.sabio.tmp
+# QCAL auto-generated state files
+tools/qcal_state.json
+# Spectral framework demo images
+*_demo.png
 
-# Lean validation reports (generated during CI)
-# Lean4 validation artifacts
-formalization/lean/validation_report.json
-
-# Lean4 build artifacts
-.lake/
-lake-packages/
-*.olean
-*.trace
-formalization/lean/validation_report.json
-
-# SageMath build artifacts
-*.sage.py
-.sage/
-validation_report.json
+# Validation notebook generated images
+evac_zeta_visualization.png
+convexity_gamma_visualization.png
+validation_summary.png
+validation_summary.txt

@@ -27,8 +27,28 @@ Validador principal de firma vibracional y estructura QCAL.
 python3 sabio_validator.py --precision 30 --output validation_report.json
 ```
 
-### 2. `test_validacion_radio_cuantico.sage`
-Validación del radio cuántico RΨ usando SageMath con precisión arbitraria.
+### 2. Validación del Radio Cuántico RΨ
+
+#### 2a. `scripts/validacion_alpha_psi.py` (Puente Python → SageMath)
+Script puente que permite ejecutar la validación del radio cuántico RΨ desde Python, facilitando su integración en pipelines CI/CD.
+
+**Características:**
+- Interfaz Python para la validación de SageMath
+- Modo fallback con `mpmath` cuando Sage no está disponible
+- Compatible con CI/CD y workflows automatizados
+- Genera resultados en formato JSON
+
+**Uso:**
+```bash
+# Con SageMath instalado (alta precisión)
+python3 scripts/validacion_alpha_psi.py --precision 256
+
+# Modo fallback con mpmath (sin Sage)
+python3 scripts/validacion_alpha_psi.py --force-fallback --fallback-dps 30
+```
+
+#### 2b. `test_validacion_radio_cuantico.sage` / `scripts/validacion_radio_cuantico.sage`
+Validación directa del radio cuántico RΨ usando SageMath con precisión arbitraria.
 
 **Características:**
 - Cálculo de RΨ desde frecuencia fundamental
@@ -38,7 +58,11 @@ Validación del radio cuántico RΨ usando SageMath con precisión arbitraria.
 
 **Uso:**
 ```bash
+# Desde el directorio raíz
 sage test_validacion_radio_cuantico.sage [precision_bits]
+
+# Desde scripts/ (symlink)
+sage scripts/validacion_radio_cuantico.sage [precision_bits]
 ```
 
 ### 3. `test_lean4_operator.lean`

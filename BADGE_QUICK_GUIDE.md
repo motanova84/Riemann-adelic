@@ -1,10 +1,5 @@
 # 🎯 Guía Rápida: Insignias Funcionales
 
-## ¿Qué cambió?
-
-**Antes:** Las insignias eran solo imágenes estáticas 🖼️  
-**Ahora:** Las insignias son enlaces funcionales que proporcionan información real 🔗✨
-
 ## 📊 Cómo Usar las Insignias
 
 ### 1️⃣ Insignias de GitHub Actions (Estado en Tiempo Real)

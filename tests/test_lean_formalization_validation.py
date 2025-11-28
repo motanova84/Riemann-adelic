@@ -83,6 +83,7 @@ class TestLeanFormalizationStructure:
             "RiemannAdelic.uniqueness_without_xi",
             "RiemannAdelic.pw_two_lines",
             "RiemannAdelic.lengths_derived",
+            "RiemannAdelic.paley_wiener_uniqueness",
         ]
         
         for imp in required_imports:
@@ -134,12 +135,35 @@ class TestLeanFormalizationStructure:
             "RiemannAdelic/pw_two_lines.lean",
             "RiemannAdelic/lengths_derived.lean",
             "RiemannAdelic/doi_positivity.lean",
+            "RiemannAdelic/paley_wiener_uniqueness.lean",
         ]
         
         for module in required_modules:
             module_path = lean_dir / module
             assert module_path.exists(), f"Module not found: {module}"
             assert module_path.stat().st_size > 0, f"Module is empty: {module}"
+    
+    def test_xi_symmetry_identity_module_exists(self):
+        """Test that the xi_symmetry_identity Lean module exists"""
+        lean_dir = PROJECT_ROOT / "formalization" / "lean"
+        xi_symmetry_path = lean_dir / "spectral" / "xi_symmetry_identity.lean"
+        assert xi_symmetry_path.exists(), "xi_symmetry_identity.lean not found"
+        assert xi_symmetry_path.stat().st_size > 0, "xi_symmetry_identity.lean is empty"
+    
+    def test_xi_symmetry_identity_content(self):
+        """Test that xi_symmetry_identity.lean contains the main theorem"""
+        lean_dir = PROJECT_ROOT / "formalization" / "lean"
+        xi_symmetry_path = lean_dir / "spectral" / "xi_symmetry_identity.lean"
+        
+        with open(xi_symmetry_path, 'r') as f:
+            content = f.read()
+        
+        # Check for main theorem
+        assert "xi_symmetry_identity" in content, "Main theorem not found"
+        assert "ξ s = ξ (1 - s)" in content, "Functional equation statement not found"
+        # Check for supporting lemmas
+        assert "symmetric_factor_invariant" in content, "symmetric_factor lemma not found"
+        assert "zeros_symmetric" in content, "zeros_symmetric corollary not found"
 
 
 class TestLeanDocumentation:

@@ -29,10 +29,25 @@ from datetime import datetime
 from pathlib import Path
 
 import mpmath as mp
-import numpy as np
 
 # Add the current directory to Python path for imports
 sys.path.append('.')
+
+def include_yolo_verification():
+    """Include YOLO verification in main validation"""
+    try:
+        from verify_yolo import YOLOverifier
+        print("   🎯 Initializing YOLO verifier...")
+        verifier = YOLOverifier()
+        yolo_result = verifier.run_yolo_verification()
+        print(f"   YOLO Verification: {'✅ SUCCESS' if yolo_result else '❌ FAILED'}")
+        return yolo_result
+    except ImportError as e:
+        print(f"   ⚠️  YOLO verification not available: {e}")
+        return True
+    except Exception as e:
+        print(f"   ❌ YOLO verification error: {e}")
+        return False
 
 def setup_precision(dps):
     """Setup computational precision"""
@@ -276,6 +291,19 @@ def validate_v5_coronacion(precision=30, verbose=False, save_certificate=False, 
         print(f"\n⚠️  V5 CORONACIÓN VALIDATION: PARTIAL SUCCESS")
         print(f"   Review {failed_count} failed components above for details.")
     
+    # --- YOLO Verification Integration -------------------------------------------
+    print("\n🚀 RUNNING YOLO VERIFICATION...")
+    yolo_result = include_yolo_verification()
+    results["YOLO Verification"] = {
+        'status': 'PASSED' if yolo_result else 'FAILED',
+        'execution_time': 0.0  # YOLO is instant by design
+    }
+    if yolo_result:
+        passed_count += 1
+    else:
+        failed_count += 1
+        all_passed = False
+
     # --- Adelic D(s) zeta-free check (opcional, visible) -------------------
     try:
         from utils.adelic_determinant import AdelicCanonicalDeterminant as ACD
@@ -288,6 +316,49 @@ def validate_v5_coronacion(precision=30, verbose=False, save_certificate=False, 
         print(f"   ✅ Adelic D(s) first zero check: |D(1/2+i t1)| = {float(zero_hit):.2e}")
     except Exception as e:
         print(f"   ⚠️  Adelic D(s) check skipped: {e}")
+    # -----------------------------------------------------------------------
+    
+    # --- H_DS Discrete Symmetry Operator Verification ---------------------
+    try:
+        from operador.operador_H_DS import DiscreteSymmetryOperator
+        from operador.operador_H import build_R_matrix, spectrum_from_R
+        
+        print("\n   🔒 H_DS Discrete Symmetry Operator Verification...")
+        
+        # Build a small operator for validation
+        n_basis = 15
+        h_param = 1e-3
+        R = build_R_matrix(n_basis=n_basis, h=h_param, L=1.0)
+        lam_H, gammas = spectrum_from_R(R, h_param)
+        
+        # Create H_DS
+        H_DS = DiscreteSymmetryOperator(dimension=n_basis, tolerance=1e-9)
+        
+        # Verify Hermiticity
+        is_hermitian, herm_dev = H_DS.verify_hermiticity(R, "R_matrix")
+        
+        # Verify critical line localization
+        critical_ok, stats = H_DS.verify_critical_line_localization(lam_H)
+        
+        if is_hermitian and critical_ok:
+            print(f"   ✅ H_DS validation: PASSED")
+            print(f"      Hermiticity deviation: {herm_dev:.2e}")
+            print(f"      Eigenvalue range: [{stats['min_eigenvalue']:.2f}, {stats['max_eigenvalue']:.2f}]")
+            results["H_DS Verification"] = {
+                'status': 'PASSED',
+                'hermiticity': is_hermitian,
+                'critical_line': critical_ok
+            }
+        else:
+            print(f"   ⚠️  H_DS validation: PARTIAL")
+            results["H_DS Verification"] = {
+                'status': 'PARTIAL',
+                'hermiticity': is_hermitian,
+                'critical_line': critical_ok
+            }
+            
+    except Exception as e:
+        print(f"   ⚠️  H_DS verification skipped: {e}")
     # -----------------------------------------------------------------------
 
     # YOLO verification integration

@@ -19,6 +19,8 @@ jobs:
     # 1️⃣ Obtención del código fuente
     - name: 🧠 Clonar repositorio
       uses: actions/checkout@v4
+      with:
+        ref: main  # Explicitly checkout main branch for scheduled runs
 
     # 2️⃣ Configuración del entorno Python + Lean
     - name: 🔧 Configurar entorno base
@@ -29,10 +31,14 @@ jobs:
     - name: ⚙️ Instalar Lean 4.5.0
       run: |
         curl -sSf https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh | sh -s -- -y
-        echo "$HOME/.elan/bin" >> $GITHUB_PATH
+        export PATH="$HOME/.elan/bin:$PATH"
+        if ! command -v elan &> /dev/null; then
+          echo "❌ Elan no está en el PATH"; exit 1
+        fi
         elan toolchain install leanprover/lean4:v4.5.0
         elan default leanprover/lean4:v4.5.0
         lean --version
+        echo "$HOME/.elan/bin" >> $GITHUB_PATH
 
     # 3️⃣ Validación estructural del sistema
     - name: 🔍 Validar dependencias del sistema
