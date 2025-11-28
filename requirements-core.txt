@@ -1,0 +1,48 @@
+# Core dependencies for QCAL mathematical validation and Lean4 scripts
+# This file avoids jax and xgboost which require numpy>=2.0
+# Compatible with Qiskit, Lean4, and all adélico-spectral modules
+
+# Core computational dependencies
+numpy>=1.25,<2.1
+scipy>=1.11
+matplotlib>=3.8
+sympy>=1.12
+
+# Quantum computing for consciousness adelic bridge
+qiskit==1.4.2
+qiskit-aer==0.15.1
+qiskit-ibm-runtime==0.34.0
+
+# JSON schema validation
+fastjsonschema>=2.21
+
+# Object serialization
+dill>=0.3
+
+# Plugin system
+stevedore>=3.0
+
+# Authentication
+requests-ntlm>=1.1
+
+# IBM Cloud services
+ibm-platform-services>=0.71
+
+# Data validation
+pydantic>=2.5,<2.10
+
+# Testing framework
+pytest>=7.4
+pytest-cov>=4.0
+
+# Multi-precision floating point
+mpmath>=1.3.0
+
+# HTTP requests
+requests>=2.31
+
+# Parallel computing
+joblib>=1.3.0
+
+# Note: jax, xgboost, and cupy are intentionally excluded
+# Use requirements-ai.txt for advanced ML/GPU acceleration

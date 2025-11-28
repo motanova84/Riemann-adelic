@@ -384,6 +384,15 @@ theorem D_functional_equation : ... := D_explicit_functional_equation
 - Fourier transform and Poisson summation
 - Mellin transform as bridge to spectral theory
 
+#### 2.5. Xi Mellin Representation 🆕 ✅ (November 27, 2025)
+
+- `spectral/xi_mellin_representation.lean` - **No sorry statements**
+- Mellin transform representation: Ξ(s) = ∫₀^∞ Φ(x) x^{s-1} dx
+- `jacobi_theta`: Jacobi theta function with modular transformation
+- `Phi`: Rapidly decreasing kernel derived from θ(x)
+- `xi_mellin_representation` theorem with justified axioms
+- References: Titchmarsh (1986), Edwards (1974)
+
 #### 3. de Branges Spaces Explicit ✅
 
 - `HermiteBiehler` structure for phase functions
