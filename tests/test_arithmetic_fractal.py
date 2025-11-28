@@ -233,31 +233,46 @@ class TestValidateArithmeticFractal:
 class TestHighPrecisionValidation:
     """Tests with higher precision to ensure numerical stability."""
     
+    # Default precision to restore after tests
+    DEFAULT_DPS = 15
+    
+    def teardown_method(self):
+        """Reset precision after each test."""
+        mp.dps = self.DEFAULT_DPS
+    
     def test_period_at_500_dps(self):
         """Test period verification at 500 decimal places."""
-        mp.dps = 500
-        validator = ArithmeticFractalValidator(dps=500)
-        result = validator.verify_68_81_period(verification_depth=50)
-        
-        assert result.exact_match is True
-        assert result.period == 9
+        original_dps = mp.dps
+        try:
+            mp.dps = 500
+            validator = ArithmeticFractalValidator(dps=500)
+            result = validator.verify_68_81_period(verification_depth=50)
+            
+            assert result.exact_match is True
+            assert result.period == 9
+        finally:
+            mp.dps = original_dps
     
     def test_direct_decimal_expansion(self):
         """Directly verify decimal expansion of 68/81."""
-        mp.dps = 200
-        
-        ratio = mp.mpf(68) / mp.mpf(81)
-        decimal_str = str(ratio)[2:]  # Remove "0."
-        
-        expected_pattern = "839506172"
-        
-        # Check first 20 periods
-        for i in range(20):
-            start = i * 9
-            block = decimal_str[start:start + 9]
-            assert block == expected_pattern, (
-                f"Period {i}: expected '{expected_pattern}', got '{block}'"
-            )
+        original_dps = mp.dps
+        try:
+            mp.dps = 200
+            
+            ratio = mp.mpf(68) / mp.mpf(81)
+            decimal_str = str(ratio)[2:]  # Remove "0."
+            
+            expected_pattern = "839506172"
+            
+            # Check first 20 periods
+            for i in range(20):
+                start = i * 9
+                block = decimal_str[start:start + 9]
+                assert block == expected_pattern, (
+                    f"Period {i}: expected '{expected_pattern}', got '{block}'"
+                )
+        finally:
+            mp.dps = original_dps
 
 
 class TestArithmeticIdentity:

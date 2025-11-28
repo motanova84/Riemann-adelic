@@ -35,9 +35,17 @@ from typing import Optional, Tuple, List, Dict, Any
 
 try:
     from mpmath import mp, mpf
+    MPMATH_AVAILABLE = True
 except ImportError:
     mp = None
-    mpf = float
+    mpf = None  # type: ignore
+    MPMATH_AVAILABLE = False
+
+
+# Named constants for readability
+MIN_VERIFICATION_MATCHES = 2  # Minimum number of pattern matches for tolerance
+MAX_SEARCH_POSITIONS = 50  # Maximum positions to search for periodic pattern
+MIN_REPETITIONS_FOR_DETECTION = 3  # Minimum repetitions for period detection
 
 
 @dataclass
@@ -84,6 +92,8 @@ class ArithmeticFractalValidator:
     """
     
     # The canonical f₀ constant from SABIO ∞³ (November 2025)
+    # Structure: 141 + (non-periodic: 7001019204384496631789440649158) + periodic(839506172)
+    # Reference: Derived from adelic flow convergence in H_Ψ operator
     F0_CONSTANT = (
         "141.7001019204384496631789440649158395061728395061728395061728"
         "3950617283950617283950617283950617283950617283950617283950617"
@@ -100,9 +110,15 @@ class ArithmeticFractalValidator:
         
         Args:
             dps: Decimal precision for mpmath (default: 300)
+            
+        Raises:
+            ImportError: If mpmath is not available
         """
-        if mp is None:
-            raise ImportError("mpmath is required for arithmetic fractal validation")
+        if not MPMATH_AVAILABLE:
+            raise ImportError(
+                "mpmath is required for arithmetic fractal validation. "
+                "Install with: pip install mpmath"
+            )
         
         mp.dps = dps
         self.dps = dps
@@ -110,6 +126,26 @@ class ArithmeticFractalValidator:
         # Initialize constants
         self.f0_full = mpf(self.F0_CONSTANT)
         self.ratio_68_81 = mpf(68) / mpf(81)
+        
+        # Verify F0_CONSTANT contains the expected periodic pattern
+        self._verify_f0_constant_structure()
+    
+    def _verify_f0_constant_structure(self) -> None:
+        """
+        Verify that F0_CONSTANT contains the expected periodic pattern.
+        
+        Raises:
+            ValueError: If F0_CONSTANT doesn't contain the expected pattern
+        """
+        # Extract fractional part
+        frac_str = self.F0_CONSTANT.split('.')[1] if '.' in self.F0_CONSTANT else ''
+        
+        # Check that the expected pattern appears in the fractional part
+        if self.EXPECTED_PATTERN not in frac_str:
+            raise ValueError(
+                f"F0_CONSTANT does not contain the expected periodic pattern "
+                f"'{self.EXPECTED_PATTERN}'. Please verify the constant."
+            )
     
     def compute_period_of_rational(
         self, 
@@ -147,13 +183,15 @@ class ArithmeticFractalValidator:
         elif "." in decimal_str:
             decimal_str = decimal_str.split(".")[1]
         
-        # Find the minimum period
+        # Find the minimum period using simple pattern matching
+        # Note: For small periods (typical for rational numbers), this is efficient
         for p in range(1, max_period):
             pattern = decimal_str[:p]
             is_valid_period = True
             
-            # Check if pattern repeats for at least 3 periods
-            for i in range(p, min(len(decimal_str), 4 * p)):
+            # Check if pattern repeats for MIN_REPETITIONS_FOR_DETECTION periods
+            check_length = min(len(decimal_str), (MIN_REPETITIONS_FOR_DETECTION + 1) * p)
+            for i in range(p, check_length):
                 if decimal_str[i] != pattern[i % p]:
                     is_valid_period = False
                     break
@@ -307,17 +345,19 @@ class ArithmeticFractalValidator:
         
         # Check for presence of the 68/81 pattern
         pattern = self.EXPECTED_PATTERN
+        pattern_len = len(pattern)
         
         # Find where the periodic pattern starts
-        for start_pos in range(0, min(50, len(frac_str) - 3 * len(pattern))):
+        max_search = min(MAX_SEARCH_POSITIONS, len(frac_str) - MIN_REPETITIONS_FOR_DETECTION * pattern_len)
+        for start_pos in range(0, max_search):
             matches = 0
-            for i in range(3):  # Check at least 3 repetitions
-                pos = start_pos + i * len(pattern)
-                if pos + len(pattern) <= len(frac_str):
-                    block = frac_str[pos:pos + len(pattern)]
+            for i in range(MIN_REPETITIONS_FOR_DETECTION):
+                pos = start_pos + i * pattern_len
+                if pos + pattern_len <= len(frac_str):
+                    block = frac_str[pos:pos + pattern_len]
                     if block == pattern:
                         matches += 1
-            if matches >= 2:  # Allow for some tolerance
+            if matches >= MIN_VERIFICATION_MATCHES:  # Allow for some tolerance
                 return True
         
         return False
