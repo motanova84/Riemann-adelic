@@ -14,7 +14,7 @@ jobs:
       - name: Set up Lean toolchain
         run: |
           echo "$HOME/.elan/bin" >> $GITHUB_PATH
-          ~/.elan/bin/elan default stable
+          cd formalization/lean && ~/.elan/bin/elan show
       - name: Generate lake manifest
         run: |
           cd formalization/lean

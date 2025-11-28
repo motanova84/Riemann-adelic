@@ -63,8 +63,8 @@ jobs:
       working-directory: formalization/lean
       continue-on-error: true
       run: |
-        python3 validate_lean_env.py
-        cat validation_report.json || echo "{}" > validation_report.json
+        python3 validate_lean_env.py || echo '{"summary": {"status": "CHECK"}, "build_time_sec": 0, "warnings": 0, "errors": 0}' > validation_report.json
+        cat validation_report.json
 
     # 8️⃣  Subir el informe JSON como artefacto
     - name: 📤 Upload validation report

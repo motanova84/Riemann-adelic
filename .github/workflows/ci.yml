@@ -47,9 +47,10 @@ jobs:
             ${{ runner.os }}-pip-
 
       - name: Install system dependencies
+        continue-on-error: true
         run: |
           sudo apt-get update
-          sudo apt-get install -y llvm-14 llvm-14-dev libigraph-dev libigraph3t64 || true
+          sudo apt-get install -y llvm-14 llvm-14-dev libigraph-dev libigraph3t64
 
       - name: Install dependencies
         env:
@@ -63,12 +64,12 @@ jobs:
       - name: Run linting (flake8)
         run: |
           flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
-          flake8 . --count --max-line-length=120 --ignore=E203,W503,E501 --statistics || true
+          flake8 . --count --max-line-length=120 --ignore=E203,W503,E501 --statistics
         continue-on-error: true
 
       - name: Check code formatting (black)
         run: |
-          black --check --line-length=120 . || true
+          black --check --line-length=120 .
         continue-on-error: true
 
       - name: Run tests with pytest

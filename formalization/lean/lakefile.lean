@@ -2,7 +2,7 @@ import Lake
 open Lake DSL
 
 package «riemann-adelic-lean» where
-  -- Require Lean 4.5.0 or higher
+  -- Configuration for Lake build system
   preferReleaseBuild := true
   moreLeanArgs := #["-DautoImplicit=false"]
 
