@@ -72,15 +72,18 @@ def construct_H_psi_matrix(
     # Diagonal potential term: α * log(x)
     diag = alpha * np.log(x_int)
 
-    # Construct the kinetic operator as per problem statement:
-    # H_matrix = -np.diag(x[1:-1][1:]) @ np.diag(1/dx_x[1:]) @ 
-    #            (np.eye(N-2, k=1) - np.eye(N-2)) + np.diag(diag)
-
     # Build the derivative operator using finite differences on logarithmic grid
-    inv_dx = 1.0 / dx_x[1:n]  # n-1 elements
+    # Reference (problem statement formulation):
+    #   H_matrix = -np.diag(x[1:-1][1:]) @ np.diag(1/dx_x[1:]) @
+    #              (np.eye(N-2, k=1) - np.eye(N-2)) + np.diag(diag)
+    #
+    # Implementation uses explicit construction for clarity:
+    #   - inv_dx: inverse of step sizes, n-1 elements
+    #   - diag_coeff: coefficients for off-diagonal kinetic term
+    inv_dx = 1.0 / dx_x[1:n]  # n-1 elements (indices 1 to n-1)
 
     # Off-diagonal elements for kinetic term
-    diag_coeff = x_int[:-1] * inv_dx
+    diag_coeff = x_int[:-1] * inv_dx  # n-1 elements
 
     # Construct full matrix
     H_matrix = np.diag(diag)  # Potential on diagonal
