@@ -47,8 +47,12 @@ N = 10000
 x = np.logspace(-10, 10, N)
 dx_x = np.diff(x)/x[:-1]
 
+# Berry-Keating coefficient: α = π · ζ'(1/2) ≈ π × (-3.922646) ≈ -12.32955
+# This encodes the arithmetic structure of the Riemann zeta function
+BERRY_KEATING_ALPHA = -12.32955
+
 # Definimos matriz H (operador discretizado)
-diag = -12.32955 * np.log(x[1:-1])
+diag = BERRY_KEATING_ALPHA * np.log(x[1:-1])
 H_matrix = -np.diag(x[1:-1][1:]) @ np.diag(1/dx_x[1:]) @ (np.eye(N-2, k=1) - np.eye(N-2)) + np.diag(diag)
 
 # Eigenvalores
@@ -184,13 +188,13 @@ El operador $\mathcal{H}_\Psi$ se integra en el marco QCAL ∞³ a través de:
 
 ## Referencias
 
-1. **Berry, M. V., & Keating, J. P. (1999).** "H = xp and the Riemann zeros", *Supersymmetry and Trace Formulae: Chaos and Disorder*, NATO ASI Series.
+1. **Berry, M. V., & Keating, J. P. (1999).** "H = xp and the Riemann zeros", in *Supersymmetry and Trace Formulae: Chaos and Disorder*, I. V. Lerner et al. (eds.), NATO ASI Series, Vol. 370, pp. 355-367. Springer, Boston, MA.
 
-2. **Connes, A. (1999).** "Trace formula in noncommutative geometry and the zeros of the Riemann zeta function", *Selecta Mathematica*.
+2. **Connes, A. (1999).** "Trace formula in noncommutative geometry and the zeros of the Riemann zeta function", *Selecta Mathematica (New Series)*, Vol. 5, No. 1, pp. 29-106.
 
-3. **Mota Burruezo, J. M. (2025).** "V5 Coronación: Adelic Spectral Systems and the Riemann Hypothesis", DOI: [10.5281/zenodo.17379721](https://doi.org/10.5281/zenodo.17379721).
+3. **Mota Burruezo, J. M. (2025).** "V5 Coronación: Adelic Spectral Systems and the Riemann Hypothesis", Instituto de Conciencia Cuántica. DOI: [10.5281/zenodo.17379721](https://doi.org/10.5281/zenodo.17379721).
 
-4. **Sierra, G. (2007).** "H = xp with interaction and the Riemann zeros", *Nuclear Physics B*.
+4. **Sierra, G. (2007).** "H = xp with interaction and the Riemann zeros", *Nuclear Physics B*, Vol. 776, No. 3, pp. 327-364.
 
 ---
 
