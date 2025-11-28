@@ -420,7 +420,8 @@ def zero_sum_limited(f, filename, max_zeros, lim_u=5):
     """Compute zero sum using only first max_zeros from file."""
     total = mp.mpf('0')
     count = 0
-    chunk_size = min(10000, max(1000, max_zeros // 100))  # Adaptive chunking
+    # Adaptive chunking with safeguard for max_zeros=0
+    chunk_size = min(10000, max(1000, max_zeros // 100)) if max_zeros > 0 else 1000
     
     print(f"Processing up to {max_zeros} zeros in chunks of {chunk_size}...")
     

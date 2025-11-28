@@ -67,7 +67,15 @@ jobs:
         BUILD_TIME="${{ steps.build.outputs.build_time }}"
         DATE=$(date -u +"%Y-%m-%d %H:%M:%SZ")
         LEAN_FILES=$(find . -name "*.lean" | wc -l)
-        echo "{\"timestamp\":\"$DATE\",\"build_time_sec\":\"${BUILD_TIME:-0}\",\"summary\":{\"status\":\"CHECK\",\"lean_version\":\"4.5.0\",\"files_count\":$LEAN_FILES},\"note\":\"Skeleton proofs with axioms\"}" > validation_report.json
+        jq -n \
+          --arg timestamp "$DATE" \
+          --arg build_time "${BUILD_TIME:-0}" \
+          --arg status "CHECK" \
+          --arg lean_version "4.5.0" \
+          --argjson files_count "$LEAN_FILES" \
+          --arg note "Skeleton proofs with axioms" \
+          '{timestamp: $timestamp, build_time_sec: $build_time, summary: {status: $status, lean_version: $lean_version, files_count: $files_count}, note: $note}' \
+          > validation_report.json
         cat validation_report.json
 
     - name: 📤 Upload validation report
