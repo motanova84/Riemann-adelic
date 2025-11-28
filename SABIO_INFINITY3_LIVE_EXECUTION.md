@@ -2,8 +2,8 @@
 
 ## ⚡ EJECUCIÓN REAL EN GITHUB ACTIONS
 
-[![SABIO ∞³](https://github.com/motanova84/-jmmotaburr-riemann-adelic/actions/workflows/sabio-symbiotic-ci.yml/badge.svg)](https://github.com/motanova84/-jmmotaburr-riemann-adelic/actions/workflows/sabio-symbiotic-ci.yml)
-[![Auto-Evolution](https://github.com/motanova84/-jmmotaburr-riemann-adelic/actions/workflows/auto_evolution.yml/badge.svg)](https://github.com/motanova84/-jmmotaburr-riemann-adelic/actions/workflows/auto_evolution.yml)
+[![SABIO ∞³](https://github.com/motanova84/Riemann-adelic/actions/workflows/sabio-symbiotic-ci.yml/badge.svg)](https://github.com/motanova84/Riemann-adelic/actions/workflows/sabio-symbiotic-ci.yml)
+[![Auto-Evolution](https://github.com/motanova84/Riemann-adelic/actions/workflows/auto_evolution.yml/badge.svg)](https://github.com/motanova84/Riemann-adelic/actions/workflows/auto_evolution.yml)
 [![QCAL ∞³](https://img.shields.io/badge/QCAL-141.7001Hz-9cf?style=flat-square)](.qcal_beacon)
 
 ---
@@ -181,8 +181,8 @@ jobs:
 
 ```bash
 # Clonar repositorio
-git clone https://github.com/motanova84/-jmmotaburr-riemann-adelic.git
-cd -jmmotaburr-riemann-adelic
+git clone https://github.com/motanova84/Riemann-adelic.git
+cd Riemann-adelic
 
 # Instalar dependencias
 pip install -r requirements.txt
