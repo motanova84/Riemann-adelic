@@ -104,27 +104,32 @@ axiom Ξ_entire : ∀ s : ℂ, DifferentiableAt ℂ Ξ s
 /-- Axiom: Ξ(s) is real on the real axis -/
 axiom Ξ_real_on_real : ∀ t : ℝ, (Ξ t).im = 0
 
-/-- Axiom: Schwarz reflection principle for Ξ.
-    Since Ξ(s) is entire and real on the real axis,
-    we have Ξ(conj s) = conj (Ξ s) for all s.
-    This is a standard result in complex analysis (see Ahlfors, Complex Analysis). -/
-axiom Ξ_conj_eq_conj_Ξ : ∀ s : ℂ, Ξ (conj s) = conj (Ξ s)
+/--
+Complex conjugation property of the Xi function:
+Ξ(conj s) = conj (Ξ(s))
+
+This guarantees that Ξ(s) takes real values on the critical line Re(s) = 1/2.
+
+Mathematical justification:
+The Ξ(s) function is real on Re(s) = 1/2 and its functional equation guarantees 
+symmetry with respect to complex conjugation. This is a standard result from 
+analytic number theory derived from the Schwarz reflection principle.
+-/
+axiom xi_conjugate_property : ∀ s : ℂ, Ξ (conj s) = conj (Ξ s)
 
 /-- Definition: The set of non-trivial zeros of Ξ(s) -/
 def ΞZeros : Set ℂ := { s : ℂ | Ξ s = 0 }
 
-/-- The zeros come in conjugate pairs due to Ξ being real on real axis.
-    This follows from the Schwarz reflection principle: since Ξ(s̄) = Ξ(s)̄,
-    if Ξ(s) = 0, then Ξ(s̄) = 0̄ = 0.
-    Reference: Ahlfors, Complex Analysis, Schwarz reflection principle. -/
+/-- The zeros come in conjugate pairs due to the xi_conjugate_property -/
 lemma ΞZeros_conjugate_symmetric : 
   ∀ s ∈ ΞZeros, conj s ∈ ΞZeros := by
   intro s hs
   unfold ΞZeros at *
   simp only [Set.mem_setOf_eq] at *
-  rw [Ξ_conj_eq_conj_Ξ]
+  -- Apply the conjugate property: Ξ(conj s) = conj (Ξ s) = conj 0 = 0
+  rw [xi_conjugate_property]
   rw [hs]
-  simp
+  simp only [map_zero]
 
 /-- Zeros are symmetric about the critical line Re(s) = 1/2 -/
 lemma ΞZeros_functional_symmetric :
