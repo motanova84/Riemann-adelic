@@ -184,6 +184,19 @@ axiom Xi : ℂ → ℂ
 /-- Main theorem: Full functional equation Ξ(s) = Ξ(1-s) -/
 axiom Xi_functional_eq : ∀ s : ℂ, Xi s = Xi (1 - s)
 
+/--
+La función ξ(s) es par: ξ(s) = ξ(1 - s)
+
+Este lema establece la simetría de ξ respecto a la línea crítica ℜ(s) = 1/2.
+Se utiliza la ecuación funcional de ξ (Xi_functional_eq).
+La propiedad de paridad es central para demostrar simetría espectral.
+
+Justification: Uses the functional equation of ξ integrated via Xi_functional_eq.
+The parity property is central to demonstrate spectral symmetry.
+-/
+lemma xi_even_property (s : ℂ) : Xi s = Xi (1 - s) :=
+  Xi_functional_eq s
+
 /-!
 ## QCAL Parameters Integration
 -/
