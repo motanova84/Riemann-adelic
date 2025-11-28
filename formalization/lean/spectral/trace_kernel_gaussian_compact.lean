@@ -78,7 +78,7 @@ theorem gaussian_kernel_le_one (x y : ℝ) : gaussian_kernel x y ≤ 1 := by
   unfold gaussian_kernel
   have h : -π * (x - y)^2 ≤ 0 := by
     apply mul_nonpos_of_neg_of_nonneg
-    · exact neg_neg_of_pos pi_pos
+    · linarith [pi_pos]  -- -π < 0 since π > 0
     · exact sq_nonneg _
   calc gaussian_kernel x y = exp (-π * (x - y)^2) := rfl
     _ ≤ exp 0 := exp_le_exp.mpr h
@@ -101,6 +101,12 @@ theorem gaussian_kernel_continuous : Continuous (fun p : ℝ × ℝ => gaussian_
   apply Continuous.mul continuous_const
   apply Continuous.pow
   exact continuous_fst.sub continuous_snd
+
+/-- Gaussian kernel squared is integrable on bounded intervals -/
+lemma gaussian_kernel_sq_integrable (R : ℝ) (a : ℝ) : 
+    IntervalIntegrable (fun y => (gaussian_kernel a y)^2) volume (-R) R := by
+  exact (Continuous.pow (gaussian_kernel_continuous.comp 
+      (Continuous.prod_mk continuous_const continuous_id)) 2).intervalIntegrable (-R) R
 
 /-!
 ## Hilbert-Schmidt Property (Local)
@@ -130,12 +136,10 @@ theorem hilbert_schmidt_local_bound (R : ℝ) (hR : 0 < R) :
     = ∫ x in -R..R, ∫ y in -R..R, (gaussian_kernel x y)^2 := rfl
     _ ≤ ∫ x in -R..R, ∫ y in -R..R, (1 : ℝ) := by
         apply intervalIntegral.integral_mono_on
-        · exact (Continuous.pow (gaussian_kernel_continuous.comp 
-            (Continuous.prod_mk continuous_id continuous_const)) 2).intervalIntegrable (-R) R
+        · exact gaussian_kernel_sq_integrable R 0  -- Outer integrand
         · exact continuous_const.intervalIntegrable (-R) R
         · intro x _; apply intervalIntegral.integral_mono_on
-          · exact (Continuous.pow (gaussian_kernel_continuous.comp 
-              (Continuous.prod_mk continuous_const continuous_id)) 2).intervalIntegrable (-R) R
+          · exact gaussian_kernel_sq_integrable R x  -- Use helper lemma
           · exact continuous_const.intervalIntegrable (-R) R
           · intro y _; exact bound x y
     _ = ∫ x in -R..R, (2 * R) := by
