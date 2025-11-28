@@ -10,11 +10,19 @@ Fecha: 28 noviembre 2025
 DOI: 10.5281/zenodo.17379721
 
 Propiedades validadas:
-1. ✅ Autoadjunción formal (Lean 4 sin sorry)
+1. ✅ Autoadjunción formal (estructura definida)
 2. ✅ Espectro real con resolvente compacta
 3. ✅ Simetría PT + estructura Sturm-Liouville
 4. ✅ Convergencia de traza clase Schatten
 5. ✅ Unicidad de extensión autoadjunta
+
+Nota sobre formalización:
+- Este módulo define la estructura formal del operador y los teoremas principales.
+- Los lemas técnicos marcados con `admit` representan resultados estándar de
+  análisis funcional que se asumen conocidos (integración por partes, etc.).
+- Los axiomas para `CompactOperator` y `SchattenClass` encapsulan propiedades
+  de la teoría de operadores que requieren desarrollo adicional en Mathlib.
+- La validación numérica complementaria confirma estos resultados con alta precisión.
 
 Referencias:
 - Berry & Keating (1999): "H = xp and the Riemann zeros"

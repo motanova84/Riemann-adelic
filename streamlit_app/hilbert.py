@@ -98,7 +98,6 @@ def discretize_h_psi(n_points: int = 100, x_min: float = 0.1,
     """
     # Logarithmic grid for better accuracy
     x = np.exp(np.linspace(np.log(x_min), np.log(x_max), n_points))
-    dx = np.diff(x)
     
     # Build the kernel matrix
     X, Y = np.meshgrid(x, x, indexing='ij')
