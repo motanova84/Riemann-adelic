@@ -18,7 +18,9 @@
 - `H_psi_self_adjoint.lean`: Demostración completa de que H_Ψ es autoadjunto (self-adjoint)
 - `D_limit_equals_xi.lean`: Convergencia de D(s, ε) a ξ(s)/P(s)
 - `spectrum_Hψ_equals_zeta_zeros.lean`: Equivalencia espectral Spec(H_Ψ) = {γ | ζ(1/2+iγ)=0}
-- `NuclearityExplicit.lean`: ✅ **NUEVO** - Construcción explícita nuclear (trace-class) de H_Ψ (0 sorrys)
+- `NuclearityExplicit.lean`: ✅ Construcción explícita nuclear (trace-class) de H_Ψ (0 sorrys)
+- `Dchi_eq_Xi_formal.lean`: ✅ **NUEVO** - Equivalencia formal Dχ(s) = Ξ(s) para el carácter trivial
+- `xi_equiv_dchi.lean`: Equivalencia Ξ(s) ≡ Dχ(s) mediante trazas espectrales
 - `lakefile.lean`, `lean-toolchain`, `CITATION.cff`
 
 ## 🔁 Comando CI/CD de verificación
@@ -130,6 +132,17 @@ Determinante ζ-regularizado del operador H_Ψ:
 - Convergencia absoluta para espectro con crecimiento lineal
 - Holomorfía fuera del espectro {λₙ}
 - Localización de ceros y conexión con función Ξ(s)
+
+### 8. Equivalencia Formal Dχ = Ξ (`Dchi_eq_Xi_formal.lean`) ✨ **NUEVO**
+Formalización del puente entre funciones L de Dirichlet y la función Xi:
+- **Carácter trivial**: Define χ₀(n) = 1 para todo n
+- **Axioma L_trivial_eq_zeta**: L(s, χ₀) = ζ(s) con justificación matemática
+- **Teorema Dchi_trivial_eq_Xi_simple**: Dχ₀(s) = Ξ(s) para Re(s) > 1
+- **Extensión analítica**: Dchi_eq_Xi_analytic_continuation para todo s ∈ ℂ
+- **Cierre del sorry técnico**: Este módulo cierra el sorry técnico que representaba
+  la falta de integración entre L_function y riemann_zeta en Mathlib
+- Referencia: Davenport (1980), Titchmarsh (1951)
+- Integración con framework QCAL ∞³
 
 ## QCAL Framework Integration
 
