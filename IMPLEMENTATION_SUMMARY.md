@@ -1,5 +1,10 @@
 # Implementation Summary: Mathematical and Physical Unification
 
+## Latest Addition: Weil Explicit Formula - Spectral Derivation (November 26, 2025)
+
+### Overview
+
+Created **`formalization/lean/spectral/Weil_explicit.lean`** and **`formalization/lean/spectral/Fredholm_Det_Xi.lean`** to formally construct the Weil-type explicit formula connecting zeros of ζ(s) (or Ξ) with prime distribution, via the spectrum of 𝓗_Ψ.
 ## Latest Addition: operator_H_psi.lean — Densely Defined Self-Adjoint Operator (November 26, 2025)
 
 ### Overview
@@ -9,6 +14,80 @@ Created **`formalization/lean/operator_H_psi.lean`** to provide the formal Lean 
 ### Problem Statement Addressed
 
 The implementation provides:
+
+1. **Test Function Space**: Schwartz functions with rapid decay and even symmetry
+2. **Fourier Transform**: Normalized definition ĝ(ξ) = ∫ g(x) e^(-2πixξ) dx
+3. **Hyperbolic Kernel**: K(t) = 1/(exp(t/2) - exp(-t/2)) for the explicit formula
+4. **Weil Explicit Formula**: ∑ₙ g(λₙ) + g(−λₙ) − ∫ g(t) K(t) dt = ∑_ρ g(Im ρ)
+5. **Fredholm-Xi Connection**: det(I - sH_Ψ^(-1)) = Ξ(s)/P(s)
+
+### Files Created
+
+1. **`formalization/lean/spectral/Weil_explicit.lean`** (345 lines)
+   - Complete test function space (Decay, EvenFunction typeclasses)
+   - Spectral eigenvalues λₙ with positivity and monotonicity
+   - Hyperbolic kernel definition with sinh alternative
+   - Main weil_explicit formula definition
+   - Weil identity axiom connecting to zeta zeros
+   - Trace formula connection theorems
+   - QCAL ∞³ interpretation constants and messages
+   - Convergence and well-definedness theorems
+
+2. **`formalization/lean/spectral/Fredholm_Det_Xi.lean`** (98 lines)
+   - Xi function definition
+   - Regularization polynomial P(s)
+   - Fredholm determinant axiom
+   - Fredholm-Xi identity: det(I - sH_Ψ^(-1)) = Ξ(s)/P(s)
+   - Functional equation for determinant
+   - Zero correspondence theorem
+
+### Key Mathematical Structures
+
+#### 1. Weil Explicit Formula
+```lean
+def weil_explicit (g : ℝ → ℂ) [Decay g] [EvenFunction g] : ℂ :=
+  ∑' (n : ℕ), (g (λₙ n) + g (-λₙ n))
+  - ∫ (t : ℝ), g t * hyperbolic_kernel t
+```
+
+#### 2. Weil Identity Axiom
+```lean
+axiom weil_identity_Xi :
+  ∀ (g : ℝ → ℂ) [Decay g] [EvenFunction g],
+    weil_explicit g = ∑' (ρ : zeta_zeros), g (ρ.val.im)
+```
+
+#### 3. Fredholm-Xi Connection
+```lean
+axiom fredholm_equals_xi_over_P :
+  ∀ s : ℂ, P s ≠ 0 → FredholmDet s = Xi s / P s
+```
+
+### QCAL ∞³ Interpretation
+
+"Every Riemann zero is a resonant note in the spectrum of 𝓗_Ψ. This formula translates it ∞³."
+
+- **Framework**: QCAL ∞³ - Quantum Coherence Adelic Lattice
+- **References**: DOI: 10.5281/zenodo.17379721
+- **Coherence**: C = 244.36, f₀ = 141.7001 Hz
+- **Mathematical Meaning**: All arithmetic is contained in the music of the spectrum
+- **RH Connection**: If the music is symmetric → RH is true
+
+### Connection to Proof Structure
+
+This module provides trace formula connections to:
+- `RH_final_v6/SelbergTraceStrong.lean` - Selberg trace formula
+- `RHComplete/FredholmDetEqualsXi.lean` - Detailed Fredholm identity proof
+- `spectral_conditions.lean` - Spectral eigenvalue properties
+- `explicit_spectral_transfer.lean` - Spectral transfer theorems
+
+---
+
+## Previous Addition: Spectral Operator with Gaussian Kernel (November 24, 2025)
+
+### Overview
+
+#### 2. Eigenvalue Definition
 
 1. **Hilbert Space Definition**: L²(ℝ, ℂ) as the base space for the spectral theory
 2. **H_psi_struct**: Complete structure for densely-defined self-adjoint operators with:
