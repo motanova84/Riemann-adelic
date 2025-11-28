@@ -39,7 +39,7 @@ jobs:
         lean --version
 
     # 4️⃣  Generar lake-manifest.json
-    - name: �� Generate lake manifest
+    - name: 📦 Generate lake manifest
       working-directory: formalization/lean
       run: |
         lake update

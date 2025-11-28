@@ -40,7 +40,7 @@ jobs:
       - name: Generate lake manifest
         run: |
           cd formalization/lean/RH_final_v6
-          lake update || echo "Lake update had issues"
+          lake update || echo "⚠️ Lake update failed - dependencies may need manual resolution or network issues"
 
       - name: Cache Lake dependencies
         uses: actions/cache@v4
@@ -75,7 +75,8 @@ jobs:
           echo ""
           if [ -f Riemann_Hypothesis_noetic.lean ]; then
             echo "Main theorem chain (Riemann_Hypothesis_noetic.lean):"
-            if grep -n "sorry" Riemann_Hypothesis_noetic.lean | grep -v "-- "; then
+            # Filter out commented sorry statements (lines starting with --)
+            if grep -n "sorry" Riemann_Hypothesis_noetic.lean | grep -v '^[[:space:]]*--'; then
               echo "⚠️ Found 'sorry' in main theorem file (expected for skeleton proofs)"
             else
               echo "✅ Main theorem file contains no sorry in proof chain"
