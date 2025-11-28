@@ -13,7 +13,7 @@ The sequence `8395061728395061` that appears in f₀ is **not a numerical coinci
 ### Key Mathematical Insights
 
 1. **Fraction 68/81**: The sequence is the exact period of 68/81 = 0.8̅3̅9̅5̅0̅6̅1̅7̅2̅8̅3̅9̅5̅0̅6̅1̅
-2. **The "9 Absent" phenomenon**: Base fraction 1/81 = 0.012345679... (the 8 is missing)
+2. **The "8 Absent" phenomenon**: Base fraction 1/81 = 0.012345679... (digit 8 is missing from the cycle)
 3. **Prime-Golden connection**: 68 = 4 × 17, where 17 is the fractal anchor (φ¹⁷ ≈ F₁₇ = 1597)
 4. **Uniqueness**: Only 68/81 satisfies all arithmetic, vibrational, and spectral constraints
 

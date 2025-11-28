@@ -32,15 +32,17 @@ print(str(result)[2:50])
 # Output: 839506172839506172839506172839506172839506
 ```
 
-### 1.2 El "9 Ausente" - La Base Aritmética
+### 1.2 El Dígito 8 Ausente - La Base Aritmética
 
 La base de esta aritmética proviene de 1/81:
 
 $$\frac{1}{81} = \frac{1}{9^2} = \frac{1}{3^4} = 0.\overline{012345679}$$
 
-Esta es la famosa expansión donde el **dígito 9 está ausente**, derivada de la serie geométrica:
+Esta es la famosa expansión donde el **dígito 8 está ausente** del ciclo. (Nota: históricamente se conoce como "el 9 ausente" por la apariencia visual de la secuencia, pero el dígito que realmente falta en el patrón cíclico es el 8.)
 
-$$\frac{1}{81} = \sum_{n=0}^{\infty} \frac{n}{10^{n+1}} \cdot \text{(corrección de acarreo)}$$
+La derivación proviene de la serie geométrica:
+
+$$\frac{1}{81} = \sum_{n=0}^{\infty} \frac{n}{10^{n+1}} \cdot \text{(con corrección de acarreo)}$$
 
 #### Múltiplos de 1/81 y sus Patrones Periódicos:
 

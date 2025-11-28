@@ -129,9 +129,12 @@ def calcular_conexion_aurea() -> Dict:
     }
 
 
-def verificar_9_ausente() -> Dict:
+def verificar_8_ausente() -> Dict:
     """
-    Verifica el fenómeno del '9 ausente' en 1/81.
+    Verifica el fenómeno del dígito ausente en 1/81.
+
+    En la secuencia 0.012345679..., el dígito 8 está ausente.
+    (Comúnmente llamado "9 ausente" por la apariencia visual de la secuencia.)
 
     Returns:
         dict: Análisis del patrón 0.012345679...
@@ -204,22 +207,22 @@ def demo_completa():
 
     print()
 
-    # 2. El fenómeno del "9 ausente"
+    # 2. El fenómeno del dígito 8 ausente (comúnmente llamado "9 ausente")
     print("─" * 70)
-    print("2. EL FENÓMENO DEL '9 AUSENTE' (1/81)")
+    print("2. EL DÍGITO 8 AUSENTE EN 1/81 (conocido como '9 ausente')")
     print("─" * 70)
 
-    nueve_ausente = verificar_9_ausente()
+    ocho_ausente = verificar_8_ausente()
 
-    print(f"   Fracción: {nueve_ausente['fraccion']}")
-    print(f"   Expansión: {nueve_ausente['expansion']}")
-    print(f"   Patrón base: {nueve_ausente['patron_base']}")
-    print(f"   Longitud del patrón: {nueve_ausente['longitud_patron']} dígitos")
-    print(f"   Dígitos presentes: {nueve_ausente['digitos_presentes']}")
-    print(f"   Dígito ausente: {nueve_ausente['digito_ausente']}")
+    print(f"   Fracción: {ocho_ausente['fraccion']}")
+    print(f"   Expansión: {ocho_ausente['expansion']}")
+    print(f"   Patrón base: {ocho_ausente['patron_base']}")
+    print(f"   Longitud del patrón: {ocho_ausente['longitud_patron']} dígitos")
+    print(f"   Dígitos presentes: {ocho_ausente['digitos_presentes']}")
+    print(f"   Dígito ausente: {ocho_ausente['digito_ausente']}")
     print()
 
-    if nueve_ausente['es_patron_correcto']:
+    if ocho_ausente['es_patron_correcto']:
         print("   ✅ Patrón 012345679 verificado (el 8 está 'ausente' del ciclo base)")
     print()
 
