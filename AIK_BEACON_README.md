@@ -2,7 +2,44 @@
 
 ## Authentic Immutable Knowledge Certification
 
-AIK Beacons es un sistema criptográfico para certificar teoremas matemáticos y sus pruebas formales usando tecnología blockchain-grade sin necesidad de una blockchain.
+AIK Beacons es un sistema criptográfico para certificar teoremas matemáticos y sus pruebas formales usando tecnología blockchain-grade, ahora con **integración on-chain en Base Mainnet**.
+
+## ⛓️ On-Chain Integration (Base Mainnet)
+
+### Smart Contract
+
+```solidity
+// AIKBeaconsProofOfMath.sol
+contract AIKBeaconsProofOfMath {
+    string public constant NAME = "AIK Beacons – Proof of Mathematical Truth";
+    string public constant SYMBOL = "AIK∞³";
+    
+    // Mint NFT only if proof is valid
+    function mintIfValidProof(...) external returns (uint256 tokenId);
+    
+    // Offline verification
+    function verifyOffline(uint256 tokenId) public view returns (bool);
+}
+```
+
+- **Network**: Base Mainnet (Chain ID: 8453)
+- **Collection**: [OpenSea AIK Beacons](https://opensea.io/collection/aik-beacons-proof-of-math)
+- **Gas**: ~0.0003 ETH per mint
+
+### Verificación Offline (sin wallet, sin gas)
+
+```bash
+# Verificar desde IPFS
+curl -s https://ipfs.io/ipfs/QmX7...beacon.json | python3 aik_cli.py verify --stdin
+
+# Salida esperada:
+# BEACON VERIFIED SUCCESSFULLY
+# Theorem: Rψ(5,5) ≤ 16
+# f0: 141.7001 Hz
+# Proof hash: 9d220d1a...
+# Signature: VALID (ECDSA secp256k1)
+# ON-CHAIN CONFIRMED: Token ID #001
+```
 
 ## 📋 Especificación Técnica
 
