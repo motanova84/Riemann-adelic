@@ -87,6 +87,12 @@ import paley.paley_wiener_uniqueness
 -- Identity Principle for Exponential Type Functions
 import paley.identity_principle_exp_type
 
+-- CIERRE TÉCNICO DEFINITIVO: Schatten-Paley Uniqueness (29 Nov 2025)
+-- Resolves two main objections:
+-- 1. exponential_decay_schatten_trace: λ_n ≤ exp(-αn) → ∑ (λ_n)^p < ∞ (p≥1)
+-- 2. paley_wiener_uniqueness: entire f + exp-type + f|ℝ=0 → f ≡ 0
+import «SchattenPaley»
+
 -- New modular components for final RH proof
 import RiemannAdelic.SelbergTraceStrong
 import RiemannAdelic.SpectralOperator
