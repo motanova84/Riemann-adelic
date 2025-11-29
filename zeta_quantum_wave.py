@@ -45,7 +45,6 @@ QCAL Integration:
 import numpy as np
 from scipy.linalg import eigh
 from scipy.integrate import simpson
-from scipy.special import gamma
 from typing import Tuple, Dict, List, Any, Optional
 from dataclasses import dataclass
 import json
@@ -55,7 +54,14 @@ from pathlib import Path
 # QCAL Constants
 QCAL_BASE_FREQUENCY = 141.7001  # Hz
 QCAL_COHERENCE = 244.36
-ZETA_PRIME_HALF = -0.207886  # ζ'(1/2) value
+
+# Validation thresholds
+RMS_ERROR_THRESHOLD = 0.1  # < 10% RMS error for spectral fidelity
+ORTHONORMALITY_THRESHOLD = 1e-6  # Numerical orthonormality (integration limited)
+
+# Physical parameters
+FREQUENCY_SCALE_FACTOR = 10  # Scale factor for visible frequency range
+ANHARMONIC_CORRECTION = 0.001  # Small anharmonic correction for realistic quantum system
 
 
 @dataclass
@@ -157,7 +163,8 @@ def zeta_gaussian_approximation(x: np.ndarray, sigma: float = 2.5) -> np.ndarray
     zeros = get_first_riemann_zeros(5)
     for i, gamma_n in enumerate(zeros):
         # Each zero contributes a frequency component
-        omega_n = gamma_n / 10  # Scaled to visible range
+        # FREQUENCY_SCALE_FACTOR scales to visible range
+        omega_n = gamma_n / FREQUENCY_SCALE_FACTOR
         amplitude = 1.0 / (i + 2)  # Decay amplitude
         zeta_real += amplitude * np.cos(omega_n * x) * envelope
 
@@ -203,9 +210,9 @@ def build_schrodinger_hamiltonian(
     # Harmonic oscillator potential: V(x) = ½ω²x²
     V = 0.5 * omega**2 * x**2
 
-    # Add small anharmonic correction for realistic quantum system
-    lambda_anharm = 0.001
-    V += lambda_anharm * x**4
+    # Add anharmonic correction for realistic quantum system
+    # ANHARMONIC_CORRECTION ensures confining potential at large |x|
+    V += ANHARMONIC_CORRECTION * x**4
 
     H += np.diag(V)
 
@@ -525,8 +532,8 @@ def validate_zeta_quantum_wave(
     # Validation criteria
     # The eigenvectors from eigh() are mathematically orthonormal by construction
     # The numerical integration check may show higher errors due to integration accuracy
-    rms_ok = rms_error < 0.1  # < 10% RMS (main fidelity criterion)
-    ortho_ok = orthonormality_error < 1e-6  # Numerical orthonormality (integration limited)
+    rms_ok = rms_error < RMS_ERROR_THRESHOLD
+    ortho_ok = orthonormality_error < ORTHONORMALITY_THRESHOLD
     all_passed = rms_ok and ortho_ok
 
     if verbose:
