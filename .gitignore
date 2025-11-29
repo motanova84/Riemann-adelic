@@ -188,3 +188,4 @@ validation_summary.txt
 notebooks/zeta_zeros_error_plot.png
 # Spectral RH generated images
 spectral_RH/*.png
+psi_plot.png
