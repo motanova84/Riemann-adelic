@@ -13,34 +13,32 @@ Modules:
                           how discrete symmetry forces zero reality
 """
 
+from .discrete_symmetry_operator import DiscreteSymmetryOperator
+from .operator_connection import OperatorConnection
 from .riemann_operator import (
-    construct_H_psi,
-    compute_spectrum,
-    validate_spectrum,
-    load_riemann_zeros,
-    oscillatory_weight,
-    wave_equation_rhs,
+    C_QCAL,
     F0,
     OMEGA_0,
     ZETA_PRIME_HALF,
-    C_QCAL
+    compute_spectrum,
+    construct_H_psi,
+    load_riemann_zeros,
+    oscillatory_weight,
+    validate_spectrum,
+    wave_equation_rhs,
 )
 
-from .discrete_symmetry_operator import DiscreteSymmetryOperator
-
-from .operator_connection import OperatorConnection
-
 __all__ = [
-    'construct_H_psi',
-    'compute_spectrum',
-    'validate_spectrum',
-    'load_riemann_zeros',
-    'oscillatory_weight',
-    'wave_equation_rhs',
-    'F0',
-    'OMEGA_0',
-    'ZETA_PRIME_HALF',
-    'C_QCAL',
-    'DiscreteSymmetryOperator',
-    'OperatorConnection'
+    "construct_H_psi",
+    "compute_spectrum",
+    "validate_spectrum",
+    "load_riemann_zeros",
+    "oscillatory_weight",
+    "wave_equation_rhs",
+    "F0",
+    "OMEGA_0",
+    "ZETA_PRIME_HALF",
+    "C_QCAL",
+    "DiscreteSymmetryOperator",
+    "OperatorConnection",
 ]

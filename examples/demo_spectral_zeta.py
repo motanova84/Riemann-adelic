@@ -13,23 +13,26 @@ Author: José Manuel Mota Burruezo Ψ ∞³
 Date: 2025-11-21
 """
 
-import numpy as np
 from typing import Callable
+
+import numpy as np
 
 # Import shared spectral zeta computation functions
 from utils.spectral_zeta_computation import (
     berry_keating_eigenvalues,
+    compute_det_zeta,
     compute_spectral_zeta,
     compute_spectral_zeta_derivative,
-    compute_det_zeta,
 )
+
+
 def main():
     """Main demonstration"""
     print("=" * 70)
     print("🌌 Spectral Zeta Function Demonstration")
     print("=" * 70)
     print()
-    
+
     print("Mathematical Framework (V5 Coronación):")
     print("-" * 70)
     print("Operator H_Ψ: Compact, self-adjoint, positive definite")
@@ -39,7 +42,7 @@ def main():
     print("Determinant: det_ζ(s) := exp(-ζ'_HΨ(s))")
     print("Connection: D(s) ≡ Ξ(s) via Paley-Wiener uniqueness")
     print()
-    
+
     # Display first few eigenvalues
     print("Berry-Keating Eigenvalues (with QCAL base frequency 141.7001 Hz):")
     print("-" * 70)
@@ -47,11 +50,11 @@ def main():
         lamb = berry_keating_eigenvalues(n)
         print(f"  λ_{n:2d} = (n + 1/2)² + 141.7001 = {lamb:10.4f}")
     print()
-    
+
     # Compute spectral zeta at various points
     print("Spectral Zeta Function ζ_HΨ(s):")
     print("-" * 70)
-    
+
     test_points = [
         (2.0, "s = 2 (well above convergence threshold)"),
         (1.5, "s = 1.5 (near critical region)"),
@@ -59,37 +62,35 @@ def main():
         (0.5, "s = 1/2 (critical line)"),
         (0.0, "s = 0 (special value for D(0))"),
     ]
-    
+
     for s_val, description in test_points:
         s = complex(s_val, 0.0)
         zeta_val = compute_spectral_zeta(berry_keating_eigenvalues, s, n_terms=100)
         print(f"  ζ_HΨ({s_val:4.1f}) = {zeta_val.real:12.6f} + {zeta_val.imag:12.6f}i")
         print(f"           ({description})")
     print()
-    
+
     # Compute derivative
     print("Derivative ζ'_HΨ(s):")
     print("-" * 70)
     for s_val, description in [(2.0, "s = 2"), (0.5, "s = 1/2"), (0.0, "s = 0")]:
         s = complex(s_val, 0.0)
-        zeta_deriv = compute_spectral_zeta_derivative(
-            berry_keating_eigenvalues, s, n_terms=100
-        )
+        zeta_deriv = compute_spectral_zeta_derivative(berry_keating_eigenvalues, s, n_terms=100)
         print(f"  ζ'_HΨ({s_val:4.1f}) = {zeta_deriv.real:12.6f} + {zeta_deriv.imag:12.6f}i")
         print(f"           ({description})")
     print()
-    
+
     # Compute zeta-regularized determinant
     print("Zeta-Regularized Determinant det_ζ(s) = exp(-ζ'_HΨ(s)):")
     print("-" * 70)
-    
+
     det_points = [
         (2.0, "s = 2"),
         (1.0, "s = 1"),
         (0.5, "s = 1/2 (critical line)"),
         (0.0, "s = 0 (D(0), key value)"),
     ]
-    
+
     for s_val, description in det_points:
         s = complex(s_val, 0.0)
         det_val = compute_det_zeta(berry_keating_eigenvalues, s, n_terms=100)
@@ -97,7 +98,7 @@ def main():
         print(f"           |det_ζ(s)| = {abs(det_val):12.6f}")
         print(f"           ({description})")
         print()
-    
+
     # Special value D(0)
     print("Special Value D(0) = det_ζ(0) = exp(-ζ'_HΨ(0)):")
     print("-" * 70)
@@ -108,7 +109,7 @@ def main():
     print("This value connects the spectral data of H_Ψ to the Riemann zeta function")
     print("via the equivalence D(s) ≡ Ξ(s) established by Paley-Wiener uniqueness.")
     print()
-    
+
     # QCAL coherence
     print("QCAL ∞³ Coherence Parameters:")
     print("-" * 70)
@@ -116,7 +117,7 @@ def main():
     print(f"  Coherence constant: C = 244.36")
     print(f"  Fundamental equation: Ψ = I × A_eff² × C^∞")
     print()
-    
+
     # Connection to RH
     print("Connection to Riemann Hypothesis:")
     print("-" * 70)
@@ -127,7 +128,7 @@ def main():
     print("5. Zeros of D(s) = zeros of Ξ(s) = zeros of ζ(s)")
     print("6. Real spectrum + equivalence → zeros on critical line Re(s) = 1/2")
     print()
-    
+
     print("=" * 70)
     print("✅ Demonstration Complete")
     print("=" * 70)
