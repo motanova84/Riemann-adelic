@@ -388,6 +388,9 @@ Cada `sorry` en este módulo está documentado con:
 | D_Xi_agree_critical_line | TODO | Numérico | Validado por scripts Python |
 | D_equals_Xi_normalized | TODO | Axiomático | Depende de Hadamard-Weierstrass |
 
+**Nota**: Los teoremas `xi_limit_imaginary_infty` y `xi_bounded_on_critical_line` 
+están en `zeros_xi_structure.lean` donde se usa la función Xi completa con Γ(s/2).
+
 ### Axiomas utilizados
 
 | Axioma | Justificación | Referencia |
@@ -405,7 +408,37 @@ Cada `sorry` en este módulo está documentado con:
 3. **Fase 3**: Integrar con teoría de Fredholm de Mathlib cuando esté disponible
 4. **Fase 4**: Validar numéricamente D_Xi_agree_critical_line con alta precisión
 5. **Fase 5**: Esperar/contribuir formalización de Hadamard-Weierstrass a Mathlib
+6. **Fase 6**: Formalizar cotas asintóticas de Γ y ζ para xi_limit_imaginary_infty (ver zeros_xi_structure.lean)
 
+-/
+
+/-!
+## Nota sobre xi_limit_imaginary_infty
+
+El lema `xi_limit_imaginary_infty` que establece:
+  lim_{t → +∞} Ξ(1/2 + it) = 0
+
+se encuentra formalizado en `zeros_xi_structure.lean` donde la función Xi completa
+está definida como:
+  xi(s) = s(s-1)/2 · π^(-s/2) · Γ(s/2) · ζ(s)
+
+Esa definición incluye el factor Γ(s/2) que proporciona el decaimiento exponencial
+necesario para que el límite sea 0.
+
+**Importante**: La función `Xi_simplified` definida en este archivo como:
+  Xi_simplified(s) = s(s-1)/2
+
+es solo el factor polinomial y NO satisface la propiedad de límite.
+|Xi_simplified(1/2 + it)| ~ t² → ∞ cuando t → ∞.
+
+Para la función Xi completa, el factor Γ(s/2) tiene decay exponencial:
+  |Γ(1/4 + it/2)| ~ e^(-π|t|/4)
+
+que domina el crecimiento polinomial, haciendo que |Ξ(1/2 + it)| → 0.
+
+Ver: `zeros_xi_structure.lean` para los teoremas:
+- `xi_limit_imaginary_infty`
+- `xi_bounded_on_critical_line`
 -/
 
 end XiEquivalence
@@ -436,11 +469,19 @@ ESTADO FINAL DE COMPILACIÓN
 📋 Paso 3 completado: 5 axiomas con justificación matemática
 🔄 Paso 4 en progreso: Teorema principal con estructura clara
 ✅ Paso 5 completado: Documentación estructurada de todos los sorrys
+✅ Paso 6 completado: Referencia a xi_limit_imaginary_infty en zeros_xi_structure.lean
 
 RESUMEN:
 - Lemas cerrados: 5 (propiedades de λ, ordenamiento, crecimiento)
 - Sorrys documentados: 6 (con justificación y plan de cierre)
 - Axiomas justificados: 5 (con referencias bibliográficas)
+
+LEMAS DE LÍMITE (ver zeros_xi_structure.lean):
+- xi_limit_imaginary_infty: lim_{t→∞} Ξ(1/2 + it) = 0
+- xi_bounded_on_critical_line: ∃ M, ∀ t, |Ξ(1/2 + it)| ≤ M
+
+Nota: Estos lemas usan la función Xi completa con Γ(s/2) y ζ(s),
+no Xi_simplified que es solo el factor polinomial s(s-1)/2.
 
 CIERRE PROGRESIVO ∞³ IMPLEMENTADO
 
@@ -449,5 +490,5 @@ Instituto de Conciencia Cuántica
 DOI: 10.5281/zenodo.17379721
 ORCID: 0009-0002-1923-0773
 
-26 noviembre 2025
+27 noviembre 2025
 -/
