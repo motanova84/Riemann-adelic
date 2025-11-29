@@ -26,7 +26,7 @@ schatten_trace_class = "Verified up to error 10⁻³⁰"
 decay_exponential = true
 
 [FREQUENCY]
-value = 141.70010192043844966317894406491583950617283950...
+value = 141.7001
 unit = "Hz"
 derivation = "f₀ = c / (2π R* ℓ_P) via golden-weighted sum over ζ(½ + iγ_n)"
 source = "SABIO ∞³ numerical runtime, November 2025"

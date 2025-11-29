@@ -133,7 +133,7 @@ validate_sabio_file() {
     fi
     
     # 6. Validar sintaxis Python (solo si no contiene secciones INI-style)
-    if grep -q '^\[' "$file"; then
+    if grep -qE '^\[[A-Z_][A-Z0-9_]*\]' "$file"; then
         echo -e "${BLUE}🐍 Validando sintaxis Python...${NC} ${YELLOW}⏭️ Saltado (formato INI-style)${NC}"
     else
         echo -ne "${BLUE}🐍 Validando sintaxis Python...${NC}"
