@@ -87,13 +87,7 @@ def main() -> None:
     # Number of zeros to validate
     N_zeros = 50
 
-    zeros_real, errors, max_error = validate_zeta_zeros(
-        n_zeros=N_zeros,
-        precision=50,
-        save_plot=True,
-        plot_filename="zeta_zeros_error_plot.png",
-        verbose=True
-    )
+    zeros_real, errors, max_error = validate_zeta_zeros(n_zeros=N_zeros)
 
     # Show the plot
     plt.show()
