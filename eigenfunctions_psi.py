@@ -65,7 +65,12 @@ def get_riemann_zeros(n: int = 10) -> np.ndarray:
     Return the first n known non-trivial zeros γₙ of ζ(1/2 + iγₙ).
 
     These are the imaginary parts of the known Riemann zeta zeros
-    on the critical line. Values from Odlyzko's high-precision computations.
+    on the critical line.
+
+    Reference:
+        Odlyzko, A. M. (1992). The 10^20-th zero of the Riemann zeta
+        function and 175 million of its neighbors.
+        http://www.dtc.umn.edu/~odlyzko/zeta_tables/
 
     Args:
         n: Number of zeros to return (max 20 for this implementation)
@@ -223,10 +228,10 @@ def compute_eigenfunctions(
     dx = x[1] - x[0]
 
     # Compute smallest algebraic eigenvalues and eigenvectors
-    # 'SA' = Smallest Algebraic (most negative first)
+    # 'SA' = Smallest Algebraic (values closest to -∞, returned unsorted)
     eigenvalues, eigenvectors = eigsh(H.tocsr(), k=num_states, which='SA')
 
-    # Sort by eigenvalue (should already be sorted, but ensure it)
+    # Sort by eigenvalue in ascending order (most negative first)
     idx = np.argsort(eigenvalues)
     eigenvalues = eigenvalues[idx]
     eigenvectors = eigenvectors[:, idx]
