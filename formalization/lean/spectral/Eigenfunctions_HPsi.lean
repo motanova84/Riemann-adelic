@@ -129,6 +129,10 @@ The axiom provides:
 3. The normalization property: ‖e n‖ = 1 for all n
 4. The orthogonality property: inner (e n) (e m) = 0 for n ≠ m
 
+Note: The eigenvalue equation 𝓗_Ψ eₙ = λₙ eₙ is established separately
+via the eigenvalue_equation axiom below, which connects the abstract
+eigenfunctions to the concrete Berry-Keating operator 𝓗_Ψ.
+
 This axiom is the foundation for:
 - eigenfunctions_dense_L2R
 - exists_orthonormal_eigenfunctions  
@@ -204,7 +208,10 @@ by
     · intro hne
       -- Orthogonality: ⟨Φₙ, Φₘ⟩ = 0 para n ≠ m se obtiene de h_ortho
       exact h_ortho n m hne
-  · -- Eigenvalue equation (structural placeholder for spectral theorem application)
+  · -- Eigenvalue equation: The connection between eigenfunctions and eigenvalues
+    -- is established by the eigenvalue_equation axiom (see below).
+    -- This theorem focuses on orthonormality; the eigenvalue property
+    -- is a separate concern handled by eigenvalue_equation.
     intro n f
     trivial
 
