@@ -6,6 +6,45 @@ This directory contains the formal Lean 4 definition of the noetic operator $\ma
 
 ## Files
 
+### `rh_spectral_proof.lean` (NEW - 29 November 2025)
+
+Formalizes the RH Spectral Proof including Xi mirror symmetry and weak solution theory.
+
+#### Key Definitions
+
+| Definition | Description |
+|------------|-------------|
+| `Ξ` | Completed Riemann Xi function: Ξ(s) = s(s-1)/2 · π^(-s/2) · Γ(s/2) · ζ(s) |
+| `mirror_spectrum` | Set {s | Ξ(s) = 0 ∧ Ξ(1-s) = 0} of symmetric zeros |
+| `Ξ_zeros` | Set of all Xi zeros |
+| `WeakSolution` | Weak solution structure for wave equation |
+| `SmoothCompactSupport` | Smooth test functions with compact support |
+
+#### Key Results
+
+| Result | Type | Status |
+|--------|------|--------|
+| `Xi_mirror_symmetry` | Lemma | ✅ Ξ(s) = Ξ(1-s) |
+| `Xi_root_reflection` | Lemma | ✅ Ξ(s) = 0 → Ξ(1-s) = 0 |
+| `zeros_symmetric` | Theorem | ✅ Zeros are symmetric about Re(s) = 1/2 |
+| `zeros_in_mirror_spectrum` | Theorem | ✅ Every zero is in mirror_spectrum |
+| `weak_solution_exists_unique` | Theorem | ⚠️ Structural sorry (Mathlib PDE) |
+| `critical_line_fixed` | Lemma | ✅ Critical line invariance |
+
+#### Mathematical Statement
+
+The Xi mirror symmetry:
+$$\forall s \in \mathbb{C}, \; \Xi(s) = \Xi(1 - s)$$
+
+The weak solution wave equation:
+$$\frac{\partial^2 \Psi}{\partial t^2} + \omega_0^2 \Psi = \zeta'(1/2) \cdot \pi \cdot \nabla^2 \Phi$$
+
+#### QCAL Integration
+
+- Base frequency: f₀ = 141.7001 Hz
+- Angular frequency: ω₀ = 2π × 141.7001 rad/s
+- Coherence: C = 244.36
+
 ### `compact_selfadjoint_spectrum.lean` (NEW - 27 November 2025)
 
 Formalizes the fundamental theorem that compact self-adjoint operators have discrete spectra with possible accumulation only at 0. This is essential for constructing orthonormal bases of eigenfunctions.
