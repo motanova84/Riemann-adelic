@@ -85,10 +85,17 @@ class FredholmPrecisionValidator:
         self.verbose = verbose
         mp.mp.dps = precision
         
-        # Load zeros data
-        self.zeros = self._load_zeros()
+        # Load zeros data (will be loaded with max_zeros in run_validation)
+        self._zeros_cache: Optional[List[mp.mpf]] = None
         
-    def _load_zeros(self, max_zeros: int = 10000) -> List[mp.mpf]:
+    @property
+    def zeros(self) -> List[mp.mpf]:
+        """Get cached zeros, loading with default if not yet loaded."""
+        if self._zeros_cache is None:
+            self._zeros_cache = self._load_zeros(max_zeros=10000)
+        return self._zeros_cache
+    
+    def _load_zeros(self, max_zeros: int) -> List[mp.mpf]:
         """Load Riemann zeta zeros from data files."""
         zeros = []
         
@@ -271,6 +278,9 @@ class FredholmPrecisionValidator:
         Returns:
             FredholmTestResult with all validation metrics
         """
+        # Reload zeros with specified max_zeros for this validation run
+        self._zeros_cache = self._load_zeros(max_zeros=max_zeros)
+        
         if self.verbose:
             print(f"\n{'='*60}")
             print("FREDHOLM DETERMINANT PRECISION TEST")
@@ -280,7 +290,7 @@ class FredholmPrecisionValidator:
             print(f"Available zeros: {len(self.zeros)}")
         
         # Test 1: Trace convergence
-        n_terms = min(max_zeros, len(self.zeros))
+        n_terms = len(self.zeros)
         trace, convergence = self.compute_fredholm_trace(n_terms)
         
         if self.verbose:
