@@ -108,8 +108,14 @@ class TestG4Analysis:
         # Expected gap ≈ 2.56 based on the problem statement
         assert 2.5 < spectral_gap < 2.7, f"Spectral gap should be ~2.56, got {spectral_gap}"
 
-    def test_not_strictly_ramanujan(self) -> None:
-        """Test that G₄ is not strictly Ramanujan (λ₁ > 2)."""
+    def test_satisfies_ramanujan_bound(self) -> None:
+        """Test that G₄ satisfies Ramanujan bound for non-trivial eigenvalues."""
         eigenvalues, _ = analyze_G4_spectrum()
-        ramanujan_bound = 2  # 2*sqrt(d-1) for d=2
-        assert eigenvalues[0] > ramanujan_bound, "G₄ should not be strictly Ramanujan"
+        # Ramanujan bound for max degree d=3: 2*sqrt(d-1) = 2*sqrt(2) ≈ 2.83
+        ramanujan_bound = 2 * np.sqrt(2)
+        # Non-trivial eigenvalues are all except λ₁
+        max_nontrivial = max(abs(eigenvalues[1]), abs(eigenvalues[-1]))
+        assert max_nontrivial <= ramanujan_bound, (
+            f"Non-trivial eigenvalues should satisfy Ramanujan bound: "
+            f"|λ| = {max_nontrivial:.4f} ≤ {ramanujan_bound:.4f}"
+        )

@@ -88,9 +88,14 @@ def plot_G4_spectrum(
         output_file: Path to save the plot.
         show: Whether to display the plot interactively.
     """
+    # Ramanujan bound for max degree d=3: 2*sqrt(d-1) = 2*sqrt(2) ≈ 2.83
+    ramanujan_bound = 2 * np.sqrt(2)
+
     plt.figure(figsize=(6, 4))
     plt.plot(eigenvalues, 'o-', label='Eigenvalues')
-    plt.axhline(2, color='red', linestyle='--', label=r'Ramanujan bound ($2\sqrt{d-1}$)')
+    plt.axhline(ramanujan_bound, color='red', linestyle='--',
+                label=rf'Ramanujan bound $2\sqrt{{d-1}} \approx {ramanujan_bound:.2f}$')
+    plt.axhline(-ramanujan_bound, color='red', linestyle='--')
     plt.title(r"Spectrum of $G_4$ (4×4 Expander)")
     plt.xlabel("Index")
     plt.ylabel("Eigenvalue")
@@ -119,8 +124,12 @@ def main() -> None:
     # Ramanujan bound for d-regular graph: 2*sqrt(d-1)
     # For this graph, vertices have degrees 2, 3, 3, 2 (not regular)
     # Using d=3 (maximum degree) gives bound = 2*sqrt(2) ≈ 2.83
-    ramanujan_bound = 2  # Simplified for d-1=1 (minimum degree case)
-    print(f"\nRamanujan bound (2√(d-1) for d=2): {ramanujan_bound:.2f}")
+    max_degree = 3
+    ramanujan_bound = 2 * np.sqrt(max_degree - 1)  # ≈ 2.83
+    print(f"\nRamanujan bound (2√(d-1) for d={max_degree}): {ramanujan_bound:.4f}")
+
+    # Non-trivial eigenvalues (excluding λ₁)
+    max_nontrivial = max(abs(eigenvalues[1]), abs(eigenvalues[-1]))
 
     # Interpretation
     print("\n" + "-" * 50)
@@ -128,10 +137,11 @@ def main() -> None:
     print("-" * 50)
     print(f"• λ₁ ≈ {eigenvalues[0]:.4f}, λ₂ ≈ {eigenvalues[1]:.4f}")
     print(f"• Gap ≈ {spectral_gap:.2f} → Good expansion properties")
-    if eigenvalues[0] > ramanujan_bound:
-        print(f"• Not strictly Ramanujan (λ₁ = {eigenvalues[0]:.4f} > {ramanujan_bound})")
+    print(f"• Max non-trivial eigenvalue: |λ| = {max_nontrivial:.4f}")
+    if max_nontrivial <= ramanujan_bound:
+        print(f"• Satisfies Ramanujan bound (|λ| = {max_nontrivial:.4f} ≤ {ramanujan_bound:.4f})")
     else:
-        print(f"• Satisfies Ramanujan bound (λ₁ = {eigenvalues[0]:.4f} ≤ {ramanujan_bound})")
+        print(f"• Not strictly Ramanujan (|λ| = {max_nontrivial:.4f} > {ramanujan_bound:.4f})")
     print("• Usable as a small gadget for expander constructions")
 
     # Generate plot
