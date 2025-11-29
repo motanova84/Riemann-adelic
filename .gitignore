@@ -188,3 +188,8 @@ validation_summary.txt
 notebooks/zeta_zeros_error_plot.png
 # Spectral RH generated images
 spectral_RH/*.png
+
+# Wave function validation generated images
+eigenfunctions_riemann.png
+potential_energy_levels.png
+node_structure.png
