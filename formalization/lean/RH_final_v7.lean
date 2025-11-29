@@ -29,16 +29,26 @@ import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.NumberTheory.ZetaFunction
 import Mathlib.MeasureTheory.Integral.Bochner
 
--- Local imports (structure)
--- import «D_explicit»
--- import «D_functional_equation»
--- import «KernelPositivity»
--- import «GammaTrivialExclusion»
--- import «Hadamard»
--- import «zeta_trace_identity»
--- import «paley_wiener_uniqueness»
--- import «positivity_implies_critical_line»
--- import «spectral_conditions»
+/-!
+## Local Module Dependencies
+
+The following modules provide the foundational theorems for this proof.
+They are part of the same formalization project and should be compiled
+as part of a unified Lake build:
+
+- `D_explicit.lean`: Theorem 1 (D(s) entire)
+- `D_functional_equation.lean`: Theorem 2 (Functional equation)
+- `KernelPositivity.lean`: Theorems 3-4 (Self-adjoint operator, kernel positivity)
+- `GammaTrivialExclusion.lean`: Theorem 5 (Gamma exclusion)
+- `Hadamard.lean`: Theorem 8 (Hadamard symmetry)
+- `zeta_trace_identity.lean`: Theorem 9 (Trace identity)
+- `paley_wiener_uniqueness.lean`: Theorem 7 (Paley-Wiener uniqueness)
+- `positivity_implies_critical_line.lean`: Theorem 10 (Critical line localization)
+- `spectral_conditions.lean`: Spectral conditions typeclass
+
+Note: To compile as a unified package, configure lakefile.toml to include
+all these modules in the library structure.
+-/
 
 noncomputable section
 open Complex Filter Topology MeasureTheory

@@ -265,8 +265,11 @@ def verify_zero_on_critical_line(t: float, precision: float = PRECISION_THRESHOL
         error = float(abs(zeta_value))
         return error < precision, error
     except Exception as e:
-        # If computation fails, do asymptotic check
-        return True, 0.0  # Assume valid for known zeros
+        # If computation fails, mark as uncertain and report the exception
+        # For known zeros from literature, computational failures are rare
+        # and likely due to numerical overflow at large t values
+        print(f"      ⚠️ Computation failed for t={t}: {e}")
+        return False, float('inf')  # Mark as failed, error is infinite
 
 
 def verify_functional_equation(t: float) -> Tuple[bool, float]:
