@@ -339,6 +339,9 @@ class TestDocumentation:
         for name, alternatives in required_sections:
             found = any(alt.lower() in content_lower for alt in alternatives)
             assert found, f"Missing section: {name} (alternatives: {alternatives})"
+
+
+"""
 Test suite for Hilbert-Pólya Formal Closure components.
 
 This module tests the documentation, Lean formalization, and Streamlit
