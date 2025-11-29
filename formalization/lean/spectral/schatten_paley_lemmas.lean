@@ -90,7 +90,7 @@ def IsPositiveSequence (λ : ℕ → ℝ) : Prop :=
 /-- The geometric series ∑ₙ rⁿ is summable when |r| < 1. -/
 lemma summable_geometric_of_lt_one {r : ℝ} (hr_pos : r > 0) (hr_lt : r < 1) :
     Summable (fun n : ℕ => r ^ n) := by
-  exact summable_geometric_of_lt_one (le_of_lt hr_pos) hr_lt
+  exact _root_.summable_geometric_of_lt_one (le_of_lt hr_pos) hr_lt
 
 /-- Exponential of negative value is less than 1. -/
 lemma exp_neg_lt_one {x : ℝ} (hx : x > 0) : Real.exp (-x) < 1 := by
@@ -178,9 +178,10 @@ corollary exponential_decay_hilbert_schmidt
     (h_exp : HasExponentialDecay λ) :
     Summable (fun n => (λ n) ^ 2) := by
   have h := exponential_decay_schatten_trace hλ_pos h_exp 2 (by norm_num : (1 : ℝ) ≤ 2)
-  convert h
+  convert h using 1
   ext n
-  rw [sq, ← Real.rpow_natCast, Nat.cast_two]
+  simp only [sq]
+  norm_cast
 
 /-!
 ## Part 2: Paley-Wiener Uniqueness for Real Zeros
@@ -233,9 +234,13 @@ theorem paley_wiener_uniqueness_real
   -- This is the identity theorem for analytic functions
   -- An entire function vanishing on ℝ (which has accumulation points) is zero
   ext z
-  -- Use classical identity principle for analytic functions
-  -- The real line ℝ ⊂ ℂ has accumulation points (every point is one)
-  -- An analytic function vanishing on a set with accumulation point is identically zero
+  -- TODO: Complete this proof using the identity_principle_entire axiom below.
+  -- The proof strategy is:
+  -- 1. Take S = {z : ℂ | z.im = 0} (the real line embedded in ℂ)
+  -- 2. Show S has accumulation points in ℂ
+  -- 3. h_real_zero shows f vanishes on S
+  -- 4. Apply identity_principle_entire to conclude f = 0
+  -- Currently left as sorry pending mathlib identity theorem formalization.
   sorry  -- Requires analytic continuation/identity theorem from complex analysis
 
 /-- **AXIOM: Identity Principle for Entire Functions**
@@ -354,9 +359,15 @@ theorem spectral_equals_xi
     rw [h_agree_line t]
     ring
 
-  -- By a variant of Paley-Wiener uniqueness for vertical lines,
-  -- h vanishing on Re(s) = 1/2 with exponential growth implies h = 0
-  -- This requires the functional equation / reflection symmetry typically
+  -- TODO: Complete this proof using the identity principle for vertical lines.
+  -- The proof requires:
+  -- 1. A variant of identity_principle_entire for vertical lines
+  -- 2. The set {1/2 + i*t : t ∈ ℝ} has accumulation points
+  -- 3. h vanishing on this set implies h = 0
+  -- Alternatively, this can be proven using:
+  -- - Functional equation symmetry: if both functions satisfy f(1-s) = f(s)
+  -- - Agreement on Re(s) = 1/2 combined with symmetry implies global agreement
+  -- Currently left as sorry pending full complex analysis formalization.
   sorry -- Full proof requires identity theorem applied to vertical line
 
 end SchattenPaleyLemmas
