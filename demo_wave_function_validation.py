@@ -191,6 +191,8 @@ def plot_node_structure(x: np.ndarray, psi: np.ndarray,
         psi: Eigenfunctions matrix
         save_path: Path to save the figure
     """
+    from wave_function_validation import count_nodes
+    
     n_plot = min(6, psi.shape[1])
     
     fig, axes = plt.subplots(2, 3, figsize=(15, 10))
@@ -204,17 +206,36 @@ def plot_node_structure(x: np.ndarray, psi: np.ndarray,
         ax.plot(x, psi_n, 'b-', linewidth=2)
         ax.axhline(y=0, color='gray', linestyle='-', linewidth=0.5)
         
-        # Mark nodes (zero crossings)
-        sign_changes = np.where(np.diff(np.sign(psi_n)) != 0)[0]
-        for idx in sign_changes:
-            # Interpolate to find exact node position
-            x_node = x[idx] - psi_n[idx] * (x[idx+1] - x[idx]) / (psi_n[idx+1] - psi_n[idx])
-            ax.axvline(x=x_node, color='red', linestyle='--', linewidth=1, alpha=0.7)
-            ax.scatter([x_node], [0], color='red', s=50, zorder=5)
+        # Find active region (where |ψ| > 1% of max)
+        abs_psi = np.abs(psi_n)
+        threshold = 0.01 * np.max(abs_psi)
+        active = abs_psi > threshold
+        active_indices = np.where(active)[0]
+        
+        if len(active_indices) >= 2:
+            start_idx = active_indices[0]
+            end_idx = active_indices[-1]
+            
+            # Only count sign changes in active region
+            psi_active = psi_n[start_idx:end_idx + 1]
+            x_active = x[start_idx:end_idx + 1]
+            
+            sign_changes = np.where(np.diff(np.sign(psi_active)) != 0)[0]
+            
+            for idx in sign_changes:
+                # Interpolate to find exact node position
+                if psi_active[idx+1] - psi_active[idx] != 0:
+                    x_node = x_active[idx] - psi_active[idx] * (x_active[idx+1] - x_active[idx]) / (psi_active[idx+1] - psi_active[idx])
+                    ax.axvline(x=x_node, color='red', linestyle='--', linewidth=1, alpha=0.7)
+                    ax.scatter([x_node], [0], color='red', s=50, zorder=5)
+            
+            node_count = len(sign_changes)
+        else:
+            node_count = 0
         
         ax.set_xlabel('$x$', fontsize=12)
         ax.set_ylabel(f'$\\psi_{n}(x)$', fontsize=12)
-        ax.set_title(f'$\\psi_{n}$: {len(sign_changes)} nodes (expected: {n})',
+        ax.set_title(f'$\\psi_{n}$: {node_count} nodes (expected: {n})',
                      fontsize=12, fontweight='bold')
         ax.grid(True, alpha=0.3)
         ax.set_xlim([-15, 15])
