@@ -341,20 +341,6 @@ class TestDocumentation:
             assert found, f"Missing section: {name} (alternatives: {alternatives})"
 
 
-class TestHilbertPolyaFormalClosure:
-    """
-    Test suite for Hilbert-Pólya Formal Closure components.
-
-    This class tests the documentation, Lean formalization, and Streamlit
-    visualization components of the Hilbert-Pólya conjecture closure.
-
-    Author: José Manuel Mota Burruezo
-    Date: November 28, 2025
-    Version: 1.0
-    """
-    pass
-
-
 # Path constants for TestDocumentation
 REPO_ROOT_DOC = Path(__file__).parent.parent
 DOCS_DIR = REPO_ROOT_DOC / "docs" / "operators"
