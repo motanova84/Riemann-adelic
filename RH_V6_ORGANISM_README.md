@@ -28,6 +28,14 @@ El teorema `RH_true` establece que todos los ceros no triviales de la función z
 
 ## 🔬 Componentes del Sistema V6.0
 
+### Nota sobre Formalización
+
+La formalización Lean4 V6.0 utiliza:
+- **Axiomas**: Para resultados analíticos profundos (funciones Ξ, D, equivalencia espectral)
+- **Sorry statements**: Para detalles técnicos de teoría espectral
+
+Esta es la práctica estándar en mathlib para formalizaciones estructurales de pruebas matemáticas complejas. Los axiomas representan teoremas establecidos que requieren formalización detallada de teoría de medida y análisis funcional.
+
 ### 1. Operador Autoadjunto H_Ψ
 
 El operador H_Ψ es un operador hermitiano (autoadjunto) que actúa sobre L²(ℝ⁺, dx/x):

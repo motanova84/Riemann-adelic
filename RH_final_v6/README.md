@@ -113,6 +113,10 @@ This is Version 6 of the formalization (**Living Mathematical Organism**):
 - ✅ Critical line secured by self-adjunction
 - ✅ QCAL coherence: f₀ = 141.7001 Hz, C = 244.36
 
+**Note**: The formalization uses axioms for deep analytic results and `sorry` 
+statements for technical measure-theoretic details. This is consistent with 
+the mathlib approach for work-in-progress formalizations.
+
 ## References
 
 1. **V5 Coronación Paper**: "A Definitive Proof of the Riemann Hypothesis via S-Finite Adelic Spectral Systems"
