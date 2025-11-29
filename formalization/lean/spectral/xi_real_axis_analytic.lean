@@ -119,9 +119,6 @@ axiom riemann_xi_analytic : ∀ s : ℂ, AnalyticAt ℂ riemann_xi s
 /-- The real numbers as a subset of ℂ -/
 def realSubset : Set ℂ := { s : ℂ | s.im = 0 }
 
-/-- Embedding of ℝ into ℂ -/
-def realEmbed (x : ℝ) : ℂ := (x : ℂ)
-
 /-!
 ## Main Theorem: ξ(s) is Analytic on ℝ
 
