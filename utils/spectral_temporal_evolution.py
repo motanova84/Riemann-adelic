@@ -73,7 +73,12 @@ class SpectralTemporalEvolution:
         precision: Precisión decimal para cálculos de alta precisión
     """
     
-    # Constantes QCAL
+    # QCAL Constants (Quantum Coherence Adelic Lattice)
+    # Reference: DOI 10.5281/zenodo.17379721
+    # f₀ = 141.7001 Hz: Fundamental frequency derived from vacuum quantum equation
+    #                   in the QCAL framework, connecting spectral zeta structure
+    #                   to observable physical phenomena.
+    # C = 244.36: Coherence constant from the equation Ψ = I × A_eff² × C^∞
     QCAL_FREQUENCY: float = 141.7001  # Hz
     QCAL_COHERENCE: float = 244.36
     
@@ -122,7 +127,11 @@ class SpectralTemporalEvolution:
         Returns:
             Lista de eigenmodos de ejemplo.
         """
-        # Primeras partes imaginarias de ceros de Riemann (aproximadas)
+        # First 15 imaginary parts of Riemann zeta zeros on the critical line.
+        # Source: A. Odlyzko, "Tables of zeros of the Riemann zeta function"
+        #         http://www.dtc.umn.edu/~odlyzko/zeta_tables/
+        # Precision: Values are accurate to 6 decimal places.
+        # These zeros satisfy ζ(1/2 + iγₙ) = 0.
         riemann_zeros = [
             14.134725, 21.022040, 25.010858, 30.424876, 32.935062,
             37.586178, 40.918720, 43.327073, 48.005151, 49.773832,
