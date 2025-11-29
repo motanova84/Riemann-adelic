@@ -154,7 +154,43 @@ theorem eigenfunctions_dense_L2R
 | `spectrum_HΨ_equals_zeros_Ξ` | Axiom | Spectral correspondence with Xi zeros |
 | `riemann_hypothesis_from_spectral` | Theorem | Proved from axioms |
 
-### `xi_mellin_representation.lean` 🆕
+### `Xi_mirror_symmetry.lean` 🆕 (29 November 2025)
+
+Formalizes the functional equation of the Xi function and the mirror spectrum property. This module proves that the completed Riemann zeta function satisfies Ξ(s) = Ξ(1−s) without sorry statements.
+
+#### Key Definitions
+
+| Definition | Description |
+|------------|-------------|
+| `Xi` | The completed Riemann Xi function: Ξ(s) = π^(-s/2) · Γ(s/2) · ζ(s) |
+| `mirror_spectrum` | Set of zeros that are symmetric: {s : Xi(s) = 0 ∧ Xi(1-s) = 0} |
+| `qcal_frequency` | QCAL base frequency (141.7001 Hz) |
+| `qcal_coherence` | QCAL coherence constant (244.36) |
+
+#### Key Results
+
+| Result | Type | Status |
+|--------|------|--------|
+| `Xi_mirror_symmetry` | Lemma | ✅ Proved (no sorry) - Main theorem Ξ(s) = Ξ(1−s) |
+| `Xi_root_reflection` | Lemma | ✅ Proved (no sorry) - If Xi(s) = 0 then Xi(1-s) = 0 |
+| `mirror_spectrum_reflects` | Lemma | ✅ Proved (no sorry) - Mirror spectrum property |
+| `Xi_zeros_eq_mirror_spectrum` | Lemma | ✅ Proved (no sorry) - Zeros equal mirror spectrum |
+| `zeros_symmetric_critical_line` | Lemma | ✅ Proved (no sorry) - Symmetry about Re(s) = 1/2 |
+| `critical_line_fixed` | Lemma | ✅ Proved (no sorry) - Critical line invariant |
+
+#### Mathematical Statement
+
+The functional equation of the completed zeta function:
+$$\Xi(s) = \Xi(1 - s)$$
+
+Implications:
+- If ρ is a zero of Ξ, then 1-ρ is also a zero
+- Zeros come in symmetric pairs about Re(s) = 1/2
+- The mirror spectrum equals the set of all zeros
+
+**References**: Riemann (1859), Titchmarsh (1986), DOI: 10.5281/zenodo.17379721
+
+### `xi_mellin_representation.lean`
 
 Formalizes the Mellin transform representation of Ξ(s) as:
 
