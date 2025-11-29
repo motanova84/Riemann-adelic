@@ -2,20 +2,20 @@ import Mathlib.Data.Real.Basic
 import Mathlib.Data.Nat.Basic
 import Mathlib.Algebra.BigOperators.Group.Finset
 import Mathlib.Tactic
--- Para gráficas espectrales, importar módulos locales si se dispone
+-- For spectral graphs, import local modules if available
 
 /-!
 # Lifting Gadgets for Circuit Lower Bounds
 
-Este módulo formaliza gadgets tipo *expander* que preservan cotas inferiores
-de complejidad en modelos de circuitos, siguiendo las ideas de Raz–McKenzie (1999).
+This module formalizes expander-type gadgets that preserve lower bounds on
+circuit complexity, following the ideas of Raz–McKenzie (1999).
 
-## Componentes principales
+## Main Components
 
-- `ExpanderGraph` y la propiedad de Ramanujan
-- Etiquetado pseudoaleatorio de vértices
-- Estructura de gadget y propiedad de lifting
-- Teoremas: validez del gadget explícito, preservación por composición
+- `ExpanderGraph` and the Ramanujan property
+- Pseudo-random labeling of vertices
+- Gadget structure and lifting property
+- Theorems: explicit gadget validity, preservation under composition
 
 ## References
 
@@ -26,7 +26,7 @@ de complejidad en modelos de circuitos, siguiendo las ideas de Raz–McKenzie (1
 
 namespace Lifting
 
--- Estructura de grafo expander
+-- Expander graph structure
 structure ExpanderGraph where
   vertices : Type
   edges : vertices → vertices → Prop
@@ -35,56 +35,57 @@ structure ExpanderGraph where
   Ramanujan_bound : ℝ
   is_regular : Prop
 
--- Propiedad Ramanujan: λ₂ ≤ 2√(d−1)
+-- Ramanujan property: λ₂ ≤ 2√(d−1)
 def is_ramanujan_expander (G : ExpanderGraph) : Prop :=
   G.spectral_gap ≥ G.Ramanujan_bound
 
--- Etiquetado pseudoaleatorio de los vértices
+-- Pseudo-random labeling of vertices
 structure PseudoRandomLabeling (G : ExpanderGraph) where
   label : G.vertices → ℕ
   discrepancy_bound : ℝ
   uniform : Prop  -- e.g., bounded discrepancy over subsets
 
--- Parámetros del gadget
+-- Gadget parameters
 structure GadgetParams where
   graph : ExpanderGraph
   labels : PseudoRandomLabeling graph
   size : ℕ
 
--- Propiedad abstracta de lifting
+-- Abstract lifting property
 def lifting_property (gadget : GadgetParams) : Prop :=
-  ∀ (_f : ℕ → Bool), -- función booleana sobre entradas
+  ∀ (_f : ℕ → Bool), -- Boolean function on inputs
     ∃ (C : ℕ), C ≥ gadget.size →
-      -- Complejidad de circuito de f ∘ gadget ≥ polinomial(C)
-      True  -- aquí colocarás tu formalismo de complejidad si tienes modelos
+      -- Circuit complexity of f ∘ gadget ≥ polynomial(C)
+      True  -- placeholder for actual complexity formalism
 
 ------------------------------------------------------------
--- TEORÍA: El gadget explícito conserva las propiedades deseadas
+-- THEORY: The explicit gadget preserves desired properties
 ------------------------------------------------------------
 
--- Teorema: Validez general del lifting si cumple condiciones espectrales
+-- Theorem: General validity of lifting under spectral conditions
 theorem gadget_lift_validity
   (params : GadgetParams)
   (_h_ramanujan : is_ramanujan_expander params.graph)
   (_h_disc : params.labels.discrepancy_bound ≤ 0.1)
   (_h_uniform : params.labels.uniform)
   : lifting_property params := by
-  -- Estrategia:
-  -- 1. Usar estructura del grafo para simular comunicación restringida
-  -- 2. Aplicar el bound de discrepancia para asegurar uniformidad
-  -- 3. Traducir el protocolo a circuitos con tamaño ≥ polinomial
+  -- Strategy:
+  -- 1. Use graph structure to simulate restricted communication
+  -- 2. Apply discrepancy bound to ensure uniformity
+  -- 3. Translate protocol to circuits with size ≥ polynomial
   intro _f
   use params.size
   intro _
   trivial
 
--- Construcción concreta del gadget (placeholder)
+-- Concrete gadget construction (placeholder for LPS graph)
 noncomputable def construct_explicit_gadget (n : ℕ) : GadgetParams :=
-  -- Aquí puedes construir un grafo Ramanujan real (ej. Lubotzky–Phillips–Sarnak)
+  -- TODO: Construct real Ramanujan graph (e.g., Lubotzky–Phillips–Sarnak)
+  -- This placeholder uses trivial edges; actual LPS uses Cayley graphs
   {
     graph := {
       vertices := Fin n,
-      edges := fun _ _ => True, -- placeholder
+      edges := fun _ _ => True, -- placeholder for actual LPS edge relation
       degree := 3,
       spectral_gap := 2.0,
       Ramanujan_bound := 1.9,
@@ -98,24 +99,24 @@ noncomputable def construct_explicit_gadget (n : ℕ) : GadgetParams :=
     size := n
   }
 
--- Teorema: El gadget explícito cumple las condiciones necesarias
+-- Theorem: The explicit gadget satisfies the necessary conditions
 theorem explicit_gadget_valid (n : ℕ) (_hn : n ≥ 10) :
   let gadget := construct_explicit_gadget n
   is_ramanujan_expander gadget.graph ∧
   gadget.labels.discrepancy_bound ≤ 0.1 ∧
   gadget.labels.uniform := by
   simp only [construct_explicit_gadget, is_ramanujan_expander]
-  exact And.intro (by norm_num) (And.intro (by norm_num) True.intro)
+  exact ⟨by norm_num, by norm_num, True.intro⟩
 
--- Teorema: Composición de gadgets también preserva lifting
+-- Theorem: Composition of gadgets also preserves lifting
 theorem lifting_composition
   (g₁ g₂ : GadgetParams)
   (h₁ : lifting_property g₁)
   (_h₂ : lifting_property g₂) :
   ∃ g₃ : GadgetParams, lifting_property g₃ := by
-  -- Definir g₃ como composición estructurada de g₁ ∘ g₂
-  -- Argumentar que si ambos preservan complejidad, su composición también
-  use g₁  -- placeholder, usar composición real
+  -- Define g₃ as structured composition of g₁ ∘ g₂
+  -- Argue that if both preserve complexity, their composition does too
+  use g₁  -- placeholder, use actual composition
   exact h₁
 
 end Lifting

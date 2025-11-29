@@ -69,11 +69,13 @@ theorem gadget_lift_validity
   trivial
 
 -- Construction of explicit gadget (Lubotzky-Phillips-Sarnak style placeholder)
+-- NOTE: The edge relation is a placeholder. Actual LPS construction uses
+-- Cayley graphs over PSL₂(ℤ/pℤ) with specific spectral properties.
 noncomputable def construct_explicit_gadget (n : ℕ) : GadgetParams :=
   {
     graph := {
       vertices := Fin n,
-      edges := fun _ _ => True,
+      edges := fun _ _ => True,  -- placeholder for actual LPS edge relation
       degree := 3,
       spectral_gap := 2.0,
       Ramanujan_bound := 1.9,
@@ -94,7 +96,7 @@ theorem explicit_gadget_valid (n : ℕ) (_hn : n ≥ 10) :
     gadget.labels.discrepancy_bound ≤ 0.1 ∧
     gadget.labels.uniform := by
   simp only [construct_explicit_gadget, is_ramanujan_expander]
-  exact And.intro (by norm_num) (And.intro (by norm_num) True.intro)
+  exact ⟨by norm_num, by norm_num, True.intro⟩
 
 -- Composition preserves lifting
 theorem lifting_composition
