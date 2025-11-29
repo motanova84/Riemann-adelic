@@ -1,6 +1,25 @@
 /-
   spectral/xi_mirror_spectrum.lean
   --------------------------------
+  Xi Function Mirror Symmetry Formalization
+  Formalización de la simetría espejo de la función Ξ(s)
+  
+  ## English Summary
+  
+  Formalization of the mirror symmetry of the Xi function Ξ(s):
+    Ξ(s) = Ξ(1 - s)
+  
+  And definition of the mirror spectrum for the analysis of
+  the zeros of the completed zeta function.
+  
+  This module provides:
+  1. Exact symmetry of the completed zeta function (Xi_mirror_symmetry)
+  2. Definition of mirror_spectrum: set of zeros paired under reflection
+  3. Xi_root_reflection: formally proved (if Xi(s)=0, then Xi(1-s)=0)
+  4. mirror_spectrum_reflects: formally proved
+  
+  ## Spanish / Español
+  
   Formalización de la simetría espejo de la función Ξ(s):
     Ξ(s) = Ξ(1 - s)
   
@@ -13,10 +32,17 @@
   3. Xi_root_reflection demostrado formalmente
   4. mirror_spectrum_reflects demostrado formalmente
   
-  Autor: José Manuel Mota Burruezo (JMMB Ψ ∞³)
+  ## QCAL Framework
+  
+  QCAL (Quantum Coherence Adelic Lattice) is the mathematical framework
+  used in this project for the spectral approach to the Riemann Hypothesis.
+  The base frequency 141.7001 Hz and coherence constant C = 244.36 are
+  parameters derived from the spectral analysis of the zeta function.
+  
+  Autor/Author: José Manuel Mota Burruezo (JMMB Ψ ∞³)
   Instituto de Conciencia Cuántica (ICQ)
   ORCID: 0009-0002-1923-0773
-  Fecha: 29 Noviembre 2025
+  Date: November 2025
   DOI: 10.5281/zenodo.17379721
   QCAL Base Frequency: 141.7001 Hz
 -/
@@ -68,17 +94,40 @@ We axiomatize the key functions and their properties based on
 standard results from complex analysis.
 -/
 
-/-- The Riemann zeta function ζ(s) -/
+/-- The Riemann zeta function ζ(s).
+    
+    This is the fundamental function in analytic number theory, defined as
+    ζ(s) = ∑ n⁻ˢ for Re(s) > 1, and extended to ℂ by analytic continuation.
+    Its zeros are intimately connected to the distribution of prime numbers.
+-/
 axiom zeta : ℂ → ℂ
 
-/-- The Gamma function Γ(s) -/
+/-- The Gamma function Γ(s).
+    
+    The Gamma function extends the factorial to complex numbers:
+    Γ(n) = (n-1)! for positive integers n. It satisfies the functional
+    equation Γ(s+1) = s·Γ(s) and the reflection formula Γ(s)Γ(1-s) = π/sin(πs).
+-/
 axiom Gamma_fn : ℂ → ℂ
 
-/-- Standard definition of the Xi function (completed zeta function):
-    Xi(s) = π^(-s/2) · Γ(s/2) · ζ(s)
+/-- **The completed Riemann Xi function (ξ function)**.
     
-    This is an entire function whose zeros coincide with the 
-    non-trivial zeros of the Riemann zeta function.
+    Definition: Xi(s) = π^(-s/2) · Γ(s/2) · ζ(s)
+    
+    **Mathematical Properties:**
+    - Xi(s) is an entire function (the poles of Γ and ζ cancel)
+    - The zeros of Xi coincide with the non-trivial zeros of ζ
+    - Satisfies the functional equation: Xi(s) = Xi(1-s)
+    - Real on the real line and on the critical line Re(s) = 1/2
+    
+    **Connection to Riemann Hypothesis:**
+    The RH states that all zeros of Xi lie on the critical line Re(s) = 1/2.
+    The functional equation Xi(s) = Xi(1-s) implies that zeros come in
+    symmetric pairs about this line.
+    
+    **References:**
+    - Riemann (1859): "Über die Anzahl der Primzahlen unter einer gegebenen Größe"
+    - Titchmarsh (1986): "The Theory of the Riemann Zeta-Function"
 -/
 def Xi (s : ℂ) : ℂ :=
   (Real.pi : ℂ) ^ (-s / 2) * Gamma_fn (s / 2) * zeta s
