@@ -107,7 +107,7 @@ def reconstruct_potential_marchenko(
     Args:
         gamma_n: Array of Riemann zeros γₙ
         x_grid: Position grid for reconstruction
-        regularization: Regularization parameter (default: 0.01)
+        regularization: Regularization parameter controlling smoothness (default: 0.01)
 
     Returns:
         V: Reconstructed potential V(x) on the grid
@@ -119,12 +119,12 @@ def reconstruct_potential_marchenko(
     V = np.zeros(n_points)
 
     # Width parameter for localization (related to zero spacing)
-    # Note: sigma is computed but not currently used - kept for future enhancements
+    # Uses regularization to control smoothness of potential reconstruction
     if n_zeros > 1:
         mean_spacing = np.mean(np.diff(gamma_n))
-        _ = regularization * mean_spacing  # Placeholder for future use
+        width_scale = regularization * mean_spacing
     else:
-        _ = regularization  # Placeholder for future use
+        width_scale = regularization
 
     # Construct potential from spectral data
     # V(x) = Σₙ Aₙ · sech²((x - xₙ)/wₙ)
@@ -132,7 +132,8 @@ def reconstruct_potential_marchenko(
     for n, gamma in enumerate(gamma_n):
         # Map γ to position scale
         x_n = np.log(gamma + 1) if gamma > 0 else 0
-        w_n = 1.0 / (1 + n * 0.1)  # Width decreases with n
+        # Width decreases with n, modulated by regularization
+        w_n = (1.0 + width_scale) / (1 + n * 0.1)
 
         # Amplitude from γₙ²
         A_n = -gamma**2 / (n_zeros * 10)
@@ -183,14 +184,10 @@ def construct_orthonormal_eigenfunctions(
     import math
 
     n_points = len(x_grid)
-    # Grid spacing (kept for documentation and potential future use)
-    _ = x_grid[1] - x_grid[0]
 
-    # Width parameter: choose alpha so that the basis is well-resolved on the grid
-    # For numerical stability, the Gaussian decay should fit within the grid
-    # L is kept for documentation of the domain half-width
-    _ = (x_grid[-1] - x_grid[0]) / 2
-    alpha = 1.0  # Standard scaling for Hermite functions
+    # Width parameter: alpha = 1.0 is the standard scaling for Hermite functions
+    # This provides optimal numerical stability and orthonormality
+    alpha = 1.0
 
     # Initialize eigenfunction matrix
     psi = np.zeros((n_points, n_states))
@@ -780,7 +777,7 @@ def demo_convergence(
             print(f"{n_modes:<10} {errors['rms_error']:<15.3e} {errors['max_error']:<15.3e}")
 
     print()
-    print("✓ Convergence ultrarrápida demostrada")
+    print("✓ Convergence ultrarápida demostrada")
     print("=" * 70)
 
     return results
