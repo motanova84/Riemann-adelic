@@ -416,7 +416,7 @@ def accelerated_prime_sum(primes, f, prime_limit=100):
             total += log_p * f(k * log_p)
     return total
 
-def zero_sum_limited(f, filename, max_zeros, lim_u=5):
+def zero_sum_limited(f, filename, max_zeros, lim_u=5, progress_chunks=None):
     """Compute zero sum using only first max_zeros from file."""
     total = mp.mpf('0')
     count = 0

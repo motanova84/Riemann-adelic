@@ -249,6 +249,170 @@ def test_self_adjointness_referenced():
         "Self-adjointness axiom not referenced"
 
 
+# New tests for H_xi_operator and H_xi_eigenbasis_exists
+
+OPERATORS_DIR = Path(__file__).resolve().parent.parent / "formalization" / "lean" / "operators"
+
+
+def test_hermitian_xi_operator_file_exists():
+    """Test that hermitian_xi_operator.lean exists."""
+    file_path = OPERATORS_DIR / "hermitian_xi_operator.lean"
+    assert file_path.exists(), f"hermitian_xi_operator.lean not found: {file_path}"
+
+
+def test_h_xi_operator_definition():
+    """Test that H_xi_operator is defined in hermitian_xi_operator.lean."""
+    file_path = OPERATORS_DIR / "hermitian_xi_operator.lean"
+    content = file_path.read_text(encoding="utf-8")
+    
+    # Check for H_xi_operator axiom
+    assert "axiom H_xi_operator" in content, \
+        "H_xi_operator axiom not found in hermitian_xi_operator.lean"
+
+
+def test_h_xi_eigenbasis_exists_axiom():
+    """Test that H_xi_eigenbasis_exists axiom is defined."""
+    file_path = OPERATORS_DIR / "hermitian_xi_operator.lean"
+    content = file_path.read_text(encoding="utf-8")
+    
+    # Check for H_xi_eigenbasis_exists axiom
+    assert "axiom H_xi_eigenbasis_exists" in content, \
+        "H_xi_eigenbasis_exists axiom not found in hermitian_xi_operator.lean"
+
+
+def test_h_xi_eigenbasis_structure():
+    """Test that H_xi_eigenbasis_exists has correct structure."""
+    file_path = OPERATORS_DIR / "hermitian_xi_operator.lean"
+    content = file_path.read_text(encoding="utf-8")
+    
+    # Check for eigenfunctions e : ℕ → HΨ
+    assert "e : ℕ → HΨ" in content, \
+        "Eigenfunction family declaration not found"
+    
+    # Check for eigenvalues λ : ℕ → ℝ
+    assert "λ_ : ℕ → ℝ" in content, \
+        "Eigenvalue family declaration not found"
+    
+    # Check for orthonormality condition
+    assert "Orthonormal ℂ e" in content, \
+        "Orthonormality condition not found in axiom"
+
+
+def test_h_xi_eigenfunction_definition():
+    """Test that xi_eigenfunction is defined."""
+    file_path = OPERATORS_DIR / "hermitian_xi_operator.lean"
+    content = file_path.read_text(encoding="utf-8")
+    
+    # Check for xi_eigenfunction definition
+    assert "def xi_eigenfunction" in content, \
+        "xi_eigenfunction definition not found"
+
+
+def test_h_xi_eigenvalue_definition():
+    """Test that xi_eigenvalue is defined."""
+    file_path = OPERATORS_DIR / "hermitian_xi_operator.lean"
+    content = file_path.read_text(encoding="utf-8")
+    
+    # Check for xi_eigenvalue definition
+    assert "def xi_eigenvalue" in content, \
+        "xi_eigenvalue definition not found"
+
+
+def test_h_xi_operator_self_adjoint_axiom():
+    """Test that H_xi_operator_self_adjoint axiom is defined."""
+    file_path = OPERATORS_DIR / "hermitian_xi_operator.lean"
+    content = file_path.read_text(encoding="utf-8")
+    
+    # Check for self-adjoint axiom
+    assert "axiom H_xi_operator_self_adjoint" in content, \
+        "H_xi_operator_self_adjoint axiom not found"
+
+
+def test_h_xi_eigenfunctions_orthonormal_theorem():
+    """Test that xi_eigenfunctions_orthonormal theorem is defined."""
+    file_path = OPERATORS_DIR / "hermitian_xi_operator.lean"
+    content = file_path.read_text(encoding="utf-8")
+    
+    # Check for orthonormality theorem
+    assert "theorem xi_eigenfunctions_orthonormal" in content, \
+        "xi_eigenfunctions_orthonormal theorem not found"
+
+
+def test_h_xi_eigenvalue_equation_theorem():
+    """Test that xi_eigenvalue_equation theorem is defined."""
+    file_path = OPERATORS_DIR / "hermitian_xi_operator.lean"
+    content = file_path.read_text(encoding="utf-8")
+    
+    # Check for eigenvalue equation theorem
+    assert "theorem xi_eigenvalue_equation" in content, \
+        "xi_eigenvalue_equation theorem not found"
+
+
+def test_h_xi_spectrum_equals_zeta_zeros_axiom():
+    """Test that spectrum_equals_zeta_zeros axiom is defined."""
+    file_path = OPERATORS_DIR / "hermitian_xi_operator.lean"
+    content = file_path.read_text(encoding="utf-8")
+    
+    # Check for spectrum equals zeta zeros axiom
+    assert "axiom spectrum_equals_zeta_zeros" in content, \
+        "spectrum_equals_zeta_zeros axiom not found"
+
+
+def test_h_xi_justification_comment():
+    """Test that the justification comment is present."""
+    file_path = OPERATORS_DIR / "hermitian_xi_operator.lean"
+    content = file_path.read_text(encoding="utf-8")
+    
+    # Check for the justification from the problem statement
+    assert "Cualquier operador autoadjunto y compacto" in content, \
+        "Technical justification not found"
+    assert "base ortonormal de eigenfunciones" in content, \
+        "Orthonormal eigenbasis justification not found"
+
+
+def test_h_xi_qcal_integration():
+    """Test that QCAL constants are present in hermitian_xi_operator.lean."""
+    file_path = OPERATORS_DIR / "hermitian_xi_operator.lean"
+    content = file_path.read_text(encoding="utf-8")
+    
+    # QCAL base frequency
+    assert "141.7001" in content, "QCAL base frequency not found"
+    
+    # QCAL coherence constant
+    assert "244.36" in content, "QCAL coherence constant not found"
+
+
+def test_eigenfunctions_hpsi_h_xi_operator_alias():
+    """Test that Eigenfunctions_HPsi.lean contains H_xi_operator alias."""
+    file_path = LEAN_DIR / "Eigenfunctions_HPsi.lean"
+    content = file_path.read_text(encoding="utf-8")
+    
+    # Check for H_xi_operator alias
+    assert "def H_xi_operator" in content, \
+        "H_xi_operator alias not found in Eigenfunctions_HPsi.lean"
+
+
+def test_eigenfunctions_hpsi_h_xi_eigenbasis_exists():
+    """Test that Eigenfunctions_HPsi.lean contains H_xi_eigenbasis_exists axiom."""
+    file_path = LEAN_DIR / "Eigenfunctions_HPsi.lean"
+    content = file_path.read_text(encoding="utf-8")
+    
+    # Check for H_xi_eigenbasis_exists axiom
+    assert "axiom H_xi_eigenbasis_exists" in content, \
+        "H_xi_eigenbasis_exists axiom not found in Eigenfunctions_HPsi.lean"
+
+
+def test_hermitian_xi_operator_namespace():
+    """Test that hermitian_xi_operator.lean uses proper namespace."""
+    file_path = OPERATORS_DIR / "hermitian_xi_operator.lean"
+    content = file_path.read_text(encoding="utf-8")
+    
+    assert "namespace HermitianXiOperator" in content, \
+        "HermitianXiOperator namespace not found"
+    assert "end HermitianXiOperator" in content, \
+        "HermitianXiOperator namespace not properly closed"
+
+
 if __name__ == "__main__":
     # Run tests when script is executed directly
     pytest.main([__file__, "-v"])
