@@ -148,6 +148,10 @@ import spectral.eigenfunctions_dense_L2R
 -- Script 42/∞³: Compact Self-Adjoint Spectrum (NEW - 27 November 2025)
 -- Discrete spectrum with accumulation only at 0 for compact self-adjoint operators
 import spectral.compact_selfadjoint_spectrum
+-- NEW: Schatten-Paley Lemmas (29 November 2025)
+-- Eigenvalue exponential decay → Schatten class trace convergence
+-- Paley-Wiener uniqueness for entire functions with real zeros
+import spectral.schatten_paley_lemmas
 
 -- ⚠️ THEORETICAL FRAMEWORK (Not imported - doesn't compile)
 -- RiemannAdelic.PsiNSE_CompleteLemmas_WithInfrastructure
@@ -273,6 +277,11 @@ def main : IO Unit := do
   IO.println "    - spectrum_compact_selfadjoint_discrete: Non-zero spectral points isolated"
   IO.println "    - Applications to constructing orthonormal eigenbases for H_Ψ"
   IO.println "    - Essential for Hilbert-Pólya approach to Riemann zeros"
+  IO.println "  • NEW: Schatten-Paley Lemmas (29 November 2025)"
+  IO.println "    - spectral/schatten_paley_lemmas: Convergence and uniqueness lemmas"
+  IO.println "    - exponential_decay_schatten_trace: λₙ decay → Schatten class"
+  IO.println "    - paley_wiener_uniqueness_real: Entire vanishing on ℝ is zero"
+  IO.println "    - spectral_equals_xi: det_zeta = Ξ from critical line agreement"
   IO.println "  • NEW: Hpsi_selfadjoint (Part 31/∞³ - Self-adjoint operator H_Ψ)"
   IO.println "    - Dense domain D(H_Ψ)"
   IO.println "    - H_Ψ = H_Ψ† (self-adjoint axiom)"
