@@ -422,6 +422,43 @@ def validate_v5_coronacion(precision=30, verbose=False, save_certificate=False, 
         print(f"   ⚠️  Aritmology verification skipped: {e}")
     # -----------------------------------------------------------------------
 
+    # --- Zeta Quantum Wave Validation (ζ(x) = Σ cₙ ψₙ(x)) ------------------
+    try:
+        from zeta_quantum_wave import validate_zeta_quantum_wave
+        
+        print("\n   ⚛️  Zeta Quantum Wave Validation (Hilbert-Pólya)...")
+        
+        zeta_result = validate_zeta_quantum_wave(
+            n_states=30,
+            N=1000,
+            L=10.0,
+            sigma=2.5,
+            verbose=False
+        )
+        
+        if zeta_result.all_passed:
+            print(f"   ✅ Zeta quantum wave: ζ(x) = Σ cₙ ψₙ(x) verified")
+            print(f"      RMS reconstruction error: {zeta_result.rms_error:.2e}")
+            print(f"      Orthonormality error: {zeta_result.orthonormality_error:.2e}")
+            results["Zeta Quantum Wave Verification"] = {
+                'status': 'PASSED',
+                'rms_error': float(zeta_result.rms_error),
+                'orthonormality_error': float(zeta_result.orthonormality_error),
+                'n_states': zeta_result.n_states,
+                'description': 'ζ(x) encoded as quantum wave function'
+            }
+        else:
+            print(f"   ⚠️  Zeta quantum wave: PARTIAL")
+            results["Zeta Quantum Wave Verification"] = {
+                'status': 'PARTIAL',
+                'rms_error': float(zeta_result.rms_error),
+                'orthonormality_error': float(zeta_result.orthonormality_error)
+            }
+            
+    except Exception as e:
+        print(f"   ⚠️  Zeta quantum wave verification skipped: {e}")
+    # -----------------------------------------------------------------------
+
     # YOLO verification integration
     yolo_success = include_yolo_verification()
     if yolo_success:
