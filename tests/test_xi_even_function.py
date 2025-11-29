@@ -273,6 +273,10 @@ class TestXiEvenFunctionCompleteness:
         assert "by" in content, \
             "Lean 4 'by' tactic not found"
         
-        # Ensure no Lean 3 syntax
-        assert "begin" not in content and "end" not in content.split("by")[0], \
-            "Lean 3 'begin...end' syntax found - should use Lean 4"
+        # Check for Lean 4 theorem/lemma style (no 'begin...end' blocks)
+        # Note: 'end' alone is valid in Lean 4 for closing namespaces/sections
+        # We specifically check for Lean 3's 'begin...end' proof blocks
+        import re
+        begin_end_pattern = re.compile(r'\bbegin\b.*?\bend\b', re.DOTALL)
+        assert not begin_end_pattern.search(content), \
+            "Lean 3 'begin...end' proof block syntax found - should use Lean 4 'by' tactic"

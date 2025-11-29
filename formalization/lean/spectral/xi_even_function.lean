@@ -175,6 +175,12 @@ theorem xi_even : ∀ s : ℂ, riemann_xi (1 - s) = riemann_xi s := by
   --        = ξ(s)  [after applying functional equations]
   --
   -- This establishes the fundamental parity of ξ.
+  --
+  -- TODO: Complete formal proof when Mathlib provides:
+  --   1. Mathlib.Analysis.SpecialFunctions.Gamma.Reflection (Euler's reflection formula)
+  --   2. Mathlib.NumberTheory.ZetaFunction (full functional equation for riemannZeta)
+  --   3. Proper handling of Complex.cpow for branch cuts
+  -- See also: xi_symmetry_identity.lean for an alternative formulation
   sorry
 
 /-! ## 5. Corollaries of the Even Symmetry -/
