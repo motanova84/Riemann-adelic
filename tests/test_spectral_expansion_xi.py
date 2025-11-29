@@ -234,7 +234,8 @@ class TestSpectralExpansionPythonModule:
         # Final error should be very small (near machine precision)
         # For this test function (ground state of harmonic oscillator), 
         # the expansion should be exact after N=1 term
-        assert errors[-1] < 1e-10, f"Final error too large: {errors[-1]}"
+        from spectral_expansion_validation import CONVERGENCE_THRESHOLD
+        assert errors[-1] < CONVERGENCE_THRESHOLD, f"Final error too large: {errors[-1]}"
 
     def test_bessel_inequality(self):
         """Test Bessel inequality: Σ|cₙ|² ≤ ‖Ψ‖²."""
@@ -266,7 +267,7 @@ class TestSpectralExpansionPythonModule:
 
     def test_spectral_convergence(self):
         """Test that spectral partial sums converge to Ψ."""
-        from spectral_expansion_validation import SpectralExpansion
+        from spectral_expansion_validation import SpectralExpansion, CONVERGENCE_THRESHOLD
         
         expansion = SpectralExpansion(grid_size=400, domain=(-8.0, 8.0))
         _, eigenfunctions = expansion.generate_harmonic_oscillator_basis(50)
@@ -281,7 +282,8 @@ class TestSpectralExpansionPythonModule:
         # Check convergence (last error should be small)
         # For this test function, the expansion converges very quickly
         # as it's the ground state eigenfunction
-        assert errors[-1] < 1e-10, f"Spectral expansion did not converge: final error = {errors[-1]}"
+        assert errors[-1] < CONVERGENCE_THRESHOLD, \
+            f"Spectral expansion did not converge: final error = {errors[-1]}"
 
     def test_full_validation(self):
         """Test the full validation function."""

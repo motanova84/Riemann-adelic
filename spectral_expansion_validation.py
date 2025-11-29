@@ -42,6 +42,12 @@ import warnings
 QCAL_FREQUENCY: float = 141.7001  # Hz
 QCAL_COHERENCE: float = 244.36
 
+# Numerical validation constants
+CONVERGENCE_THRESHOLD: float = 1e-10  # Threshold for convergence check
+BESSEL_TOLERANCE_FACTOR: float = 1.001  # 0.1% tolerance for Bessel inequality
+ORTHONORMALITY_TOLERANCE: float = 1e-6  # Tolerance for orthonormality check
+PARSEVAL_TOLERANCE: float = 1e-4  # Tolerance for Parseval identity check
+
 
 class SpectralExpansion:
     """
@@ -188,7 +194,7 @@ class SpectralExpansion:
         return partial_sum
 
     def verify_orthonormality(
-        self, eigenfunctions: NDArray[np.float64], tolerance: float = 1e-6
+        self, eigenfunctions: NDArray[np.float64], tolerance: float = ORTHONORMALITY_TOLERANCE
     ) -> Tuple[bool, float]:
         """
         Verify that the eigenfunctions are orthonormal.
@@ -260,7 +266,7 @@ class SpectralExpansion:
         self,
         psi: NDArray[np.complex128],
         eigenfunctions: NDArray[np.float64],
-        tolerance: float = 1e-4,
+        tolerance: float = PARSEVAL_TOLERANCE,
     ) -> Tuple[bool, float, float]:
         """
         Verify Parseval's identity: ‖Ψ‖² = Σₙ |⟨Ψ, eₙ⟩|².
@@ -278,7 +284,7 @@ class SpectralExpansion:
         lhs_norm_sq = self.compute_norm(psi) ** 2
         rhs_sum_sq = float(np.sum(np.abs(coefficients) ** 2))
 
-        relative_error = abs(lhs_norm_sq - rhs_sum_sq) / max(lhs_norm_sq, 1e-10)
+        relative_error = abs(lhs_norm_sq - rhs_sum_sq) / max(lhs_norm_sq, CONVERGENCE_THRESHOLD)
         is_valid = relative_error < tolerance
 
         return is_valid, lhs_norm_sq, rhs_sum_sq
@@ -306,7 +312,7 @@ class SpectralExpansion:
         for n, c in enumerate(coefficients):
             cumulative_sum += abs(c) ** 2
             results.append((n + 1, cumulative_sum, norm_sq))
-            if cumulative_sum > norm_sq * 1.001:  # 0.1% tolerance
+            if cumulative_sum > norm_sq * BESSEL_TOLERANCE_FACTOR:
                 all_valid = False
 
         return all_valid, results
@@ -376,11 +382,11 @@ def validate_spectral_expansion_theorem() -> dict:
 
     # For this specific test function (ground state), convergence is immediate after N=1
     # The remaining error is machine precision noise
-    is_decreasing = errors[-1] < 1e-10  # Check final convergence instead of monotonicity
+    is_decreasing = errors[-1] < CONVERGENCE_THRESHOLD
     print(f"\n   Converged to machine precision: {is_decreasing}")
 
     # Final convergence check - should be near machine precision
-    converged = errors[-1] < 1e-10
+    converged = errors[-1] < CONVERGENCE_THRESHOLD
     print(f"\n   Spectral expansion converged: {converged}")
 
     print("\n" + "=" * 70)
