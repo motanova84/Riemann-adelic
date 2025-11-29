@@ -406,3 +406,48 @@ class TestEdgeCases:
         )
         
         assert beacon_generator.verify_beacon(beacon) is True
+
+
+class TestOnChainIntegration:
+    """Tests for on-chain integration functionality."""
+
+    def test_prepare_onchain_data(self, beacon_generator, sample_proof_file):
+        """Test preparation of on-chain data."""
+        beacon = beacon_generator.create_beacon(
+            theorem="Test Theorem",
+            proof_file=sample_proof_file,
+            doi="10.5281/zenodo.test"
+        )
+
+        ipfs_cid = "QmTestCID12345"
+        onchain_data = beacon_generator.prepare_onchain_data(beacon, ipfs_cid)
+
+        assert onchain_data["theorem"] == "Test Theorem"
+        assert onchain_data["beacon_cid"] == ipfs_cid
+        assert onchain_data["proof_cid"] == ipfs_cid
+        assert isinstance(onchain_data["beacon_hash"], bytes)
+        assert len(onchain_data["beacon_hash"]) == 32  # SHA3-256 = 32 bytes
+        assert isinstance(onchain_data["signature"], bytes)
+
+    def test_onchain_config_exists(self):
+        """Test that on-chain configuration is available."""
+        from aik_beacon import ONCHAIN_CONFIG
+
+        assert "network" in ONCHAIN_CONFIG
+        assert ONCHAIN_CONFIG["network"] == "Base Mainnet"
+        assert ONCHAIN_CONFIG["chain_id"] == 8453
+        assert ONCHAIN_CONFIG["symbol"] == "AIK∞³"
+        assert ONCHAIN_CONFIG["f0_millihertz"] == 141700100
+
+    def test_onchain_data_hash_format(self, beacon_generator, sample_proof_file):
+        """Test that the beacon hash in on-chain data is correct bytes."""
+        beacon = beacon_generator.create_beacon(
+            theorem="Hash Format Test",
+            proof_file=sample_proof_file,
+            doi="10.5281/zenodo.test"
+        )
+
+        onchain_data = beacon_generator.prepare_onchain_data(beacon, "QmTestCID")
+
+        # Verify the bytes hash matches the hex hash
+        assert onchain_data["beacon_hash"].hex() == beacon["hash"]

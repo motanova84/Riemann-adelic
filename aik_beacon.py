@@ -229,6 +229,37 @@ class AIKBeacon:
             "public_key": self.pk.to_string().hex()
         }
 
+    def prepare_onchain_data(self, beacon: Dict[str, Any], ipfs_cid: str) -> Dict[str, Any]:
+        """
+        Prepare beacon data for on-chain minting.
+
+        Args:
+            beacon: The beacon to prepare for on-chain
+            ipfs_cid: The IPFS CID where the beacon JSON is stored
+
+        Returns:
+            Dictionary with data ready for smart contract minting
+        """
+        return {
+            "theorem": beacon["data"]["theorem"],
+            "proof_cid": ipfs_cid,  # IPFS CID of proof file
+            "beacon_cid": ipfs_cid,  # IPFS CID of beacon JSON
+            "beacon_hash": bytes.fromhex(beacon["hash"]),
+            "signature": bytes.fromhex(beacon["signature"]),
+            "public_key": beacon["public_key"],
+        }
+
+
+# On-chain contract configuration
+ONCHAIN_CONFIG = {
+    "network": "Base Mainnet",
+    "chain_id": 8453,
+    "contract_name": "AIKBeaconsProofOfMath",
+    "symbol": "AIK∞³",
+    "f0_millihertz": 141700100,  # 141.7001 Hz in millihertz
+    "opensea_collection": "https://opensea.io/collection/aik-beacons-proof-of-math",
+}
+
 
 if __name__ == "__main__":
     # Ejemplo de uso: Generación de beacon para Rψ(5,5) ≤ 16
