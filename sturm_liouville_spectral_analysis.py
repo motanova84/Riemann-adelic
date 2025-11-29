@@ -54,7 +54,12 @@ from pathlib import Path
 # QCAL Constants
 QCAL_BASE_FREQUENCY = 141.7001  # Hz
 QCAL_COHERENCE = 244.36
-ZETA_PRIME_HALF = -0.207886  # ζ'(1/2) value
+ZETA_PRIME_HALF = -0.207886  # ζ'(1/2) value (used in wave equation formulation)
+
+# Numerical precision constants
+LOG_EPSILON = 1e-20  # Small epsilon to avoid log(0) in coefficient decay analysis
+PEAK_DETECTION_THRESHOLD = 0.01  # 1% of max power for detecting spectral peaks
+COINCIDENCE_EPSILON = 1e-10  # Small epsilon for frequency coincidence calculation
 
 
 def get_first_riemann_zeros(n: int = 20) -> np.ndarray:
@@ -326,7 +331,7 @@ def compute_spectral_amplitudes(eigenvectors: np.ndarray, x: np.ndarray,
     # Decay rate analysis: |cₙ|² ~ 1/n^α
     n_indices = np.arange(2, n_states + 1)  # Start from n=2
     log_n = np.log(n_indices)
-    log_c = np.log(np.abs(c_n_sq[1:]) + 1e-20)  # Avoid log(0)
+    log_c = np.log(np.abs(c_n_sq[1:]) + LOG_EPSILON)  # Add epsilon to avoid log(0)
     # Linear regression for decay exponent
     if len(log_n) > 1:
         slope, _ = np.polyfit(log_n, log_c, 1)
@@ -446,11 +451,10 @@ def compute_fourier_analysis(eigenvectors: np.ndarray, eigenvalues: np.ndarray,
     # Due to scaling, we find the dominant peak and check ratio to QCAL frequency
 
     peak_indices = []
-    threshold = 0.01  # 1% of max
     for i in range(1, len(power_spectrum) - 1):
         if (power_spectrum[i] > power_spectrum[i-1] and
             power_spectrum[i] > power_spectrum[i+1] and
-            power_spectrum[i] > threshold):
+            power_spectrum[i] > PEAK_DETECTION_THRESHOLD):
             peak_indices.append(i)
 
     peak_frequencies = positive_freqs[peak_indices]
@@ -496,8 +500,10 @@ def compute_fourier_analysis(eigenvectors: np.ndarray, eigenvalues: np.ndarray,
                 })
 
     # Compute coincidence with QCAL frequency
+    # Coincidence ratio measures how close the detected peak is to the QCAL constant
+    # Higher values indicate better match (perfect match → infinity)
     if qcal_peak_freq > 0:
-        coincidence = 1.0 / np.abs(1.0 - qcal_peak_freq / QCAL_BASE_FREQUENCY + 1e-10)
+        coincidence = 1.0 / np.abs(1.0 - qcal_peak_freq / QCAL_BASE_FREQUENCY + COINCIDENCE_EPSILON)
     else:
         coincidence = 0.0
 
