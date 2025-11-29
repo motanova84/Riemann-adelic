@@ -143,49 +143,26 @@ if __name__ == "__main__":
         print(f"❌ Verificación fallida para {jsonld_path}")
         register_verification(jsonld_path, proof_path, False)
         sys.exit(1)
-"""Hybrid universal kernel for QCAL coherence validation.
 
-This module formalises the triple-layer verifier described in the QCAL
-specification.  Each JSON-LD descriptor is interpreted as an element of the
-structure ``U = (L, S, F)`` composed of logical, semantic, and
-physical/informational components.  Validation succeeds if and only if all
-three layers hold for every descriptor supplied to the CLI.
 
-Layer responsibilities
-
-``L`` (logical)
-    Delegates proof checking to the declared kernel when possible (Lean,
-    Dedukti, …) and otherwise enforces structural safeguards on the proof
-    artefact.  The verification ensures that the referenced proof exists and
-    that an admissible checker can process it.
-
-``S`` (semantic)
-    Interprets ``sem:dependsOn`` as edges of a dependency graph and checks
-    that the induced ontology is consistent: identifiers follow the QCAL URN
-    scheme, dependencies do not self-reference, and the dependency graph is
-    acyclic.  This mirrors the RDF/GraphDB coherence model outlined in the
-    user instructions.
-
-``F`` (physical/informational)
-    Recomputes cryptographic hashes and resonance frequencies for each proof
-    so that informational invariants are preserved across commits.  The
-    frequency is a deterministic function of the hash and must lie within a
-    narrow tolerance band around the baseline 141.7001 Hz.
-
-The CLI aggregates these layer checks, prints a summary table, and exits with
-status code 1 if any descriptor fails the combined validation.
-"""
-
-from __future__ import annotations
+# =============================================================================
+# Advanced Universal Kernel for QCAL coherence validation
+# =============================================================================
+# Hybrid universal kernel that formalises the triple-layer verifier described
+# in the QCAL specification. Each JSON-LD descriptor is interpreted as an
+# element of the structure U = (L, S, F) composed of logical, semantic, and
+# physical/informational components.
+# =============================================================================
 
 import argparse
 import hashlib
-import json
 import shutil
 import subprocess
 from dataclasses import dataclass
-from pathlib import Path
-from typing import Dict, Iterable, Iterator, List, Mapping, MutableMapping, Optional, Sequence, Tuple
+from typing import (
+    Dict, Iterable, Iterator, List, Mapping, MutableMapping,
+    Optional, Sequence, Tuple
+)
 
 BASELINE_FREQUENCY = 141.7001
 FREQUENCY_TOLERANCE = 1e-4
@@ -634,7 +611,8 @@ def parse_args(argv: Optional[Sequence[str]] = None) -> argparse.Namespace:
     return parser.parse_args(argv)
 
 
-def main(argv: Optional[Sequence[str]] = None) -> int:
+def main_advanced(argv: Optional[Sequence[str]] = None) -> int:
+    """Advanced CLI entry point for QCAL validation."""
     args = parse_args(argv)
     try:
         results = run_validation(
@@ -660,7 +638,3 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
             f"{result.frequency:11.6f}  {result.computed_frequency:11.6f}  {result.declared_hash[:18]}…"
         )
     return 0
-
-
-if __name__ == "__main__":
-    raise SystemExit(main())
