@@ -38,6 +38,36 @@ except ImportError:
     NETWORKX_AVAILABLE = False
 
 
+# =============================================================================
+# G4 Graph Edge Weights Constants
+# =============================================================================
+# These weights are derived from spectral optimization to achieve the target
+# eigenvalues: λ₁ ≈ 2.5616, λ₂ ≈ 0, λ₃ ≈ -1.0, λ₄ ≈ -1.5616
+#
+# The graph structure forms a near-bipartite pattern with strong connections
+# between nodes {0,1} and {3}, and weak connections to node 2.
+
+# Target eigenvalue for λ₁ (largest eigenvalue / spectral radius)
+G4_LAMBDA1_TARGET = 2.5616
+
+# Target eigenvalue for λ₄ (smallest eigenvalue)
+G4_LAMBDA4_TARGET = -1.5616
+
+# Edge weight: Strong connection between nodes 0-1 (equal to |λ₄|)
+G4_EDGE_WEIGHT_01 = 1.5616
+
+# Edge weight: Weak connection to node 2
+G4_EDGE_WEIGHT_02 = 0.0314
+G4_EDGE_WEIGHT_12 = 0.0314
+
+# Edge weight: Medium connection to node 3
+G4_EDGE_WEIGHT_03 = 1.1295
+G4_EDGE_WEIGHT_13 = 1.1295
+
+# Edge weight: Weak connection between nodes 2-3
+G4_EDGE_WEIGHT_23 = 0.0907
+
+
 @dataclass
 class SpectralGraphResult:
     """
@@ -160,7 +190,7 @@ def compute_spectral_analysis(adjacency: np.ndarray) -> SpectralGraphResult:
     # This applies to both regular and irregular graphs
     is_expander = spectral_gap > 0
 
-    if is_regular and degree is not None and degree >= 1:
+    if is_regular and degree is not None and degree > 1:
         ramanujan_bound = 2 * np.sqrt(degree - 1)
 
         # Check Ramanujan property: all non-trivial eigenvalues ≤ 2√(d-1)
@@ -257,25 +287,12 @@ def construct_mini_ramanujan_g4() -> np.ndarray:
     Returns:
         np.ndarray: 4x4 weighted adjacency matrix
     """
-    # Optimized edge weights to achieve target eigenvalues
-    # Weights derived from spectral optimization:
-    # Target: λ₁ ≈ 2.5616, λ₂ ≈ 0, λ₃ ≈ -1.0, λ₄ ≈ -1.5616
-    #
-    # The graph structure forms a near-bipartite pattern with
-    # strong connections between nodes {0,1} and {3}, weak to node 2
-
-    w01 = 1.5616  # Strong edge between nodes 0-1
-    w02 = 0.0314  # Weak edge to node 2
-    w03 = 1.1295  # Medium edge to node 3
-    w12 = 0.0314  # Weak edge to node 2
-    w13 = 1.1295  # Medium edge to node 3
-    w23 = 0.0907  # Weak edge between 2-3
-
+    # Use named constants for edge weights
     adjacency = np.array([
-        [0.0,  w01,  w02, w03],
-        [w01,  0.0,  w12, w13],
-        [w02,  w12,  0.0, w23],
-        [w03,  w13,  w23, 0.0],
+        [0.0, G4_EDGE_WEIGHT_01, G4_EDGE_WEIGHT_02, G4_EDGE_WEIGHT_03],
+        [G4_EDGE_WEIGHT_01, 0.0, G4_EDGE_WEIGHT_12, G4_EDGE_WEIGHT_13],
+        [G4_EDGE_WEIGHT_02, G4_EDGE_WEIGHT_12, 0.0, G4_EDGE_WEIGHT_23],
+        [G4_EDGE_WEIGHT_03, G4_EDGE_WEIGHT_13, G4_EDGE_WEIGHT_23, 0.0],
     ], dtype=float)
 
     return adjacency
@@ -368,7 +385,7 @@ def validate_g4_properties() -> Tuple[bool, Dict[str, Any]]:
 
     Expected eigenvalues (from problem statement):
         λ₁ ≈ 2.5616
-        λ₂ ≈ 0 (≈ -2.3e-16, numerically zero)
+        λ₂ ≈ 0 (numerically zero, at machine precision)
         λ₃ ≈ -1.0000
         λ₄ ≈ -1.5616
 

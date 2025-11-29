@@ -94,7 +94,7 @@ class TestSpectralAnalysis:
     def test_standard_g4_is_ramanujan(self):
         """Test that standard G4 (4-cycle) is Ramanujan."""
         result = analyze_g4_graph()
-        assert result.is_ramanujan  # True or np.True_
+        assert result.is_ramanujan
 
     def test_mini_g4_eigenvalue_lambda1(self):
         """Test mini-Ramanujan G4 λ₁ ≈ 2.5616."""
@@ -124,7 +124,7 @@ class TestSpectralAnalysis:
     def test_mini_g4_is_expander(self):
         """Test that mini-Ramanujan G4 is a good expander."""
         result = analyze_mini_ramanujan_g4()
-        assert result.is_expander  # True or np.True_
+        assert result.is_expander
 
     def test_mini_g4_trace_zero(self):
         """Test that eigenvalue sum (trace) is approximately zero."""
@@ -139,7 +139,7 @@ class TestValidation:
     def test_validate_g4_properties_passes(self):
         """Test that validation passes for correctly constructed G4."""
         passed, details = validate_g4_properties()
-        assert passed  # True or np.True_
+        assert passed
 
     def test_validate_g4_all_checks(self):
         """Test that all individual validation checks pass."""
@@ -150,18 +150,18 @@ class TestValidation:
     def test_validate_g4_eigenvalue_count(self):
         """Test that validation confirms 4 eigenvalues."""
         passed, details = validate_g4_properties()
-        assert details["validations"]["has_four_eigenvalues"]  # True or np.True_
+        assert details["validations"]["has_four_eigenvalues"]
 
     def test_validate_g4_expander_property(self):
         """Test that validation confirms expander property."""
         passed, details = validate_g4_properties()
-        assert details["validations"]["is_good_expander"]  # True or np.True_
+        assert details["validations"]["is_good_expander"]
 
     def test_validate_g4_not_strict_ramanujan(self):
         """Test that validation confirms not strictly Ramanujan."""
         passed, details = validate_g4_properties()
         # The problem statement says λ₁ > 2, so not strictly Ramanujan
-        assert details["validations"]["not_strictly_ramanujan"]  # True or np.True_
+        assert details["validations"]["not_strictly_ramanujan"]
 
 
 class TestSpectralGraphResult:
