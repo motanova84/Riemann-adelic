@@ -26,9 +26,13 @@ print("Eigenvalues (sorted):", eigenvalues_sorted)
 print("Spectral gap Δ = λ₁ − λ₂ =", spectral_gap)
 
 # Plot spectrum
+# Ramanujan bound: 2√(d-1) where d is the degree of a regular graph.
+# G₄ has mixed degrees (vertices 0,3 have degree 2, vertices 1,2 have degree 3).
+# Using d=2 (minimum degree) gives 2√(2-1) = 2.
+ramanujan_bound = 2  # 2√(d-1) with d=2 (minimum vertex degree)
 plt.figure(figsize=(6, 4))
 plt.plot(eigenvalues_sorted, 'o-', label='Eigenvalues')
-plt.axhline(2, color='red', linestyle='--', label='Ramanujan bound (2√(d−1))')
+plt.axhline(ramanujan_bound, color='red', linestyle='--', label='Ramanujan bound (2√(d−1))')
 plt.title("Spectrum of G₄ (4×4 Expander)")
 plt.xlabel("Index")
 plt.ylabel("Eigenvalue")

@@ -14,49 +14,39 @@ import pytest
 # Add parent directory to path
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
+# G₄ adjacency matrix - shared across all tests
+# This is the 4×4 expander graph used in Lean formalization
+G4_ADJACENCY_MATRIX = np.array([
+    [0, 1, 1, 0],
+    [1, 0, 1, 1],
+    [1, 1, 0, 1],
+    [0, 1, 1, 0]
+], dtype=float)
+
+# Expected spectral gap bounds (derived from numerical computation)
+# λ₁ ≈ 2.5616, λ₂ ≈ 0, so spectral gap ≈ 2.5616
+SPECTRAL_GAP_LOWER_BOUND = 2.5  # Slightly below expected value
+SPECTRAL_GAP_UPPER_BOUND = 2.7  # Slightly above expected value
+
 
 class TestG4AdjacencyMatrix:
     """Tests for the G₄ adjacency matrix structure."""
 
     def test_matrix_shape(self):
         """Test that G₄ is a 4×4 matrix."""
-        A = np.array([
-            [0, 1, 1, 0],
-            [1, 0, 1, 1],
-            [1, 1, 0, 1],
-            [0, 1, 1, 0]
-        ], dtype=float)
-        assert A.shape == (4, 4)
+        assert G4_ADJACENCY_MATRIX.shape == (4, 4)
 
     def test_matrix_symmetric(self):
         """Test that G₄ adjacency matrix is symmetric."""
-        A = np.array([
-            [0, 1, 1, 0],
-            [1, 0, 1, 1],
-            [1, 1, 0, 1],
-            [0, 1, 1, 0]
-        ], dtype=float)
-        assert np.allclose(A, A.T)
+        assert np.allclose(G4_ADJACENCY_MATRIX, G4_ADJACENCY_MATRIX.T)
 
     def test_matrix_no_self_loops(self):
         """Test that G₄ has no self-loops (diagonal is zero)."""
-        A = np.array([
-            [0, 1, 1, 0],
-            [1, 0, 1, 1],
-            [1, 1, 0, 1],
-            [0, 1, 1, 0]
-        ], dtype=float)
-        assert np.allclose(np.diag(A), np.zeros(4))
+        assert np.allclose(np.diag(G4_ADJACENCY_MATRIX), np.zeros(4))
 
     def test_matrix_binary_entries(self):
         """Test that G₄ has only binary entries (0 or 1)."""
-        A = np.array([
-            [0, 1, 1, 0],
-            [1, 0, 1, 1],
-            [1, 1, 0, 1],
-            [0, 1, 1, 0]
-        ], dtype=float)
-        assert np.all((A == 0) | (A == 1))
+        assert np.all((G4_ADJACENCY_MATRIX == 0) | (G4_ADJACENCY_MATRIX == 1))
 
 
 class TestG4Eigenvalues:
@@ -65,13 +55,7 @@ class TestG4Eigenvalues:
     @pytest.fixture
     def eigenvalues(self):
         """Compute eigenvalues of G₄."""
-        A = np.array([
-            [0, 1, 1, 0],
-            [1, 0, 1, 1],
-            [1, 1, 0, 1],
-            [0, 1, 1, 0]
-        ], dtype=float)
-        return np.sort(np.linalg.eigvalsh(A))[::-1]
+        return np.sort(np.linalg.eigvalsh(G4_ADJACENCY_MATRIX))[::-1]
 
     def test_eigenvalue_count(self, eigenvalues):
         """Test that G₄ has exactly 4 eigenvalues."""
@@ -96,13 +80,7 @@ class TestG4SpectralGap:
     @pytest.fixture
     def spectral_data(self):
         """Compute spectral data of G₄."""
-        A = np.array([
-            [0, 1, 1, 0],
-            [1, 0, 1, 1],
-            [1, 1, 0, 1],
-            [0, 1, 1, 0]
-        ], dtype=float)
-        eigenvalues = np.sort(np.linalg.eigvalsh(A))[::-1]
+        eigenvalues = np.sort(np.linalg.eigvalsh(G4_ADJACENCY_MATRIX))[::-1]
         spectral_gap = eigenvalues[0] - eigenvalues[1]
         return {
             'eigenvalues': eigenvalues,
@@ -117,17 +95,17 @@ class TestG4SpectralGap:
 
     def test_spectral_gap_value(self, spectral_data):
         """Test spectral gap value is approximately correct."""
-        # λ₁ ≈ 2.56, λ₂ ≈ 0, so gap ≈ 2.56
-        assert spectral_data['spectral_gap'] > 2.5
-        assert spectral_data['spectral_gap'] < 2.7
+        assert spectral_data['spectral_gap'] > SPECTRAL_GAP_LOWER_BOUND
+        assert spectral_data['spectral_gap'] < SPECTRAL_GAP_UPPER_BOUND
 
     def test_ramanujan_bound_comparison(self, spectral_data):
-        """Test comparison with Ramanujan bound 2√(d-1) where d=3 for this graph."""
-        # For a d-regular expander, Ramanujan bound is 2√(d-1)
-        # G₄ vertices have degree 2 or 3, so this is approximate
-        ramanujan_bound = 2  # 2√(2-1) = 2
-        # The second eigenvalue should be compared against this bound
-        # For an expander, |λ₂| ≤ 2√(d-1)
+        """Test comparison with Ramanujan bound 2√(d-1).
+        
+        G₄ has mixed degrees: vertices 0,3 have degree 2, vertices 1,2 have degree 3.
+        Using minimum degree d=2 gives Ramanujan bound = 2√(2-1) = 2.
+        For an expander, |λ₂| should be at most 2√(d-1).
+        """
+        ramanujan_bound = 2  # 2√(2-1) = 2, using minimum degree d=2
         assert np.abs(spectral_data['lambda2']) <= ramanujan_bound + 0.1
 
 
@@ -137,19 +115,13 @@ class TestG4ExpanderProperties:
     @pytest.fixture
     def graph_data(self):
         """Compute graph properties of G₄."""
-        A = np.array([
-            [0, 1, 1, 0],
-            [1, 0, 1, 1],
-            [1, 1, 0, 1],
-            [0, 1, 1, 0]
-        ], dtype=float)
-        degrees = np.sum(A, axis=1)
-        eigenvalues = np.sort(np.linalg.eigvalsh(A))[::-1]
+        degrees = np.sum(G4_ADJACENCY_MATRIX, axis=1)
+        eigenvalues = np.sort(np.linalg.eigvalsh(G4_ADJACENCY_MATRIX))[::-1]
         return {
-            'A': A,
+            'A': G4_ADJACENCY_MATRIX,
             'degrees': degrees,
             'eigenvalues': eigenvalues,
-            'edge_count': int(np.sum(A) / 2)
+            'edge_count': int(np.sum(G4_ADJACENCY_MATRIX) / 2)
         }
 
     def test_connected_graph(self, graph_data):
