@@ -37,6 +37,10 @@ from .spectral_graph_analysis import (
     analyze_mini_ramanujan_g4,
     validate_g4_properties,
 )
+from .weak_solution_existence import (
+    WeakSolutionExistence,
+    validate_weak_solution_theorem,
+)
 
 __all__ = [
     'AdelicCanonicalDeterminant',
@@ -57,4 +61,7 @@ __all__ = [
     'analyze_g4_graph',
     'analyze_mini_ramanujan_g4',
     'validate_g4_properties',
+    # Weak solution existence theorem
+    'WeakSolutionExistence',
+    'validate_weak_solution_theorem',
 ]
