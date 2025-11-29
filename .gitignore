@@ -188,7 +188,4 @@ validation_summary.txt
 notebooks/zeta_zeros_error_plot.png
 # Spectral RH generated images
 spectral_RH/*.png
-
-# Generated eigenfunctions images
-eigenfunctions_psi.png
-potential_marchenko.png
+psi_plot.png
