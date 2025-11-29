@@ -1,6 +1,87 @@
 # Implementation Summary: Mathematical and Physical Unification
 
-## Latest Addition: Cierre Técnico Definitivo — SchattenPaley.lean (November 29, 2025)
+## Latest Addition: Wave Energy Balance — Noetic Energy Conservation (November 29, 2025)
+
+### Overview
+
+Created **`formalization/lean/spectral/wave_energy_balance.lean`** and **`utils/wave_energy_balance.py`** to formalize and implement the propagation of coherence in wave solutions and conservation of noetic energy.
+
+### The Wave Energy Balance Equation
+
+For the noetic wave equation:
+
+$$\frac{\partial^2 \Psi}{\partial t^2} + \omega_0^2 \Psi = \zeta'(1/2) \cdot \pi \cdot \nabla^2 \Phi$$
+
+with:
+- Ψ ∈ C⁰([0,T], H¹(ℝⁿ)) ∩ C¹([0,T], L²(ℝⁿ)) - weak solution
+- Φ ∈ C_c^∞(ℝⁿ) - smooth source with compact support
+- ω₀ ≈ 890.33 rad/s (from f₀ = 141.7001 Hz)
+
+The total noetic energy:
+
+$$E(t) := \frac{1}{2}\left\|\frac{\partial\Psi}{\partial t}(t)\right\|_{L^2}^2 + \frac{1}{2}\omega_0^2 \|\Psi(t)\|_{L^2}^2$$
+
+satisfies the **energy balance equation**:
+
+$$\frac{dE}{dt}(t) = \left\langle \zeta'(1/2) \cdot \pi \cdot \nabla^2\Phi(t), \frac{\partial\Psi}{\partial t}(t) \right\rangle_{L^2}$$
+
+This establishes that **the source Φ directly regulates the energy flow of field Ψ**.
+
+### Key Results
+
+1. **Energy Balance Theorem**: dE/dt = ⟨source, ∂Ψ/∂t⟩_{L²}
+2. **Energy Conservation (Homogeneous)**: When Φ = 0, dE/dt = 0
+3. **Energy Non-negativity**: E(t) ≥ 0 always
+4. **Arithmetic-Geometric Coupling**: ζ'(1/2) connects primes to geometry
+
+### Files Created
+
+1. **`formalization/lean/spectral/wave_energy_balance.lean`** (~12 KB)
+   - Lean 4 formalization of energy definitions
+   - `energy_balance_equation` main theorem
+   - `energy_conservation_homogeneous` corollary
+   - QCAL integration (f₀, ω₀, ζ'(1/2))
+   - Connection to Riemann Hypothesis
+
+2. **`utils/wave_energy_balance.py`** (~15 KB)
+   - Python implementation of WaveEnergyBalance class
+   - Kinetic, potential, and total energy calculations
+   - Power input computation
+   - Energy balance verification
+   - QCAL parameters integration
+
+3. **`tests/test_wave_energy_balance.py`** (~14 KB)
+   - 29 test cases covering all aspects
+   - Energy conservation tests
+   - Numerical stability tests
+   - Physical consistency tests
+
+### Physical Significance
+
+The energy balance equation has deep physical meaning:
+
+1. **Energy Conservation Structure**: Standard form dE/dt = P (power input)
+2. **Arithmetic-Geometric Coupling**: ζ'(1/2) ≈ -3.92 modulates geometric potential
+3. **Noetic Resonance**: At ω₀ ≈ 890 rad/s, coherent energy transfer
+4. **Information Flow**: Φ encodes geometric content that modulates Ψ
+
+### Connection to Riemann Hypothesis
+
+The energy balance connects to RH through:
+- Spectral energy levels λₙ = 1/4 + γₙ²
+- ζ'(1/2) in source term links to critical structure
+- Self-adjoint conservation reflects spectral reality
+
+### Status: VALIDATED
+
+```bash
+python3 -m pytest tests/test_wave_energy_balance.py -v
+# Output: 29 passed
+```
+
+---
+
+## Previous Addition: Cierre Técnico Definitivo — SchattenPaley.lean (November 29, 2025)
 
 ### Overview
 
