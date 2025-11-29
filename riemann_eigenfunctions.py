@@ -88,6 +88,11 @@ def get_riemann_zeros(n: int = 30) -> np.ndarray:
     """
     return RIEMANN_ZEROS[:min(n, len(RIEMANN_ZEROS))]
 
+# Marchenko reconstruction constants
+# These parameters tune the inverse scattering potential construction
+MARCHENKO_WIDTH_SCALE = 0.01  # Controls width decay with γ_n
+MARCHENKO_SHIFT_SCALE = 0.1   # Controls position offset of perturbations
+
 
 def build_potential_from_zeros(
     x: np.ndarray,
@@ -113,7 +118,9 @@ def build_potential_from_zeros(
     Args:
         x: Spatial grid points
         gamma: Array of Riemann zeros to target
-        lambda_param: Coupling strength parameter
+        lambda_param: Coupling strength for the perturbation depth.
+            Controls the overall magnitude of the Marchenko correction.
+            Typical values are in the range [0.01, 1.0].
 
     Returns:
         np.ndarray: Potential values V(x)
@@ -128,13 +135,14 @@ def build_potential_from_zeros(
 
     for n, gamma_n in enumerate(gamma):
         # Each zero contributes a localized perturbation
-        # Width inversely related to gamma_n
-        width = 1.0 / (1 + 0.01 * gamma_n)
+        # Width inversely related to gamma_n (higher zeros → narrower wells)
+        width = 1.0 / (1 + MARCHENKO_WIDTH_SCALE * gamma_n)
         depth = lambda_param * gamma_n**2
 
         # Pöschl-Teller-like term centered appropriately
+        # Shift provides spatial separation for higher modes
         shift = 0.5 * np.log(gamma_n) if gamma_n > 1 else 0
-        V_marchenko -= depth / (np.cosh((x - shift * 0.1) / width)**2 + 1)
+        V_marchenko -= depth / (np.cosh((x - shift * MARCHENKO_SHIFT_SCALE) / width)**2 + 1)
 
     return V_confine + V_marchenko
 
@@ -492,10 +500,15 @@ def compute_spectral_expansion(
     return coefficients, reconstruction
 
 
+# Default width for δ(x) approximation in spectral expansion tests
+DELTA_GAUSSIAN_WIDTH = 0.5  # Standard deviation of the Gaussian approximation
+
+
 def verify_spectral_expansion(
     eigenfunctions: np.ndarray,
     x: np.ndarray,
-    n_terms: int = 10
+    n_terms: int = 10,
+    sigma: float = DELTA_GAUSSIAN_WIDTH
 ) -> Dict[str, Any]:
     """
     Verify spectral expansion capability using a δ(x=0) mimetic function.
@@ -507,12 +520,13 @@ def verify_spectral_expansion(
         eigenfunctions: (N, n_states) array of eigenfunctions
         x: Spatial grid points
         n_terms: Number of terms in expansion
+        sigma: Width of the Gaussian δ approximation (default: 0.5)
+            Smaller values give sharper approximations but require more terms.
 
     Returns:
         dict: Spectral expansion verification results
     """
     # Create δ(x=0) mimetic function (narrow Gaussian)
-    sigma = 0.5  # Width of Gaussian
     delta_approx = np.exp(-x**2 / (2 * sigma**2)) / np.sqrt(2 * np.pi * sigma**2)
 
     # Compute spectral expansion
