@@ -177,9 +177,12 @@ def build_schrodinger_hamiltonian(N: int = 500, L: float = 30.0,
     # This guarantees exact nodal structure: state n has (n-1) nodes
     # Tune omega so that the spectrum spacing matches Riemann zeros spacing
     if gamma_n is not None and len(gamma_n) >= 2:
-        # Match the energy gap between first and second zero
+        # Match the energy gap between first and second Riemann zero
+        # For Riemann zeros: γ₁ ≈ 14.13, γ₂ ≈ 21.02
+        # Δ(γ²) = γ₂² - γ₁² ≈ 441.93 - 199.79 ≈ 242.14
+        # So ω = √(Δγ²) ≈ 15.56 (approximately 16)
         delta_gamma_sq = gamma_n[1]**2 - gamma_n[0]**2
-        omega = np.sqrt(delta_gamma_sq)  # ω ≈ 16 for standard Riemann zeros
+        omega = np.sqrt(delta_gamma_sq)
     else:
         omega = 1.0
 
@@ -510,7 +513,8 @@ def visualize_eigenfunctions(x: np.ndarray, eigenvalues: np.ndarray,
         # Count nodes
         nodes = count_nodes(psi)
 
-        # Check parity
+        # Check parity: n=1 (ground state) is even, n=2 is odd, n=3 is even, etc.
+        # This follows from ψₙ(-x) = (-1)^(n+1) ψₙ(x)
         parity_ok, _ = check_parity(psi, x, n)
         parity_str = "par" if (n % 2 == 1) else "impar"
 
@@ -632,6 +636,7 @@ def print_validation_report(results: Dict[str, Any], gamma_n: np.ndarray) -> Non
 
         parity_data = results['parity'][i]
         parity_ok = "✅" if parity_data['passed'] else "❌"
+        # Parity convention: n=1 is even (par), n=2 is odd (impar), etc.
         parity_type = "par" if (n % 2 == 1) else "impar"
 
         print(f"│ {n:2d}  │ {gamma:9.2f} │ {energy:13.2f} │ "
