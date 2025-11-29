@@ -296,9 +296,9 @@ class QuantumZetaEvolutionSimulator:
         if self.initial_state is None:
             raise ValueError("Initial state not prepared. Call prepare_initial_state first.")
 
-        # Compute overlap integrals
+        # Compute overlap integrals: cₙ = ⟨ψₙ | ζ₀⟩ = ∫ ψₙ*(x) ζ₀(x) dx
         self.c_n = np.array([
-            np.trapezoid(psi * np.conj(self.initial_state), self.x)
+            np.trapezoid(np.conj(psi) * self.initial_state, self.x)
             for psi in self.psi_n
         ])
 
