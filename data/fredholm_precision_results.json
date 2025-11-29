@@ -1,0 +1,17 @@
+{
+  "test_name": "fredholm_precision_test",
+  "status": "PASSED",
+  "n_zeros": 1000,
+  "precision_dps": 30,
+  "trace_convergence": 5.328113980217042e-49,
+  "relative_error": 6.115426639803722e-08,
+  "spectral_density_error": 1.2230853279607445,
+  "timestamp": "2025-11-29T19:27:53.842508Z",
+  "details": {
+    "trace_value": 0.6009079943194557,
+    "trace_norm": 0.6009079943194557,
+    "bounds_satisfied": true,
+    "qcal_frequency": 141.7001,
+    "qcal_coherence": 244.36
+  }
+}
