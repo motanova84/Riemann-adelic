@@ -22,10 +22,10 @@ jobs:
         python-version: ["3.10", "3.11"]
     
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Set up Python ${{ matrix.python-version }}
+      - name: 🐍 Configurar Python 3.11 + caché pip
+        id: cache-python
         uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
@@ -70,8 +70,6 @@ jobs:
   validate-metadata:
     name: Validate metadata
     runs-on: ubuntu-latest
-    needs: test
-    
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4

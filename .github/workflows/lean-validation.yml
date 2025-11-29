@@ -29,9 +29,6 @@ jobs:
       run: |
         curl https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -sSf | sh -s -- -y
         echo "$HOME/.elan/bin" >> $GITHUB_PATH
-        elan toolchain install leanprover/lean4:v4.5.0
-        elan default leanprover/lean4:v4.5.0
-        lean --version
 
     - name: Verify Lean project structure
       working-directory: formalization/lean
@@ -53,6 +50,7 @@ jobs:
       working-directory: formalization/lean
       continue-on-error: true
       timeout-minutes: 45
+      working-directory: formalization/lean
       run: |
         START_TIME=$(date +%s)
         echo "Building project..."
@@ -126,7 +124,7 @@ jobs:
     - name: Upload validation report
       uses: actions/upload-artifact@v4
       with:
-        name: lean-validation-report
+        name: validation-report
         path: formalization/lean/validation_report.json
 
     - name: Display summary
