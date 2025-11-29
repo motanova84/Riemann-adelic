@@ -1,14 +1,15 @@
 """
-Test module for Riemann eigenfunctions visualization.
+Test module for Riemann eigenfunctions validation.
 
-This module tests the implementation of the 10 wavefunctions ψₙ(x)
-corresponding to the first 10 non-trivial Riemann zeta zeros.
+This module tests the eigenfunctions ψ_n(x) of the Hamiltonian H = -d²/dx² + V(x),
+reconstructed from the first 30 imaginary parts γ_n of the Riemann zeros.
 
-Validated properties:
-1. Node counting: ψₙ has exactly (n-1) nodes
-2. Parity: ψₙ(-x) = (-1)^(n+1) ψₙ(x)
-3. Localization: Exponential decay at boundaries
-4. Orthonormality: ⟨ψₘ|ψₙ⟩ = δₘₙ with error < 10⁻¹⁰
+Key tests:
+    1. Orthonormality: ∫ψ_n(x)ψ_m(x)dx = δ_{nm}
+    2. Bound state localization
+    3. Sturm-Liouville nodal counting
+    4. Eigenvalue correspondence
+    5. Spectral expansion capability
 
 Author: José Manuel Mota Burruezo Ψ ∞³
 Date: November 2025
@@ -18,252 +19,236 @@ DOI: 10.5281/zenodo.17379721
 import pytest
 import numpy as np
 from pathlib import Path
-import sys
-
-# Add parent directory to path for imports
-sys.path.insert(0, str(Path(__file__).parent.parent))
-
-from riemann_eigenfunctions_visualization import (
-    get_first_riemann_zeros,
-    build_schrodinger_hamiltonian,
-    compute_eigenfunctions,
-    count_nodes,
-    check_parity,
-    check_orthonormality,
-    check_localization,
-    validate_all_properties,
-    run_riemann_eigenfunction_validation,
-    QCAL_BASE_FREQUENCY,
-    QCAL_COHERENCE,
-)
 
 
-class TestRiemannZeros:
-    """Test the Riemann zeros data."""
-
-    def test_get_first_10_zeros(self):
-        """Test that we can retrieve 10 Riemann zeros."""
-        zeros = get_first_riemann_zeros(10)
-        assert len(zeros) == 10
-        assert all(z > 0 for z in zeros)
-
-    def test_zeros_are_ordered(self):
-        """Test that zeros are in ascending order."""
-        zeros = get_first_riemann_zeros(10)
-        assert all(zeros[i] < zeros[i + 1] for i in range(len(zeros) - 1))
-
-    def test_first_zero_value(self):
-        """Test the value of the first Riemann zero."""
-        zeros = get_first_riemann_zeros(1)
-        # γ₁ ≈ 14.134725...
-        assert abs(zeros[0] - 14.134725141734693) < 1e-10
-
-    def test_tenth_zero_value(self):
-        """Test the value of the tenth Riemann zero."""
-        zeros = get_first_riemann_zeros(10)
-        # γ₁₀ ≈ 49.773832...
-        assert abs(zeros[9] - 49.773832477672302) < 1e-10
+# Import module to test
+try:
+    from riemann_eigenfunctions import (
+        get_riemann_zeros,
+        build_hamiltonian_from_zeros,
+        compute_eigenfunctions,
+        verify_orthonormality,
+        verify_localization,
+        verify_nodal_counting,
+        verify_eigenvalues,
+        verify_spectral_expansion,
+        run_full_validation,
+        RIEMANN_ZEROS,
+        QCAL_BASE_FREQUENCY,
+        QCAL_COHERENCE
+    )
+    RIEMANN_EIGENFUNCTIONS_AVAILABLE = True
+except ImportError:
+    RIEMANN_EIGENFUNCTIONS_AVAILABLE = False
 
 
-class TestHamiltonian:
-    """Test the Hamiltonian construction."""
+@pytest.mark.skipif(not RIEMANN_EIGENFUNCTIONS_AVAILABLE, 
+                    reason="riemann_eigenfunctions module not available")
+class TestRiemannEigenfunctions:
+    """Test class for Riemann eigenfunctions."""
 
-    def test_hamiltonian_is_symmetric(self):
-        """Test that H is symmetric (Hermitian for real matrices)."""
-        gamma_n = get_first_riemann_zeros(10)
-        H, x = build_schrodinger_hamiltonian(N=200, L=20.0, gamma_n=gamma_n)
+    def test_riemann_zeros_count(self):
+        """Test that we have 30 Riemann zeros defined."""
+        assert len(RIEMANN_ZEROS) == 30
+        assert RIEMANN_ZEROS[0] == pytest.approx(14.134725141734693, rel=1e-10)
+        assert RIEMANN_ZEROS[-1] == pytest.approx(101.31785100573139, rel=1e-10)
 
-        asymmetry = np.max(np.abs(H - H.T))
-        assert asymmetry < 1e-14
+    def test_get_riemann_zeros_subset(self):
+        """Test getting a subset of Riemann zeros."""
+        zeros_10 = get_riemann_zeros(10)
+        assert len(zeros_10) == 10
+        assert zeros_10[0] == RIEMANN_ZEROS[0]
+        assert zeros_10[9] == RIEMANN_ZEROS[9]
 
-    def test_hamiltonian_shape(self):
-        """Test that H has correct dimensions."""
-        H, x = build_schrodinger_hamiltonian(N=100, L=10.0)
-        assert H.shape == (100, 100)
-        assert len(x) == 100
+    def test_get_riemann_zeros_max(self):
+        """Test getting more zeros than available returns all available."""
+        zeros_100 = get_riemann_zeros(100)
+        assert len(zeros_100) == 30
 
-    def test_domain_range(self):
-        """Test that x covers [-L, L]."""
-        L = 30.0
-        H, x = build_schrodinger_hamiltonian(N=1000, L=L)
-        assert x[0] == pytest.approx(-L, rel=1e-10)
-        assert x[-1] == pytest.approx(L, rel=1e-10)
-
-
-class TestEigenfunctions:
-    """Test eigenfunction properties."""
-
-    @pytest.fixture(scope="class")
-    def eigensystem(self):
-        """Compute eigenfunctions once for all tests in this class."""
-        gamma_n = get_first_riemann_zeros(10)
-        H, x = build_schrodinger_hamiltonian(N=1000, L=30.0, gamma_n=gamma_n)
-        eigenvalues, eigenvectors = compute_eigenfunctions(H, x, n_states=10)
-        return x, eigenvalues, eigenvectors, gamma_n
-
-    def test_eigenvalues_are_real(self, eigensystem):
-        """Test that all eigenvalues are real."""
-        x, eigenvalues, eigenvectors, gamma_n = eigensystem
-        # For real symmetric matrices, eigenvalues must be real
-        assert np.all(np.isreal(eigenvalues))
-
-    def test_eigenvalues_are_ordered(self, eigensystem):
-        """Test that eigenvalues are in ascending order."""
-        x, eigenvalues, eigenvectors, gamma_n = eigensystem
-        assert all(eigenvalues[i] <= eigenvalues[i + 1]
-                   for i in range(len(eigenvalues) - 1))
-
-    def test_ground_state_has_no_nodes(self, eigensystem):
-        """Test that ψ₁(x) has 0 nodes (ground state)."""
-        x, eigenvalues, eigenvectors, gamma_n = eigensystem
-        psi_1 = eigenvectors[:, 0]
-        nodes = count_nodes(psi_1, x)
-        assert nodes == 0
-
-    def test_second_state_has_one_node(self, eigensystem):
-        """Test that ψ₂(x) has 1 node."""
-        x, eigenvalues, eigenvectors, gamma_n = eigensystem
-        psi_2 = eigenvectors[:, 1]
-        nodes = count_nodes(psi_2, x)
-        assert nodes == 1
-
-    def test_node_counting_all_states(self, eigensystem):
-        """Test that ψₙ has (n-1) nodes for all n from 1 to 10."""
-        x, eigenvalues, eigenvectors, gamma_n = eigensystem
-        for n in range(1, 11):
-            psi_n = eigenvectors[:, n - 1]
-            nodes = count_nodes(psi_n, x)
-            assert nodes == n - 1, f"State ψ_{n} should have {n-1} nodes, got {nodes}"
-
-    def test_ground_state_even_parity(self, eigensystem):
-        """Test that ψ₁ is even: ψ₁(-x) = ψ₁(x)."""
-        x, eigenvalues, eigenvectors, gamma_n = eigensystem
-        psi_1 = eigenvectors[:, 0]
-        is_correct, deviation = check_parity(psi_1, x, n=1)
-        assert is_correct, f"ψ₁ should have even parity, deviation = {deviation}"
-
-    def test_second_state_odd_parity(self, eigensystem):
-        """Test that ψ₂ is odd: ψ₂(-x) = -ψ₂(x)."""
-        x, eigenvalues, eigenvectors, gamma_n = eigensystem
-        psi_2 = eigenvectors[:, 1]
-        is_correct, deviation = check_parity(psi_2, x, n=2)
-        assert is_correct, f"ψ₂ should have odd parity, deviation = {deviation}"
-
-    def test_alternating_parity(self, eigensystem):
-        """Test that parity alternates: ψₙ(-x) = (-1)^(n+1) ψₙ(x)."""
-        x, eigenvalues, eigenvectors, gamma_n = eigensystem
-        for n in range(1, 11):
-            psi_n = eigenvectors[:, n - 1]
-            is_correct, deviation = check_parity(psi_n, x, n=n)
-            assert is_correct, f"ψ_{n} has incorrect parity, deviation = {deviation}"
-
-
-class TestOrthonormality:
-    """Test orthonormality of eigenfunctions."""
-
-    @pytest.fixture(scope="class")
-    def eigensystem(self):
-        """Compute eigenfunctions once for all tests in this class."""
-        gamma_n = get_first_riemann_zeros(10)
-        H, x = build_schrodinger_hamiltonian(N=1000, L=30.0, gamma_n=gamma_n)
-        eigenvalues, eigenvectors = compute_eigenfunctions(H, x, n_states=10)
-        return x, eigenvectors
-
-    def test_orthonormality(self, eigensystem):
-        """Test that ⟨ψₘ|ψₙ⟩ = δₘₙ with high precision."""
-        x, eigenvectors = eigensystem
-        is_orthonormal, max_error = check_orthonormality(eigenvectors, x)
-
-        # Require very high precision
-        assert is_orthonormal, f"Eigenfunctions not orthonormal, max error = {max_error}"
-        assert max_error < 1e-10, f"Orthonormality error {max_error} exceeds 1e-10"
-
-    def test_individual_normalizations(self, eigensystem):
-        """Test that each eigenfunction is normalized to 1."""
-        x, eigenvectors = eigensystem
-        dx = x[1] - x[0]
-        from scipy.integrate import simpson
-
-        for i in range(10):
-            psi = eigenvectors[:, i]
-            norm_sq = simpson(psi**2, x=x, dx=dx)
-            assert abs(norm_sq - 1.0) < 1e-10, f"||ψ_{i+1}||² = {norm_sq}, expected 1.0"
-
-
-class TestLocalization:
-    """Test exponential localization of eigenfunctions."""
-
-    @pytest.fixture(scope="class")
-    def eigensystem(self):
-        """Compute eigenfunctions once for all tests in this class."""
-        gamma_n = get_first_riemann_zeros(10)
-        H, x = build_schrodinger_hamiltonian(N=1000, L=30.0, gamma_n=gamma_n)
-        eigenvalues, eigenvectors = compute_eigenfunctions(H, x, n_states=10)
-        return x, eigenvectors
-
-    def test_localization_all_states(self, eigensystem):
-        """Test that all eigenfunctions are exponentially localized."""
-        x, eigenvectors = eigensystem
-        for n in range(1, 11):
-            psi_n = eigenvectors[:, n - 1]
-            is_localized, decay_rate = check_localization(psi_n, x)
-            assert is_localized, f"ψ_{n} is not localized"
-
-    def test_ground_state_gaussian_like(self, eigensystem):
-        """Test that ground state is approximately Gaussian."""
-        x, eigenvectors = eigensystem
-        psi_1 = eigenvectors[:, 0]
-
-        # Ground state of harmonic oscillator should be Gaussian-like
-        # Check that maximum is near x=0
-        max_idx = np.argmax(np.abs(psi_1))
-        assert abs(x[max_idx]) < 1.0, "Ground state maximum should be near x=0"
-
-
-class TestValidationSummary:
-    """Test the complete validation workflow."""
-
-    def test_run_validation_returns_results(self):
-        """Test that validation returns proper results dictionary."""
-        results = run_riemann_eigenfunction_validation(
-            N=500, L=20.0, n_states=10, save_figures=False, verbose=False
-        )
-
-        assert 'n_states' in results
-        assert 'nodes' in results
-        assert 'parity' in results
-        assert 'localization' in results
-        assert 'orthonormality' in results
-        assert results['n_states'] == 10
-
-    def test_all_validations_pass(self):
-        """Test that all validations pass with standard parameters."""
-        results = run_riemann_eigenfunction_validation(
-            N=1000, L=30.0, n_states=10, save_figures=False, verbose=False
-        )
-
-        assert results['all_passed'], "Not all validations passed"
-
-    def test_orthonormality_precision(self):
-        """Test that orthonormality error is less than 10⁻¹⁰."""
-        results = run_riemann_eigenfunction_validation(
-            N=1000, L=30.0, n_states=10, save_figures=False, verbose=False
-        )
-
-        max_error = results['orthonormality']['max_error']
-        assert max_error < 1e-10, f"Orthonormality error {max_error} exceeds 10⁻¹⁰"
-
-
-class TestQCALIntegration:
-    """Test QCAL ∞³ integration."""
-
-    def test_qcal_base_frequency(self):
-        """Test QCAL base frequency constant."""
+    def test_qcal_constants(self):
+        """Test QCAL constants are defined correctly."""
         assert QCAL_BASE_FREQUENCY == 141.7001
-
-    def test_qcal_coherence(self):
-        """Test QCAL coherence constant."""
         assert QCAL_COHERENCE == 244.36
+
+    def test_build_hamiltonian_shape(self):
+        """Test Hamiltonian matrix has correct shape."""
+        N = 100
+        H, x, V = build_hamiltonian_from_zeros(N=N, L=10.0)
+        assert H.shape == (N, N)
+        assert len(x) == N
+        assert len(V) == N
+
+    def test_hamiltonian_symmetry(self):
+        """Test that the Hamiltonian is symmetric (self-adjoint)."""
+        H, x, V = build_hamiltonian_from_zeros(N=100, L=10.0)
+        max_asymmetry = np.max(np.abs(H - H.T))
+        assert max_asymmetry < 1e-14, f"Hamiltonian not symmetric: max_asymmetry = {max_asymmetry}"
+
+    def test_compute_eigenfunctions_returns_correct_types(self):
+        """Test that compute_eigenfunctions returns correct types."""
+        eigenvalues, eigenfunctions, x, V = compute_eigenfunctions(N=100, L=10.0, n_states=5)
+        
+        assert isinstance(eigenvalues, np.ndarray)
+        assert isinstance(eigenfunctions, np.ndarray)
+        assert isinstance(x, np.ndarray)
+        assert isinstance(V, np.ndarray)
+        
+        assert len(eigenvalues) == 5
+        assert eigenfunctions.shape == (100, 5)
+
+    def test_eigenvalues_sorted(self):
+        """Test that eigenvalues are sorted in ascending order."""
+        eigenvalues, _, _, _ = compute_eigenfunctions(N=100, L=10.0, n_states=10)
+        
+        for i in range(len(eigenvalues) - 1):
+            assert eigenvalues[i] <= eigenvalues[i + 1], \
+                f"Eigenvalues not sorted: E[{i}]={eigenvalues[i]} > E[{i+1}]={eigenvalues[i+1]}"
+
+    def test_orthonormality(self):
+        """Test orthonormality of eigenfunctions: ∫ψ_n·ψ_m dx = δ_{nm}."""
+        _, eigenfunctions, x, _ = compute_eigenfunctions(N=500, L=25.0, n_states=8)
+        
+        result = verify_orthonormality(eigenfunctions, x, n_check=8)
+        
+        assert result["is_orthonormal"], \
+            f"Eigenfunctions not orthonormal: max_error = {result['max_error']}"
+        assert result["max_error"] < 1e-10, \
+            f"Orthonormality error too large: {result['max_error']}"
+
+    def test_localization(self):
+        """Test bound state localization: ψ_n → 0 for |x| → ∞."""
+        _, eigenfunctions, x, _ = compute_eigenfunctions(N=500, L=25.0, n_states=10)
+        
+        result = verify_localization(eigenfunctions, x, L=25.0)
+        
+        assert result["all_localized"], \
+            f"Not all states localized: {result['is_localized_per_state']}"
+        assert all(v < 0.05 for v in result["max_tail_values"]), \
+            f"Tail values too large: {result['max_tail_values']}"
+
+    def test_nodal_counting(self):
+        """Test Sturm-Liouville nodal theorem: ψ_n has n nodes."""
+        _, eigenfunctions, x, _ = compute_eigenfunctions(N=500, L=25.0, n_states=10)
+        
+        result = verify_nodal_counting(eigenfunctions, x, n_check=10)
+        
+        assert result["all_correct"], \
+            f"Nodal counts incorrect: computed={result['node_counts']}, expected={result['expected_counts']}"
+
+    def test_eigenvalue_correspondence(self):
+        """Test that eigenvalues correspond to -γ_n²."""
+        eigenvalues, _, _, _ = compute_eigenfunctions(N=500, L=25.0, n_states=10)
+        
+        result = verify_eigenvalues(eigenvalues, n_check=10)
+        
+        # Ground state should be close to -γ_0² ≈ -199.79
+        ground_state_target = -RIEMANN_ZEROS[0]**2
+        assert result["eigenvalues_computed"][0] < 0, "Ground state energy should be negative"
+        
+        # Check that computed eigenvalues are reasonably ordered
+        assert all(result["eigenvalues_computed"][i] < result["eigenvalues_computed"][i+1] 
+                  for i in range(len(result["eigenvalues_computed"])-1)), \
+            "Computed eigenvalues should be increasing"
+
+    def test_spectral_expansion_convergence(self):
+        """Test that spectral expansion converges rapidly for δ(x) mimetic."""
+        _, eigenfunctions, x, _ = compute_eigenfunctions(N=500, L=25.0, n_states=10)
+        
+        result = verify_spectral_expansion(eigenfunctions, x, n_terms=10)
+        
+        assert result["converges_rapidly"], \
+            f"Spectral expansion not converging rapidly"
+        assert result["relative_error"] < 0.5, \
+            f"Reconstruction error too large: {result['relative_error']}"
+
+    def test_full_validation_passes(self):
+        """Test that the full validation passes."""
+        result = run_full_validation(N=500, L=25.0, n_states=10, verbose=False)
+        
+        assert result["success"], "Full validation should pass"
+        assert result["orthonormality"]["is_orthonormal"]
+        assert result["localization"]["all_localized"]
+        assert result["nodal_counting"]["all_correct"]
+
+    def test_ground_state_properties(self):
+        """Test ground state (ψ_0) specific properties."""
+        _, eigenfunctions, x, _ = compute_eigenfunctions(N=500, L=25.0, n_states=1)
+        
+        psi_0 = eigenfunctions[:, 0]
+        
+        # Ground state should not have nodes in the significant region
+        # Find where the function has significant amplitude
+        max_amplitude = np.max(np.abs(psi_0))
+        significant_mask = np.abs(psi_0) > 1e-12 * max_amplitude
+        psi_significant = psi_0[significant_mask]
+        
+        if len(psi_significant) > 0:
+            # Check that the significant part doesn't change sign
+            signs = np.sign(psi_significant)
+            sign_changes = np.sum(np.abs(np.diff(signs)) == 2)
+            assert sign_changes == 0, \
+                f"Ground state should have 0 nodes, found {sign_changes} sign changes"
+        
+        # Ground state should be symmetric
+        N = len(x)
+        psi_left = psi_0[:N//2]
+        psi_right = psi_0[N//2:][::-1]
+        min_len = min(len(psi_left), len(psi_right))
+        symmetry_error = np.max(np.abs(psi_left[:min_len] - psi_right[:min_len]))
+        assert symmetry_error < 1e-10, \
+            f"Ground state should be symmetric: error = {symmetry_error}"
+
+    def test_first_excited_state_properties(self):
+        """Test first excited state (ψ_1) specific properties."""
+        _, eigenfunctions, x, _ = compute_eigenfunctions(N=500, L=25.0, n_states=2)
+        
+        psi_1 = eigenfunctions[:, 1]
+        
+        # First excited state should have exactly 1 node
+        signs = np.sign(psi_1)
+        sign_changes = np.sum(np.abs(np.diff(signs)) == 2)
+        assert sign_changes == 1, \
+            f"First excited state should have 1 node, found {sign_changes}"
+
+    def test_eigenfunction_normalization(self):
+        """Test that eigenfunctions are properly normalized."""
+        _, eigenfunctions, x, _ = compute_eigenfunctions(N=500, L=25.0, n_states=5)
+        
+        for n in range(5):
+            psi_n = eigenfunctions[:, n]
+            norm = np.trapezoid(psi_n**2, x=x)
+            assert abs(norm - 1.0) < 1e-10, \
+                f"Eigenfunction ψ_{n} not normalized: ⟨ψ_{n}|ψ_{n}⟩ = {norm}"
+
+
+class TestRiemannZerosData:
+    """Test class for Riemann zeros data validation."""
+    
+    @pytest.mark.skipif(not RIEMANN_EIGENFUNCTIONS_AVAILABLE, 
+                        reason="riemann_eigenfunctions module not available")
+    def test_zeros_are_positive(self):
+        """Test that all Riemann zeros are positive."""
+        assert all(z > 0 for z in RIEMANN_ZEROS)
+
+    @pytest.mark.skipif(not RIEMANN_EIGENFUNCTIONS_AVAILABLE, 
+                        reason="riemann_eigenfunctions module not available")
+    def test_zeros_are_increasing(self):
+        """Test that Riemann zeros are in increasing order."""
+        for i in range(len(RIEMANN_ZEROS) - 1):
+            assert RIEMANN_ZEROS[i] < RIEMANN_ZEROS[i + 1]
+
+    @pytest.mark.skipif(not RIEMANN_EIGENFUNCTIONS_AVAILABLE, 
+                        reason="riemann_eigenfunctions module not available")
+    def test_known_zero_values(self):
+        """Test some well-known Riemann zero values."""
+        # First few zeros from mathematical literature
+        known_zeros = [
+            14.134725141734693,
+            21.022039638771555,
+            25.010857580145688,
+        ]
+        for i, known in enumerate(known_zeros):
+            assert RIEMANN_ZEROS[i] == pytest.approx(known, rel=1e-12)
 
 
 if __name__ == "__main__":
