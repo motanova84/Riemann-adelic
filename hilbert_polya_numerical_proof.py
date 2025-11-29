@@ -110,14 +110,14 @@ def compute_eigenvalues_sparse(H_matrix: np.ndarray, k: int = 20) -> np.ndarray:
     Returns:
         np.ndarray: Array of k eigenvalues
     """
-    from scipy.sparse.linalg import eigsh
     from scipy.sparse import csr_matrix
+    from scipy.sparse.linalg import eigsh
 
     # Convert to sparse format for efficiency
     H_sparse = csr_matrix(H_matrix)
 
     # Compute k smallest magnitude eigenvalues
-    eigenvalues = eigsh(H_sparse, k=k, which='SM', return_eigenvectors=False)
+    eigenvalues = eigsh(H_sparse, k=k, which="SM", return_eigenvectors=False)
 
     return eigenvalues
 
@@ -143,10 +143,7 @@ def compute_eigenvalues_dense(H_matrix: np.ndarray, k: int = 20) -> np.ndarray:
 
 
 def validate_self_adjointness(
-    H_matrix: np.ndarray, 
-    n_test_functions: int = 1000000,
-    batch_size: int = 10000,
-    tolerance: float = 1e-6
+    H_matrix: np.ndarray, n_test_functions: int = 1000000, batch_size: int = 10000, tolerance: float = 1e-6
 ) -> Dict[str, Any]:
     """
     Validate self-adjointness with up to 10⁶ test functions.
@@ -196,7 +193,7 @@ def validate_self_adjointness(
 
         # Compute absolute errors
         errors = np.abs(inner_Hf_g - inner_f_Hg)
-        
+
         # Compute relative errors
         scale = np.maximum(np.abs(inner_Hf_g), np.abs(inner_f_Hg))
         scale = np.maximum(scale, 1e-10)  # Avoid division by zero
@@ -261,7 +258,7 @@ def validate_matrix_symmetry(H_matrix: np.ndarray) -> Dict[str, Any]:
     """
     diff = H_matrix - H_matrix.T
     max_diff = np.max(np.abs(diff))
-    frobenius_norm = np.linalg.norm(diff, 'fro')
+    frobenius_norm = np.linalg.norm(diff, "fro")
 
     return {
         "is_symmetric": max_diff < 1e-14,
@@ -271,10 +268,7 @@ def validate_matrix_symmetry(H_matrix: np.ndarray) -> Dict[str, Any]:
 
 
 def run_hilbert_polya_proof(
-    N: int = 10000, 
-    k: int = 20, 
-    n_test_functions: int = 1000000,
-    verbose: bool = True
+    N: int = 10000, k: int = 20, n_test_functions: int = 1000000, verbose: bool = True
 ) -> Dict[str, Any]:
     """
     Run the complete Hilbert-Pólya numerical proof.
@@ -381,11 +375,7 @@ def run_hilbert_polya_proof(
         print()
 
     # Overall success
-    results["success"] = (
-        sym_results["is_symmetric"]
-        and sa_results["is_self_adjoint"]
-        and spectral_results["all_real"]
-    )
+    results["success"] = sym_results["is_symmetric"] and sa_results["is_self_adjoint"] and spectral_results["all_real"]
 
     execution_time = time.time() - start_time
     results["execution_time"] = execution_time
@@ -436,7 +426,7 @@ def run_hilbert_polya_proof(
 def main():
     """Main entry point for Hilbert-Pólya numerical proof."""
     parser = argparse.ArgumentParser(
-        description='Hilbert-Pólya Numerical Proof for Operator H_Ψ',
+        description="Hilbert-Pólya Numerical Proof for Operator H_Ψ",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
@@ -444,33 +434,28 @@ Examples:
   python hilbert_polya_numerical_proof.py --N 20000          # Higher resolution
   python hilbert_polya_numerical_proof.py --test-functions 10000  # Quick test
   python hilbert_polya_numerical_proof.py --save-certificate # Save proof certificate
-        """
+        """,
     )
 
-    parser.add_argument('--N', type=int, default=10000,
-                        help='Number of discretization points (default: 10000)')
-    parser.add_argument('--k', type=int, default=20,
-                        help='Number of eigenvalues to compute (default: 20)')
-    parser.add_argument('--test-functions', type=int, default=1000000,
-                        help='Number of test functions for self-adjoint validation (default: 10^6)')
-    parser.add_argument('--save-certificate', action='store_true',
-                        help='Save proof certificate to data/')
-    parser.add_argument('--quiet', action='store_true',
-                        help='Suppress verbose output')
+    parser.add_argument("--N", type=int, default=10000, help="Number of discretization points (default: 10000)")
+    parser.add_argument("--k", type=int, default=20, help="Number of eigenvalues to compute (default: 20)")
+    parser.add_argument(
+        "--test-functions",
+        type=int,
+        default=1000000,
+        help="Number of test functions for self-adjoint validation (default: 10^6)",
+    )
+    parser.add_argument("--save-certificate", action="store_true", help="Save proof certificate to data/")
+    parser.add_argument("--quiet", action="store_true", help="Suppress verbose output")
 
     args = parser.parse_args()
 
     # Run the proof
-    results = run_hilbert_polya_proof(
-        N=args.N,
-        k=args.k,
-        n_test_functions=args.test_functions,
-        verbose=not args.quiet
-    )
+    results = run_hilbert_polya_proof(N=args.N, k=args.k, n_test_functions=args.test_functions, verbose=not args.quiet)
 
     # Save certificate if requested
     if args.save_certificate:
-        cert_file = Path('data') / 'hilbert_polya_certificate.json'
+        cert_file = Path("data") / "hilbert_polya_certificate.json"
         cert_file.parent.mkdir(exist_ok=True)
 
         certificate = {
@@ -499,7 +484,7 @@ Examples:
             "doi": "10.5281/zenodo.17379721",
         }
 
-        with open(cert_file, 'w') as f:
+        with open(cert_file, "w") as f:
             json.dump(certificate, f, indent=2)
 
         print(f"📜 Certificate saved to: {cert_file}")
