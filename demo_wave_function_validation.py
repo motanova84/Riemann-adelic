@@ -42,6 +42,9 @@ from wave_function_validation import (
     QCAL_COHERENCE
 )
 
+# Plotting constants
+PLOT_OFFSET_SPACING = 0.3  # Vertical offset spacing for stacked plots
+
 
 def plot_eigenfunctions(x: np.ndarray, psi: np.ndarray,
                         eigenvalues: np.ndarray, n_plot: int = 10,
@@ -64,7 +67,7 @@ def plot_eigenfunctions(x: np.ndarray, psi: np.ndarray,
     ax1 = axes[0, 0]
     colors = plt.cm.viridis(np.linspace(0, 1, n_plot))
     for n in range(n_plot):
-        offset = n * 0.3  # Offset for visibility
+        offset = n * PLOT_OFFSET_SPACING  # Offset for visibility
         ax1.plot(x, psi[:, n] + offset, color=colors[n], 
                  linewidth=1.5, label=f'$\\psi_{n}(x)$')
     ax1.set_xlabel('$x$', fontsize=12)

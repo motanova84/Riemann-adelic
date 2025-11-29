@@ -44,6 +44,11 @@ QCAL_BASE_FREQUENCY = 141.7001  # Hz
 QCAL_COHERENCE = 244.36
 ZETA_PRIME_HALF = -0.207886  # ζ'(1/2) numerical value
 
+# Numerical constants
+LOG_EPSILON = 1e-10  # Small value to avoid log(0)
+EIGSH_SAFETY_MARGIN = 2  # scipy.sparse.linalg.eigsh requires k < n
+DELTA_WIDTH_FACTOR = 2.0  # Factor for delta function width relative to dx
+
 
 def load_riemann_zeros(n_zeros: int = 30, data_dir: Optional[str] = None) -> np.ndarray:
     """
@@ -115,7 +120,7 @@ def marchenko_potential(x: np.ndarray, gamma_n: np.ndarray,
 
     # Oscillatory correction encoding the spectral structure
     for i, gamma in enumerate(gamma_n):
-        phase = gamma * np.log(np.abs(x) + 1e-10)
+        phase = gamma * np.log(np.abs(x) + LOG_EPSILON)
         weight = 0.1 / (i + 1)
         V += weight * np.cos(phase) * np.exp(-x**2 / (4 * sigma**2))
 
@@ -179,7 +184,7 @@ def compute_eigenstates(H: np.ndarray, dx: float,
         psi: Normalized eigenfunctions (columns are ψn)
     """
     n = H.shape[0]
-    num_states = min(num_states, n - 2)  # eigsh needs k < n
+    num_states = min(num_states, n - EIGSH_SAFETY_MARGIN)  # eigsh needs k < n
 
     if use_sparse and n > 100:
         # Use sparse eigensolver for large matrices
@@ -530,7 +535,7 @@ def create_delta_function(x: np.ndarray, x0: float = 0.0,
     if width is None:
         if dx is None:
             dx = x[1] - x[0]
-        width = 2 * dx
+        width = DELTA_WIDTH_FACTOR * dx
 
     # Gaussian approximation to delta
     delta = np.exp(-(x - x0)**2 / (2 * width**2))

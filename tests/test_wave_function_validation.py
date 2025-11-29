@@ -36,6 +36,10 @@ from wave_function_validation import (
     QCAL_COHERENCE
 )
 
+# Test constants
+NUMERICAL_TOLERANCE = 1e-10  # Tolerance for numerical comparisons
+MIN_SYMMETRY_CORRELATION = 0.5  # Minimum correlation for approximate symmetry
+
 
 class TestRiemannZerosLoading:
     """Tests for loading Riemann zeros."""
@@ -95,7 +99,7 @@ class TestMarchenkoPotential:
         V_left = V[:50]
         V_right = V[-50:][::-1]
         # Check that structure is similar
-        assert np.corrcoef(V_left, V_right)[0, 1] > 0.5
+        assert np.corrcoef(V_left, V_right)[0, 1] > MIN_SYMMETRY_CORRELATION
 
 
 class TestHamiltonianConstruction:
@@ -156,7 +160,7 @@ class TestEigenstateComputation:
         
         for n in range(psi.shape[1]):
             norm = np.sqrt(np.sum(psi[:, n]**2) * dx)
-            assert abs(norm - 1.0) < 1e-10
+            assert abs(norm - 1.0) < NUMERICAL_TOLERANCE
 
 
 class TestOrthonormality:
@@ -171,7 +175,7 @@ class TestOrthonormality:
         results = verify_orthonormality(psi, dx)
         
         assert results['is_orthonormal']
-        assert results['max_error'] < 1e-10
+        assert results['max_error'] < NUMERICAL_TOLERANCE
     
     def test_orthonormality_diagonal(self):
         """Test that diagonal of overlap matrix is 1."""
@@ -182,7 +186,7 @@ class TestOrthonormality:
         results = verify_orthonormality(psi, dx)
         
         for err in results['diagonal_errors']:
-            assert err < 1e-10
+            assert err < NUMERICAL_TOLERANCE
     
     def test_orthonormality_off_diagonal(self):
         """Test that off-diagonal elements are near zero."""
@@ -192,7 +196,7 @@ class TestOrthonormality:
         eigenvalues, psi = compute_eigenstates(H, dx, num_states=5)
         results = verify_orthonormality(psi, dx)
         
-        assert results['off_diagonal_max'] < 1e-10
+        assert results['off_diagonal_max'] < NUMERICAL_TOLERANCE
 
 
 class TestLocalization:
@@ -219,7 +223,7 @@ class TestLocalization:
         results = verify_localization(psi, x)
         
         # Ground state should have very small boundary ratio
-        assert results['boundary_ratios'][0] < 1e-10
+        assert results['boundary_ratios'][0] < NUMERICAL_TOLERANCE
 
 
 class TestNodeTheorem:
@@ -274,9 +278,9 @@ class TestEigenfunctionExpansion:
         coeffs = expand_in_eigenbasis(f, psi, dx)
         
         # First coefficient should be 1, rest should be 0
-        assert abs(coeffs[0] - 1.0) < 1e-10
+        assert abs(coeffs[0] - 1.0) < NUMERICAL_TOLERANCE
         for c in coeffs[1:]:
-            assert abs(c) < 1e-10
+            assert abs(c) < NUMERICAL_TOLERANCE
     
     def test_reconstruction(self):
         """Test that reconstruction works."""
@@ -292,7 +296,7 @@ class TestEigenfunctionExpansion:
         f_reconstructed = reconstruct_from_coefficients(coeffs, psi)
         
         error = np.sqrt(np.sum((f - f_reconstructed)**2) * dx)
-        assert error < 1e-10
+        assert error < NUMERICAL_TOLERANCE
     
     def test_delta_function_expansion(self):
         """Test expansion of delta function."""
@@ -404,7 +408,7 @@ class TestNumericalStability:
         ev2, psi2 = compute_eigenstates(H2, dx2, num_states=5)
         
         # Eigenvalues should be identical
-        np.testing.assert_allclose(ev1, ev2, rtol=1e-10)
+        np.testing.assert_allclose(ev1, ev2, rtol=NUMERICAL_TOLERANCE)
 
 
 if __name__ == "__main__":
