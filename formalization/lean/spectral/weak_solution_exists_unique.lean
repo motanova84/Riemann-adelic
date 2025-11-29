@@ -61,10 +61,20 @@ def L2Space := Lp ℝ 2 volume
 
 /-- 
 Placeholder para el espacio de Sobolev H¹(ℝⁿ).
-En una formalización completa, esto sería el espacio con norma:
+
+**Important Note for Future Formalization:**
+This should be the Sobolev space with norm:
   ||u||²_{H¹} = ||u||²_{L²} + ||∇u||²_{L²}
+
+The proper definition would involve:
+1. The space of functions u ∈ L²(ℝⁿ) with weak derivatives ∂ᵢu ∈ L²(ℝⁿ)
+2. The inner product: ⟨u, v⟩_{H¹} = ∫ (u·v + ∇u·∇v) dx
+3. Completion of C_c^∞(ℝⁿ) under this norm
+
+When Mathlib has Sobolev spaces, this should be replaced with
+the proper definition from `Mathlib.Analysis.Sobolev`.
 -/
-def H1Space := ℝ → ℝ  -- Placeholder
+def H1Space := ℝ → ℝ  -- Placeholder, see documentation above
 
 /-- 
 Placeholder para funciones C_c^∞ (suaves con soporte compacto).

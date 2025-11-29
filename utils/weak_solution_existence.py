@@ -84,16 +84,16 @@ class WeakSolutionExistence:
         """
         Calcula ζ'(1/2) con alta precisión usando mpmath.
         
+        Uses mpmath's built-in derivative function for accurate computation.
+        
         Retorna:
         --------
         float
             Valor de ζ'(1/2) ≈ -3.9226461392
         """
         s = mp.mpf('0.5')
-        h = mp.mpf('1e-12')
-        zeta_plus = mp.zeta(s + h)
-        zeta_minus = mp.zeta(s - h)
-        zeta_prime = (zeta_plus - zeta_minus) / (2 * h)
+        # Use mpmath's built-in derivative for more accurate computation
+        zeta_prime = mp.diff(mp.zeta, s)
         return float(zeta_prime)
     
     def bilinear_form_coercivity(
@@ -148,6 +148,16 @@ class WeakSolutionExistence:
         
         # Teóricamente, α = min(1, ω₀²) para nuestro operador
         theoretical_alpha = min(1.0, self.omega_0_squared)
+        
+        # Validate that computed coercivity is consistent with theory
+        # For our operator -∇² + ω₀², we expect α ≥ min(1, ω₀²)
+        # Note: numerical discretization may cause small deviations
+        if min_alpha < theoretical_alpha * 0.1:
+            import warnings
+            warnings.warn(
+                f"Computed coercivity {min_alpha:.6f} significantly differs from "
+                f"theoretical value {theoretical_alpha:.6f}. Check discretization."
+            )
         
         return min_alpha, min_alpha > 0
     
@@ -326,8 +336,15 @@ class WeakSolutionExistence:
         T_final : float
             Tiempo final de existencia
         initial_data_smooth : bool
-            Si las condiciones iniciales son suaves
+            If True, assumes initial conditions Ψ(0,x), ∂Ψ/∂t(0,x) are in H¹ and L²
+            respectively (formal mathematical assumption for Lax-Milgram).
+            When concrete functions are provided for validation, this should be
+            verified separately.
         source_compact_support : bool
+            If True, assumes source field Φ ∈ C_c^∞ (smooth with compact support).
+            This ensures the RHS functional is continuous on V'.
+            When concrete functions are provided for validation, this should be
+            verified separately.
             Si la fuente tiene soporte compacto
             
         Retorna:
