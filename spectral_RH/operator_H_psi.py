@@ -668,17 +668,19 @@ def main():
     print()
     resonant_results = run_resonant_validation(N=1000, L=10.0, k=10, verbose=True)
 
-    # Generate plots
+    # Generate plots (use pathlib for portable paths)
+    from pathlib import Path
+    output_dir = Path(__file__).parent
     x = np.linspace(-50, 50, 1000)
 
     print("Generando visualizaciones...")
-    plot_potential(x, save_path='spectral_RH/potential_V.png')
+    plot_potential(x, save_path=str(output_dir / 'potential_V.png'))
     print("  ✓ Potencial V(x) guardado")
 
     # Use resonant operator for eigenvector plot
     H, x = build_H_psi_resonant(N=500, L=10.0)
     eigenvalues, eigenvectors = compute_eigenvalues_eigenvectors(H, k=10)
-    plot_eigenvectors(x, eigenvectors, n_plot=5, save_path='spectral_RH/eigenvectors_H_psi.png')
+    plot_eigenvectors(x, eigenvectors, n_plot=5, save_path=str(output_dir / 'eigenvectors_H_psi.png'))
     print("  ✓ Autovectores guardados")
 
     print()
