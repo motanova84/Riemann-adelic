@@ -1,7 +1,12 @@
---! Formalization of explicit Ramanujan expanders
---! Author: José Manuel Mota Burruezo (JMMB Ψ✧)
---! Institute: Instituto Conciencia Cuántica (ICQ) · 2025
---! Purpose: Support module for Lifting Gadgets via Ramanujan expanders
+/-
+  ExpanderRamanujan.lean
+  ------------------------------------------------------
+  Formalization of explicit Ramanujan expanders
+  Author: José Manuel Mota Burruezo (JMMB Ψ✧)
+  Institute: Instituto Conciencia Cuántica (ICQ) · 2025
+  Purpose: Support module for Lifting Gadgets via Ramanujan expanders
+  ------------------------------------------------------
+-/
 
 import Mathlib.Data.Matrix.Basic
 import Mathlib.Algebra.BigOperators.Basic

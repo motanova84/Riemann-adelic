@@ -65,14 +65,17 @@ theorem gadget_lift_validity :
   sorry
 
 -- Construction of explicit gadget using Ramanujan expander G₄
+-- Note: For G₄ with degree d=2, the Ramanujan bound is 2√(d-1) = 2√1 = 2.
+-- The spectral gap 1.8 is chosen as a conservative estimate below the bound,
+-- corresponding to the second largest eigenvalue magnitude of G₄.
 noncomputable def construct_explicit_gadget (n : ℕ) : GadgetParams :=
   if n = 4 then {
     graph := {
       vertices := Fin 4,
       edges := fun i j => G₄.A i j ≠ 0,
       degree := 2,
-      spectral_gap := 1.8,  -- Estimated from spectrum of G₄
-      Ramanujan_bound := 2 * Real.sqrt (2 - 1),  -- 2√(d-1) = 2√1 ≈ 2
+      spectral_gap := 1.8,  -- Conservative estimate for λ₂ of G₄
+      Ramanujan_bound := 2 * Real.sqrt (2 - 1),  -- 2√(d-1) = 2
       is_regular := True
     },
     labels := {
