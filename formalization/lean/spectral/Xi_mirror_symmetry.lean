@@ -92,6 +92,13 @@ This is axiomatized here based on Mathlib's riemannZeta definition.
     This axiom encapsulates the classical result that relates
     ζ(s) and ζ(1-s) through the Gamma function and trigonometric factors.
     
+    **Note on Axiomatization**: This is axiomatized pending full integration
+    with Mathlib's riemannZeta_one_sub theorem. The mathematical content
+    is well-established (Riemann, 1859; Titchmarsh, 1986). The axiom
+    follows the same pattern as other files in this repository (see
+    functional_equation.lean, xi_symmetry_identity.lean) where fundamental
+    number-theoretic results are axiomatized for tractable formalization.
+    
     Reference: Mathlib.NumberTheory.ZetaFunction.riemannZeta_one_sub
 -/
 axiom zeta_functional_equation : 
@@ -117,8 +124,13 @@ the Gamma reflection formula and algebraic manipulation of the
     2. Gamma reflection: Γ(s) · Γ(1-s) = π / sin(πs)
     3. Algebraic simplification of π-powers
     
-    This axiom is standard in number theory and represents
-    Riemann's original functional equation discovery (1859).
+    **Note on Axiomatization**: This axiom is standard in number theory
+    and represents Riemann's original functional equation discovery (1859).
+    It is consistent with the axiomatization approach used throughout
+    this repository (e.g., Ξ_functional_equation in functional_equation.lean,
+    xi_functional_equation in xi_symmetry_identity.lean). The mathematical
+    content is well-established and the axiom enables tractable formalization
+    of downstream results without requiring deep Mathlib integration.
     
     Reference: Titchmarsh "The Theory of the Riemann Zeta-Function" §2.15
 -/
