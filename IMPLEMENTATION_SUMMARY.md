@@ -1,6 +1,83 @@
 # Implementation Summary: Mathematical and Physical Unification
 
-## Latest Addition: Cierre Técnico Definitivo — SchattenPaley.lean (November 29, 2025)
+## Latest Addition: Spectral Expansion of Ψ (November 29, 2025)
+
+### Overview
+
+Created **`formalization/lean/spectral/spectral_expansion_xi.lean`** and **`spectral_expansion_validation.py`** to implement the spectral expansion theorem for Ψ in the orthonormal basis of eigenfunctions of H_Ξ.
+
+### Theorem (Spectral Expansion of Ψ)
+
+For an orthonormal and total (complete) basis {eₙ} of eigenfunctions of H_Ξ, every Ψ ∈ L²(ℝ) admits the expansion:
+
+```
+Ψ(x) = Σₙ₌₀^∞ ⟨Ψ, eₙ⟩ · eₙ(x)
+```
+
+with convergence in the L² norm.
+
+### Components Defined
+
+1. **coeff_Ξ Ψ n**: Spectral (Fourier) coefficient of Ψ over eigenmode eₙ
+   - Definition: `coeff_Ξ Ψ eigen_Ξ n := inner Ψ (eigen_Ξ n)`
+   
+2. **spectral_partial_sum Ψ eigen_Ξ N**: Partial sum of order N
+   - Definition: `Σₙ₌₀^{N-1} ⟨Ψ, eₙ⟩ · eₙ`
+   
+3. **spectral_expansion_converges**: Convergence theorem
+   - Statement: `Tendsto (λ N, spectral_partial_sum Ψ eigen_Ξ N) atTop (𝓝 Ψ)`
+
+### Mathematical Conclusions
+
+1. The eigenfunctions of H_Ξ form an orthonormal and dense basis
+2. Every Ψ ∈ L²(ℝ) can be expressed as an infinite sum of eigenmodes
+3. This resolves formally the wave equation based on H_Ξ via spectral decomposition
+
+### Files Created
+
+1. **`formalization/lean/spectral/spectral_expansion_xi.lean`** (~14 KB)
+   - Lean4 formalization of spectral expansion theorem
+   - `IsOrthonormal` and `IsTotal` predicates
+   - `coeff_Ξ` coefficient definition
+   - `spectral_partial_sum` partial sum definition
+   - `spectral_expansion_converges` main theorem
+   - `bessel_inequality` and `parseval_identity` axioms
+   - Connection to Riemann zeros (`spectral_expansion_zeta_zeros`)
+   - QCAL integration (f₀ = 141.7001 Hz, C = 244.36)
+
+2. **`spectral_expansion_validation.py`** (~14 KB)
+   - Python numerical validation module
+   - `SpectralExpansion` class with numerical tools
+   - Harmonic oscillator eigenbasis generation
+   - Orthonormality, Bessel, Parseval verification
+   - Spectral convergence validation
+
+3. **`tests/test_spectral_expansion_xi.py`** (~14 KB)
+   - 27 test cases covering Lean file structure and Python validation
+   - Tests for all components defined
+   - QCAL integration tests
+
+### Key Theorems
+
+- `IsOrthonormal`: Predicate for orthonormal sequences
+- `IsTotal`: Predicate for total (dense span) sequences
+- `coeff_Ξ`: Spectral coefficient definition
+- `spectral_partial_sum`: Partial sum definition
+- `bessel_inequality`: Sum of |cₙ|² ≤ ‖Ψ‖²
+- `parseval_identity`: Σ|cₙ|² = ‖Ψ‖² for complete basis
+- `spectral_expansion_converges`: Main convergence theorem
+- `eigenvalues_are_zeta_zeros`: Connection to Riemann zeta zeros
+
+### Status: VALIDATED
+
+```
+python -m pytest tests/test_spectral_expansion_xi.py -v
+# Output: 27 passed
+```
+
+---
+
+## Previous Addition: Cierre Técnico Definitivo — SchattenPaley.lean (November 29, 2025)
 
 ### Overview
 
