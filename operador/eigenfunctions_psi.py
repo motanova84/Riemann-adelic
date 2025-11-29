@@ -147,7 +147,8 @@ def construct_marchenko_potential(
         width = 1.0 / (1.0 + gamma / 20.0)
 
         # sech² well (exactly solvable in 1D quantum mechanics)
-        sech_component = -weight * gamma**2 / (np.cosh((x - center) / width)**2 + EPSILON)
+        # Note: cosh() >= 1, so cosh()^2 >= 1, no division by zero possible
+        sech_component = -weight * gamma**2 / np.cosh((x - center) / width)**2
 
         # Oscillatory component encoding the zero's position
         oscillatory = weight * np.cos(gamma * x / 5.0) * envelope

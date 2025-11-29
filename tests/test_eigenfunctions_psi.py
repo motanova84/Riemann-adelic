@@ -11,11 +11,6 @@ DOI: 10.5281/zenodo.17379721
 
 import numpy as np
 import pytest
-from pathlib import Path
-import sys
-
-# Add operador to path
-sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "operador"))
 
 from operador.eigenfunctions_psi import (
     load_riemann_zeros,
