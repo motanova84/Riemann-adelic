@@ -8,10 +8,13 @@
   Key components:
   1. Hilbert space ℋ defined as ℓ²(ℕ)
   2. Operator H_Ψ (canonical Hamiltonian) as diagonal multiplication
-  3. Symmetry lemma for H_Ψ
-  4. Fredholm determinant D(s) construction with functional equation
-  5. Bridge theorems: D_zero_implies_spectrum and spectrum_implies_D_zero
-  6. Final RH_true theorem without direct sorry
+  3. Symmetry lemma for H_Ψ (fully proved)
+  4. Fredholm determinant D(s) construction with functional equation (axiomatized)
+  5. Bridge theorems: D_zero_implies_spectrum and spectrum_implies_D_zero (structural sorry)
+  6. Final RH_true theorem (depends on bridge theorems)
+
+  Note: The final theorem RH_true derives Re(ρ)=1/2 from the bridge theorems.
+  The bridge theorems contain structural sorry pending full spectral theory formalization.
 
   Author: José Manuel Mota Burruezo Ψ ✧ ∞³
   Instituto de Conciencia Cuántica (ICQ)
@@ -331,18 +334,18 @@ to the Riemann Hypothesis. The key contributions are:
 - zero_set_zeta: Set of nontrivial zeros
 
 ### Theorems
-1. H_Ψ_symmetric: The operator is symmetric
-2. D_zero_implies_spectrum: Zeros ↔ Spectrum (→)
-3. spectrum_implies_D_zero: Zeros ↔ Spectrum (←)
-4. RH_true: All nontrivial zeros have Re(s) = 1/2
+1. H_Ψ_symmetric: The operator is symmetric (✅ fully proved)
+2. D_zero_implies_spectrum: Zeros ↔ Spectrum (→) (⚠️ structural sorry)
+3. spectrum_implies_D_zero: Zeros ↔ Spectrum (←) (⚠️ structural sorry)
+4. RH_true: All nontrivial zeros have Re(s) = 1/2 (derives from above)
 
 ### Status
 - ✅ Hilbert space ℋ defined as ℓ²(ℕ)
 - ✅ Operator H_Ψ as diagonal multiplication
-- ✅ H_Ψ symmetry lemma proven
+- ✅ H_Ψ symmetry lemma fully proven
 - ✅ Axioms for D(s) as Fredholm determinant
-- ✅ Bridge theorems formulated
-- ✅ Final RH_true theorem stated without direct sorry
+- ⚠️ Bridge theorems contain structural sorry (pending spectral theory)
+- ✅ Final RH_true theorem derives Re(ρ)=1/2 from bridge theorems
 
 ### Technical Notes
 - Uses Mathlib for complex analysis and topology
