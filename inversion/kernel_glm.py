@@ -30,6 +30,7 @@ References:
 import numpy as np
 from scipy.linalg import solve
 from typing import Tuple, Optional, Dict, Any
+from mpmath import zetazero
 
 # QCAL Constants
 QCAL_BASE_FREQUENCY = 141.7001  # Hz
@@ -50,7 +51,6 @@ def get_riemann_zeros(N: int = 30) -> np.ndarray:
         Uses mpmath.zetazero for high-precision computation.
         The zeros are on the critical line Re(s) = 1/2.
     """
-    from mpmath import zetazero
     gamma = np.array([float(zetazero(k).imag) for k in range(1, N + 1)])
     return gamma
 
@@ -326,8 +326,17 @@ def plot_reconstruction(
     Args:
         result: Dictionary from full_reconstruction()
         save_path: Optional path to save the figure
+
+    Raises:
+        ImportError: If matplotlib is not available
     """
-    import matplotlib.pyplot as plt
+    try:
+        import matplotlib.pyplot as plt
+    except ImportError as e:
+        raise ImportError(
+            "matplotlib is required for plotting. "
+            "Install it with: pip install matplotlib"
+        ) from e
 
     x_full = result['x_full']
     V_full = result['V_full']
