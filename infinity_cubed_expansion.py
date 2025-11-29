@@ -94,11 +94,17 @@ def get_known_riemann_zeros(n: int = 100) -> np.ndarray:
     ])
     # For more zeros, use asymptotic approximation
     if n > len(known_zeros):
-        # Asymptotic formula: γₙ ≈ 2πn / ln(n) for large n
+        # Use improved asymptotic formula from Riemann-von Mangoldt
+        # N(T) ≈ (T/2π) log(T/2π) - T/2π
+        # Inverting: γₙ ≈ 2πn / W(n/e) where W is Lambert W function
+        # Simplified approximation for n > 30:
         extra_zeros = []
-        for i in range(len(known_zeros), n):
-            # Better asymptotic approximation
-            t = 2 * np.pi * (i + 1) / np.log(i + 2)
+        for idx in range(len(known_zeros), n):
+            # Use improved formula with log correction
+            m = idx + 1  # 1-indexed zero number
+            # γₘ ≈ 2πm / log(m) * (1 + 1/log(m))
+            log_m = np.log(m) if m > 1 else 1.0
+            t = 2 * np.pi * m / log_m * (1 + 1 / (2 * log_m))
             extra_zeros.append(t)
         return np.concatenate([known_zeros, np.array(extra_zeros)])
 
