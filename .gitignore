@@ -176,6 +176,7 @@ examples/__pycache__/
 tools/qcal_state.json
 # Spectral framework demo images
 *_demo.png
+G4_spectrum_plot.png
 
 # Validation notebook generated images
 evac_zeta_visualization.png
