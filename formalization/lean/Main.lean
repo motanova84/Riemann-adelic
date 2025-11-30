@@ -35,11 +35,13 @@ import RiemannAdelic.BerryKeatingOperator
 -- Entire function theory
 import RiemannAdelic.entire_order
 import RiemannAdelic.xi_entire_proof
--- Script 4: Holomorphy of Ξ(s) = D(s) as entire function
-import RiemannAdelic.Xi_holomorphic
+-- NEW: Axiom Xi Holomorphic - Complete Ξ(s) construction via Mellin transform (V6)
+import axiom_Xi_holomorphic
 
 -- Hadamard factorization and quotient analysis
 import RiemannAdelic.Hadamard
+-- Hadamard product theorem for ξ(s) (Riemann Xi function)
+import RiemannAdelic.hadamard_product_xi
 
 -- Functional equation and symmetry
 import RiemannAdelic.functional_eq
@@ -47,9 +49,12 @@ import RiemannAdelic.poisson_radon_symmetry
 import RiemannAdelic.radon_integral_symmetry
 -- Xi functional equation from spectral symmetry (Part 4/∞³)
 import RiemannAdelic.Xi_functional_eq
+-- Φ(x) Fourier self-dual and Ξ(s) functional equation (NEW - 27 Nov 2025)
+import RiemannAdelic.phi_fourier_self_dual
 
 -- Archimedean factors
 import RiemannAdelic.arch_factor
+import RiemannAdelic.gamma_factor_basic
 import RiemannAdelic.GammaTrivialExclusion
 import RiemannAdelic.GammaWeierstrassLemma
 
@@ -82,6 +87,12 @@ import paley.paley_wiener_uniqueness
 -- Identity Principle for Exponential Type Functions
 import paley.identity_principle_exp_type
 
+-- CIERRE TÉCNICO DEFINITIVO: Schatten-Paley Uniqueness (29 Nov 2025)
+-- Resolves two main objections:
+-- 1. exponential_decay_schatten_trace: λ_n ≤ exp(-αn) → ∑ (λ_n)^p < ∞ (p≥1)
+-- 2. paley_wiener_uniqueness: entire f + exp-type + f|ℝ=0 → f ≡ 0
+import «SchattenPaley»
+
 -- New modular components for final RH proof
 import RiemannAdelic.SelbergTraceStrong
 import RiemannAdelic.SpectralOperator
@@ -111,6 +122,11 @@ import RiemannAdelic.riemann_hypothesis_proof
 -- NoExtraneousSpectrum: Final closure - spectrum = zeta zeros (23 Nov 2025)
 import RiemannAdelic.NoExtraneousSpectrum
 
+-- Heat kernel convergence lemmas (Selberg trace spectral convergence)
+import RiemannAdelic.heat_kernel_to_delta_plus_primes
+import RiemannAdelic.tendsto_integral_kernel_to_delta
+import RiemannAdelic.convergence_arithmetic_correction
+import RiemannAdelic.tendsto_integral_shifted_kernel
 -- RHSpectralProof: Spectral form of RH with Dχ(s) ≡ Ξ(s) identity
 -- import RHComplete.RHSpectralProof  -- Now imported via RHComplete module
 
@@ -125,10 +141,28 @@ import RiemannAdelic.SelbergTraceStrong
 -- Heat Kernel Convergence (formalization in progress)
 import RiemannAdelic.heat_kernel_to_delta_plus_primes
 
--- Script 41/∞³: Zeta from Heat Kernel (NEW - 26 November 2025)
--- Reconstruction of ζ(s) from heat kernel of H_Ψ²
-import spectral.H_psi_spectrum
-import spectral.zeta_from_heat_kernel
+-- Weil Explicit Formula (spectral derivation)
+import spectral.Fredholm_Det_Xi
+import spectral.Weil_explicit
+-- NEW: Self-adjoint operator H_Ψ (Part 31/∞³)
+-- Formalizes: Dense domain D(H_Ψ), H_Ψ = H_Ψ† (self-adjoint), spectrum ⊆ ℝ
+import operators.Hpsi_selfadjoint
+
+-- Script 13/∞³: Eigenfunctions Dense in L²(ℝ) (NEW - 26 November 2025)
+-- Orthonormal basis of eigenfunctions for compact self-adjoint operators
+import spectral.eigenfunctions_dense_L2R
+-- Script 42/∞³: Compact Self-Adjoint Spectrum (NEW - 27 November 2025)
+-- Discrete spectrum with accumulation only at 0 for compact self-adjoint operators
+import spectral.compact_selfadjoint_spectrum
+-- NEW: Schatten-Paley Lemmas (29 November 2025)
+-- Eigenvalue exponential decay → Schatten class trace convergence
+-- Paley-Wiener uniqueness for entire functions with real zeros
+import spectral.schatten_paley_lemmas
+
+-- ⚠️ THEORETICAL FRAMEWORK (Not imported - doesn't compile)
+-- RiemannAdelic.PsiNSE_CompleteLemmas_WithInfrastructure
+-- This is a skeleton formalization connecting NSE with QCAL infrastructure
+-- See formalization/lean/RiemannAdelic/PSI_NSE_README.md for details
 
 def main : IO Unit := do
   IO.println "╔═══════════════════════════════════════════════════════════╗"
@@ -179,7 +213,10 @@ def main : IO Unit := do
   IO.println "    - RH_spectral_form: ζ(s) = 0 → Re(s) = 1/2"
   IO.println "    - Non-circular proof via spectral operators"
   IO.println "  • Entire function and Hadamard theory"
-  IO.println "  • Script 4: Xi_holomorphic (Ξ(s) = D(s) as entire function)"
+  IO.println "  • NEW: Axiom Xi Holomorphic (V6 - 26 November 2025)"
+  IO.println "    - Complete Ξ(s) construction via theta/Mellin transform"
+  IO.println "    - Eliminates axiom Xi_holomorphic from proof chain"
+  IO.println "    - Pole cancellation analysis at s = 0, 1, -2n"
   IO.println "  • Hadamard factorization and quotient analysis"
   IO.println "  • Functional equation and Poisson symmetry"
   IO.println "  • Radon-Poisson integral functional symmetry"
@@ -188,6 +225,12 @@ def main : IO Unit := do
   IO.println "    - Spectral symmetry: λₙ = λ₋ₙ proved"
   IO.println "    - Truncated Ξ(s) product representation"
   IO.println "    - Functional equation Ξ(s) = Ξ(1-s) via symmetry"
+  IO.println "  • NEW: Φ(x) Fourier Self-Dual (phi_fourier_self_dual.lean - 27 Nov 2025)"
+  IO.println "    - Jacobi theta modular transform: θ(1/t) = √t·θ(t)"
+  IO.println "    - PhiFunction structure with Schwartz properties"
+  IO.println "    - Main theorem: ∃ Φ, ℱ[Φ](ξ) = Φ(ξ) (self-duality)"
+  IO.println "    - Connection to Ξ(s) = Ξ(1-s) via Mellin transform"
+  IO.println "    - Gaussian exp(-πx²) as explicit eigenfunction"
   IO.println "  • Gamma Weierstrass representation for reflected Gamma function"
   IO.println "  • de Branges space framework"
   IO.println "  • Weil-Guinand positivity theory"
@@ -205,19 +248,58 @@ def main : IO Unit := do
   IO.println "  • Spectral RH operator (H_ε with prime harmonic potential)"
   IO.println "  • Critical line proof via spectral operators"
   IO.println "  • Spectral RH operator H_ε"
+  IO.println "  • H_ε foundation (eigenvalues and D(s) definitions)"
+  IO.println "  • Selberg trace formula (spectral-arithmetic connection)"
+  IO.println "  • Heat kernel convergence lemmas (Selberg spectral convergence)"
+  IO.println "  • H_ε foundation (logarithmic Hilbert space, Hermite basis, p-adic potential)"
   IO.println "  • Berry-Keating operator H_Ψ (complete formalization)"
   IO.println "  • Spectral zeta function ζ_HΨ(s) and zeta-regularized determinant"
   IO.println "  • Hadamard factorization (purge_axioms branch)"
+  IO.println "  • NEW: Hadamard Product for ξ(s) (hadamard_product_xi.lean)"
+  IO.println "    - Main theorem: ξ(s) = e^{A+Bs} ∏_ρ (1-s/ρ)e^{s/ρ}"
+  IO.println "    - Connection to spectral interpretation (Ξ-HΨ model)"
+  IO.println "    - Weierstrass elementary factors for order 1 functions"
+  IO.println "    - Functional equation ξ(s) = ξ(1-s) and zero symmetry"
   IO.println "  • Kernel positivity (purge_axioms branch)"
   IO.println "  • Gamma trivial exclusion (purge_axioms branch)"
   IO.println "  • Selberg Trace Formula (strong form with exact convergence)"
   IO.println "  • Heat Kernel Convergence to δ₀ + Arithmetic Distribution (formalization in progress; contains sorry/axiom)"
+  IO.println "  • NEW: Weil Explicit Formula (spectral derivation from H_Ψ)"
+  IO.println "    - Connects zeta zeros with prime distribution via spectrum"
+  IO.println "    - ∑g(λₙ) + g(-λₙ) - ∫g(t)K(t)dt = ∑g(Im ρ)"
+  IO.println "    - Fredholm determinant ↔ Xi function connection"
   IO.println "  • NEW: Script 41/∞³ - Zeta from Heat Kernel (26 November 2025)"
   IO.println "    - spectral/H_psi_spectrum: Eigenvalue sequence λₙ of H_Ψ"
   IO.println "    - spectral/zeta_from_heat_kernel: ζ(s) reconstruction via Mellin transform"
   IO.println "    - heat_kernel_trace: Tr(exp(-t·H_Ψ²)) = ∑ₙ exp(-t·λₙ²)"
   IO.println "    - zeta_from_heat: ζ(s) = (1/Γ(s)) ∫ t^(s-1) Tr(K_t) dt"
+  IO.println "  • NEW: Script 13/∞³ - Eigenfunctions Dense in L²(ℝ) (26 November 2025)"
+  IO.println "    - spectral/eigenfunctions_dense_L2R: Orthonormal basis of eigenfunctions"
+  IO.println "    - eigenfunctions_dense_L2R: ∃ (e : ℕ → H), orthonormal ℂ e ∧ span(e) = ⊤"
+  IO.println "    - Complete theorem: no sorry (zero pending proofs)"
+  IO.println "    - Key for spectral development and heat kernel expansions"
+  IO.println "  • NEW: Script 42/∞³ - Compact Self-Adjoint Spectrum (27 November 2025)"
+  IO.println "    - spectral/compact_selfadjoint_spectrum: Discrete spectrum theorem"
+  IO.println "    - spectrum_compact_selfadjoint_discrete: Non-zero spectral points isolated"
+  IO.println "    - Applications to constructing orthonormal eigenbases for H_Ψ"
+  IO.println "    - Essential for Hilbert-Pólya approach to Riemann zeros"
+  IO.println "  • NEW: Schatten-Paley Lemmas (29 November 2025)"
+  IO.println "    - spectral/schatten_paley_lemmas: Convergence and uniqueness lemmas"
+  IO.println "    - exponential_decay_schatten_trace: λₙ decay → Schatten class"
+  IO.println "    - paley_wiener_uniqueness_real: Entire vanishing on ℝ is zero"
+  IO.println "    - spectral_equals_xi: det_zeta = Ξ from critical line agreement"
+  IO.println "  • NEW: Hpsi_selfadjoint (Part 31/∞³ - Self-adjoint operator H_Ψ)"
+  IO.println "    - Dense domain D(H_Ψ)"
+  IO.println "    - H_Ψ = H_Ψ† (self-adjoint axiom)"
+  IO.println "    - Spectrum(H_Ψ) ⊆ ℝ (spectral theorem compatible)"
   IO.println ""
+  IO.println "Theoretical frameworks (documented but not compiled):"
+  IO.println "  • Ψ-NSE with QCAL infrastructure (f₀ = 141.7001 Hz)"
+  IO.println "  • P≠NP treewidth connections"
+  IO.println "  • Adelic spectral coherence system"
+  IO.println ""
+  IO.println "Status: Constructive formalization in progress"
+  IO.println "DOI: 10.5281/zenodo.17116291"
   IO.println "Status: Constructive formalization in progress (purge_axioms branch)"
   IO.println "DOI: 10.5281/zenodo.17116291"
   IO.println "Frequency: 141.7001 Hz"

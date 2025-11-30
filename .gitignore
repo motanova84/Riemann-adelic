@@ -66,6 +66,7 @@ data/temp_*
 data/*.tmp
 data/validation/results/*
 data/validation/certificates/*
+data/qcal_validation_certificate.json
 !data/validation/results/.gitkeep
 !data/validation/certificates/.gitkeep
 !data/validation_results.csv
@@ -165,5 +166,32 @@ build/
 # Disabled workflow files
 *.disabled
 
+# Monitoring system - evidence and sensitive data
+monitoring/evidence/
+monitoring/alerts/*.json
+!monitoring/alerts/.gitkeep
+examples/__pycache__/
+
+# QCAL auto-generated state files
+tools/qcal_state.json
 # Spectral framework demo images
 *_demo.png
+G4_spectrum_plot.png
+
+# Validation notebook generated images
+evac_zeta_visualization.png
+convexity_gamma_visualization.png
+validation_summary.png
+validation_summary.txt
+
+# Notebook execution generated files
+notebooks/zeta_zeros_error_plot.png
+# Spectral RH generated images
+spectral_RH/*.png
+# Riemann eigenfunctions visualization output
+riemann_eigenfunctions_individual.png
+riemann_eigenfunctions_combined.png
+# Sturm-Liouville spectral analysis generated images
+sturm_liouville_nodal_structure.png
+spectral_amplitudes.png
+fourier_spectrum_141_7001_hz.png
