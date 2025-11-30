@@ -19,6 +19,7 @@
 ```
 
 **Ver documentación completa**: 
+- [ADELIC_SPECTRAL_DEMONSTRATION_RH.md](ADELIC_SPECTRAL_DEMONSTRATION_RH.md) - 🆕 **Demostración Adélico-Espectral Completa**
 - [RESPUESTA_COMPLETA_FORMALIZACION.md](RESPUESTA_COMPLETA_FORMALIZACION.md)
 - [FORMALIZACION_COMPLETA_SIN_SORRY.md](FORMALIZACION_COMPLETA_SIN_SORRY.md)
 - [TASK_COMPLETION_FORMALIZACION.md](TASK_COMPLETION_FORMALIZACION.md)
@@ -1872,7 +1873,7 @@ ___
 | **Warnings** | null |
 | **Errors** | null |
 | **Lean Version** | null |
-| **Date (UTC)** | 2025-11-29 18:51:56Z |
+| **Date (UTC)** | 2025-11-30 17:12:33Z |
 ___
 
 ## License
