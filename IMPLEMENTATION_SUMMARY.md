@@ -56,41 +56,6 @@ The weak form fits classical linear hyperbolic equation frameworks with smooth s
 ### Key Results
 
 ```
-======================================================================
-Teorema: weak_solution_exists_unique
-======================================================================
-
-Ecuación: ∂²Ψ/∂t² + ω₀²Ψ = ζ'(1/2)·π·∇²Φ
-
-Hipótesis:
-  ✓ initial_data_smooth: True
-  ✓ source_compact_support: True
-  ✓ operator_coercive: True (ω₀² > 0)
-  ✓ omega_0_positive: True
-  ✓ coupling_constant_finite: True
-
-Condiciones de Lax-Milgram:
-  ✓ bilinear_continuous: True
-  ✓ bilinear_coercive: True
-  ✓ rhs_continuous: True
-  ✓ lax_milgram_satisfied: True
-
-Resultado: El teorema SE CUMPLE ✓
-Solución: Ψ ∈ C⁰([0,T], H¹(ℝⁿ)) ∩ C¹([0,T], L²(ℝⁿ))
-======================================================================
-```
-
-### Integration with QCAL ∞³
-
-- Frequency: ω₀ = 2π × 141.7001 Hz
-- ζ'(1/2) ≈ -3.9226461392 (coupling to arithmetic structure)
-- Coherence constant: C = 244.36
-
-### References
-
-- Lions, J.L. & Magenes, E.: Non-Homogeneous Boundary Value Problems
-- Evans, L.C.: Partial Differential Equations, Chapter 7
-- Lax-Milgram Theorem for coercive bilinear forms
 
 ---
 
