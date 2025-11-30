@@ -11,11 +11,11 @@ jobs:
       - uses: actions/checkout@v4
       - name: Install elan
         run: curl https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -sSf | sh -s -- -y
-      - name: Set Lean toolchain
+      - name: Set up Lean toolchain
         run: |
           echo "$HOME/.elan/bin" >> $GITHUB_PATH
-          ~/.elan/bin/elan default stable
-      - name: Update lake manifest
+          cd formalization/lean && ~/.elan/bin/elan show
+      - name: Generate lake manifest
         run: |
           cd formalization/lean
           ~/.elan/bin/lake update
