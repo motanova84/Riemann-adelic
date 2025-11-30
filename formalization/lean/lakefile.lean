@@ -11,6 +11,10 @@ lean_lib RHComplete where
   globs := #[.submodules `RHComplete]
   roots := #[`RHComplete]
 
+lean_lib «QCAL» where
+  -- QCAL library for universal verification
+  roots := #[`QCAL]
+
 -- RH_final_v6 library
 lean_lib RH_final_v6 where
   globs := #[.submodules `RH_final_v6]
@@ -20,14 +24,10 @@ lean_lib RiemannAdelic where
   globs := #[.submodules `RiemannAdelic]
   roots := #[`RiemannAdelic]
 
--- Operator library - Spectral operators and H_Ψ core
-lean_lib Operator where
-  globs := #[.submodules `Operator]
-  roots := #[`Operator.H_psi_core]
-
--- Hpsi_selfadjoint - Part 34/∞³ self-adjointness module
-lean_lib Hpsi where
-  roots := #[`Hpsi_selfadjoint]
+-- Adelic library - L-function spectral reconstruction
+lean_lib adelic where
+  globs := #[.submodules `adelic]
+  roots := #[`adelic]
 
 -- Main executable
 @[default_target]

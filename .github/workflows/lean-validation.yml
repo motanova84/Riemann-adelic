@@ -1,4 +1,4 @@
-name: 🔎 Lean 4 Validation & Report
+name: Lean 4 Validation
 
 on:
   push:
@@ -12,38 +12,35 @@ permissions:
 
 jobs:
   validate-lean:
-    name: "🧠 Formalización Riemann–Adelic (Lean 4.5.0)"
+    name: "Lean 4 Formalization Validation"
     runs-on: ubuntu-latest
     timeout-minutes: 60
 
     steps:
-    # 1️⃣  Clonar el repositorio
     - name: 🔽 Checkout repository
       uses: actions/checkout@v4
 
-    # 2️⃣  Configurar Python (para el validador)
     - name: 🐍 Set up Python 3.11
       uses: actions/setup-python@v5
       with:
         python-version: "3.11"
 
-    # 3️⃣  Configurar Lean (via elan)
     - name: ⚙️ Install Lean 4.5.0 toolchain
       run: |
         curl https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -sSf | sh -s -- -y
         echo "$HOME/.elan/bin" >> $GITHUB_PATH
-        elan toolchain install leanprover/lean4:v4.5.0
-        elan default leanprover/lean4:v4.5.0
-        lean --version
+        ~/.elan/bin/elan toolchain install leanprover/lean4:v4.5.0
+        ~/.elan/bin/elan default leanprover/lean4:v4.5.0
+        ~/.elan/bin/lean --version
 
-    # 4️⃣  Ir al directorio de formalización
     - name: 📂 Navigate to Lean formalization folder
       working-directory: formalization/lean
       run: |
-        echo "Contenido actual:"
+        echo "Lean project structure:"
         ls -la
+        echo "Lean files found:"
+        find . -name "*.lean" | head -20
 
-    # 5️⃣  Instalar dependencias del proyecto Lean
     - name: 📦 Install Lean project dependencies
       working-directory: formalization/lean
       run: |
