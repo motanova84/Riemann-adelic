@@ -141,9 +141,13 @@ theorem xi_zero_iff_resolvent_symbol_blowup (γ : ℝ) :
     -- At t = γ, the resolvent symbol blows up due to the pole
     unfold resolventSymbol
     -- The denominator HΨ(γ) - iγ approaches 0 near the zero
+    -- TODO: Requires proof that HΨ(t) = (ξ'/ξ)(1/2 + it) has a pole at t = γ
+    -- when ξ(1/2 + iγ) = 0. This follows from the simple zero property of ξ.
     sorry
   · intro hblow
     -- If the multiplier diverges, ξ'/ξ has a pole, so ξ has a zero
+    -- TODO: Requires proof that divergence of 1/(HΨ(t) - iγ) implies
+    -- HΨ(t) has a pole, which means ξ'/ξ has a pole, hence ξ has a zero.
     sorry
 
 /-- 
@@ -160,12 +164,16 @@ theorem symbol_blowup_iff_GreenKernel_blowup (γ : ℝ) :
     obtain ⟨t₀, ht₀⟩ := h_symbol R hR
     -- Fourier transform preserves the singularity
     use ⟨0, 0⟩
+    -- TODO: Requires proof that Fourier transform of unbounded symbol
+    -- produces unbounded kernel. Uses Plancherel/Parseval duality.
     sorry
   · intro h_kernel
     intro R hR
     -- Fourier inversion: kernel blowup ⟹ symbol blowup
     obtain ⟨p, hp⟩ := h_kernel R hR
     use 0
+    -- TODO: Requires Fourier inversion argument: if kernel blows up,
+    -- the symbol (its Fourier transform) must also be unbounded.
     sorry
 
 /-- 
@@ -180,6 +188,8 @@ theorem GreenKernel_blowup_iff_resolvent_unbounded (γ : ℝ) :
     -- Kernel blowup contradicts boundedness
     obtain ⟨p, hp⟩ := h_kernel M hM_pos
     -- The kernel at (p.1, p.2) exceeds any bound
+    -- TODO: Requires proof that unbounded kernel implies unbounded operator.
+    -- Standard functional analysis: integral operator norm bounds kernel norm.
     sorry
   · intro h_unbounded
     intro R hR
@@ -192,6 +202,8 @@ theorem GreenKernel_blowup_iff_resolvent_unbounded (γ : ℝ) :
     · exact hR
     · intro t
       -- Need to relate symbol bound to kernel bound
+      -- TODO: Requires proof that bounded operator implies bounded kernel.
+      -- Uses Schur test or equivalent kernel bounds.
       sorry
 
 /-- 
@@ -279,6 +291,10 @@ theorem RH_from_self_adjoint
   -- By Theorem 18, iγ ∈ spectrum(HΨ)
   -- By self-adjointness, the spectrum is real
   -- Therefore Re(s) = 1/2
+  -- TODO: Requires:
+  -- 1. Proof that zeros of ξ lie on Re(s) = 1/2 (by functional equation symmetry)
+  -- 2. Connection to HΨ spectrum via RH_equivalent_spectrum
+  -- 3. Self-adjointness implies real spectrum (standard spectral theory)
   sorry
 
 /-!

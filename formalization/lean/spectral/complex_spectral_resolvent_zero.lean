@@ -99,6 +99,8 @@ theorem complex_spectral_resolvent_zero
   use γ
   -- At t = γ, the denominator approaches zero while numerator is 1
   -- This follows from the structure of the logarithmic derivative
+  -- TODO: Requires proof of pole structure of ξ'/ξ at zeros.
+  -- Key result: ξ has simple zeros, so ξ'/ξ has simple poles with residue 1.
   sorry
 
 /--

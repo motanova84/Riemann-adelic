@@ -127,6 +127,8 @@ theorem resolvent_unbounded_iff_GreenKernel_blowup :
     -- The kernel at x = y = 0 captures the integral of the symbol
     use ⟨0, 0⟩
     -- Transfer the singularity from symbol to kernel via Fourier
+    -- TODO: Requires Plancherel theorem application to show that
+    -- symbol pole produces kernel singularity at the diagonal.
     sorry
   · -- Backward: kernel blows up ⟹ resolvent unbounded
     intro h_kernel
@@ -135,6 +137,8 @@ theorem resolvent_unbounded_iff_GreenKernel_blowup :
     obtain ⟨p, hp⟩ := h_kernel R hR
     -- The symbol must be unbounded to produce kernel blowup
     use 0  -- Placeholder
+    -- TODO: Requires Fourier inversion argument: kernel singularity
+    -- implies symbol pole via inverse Fourier transform.
     sorry
 
 /--
