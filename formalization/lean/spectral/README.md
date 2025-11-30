@@ -190,6 +190,58 @@ Implications:
 
 **References**: Riemann (1859), Titchmarsh (1986), DOI: 10.5281/zenodo.17379721
 
+### `operator_resolvent.lean` 🆕 (30 November 2025)
+
+**Complete resolvent construction for HΨ and characterization on the imaginary axis.**
+
+This file bridges the noetic operator HΨ = −ω₀² I + κ ΔΦ and its resolvent (HΨ − λI)⁻¹, which is the key to connecting the spectrum of HΨ with the zeros of ζ.
+
+#### Key Definitions
+
+| Definition | Description |
+|------------|-------------|
+| `NoeticH` | Structure representing the Noetic Hamiltonian operator |
+| `GreenKernel` | Green kernel G_λ(t) = exp(-λt) for resolvent construction |
+| `resolvent` | The resolvent operator R(λ) = (HΨ - λI)⁻¹ |
+| `spectrum_set` | Set of spectral points where resolvent is unbounded |
+
+#### Key Results
+
+| Result | Type | Status |
+|--------|------|--------|
+| `GreenKernel_decay` | Lemma | ✅ Proved (no sorry) - Exponential decay |
+| `GreenKernel_continuous` | Lemma | ✅ Proved (no sorry) - Continuity |
+| `resolvent_well_defined` | Lemma | ⚠️ sorry (summability) |
+| `resolvent_is_right_inverse` | Theorem | ✅ Structure complete |
+| `λ_not_in_spectrum_iff_resolvent_bounded` | Theorem | ⚠️ sorry (spectral characterization) |
+| `first_resolvent_identity` | Theorem | ⚠️ sorry (algebraic identity) |
+| `resolvent_imaginary_bound` | Theorem | ⚠️ sorry (self-adjoint bound) |
+| `RH_from_self_adjoint_resolvent` | Theorem | ⚠️ sorry (main RH implication) |
+
+#### Mathematical Statement
+
+The resolvent formula:
+$$R(\lambda) f = \int_0^\infty G_\lambda(t) \cdot e^{tH_\Psi} f \, dt$$
+
+where $G_\lambda(t) = e^{-\lambda t}$ is the Green kernel.
+
+Spectral characterization:
+$$\lambda \notin \sigma(H_\Psi) \iff R(\lambda) \text{ is bounded}$$
+
+For self-adjoint HΨ on the imaginary axis:
+$$\|R(i\gamma)\| \leq \frac{1}{|\gamma|}$$
+
+#### Dependencies
+
+- `spectral/functional_equation.lean` (Ξ function)
+- `spectral/xi_mellin_representation.lean` (Mellin transform)
+- `spectral/operator_hpsi.lean` (HΨ definition)
+- `spectral/self_adjoint.lean` (Self-adjointness)
+
+**References**: Reed & Simon Vol. I-IV, Berry-Keating (1999), DOI: 10.5281/zenodo.17379721
+
+---
+
 ### `xi_mellin_representation.lean`
 
 Formalizes the Mellin transform representation of Ξ(s) as:
