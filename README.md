@@ -1437,6 +1437,8 @@ El wrapper ya ejecuta internamente:
    ✨ The Riemann Hypothesis proof framework is fully verified!
 ```
 
+> **📝 Note:** Both `python3 validate_v5_coronacion.py` and `python validar_v5_coronacion.py` work identically. The latter is a Spanish-friendly alias that forwards to the main script.
+
 ## Modes for Validation
 - **Light Mode**: Usa dataset mínimo (zeros_t1e3.txt con 1000 ceros, preincluido). Validación rápida (~2-5 min). Error esperado ~1e-6 con dps=15.
   Ejemplo: `python3 validate_v5_coronacion.py --precision 15`
@@ -1503,6 +1505,7 @@ Error relativo: ~0.004% (4.0e-4) for 100 zeros, within the refined tolerance of 
 │   └── zeros_t1e8.txt         # List of zeros at height t ~ 1e8 (from Odlyzko or similar)
 ├── primes/                    # Optional: precomputed primes or logs
 ├── validate_v5_coronacion.py  # Main V5 Coronación validation script
+├── validar_v5_coronacion.py   # Spanish alias (forwards to main script)
 ├── validate_explicit_formula.py  # Legacy explicit formula validation
 ├── validate_repository.py     # Repository integrity validation
 ├── validate_critical_line.py  # Critical line verification
