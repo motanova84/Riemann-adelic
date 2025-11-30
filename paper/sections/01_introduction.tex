@@ -1,0 +1,43 @@
+\section{Introduction}
+
+\subsection{Context and Motivation}
+
+The Riemann Hypothesis (RH), formulated in 1859, remains one of the most fundamental open problems in mathematics. It asserts that all non-trivial zeros of the Riemann zeta function $\zeta(s)$ lie on the critical line $\Re(s) = 1/2$. Beyond its intrinsic mathematical interest, RH has profound implications for the distribution of prime numbers and connects to numerous areas of pure and applied mathematics.
+
+Traditional approaches to RH have relied heavily on complex analysis, analytic number theory, and the properties of $\zeta(s)$ itself. In contrast, this work presents a \textbf{spectral-theoretic framework} rooted in adelic geometry, where $\zeta(s)$ emerges as a consequence rather than an assumption.
+
+\subsection{Main Strategy}
+
+Our approach consists of five interconnected steps:
+
+\begin{enumerate}
+  \item \textbf{Adelic Spectral Construction}: We build a canonical entire function $D(s)$ from first principles using S-finite adelic systems, without assuming the existence or properties of $\zeta(s)$.
+  
+  \item \textbf{Geometric Trace Formula}: Through Tate's theory and Weil's orbit identification, we derive that the orbit lengths are $\ell_v = \log q_v$ as a geometric consequence, not an axiom.
+  
+  \item \textbf{Functional Equation}: Using adelic Poisson summation with the Weil index, we prove that $D(1-s) = D(s)$.
+  
+  \item \textbf{Paley-Wiener Uniqueness}: We establish that $D(s) \equiv \Xi(s)$, where $\Xi(s)$ is the completed Riemann xi-function, using a strengthened uniqueness theorem with multiplicities.
+  
+  \item \textbf{Zero Localization}: We prove that all zeros lie on $\Re(s) = 1/2$ using two independent routes: de Branges canonical systems and Weil-Guinand positivity criteria.
+\end{enumerate}
+
+\subsection{Key Innovations}
+
+This framework distinguishes itself through:
+
+\begin{itemize}
+  \item \textbf{Autonomy}: The construction of $D(s)$ does not presuppose $\zeta(s)$ or its Euler product.
+  
+  \item \textbf{Operator-Theoretic Foundation}: All analytic properties emerge from trace-class operator theory (Birman-Solomyak) and spectral geometry.
+  
+  \item \textbf{Adelic Naturality}: The S-finite restriction provides both convergence and a natural regularization mechanism.
+  
+  \item \textbf{Dual Zero Localization}: Two independent proofs ensure robustness and provide complementary insights.
+\end{itemize}
+
+\subsection{Structure of the Paper}
+
+Section 2 establishes the adelic preliminaries and Schwartz-Bruhat theory. Section 3 derives the local length formula $\ell_v = \log q_v$ from Tate-Weil theory. Sections 4-5 construct the Hilbert space framework and define the resolvent operators. Section 6 proves the functional equation. Sections 7-8 establish growth estimates and Paley-Wiener uniqueness. Section 9 provides the inversion formula recovering primes. Section 10 presents numerical validation. Section 11 sketches the BSD extension (conditional). Section 12 discusses limitations and open questions.
+
+The appendices provide detailed technical proofs: trace-class estimates via double operator integrals (A), de Branges canonical systems (B), Paley-Wiener theory with multiplicities (C), archimedean contributions (D), computational algorithms (E), and reproducibility protocols (F).
