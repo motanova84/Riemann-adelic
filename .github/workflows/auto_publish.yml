@@ -18,7 +18,7 @@ on:
 jobs:
   publish-datasets:
     runs-on: ubuntu-latest
-    if: github.repository == 'motanova84/-jmmotaburr-riemann-adelic'
+    if: ${{ github.repository == 'motanova84/Riemann-adelic' }}
     permissions:
       contents: read
     
@@ -57,7 +57,7 @@ jobs:
         continue-on-error: true
 
       - name: Upload to Zenodo (if configured)
-        if: secrets.ZENODO_TOKEN != ''
+        if: ${{ secrets.ZENODO_TOKEN != '' }}
         run: |
           # Upload to Zenodo using their API
           # Note: This requires ZENODO_TOKEN secret to be configured
@@ -69,7 +69,7 @@ jobs:
           ZENODO_TOKEN: ${{ secrets.ZENODO_TOKEN }}
 
       - name: Upload to Hugging Face (if configured)
-        if: secrets.HF_TOKEN != ''
+        if: ${{ secrets.HF_TOKEN != '' }}
         run: |
           # Upload to Hugging Face Hub
           # Note: This requires HF_TOKEN secret to be configured
