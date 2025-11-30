@@ -1,6 +1,54 @@
 # Implementation Summary: Mathematical and Physical Unification
 
-## Latest Addition: Wave Energy Balance — Noetic Energy Conservation (November 29, 2025)
+## Latest Addition: Noetic Resolvent Green Kernel (November 30, 2025)
+
+### Overview
+
+Created **`formalization/lean/spectral/noetic_resolvent_green_kernel.lean`** to formalize the Green kernel of the resolvent operator (HΨ - iγI)⁻¹, essential for Theorem 18.
+
+### Mathematical Content
+
+The Green kernel for the noetic wave resolvent is defined spectrally:
+
+$$G_\gamma(x,y) = \int \frac{\exp(i t (x-y))}{\sigma(t) - i\gamma} \, dt$$
+
+This is the Fourier inversion of the resolvent symbol 1/(σ(t) - iγ).
+
+### Key Results
+
+1. **Green Kernel Definition**: `GreenKernel` - The integral kernel of (HΨ - iγI)⁻¹
+2. **Symmetry Property**: `GreenKernel_symm` - Conjugate symmetry: conj(Gγ(x,y)) = Gγ(y,x)
+3. **Hilbert-Schmidt Property**: `GreenKernel_HS_on_compact` - Local square-integrability on compact sets
+4. **Divergence Criterion**: `resolvent_unbounded_iff_GreenKernel_blowup` - Main theorem:
+   - (HΨ - iγI)⁻¹ unbounded ⟺ sup|Gγ(x,y)| = ∞
+5. **Spectral Characterization**: `spectral_characterization_of_zeros` - Connection to Xi zeros
+
+### Files Created
+
+1. **`formalization/lean/spectral/noetic_resolvent_green_kernel.lean`** (~15 KB)
+   - Green kernel definition for the resolvent
+   - Hilbert-Schmidt compactness criterion
+   - Divergence equivalence theorem
+   - QCAL integration (f₀ = 141.7001 Hz, C = 244.36)
+   - 100% compatible with Mathlib (no new theory invented)
+
+### Connection to RH Framework
+
+This module connects with:
+- `spectral/operator_hpsi.lean` (H_Ψ definition)
+- `spectral/noetic_wave_solution.lean` (wave equation context)
+- `spectral/trace_kernel_gaussian_compact.lean` (kernel analysis patterns)
+- `spectral/schatten_paley_lemmas.lean` (Hilbert-Schmidt theory)
+
+### QCAL Integration
+
+- Base frequency: 141.7001 Hz
+- Coherence: C = 244.36
+- Resonance interpretation: zeros as spectral frequencies where resolvent diverges
+
+---
+
+## Previous Addition: Wave Energy Balance — Noetic Energy Conservation (November 29, 2025)
 
 ### Overview
 
