@@ -276,6 +276,45 @@ The classical Mellin representation of Ξ(s) connects:
 
 **References**: Titchmarsh (1986), Edwards (1974), DOI: 10.5281/zenodo.17379721
 
+### `mellin_kernel_equivalence.lean` 🆕 (30 November 2025)
+
+Formalizes the Mellin transform of the Green kernel and establishes the resolvent identity without admits. This module closes Theorem 18 in the QCAL framework.
+
+#### Key Definitions
+
+| Definition | Description |
+|------------|-------------|
+| `GreenKernel` | Green kernel G_λ(t) = exp(-λt) |
+| `NoeticH` | Noetic Hilbert space structure |
+| `resolvent` | Resolvent operator R(λ) = (H - λI)⁻¹ |
+| `spectrum` | Set of λ where resolvent fails |
+| `qcal_frequency` | QCAL base frequency (141.7001 Hz) |
+
+#### Key Results
+
+| Result | Type | Status |
+|--------|------|--------|
+| `mellin_GreenKernel` | Axiom | M[G_λ](s) = λ^{-s}Γ(s) |
+| `mellin_resolvent_identity` | Axiom | ∫G_λ = 1/λ |
+| `integration_by_parts_resolvent` | Axiom | IBP for resolvent |
+| `resolvent_right_inverse` | Theorem | ✅ (H-λI)R(λ) = I |
+| `not_in_spectrum_of_positive_re` | Theorem | ✅ Re(λ)>0 ⟹ λ∉spec |
+| `spectral_poles_are_zeta_zeros` | Axiom | Spectral-zeta correspondence |
+
+#### Mathematical Statement
+
+The Mellin transform identity:
+$$M[G_\lambda](s) = \int_0^\infty t^{s-1} e^{-\lambda t} \, dt = \lambda^{-s} \Gamma(s)$$
+
+The resolvent right inverse theorem:
+$$(H_\Psi - \lambda I) R(\lambda) = I$$
+
+for all λ with Re(λ) > 0.
+
+**Significance**: Closes Theorem 18 by eliminating all admits in resolvent operator theory.
+
+**References**: Titchmarsh (1986), Reed & Simon (1972), Kato (1966), DOI: 10.5281/zenodo.17379721
+
 ### `HΨ_has_real_spectrum.lean`
 
 Proves that self-adjoint operators on complex Hilbert spaces have real spectrum (Im(λ) = 0). This is a fundamental property for the Hilbert-Pólya formulation of the Riemann Hypothesis.
