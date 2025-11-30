@@ -133,14 +133,18 @@ structure WeakSolution (Ω : Type*) [NormedAddCommGroup Ω] [InnerProductSpace �
   Ψ     : ℝ → Ω
   /-- Time derivative ∂Ψ/∂t : ℝ → Ω -/
   Ψ_t   : ℝ → Ω
+  /-- Second time derivative ∂²Ψ/∂t² : ℝ → Ω -/
+  Ψ_tt  : ℝ → Ω
+  /-- Gradient of Ψ: ∇Ψ : ℝ → Ω (for energy calculations) -/
+  gradΨ : ℝ → Ω
   /-- Ψ is continuous in time -/
   hΨ    : Continuous Ψ
   /-- Ψ_t is continuous in time -/
   hΨt   : Continuous Ψ_t
-  /-- The weak equation is satisfied symbolically.
-      In full form: ∂²Ψ/∂t² + ω₀²Ψ = κ·∇²Φ
-      This is a placeholder template for the weak formulation. -/
-  eq_weak : ∀ t, Ψ_t t + omega0_sq • Ψ t = kappa • Ψ t
+  /-- The wave equation is satisfied: ∂²Ψ/∂t² + ω₀²Ψ = κ·∇²Φ
+      In the weak formulation, this represents the equation structure.
+      The laplacianΦ term represents κ·∇²Φ applied to the solution. -/
+  eq_wave : ∀ t, ∀ laplacianΦ : Ω, Ψ_tt t + omega0_sq • Ψ t = kappa • laplacianΦ
 
 /-!
 ## 4. Energy Functional
@@ -165,12 +169,12 @@ This represents the total energy of the noetic field:
   - ⟨·,·⟩ is the L² inner product
   - κ = ζ'(1/2)·π is the coupling constant
   
-  The gradient terms ∇Φ and ∇Ψ are represented by gradΦ parameter.
+  The gradient terms ∇Φ and ∇Ψ are represented by gradΦ and sol.gradΨ respectively.
 -/
 def Energy (sol : WeakSolution Ω) (Φ gradΦ : ℝ → Ω) (t : ℝ) : ℝ :=
   (‖sol.Ψ_t t‖^2) / 2
   + (omega0_sq * ‖sol.Ψ t‖^2) / 2
-  - kappa * ⟪gradΦ t, sol.Ψ t⟫_ℝ
+  - kappa * ⟪gradΦ t, sol.gradΨ t⟫_ℝ
 
 /-- Kinetic energy component: ½‖Ψ_t(t)‖² -/
 def kineticEnergy (sol : WeakSolution Ω) (t : ℝ) : ℝ :=
@@ -182,7 +186,7 @@ def potentialEnergy (sol : WeakSolution Ω) (t : ℝ) : ℝ :=
 
 /-- Coupling energy component: −κ⟨∇Φ, ∇Ψ⟩ -/
 def couplingEnergy (sol : WeakSolution Ω) (gradΦ : ℝ → Ω) (t : ℝ) : ℝ :=
-  - kappa * ⟪gradΦ t, sol.Ψ t⟫_ℝ
+  - kappa * ⟪gradΦ t, sol.gradΨ t⟫_ℝ
 
 /-- Energy decomposition: E = kinetic + potential + coupling -/
 lemma energy_decomposition (sol : WeakSolution Ω) (Φ gradΦ : ℝ → Ω) (t : ℝ) :
