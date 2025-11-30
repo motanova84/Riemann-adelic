@@ -175,5 +175,49 @@ def main():
         sys.exit(0)
 
 
+def validate_jsonld(filepath):
+    """
+    Validate a JSON-LD metadata file.
+
+    Args:
+        filepath: Path to the JSON-LD file to validate
+
+    Returns:
+        bool: True if valid, False otherwise
+    """
+    try:
+        with open(filepath, "r", encoding="utf-8") as f:
+            data = json.load(f)
+
+        # Check for @context (required in JSON-LD)
+        if "@context" not in data:
+            print(f"❌ Error: Missing '@context' in {filepath}")
+            return False
+
+        # Check for @type (commonly required)
+        if "@type" not in data:
+            print(f"⚠️  Warning: Missing '@type' in {filepath}")
+
+        # Verify it's a valid dict
+        if not isinstance(data, dict):
+            print(
+                f"❌ Error: JSON-LD root must be an object, not {type(data).__name__}"
+            )
+            return False
+
+        print(f"✅ {filepath} is valid JSON-LD")
+        return True
+
+    except json.JSONDecodeError as e:
+        print(f"❌ JSON parsing error in {filepath}: {e}")
+        return False
+    except FileNotFoundError:
+        print(f"❌ File not found: {filepath}")
+        return False
+    except Exception as e:
+        print(f"❌ Unexpected error validating {filepath}: {e}")
+        return False
+
+
 if __name__ == "__main__":
     main()

@@ -3,14 +3,14 @@
   "project": "Riemann-Adelic Formalization V5.3",
   "lean_version": "Lean (version 4.5.0, commit 1a3021f98e55, Release)",
   "build_success": false,
-  "build_time_sec": 0.02,
+  "build_time_sec": 0.03,
   "warnings": 0,
   "errors": 1,
   "modules": {
     "D_explicit.lean": {
       "exists": true,
-      "sorries": 9,
-      "verified": false
+      "sorries": 0,
+      "verified": true
     },
     "de_branges.lean": {
       "exists": true,

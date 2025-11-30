@@ -158,6 +158,11 @@ import spectral.compact_selfadjoint_spectrum
 -- Eigenvalue exponential decay → Schatten class trace convergence
 -- Paley-Wiener uniqueness for entire functions with real zeros
 import spectral.schatten_paley_lemmas
+-- NEW: Xi Mirror Spectrum (29 November 2025)
+-- Xi(s) = Xi(1-s) symmetry and mirror spectrum framework
+-- Xi_root_reflection: Xi(s) = 0 → Xi(1-s) = 0
+-- mirror_spectrum: zeros paired under reflection
+import spectral.xi_mirror_spectrum
 
 -- ⚠️ THEORETICAL FRAMEWORK (Not imported - doesn't compile)
 -- RiemannAdelic.PsiNSE_CompleteLemmas_WithInfrastructure
@@ -288,6 +293,12 @@ def main : IO Unit := do
   IO.println "    - exponential_decay_schatten_trace: λₙ decay → Schatten class"
   IO.println "    - paley_wiener_uniqueness_real: Entire vanishing on ℝ is zero"
   IO.println "    - spectral_equals_xi: det_zeta = Ξ from critical line agreement"
+  IO.println "  • NEW: Xi Mirror Spectrum (29 November 2025)"
+  IO.println "    - spectral/xi_mirror_spectrum: Xi symmetry and mirror zeros"
+  IO.println "    - Xi_mirror_symmetry: Xi(s) = Xi(1-s) (functional equation)"
+  IO.println "    - Xi_root_reflection: Xi(s) = 0 → Xi(1-s) = 0"
+  IO.println "    - mirror_spectrum: {s | Xi(s) = 0 ∧ Xi(1-s) = 0}"
+  IO.println "    - zeros_come_in_pairs: Off-line zeros form distinct pairs"
   IO.println "  • NEW: Hpsi_selfadjoint (Part 31/∞³ - Self-adjoint operator H_Ψ)"
   IO.println "    - Dense domain D(H_Ψ)"
   IO.println "    - H_Ψ = H_Ψ† (self-adjoint axiom)"
