@@ -27,6 +27,7 @@ import Mathlib.MeasureTheory.Integral.IntegrableOn
 import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Topology.Algebra.InfiniteSum.Basic
 import Mathlib.Data.Complex.Exponential
+import Mathlib.NumberTheory.ZetaFunction
 
 noncomputable section
 open Classical Real Complex BigOperators Filter MeasureTheory
@@ -113,8 +114,8 @@ to the Gamma function.
   and the substitution u = λt.
 
   Mathematical justification:
-  - Standard result in complex analysis (Titchmarsh, Chapter V)
-  - Mathlib provides Gamma integral representation
+  - Standard result in complex analysis (Titchmarsh, Chapter V, Eq. 5.9.1)
+  - Mathlib provides Gamma integral representation (Gamma_integral_repr)
   - Falsifiability: Medium (integral can be validated numerically)
 -/
 axiom mellin_GreenKernel
