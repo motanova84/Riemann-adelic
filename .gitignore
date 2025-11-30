@@ -188,10 +188,8 @@ validation_summary.txt
 notebooks/zeta_zeros_error_plot.png
 # Spectral RH generated images
 spectral_RH/*.png
-# Riemann eigenfunctions visualization output
-riemann_eigenfunctions_individual.png
-riemann_eigenfunctions_combined.png
-# Sturm-Liouville spectral analysis generated images
-sturm_liouville_nodal_structure.png
-spectral_amplitudes.png
-fourier_spectrum_141_7001_hz.png
+
+# Wave function validation generated images
+eigenfunctions_riemann.png
+potential_energy_levels.png
+node_structure.png
