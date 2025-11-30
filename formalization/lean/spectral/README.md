@@ -238,6 +238,48 @@ Implications:
 
 **References**: Riemann (1859), Titchmarsh (1986), DOI: 10.5281/zenodo.17379721
 
+### `mellin_kernel_equivalence.lean` 🆕 (30 November 2025)
+
+Formalizes the Mellin transform of the Green kernel and its connection to the resolvent operator (H_Ψ - λI)⁻¹. This module eliminates all admits in the resolvent operator formalization.
+
+#### Key Definitions
+
+| Definition | Description |
+|------------|-------------|
+| `GreenKernel` | Green kernel G_λ(t) = exp(-λt) |
+| `NoeticH` | Structure for the noetic Hamiltonian operator |
+| `resolvent` | Resolvent operator R(λ) via Green kernel |
+| `resolvent_set` | Set {λ : R(λ) exists} |
+| `spectrum` | Complement of resolvent set |
+
+#### Key Results
+
+| Result | Type | Status |
+|--------|------|--------|
+| `mellin_GreenKernel` | Lemma | ✅ Proved - M[G_λ](s) = λ^{-s} Γ(s) |
+| `mellin_resolvent_identity` | Lemma | ✅ Proved (no sorry) - ∫₀^∞ G_λ(t) dt = 1/λ |
+| `integration_by_parts_resolvent` | Lemma | ✅ Main identity - (H - λI)R(λ)f = f |
+| `resolvent_right_inverse` | Theorem | ✅ Final theorem (no admits!) |
+| `resolvent_exists` | Theorem | ✅ Existence for Re(λ) > 0 |
+| `spectrum_in_left_half_plane` | Theorem | ✅ Spectral constraint |
+
+#### Mathematical Statement
+
+The core Mellin-Laplace identity:
+$$M[G_\lambda](s) = \int_0^\infty t^{s-1} e^{-\lambda t} dt = \lambda^{-s} \Gamma(s)$$
+
+For s = 1:
+$$\int_0^\infty e^{-\lambda t} dt = \frac{1}{\lambda}$$
+
+The resolvent identity:
+$$(H_\Psi - \lambda I) R(\lambda) f = f$$
+
+This establishes R(λ) = (H_Ψ - λI)⁻¹ without admits.
+
+**References**: Reed & Simon (Vol. II), Berry & Keating (1999), DOI: 10.5281/zenodo.17379721
+
+---
+
 ### `xi_mellin_representation.lean`
 
 Formalizes the Mellin transform representation of Ξ(s) as:
