@@ -1,4 +1,4 @@
-name: 🔎 Lean 4 Validation & Report
+name: Lean 4 Validation
 
 on:
   push:
@@ -12,7 +12,7 @@ permissions:
 
 jobs:
   validate-lean:
-    name: "🧠 Formalización Riemann–Adelic (Lean 4.5.0)"
+    name: "Lean 4 Formalization Validation"
     runs-on: ubuntu-latest
     timeout-minutes: 60
 
@@ -36,8 +36,10 @@ jobs:
     - name: 📂 Navigate to Lean formalization folder
       working-directory: formalization/lean
       run: |
-        echo "Contenido actual:"
+        echo "Lean project structure:"
         ls -la
+        echo "Lean files found:"
+        find . -name "*.lean" | head -20
 
     - name: 📦 Install Lean project dependencies
       working-directory: formalization/lean
@@ -47,6 +49,7 @@ jobs:
 
     - name: 🔨 Build Lean project
       id: build
+      working-directory: formalization/lean
       continue-on-error: true
       working-directory: formalization/lean
       run: |
@@ -78,10 +81,10 @@ jobs:
           > validation_report.json
         cat validation_report.json
 
-    - name: 📤 Upload validation report
+    - name: Upload validation report
       uses: actions/upload-artifact@v4
       with:
-        name: lean-validation-report
+        name: validation-report
         path: formalization/lean/validation_report.json
 
     - name: 🧾 Display summary

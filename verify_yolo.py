@@ -194,7 +194,7 @@ class YOLOverifier:
 
 
 def main():
-    """Main entry point for YOLO verification"""
+    """Main entry point for YOLO verification."""
     print("🚀 YOLO Riemann Hypothesis Verification")
     print("Author: José Manuel Mota Burruezo")
     print("Contact: institutoconsciencia@proton.me")

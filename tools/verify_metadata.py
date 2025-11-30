@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Script to validate metadata JSON-LD files against a schema.
+Verify JSON-LD metadata schema files.
 
 This script validates mathematical archive metadata files to ensure:
 - Valid JSON-LD structure

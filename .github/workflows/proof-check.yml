@@ -37,8 +37,9 @@ jobs:
         uses: actions/cache@v4
         with:
           path: |
+            ~/.elan
             formalization/lean/.lake
-            formalization/lean/build
+            formalization/lean/lake-packages
           key: ${{ runner.os }}-lean-${{ hashFiles('formalization/lean/lakefile.lean', 'formalization/lean/lean-toolchain') }}
           restore-keys: |
             ${{ runner.os }}-lean-
