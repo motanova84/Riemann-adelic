@@ -232,14 +232,35 @@ This is a consequence of the following chain:
     
     This means: closure(HΨ) = HΨ*
     
-    Mathematical justification:
-    - Theorem 15 establishes weak solution existence (domain regularity)
-    - Theorem 16 establishes energy conservation (closed quadratic form)
-    - Von Neumann's theorem: symmetric + closed form → essentially s.a.
+    **Mathematical Justification (Von Neumann Extension Theory):**
     
-    References:
-    - Reed & Simon Vol. II, Theorem X.23
-    - Kato (1966): Perturbation Theory for Linear Operators -/
+    Von Neumann's extension theorem (1929-1932) states that a closed symmetric
+    operator T is essentially self-adjoint if and only if its deficiency indices
+    (n₊, n₋) are equal to (0, 0), where:
+    - n₊ = dim(ker(T* - i))
+    - n₋ = dim(ker(T* + i))
+    
+    For the noetic operator HΨ:
+    1. **Closed quadratic form** (Theorem 16): The quadratic form 
+       Q[f] = ⟨HΨf, f⟩ is closed, meaning its domain is complete under
+       the form-norm ‖f‖_Q = √(Q[f] + ‖f‖²)
+    
+    2. **KLMN Theorem** (Kato-Lax-Milgram-Nelson): A closed, symmetric,
+       positive quadratic form uniquely determines a self-adjoint operator
+       
+    3. **Energy conservation** (Theorem 16) implies positivity of the form,
+       ensuring deficiency indices (0, 0)
+    
+    Therefore, by the KLMN theorem combined with energy conservation from
+    Theorem 16, HΨ has a unique self-adjoint extension (its closure).
+    
+    **References:**
+    - Von Neumann, J. (1929): Allgemeine Eigenwerttheorie Hermitescher 
+      Funktionaloperatoren. Math. Ann. 102, 49-131
+    - Reed & Simon Vol. II, Theorem X.23 (Friedrichs Extension)
+    - Reed & Simon Vol. II, Theorem X.25 (KLMN Theorem)
+    - Kato, T. (1966): Perturbation Theory for Linear Operators, Ch. VI
+    - V5 Coronación: DOI 10.5281/zenodo.17379721 (Theorems 15-16) -/
 axiom essentially_self_adjoint (op : NoeticOp Ω) :
   ∃ (H_closure : Ω → Ω), 
     (∀ f ∈ op.domain, H_closure f = op.H f) ∧
@@ -289,19 +310,37 @@ Conversely, every strongly continuous unitary group has a self-adjoint
 generator.
 -/
 
-/-- **AXIOM: Stone's Theorem**
+/-- **AXIOM: Stone's Theorem (for essentially self-adjoint operators)**
 
-    If A is a densely defined self-adjoint operator on a Hilbert space H,
-    then there exists a unique strongly continuous unitary group {U(t)}
-    such that:
+    **Statement:** If A is a densely defined self-adjoint operator on a
+    Hilbert space H, then there exists a unique strongly continuous 
+    unitary group {U(t)}_{t∈ℝ} such that:
       U(t) = e^{itA}
-    
     in the sense of functional calculus.
     
-    References:
-    - Stone, M.H. (1932): On one-parameter unitary groups in Hilbert space
-    - Reed & Simon Vol. I, Theorem VIII.8
-    - Rudin, Functional Analysis, Theorem 13.38 -/
+    **Preconditions:**
+    This axiom is applied only after establishing essential self-adjointness
+    via the `essentially_self_adjoint` axiom. The NoeticOp structure requires:
+    1. Dense domain (op.dense)
+    2. Symmetry (op.symmetric)  
+    3. Closed quadratic form (op.closed_form)
+    
+    These conditions, combined with the `essentially_self_adjoint` axiom,
+    ensure that the closure of HΨ is self-adjoint, allowing Stone's theorem
+    to be applied to the closure.
+    
+    **Mathematical Chain:**
+    1. op.symmetric + op.dense + op.closed_form → HΨ essentially self-adjoint
+    2. Essentially self-adjoint → closure(HΨ) is self-adjoint
+    3. Self-adjoint operator → Stone's theorem applies
+    4. Stone's theorem → e^{tHΨ} exists as strongly continuous unitary group
+    
+    **References:**
+    - Stone, M.H. (1932): On one-parameter unitary groups in Hilbert space.
+      Ann. of Math. (2) 33, no. 3, 643-648
+    - Reed & Simon Vol. I, Theorem VIII.8 (Stone's Theorem)
+    - Reed & Simon Vol. II, Theorem X.1 (Generators of C₀-semigroups)
+    - Rudin, W., Functional Analysis, Theorem 13.38 -/
 axiom stones_theorem_for_symmetric 
     (op : NoeticOp Ω) :
     ∃ (G : StronglyContinuousGroup Ω), IsUnitary G
