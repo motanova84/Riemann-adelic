@@ -4,11 +4,11 @@
 # To regenerate: pip freeze > requirements-lock.txt (then manually clean)
 
 # Core computational dependencies
-mpmath>=1.3.0
-numpy>=1.22.0
-scipy>=1.13.0
-sympy>=1.12
-matplotlib>=3.8.0
+mpmath==1.3.0
+numpy==1.26.4
+scipy==1.11.4
+sympy==1.12
+matplotlib==3.10.0
 
 # Jupyter and notebook execution
 jupyter>=1.0.0
@@ -45,26 +45,26 @@ iniconfig>=2.0.0
 
 # Advanced mathematical libraries for acceleration and expansion
 # JIT compilation and performance optimization
-numba>=0.58.0
-llvmlite>=0.41.0
+numba==0.61.2
+llvmlite==0.44.0
+numba==0.62.1
+llvmlite==0.45.1
 
 # Machine Learning and optimization
-scikit-learn>=1.3.0
-xgboost>=2.0.0
-threadpoolctl>=3.2.0
+scikit-learn==1.4.2
+xgboost==2.0.3
+threadpoolctl==3.6.0
 
 # Automatic differentiation and GPU acceleration
-jax>=0.4.20
-jaxlib>=0.4.20
-opt-einsum>=3.3.0
-ml_dtypes>=0.3.0
+jax==0.4.30
+jaxlib==0.4.30
 jax==0.4.38
 jaxlib==0.4.38
 opt-einsum==3.4.0
 
 # Advanced numerical methods
-numexpr>=2.8.0
-bottleneck>=1.3.0
+numexpr==2.8.4
+bottleneck==1.3.7
 
 # Graph theory and combinatorics
 networkx>=3.2.0
@@ -81,24 +81,7 @@ statsmodels>=0.14.0
 patsy>=0.5.3
 
 # Optimization and root finding
-nlopt>=2.7.0
-
-# Cryptography for AIK Beacons
-ecdsa>=0.18.0
-
-# Web services and dashboards
-fastapi>=0.100.0
-uvicorn>=0.23.0
-websockets>=10.4
-dash>=2.14.0
-plotly>=5.18.0
-
-# Metadata validation and processing
-jsonschema>=4.0.0
-rdflib>=6.0.0
-
-# HTTP client
-httpx>=0.25.0
+nlopt==2.7.1
 
 # Supporting dependencies
 certifi>=2024.2.0
