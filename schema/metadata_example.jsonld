@@ -58,33 +58,5 @@
   "schema:license": "https://opensource.org/licenses/MIT",
   "schema:codeRepository": "https://github.com/motanova84/-jmmotaburr-riemann-adelic",
   "schema:version": "1.0.0",
-  "rdfs:comment": "This is an example metadata file for a theorem in the mathematical archive. It includes semantic annotations using JSON-LD, Dublin Core, Schema.org, and custom namespaces.",
-  "riemann:formalizations": [
-    {
-      "@type": "SoftwareSourceCode",
-      "programmingLanguage": "Lean",
-      "codeRepository": "https://github.com/motanova84/-jmmotaburr-riemann-adelic",
-      "description": "Lean 4 formalization of key theorems"
-    },
-    {
-      "@type": "SoftwareSourceCode",
-      "programmingLanguage": "Python",
-      "codeRepository": "https://github.com/motanova84/-jmmotaburr-riemann-adelic",
-      "description": "Numerical verification and computational tools"
-    }
-  ],
-  "riemann:mathematicalComponents": {
-    "zetaFunction": {
-      "@type": "math:function",
-      "description": "Riemann zeta function"
-    },
-    "adelicStructure": {
-      "@type": "math:algebraicStructure",
-      "description": "Adelic ring structure"
-    },
-    "spectralOperators": {
-      "@type": "math:operator",
-      "description": "Spectral theory operators for analysis"
-    }
-  }
+  "rdfs:comment": "This is an example metadata file for a theorem in the mathematical archive. It includes semantic annotations using JSON-LD, Dublin Core, Schema.org, and custom namespaces."
 }
