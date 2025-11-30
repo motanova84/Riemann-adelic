@@ -1,11 +1,11 @@
 {
-  "timestamp": "2025-11-30T13:46:22.701198+00:00",
+  "timestamp": "2025-11-30T14:13:38.179127+00:00",
   "project": "Riemann-Adelic Formalization V5.3",
-  "lean_version": "Lean (version 4.5.0, commit 1a3021f98e55, Release)",
+  "lean_version": "Lean not installed or not in PATH",
   "build_success": false,
-  "build_time_sec": 0.03,
+  "build_time_sec": 0.0,
   "warnings": 0,
-  "errors": 1,
+  "errors": 0,
   "modules": {
     "D_explicit.lean": {
       "exists": true,
