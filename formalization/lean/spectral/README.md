@@ -238,45 +238,55 @@ Implications:
 
 **References**: Riemann (1859), Titchmarsh (1986), DOI: 10.5281/zenodo.17379721
 
-### `mellin_kernel_equivalence.lean` 🆕 (30 November 2025)
+### `operator_resolvent.lean` 🆕 (30 November 2025)
 
-Formalizes the Mellin transform of the Green kernel and its connection to the resolvent operator (H_Ψ - λI)⁻¹. This module eliminates all admits in the resolvent operator formalization.
+**Complete resolvent construction for HΨ and characterization on the imaginary axis.**
+
+This file bridges the noetic operator HΨ = −ω₀² I + κ ΔΦ and its resolvent (HΨ − λI)⁻¹, which is the key to connecting the spectrum of HΨ with the zeros of ζ.
 
 #### Key Definitions
 
 | Definition | Description |
 |------------|-------------|
-| `GreenKernel` | Green kernel G_λ(t) = exp(-λt) |
-| `NoeticH` | Structure for the noetic Hamiltonian operator |
-| `resolvent` | Resolvent operator R(λ) via Green kernel |
-| `resolvent_set` | Set {λ : R(λ) exists} |
-| `spectrum` | Complement of resolvent set |
+| `NoeticH` | Structure representing the Noetic Hamiltonian operator |
+| `GreenKernel` | Green kernel G_λ(t) = exp(-λt) for resolvent construction |
+| `resolvent` | The resolvent operator R(λ) = (HΨ - λI)⁻¹ |
+| `spectrum_set` | Set of spectral points where resolvent is unbounded |
 
 #### Key Results
 
 | Result | Type | Status |
 |--------|------|--------|
-| `mellin_GreenKernel` | Lemma | ✅ Proved - M[G_λ](s) = λ^{-s} Γ(s) |
-| `mellin_resolvent_identity` | Lemma | ✅ Proved (no sorry) - ∫₀^∞ G_λ(t) dt = 1/λ |
-| `integration_by_parts_resolvent` | Lemma | ✅ Main identity - (H - λI)R(λ)f = f |
-| `resolvent_right_inverse` | Theorem | ✅ Final theorem (no admits!) |
-| `resolvent_exists` | Theorem | ✅ Existence for Re(λ) > 0 |
-| `spectrum_in_left_half_plane` | Theorem | ✅ Spectral constraint |
+| `GreenKernel_decay` | Lemma | ✅ Proved (no sorry) - Exponential decay |
+| `GreenKernel_continuous` | Lemma | ✅ Proved (no sorry) - Continuity |
+| `resolvent_well_defined` | Lemma | ⚠️ sorry (summability) |
+| `resolvent_is_right_inverse` | Theorem | ✅ Structure complete |
+| `λ_not_in_spectrum_iff_resolvent_bounded` | Theorem | ⚠️ sorry (spectral characterization) |
+| `first_resolvent_identity` | Theorem | ⚠️ sorry (algebraic identity) |
+| `resolvent_imaginary_bound` | Theorem | ⚠️ sorry (self-adjoint bound) |
+| `RH_from_self_adjoint_resolvent` | Theorem | ⚠️ sorry (main RH implication) |
 
 #### Mathematical Statement
 
-The core Mellin-Laplace identity:
-$$M[G_\lambda](s) = \int_0^\infty t^{s-1} e^{-\lambda t} dt = \lambda^{-s} \Gamma(s)$$
+The resolvent formula:
+$$R(\lambda) f = \int_0^\infty G_\lambda(t) \cdot e^{tH_\Psi} f \, dt$$
 
-For s = 1:
-$$\int_0^\infty e^{-\lambda t} dt = \frac{1}{\lambda}$$
+where $G_\lambda(t) = e^{-\lambda t}$ is the Green kernel.
 
-The resolvent identity:
-$$(H_\Psi - \lambda I) R(\lambda) f = f$$
+Spectral characterization:
+$$\lambda \notin \sigma(H_\Psi) \iff R(\lambda) \text{ is bounded}$$
 
-This establishes R(λ) = (H_Ψ - λI)⁻¹ without admits.
+For self-adjoint HΨ on the imaginary axis:
+$$\|R(i\gamma)\| \leq \frac{1}{|\gamma|}$$
 
-**References**: Reed & Simon (Vol. II), Berry & Keating (1999), DOI: 10.5281/zenodo.17379721
+#### Dependencies
+
+- `spectral/functional_equation.lean` (Ξ function)
+- `spectral/xi_mellin_representation.lean` (Mellin transform)
+- `spectral/operator_hpsi.lean` (HΨ definition)
+- `spectral/self_adjoint.lean` (Self-adjointness)
+
+**References**: Reed & Simon Vol. I-IV, Berry-Keating (1999), DOI: 10.5281/zenodo.17379721
 
 ---
 
