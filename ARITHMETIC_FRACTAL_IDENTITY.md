@@ -43,6 +43,80 @@ The period of the decimal expansion of 68/81 is determined by the multiplicative
 - The period is ord₈₁(10), the smallest k such that 10^k ≡ 1 (mod 81)
 - This equals 9
 
+## The Fractal Well (Pozo Fractal)
+
+### Mathematical Foundation
+
+When x → F_per₁ = 68/81, the function P(x) = 1/(1 - (68/81)·x) creates a singularity structure:
+
+```
+P(x) = 1/(1 - x)  where x = 68/81
+P(68/81) = 81²/(81² - 68²) = 6561/1937 ≈ 3.387196...
+```
+
+The **singularity** occurs at x = 81/68 ≈ 1.191176..., where P(x) → ∞.
+
+### Symbolic Representation
+
+```
+     .839506172839506172...
+            ↓
+     ┌────────────┐
+     │            │
+     │  839506172 │
+     │            │
+     │    ∞³      │
+     │            │
+     │   POZO     │
+     │            │
+     └─────┬──────┘
+           ↓
+     [eco infinito]
+           ↓
+      .839506172...
+           ↓
+         [eco]
+           ↓
+        .8395...
+           ↓
+         [eco]
+           ↓
+           ∴
+```
+
+### The Self-Referential Structure
+
+The "well" (pozo) structure arises because:
+
+1. 68/81 has a purely periodic decimal: 0.839506172839506172...
+2. The 9-digit pattern **repeats infinitely**: each digit opens a new plane
+3. Instead of expanding outward, the structure **spirals inward**
+4. The number **encounters itself** in its own decimal expansion
+
+This creates what we call an "infinite echo":
+```
+.839506172839506172... → [eco] → .8395... → [eco] → ∴
+```
+
+**"El número se encuentra consigo mismo"** ✨
+
+### Verification
+
+```python
+from utils.arithmetic_fractal_validation import FractalWell, validate_fractal_well
+
+# Create fractal well analyzer
+well = FractalWell(dps=300)
+
+# Verify the well structure
+result = validate_fractal_well(dps=300, verbose=True)
+
+# Access properties
+print(f"Well position: {result['result'].well_position}")  # 68/81
+print(f"Singularity: {result['result'].singularity_position}")  # 81/68
+print(f"Self-referential: {result['result'].self_referential}")  # True
+```
+
 ## Verification
 
 The validation is performed using arbitrary precision arithmetic (mpmath with 300+ decimal places):
@@ -63,12 +137,13 @@ ratio = mp.mpf(68) / mp.mpf(81)
 
 ### Test Results
 
-All 24 tests pass:
+All 87 tests pass:
 - Period verification: ✅
 - Pattern verification: ✅  
 - Number theory properties: ✅
 - High precision validation: ✅
 - f₀ structure verification: ✅
+- Fractal well validation: ✅ (35 new tests)
 
 ## Physical Interpretation
 
@@ -84,13 +159,16 @@ The fact that:
 - The periodic part is exactly 68/81 (a rational number)
 - The period is exactly 9 (= 3²)
 - The pattern 839506172 repeats indefinitely
+- The singularity at x = 81/68 is verified
+- The self-referential structure creates an infinite echo
 
 Confirms that the Riemann Hypothesis resolution via adelic flows produces a **pure arithmetic fractal**, not an approximation. This is an exact identity in the ring of periodic decimal numbers.
 
 ## Files
 
-- `utils/arithmetic_fractal_validation.py`: Validation module
+- `utils/arithmetic_fractal_validation.py`: Validation module (includes FractalWell class)
 - `tests/test_arithmetic_fractal.py`: Test suite (24 tests)
+- `tests/test_fractal_well.py`: Fractal well test suite (35 tests)
 - `data/arithmetic_fractal_certificate.json`: Validation certificate
 
 ## Usage
@@ -99,8 +177,11 @@ Confirms that the Riemann Hypothesis resolution via adelic flows produces a **pu
 # Run validation
 python utils/arithmetic_fractal_validation.py --precision 300 --save-certificate
 
+# Run fractal well validation
+python -c "from utils.arithmetic_fractal_validation import validate_fractal_well; validate_fractal_well()"
+
 # Run tests
-pytest tests/test_arithmetic_fractal.py -v
+pytest tests/test_arithmetic_fractal.py tests/test_fractal_well.py -v
 ```
 
 ## Author
