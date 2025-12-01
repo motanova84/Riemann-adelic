@@ -45,8 +45,6 @@ iniconfig>=2.0.0
 
 # Advanced mathematical libraries for acceleration and expansion
 # JIT compilation and performance optimization
-numba==0.61.2
-llvmlite==0.44.0
 numba==0.62.1
 llvmlite==0.45.1
 
@@ -56,8 +54,6 @@ xgboost==2.0.3
 threadpoolctl==3.6.0
 
 # Automatic differentiation and GPU acceleration
-jax==0.4.30
-jaxlib==0.4.30
 jax==0.4.38
 jaxlib==0.4.38
 opt-einsum==3.4.0
