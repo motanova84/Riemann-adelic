@@ -23,6 +23,13 @@ from utils.arithmetic_fractal_validation import (
     validate_fractal_well,
 )
 
+# Constants for tests (computed from base values)
+NUMERATOR = 68
+DENOMINATOR = 81
+P_AT_WELL_NUMERATOR = DENOMINATOR ** 2  # 6561
+P_AT_WELL_DENOMINATOR = DENOMINATOR ** 2 - NUMERATOR ** 2  # 1937
+P_AT_WELL_EXACT = P_AT_WELL_NUMERATOR / P_AT_WELL_DENOMINATOR  # ≈ 3.387196...
+
 
 class TestFractalWellInitialization:
     """Test suite for FractalWell initialization."""
@@ -73,16 +80,14 @@ class TestPFunction:
         This is the value at the "well" position.
         """
         result = self.well.evaluate_at_well()
-        expected = mpf(6561) / mpf(1937)
+        expected = mpf(P_AT_WELL_NUMERATOR) / mpf(P_AT_WELL_DENOMINATOR)
         assert abs(result - expected) < mpf(10) ** (-50)
     
     def test_p_exact_formula(self):
         """Verify P(68/81) = 81²/(81² - 68²)."""
         p_value = self.well.evaluate_at_well()
         
-        numerator = 81**2
-        denominator = 81**2 - 68**2
-        expected = mpf(numerator) / mpf(denominator)
+        expected = mpf(P_AT_WELL_NUMERATOR) / mpf(P_AT_WELL_DENOMINATOR)
         
         assert abs(p_value - expected) < mpf(10) ** (-50)
     
@@ -254,7 +259,8 @@ class TestVerifyWell:
         props = result.mathematical_properties
         
         assert "P_at_well" in props
-        assert props["P_at_well"]["exact"] == "6561/1937"
+        expected_exact = f"{P_AT_WELL_NUMERATOR}/{P_AT_WELL_DENOMINATOR}"
+        assert props["P_at_well"]["exact"] == expected_exact
         
         assert "number_theory" in props
         assert props["number_theory"]["68"]["is_2_squared_times_17"] is True
@@ -308,14 +314,18 @@ class TestMathematicalIdentities:
     
     def test_singularity_denominator(self):
         """Test 81² - 68² = 1937."""
-        assert 81**2 - 68**2 == 1937
+        assert DENOMINATOR**2 - NUMERATOR**2 == P_AT_WELL_DENOMINATOR
+        assert P_AT_WELL_DENOMINATOR == 1937
     
     def test_p_at_well_exact(self):
         """Test P(68/81) exact value."""
         # P(68/81) = 6561/1937
-        assert 81**2 == 6561
-        expected = 6561 / 1937
-        assert abs(expected - 3.3871966959215283) < 1e-10
+        assert P_AT_WELL_NUMERATOR == DENOMINATOR**2
+        assert P_AT_WELL_NUMERATOR == 6561
+        
+        # Verify computed exact value
+        expected = P_AT_WELL_NUMERATOR / P_AT_WELL_DENOMINATOR
+        assert abs(expected - P_AT_WELL_EXACT) < 1e-15
 
 
 if __name__ == "__main__":

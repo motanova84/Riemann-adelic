@@ -453,7 +453,7 @@ class FractalWell:
     When x = 68/81 = 0.839506172839506172..., we have:
     
         P(x) = 1 / (1 - (68/81) * x)
-        P(68/81) = 1 / (1 - (68/81)²) = 81² / (81² - 68²) = 6561 / 2897
+        P(68/81) = 1 / (1 - (68/81)²) = 81² / (81² - 68²) = 6561 / 1937
     
     The singularity occurs at x = 81/68 ≈ 1.191176..., where P(x) → ∞.
     
@@ -478,6 +478,10 @@ class FractalWell:
     PERIOD = 9
     PATTERN = "839506172"
     
+    # Derived constants for P(68/81) = 81² / (81² - 68²)
+    P_AT_WELL_NUMERATOR = DENOMINATOR ** 2  # 6561
+    P_AT_WELL_DENOMINATOR = DENOMINATOR ** 2 - NUMERATOR ** 2  # 1937
+    
     def __init__(self, dps: int = 300):
         """
         Initialize the Fractal Well analyzer.
@@ -499,6 +503,9 @@ class FractalWell:
         
         self.ratio_68_81 = mpf(self.NUMERATOR) / mpf(self.DENOMINATOR)
         self.ratio_81_68 = mpf(self.DENOMINATOR) / mpf(self.NUMERATOR)
+        
+        # Pre-compute formatted singularity string for symbolic representation
+        self._singularity_str = f"{float(self.ratio_81_68):.10f}"
     
     def P(self, x: mpf) -> mpf:
         """
@@ -670,7 +677,7 @@ class FractalWell:
 │  "El número se encuentra consigo mismo" ✨                         │
 │                                                                    │
 │  P(x) = 1/(1 - (68/81)·x)                                          │
-│  Singularity: x = 81/68 = {float(self.ratio_81_68):.10f}                    │
+│  Singularity: x = 81/68 = {self._singularity_str}                    │
 │  Period: 9 digits                                                  │
 │  Pattern: 839506172                                                │
 │  State: VERIFIABLE ✅                                              │
@@ -697,9 +704,10 @@ class FractalWell:
         p_at_well = self.evaluate_at_well()
         
         # Mathematical properties
+        exact_fraction = f"{self.P_AT_WELL_NUMERATOR}/{self.P_AT_WELL_DENOMINATOR}"
         properties = {
             "P_at_well": {
-                "exact": "6561/1937",
+                "exact": exact_fraction,
                 "decimal": float(p_at_well),
                 "formula": "81² / (81² - 68²)"
             },
