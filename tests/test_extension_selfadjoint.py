@@ -44,6 +44,7 @@ def validate_extension_selfadjoint() -> Dict[str, Any]:
         "theorems": [],
         "structures": [],
         "imports": [],
+        "missing": [],
         "qcal_integration": False,
         "passed": True
     }
@@ -91,7 +92,7 @@ def validate_extension_selfadjoint() -> Dict[str, Any]:
             actual_items = results.get(category, [])
             if item not in actual_items:
                 results["passed"] = False
-                results.setdefault("missing", []).append(f"{category}:{item}")
+                results["missing"].append(f"{category}:{item}")
     
     # Check QCAL integration
     qcal_markers = ["141.7001", "244.36", "QCAL"]

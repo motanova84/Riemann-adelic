@@ -78,10 +78,13 @@ The domain D(D) is the Schwartz space restricted to ℝ₊, which is dense
 in L²(ℝ₊, μ) and invariant under the Mellin transform.
 -/
 
-/-- Domain D(D): Schwartz space on ℝ₊ (smooth, rapidly decreasing functions) -/
-def Domain : Type := { f : ℝ → ℂ //
+/-- Predicate for functions in Schwartz space on ℝ₊ -/
+def IsInSchwartz (f : ℝ → ℂ) : Prop :=
   Differentiable ℝ f ∧
-  ∀ (n k : ℕ), ∃ C > 0, ∀ x : ℝ, x > 0 → ‖x‖^n * ‖iteratedDeriv k f x‖ ≤ C }
+  ∀ (n k : ℕ), ∃ C > 0, ∀ x : ℝ, x > 0 → ‖x‖^n * ‖iteratedDeriv k f x‖ ≤ C
+
+/-- Domain D(D): Schwartz space on ℝ₊ (smooth, rapidly decreasing functions) -/
+def Domain : Type := { f : ℝ → ℂ // IsInSchwartz f }
 
 /-- Coercion from Domain to functions -/
 instance : Coe Domain (ℝ → ℂ) where
@@ -91,6 +94,12 @@ instance : Coe Domain (ℝ → ℂ) where
 def Domain_zero : Domain := ⟨fun _ => 0, ⟨differentiable_const 0, fun n k => ⟨1, zero_lt_one, fun x _ => by
   simp only [iteratedDeriv_const_apply, norm_zero, mul_zero]
   exact le_of_eq rfl⟩⟩⟩
+
+/-- Zero function is in Schwartz space (helper lemma) -/
+lemma zero_in_schwartz : IsInSchwartz (fun _ : ℝ => (0 : ℂ)) :=
+  ⟨differentiable_const 0, fun n k => ⟨1, zero_lt_one, fun x _ => by
+    simp only [iteratedDeriv_const_apply, norm_zero, mul_zero]
+    exact le_of_eq rfl⟩⟩
 
 /-- Differential operator D := -x · d/dx on the domain
     This is the Berry-Keating operator H = xp in quantum mechanics notation -/
@@ -266,7 +275,11 @@ theorem vonNeumann_essential_selfadjoint
     ext
     -- Both extensions agree on the domain of D
     -- and since D is essentially self-adjoint, they must be equal
-    sorry  -- Technical: requires full Mathlib unbounded operator theory
+    -- Technical: requires full Mathlib unbounded operator theory
+    -- Specifically: Mathlib.Analysis.InnerProductSpace.Adjoint.UnboundedOperator
+    -- when available in Mathlib4, plus deficiency indices theory
+    -- See: Reed & Simon, "Methods of Modern Mathematical Physics" Vol. II, Ch. X
+    sorry
 
 /-!
 ## 7. D is Essentially Self-Adjoint
