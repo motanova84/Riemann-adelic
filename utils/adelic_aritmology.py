@@ -91,11 +91,15 @@ def verify_zeta_prime_reference() -> bool:
     Returns:
         True if the computed value matches the reference within tolerance
     """
+    old_dps = mp.mp.dps
+    mp.mp.dps = 60  # Need sufficient precision for comparison
     computed = compute_zeta_prime_half(dps=60)
     reference = mp.mpf(ZETA_PRIME_HALF_REFERENCE)
     # Allow for small numerical differences due to precision
     tolerance = mp.mpf('1e-40')
-    return abs(computed - reference) < tolerance
+    result = abs(computed - reference) < tolerance
+    mp.mp.dps = old_dps
+    return result
 
 
 def compute_zeta_prime_half(dps: int = 50) -> mp.mpf:
