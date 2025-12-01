@@ -167,8 +167,11 @@ The file `operador/operador_H_real.py` implements the universal operator H in lo
 2. **Spectral inversion**: Demonstrates K_D(0,0;t) → #{ρ} as t↓0+
 3. **Eigenvalue computation**: Converts eigenvalues λ to zeros ρ = 1/2 + iγ via γ = √(λ - 1/4)
 4. **Verification**: Cross-checks computed zeros with Odlyzko's tables
+5. **High precision support**: Includes `high_precision_H` function with 100-digit precision using mpmath
 
 ### Usage
+
+#### Standard Implementation
 
 ```bash
 cd spectral_RH
@@ -196,6 +199,37 @@ Ceros computados:
 ✅ Inversión espectral verificada
 ✅ Operador H construido exitosamente
 ```
+
+#### High Precision Implementation
+
+For ultra-high precision computation (100 decimal digits):
+
+```python
+import sys
+sys.path.insert(0, 'spectral_RH')
+from operador.operador_H_real import high_precision_H
+
+# Compute with 100-digit precision
+eigenvalues = high_precision_H(N=200, h=0.001)
+```
+
+**Features of `high_precision_H`:**
+- mpmath with 100 decimal digits precision (mp.dps = 100)
+- Gaussian kernel: `exp(-(t-s)²/(4h)) / sqrt(4πh)`
+- Hermite basis on logarithmic scale (nodes from -10 to 10)
+- High precision diagonalization via `mpmath.eigsy`
+- Returns transformed eigenvalues: `0.25 + log(1/λ)` for λ > 0
+
+**Demo script:**
+```bash
+python demo_high_precision_H.py
+```
+
+This demonstrates:
+- Small matrix examples with varying parameters
+- Connection to Riemann zeros via γ = √(λ - 0.25)
+- Effect of thermal parameter h on the spectrum
+- Full high precision computation workflow
 
 ### Implementation Notes
 
