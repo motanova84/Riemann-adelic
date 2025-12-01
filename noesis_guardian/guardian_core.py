@@ -51,6 +51,7 @@ class NoesisGuardian:
     F0_HZ = 141.7001  # Frecuencia fundamental
     COHERENCE_CONSTANT = 244.36  # C = 244.36
     DEFAULT_CYCLE_INTERVAL = 1800  # 30 minutos
+    DEFAULT_LOG_FILENAME = "guardian_log_v2.json"
 
     def __init__(self, repo_root: Optional[Path] = None, log_path: Optional[str] = None):
         """
@@ -64,7 +65,9 @@ class NoesisGuardian:
             repo_root = Path(__file__).resolve().parents[1]
 
         self.repo_root = Path(repo_root)
-        self.log_path = log_path or str(self.repo_root / "noesis_guardian" / "guardian_log_v2.json")
+        self.log_path = log_path or str(
+            self.repo_root / "noesis_guardian" / self.DEFAULT_LOG_FILENAME
+        )
 
         # Inicializar componentes
         self.watcher = RepoWatcher(self.repo_root)

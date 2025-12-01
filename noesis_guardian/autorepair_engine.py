@@ -42,6 +42,14 @@ class AutoRepairEngine:
     - Coherencia espectral
     """
 
+    # Caracteres Unicode problemáticos y sus reemplazos
+    UNICODE_REPLACEMENTS = {
+        "\ufeff": "",  # BOM
+        "\u200b": "",  # Zero-width space
+        "\u2028": "\n",  # Line separator
+        "\u2029": "\n\n",  # Paragraph separator
+    }
+
     def __init__(self, repo_root: Optional[Path] = None):
         """
         Inicializa el motor de reparación.
@@ -229,13 +237,6 @@ class AutoRepairEngine:
             "files": [],
         }
 
-        problematic_chars = {
-            "\ufeff": "",  # BOM
-            "\u200b": "",  # Zero-width space
-            "\u2028": "\n",  # Line separator
-            "\u2029": "\n\n",  # Paragraph separator
-        }
-
         for py_file in self.repo_root.rglob("*.py"):
             try:
                 with open(py_file, "r", encoding="utf-8") as f:
@@ -244,7 +245,7 @@ class AutoRepairEngine:
                 modified_content = original_content
                 was_modified = False
 
-                for char, replacement in problematic_chars.items():
+                for char, replacement in self.UNICODE_REPLACEMENTS.items():
                     if char in modified_content:
                         modified_content = modified_content.replace(char, replacement)
                         was_modified = True

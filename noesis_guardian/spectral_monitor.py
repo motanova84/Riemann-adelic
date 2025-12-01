@@ -41,6 +41,10 @@ class SpectralMonitor:
     COHERENCE_CONSTANT = 244.36  # C = 244.36
     FRACTAL_RATIO = 68 / 81  # Patrón fractal fundamental
 
+    # Constantes físicas
+    SPEED_OF_LIGHT = 299792458  # velocidad de la luz (m/s)
+    PLANCK_LENGTH = 1.616255e-35  # longitud de Planck (m)
+
     def __init__(self, precision: int = 30):
         """
         Inicializa el monitor espectral.
@@ -119,13 +123,15 @@ class SpectralMonitor:
             Estado de la verificación de f₀
         """
         try:
-            # Calcular f₀ teórico
-            c = 299792458  # velocidad de la luz (m/s)
-            planck_length = 1.616255e-35  # longitud de Planck (m)
-            r_psi = c / (2 * math.pi * self.F0_HZ * planck_length)
+            # Calcular f₀ teórico usando constantes de clase
+            r_psi = self.SPEED_OF_LIGHT / (
+                2 * math.pi * self.F0_HZ * self.PLANCK_LENGTH
+            )
 
             # Verificar que f₀ está en el rango correcto
-            f0_calculated = c / (2 * math.pi * r_psi * planck_length)
+            f0_calculated = self.SPEED_OF_LIGHT / (
+                2 * math.pi * r_psi * self.PLANCK_LENGTH
+            )
             deviation = abs(f0_calculated - self.F0_HZ) / self.F0_HZ
 
             return {
