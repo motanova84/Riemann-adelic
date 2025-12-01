@@ -172,6 +172,10 @@ monitoring/alerts/*.json
 !monitoring/alerts/.gitkeep
 examples/__pycache__/
 
+# Noesis Guardian logs (keep directory structure)
+noesis_guardian/logs/*.json
+!noesis_guardian/logs/.gitkeep
+
 # QCAL auto-generated state files
 tools/qcal_state.json
 # Spectral framework demo images
