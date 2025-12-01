@@ -27,6 +27,7 @@ from utils.adelic_aritmology import (
     QCAL_FREQUENCY_STRING,
     ARITMOLOGY_FRACTION,
     ZETA_PRIME_HALF_REFERENCE,
+    MIN_IDENTITY_PRECISION,
 )
 
 
@@ -258,8 +259,10 @@ class TestZetaPrimeIdentity:
         zeta_prime = compute_zeta_prime_half(dps=50)
         assert isinstance(zeta_prime, mp.mpf)
         # ζ'(1/2) should be approximately -3.9226461392
-        assert float(zeta_prime) < -3.92
-        assert float(zeta_prime) > -3.93
+        # Expected value based on known mathematical tables
+        expected_zeta_prime = -3.9226461392
+        relative_tolerance = 1e-8  # Allow 0.00001% deviation
+        assert abs((float(zeta_prime) - expected_zeta_prime) / expected_zeta_prime) < relative_tolerance
 
     def test_compute_zeta_prime_half_is_negative(self):
         """Test that ζ'(1/2) is negative."""
@@ -306,6 +309,26 @@ class TestZetaPrimeIdentity:
         exp_value = result["components"]["exp_minus_zeta_prime_over_pi"]
         # Since ζ'(1/2) < 0, -ζ'(1/2)/π > 0, so e^(-ζ'(1/2)/π) > 1
         assert exp_value > 1
+
+    def test_min_identity_precision_constant(self):
+        """Test that MIN_IDENTITY_PRECISION constant is defined correctly."""
+        assert MIN_IDENTITY_PRECISION == 50
+        assert isinstance(MIN_IDENTITY_PRECISION, int)
+
+    def test_verification_details_structure(self):
+        """Test that verification_details contains all expected fields."""
+        result = verify_zeta_prime_identity(dps=50)
+        assert "verification_details" in result
+        details = result["verification_details"]
+        assert "zeta_prime_in_expected_range" in details
+        assert "fraction_value_correct" in details
+        assert "exponential_positive" in details
+        assert "values_well_defined" in details
+        # All verification details should be True for a valid identity
+        assert details["zeta_prime_in_expected_range"] is True
+        assert details["fraction_value_correct"] is True
+        assert details["exponential_positive"] is True
+        assert details["values_well_defined"] is True
 
     def test_class_method_verify_zeta_prime_identity(self):
         """Test the class method for identity verification."""
