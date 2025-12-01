@@ -45,10 +45,21 @@ class SchattenPaley:
     to ensure mathematical stability and detect anomalies.
 
     Attributes:
-        STABILITY_THRESHOLD: Maximum acceptable value for norms (default: 1e6)
+        STABILITY_THRESHOLD: Maximum acceptable value for norms.
+            Set to 1e6 as typical Hilbert-Pólya operators have
+            bounded Schatten norms. Values exceeding this indicate
+            potential divergence or numerical instability.
+        MAX_EIGENVALUES: Maximum number of eigenvalues to analyze.
+            Limited to 300 for computational efficiency while
+            capturing the dominant spectral behavior.
     """
 
+    # Threshold for detecting spectral anomalies. Values exceeding
+    # this indicate the operator may not be compact or trace-class.
     STABILITY_THRESHOLD = 1e6
+
+    # Maximum eigenvalues to analyze for computational efficiency
+    MAX_EIGENVALUES = 300
 
     @staticmethod
     def _get_data_path() -> Path:
@@ -84,8 +95,8 @@ class SchattenPaley:
             with open(filepath, encoding="utf-8") as f:
                 d = json.load(f)
             eigenvalues = d.get("eigenvalues", [])
-            # Take up to 300 eigenvalues for analysis
-            return [mp.mpf(v) for v in eigenvalues[:300]]
+            # Limit to MAX_EIGENVALUES for computational efficiency
+            return [mp.mpf(v) for v in eigenvalues[:SchattenPaley.MAX_EIGENVALUES]]
         except FileNotFoundError:
             return None
         except (json.JSONDecodeError, KeyError, TypeError):
@@ -146,7 +157,9 @@ class SchattenPaley:
             ValueError: If p < 1
         """
         if p < 1:
-            raise ValueError("Schatten parameter p must be >= 1")
+            raise ValueError(
+                "Schatten parameter p must be >= 1 for valid Schatten norm definition"
+            )
         sum_p = sum(abs(eig) ** p for eig in eigs)
         return sum_p ** (1 / p)
 

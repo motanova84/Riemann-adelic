@@ -21,7 +21,7 @@ import sys
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from noesis_guardian.modules.hook_schatten_paley import SchattenPaley
-from noesis_guardian.guardian_core import GuardianCore, Notifier
+from noesis_guardian.guardian_core import GuardianCore, Notifier, Status
 
 
 class TestSchattenPaleyModule:

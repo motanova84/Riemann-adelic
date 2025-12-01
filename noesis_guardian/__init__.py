@@ -14,7 +14,7 @@ DOI: 10.5281/zenodo.17379721
 """
 
 from .modules.hook_schatten_paley import SchattenPaley
-from .guardian_core import GuardianCore, Notifier
+from .guardian_core import GuardianCore, Notifier, Status
 
-__all__ = ["SchattenPaley", "GuardianCore", "Notifier"]
+__all__ = ["SchattenPaley", "GuardianCore", "Notifier", "Status"]
 __version__ = "1.0.0"

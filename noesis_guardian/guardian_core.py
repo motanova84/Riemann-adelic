@@ -35,6 +35,15 @@ logging.basicConfig(
 logger = logging.getLogger("NoesisGuardian")
 
 
+# Status constants for hook results
+class Status:
+    """Status constants for Guardian hook results."""
+    OK = "ok"
+    ANOMALY = "⚠️ anomaly"
+    MISSING_DATA = "missing_data"
+    ERROR = "error"
+
+
 class Notifier:
     """
     Alert notification system for Guardian events.
@@ -136,7 +145,7 @@ class GuardianCore:
         Notifier.info(f"Running hook: {name}")
         result = self.hooks[name]()
 
-        if result.get("status") not in ("ok", "missing_data"):
+        if result.get("status") not in (Status.OK, Status.MISSING_DATA):
             Notifier.alert(
                 f"⚠️ Anomaly in {name} functional invariants", result
             )
@@ -154,7 +163,7 @@ class GuardianCore:
         report: Dict[str, Any] = {
             "timestamp": timestamp,
             "hooks": {},
-            "overall_status": "ok",
+            "overall_status": Status.OK,
             "anomalies": [],
         }
 
@@ -163,8 +172,8 @@ class GuardianCore:
                 result = self.run_hook(name)
                 report["hooks"][name] = result
 
-                if result.get("status") not in ("ok", "missing_data"):
-                    report["overall_status"] = "⚠️ anomaly"
+                if result.get("status") not in (Status.OK, Status.MISSING_DATA):
+                    report["overall_status"] = Status.ANOMALY
                     report["anomalies"].append({
                         "hook": name,
                         "status": result.get("status"),
@@ -172,21 +181,21 @@ class GuardianCore:
                     })
             except Exception as e:
                 error_result = {
-                    "status": "error",
+                    "status": Status.ERROR,
                     "message": str(e),
                 }
                 report["hooks"][name] = error_result
-                report["overall_status"] = "error"
+                report["overall_status"] = Status.ERROR
                 report["anomalies"].append({
                     "hook": name,
-                    "status": "error",
+                    "status": Status.ERROR,
                     "message": str(e),
                 })
                 Notifier.alert(f"Error in hook {name}", {"error": str(e)})
 
         self.last_report = report
 
-        if report["overall_status"] == "ok":
+        if report["overall_status"] == Status.OK:
             Notifier.success("All Guardian hooks passed")
         else:
             Notifier.alert(
