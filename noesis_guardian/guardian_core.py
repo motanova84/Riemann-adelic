@@ -25,10 +25,16 @@ DOI: 10.5281/zenodo.17379721
 import json
 import os
 import logging
+import re
 from datetime import datetime, timezone
 from typing import Dict, Any, Optional, List
 
 from noesis_guardian.modules.hook_calabi_yau_resonance import CalabiYauResonance
+
+
+def _sanitize_timestamp(timestamp: str) -> str:
+    """Sanitize timestamp for use in filenames by replacing special characters."""
+    return re.sub(r'[:.]+', '-', timestamp)
 
 
 # Configure logging
@@ -218,7 +224,7 @@ class GuardianCore:
                 "timestamp",
                 datetime.now(timezone.utc).isoformat().replace('+00:00', 'Z')
             )
-            safe_timestamp = timestamp.replace(":", "-").replace(".", "-")
+            safe_timestamp = _sanitize_timestamp(timestamp)
             filename = f"guardian_report_{safe_timestamp}.json"
 
         filepath = os.path.join(self.log_dir, filename)

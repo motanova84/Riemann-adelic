@@ -49,6 +49,7 @@ class CalabiYauResonance:
             derived from Calabi-Yau compactification geometry.
         RESONANCE_THRESHOLD (float): Minimum resonance score for stable status.
         DEFAULT_SPECTRUM_PATH (str): Default path to spectrum data file.
+        MAX_EIGENVALUES_TO_SUM (int): Maximum number of eigenvalues to use in resonance sum.
     """
 
     FUNDAMENTAL_FREQUENCY: float = 141.7001  # Hz
@@ -56,6 +57,7 @@ class CalabiYauResonance:
     # produce small resonance scores due to their quasi-random distribution
     RESONANCE_THRESHOLD: float = 0.005
     DEFAULT_SPECTRUM_PATH: str = "data/spectrum_Hpsi.json"
+    MAX_EIGENVALUES_TO_SUM: int = 150  # Limit for resonance summation
 
     @staticmethod
     def load_spectrum(filepath: Optional[str] = None) -> Optional[List[mp.mpf]]:
@@ -92,7 +94,14 @@ class CalabiYauResonance:
                 with open(path, 'r', encoding='utf-8') as f:
                     data = json.load(f)
                     eigenvalues = data.get("eigenvalues", [])
-                    return [mp.mpf(v) for v in eigenvalues[:200]]
+                    # Safely convert each value, skipping any invalid entries
+                    result = []
+                    for v in eigenvalues[:200]:
+                        try:
+                            result.append(mp.mpf(v))
+                        except (ValueError, TypeError):
+                            continue  # Skip invalid values
+                    return result if result else None
             except (FileNotFoundError, json.JSONDecodeError, KeyError):
                 continue
 
@@ -122,7 +131,8 @@ class CalabiYauResonance:
             This is NOT physical curvature. It is a computational construct
             for symbolic representation within the QCAL framework.
         """
-        # Use irrational coefficient sqrt(3) for non-periodic behavior
+        # Use irrational coefficient sqrt(3) for quasi-periodic oscillations
+        # that create pseudo-random behavior over finite ranges
         return mp.sin(n * mp.sqrt(3) / 10) * mp.mpf('1e-3')
 
     @staticmethod
@@ -154,7 +164,7 @@ class CalabiYauResonance:
         if not eigenvalues:
             return 0.0
 
-        max_n = min(len(eigenvalues) - 1, 150)
+        max_n = min(len(eigenvalues) - 1, CalabiYauResonance.MAX_EIGENVALUES_TO_SUM)
 
         # Compute weighted sine sum
         total = mp.mpf(0)

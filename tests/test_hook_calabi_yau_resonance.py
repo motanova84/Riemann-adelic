@@ -29,6 +29,7 @@ class TestCalabiYauResonanceBasics:
         assert CalabiYauResonance.FUNDAMENTAL_FREQUENCY == 141.7001
         assert CalabiYauResonance.RESONANCE_THRESHOLD > 0
         assert 'spectrum_Hpsi.json' in CalabiYauResonance.DEFAULT_SPECTRUM_PATH
+        assert CalabiYauResonance.MAX_EIGENVALUES_TO_SUM == 150
 
     def test_model_calabi_yau_curvature_zero(self):
         """Test curvature model at n=0."""
@@ -116,6 +117,21 @@ class TestCalabiYauResonanceLoadSpectrum:
             result = CalabiYauResonance.load_spectrum(test_file)
             assert result is not None
             assert len(result) == 200
+
+    def test_load_spectrum_with_invalid_values(self):
+        """Test that loading handles invalid eigenvalue values gracefully."""
+        with TemporaryDirectory() as tmpdir:
+            test_file = os.path.join(tmpdir, 'mixed_spectrum.json')
+            test_data = {
+                'eigenvalues': [14.13, 'invalid', 25.01, None, 32.94]
+            }
+            with open(test_file, 'w') as f:
+                json.dump(test_data, f)
+
+            result = CalabiYauResonance.load_spectrum(test_file)
+            assert result is not None
+            # Only valid numeric values should be loaded
+            assert len(result) == 3
 
 
 class TestCalabiYauResonanceRun:
