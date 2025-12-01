@@ -68,9 +68,20 @@ class NoesisGuardian:
 
         self.log(entry)
 
-        if repo_state["errors"] or not spectral_state["coherent"]:
+        # Separate handling for repo errors vs spectral incoherence
+        needs_alert = False
+
+        # Only repair file system if there are actual missing files
+        if repo_state["errors"]:
             self.repair_engine.repair(repo_state)
-            Notifier.alert("Guardian ejecutó reparación", entry)
+            needs_alert = True
+
+        # Alert on spectral incoherence (but don't trigger file repair)
+        if not spectral_state["coherent"]:
+            needs_alert = True
+
+        if needs_alert:
+            Notifier.alert("Guardian detectó problemas", entry)
             AikSync.emit(entry)
 
         SabioBridge.update(entry)

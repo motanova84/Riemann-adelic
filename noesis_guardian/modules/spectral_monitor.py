@@ -22,6 +22,17 @@ class SpectralMonitor:
     mechanism for the QCAL framework.
     """
 
+    def __init__(self, seed: int = 42, sample_size: int = 128) -> None:
+        """
+        Initialize the spectral monitor.
+
+        Args:
+            seed: Random seed for reproducible sample generation.
+            sample_size: Size of the sample signal for FFT analysis.
+        """
+        self.seed = seed
+        self.sample_size = sample_size
+
     def check(self) -> Dict[str, object]:
         """
         Perform spectral coherence check.
@@ -38,8 +49,8 @@ class SpectralMonitor:
                 - symmetry: Float representing total spectral magnitude
         """
         # Generate reproducible sample for testing
-        np.random.seed(42)
-        sample = np.random.random(128)
+        np.random.seed(self.seed)
+        sample = np.random.random(self.sample_size)
 
         # Compute FFT
         spectrum = np.fft.fft(sample)
