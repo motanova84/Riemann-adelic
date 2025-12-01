@@ -22,6 +22,7 @@ from utils.adelic_aritmology import (
     get_phi,
     compute_zeta_prime_half,
     verify_zeta_prime_identity,
+    verify_zeta_prime_reference,
     PERIOD_DECIMAL,
     PERIOD_LENGTH,
     QCAL_FREQUENCY_STRING,
@@ -254,6 +255,10 @@ class TestZetaPrimeIdentity:
         assert ZETA_PRIME_HALF_REFERENCE is not None
         assert ZETA_PRIME_HALF_REFERENCE.startswith("-3.9226")
 
+    def test_verify_zeta_prime_reference(self):
+        """Test that computed ζ'(1/2) matches the reference value."""
+        assert verify_zeta_prime_reference() is True
+
     def test_compute_zeta_prime_half_value(self):
         """Test computation of ζ'(1/2)."""
         zeta_prime = compute_zeta_prime_half(dps=50)
@@ -261,7 +266,7 @@ class TestZetaPrimeIdentity:
         # ζ'(1/2) should be approximately -3.9226461392
         # Expected value based on known mathematical tables
         expected_zeta_prime = -3.9226461392
-        relative_tolerance = 1e-8  # Allow 0.00001% deviation
+        relative_tolerance = 1e-8  # Allow 0.000001% (1e-6 %) relative deviation
         assert abs((float(zeta_prime) - expected_zeta_prime) / expected_zeta_prime) < relative_tolerance
 
     def test_compute_zeta_prime_half_is_negative(self):
