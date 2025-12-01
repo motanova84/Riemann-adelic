@@ -34,9 +34,7 @@ jobs:
         run: mkdir -p noesis_guardian/logs
 
       - name: Run Guardian cycle
-        run: |
-          mkdir -p noesis_guardian/logs
-          python noesis_guardian/guardian_core.py
+        run: python noesis_guardian/guardian_core.py
         continue-on-error: true
 
       - name: Upload Guardian logs

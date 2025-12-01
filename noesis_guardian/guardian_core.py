@@ -27,16 +27,20 @@ Security Guarantees:
 - ✔️ Emits minimal alerts
 """
 
+import hashlib
 import json
+import subprocess
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Dict, Optional
 
-# Add parent directory to path for imports
-sys.path.insert(0, str(Path(__file__).parent.parent))
-
-from noesis_guardian.modules.coherency_hooks import CoherencyHooks
+# Handle both package import and direct script execution
+if __name__ == "__main__":
+    sys.path.insert(0, str(Path(__file__).parent.parent))
+    from noesis_guardian.modules.coherency_hooks import CoherencyHooks
+else:
+    from .modules.coherency_hooks import CoherencyHooks
 
 
 class Notifier:
@@ -70,8 +74,7 @@ class AikSync:
         Args:
             entry: Guardian entry data
         """
-        # Optional: Generate AIK hash for entry
-        import hashlib
+        # Generate AIK hash for entry
         entry_json = json.dumps(entry, sort_keys=True, default=str)
         aik_hash = hashlib.sha256(entry_json.encode()).hexdigest()[:16]
         print(f"🔗 AIK Hash: {aik_hash}")
@@ -120,8 +123,6 @@ class NoesisGuardian:
         Returns:
             Dictionary with repository state details.
         """
-        import subprocess
-
         state = {
             "path": str(self.repo_root),
             "timestamp": datetime.now(timezone.utc).isoformat(),

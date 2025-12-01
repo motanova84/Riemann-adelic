@@ -27,6 +27,12 @@ Validation Scripts:
 import subprocess
 from typing import Dict, List, Tuple
 
+# Maximum output length to capture (prevents memory issues with large outputs)
+MAX_OUTPUT_LENGTH = 5000
+
+# Timeout for each hook in seconds
+HOOK_TIMEOUT = 240
+
 
 class CoherencyHooks:
     """
@@ -36,23 +42,25 @@ class CoherencyHooks:
     and captures their results for reporting.
     """
 
-    HOOKS: List[Tuple[str, str]] = [
-        ("V5 Coronación", "python validate_v5_coronacion.py"),
-        ("RH Completo", "python verify_rh_complete.py"),
-        ("Fórmula Explícita", "python validate_explicit_formula.py"),
-        ("Hilbert–Pólya", "python validate_hilbert_polya.py"),
-        ("H_psi AutoAdjunto", "python validate_spectral_self_adjoint.py"),
-        ("Línea Crítica", "python validate_critical_line.py"),
+    # List of (title, command_list) tuples for validation hooks
+    # Commands are lists to avoid shell injection vulnerabilities
+    HOOKS: List[Tuple[str, List[str]]] = [
+        ("V5 Coronación", ["python", "validate_v5_coronacion.py"]),
+        ("RH Completo", ["python", "verify_rh_complete.py"]),
+        ("Fórmula Explícita", ["python", "validate_explicit_formula.py"]),
+        ("Hilbert–Pólya", ["python", "validate_hilbert_polya.py"]),
+        ("H_psi AutoAdjunto", ["python", "validate_spectral_self_adjoint.py"]),
+        ("Línea Crítica", ["python", "validate_critical_line.py"]),
     ]
 
     @staticmethod
-    def run_hook(title: str, command: str) -> Dict:
+    def run_hook(title: str, command: List[str]) -> Dict:
         """
         Execute a single coherency hook.
 
         Args:
             title: Human-readable name of the hook
-            command: Shell command to execute
+            command: Command as list of arguments (shell=False for security)
 
         Returns:
             Dictionary with hook execution results including:
@@ -66,18 +74,18 @@ class CoherencyHooks:
         try:
             result = subprocess.run(
                 command,
-                shell=True,
+                shell=False,  # Avoid shell injection
                 capture_output=True,
                 text=True,
-                timeout=240  # seguridad: 4 minutos
+                timeout=HOOK_TIMEOUT
             )
             success = result.returncode == 0
 
             return {
                 "title": title,
                 "ok": success,
-                "stdout": result.stdout[-5000:] if result.stdout else "",
-                "stderr": result.stderr[-5000:] if result.stderr else "",
+                "stdout": result.stdout[-MAX_OUTPUT_LENGTH:] if result.stdout else "",
+                "stderr": result.stderr[-MAX_OUTPUT_LENGTH:] if result.stderr else "",
             }
 
         except subprocess.TimeoutExpired:
