@@ -18,6 +18,11 @@ from pathlib import Path
 from typing import Dict, List, Any
 
 
+# Configuration constants
+SORRY_THRESHOLD = 10  # Maximum number of 'sorry' statements before Lean is marked incomplete
+MAX_UNICODE_ISSUES = 100  # Maximum number of Unicode issues to report
+
+
 class RepoWatcher:
     """
     Repository watcher that monitors QCAL repository health.
@@ -209,7 +214,7 @@ class RepoWatcher:
                 content = f.read()
                 # Count sorry statements (incomplete proofs)
                 sorry_count = content.count('sorry')
-                if sorry_count > 10:  # Threshold for "too many sorrys"
+                if sorry_count > SORRY_THRESHOLD:
                     return "incomplete"
         except Exception:
             return "broken"
@@ -273,7 +278,7 @@ class RepoWatcher:
                 except Exception:
                     pass
         
-        return issues[:100]  # Limit to first 100 issues
+        return issues[:MAX_UNICODE_ISSUES]  # Limit reported issues
     
     def get_summary(self) -> str:
         """

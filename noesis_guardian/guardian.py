@@ -39,11 +39,21 @@ if str(_parent_dir) not in sys.path:
 
 from noesis_guardian.watcher import RepoWatcher
 
-# QCAL coherence frequency
+# QCAL coherence frequency (Hz) - derived from spectral analysis of zeta zeros
+# This frequency represents the fundamental resonance of the QCAL system
+# and is used for the heartbeat signal generation.
+# Reference: Evac_Rpsi_data.csv spectral validation
 FREQ = 141.7001
 
 # Log file for guardian activity
 LOGFILE = "noesis_guardian/guardian_log.json"
+
+# Timeout constants (in seconds)
+LEAN_REBUILD_TIMEOUT = 300
+OPERATOR_VERIFICATION_TIMEOUT = 120
+
+# Daemon mode interval (in seconds) - 1 hour between cycles
+DAEMON_INTERVAL = 3600
 
 
 def noesis_heartbeat() -> float:
@@ -155,7 +165,7 @@ def autorepair(state: Dict[str, Any], repo_root: Optional[str] = None) -> Dict[s
                     capture_output=True,
                     text=True,
                     cwd=repo_root,
-                    timeout=300
+                    timeout=LEAN_REBUILD_TIMEOUT
                 )
                 report["actions"].append({
                     "action": "rebuild_lean",
@@ -182,7 +192,7 @@ def autorepair(state: Dict[str, Any], repo_root: Optional[str] = None) -> Dict[s
                 capture_output=True,
                 text=True,
                 cwd=repo_root,
-                timeout=120
+                timeout=OPERATOR_VERIFICATION_TIMEOUT
             )
             report["actions"].append({
                 "action": "verify_H_DS",
@@ -206,7 +216,7 @@ def autorepair(state: Dict[str, Any], repo_root: Optional[str] = None) -> Dict[s
                 capture_output=True,
                 text=True,
                 cwd=repo_root,
-                timeout=120
+                timeout=OPERATOR_VERIFICATION_TIMEOUT
             )
             report["actions"].append({
                 "action": "validate_h_psi",
@@ -230,7 +240,7 @@ def autorepair(state: Dict[str, Any], repo_root: Optional[str] = None) -> Dict[s
                 capture_output=True,
                 text=True,
                 cwd=repo_root,
-                timeout=120
+                timeout=OPERATOR_VERIFICATION_TIMEOUT
             )
             report["actions"].append({
                 "action": "validate_critical_line",
@@ -376,11 +386,34 @@ def generate_certificate(repo_root: Optional[str] = None) -> Dict[str, Any]:
     return certificate
 
 
+def run_daemon(repo_root: Optional[str] = None):
+    """
+    Run the guardian in continuous daemon mode.
+    
+    This function runs indefinitely, executing monitoring cycles at
+    regular intervals defined by DAEMON_INTERVAL.
+    
+    Args:
+        repo_root: Repository root directory
+    """
+    print("=" * 60)
+    print("NOESIS GUARDIAN ∞³ — DAEMON MODE ACTIVATED")
+    print("=" * 60)
+    print(f"Frequency: {FREQ} Hz")
+    print(f"Interval: {DAEMON_INTERVAL} seconds")
+    print()
+    
+    while True:
+        run_cycle(repo_root)
+        time.sleep(DAEMON_INTERVAL)
+
+
 def main():
     """
     Main entry point for the NOESIS Guardian.
     
-    Runs in continuous monitoring mode with 1-hour intervals.
+    Runs a single monitoring cycle and generates a coherence certificate.
+    For continuous monitoring, use run_daemon() instead.
     """
     print("=" * 60)
     print("NOESIS GUARDIAN CORE ∞³ — AUTORREPARACIÓN ACTIVADA")
@@ -389,12 +422,7 @@ def main():
     print(f"Log file: {LOGFILE}")
     print()
     
-    # For daemon mode, uncomment the following:
-    # while True:
-    #     run_cycle()
-    #     time.sleep(3600)  # 1 hour
-    
-    # For single run:
+    # Single run mode
     report = run_cycle()
     
     # Generate certificate

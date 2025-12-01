@@ -26,7 +26,6 @@ def find_collision_files(repo_root: Path) -> List[Tuple[Path, str]]:
         list: Tuples of (file_path, collision_type)
     """
     collision_extensions = ['.orig', '.bak', '.backup', '.conflict', '.mine', '.theirs']
-    collision_patterns = ['*.orig', '*.bak', '*.backup', '*.conflict']
     
     collisions = []
     

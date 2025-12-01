@@ -8,13 +8,18 @@ Author: José Manuel Mota Burruezo (JMMB Ψ ✧)
 Frequency: 141.7001 Hz (base coherence frequency)
 """
 
-from .watcher import RepoWatcher
+from .watcher import RepoWatcher, SORRY_THRESHOLD, MAX_UNICODE_ISSUES
 from .guardian import (
     noesis_heartbeat,
     autorepair,
     run_cycle,
+    run_daemon,
+    generate_certificate,
     FREQ,
-    LOGFILE
+    LOGFILE,
+    LEAN_REBUILD_TIMEOUT,
+    OPERATOR_VERIFICATION_TIMEOUT,
+    DAEMON_INTERVAL
 )
 
 __all__ = [
@@ -22,8 +27,15 @@ __all__ = [
     'noesis_heartbeat',
     'autorepair',
     'run_cycle',
+    'run_daemon',
+    'generate_certificate',
     'FREQ',
-    'LOGFILE'
+    'LOGFILE',
+    'LEAN_REBUILD_TIMEOUT',
+    'OPERATOR_VERIFICATION_TIMEOUT',
+    'DAEMON_INTERVAL',
+    'SORRY_THRESHOLD',
+    'MAX_UNICODE_ISSUES'
 ]
 
 __version__ = '1.0.0'

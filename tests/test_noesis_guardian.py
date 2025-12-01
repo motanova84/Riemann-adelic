@@ -32,6 +32,9 @@ from noesis_guardian.guardian import (
     _repair_collisions_direct
 )
 
+# Git conflict marker length (7 characters: <<<<<<< or >>>>>>>)
+GIT_CONFLICT_MARKER_LENGTH = 7
+
 
 class TestNoesisHeartbeat:
     """Test the heartbeat signal generation."""
@@ -135,11 +138,11 @@ class TestRepoWatcher:
         """Watcher should detect merge conflict markers."""
         # Build conflict content dynamically to avoid false detection in this test file
         conflict_lines = [
-            "<" * 7 + " HEAD",
+            "<" * GIT_CONFLICT_MARKER_LENGTH + " HEAD",
             "my changes",
-            "=" * 7,
+            "=" * GIT_CONFLICT_MARKER_LENGTH,
             "their changes",
-            ">" * 7 + " branch"
+            ">" * GIT_CONFLICT_MARKER_LENGTH + " branch"
         ]
         conflict_content = "\n".join(conflict_lines)
         (Path(temp_repo) / "conflict.py").write_text(conflict_content)
