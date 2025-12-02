@@ -101,21 +101,17 @@ This follows from:
 -/
 theorem frequency_fixed :
   ω₀ = 2 * Real.pi * f₀ := by
-  unfold ω₀ k f₀ f_raw
+  unfold ω₀ k
 
-  -- reduce equality to square equality for sqrt
-  have hpos :
-    0 ≤ (141.7001 / 157.9519)^2 *
-        (2 * Real.pi * 157.9519)^2 :=
+  -- Positivity: the argument of sqrt is non-negative
+  have hpos : 0 ≤ (f₀ / f_raw)^2 * (2 * Real.pi * f_raw)^2 :=
     mul_nonneg (sq_nonneg _) (sq_nonneg _)
 
   apply (Real.sqrt_eq_iff_sq_eq hpos).mpr
 
-  -- algebraic identity
-  have h :
-    (141.7001 / 157.9519)^2 *
-      (2 * Real.pi * 157.9519)^2
-      = (2 * Real.pi * 141.7001)^2 := by
+  -- Algebraic identity: (f₀/f_raw)² · (2π·f_raw)² = (2π·f₀)²
+  have h : (f₀ / f_raw)^2 * (2 * Real.pi * f_raw)^2 = (2 * Real.pi * f₀)^2 := by
+    unfold f₀ f_raw
     ring_nf
   simpa using h
 
