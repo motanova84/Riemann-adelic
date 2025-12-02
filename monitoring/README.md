@@ -180,8 +180,7 @@ Los reportes se guardan en `monitoring/alerts/` con timestamps:
    - `paper/main.pdf` (SHA256)
    - `paper/main.tex` (SHA256)
    - `paper_standalone.tex` (SHA256)
-   - `trabajos/riemann_adelic_approach_jmmb84.pdf` (SHA256)
-   - Todos los PDFs en `trabajos/` (SHA256)
+   - `RIEMANNJMMB84.pdf` (SHA256)
 
 2. **Snippets LaTeX Clave**:
    - Ecuación de energía de vacío: `E_{vac}(R_\Psi) = \alpha/R_\Psi^4`

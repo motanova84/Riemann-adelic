@@ -1,0 +1,91 @@
+\section{Introduction}
+\label{sec:introduction}
+
+The Riemann Hypothesis (RH), formulated by Bernhard Riemann in 1859, asserts that all non-trivial zeros of the Riemann zeta function $\zeta(s)$ lie on the critical line $\Re(s) = 1/2$. This conjecture has profound implications for the distribution of prime numbers and remains one of the most important unsolved problems in mathematics.
+
+\subsection{Historical Context}
+
+Classical approaches to the Riemann Hypothesis have relied on the explicit formula connecting the zeros of $\zeta(s)$ to the distribution of primes:
+\[
+\psi(x) = x - \sum_{\rho} \frac{x^\rho}{\rho} - \frac{\zeta'(0)}{\zeta(0)} - \frac{1}{2}\log(1-x^{-2}),
+\]
+where $\psi(x) = \sum_{n \leq x} \Lambda(n)$ is the Chebyshev function, and the sum runs over non-trivial zeros $\rho$ of $\zeta(s)$.
+
+Traditional methods have explored various approaches including:
+\begin{itemize}
+\item \textbf{Analytic continuation}: The functional equation and analytic properties of $\zeta(s)$
+\item \textbf{Operator theory}: Hilbert-Pólya conjecture relating zeros to eigenvalues
+\item \textbf{Dynamical systems}: Connections to ergodic theory and trace formulas
+\item \textbf{Adelic methods}: Global-local principles from algebraic number theory
+\end{itemize}
+
+\subsection{Our Approach: S-Finite Adelic Spectral Systems}
+
+This work introduces a fundamentally new framework based on \textbf{S-finite adelic spectral systems}. The key innovation is to construct a canonical entire function $D(s)$ using only operator-theoretic principles, without assuming:
+\begin{enumerate}
+\item The Riemann zeta function $\zeta(s)$ as input
+\item The Euler product formula
+\item The functional equation of $\zeta(s)$
+\end{enumerate}
+
+Instead, we build $D(s)$ from a spectral determinant arising from:
+\begin{itemize}
+\item A finite set $S$ of places (including the archimedean place)
+\item Local operators at each place $v \in S$
+\item A global trace formula emerging from geometric orbit structure
+\item Spectral flow governed by canonical length scales $\ell_v$
+\end{itemize}
+
+\subsection{Main Results}
+
+Our main contributions are:
+
+\begin{theorem}[Unconditional RH via $D(s)$]
+\label{thm:main_rh}
+The canonical determinant $D(s)$ constructed from the S-finite adelic system satisfies:
+\begin{enumerate}
+\item $D(s)$ is entire of order $\leq 1$
+\item $D(1-s) = D(s)$ (functional equation from spectral symmetry)
+\item $D(s) \equiv \Xi(s)$ where $\Xi(s) = \frac{1}{2}s(s-1)\pi^{-s/2}\Gamma(s/2)\zeta(s)$
+\item All zeros of $D(s)$ lie on $\Re(s) = 1/2$
+\end{enumerate}
+Therefore, all non-trivial zeros of $\zeta(s)$ lie on the critical line.
+\end{theorem}
+
+\begin{theorem}[Emergence of Local Lengths]
+\label{thm:local_lengths}
+The local length scales $\ell_v = \log q_v$ emerge geometrically from closed orbit structure, without input from $\zeta(s)$. This is proven via:
+\begin{itemize}
+\item Tate's theorem on local Fourier analysis
+\item Weil's classification of closed orbits
+\item Birman-Solomyak trace bounds
+\end{itemize}
+\end{theorem}
+
+\subsection{Structure of This Paper}
+
+The paper is organized as follows:
+\begin{itemize}
+\item \textbf{Section~\ref{sec:preliminaries}}: Adelic preliminaries and S-finite systems
+\item \textbf{Section~\ref{sec:local_length}}: Geometric emergence of $\ell_v = \log q_v$
+\item \textbf{Section~\ref{sec:hilbert_space}}: Construction of the spectral Hilbert space
+\item \textbf{Section~\ref{sec:operator_resolvent}}: Operator theory and resolvent analysis
+\item \textbf{Section~\ref{sec:functional_equation}}: Derivation of the functional equation
+\item \textbf{Section~\ref{sec:growth_order}}: Growth estimates and order bounds
+\item \textbf{Section~\ref{sec:pw_uniqueness}}: Paley-Wiener uniqueness theorem
+\item \textbf{Section~\ref{sec:inversion_primes}}: Prime number inversion formula
+\item \textbf{Section~\ref{sec:numerics}}: Numerical validation
+\item \textbf{Section~\ref{sec:bsd}}: Extension to BSD conjecture (conditional)
+\item \textbf{Section~\ref{sec:limitations}}: Limitations and open questions
+\end{itemize}
+
+Appendices provide detailed technical results on trace-class convergence, de Branges theory, Paley-Wiener multiplicities, archimedean contributions, computational algorithms, and reproducibility guidelines.
+
+\subsection{Transparency and Reproducibility}
+
+All code, data, and numerical validations are openly available at:
+\begin{center}
+\texttt{https://github.com/motanova84/-jmmotaburr-riemann-adelic}
+\end{center}
+
+This work is submitted for rigorous peer review with complete transparency regarding all assumptions, constructions, and computational verifications.

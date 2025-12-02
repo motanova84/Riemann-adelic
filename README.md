@@ -138,6 +138,13 @@ It includes:
   <img src="https://github.com/motanova84/-jmmotaburr-riemann-adelic/actions/workflows/nightly.yml/badge.svg" alt="Nightly">
 </p>
 
+<p align="center">
+  <img src="https://github.com/motanova84/-jmmotaburr-riemann-adelic/actions/workflows/ci.yml/badge.svg?branch=main" alt="CI">
+  <img src="https://github.com/motanova84/-jmmotaburr-riemann-adelic/actions/workflows/proof-check.yml/badge.svg?branch=main" alt="Proof Check">
+  <img src="https://img.shields.io/codecov/c/github/motanova84/-jmmotaburr-riemann-adelic/main?logo=codecov&logoColor=white" alt="Coverage">
+  <img src="https://github.com/motanova84/-jmmotaburr-riemann-adelic/actions/workflows/nightly.yml/badge.svg" alt="Nightly">
+</p>
+
   <a href="https://github.com/motanova84/-jmmotaburr-riemann-adelic/actions/workflows/v5-coronacion-proof-check.yml"><img src="https://img.shields.io/badge/Versión-V5_Coronación-blue" alt="Versión"></a>
   <a href="https://github.com/motanova84/-jmmotaburr-riemann-adelic/actions/workflows/comprehensive-ci.yml"><img src="https://img.shields.io/badge/Estado-Completada-green" alt="Estado"></a>
   <a href="https://github.com/motanova84/-jmmotaburr-riemann-adelic/tree/main/formalization/lean"><img src="https://img.shields.io/badge/Formalización_Lean-Completada-green" alt="Formalización Lean"></a>
@@ -1315,6 +1322,134 @@ measure = prime_measure_from_zeros(zeros, X)
 ✅ **4 visualizaciones** generadas  
 ✅ Compatible con ceros de Odlyzko y código existente
 
+---
+
+## 💓 Hook B: Monitor de Núcleo de Calor Espectral
+
+### Electrocardiograma Matemático para la Correspondencia de Hilbert-Pólya
+
+**Hook B** es un monitor de núcleo de calor espectral que actúa como un **electrocardiograma (ECG) matemático** para la validación espectral profunda del operador de Riemann H_Ψ. Verifica la correspondencia de Hilbert-Pólya:
+
+$$\lambda_n \approx \gamma_n^2$$
+
+donde:
+- **λ_n**: n-ésimo autovalor del operador H_Ψ
+- **γ_n**: parte imaginaria del n-ésimo cero no trivial de ζ(s): ρ_n = 1/2 + iγ_n
+
+### Fundamento Matemático
+
+La conjetura de Hilbert-Pólya (1912) establece que si existe un operador autoadjunto H cuyos autovalores {λ_n} corresponden a los ceros no triviales {γ_n} de ζ(s), entonces la Hipótesis de Riemann se cumple. Esta correspondencia es:
+
+```
+λ_n ≈ γ_n²
+```
+
+El monitor "Hook B" funciona como un ECG matemático:
+- **Latido (Heartbeat)**: Cada par autovalor-cero (λ_n, γ_n²)
+- **Ritmo**: La correlación λ_n ≈ γ_n²
+- **Salud**: Baja desviación indica validez de RH
+
+### Conexión con el Núcleo de Calor
+
+El núcleo de calor K_t(x,y) se conecta con la descomposición espectral:
+
+```
+K_t(x,y) = Σ_n e^{-t λ_n} ψ_n(x) ψ_n*(y)
+```
+
+donde ψ_n son autofunciones de H_Ψ. Cuando t → 0+, la traza:
+
+```
+Tr(e^{-t H}) = Σ_n e^{-t λ_n}
+```
+
+codifica información espectral sobre los ceros mediante la correspondencia de Hilbert-Pólya.
+
+### Uso Rápido
+
+```bash
+# Ejecutar el monitor Hook B
+python3 hook_b_spectral_monitor.py
+
+# Con opciones personalizadas
+python3 hook_b_spectral_monitor.py --max-zeros 50 --tolerance 0.1 --export
+
+# Ejecutar tests
+python3 -m pytest tests/test_hook_b_spectral_monitor.py -v
+```
+
+### Ejemplo de Código
+
+```python
+from hook_b_spectral_monitor import HookBSpectralMonitor, run_hook_b_monitor
+
+# Crear el monitor
+monitor = HookBSpectralMonitor(max_zeros=50, tolerance=0.1)
+
+# Ejecutar el ECG espectral
+report = monitor.run_ecg()
+
+# Ver el reporte
+monitor.print_report(report)
+
+# Exportar a JSON
+monitor.export_report(report, "hook_b_report.json")
+```
+
+### Salida del Monitor (ECG Visual)
+
+```
+╔══════════════════════════════════════════════════════════════════════╗
+║                      HOOK B: SPECTRAL ECG TRACE                      ║
+║      Mathematical Electrocardiogram - Hilbert-Pólya λ_n ≈ γ_n²       ║
+╚══════════════════════════════════════════════════════════════════════╝
+
+  ECG Rhythm (deviation from λ_n ≈ γ_n²):
+  ────────────────────────────────────────────────────────────
+  ♥ n= 1 │━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  ♥ n= 2 │━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  ♥ n= 3 │
+  ♥ n= 4 │━━━━━━━━━━━━━━━━━━━━━━━
+  ♥ n= 5 │━━━━━━━━━━━━━━━━━━━━━━
+  ...
+
+╔══════════════════════════════════════════════════════════════════════╗
+║             💚 HOOK B SPECTRAL MONITOR: STATUS = HEALTHY              ║
+╚══════════════════════════════════════════════════════════════════════╝
+
+  HILBERT-PÓLYA CORRESPONDENCE METRICS:
+  ──────────────────────────────────────────────────
+  Total zeros analyzed:       50
+  Healthy heartbeats:         50 (100.0%)
+  Mean relative error:        7.73e-03
+  Correlation (λ vs γ²):      0.9998839226
+  ──────────────────────────────────────────────────
+```
+
+### Métricas de Salud
+
+| Estado | Descripción | Criterio |
+|--------|-------------|----------|
+| 💚 **HEALTHY** | Correspondencia válida | ≥90% latidos sanos, error medio <5% |
+| 💛 **WARNING** | Desviaciones menores | ≥70% latidos sanos, error medio <10% |
+| ❤️ **CRITICAL** | Desviaciones significativas | <70% latidos sanos |
+
+### Documentación Adicional
+
+- **Módulo**: `hook_b_spectral_monitor.py`
+- **Tests**: `tests/test_hook_b_spectral_monitor.py` (22 tests)
+- **Exportación**: Reportes en formato JSON con métricas completas
+
+### Resultados
+
+✅ **Monitor ECG espectral** implementado  
+✅ **22 tests unitarios** (todos pasan)  
+✅ **Correlación λ↔γ²** > 0.999  
+✅ **Visualización ECG** con símbolos de latido  
+✅ **Exportación JSON** para automatización
+
+---
+
 ## Papel Científico y Formalización
 
 - **Artículo principal (standalone)**: `paper_standalone.tex` - Versión completa y autocontenida del paper
@@ -1923,7 +2058,7 @@ ___
 | **Warnings** | null |
 | **Errors** | null |
 | **Lean Version** | null |
-| **Date (UTC)** | 2025-12-02 03:25:48Z |
+| **Date (UTC)** | 2025-12-02 22:28:03Z |
 ___
 
 ## License

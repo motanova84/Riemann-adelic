@@ -92,6 +92,11 @@ logs/performance/benchmark_results_*.json
 logs/performance/benchmark_results_*_report.md
 !logs/validation/.gitkeep
 
+# NOESIS GUARDIAN 3.0 logs
+noesis_guardian/logs/*.json
+noesis_guardian/logs/*.log
+!noesis_guardian/logs/.gitkeep
+
 # CI/CD artifacts
 artifacts/
 reports/
@@ -172,6 +177,10 @@ monitoring/alerts/*.json
 !monitoring/alerts/.gitkeep
 examples/__pycache__/
 
+# Noesis Guardian logs (keep directory structure)
+noesis_guardian/logs/guardian_log.json
+!noesis_guardian/logs/.gitkeep
+
 # QCAL auto-generated state files
 tools/qcal_state.json
 # Spectral framework demo images
@@ -184,3 +193,7 @@ convexity_gamma_visualization.png
 validation_summary.png
 validation_summary.txt
 G4_spectrum_plot.png
+
+# NOESIS Guardian generated files
+.noesis_backups/
+noesis_guardian/guardian_log.json
