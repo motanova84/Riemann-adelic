@@ -15,7 +15,9 @@ where k = (f₀/f_raw)²
 Mathematical Framework:
     H_Ψ = d²E_vac/dR² (second variation of vacuum functional)
     
-    E_vac(R_Ψ) = α/R_Ψ^4 + β·ζ'(1/2)/R_Ψ^2 + γ·Λ²·R_Ψ² + δ·sin²(log(R_Ψ)/log(η))
+    E_vac(R_Ψ) = α/R_Ψ^4 + β·ζ'(1/2)/R_Ψ^2 + γ·R_Ψ² + δ·sin²(log(R_Ψ)/log(η))
+    
+    Note: The cosmological constant Λ is absorbed into the γ parameter for simplicity.
 
 Author: José Manuel Mota Burruezo Ψ ∴ ∞³
 Date: December 2025

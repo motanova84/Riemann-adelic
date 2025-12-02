@@ -10,7 +10,7 @@ Triple Rescaling:
     β → k·β  
     E_vac → k·E_vac
 
-where k = (f₀/f_raw)² ≈ 0.8058
+where k = (f₀/f_raw)² = (141.7001/157.9519)² ≈ 0.8048
 
 Author: José Manuel Mota Burruezo Ψ ∴ ∞³
 Date: December 2025
