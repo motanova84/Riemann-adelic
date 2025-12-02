@@ -303,12 +303,16 @@ def test_imports() -> None:
     import_count = len(results["imports"])
     assert import_count >= 5, f"Expected at least 5 imports, got {import_count}"
     
-    # Check for critical imports
+    # Check for critical imports - must include the specific Mathlib adjoint module
     imports_str = " ".join(results["imports"])
-    assert "Adjoint" in imports_str or "adjoint" in imports_str.lower(), \
-        "Adjoint-related import missing"
-    assert "InnerProductSpace" in imports_str, \
-        "InnerProductSpace import missing"
+    
+    # Check for Mathlib.Analysis.InnerProductSpace.Adjoint specifically
+    assert "Mathlib.Analysis.InnerProductSpace.Adjoint" in imports_str, \
+        "Required import Mathlib.Analysis.InnerProductSpace.Adjoint missing"
+    
+    # Check for InnerProductSpace base import
+    assert "Mathlib.Analysis.InnerProductSpace.Basic" in imports_str, \
+        "Required import Mathlib.Analysis.InnerProductSpace.Basic missing"
 
 
 def test_integration_by_parts() -> None:
