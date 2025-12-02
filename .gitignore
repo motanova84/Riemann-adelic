@@ -185,6 +185,7 @@ noesis_guardian/logs/guardian_log.json
 tools/qcal_state.json
 # Spectral framework demo images
 *_demo.png
+*_spectrum.png
 G4_spectrum_plot.png
 
 # Validation notebook generated images
