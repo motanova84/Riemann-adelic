@@ -35,8 +35,10 @@ qiskit==2.2.3
 qiskit-aer==0.17.2
 qiskit-ibm-runtime==0.43.1
 
-# ML & numerical processing
-joblib==1.5.2
+# Advanced mathematical libraries for acceleration and expansion
+# JIT compilation and performance optimization
+numba==0.62.1
+llvmlite==0.45.1
 
 # Jupyter environment (fixed modern versions)
 jupyter-core==5.9.1
@@ -44,13 +46,10 @@ jupyter-server==2.17.0
 jupyterlab==4.5.0
 nbformat==5.10.4
 
-# Formatting, linting, CI tools
-black==25.11.0
-flake8==7.3.0
-isort==7.0.0
-mypy-extensions==1.1.0
-pyflakes==3.4.0
-pycodestyle==2.14.0
+# Automatic differentiation and GPU acceleration
+jax==0.4.38
+jaxlib==0.4.38
+opt-einsum==3.4.0
 
 # Testing infrastructure
 pytest==9.0.1
