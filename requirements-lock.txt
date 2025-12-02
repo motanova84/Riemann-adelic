@@ -37,6 +37,7 @@ qiskit-ibm-runtime==0.43.1
 
 # Advanced mathematical libraries for acceleration and expansion
 # JIT compilation and performance optimization
+# FIX: unify numba version to avoid dependency conflict
 numba==0.62.1
 llvmlite==0.45.1
 
