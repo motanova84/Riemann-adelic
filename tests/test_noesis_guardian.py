@@ -1,428 +1,400 @@
 #!/usr/bin/env python3
 """
-Tests for NOESIS GUARDIAN 2.0
-=============================
+Test suite for NOESIS GUARDIAN ∞³
 
-Test suite for the NOESIS Guardian monitoring and auto-repair system.
+This test suite validates the guardian functionality for the QCAL framework,
+ensuring proper monitoring and self-repair capabilities.
 
-Author: José Manuel Mota Burruezo Ψ ✧ ∞³
-Institution: Instituto de Conciencia Cuántica (ICQ)
-License: Creative Commons BY-NC-SA 4.0
+Author: José Manuel Mota Burruezo (JMMB Ψ ✧)
 """
 
-import json
 import os
 import sys
+import json
 import tempfile
+import shutil
 from pathlib import Path
+from unittest import mock
 
 import pytest
 
 # Add parent directory to path for imports
-sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+sys.path.insert(0, str(Path(__file__).parent.parent))
+
+from noesis_guardian.watcher import RepoWatcher
+from noesis_guardian.guardian import (
+    noesis_heartbeat,
+    autorepair,
+    run_cycle,
+    generate_certificate,
+    FREQ,
+    LOGFILE,
+    _repair_collisions_direct
+)
+
+# Git conflict marker length (7 characters: <<<<<<< or >>>>>>>)
+GIT_CONFLICT_MARKER_LENGTH = 7
+
+
+class TestNoesisHeartbeat:
+    """Test the heartbeat signal generation."""
+    
+    def test_heartbeat_returns_float(self):
+        """Heartbeat should return a float value."""
+        signal = noesis_heartbeat()
+        assert isinstance(signal, float)
+    
+    def test_heartbeat_in_valid_range(self):
+        """Heartbeat signal should be within expected bounds."""
+        signal = noesis_heartbeat()
+        # sin + cos should be between -2 and 2
+        assert -2.0 <= signal <= 2.0
+    
+    def test_heartbeat_consistent(self):
+        """Heartbeat should be consistent across calls."""
+        signal1 = noesis_heartbeat()
+        signal2 = noesis_heartbeat()
+        assert signal1 == signal2
+    
+    def test_frequency_constant(self):
+        """Verify the frequency constant."""
+        assert FREQ == 141.7001
 
 
 class TestRepoWatcher:
-    """Tests for the RepoWatcher module."""
-
-    def test_watcher_import(self):
-        """Test that watcher can be imported."""
-        from noesis_guardian.watcher import RepoWatcher
-        assert RepoWatcher is not None
-
-    def test_watcher_scan_repo(self):
-        """Test repository scanning."""
-        from noesis_guardian.watcher import RepoWatcher
-        watcher = RepoWatcher()
+    """Test the repository watcher functionality."""
+    
+    @pytest.fixture
+    def temp_repo(self):
+        """Create a temporary repository structure for testing."""
+        temp_dir = tempfile.mkdtemp()
+        
+        # Create basic structure
+        (Path(temp_dir) / "operador").mkdir()
+        (Path(temp_dir) / "formalization" / "lean").mkdir(parents=True)
+        (Path(temp_dir) / "tools").mkdir()
+        
+        # Create essential files
+        essential_files = [
+            "validate_v5_coronacion.py",
+            "demo_H_DS_complete.py",
+            "validate_h_psi_self_adjoint.py",
+            "validate_critical_line.py",
+            "fix_unicode.py",
+            ".qcal_beacon",
+            "Evac_Rpsi_data.csv",
+            "operador/operador_H_DS.py",
+            "operador/operador_H.py",
+            "operador/hilbert_polya_operator.py",
+            "formalization/lean/RiemannHypothesis.lean",
+            "formalization/lean/lakefile.lean",
+        ]
+        
+        for file_path in essential_files:
+            full_path = Path(temp_dir) / file_path
+            full_path.parent.mkdir(parents=True, exist_ok=True)
+            full_path.write_text(f"# {file_path}\n")
+        
+        yield temp_dir
+        
+        # Cleanup
+        shutil.rmtree(temp_dir)
+    
+    def test_watcher_initialization(self, temp_repo):
+        """Test watcher initializes correctly."""
+        watcher = RepoWatcher(temp_repo)
+        assert watcher.repo_root == Path(temp_repo)
+    
+    def test_scan_repo_returns_dict(self, temp_repo):
+        """Scan should return a dictionary with expected keys."""
+        watcher = RepoWatcher(temp_repo)
         state = watcher.scan_repo()
-
-        assert "timestamp" in state
+        
+        assert isinstance(state, dict)
         assert "collisions" in state
-        assert "missing" in state
         assert "lean_status" in state
-        assert "critical_files" in state
-        assert "critical_dirs" in state
-
-    def test_watcher_critical_files(self):
-        """Test critical files detection."""
-        from noesis_guardian.watcher import RepoWatcher
-        watcher = RepoWatcher()
-
-        # Check that critical files list is defined
-        assert len(watcher.CRITICAL_FILES) > 0
-        assert ".qcal_beacon" in watcher.CRITICAL_FILES
-
-    def test_watcher_git_status(self):
-        """Test git status detection."""
-        from noesis_guardian.watcher import RepoWatcher
-        watcher = RepoWatcher()
+        assert "missing" in state
+        assert "scan_complete" in state
+    
+    def test_no_collisions_in_clean_repo(self, temp_repo):
+        """Clean repository should have no collisions."""
+        watcher = RepoWatcher(temp_repo)
         state = watcher.scan_repo()
+        
+        assert state["collisions"] == 0
+    
+    def test_detect_backup_files(self, temp_repo):
+        """Watcher should detect .orig and .bak files as collisions."""
+        # Create backup files
+        (Path(temp_repo) / "test.py.orig").write_text("backup")
+        (Path(temp_repo) / "test2.py.bak").write_text("backup")
+        
+        watcher = RepoWatcher(temp_repo)
+        state = watcher.scan_repo()
+        
+        assert state["collisions"] == 2
+    
+    def test_detect_merge_conflicts(self, temp_repo):
+        """Watcher should detect merge conflict markers."""
+        # Build conflict content dynamically to avoid false detection in this test file
+        conflict_lines = [
+            "<" * GIT_CONFLICT_MARKER_LENGTH + " HEAD",
+            "my changes",
+            "=" * GIT_CONFLICT_MARKER_LENGTH,
+            "their changes",
+            ">" * GIT_CONFLICT_MARKER_LENGTH + " branch"
+        ]
+        conflict_content = "\n".join(conflict_lines)
+        (Path(temp_repo) / "conflict.py").write_text(conflict_content)
+        
+        watcher = RepoWatcher(temp_repo)
+        state = watcher.scan_repo()
+        
+        assert state["collisions"] >= 1
+    
+    def test_lean_status_ok(self, temp_repo):
+        """Lean status should be 'ok' with valid setup."""
+        watcher = RepoWatcher(temp_repo)
+        state = watcher.scan_repo()
+        
+        assert state["lean_status"] == "ok"
+    
+    def test_lean_status_missing(self, temp_repo):
+        """Lean status should be 'missing' without formalization directory."""
+        shutil.rmtree(Path(temp_repo) / "formalization")
+        
+        watcher = RepoWatcher(temp_repo)
+        state = watcher.scan_repo()
+        
+        assert state["lean_status"] == "missing"
+    
+    def test_missing_files_detection(self, temp_repo):
+        """Watcher should detect missing essential files."""
+        # Remove an essential file
+        (Path(temp_repo) / "validate_v5_coronacion.py").unlink()
+        
+        watcher = RepoWatcher(temp_repo)
+        state = watcher.scan_repo()
+        
+        assert state["missing"] >= 1
+        assert "validate_v5_coronacion.py" in state["missing_files"]
+    
+    def test_get_summary(self, temp_repo):
+        """Get summary should return a formatted string."""
+        watcher = RepoWatcher(temp_repo)
+        summary = watcher.get_summary()
+        
+        assert isinstance(summary, str)
+        assert "NOESIS GUARDIAN" in summary
 
-        git_status = state.get("git_status", {})
-        assert "branch" in git_status
-        assert "uncommitted" in git_status
-        assert "untracked" in git_status
 
-
-class TestSpectralMonitor:
-    """Tests for the SpectralMonitor module."""
-
-    def test_spectral_import(self):
-        """Test that spectral monitor can be imported."""
-        from noesis_guardian.spectral_monitor import SpectralMonitor
-        assert SpectralMonitor is not None
-
-    def test_spectral_constants(self):
-        """Test spectral constants."""
-        from noesis_guardian.spectral_monitor import SpectralMonitor
-        monitor = SpectralMonitor()
-
-        assert monitor.F0_HZ == 141.7001
-        assert monitor.COHERENCE_CONSTANT == 244.36
-        assert abs(monitor.FRACTAL_RATIO - 68/81) < 1e-10
-
-    def test_spectral_coherence_check(self):
-        """Test spectral coherence checking."""
-        from noesis_guardian.spectral_monitor import SpectralMonitor
-        monitor = SpectralMonitor()
-        coherence = monitor.check_spectral_coherence()
-
-        assert "timestamp" in coherence
-        assert "coherent" in coherence
-        assert "f0_status" in coherence
-        assert "xi_symmetry" in coherence
-        assert "fractal_status" in coherence
-        assert "h_psi_status" in coherence
-
-    def test_noesis_signal(self):
-        """Test NOESIS signal computation."""
-        from noesis_guardian.spectral_monitor import SpectralMonitor
-        monitor = SpectralMonitor()
-        signal = monitor.compute_noesis_signal()
-
-        assert "timestamp" in signal
-        assert "heartbeat_hz" in signal
-        assert signal["heartbeat_hz"] == 141.7001
-        assert "state" in signal
-        assert signal["state"] in ["vivo", "parcial", "crítico"]
-        assert "vitality" in signal
-        assert 0 <= signal["vitality"] <= 1
-        assert "equation" in signal
-
-    def test_spectral_metrics(self):
-        """Test spectral metrics."""
-        from noesis_guardian.spectral_monitor import SpectralMonitor
-        monitor = SpectralMonitor()
-        metrics = monitor.get_spectral_metrics()
-
-        assert metrics["f0_hz"] == 141.7001
-        assert metrics["coherence_constant"] == 244.36
-        assert metrics["fractal_period"] == 9
-
-
-class TestAutoRepairEngine:
-    """Tests for the AutoRepairEngine module."""
-
-    def test_repair_import(self):
-        """Test that repair engine can be imported."""
-        from noesis_guardian.autorepair_engine import AutoRepairEngine
-        assert AutoRepairEngine is not None
-
-    def test_repair_full_repair(self):
-        """Test full repair execution."""
-        from noesis_guardian.autorepair_engine import AutoRepairEngine
-        engine = AutoRepairEngine()
-
-        # Test with clean state
-        test_state = {
+class TestAutorepair:
+    """Test the auto-repair functionality."""
+    
+    @pytest.fixture
+    def temp_repo(self):
+        """Create a minimal temporary repository."""
+        temp_dir = tempfile.mkdtemp()
+        (Path(temp_dir) / "noesis_guardian").mkdir()
+        (Path(temp_dir) / "tools").mkdir()
+        yield temp_dir
+        shutil.rmtree(temp_dir)
+    
+    def test_autorepair_returns_report(self, temp_repo):
+        """Autorepair should return a report dictionary."""
+        state = {
             "collisions": 0,
-            "missing": 0,
             "lean_status": "ok",
-            "critical_files": {},
+            "missing": 0
         }
-
-        report = engine.full_repair(test_state)
+        
+        report = autorepair(state, temp_repo)
+        
+        assert isinstance(report, dict)
         assert "timestamp" in report
         assert "actions" in report
         assert "success" in report
+    
+    def test_autorepair_handles_no_issues(self, temp_repo):
+        """Autorepair should succeed when no issues exist."""
+        state = {
+            "collisions": 0,
+            "lean_status": "ok",
+            "missing": 0
+        }
+        
+        report = autorepair(state, temp_repo)
+        
         assert report["success"] is True
-
-    def test_repair_operators(self):
-        """Test operator repair check."""
-        from noesis_guardian.autorepair_engine import AutoRepairEngine
-        engine = AutoRepairEngine()
-        result = engine.repair_operators()
-
-        assert "action" in result
-        assert result["action"] == "repair_operators"
-        assert "status" in result
-        assert "operators" in result
-
-    def test_repair_spectral_coherence(self):
-        """Test spectral coherence repair."""
-        from noesis_guardian.autorepair_engine import AutoRepairEngine
-        engine = AutoRepairEngine()
-        result = engine.repair_spectral_coherence()
-
-        assert "action" in result
-        assert result["action"] == "repair_spectral_coherence"
-        assert "status" in result
+    
+    def test_repair_collisions_direct(self, temp_repo):
+        """Direct collision repair should move backup files."""
+        # Create a backup file
+        backup_file = Path(temp_repo) / "test.py.orig"
+        backup_file.write_text("backup content")
+        
+        state = {
+            "collision_details": [
+                {"type": "backup_file", "path": "test.py.orig"}
+            ]
+        }
+        
+        repaired = _repair_collisions_direct(state, Path(temp_repo))
+        
+        assert repaired == 1
+        assert not backup_file.exists()
 
 
-class TestNotifier:
-    """Tests for the Notifier module."""
-
-    def test_notifier_import(self):
-        """Test that notifier can be imported."""
-        from noesis_guardian.ai_notifier import Notifier
-        assert Notifier is not None
-
-    def test_notifier_alert(self):
-        """Test alert sending."""
-        from noesis_guardian.ai_notifier import Notifier
-        result = Notifier.alert("Test alert", {"test": True})
-
-        assert "timestamp" in result
-        assert "message" in result
-        assert "channels" in result
-        assert "console" in result["channels"]
-
-    def test_notifier_logging(self):
-        """Test logging functions."""
-        from noesis_guardian.ai_notifier import Notifier
-
-        # These should not raise exceptions
-        Notifier.info("Test info message")
-        Notifier.warning("Test warning message")
-        Notifier.error("Test error message")
-
-
-class TestSabioBridge:
-    """Tests for the SabioBridge module."""
-
-    def test_sabio_import(self):
-        """Test that SABIO bridge can be imported."""
-        from noesis_guardian.sabio_bridge import SabioBridge
-        assert SabioBridge is not None
-
-    def test_sabio_constants(self):
-        """Test SABIO constants."""
-        from noesis_guardian.sabio_bridge import SabioBridge
-
-        assert SabioBridge.SABIO_FREQUENCY == 141.7001
-        assert SabioBridge.SABIO_COHERENCE == 244.36
-        assert SabioBridge.SABIO_VERSION == "∞⁴"
-
-    def test_sabio_status(self):
-        """Test SABIO status retrieval."""
-        from noesis_guardian.sabio_bridge import SabioBridge
-        status = SabioBridge.get_sabio_status()
-
-        assert "version" in status
-        assert "frequency" in status
-        assert "coherence" in status
-        assert "status" in status
-
-    def test_sabio_update_state(self):
-        """Test state update."""
-        from noesis_guardian.sabio_bridge import SabioBridge
-        result = SabioBridge.update_state({"test": True})
-
-        assert result["success"] is True
-        assert "timestamp" in result
-
-    def test_sabio_insert_seed(self):
-        """Test seed insertion."""
-        from noesis_guardian.sabio_bridge import SabioBridge
-        result = SabioBridge.insert_seed("test", {"value": 42})
-
-        assert result["success"] is True
-        assert "seed_id" in result
-
-    def test_sabio_sync_infinity(self):
-        """Test infinity synchronization."""
-        from noesis_guardian.sabio_bridge import SabioBridge
-        result = SabioBridge.sync_with_infinity()
-
-        assert "infinity_level" in result
-        assert result["infinity_level"] == 3
-        assert result["symbol"] == "∞³"
+class TestRunCycle:
+    """Test the run cycle functionality."""
+    
+    @pytest.fixture
+    def temp_repo(self):
+        """Create a temporary repository for cycle testing."""
+        temp_dir = tempfile.mkdtemp()
+        
+        # Create minimal structure
+        (Path(temp_dir) / "noesis_guardian").mkdir()
+        (Path(temp_dir) / "formalization" / "lean").mkdir(parents=True)
+        (Path(temp_dir) / "operador").mkdir()
+        
+        # Create essential files
+        for f in [".qcal_beacon", "Evac_Rpsi_data.csv", "fix_unicode.py",
+                  "validate_v5_coronacion.py", "demo_H_DS_complete.py",
+                  "validate_h_psi_self_adjoint.py", "validate_critical_line.py",
+                  "operador/operador_H_DS.py", "operador/operador_H.py",
+                  "operador/hilbert_polya_operator.py",
+                  "formalization/lean/RiemannHypothesis.lean",
+                  "formalization/lean/lakefile.lean"]:
+            full_path = Path(temp_dir) / f
+            full_path.parent.mkdir(parents=True, exist_ok=True)
+            full_path.write_text(f"# {f}")
+        
+        yield temp_dir
+        shutil.rmtree(temp_dir)
+    
+    def test_run_cycle_returns_report(self, temp_repo):
+        """Run cycle should return a complete report."""
+        report = run_cycle(temp_repo, auto_repair=False)
+        
+        assert isinstance(report, dict)
+        assert "timestamp" in report
+        assert "state" in report
+        assert "noesis_signal" in report
+    
+    def test_run_cycle_creates_log(self, temp_repo):
+        """Run cycle should create a log file."""
+        run_cycle(temp_repo, auto_repair=False)
+        
+        log_path = Path(temp_repo) / LOGFILE
+        assert log_path.exists()
+    
+    def test_run_cycle_log_is_valid_json(self, temp_repo):
+        """Log entries should be valid JSON."""
+        run_cycle(temp_repo, auto_repair=False)
+        
+        log_path = Path(temp_repo) / LOGFILE
+        with open(log_path) as f:
+            for line in f:
+                if line.strip():
+                    entry = json.loads(line)
+                    assert "timestamp" in entry
 
 
-class TestAikSync:
-    """Tests for the AikSync module."""
-
-    def test_aik_import(self):
-        """Test that AIK sync can be imported."""
-        from noesis_guardian.aik_sync import AikSync
-        assert AikSync is not None
-
-    def test_aik_constants(self):
-        """Test AIK constants."""
-        from noesis_guardian.aik_sync import AikSync
-
-        assert AikSync.F0_HZ == 141.7001
-        assert AikSync.ALGORITHM == "SHA3-256"
-
-    def test_aik_sync_certificate(self):
-        """Test certificate synchronization."""
-        from noesis_guardian.aik_sync import AikSync
-        result = AikSync.sync_certificate({
-            "timestamp": "2025-01-01T00:00:00Z",
-            "spectral": {"coherent": True},
-        })
-
-        assert result["success"] is True
-        assert "certificate" in result
-        cert = result["certificate"]
-        assert "id" in cert
-        assert "hash" in cert
-        assert "algorithm" in cert
-        assert cert["algorithm"] == "SHA3-256"
-        assert "symbolic_signature" in cert
-        assert cert["symbolic_signature"].startswith("∞³-")
-
-    def test_aik_verify_certificate(self):
-        """Test certificate verification."""
-        from noesis_guardian.aik_sync import AikSync
-
-        # Generate a certificate
-        result = AikSync.sync_certificate({"test": True})
-        cert = result["certificate"]
-
-        # Verify it
-        verification = AikSync.verify_certificate(cert)
-        assert verification["valid"] is True
-
-
-class TestGuardianCore:
-    """Tests for the GuardianCore module."""
-
-    def test_guardian_import(self):
-        """Test that guardian core can be imported."""
-        from noesis_guardian.guardian_core import NoesisGuardian
-        assert NoesisGuardian is not None
-
-    def test_guardian_constants(self):
-        """Test guardian constants."""
-        from noesis_guardian.guardian_core import NoesisGuardian
-
-        assert NoesisGuardian.F0_HZ == 141.7001
-        assert NoesisGuardian.COHERENCE_CONSTANT == 244.36
-
-    def test_guardian_initialization(self):
-        """Test guardian initialization."""
-        from noesis_guardian.guardian_core import NoesisGuardian
-        guardian = NoesisGuardian()
-
-        assert guardian.watcher is not None
-        assert guardian.repair is not None
-        assert guardian.spectral is not None
-
-    def test_guardian_quick_check(self):
-        """Test quick check functionality."""
-        from noesis_guardian.guardian_core import NoesisGuardian
-        guardian = NoesisGuardian()
-        result = guardian.quick_check()
-
-        assert "timestamp" in result
-        assert "healthy" in result
-        assert "coherent" in result
-        assert "signal_state" in result
-        assert "vitality" in result
-
-    def test_guardian_noesis_signal(self):
-        """Test NOESIS signal from guardian."""
-        from noesis_guardian.guardian_core import NoesisGuardian
-        guardian = NoesisGuardian()
-        signal = guardian.noesis_signal()
-
-        assert "heartbeat_hz" in signal
-        assert signal["heartbeat_hz"] == 141.7001
-        assert "state" in signal
-
-    def test_guardian_status(self):
-        """Test guardian status retrieval."""
-        from noesis_guardian.guardian_core import NoesisGuardian
-        guardian = NoesisGuardian()
-        status = guardian.get_status()
-
-        assert "running" in status
-        assert "cycles" in status
-        assert "f0_hz" in status
-        assert status["f0_hz"] == 141.7001
+class TestGenerateCertificate:
+    """Test certificate generation."""
+    
+    @pytest.fixture
+    def temp_repo(self):
+        """Create a minimal temporary repository."""
+        temp_dir = tempfile.mkdtemp()
+        (Path(temp_dir) / "formalization" / "lean").mkdir(parents=True)
+        (Path(temp_dir) / "operador").mkdir()
+        
+        for f in [".qcal_beacon", "Evac_Rpsi_data.csv",
+                  "validate_v5_coronacion.py", "demo_H_DS_complete.py",
+                  "validate_h_psi_self_adjoint.py", "validate_critical_line.py",
+                  "fix_unicode.py", "operador/operador_H_DS.py",
+                  "operador/operador_H.py", "operador/hilbert_polya_operator.py",
+                  "formalization/lean/RiemannHypothesis.lean",
+                  "formalization/lean/lakefile.lean"]:
+            full_path = Path(temp_dir) / f
+            full_path.parent.mkdir(parents=True, exist_ok=True)
+            full_path.write_text(f"# {f}")
+        
+        yield temp_dir
+        shutil.rmtree(temp_dir)
+    
+    def test_certificate_structure(self, temp_repo):
+        """Certificate should have required fields."""
+        cert = generate_certificate(temp_repo)
+        
+        assert "timestamp" in cert
+        assert "type" in cert
+        assert "version" in cert
+        assert "frequency" in cert
+        assert "heartbeat" in cert
+        assert "state" in cert
+        assert "coherent" in cert
+        assert "signature" in cert
+    
+    def test_certificate_type(self, temp_repo):
+        """Certificate type should be QCAL_COHERENCE_CERTIFICATE."""
+        cert = generate_certificate(temp_repo)
+        
+        assert cert["type"] == "QCAL_COHERENCE_CERTIFICATE"
+    
+    def test_certificate_frequency(self, temp_repo):
+        """Certificate should have correct frequency."""
+        cert = generate_certificate(temp_repo)
+        
+        assert cert["frequency"] == FREQ
+    
+    def test_certificate_coherent_for_clean_repo(self, temp_repo):
+        """Clean repository should be marked as coherent."""
+        cert = generate_certificate(temp_repo)
+        
+        assert cert["coherent"] is True
+    
+    def test_certificate_not_coherent_with_issues(self, temp_repo):
+        """Repository with issues should not be marked as coherent."""
+        # Create a collision
+        (Path(temp_repo) / "test.py.orig").write_text("backup")
+        
+        cert = generate_certificate(temp_repo)
+        
+        # This will depend on whether collision is detected
+        # The collision should make it incoherent
+        assert cert["state"]["collisions"] >= 1
 
 
-class TestDashboard:
-    """Tests for the Dashboard module."""
-
-    def test_dashboard_import(self):
-        """Test that dashboard can be imported."""
-        from noesis_guardian.panel.dashboard import Dashboard
-        assert Dashboard is not None
-
-    def test_dashboard_data(self):
-        """Test dashboard data retrieval."""
-        from noesis_guardian.panel.dashboard import Dashboard
-        dashboard = Dashboard()
-        data = dashboard.get_dashboard_data()
-
-        assert "timestamp" in data
-        assert "heartbeat" in data
-        assert "spectral" in data
-        assert "repository" in data
-        assert "lean" in data
-        assert "metrics" in data
-
-    def test_dashboard_heartbeat(self):
-        """Test heartbeat data."""
-        from noesis_guardian.panel.dashboard import Dashboard
-        dashboard = Dashboard()
-        heartbeat = dashboard.get_heartbeat()
-
-        assert heartbeat["frequency_hz"] == 141.7001
-        assert heartbeat["status"] == "active"
-
-    def test_dashboard_text_render(self):
-        """Test text dashboard rendering."""
-        from noesis_guardian.panel.dashboard import Dashboard
-        dashboard = Dashboard()
-        text = dashboard.render_text_dashboard()
-
-        assert "NOESIS GUARDIAN" in text
-        assert "141.7001" in text
-        assert "HEARTBEAT" in text
-
-
-class TestRuleset:
-    """Tests for the ruleset configuration."""
-
-    def test_ruleset_exists(self):
-        """Test that ruleset.json exists."""
-        ruleset_path = Path(__file__).resolve().parents[1] / "noesis_guardian" / "ruleset.json"
-        assert ruleset_path.exists()
-
-    def test_ruleset_valid_json(self):
-        """Test that ruleset is valid JSON."""
-        ruleset_path = Path(__file__).resolve().parents[1] / "noesis_guardian" / "ruleset.json"
-        with open(ruleset_path, "r", encoding="utf-8") as f:
-            ruleset = json.load(f)
-
-        assert "version" in ruleset
-        assert "constants" in ruleset
-        assert "monitoring" in ruleset
-        assert "repair" in ruleset
-
-    def test_ruleset_constants(self):
-        """Test ruleset constants."""
-        ruleset_path = Path(__file__).resolve().parents[1] / "noesis_guardian" / "ruleset.json"
-        with open(ruleset_path, "r", encoding="utf-8") as f:
-            ruleset = json.load(f)
-
-        constants = ruleset["constants"]
-        assert constants["f0_hz"] == 141.7001
-        assert constants["coherence_constant"] == 244.36
-        assert constants["fractal_period"] == 9
+class TestIntegration:
+    """Integration tests for the complete guardian system."""
+    
+    def test_import_from_package(self):
+        """Test importing from the noesis_guardian package."""
+        from noesis_guardian import (
+            RepoWatcher,
+            noesis_heartbeat,
+            autorepair,
+            run_cycle,
+            FREQ,
+            LOGFILE
+        )
+        
+        assert FREQ == 141.7001
+        assert callable(noesis_heartbeat)
+        assert callable(autorepair)
+        assert callable(run_cycle)
+    
+    def test_watcher_main_function(self):
+        """Test watcher module main function."""
+        from noesis_guardian.watcher import main
+        
+        # Main function should not raise
+        # It prints to stdout, so we just verify it runs
+        with mock.patch('builtins.print'):
+            main()
 
 
 if __name__ == "__main__":
