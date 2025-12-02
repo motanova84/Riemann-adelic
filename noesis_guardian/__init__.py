@@ -1,4 +1,9 @@
 """
+NOESIS GUARDIAN 3.0
+Sistema técnico de monitorización y mantenimiento ligero del repositorio.
+"""
+
+__version__ = "3.0.0"
 NOESIS GUARDIAN 3.0 — Main Package
 
 Sistema técnico de validación, análisis y autoreparación del repositorio.

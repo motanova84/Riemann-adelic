@@ -1,4 +1,6 @@
 """
+Noesis Guardian 3.0 - Panel package
+"""
 NOESIS GUARDIAN 3.0 — Panel Package
 
 Dashboard and visualization components for Guardian monitoring.

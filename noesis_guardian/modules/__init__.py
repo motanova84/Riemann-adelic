@@ -1,4 +1,6 @@
 """
+Noesis Guardian 3.0 - Modules package
+"""
 NOESIS GUARDIAN 3.0 — Modules Package
 NOESIS GUARDIAN 3.0 — Modules
 

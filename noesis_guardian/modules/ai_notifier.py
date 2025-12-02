@@ -1,3 +1,7 @@
+"""
+AI notifier module for Noesis Guardian 3.0.
+
+Provides notification capabilities for the guardian system.
 #!/usr/bin/env python3
 """
 NOESIS GUARDIAN 3.0 — AI Notifier Module
@@ -11,6 +15,7 @@ from typing import Any, Dict
 
 
 class Notifier:
+    """Placeholder: por ahora solo imprime en consola."""
     """
     Notification component for Guardian alerts.
 
@@ -24,6 +29,11 @@ class Notifier:
         Send an alert notification.
 
         Args:
+            title: Title of the notification.
+            data: Dictionary containing notification data.
+        """
+        print(f"⚠️ NOTIFICACIÓN: {title}")
+        # Aquí podrías integrar Telegram / email en el futuro.
             title: Alert title/summary.
             data: Additional data to include with the alert.
         """

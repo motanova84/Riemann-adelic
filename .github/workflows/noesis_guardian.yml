@@ -1,3 +1,33 @@
+name: Noesis Guardian
+
+on:
+  schedule:
+    - cron: "0 2 * * *"  # cada día a las 02:00 UTC
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+jobs:
+  run-guardian:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install core dependencies
+        run: |
+          pip install numpy
+
+      - name: Run Guardian cycle
+        run: |
+          mkdir -p noesis_guardian/logs
+          python noesis_guardian/guardian_core.py
 name: NOESIS Guardian
 
 on:
