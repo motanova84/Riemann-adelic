@@ -1,0 +1,93 @@
+\section{Adelic Preliminaries}
+
+\subsection{The Ring of Adèles}
+
+Let $K$ be a number field. For each place $v$ of $K$, let $K_v$ denote the completion of $K$ at $v$. The \textbf{ring of adèles} is defined as the restricted product:
+\[
+\mathbb{A}_K = \prod'_v K_v = \left\{ (x_v)_{v} \in \prod_v K_v : x_v \in \mathcal{O}_v \text{ for all but finitely many } v \right\},
+\]
+where $\mathcal{O}_v$ denotes the ring of integers in $K_v$ for non-archimedean places.
+
+For the rational number field $K = \mathbb{Q}$, the places are:
+\begin{itemize}
+  \item The \textbf{archimedean place} $v = \infty$ with $\mathbb{Q}_\infty = \mathbb{R}$.
+  \item The \textbf{non-archimedean places} $v = p$ (for each prime $p$) with $\mathbb{Q}_p$ the field of $p$-adic numbers.
+\end{itemize}
+
+\subsection{Local Absolute Values and Haar Measures}
+
+At each place $v$, there is a normalized absolute value $|\cdot|_v$ satisfying the product formula:
+\[
+\prod_{v} |x|_v = 1 \quad \text{for all } x \in K^\times.
+\]
+
+For non-archimedean places $v = p$, we normalize:
+\[
+|p|_p = p^{-1}.
+\]
+
+Each local field $K_v$ carries a \textbf{Haar measure} $\mu_v$, unique up to scaling. For $\mathbb{Q}_p$, we normalize so that $\mu_p(\mathbb{Z}_p) = 1$. For $\mathbb{R}$, we take the Lebesgue measure.
+
+By \textbf{Tate's theorem} \cite{tate1967}, the adelic Haar measure factorizes:
+\[
+d\mu_{\mathbb{A}} = \prod_v d\mu_v,
+\]
+and the adelic Fourier transform satisfies:
+\[
+\hat{\Phi}(y) = \int_{\mathbb{A}_K} \Phi(x) \psi(x \cdot y) \, d\mu(x),
+\]
+where $\psi$ is a non-trivial additive character on $\mathbb{A}_K/K$.
+
+\subsection{Schwartz-Bruhat Functions}
+
+The \textbf{Schwartz-Bruhat space} $\mathcal{S}(\mathbb{A}_K)$ consists of functions $\Phi: \mathbb{A}_K \to \mathbb{C}$ that:
+\begin{itemize}
+  \item Are smooth at archimedean places (rapidly decreasing in all derivatives).
+  \item Are locally constant with compact support at non-archimedean places.
+  \item Factorize as $\Phi = \prod_v \Phi_v$ with $\Phi_v \in \mathcal{S}(K_v)$ and $\Phi_v$ is the characteristic function of $\mathcal{O}_v$ for all but finitely many $v$.
+\end{itemize}
+
+The Fourier transform preserves $\mathcal{S}(\mathbb{A}_K)$ and satisfies the \textbf{adelic Poisson summation formula}:
+\[
+\sum_{\xi \in K} \Phi(\xi) = \sum_{\eta \in K} \hat{\Phi}(\eta).
+\]
+
+\subsection{S-Finite Restriction}
+
+For a finite set $S$ of places containing all archimedean places and possibly finitely many non-archimedean places, we consider the \textbf{S-finite adelic ring}:
+\[
+\mathbb{A}_K^S = \prod_{v \in S} K_v \times \prod_{v \notin S} \mathcal{O}_v.
+\]
+
+This restriction serves two purposes:
+\begin{enumerate}
+  \item \textbf{Convergence}: Infinite products over all primes are replaced by finite products, ensuring trace-class properties.
+  \item \textbf{Approximation}: As $S$ grows, $\mathbb{A}_K^S$ approximates $\mathbb{A}_K$, and spectral quantities converge via Kato-Seiler-Simon estimates.
+\end{enumerate}
+
+\subsection{Local Fields and Uniformizers}
+
+For a non-archimedean place $v$ corresponding to a prime $p$ with residue field degree $f$ (i.e., $K_v$ is an extension of $\mathbb{Q}_p$ of degree $f$), the \textbf{local field} has residue field $\mathbb{F}_q$ where $q = p^f$. 
+
+A \textbf{uniformizer} $\pi_v$ is a generator of the maximal ideal of $\mathcal{O}_v$, characterized by:
+\[
+|\pi_v|_v = q^{-1}.
+\]
+
+The \textbf{local factor} at $v$ in the Euler product (when it emerges from the spectral construction) is:
+\[
+\left(1 - q_v^{-s}\right)^{-1},
+\]
+where $q_v = q = p^f$.
+
+\subsection{Tate's Thesis and Commutativity}
+
+A fundamental result of \textbf{Tate's thesis} \cite{tate1967} is that local zeta integrals satisfy:
+\[
+\int_{K_v^\times} f_v(x) |x|_v^s \, d^\times x
+\]
+and these integrals commute with multiplication:
+\[
+U_v S_u = S_u U_v,
+\]
+where $U_v$ and $S_u$ are the local and scaling operators, respectively. This commutativity is essential for defining the global spectral determinant.
