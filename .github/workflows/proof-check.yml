@@ -1,0 +1,57 @@
+# Proof-check: instala entorno de pruebas formales y verifica/compila pruebas.
+# Este workflow verifica la formalización en Lean 4
+name: Proof Check
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'formalization/lean/**'
+      - '.github/workflows/proof-check.yml'
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'formalization/lean/**'
+      - '.github/workflows/proof-check.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  lean-build:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Lean
+        uses: leanprover/lean-action@v1
+        with:
+          lean-version: "leanprover/lean4:latest"
+
+      - name: Cache Lean build
+        uses: actions/cache@v4
+        with:
+          path: |
+            formalization/lean/.lake
+            formalization/lean/build
+          key: ${{ runner.os }}-lean-${{ hashFiles('formalization/lean/lakefile.lean', 'formalization/lean/lean-toolchain') }}
+          restore-keys: |
+            ${{ runner.os }}-lean-
+
+      - name: Install Lean dependencies
+        run: |
+          cd formalization/lean
+          lake update
+
+      - name: Build Lean formalization
+        run: |
+          cd formalization/lean
+          lake build
+
+      - name: Run Lean check on RH_final.lean
+        run: |
+          cd formalization/lean
+          lake exe cache get || true
+          lake build RH_final

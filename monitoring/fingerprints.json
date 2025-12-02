@@ -9,14 +9,14 @@
       "size": 313097
     },
     "paper/main.tex": {
-      "sha256": "9ed77fc12f96a1cf47bfa894457c3ae91badee1ec3f55b0a83745192ab3aff0a",
-      "size": 5763
+      "sha256": "747c570f52ba12850e7a2dfefd0c8e90e08526e78bb3476d55b02a1f8468e637",
+      "size": 5800
     },
     "paper_standalone.tex": {
       "sha256": "3af99f37a7b5995a8cac1355eb8536c8c26472a0d4c09bcb22438fc6e36d7409",
       "size": 13484
     },
-    "trabajos/riemann_adelic_approach_jmmb84.pdf": {
+    "RIEMANNJMMB84.pdf": {
       "sha256": "b14ac314e62a4dd5fc3c3063dc160eaa1ddcfae1a5ce11cf9a8b21014d311bac",
       "size": 149651
     }
@@ -45,6 +45,6 @@
   },
   "metadata": {
     "citation_cff": "59ea2e53819809407ad9bc1c2e9a0c38451584a334c318ad7bdc711db1b77463",
-    "readme_header": "354cb5edab26c55118cc6a27d5ba719f8c71b0cc4ee8b7fc69f5d0780fe0ed9e"
+    "readme_header": "8db521ef23ee4e576d321104fba07b799635d27a629efb5ec14a859aeaedc06c"
   }
 }

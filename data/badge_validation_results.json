@@ -1,0 +1,24 @@
+{
+  "timestamp": "2025-10-24T00:37:44.220070",
+  "total_tests": 7,
+  "passed_tests": 6,
+  "failed_tests": 1,
+  "results": {
+    "v5_coronacion": true,
+    "ci_coverage": true,
+    "critical_line": true,
+    "explicit_formula": true,
+    "lean_files": true,
+    "badge_links": true,
+    "repo_validation": false
+  },
+  "badges": {
+    "V5 Coronaci\u00f3n": true,
+    "CI Coverage": true,
+    "Critical Line Verification": true,
+    "Advanced Validation": true,
+    "Lean Formalization": true,
+    "Badge System": true,
+    "Repository": false
+  }
+}

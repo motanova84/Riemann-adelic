@@ -1,0 +1,14 @@
+{
+  "status": "VALIDATED",
+  "date": "2025-11-22T14:49:36.564923",
+  "file": "RH_complete_5step_JMMB_20251122.lean",
+  "theorems": 16,
+  "lemmas": 7,
+  "definitions": 8,
+  "qcal_frequency": 141.7001,
+  "qcal_coherence": 244.36,
+  "certificate": "QCAL-SABIO-V5-RH-COMPLETE-LEAN4",
+  "author": "José Manuel Mota Burruezo (JMMB Ψ✧)",
+  "doi": "10.5281/zenodo.17379721",
+  "orcid": "0009-0002-1923-0773"
+}

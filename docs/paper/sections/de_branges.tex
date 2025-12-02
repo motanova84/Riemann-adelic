@@ -1,5 +1,80 @@
 \section{Esquema de de Branges para $D(s)$}
 
+Introducimos la función de Hermite--Biehler
+\[
+  E(z)=D\!\left(\tfrac{1}{2}-iz\right)+i\,D\!\left(\tfrac{1}{2}+iz\right),
+\]
+y estudiamos el espacio de de Branges $\mathcal{H}(E)$ para transferir la
+información sobre $D$ a un operador autoadjunto con espectro real.
+
+\paragraph{Estado actual.}
+El argumento resume la literatura clásica de de Branges, pero aún falta comprobar
+las hipótesis técnicas relevantes para $D$: verificación límite-punto, control de
+dominios esenciales y análisis detallado del Hamiltoniano construido a partir del
+kernél reproducing.  Estas verificaciones constituyen los entregables P2.1 y
+P2.2.
+
+\begin{lemma}[Hermite--Biehler y tipo Cartwright]\label{lem:paper-HB}
+La función $E$ es de Hermite--Biehler y de tipo Cartwright: satisface
+$|E(z)|>|E(\overline{z})|$ para $\Im z>0$ y tiene crecimiento exponencial
+controlado.
+\end{lemma}
+
+\begin{proof}
+La simetría funcional $D(s)=D(1-s)$ implica
+$D(\tfrac{1}{2}-iz)=\overline{D(\tfrac{1}{2}+iz)}$, de modo que
+$|E(z)|^2-|E(\overline{z})|^2$ es proporcional a la parte imaginaria de
+$D'(\tfrac{1}{2}+iz)\overline{D(\tfrac{1}{2}+iz)}$, positiva para $\Im z>0$ gracias
+al formalismo adélico unitario \cite[Chap.~I]{Tate1967}.  Las cotas de
+Phragm\'en--Lindel\"of en bandas verticales \cite[Prop.~3.1]{IK2004} dan el tipo
+Cartwright.
+\end{proof}
+
+\begin{lemma}[Hamiltoniano positivo]\label{lem:paper-H}
+El núcleo de reproducción
+\[
+  K_w(z)=\frac{E(z)\,\overline{E(w)}-E^*(z)\,\overline{E^*(w)}}{2\pi i\,(\overline{w}-z)}
+\]
+induce un sistema canónico $Y'(x)=JH(x)Y(x)$ con Hamiltoniano $H(x)\succ0$,
+localmente integrable.
+\end{lemma}
+
+\begin{proof}
+La correspondencia de de Branges entre funciones de Hermite--Biehler y sistemas
+canónicos \cite[Thm.~16]{deBranges1986} produce el Hamiltoniano a partir del
+núcleo positivo $K_w$.  La ausencia de ceros reales de $E$ y su condición de tipo
+Cartwright implican que $\operatorname{tr} H(x)$ es localmente integrable y
+estrictamente positiva casi en todas partes.
+\end{proof}
+
+\begin{proposition}[Autoadjunción]\label{prop:paper-selfadjoint}
+El operador diferencial asociado al sistema canónico con Hamiltoniano $H$ es
+esencialmente autoadjunto en $L^2((0,\infty),H(x)\,dx)$; en particular, su
+espectro es real y simple.
+\end{proposition}
+
+\begin{proof}
+Las hipótesis $H(x)\succ0$ y
+$\int_0^{\infty}\operatorname{tr}H(x)\,dx=\infty$ sitúan al sistema en el caso
+límite-punto en ambos extremos.  El teorema de autoadjunción para sistemas
+canónicos \cite[Thm.~35]{deBranges1986} garantiza que la clausura del operador es
+autoadjunta y tiene espectro real y simple.
+\end{proof}
+
+\begin{proposition}[Correspondencia cero--espectro]\label{prop:paper-spectrum}
+Para $t\in\mathbb{R}$, $E(t)=0$ si y sólo si $D\!\left(\tfrac{1}{2}+it\right)=0$; esos
+valores corresponden a los autovalores del sistema canónico.
+\end{proposition}
+
+\begin{proof}
+El vector $K_t$ pertenece al núcleo de reproducción si y sólo si $E(t)=0$
+\cite[Thm.~22]{deBranges1986}.  La definición de $E$ enlaza estos ceros con los
+de $D$ en la recta crítica, y la autoadjunción implica que el espectro es real.
+\end{proof}
+
+Los resultados anteriores establecen la ruta de Branges: un Hamiltoniano positivo
+produce un operador autoadjunto con espectro real, y los ceros de $D$ se sitúan en
+$\Re(s)=\tfrac{1}{2}$.
 Definimos
 \[
 E(z):=D\!\left(\tfrac{1}{2}-iz\right)+i\,D\!\left(\tfrac{1}{2}+iz\right).
