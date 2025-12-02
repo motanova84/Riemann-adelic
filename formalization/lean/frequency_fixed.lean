@@ -56,9 +56,10 @@ By uniqueness of the positive square root:
 -/
 
 noncomputable section
-open Real
 
 namespace FrequencyFixed
+
+open Real
 
 /-! ## Fundamental Constants -/
 
