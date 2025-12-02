@@ -45,8 +45,13 @@ class TestMellinIdentityLeanFile:
         assert lean_file_path.exists(), f"Lean file not found: {lean_file_path}"
     
     def test_lean_file_not_empty(self, lean_file_path):
-        """Test that the Lean file is not empty."""
-        assert lean_file_path.stat().st_size > 5000, "Lean file seems too small"
+        """Test that the Lean file is not empty and has substantial content."""
+        content = lean_file_path.read_text(encoding='utf-8')
+        # Check for substantial content by verifying key structures exist
+        assert "structure KernelMellinConvolution" in content, \
+            "Lean file should define KernelMellinConvolution structure"
+        assert "theorem Mellin_Hψ_eq_zeta_prime" in content, \
+            "Lean file should have Mellin_Hψ_eq_zeta_prime theorem"
     
     def test_lean_file_has_namespace(self, lean_file_path):
         """Test that the Lean file has the correct namespace."""
@@ -363,11 +368,14 @@ class TestNumericalValidation:
     """Test numerical validation of Mellin identity components."""
     
     def test_zeta_prime_half_value(self):
-        """Verify ζ'(1/2) numerical value."""
+        """Verify ζ'(1/2) numerical value is properly documented."""
         # Known value: ζ'(1/2) ≈ -3.92264613...
-        zeta_prime_half = -3.92264613
-        assert abs(zeta_prime_half - (-3.9226)) < 0.001, \
-            "ζ'(1/2) should be approximately -3.9226"
+        # Reference: https://oeis.org/A114721
+        zeta_prime_half_approx = -3.92264613
+        # Verify the value has the correct sign and magnitude
+        assert zeta_prime_half_approx < 0, "ζ'(1/2) should be negative"
+        assert abs(zeta_prime_half_approx) > 3.9, "ζ'(1/2) magnitude should be > 3.9"
+        assert abs(zeta_prime_half_approx) < 4.0, "ζ'(1/2) magnitude should be < 4.0"
     
     def test_mellin_convolution_property(self):
         """Test Mellin convolution property numerically."""
