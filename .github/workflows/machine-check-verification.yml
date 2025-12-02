@@ -1,0 +1,170 @@
+name: Machine-Check Verification
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    types: [opened, synchronize, reopened]
+  schedule:
+    - cron: "0 0 * * 0"  # Weekly on Sunday at midnight
+  workflow_dispatch:     # Manual trigger
+
+jobs:
+  machine-check:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+      
+      - name: Cache dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+      
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pytest pytest-cov
+      
+      - name: Run Machine-Check Verification
+        id: machine-check
+        run: |
+          python machine_check_verification.py \
+            --precision 25 \
+            --verbose \
+            --generate-certificate \
+            --comprehensive
+        continue-on-error: true
+      
+      - name: Run Machine-Check Tests
+        run: |
+          pytest tests/test_machine_check_verification.py -v --tb=short
+        continue-on-error: true
+      
+      - name: Verify Certificate Generated
+        run: |
+          if [ -f data/machine_check_certificate.json ]; then
+            echo "✅ Machine-check certificate generated successfully"
+            cat data/machine_check_certificate.json | jq '.overall_status'
+          else
+            echo "⚠️  Machine-check certificate not found"
+          fi
+      
+      - name: Upload Certificate as Artifact
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: machine-check-certificate
+          path: |
+            data/machine_check_certificate.json
+            data/validation_results.csv
+          retention-days: 90
+      
+      - name: Generate Summary Report
+        if: always()
+        run: |
+          echo "## 🤖 Machine-Check Verification Report" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          
+          if [ -f data/machine_check_certificate.json ]; then
+            STATUS=$(jq -r '.overall_status' data/machine_check_certificate.json)
+            PASSED=$(jq -r '.summary.passed' data/machine_check_certificate.json)
+            FAILED=$(jq -r '.summary.failed' data/machine_check_certificate.json)
+            SKIPPED=$(jq -r '.summary.skipped' data/machine_check_certificate.json)
+            TOTAL=$(jq -r '.summary.total' data/machine_check_certificate.json)
+            
+            echo "### Overall Status: **$STATUS**" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "| Metric | Count |" >> $GITHUB_STEP_SUMMARY
+            echo "|--------|-------|" >> $GITHUB_STEP_SUMMARY
+            echo "| ✅ Passed | $PASSED |" >> $GITHUB_STEP_SUMMARY
+            echo "| ❌ Failed | $FAILED |" >> $GITHUB_STEP_SUMMARY
+            echo "| ⚠️ Skipped | $SKIPPED |" >> $GITHUB_STEP_SUMMARY
+            echo "| 📊 Total | $TOTAL |" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            
+            if [ "$STATUS" = "PASSED" ]; then
+              echo "🏆 **All critical verifications passed!**" >> $GITHUB_STEP_SUMMARY
+              echo "" >> $GITHUB_STEP_SUMMARY
+              echo "- ✨ QCAL ∞³ coherence maintained" >> $GITHUB_STEP_SUMMARY
+              echo "- 🎯 V5 Coronación framework validated" >> $GITHUB_STEP_SUMMARY
+              echo "- 📜 Mathematical certificates verified" >> $GITHUB_STEP_SUMMARY
+              echo "- ♾️ Machine-check verification complete" >> $GITHUB_STEP_SUMMARY
+            else
+              echo "⚠️ **Review required:** Some verifications need attention" >> $GITHUB_STEP_SUMMARY
+            fi
+          else
+            echo "⚠️ Certificate file not found - verification may have failed" >> $GITHUB_STEP_SUMMARY
+          fi
+      
+      - name: Comment on PR
+        if: github.event_name == 'pull_request' && always()
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const fs = require('fs');
+            const certPath = 'data/machine_check_certificate.json';
+            
+            let comment = '## 🤖 Machine-Check Verification Report\n\n';
+            
+            if (fs.existsSync(certPath)) {
+              const cert = JSON.parse(fs.readFileSync(certPath, 'utf8'));
+              const status = cert.overall_status;
+              const summary = cert.summary;
+              
+              comment += `### Overall Status: **${status}**\n\n`;
+              comment += '| Metric | Count |\n';
+              comment += '|--------|-------|\n';
+              comment += `| ✅ Passed | ${summary.passed} |\n`;
+              comment += `| ❌ Failed | ${summary.failed} |\n`;
+              comment += `| ⚠️ Skipped | ${summary.skipped} |\n`;
+              comment += `| 📊 Total | ${summary.total} |\n\n`;
+              
+              if (status === 'PASSED') {
+                comment += '🏆 **All critical verifications passed!**\n\n';
+                comment += '- ✨ QCAL ∞³ coherence maintained\n';
+                comment += '- 🎯 V5 Coronación framework validated\n';
+                comment += '- 📜 Mathematical certificates verified\n';
+                comment += '- ♾️ Machine-check verification complete\n';
+              } else {
+                comment += '⚠️ **Review required:** Some verifications need attention\n';
+              }
+            } else {
+              comment += '⚠️ Certificate file not found - verification may have failed\n';
+            }
+            
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: comment
+            });
+      
+      - name: Commit Certificate (on main branch)
+        if: github.ref == 'refs/heads/main' && success()
+        run: |
+          git config user.name "qcal-bot"
+          git config user.email "bot@qcal.cloud"
+          
+          if [ -f data/machine_check_certificate.json ]; then
+            git add data/machine_check_certificate.json
+            git add data/validation_results.csv 2>/dev/null || true
+            git commit -m "♾️ Machine-check verification: certificate updated [skip ci]" || echo "No changes to commit"
+            git push || echo "Push failed or no changes"
+          fi
+        continue-on-error: true
