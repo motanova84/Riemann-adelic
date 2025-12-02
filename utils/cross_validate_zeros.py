@@ -24,7 +24,7 @@ def validate_with_sagemath(file_path="zeros/zeros_t1e8.txt", num_zeros=10):
     """Validate zeros using SageMath computation (if available)."""
     try:
         # Try to import SageMath - this will fail if not installed
-        from sage.all import *
+        import sage.all as sage
         
         print("📊 Cross-validating with SageMath...")
         
@@ -42,7 +42,7 @@ def validate_with_sagemath(file_path="zeros/zeros_t1e8.txt", num_zeros=10):
         # Compute zeros using SageMath
         sage_zeros = []
         for i in range(1, num_zeros + 1):
-            zero = float(zeta_zeros(i)[0].imag())
+            zero = float(sage.zeta_zeros(i)[0].imag())
             sage_zeros.append(zero)
         
         # Compare
