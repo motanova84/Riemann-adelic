@@ -1,5 +1,6 @@
+#!/usr/bin/env python3
 """
-Script to validate metadata JSON-LD files against a schema.
+Verify JSON-LD metadata schema files.
 
 This script validates mathematical archive metadata files to ensure:
 - Valid JSON-LD structure
@@ -10,10 +11,6 @@ This script validates mathematical archive metadata files to ensure:
 Usage:
     python tools/verify_metadata.py schema/metadata_example.jsonld
     python tools/verify_metadata.py schema/*.jsonld
-#!/usr/bin/env python3
-"""
-Verify JSON-LD metadata schema files.
-This script validates that a JSON-LD file is well-formed and contains required fields.
 """
 
 import json
@@ -220,26 +217,6 @@ def validate_jsonld(filepath):
     except Exception as e:
         print(f"❌ Unexpected error validating {filepath}: {e}")
         return False
-
-
-def main():
-    """Main entry point for the metadata validator."""
-    if len(sys.argv) < 2:
-        print("Usage: python verify_metadata.py <jsonld_file>")
-        sys.exit(1)
-
-    filepath = Path(sys.argv[1])
-
-    if not filepath.exists():
-        print(f"❌ Error: File does not exist: {filepath}")
-        sys.exit(1)
-
-    if validate_jsonld(filepath):
-        print(f"\n✅ Metadata validation passed for {filepath}")
-        sys.exit(0)
-    else:
-        print(f"\n❌ Metadata validation failed for {filepath}")
-        sys.exit(1)
 
 
 if __name__ == "__main__":

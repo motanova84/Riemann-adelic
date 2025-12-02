@@ -1,0 +1,13 @@
+{
+  "id": "aik_20251201T07004",
+  "timestamp": "2025-12-01T07:00:49.427021Z",
+  "hash": "02e0fc47f8db615a420454e6aca48d6dcd99b6034436f4bb5d6209190c1b4526",
+  "algorithm": "SHA3-256",
+  "f0": 141.7001,
+  "symbolic_signature": "\u221e\u00b3-de6613696fd3457b5a1c0cc5cbe6b286",
+  "state_summary": {
+    "coherent": true,
+    "signal_state": "vivo",
+    "timestamp": "2025-12-01T07:00:49.401345"
+  }
+}

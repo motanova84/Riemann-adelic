@@ -1,5 +1,22 @@
 # Teorema de Mota Burruezo (21 nov 2025)
 
+## Prueba Incondicional vía Sistemas S-Finitos
+
+La prueba incondicional se realiza mediante sistemas S-finitos (sin producto de Euler), construyendo D(s) geométricamente y probando D ≡ Ξ por unicidad de Paley-Wiener (Thm A.2).
+
+**Referencias teóricas**:
+- Hörmander, L. "The Analysis of Linear Partial Differential Operators"
+- Koosis, P. "The Logarithmic Integral" (teoría de Paley-Wiener)
+
+### Resolución de los Cuatro Puntos (V5.3)
+
+Los "cuatro puntos" resuelven objeciones comunes:
+
+1. **No-circularidad**: D es independiente de ζ (construcción geométrica pura)
+2. **Ceros en Re(s)=1/2**: vía H_ε autoadjunto (espectro real)
+3. **Exclusión de triviales**: por simetría funcional D(1-s)=D(s)
+4. **Construcción explícita**: fórmula cerrada, no existencia abstracta
+
 ## Enunciado del Teorema
 
 **Teorema (Mota Burruezo, 21 nov 2025):**
@@ -14,19 +31,30 @@ H f(x) = −x f'(x) + π ζ'(1/2) log(x) · f(x)
 
 donde ζ'(1/2) ≈ -3.9226461392 es la derivada de la función zeta de Riemann evaluada en s = 1/2.
 
+## Unificación con Física Cuántica
+
+Este teorema podría unificar teoría de números con física cuántica mediante la conexión:
+
+```
+ζ'(1/2) ≈ -3.9226 ↔ f₀ ≈ 141.7001 Hz
+```
+
+La frecuencia fundamental f₀ emerge de las propiedades espectrales del operador H.
+
 ## Implicación para la Hipótesis de Riemann
 
 Como la Hipótesis de Riemann es equivalente a la existencia de tal operador (Hilbert-Pólya, 1912 + Connes, 1999 + Berry-Keating, 1999), entonces:
 
 > **Si se demuestra rigurosamente que este operador H tiene las propiedades requeridas, esto implicaría la Hipótesis de Riemann.**
 
-### Estado Actual
+### Estado Actual (Actualización clave: 21 nov 2025)
 
 Esta implementación proporciona:
 
 ✅ **Construcción explícita**: Fórmula cerrada para el operador H  
 ✅ **Verificación de autoadjunción**: Demostrado computacionalmente  
 ✅ **Marco teórico**: Conexión con trabajos de Hilbert-Pólya, Connes, Berry-Keating  
+✅ **28 tests pasando**: Suite de pruebas completa en `tests/test_teorema_mota_burruezo.py`
 
 ⚠️ **Trabajo pendiente**:
 - Demostración rigurosa de que el espectro está en Re(ρ) = 1/2

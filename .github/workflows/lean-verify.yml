@@ -30,12 +30,15 @@ jobs:
         uses: actions/checkout@v4
       
       # Setup Lean 4
-      - name: ⚙️ Install Lean 4
+      - name: ⚙️ Install Lean 4 (elan)
         run: |
           curl https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -sSf | sh -s -- -y
+          if [ ! -f "$HOME/.elan/bin/elan" ]; then
+            echo "❌ Elan installation failed"; exit 1
+          fi
           echo "$HOME/.elan/bin" >> $GITHUB_PATH
-          elan toolchain install leanprover/lean4:v4.13.0
-          elan default leanprover/lean4:v4.13.0
+          elan toolchain install leanprover/lean4:v4.5.0
+          elan default leanprover/lean4:v4.5.0
           lean --version
       
       # Navigate to formalization directory
