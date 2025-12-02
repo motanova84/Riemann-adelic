@@ -33,6 +33,36 @@ Una implementación completa requeriría integración numérica costosa del núc
 import numpy as np
 from scipy.linalg import eigh
 
+try:  # pragma: no cover - optional accelerator
+    import jax.numpy as jnp
+    from jax import jit
+except ImportError:  # pragma: no cover - optional dependency
+    jnp = None  # type: ignore
+    jit = lambda fn: fn  # type: ignore
+
+try:  # pragma: no cover - optional accelerator
+    import cupy as cp
+except ImportError:  # pragma: no cover - optional dependency
+    cp = None  # type: ignore
+
+
+if jnp is not None:
+
+    @jit  # type: ignore[arg-type]
+    def xi_function(t):
+        """JIT compiled Riemann Xi function for GPU/TPU acceleration."""
+
+        return jnp.real(
+            jnp.pi ** (-0.5 * (0.5 + 1j * t))
+            * jnp.gamma(0.25 + 0.5j * t)
+            * jnp.zeta(0.5 + 1j * t)
+        )
+
+else:  # pragma: no cover - CPU-only fallback
+
+    def xi_function(t):
+        raise RuntimeError("JAX is required for xi_function acceleration")
+
 def build_H_real(n_basis=10, t=0.01):
     """
     Implementación REAL del operador H en base log-wave (versión simplificada)
@@ -56,18 +86,27 @@ def build_H_real(n_basis=10, t=0.01):
     known_zeros = [14.1347, 21.0220, 25.0109, 30.4249, 32.9351, 
                    37.5862, 40.9187, 43.3271, 48.0052, 49.7738]
     
-    H = np.zeros((n_basis, n_basis))
-    
-    # Diagonal: autovalores teóricos
-    for i in range(min(n_basis, len(known_zeros))):
-        gamma = known_zeros[i]
-        eigenval = gamma**2 + 0.25
-        H[i, i] = eigenval
+    use_gpu = cp is not None
+    H = cp.zeros((n_basis, n_basis), dtype=cp.float64) if use_gpu else np.zeros((n_basis, n_basis))
+
+    # Diagonal: autovalores teóricos (vectorizado con JAX si está disponible)
+    gamma_array = np.array(known_zeros[:n_basis])
+    if jnp is not None and gamma_array.size:
+        eigenvals = np.array(jnp.square(gamma_array) + 0.25)
+    else:
+        eigenvals = gamma_array**2 + 0.25
+
+    for idx, eigenval in enumerate(eigenvals):
+        H[idx, idx] = eigenval
     
     # Agregar pequeñas perturbaciones fuera de diagonal para hacer realista
-    for i in range(n_basis-1):
-        H[i, i+1] = 0.01 * np.exp(-t * i)
-        H[i+1, i] = H[i, i+1]  # Simetría
+    for i in range(n_basis - 1):
+        value = 0.01 * np.exp(-t * i)
+        H[i, i + 1] = value
+        H[i + 1, i] = value  # Simetría
+
+    if use_gpu:
+        H = cp.asnumpy(H)
     
     print(f"  Matriz {n_basis}x{n_basis} construida")
     

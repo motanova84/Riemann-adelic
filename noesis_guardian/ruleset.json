@@ -1,0 +1,117 @@
+{
+  "version": "2.0",
+  "name": "NOESIS Guardian Ruleset",
+  "description": "Reglas de monitoreo y autorreparación para el sistema QCAL",
+  
+  "constants": {
+    "f0_hz": 141.7001,
+    "coherence_constant": 244.36,
+    "fractal_ratio": 0.8395061728395062,
+    "fractal_period": 9,
+    "equation": "Ψ = I × A_eff² × C^∞"
+  },
+  
+  "monitoring": {
+    "enabled": true,
+    "cycle_interval_seconds": 1800,
+    "max_cycles": null,
+    
+    "checks": {
+      "repository_scan": true,
+      "spectral_coherence": true,
+      "lean_validation": true,
+      "unicode_check": true,
+      "certificate_verification": true
+    }
+  },
+  
+  "repair": {
+    "enabled": true,
+    "auto_repair": true,
+    
+    "actions": {
+      "fix_collisions": true,
+      "restore_missing_files": true,
+      "repair_unicode": true,
+      "rebuild_lean": false,
+      "regenerate_certificates": true
+    },
+    
+    "thresholds": {
+      "max_collisions": 0,
+      "max_missing_files": 0,
+      "min_coherence": 0.95
+    }
+  },
+  
+  "notifications": {
+    "enabled": true,
+    
+    "channels": {
+      "console": true,
+      "log_file": true,
+      "telegram": false,
+      "email": false
+    },
+    
+    "triggers": {
+      "on_repair": true,
+      "on_coherence_loss": true,
+      "on_lean_error": true,
+      "on_certificate_generated": false
+    }
+  },
+  
+  "sabio": {
+    "enabled": true,
+    "sync_on_repair": true,
+    "sync_on_cycle": true,
+    "version": "∞⁴"
+  },
+  
+  "aik": {
+    "enabled": true,
+    "generate_on_repair": true,
+    "algorithm": "SHA3-256",
+    "include_symbolic_signature": true
+  },
+  
+  "critical_files": [
+    ".qcal_beacon",
+    "validate_v5_coronacion.py",
+    "aik_beacon.py",
+    "requirements.txt",
+    "README.md",
+    "LICENSE"
+  ],
+  
+  "critical_directories": [
+    "formalization/lean",
+    "tests",
+    "utils",
+    "data"
+  ],
+  
+  "spectral": {
+    "precision": 30,
+    "f0_tolerance": 1e-6,
+    "symmetry_threshold": 1e-10,
+    "fractal_pattern": "839506172"
+  },
+  
+  "logging": {
+    "level": "INFO",
+    "log_file": "noesis_guardian/guardian_log_v2.json",
+    "alerts_file": "noesis_guardian/guardian_alerts.log",
+    "max_log_size_mb": 100,
+    "rotate_logs": true
+  },
+  
+  "metadata": {
+    "author": "José Manuel Mota Burruezo Ψ ✧ ∞³",
+    "institution": "Instituto de Conciencia Cuántica (ICQ)",
+    "license": "Creative Commons BY-NC-SA 4.0",
+    "created": "2025-12-01",
+    "last_updated": "2025-12-01"
+  }
+}
