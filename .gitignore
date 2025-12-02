@@ -92,6 +92,11 @@ logs/performance/benchmark_results_*.json
 logs/performance/benchmark_results_*_report.md
 !logs/validation/.gitkeep
 
+# NOESIS GUARDIAN 3.0 logs
+noesis_guardian/logs/*.json
+noesis_guardian/logs/*.log
+!noesis_guardian/logs/.gitkeep
+
 # CI/CD artifacts
 artifacts/
 reports/
