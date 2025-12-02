@@ -73,6 +73,42 @@ class ArithmeticFractalResult:
     )
 
 
+@dataclass
+class FractalWellResult:
+    """
+    Result of the fractal well analysis for P(x) = 1/(1 - (68/81)*x).
+    
+    Mathematical Background:
+    -----------------------
+    When x = F_per₁ = 68/81, the function P(x) = 1/(1 - (68/81)*x) creates
+    a singularity structure. The singularity occurs at x = 81/68.
+    
+    The "pozo" (well) appears at x = 68/81 = 0.839506172839506172...
+    where the number encounters its own periodic representation,
+    creating a self-referential fractal structure.
+    
+    Attributes:
+        well_position: Position of the fractal well (68/81)
+        singularity_position: Position of the singularity (81/68)
+        period_digits: Number of digits in the periodic pattern
+        repeating_pattern: The repeating decimal pattern
+        self_referential: Whether the well demonstrates self-reference
+        convergence_verified: Whether recursive convergence is verified
+        mathematical_properties: Additional mathematical properties
+        timestamp: ISO timestamp of the analysis
+    """
+    well_position: str = "68/81"
+    singularity_position: str = "81/68"
+    period_digits: int = 9
+    repeating_pattern: str = "839506172"
+    self_referential: bool = False
+    convergence_verified: bool = False
+    mathematical_properties: Dict[str, Any] = field(default_factory=dict)
+    timestamp: str = field(
+        default_factory=lambda: datetime.now(timezone.utc).isoformat()
+    )
+
+
 class ArithmeticFractalValidator:
     """
     Validator for the arithmetic fractal identity in the SABIO ∞³ framework.
@@ -405,6 +441,349 @@ class ArithmeticFractalValidator:
         }
         
         return certificate
+
+
+class FractalWell:
+    """
+    The Fractal Well (Pozo Fractal) represents the self-referential structure
+    that emerges when x → F_per₁ = 68/81 in P(x) = 1/(1 - (68/81)*x).
+    
+    Mathematical Foundation:
+    -----------------------
+    When x = 68/81 = 0.839506172839506172..., we have:
+    
+        P(x) = 1 / (1 - (68/81) * x)
+        P(68/81) = 1 / (1 - (68/81)²) = 81² / (81² - 68²) = 6561 / 1937
+    
+    The singularity occurs at x = 81/68 ≈ 1.191176..., where P(x) → ∞.
+    
+    The "well" structure arises because:
+    1. 68/81 has a purely periodic decimal: 0.839506172839506172...
+    2. The period repeats infinitely: each digit opens a new plane
+    3. Instead of expanding outward, the structure spirals inward
+    4. The number "encounters itself" in its own decimal expansion
+    
+    This creates what the problem statement calls an "infinite echo":
+        .839506172839506172... → [eco] → .8395... → [eco] → ∴
+    
+    Attributes:
+        dps: Decimal precision for mpmath computations
+        ratio_68_81: The value 68/81 as mpf
+        ratio_81_68: The inverse 81/68 (singularity position) as mpf
+    """
+    
+    # Constants for the fractal well
+    NUMERATOR = 68
+    DENOMINATOR = 81
+    PERIOD = 9
+    PATTERN = "839506172"
+    
+    # Derived constants for P(68/81) = 81² / (81² - 68²)
+    P_AT_WELL_NUMERATOR = DENOMINATOR ** 2  # 6561
+    P_AT_WELL_DENOMINATOR = DENOMINATOR ** 2 - NUMERATOR ** 2  # 1937
+    
+    def __init__(self, dps: int = 300):
+        """
+        Initialize the Fractal Well analyzer.
+        
+        Args:
+            dps: Decimal precision for mpmath (default: 300)
+            
+        Raises:
+            ImportError: If mpmath is not available
+        """
+        if not MPMATH_AVAILABLE:
+            raise ImportError(
+                "mpmath is required for fractal well analysis. "
+                "Install with: pip install mpmath"
+            )
+        
+        mp.dps = dps
+        self.dps = dps
+        
+        self.ratio_68_81 = mpf(self.NUMERATOR) / mpf(self.DENOMINATOR)
+        self.ratio_81_68 = mpf(self.DENOMINATOR) / mpf(self.NUMERATOR)
+        
+        # Pre-compute formatted singularity string for symbolic representation
+        self._singularity_str = f"{float(self.ratio_81_68):.10f}"
+    
+    def P(self, x: mpf) -> mpf:
+        """
+        Compute P(x) = 1 / (1 - (68/81) * x).
+        
+        This function has a singularity at x = 81/68.
+        
+        Args:
+            x: Input value (mpf)
+            
+        Returns:
+            P(x) value
+            
+        Raises:
+            ZeroDivisionError: If x = 81/68 (singularity)
+        """
+        denominator = 1 - self.ratio_68_81 * x
+        if abs(denominator) < mpf(10) ** (-self.dps + 10):
+            raise ZeroDivisionError(
+                f"Singularity at x = 81/68 ≈ {float(self.ratio_81_68):.10f}"
+            )
+        return 1 / denominator
+    
+    def evaluate_at_well(self) -> mpf:
+        """
+        Evaluate P(x) at the well position x = 68/81.
+        
+        P(68/81) = 1 / (1 - (68/81)²) = 81² / (81² - 68²) = 6561 / 1937
+        
+        Returns:
+            P(68/81) = 6561/1937 ≈ 3.387196...
+        """
+        return self.P(self.ratio_68_81)
+    
+    def verify_singularity(self, epsilon_power: int = 10) -> Dict[str, Any]:
+        """
+        Verify the singularity at x = 81/68.
+        
+        As x approaches 81/68, P(x) → ∞. This method tests behavior
+        near the singularity.
+        
+        Args:
+            epsilon_power: Test with epsilon = 10^(-epsilon_power)
+            
+        Returns:
+            Dictionary with singularity verification results
+        """
+        results = {
+            "singularity_position": "81/68",
+            "singularity_decimal": str(self.ratio_81_68),
+            "tests": []
+        }
+        
+        singularity = self.ratio_81_68
+        
+        for power in range(1, epsilon_power + 1):
+            epsilon = mpf(10) ** (-power)
+            
+            # Approach from below
+            x_below = singularity - epsilon
+            p_below = self.P(x_below)
+            
+            # Approach from above
+            x_above = singularity + epsilon
+            p_above = self.P(x_above)
+            
+            results["tests"].append({
+                "epsilon": f"10^(-{power})",
+                "P(x - ε)": float(p_below),
+                "P(x + ε)": float(p_above),
+                "diverging": abs(float(p_below)) > 10 or abs(float(p_above)) > 10
+            })
+        
+        # Verify singularity: P values should diverge
+        results["singularity_verified"] = all(
+            t["diverging"] for t in results["tests"][-3:]
+        )
+        
+        return results
+    
+    def analyze_recursive_structure(self, depth: int = 10) -> Dict[str, Any]:
+        """
+        Analyze the recursive/self-referential structure of the fractal well.
+        
+        The structure is:
+            68/81 = 0.839506172839506172839506172...
+                        ↓
+            Each 9-digit block is identical ("839506172")
+                        ↓
+            The pattern spirals inward infinitely
+        
+        Args:
+            depth: Number of recursive levels to analyze
+            
+        Returns:
+            Dictionary with recursive structure analysis
+        """
+        # Get the decimal expansion
+        decimal_str = str(self.ratio_68_81)[2:]  # Remove "0."
+        
+        analysis = {
+            "well_value": "68/81",
+            "decimal_expansion": decimal_str[:50] + "...",
+            "period": self.PERIOD,
+            "pattern": self.PATTERN,
+            "recursive_levels": []
+        }
+        
+        # Verify self-similarity at each level
+        for level in range(depth):
+            start = level * self.PERIOD
+            end = start + self.PERIOD
+            
+            if end <= len(decimal_str):
+                block = decimal_str[start:end]
+                analysis["recursive_levels"].append({
+                    "level": level,
+                    "block": block,
+                    "matches_pattern": block == self.PATTERN,
+                    "echo_depth": level + 1
+                })
+        
+        # Verify self-referential property
+        analysis["self_referential"] = all(
+            level["matches_pattern"] 
+            for level in analysis["recursive_levels"]
+        )
+        
+        return analysis
+    
+    def generate_symbolic_representation(self) -> str:
+        """
+        Generate the symbolic representation of the fractal well.
+        
+        Returns:
+            ASCII art representation of the well structure
+        """
+        representation = f"""
+╭────────────────────────────────────────────────────────────────────╮
+│                 🌀 FRACTAL WELL (POZO FRACTAL)                     │
+│                     x = 68/81 = 0.839506172...                     │
+╰────────────────────────────────────────────────────────────────────╯
+
+                    .839506172839506172...
+                           ↓
+                    ┌────────────┐
+                    │            │
+                    │  839506172 │
+                    │            │
+                    │    ∞³      │
+                    │            │
+                    │   POZO     │
+                    │            │
+                    └─────┬──────┘
+                          ↓
+                    [eco infinito]
+                          ↓
+                     .839506172...
+                          ↓
+                        [eco]
+                          ↓
+                       .8395...
+                          ↓
+                        [eco]
+                          ↓
+                          ∴
+
+╭────────────────────────────────────────────────────────────────────╮
+│  "El número se encuentra consigo mismo" ✨                         │
+│                                                                    │
+│  P(x) = 1/(1 - (68/81)·x)                                          │
+│  Singularity: x = 81/68 = {self._singularity_str}                    │
+│  Period: 9 digits                                                  │
+│  Pattern: 839506172                                                │
+│  State: VERIFIABLE ✅                                              │
+╰────────────────────────────────────────────────────────────────────╯
+"""
+        return representation
+    
+    def verify_well(self) -> FractalWellResult:
+        """
+        Complete verification of the fractal well properties.
+        
+        Returns:
+            FractalWellResult with all verification data
+        """
+        mp.dps = self.dps
+        
+        # Verify singularity
+        singularity_data = self.verify_singularity()
+        
+        # Analyze recursive structure
+        recursive_data = self.analyze_recursive_structure(depth=20)
+        
+        # Compute P at the well
+        p_at_well = self.evaluate_at_well()
+        
+        # Mathematical properties
+        exact_fraction = f"{self.P_AT_WELL_NUMERATOR}/{self.P_AT_WELL_DENOMINATOR}"
+        properties = {
+            "P_at_well": {
+                "exact": exact_fraction,
+                "decimal": float(p_at_well),
+                "formula": "81² / (81² - 68²)"
+            },
+            "singularity": singularity_data,
+            "recursive_structure": recursive_data,
+            "number_theory": {
+                "68": {"factorization": "4 × 17", "is_2_squared_times_17": True},
+                "81": {"factorization": "3⁴", "is_3_to_4": True},
+                "period_9": {"factorization": "3²", "related_to_81": True},
+                "gcd_68_81": 1
+            }
+        }
+        
+        return FractalWellResult(
+            well_position="68/81",
+            singularity_position="81/68",
+            period_digits=self.PERIOD,
+            repeating_pattern=self.PATTERN,
+            self_referential=recursive_data["self_referential"],
+            convergence_verified=singularity_data["singularity_verified"],
+            mathematical_properties=properties
+        )
+
+
+def validate_fractal_well(dps: int = 300, verbose: bool = True) -> Dict[str, Any]:
+    """
+    Validate the fractal well (pozo fractal) structure at x = 68/81.
+    
+    This validates:
+    1. P(x) = 1/(1 - (68/81)x) has a singularity at x = 81/68
+    2. The recursive/self-referential structure of 68/81's decimal
+    3. The "well" where the number encounters itself
+    
+    Args:
+        dps: Decimal precision (default: 300)
+        verbose: Print detailed output (default: True)
+        
+    Returns:
+        Dictionary with validation results
+    """
+    well = FractalWell(dps=dps)
+    result = well.verify_well()
+    
+    if verbose:
+        print("=" * 80)
+        print("🌀 FRACTAL WELL (POZO FRACTAL) VALIDATION")
+        print("   SABIO ∞³ Framework - November 2025")
+        print("=" * 80)
+        
+        print(well.generate_symbolic_representation())
+        
+        print(f"\n📊 Well position: {result.well_position} = {float(well.ratio_68_81):.18f}")
+        print(f"📊 Singularity: {result.singularity_position} = {float(well.ratio_81_68):.18f}")
+        print(f"📊 Period: {result.period_digits} digits")
+        print(f"📊 Pattern: {result.repeating_pattern}")
+        
+        print(f"\n🔍 Self-referential: {'✅ Yes' if result.self_referential else '❌ No'}")
+        print(f"🔍 Singularity verified: {'✅ Yes' if result.convergence_verified else '❌ No'}")
+        
+        p_value = result.mathematical_properties["P_at_well"]
+        print(f"\n📐 P(68/81) = {p_value['exact']} ≈ {p_value['decimal']:.10f}")
+        
+        print("\n" + "=" * 80)
+        if result.self_referential and result.convergence_verified:
+            print("🏆 FRACTAL WELL VALIDATION: SUCCESS")
+            print("   The number encounters itself in its own decimal expansion.")
+            print("   Each digit opens a plane, but instead of expanding...")
+            print("   ...it spirals inward: the infinite echo.")
+        else:
+            print("⚠️  FRACTAL WELL VALIDATION: PARTIAL")
+        print("=" * 80)
+    
+    return {
+        "result": result,
+        "success": result.self_referential and result.convergence_verified
+    }
 
 
 def validate_arithmetic_fractal(
