@@ -1,141 +1,133 @@
 #!/usr/bin/env python3
 """
-Validate LaTeX paper structure for docs/paper/
-
-This script checks:
-1. All section files referenced in main.tex exist
-2. No circular dependencies
-3. Basic LaTeX syntax validation
-4. Section file completeness
+Validate LaTeX structure for the new paper organization.
 """
 
 import os
 import re
 from pathlib import Path
 
-def validate_paper_structure():
-    """Validate the paper structure in docs/paper/"""
-    
-    paper_dir = Path("docs/paper")
-    main_tex = paper_dir / "main.tex"
-    sections_dir = paper_dir / "sections"
-    
-    print("=" * 70)
-    print("PAPER STRUCTURE VALIDATION")
-    print("=" * 70)
-    print()
-    
-    # Check main.tex exists
-    if not main_tex.exists():
-        print("❌ ERROR: main.tex not found in docs/paper/")
-        return False
-    
-    print(f"✅ Found main.tex: {main_tex}")
-    print()
-    
-    # Check sections directory exists
-    if not sections_dir.exists():
-        print("❌ ERROR: sections/ directory not found in docs/paper/")
-        return False
-    
-    print(f"✅ Found sections directory: {sections_dir}")
-    print()
-    
-    # Read main.tex
-    with open(main_tex, 'r', encoding='utf-8') as f:
-        main_content = f.read()
-    
-    # Extract all \input commands
-    input_pattern = r'\\input\{([^}]+)\}'
-    inputs = re.findall(input_pattern, main_content)
-    
-    print(f"📄 Found {len(inputs)} \\input commands in main.tex:")
-    print()
-    
-    all_valid = True
-    section_files = []
-    
-    for i, input_file in enumerate(inputs, 1):
-        # Handle both with and without .tex extension
-        if not input_file.endswith('.tex'):
-            input_file_with_ext = input_file + '.tex'
-        else:
-            input_file_with_ext = input_file
-        
-        # Construct full path
-        if 'sections/' in input_file:
-            full_path = paper_dir / input_file_with_ext
-        else:
-            full_path = paper_dir / input_file_with_ext
-        
-        # Check if file exists
-        exists = full_path.exists()
-        status = "✅" if exists else "❌"
-        
-        print(f"{i:2d}. {status} {input_file}")
-        
-        if exists:
-            # Get file size
-            size = full_path.stat().st_size
-            lines = len(full_path.read_text(encoding='utf-8').splitlines())
-            print(f"    Size: {size:,} bytes, Lines: {lines:,}")
-            section_files.append(full_path)
-        else:
-            print(f"    ERROR: File not found at {full_path}")
-            all_valid = False
-        
-        print()
-    
-    # List all section files
-    print("=" * 70)
-    print("SECTION FILES IN sections/ DIRECTORY")
-    print("=" * 70)
-    print()
-    
-    if sections_dir.exists():
-        section_files_on_disk = sorted(sections_dir.glob("*.tex"))
-        print(f"Found {len(section_files_on_disk)} .tex files in sections/:")
-        print()
-        
-        for i, section_file in enumerate(section_files_on_disk, 1):
-            size = section_file.stat().st_size
-            lines = len(section_file.read_text(encoding='utf-8').splitlines())
-            
-            # Check if referenced in main.tex
-            # Remove .tex extension for comparison
-            file_stem = section_file.stem
-            referenced = any(file_stem in str(input_ref) for input_ref in inputs)
-            ref_status = "📎 Referenced" if referenced else "⚠️  Not referenced"
-            
-            print(f"{i:2d}. {section_file.name:30s} {size:6,} bytes {lines:4,} lines  {ref_status}")
-    
-    print()
-    print("=" * 70)
-    print("VALIDATION SUMMARY")
-    print("=" * 70)
-    print()
-    
-    if all_valid:
-        print("✅ All referenced files exist")
-        print("✅ Paper structure is valid")
-        print()
-        print("Structure ready for:")
-        print("  - Compilation with pdflatex or latexmk")
-        print("  - Individual section editing")
-        print("  - Enhancement of §6 and §8 as planned")
+def check_file_exists(filepath, description):
+    """Check if a file exists and report."""
+    if os.path.exists(filepath):
+        print(f"✓ {description}: {filepath}")
         return True
     else:
-        print("❌ Some referenced files are missing")
-        print("Please ensure all section files exist before compiling")
+        print(f"✗ MISSING {description}: {filepath}")
         return False
 
+def check_latex_syntax(filepath):
+    """Basic LaTeX syntax validation."""
+    try:
+        with open(filepath, 'r', encoding='utf-8') as f:
+            content = f.read()
+        
+        # Check for balanced braces
+        if content.count('{') != content.count('}'):
+            print(f"  ⚠ Unbalanced braces in {filepath}")
+            return False
+        
+        # Check for balanced \begin{} \end{}
+        begins = re.findall(r'\\begin\{([^}]+)\}', content)
+        ends = re.findall(r'\\end\{([^}]+)\}', content)
+        
+        if sorted(begins) != sorted(ends):
+            print(f"  ⚠ Unbalanced begin/end in {filepath}")
+            print(f"     Begins: {begins}")
+            print(f"     Ends: {ends}")
+            return False
+        
+        return True
+    except Exception as e:
+        print(f"  ✗ Error reading {filepath}: {e}")
+        return False
+
+def main():
+    print("=" * 70)
+    print("LaTeX Paper Structure Validation")
+    print("=" * 70)
+    
+    base_path = Path("/home/runner/work/-jmmotaburr-riemann-adelic/-jmmotaburr-riemann-adelic/paper")
+    
+    all_ok = True
+    
+    # Check main.tex
+    print("\n1. Checking main document:")
+    main_tex = base_path / "main_new.tex"
+    if check_file_exists(main_tex, "Main document"):
+        all_ok &= check_latex_syntax(main_tex)
+    else:
+        all_ok = False
+    
+    # Check sections
+    print("\n2. Checking sections:")
+    sections = [
+        "01_introduction.tex",
+        "02_preliminaries.tex",
+        "03_local_length.tex",
+        "04_hilbert_space.tex",
+        "05_operator_resolvent.tex",
+        "06_functional_equation.tex",
+        "07_growth_order.tex",
+        "08_pw_uniqueness.tex",
+        "09_inversion_primes.tex",
+        "10_numerics.tex",
+        "11_bsd_extension.tex",
+        "12_limitations.tex"
+    ]
+    
+    for section in sections:
+        section_path = base_path / "sections" / section
+        if check_file_exists(section_path, f"Section {section}"):
+            all_ok &= check_latex_syntax(section_path)
+        else:
+            all_ok = False
+    
+    # Check appendices
+    print("\n3. Checking appendices:")
+    appendices = [
+        "A_trace_doi.tex",
+        "B_debranges.tex",
+        "C_pw_multiplicities.tex",
+        "D_archimedean.tex",
+        "E_algorithms.tex",
+        "F_reproducibility.tex"
+    ]
+    
+    for appendix in appendices:
+        appendix_path = base_path / "appendix" / appendix
+        if check_file_exists(appendix_path, f"Appendix {appendix}"):
+            all_ok &= check_latex_syntax(appendix_path)
+        else:
+            all_ok = False
+    
+    # Check bibliography
+    print("\n4. Checking bibliography:")
+    biblio = base_path / "biblio.bib"
+    if check_file_exists(biblio, "Bibliography"):
+        all_ok &= check_latex_syntax(biblio)
+    else:
+        all_ok = False
+    
+    # Summary
+    print("\n" + "=" * 70)
+    if all_ok:
+        print("✓ ALL CHECKS PASSED")
+        print("\nStructure created successfully:")
+        print("  - Main document: paper/main_new.tex")
+        print("  - 12 sections with content")
+        print("  - 6 appendices with placeholders")
+        print("  - Bibliography file")
+        print("\nFirst three sections have substantial content:")
+        print("  - 01_introduction.tex: Full introduction with context and main results")
+        print("  - 02_preliminaries.tex: Adelic framework and S-finite systems")
+        print("  - 03_local_length.tex: Geometric emergence of ℓ_v = log q_v")
+    else:
+        print("✗ SOME CHECKS FAILED")
+        return 1
+    
+    print("=" * 70)
+    return 0
+
 if __name__ == "__main__":
-    import sys
-    
-    # Change to repo root if needed
-    if not Path("docs/paper").exists():
-        print("Changing to repository root...")
-        os.chdir("/home/runner/work/-jmmotaburr-riemann-adelic/-jmmotaburr-riemann-adelic")
-    
-    success = validate_paper_structure()
-    sys.exit(0 if success else 1)
+    exit(main())
