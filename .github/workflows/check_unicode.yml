@@ -23,7 +23,7 @@ jobs:
           echo "🔍 Checking for problematic Unicode characters in notebooks..."
           
           # Define problematic characters that can cause Python syntax errors
-          PROBLEMATIC_CHARS="≪≫≠≤≥–—''""\""
+          PROBLEMATIC_CHARS="≪≫≠≤≥‘’“”–—"
           
           # Check notebooks directory
           if find notebooks/ -name "*.ipynb" -exec grep -l "[$PROBLEMATIC_CHARS]" {} \; | head -1 | read; then

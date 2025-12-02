@@ -1,0 +1,50 @@
+{
+  "version": "1.0",
+  "timestamp": "",
+  "doi": "10.5281/zenodo.17116291",
+  "repository": "https://github.com/motanova84/-jmmotaburr-riemann-adelic",
+  "files": {
+    "paper/main.pdf": {
+      "sha256": "04fe2757d7d42498924c1c6c5dcae056ae7778419729c630b75991753fb599e1",
+      "size": 313097
+    },
+    "paper/main.tex": {
+      "sha256": "747c570f52ba12850e7a2dfefd0c8e90e08526e78bb3476d55b02a1f8468e637",
+      "size": 5800
+    },
+    "paper_standalone.tex": {
+      "sha256": "3af99f37a7b5995a8cac1355eb8536c8c26472a0d4c09bcb22438fc6e36d7409",
+      "size": 13484
+    },
+    "RIEMANNJMMB84.pdf": {
+      "sha256": "b14ac314e62a4dd5fc3c3063dc160eaa1ddcfae1a5ce11cf9a8b21014d311bac",
+      "size": 149651
+    }
+  },
+  "latex_snippets": {
+    "vacuum_energy": {
+      "content": "E_{vac}(R_\\Psi) = \\frac{\\alpha}{R_\\Psi^4}",
+      "sha256": "900b4fb0024cc677e328cf62e31f861f39a095d04c6d3ef69bdd01c40637b79e"
+    },
+    "adelic_operator": {
+      "content": "\\mathcal{D}_{\\text{ad\\`{e}lico}}",
+      "sha256": "05f6ad0bffe0992f6d3b392f43f629b47a8525c973496565247feac87d5e393d"
+    },
+    "spectral_theorem": {
+      "content": "\\text{Spec}(\\mathcal{D}) \\subset i\\mathbb{R}",
+      "sha256": "92a3c89232979a684517da88a4dd87a49117d002a3be477c8a3b0328a1ceb67b"
+    },
+    "riemann_hypothesis": {
+      "content": "\\zeta(s) = 0 \\implies \\Re(s) = \\frac{1}{2}",
+      "sha256": "c807599e742fed0d9770d434f52494255b2277bfefd8dab226b25e286bf2071c"
+    },
+    "discrete_symmetry": {
+      "content": "\\alpha_\\Psi",
+      "sha256": "50b1a1ec4bd0d7636a7c8d00c66cb4b02354090151c2fb1c20ef3b0d715b0977"
+    }
+  },
+  "metadata": {
+    "citation_cff": "59ea2e53819809407ad9bc1c2e9a0c38451584a334c318ad7bdc711db1b77463",
+    "readme_header": "8db521ef23ee4e576d321104fba07b799635d27a629efb5ec14a859aeaedc06c"
+  }
+}

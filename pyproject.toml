@@ -1,0 +1,203 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "jmmotaburr-riemann-adelic"
+version = "1.0.0"
+description = "Mathematical archive and verification tools for the Riemann Hypothesis proof via adelic spectral systems"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+authors = [
+    {name = "José Manuel Mota Burruezo", email = "motanova84@example.com"}
+]
+maintainers = [
+    {name = "José Manuel Mota Burruezo", email = "motanova84@example.com"}
+]
+keywords = [
+    "riemann-hypothesis",
+    "number-theory",
+    "formal-verification",
+    "mathematical-archive",
+    "proof-assistant",
+    "lean",
+    "spectral-theory",
+    "adelic-analysis"
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Science/Research",
+    "Topic :: Scientific/Engineering :: Mathematics",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
+dependencies = [
+    "mpmath==1.3.0",
+    "numpy>=1.22.4,<2.3",
+    "scipy>=1.11.0",
+    "sympy==1.12",
+    "matplotlib>=3.10.1",
+    "jupyter==1.0.0",
+    "nbconvert==7.16.4",
+    "mistune==2.0.5",
+    "requests==2.32.4",
+    "joblib>=1.3.0",
+    "qiskit>=1.5.0",
+    "pytest==8.3.3",
+    "pytest-cov==6.0.0",
+    "numba>=0.60.0",
+    "llvmlite>=0.41.0",
+    "scikit-learn>=1.3.0",
+    "xgboost>=2.0.0",
+    "jax>=0.8.0",
+    "jaxlib>=0.8.0",
+    "numexpr>=2.8.5",
+    "bottleneck>=1.3.7",
+    "networkx>=3.1",
+    "python-igraph>=0.10.8",
+    "tensorly>=0.8.1",
+    "opt-einsum>=3.3.0",
+    "statsmodels>=0.14.0",
+    "patsy>=0.5.3",
+    "sparse>=0.14.0",
+    "nlopt>=2.7.1",
+    "jsonschema>=4.0.0",
+    "rdflib>=6.0.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "black>=23.0.0",
+    "flake8>=6.0.0",
+    "isort>=5.12.0",
+    "pre-commit>=3.0.0",
+    "mypy>=1.0.0",
+    "pytest-xdist>=3.0.0",
+]
+monitoring = [
+    "ssdeep>=3.4",
+    "simhash>=2.1.2",
+    "pdfminer.six>=20221105",
+    "beautifulsoup4>=4.12.0",
+    "pyppeteer>=1.0.2",
+    "python-whois>=0.8.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/motanova84/-jmmotaburr-riemann-adelic"
+Documentation = "https://motanova84.github.io/-jmmotaburr-riemann-adelic"
+Repository = "https://github.com/motanova84/-jmmotaburr-riemann-adelic"
+Issues = "https://github.com/motanova84/-jmmotaburr-riemann-adelic/issues"
+Changelog = "https://github.com/motanova84/-jmmotaburr-riemann-adelic/blob/main/CHANGELOG.md"
+
+[project.scripts]
+verify-metadata = "tools.verify_metadata:main"
+convert-lean = "tools.convert_example:main"
+
+[tool.black]
+line-length = 120
+target-version = ['py310', 'py311']
+include = '\.pyi?$'
+extend-exclude = '''
+/(
+  # directories
+  \.eggs
+  | \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | build
+  | dist
+  | notebooks
+)/
+'''
+
+[tool.isort]
+profile = "black"
+line_length = 120
+multi_line_output = 3
+include_trailing_comma = true
+force_grid_wrap = 0
+use_parentheses = true
+ensure_newline_before_comments = true
+skip_glob = ["*/migrations/*", "*/notebooks/*"]
+
+[tool.flake8]
+max-line-length = 120
+extend-ignore = ["E203", "W503", "E501"]
+exclude = [
+    ".git",
+    "__pycache__",
+    "build",
+    "dist",
+    ".eggs",
+    "*.egg-info",
+    ".venv",
+    "notebooks"
+]
+
+[tool.mypy]
+python_version = "3.10"
+warn_return_any = true
+warn_unused_configs = true
+ignore_missing_imports = true
+no_strict_optional = true
+exclude = [
+    "tests/",
+    "notebooks/",
+    "build/",
+    "dist/"
+]
+
+[tool.pytest.ini_options]
+minversion = "7.0"
+addopts = [
+    "-ra",
+    "-q",
+    "--strict-markers",
+    "--strict-config",
+]
+testpaths = [
+    "tests",
+]
+python_files = [
+    "test_*.py",
+    "*_test.py",
+]
+python_classes = [
+    "Test*",
+]
+python_functions = [
+    "test_*",
+]
+markers = [
+    "slow: marks tests as slow (deselect with '-m \"not slow\"')",
+    "integration: marks tests as integration tests",
+    "unit: marks tests as unit tests",
+]
+
+[tool.coverage.run]
+source = ["."]
+omit = [
+    "*/tests/*",
+    "*/test_*.py",
+    "*/__pycache__/*",
+    "*/site-packages/*",
+    "*/notebooks/*",
+]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "raise AssertionError",
+    "raise NotImplementedError",
+    "if __name__ == .__main__.:",
+    "if TYPE_CHECKING:",
+    "@abstractmethod",
+]

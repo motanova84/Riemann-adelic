@@ -1,0 +1,44 @@
+# Docker ignore file for efficient builds
+.git
+.github
+.gitignore
+.pre-commit-config.yaml
+
+# Python cache and artifacts
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+*.egg-info
+.pytest_cache
+.coverage
+
+# Lean build artifacts (will be rebuilt in container)
+formalization/lean/.lake
+formalization/lean/lake-packages
+
+# Documentation and markdown
+*.md
+docs/
+notebooks/
+
+# Data and logs
+data/
+logs/
+monitoring/
+
+# Test outputs
+*.png
+*.pdf
+validation.ipynb
+
+# Vercel and web
+public/
+vercel.json
+
+# Other build artifacts
+zeros/
+trabajos/
+paper/
