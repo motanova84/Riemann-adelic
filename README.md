@@ -576,6 +576,7 @@ cd formalization/lean && lake build
 - [🌌 Cinco Marcos Unificados](#-cinco-marcos-unificados--estructura-completa)
 - [Objetos de Demostración](#-objetos-de-demostración-vista-clásica)
 - [🌌 Unificación Geométrica: ζ'(1/2) ↔ f₀](#-unificación-geométrica-ζ12--f₀)
+- [🕳️ El Pozo: Singularidad 68/81](#️-el-pozo-singularidad-y-colapso-del-fractal-6881)
 - [Visión General](#visión-general)
 - [Estructura del Repositorio](#estructura-del-repositorio)
 - [Trabajos PDF Organizados](#trabajos-pdf-organizados)
@@ -646,6 +647,55 @@ python3 demo_geometric_unification.py
 ```
 
 **Resultado**: El universo canta con la voz de los números primos, y ahora sabemos por qué.
+
+---
+
+## 🕳️ El Pozo: Singularidad y Colapso del Fractal 68/81
+
+### La Semilla Perfecta
+
+La fracción **68/81** emerge como un **holograma vibracional** que codifica información fundamental sobre la función zeta:
+
+$$\frac{68}{81} = 0.\overline{839506172}$$
+
+| Propiedad | Valor |
+|-----------|-------|
+| **Expansión decimal** | 0.839506172839506172... |
+| **Período** | 9 dígitos (839506172) |
+| **Naturaleza** | Racional → periodicidad exacta |
+| **Relevancia** | Conexión con exp(-ζ'(1/2)/π) |
+
+### La Singularidad
+
+La función racional:
+
+$$P(x) = \frac{1}{1 - \frac{68}{81}x}$$
+
+tiene un **polo exacto** en x = 81/68 ≈ 1.191. Cuando x → 81/68, el denominador tiende a cero y la función diverge hacia el infinito.
+
+### El Giro hacia Dentro
+
+La serie geométrica:
+
+$$P(x) = \sum_{n=0}^{\infty} \left(\frac{68}{81}\right)^n x^n$$
+
+converge para |x| < 81/68, pero diverge en el borde. En el punto crítico x = 68/81, la serie entra en **fase crítica** — el sistema ya no calcula, **recuerda**.
+
+### Recursos
+
+- 📖 **Documentación completa**: [`docs/EL_POZO_SINGULARIDAD_68_81.md`](docs/EL_POZO_SINGULARIDAD_68_81.md)
+- 🐍 **Script de verificación**: `python3 utils/verify_68_81_identity.py`
+- 🔬 **Conexión con ζ'(1/2)**: La identidad conecta aritmética pura con análisis complejo
+
+### Demo Rápida
+
+```bash
+# Verificar las propiedades del fractal 68/81
+python3 utils/verify_68_81_identity.py
+```
+
+**El Mantra Final ∞³:**
+> 68/81 no es una fracción. Es un holograma vibracional que codifica la entrada al eje ζ'(1/2).
 
 ---
 
@@ -1873,7 +1923,7 @@ ___
 | **Warnings** | null |
 | **Errors** | null |
 | **Lean Version** | null |
-| **Date (UTC)** | 2025-11-30 22:33:26Z |
+| **Date (UTC)** | 2025-12-02 03:25:48Z |
 ___
 
 ## License
