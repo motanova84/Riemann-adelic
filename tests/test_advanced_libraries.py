@@ -232,6 +232,57 @@ class TestAdvancedLibrariesDemo:
             pytest.fail(f"Demo script import failed: {e}")
 
 
+class TestRealDataUsage:
+    """Test that real, verified data is used in demonstrations."""
+    
+    def test_real_zeros_file_exists(self):
+        """Test that real Riemann zeros data file exists."""
+        zeros_path = os.path.join(os.path.dirname(__file__), '..', 'zeros', 'zeros_t1e8.txt')
+        assert os.path.exists(zeros_path), "Real zeros data file not found"
+    
+    def test_real_zeros_data_valid(self):
+        """Test that zeros data is valid and not empty."""
+        zeros_path = os.path.join(os.path.dirname(__file__), '..', 'zeros', 'zeros_t1e8.txt')
+        
+        with open(zeros_path, 'r') as f:
+            zeros = [float(line.strip()) for line in f if line.strip()]
+        
+        assert len(zeros) > 0, "Zeros data is empty"
+        assert len(zeros) >= 100, f"Expected at least 100 zeros, got {len(zeros)}"
+        
+        # Check that zeros are in reasonable range
+        assert all(z > 0 for z in zeros), "All zeros should be positive"
+        assert zeros[0] >= 14.0, f"First zero should be >= 14.0, got {zeros[0]}"
+    
+    def test_demo_loads_real_zeros(self):
+        """Test that demo script can load real zeros."""
+        import sys
+        sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
+        
+        from demo_advanced_math_libraries import load_real_zeros
+        
+        zeros = load_real_zeros(max_zeros=100)
+        
+        assert zeros is not None, "load_real_zeros returned None"
+        assert len(zeros) == 100, f"Expected 100 zeros, got {len(zeros)}"
+        assert zeros[0] >= 14.0, f"First zero should be >= 14.0, got {zeros[0]}"
+    
+    def test_no_random_data_in_demo(self):
+        """Test that demo doesn't use random data for zeros."""
+        demo_path = os.path.join(os.path.dirname(__file__), '..', 'demo_advanced_math_libraries.py')
+        
+        with open(demo_path, 'r') as f:
+            content = f.read()
+        
+        # Check that demo mentions real data
+        assert 'load_real_zeros' in content, "Demo should load real zeros"
+        assert 'Odlyzko' in content, "Demo should reference Odlyzko data"
+        
+        # Check that old random simulation is removed
+        assert 't_values = 14.134 + np.cumsum(np.abs(np.random.randn' not in content, \
+            "Demo should not simulate zeros with random data"
+
+
 class TestDocumentation:
     """Test that advanced libraries documentation exists."""
     
@@ -257,6 +308,19 @@ class TestDocumentation:
         assert 'Scikit-learn' in content
         assert 'Performance Benchmarks' in content
         assert 'Installation Guide' in content
+    
+    def test_readme_mentions_real_data(self):
+        """Test that README emphasizes use of real data."""
+        readme_path = os.path.join(os.path.dirname(__file__),
+                                   '..', 'ADVANCED_LIBRARIES_README.md')
+        
+        with open(readme_path, 'r', encoding='utf-8') as f:
+            content = f.read()
+        
+        # Check that README mentions real data
+        assert 'REAL' in content or 'real' in content, "README should mention real data"
+        assert 'Odlyzko' in content, "README should reference Odlyzko data"
+        assert 'verified' in content.lower(), "README should mention verified data"
 
 
 class TestWorkflows:

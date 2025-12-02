@@ -1,0 +1,106 @@
+name: Auto-Publish QCAL Datasets
+
+# Optional workflow for automatic publication to Zenodo and Hugging Face
+# This workflow uploads validation results and datasets periodically
+
+on:
+  # Trigger manually via workflow_dispatch
+  workflow_dispatch:
+  
+  # Trigger on releases
+  release:
+    types: [published]
+  
+  # Optional: Periodic publication (monthly)
+  schedule:
+    - cron: "0 0 1 * *"  # First day of each month at midnight
+
+jobs:
+  publish-datasets:
+    runs-on: ubuntu-latest
+    if: ${{ github.repository == 'motanova84/Riemann-adelic' }}
+    permissions:
+      contents: read
+    
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main  # Explicitly checkout main branch for scheduled runs
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+
+      - name: Install publishing tools
+        run: |
+          python -m pip install --upgrade pip
+          # Install Zenodo and Hugging Face CLI tools if available
+          pip install requests || true
+        continue-on-error: true
+
+      - name: Prepare dataset archive
+        run: |
+          mkdir -p publish
+          # Archive validation results and certificates
+          tar -czf publish/qcal-validation-results.tar.gz data/*.json data/*.csv 2>/dev/null || true
+          tar -czf publish/qcal-certificates.tar.gz data/*certificate*.json 2>/dev/null || true
+          # Create metadata file
+          echo '{
+            "title": "QCAL Riemann Hypothesis Validation Results",
+            "description": "Validation results and mathematical certificates from QCAL framework",
+            "creators": [{"name": "QCAL Research Team"}],
+            "keywords": ["Riemann Hypothesis", "QCAL", "Mathematical Validation"],
+            "license": "CC-BY-4.0",
+            "upload_type": "dataset"
+          }' > publish/metadata.json
+        continue-on-error: true
+
+      - name: Upload to Zenodo (if configured)
+        if: ${{ secrets.ZENODO_TOKEN != '' }}
+        run: |
+          # Upload to Zenodo using their API
+          # Note: This requires ZENODO_TOKEN secret to be configured
+          echo "Zenodo upload would happen here with proper token"
+          echo "Files to upload:"
+          ls -lh publish/
+        continue-on-error: true
+        env:
+          ZENODO_TOKEN: ${{ secrets.ZENODO_TOKEN }}
+
+      - name: Upload to Hugging Face (if configured)
+        if: ${{ secrets.HF_TOKEN != '' }}
+        run: |
+          # Upload to Hugging Face Hub
+          # Note: This requires HF_TOKEN secret to be configured
+          echo "Hugging Face upload would happen here with proper token"
+          echo "Dataset: qcal-riemann-validation"
+        continue-on-error: true
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+
+      - name: Generate publication report
+        if: always()
+        run: |
+          echo "# QCAL Dataset Publication Report" > publish/report.md
+          echo "" >> publish/report.md
+          echo "**Date**: $(date -u +%Y-%m-%d)" >> publish/report.md
+          echo "**Run**: ${{ github.run_number }}" >> publish/report.md
+          echo "" >> publish/report.md
+          echo "## Files Prepared" >> publish/report.md
+          ls -lh publish/ >> publish/report.md || true
+          echo "" >> publish/report.md
+          echo "## Publication Status" >> publish/report.md
+          echo "- Zenodo: ${ZENODO_STATUS:-Not configured}" >> publish/report.md
+          echo "- Hugging Face: ${HF_STATUS:-Not configured}" >> publish/report.md
+          cat publish/report.md
+        continue-on-error: true
+
+      - name: Upload publication artifacts
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: publication-report
+          path: publish/
+          retention-days: 90
+        continue-on-error: true

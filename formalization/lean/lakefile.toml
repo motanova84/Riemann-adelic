@@ -1,0 +1,29 @@
+name = "riemann-adelic"
+version = "5.3"
+lean_version = "leanprover/lean4:4.5.0"
+defaultTargets = ["Main"]
+
+[[dependency]]
+name = "mathlib"
+src = "git"
+url = "https://github.com/leanprover-community/mathlib4"
+rev = "master"  # Using master for stable CI (fixed commit refs get deleted from mathlib history)
+rev = "master"  # Use master branch - will be resolved to a specific commit by lake update
+
+[[dependency]]
+name = "aesop"
+src = "git"
+url = "https://github.com/leanprover-community/aesop"
+rev = "master"
+
+[[dependency]]
+name = "proofwidgets"
+src = "git"
+url = "https://github.com/leanprover-community/proofwidgets4"
+rev = "main"
+
+[package]
+description = "Formalización constructiva de la Hipótesis de Riemann adélica (V5.3)"
+authors = ["José Manuel Mota Burruezo (ICQ)"]
+license = "CC-BY-NC-SA 4.0"
+rev = "master"

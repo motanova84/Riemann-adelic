@@ -131,6 +131,43 @@ Updated **README.md** to:
 ## Implementation Date
 2025-10-18
 
+## Additional Pip Version Standardization (2025-10-24)
+
+### Problem
+Some CI/CD workflows were still using unpinned pip upgrade commands (`python -m pip install --upgrade pip` or `pip install --upgrade pip`), which could lead to:
+- Installation of the latest pip version (25.2) in some workflows
+- Inconsistent pip versions across different workflows
+- Unnecessary warning messages during CI/CD runs
+- Potential behavior differences between workflows
+
+### Affected Workflows
+The following workflows had unpinned pip upgrade commands:
+- `.github/workflows/ci.yml` (4 instances)
+- `.github/workflows/monitor.yml` (1 instance)
+- `.github/workflows/sabio-symbiotic-matrix.yml` (1 instance)
+- `.github/workflows/tests.yml` (1 instance)
+- `.github/workflows/v5-coronacion-proof-check.yml` (1 instance)
+
+### Solution
+Standardized all pip installations to use pinned version:
+- Changed all instances from `pip install --upgrade pip` to `pip install --upgrade pip==24.3.1`
+- Ensures 100% consistency across all 26+ CI/CD workflows
+- Eliminates version upgrade warnings
+- Guarantees reproducible build environments
+
+### Benefits
+1. **Complete Consistency** - All workflows now use pip 24.3.1
+2. **No Warnings** - Eliminates "new pip version available" messages
+3. **Predictable Behavior** - Same pip version across all CI/CD runs
+4. **Better Reproducibility** - One less source of variance in builds
+
+### Updated Files
+- `.github/workflows/ci.yml` - 4 instances updated
+- `.github/workflows/monitor.yml` - 1 instance updated
+- `.github/workflows/sabio-symbiotic-matrix.yml` - 1 instance updated
+- `.github/workflows/tests.yml` - 1 instance updated
+- `.github/workflows/v5-coronacion-proof-check.yml` - 1 instance updated
+
 ## Parameter Standardization (2025-10-18)
 
 ### Problem

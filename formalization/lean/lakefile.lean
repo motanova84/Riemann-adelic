@@ -2,14 +2,46 @@ import Lake
 open Lake DSL
 
 package «riemann-adelic-lean» where
-  -- add package configuration options here
+  -- Configuration for Lake build system
+  preferReleaseBuild := true
+  moreLeanArgs := #["-DautoImplicit=false"]
 
-lean_lib «RiemannAdelic» where
-  -- add library configuration options here
+-- RHComplete library - Complete RH proof modules
+lean_lib RHComplete where
+  globs := #[.submodules `RHComplete]
+  roots := #[`RHComplete]
 
+lean_lib «QCAL» where
+  -- QCAL library for universal verification
+  roots := #[`QCAL]
+
+-- RH_final_v6 library
+lean_lib RH_final_v6 where
+  globs := #[.submodules `RH_final_v6]
+
+-- RiemannAdelic library - Base modules
+lean_lib RiemannAdelic where
+  globs := #[.submodules `RiemannAdelic]
+  roots := #[`RiemannAdelic]
+
+-- Adelic library - L-function spectral reconstruction
+lean_lib adelic where
+  globs := #[.submodules `adelic]
+  roots := #[`adelic]
+
+-- Main executable
 @[default_target]
 lean_exe «riemann-adelic-lean» where
   root := `Main
+  supportInterpreter := true
 
+-- Require mathlib4 for complete mathematical library support
+-- Using stable v4.5.0 tag to ensure CI stability
 require mathlib from git
-  "https://github.com/leanprover-community/mathlib4.git"
+  "https://github.com/leanprover-community/mathlib4" @ "v4.5.0"
+
+require aesop from git
+  "https://github.com/leanprover-community/aesop" @ "master"
+
+require proofwidgets from git
+  "https://github.com/leanprover-community/proofwidgets4" @ "main"
