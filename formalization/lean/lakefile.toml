@@ -14,7 +14,7 @@ rev = "master"  # Use master branch - will be resolved to a specific commit by l
 name = "aesop"
 src = "git"
 url = "https://github.com/leanprover-community/aesop"
-rev = "main"
+rev = "master"
 
 [[dependency]]
 name = "proofwidgets"
