@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
 """
-NOESIS Guardian Modules
+Noesis Guardian Modules
+-----------------------
 
-Spectral monitoring hooks for the Riemann Hypothesis proof validation.
+Collection of monitoring hooks for spectral operator analysis.
 
-Author: José Manuel Mota Burruezo Ψ ✧ ∞³
-Institution: Instituto de Conciencia Cuántica (ICQ)
-DOI: 10.5281/zenodo.17379721
+Available hooks:
+- hook_schatten_paley: Monitors Schatten-Paley functional invariants
 """
 
-from .hook_spectral_heat import SpectralHeat
+from .hook_schatten_paley import SchattenPaley
 
-__all__ = ["SpectralHeat"]
+__all__ = ["SchattenPaley"]

@@ -1,230 +1,277 @@
 #!/usr/bin/env python3
 """
-NOESIS Guardian Core — Central Monitoring and Alert System
+Guardian Core - Central Orchestration for Noesis Guardian
+----------------------------------------------------------
 
-Orchestrates all spectral monitoring hooks and provides alert capabilities
-for structural incoherence detection in the Riemann operator.
+This module provides the central coordination for all monitoring hooks,
+alert notification, and spectral integrity validation.
+
+Usage:
+    from noesis_guardian.guardian_core import GuardianCore
+
+    guardian = GuardianCore()
+    report = guardian.run_all_hooks()
 
 Author: José Manuel Mota Burruezo Ψ ✧ ∞³
-Institution: Instituto de Conciencia Cuántica (ICQ)
+Instituto de Conciencia Cuántica (ICQ)
+ORCID: 0009-0002-1923-0773
 DOI: 10.5281/zenodo.17379721
-QCAL: f₀=141.7001 Hz, C=244.36
 """
 
-from __future__ import annotations
-
 import json
-import sys
+import logging
 from datetime import datetime
 from pathlib import Path
-from typing import Any
+from typing import Any, Callable, Dict, Optional
 
-from noesis_guardian.modules.hook_spectral_heat import SpectralHeat
+from .modules.hook_schatten_paley import SchattenPaley
+
+
+# Configure logging
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+)
+logger = logging.getLogger("NoesisGuardian")
+
+
+# Status constants for hook results
+class Status:
+    """Status constants for Guardian hook results."""
+    OK = "ok"
+    ANOMALY = "⚠️ anomaly"
+    MISSING_DATA = "missing_data"
+    ERROR = "error"
 
 
 class Notifier:
     """
-    Alert notification system for spectral anomalies.
+    Alert notification system for Guardian events.
 
-    Provides methods for reporting and logging spectral incoherence
-    detected by the Guardian monitoring system.
+    Handles alerting when monitoring hooks detect anomalies
+    or when system integrity is compromised.
     """
 
-    LOG_DIR = Path(__file__).parent.parent / "logs" / "guardian"
-
-    @classmethod
-    def _ensure_log_dir(cls) -> None:
-        """Ensure the log directory exists."""
-        cls.LOG_DIR.mkdir(parents=True, exist_ok=True)
-
-    @classmethod
-    def alert(cls, message: str, data: dict[str, Any] | None = None) -> None:
+    @staticmethod
+    def alert(message: str, data: Optional[Dict[str, Any]] = None) -> None:
         """
-        Send an alert about spectral anomaly.
+        Emit an alert notification.
+
+        In production, this can be extended to send emails,
+        Slack messages, or trigger other notification systems.
 
         Args:
-            message: Alert message describing the anomaly
-            data: Additional data about the anomaly
+            message: Alert message
+            data: Optional additional data to include
         """
-        cls._ensure_log_dir()
-
-        timestamp = datetime.now().isoformat()
-        alert_entry = {
-            "timestamp": timestamp,
-            "type": "spectral_alert",
-            "message": message,
-            "data": data
-        }
-
-        # Print to stderr for immediate visibility
-        print(f"🚨 GUARDIAN ALERT: {message}", file=sys.stderr)
+        logger.warning(f"🚨 ALERT: {message}")
         if data:
-            print(f"   Data: {json.dumps(data, indent=2)}", file=sys.stderr)
+            logger.warning(f"   Data: {json.dumps(data, indent=2)}")
 
-        # Log to file
-        log_file = cls.LOG_DIR / f"alerts_{datetime.now().strftime('%Y%m%d')}.json"
-
-        alerts = []
-        if log_file.exists():
-            try:
-                with open(log_file) as f:
-                    alerts = json.load(f)
-            except (json.JSONDecodeError, IOError):
-                alerts = []
-
-        alerts.append(alert_entry)
-
-        with open(log_file, "w") as f:
-            json.dump(alerts, f, indent=2)
-
-    @classmethod
-    def info(cls, message: str, data: dict[str, Any] | None = None) -> None:
+    @staticmethod
+    def info(message: str) -> None:
         """
         Log an informational message.
 
         Args:
             message: Info message
-            data: Additional data
         """
-        timestamp = datetime.now().isoformat()
-        print(f"ℹ️  GUARDIAN INFO [{timestamp}]: {message}")
-        if data:
-            print(f"   {json.dumps(data, indent=2)}")
+        logger.info(f"ℹ️  {message}")
 
-    @classmethod
-    def success(cls, message: str, data: dict[str, Any] | None = None) -> None:
+    @staticmethod
+    def success(message: str) -> None:
         """
         Log a success message.
 
         Args:
             message: Success message
-            data: Additional data
         """
-        timestamp = datetime.now().isoformat()
-        print(f"✅ GUARDIAN SUCCESS [{timestamp}]: {message}")
-        if data:
-            print(f"   {json.dumps(data, indent=2)}")
+        logger.info(f"✅ {message}")
 
 
 class GuardianCore:
     """
-    Central coordinator for NOESIS Guardian monitoring.
+    Central orchestration for the Noesis Guardian system.
 
-    Runs all spectral hooks and aggregates results into a unified
-    monitoring report with alerts for any detected anomalies.
+    This class manages all monitoring hooks and coordinates
+    their execution to ensure spectral operator integrity.
+
+    Attributes:
+        hooks: Dictionary of registered monitoring hooks
+        last_report: Last execution report
     """
 
-    QCAL_FREQUENCY = 141.7001
-    QCAL_COHERENCE = 244.36
+    def __init__(self) -> None:
+        """Initialize GuardianCore with default hooks."""
+        self.hooks: Dict[str, Callable[[], Dict[str, Any]]] = {}
+        self.last_report: Optional[Dict[str, Any]] = None
 
-    @classmethod
-    def run_all_hooks(cls) -> dict[str, Any]:
+        # Register default hooks
+        self._register_default_hooks()
+
+    def _register_default_hooks(self) -> None:
+        """Register the default set of monitoring hooks."""
+        self.register_hook("schatten_paley", SchattenPaley.run)
+
+    def register_hook(
+        self, name: str, hook_func: Callable[[], Dict[str, Any]]
+    ) -> None:
         """
-        Execute all monitoring hooks and compile results.
-
-        Returns:
-            Comprehensive monitoring report with all hook results
-        """
-        timestamp = datetime.now().isoformat()
-
-        entry = {
-            "timestamp": timestamp,
-            "guardian": "NOESIS",
-            "version": "1.0.0",
-            "qcal": {
-                "base_frequency": cls.QCAL_FREQUENCY,
-                "coherence": cls.QCAL_COHERENCE
-            },
-            "hooks": {},
-            "alerts": [],
-            "status": "initializing"
-        }
-
-        # --- Hook B: Spectral Heat ---
-        Notifier.info("Running Hook B: Spectral Heat Analysis...")
-        spectral_report = SpectralHeat.run()
-        entry["hooks"]["spectral_heat"] = spectral_report
-        entry["spectral_heat"] = spectral_report  # For backward compatibility
-
-        if not spectral_report.get("hilbert_polya_ok", True):
-            alert_msg = "⚠️ Anomalía espectral profunda detectada"
-            Notifier.alert(alert_msg, spectral_report)
-            entry["alerts"].append({
-                "hook": "spectral_heat",
-                "message": alert_msg,
-                "severity": "critical"
-            })
-
-        if spectral_report.get("status") == "missing_data":
-            Notifier.alert("Missing spectral data files", spectral_report)
-            entry["alerts"].append({
-                "hook": "spectral_heat",
-                "message": "Missing data files",
-                "severity": "error"
-            })
-
-        # --- Determine overall status ---
-        if entry["alerts"]:
-            critical = any(a.get("severity") == "critical" for a in entry["alerts"])
-            entry["status"] = "critical" if critical else "warning"
-        elif spectral_report.get("status") == "ok":
-            entry["status"] = "coherent"
-            Notifier.success("All hooks passed - spectral coherence verified")
-        else:
-            entry["status"] = "unknown"
-
-        return entry
-
-    @classmethod
-    def save_report(cls, report: dict[str, Any], output_path: Path | None = None) -> Path:
-        """
-        Save monitoring report to file.
+        Register a new monitoring hook.
 
         Args:
-            report: The monitoring report to save
-            output_path: Optional custom output path
+            name: Unique identifier for the hook
+            hook_func: Callable that returns a status dictionary
+        """
+        self.hooks[name] = hook_func
+        Notifier.info(f"Registered hook: {name}")
+
+    def run_hook(self, name: str) -> Dict[str, Any]:
+        """
+        Execute a specific hook by name.
+
+        Args:
+            name: Name of the hook to run
 
         Returns:
-            Path to the saved report file
+            Hook execution result dictionary
+
+        Raises:
+            KeyError: If hook name not found
         """
-        if output_path is None:
-            reports_dir = Path(__file__).parent.parent / "data" / "guardian_reports"
-            reports_dir.mkdir(parents=True, exist_ok=True)
-            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-            output_path = reports_dir / f"guardian_report_{timestamp}.json"
+        if name not in self.hooks:
+            raise KeyError(f"Hook '{name}' not registered")
 
-        with open(output_path, "w") as f:
-            json.dump(report, f, indent=2)
+        Notifier.info(f"Running hook: {name}")
+        result = self.hooks[name]()
 
-        return output_path
+        if result.get("status") not in (Status.OK, Status.MISSING_DATA):
+            Notifier.alert(
+                f"⚠️ Anomaly in {name} functional invariants", result
+            )
+
+        return result
+
+    def run_all_hooks(self) -> Dict[str, Any]:
+        """
+        Execute all registered monitoring hooks.
+
+        Returns:
+            Complete execution report with all hook results
+        """
+        timestamp = datetime.now().isoformat()
+        report: Dict[str, Any] = {
+            "timestamp": timestamp,
+            "hooks": {},
+            "overall_status": Status.OK,
+            "anomalies": [],
+        }
+
+        for name in self.hooks:
+            try:
+                result = self.run_hook(name)
+                report["hooks"][name] = result
+
+                if result.get("status") not in (Status.OK, Status.MISSING_DATA):
+                    report["overall_status"] = Status.ANOMALY
+                    report["anomalies"].append({
+                        "hook": name,
+                        "status": result.get("status"),
+                        "message": result.get("message"),
+                    })
+            except Exception as e:
+                error_result = {
+                    "status": Status.ERROR,
+                    "message": str(e),
+                }
+                report["hooks"][name] = error_result
+                report["overall_status"] = Status.ERROR
+                report["anomalies"].append({
+                    "hook": name,
+                    "status": Status.ERROR,
+                    "message": str(e),
+                })
+                Notifier.alert(f"Error in hook {name}", {"error": str(e)})
+
+        self.last_report = report
+
+        if report["overall_status"] == Status.OK:
+            Notifier.success("All Guardian hooks passed")
+        else:
+            Notifier.alert(
+                f"Guardian detected issues: {len(report['anomalies'])} anomalies"
+            )
+
+        return report
+
+    def get_schatten_paley_report(self) -> Dict[str, Any]:
+        """
+        Get the Schatten-Paley hook report specifically.
+
+        This is a convenience method for the most common use case.
+
+        Returns:
+            Schatten-Paley analysis report
+        """
+        return self.run_hook("schatten_paley")
+
+    def save_report(self, filepath: Optional[str] = None) -> Path:
+        """
+        Save the last report to a JSON file.
+
+        Args:
+            filepath: Optional output path. Defaults to data/guardian_report.json
+
+        Returns:
+            Path to saved report file
+        """
+        if self.last_report is None:
+            self.run_all_hooks()
+
+        if filepath is None:
+            # Find data directory
+            possible_paths = [
+                Path("data"),
+                Path(__file__).parent.parent / "data",
+                Path.cwd() / "data",
+            ]
+            data_dir = next(
+                (p for p in possible_paths if p.exists()), Path("data")
+            )
+            data_dir.mkdir(exist_ok=True)
+            filepath = data_dir / "guardian_report.json"
+        else:
+            filepath = Path(filepath)
+
+        with open(filepath, "w", encoding="utf-8") as f:
+            json.dump(self.last_report, f, indent=2)
+
+        Notifier.info(f"Report saved to: {filepath}")
+        return filepath
 
 
-def run_guardian() -> dict[str, Any]:
-    """
-    Main entry point for running the Guardian monitoring system.
+def main() -> None:
+    """Main entry point for Guardian Core execution."""
+    print("=" * 70)
+    print("NOESIS GUARDIAN - Spectral Operator Monitoring System")
+    print("=" * 70)
 
-    Returns:
-        Complete monitoring report
-    """
-    Notifier.info("NOESIS Guardian starting...")
-    Notifier.info(f"QCAL Parameters: f₀={GuardianCore.QCAL_FREQUENCY} Hz, C={GuardianCore.QCAL_COHERENCE}")
+    guardian = GuardianCore()
+    report = guardian.run_all_hooks()
 
-    report = GuardianCore.run_all_hooks()
+    print("\n" + "=" * 70)
+    print("GUARDIAN REPORT")
+    print("=" * 70)
+    print(json.dumps(report, indent=2))
 
-    if report["status"] == "coherent":
-        Notifier.success("Guardian validation complete - all systems coherent")
-    else:
-        Notifier.alert(f"Guardian status: {report['status']}", report.get("alerts"))
-
-    return report
+    # Process Schatten-Paley specifically
+    sp_report = report["hooks"].get("schatten_paley", {})
+    if sp_report.get("status") != "ok":
+        Notifier.alert(
+            "⚠️ Anomaly in Schatten–Paley functional invariants",
+            sp_report
+        )
 
 
 if __name__ == "__main__":
-    report = run_guardian()
-    print("\n" + "=" * 60)
-    print("NOESIS GUARDIAN REPORT")
-    print("=" * 60)
-    print(json.dumps(report, indent=2))
-
-    if report["status"] not in ("coherent", "ok"):
-        sys.exit(1)
+    main()
