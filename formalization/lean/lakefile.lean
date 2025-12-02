@@ -36,8 +36,9 @@ lean_exe «riemann-adelic-lean» where
   supportInterpreter := true
 
 -- Require mathlib4 for complete mathematical library support
+-- Using stable v4.5.0 tag to ensure CI stability
 require mathlib from git
-  "https://github.com/leanprover-community/mathlib4" @ "07a2d4e5c3c9e55bb6e37bbf5132fd47d75b9ce2"
+  "https://github.com/leanprover-community/mathlib4" @ "v4.5.0"
 
 require aesop from git
   "https://github.com/leanprover-community/aesop" @ "main"
