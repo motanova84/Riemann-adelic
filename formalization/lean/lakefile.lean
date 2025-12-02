@@ -41,7 +41,7 @@ require mathlib from git
   "https://github.com/leanprover-community/mathlib4" @ "v4.5.0"
 
 require aesop from git
-  "https://github.com/leanprover-community/aesop" @ "main"
+  "https://github.com/leanprover-community/aesop" @ "master"
 
 require proofwidgets from git
   "https://github.com/leanprover-community/proofwidgets4" @ "main"
