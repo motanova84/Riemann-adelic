@@ -138,6 +138,13 @@ It includes:
   <img src="https://github.com/motanova84/-jmmotaburr-riemann-adelic/actions/workflows/nightly.yml/badge.svg" alt="Nightly">
 </p>
 
+<p align="center">
+  <img src="https://github.com/motanova84/-jmmotaburr-riemann-adelic/actions/workflows/ci.yml/badge.svg?branch=main" alt="CI">
+  <img src="https://github.com/motanova84/-jmmotaburr-riemann-adelic/actions/workflows/proof-check.yml/badge.svg?branch=main" alt="Proof Check">
+  <img src="https://img.shields.io/codecov/c/github/motanova84/-jmmotaburr-riemann-adelic/main?logo=codecov&logoColor=white" alt="Coverage">
+  <img src="https://github.com/motanova84/-jmmotaburr-riemann-adelic/actions/workflows/nightly.yml/badge.svg" alt="Nightly">
+</p>
+
   <a href="https://github.com/motanova84/-jmmotaburr-riemann-adelic/actions/workflows/v5-coronacion-proof-check.yml"><img src="https://img.shields.io/badge/Versión-V5_Coronación-blue" alt="Versión"></a>
   <a href="https://github.com/motanova84/-jmmotaburr-riemann-adelic/actions/workflows/comprehensive-ci.yml"><img src="https://img.shields.io/badge/Estado-Completada-green" alt="Estado"></a>
   <a href="https://github.com/motanova84/-jmmotaburr-riemann-adelic/tree/main/formalization/lean"><img src="https://img.shields.io/badge/Formalización_Lean-Completada-green" alt="Formalización Lean"></a>
