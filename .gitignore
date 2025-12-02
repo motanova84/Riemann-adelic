@@ -184,3 +184,6 @@ convexity_gamma_visualization.png
 validation_summary.png
 validation_summary.txt
 G4_spectrum_plot.png
+
+# Noesis Guardian logs
+noesis_guardian/logs/guardian_log.json
