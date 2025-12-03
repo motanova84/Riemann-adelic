@@ -75,8 +75,13 @@ class TestGYDerivation:
         # The derivation only uses m_P and Λ_Q
         _, details = derive_G_Y()
 
-        # Check that details don't mention f₀ as an input
-        assert "f0" not in str(details).lower() or "without" in str(details).lower()
+        # Verify the formula doesn't require f₀ as input
+        # The derivation should only mention m_planck and lambda_Q
+        assert "m_planck_kg" in details
+        assert "lambda_Q_kg" in details
+        # Verify the formula string doesn't include f₀
+        assert "f0" not in details["formula"].lower()
+        assert "f_0" not in details["formula"].lower()
 
 
 class TestRPsiDerivation:
@@ -111,8 +116,8 @@ class TestRPsiDerivation:
         alpha = details["alpha_phys"]
         gamma = details["gamma_phys"]
 
-        # α × γ should equal 1 (complementary UV/IR scales)
-        # Actually α = ħc/Λ² and γ = Λ²/ħc, so α × γ = 1
+        # Physical relationship: α = ħc/Λ² and γ = Λ²/ħc
+        # Therefore: α × γ = (ħc/Λ²) × (Λ²/ħc) = 1 (exactly)
         product = alpha * gamma
 
         assert abs(product - 1.0) < 1e-10
@@ -254,16 +259,14 @@ class TestVacuumEnergyFull:
         assert np.isfinite(E)
 
     def test_vacuum_energy_zero_R(self):
-        """Test vacuum energy at R=0 returns infinity."""
-        E = vacuum_energy_full(R=0, alpha=1.0, beta=1.0, gamma=0.001, delta=0.5)
-
-        assert E == float('inf')
+        """Test vacuum energy at R=0 raises ValueError."""
+        with pytest.raises(ValueError, match="positive"):
+            vacuum_energy_full(R=0, alpha=1.0, beta=1.0, gamma=0.001, delta=0.5)
 
     def test_vacuum_energy_negative_R(self):
-        """Test vacuum energy at negative R returns infinity."""
-        E = vacuum_energy_full(R=-1.0, alpha=1.0, beta=1.0, gamma=0.001, delta=0.5)
-
-        assert E == float('inf')
+        """Test vacuum energy at negative R raises ValueError."""
+        with pytest.raises(ValueError, match="positive"):
+            vacuum_energy_full(R=-1.0, alpha=1.0, beta=1.0, gamma=0.001, delta=0.5)
 
     def test_UV_dominance_small_R(self):
         """Test that UV term dominates at small R."""

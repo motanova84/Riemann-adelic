@@ -194,9 +194,12 @@ def vacuum_energy_full(
 
     Returns:
         Vacuum energy at radius R
+
+    Raises:
+        ValueError: If R is non-positive (R <= 0)
     """
     if R <= 0:
-        return float('inf')
+        raise ValueError(f"Radius R must be positive, got R={R}")
 
     # Term 1: UV divergence (Casimir-like)
     term1 = alpha / (R ** 4)
@@ -494,13 +497,17 @@ def derive_all_from_first_principles(precision: int = 50) -> FirstPrinciplesResu
     5. Gets R_Ψ ≈ 10^47 with all corrections
 
     Args:
-        precision: Decimal precision for mpmath calculations
+        precision: Decimal precision for mpmath calculations.
+            Note: This parameter is only used when mpmath is available.
+            If mpmath is not installed, standard Python floats are used.
 
     Returns:
         FirstPrinciplesResult with all derived values
     """
     if MPMATH_AVAILABLE:
         mp.dps = precision
+    # Note: When mpmath is unavailable, we use standard Python floats
+    # which provide sufficient precision for these calculations
 
     result = FirstPrinciplesResult()
 
