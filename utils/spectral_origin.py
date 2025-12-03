@@ -223,7 +223,7 @@ def compute_spectral_constants(
         'lambda_0': lambda_0,
         'C_primaria': C_primaria,
         'C_coherencia': C_COHERENCIA,  # QCAL constant
-        'C_ratio': C_COHERENCIA / C_primaria,
+        'C_ratio': C_primaria / C_COHERENCIA,  # ≈ 2.577
     }
 
 

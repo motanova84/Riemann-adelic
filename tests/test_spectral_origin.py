@@ -110,10 +110,11 @@ class TestComputeSpectralConstants:
         assert abs(result['C_coherencia'] - 244.36) < 0.01
 
     def test_C_ratio_calculation(self):
-        """C_ratio should be C_coherencia/C_primaria."""
+        """C_ratio should be C_primaria/C_coherencia ≈ 2.577."""
         result = compute_spectral_constants()
-        expected = result['C_coherencia'] / result['C_primaria']
+        expected = result['C_primaria'] / result['C_coherencia']
         assert abs(result['C_ratio'] - expected) < 1e-10
+        assert abs(result['C_ratio'] - 2.577) < 0.1
 
     def test_custom_lambda_values(self):
         """Should work with custom λ₀ value."""
