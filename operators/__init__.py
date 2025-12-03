@@ -13,6 +13,10 @@ Modules:
                           how discrete symmetry forces zero reality
     - noetic_operator: H_ψ = -Δ + V_ψ noetic operator with p-adic corrections
                        implementing λ₀ ≈ 0.001588 and C = 1/λ₀ ≈ 629.83
+    - spectral_constants: Dual spectral constant system implementing
+                         C_PRIMARY = 629.83 (structure) and
+                         C_COHERENCE = 244.36 (coherence) with
+                         f₀ = 141.7001 Hz as natural manifestation
 """
 
 from .riemann_operator import (
@@ -47,6 +51,27 @@ from .noetic_operator import (
     LAMBDA_0_TARGET
 )
 
+from .spectral_constants import (
+    # Constants
+    C_PRIMARY,
+    C_COHERENCE,
+    F0_BASE,
+    LAMBDA_0,
+    LAMBDA_MEAN_EFFECTIVE,
+    PHI,
+    EULER_GAMMA,
+    # Functions
+    compute_C_primary_from_lambda,
+    compute_C_coherence_from_spectrum,
+    compute_lambda_mean_from_coherence,
+    analyze_constant_relationship,
+    validate_f0_manifestation,
+    build_spectral_H_operator,
+    compute_spectral_constants_from_operator,
+    validate_dual_constants,
+    run_complete_spectral_validation,
+)
+
 __all__ = [
     'construct_H_psi',
     'compute_spectrum',
@@ -72,5 +97,22 @@ __all__ = [
     'run_complete_noetic_validation',
     'F0_TARGET',
     'C_TARGET',
-    'LAMBDA_0_TARGET'
+    'LAMBDA_0_TARGET',
+    # Spectral constants exports
+    'C_PRIMARY',
+    'C_COHERENCE',
+    'F0_BASE',
+    'LAMBDA_0',
+    'LAMBDA_MEAN_EFFECTIVE',
+    'PHI',
+    'EULER_GAMMA',
+    'compute_C_primary_from_lambda',
+    'compute_C_coherence_from_spectrum',
+    'compute_lambda_mean_from_coherence',
+    'analyze_constant_relationship',
+    'validate_f0_manifestation',
+    'build_spectral_H_operator',
+    'compute_spectral_constants_from_operator',
+    'validate_dual_constants',
+    'run_complete_spectral_validation',
 ]
