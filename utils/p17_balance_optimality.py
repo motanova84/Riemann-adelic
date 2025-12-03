@@ -122,9 +122,28 @@ def equilibrium(p: int) -> float:
     
     equilibrium(p) = exp(π√p/2) / p^(3/2)
     
-    NOTE: The minimum of this function is at p = 3, NOT p = 17.
-    p = 17 is significant because it produces f₀ = 141.7001 Hz
-    when used in the frequency scaling formula.
+    MATHEMATICAL ANALYSIS OF MINIMUM
+    =================================
+    
+    The derivative is:
+        d/dp [exp(π√p/2) / p^(3/2)] = exp(π√p/2) × [π/(4p^2) - 3/(2p^(5/2))]
+        
+    Setting to zero: π/(4p^2) = 3/(2p^(5/2))
+    Solving: √p = 6/π ≈ 1.909
+    Therefore: p ≈ 3.64
+    
+    Since p must be prime, we check p = 2, 3, 5:
+        - equilibrium(2) ≈ 3.26
+        - equilibrium(3) ≈ 2.92  ← MINIMUM
+        - equilibrium(5) ≈ 3.00
+    
+    This proves mathematically that the minimum is at p = 3, NOT p = 17.
+    
+    SIGNIFICANCE OF p = 17
+    ======================
+    
+    p = 17 is NOT the minimum, but it IS the unique prime that produces
+    f₀ = 141.7001 Hz when used in the frequency scaling formula.
     
     Args:
         p: Prime number
