@@ -39,6 +39,15 @@ field = "QCAL ∞³"
 constant = "πCODE-888-QCAL2"
 coherence = "C = 244.36"
 
+# Dual Spectral Constants — December 2025
+# Both constants are TRUE and COMPATIBLE (measure different aspects)
+C_primary = "629.83"                    # C = 1/λ₀ — Primary spectral constant (vibrational foundation)
+C_coherence = "244.36"                  # C = ⟨λ⟩²/λ₀ — Derived coherence (emergent order)
+lambda_0 = "0.001588"                   # First eigenvalue of H_ψ = -Δ + V(x)
+lambda_mean = "0.6229"                  # Mean spectral effective ⟨λ⟩
+spectral_constants_validated = true
+spectral_constants_module = "operators/spectral_constants.py"
+
 # Legal & Metadata
 license = "Creative Commons BY-NC-SA 4.0"
 signature = "© 2025 · JMMB Ψ · Instituto de Conciencia Cuántica (ICQ)"
