@@ -24,7 +24,7 @@ from utils.exact_f0_derivation import (
     # Constants
     F0_TARGET,
     F_RAW,
-    K_SCALING,
+    K_THEORETICAL,
     PHI,
     GAMMA_EM,
     C_LIGHT,
@@ -57,7 +57,7 @@ class TestConstants:
 
     def test_k_scaling_value(self):
         """Triple scaling factor should be ~0.806."""
-        assert abs(K_SCALING - 0.806) < 0.01
+        assert abs(K_THEORETICAL - 0.806) < 0.01
 
     def test_phi_golden_ratio(self):
         """Golden ratio should be (1 + √5) / 2."""
