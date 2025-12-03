@@ -41,6 +41,9 @@ LAMBDA_0_TARGET = 1.0 / C_TARGET  # ≈ 0.001588
 PRIMES = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47,
           53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101, 103, 107, 109, 113]
 
+# Default number of primes to use in potential
+DEFAULT_PRIME_COUNT = 10
+
 
 def build_discrete_laplacian(N: int, dx: float = 1.0) -> np.ndarray:
     """
@@ -96,7 +99,7 @@ def build_padic_potential(
         N×N diagonal potential matrix
     """
     if primes is None:
-        primes = PRIMES[:min(10, len(PRIMES))]  # Use first 10 primes by default
+        primes = PRIMES[:min(DEFAULT_PRIME_COUNT, len(PRIMES))]
     
     V = np.zeros((N, N))
     
@@ -166,8 +169,11 @@ def compute_first_eigenvalue(
     if return_all:
         return eigenvalues
     
+    # Sort eigenvalues explicitly for robustness across scipy versions
+    sorted_eigenvalues = np.sort(eigenvalues)
+    
     # Get first positive eigenvalue
-    positive_eigenvalues = eigenvalues[eigenvalues > 0]
+    positive_eigenvalues = sorted_eigenvalues[sorted_eigenvalues > 0]
     
     if len(positive_eigenvalues) == 0:
         raise ValueError("No positive eigenvalues found in H_ψ spectrum")
@@ -214,9 +220,16 @@ def validate_lambda_C_relationship(
     # Compute C
     C_computed = compute_C_from_lambda(lambda_0)
     
-    # Compare with targets
-    lambda_0_error_rel = abs(lambda_0 - LAMBDA_0_TARGET) / LAMBDA_0_TARGET
-    C_error_rel = abs(C_computed - C_TARGET) / C_TARGET
+    # Compare with targets (safe division with checks)
+    if LAMBDA_0_TARGET > 0:
+        lambda_0_error_rel = abs(lambda_0 - LAMBDA_0_TARGET) / LAMBDA_0_TARGET
+    else:
+        lambda_0_error_rel = float('inf')
+    
+    if C_TARGET > 0:
+        C_error_rel = abs(C_computed - C_TARGET) / C_TARGET
+    else:
+        C_error_rel = float('inf')
     
     # Validation status
     lambda_validated = lambda_0_error_rel < tolerance_rel
@@ -261,8 +274,6 @@ def analyze_f0_C_relationship(
     Returns:
         Dictionary with test results
     """
-    import numpy as np
-    
     # Test 1: f₀ = 1/(2π√C)
     f0_test1 = 1.0 / (2 * np.pi * np.sqrt(C))
     error1 = abs(f0 - f0_test1) / f0

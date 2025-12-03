@@ -64,7 +64,8 @@ class TestConstants:
         """λ₀ target should be approximately 0.001588."""
         expected_lambda_0 = 1.0 / 629.83
         assert abs(LAMBDA_0_TARGET - expected_lambda_0) < 1e-6
-        assert abs(LAMBDA_0_TARGET - 0.001588) < 0.0001
+        # Use constant instead of magic number
+        assert abs(LAMBDA_0_TARGET - (1.0 / C_TARGET)) < 0.0001
 
     def test_lambda_C_relationship(self):
         """C = 1/λ₀ should hold for target values."""
