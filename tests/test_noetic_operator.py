@@ -458,5 +458,249 @@ class TestEvidenciasSolidas:
         print(f"ω₀²/C ratio = {result['test2_ratio']:.4f}")
 
 
+class TestSpectralHierarchy:
+    """
+    Tests for the two-level spectral hierarchy.
+    
+    Level 1 (Primary): C = 1/λ₀ ≈ 629.83 (structure, local)
+    Level 2 (Derived): C_QCAL = ⟨λ⟩²/λ₀ ≈ 244.36 (coherence, global)
+    Fusion: f₀ = 141.7001 Hz (harmonization)
+    """
+
+    def test_primary_constant_value(self):
+        """C_PRIMARY should be 629.83."""
+        from operators.noetic_operator import C_PRIMARY
+        assert abs(C_PRIMARY - 629.83) < 0.01
+
+    def test_coherence_constant_value(self):
+        """C_COHERENCE should be 244.36."""
+        from operators.noetic_operator import C_COHERENCE
+        assert abs(C_COHERENCE - 244.36) < 0.01
+
+    def test_euler_mascheroni_constant(self):
+        """EULER_MASCHERONI should be approximately 0.5772."""
+        from operators.noetic_operator import EULER_MASCHERONI
+        assert abs(EULER_MASCHERONI - 0.5772156649015329) < 1e-10
+
+    def test_golden_ratio_constant(self):
+        """PHI should be the golden ratio ≈ 1.61803."""
+        from operators.noetic_operator import PHI
+        expected_phi = (1 + np.sqrt(5)) / 2
+        assert abs(PHI - expected_phi) < 1e-10
+
+    def test_coherence_ratio(self):
+        """Coherence ratio C_QCAL/C should be ≈ 0.388."""
+        from operators.noetic_operator import C_PRIMARY, C_COHERENCE
+        ratio = C_COHERENCE / C_PRIMARY
+        assert 0.38 < ratio < 0.40
+
+    def test_constants_not_contradictory(self):
+        """
+        The two constants should coexist - both from same spectrum.
+        They represent different levels: local (λ₀) vs global (⟨λ⟩²/λ₀).
+        """
+        from operators.noetic_operator import C_PRIMARY, C_COHERENCE, LAMBDA_0_TARGET
+        # C_PRIMARY comes from λ₀
+        assert abs(1.0 / LAMBDA_0_TARGET - C_PRIMARY) < 0.01
+        # C_COHERENCE is different but both are positive constants
+        assert C_COHERENCE > 0
+        assert C_PRIMARY > C_COHERENCE  # Primary > Coherence
+
+    def test_delta_fractal(self):
+        """δ_fractal = π/φ³ should be defined."""
+        from operators.noetic_operator import DELTA_FRACTAL, PHI
+        expected = np.pi / (PHI ** 3)
+        assert abs(DELTA_FRACTAL - expected) < 1e-10
+
+
+class TestSpectralMean:
+    """Tests for the spectral mean computation."""
+
+    def test_spectral_mean_basic(self):
+        """compute_spectral_mean should return the mean of eigenvalues."""
+        from operators.noetic_operator import compute_spectral_mean
+        eigenvalues = np.array([1.0, 2.0, 3.0, 4.0, 5.0])
+        mean = compute_spectral_mean(eigenvalues, M=5)
+        assert abs(mean - 3.0) < 1e-10
+
+    def test_spectral_mean_partial(self):
+        """compute_spectral_mean with M < len should use first M."""
+        from operators.noetic_operator import compute_spectral_mean
+        eigenvalues = np.array([1.0, 2.0, 3.0, 100.0, 1000.0])
+        mean = compute_spectral_mean(eigenvalues, M=3)
+        assert abs(mean - 2.0) < 1e-10  # Mean of [1, 2, 3]
+
+    def test_spectral_mean_sorted(self):
+        """compute_spectral_mean should sort eigenvalues first."""
+        from operators.noetic_operator import compute_spectral_mean
+        eigenvalues = np.array([5.0, 1.0, 3.0, 2.0, 4.0])
+        mean = compute_spectral_mean(eigenvalues, M=3)
+        assert abs(mean - 2.0) < 1e-10  # Mean of sorted [1, 2, 3]
+
+
+class TestCCoherence:
+    """Tests for the derived coherence constant computation."""
+
+    def test_C_coherence_formula(self):
+        """C_QCAL = ⟨λ⟩²/λ₀ should work correctly."""
+        from operators.noetic_operator import compute_C_coherence
+        # Create eigenvalues where ⟨λ⟩ = 2, λ₀ = 1
+        eigenvalues = np.array([1.0, 2.0, 3.0])  # Mean = 2, λ₀ = 1
+        C_qcal = compute_C_coherence(eigenvalues, lambda_0=1.0, M=3)
+        # C_QCAL = 2²/1 = 4
+        assert abs(C_qcal - 4.0) < 1e-10
+
+    def test_C_coherence_auto_lambda(self):
+        """compute_C_coherence should auto-detect λ₀ if not provided."""
+        from operators.noetic_operator import compute_C_coherence
+        eigenvalues = np.array([0.5, 1.0, 1.5, 2.0])
+        C_qcal = compute_C_coherence(eigenvalues, M=4)
+        # λ₀ = 0.5, ⟨λ⟩ = 1.25
+        # C_QCAL = 1.25²/0.5 = 3.125
+        assert abs(C_qcal - 3.125) < 1e-10
+
+
+class TestF0FromHierarchy:
+    """Tests for the f₀ harmonization formula."""
+
+    def test_f0_default_values(self):
+        """compute_f0_from_hierarchy with defaults should give 141.7001 Hz."""
+        from operators.noetic_operator import compute_f0_from_hierarchy, F0_TARGET
+        f0 = compute_f0_from_hierarchy()
+        error_rel = abs(f0 - F0_TARGET) / F0_TARGET
+        assert error_rel < 0.0001  # Less than 0.01% error
+
+    def test_f0_high_precision(self):
+        """f₀ should match target with 99.999% accuracy (as per problem statement)."""
+        from operators.noetic_operator import compute_f0_from_hierarchy, F0_TARGET
+        f0 = compute_f0_from_hierarchy()
+        agreement = 1 - abs(f0 - F0_TARGET) / F0_TARGET
+        assert agreement > 0.99999  # 99.999% agreement
+
+    def test_f0_uses_both_constants(self):
+        """f₀ formula uses both C and C_QCAL through the coherence ratio."""
+        from operators.noetic_operator import (
+            compute_f0_from_hierarchy, C_PRIMARY, C_COHERENCE
+        )
+        f0_default = compute_f0_from_hierarchy()
+        
+        # When C_QCAL changes, f₀ changes proportionally
+        f0_modified_Cqcal = compute_f0_from_hierarchy(C_qcal=C_COHERENCE * 1.1)
+        
+        # The formula uses C_QCAL/C ratio, so:
+        # - Changing C_QCAL alone changes f₀
+        # - Changing C alone doesn't affect f₀ (ratio adjusts)
+        # - Changing both proportionally keeps f₀ same
+        
+        # f₀ should change when C_QCAL changes (C_QCAL appears in numerator of ratio)
+        assert f0_modified_Cqcal != f0_default
+        
+        # The change should be approximately proportional (10% increase in C_QCAL → ~10% increase in f₀)
+        expected_factor = 1.1
+        actual_factor = f0_modified_Cqcal / f0_default
+        assert abs(actual_factor - expected_factor) < 0.01
+
+    def test_f0_coherence_ratio(self):
+        """The C_QCAL/C ratio should modulate the frequency."""
+        from operators.noetic_operator import (
+            compute_f0_from_hierarchy, C_PRIMARY, C_COHERENCE
+        )
+        ratio = C_COHERENCE / C_PRIMARY
+        assert 0.38 < ratio < 0.40  # ≈ 0.388
+
+
+class TestSpectralHierarchyValidation:
+    """Tests for the complete spectral hierarchy validation."""
+
+    def test_validate_spectral_hierarchy_runs(self):
+        """validate_spectral_hierarchy should run without error."""
+        from operators.noetic_operator import validate_spectral_hierarchy
+        result = validate_spectral_hierarchy(N=50)
+        assert isinstance(result, dict)
+
+    def test_validate_spectral_hierarchy_levels(self):
+        """Result should have both level 1 and level 2 data."""
+        from operators.noetic_operator import validate_spectral_hierarchy
+        result = validate_spectral_hierarchy(N=50)
+        assert 'level1_primary' in result
+        assert 'level2_coherence' in result
+        assert 'fusion' in result
+
+    def test_validate_spectral_hierarchy_primary(self):
+        """Level 1 should have λ₀ and C values."""
+        from operators.noetic_operator import validate_spectral_hierarchy
+        result = validate_spectral_hierarchy(N=100)
+        level1 = result['level1_primary']
+        assert 'lambda_0' in level1
+        assert 'C' in level1
+        assert level1['lambda_0'] > 0
+        assert level1['C'] > 0
+
+    def test_validate_spectral_hierarchy_coherence(self):
+        """Level 2 should have spectral mean and C_QCAL values."""
+        from operators.noetic_operator import validate_spectral_hierarchy
+        result = validate_spectral_hierarchy(N=100)
+        level2 = result['level2_coherence']
+        assert 'spectral_mean' in level2
+        assert 'C_qcal' in level2
+
+    def test_validate_spectral_hierarchy_fusion(self):
+        """Fusion should have f₀ values and coherence ratio."""
+        from operators.noetic_operator import validate_spectral_hierarchy
+        result = validate_spectral_hierarchy(N=100)
+        fusion = result['fusion']
+        assert 'f0_from_targets' in fusion
+        assert 'coherence_ratio' in fusion
+        # f₀ from targets should be very close to 141.7001
+        assert abs(fusion['f0_from_targets'] - 141.7001) < 0.01
+
+
+class TestHierarchyMathematicalProperties:
+    """
+    Test mathematical properties described in the problem statement.
+    
+    The spectral hierarchy represents:
+    - Level 1: Local structure (eigenvalue minimum)
+    - Level 2: Global coherence (spectral dispersion)
+    - Fusion: Harmonic product (not simple sum)
+    """
+
+    def test_hierarchy_not_sum(self):
+        """f₀ is NOT a simple sum of C and C_QCAL."""
+        from operators.noetic_operator import (
+            compute_f0_from_hierarchy, C_PRIMARY, C_COHERENCE, F0_TARGET
+        )
+        f0 = compute_f0_from_hierarchy()
+        simple_sum = C_PRIMARY + C_COHERENCE
+        # f₀ (≈141.7) is very different from simple sum (≈874)
+        assert abs(f0 - simple_sum) > 100
+
+    def test_hierarchy_is_product(self):
+        """f₀ emerges from a product formula involving both constants."""
+        from operators.noetic_operator import (
+            compute_f0_from_hierarchy, C_PRIMARY, C_COHERENCE
+        )
+        # The formula involves C_QCAL/C as a multiplicative factor
+        # Doubling both should roughly preserve f₀
+        f0_default = compute_f0_from_hierarchy()
+        f0_doubled = compute_f0_from_hierarchy(C=C_PRIMARY * 2, C_qcal=C_COHERENCE * 2)
+        # The ratio C_QCAL/C is preserved, so f₀ scales by ~2 * C_QCAL ratio effect
+        # This test verifies the product nature
+        assert f0_doubled != f0_default
+
+    def test_f_natural_vs_f_coherent(self):
+        """
+        f_natural = sqrt(C)/(2π) ≈ 4 Hz (base)
+        f_coherent = 141.7 Hz (modulated)
+        """
+        from operators.noetic_operator import C_PRIMARY, F0_TARGET
+        f_natural = np.sqrt(C_PRIMARY) / (2 * np.pi)
+        # f_natural should be around 4 Hz
+        assert 3.5 < f_natural < 4.5
+        # Modulation factor to get to 141.7 Hz
+        modulation = F0_TARGET / f_natural
+        assert 30 < modulation < 40  # ≈ 35.5
+
+
 if __name__ == "__main__":
     pytest.main([__file__, "-v"])

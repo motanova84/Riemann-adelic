@@ -12,7 +12,10 @@ Modules:
     - operator_connection: Connection between H_Ψ and H_DS that demonstrates
                           how discrete symmetry forces zero reality
     - noetic_operator: H_ψ = -Δ + V_ψ noetic operator with p-adic corrections
-                       implementing λ₀ ≈ 0.001588 and C = 1/λ₀ ≈ 629.83
+                       implementing the spectral hierarchy:
+                       Level 1: λ₀ ≈ 0.001588 → C = 1/λ₀ ≈ 629.83 (structure)
+                       Level 2: C_QCAL = ⟨λ⟩²/λ₀ ≈ 244.36 (coherence)
+                       Fusion: f₀ = 141.7001 Hz (harmonization)
 """
 
 from .riemann_operator import (
@@ -33,18 +36,32 @@ from .discrete_symmetry_operator import DiscreteSymmetryOperator
 from .operator_connection import OperatorConnection
 
 from .noetic_operator import (
+    # Operator construction
     build_noetic_operator,
     build_discrete_laplacian,
     build_padic_potential,
+    # Eigenvalue computation
     compute_first_eigenvalue,
     compute_C_from_lambda,
+    # Spectral hierarchy (new)
+    compute_spectral_mean,
+    compute_C_coherence,
+    compute_f0_from_hierarchy,
+    validate_spectral_hierarchy,
+    # Validation functions
     validate_lambda_C_relationship,
     analyze_f0_C_relationship,
     validate_operator_self_adjoint,
     run_complete_noetic_validation,
+    # Constants - spectral hierarchy
     F0_TARGET,
+    C_PRIMARY,
+    C_COHERENCE,
     C_TARGET,
-    LAMBDA_0_TARGET
+    LAMBDA_0_TARGET,
+    EULER_MASCHERONI,
+    PHI,
+    DELTA_FRACTAL
 )
 
 __all__ = [
@@ -66,11 +83,23 @@ __all__ = [
     'build_padic_potential',
     'compute_first_eigenvalue',
     'compute_C_from_lambda',
+    # Spectral hierarchy (new)
+    'compute_spectral_mean',
+    'compute_C_coherence',
+    'compute_f0_from_hierarchy',
+    'validate_spectral_hierarchy',
+    # Validation
     'validate_lambda_C_relationship',
     'analyze_f0_C_relationship',
     'validate_operator_self_adjoint',
     'run_complete_noetic_validation',
+    # Constants - spectral hierarchy
     'F0_TARGET',
+    'C_PRIMARY',
+    'C_COHERENCE',
     'C_TARGET',
-    'LAMBDA_0_TARGET'
+    'LAMBDA_0_TARGET',
+    'EULER_MASCHERONI',
+    'PHI',
+    'DELTA_FRACTAL'
 ]
