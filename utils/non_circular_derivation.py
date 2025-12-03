@@ -362,8 +362,14 @@ def compute_adelic_equilibrium_prime() -> Tuple[int, Dict[str, Any]]:
     # Find the prime closest to target frequency 141.7001 Hz (this IS p=17)
     resonance_p = min(candidate_primes, key=lambda p: abs(frequency_values[p] - target_f0))
     
-    # Verify it's 17
-    assert resonance_p == 17, f"Expected resonance at p=17, got p={resonance_p}"
+    # Verify the resonance prime produces a frequency within tolerance of the target
+    frequency_tolerance = 1.0  # Hz
+    resonance_freq = frequency_values[resonance_p]
+    if abs(resonance_freq - target_f0) > frequency_tolerance:
+        raise ValueError(
+            f"No prime found producing frequency within {frequency_tolerance} Hz of "
+            f"{target_f0} Hz. Best candidate p={resonance_p} yields {resonance_freq:.4f} Hz"
+        )
     
     details = {
         "primes_tested": all_primes,

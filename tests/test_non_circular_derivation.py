@@ -200,8 +200,8 @@ class TestAdelicEquilibriumPrime:
         _, details = compute_adelic_equilibrium_prime()
         f0_17 = details.get("resonance_frequency", 0)
         target = details.get("target_frequency", 141.7001)
-        # Should be very close to 141.7001 Hz
-        assert abs(f0_17 - target) < 1.0, (
+        # Should be very close to 141.7001 Hz (within 0.01 Hz)
+        assert abs(f0_17 - target) < 0.01, (
             f"f₀(17) = {f0_17} should be close to {target}"
         )
 

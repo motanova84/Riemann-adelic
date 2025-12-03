@@ -17,8 +17,8 @@ p = 17 es un PUNTO DE RESONANCIA, no un mínimo de optimización.
 import mpmath as mp
 import math
 
-# Configuración de precisión alta
-mp.mp.dps = 80
+# Configuración de precisión alta (50 dps is sufficient for this verification)
+mp.mp.dps = 50
 
 # Constantes físicas
 C_LIGHT = 299792458  # m/s
