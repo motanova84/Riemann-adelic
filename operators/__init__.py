@@ -61,7 +61,8 @@ from .noetic_operator import (
     LAMBDA_0_TARGET,
     EULER_MASCHERONI,
     PHI,
-    DELTA_FRACTAL
+    DELTA_FRACTAL,
+    O4_REFINEMENT
 )
 
 __all__ = [
@@ -101,5 +102,6 @@ __all__ = [
     'LAMBDA_0_TARGET',
     'EULER_MASCHERONI',
     'PHI',
-    'DELTA_FRACTAL'
+    'DELTA_FRACTAL',
+    'O4_REFINEMENT'
 ]

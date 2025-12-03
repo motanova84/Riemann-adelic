@@ -672,8 +672,11 @@ class TestHierarchyMathematicalProperties:
         )
         f0 = compute_f0_from_hierarchy()
         simple_sum = C_PRIMARY + C_COHERENCE
-        # f₀ (≈141.7) is very different from simple sum (≈874)
-        assert abs(f0 - simple_sum) > 100
+        # f₀ (≈141.7 Hz) should differ from simple sum (≈874) by more than
+        # half of F0_TARGET, demonstrating they are fundamentally different
+        # This validates that f₀ is a harmonic product, not an additive sum
+        min_difference = F0_TARGET / 2  # At least 50% of f₀
+        assert abs(f0 - simple_sum) > min_difference
 
     def test_hierarchy_is_product(self):
         """f₀ emerges from a product formula involving both constants."""
