@@ -255,10 +255,6 @@ def validate_spectral_coherence(tolerance: float = 0.01) -> Dict[str, Any]:
     C_ratio_actual = constants['C_primaria'] / constants['C_coherencia']
     ratio_approx = abs(C_ratio_actual - 2.577) < 0.1
     
-    # Check approximate values
-    C_primaria_approx = abs(constants['C_primaria'] - 629.70) < 1.0
-    C_coherencia_approx = abs(constants['C_coherencia'] - 244.36) < 0.01
-    
     results = {
         'C_primaria': constants['C_primaria'],
         'C_primaria_target': 629.70,

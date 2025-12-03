@@ -10,7 +10,7 @@ This module tests the spectral origin derivation where:
 The unified formula:
     f₀ = (1/(2π)) × exp(γ) × √(2πγ) × (φ²/(2π)) × C_primaria
     
-Result: f₀ ≈ 141.64 Hz (within 0.05% of target 141.7001 Hz)
+Result: f₀ ≈ 141.64 Hz (within 0.04% of target 141.7001 Hz)
 
 This validates:
     - The structure (629.70) → natural f₀ manifestation
