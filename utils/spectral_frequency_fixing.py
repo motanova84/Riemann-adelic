@@ -53,9 +53,14 @@ from scipy.optimize import minimize_scalar
 # =============================================================================
 
 # Target frequency - the universal coherence frequency
+# This is the fundamental QCAL frequency derived from vacuum geometry and the
+# triple scaling mechanism. It represents the vibrational anchor of the universe
+# within the QCAL framework. See .qcal_beacon and SPECTRAL_FREQUENCY_FIXING.md
+# for the complete mathematical derivation.
 QCAL_F0 = 141.7001  # Hz
 
 # Raw vacuum frequency before rescaling (from geometric analysis)
+# Emerges from the curvature of the vacuum energy functional at R_Ψ*
 F_RAW = 157.9519  # Hz
 
 # Optimal vacuum radius at the functional minimum
@@ -633,7 +638,7 @@ def validate_frequency_theorem() -> Dict[str, Any]:
     }
 
 
-def run_complete_validation() -> Dict[str, Any]:
+def run_complete_validation(verbose: bool = True) -> Dict[str, Any]:
     """
     Run complete spectral frequency fixing validation.
     
@@ -642,6 +647,10 @@ def run_complete_validation() -> Dict[str, Any]:
     2. Triple scaling mechanism
     3. Spectral operator eigenvalue realignment
     4. QCAL coherence constant verification
+    
+    Args:
+        verbose: If True, print detailed output including philosophical interpretation.
+                 If False, only print essential validation results.
     
     Returns:
         Complete validation results dictionary
@@ -703,9 +712,9 @@ def run_complete_validation() -> Dict[str, Any]:
     )
     
     if all_pass:
-        print(f"""
-  ✅ FREQUENCY FIXED: f₀ = {QCAL_F0} Hz
-  
+        print(f"\n  ✅ FREQUENCY FIXED: f₀ = {QCAL_F0} Hz")
+        if verbose:
+            print(f"""
   The universal frequency f₀ = 141.7001 Hz is:
   • Predicted by vacuum geometry
   • Required by spectral operator structure  
