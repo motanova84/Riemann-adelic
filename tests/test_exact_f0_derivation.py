@@ -284,10 +284,10 @@ class TestNonCircularSpectralConstruction:
         spectral = NonCircularSpectralConstruction()
         demo = spectral.demonstrate_non_circularity()
 
-        assert demo['uses_zeta_function'] == False
-        assert demo['uses_euler_product'] == False
-        assert demo['self_adjoint'] == True
-        assert demo['spectrum_is_real'] == True
+        assert not demo['uses_zeta_function']
+        assert not demo['uses_euler_product']
+        assert demo['self_adjoint']
+        assert demo['spectrum_is_real']
         assert 'rh_implication' in demo
 
 
