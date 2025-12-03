@@ -73,6 +73,28 @@ REFERENCE_EQUILIBRIUM = {
 }
 
 
+def is_prime(n: int) -> bool:
+    """
+    Check if a number is prime.
+    
+    Args:
+        n: Integer to check
+        
+    Returns:
+        True if n is prime, False otherwise
+    """
+    if n < 2:
+        return False
+    if n == 2:
+        return True
+    if n % 2 == 0:
+        return False
+    for i in range(3, int(n**0.5) + 1, 2):
+        if n % i == 0:
+            return False
+    return True
+
+
 def get_primes_to_check() -> List[int]:
     """
     Get the list of primes relevant for adelic compactification.
@@ -80,18 +102,6 @@ def get_primes_to_check() -> List[int]:
     Returns:
         List of primes from 2 to 101
     """
-    def is_prime(n: int) -> bool:
-        if n < 2:
-            return False
-        if n == 2:
-            return True
-        if n % 2 == 0:
-            return False
-        for i in range(3, int(n**0.5) + 1, 2):
-            if n % i == 0:
-                return False
-        return True
-    
     return [p for p in range(2, 102) if is_prime(p)]
 
 

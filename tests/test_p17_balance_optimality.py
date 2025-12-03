@@ -13,7 +13,11 @@ DOI: 10.5281/zenodo.17379721
 import pytest
 import sys
 import os
-import mpmath as mp
+
+try:
+    import mpmath as mp
+except ImportError:
+    pytest.skip("mpmath is required for these tests", allow_module_level=True)
 
 # Add utils to path
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
