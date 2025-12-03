@@ -122,11 +122,14 @@ See `.github/workflows/ci.yml` for details.
 ```
 formalization/lean/QCAL/
 ├── FFI/
-│   ├── Bridge.lean          # Lean FFI interface
-│   ├── libbridge.c          # C FFI bridge
-│   └── libbridge.so         # Compiled shared library
-├── UniversalKernel.lean     # High-level API
-└── README.md                # This file
+│   ├── Bridge.lean                   # Lean FFI interface
+│   ├── libbridge.c                   # C FFI bridge
+│   └── libbridge.so                  # Compiled shared library
+├── UniversalKernel.lean              # High-level API
+├── cy_fundamental_frequency.lean     # Script 19: CY³ → f₀
+├── operator_Hpsi_frequency.lean      # Script 20: Hψ integration with f₀
+├── casimir_ligo_frequency.lean       # Script 21: Casimir + LIGO → f₀
+└── README.md                         # This file
 
 tools/
 ├── universal_kernel.py      # Python verifier
@@ -135,6 +138,17 @@ tools/
 schema/
 └── metadatos_ejemplo.jsonld # Example metadata
 ```
+
+## QCAL Universal Frequency Scripts
+
+### Script 19: Calabi-Yau Origin (`cy_fundamental_frequency.lean`)
+Derives f₀ = 141.7001 Hz from the fundamental mode of a Calabi-Yau 3-fold.
+
+### Script 20: Operator Integration (`operator_Hpsi_frequency.lean`)
+Integrates f₀ into the noetic operator Hψ := -Δ + ω₀².
+
+### Script 21: Physical Validation (`casimir_ligo_frequency.lean`)
+Validates f₀ through Casimir effect and LIGO O4 observations.
 
 ## Requirements
 
