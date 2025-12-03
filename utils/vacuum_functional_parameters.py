@@ -347,7 +347,10 @@ class VacuumFunctionalParameters:
     def __post_init__(self):
         """Validate parameters after initialization."""
         if self.eta <= 0 or self.eta == 1:
-            raise ValueError("eta must be positive and not equal to 1")
+            raise ValueError(
+                "eta must be positive and not equal to 1 "
+                "(to avoid division by zero in log(eta))"
+            )
     
     def get_interpretation(self, param: str) -> ParameterInterpretation:
         """
@@ -400,6 +403,8 @@ class VacuumFunctional:
         """Initialize the vacuum functional with parameters."""
         self.params = params or VacuumFunctionalParameters()
         self.zeta_prime_half = zeta_prime_half
+        # Cache log(eta) to avoid repeated logarithm calculations
+        self._log_eta = np.log(self.params.eta)
     
     def casimir_term(self, R_psi: float) -> float:
         """
@@ -475,7 +480,7 @@ class VacuumFunctional:
         float
             δ·sin²(log R_Ψ / log η)
         """
-        log_ratio = np.log(R_psi) / np.log(self.params.eta)
+        log_ratio = np.log(R_psi) / self._log_eta
         return self.params.delta * (np.sin(log_ratio) ** 2)
     
     def energy(self, R_psi: float) -> float:
@@ -567,11 +572,11 @@ class VacuumFunctional:
         d_harmonic = 2 * self.params.gamma * R_psi
         
         # d/dR (δ·sin²(log R / log η)) = δ·sin(2·log R / log η) / (R·log η)
-        log_ratio = np.log(R_psi) / np.log(self.params.eta)
+        log_ratio = np.log(R_psi) / self._log_eta
         d_fractal = (
             self.params.delta * 
             np.sin(2 * log_ratio) / 
-            (R_psi * np.log(self.params.eta))
+            (R_psi * self._log_eta)
         )
         
         return d_casimir + d_adelic + d_harmonic + d_fractal
@@ -595,9 +600,8 @@ class VacuumFunctional:
         if R_psi <= 0:
             raise ValueError("R_psi must be positive")
         
-        log_eta = np.log(self.params.eta)
         log_R = np.log(R_psi)
-        log_ratio = log_R / log_eta
+        log_ratio = log_R / self._log_eta
         
         # d²/dR² (α/R⁴) = 20α/R⁶
         d2_casimir = 20 * self.params.alpha / (R_psi ** 6)
@@ -609,8 +613,8 @@ class VacuumFunctional:
         d2_harmonic = 2 * self.params.gamma
         
         # d²/dR² of fractal term
-        term1 = 2 * np.cos(2 * log_ratio) / (R_psi ** 2 * log_eta ** 2)
-        term2 = -np.sin(2 * log_ratio) / (R_psi ** 2 * log_eta)
+        term1 = 2 * np.cos(2 * log_ratio) / (R_psi ** 2 * self._log_eta ** 2)
+        term2 = -np.sin(2 * log_ratio) / (R_psi ** 2 * self._log_eta)
         d2_fractal = self.params.delta * (term1 + term2)
         
         return d2_casimir + d2_adelic + d2_harmonic + d2_fractal
