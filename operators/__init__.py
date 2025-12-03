@@ -13,10 +13,9 @@ Modules:
                           how discrete symmetry forces zero reality
     - noetic_operator: H_ψ = -Δ + V_ψ noetic operator with p-adic corrections
                        implementing λ₀ ≈ 0.001588 and C = 1/λ₀ ≈ 629.83
-    - spectral_constants: Dual spectral constant system implementing
-                         C_PRIMARY = 629.83 (structure) and
-                         C_COHERENCE = 244.36 (coherence) with
-                         f₀ = 141.7001 Hz as natural manifestation
+    - spectral_constants: Dual spectral constants framework unifying
+                         C_PRIMARY = 629.83 (structure) and 
+                         C_COHERENCE = 244.36 (form) to derive f₀ = 141.7001 Hz
 """
 
 from .riemann_operator import (
@@ -52,24 +51,24 @@ from .noetic_operator import (
 )
 
 from .spectral_constants import (
-    # Constants
+    # Fundamental constants
     C_PRIMARY,
     C_COHERENCE,
-    F0_BASE,
     LAMBDA_0,
-    LAMBDA_MEAN_EFFECTIVE,
+    F0 as F0_SPECTRAL,
+    OMEGA_0 as OMEGA_0_SPECTRAL,
     PHI,
     EULER_GAMMA,
+    COHERENCE_FACTOR,
+    # Classes
+    SpectralLevel,
     # Functions
-    compute_C_primary_from_lambda,
-    compute_C_coherence_from_spectrum,
-    compute_lambda_mean_from_coherence,
-    analyze_constant_relationship,
-    validate_f0_manifestation,
-    build_spectral_H_operator,
-    compute_spectral_constants_from_operator,
-    validate_dual_constants,
-    run_complete_spectral_validation,
+    compute_primary_constant,
+    compute_coherence_constant,
+    compute_coherence_factor,
+    derive_f0_from_constants,
+    verify_f0_coherence,
+    validate_dual_constants
 )
 
 __all__ = [
@@ -98,21 +97,20 @@ __all__ = [
     'F0_TARGET',
     'C_TARGET',
     'LAMBDA_0_TARGET',
-    # Spectral constants exports
+    # Spectral constants (dual framework)
     'C_PRIMARY',
     'C_COHERENCE',
-    'F0_BASE',
     'LAMBDA_0',
-    'LAMBDA_MEAN_EFFECTIVE',
+    'F0_SPECTRAL',
+    'OMEGA_0_SPECTRAL',
     'PHI',
     'EULER_GAMMA',
-    'compute_C_primary_from_lambda',
-    'compute_C_coherence_from_spectrum',
-    'compute_lambda_mean_from_coherence',
-    'analyze_constant_relationship',
-    'validate_f0_manifestation',
-    'build_spectral_H_operator',
-    'compute_spectral_constants_from_operator',
-    'validate_dual_constants',
-    'run_complete_spectral_validation',
+    'COHERENCE_FACTOR',
+    'SpectralLevel',
+    'compute_primary_constant',
+    'compute_coherence_constant',
+    'compute_coherence_factor',
+    'derive_f0_from_constants',
+    'verify_f0_coherence',
+    'validate_dual_constants'
 ]

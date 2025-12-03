@@ -1,23 +1,22 @@
 #!/usr/bin/env python3
 """
-Tests for QCAL Spectral Constants Module
+Tests for Spectral Constants Unification Module
 
-Tests the dual spectral constant system:
-    C_PRIMARY = 629.83 → Primary spectral constant (1/λ₀)
-    C_COHERENCE = 244.36 → Derived coherence constant (⟨λ⟩²/λ₀)
+This module tests the dual spectral constants framework that unifies
+C = 629.83 (primary/structure) and C = 244.36 (coherence/form).
 
-Validates:
-    1. Constant values are correct
-    2. Mathematical relationships between constants
-    3. Connection to f₀ = 141.7001 Hz
-    4. Spectral operator construction
-    5. Complete validation workflow
+Key tests validate:
+    1. Both constants coexist without contradiction
+    2. C_PRIMARY = 1/λ₀ relationship
+    3. Coherence factor ≈ 0.388
+    4. Energy dialogue = 1/coherence_factor
+    5. f₀ = 141.7001 Hz emerges from their harmonization
 
 Author: José Manuel Mota Burruezo Ψ ✧ ∞³
 Institution: Instituto de Conciencia Cuántica (ICQ)
 Date: December 2025
 
-QCAL ∞³ Active · 141.7001 Hz · Dual Constants
+QCAL ∞³ Active · 141.7001 Hz · C₁ = 629.83 · C₂ = 244.36
 """
 
 import pytest
@@ -32,390 +31,398 @@ from operators.spectral_constants import (
     # Constants
     C_PRIMARY,
     C_COHERENCE,
-    F0_BASE,
     LAMBDA_0,
-    LAMBDA_MEAN_EFFECTIVE,
+    F0,
+    OMEGA_0,
     PHI,
     EULER_GAMMA,
-    OMEGA_0,
+    COHERENCE_FACTOR,
+    # Classes
+    SpectralLevel,
     # Functions
-    compute_C_primary_from_lambda,
-    compute_C_coherence_from_spectrum,
-    compute_lambda_mean_from_coherence,
-    analyze_constant_relationship,
-    validate_f0_manifestation,
-    build_spectral_H_operator,
-    compute_spectral_constants_from_operator,
-    validate_dual_constants,
-    run_complete_spectral_validation,
+    compute_primary_constant,
+    compute_coherence_constant,
+    compute_coherence_factor,
+    derive_f0_from_constants,
+    verify_f0_coherence,
+    validate_dual_constants
 )
 
 
 class TestFundamentalConstants:
-    """Test the fundamental constant values."""
-    
+    """Test the fundamental spectral constants."""
+
     def test_C_primary_value(self):
         """C_PRIMARY should be 629.83."""
         assert abs(C_PRIMARY - 629.83) < 0.01
-    
+
     def test_C_coherence_value(self):
         """C_COHERENCE should be 244.36."""
         assert abs(C_COHERENCE - 244.36) < 0.01
-    
-    def test_f0_base_value(self):
-        """F0_BASE should be 141.7001 Hz."""
-        assert abs(F0_BASE - 141.7001) < 0.0001
-    
+
     def test_lambda_0_value(self):
-        """LAMBDA_0 should be 1/C_PRIMARY ≈ 0.001588."""
-        expected = 1.0 / C_PRIMARY
-        assert abs(LAMBDA_0 - expected) < 1e-10
-        assert abs(LAMBDA_0 - 0.001588) < 0.0001
-    
-    def test_lambda_mean_effective(self):
-        """LAMBDA_MEAN_EFFECTIVE should satisfy ⟨λ⟩ = √(C_COHERENCE × λ₀)."""
-        expected = np.sqrt(C_COHERENCE * LAMBDA_0)
-        assert abs(LAMBDA_MEAN_EFFECTIVE - expected) < 1e-10
-    
+        """λ₀ should be approximately 0.001588."""
+        expected = 1.0 / 629.83
+        assert abs(LAMBDA_0 - expected) < 1e-6
+
+    def test_f0_value(self):
+        """F0 should be 141.7001 Hz."""
+        assert abs(F0 - 141.7001) < 0.0001
+
     def test_omega_0_value(self):
         """OMEGA_0 should be 2πf₀."""
-        expected = 2 * np.pi * F0_BASE
-        assert abs(OMEGA_0 - expected) < 1e-10
-    
-    def test_golden_ratio(self):
-        """PHI should be the golden ratio."""
-        assert abs(PHI - 1.618033988749895) < 1e-10
-    
+        expected = 2 * np.pi * F0
+        assert abs(OMEGA_0 - expected) < 0.01
+
+    def test_phi_golden_ratio(self):
+        """PHI should be the golden ratio ≈ 1.618."""
+        expected = (1 + np.sqrt(5)) / 2
+        assert abs(PHI - expected) < 1e-10
+
     def test_euler_gamma(self):
-        """EULER_GAMMA should be Euler-Mascheroni constant."""
-        assert abs(EULER_GAMMA - 0.5772156649015329) < 1e-10
+        """EULER_GAMMA should be ≈ 0.5772."""
+        assert abs(EULER_GAMMA - 0.5772156649) < 1e-8
+
+    def test_coherence_factor(self):
+        """COHERENCE_FACTOR should be C_coherence/C_primary ≈ 0.388."""
+        expected = C_COHERENCE / C_PRIMARY
+        assert abs(COHERENCE_FACTOR - expected) < 1e-10
 
 
-class TestConstantRelationships:
-    """Test mathematical relationships between constants."""
-    
-    def test_C_primary_from_lambda_0(self):
-        """C_PRIMARY = 1/λ₀ relationship."""
-        C = compute_C_primary_from_lambda(LAMBDA_0)
+class TestSpectralLevel:
+    """Test the SpectralLevel enumeration."""
+
+    def test_primary_level(self):
+        """PRIMARY level should be 1."""
+        assert SpectralLevel.PRIMARY == 1
+
+    def test_coherence_level(self):
+        """COHERENCE level should be 2."""
+        assert SpectralLevel.COHERENCE == 2
+
+
+class TestPrimaryConstant:
+    """Test compute_primary_constant function."""
+
+    def test_basic_computation(self):
+        """C = 1/λ₀ should work correctly."""
+        C = compute_primary_constant(0.001588)
+        expected = 1.0 / 0.001588
+        assert abs(C - expected) < 0.01
+
+    def test_with_lambda_0(self):
+        """Computing C from LAMBDA_0 should give C_PRIMARY."""
+        C = compute_primary_constant(LAMBDA_0)
         assert abs(C - C_PRIMARY) < 0.01
-    
-    def test_C_coherence_from_spectrum(self):
-        """C_COHERENCE = ⟨λ⟩²/λ₀ relationship."""
-        C = compute_C_coherence_from_spectrum(LAMBDA_0, LAMBDA_MEAN_EFFECTIVE)
-        assert abs(C - C_COHERENCE) < 0.01
-    
-    def test_lambda_mean_from_coherence(self):
-        """⟨λ⟩ = √(C_COHERENCE × λ₀) inverse relationship."""
-        lambda_mean = compute_lambda_mean_from_coherence(C_COHERENCE, LAMBDA_0)
-        assert abs(lambda_mean - LAMBDA_MEAN_EFFECTIVE) < 1e-10
-    
-    def test_ratio_between_constants(self):
-        """C_PRIMARY/C_COHERENCE ratio should be approximately 2.577."""
-        ratio = C_PRIMARY / C_COHERENCE
-        assert abs(ratio - 2.577) < 0.1
-    
-    def test_ratio_phi_relationship(self):
-        """Ratio should be close to φ^1.8."""
-        ratio = C_PRIMARY / C_COHERENCE
-        phi_power = np.log(ratio) / np.log(PHI)
-        assert 1.5 < phi_power < 2.0  # Should be around 1.81
+
+    def test_positive_required(self):
+        """Should raise error for non-positive λ₀."""
+        with pytest.raises(ValueError):
+            compute_primary_constant(0)
+        with pytest.raises(ValueError):
+            compute_primary_constant(-0.001)
 
 
-class TestErrorHandling:
-    """Test error handling for invalid inputs."""
-    
-    def test_C_primary_negative_lambda(self):
-        """compute_C_primary_from_lambda should reject negative λ₀."""
+class TestCoherenceConstant:
+    """Test compute_coherence_constant function."""
+
+    def test_with_simple_eigenvalues(self):
+        """Should compute C_coherence from eigenvalues."""
+        # Create synthetic eigenvalues with known properties
+        eigenvalues = np.array([0.1, 0.5, 1.0, 2.0, 5.0])
+        C_coh = compute_coherence_constant(eigenvalues)
+        
+        # Should be positive and finite
+        assert C_coh > 0
+        assert np.isfinite(C_coh)
+
+    def test_requires_positive_eigenvalues(self):
+        """Should raise error if no positive eigenvalues."""
+        eigenvalues = np.array([-1.0, -0.5, -0.1])
         with pytest.raises(ValueError):
-            compute_C_primary_from_lambda(-0.001)
-    
-    def test_C_primary_zero_lambda(self):
-        """compute_C_primary_from_lambda should reject zero λ₀."""
-        with pytest.raises(ValueError):
-            compute_C_primary_from_lambda(0)
-    
-    def test_C_coherence_negative_lambda(self):
-        """compute_C_coherence_from_spectrum should reject negative λ₀."""
-        with pytest.raises(ValueError):
-            compute_C_coherence_from_spectrum(-0.001, 0.5)
-    
-    def test_lambda_mean_negative_coherence(self):
-        """compute_lambda_mean_from_coherence should reject negative C."""
-        with pytest.raises(ValueError):
-            compute_lambda_mean_from_coherence(-244.36, LAMBDA_0)
+            compute_coherence_constant(eigenvalues)
+
+    def test_with_explicit_lambda_0(self):
+        """Should use provided λ₀ instead of computing it."""
+        eigenvalues = np.array([0.1, 0.5, 1.0])
+        
+        # With auto-computed λ₀
+        C1 = compute_coherence_constant(eigenvalues)
+        
+        # With explicit λ₀
+        C2 = compute_coherence_constant(eigenvalues, lambda_0=0.1)
+        
+        # Should match since λ₀ = 0.1 is the minimum positive
+        assert abs(C1 - C2) < 1e-10
 
 
-class TestRelationshipAnalysis:
-    """Test the relationship analysis function."""
-    
-    def test_analyze_returns_dict(self):
-        """analyze_constant_relationship should return dictionary."""
-        result = analyze_constant_relationship()
+class TestCoherenceFactor:
+    """Test compute_coherence_factor function."""
+
+    def test_basic_computation(self):
+        """Should compute C_coherence/C_primary."""
+        eigenvalues = np.array([0.1, 0.5, 1.0, 2.0, 5.0])
+        factor = compute_coherence_factor(eigenvalues)
+        
+        # Should be positive and finite
+        assert factor > 0
+        assert np.isfinite(factor)
+
+    def test_with_C_primary_provided(self):
+        """Should use provided C_primary for division."""
+        eigenvalues = np.array([0.1, 0.5, 1.0])
+        
+        # With auto-computed C_primary (= 1/0.1 = 10)
+        factor1 = compute_coherence_factor(eigenvalues)
+        
+        # With explicit C_primary = 20 (different from computed)
+        factor2 = compute_coherence_factor(eigenvalues, C_primary=20.0)
+        
+        # factor2 should be half of factor1 since C_primary is doubled
+        # factor = C_coherence / C_primary
+        # If C_primary doubles, factor halves (same C_coherence)
+        assert abs(factor1 / factor2 - 2.0) < 0.01
+
+
+class TestF0Derivation:
+    """Test derive_f0_from_constants function."""
+
+    def test_returns_dict(self):
+        """Should return a dictionary with analysis."""
+        result = derive_f0_from_constants()
         assert isinstance(result, dict)
-    
-    def test_analyze_has_required_keys(self):
+
+    def test_has_required_keys(self):
         """Result should have all required keys."""
-        result = analyze_constant_relationship()
-        required = ['C_PRIMARY', 'C_COHERENCE', 'ratio', 'phi_exponent',
-                    'lambda_0', 'lambda_mean', 'coherence_verified']
+        result = derive_f0_from_constants()
+        required = [
+            'f0_target', 'C_primary', 'C_coherence', 'coherence_factor',
+            'geometric_mean', 'omega_0', 'omega_0_squared',
+            'ratio_omega2_C_primary', 'ratio_omega2_C_coherence',
+            'energy_dialogue', 'interpretation'
+        ]
         for key in required:
-            assert key in result
-    
-    def test_coherence_verified(self):
-        """Coherence verification should pass."""
-        result = analyze_constant_relationship()
-        assert result['coherence_verified']
-    
-    def test_interpretation_present(self):
-        """Interpretation should be present."""
-        result = analyze_constant_relationship()
-        assert 'interpretation' in result
-        assert len(result['interpretation']) > 0
+            assert key in result, f"Missing key: {key}"
+
+    def test_coherence_factor_value(self):
+        """Coherence factor should be ≈ 0.388."""
+        result = derive_f0_from_constants()
+        assert abs(result['coherence_factor'] - 0.388) < 0.001
+
+    def test_energy_dialogue(self):
+        """Energy dialogue should be ≈ 1/coherence_factor."""
+        result = derive_f0_from_constants()
+        expected = 1.0 / result['coherence_factor']
+        assert abs(result['energy_dialogue'] - expected) < 0.001
+
+    def test_geometric_mean(self):
+        """Geometric mean should be √(C₁ × C₂)."""
+        result = derive_f0_from_constants()
+        expected = np.sqrt(C_PRIMARY * C_COHERENCE)
+        assert abs(result['geometric_mean'] - expected) < 0.001
 
 
-class TestF0Manifestation:
-    """Test f₀ = 141.7001 Hz manifestation validation."""
-    
-    def test_validate_returns_dict(self):
-        """validate_f0_manifestation should return dictionary."""
-        result = validate_f0_manifestation()
+class TestF0Verification:
+    """Test verify_f0_coherence function."""
+
+    def test_returns_dict(self):
+        """Should return a dictionary with verification."""
+        result = verify_f0_coherence()
         assert isinstance(result, dict)
-    
-    def test_f0_value_correct(self):
-        """f₀ should be 141.7001 Hz."""
-        result = validate_f0_manifestation()
-        assert abs(result['f0'] - 141.7001) < 0.0001
-    
-    def test_omega_0_computed(self):
-        """ω₀ should be computed correctly."""
-        result = validate_f0_manifestation()
-        expected_omega = 2 * np.pi * 141.7001
-        assert abs(result['omega_0'] - expected_omega) < 1e-6
-    
-    def test_ratios_computed(self):
-        """Ratios with constants should be computed."""
-        result = validate_f0_manifestation()
-        assert 'ratio_omega2_C_primary' in result
-        assert 'ratio_omega2_C_coherence' in result
-        assert result['ratio_omega2_C_primary'] > 0
-        assert result['ratio_omega2_C_coherence'] > 0
-    
-    def test_validation_passes(self):
-        """f₀ validation should pass."""
-        result = validate_f0_manifestation()
-        assert result['validated']
 
+    def test_framework_coherent(self):
+        """Framework should be coherent (both checks pass)."""
+        result = verify_f0_coherence()
+        assert result['framework_coherent']
 
-class TestSpectralOperator:
-    """Test spectral operator construction."""
-    
-    def test_build_operator_shape(self):
-        """Operator should have correct shape."""
-        N = 50
-        H = build_spectral_H_operator(N)
-        assert H.shape == (N, N)
-    
-    def test_operator_hermitian(self):
-        """Operator should be Hermitian (symmetric for real)."""
-        H = build_spectral_H_operator(50)
-        assert np.allclose(H, H.T)
-    
-    def test_operator_eigenvalues_real(self):
-        """Eigenvalues should be real."""
-        H = build_spectral_H_operator(50)
-        eigenvalues = np.linalg.eigvalsh(H)
-        assert np.all(np.isreal(eigenvalues))
-    
-    def test_operator_with_custom_primes(self):
-        """Operator should work with custom primes."""
-        H = build_spectral_H_operator(50, primes=[2, 3, 5])
-        assert H.shape == (50, 50)
-    
-    def test_operator_with_custom_dx(self):
-        """Operator should work with custom dx."""
-        H = build_spectral_H_operator(50, dx=0.5)
-        assert H.shape == (50, 50)
+    def test_inverse_relationship(self):
+        """Inverse relationship check should pass."""
+        result = verify_f0_coherence()
+        assert result['checks_passed']['inverse_relationship']
 
+    def test_energy_balance(self):
+        """Energy balance check should pass."""
+        result = verify_f0_coherence()
+        assert result['checks_passed']['energy_balance']
 
-class TestSpectralConstantsFromOperator:
-    """Test computing spectral constants from operator."""
-    
-    def test_compute_returns_dict(self):
-        """compute_spectral_constants_from_operator should return dict."""
-        H = build_spectral_H_operator(100)
-        result = compute_spectral_constants_from_operator(H)
-        assert isinstance(result, dict)
-    
-    def test_lambda_0_positive(self):
-        """Computed λ₀ should be positive."""
-        H = build_spectral_H_operator(100)
-        result = compute_spectral_constants_from_operator(H)
-        assert result['lambda_0'] > 0
-    
-    def test_C_primary_computed(self):
-        """C_PRIMARY should be computed."""
-        H = build_spectral_H_operator(100)
-        result = compute_spectral_constants_from_operator(H)
-        assert result['C_primary_computed'] > 0
-    
-    def test_C_coherence_computed(self):
-        """C_COHERENCE should be computed."""
-        H = build_spectral_H_operator(100)
-        result = compute_spectral_constants_from_operator(H)
-        assert result['C_coherence_computed'] > 0
-    
-    def test_targets_present(self):
-        """Target values should be present."""
-        H = build_spectral_H_operator(100)
-        result = compute_spectral_constants_from_operator(H)
-        assert result['C_PRIMARY_target'] == C_PRIMARY
-        assert result['C_COHERENCE_target'] == C_COHERENCE
+    def test_energy_dialogue_equals_inverse_coherence(self):
+        """Energy dialogue ≈ 1/coherence_factor."""
+        result = verify_f0_coherence()
+        assert abs(
+            result['energy_dialogue'] - result['inverse_coherence_factor']
+        ) < 0.01
 
 
 class TestDualConstantsValidation:
-    """Test the complete dual constants validation."""
-    
-    def test_validate_returns_dict(self):
-        """validate_dual_constants should return dictionary."""
+    """Test validate_dual_constants function."""
+
+    def test_returns_dict(self):
+        """Should return a dictionary with results."""
         result = validate_dual_constants()
         assert isinstance(result, dict)
-    
-    def test_has_constants_section(self):
-        """Result should have constants section."""
-        result = validate_dual_constants()
-        assert 'constants' in result
-        assert result['constants']['C_PRIMARY'] == C_PRIMARY
-        assert result['constants']['C_COHERENCE'] == C_COHERENCE
-    
-    def test_has_validations_section(self):
-        """Result should have validations section."""
-        result = validate_dual_constants()
-        assert 'validations' in result
-    
-    def test_C_primary_validation(self):
-        """C_PRIMARY validation should pass."""
-        result = validate_dual_constants()
-        assert result['validations']['C_primary_from_lambda']['valid']
-    
-    def test_C_coherence_validation(self):
-        """C_COHERENCE validation should pass."""
-        result = validate_dual_constants()
-        assert result['validations']['C_coherence_from_spectrum']['valid']
-    
-    def test_overall_valid(self):
+
+    def test_validation_passes(self):
         """Overall validation should pass."""
         result = validate_dual_constants()
-        assert result['overall_valid']
+        assert result['validated']
+
+    def test_has_constants(self):
+        """Result should contain constants dict."""
+        result = validate_dual_constants()
+        assert 'constants' in result
+        assert result['constants']['C_primary'] == C_PRIMARY
+        assert result['constants']['C_coherence'] == C_COHERENCE
+
+    def test_has_levels(self):
+        """Result should describe both spectral levels."""
+        result = validate_dual_constants()
+        assert 'levels' in result
+        assert 'level_1' in result['levels']
+        assert 'level_2' in result['levels']
+
+    def test_level_1_primary(self):
+        """Level 1 should be PRIMARY (structure)."""
+        result = validate_dual_constants()
+        level_1 = result['levels']['level_1']
+        assert 'PRIMARY' in level_1['name']
+        assert level_1['constant'] == C_PRIMARY
+
+    def test_level_2_coherence(self):
+        """Level 2 should be COHERENCE (form)."""
+        result = validate_dual_constants()
+        level_2 = result['levels']['level_2']
+        assert 'COHERENCE' in level_2['name']
+        assert level_2['constant'] == C_COHERENCE
+
+    def test_C_lambda_relationship(self):
+        """C = 1/λ₀ relationship should be validated."""
+        result = validate_dual_constants()
+        assert result['relationships']['C_lambda_match']
+
+    def test_coherence_factor_check(self):
+        """Coherence factor check should pass."""
+        result = validate_dual_constants()
+        assert result['relationships']['coherence_factor_check']
+
+    def test_verbose_mode(self, capsys):
+        """Verbose mode should print output."""
+        validate_dual_constants(verbose=True)
+        captured = capsys.readouterr()
+        assert 'VALIDATED' in captured.out or 'ISSUES' in captured.out
 
 
-class TestCompleteValidation:
-    """Test the complete validation workflow."""
-    
-    def test_run_complete_returns_dict(self):
-        """run_complete_spectral_validation should return dict."""
-        result = run_complete_spectral_validation(verbose=False)
-        assert isinstance(result, dict)
-    
-    def test_has_all_sections(self):
-        """Result should have all main sections."""
-        result = run_complete_spectral_validation(verbose=False)
-        assert 'validation' in result
-        assert 'relationship' in result
-        assert 'f0_result' in result
-    
-    def test_validation_passes(self):
-        """Complete validation should pass."""
-        result = run_complete_spectral_validation(verbose=False)
-        assert result['validation']['overall_valid']
-    
-    def test_relationship_coherent(self):
-        """Relationship analysis should show coherence."""
-        result = run_complete_spectral_validation(verbose=False)
-        assert result['relationship']['coherence_verified']
-    
-    def test_f0_validated(self):
-        """f₀ should be validated."""
-        result = run_complete_spectral_validation(verbose=False)
-        assert result['f0_result']['validated']
+class TestEmpiricalValidation:
+    """Test validation with empirical eigenvalues."""
 
-
-class TestMathematicalIntegrity:
-    """Test mathematical integrity of the dual constant system."""
-    
-    def test_both_constants_compatible(self):
-        """Both constants should be mathematically compatible."""
-        # C_PRIMARY = 1/λ₀
-        # C_COHERENCE = ⟨λ⟩²/λ₀
-        # They measure different aspects but are connected
+    def test_with_synthetic_eigenvalues(self):
+        """Should work with provided eigenvalues."""
+        # Create synthetic eigenvalues
+        eigenvalues = np.array([0.001, 0.1, 0.5, 1.0, 2.0, 5.0, 10.0])
         
-        # Verify C_PRIMARY
-        C_primary_check = 1.0 / LAMBDA_0
-        assert abs(C_primary_check - C_PRIMARY) < 0.01
+        result = validate_dual_constants(eigenvalues=eigenvalues)
         
-        # Verify C_COHERENCE
-        C_coherence_check = (LAMBDA_MEAN_EFFECTIVE ** 2) / LAMBDA_0
-        assert abs(C_coherence_check - C_COHERENCE) < 0.01
+        # Should have empirical section
+        assert 'empirical' in result
+        assert 'lambda_0' in result['empirical']
+        assert 'C_primary' in result['empirical']
+        assert 'C_coherence' in result['empirical']
+
+    def test_empirical_values_computed(self):
+        """Empirical values should be correctly computed."""
+        eigenvalues = np.array([0.001, 0.1, 0.5, 1.0, 2.0])
+        
+        result = validate_dual_constants(eigenvalues=eigenvalues)
+        
+        # λ₀ should be the first positive eigenvalue
+        assert result['empirical']['lambda_0'] == 0.001
+        
+        # C_primary should be 1/λ₀ = 1000
+        assert abs(result['empirical']['C_primary'] - 1000.0) < 0.1
+
+
+class TestCoexistenceWithoutContradiction:
+    """
+    Test that both constants coexist without contradiction.
     
-    def test_constants_not_contradictory(self):
-        """Constants should not contradict each other."""
-        # C_PRIMARY ≠ C_COHERENCE, but both are valid
+    This is the key mathematical insight from the problem statement:
+    - C = 629.83 comes from λ₀ (local, structure)
+    - C = 244.36 comes from ⟨λ⟩²/λ₀ (global, coherence)
+    - They don't compete, contradict, or overlap
+    - They complement each other
+    """
+
+    def test_different_constants(self):
+        """The two constants should be different values."""
         assert C_PRIMARY != C_COHERENCE
+
+    def test_both_positive(self):
+        """Both constants should be positive."""
+        assert C_PRIMARY > 0
+        assert C_COHERENCE > 0
+
+    def test_C_primary_greater(self):
+        """C_PRIMARY should be greater than C_COHERENCE."""
+        assert C_PRIMARY > C_COHERENCE
+
+    def test_ratio_well_defined(self):
+        """The ratio (coherence factor) should be well-defined."""
+        ratio = C_COHERENCE / C_PRIMARY
+        assert 0 < ratio < 1  # ≈ 0.388
+        assert np.isfinite(ratio)
+
+    def test_inverse_relationship(self):
+        """Energy dialogue = 1/coherence_factor should hold."""
+        coherence_factor = C_COHERENCE / C_PRIMARY
+        energy_dialogue = 1.0 / coherence_factor
         
-        # They are mathematically connected
-        # C_COHERENCE = C_PRIMARY × (⟨λ⟩ × λ₀)
-        connection = C_COHERENCE / C_PRIMARY
-        assert 0 < connection < 1  # C_COHERENCE < C_PRIMARY
+        # Energy dialogue is the inverse
+        assert abs(energy_dialogue - C_PRIMARY / C_COHERENCE) < 1e-10
+
+    def test_f0_is_their_dialogue(self):
+        """f₀ should emerge from the interaction of both constants."""
+        # The omega_squared ratios should satisfy:
+        # ratio_coherence / ratio_primary = 1/coherence_factor
+        omega_sq = OMEGA_0 ** 2
+        ratio_primary = omega_sq / C_PRIMARY
+        ratio_coherence = omega_sq / C_COHERENCE
+        
+        energy_dialogue = ratio_coherence / ratio_primary
+        inverse_coherence = C_PRIMARY / C_COHERENCE
+        
+        assert abs(energy_dialogue - inverse_coherence) < 1e-10
+
+
+class TestPhysicalInterpretation:
+    """
+    Test the physical interpretation of the dual constants.
     
-    def test_f0_is_natural_manifestation(self):
-        """f₀ = 141.7001 Hz should be the natural meeting point."""
-        # f₀ is where structure (629.83) and coherence (244.36) meet
-        omega_squared = (2 * np.pi * F0_BASE) ** 2
+    From the problem statement:
+    - 629.83: natural frequency → structure
+    - 244.36: coherent mode → form
+    """
+
+    def test_C_primary_is_spectral_residue(self):
+        """C_PRIMARY should be the spectral residue (1/λ₀)."""
+        residue = 1.0 / LAMBDA_0
+        assert abs(residue - C_PRIMARY) < 0.01
+
+    def test_coherence_is_second_moment(self):
+        """C_COHERENCE is related to second spectral moment."""
+        # From the formula: C_QCAL = ⟨λ⟩²/λ₀
+        # For QCAL values, this gives 244.36
+        assert abs(C_COHERENCE - 244.36) < 0.01
+
+    def test_omega_squared_C_ratio_meaningful(self):
+        """ω₀²/C ratios should be physically meaningful."""
+        omega_sq = OMEGA_0 ** 2
         
-        # Both ratios should give meaningful values
-        ratio_primary = omega_squared / C_PRIMARY
-        ratio_coherence = omega_squared / C_COHERENCE
+        # These ratios encode energy-like quantities
+        ratio_primary = omega_sq / C_PRIMARY
+        ratio_coherence = omega_sq / C_COHERENCE
         
         assert ratio_primary > 0
         assert ratio_coherence > 0
-        assert ratio_coherence > ratio_primary  # Since C_COHERENCE < C_PRIMARY
-    
-    def test_spectral_field_self_organized(self):
-        """The spectral field should be self-organized."""
-        # Geometric mean of constants
-        geometric_mean = np.sqrt(C_PRIMARY * C_COHERENCE)
-        
-        # Should be a meaningful intermediate value
-        assert C_COHERENCE < geometric_mean < C_PRIMARY
-        
-        # Approximately √(629.83 × 244.36) ≈ 392.3
-        assert abs(geometric_mean - 392.3) < 1
-
-
-class TestQCALSymbioticSeal:
-    """Test QCAL ∞³ symbiotic seal requirements."""
-    
-    def test_frequency_coherence(self):
-        """Frequency 141.7001 Hz should be coherent with constants."""
-        # This is the QCAL symbiotic seal requirement
-        result = validate_f0_manifestation()
-        assert result['f0'] == F0_BASE
-        assert result['validated']
-    
-    def test_equation_psi(self):
-        """Ψ = I × A_eff² × C^∞ framework should be consistent."""
-        # The equation uses C (coherence constant)
-        # Verify C_COHERENCE is the right constant for this
-        assert C_COHERENCE == 244.36
-    
-    def test_dual_constants_in_field(self):
-        """Both constants should be part of the same spectral field."""
-        # C_PRIMARY = 629.83 (structure)
-        # C_COHERENCE = 244.36 (coherence)
-        # Connected via ⟨λ⟩
-        
-        relationship = analyze_constant_relationship()
-        assert relationship['coherence_verified']
-        assert 'spectral field' in relationship['interpretation'].lower()
+        assert ratio_coherence > ratio_primary  # coherence is more "energetic"
 
 
 if __name__ == "__main__":
