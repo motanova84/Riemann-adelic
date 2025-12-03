@@ -35,11 +35,35 @@ from utils.p17_balance_optimality import (
     find_optimal_prime,
     compute_R_psi,
     generate_equilibrium_data,
+    is_prime,
     F0_UNIVERSAL,
     COHERENCE_C,
     OPTIMAL_PRIME,
     REFERENCE_EQUILIBRIUM,
 )
+
+
+class TestIsPrime:
+    """Tests for the is_prime function."""
+    
+    def test_prime_numbers(self):
+        """Test that known primes return True."""
+        primes = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31]
+        for p in primes:
+            assert is_prime(p) is True, f"{p} should be prime"
+    
+    def test_composite_numbers(self):
+        """Test that composite numbers return False."""
+        composites = [4, 6, 8, 9, 10, 12, 14, 15, 16, 18, 20]
+        for n in composites:
+            assert is_prime(n) is False, f"{n} should not be prime"
+    
+    def test_edge_cases(self):
+        """Test edge cases."""
+        assert is_prime(0) is False
+        assert is_prime(1) is False
+        assert is_prime(2) is True
+        assert is_prime(-5) is False
 
 
 class TestBalanceFunction:
