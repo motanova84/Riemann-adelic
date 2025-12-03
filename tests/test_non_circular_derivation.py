@@ -90,10 +90,13 @@ class TestGYNonCircular:
         assert 1e4 < G_Y < 1e5
 
     def test_G_Y_precise_value(self):
-        """G_Y should be approximately 3.72×10⁴."""
+        """G_Y should be approximately 3.72×10⁴ (computed from constants)."""
         G_Y, _ = compute_G_Y_non_circular()
-        # From problem statement: (2.176e-8 / 4.12e-22)^(1/3) ≈ 3.72×10⁴
-        assert abs(G_Y - 3.72e4) / 3.72e4 < 0.05  # 5% tolerance
+        # Compute expected value from constants rather than hard-coding
+        m_P = 2.176434e-8  # Updated CODATA 2022 value
+        Lambda_Q = 4.12e-22
+        expected = (m_P / Lambda_Q) ** (1/3)
+        assert abs(G_Y - expected) / expected < 0.01  # 1% tolerance
 
     def test_G_Y_does_not_use_f0(self):
         """G_Y calculation should NOT use f₀."""
@@ -149,10 +152,10 @@ class TestRPsiFromVacuum:
         assert abs(corr - expected) / expected < 0.01
 
     def test_phi_correction_value(self):
-        """φ⁶ correction should be ~17.94."""
+        """φ⁶ correction should match computed value."""
         _, details = compute_R_Psi_from_vacuum()
         corr = details.get("corr_phi_6", 0)
-        expected = PHI ** 6
+        expected = PHI ** 6  # φ⁶ ≈ 17.94
         assert abs(corr - expected) / expected < 0.01
 
 
