@@ -35,6 +35,7 @@ from utils.non_circular_derivation import (
     LAMBDA_Q,
     PHI,
     ZETA_PRIME_HALF,
+    SCALE_FACTOR_P17,
     # Functions
     compute_G_Y_non_circular,
     compute_R_Psi_from_vacuum,
@@ -249,8 +250,14 @@ class TestEquilibriumFunction:
         assert primes[min_idx] == 11
 
     def test_equilibrium_values_match_problem_statement(self):
-        """Equilibrium values should match the problem statement table."""
-        expected = {
+        """
+        Equilibrium values should match the problem statement table.
+        
+        Reference values from AIK_BEACON_RESONANCEP17_CORRECTED.md:
+        These are computed using equilibrium(p) = exp(π√p/2) / p^(3/2)
+        """
+        # Reference values from the problem statement (rounded to 3 decimal places)
+        reference_values = {
             11: 5.017,
             13: 6.148,
             17: 9.270,
@@ -258,10 +265,11 @@ class TestEquilibriumFunction:
             23: 16.946,
             29: 30.206,
         }
-        for p, exp_val in expected.items():
+        for p, ref_val in reference_values.items():
             actual = equilibrium_function(p)
-            assert abs(actual - exp_val) < 0.01, (
-                f"equilibrium({p}) = {actual:.3f}, expected ~{exp_val}"
+            # Verify actual matches reference within tolerance
+            assert abs(actual - ref_val) < 0.01, (
+                f"equilibrium({p}) = {actual:.3f}, expected ~{ref_val}"
             )
 
 

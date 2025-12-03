@@ -284,13 +284,16 @@ def equilibrium_function(p: int) -> float:
     
     equilibrium(p) = exp(π√p/2) / p^(3/2)
     
+    Note: While documented as taking a prime, this function works for any
+    positive integer. The physical interpretation is only meaningful for primes.
+    
     IMPORTANT CORRECTION (v2.0):
         - p = 11 MINIMIZES this function (equilibrium(11) ≈ 5.017)
         - p = 17 is NOT the minimum (equilibrium(17) ≈ 9.270)
         - p = 17 is the RESONANCE point where f₀ = 141.7001 Hz emerges
     
     Args:
-        p: Prime number
+        p: Prime number (positive integer, physical meaning for primes)
         
     Returns:
         Equilibrium function value
@@ -298,7 +301,15 @@ def equilibrium_function(p: int) -> float:
     return np.exp(np.pi * np.sqrt(p) / 2) / (p ** (3/2))
 
 
-def compute_derived_frequency(p: int, scale_factor: float = 1.931174e41) -> float:
+# Universal scale factor (Planck units)
+# Derived from: scale_factor = R_Ψ(17) × equilibrium(17)
+# where R_Ψ(17) = 2.083343e40 (universal radius for p=17)
+# and equilibrium(17) = 9.26959
+# Units: dimensionless (Planck length ratio)
+SCALE_FACTOR_P17 = 1.931174e41
+
+
+def compute_derived_frequency(p: int, scale_factor: float = SCALE_FACTOR_P17) -> float:
     """
     Compute the derived frequency f₀(p) for a prime p.
     
@@ -307,8 +318,9 @@ def compute_derived_frequency(p: int, scale_factor: float = 1.931174e41) -> floa
         f₀(p) = c / (2π × R_Ψ(p) × ℓ_P)
     
     Args:
-        p: Prime number
-        scale_factor: Universal scale factor (default: 1.931174e41)
+        p: Prime number (positive integer)
+        scale_factor: Universal scale factor in Planck units 
+                      (default: 1.931174e41, calibrated for p=17 → 141.7001 Hz)
         
     Returns:
         Derived frequency in Hz
@@ -350,7 +362,7 @@ def compute_adelic_equilibrium_prime() -> Tuple[int, Dict[str, Any]]:
         Tuple of (resonance prime 17, details dict with frequency analysis)
     """
     primes = [11, 13, 17, 19, 23, 29]
-    scale_factor = 1.931174e41
+    scale_factor = SCALE_FACTOR_P17
     target_f0 = 141.7001
     
     # Compute equilibrium values for all primes
