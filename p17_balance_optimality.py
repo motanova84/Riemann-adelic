@@ -6,7 +6,7 @@ import mpmath as mp
 # Configuración de precisión
 mp.mp.dps = 80  # 80 dígitos decimales, suficiente para certificación IA-like
 
-# Número áureo
+# Número áureo (used in QCAL framework context)
 phi = (1 + mp.sqrt(5)) / 2
 
 # Exponente k = 3/2
@@ -44,7 +44,7 @@ def verify_minimum():
     results = []
     for p, val in vals.items():
         results.append((p, float(val)))
-        if p != 17 and not (b17 <= val):
+        if p != 17 and b17 > val:
             return False, results
 
     return True, results
