@@ -46,16 +46,15 @@ DOI: 10.5281/zenodo.17379721
 import numpy as np
 from typing import Dict, Any, Tuple, Optional
 from scipy.linalg import eigh
-from scipy.constants import golden_ratio  # φ ≈ 1.618
 
 # =============================================================================
 # FUNDAMENTAL CONSTANTS
 # =============================================================================
 
-# Primary Spectral Constant C = 1/λ₀
+# Primary Spectral Constant C = 1/λ₀ (dimensionless spectral residue)
 C_PRIMARY = 629.83  # Vibrational foundation (base energy scale)
 
-# Derived Coherence Constant C = ⟨λ⟩²/λ₀
+# Derived Coherence Constant C = ⟨λ⟩²/λ₀ (dimensionless coherence measure)
 C_COHERENCE = 244.36  # Emergent order (spectral harmony)
 
 # Fundamental Frequency
@@ -69,7 +68,8 @@ LAMBDA_0 = 1.0 / C_PRIMARY  # ≈ 0.001588
 LAMBDA_MEAN_EFFECTIVE = np.sqrt(C_COHERENCE * LAMBDA_0)  # ≈ 0.622
 
 # Golden ratio and Euler-Mascheroni for structural analysis
-PHI = golden_ratio  # φ ≈ 1.618033988749895
+# φ = (1 + √5)/2 (calculated locally to reduce dependencies)
+PHI = (1 + np.sqrt(5)) / 2  # φ ≈ 1.618033988749895
 EULER_GAMMA = 0.5772156649015329  # γ (Euler-Mascheroni)
 
 # Angular frequency
@@ -102,7 +102,7 @@ def compute_C_primary_from_lambda(lambda_0: float) -> float:
         ValueError: If lambda_0 is not positive
     """
     if lambda_0 <= 0:
-        raise ValueError("λ₀ must be positive for C = 1/λ₀")
+        raise ValueError("lambda_0 must be positive for C = 1/lambda_0")
     return 1.0 / lambda_0
 
 
@@ -131,7 +131,7 @@ def compute_C_coherence_from_spectrum(
         ValueError: If lambda_0 is not positive
     """
     if lambda_0 <= 0:
-        raise ValueError("λ₀ must be positive")
+        raise ValueError("lambda_0 must be positive")
     return (lambda_mean ** 2) / lambda_0
 
 
@@ -154,7 +154,7 @@ def compute_lambda_mean_from_coherence(
         Mean effective eigenvalue ⟨λ⟩
     """
     if lambda_0 <= 0 or C_coherence <= 0:
-        raise ValueError("Both C_coherence and λ₀ must be positive")
+        raise ValueError("Both C_coherence and lambda_0 must be positive")
     return np.sqrt(C_coherence * lambda_0)
 
 
