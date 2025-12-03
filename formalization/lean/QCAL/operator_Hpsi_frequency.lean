@@ -108,9 +108,9 @@ lemma ω₀_pos : 0 < ω₀ := by
 /-- The curvature term is positive -/
 lemma curvature_pos : 0 < ω₀^2 := sq_pos_of_pos ω₀_pos
 
-/-- Operator linearity in ψ -/
-lemma Hψ_linear_ψ (Δψ : ℝ) (ψ₁ ψ₂ : ℝ) (a b : ℝ) :
-    Hψ Δψ (a * ψ₁ + b * ψ₂) = a * ω₀^2 * ψ₁ + b * ω₀^2 * ψ₂ - Δψ := by
+/-- Operator scaling in ψ: Hψ(Δψ)(c·ψ) = c·ω₀²·ψ - Δψ -/
+lemma Hψ_scale_ψ (Δψ : ℝ) (ψ : ℝ) (c : ℝ) :
+    Hψ Δψ (c * ψ) = c * ω₀^2 * ψ - Δψ := by
   unfold Hψ; ring
 
 /-!

@@ -90,23 +90,6 @@ The central result proves that the detected frequency, computed from
 Casimir theory with the universal rescaling, exactly matches f₀.
 -/
 
-/-- Teorema: la frecuencia detectada coincide exactamente con f₀ --/
-theorem LIGO_detects_f0 :
-    f_detected = f₀ := by
-  unfold f_detected k A_LIGO
-  simp only [one_mul]
-  have h_ratio_pos : 0 ≤ f₀ / f_Casimir_raw := by
-    unfold f₀ f_Casimir_raw; norm_num
-  rw [Real.sqrt_sq h_ratio_pos]
-  unfold f₀ f_Casimir_raw
-  field_simp
-
-/-!
-## Auxiliary Properties
-
-These lemmas establish positivity and basic properties of the physical constants.
--/
-
 /-- The universal frequency is positive -/
 lemma f₀_pos : 0 < f₀ := by
   unfold f₀; norm_num
@@ -124,6 +107,20 @@ lemma k_pos : 0 < k := by
 /-- The LIGO amplitude is positive -/
 lemma A_LIGO_pos : 0 < A_LIGO := by
   unfold A_LIGO; norm_num
+
+/-- Ratio of frequencies is non-negative -/
+lemma f_ratio_nonneg : 0 ≤ f₀ / f_Casimir_raw := 
+  le_of_lt (div_pos f₀_pos f_Casimir_raw_pos)
+
+/-- Teorema: la frecuencia detectada coincide exactamente con f₀ --/
+theorem LIGO_detects_f0 :
+    f_detected = f₀ := by
+  unfold f_detected k A_LIGO
+  simp only [one_mul]
+  rw [Real.sqrt_sq f_ratio_nonneg]
+  -- Now we need: (f₀ / f_Casimir_raw) * f_Casimir_raw = f₀
+  have hne : f_Casimir_raw ≠ 0 := ne_of_gt f_Casimir_raw_pos
+  field_simp [hne]
 
 /-- The detected frequency is positive -/
 lemma f_detected_pos : 0 < f_detected := by

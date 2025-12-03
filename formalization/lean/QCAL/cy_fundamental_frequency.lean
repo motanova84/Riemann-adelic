@@ -68,25 +68,6 @@ to the raw CY mode precisely yields the QCAL universal frequency f₀.
 This demonstrates that f₀ has a geometric origin in the Calabi-Yau structure.
 -/
 
-/-- El modo fundamental geométrico ajustado coincide exactamente con f₀ --/
-theorem CY_frequency_collapse :
-    Real.sqrt (k_geom * f_geom_raw^2) = f₀ := by
-  have hpos : 0 ≤ k_geom * f_geom_raw^2 := by
-    apply mul_nonneg
-    · unfold k_geom; exact sq_nonneg _
-    · exact sq_nonneg _
-  unfold k_geom f_geom_raw f₀
-  have h1 : (141.7001 / 157.9519)^2 * 157.9519^2 = 141.7001^2 := by ring
-  rw [h1]
-  have h2 : (0:ℝ) ≤ 141.7001^2 := sq_nonneg _
-  exact Real.sqrt_sq (by norm_num : (0:ℝ) ≤ 141.7001)
-
-/-!
-## Auxiliary Properties
-
-These lemmas establish basic properties of the geometric constants.
--/
-
 /-- The raw geometric mode is positive -/
 lemma f_geom_raw_pos : 0 < f_geom_raw := by
   unfold f_geom_raw; norm_num
@@ -104,6 +85,18 @@ lemma k_geom_pos : 0 < k_geom := by
 /-- Volume normalization is positive -/
 lemma Vol_CY_pos : 0 < Vol_CY := by
   unfold Vol_CY; norm_num
+
+/-- El modo fundamental geométrico ajustado coincide exactamente con f₀ --/
+theorem CY_frequency_collapse :
+    Real.sqrt (k_geom * f_geom_raw^2) = f₀ := by
+  have hpos : 0 ≤ k_geom * f_geom_raw^2 := by
+    apply mul_nonneg
+    · exact le_of_lt k_geom_pos
+    · exact sq_nonneg _
+  unfold k_geom f_geom_raw f₀
+  have h1 : (141.7001 / 157.9519)^2 * 157.9519^2 = 141.7001^2 := by ring
+  rw [h1]
+  exact Real.sqrt_sq (le_of_lt f₀_pos)
 
 end QCAL.Script19
 
