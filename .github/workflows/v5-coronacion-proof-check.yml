@@ -171,6 +171,17 @@ jobs:
         python -m pip install --upgrade pip==24.3.1
         pip install -r requirements.txt
         
+    - name: Run V5 Coronación Main Validation Script
+      run: |
+        echo "🏆 Running V5 Coronación main validation script..."
+        
+        # Run the main validation script with light parameters for CI
+        python3 validate_v5_coronacion.py --precision 15 --verbose
+        
+        # Save logs
+        mkdir -p logs
+        echo "V5 Coronación validation completed at $(date)" > logs/v5_coronacion_run.log
+        
     - name: Run Complete V5 Validation Suite
       run: |
         echo "🔍 Running comprehensive V5 Coronación validation..."
