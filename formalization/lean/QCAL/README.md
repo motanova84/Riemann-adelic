@@ -130,6 +130,12 @@ formalization/lean/QCAL/
 ├── operator_Hpsi_frequency.lean      # Script 20: Hψ integration with f₀
 ├── casimir_ligo_frequency.lean       # Script 21: Casimir + LIGO → f₀
 └── README.md                         # This file
+│   ├── Bridge.lean          # Lean FFI interface
+│   ├── libbridge.c          # C FFI bridge
+│   └── libbridge.so         # Compiled shared library
+├── UniversalKernel.lean     # High-level API
+├── frequency_identity.lean  # Script 18: Frequency scaling identity
+└── README.md                # This file
 
 tools/
 ├── universal_kernel.py      # Python verifier
@@ -137,6 +143,47 @@ tools/
 
 schema/
 └── metadatos_ejemplo.jsonld # Example metadata
+
+tests/
+└── test_frequency_identity.py  # Numerical validation (50 dps)
+```
+
+## Frequency Identity Module (Script 18)
+
+The `frequency_identity.lean` module formalizes the mathematical relationship between the universal base frequency (f₀ = 141.7001 Hz) and the raw geometric frequency (f_raw = 157.9519 Hz) in the QCAL framework.
+
+### Mathematical Foundation
+
+The scaling transformation uses:
+- **Universal base frequency**: f₀ = 141.7001 Hz
+- **Raw geometric frequency**: f_raw = 157.9519 Hz  
+- **Scaling factor**: k = (f₀ / f_raw)²
+- **Rescaled angular frequency**: ω₀ = √(k × (2π × f_raw)²)
+
+### Core Identity
+
+The central theorem proves:
+```
+ω₀ = 2π f₀
+```
+
+This identity ensures that the rescaled angular frequency exactly equals `2π` times the universal base frequency, validating the coherence of the QCAL frequency system.
+
+### Theorems Proved
+
+| Theorem | Statement | Description |
+|---------|-----------|-------------|
+| `frequency_fixed` | ω₀ = 2π f₀ | Core frequency identity |
+| `frequency_fixed_sq` | ω₀² = (2π f₀)² | Squared form of identity |
+| `frequency_fixed_abs` | \|ω₀\| = 2π f₀ | Absolute value (positive root) |
+
+### Numerical Validation
+
+The Python test suite (`tests/test_frequency_identity.py`) validates these identities with **50 decimal places precision** using mpmath:
+
+```python
+# Run validation tests
+pytest tests/test_frequency_identity.py -v
 ```
 
 ## QCAL Universal Frequency Scripts
@@ -149,6 +196,23 @@ Integrates f₀ into the noetic operator Hψ := -Δ + ω₀².
 
 ### Script 21: Physical Validation (`casimir_ligo_frequency.lean`)
 Validates f₀ through Casimir effect and LIGO O4 observations.
+### Compatibility
+
+This module is compatible with all QCAL operators:
+- Hψ (Hilbert-Pólya operator)
+- Lψ (L-operator)
+- ΔΦ (Phase difference operator)
+- Ξ (Xi function)
+- ζ′(1/2) (Zeta derivative at critical line)
+- V_eff (Effective potential)
+- Casimir operator
+- Schatten-Paley operators
+
+### References
+
+- [QCAL Framework Documentation](../../README.md)
+- [Riemann Hypothesis Formalization](../RH_final_v6.lean)
+- [Universal Kernel API](./UniversalKernel.lean)
 
 ## Requirements
 
