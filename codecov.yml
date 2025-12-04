@@ -61,7 +61,12 @@ ignore:
 flags:
   unittests:
     paths:
-      - "!tests/**/*"
+      - "utils/**/*"
+      - "spectral_RH/**/*"
+      - "inversion/**/*"
+      - "dualidad/**/*"
+      - "unicidad/**/*"
+      - "operador/**/*"
     carryforward: true
   validation:
     paths:
