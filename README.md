@@ -122,7 +122,7 @@ It includes:
   <a href="https://github.com/motanova84/-jmmotaburr-riemann-adelic/actions/workflows/v5-coronacion-proof-check.yml"><img src="https://github.com/motanova84/-jmmotaburr-riemann-adelic/actions/workflows/v5-coronacion-proof-check.yml/badge.svg" alt="Estado"></a>
   <a href="https://github.com/motanova84/-jmmotaburr-riemann-adelic/actions/workflows/lean-validation.yml"><img src="https://github.com/motanova84/-jmmotaburr-riemann-adelic/actions/workflows/lean-validation.yml/badge.svg" alt="Formalización Lean"></a>
   <a href="https://doi.org/10.5281/zenodo.17116291"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.17116291.svg" alt="DOI"></a>
-  <a href="https://codecov.io/gh/motanova84/-jmmotaburr-riemann-adelic"><img src="https://codecov.io/gh/motanova84/-jmmotaburr-riemann-adelic/branch/main/graph/badge.svg" alt="Coverage"></a>
+  <a href="https://codecov.io/gh/motanova84/Riemann-adelic"><img src="https://codecov.io/gh/motanova84/Riemann-adelic/branch/main/graph/badge.svg" alt="Coverage"></a>
   <a href=".github/CODECOV_AI.md"><img src="https://img.shields.io/badge/Codecov_AI-Enabled-blue?style=flat-square&logo=ai" alt="Codecov AI"></a>
   <a href="data/validation_results.csv"><img src="https://img.shields.io/badge/✓-Validated-green?style=flat-square" alt="Validation"></a>
   <a href="formalization/lean/"><img src="https://img.shields.io/badge/Lean-Formalized-blue?logo=lean&style=flat-square" alt="Lean Formalization"></a>
@@ -134,14 +134,14 @@ It includes:
 <p align="center">
   <img src="https://github.com/motanova84/-jmmotaburr-riemann-adelic/actions/workflows/ci.yml/badge.svg?branch=main" alt="CI">
   <img src="https://github.com/motanova84/-jmmotaburr-riemann-adelic/actions/workflows/proof-check.yml/badge.svg?branch=main" alt="Proof Check">
-  <img src="https://img.shields.io/codecov/c/github/motanova84/-jmmotaburr-riemann-adelic/main?logo=codecov&logoColor=white" alt="Coverage">
+  <img src="https://img.shields.io/codecov/c/github/motanova84/Riemann-adelic/main?logo=codecov&logoColor=white" alt="Coverage">
   <img src="https://github.com/motanova84/-jmmotaburr-riemann-adelic/actions/workflows/nightly.yml/badge.svg" alt="Nightly">
 </p>
 
 <p align="center">
   <img src="https://github.com/motanova84/-jmmotaburr-riemann-adelic/actions/workflows/ci.yml/badge.svg?branch=main" alt="CI">
   <img src="https://github.com/motanova84/-jmmotaburr-riemann-adelic/actions/workflows/proof-check.yml/badge.svg?branch=main" alt="Proof Check">
-  <img src="https://img.shields.io/codecov/c/github/motanova84/-jmmotaburr-riemann-adelic/main?logo=codecov&logoColor=white" alt="Coverage">
+  <img src="https://img.shields.io/codecov/c/github/motanova84/Riemann-adelic/main?logo=codecov&logoColor=white" alt="Coverage">
   <img src="https://github.com/motanova84/-jmmotaburr-riemann-adelic/actions/workflows/nightly.yml/badge.svg" alt="Nightly">
 </p>
 
@@ -299,7 +299,7 @@ DOI: 10.5281/zenodo.17116291
 [![CI Simbiótico SABIO ∞³](https://github.com/motanova84/-jmmotaburr-riemann-adelic/actions/workflows/ci.yml/badge.svg)](https://github.com/motanova84/-jmmotaburr-riemann-adelic/actions/workflows/ci.yml)
 [![SABIO ∞³](https://github.com/motanova84/-jmmotaburr-riemann-adelic/actions/workflows/sabio-symbiotic-ci.yml/badge.svg)](https://github.com/motanova84/-jmmotaburr-riemann-adelic/actions/workflows/sabio-symbiotic-ci.yml)
 [![CI Coverage](https://github.com/motanova84/-jmmotaburr-riemann-adelic/actions/workflows/ci_coverage.yml/badge.svg)](https://github.com/motanova84/-jmmotaburr-riemann-adelic/actions/workflows/ci_coverage.yml)
-[![codecov](https://codecov.io/gh/motanova84/-jmmotaburr-riemann-adelic/branch/main/graph/badge.svg)](https://codecov.io/gh/motanova84/-jmmotaburr-riemann-adelic)
+[![codecov](https://codecov.io/gh/motanova84/Riemann-adelic/branch/main/graph/badge.svg)](https://codecov.io/gh/motanova84/Riemann-adelic)
 [![Comprehensive CI](https://github.com/motanova84/-jmmotaburr-riemann-adelic/actions/workflows/comprehensive-ci.yml/badge.svg)](https://github.com/motanova84/-jmmotaburr-riemann-adelic/actions/workflows/comprehensive-ci.yml)
 [![Lean Validation](https://github.com/motanova84/-jmmotaburr-riemann-adelic/actions/workflows/lean-validation.yml/badge.svg)](https://github.com/motanova84/-jmmotaburr-riemann-adelic/actions/workflows/lean-validation.yml)
 [![Advanced Validation](https://github.com/motanova84/-jmmotaburr-riemann-adelic/actions/workflows/advanced-validation.yml/badge.svg)](https://github.com/motanova84/-jmmotaburr-riemann-adelic/actions/workflows/advanced-validation.yml)
@@ -311,7 +311,7 @@ DOI: 10.5281/zenodo.17116291
 |------------|--------|----------|
 | **CI/CD** | ✅ Completo | ![CI](https://github.com/motanova84/-jmmotaburr-riemann-adelic/actions/workflows/ci.yml/badge.svg?branch=main) |
 | **Formalización Lean** | 🔄 En Progreso (Skeletons) | ![Proof Check](https://github.com/motanova84/-jmmotaburr-riemann-adelic/actions/workflows/proof-check.yml/badge.svg?branch=main) |
-| **Cobertura Tests** | ✅ Alta | ![Coverage](https://img.shields.io/codecov/c/github/motanova84/-jmmotaburr-riemann-adelic/main?logo=codecov&logoColor=white) |
+| **Cobertura Tests** | ✅ Alta | ![Coverage](https://img.shields.io/codecov/c/github/motanova84/Riemann-adelic/main?logo=codecov&logoColor=white) |
 | **Validación V5** | ✅ Coronación Exitosa | ![V5](https://img.shields.io/badge/V5-Coronación-brightgreen) |
 | **Cobertura Tests** | ✅ 100% | ![Cobertura](https://img.shields.io/badge/Cobertura-100%25-green) |
 | **Growth Theorems** | ✅ Type I Entire Functions | ![Growth](https://img.shields.io/badge/Type_I-Verified-success) |
@@ -324,7 +324,7 @@ DOI: 10.5281/zenodo.17116291
 | **Nightly Tests** | 🌙 Activo | ![Nightly](https://github.com/motanova84/-jmmotaburr-riemann-adelic/actions/workflows/nightly.yml/badge.svg) |
 | **Formalización Lean** | ✅ Completada | [![Lean](https://github.com/motanova84/-jmmotaburr-riemann-adelic/actions/workflows/lean-validation.yml/badge.svg)](https://github.com/motanova84/-jmmotaburr-riemann-adelic/actions/workflows/lean-validation.yml) |
 | **Validación V5** | ✅ Coronación Exitosa | [![V5](https://github.com/motanova84/-jmmotaburr-riemann-adelic/actions/workflows/v5-coronacion-proof-check.yml/badge.svg)](https://github.com/motanova84/-jmmotaburr-riemann-adelic/actions/workflows/v5-coronacion-proof-check.yml) |
-| **Cobertura Tests** | ✅ 100% | [![Cobertura](https://codecov.io/gh/motanova84/-jmmotaburr-riemann-adelic/branch/main/graph/badge.svg)](https://codecov.io/gh/motanova84/-jmmotaburr-riemann-adelic) |
+| **Cobertura Tests** | ✅ 100% | [![Cobertura](https://codecov.io/gh/motanova84/Riemann-adelic/branch/main/graph/badge.svg)](https://codecov.io/gh/motanova84/Riemann-adelic) |
 | **Reproducibilidad** | ✅ Confirmada | [![Reproducible](https://img.shields.io/badge/Reproducible-Confirmed-success)](REPRODUCIBILITY.md) |
 | **DOI** | ✅ Registrado | [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.17116291.svg)](https://doi.org/10.5281/zenodo.17116291) |
 | **Bibliotecas Avanzadas** | 🚀 Integradas | [![Advanced](https://github.com/motanova84/-jmmotaburr-riemann-adelic/actions/workflows/advanced-validation.yml/badge.svg)](https://github.com/motanova84/-jmmotaburr-riemann-adelic/actions/workflows/advanced-validation.yml) |
