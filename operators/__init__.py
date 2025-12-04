@@ -32,7 +32,9 @@ from .riemann_operator import (
     F0,
     OMEGA_0,
     ZETA_PRIME_HALF,
-    C_QCAL
+    C_QCAL,
+    LAMBDA_0,
+    C_UNIVERSAL
 )
 
 from .discrete_symmetry_operator import DiscreteSymmetryOperator
@@ -101,6 +103,8 @@ __all__ = [
     'OMEGA_0',
     'ZETA_PRIME_HALF',
     'C_QCAL',
+    'LAMBDA_0',
+    'C_UNIVERSAL',
     'DiscreteSymmetryOperator',
     'OperatorConnection',
     # Noetic operator exports

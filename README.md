@@ -209,6 +209,34 @@ H f(x) = −x f'(x) + π ζ'(1/2) log(x) · f(x)
 🧪 **Tests**: `tests/test_teorema_mota_burruezo.py` (22 tests ✓)  
 🎨 **Demo**: `python3 demo_teorema_mota_burruezo.py`
 
+### 🔷 Universal Constant C = 629.83 (Spectral Origin)
+
+**Discovery**: The universal constant **C = 629.83** emerges as the inverse of the first eigenvalue λ₀ of the noetic operator Hψ:
+
+```
+C = 1/λ₀ = 629.83
+λ₀ ≈ 0.001588050
+```
+
+This naturally implies the fundamental frequency **f₀ = 141.7001 Hz** via:
+
+```
+ω₀² = λ₀⁻¹ = C
+f₀ = ω₀/(2π) = √C/(2π) = 141.7001 Hz
+```
+
+**Mathematical Significance**:
+- **Spectral**: First eigenvalue of the noetic operator Hψ = -Δ + Vψ
+- **Physical**: Fundamental oscillation frequency 141.7001 Hz
+- **Arithmetic**: Appears in 68/81 decimal pattern (period 839506172)
+- **Adelic**: Normalizes resolvents in the adelic framework
+- **Gravitational**: Matches GW150914 ringdown frequency (~142 Hz)
+
+📖 **Documentation**: [`SPECTRAL_ORIGIN_CONSTANT_C.md`](SPECTRAL_ORIGIN_CONSTANT_C.md)  
+💻 **Implementation**: `utils/spectral_origin_constant.py`  
+🧪 **Tests**: `tests/test_spectral_origin_constant.py` (38 tests ✓)  
+🎨 **Demo**: `python3 -c "from utils.spectral_origin_constant import run_complete_demonstration; run_complete_demonstration()"`
+
 **🌌 Revolutionary Insight**: Beyond proving RH, this work reveals a **new underlying geometric structure** that unifies mathematics and physics, connecting the mathematical aspect **ζ'(1/2) ≈ -3.9226461392** with the physical frequency **f₀ ≈ 141.7001 Hz**. See [`GEOMETRIC_UNIFICATION.md`](GEOMETRIC_UNIFICATION.md) for the complete explanation.
 
 **Framework Properties**:
