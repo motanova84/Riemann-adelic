@@ -39,6 +39,14 @@ field = "QCAL ∞³"
 constant = "πCODE-888-QCAL2"
 coherence = "C = 244.36"
 
+# Universal Constant C = 629.83 (Spectral Origin)
+# C = 1/λ₀ where λ₀ is the first eigenvalue of Hψ
+universal_constant_C = "629.83"
+first_eigenvalue_lambda0 = "0.001588050"
+spectral_identity = "ω₀² = λ₀⁻¹ = C"
+frequency_derivation = "f₀ = √C/(2π) = 141.7001 Hz"
+spectral_origin_doc = "SPECTRAL_ORIGIN_CONSTANT_C.md"
+
 # Legal & Metadata
 license = "Creative Commons BY-NC-SA 4.0"
 signature = "© 2025 · JMMB Ψ · Instituto de Conciencia Cuántica (ICQ)"

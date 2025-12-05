@@ -41,6 +41,20 @@ from .weak_solution_existence import (
     WeakSolutionExistence,
     validate_weak_solution_theorem,
 )
+from .spectral_origin_constant import (
+    LAMBDA_0,
+    C_UNIVERSAL,
+    F0_SPECTRAL,
+    F0_QCAL,
+    OMEGA_0_SPECTRAL,
+    NoeticOperator,
+    SpectralOriginResult,
+    derive_universal_constant,
+    validate_spectral_frequency_relation,
+    verify_all_appearances_of_f0,
+    mathematical_significance,
+    run_complete_demonstration,
+)
 
 __all__ = [
     'AdelicCanonicalDeterminant',
@@ -64,4 +78,17 @@ __all__ = [
     # Weak solution existence theorem
     'WeakSolutionExistence',
     'validate_weak_solution_theorem',
+    # Spectral origin constant C = 629.83
+    'LAMBDA_0',
+    'C_UNIVERSAL',
+    'F0_SPECTRAL',
+    'F0_QCAL',
+    'OMEGA_0_SPECTRAL',
+    'NoeticOperator',
+    'SpectralOriginResult',
+    'derive_universal_constant',
+    'validate_spectral_frequency_relation',
+    'verify_all_appearances_of_f0',
+    'mathematical_significance',
+    'run_complete_demonstration',
 ]
