@@ -2,13 +2,8 @@
 Repository watcher module for Noesis Guardian 3.0.
 
 Provides simple structure scanning of the repository.
-#!/usr/bin/env python3
-"""
-NOESIS GUARDIAN 3.0 — Repository Watcher Module
 
-Monitors the repository structure and detects missing or modified critical files.
-
-Author: José Manuel Mota Burruezo (JMMB Ψ ✧)
+Author: Jose Manuel Mota Burruezo (JMMB)
 """
 
 import os
@@ -16,11 +11,6 @@ from typing import Dict, List
 
 
 class RepoWatcher:
-    """Escaneo muy simple de estructura mínima esperada."""
-
-    def __init__(self) -> None:
-        """Initialize the watcher with expected paths."""
-        self.expected_paths: List[str] = [
     """
     Repository structure monitoring component.
 
@@ -37,21 +27,6 @@ class RepoWatcher:
             "tests",
         ]
 
-    def scan(self) -> Dict:
-        """
-        Scan the repository for expected paths.
-
-        Returns:
-            Dict with 'missing' list and 'errors' boolean.
-        """
-        missing: List[str] = []
-        for path in self.expected_paths:
-            if not os.path.exists(path):
-                missing.append(path)
-
-        return {
-            "missing": missing,
-            "errors": bool(missing),
     def scan(self) -> Dict[str, object]:
         """
         Scan the repository for expected files and directories.

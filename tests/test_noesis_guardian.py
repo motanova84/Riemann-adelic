@@ -182,12 +182,18 @@ class TestPanelDashboard:
         captured = capsys.readouterr()
 
         assert "Panel Noesis Guardian 3.0" in captured.out
-Test suite for NOESIS GUARDIAN ∞³
+
+
+# =============================================================================
+# Additional tests for the Guardian watcher and autorepair modules
+# =============================================================================
+"""
+Test suite for NOESIS GUARDIAN - Watcher and Autorepair Modules
 
 This test suite validates the guardian functionality for the QCAL framework,
 ensuring proper monitoring and self-repair capabilities.
 
-Author: José Manuel Mota Burruezo (JMMB Ψ ✧)
+Author: Jose Manuel Mota Burruezo (JMMB)
 """
 
 import os
