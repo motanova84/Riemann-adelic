@@ -4,11 +4,38 @@
 
 This repository uses Codecov for code coverage reporting and now supports Codecov AI, an AI-powered assistant developed by Codecov at Sentry. Codecov AI helps review code changes and provides improvement suggestions before merging pull requests.
 
+## ⚠️ Important: Install Codecov GitHub App
+
+To ensure reliable processing of coverage uploads and PR comments, the Codecov GitHub App must be installed:
+
+### Installing Codecov GitHub App (Required)
+
+1. Visit: **[https://github.com/apps/codecov](https://github.com/apps/codecov)**
+2. Click "Install" and select the `motanova84` organization
+3. Grant permissions to the `Riemann-adelic` repository (or all repositories)
+4. The app will enable:
+   - ✅ Reliable coverage uploads
+   - ✅ PR comments with coverage reports
+   - ✅ Coverage badge generation (SVG)
+   - ✅ Status checks on PRs
+
+### Codecov Badge
+
+Once installed, use this SVG badge in your README:
+
+```markdown
+[![codecov](https://codecov.io/gh/motanova84/Riemann-adelic/graph/badge.svg)](https://codecov.io/gh/motanova84/Riemann-adelic)
+```
+
+Preview: [![codecov](https://codecov.io/gh/motanova84/Riemann-adelic/graph/badge.svg)](https://codecov.io/gh/motanova84/Riemann-adelic)
+
 ## Current Configuration
 
 The repository is configured to upload coverage reports to Codecov through GitHub Actions workflows:
 - `.github/workflows/ci_coverage.yml` - Coverage workflow for core tests
+- `.github/workflows/coverage.yml` - Standard coverage workflow
 - `.github/workflows/advanced-validation.yml` - Advanced validation with coverage
+- `codecov.yml` - Codecov configuration file
 
 ## Tokenless Upload
 

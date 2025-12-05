@@ -30,11 +30,14 @@ jobs:
       - name: Run tests with coverage
         run: pytest --cov=. --cov-report=xml --cov-report=term
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4
+        uses: codecov/codecov-action@v5
         continue-on-error: true
         with:
           files: ./coverage.xml
           fail_ci_if_error: false
+          flags: unittests
+          name: codecov-qcal
+          verbose: true
           # Note: Token is optional as organization supports tokenless uploads
           # Administrators manage token configuration globally
           token: ${{ secrets.CODECOV_TOKEN }}
