@@ -511,12 +511,16 @@ def compute_adelic_equilibrium_prime() -> Tuple[int, Dict[str, Any]]:
         "primes_tested": primes,
         "equilibrium_values": eq_values,
         "frequencies_hz": frequencies,
+        "frequency_values": frequencies,  # Alias for backward compatibility
         "frequency_errors": frequency_errors,
         "scale_factor": scale_factor,
         "target_f0": target_f0,
+        "target_frequency": target_f0,  # Alias for backward compatibility
         "minimum_equilibrium_prime": min_eq_prime,
+        "equilibrium_minimum_p": min_eq_prime,  # Alias for backward compatibility  
         "minimum_equilibrium_value": eq_values[min_eq_prime],
         "resonance_prime": resonance_prime,
+        "resonance_frequency": frequencies[resonance_prime],  # Add resonance frequency
         "optimal_prime": optimal_p,
         "physical_interpretation": physical_interpretation,
         "correction_note": (

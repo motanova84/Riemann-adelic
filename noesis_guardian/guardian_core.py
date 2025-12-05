@@ -45,6 +45,9 @@ if __name__ == "__main__":
 else:
     from .modules.coherency_hooks import CoherencyHooks
 
+# Log file path for Guardian activity
+LOGFILE = "noesis_guardian/logs/guardian_log.json"
+
 
 class Notifier:
     """Simple notification handler for Guardian alerts."""
@@ -108,6 +111,15 @@ class NoesisGuardian:
         self.logs_dir.mkdir(parents=True, exist_ok=True)
 
         self.log_file = self.logs_dir / "guardian_log.json"
+        
+        # Initialize components for compatibility with tests
+        from .modules.watcher import RepoWatcher
+        from .modules.autorepair_engine import AutoRepairEngine
+        from .modules.spectral_monitor import SpectralMonitor
+        
+        self.watcher = RepoWatcher()
+        self.repair_engine = AutoRepairEngine()
+        self.spectral_monitor = SpectralMonitor()
 
     @staticmethod
     def _find_repo_root() -> Path:
@@ -259,6 +271,31 @@ class NoesisGuardian:
             json.dump(log_data, f, indent=2, default=str)
 
         print(f"📝 Log saved to: {self.log_file}")
+
+    def run(self) -> Dict[str, Any]:
+        """
+        Run the Guardian and produce a log entry.
+        
+        This is an alias for run_cycle() for backward compatibility.
+        
+        Returns:
+            Dictionary with complete cycle results.
+        """
+        entry = {
+            "timestamp": datetime.now(timezone.utc).isoformat(),
+            "repo": self.get_repo_state(),
+            "spectral": self.spectral_monitor.check(),
+        }
+        return entry
+
+    def log(self, entry: Dict[str, Any]) -> None:
+        """
+        Log an entry to the log file.
+        
+        Args:
+            entry: Entry data to log
+        """
+        self._save_log(entry)
 
 
 def main():

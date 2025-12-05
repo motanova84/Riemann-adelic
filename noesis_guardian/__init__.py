@@ -16,7 +16,32 @@ Features:
 
 from .guardian_core import NoesisGuardian
 from .modules.coherency_hooks import CoherencyHooks
+from .watcher import RepoWatcher, SORRY_THRESHOLD, MAX_UNICODE_ISSUES
+from .guardian import (
+    noesis_heartbeat,
+    autorepair,
+    run_cycle,
+    FREQ,
+    LOGFILE,
+    LEAN_REBUILD_TIMEOUT,
+    OPERATOR_VERIFICATION_TIMEOUT,
+    DAEMON_INTERVAL
+)
 
-__all__ = ["NoesisGuardian", "CoherencyHooks"]
+__all__ = [
+    "NoesisGuardian",
+    "CoherencyHooks",
+    "RepoWatcher",
+    "noesis_heartbeat",
+    "autorepair",
+    "run_cycle",
+    "FREQ",
+    "LOGFILE",
+    "LEAN_REBUILD_TIMEOUT",
+    "OPERATOR_VERIFICATION_TIMEOUT",
+    "DAEMON_INTERVAL",
+    "SORRY_THRESHOLD",
+    "MAX_UNICODE_ISSUES",
+]
 __version__ = "3.0.0"
 __author__ = 'JMMB'
