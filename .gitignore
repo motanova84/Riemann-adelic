@@ -198,3 +198,4 @@ G4_spectrum_plot.png
 # NOESIS Guardian generated files
 .noesis_backups/
 noesis_guardian/guardian_log.json
+_codeql_detected_source_root/

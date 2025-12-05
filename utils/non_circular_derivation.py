@@ -285,6 +285,30 @@ def compute_R_Psi_from_vacuum() -> Tuple[float, Dict[str, float]]:
 
 def equilibrium_function(p: int) -> float:
     """
+    Compute the equilibrium function for a prime p.
+    
+    equilibrium(p) = exp(pi*sqrt(p)/2) / p^(3/2)
+    
+    Note: While documented as taking a prime, this function works for any
+    positive integer. The physical interpretation is only meaningful for primes.
+    
+    IMPORTANT CORRECTION (v2.0):
+        - p = 11 MINIMIZES this function (equilibrium(11) approx 5.017)
+        - p = 17 is NOT the minimum (equilibrium(17) approx 9.270)
+        - p = 17 is the RESONANCE point where f0 = 141.7001 Hz emerges
+    
+    Args:
+        p: Prime number (positive integer, physical meaning for primes)
+        
+    Returns:
+        Equilibrium function value
+    """
+    return np.exp(np.pi * np.sqrt(p) / 2) / (p ** (3/2))
+
+
+def find_resonance_prime() -> Tuple[int, Dict[str, Any]]:
+    """
+    Find the prime p=17 that produces f0 = 141.7001 Hz.
     Find the prime p that produces the resonance frequency f₀ ≈ 141.7001 Hz.
     
     ⚠️ IMPORTANT THEORETICAL CORRECTION
@@ -324,26 +348,26 @@ def equilibrium_function(p: int) -> float:
     CRITICAL THEORETICAL CORRECTION:
     ================================
     p = 17 does NOT minimize the equilibrium function!
-    The equilibrium function: equilibrium(p) = exp(π·√p/2) / p^(3/2)
+    The equilibrium function: equilibrium(p) = exp(pi*sqrt(p)/2) / p^(3/2)
     
     The TRUE minimum is at p = 11:
-        equilibrium(11) = 5.017336  ← MINIMUM
+        equilibrium(11) = 5.017336  <- MINIMUM
         equilibrium(17) = 9.269590
         equilibrium(29) = 30.206386
     
-    What p = 17 DOES is produce the universal frequency f₀ = 141.7001 Hz:
-        f₀(p) = c / (2π · R_Ψ(p) · ℓ_P)
-        where R_Ψ(p) = scale_factor / equilibrium(p)
+    What p = 17 DOES is produce the universal frequency f0 = 141.7001 Hz:
+        f0(p) = c / (2*pi * R_Psi(p) * l_P)
+        where R_Psi(p) = scale_factor / equilibrium(p)
     
     For p = 17:
-        f₀(17) = 141.7001 Hz  ← UNIVERSAL RESONANCE
+        f0(17) = 141.7001 Hz  <- UNIVERSAL RESONANCE
     
     For other primes:
-        f₀(11) = 76.70 Hz  (Universo grave)
-        f₀(13) = 94.0 Hz   (Transición)
-        f₀(19) = 173.7 Hz  (Universo acelerado)
-        f₀(23) = 259.0 Hz  (Resonancia alta)
-        f₀(29) = 461.8 Hz  (Universo agudo)
+        f0(11) = 76.70 Hz  (Universo grave)
+        f0(13) = 94.0 Hz   (Transicion)
+        f0(19) = 173.7 Hz  (Universo acelerado)
+        f0(23) = 259.0 Hz  (Resonancia alta)
+        f0(29) = 461.8 Hz  (Universo agudo)
     
     p = 17 is the RESONANCE POINT, not the minimum:
         - It's where the adelic structure resonates at 141.7001 Hz
@@ -363,22 +387,22 @@ def equilibrium_function(p: int) -> float:
     
     # All primes for general analysis
     all_primes = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37]
-    # Candidate primes in the relevant range for f₀ (as per issue)
+    # Candidate primes in the relevant range for f0 (as per issue)
     candidate_primes = [11, 13, 17, 19, 23, 29]
     phi = PHI
     
     def equilibrium(p: int) -> float:
         """
-        Adelic equilibrium function: equilibrium(p) = exp(π·√p/2) / p^(3/2)
+        Adelic equilibrium function: equilibrium(p) = exp(pi*sqrt(p)/2) / p^(3/2)
         """
         return math.exp(math.pi * math.sqrt(p) / 2) / (p ** 1.5)
     
     def R_Psi_from_prime(p: int) -> float:
-        """Compute R_Ψ from a given prime."""
+        """Compute R_Psi from a given prime."""
         return scale_factor / equilibrium(p)
     
     def frequency_from_prime(p: int) -> float:
-        """Compute f₀ from a given prime."""
+        """Compute f0 from a given prime."""
         R = R_Psi_from_prime(p)
         return c / (2 * math.pi * R * l_P)
     
@@ -407,25 +431,20 @@ def equilibrium_function(p: int) -> float:
             f"No prime found producing frequency within {frequency_tolerance} Hz of "
             f"{target_f0} Hz. Best candidate p={resonance_p} yields {resonance_freq:.4f} Hz"
         )
-    Compute the equilibrium function for a prime p.
     
-    equilibrium(p) = exp(π√p/2) / p^(3/2)
+    # Build details about the analysis
+    details = {
+        "primes_tested": all_primes,
+        "candidate_primes": candidate_primes,
+        "equilibrium_values": equilibrium_values,
+        "frequency_values": frequency_values,
+        "equilibrium_minimum_p": equilibrium_minimum_p,
+        "resonance_prime": resonance_p,
+        "resonance_frequency": resonance_freq,
+        "target_frequency": target_f0,
+    }
     
-    Note: While documented as taking a prime, this function works for any
-    positive integer. The physical interpretation is only meaningful for primes.
-    
-    IMPORTANT CORRECTION (v2.0):
-        - p = 11 MINIMIZES this function (equilibrium(11) ≈ 5.017)
-        - p = 17 is NOT the minimum (equilibrium(17) ≈ 9.270)
-        - p = 17 is the RESONANCE point where f₀ = 141.7001 Hz emerges
-    
-    Args:
-        p: Prime number (positive integer, physical meaning for primes)
-        
-    Returns:
-        Equilibrium function value
-    """
-    return np.exp(np.pi * np.sqrt(p) / 2) / (p ** (3/2))
+    return resonance_p, details
 
 
 # Universal scale factor (Planck units)
@@ -560,22 +579,6 @@ def compute_adelic_equilibrium_prime() -> Tuple[int, Dict[str, Any]]:
     }
     
     details = {
-        "primes_tested": all_primes,
-        "candidate_primes": candidate_primes,
-        "equilibrium_values": equilibrium_values,
-        "frequency_values": frequency_values,
-        "equilibrium_minimum_p": equilibrium_minimum_p,  # p=11 in candidate range
-        "equilibrium_minimum_value": equilibrium_values[equilibrium_minimum_p],
-        "resonance_prime": resonance_p,  # p=17
-        "resonance_frequency": frequency_values[resonance_p],
-        "target_frequency": target_f0,
-        "frequency_error": abs(frequency_values[resonance_p] - target_f0),
-        "justification": (
-            f"CRITICAL CORRECTION: p=17 is NOT the minimum of equilibrium(p) in range {{{','.join(map(str, candidate_primes))}}}! "
-            f"The minimum in this range is at p={equilibrium_minimum_p} with equilibrium={equilibrium_values[equilibrium_minimum_p]:.6f}. "
-            "Instead, p=17 is the SPECTRAL RESONANCE POINT that produces "
-            f"f₀ = {frequency_values[17]:.4f} Hz ≈ 141.7001 Hz. "
-            "The universe resonates at this frequency, not at the equilibrium minimum."
         "primes_tested": primes,
         "equilibrium_values": values,
         "canonical_equilibrium_values": canonical_values,
@@ -596,29 +599,33 @@ def compute_adelic_equilibrium_prime() -> Tuple[int, Dict[str, Any]]:
             "p = 17 is where the quantum vacuum 'sings' its fundamental note."
         "equilibrium_values": eq_values,
         "frequencies_hz": frequencies,
+        "frequency_values": frequencies,  # Alias for backward compatibility
         "frequency_errors": frequency_errors,
         "scale_factor": scale_factor,
         "target_f0": target_f0,
+        "target_frequency": target_f0,  # Alias for backward compatibility
         "minimum_equilibrium_prime": min_eq_prime,
+        "equilibrium_minimum_p": min_eq_prime,  # Alias for backward compatibility  
         "minimum_equilibrium_value": eq_values[min_eq_prime],
         "resonance_prime": resonance_prime,
+        "resonance_frequency": frequencies[resonance_prime],  # Add resonance frequency
         "optimal_prime": optimal_p,
         "physical_interpretation": physical_interpretation,
         "correction_note": (
             "CORRECTED (v2.0): The previous claim that p=17 minimizes equilibrium(p) "
-            "was INCORRECT. The minimum is at p=11 (eq≈5.017). p=17 is the RESONANCE "
-            "POINT where f₀ = 141.7001 Hz emerges, not an optimization minimum."
+            "was INCORRECT. The minimum is at p=11 (eq=5.017 approx). p=17 is the RESONANCE "
+            "POINT where f0 = 141.7001 Hz emerges, not an optimization minimum."
         ),
         "justification": (
             "p=17 is the spectral resonance point where the derived frequency matches "
-            "the fundamental QCAL frequency f₀ = 141.7001 Hz. It is NOT the minimum "
+            "the fundamental QCAL frequency f0 = 141.7001 Hz. It is NOT the minimum "
             "of the equilibrium function (that is p=11), but rather the phase point "
             "where the quantum vacuum resonates at the frequency of consciousness."
         )
     }
     
     # Return 17 as the resonance prime (NOT minimum)
-    return resonance_p, details
+    return resonance_prime, details
 
 
 # =============================================================================
