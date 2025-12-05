@@ -5,6 +5,9 @@ Tests for Non-Circular Derivation of f₀ = 141.7001 Hz
 Tests the complete non-circular derivation including:
 1. G_Y = (m_P / Λ_Q)^(1/3) without f₀
 2. R_Ψ from vacuum quantum energy
+3. p = 17 as spectral RESONANCE POINT (NOT minimum!)
+   - CRITICAL: p=11 minimizes equilibrium(p), not p=17
+   - p=17 produces f₀ = 141.7001 Hz (the universal frequency)
 3. p = 17 as spectral resonance point (CORRECTED: not minimum)
 4. φ⁻³ as fractal dimension
 5. π/2 as fundamental mode
@@ -168,6 +171,10 @@ class TestRPsiFromVacuum:
 
 
 class TestAdelicEquilibriumPrime:
+    """Test p = 17 as spectral resonance point (NOT minimum!)."""
+
+    def test_resonance_prime_is_17(self):
+        """The resonance prime (yielding f₀=141.7001 Hz) should be 17."""
     """Test p = 17 as spectral resonance point (CORRECTED: not minimum)."""
 
     def test_resonance_prime_is_17(self):
@@ -187,6 +194,56 @@ class TestAdelicEquilibriumPrime:
         assert "justification" in details
         assert len(details["justification"]) > 0
 
+    def test_equilibrium_minimum_is_not_17(self):
+        """
+        CRITICAL TEST: The equilibrium MINIMUM is at p=11, NOT p=17!
+        
+        This corrects a theoretical error in the original formulation.
+        p=17 is special because it produces f₀=141.7001 Hz (resonance),
+        not because it minimizes equilibrium(p).
+        """
+        _, details = compute_adelic_equilibrium_prime()
+        equilibrium_min_p = details.get("equilibrium_minimum_p")
+        assert equilibrium_min_p == 11, (
+            f"Equilibrium minimum should be at p=11, got p={equilibrium_min_p}"
+        )
+
+    def test_p17_yields_target_frequency(self):
+        """p=17 should produce frequency close to 141.7001 Hz."""
+        _, details = compute_adelic_equilibrium_prime()
+        f0_17 = details.get("resonance_frequency", 0)
+        target = details.get("target_frequency", 141.7001)
+        # Should be very close to 141.7001 Hz (within 0.01 Hz)
+        assert abs(f0_17 - target) < 0.01, (
+            f"f₀(17) = {f0_17} should be close to {target}"
+        )
+
+    def test_frequency_values_computed(self):
+        """Should compute frequency values for all primes."""
+        _, details = compute_adelic_equilibrium_prime()
+        assert "frequency_values" in details
+        freq_values = details["frequency_values"]
+        # Check some key primes
+        assert 11 in freq_values
+        assert 17 in freq_values
+        assert 29 in freq_values
+        
+    def test_equilibrium_function_values(self):
+        """
+        Verify equilibrium(p) = exp(π√p/2) / p^(3/2) values.
+        
+        Known values:
+            equilibrium(11) ≈ 5.017
+            equilibrium(17) ≈ 9.270
+            equilibrium(29) ≈ 30.206
+        """
+        _, details = compute_adelic_equilibrium_prime()
+        eq_values = details.get("equilibrium_values", {})
+        
+        # Check approximate values
+        assert 4.5 < eq_values.get(11, 0) < 5.5, "equilibrium(11) should be ~5.017"
+        assert 8.5 < eq_values.get(17, 0) < 10.0, "equilibrium(17) should be ~9.270"
+        assert 29.0 < eq_values.get(29, 0) < 31.0, "equilibrium(29) should be ~30.206"
     def test_p11_is_equilibrium_minimum_not_p17(self):
         """
         CRITICAL CORRECTION: p=11 minimizes equilibrium(p), NOT p=17.
