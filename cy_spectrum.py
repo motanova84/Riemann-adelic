@@ -32,11 +32,13 @@ DOI: 10.5281/zenodo.17379721
 """
 
 import numpy as np
+from scipy.stats import gamma as gamma_dist
 from typing import Tuple, Optional, Dict
 
 
 # Fundamental constants for QCAL framework
-KAPPA_PI_EXPECTED = 2.5773  # Expected invariant value (rounded)
+# Note: MU2_TARGET / MU1_TARGET = 2.5782, rounded to KAPPA_PI_EXPECTED = 2.5773
+KAPPA_PI_EXPECTED = 2.5782  # Expected invariant value from SageMath verification
 KAPPA_PI_TOLERANCE = 0.02   # Tolerance for verification (2% for finite sample)
 F0_FREQUENCY = 141.7001     # Fundamental frequency in Hz
 COHERENCE_C = 244.36        # QCAL coherence constant
@@ -186,7 +188,7 @@ class CYLaplacianSpectrum:
             # Gamma distribution parameters derived from moment matching
             # For Gamma(k, θ):
             #   E[λ] = kθ = μ₁
-            #   E[λ²] = kθ²(1+k) = μ₂
+            #   E[λ²] = k(k+1)θ² = Var + E² = μ₂
             # Solving: k = μ₁²/(μ₂ - μ₁²), θ = μ₁/k
             k_shape = mu1_target**2 / (mu2_target - mu1_target**2)  # ≈ 0.7703
             theta = mu1_target / k_shape  # ≈ 1.4564
@@ -194,8 +196,6 @@ class CYLaplacianSpectrum:
             # For reproducibility and accuracy, use quantile-based sampling
             # This ensures the sample moments match the theoretical moments better
             # by using stratified sampling (Latin Hypercube style)
-
-            from scipy.stats import gamma as gamma_dist
 
             # Create probability quantiles evenly spaced
             quantiles = (np.arange(1, num_nonzero + 1) - 0.5) / num_nonzero

@@ -332,7 +332,7 @@ class TestConstants:
 
     def test_kappa_pi_expected(self):
         """Test expected κ_Π value."""
-        assert KAPPA_PI_EXPECTED == 2.5773
+        assert KAPPA_PI_EXPECTED == 2.5782
 
     def test_kappa_pi_tolerance(self):
         """Test tolerance value."""
@@ -358,8 +358,8 @@ class TestConstants:
         """Test that target moments give correct κ_Π."""
         kappa_from_targets = MU2_TARGET / MU1_TARGET
 
-        # Should match expected κ_Π (with small rounding difference)
-        assert abs(kappa_from_targets - KAPPA_PI_EXPECTED) < 0.001
+        # Should match expected κ_Π exactly
+        assert abs(kappa_from_targets - KAPPA_PI_EXPECTED) < 0.0001
 
 
 if __name__ == "__main__":
