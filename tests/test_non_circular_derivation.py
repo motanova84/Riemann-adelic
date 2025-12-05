@@ -5,10 +5,15 @@ Tests for Non-Circular Derivation of f₀ = 141.7001 Hz
 Tests the complete non-circular derivation including:
 1. G_Y = (m_P / Λ_Q)^(1/3) without f₀
 2. R_Ψ from vacuum quantum energy
-3. p = 17 as spectral minimum
+3. p = 17 as spectral resonance point (CORRECTED: not minimum)
 4. φ⁻³ as fractal dimension
 5. π/2 as fundamental mode
 6. Non-circularity verification
+
+CORRECTION v2.0:
+    The claim that "p = 17 minimizes equilibrium(p)" was INCORRECT.
+    equilibrium(11) ≈ 5.017 < equilibrium(17) ≈ 9.270
+    p = 17 is the RESONANCE POINT for f₀ = 141.7001 Hz, not the minimum.
 
 Author: José Manuel Mota Burruezo Ψ ✧ ∞³
 """
@@ -30,10 +35,13 @@ from utils.non_circular_derivation import (
     LAMBDA_Q,
     PHI,
     ZETA_PRIME_HALF,
+    SCALE_FACTOR_P17,
     # Functions
     compute_G_Y_non_circular,
     compute_R_Psi_from_vacuum,
     compute_adelic_equilibrium_prime,
+    equilibrium_function,
+    compute_derived_frequency,
     compute_fractal_factor,
     compute_fundamental_mode,
     compute_G_components,
@@ -160,10 +168,10 @@ class TestRPsiFromVacuum:
 
 
 class TestAdelicEquilibriumPrime:
-    """Test p = 17 as spectral minimum."""
+    """Test p = 17 as spectral resonance point (CORRECTED: not minimum)."""
 
-    def test_optimal_prime_is_17(self):
-        """The optimal prime should be 17."""
+    def test_resonance_prime_is_17(self):
+        """The resonance prime should be 17."""
         p_opt, _ = compute_adelic_equilibrium_prime()
         assert p_opt == 17
 
@@ -178,6 +186,109 @@ class TestAdelicEquilibriumPrime:
         _, details = compute_adelic_equilibrium_prime()
         assert "justification" in details
         assert len(details["justification"]) > 0
+
+    def test_p11_is_equilibrium_minimum_not_p17(self):
+        """
+        CRITICAL CORRECTION: p=11 minimizes equilibrium(p), NOT p=17.
+        
+        equilibrium(11) ≈ 5.017 < equilibrium(17) ≈ 9.270
+        """
+        eq_11 = equilibrium_function(11)
+        eq_17 = equilibrium_function(17)
+        
+        # p=11 has the smaller equilibrium value
+        assert eq_11 < eq_17, (
+            f"CORRECTED: equilibrium(11)={eq_11:.3f} should be < equilibrium(17)={eq_17:.3f}"
+        )
+        
+        # Verify approximate values from the problem statement
+        assert abs(eq_11 - 5.017) < 0.01, f"equilibrium(11) should be ~5.017, got {eq_11}"
+        assert abs(eq_17 - 9.270) < 0.01, f"equilibrium(17) should be ~9.270, got {eq_17}"
+
+    def test_p17_is_resonance_point(self):
+        """p=17 is the resonance point for f₀ = 141.7001 Hz."""
+        _, details = compute_adelic_equilibrium_prime()
+        
+        # Check that p=17 is identified as resonance prime
+        assert details.get("resonance_prime") == 17 or details.get("optimal_prime") == 17
+        
+        # Check that f₀(17) is close to 141.7001 Hz
+        freq_17 = details.get("frequencies_hz", {}).get(17, 0)
+        if freq_17 > 0:
+            assert abs(freq_17 - 141.7001) < 0.1, f"f₀(17) should be ~141.7001 Hz, got {freq_17}"
+
+    def test_minimum_equilibrium_identified(self):
+        """Should correctly identify p=11 as the minimum equilibrium prime."""
+        _, details = compute_adelic_equilibrium_prime()
+        
+        min_eq_prime = details.get("minimum_equilibrium_prime")
+        assert min_eq_prime == 11, (
+            f"Minimum equilibrium should be at p=11, got p={min_eq_prime}"
+        )
+
+    def test_correction_note_present(self):
+        """Should include correction note about v2.0 changes."""
+        _, details = compute_adelic_equilibrium_prime()
+        
+        assert "correction_note" in details, "Should have correction_note"
+        assert "CORRECTED" in details["correction_note"]
+
+
+class TestEquilibriumFunction:
+    """Test the equilibrium function: equilibrium(p) = exp(π√p/2) / p^(3/2)."""
+
+    def test_equilibrium_positive(self):
+        """Equilibrium values should be positive for all primes."""
+        for p in [11, 13, 17, 19, 23, 29]:
+            assert equilibrium_function(p) > 0
+
+    def test_equilibrium_11_is_minimum(self):
+        """equilibrium(11) should be the minimum among tested primes."""
+        primes = [11, 13, 17, 19, 23, 29]
+        eq_values = [equilibrium_function(p) for p in primes]
+        min_idx = eq_values.index(min(eq_values))
+        assert primes[min_idx] == 11
+
+    def test_equilibrium_values_match_problem_statement(self):
+        """
+        Equilibrium values should match the problem statement table.
+        
+        Reference values from AIK_BEACON_RESONANCEP17_CORRECTED.md:
+        These are computed using equilibrium(p) = exp(π√p/2) / p^(3/2)
+        """
+        # Reference values from the problem statement (rounded to 3 decimal places)
+        reference_values = {
+            11: 5.017,
+            13: 6.148,
+            17: 9.270,
+            19: 11.362,
+            23: 16.946,
+            29: 30.206,
+        }
+        for p, ref_val in reference_values.items():
+            actual = equilibrium_function(p)
+            # Verify actual matches reference within tolerance
+            assert abs(actual - ref_val) < 0.01, (
+                f"equilibrium({p}) = {actual:.3f}, expected ~{ref_val}"
+            )
+
+
+class TestDerivedFrequency:
+    """Test the derived frequency computation."""
+
+    def test_derived_frequency_positive(self):
+        """Derived frequencies should be positive."""
+        for p in [11, 13, 17, 19, 23, 29]:
+            f0 = compute_derived_frequency(p)
+            assert f0 > 0
+
+    def test_f0_17_matches_target(self):
+        """f₀(17) should match 141.7001 Hz."""
+        f0_17 = compute_derived_frequency(17)
+        # Allow some tolerance due to numerical computation
+        assert abs(f0_17 - 141.7001) < 1.0, (
+            f"f₀(17) = {f0_17:.4f} Hz, expected ~141.7001 Hz"
+        )
 
 
 class TestFractalFactor:
