@@ -86,7 +86,7 @@ def adelic_kernel (χ : ℕ → ℂ) (φ : ℂ → ℂ) (s : ℂ) : ℂ :=
     
     Nota: La suma empieza en n=1 para evitar log(0) y división por cero. -/
 def D_χ (χ : ℕ → ℂ) (φ : ℂ → ℂ) : ℂ → ℂ :=
-  fun s ↦ exp (-∑' n : ℕ, if n = 0 then 0 else χ n * φ (s + Real.log n) / n)
+  fun s ↦ exp (-∑' n : ℕ, if n = 0 then 0 else χ n * φ (s + Real.log (n : ℝ)) / n)
 
 /-! ## Holomorphy Axiom -/
 
