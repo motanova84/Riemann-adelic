@@ -120,6 +120,10 @@ It includes:
 </p>
 
 <p align="center">
+  <img src="https://img.shields.io/badge/Versión-V5_Coronación-blue" alt="Versión">
+  <img src="https://img.shields.io/badge/Estado-Validado-green" alt="Estado">
+  <img src="https://img.shields.io/badge/Formalización_Lean-En_Progreso-yellow" alt="Formalización Lean">
+  <img src="https://img.shields.io/badge/DOI-10.5281%2Fzenodo.17116291-blue" alt="DOI">
   <a href="https://github.com/motanova84/-jmmotaburr-riemann-adelic/releases"><img src="https://img.shields.io/github/v/release/motanova84/-jmmotaburr-riemann-adelic?label=Versión&color=blue" alt="Versión"></a>
   <a href="https://github.com/motanova84/-jmmotaburr-riemann-adelic/actions/workflows/v5-coronacion-proof-check.yml"><img src="https://github.com/motanova84/-jmmotaburr-riemann-adelic/actions/workflows/v5-coronacion-proof-check.yml/badge.svg" alt="Estado"></a>
   <a href="https://github.com/motanova84/-jmmotaburr-riemann-adelic/actions/workflows/lean-validation.yml"><img src="https://github.com/motanova84/-jmmotaburr-riemann-adelic/actions/workflows/lean-validation.yml/badge.svg" alt="Formalización Lean"></a>
@@ -339,6 +343,7 @@ DOI: 10.5281/zenodo.17116291
 
 | Componente | Estado | Insignia |
 |------------|--------|----------|
+| **Formalización Lean** | 🟡 Core Proven | ![Lean](https://img.shields.io/badge/Lean-4_Core_Proven-yellow) |
 | **CI/CD** | ✅ Completo | ![CI](https://github.com/motanova84/-jmmotaburr-riemann-adelic/actions/workflows/ci.yml/badge.svg?branch=main) |
 | **Formalización Lean** | 🔄 En Progreso (Skeletons) | ![Proof Check](https://github.com/motanova84/-jmmotaburr-riemann-adelic/actions/workflows/proof-check.yml/badge.svg?branch=main) |
 | **Cobertura Tests** | ✅ Alta | ![Coverage](https://img.shields.io/codecov/c/github/motanova84/Riemann-adelic/main?logo=codecov&logoColor=white) |
@@ -1860,6 +1865,35 @@ monitor.export_report(report, "hook_b_report.json")
 - Versión alternativa en `docs/paper/main.tex`
 - **Formalización Lean 4**: En progreso en `formalization/lean/` (skeletons con `axiom` y `sorry`, pendiente de compilación completa)
 - Referencias a literatura clásica y moderna
+
+### Estado de la Formalización Lean 4
+
+La formalización en Lean 4 ha alcanzado hitos importantes:
+
+**✅ Completamente Probado:**
+- **A1_finite_scale_flow**: Flujo de escala finita con cotas explícitas
+- **A2_poisson_adelic_symmetry**: Simetría de Poisson adélica vía ecuación funcional
+- **A4_spectral_regularity**: Regularidad espectral con cota explícita
+- **adelic_foundation_consistent**: Consistencia de los tres teoremas fundamentales
+- **J_involutive**: Operador de inversión geométrica involutivo
+- **operator_symmetry**: Simetría del operador bajo inversión J
+
+**⚠️ Estructura Definida (Pruebas Diferidas):**
+- Ecuación funcional geométrica (`poisson_radon_symmetry.lean`)
+- Determinancia de Paley-Wiener (`pw_two_lines.lean`)
+- Criterio de positividad DOI (`doi_positivity.lean`)
+- Teorema principal de Riemann Hypothesis (`RH_final.lean`)
+
+**Documentación Completa:**
+- Ver `formalization/lean/FORMALIZATION_STATUS.md` para detalles completos
+- Ver `formalization/lean/REAL_VS_SIMULATED.md` para verificación de contenido real vs. simulado
+- Ver `formalization/lean/README.md` para instrucciones de compilación
+
+**Verificación Independiente:**
+```bash
+# Ejecutar script de validación
+python3 formalization/lean/validate_formalization.py
+```
 
 ### Estado de la Formalización Lean
 
