@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-12-06T20:02:11.142988+00:00",
+  "timestamp": "2025-12-06T22:53:19.472924+00:00",
   "project": "Riemann-Adelic Formalization V5.3",
   "lean_version": "Lean (version 4.5.0, commit 1a3021f98e55, Release)",
   "build_success": false,
@@ -24,7 +24,7 @@
     },
     "RH_final.lean": {
       "exists": true,
-      "sorries": 11,
+      "sorries": 12,
       "verified": false
     }
   },
