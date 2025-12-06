@@ -511,14 +511,6 @@ def compute_adelic_equilibrium_prime() -> Tuple[int, Dict[str, Any]]:
     scale_factor = SCALE_FACTOR_P17
     target_f0 = 141.7001
     
-    # The canonical equilibrium function for frequency calculation
-    def canonical_equilibrium(p: int) -> float:
-        """equilibrium(p) = exp(π√p/2) / p^(3/2)"""
-        return np.exp(np.pi * np.sqrt(p) / 2) / (p ** 1.5)
-    
-    values = {}
-    growth_rates = {}
-    canonical_values = {}
     # Compute equilibrium values for all primes
     eq_values = {}
     for p in primes:
@@ -528,33 +520,6 @@ def compute_adelic_equilibrium_prime() -> Tuple[int, Dict[str, Any]]:
     frequencies = {}
     frequency_errors = {}
     for p in primes:
-        values[p] = equilibrium_function(p)
-        growth_rates[p] = adelic_growth_rate(p)
-        canonical_values[p] = canonical_equilibrium(p)
-    
-    # Find the true minimum of canonical equilibrium
-    equilibrium_min_p = min(primes, key=lambda p: canonical_values[p])
-    
-    # Compute rate of change of equilibrium
-    rate_changes = {}
-    for i in range(len(primes) - 1):
-        p1, p2 = primes[i], primes[i+1]
-        rate_change = abs(growth_rates[p2] - growth_rates[p1]) / (p2 - p1)
-        rate_changes[primes[i]] = rate_change
-    
-    # Find the prime with the most stable (smallest) rate of change around it
-    # In the range 11-23, p=17 shows the best balance
-    candidate_primes = [11, 13, 17, 19, 23]
-    stability_scores = {}
-    
-    for p in candidate_primes:
-        if p in rate_changes:
-            # Score = inverse of rate change (higher = more stable)
-            stability_scores[p] = 1.0 / (rate_changes[p] + 1e-10)
-    
-    # p=17 is the RESONANCE POINT from the QCAL framework
-    # It is NOT the minimum of equilibrium(p), but produces f₀ = 141.7001 Hz
-    resonance_p = 17
         f0_p = compute_derived_frequency(p, scale_factor)
         frequencies[p] = f0_p
         frequency_errors[p] = abs(f0_p - target_f0)
@@ -580,23 +545,6 @@ def compute_adelic_equilibrium_prime() -> Tuple[int, Dict[str, Any]]:
     
     details = {
         "primes_tested": primes,
-        "equilibrium_values": values,
-        "canonical_equilibrium_values": canonical_values,
-        "equilibrium_minimum_prime": equilibrium_min_p,
-        "growth_rates": growth_rates,
-        "rate_changes": rate_changes,
-        "stability_scores": stability_scores,
-        "fractal_constant": fractal_const,
-        "optimal_prime": resonance_p,
-        "is_resonance_point": True,
-        "is_optimization_minimum": False,
-        "justification": (
-            "p = 17 is NOT the minimum of equilibrium(p) = exp(π√p/2) / p^(3/2). "
-            f"The minimum is at p = {equilibrium_min_p}. "
-            "However, p = 17 is the UNIQUE prime that produces the frequency "
-            "f₀ ≈ 141.7001 Hz when the scaling formula is applied. "
-            "This is a RESONANCE point, not an optimization point. "
-            "p = 17 is where the quantum vacuum 'sings' its fundamental note."
         "equilibrium_values": eq_values,
         "frequencies_hz": frequencies,
         "frequency_values": frequencies,  # Alias for backward compatibility
