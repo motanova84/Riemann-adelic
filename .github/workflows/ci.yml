@@ -1,22 +1,63 @@
-# CI: instala dependencias, cache de pip, lint (opcional) y ejecuta tests.
-# Este workflow corre en cada push a main y en pull requests
 name: CI
 
+# Workflow CI básico para Python
+# Ejecuta en push a main/master y en todos los PRs
 on:
   push:
-    branches: [ main ]
+    branches: [ main, master ]
   pull_request:
-    branches: [ main ]
-  workflow_dispatch:
-
-permissions:
-  contents: read
+    branches: [ main, master ]
 
 permissions:
   contents: read
 
 jobs:
   test:
+    name: Test Python ${{ matrix.python-version }}
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        # Puedes personalizar las versiones de Python según tus necesidades
+        python-version: ['3.10', '3.11']
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ matrix.python-version }}
+    
+    - name: Cache pip dependencies
+      uses: actions/cache@v4
+      with:
+        path: ~/.cache/pip
+        key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
+        restore-keys: |
+          ${{ runner.os }}-pip-
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+    
+    # Opcional: Ejecutar linter (flake8, black, etc.)
+    # Descomenta si quieres activar linting
+    # - name: Lint with flake8
+    #   run: |
+    #     pip install flake8
+    #     # Para fallar en errores críticos
+    #     flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+    #     # Para advertencias generales (no bloquea)
+    #     flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+    
+    - name: Run tests with pytest
+      run: |
+        # Ejecuta la suite de tests. Personaliza los argumentos según necesites
+        pytest tests/ -v --tb=short
+      # Puedes añadir más opciones como --maxfail=1 para detener al primer fallo
     runs-on: ubuntu-latest
     strategy:
       matrix:

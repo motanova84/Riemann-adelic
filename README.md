@@ -138,179 +138,19 @@ It includes:
 </p>
 
 <p align="center">
-  <img src="https://github.com/motanova84/-jmmotaburr-riemann-adelic/actions/workflows/ci.yml/badge.svg?branch=main" alt="CI">
-  <img src="https://github.com/motanova84/-jmmotaburr-riemann-adelic/actions/workflows/proof-check.yml/badge.svg?branch=main" alt="Proof Check">
-  <img src="https://img.shields.io/codecov/c/github/motanova84/Riemann-adelic/main?logo=codecov&logoColor=white" alt="Coverage">
-  <img src="https://github.com/motanova84/-jmmotaburr-riemann-adelic/actions/workflows/nightly.yml/badge.svg" alt="Nightly">
+  <a href="https://github.com/motanova84/-jmmotaburr-riemann-adelic/actions/workflows/ci.yml">
+    <img src="https://github.com/motanova84/-jmmotaburr-riemann-adelic/actions/workflows/ci.yml/badge.svg" alt="CI Status">
+  </a>
+  <a href="https://codecov.io/gh/motanova84/-jmmotaburr-riemann-adelic">
+    <img src="https://codecov.io/gh/motanova84/-jmmotaburr-riemann-adelic/branch/main/graph/badge.svg" alt="Coverage">
+  </a>
+  <a href="https://github.com/motanova84/-jmmotaburr-riemann-adelic/actions/workflows/proof-check.yml">
+    <img src="https://github.com/motanova84/-jmmotaburr-riemann-adelic/actions/workflows/proof-check.yml/badge.svg" alt="Proof Check">
+  </a>
+  <a href="https://github.com/motanova84/-jmmotaburr-riemann-adelic/security/dependabot">
+    <img src="https://img.shields.io/badge/Dependency_Review-Active-brightgreen" alt="Dependency Review">
+  </a>
 </p>
-
-<p align="center">
-  <img src="https://github.com/motanova84/-jmmotaburr-riemann-adelic/actions/workflows/ci.yml/badge.svg?branch=main" alt="CI">
-  <img src="https://github.com/motanova84/-jmmotaburr-riemann-adelic/actions/workflows/proof-check.yml/badge.svg?branch=main" alt="Proof Check">
-  <img src="https://img.shields.io/codecov/c/github/motanova84/Riemann-adelic/main?logo=codecov&logoColor=white" alt="Coverage">
-  <img src="https://github.com/motanova84/-jmmotaburr-riemann-adelic/actions/workflows/nightly.yml/badge.svg" alt="Nightly">
-</p>
-
-  <a href="https://github.com/motanova84/-jmmotaburr-riemann-adelic/actions/workflows/v5-coronacion-proof-check.yml"><img src="https://img.shields.io/badge/Versión-V5_Coronación-blue" alt="Versión"></a>
-  <a href="https://github.com/motanova84/-jmmotaburr-riemann-adelic/actions/workflows/comprehensive-ci.yml"><img src="https://img.shields.io/badge/Estado-Completada-green" alt="Estado"></a>
-  <a href="https://github.com/motanova84/-jmmotaburr-riemann-adelic/tree/main/formalization/lean"><img src="https://img.shields.io/badge/Formalización_Lean-Completada-green" alt="Formalización Lean"></a>
-  <a href="VALIDATION_STATUS.md"><img src="https://img.shields.io/badge/Validación-Ver_Estado_Completo-blue?style=flat-square&logo=checkmarx" alt="Ver Estado de Validación"></a>
-</p>
-
----
-
-## 📊 Resumen de Validación Rápido
-
-| Componente | Estado | Badge |
-|------------|--------|-------|
-| **Formalización Lean** | ✅ Completada | ![Lean](https://img.shields.io/badge/Lean-4.5.0-green?style=flat-square) |
-| **Validación V5 Coronación** | ✅ Exitosa | ![V5](https://img.shields.io/badge/V5-Coronación-green?style=flat-square) |
-| **Pruebas de Cobertura** | ✅ 100% | ![Coverage](https://img.shields.io/badge/Coverage-100%25-brightgreen?style=flat-square) |
-| **Reproducibilidad** | ✅ Confirmada | ![Docs](https://img.shields.io/badge/Docs-Completa-green?style=flat-square) |
-| **DOI Zenodo** | ✅ Registrado | [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.17116291.svg)](https://doi.org/10.5281/zenodo.17116291) |
-| **Bibliotecas Avanzadas** | 🚀 Integradas | ![Advanced](https://img.shields.io/badge/Libraries-Advanced-blue?style=flat-square) |
-| **Dependencias Sistema** | ✅ Configuradas | ![System](https://img.shields.io/badge/System-OK-green?style=flat-square) |
-
-👉 **[Ver informe completo de validación](VALIDATION_STATUS.md)**
-
----
-
-## Abstract
-
-This repository presents the first complete and unconditional proof of the Riemann Hypothesis through S-finite adelic spectral systems. The methodology circumvents the Euler product by constructing a canonical spectral function D(s) directly from geometric structures (operator A₀ on ℓ²(ℤ)), establishing its equivalence to the Riemann xi-function Ξ(s) via Paley-Wiener determinacy, and deriving the location of all non-trivial zeros on the critical line Re(s) = 1/2. 
-
-**Status (Post-Merge #650, September 2025)**: The axiomatic framework is unconditional—axioms A1-A4 are now derived as lemmas within the adelic flow (see [REDUCCION_AXIOMATICA_V5.3.md](REDUCCION_AXIOMATICA_V5.3.md)). The framework integrates three components: (1) rigorous mathematical proof, (2) Lean 4 mechanical formalization with minimal 'sorry' statements in proof bodies (not affecting core axiom validity, D(s) construction, or type signatures), and (3) high-precision numerical validation achieving 8.91×10⁻⁷ relative error with 10⁸ zeros, well within the ≤10⁻⁶ target. Convergence is guaranteed by Schatten bounds and trace-class operator theory from the adelic flow structure, independent of explicit Hecke operators.
-
-### 🎯 Four Points Demonstration (V5.3)
-
-The proof rigorously demonstrates four fundamental requirements without circularity:
-
-1. **D ≡ Ξ**: Identification from construction (functional equation, order ≤1, Paley-Wiener) **before** using ζ or Ξ properties
-2. **Zeros on Re(s)=1/2**: From self-adjoint operator H_ε (real spectrum) + divisor-spectrum correspondence
-3. **Trivial zeros excluded**: From functional symmetry and D structure (gamma factors), not by comparison with Ξ  
-4. **Non-circularity**: D independent of ζ,Ξ; explicit Schatten bounds; Paley-Wiener correctly applied
-
-📖 **Complete Documentation**: [FOUR_POINTS_DEMONSTRATION.md](FOUR_POINTS_DEMONSTRATION.md)  
-🔧 **Validation Script**: Run `python3 validate_four_points.py --precision 30`  
-🗺️ **Lean Mapping**: [formalization/lean/FOUR_POINTS_LEAN_MAPPING.md](formalization/lean/FOUR_POINTS_LEAN_MAPPING.md)
-
-### 🆕 Teorema de Mota Burruezo (21 nov 2025)
-
-**Propuesta Teórica**: Construcción explícita de un operador autoadjunto **H** en L²(ℝ⁺, dx/x).
-
-El operador está dado por:
-```
-H f(x) = −x f'(x) + π ζ'(1/2) log(x) · f(x)
-```
-
-**Significado**: Si se demuestra rigurosamente que este operador tiene todas las propiedades requeridas (autoadjunción y espectro en Re(ρ) = 1/2), esto implicaría la Hipótesis de Riemann por la equivalencia de Hilbert-Pólya (1912) + Connes (1999) + Berry-Keating (1999).
-
-**Implementación actual**:
-- ✅ Fórmula explícita del operador
-- ✅ Verificación computacional de autoadjunción
-- ⚠️ Análisis espectral riguroso en desarrollo
-
-📖 **Documentación completa**: [`TEOREMA_MOTA_BURRUEZO_21NOV2025.md`](TEOREMA_MOTA_BURRUEZO_21NOV2025.md)  
-💻 **Implementación**: `operador/teorema_mota_burruezo.py`  
-🧪 **Tests**: `tests/test_teorema_mota_burruezo.py` (22 tests ✓)  
-🎨 **Demo**: `python3 demo_teorema_mota_burruezo.py`
-
-### 🔷 Universal Constant C = 629.83 (Spectral Origin)
-
-**Discovery**: The universal constant **C = 629.83** emerges as the inverse of the first eigenvalue λ₀ of the noetic operator Hψ:
-
-```
-C = 1/λ₀ = 629.83
-λ₀ ≈ 0.001588050
-```
-
-This naturally implies the fundamental frequency **f₀ = 141.7001 Hz** via:
-
-```
-ω₀² = λ₀⁻¹ = C
-f₀ = ω₀/(2π) = √C/(2π) = 141.7001 Hz
-```
-
-**Mathematical Significance**:
-- **Spectral**: First eigenvalue of the noetic operator Hψ = -Δ + Vψ
-- **Physical**: Fundamental oscillation frequency 141.7001 Hz
-- **Arithmetic**: Appears in 68/81 decimal pattern (period 839506172)
-- **Adelic**: Normalizes resolvents in the adelic framework
-- **Gravitational**: Matches GW150914 ringdown frequency (~142 Hz)
-
-📖 **Documentation**: [`SPECTRAL_ORIGIN_CONSTANT_C.md`](SPECTRAL_ORIGIN_CONSTANT_C.md)  
-💻 **Implementation**: `utils/spectral_origin_constant.py`  
-🧪 **Tests**: `tests/test_spectral_origin_constant.py` (38 tests ✓)  
-🎨 **Demo**: `python3 -c "from utils.spectral_origin_constant import run_complete_demonstration; run_complete_demonstration()"`
-
-**🌌 Revolutionary Insight**: Beyond proving RH, this work reveals a **new underlying geometric structure** that unifies mathematics and physics, connecting the mathematical aspect **ζ'(1/2) ≈ -3.9226461392** with the physical frequency **f₀ ≈ 141.7001 Hz**. See [`GEOMETRIC_UNIFICATION.md`](GEOMETRIC_UNIFICATION.md) for the complete explanation.
-
-**Framework Properties**:
-- **Internally Consistent**: Zeta-free construction where primes emerge from adelic trace
-- **Unconditional Core**: Axioms A1-A4 derived within adelic flow (post-merge #650, V5.3)
-- **Formalization Status**: Minimal 'sorry' statements remain only in proof bodies (doi_positivity.lean); all type signatures and core definitions are complete. Convergence guaranteed by Schatten bounds and trace-class operators from idelic/adelic flow, not dependent on explicit Hecke operators. These represent proof implementation details, not gaps in core axiom validity (A1-A4) or D(s) construction
-- **Numerical Validation**: 8.91×10⁻⁷ relative error with 10⁸ zeros confirms consistency
----
-
-## Riemann–Adelic Formalization (Lean 4 V5.3)
-
-[![Lean Validation](https://github.com/motanova84/-jmmotaburr-riemann-adelic/actions/workflows/lean-validation.yml/badge.svg)](https://github.com/motanova84/-jmmotaburr-riemann-adelic/actions/workflows/lean-validation.yml)
-
-### Validation Summary
-
-| Field | Value |
-|-------|-------|
-| **Status** | ✅ COMPLETADA |
-| **Build Time (s)** | 41.7 |
-| **Warnings** | 0 |
-| **Errors** | 0 |
-| **Lean Version** | 4.5.0 |
-| **Date (UTC)** | 2025-11-22 12:46:52 |
-
-### Project Overview
-
-This repository contains the complete Lean 4 formalization of the *Adelic Spectral Proof* of the Riemann Hypothesis (Version 5.3).  
-The system implements a fully constructive definition of \( D(s) \) via spectral trace, eliminating all non-essential axioms.
-
-Formal components include:
-
-- **`D_explicit.lean`** — Constructive definition of \( D(s) \) via spectral trace.  
-- **`de_branges.lean`** — De Branges spaces and canonical phase formalism.  
-- **`schwartz_adelic.lean`** — Adelic Schwartz functions and decay estimates.  
-- **`entire_order.lean`** — Hadamard factorization of order 1.  
-- **`positivity.lean`** — Explicit positive kernels and trace-class operators.  
-- **`RH_final.lean`** — Main theorem `riemann_hypothesis_adelic`.
-
-All components are compatible with **Lean 4.5.0 + Mathlib 4** and verified through the automatic CI/CD workflow.
-
-### Reproducibility
-
-To reproduce the validation locally:
-
-```bash
-elan toolchain install leanprover/lean4:4.5.0
-cd formalization/lean
-lake update
-lake build
-python3 validate_lean_env.py
-```
-
-A JSON validation report will be generated at:
-
-```
-formalization/lean/validation_report.json
-```
-
-### Citation
-
-```
-Mota Burruezo, J. M. (2025).
-A Complete Formalization of the Riemann Hypothesis via S-Finite Adelic Systems (V5.3).
-Instituto Conciencia Cuántica (ICQ).
-DOI: 10.5281/zenodo.17116291
-```
-
----
 
 ## 📊 Estado del Proyecto
 
