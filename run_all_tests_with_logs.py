@@ -71,12 +71,19 @@ class ComprehensiveTestRunner:
         print(f"📝 Pytest log: {log_file}")
         print(f"Running: {' '.join(cmd)}\n")
         
-        result = subprocess.run(
-            cmd,
-            cwd=self.project_root,
-            capture_output=True,
-            text=True
-        )
+        try:
+            result = subprocess.run(
+                cmd,
+                cwd=self.project_root,
+                capture_output=True,
+                text=True,
+                timeout=600  # 10 minute timeout to prevent hanging
+            )
+        except subprocess.TimeoutExpired:
+            print(f"⚠️  Pytest tests timed out after 600 seconds")
+            result = subprocess.CompletedProcess(
+                cmd, returncode=1, stdout="TIMEOUT", stderr="Test execution timed out"
+            )
         
         # Also save stdout/stderr
         output_file = self.log_dir / f"pytest_output_{self.timestamp}.txt"
@@ -116,12 +123,19 @@ class ComprehensiveTestRunner:
         
         print(f"📝 Log: {log_file}")
         
-        result = subprocess.run(
-            cmd,
-            cwd=self.project_root,
-            capture_output=True,
-            text=True
-        )
+        try:
+            result = subprocess.run(
+                cmd,
+                cwd=self.project_root,
+                capture_output=True,
+                text=True,
+                timeout=300  # 5 minute timeout per validation script
+            )
+        except subprocess.TimeoutExpired:
+            print(f"⚠️  {script_name} timed out after 300 seconds")
+            result = subprocess.CompletedProcess(
+                cmd, returncode=1, stdout="TIMEOUT", stderr="Script execution timed out"
+            )
         
         # Save output to log
         with open(log_file, 'w') as f:

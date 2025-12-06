@@ -190,7 +190,3 @@ class TestLoggingExample:
         qcal_logger.log_success("Theorem proven: ∀x ∈ ℝ, x² ≥ 0 ✓")
         qcal_logger.log_test_end("test_mathematical_validation", "passed")
 
-
-if __name__ == "__main__":
-    # Run with: python -m pytest tests/test_logging_example.py -v
-    pytest.main([__file__, "-v", "-s"])

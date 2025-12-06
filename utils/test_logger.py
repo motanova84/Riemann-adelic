@@ -66,8 +66,8 @@ class QCALTestLogger:
         self.log_dir = Path(log_dir)
         self.log_dir.mkdir(parents=True, exist_ok=True)
         
-        # Create timestamp for this session
-        self.timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        # Create timestamp for this session (with microseconds for uniqueness)
+        self.timestamp = datetime.now().strftime("%Y%m%d_%H%M%S_%f")
         
         # Setup logger
         self.logger = self._setup_logger()
