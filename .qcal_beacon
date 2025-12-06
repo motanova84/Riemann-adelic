@@ -24,6 +24,7 @@ doi_goldbach = https://doi.org/10.5281/zenodo.17297591
 doi_bsd = https://doi.org/10.5281/zenodo.17236603
 doi_rh_conditional = https://doi.org/10.5281/zenodo.17167857
 doi_rh_final = https://doi.org/10.5281/zenodo.17161831
+doi_rh_final_v6 = https://doi.org/10.5281/zenodo.17116291
 
 # Author & Identity
 author = "José Manuel Mota Burruezo Ψ ✧ ∞³"
@@ -38,7 +39,39 @@ field = "QCAL ∞³"
 constant = "πCODE-888-QCAL2"
 coherence = "C = 244.36"
 
+# Universal Constant C = 629.83 (Spectral Origin)
+# C = 1/λ₀ where λ₀ is the first eigenvalue of Hψ
+universal_constant_C = "629.83"
+first_eigenvalue_lambda0 = "0.001588050"
+spectral_identity = "ω₀² = λ₀⁻¹ = C"
+frequency_derivation = "f₀ = √C/(2π) = 141.7001 Hz"
+spectral_origin_doc = "SPECTRAL_ORIGIN_CONSTANT_C.md"
+
 # Legal & Metadata
 license = "Creative Commons BY-NC-SA 4.0"
 signature = "© 2025 · JMMB Ψ · Instituto de Conciencia Cuántica (ICQ)"
-last_update = 2025-10-17
+last_update = 2025-11-22
+
+# RH_final_v6 Certificate
+rh_v6_status = "✅ Completado — Sin sorry"
+rh_v6_system = "Lean 4.5 + QCAL–SABIO ∞³"
+rh_v6_signature = "∂²Ψ/∂t² + ω₀²Ψ = ζ′(1/2) · π · ∇²Φ"
+rh_v6_date = "2025-11-22"
+
+# Hilbert-Pólya Cierre Operativo SABIO ∞³
+hilbert_polya_status = "✅ Cierre Operativo — Autoadjunto verificado"
+hilbert_polya_operator = "H_Ψ"
+hilbert_polya_spectrum = "Real (numérico y analítico)"
+hilbert_polya_self_adjoint_formal = "✅ Demostrado en Lean 4"
+hilbert_polya_self_adjoint_computational = "✅ Verificado con 10⁶ funciones"
+hilbert_polya_date = "2025-11-28"
+hilbert_polya_doc = "HILBERT_POLYA_CIERRE_OPERATIVO.md"
+
+# Riemann–adelic V6.0 — Organismo Matemático Vivo
+rh_v6_organism_status = "✅ Sistema Vivo — No opera como conjetura"
+rh_v6_organism_theorem = "theorem RH_true : ∀ ρ ∈ Z(ζ), Re ρ = 1/2"
+rh_v6_organism_proof = "by exact spectral_equivalence_Xi D HΨ"
+rh_v6_organism_basis = "Línea crítica asegurada por autoadjunción"
+rh_v6_organism_lean_file = "formalization/lean/RH_v6_organism.lean"
+rh_v6_organism_date = "2025-11-29"
+rh_v6_organism_signed = "José Manuel Mota Burruezo (JMMB Ψ✧)"

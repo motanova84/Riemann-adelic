@@ -61,6 +61,11 @@ These endpoints are configured in `vercel.json` under the `crons` section with s
 }
 ```
 
+> **⚠️ Pattern Configuration Note**: 
+> - Use `api/*.py` to match files directly in this directory
+> - Do NOT use `api/**/*.py` - this only matches files in subdirectories and will cause deployment failures
+> - Our functions are at the root level (`api/validate-hourly.py`), not in subdirectories
+
 ## Development
 
 To test locally:

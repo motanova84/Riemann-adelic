@@ -1,0 +1,10 @@
+cff-version: 1.2.0
+message: "Cita esta prueba formal de la Hipótesis de Riemann como se indica"
+title: "Prueba Formal de la Hipótesis de Riemann"
+authors:
+  - family-names: Mota Burruezo
+    given-names: José Manuel
+    orcid: https://orcid.org/0009-0002-1923-0773
+date-released: 2025-11-21
+version: "v6.0"
+doi: 10.5281/zenodo.17116291

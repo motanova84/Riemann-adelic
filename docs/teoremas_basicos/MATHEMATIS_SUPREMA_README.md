@@ -9,7 +9,7 @@
 **LEX WEYL: δ-ε ABSOLUTUS EXPLICITUS**  
 **DEMONSTRATIO COMPLETA HYPOTHESIS RIEMANN**  
 **MATHESIS HISTORICA RIGOROSISSIMA**
-
+https://doi.org/10.5281/zenodo.17281699
 ## Structure
 
 The document contains eight major sections, each with complete proofs:
@@ -171,5 +171,8 @@ When citing this work, please reference:
 **Status**: ✅ Complete  
 **Date**: January 2025  
 **Version**: 1.0
+
+https://doi.org/10.5281/zenodo.17281699
+
 
 **ACTUM EST. Q.E.D. ABSOLUTUM**
