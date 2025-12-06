@@ -116,16 +116,14 @@ def test_weil_formula_basic():
         assert relative_error >= 0, "Relative error should be non-negative"
         assert len(corrected_zeros) > 0, "Should have corrected zeros"
         
-        print(f"Weil formula test: error={error}, rel_error={relative_error}")
-        print(f"  left={left_side}, right={right_side}")
+        print(f"Weil formula test: error={error}, rel_error={relative_error}, left={left_side}, right={right_side}")
         print(f"Corrected zeros (first 3): {corrected_zeros[:3]}")
         
         # CRITICAL: Apply scientific tolerances for number theory
-        # The explicit formula for small test cases has inherent limitations
-        # NOTE: Large absolute errors are expected due to truncation and numerical precision
-        # The test validates that computation completes and produces consistent results
-        scientific_tolerance_abs = 1e6   # Absolute tolerance - allows for inherent numerical limitations
-        scientific_tolerance_rel = 1e6   # Relative tolerance - allows for small test case limitations
+        # The explicit formula should match to high precision for small examples
+        # NOTE: We've dramatically improved from ~71,510 error to ~1.0 error 
+        scientific_tolerance_abs = 5.0   # Absolute tolerance - much improved
+        scientific_tolerance_rel = 5.0   # Relative tolerance - allow for small example limitations
         
         # Check scientific tolerances
         if abs(right_side) > 1e-10:  # If right side is not essentially zero
@@ -391,8 +389,8 @@ def test_error_handling():
     print("✅ Error handling test passed")
 
 
-def test_p_adic_zeta_function():
-    """Test the p-adic zeta function approximation."""
+def test_p_adic_zeta_approx_function():
+    """Test the p-adic zeta approximation function."""
     from validate_explicit_formula import zeta_p_approx
     
     # Test basic functionality

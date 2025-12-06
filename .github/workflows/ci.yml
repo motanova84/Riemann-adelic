@@ -1,4 +1,4 @@
-# CI: instala dependencias, cache de pip, lint y ejecuta tests.
+# CI: instala dependencias, cache de pip, lint (opcional) y ejecuta tests.
 # Este workflow corre en cada push a main y en pull requests
 name: CI
 
@@ -12,20 +12,21 @@ on:
 permissions:
   contents: read
 
+permissions:
+  contents: read
+
 jobs:
   test:
-    name: Test Python ${{ matrix.python-version }}
     runs-on: ubuntu-latest
-    timeout-minutes: 30
     strategy:
       matrix:
-        python-version: ["3.10", "3.11"]
+        python-version: ["3.10", "3.11", "3.12"]
     
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-      - name: 🐍 Configurar Python 3.11 + caché pip
-        id: cache-python
+      - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
@@ -38,11 +39,6 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pip-
 
-      - name: Install system dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y llvm-14 llvm-14-dev || true
-
       - name: Install dependencies
         env:
           NUMEXPR_MAX_THREADS: 4
@@ -50,72 +46,24 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-          pip install flake8 black isort pytest
+          pip install flake8 black isort
 
       - name: Run linting (flake8)
-        continue-on-error: true
         run: |
           flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+          flake8 . --count --max-line-length=120 --ignore=E203,W503,E501 --statistics
+        continue-on-error: true
 
       - name: Check code formatting (black)
-        continue-on-error: true
         run: |
-          black --check --line-length=120 . || true
+          black --check --line-length=120 .
+        continue-on-error: true
+
+      - name: Check import sorting (isort)
+        run: |
+          isort --check-only --profile black --line-length 120 .
+        continue-on-error: true
 
       - name: Run tests with pytest
-        continue-on-error: true
         run: |
-          pytest tests/ -v --tb=short --timeout=300
-
-  validate-metadata:
-    name: Validate metadata
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.11"
-
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
-
-      - name: Validate metadata JSON-LD
-        run: |
-          if [ -f tools/verify_metadata.py ] && [ -f schema/metadata_example.jsonld ]; then
-            python tools/verify_metadata.py schema/metadata_example.jsonld
-          else
-            echo "Metadata validation skipped - files not present"
-          fi
-
-  verify-conversion:
-    name: Verify conversion
-    runs-on: ubuntu-latest
-    needs: test
-    if: github.event_name == 'pull_request'
-    
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.11"
-
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
-
-      - name: Run conversion smoke test
-        run: |
-          if [ -f tools/convert_example.py ] && [ -f tests/examples/example_lean.lean ]; then
-            python tools/convert_example.py tests/examples/example_lean.lean
-          else
-            echo "Conversion test skipped - files not present"
-          fi
+          pytest tests/ -v --tb=short

@@ -344,25 +344,13 @@ class TestDocumentation:
 """
 Test suite for Hilbert-Pólya Formal Closure components.
 
-This module tests the documentation, Lean formalization, and Streamlit
-visualization components of the Hilbert-Pólya conjecture closure.
 
-Author: José Manuel Mota Burruezo
-Date: November 28, 2025
-Version: 1.0
-"""
-
-import pytest
-import re
-from pathlib import Path
-
-
-# Path constants
-REPO_ROOT = Path(__file__).parent.parent
-DOCS_DIR = REPO_ROOT / "docs" / "operators"
-LEAN_DIR = REPO_ROOT / "formalization" / "lean" / "RiemannAdelic"
-STREAMLIT_DIR = REPO_ROOT / "streamlit_app"
-WORKFLOW_DIR = REPO_ROOT / ".github" / "workflows"
+# Path constants for TestDocumentation
+REPO_ROOT_DOC = Path(__file__).parent.parent
+DOCS_DIR = REPO_ROOT_DOC / "docs" / "operators"
+LEAN_DIR = REPO_ROOT_DOC / "formalization" / "lean" / "RiemannAdelic"
+STREAMLIT_DIR = REPO_ROOT_DOC / "streamlit_app"
+WORKFLOW_DIR = REPO_ROOT_DOC / ".github" / "workflows"
 
 
 class TestDocumentation:

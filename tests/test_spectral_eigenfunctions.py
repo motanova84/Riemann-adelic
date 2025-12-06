@@ -190,6 +190,68 @@ def test_no_admit_statements():
     print(f"Found {admits} admit statements")
 
 
+def test_no_sorry_statements():
+    """Test that there are no 'sorry' statements in the main proofs.
+    
+    This test verifies that the eigenfunctions_dense_L2R lemma and
+    related theorems are proven without sorry placeholders.
+    
+    The proofs should use the spectral_theorem_compact_selfadjoint axiom
+    instead of sorry statements.
+    """
+    file_path = LEAN_DIR / "Eigenfunctions_HPsi.lean"
+    content = file_path.read_text(encoding="utf-8")
+    
+    # Count sorry statements (excluding comments and documentation)
+    lines = content.split('\n')
+    sorrys = 0
+    in_comment = False
+    for line in lines:
+        stripped = line.strip()
+        # Track multi-line comments
+        if '/-' in stripped:
+            in_comment = True
+        if '-/' in stripped:
+            in_comment = False
+            continue
+        # Skip comment lines
+        if in_comment or stripped.startswith('--'):
+            continue
+        # Count actual sorry usage
+        if 'sorry' in stripped.lower():
+            sorrys += 1
+    
+    assert sorrys == 0, f"Found {sorrys} sorry statements - all proofs should use axioms"
+
+
+def test_spectral_theorem_axiom():
+    """Test that the spectral_theorem_compact_selfadjoint axiom is present.
+    
+    This axiom captures the Hilbert-Schmidt spectral theorem for compact
+    self-adjoint operators, which provides:
+    1. An orthonormal family of eigenfunctions
+    2. Associated real eigenvalues
+    3. Normalization property: ‖e n‖ = 1
+    4. Orthogonality property: inner (e n) (e m) = 0 for n ≠ m
+    
+    Reference: Reed & Simon, Methods of Modern Mathematical Physics, Vol. I
+    """
+    file_path = LEAN_DIR / "Eigenfunctions_HPsi.lean"
+    content = file_path.read_text(encoding="utf-8")
+    
+    # Check for the spectral theorem axiom
+    assert "axiom spectral_theorem_compact_selfadjoint" in content, \
+        "spectral_theorem_compact_selfadjoint axiom not found"
+    
+    # Check that it provides normalization
+    assert "‖e n‖ = 1" in content, \
+        "Normalization property not found in spectral theorem axiom"
+    
+    # Check that it provides orthogonality
+    assert "inner (e n) (e m) = (0 : ℂ)" in content, \
+        "Orthogonality property not found in spectral theorem axiom"
+
+
 def test_namespace_structure():
     """Test that the proper namespace is used."""
     file_path = LEAN_DIR / "Eigenfunctions_HPsi.lean"

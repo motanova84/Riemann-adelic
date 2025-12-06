@@ -34,9 +34,8 @@ import RiemannAdelic.BerryKeatingOperator
 
 -- Entire function theory
 import RiemannAdelic.entire_order
-import RiemannAdelic.xi_entire_proof
--- NEW: Axiom Xi Holomorphic - Complete Ξ(s) construction via Mellin transform (V6)
-import axiom_Xi_holomorphic
+-- Entire functions of exponential type (foundational support for Paley-Wiener)
+import entire_exponential_growth
 
 -- Hadamard factorization and quotient analysis
 import RiemannAdelic.Hadamard
@@ -158,6 +157,11 @@ import spectral.compact_selfadjoint_spectrum
 -- Eigenvalue exponential decay → Schatten class trace convergence
 -- Paley-Wiener uniqueness for entire functions with real zeros
 import spectral.schatten_paley_lemmas
+-- NEW: Xi Mirror Spectrum (29 November 2025)
+-- Xi(s) = Xi(1-s) symmetry and mirror spectrum framework
+-- Xi_root_reflection: Xi(s) = 0 → Xi(1-s) = 0
+-- mirror_spectrum: zeros paired under reflection
+import spectral.xi_mirror_spectrum
 
 -- ⚠️ THEORETICAL FRAMEWORK (Not imported - doesn't compile)
 -- RiemannAdelic.PsiNSE_CompleteLemmas_WithInfrastructure
@@ -213,10 +217,7 @@ def main : IO Unit := do
   IO.println "    - RH_spectral_form: ζ(s) = 0 → Re(s) = 1/2"
   IO.println "    - Non-circular proof via spectral operators"
   IO.println "  • Entire function and Hadamard theory"
-  IO.println "  • NEW: Axiom Xi Holomorphic (V6 - 26 November 2025)"
-  IO.println "    - Complete Ξ(s) construction via theta/Mellin transform"
-  IO.println "    - Eliminates axiom Xi_holomorphic from proof chain"
-  IO.println "    - Pole cancellation analysis at s = 0, 1, -2n"
+  IO.println "  • Entire functions of exponential type (foundational support)"
   IO.println "  • Hadamard factorization and quotient analysis"
   IO.println "  • Functional equation and Poisson symmetry"
   IO.println "  • Radon-Poisson integral functional symmetry"
@@ -288,6 +289,12 @@ def main : IO Unit := do
   IO.println "    - exponential_decay_schatten_trace: λₙ decay → Schatten class"
   IO.println "    - paley_wiener_uniqueness_real: Entire vanishing on ℝ is zero"
   IO.println "    - spectral_equals_xi: det_zeta = Ξ from critical line agreement"
+  IO.println "  • NEW: Xi Mirror Spectrum (29 November 2025)"
+  IO.println "    - spectral/xi_mirror_spectrum: Xi symmetry and mirror zeros"
+  IO.println "    - Xi_mirror_symmetry: Xi(s) = Xi(1-s) (functional equation)"
+  IO.println "    - Xi_root_reflection: Xi(s) = 0 → Xi(1-s) = 0"
+  IO.println "    - mirror_spectrum: {s | Xi(s) = 0 ∧ Xi(1-s) = 0}"
+  IO.println "    - zeros_come_in_pairs: Off-line zeros form distinct pairs"
   IO.println "  • NEW: Hpsi_selfadjoint (Part 31/∞³ - Self-adjoint operator H_Ψ)"
   IO.println "    - Dense domain D(H_Ψ)"
   IO.println "    - H_Ψ = H_Ψ† (self-adjoint axiom)"

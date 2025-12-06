@@ -7,13 +7,14 @@ defaultTargets = ["Main"]
 name = "mathlib"
 src = "git"
 url = "https://github.com/leanprover-community/mathlib4"
-rev = "07a2d4e5c3c9e55bb6e37bbf5132fd47d75b9ce2"  # Octubre 2025 estable
+rev = "master"  # Using master for stable CI (fixed commit refs get deleted from mathlib history)
+rev = "master"  # Use master branch - will be resolved to a specific commit by lake update
 
 [[dependency]]
 name = "aesop"
 src = "git"
 url = "https://github.com/leanprover-community/aesop"
-rev = "main"
+rev = "master"
 
 [[dependency]]
 name = "proofwidgets"

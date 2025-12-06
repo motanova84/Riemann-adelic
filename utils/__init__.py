@@ -37,6 +37,49 @@ from .spectral_graph_analysis import (
     analyze_mini_ramanujan_g4,
     validate_g4_properties,
 )
+from .weak_solution_existence import (
+    WeakSolutionExistence,
+    validate_weak_solution_theorem,
+)
+from .spectral_origin_constant import (
+    LAMBDA_0,
+    C_UNIVERSAL,
+    F0_SPECTRAL,
+    F0_QCAL,
+    OMEGA_0_SPECTRAL,
+    NoeticOperator,
+    SpectralOriginResult,
+    derive_universal_constant,
+    validate_spectral_frequency_relation,
+    verify_all_appearances_of_f0,
+    mathematical_significance,
+    run_complete_demonstration,
+)
+from .calabi_yau_spectral_invariant import (
+    # Constants
+    K_PI_CLAIMED,
+    K_PI_EXACT,
+    MU_1,
+    MU_2,
+    H11_QUINTIC,
+    H21_QUINTIC,
+    EULER_CHAR_QUINTIC,
+    CS_LEVEL,
+    NOETIC_PRIME,
+    F0_UNIVERSAL,
+    # Functions
+    compute_k_pi_invariant,
+    validate_k_pi_against_claimed,
+    compute_chern_simons_level,
+    verify_noetic_prime_connection,
+    compute_phi_zeta_connection,
+    validate_calabi_yau_quintic,
+    validate_spectral_bridge,
+    run_complete_validation as run_k_pi_validation,
+    # Data classes
+    CalabiYauQuinticResult,
+    SpectralBridgeResult,
+)
 
 __all__ = [
     'AdelicCanonicalDeterminant',
@@ -57,4 +100,41 @@ __all__ = [
     'analyze_g4_graph',
     'analyze_mini_ramanujan_g4',
     'validate_g4_properties',
+    # Weak solution existence theorem
+    'WeakSolutionExistence',
+    'validate_weak_solution_theorem',
+    # Spectral origin constant C = 629.83
+    'LAMBDA_0',
+    'C_UNIVERSAL',
+    'F0_SPECTRAL',
+    'F0_QCAL',
+    'OMEGA_0_SPECTRAL',
+    'NoeticOperator',
+    'SpectralOriginResult',
+    'derive_universal_constant',
+    'validate_spectral_frequency_relation',
+    'verify_all_appearances_of_f0',
+    'mathematical_significance',
+    'run_complete_demonstration',
+    # Calabi-Yau spectral invariant k_Π = 2.5773
+    'K_PI_CLAIMED',
+    'K_PI_EXACT',
+    'MU_1',
+    'MU_2',
+    'H11_QUINTIC',
+    'H21_QUINTIC',
+    'EULER_CHAR_QUINTIC',
+    'CS_LEVEL',
+    'NOETIC_PRIME',
+    'F0_UNIVERSAL',
+    'compute_k_pi_invariant',
+    'validate_k_pi_against_claimed',
+    'compute_chern_simons_level',
+    'verify_noetic_prime_connection',
+    'compute_phi_zeta_connection',
+    'validate_calabi_yau_quintic',
+    'validate_spectral_bridge',
+    'run_k_pi_validation',
+    'CalabiYauQuinticResult',
+    'SpectralBridgeResult',
 ]

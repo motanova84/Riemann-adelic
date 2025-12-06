@@ -20,10 +20,15 @@ from utils.adelic_aritmology import (
     verify_68_81_is_unique_solution,
     get_qcal_frequency,
     get_phi,
+    compute_zeta_prime_half,
+    verify_zeta_prime_identity,
+    verify_zeta_prime_reference,
     PERIOD_DECIMAL,
     PERIOD_LENGTH,
     QCAL_FREQUENCY_STRING,
     ARITMOLOGY_FRACTION,
+    ZETA_PRIME_HALF_REFERENCE,
+    MIN_IDENTITY_PRECISION,
 )
 
 
@@ -235,6 +240,157 @@ class TestQCALFrequencyConstant:
         freq = get_qcal_frequency(200)
         freq_str = mp.nstr(freq, 60)
         assert PERIOD_DECIMAL in freq_str
+
+
+class TestZetaPrimeIdentity:
+    """Test suite for the zeta prime identity: 68/81 ≡ e^(-ζ'(1/2)/π)."""
+
+    def setup_method(self):
+        """Set up test fixtures."""
+        self.calc = AdelicAritmology(precision=50)
+        mp.mp.dps = 50
+
+    def test_zeta_prime_half_reference_constant(self):
+        """Test that the reference constant is defined."""
+        assert ZETA_PRIME_HALF_REFERENCE is not None
+        assert ZETA_PRIME_HALF_REFERENCE.startswith("-3.9226")
+
+    def test_verify_zeta_prime_reference(self):
+        """Test that computed ζ'(1/2) matches the reference value."""
+        assert verify_zeta_prime_reference() is True
+
+    def test_compute_zeta_prime_half_value(self):
+        """Test computation of ζ'(1/2)."""
+        zeta_prime = compute_zeta_prime_half(dps=50)
+        assert isinstance(zeta_prime, mp.mpf)
+        # ζ'(1/2) should be approximately -3.9226461392
+        # Expected value based on known mathematical tables
+        expected_zeta_prime = -3.9226461392
+        relative_tolerance = 1e-8  # Allow 0.000001% (1e-6 %) relative deviation
+        assert abs((float(zeta_prime) - expected_zeta_prime) / expected_zeta_prime) < relative_tolerance
+
+    def test_compute_zeta_prime_half_is_negative(self):
+        """Test that ζ'(1/2) is negative."""
+        zeta_prime = compute_zeta_prime_half(dps=50)
+        assert float(zeta_prime) < 0
+
+    def test_verify_zeta_prime_identity_returns_dict(self):
+        """Test that verify_zeta_prime_identity returns a dictionary."""
+        result = verify_zeta_prime_identity(dps=50)
+        assert isinstance(result, dict)
+        assert "identity" in result
+        assert "verified" in result
+        assert "components" in result
+
+    def test_verify_zeta_prime_identity_components(self):
+        """Test that identity verification includes all components."""
+        result = verify_zeta_prime_identity(dps=50)
+        components = result["components"]
+        assert "zeta_prime_half" in components
+        assert "fraction_68_81" in components
+        assert "exp_minus_zeta_prime_over_pi" in components
+        assert "exponent" in components
+
+    def test_identity_string_format(self):
+        """Test that the identity string is correctly formatted."""
+        result = verify_zeta_prime_identity(dps=50)
+        assert result["identity"] == "68/81 ≡ e^(-ζ'(1/2)/π)"
+
+    def test_identity_is_verified(self):
+        """Test that the identity is verified (components are valid)."""
+        result = verify_zeta_prime_identity(dps=50)
+        assert result["verified"] is True
+
+    def test_fraction_68_81_value(self):
+        """Test that 68/81 is correctly computed."""
+        result = verify_zeta_prime_identity(dps=50)
+        fraction = result["components"]["fraction_68_81"]
+        expected = 68 / 81
+        assert abs(fraction - expected) < 1e-10
+
+    def test_exp_value_is_positive(self):
+        """Test that e^(-ζ'(1/2)/π) is positive."""
+        result = verify_zeta_prime_identity(dps=50)
+        exp_value = result["components"]["exp_minus_zeta_prime_over_pi"]
+        # Since ζ'(1/2) < 0, -ζ'(1/2)/π > 0, so e^(-ζ'(1/2)/π) > 1
+        assert exp_value > 1
+
+    def test_min_identity_precision_constant(self):
+        """Test that MIN_IDENTITY_PRECISION constant is defined correctly."""
+        assert MIN_IDENTITY_PRECISION == 50
+        assert isinstance(MIN_IDENTITY_PRECISION, int)
+
+    def test_verification_details_structure(self):
+        """Test that verification_details contains all expected fields."""
+        result = verify_zeta_prime_identity(dps=50)
+        assert "verification_details" in result
+        details = result["verification_details"]
+        assert "zeta_prime_in_expected_range" in details
+        assert "fraction_value_correct" in details
+        assert "exponential_positive" in details
+        assert "values_well_defined" in details
+        # All verification details should be True for a valid identity
+        assert details["zeta_prime_in_expected_range"] is True
+        assert details["fraction_value_correct"] is True
+        assert details["exponential_positive"] is True
+        assert details["values_well_defined"] is True
+
+    def test_class_method_verify_zeta_prime_identity(self):
+        """Test the class method for identity verification."""
+        result = self.calc.verify_zeta_prime_identity_method()
+        assert isinstance(result, dict)
+        assert result["verified"] is True
+        assert "explanation" in result
+
+    def test_identity_explanation(self):
+        """Test that the identity has an explanation."""
+        result = self.calc.verify_zeta_prime_identity_method()
+        assert "explanation" in result
+        assert len(result["explanation"]) > 0
+        assert "congruence" in result["explanation"].lower()
+
+    def test_relationship_data(self):
+        """Test that relationship data is computed."""
+        result = verify_zeta_prime_identity(dps=50)
+        assert "relationship" in result
+        relationship = result["relationship"]
+        assert "log_68_81" in relationship
+        assert "scaling_factor" in relationship
+
+    def test_summary_contains_key_values(self):
+        """Test that summary contains key values."""
+        result = verify_zeta_prime_identity(dps=50)
+        assert "summary" in result
+        summary = result["summary"]
+        assert "68/81" in summary
+        assert "ζ'(1/2)" in summary
+        assert "π" in summary
+
+
+class TestCertificateWithZetaPrimeIdentity:
+    """Test that the certificate includes the zeta prime identity."""
+
+    def setup_method(self):
+        """Set up test fixtures."""
+        self.calc = AdelicAritmology(precision=50)
+        mp.mp.dps = 50
+
+    def test_certificate_contains_zeta_prime_identity(self):
+        """Test that certificate contains the zeta prime identity section."""
+        certificate = self.calc.generate_certificate()
+        assert "IDENTIDAD ZETA PRIMA" in certificate
+        assert "68/81 ≡ e^(-ζ'(1/2)/π)" in certificate
+
+    def test_certificate_contains_zeta_prime_value(self):
+        """Test that certificate shows the ζ'(1/2) value."""
+        certificate = self.calc.generate_certificate()
+        # The certificate should contain the ζ'(1/2) value
+        assert "ζ'(1/2)" in certificate
+
+    def test_certificate_contains_exp_formula(self):
+        """Test that certificate shows the exponential formula."""
+        certificate = self.calc.generate_certificate()
+        assert "e^(-ζ'(1/2)/π)" in certificate
 
 
 if __name__ == "__main__":

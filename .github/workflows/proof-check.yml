@@ -13,7 +13,6 @@ on:
     paths:
       - 'formalization/lean/**'
       - '.github/workflows/proof-check.yml'
-  workflow_dispatch:
 
 permissions:
   contents: read
@@ -21,37 +20,30 @@ permissions:
 jobs:
   lean-build:
     runs-on: ubuntu-latest
-    timeout-minutes: 120
     
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set up Lean toolchain
-        run: |
-          curl https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -sSf | sh -s -- -y
-          echo "$HOME/.elan/bin" >> $GITHUB_PATH
-
-      - name: Configure Lean version
-        run: |
-          elan default stable
-          lean --version
-
-      - name: Generate lake manifest
-        run: |
-          cd formalization/lean
-          lake update
+      - name: Set up Lean
+        uses: leanprover/lean-action@v1
+        with:
+          lean-version: "leanprover/lean4:latest"
 
       - name: Cache Lean build
         uses: actions/cache@v4
         with:
           path: |
-            ~/.elan
             formalization/lean/.lake
-            formalization/lean/lake-packages
+            formalization/lean/build
           key: ${{ runner.os }}-lean-${{ hashFiles('formalization/lean/lakefile.lean', 'formalization/lean/lean-toolchain') }}
           restore-keys: |
             ${{ runner.os }}-lean-
+
+      - name: Install Lean dependencies
+        run: |
+          cd formalization/lean
+          lake update
 
       - name: Build Lean formalization
         run: |
@@ -59,20 +51,7 @@ jobs:
           lake build
 
       - name: Run Lean check on RH_final.lean
-        continue-on-error: true
         run: |
           cd formalization/lean
           lake exe cache get || true
-          lake build RH_final || echo "RH_final build completed with issues (expected for skeleton proofs)"
-
-      - name: Proof-check summary
-        if: always()
-        run: |
-          echo "📊 LEAN PROOF CHECK SUMMARY"
-          echo "================================"
-          echo "✅ Lean 4 project structure: Valid"
-          LEAN_FILES=$(find formalization/lean -name '*.lean' | wc -l)
-          echo "✅ Lean files present: $LEAN_FILES files"
-          echo "✅ Lakefile configuration: Valid"
-          echo "ℹ️  Status: Skeleton proofs with axioms (as documented)"
-          echo "✅ PROOF CHECK WORKFLOW: COMPLETED"
+          lake build RH_final
