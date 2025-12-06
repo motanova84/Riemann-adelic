@@ -16,7 +16,7 @@ on:
         description: 'Run full validation with high precision'
         required: false
         default: 'false'
-        type: boolean
+        type: string
       precision_level:
         description: 'Precision level (t1e8, t1e10, t1e12)'
         required: false
@@ -58,7 +58,15 @@ jobs:
         id: setup-python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.10'
+          python-version: '3.11'
+      
+      - name: 📦 Install system dependencies
+        run: |
+          sudo apt-get update
+          # Install LLVM tools for numba/llvmlite
+          sudo apt-get install -y llvm-14 llvm-14-dev
+          # Install libigraph for python-igraph
+          sudo apt-get install -y libigraph-dev libigraph3t64
           
       - name: 💾 Cache dependencies
         id: cache-deps
@@ -69,6 +77,10 @@ jobs:
           
       - name: 📦 Install dependencies
         if: steps.cache-deps.outputs.cache-hit != 'true'
+        env:
+          # Configure numexpr for virtual runners
+          NUMEXPR_MAX_THREADS: 4
+          NUMEXPR_NUM_THREADS: 2
         run: |
           python -m pip install --upgrade pip
           pip install --user -r requirements.txt
@@ -119,7 +131,12 @@ jobs:
       - name: 🐍 Setup Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.10'
+          python-version: '3.11'
+      
+      - name: 📦 Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y llvm-14 llvm-14-dev libigraph-dev libigraph3t64
           
       - name: 💾 Restore dependencies cache
         uses: actions/cache@v4
@@ -173,7 +190,12 @@ jobs:
       - name: 🐍 Setup Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.10'
+          python-version: '3.11'
+      
+      - name: 📦 Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y llvm-14 llvm-14-dev libigraph-dev libigraph3t64
           
       - name: 💾 Restore dependencies cache
         uses: actions/cache@v4
@@ -188,6 +210,10 @@ jobs:
           path: zeros/
           
       - name: 🧪 Run pytest with coverage
+        env:
+          # Configure numexpr for virtual runners
+          NUMEXPR_MAX_THREADS: 4
+          NUMEXPR_NUM_THREADS: 2
         run: |
           mkdir -p logs
           pytest tests/ -v --tb=short --cov=. --cov-report=term-missing --cov-report=xml | tee logs/test_results.log
@@ -219,7 +245,12 @@ jobs:
       - name: 🐍 Setup Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.10'
+          python-version: '3.11'
+      
+      - name: 📦 Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y llvm-14 llvm-14-dev libigraph-dev libigraph3t64
           
       - name: 💾 Restore dependencies cache
         uses: actions/cache@v4
@@ -308,7 +339,12 @@ jobs:
       - name: 🐍 Setup Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.10'
+          python-version: '3.11'
+      
+      - name: 📦 Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y llvm-14 llvm-14-dev libigraph-dev libigraph3t64
           
       - name: 💾 Restore dependencies cache
         uses: actions/cache@v4

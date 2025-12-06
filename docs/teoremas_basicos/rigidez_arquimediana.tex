@@ -11,4 +11,44 @@ $\pi^{-s/2}\Gamma(s/2)$ de forma única.
 % 1. Construcción de la transformada de Fourier en $\mathbb{R}$.
 % 2. Cálculo del índice de Weil global.
 % 3. Demostrar que cualquier otra normalización rompe la simetría.
+Sea $D(s)$ una función entera de orden $\le 1$, con simetría $D(1-s)=D(s)$, tal que
+sus factores locales satisfacen la ley de producto global del índice de Weil. Entonces
+el factor local en $v=\infty$ (lugar arquimediano) está fijado de forma única como
+\[
+\gamma_\infty(s)=\pi^{-s/2}\Gamma\!\left(\frac{s}{2}\right).
+\]
+\end{theorem}
+
+\begin{proof}
+Trabajamos en el marco de Schwartz--Bruhat $\mathcal{S}(\Bbb A_\Bbb Q)$ y su transformada de Fourier adélica $\widehat{\Phi}$ con normalización metapléctica (índice de Weil).
+Sea $\Phi=\prod_v \Phi_v$ factorizable localmente con $\Phi_\infty(x)=e^{-\pi x^2}$ y $\Phi_p=\mathbf 1_{\Bbb Z_p}$.
+
+\emph{(1) Identidad de Poisson global.} La fórmula de Poisson adélica (Weil) da
+\[
+\sum_{x\in\Bbb Q}\Phi(x)=\sum_{x\in\Bbb Q}\widehat\Phi(x).
+\]
+Al descomponer localmente, aparecen factores $\gamma_v(s)$ en la ecuación funcional local de las integrales de Tate. Para cada lugar $v$,
+\[
+Z_v(\Phi_v,s)=\gamma_v(s)\,Z_v(\widehat{\Phi_v},1-s),
+\]
+y el \emph{producto global} de índices satisface $\prod_v \gamma_v(s)=1$ (reciprocidad).
+
+\emph{(2) Fijación en los lugares finitos.} Con la elección estándar $\Phi_p=\mathbf 1_{\Bbb Z_p}$ se obtiene la normalización canónica en $p$ (véase Tate). Así, $\gamma_p(s)$ queda determinado y coincide con el factor local usual de Riemann.
+
+\emph{(3) Caso arquimediano y simetría.} La condición global $\prod_v \gamma_v(s)=1$ y la simetría $D(1-s)=D(s)$ fuerzan que el único candidato para compensar los factores finitos sea el factor
+\[
+\gamma_\infty(s)=\pi^{-s/2}\Gamma\!\left(\frac{s}{2}\right),
+\]
+que es precisamente el que se obtiene con la gaussiana $e^{-\pi x^2}$ y la normalización metapléctica estándar (Weil). Cualquier otra normalización en $v=\infty$ rompería bien la ley de producto (no se obtiene $1$) o la simetría $s\mapsto 1-s$.
+\end{proof}
+
+\begin{prop}[Rigidez por método de fase estacionaria]
+Sea $I_\infty(s)$ el término arquimediano en la fórmula explícita asociado a un kernel gaussiano.
+La evaluación por fase estacionaria del integral oscilatorio en el lugar real produce
+el mismo factor $\pi^{-s/2}\Gamma(s/2)$. Por tanto, la constante global se fija de modo independiente de la ruta metapléctica.
+\end{prop}
+
+\begin{proof}[Bosquejo]
+Se reescribe $I_\infty(s)$ como integral de Mellin--Fourier con fase cuadrática; al
+aplicar estacionaria y cambio de variables estándar (Gaussian integral), el término principal y la constante coinciden con la de la transformada de Fourier normalizada de la gaussiana, lo cual reproduce $\pi^{-s/2}\Gamma(s/2)$.
 \end{proof}

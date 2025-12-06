@@ -20,3 +20,9 @@ Provide a mechanically-checkable pathway for the RH program:
 - M2: formal lemma for Archimedean rigidity
 - M3: positivity lemma in a simplified model (toy kernel)
 - M4: integration of all modules into the RH statement skeleton
+
+## Current status
+
+Only scaffolding files exist; no Lean or Isabelle proofs have been implemented
+yet.  Completing the milestones above is essential for Deliverables P4.1--P4.4
+and for independent verification of the programme.

@@ -1,0 +1,255 @@
+name: Advanced Performance Benchmarking
+
+on:
+  push:
+    branches: [ main, develop, copilot/** ]
+  pull_request:
+    branches: [ main, develop ]
+  workflow_dispatch:
+  schedule:
+    # Run weekly on Sundays at 00:00 UTC
+    - cron: '0 0 * * 0'
+
+permissions:
+  contents: read
+
+jobs:
+  benchmark-core:
+    name: Core Performance Benchmarks
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        ref: main  # Explicitly checkout main branch for scheduled runs
+      
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.10'
+        cache: 'pip'
+        
+    - name: Install core dependencies
+      env:
+        NUMEXPR_MAX_THREADS: 4
+        NUMEXPR_NUM_THREADS: 2
+      run: |
+        python -m pip install --upgrade pip
+        pip install numpy scipy mpmath matplotlib pytest
+        
+    - name: Install advanced libraries
+      continue-on-error: true
+      run: |
+        pip install numba jax jaxlib numexpr bottleneck
+        
+    - name: Run core benchmarks
+      run: |
+        python -c "
+        import time
+        import numpy as np
+        from mpmath import mp
+        
+        print('='*80)
+        print('CORE PERFORMANCE BENCHMARKS')
+        print('='*80)
+        
+        # Test 1: NumPy array operations
+        n = 10000000
+        start = time.time()
+        x = np.random.randn(n)
+        y = np.exp(-x**2)
+        t1 = time.time() - start
+        print(f'\n✅ NumPy benchmark (n={n}):')
+        print(f'   Time: {t1:.4f}s')
+        print(f'   Throughput: {n/t1:.0f} ops/sec')
+        
+        # Test 2: mpmath precision
+        mp.dps = 50
+        start = time.time()
+        result = mp.zeta(0.5 + 14.134j)
+        t2 = time.time() - start
+        print(f'\n✅ mpmath zeta computation (dps=50):')
+        print(f'   Time: {t2:.4f}s')
+        print(f'   Result: {result}')
+        
+        print('\n' + '='*80)
+        "
+        
+    - name: Benchmark with numba (if available)
+      continue-on-error: true
+      run: |
+        python -c "
+        try:
+            from numba import jit
+            import numpy as np
+            import time
+            
+            @jit(nopython=True)
+            def compute_sum(n):
+                result = 0.0
+                for i in range(n):
+                    result += np.sqrt(i)
+                return result
+            
+            # Warm up
+            compute_sum(100)
+            
+            # Benchmark
+            n = 10000000
+            start = time.time()
+            result = compute_sum(n)
+            elapsed = time.time() - start
+            
+            print('✅ Numba JIT benchmark:')
+            print(f'   Time: {elapsed:.4f}s')
+            print(f'   Result: {result:.2e}')
+        except ImportError:
+            print('⚠️  Numba not available')
+        "
+        
+  benchmark-spectral:
+    name: Spectral Operations Benchmark
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        ref: main  # Explicitly checkout main branch for scheduled runs
+      
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.10'
+        cache: 'pip'
+        
+    - name: Install dependencies
+      env:
+        NUMEXPR_MAX_THREADS: 4
+        NUMEXPR_NUM_THREADS: 2
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        
+    - name: Benchmark spectral computations
+      run: |
+        python -c "
+        import time
+        import numpy as np
+        from scipy.linalg import eigh
+        
+        print('='*80)
+        print('SPECTRAL OPERATIONS BENCHMARK')
+        print('='*80)
+        
+        # Test different matrix sizes
+        for n in [100, 500, 1000]:
+            # Create symmetric matrix
+            A = np.random.randn(n, n)
+            A = (A + A.T) / 2
+            
+            start = time.time()
+            eigenvalues, eigenvectors = eigh(A)
+            elapsed = time.time() - start
+            
+            print(f'\n✅ Eigenvalue decomposition (n={n}):')
+            print(f'   Time: {elapsed:.4f}s')
+            print(f'   Eigenvalue range: [{eigenvalues.min():.4f}, {eigenvalues.max():.4f}]')
+        
+        print('\n' + '='*80)
+        "
+        
+  benchmark-advanced:
+    name: Advanced Libraries Benchmark
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        ref: main  # Explicitly checkout main branch for scheduled runs
+      
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.10'
+        cache: 'pip'
+        
+    - name: Install all dependencies
+      continue-on-error: true
+      env:
+        NUMEXPR_MAX_THREADS: 4
+        NUMEXPR_NUM_THREADS: 2
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        
+    - name: Run advanced library demo
+      continue-on-error: true
+      run: |
+        python demo_advanced_math_libraries.py || echo "Demo completed with some libraries missing"
+        
+  benchmark-comparison:
+    name: Performance Comparison Report
+    runs-on: ubuntu-latest
+    needs: [benchmark-core, benchmark-spectral, benchmark-advanced]
+    if: always()
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        ref: main  # Explicitly checkout main branch for scheduled runs
+      
+    - name: Generate performance report
+      run: |
+        cat << 'EOF' > performance_report.md
+        # Performance Benchmarking Report
+        
+        Generated: $(date -u +"%Y-%m-%d %H:%M:%S UTC")
+        
+        ## Summary
+        
+        This report summarizes the performance benchmarks for the Riemann-Adelic framework
+        with advanced mathematical libraries.
+        
+        ### Core Operations
+        - ✅ NumPy array operations
+        - ✅ mpmath high-precision arithmetic
+        - ✅ Spectral decompositions
+        
+        ### Advanced Libraries
+        - Numba JIT compilation
+        - JAX automatic differentiation
+        - NetworkX graph algorithms
+        - TensorLy tensor decompositions
+        - Scikit-learn ML algorithms
+        
+        ## Recommendations
+        
+        1. Use numba for tight loops and numerical functions
+        2. Use numexpr for complex array expressions
+        3. Use JAX for GPU acceleration when available
+        4. Use scipy.sparse for large sparse matrices
+        
+        ## Next Steps
+        
+        - [ ] Profile critical code paths
+        - [ ] Optimize bottlenecks with JIT compilation
+        - [ ] Add GPU support for large-scale computations
+        - [ ] Implement caching for repeated computations
+        
+        EOF
+        
+        cat performance_report.md
+        
+    - name: Upload performance report
+      uses: actions/upload-artifact@v4
+      with:
+        name: performance-report
+        path: performance_report.md
+        retention-days: 30

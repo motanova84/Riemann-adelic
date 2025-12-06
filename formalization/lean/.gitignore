@@ -1,0 +1,27 @@
+# Lean build artifacts
+.lake/
+build/
+*.olean
+lakefile.olean
+
+# Build certification (keep only in releases)
+build/rh_proof.hash
+build/rh_proof.sha256
+build/rh_proof.metadata
+
+# Temporary files
+*.tmp
+*.bak
+*~
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+# Validation report - auto-generated
+validation_report.json

@@ -8,6 +8,7 @@ on:
 
 jobs:
   latex:
+  latex-teoremas:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -17,10 +18,30 @@ jobs:
         working-directory: docs/teoremas_basicos
         run: make
       - name: Upload PDF artifact
+      - name: Upload teoremas artifact
         uses: actions/upload-artifact@v4
         with:
           name: teoremas-basicos
           path: docs/teoremas_basicos/main.pdf
+
+  latex-paper:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install TeX Live
+        run: sudo apt-get update && sudo apt-get install -y texlive-latex-base texlive-latex-recommended texlive-latex-extra
+      - name: Build RH paper
+        working-directory: docs/paper
+        run: |
+          pdflatex main.tex
+          bibtex main
+          pdflatex main.tex
+          pdflatex main.tex
+      - name: Upload RH paper artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: rh-paper
+          path: docs/paper/main.pdf
 
   proof:
     runs-on: ubuntu-latest
@@ -33,4 +54,33 @@ jobs:
       - name: Install deps
         run: pip install mpmath sympy pytest
       - name: Run proof-check tests
+        run: pytest -q
+name: LaTeX and Proof Validation
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          
+      - name: Run pytest
         run: pytest -q

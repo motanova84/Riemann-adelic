@@ -178,7 +178,8 @@ def verify_explicit_formula_on_critical_line(imaginary_parts: list, test_functio
             # Use log weights as in typical explicit formula
             contribution = lp * f(lp)
             prime_contribution += contribution
-        except:
+        except (ValueError, OverflowError) as e:
+            mp.dprint(f"Skipping prime {p} due to error: {e}")
             continue
     
     # Archimedean contribution - simplified
