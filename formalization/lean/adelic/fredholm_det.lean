@@ -41,6 +41,7 @@ ORCID: 0009-0002-1923-0773
 import Mathlib.Analysis.Complex.Basic
 import Mathlib.Topology.MetricSpace.Basic
 import Mathlib.LinearAlgebra.FiniteDimensional
+import Mathlib.Analysis.SpecialFunctions.Log.Basic
 
 noncomputable section
 open Complex Real
