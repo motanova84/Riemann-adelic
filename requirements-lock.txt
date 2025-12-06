@@ -29,7 +29,10 @@ llvmlite==0.45.0
 jax==0.4.30
 jaxlib==0.4.30
 
-# Quantum stack (Qiskit stable series)
+# Quantum computing for consciousness adelic bridge
+qiskit==1.3.3
+qiskit-aer==0.15.1
+qiskit-ibm-runtime==0.34.0
 rustworkx==0.17.1
 qiskit==2.2.3
 qiskit-aer==0.17.2

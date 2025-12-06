@@ -34,10 +34,7 @@ jobs:
         continue-on-error: true
         with:
           files: ./coverage.xml
-          fail_ci_if_error: false
-          flags: unittests
-          name: codecov-qcal
-          verbose: true
-          # Note: Token is optional as organization supports tokenless uploads
-          # Administrators manage token configuration globally
-          token: ${{ secrets.CODECOV_TOKEN }}
+          fail_ci_if_error: true
+        env:
+          # Si tu repo es privado, añade CODECOV_TOKEN en Settings > Secrets
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
