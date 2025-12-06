@@ -55,6 +55,8 @@ python3 validate_v5_coronacion.py    # Run complete validation
 
 [![LaTeX & Proof-Checks](https://github.com/motanova84/-jmmotaburr-riemann-adelic/actions/workflows/latex-and-proof.yml/badge.svg)](https://github.com/motanova84/-jmmotaburr-riemann-adelic/actions/workflows/latex-and-proof.yml)
 
+[![LaTeX & Proof-Checks](https://github.com/motanova84/-jmmotaburr-riemann-adelic/actions/workflows/latex-and-proof.yml/badge.svg)](https://github.com/motanova84/-jmmotaburr-riemann-adelic/actions/workflows/latex-and-proof.yml)
+
 This repository contains numerical validation code for the paper:
 > ⚠️ **IMPORTANTE:**
 > 
