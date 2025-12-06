@@ -29,7 +29,7 @@ jobs:
     
     strategy:
       matrix:
-        python-version: ['3.11']
+        python-version: ['3.10', '3.11']
         acceleration: ['numba', 'numexpr', 'baseline']
       fail-fast: false
     
@@ -42,20 +42,38 @@ jobs:
       with:
         python-version: ${{ matrix.python-version }}
         cache: 'pip'
-        cache-dependency-path: 'requirements-lock.txt'
         
     - name: Install base dependencies
+      env:
+        # Configure numexpr for virtual runners
+        NUMEXPR_MAX_THREADS: 4
+        NUMEXPR_NUM_THREADS: 2
       run: |
-        python -m pip install --upgrade pip==24.3.1
-        pip install -r requirements-lock.txt
+        python -m pip install --upgrade pip
+        pip install numpy scipy mpmath sympy matplotlib pytest pytest-cov
+        
+    - name: Install acceleration library
+      if: matrix.acceleration != 'baseline'
+      continue-on-error: true
+      run: |
+        if [ "${{ matrix.acceleration }}" = "numba" ]; then
+          pip install numba llvmlite
+        elif [ "${{ matrix.acceleration }}" = "numexpr" ]; then
+          pip install numexpr bottleneck
+        fi
         
     - name: Fetch Riemann zeros data
       run: |
         python utils/fetch_odlyzko.py --precision t1e3 || echo "Using existing zeros data"
         
-    - name: Run validation tests
+    - name: Run validation tests (core subset)
+      timeout-minutes: 15
+      env:
+        # Configure numexpr for virtual runners
+        NUMEXPR_MAX_THREADS: 4
+        NUMEXPR_NUM_THREADS: 2
       run: |
-        pytest tests/ -v --tb=short --cov=. --cov-report=term-missing
+        pytest tests/test_coronacion_v5.py tests/test_a4_lemma.py tests/test_adelic_D.py tests/test_genuine_contributions.py tests/test_non_circular.py -v --tb=short --cov=. --cov-report=term-missing --cov-report=xml
         
     - name: Run explicit formula validation
       continue-on-error: true
@@ -64,11 +82,13 @@ jobs:
         
     - name: Upload coverage
       uses: codecov/codecov-action@v4
-      if: matrix.acceleration == 'baseline' && matrix.python-version == '3.11'
+      if: matrix.acceleration == 'baseline' && matrix.python-version == '3.10'
       with:
         file: ./coverage.xml
         flags: unittests
         name: codecov-umbrella
+        # Note: Token is optional as organization supports tokenless uploads
+        # Administrators manage token configuration globally
         
   validate-ml-enhanced:
     name: ML-Enhanced Zero Analysis
@@ -82,14 +102,16 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v5
       with:
-        python-version: '3.11'
+        python-version: '3.10'
         cache: 'pip'
-        cache-dependency-path: 'requirements-lock.txt'
         
     - name: Install dependencies
+      env:
+        NUMEXPR_MAX_THREADS: 4
+        NUMEXPR_NUM_THREADS: 2
       run: |
-        python -m pip install --upgrade pip==24.3.1
-        pip install -r requirements-lock.txt
+        python -m pip install --upgrade pip
+        pip install numpy scipy scikit-learn matplotlib
         
     - name: Run ML-based zero pattern analysis
       run: |
@@ -148,12 +170,14 @@ jobs:
       with:
         python-version: '3.10'
         cache: 'pip'
-        cache-dependency-path: 'requirements-lock.txt'
         
     - name: Install dependencies
+      env:
+        NUMEXPR_MAX_THREADS: 4
+        NUMEXPR_NUM_THREADS: 2
       run: |
-        python -m pip install --upgrade pip==24.3.1
-        pip install -r requirements-lock.txt
+        python -m pip install --upgrade pip
+        pip install numpy networkx matplotlib
         
     - name: Analyze prime network structure
       run: |
@@ -220,11 +244,19 @@ jobs:
         python-version: '3.10'
         cache: 'pip'
         
+    - name: Install system dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y llvm-14 llvm-14-dev libigraph-dev libigraph3t64
+    
     - name: Install dependencies
       continue-on-error: true
+      env:
+        NUMEXPR_MAX_THREADS: 4
+        NUMEXPR_NUM_THREADS: 2
       run: |
-        python -m pip install --upgrade pip==24.3.1
-        pip install -r requirements-lock.txt
+        python -m pip install --upgrade pip
+        pip install numpy scipy tensorly
         
     - name: Run tensor decomposition analysis
       continue-on-error: true

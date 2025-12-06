@@ -23,7 +23,8 @@ jobs:
           echo "🔍 Checking for problematic Unicode characters in notebooks..."
           
           # Define problematic characters that can cause Python syntax errors
-          PROBLEMATIC_CHARS="≪≫≠≤≥–—''""\""
+          # Using Unicode escape sequences to avoid confusion with JSON quotes
+          PROBLEMATIC_CHARS=$'\u226A\u226B\u2260\u2264\u2265\u2013\u2014\u2018\u2019\u201C\u201D\u2026'
           
           # Check notebooks directory
           if find notebooks/ -name "*.ipynb" -exec grep -l "[$PROBLEMATIC_CHARS]" {} \; | head -1 | read; then
@@ -38,10 +39,13 @@ jobs:
             echo "   ≥ → >="
             echo "   – → -"
             echo "   — → -"
-            echo "   ' → '"
-            echo "   ' → '"
-            echo "   " → \""
-            echo "   " → \""
+            echo "   ' → ' [U+2018 left single quote]"
+            echo "   ' → ' [U+2019 right single quote]"
+            echo "   \" → \" [U+201C left double quote]"
+            echo "   \" → \" [U+201D right double quote]"
+            echo "   … → ..."
+            echo ""
+            echo "Run: python3 fix_unicode.py"
             exit 1
           fi
           
