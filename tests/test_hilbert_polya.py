@@ -343,7 +343,7 @@ class TestDocumentation:
 
 """
 Test suite for Hilbert-Pólya Formal Closure components.
-
+"""
 
 # Path constants for TestDocumentation
 REPO_ROOT_DOC = Path(__file__).parent.parent
