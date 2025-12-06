@@ -43,7 +43,7 @@ import Mathlib.Topology.MetricSpace.Basic
 import Mathlib.LinearAlgebra.FiniteDimensional
 
 noncomputable section
-open Complex
+open Complex Real
 
 namespace FredholmAdelic
 
