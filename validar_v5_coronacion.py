@@ -1,22 +1,24 @@
 #!/usr/bin/env python3
 """
-Validador V5 Coronación — Wrapper
----------------------------------
-Conveniencia para ejecutar la validación completa del marco de la
-Hipótesis de Riemann basado en sistemas adélicos S-finitos.
-
-Permite a los usuarios invocar:
-    python validar_v5_coronacion.py [args]
-y esto reenvía la ejecución al script real:
-    validate_v5_coronacion.py
+Validador V5 Coronación
+-----------------------
+Ejecuta la validación completa del marco de la Hipótesis de Riemann
+basado en sistemas adélicos S-finitos.
 """
 
-import subprocess
 import sys
-import os
+import subprocess
 
-# Ruta al script real
-target = os.path.join(os.path.dirname(__file__), "validate_v5_coronacion.py")
+def main():
+    try:
+        # Llamar al script de validación real
+        subprocess.run(
+            [sys.executable, "validate_v5_coronacion.py"] + sys.argv[1:],
+            check=True
+        )
+    except subprocess.CalledProcessError as e:
+        print("❌ Error en la validación V5 Coronación:", e)
+        sys.exit(1)
 
-# Reenviar todos los argumentos y salir con el mismo código
-sys.exit(subprocess.call([sys.executable, target] + sys.argv[1:]))
+if __name__ == "__main__":
+    main()

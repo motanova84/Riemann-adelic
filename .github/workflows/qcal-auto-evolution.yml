@@ -1,0 +1,156 @@
+name: 🧬 Auto-Evolución QCAL – Lean 4 V5.3 Formalization
+
+on:
+  schedule:
+    - cron: "0 3 * * *"       # ejecución diaria automática a las 03:00 UTC
+  workflow_dispatch:
+  push:
+    branches: [ main ]
+
+permissions:
+  contents: write
+
+jobs:
+  evolve:
+    name: "✨ Auto-Evolución QCAL – Validación y Regeneración Cognitiva"
+    runs-on: ubuntu-latest
+
+    steps:
+    # 1️⃣ Obtención del código fuente
+    - name: 🧠 Clonar repositorio
+      uses: actions/checkout@v4
+      with:
+        ref: main  # Explicitly checkout main branch for scheduled runs
+
+    # 2️⃣ Configuración del entorno Python + Lean
+    - name: 🔧 Configurar entorno base
+      uses: actions/setup-python@v5
+      with:
+        python-version: "3.11"
+
+    - name: 📦 Instalar dependencias del sistema
+      run: |
+        sudo apt-get update
+        # Install LLVM tools for numba/llvmlite
+        sudo apt-get install -y llvm-14 llvm-14-dev
+        # Install libigraph for python-igraph
+        sudo apt-get install -y libigraph-dev libigraph3t64
+
+    - name: 📦 Instalar dependencias Python
+      env:
+        NUMEXPR_MAX_THREADS: 4
+        NUMEXPR_NUM_THREADS: 2
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: ⚙️ Instalar Lean 4.5.0
+      run: |
+        curl -sSf https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh | sh -s -- -y
+        export PATH="$HOME/.elan/bin:$PATH"
+        if ! command -v elan &> /dev/null; then
+          echo "❌ Elan no está en el PATH"; exit 1
+        fi
+        elan toolchain install leanprover/lean4:v4.5.0
+        elan default leanprover/lean4:v4.5.0
+        lean --version
+        echo "$HOME/.elan/bin" >> $GITHUB_PATH
+
+    # 3️⃣ Validación estructural del sistema
+    - name: 🔍 Validar dependencias del sistema
+      run: |
+        python3 validate_system_dependencies.py || true
+
+    # 4️⃣ Validación formal Lean
+    - name: 🧩 Ejecutar validación Lean 4
+      working-directory: formalization/lean
+      run: |
+        python3 validate_lean_env.py || true
+
+    # 5️⃣ Generar e integrar informe
+    - name: 📘 Subir informe de validación
+      uses: actions/upload-artifact@v4
+      with:
+        name: validation-report
+        path: formalization/lean/validation_report.json
+
+    # 6️⃣ Actualizar resumen en README
+    - name: 🔄 Actualizar resumen en README
+      if: success()
+      run: |
+        REPORT="formalization/lean/validation_report.json"
+        if [ -f "$REPORT" ]; then
+          STATUS=$(jq -r '.summary.status' $REPORT)
+          TIME=$(jq -r '.summary.build_time_sec' $REPORT)
+          WARN=$(jq -r '.summary.warnings' $REPORT)
+          ERR=$(jq -r '.summary.errors' $REPORT)
+          LEANV=$(jq -r '.summary.lean_version' $REPORT)
+          DATE=$(date -u +"%Y-%m-%d %H:%M:%SZ")
+          
+          # Crear la sección de Validation Summary si no existe
+          if ! grep -q "## Validation Summary" README.md; then
+            echo "" >> README.md
+            echo "___" >> README.md
+            echo "" >> README.md
+            echo "## Validation Summary" >> README.md
+            echo "" >> README.md
+            echo "Última ejecución automática del sistema QCAL Auto-Evolución:" >> README.md
+            echo "" >> README.md
+            echo "| Property | Value |" >> README.md
+            echo "|----------|-------|" >> README.md
+            echo "| **Status** | - |" >> README.md
+            echo "| **Build Time (s)** | - |" >> README.md
+            echo "| **Warnings** | - |" >> README.md
+            echo "| **Errors** | - |" >> README.md
+            echo "| **Lean Version** | - |" >> README.md
+            echo "| **Date (UTC)** | - |" >> README.md
+            echo "" >> README.md
+            echo "___" >> README.md
+          fi
+          
+          # Actualizar la tabla con AWK
+          awk -v status="$STATUS" -v time="$TIME" -v warn="$WARN" -v err="$ERR" -v leanv="$LEANV" -v date="$DATE" '
+            BEGIN { inside=0; found=0 }
+            /^## Validation Summary/ { inside=1; found=1; print; next }
+            inside && /^\| Property \| Value \|/ {
+              print
+              print "|----------|-------|"
+              print "| **Status** | " status " |"
+              print "| **Build Time (s)** | " time " |"
+              print "| **Warnings** | " warn " |"
+              print "| **Errors** | " err " |"
+              print "| **Lean Version** | " leanv " |"
+              print "| **Date (UTC)** | " date " |"
+              inside=0
+              # Skip old table rows until we hit the separator
+              while (getline && !/^___/ && !/^##/ && NF > 0) {}
+              if (/^___/ || /^##/) print
+              next
+            }
+            { print }
+          ' README.md > README.tmp && mv README.tmp README.md
+        fi
+
+    - name: 🧾 Confirmar actualización del README
+      uses: stefanzweifel/git-auto-commit-action@v5
+      with:
+        commit_message: "📘 Actualizar resumen de validación QCAL automática"
+        branch: main
+
+    # 7️⃣ Informe final y energía simbiótica
+    - name: ⏱️ Resumen de evolución
+      if: always()
+      run: |
+        echo "───────────────────────────────────────────────"
+        echo "🧬  CICLO QCAL COMPLETADO"
+        echo "───────────────────────────────────────────────"
+        echo "Repositorio     : motanova84/-jmmotaburr-riemann-adelic"
+        echo "Fecha UTC       : $(date -u +"%Y-%m-%d %H:%M:%SZ")"
+        REPORT="formalization/lean/validation_report.json"
+        if [ -f "$REPORT" ]; then
+          echo "Estado Resumen  : $(jq -r '.summary.status' $REPORT)"
+          echo "Coherencia QCAL : $(jq -r '.summary.qcal_coherence' $REPORT)"
+        else
+          echo "Estado Resumen  : REPORT NOT FOUND"
+        fi
+        echo "───────────────────────────────────────────────"

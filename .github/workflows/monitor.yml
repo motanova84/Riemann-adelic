@@ -17,6 +17,15 @@ on:
       - 'RIEMANNJMMB84.pdf'
       - 'CITATION.cff'
       - 'monitoring/**'
+  
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'paper/**'
+      - 'paper_standalone.tex'
+      - 'RIEMANNJMMB84.pdf'
+      - 'CITATION.cff'
+      - 'monitoring/**'
 
 jobs:
   monitor:
@@ -25,6 +34,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          ref: main  # Explicitly checkout main branch for scheduled runs
       
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -33,7 +44,7 @@ jobs:
       
       - name: Install dependencies
         run: |
-          python -m pip install --upgrade pip
+          python -m pip install --upgrade pip==24.3.1
           pip install requests
       
       - name: Generate fingerprints
@@ -57,7 +68,7 @@ jobs:
           python monitoring/run_monitor.py
       
       - name: Upload monitoring artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: always()
         with:
           name: monitoring-reports
