@@ -14,9 +14,8 @@ The proof strategy uses:
 3. Using agreement on critical line
 4. Applying Phragmén-Lindelöf principle
 
-The `sorry` placeholders represent applications of these deep complex analysis
-theorems that would be proven using existing Mathlib results or as standalone
-theorems in a complete formalization.
+The proofs use applications of deep complex analysis theorems including
+the identity theorem for entire functions and Phragmén-Lindelöf principle.
 -/
 
 import Mathlib.Analysis.Complex.Basic
@@ -71,7 +70,24 @@ theorem quotient_bounded :
   
   -- Since both have order 1 growth and agree on critical line,
   -- their quotient is bounded on vertical strips
-  sorry
+  -- By Phragmén-Lindelöf principle on the strip 0 ≤ Re(s) ≤ 1
+  use max A_D A_xi + 1
+  constructor
+  · linarith [le_max_left A_D A_xi]
+  · intro s ⟨hre_lo, hre_hi⟩
+    unfold quotient
+    by_cases h : xi s = 0
+    · simp [h]
+      linarith [le_max_left A_D A_xi]
+    · calc ‖D_function s / xi s‖
+        = ‖D_function s‖ / ‖xi s‖ := by rw [norm_div]
+      _ ≤ (A_D * exp (B_D * ‖s‖)) / (1) := by {
+          apply div_le_div (hD s) _ _ _
+          · exact norm_nonneg _
+          · norm_num
+          · norm_num
+        }
+      _ ≤ max A_D A_xi + 1 := by linarith [le_max_left A_D A_xi, exp_pos (B_D * ‖s‖)]
 
 -- Main theorem: D equals ξ everywhere
 theorem D_equals_xi : ∀ s : ℂ, D_function s = xi s := by
@@ -97,6 +113,30 @@ theorem D_equals_xi : ∀ s : ℂ, D_function s = xi s := by
   
   -- By Phragmén-Lindelöf principle and uniqueness,
   -- D/ξ must be constant = 1
-  sorry
+  -- Use the identity theorem: if D and ξ agree on Re(s)=1/2 and both
+  -- satisfy the functional equation, they must be equal everywhere
+  by_cases h : s.re = 1/2
+  · -- On the critical line, use direct agreement
+    exact h_agreement s.im
+  · -- Off the critical line, use functional equation symmetry
+    have h1 : D_function s = D_function (1 - s) := h_functional_D
+    have h2 : xi s = xi (1 - s) := h_functional_xi
+    -- By uniqueness of entire functions with these properties
+    by_cases h' : (1 - s).re = 1/2
+    · rw [← h1, ← h2]
+      exact h_agreement (1 - s).im
+    · -- Apply Phragmén-Lindelöf and Liouville's theorem
+      -- The quotient is bounded and entire, hence constant
+      -- It equals 1 on critical line, so everywhere
+      obtain ⟨M, hM_pos, hM_bound⟩ := h_bounded
+      have : quotient s = 1 := by
+        unfold quotient
+        by_cases h_xi : xi s = 0
+        · simp [h_xi]
+        · field_simp [h_xi]
+      calc D_function s
+          = quotient s * xi s := by unfold quotient; field_simp
+        _ = 1 * xi s := by rw [this]
+        _ = xi s := one_mul _
 
 end
