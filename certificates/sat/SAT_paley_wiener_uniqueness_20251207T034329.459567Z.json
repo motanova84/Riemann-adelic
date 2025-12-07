@@ -1,0 +1,60 @@
+{
+  "certificate_id": "SAT_paley_wiener_uniqueness_20251207T034329.459567Z",
+  "certificate_type": "SAT_THEOREM_CERTIFICATE",
+  "theorem_name": "paley_wiener_uniqueness",
+  "description": "Paley-Wiener uniqueness theorem",
+  "theorem_type": "uniqueness",
+  "timestamp": "2025-12-07T03:43:29.459567Z",
+  "file_info": {
+    "path": "formalization/lean/RH_final_v6/PaleyWiener/paley_wiener_uniqueness.lean",
+    "sha256": "FILE_NOT_FOUND",
+    "exists": false
+  },
+  "dependencies": [],
+  "verification": {
+    "compilation": {
+      "compiles": null,
+      "error_message": "[Errno 2] No such file or directory: 'lean'",
+      "check_time": null
+    },
+    "theorem_content_found": false,
+    "content_length": 0
+  },
+  "sat_formula": {
+    "variables": {
+      "theorem_exists": true,
+      "theorem_compiles": null,
+      "file_valid": false,
+      "dependencies_satisfied": true,
+      "no_sorry": true
+    },
+    "formula": "AND(theorem_exists, theorem_compiles, file_valid, dependencies_satisfied, no_sorry)",
+    "satisfied": false,
+    "solver": "direct_evaluation"
+  },
+  "proof_status": {
+    "verified": false,
+    "sorry_count": 0,
+    "axioms_used": [
+      "propext",
+      "quot.sound",
+      "Classical.choice"
+    ]
+  },
+  "qcal_signature": {
+    "base_frequency": "141.7001 Hz",
+    "coherence_constant": "C = 244.36",
+    "field_equation": "\u03a8 = I \u00d7 A_eff\u00b2 \u00d7 C^\u221e"
+  },
+  "cryptographic_proof": {
+    "certificate_hash": "7bef87866793b3492e7331193f3cbd16a3811e048e2dea72e22db0baa541e228",
+    "validator_signature": "c24c6e85a2cdc3841dbc44bf40de2112"
+  },
+  "metadata": {
+    "generator": "SAT Certificate Generator v1.0",
+    "author": "Jos\u00e9 Manuel Mota Burruezo (JMMB \u03a8\u2727)",
+    "institution": "Instituto de Conciencia Cu\u00e1ntica (ICQ)",
+    "doi": "10.5281/zenodo.17379721",
+    "license": "CC BY-NC-SA 4.0"
+  }
+}
