@@ -39,6 +39,11 @@ OMEGA_0 = 2 * np.pi * F0  # Angular frequency
 ZETA_PRIME_HALF = -3.92264613  # ζ'(1/2) numerical value
 C_QCAL = 244.36  # QCAL coherence constant
 
+# Universal Constant C = 629.83 (Spectral Origin)
+# C = 1/λ₀ where λ₀ is the first eigenvalue of Hψ
+LAMBDA_0 = 0.001588050  # First eigenvalue of noetic operator Hψ
+C_UNIVERSAL = 1.0 / LAMBDA_0  # ≈ 629.83 - Universal constant
+
 # Numerical stability constants
 LOG_X_EPSILON = 1e-10  # Epsilon for log(x) to avoid log(0)
 

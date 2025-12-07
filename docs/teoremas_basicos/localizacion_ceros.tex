@@ -1,3 +1,29 @@
+\section{Localización analítica de ceros}
+
+\newtheorem{theoremD}{Theorem}[section]
+\newtheorem{lemmaD}[theoremD]{Lemma}
+
+\subsection*{Ruta A: de Branges}
+Combina los resultados de la sección anterior: si $E$ es HB, $H\succ 0$ e integrable,
+y el operador es autoadjunto, el espectro es real $\Rightarrow$ ceros en la recta crítica.
+
+\subsection*{Ruta B: Positividad tipo Weil--Guinand}
+
+\begin{theoremD}[Criterio de positividad]
+Sea $\mathcal F$ una familia densa de funciones de prueba suaves
+cuyas transformadas de Mellin/Paley--Wiener cumplen las hipótesis estándar.
+Si para todo $f\in\mathcal F$ la forma
+\[
+Q[f]=\sum_{\rho}\widehat f(\rho)-\Big(\sum_{n\ge1}\Lambda(n)f(\log n)+\text{término arquimediano}\Big)\ge 0,
+\]
+entonces no existen ceros de $D$ fuera de $\Re(s)=\tfrac{1}{2}$.
+\end{theoremD}
+
+\begin{proof}[Esquema]
+Si existiera $\rho_0$ con $\Re(\rho_0)\neq \tfrac{1}{2}$, se construye $f$
+concentrada en frecuencia cerca de $\rho_0$ (ajustada por simetrías) que hace
+$Q[f]<0$, contradiciendo la positividad (véase el criterio de Weil).
+\end{proof}
 \section{Localización analítica de ceros en la recta crítica}
 
 Esta sección muestra que la combinación del esquema de de Branges y el criterio

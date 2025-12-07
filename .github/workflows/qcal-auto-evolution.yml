@@ -28,13 +28,33 @@ jobs:
       with:
         python-version: "3.11"
 
+    - name: 📦 Instalar dependencias del sistema
+      run: |
+        sudo apt-get update
+        # Install LLVM tools for numba/llvmlite
+        sudo apt-get install -y llvm-14 llvm-14-dev
+        # Install libigraph for python-igraph
+        sudo apt-get install -y libigraph-dev libigraph3t64
+
+    - name: 📦 Instalar dependencias Python
+      env:
+        NUMEXPR_MAX_THREADS: 4
+        NUMEXPR_NUM_THREADS: 2
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
     - name: ⚙️ Instalar Lean 4.5.0
       run: |
         curl -sSf https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh | sh -s -- -y
-        echo "$HOME/.elan/bin" >> $GITHUB_PATH
+        export PATH="$HOME/.elan/bin:$PATH"
+        if ! command -v elan &> /dev/null; then
+          echo "❌ Elan no está en el PATH"; exit 1
+        fi
         elan toolchain install leanprover/lean4:v4.5.0
         elan default leanprover/lean4:v4.5.0
         lean --version
+        echo "$HOME/.elan/bin" >> $GITHUB_PATH
 
     # 3️⃣ Validación estructural del sistema
     - name: 🔍 Validar dependencias del sistema

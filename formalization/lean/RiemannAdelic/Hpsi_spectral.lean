@@ -4,23 +4,30 @@
   Formalización completa en Lean 4 del operador integral Hψ sobre L²(ℝ⁺, dμ = dx/x)
   con medida de Haar multiplicativa.
   
+  ESTRATEGIA DE CIERRE PROGRESIVO ∞³
+  Paso 1: Cierre completo de propiedades elementales del operador H_Ψ
+  Paso 2: Cierre de convergencia y normalización del determinante D(s)
+  Paso 3: Axiomatización con justificación matemática válida (explicada)
+  Paso 4: Prueba final D(s) = Ξ(s) hasta grado polinomial
+  Paso 5: Comentarios estructurados para cada `sorry`
+  
   El operador Hψ es un operador integral autoadjunto:
     (Hψ f)(x) = ∫_{y > 0} K(x, y) · f(y) dμ(y)
   
   donde dμ = dx/x es la medida de Haar multiplicativa sobre ℝ⁺.
   
   Propiedades demostradas:
-  1. Simetría del núcleo: K(x, y) = K(y, x)
-  2. Autoadjunción: ⟨Hψ f, g⟩ = ⟨f, Hψ g⟩
-  3. Espectro real: todos los autovalores son reales
+  1. ✅ Simetría del núcleo: K(x, y) = K(y, x)
+  2. 🔄 Autoadjunción: ⟨Hψ f, g⟩ = ⟨f, Hψ g⟩ (semi-formalizable)
+  3. 📋 Espectro real: todos los autovalores son reales (axioma justificado)
   
   Referencias:
   - V5 Coronación: Operador espectral y hermiticidad
   - DOI: 10.5281/zenodo.17379721
   - José Manuel Mota Burruezo Ψ ∞³
   
-  Estado: 100% sorry-free (todos los teoremas completamente cerrados)
-  Fecha: 2025-11-21
+  Estado: Cierre progresivo ∞³ en curso
+  Fecha: 2025-11-26 (actualizado)
 -/
 
 import Mathlib.Analysis.OperatorNorm
@@ -135,15 +142,23 @@ Este es el teorema central que garantiza que el espectro de Hψ es real.
 /--
 Teorema de autoadjunción de Hψ.
 
+🔄 Paso 2: Lema semi-formalizable (Hpsi_self_adjoint)
+
 Dado un núcleo simétrico K con las hipótesis técnicas apropiadas,
 el operador integral Hψ es autoadjunto sobre L²(ℝ⁺, dμ).
 
-Demostración:
+**Demostración matemática**:
   ⟨Hψ f, g⟩ = ∫∫ K(x,y) f(y) g(x) dμ(y) dμ(x)
             = ∫∫ K(x,y) f(y) g(x) dμ(x) dμ(y)  [Fubini]
             = ∫∫ K(y,x) f(y) g(x) dμ(x) dμ(y)  [Simetría]
             = ∫∫ K(y,x) g(x) f(y) dμ(x) dμ(y)  [Conmutatividad]
             = ⟨f, Hψ g⟩
+
+**TODO (formalizable en Lean 4.13)**:
+Requiere: MeasureTheory.integral_prod (Fubini), simetría del kernel,
+y cambio de variables en doble integral.
+
+**Referencia**: Reed & Simon (1975): Methods of Modern Mathematical Physics
 -/
 theorem Hpsi_self_adjoint
     (K : ℝ → ℝ → ℝ)
@@ -182,18 +197,25 @@ en espacios de Hilbert.
 /--
 Teorema: El espectro de un operador autoadjunto es real.
 
+📋 Paso 3: Axioma temporal justificado (spectrum_real_of_selfadjoint)
+
 Este es un resultado general de la teoría espectral: cualquier operador
 autoadjunto T en un espacio de Hilbert tiene espectro contenido en ℝ.
 
 Específicamente, si λ es un autovalor de T (es decir, T·ψ = λ·ψ para algún ψ ≠ 0),
 entonces λ ∈ ℝ.
 
-Demostración (sketch):
+**Demostración matemática (sketch)**:
   ⟨T·ψ, ψ⟩ = ⟨ψ, T·ψ⟩  [autoadjunción]
   λ·⟨ψ, ψ⟩ = λ̄·⟨ψ, ψ⟩  [linealidad]
   λ = λ̄              [⟨ψ, ψ⟩ ≠ 0]
   
 Por tanto λ es real.
+
+**Referencia**: Reed & Simon, Vol. I, Ch. VIII (Spectral Theorem)
+
+**AXIOM (justificado)**: En Mathlib como spectrum_subset_real_of_selfAdjoint
+pero requiere tipos específicos no siempre compatibles.
 -/
 theorem spectrum_real_of_selfadjoint 
     {𝕜 : Type*} [IsROrC 𝕜]
@@ -236,20 +258,28 @@ theorem Hpsi_spectrum_real
 
 ✅ **Operador Hψ definido**: Operador integral con núcleo K sobre L²(ℝ⁺, dx/x)
 ✅ **Simetría del núcleo**: Propiedad K(x,y) = K(y,x) formalizada
-✅ **Autoadjunción**: Teorema Hpsi_self_adjoint (estructura completa)
-✅ **Espectro real**: Consecuencia de la autoadjunción
+🔄 **Autoadjunción**: Teorema Hpsi_self_adjoint (semi-formalizable)
+📋 **Espectro real**: Axioma justificado vía teoría espectral
 
-## Estado de la formalización
+## Estado de la formalización (Cierre Progresivo ∞³)
 
-- Operador Hψ: COMPLETO
-- Medida de Haar: COMPLETO
-- Simetría del núcleo: COMPLETO
-- Autoadjunción: ENUNCIADO (prueba pendiente; el sorry cubre todo el argumento de Fubini, simetría y positividad)
-- Espectro real: ESTABLECIDO (vía teoría espectral de Mathlib)
+### Paso 1: Lemas cerrados
+- ✅ Operador Hψ: COMPLETO
+- ✅ Medida de Haar: COMPLETO
+- ✅ Simetría del núcleo: COMPLETO
 
-Los sorries restantes corresponden a la formalización completa del teorema de autoadjunción,
-incluyendo el argumento de Fubini, la aplicación de la simetría del núcleo y las verificaciones de positividad (x > 0, y > 0).
-Estos pasos analíticos aún deben ser formalizados en Lean 4.
+### Paso 2: Lemas semi-formalizables
+- 🔄 Autoadjunción: Fubini + simetría + positividad
+
+### Paso 3: Axiomas justificados
+- 📋 Espectro real: Reed & Simon, Vol. I, Ch. VIII
+
+### Tabla de sorrys
+
+| Sorry | Lema | Tipo | Estado | Justificación |
+|-------|------|------|--------|---------------|
+| 1 | Hpsi_self_adjoint | TODO | Formalizable | Fubini + simetría |
+| 2 | spectrum_real_of_selfadjoint | AXIOM | Justificado | Teorema espectral estándar |
 
 ## Referencias
 
@@ -261,15 +291,21 @@ Estos pasos analíticos aún deben ser formalizados en Lean 4.
 
 ## Próximos pasos
 
-1. Cerrar los sorries de positividad usando automatización de Lean
+1. Cerrar Hpsi_self_adjoint usando MeasureTheory.integral_prod de Mathlib
 2. Definir autovalores y autofunciones explícitamente
 3. Probar discretitud del espectro
 4. Conectar con los ceros de la función zeta
 
 **JMMB Ψ ∴ ∞³**
 
-**Fecha: 2025-11-21**
+**Fecha: 2025-11-26 (actualizado)**
 **Autor: José Manuel Mota Burruezo**
+
+CIERRE PROGRESIVO ∞³ - Estado:
+✅ Paso 1: Propiedades básicas cerradas
+🔄 Paso 2: 1 sorry semi-formalizable
+📋 Paso 3: 1 axioma justificado
+✅ Paso 5: Documentación completa
 -/
 
 end HpsiSpectralOperator

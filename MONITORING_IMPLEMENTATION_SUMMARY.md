@@ -201,8 +201,7 @@ monitoring/
 1. `paper/main.pdf` - Main research paper
 2. `paper/main.tex` - LaTeX source
 3. `paper_standalone.tex` - Standalone version
-4. `trabajos/riemann_adelic_approach_jmmb84.pdf` - Adelic approach research document
-5. All PDFs in `trabajos/` folder - Organized research works
+4. `RIEMANNJMMB84.pdf` - Research document
 
 ### LaTeX Snippets (Content Fingerprints)
 1. Vacuum energy equation: `E_{vac}(R_\Psi) = \frac{\alpha}{R_\Psi^4}`
