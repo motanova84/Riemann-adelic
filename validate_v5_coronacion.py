@@ -33,6 +33,14 @@ import mpmath as mp
 # Add the current directory to Python path for imports
 sys.path.append('.')
 
+# Import QCAL logging system
+try:
+    from utils.validation_logger import ValidationLogger
+    LOGGING_AVAILABLE = True
+except ImportError:
+    LOGGING_AVAILABLE = False
+    print("⚠️  Warning: QCAL logging system not available")
+
 def include_yolo_verification():
     """Include YOLO verification in main validation"""
     try:
@@ -68,6 +76,15 @@ def validate_v5_coronacion(precision=30, verbose=False, save_certificate=False, 
     Returns:
         dict: Validation results and proof certificate
     """
+    # Initialize logging
+    logger = None
+    if LOGGING_AVAILABLE:
+        logger = ValidationLogger("validate_v5_coronacion")
+        logger.log_step("V5 Coronación Validation", 1)
+        logger.log(f"Precision: {precision} decimal places")
+        logger.log(f"Max zeros: {max_zeros}")
+        logger.log(f"Max primes: {max_primes}")
+    
     setup_precision(precision)
     
     print("=" * 80)
@@ -563,6 +580,20 @@ def validate_v5_coronacion(precision=30, verbose=False, save_certificate=False, 
         
     except Exception as e:
         print(f"⚠️  Warning: Could not save CSV results: {e}")
+    
+    # Finalize logging
+    if logger:
+        logger.log_metric("total_tests", len(results))
+        logger.log_metric("passed_tests", passed_count)
+        logger.log_metric("failed_tests", failed_count)
+        logger.log_metric("skipped_tests", skipped_count)
+        
+        if all_passed and failed_count == 0:
+            logger.log_success("V5 Coronación validation completed successfully")
+            logger.finalize("success")
+        else:
+            logger.log_warning(f"V5 Coronación validation completed with {failed_count} failures")
+            logger.finalize("partial")
     
     return {
         'success': all_passed and failed_count == 0,
