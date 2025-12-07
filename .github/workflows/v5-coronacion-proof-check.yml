@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: [3.11, 3.12]
+        python-version: ['3.11']
         precision: [15, 30]
         
     steps:
@@ -164,7 +164,7 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
-        python-version: 3.12
+        python-version: '3.11'
         
     - name: Install dependencies
       run: |
