@@ -64,7 +64,7 @@ iniconfig==2.3.0
 
 # Networking, requests stack
 requests==2.32.5
-urllib3==2.5.0
+urllib3==2.6.0  # Updated from 2.5.0 to fix CVE: streaming API and decompression chain vulnerabilities
 charset-normalizer==3.4.4
 idna==3.11
 certifi==2025.11.12
