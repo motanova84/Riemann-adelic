@@ -21,8 +21,9 @@ echo ""
 echo "Checking for 'sorry' or 'admit' statements..."
 echo "----------------------------------------------"
 
-# Method 1: Check for sorry/admit as standalone keywords (not in comments)
-SORRY_COUNT=$(grep -E "^\s*(sorry|admit)\s*$" "$FILE" | wc -l)
+# Method 1: Check for sorry/admit as keywords (not in comments)
+# This catches sorry/admit as standalone words or at end of lines
+SORRY_COUNT=$(grep -v "^--" "$FILE" | grep -E "(sorry|admit)(\s|$)" | wc -l || echo "0")
 
 echo "Result: Found $SORRY_COUNT instances of 'sorry' or 'admit' as proof placeholders"
 echo ""
