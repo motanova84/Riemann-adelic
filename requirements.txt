@@ -13,6 +13,7 @@ mistune==2.0.5
 
 # HTTP requests for data fetching
 requests==2.32.4
+urllib3>=2.6.0  # Security: CVE fixes for decompression vulnerabilities
 httpx>=0.27.0
 
 # Parallel computing
