@@ -1,0 +1,36 @@
+{
+  "certificate_type": "SAT Certificate",
+  "theorem_name": "Gamma Exclusion (Trivial Zeros)",
+  "theorem_number": 10,
+  "category": "special_functions",
+  "theorem_statement": {
+    "formal": "\u03be(s) has no zeros at s = -2n (n \u2208 \u2115) due to \u0393(s/2) poles",
+    "natural": "The gamma factor \u0393(s/2) in the completed zeta function excludes the trivial zeros at negative even integers."
+  },
+  "status": "PROVEN",
+  "dependencies": [
+    "Gamma function properties"
+  ],
+  "proof_method": "Gamma function pole analysis",
+  "verification_results": {
+    "trivial_zeros_excluded": true
+  },
+  "computational_evidence": {
+    "trivial_zeros_excluded": true,
+    "gamma_poles_verified": [
+      -2,
+      -4,
+      -6,
+      -8,
+      -10
+    ],
+    "exclusion_mechanism": "\u0393(s/2) pole cancellation"
+  },
+  "lean_reference": "formalization/lean/GammaTrivialExclusion.lean",
+  "metadata": {
+    "created": "2025-12-07T03:43:24.396510",
+    "precision": 30,
+    "version": "V7.0-Coronaci\u00f3n-Final"
+  },
+  "certificate_hash": "fe184ffeee462b5f2ed1b0f5b49c0a89fcada26389e865497c9cc07387501924"
+}

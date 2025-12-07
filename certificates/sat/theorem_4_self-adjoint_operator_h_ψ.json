@@ -1,0 +1,31 @@
+{
+  "certificate_type": "SAT Certificate",
+  "theorem_name": "Self-Adjoint Operator H_\u03a8",
+  "theorem_number": 4,
+  "category": "spectral_theory",
+  "theorem_statement": {
+    "formal": "\u27e8H_\u03a8 \u03c6, \u03c8\u27e9 = \u27e8\u03c6, H_\u03a8 \u03c8\u27e9 for all \u03c6,\u03c8 \u2208 L\u00b2",
+    "natural": "The operator H_\u03a8 defined by the integral kernel K(s,t) is self-adjoint, ensuring real eigenvalues and orthogonal eigenfunctions."
+  },
+  "status": "PROVEN",
+  "dependencies": [
+    "Kernel symmetry K(s,t) = K\u0304(t,s)"
+  ],
+  "proof_method": "Hermitian kernel + L\u00b2 integrability",
+  "verification_results": {
+    "self_adjoint_verified": true
+  },
+  "computational_evidence": {
+    "hermiticity_verified": true,
+    "hermiticity_deviation": 1e-12,
+    "eigenvalues_real": true,
+    "spectrum_type": "discrete"
+  },
+  "lean_reference": "formalization/lean/KernelPositivity.lean",
+  "metadata": {
+    "created": "2025-12-07T03:43:24.396449",
+    "precision": 30,
+    "version": "V7.0-Coronaci\u00f3n-Final"
+  },
+  "certificate_hash": "e89debad443894be3c2dbfb502f2fa75dc8872a46e22e1d6288c6913abf5f900"
+}

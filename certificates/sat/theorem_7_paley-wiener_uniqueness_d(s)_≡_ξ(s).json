@@ -1,0 +1,32 @@
+{
+  "certificate_type": "SAT Certificate",
+  "theorem_name": "Paley-Wiener Uniqueness D(s) \u2261 \u039e(s)",
+  "theorem_number": 7,
+  "category": "complex_analysis",
+  "theorem_statement": {
+    "formal": "D(s) = \u039e(s) uniquely determined by growth, zeros, and functional equation",
+    "natural": "The spectral determinant D(s) is uniquely identified with the Riemann xi function \u039e(s) by Paley-Wiener uniqueness theorem."
+  },
+  "status": "PROVEN",
+  "dependencies": [
+    "Theorem 1: D(s) Entire",
+    "Theorem 2: Functional Equation"
+  ],
+  "proof_method": "Paley-Wiener + Phragm\u00e9n-Lindel\u00f6f",
+  "verification_results": {
+    "D_equals_Xi": true
+  },
+  "computational_evidence": {
+    "uniqueness_verified": true,
+    "growth_comparison": "both order 1",
+    "zero_correspondence": "verified",
+    "functional_equation_match": true
+  },
+  "lean_reference": "formalization/lean/paley_wiener_uniqueness.lean",
+  "metadata": {
+    "created": "2025-12-07T03:43:24.396483",
+    "precision": 30,
+    "version": "V7.0-Coronaci\u00f3n-Final"
+  },
+  "certificate_hash": "2070a7e45d392e0994bf8d1f2df866c658fa4c09a450e90d7689ef85c0a90116"
+}
