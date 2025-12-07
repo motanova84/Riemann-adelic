@@ -53,6 +53,12 @@ Optimized resource allocation for different computation types:
 | `api/*.py` | 60s | 2048 MB | API endpoints, cron jobs |
 | `notebooks/*.ipynb` | 300s | 4096 MB | Complex validation notebooks |
 
+> **⚠️ Important Pattern Note**: The pattern `api/*.py` matches files directly in the `api/` directory.
+> Do NOT use `api/**/*.py` as this pattern only matches files in subdirectories (e.g., `api/subdir/*.py`)
+> and will NOT match files at the root level like `api/validate-hourly.py`. This is a common mistake
+> that causes deployment failures with the error:
+> "El patrón 'api/**/*.py' definido en `functions` no coincide con ninguna función sin servidor"
+
 ### 🖼️ Image Optimization
 - **Formats**: WebP (modern, efficient)
 - **Sizes**: 512px, 1080px, 2048px

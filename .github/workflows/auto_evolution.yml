@@ -1,0 +1,66 @@
+name: Auto-Evolution QCAL
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    types: [opened, synchronize, reopened]
+  schedule:
+    - cron: "0 */12 * * *"     # cada 12 h revisión
+
+jobs:
+  evolve:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main  # Explicitly checkout main branch for scheduled runs
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run validation
+        run: python3 validate_v5_coronacion.py --precision 25 --verbose
+
+      - name: Archive results
+        if: always()
+        run: |
+          mkdir -p data/logs
+          cp data/*.json data/logs/ 2>/dev/null || true
+          tar -czf data/logs_${{ github.run_number }}.tar.gz data/logs
+        continue-on-error: true
+
+      - name: Upload to QCAL-CLOUD
+        if: always()
+        run: |
+          if [ -f data/validation.json ]; then
+            curl -X POST https://qcal.cloud/api/upload \
+                 -H "Content-Type: application/json" \
+                 -d @data/validation.json || echo "QCAL-CLOUD upload skipped (optional)"
+          else
+            echo "No validation.json found, skipping QCAL-CLOUD upload"
+          fi
+        continue-on-error: true
+
+      - name: Commit auto-updates
+        if: success()
+        run: |
+          git config user.name "qcal-bot"
+          git config user.email "bot@qcal.cloud"
+          if [ -f data/logs_${{ github.run_number }}.tar.gz ]; then
+            git add data/logs_${{ github.run_number }}.tar.gz
+            git commit -m "Auto-evolution #${{ github.run_number }}" || echo "No changes to commit"
+            git push || echo "Push failed or no changes to push"
+          fi
+        continue-on-error: true

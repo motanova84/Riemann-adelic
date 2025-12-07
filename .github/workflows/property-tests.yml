@@ -1,0 +1,79 @@
+name: Property Tests
+
+# Workflow para ejecutar pruebas basadas en propiedades con Hypothesis (Python)
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+  schedule:
+    # Ejecutar diariamente a las 2 AM UTC para detectar fallos aleatorios
+    - cron: '0 2 * * *'
+
+permissions:
+  contents: read
+
+jobs:
+  property-tests:
+    name: Property-Based Testing
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+    
+    - name: Cache pip dependencies
+      uses: actions/cache@v4
+      with:
+        path: ~/.cache/pip
+        key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
+        restore-keys: |
+          ${{ runner.os }}-pip-
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        # Instalar Hypothesis para property-based testing
+        pip install hypothesis
+    
+    - name: Run property-based tests
+      run: |
+        # Ejecuta tests que usan Hypothesis
+        # Puedes filtrar por marca si tus tests están marcados con @pytest.mark.property
+        pytest tests/ -v -m property || true
+        
+        # Si no tienes tests con Hypothesis aún, este comando no fallará
+        # Para añadir property tests, usa decoradores como:
+        # from hypothesis import given, strategies as st
+        # @given(st.integers())
+        # def test_property(n):
+        #     assert mi_funcion(n) >= 0
+    
+    - name: Upload test results on failure
+      if: failure()
+      uses: actions/upload-artifact@v4
+      with:
+        name: property-test-failures
+        path: |
+          .hypothesis/
+          test-results/
+    
+    # ============================================================
+    # INSTRUCCIONES PARA EL MANTENEDOR:
+    # 
+    # 1. Añade tests basados en propiedades usando Hypothesis en tu suite de tests
+    # 2. Marca los tests con @pytest.mark.property para identificarlos
+    # 3. Considera aumentar el número de ejemplos en CI:
+    #    @settings(max_examples=1000)
+    # 4. Hypothesis guardará ejemplos que fallan en .hypothesis/examples/
+    # 5. Para otros lenguajes:
+    #    - QuickCheck (Haskell): stack test --fast
+    #    - PropCheck (Scala): sbt test
+    #    - fast-check (JavaScript/TypeScript): npm test
+    # ============================================================

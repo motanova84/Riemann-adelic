@@ -96,6 +96,52 @@ def test_vercel_json_has_functions_config():
     assert 'notebooks/*.ipynb' in config['functions']
 
 
+def test_api_pattern_matches_existing_files():
+    """
+    Test that the API function pattern correctly matches existing API files.
+    
+    This test prevents the common mistake of using 'api/**/*.py' which only
+    matches files in subdirectories, not files directly in the api/ directory.
+    The correct pattern is 'api/*.py' for files at the root level of api/.
+    """
+    import glob
+    
+    with open('vercel.json', 'r') as f:
+        config = json.load(f)
+    
+    # Get the API pattern from vercel.json
+    functions_config = config.get('functions', {})
+    api_patterns = [k for k in functions_config.keys() if k.startswith('api/') and k.endswith('.py')]
+    
+    assert len(api_patterns) > 0, "Should have at least one API pattern"
+    
+    # Verify the pattern matches actual files
+    for pattern in api_patterns:
+        matched_files = glob.glob(pattern)
+        assert len(matched_files) > 0, f"Pattern '{pattern}' should match at least one file"
+    
+    # Verify we don't use the problematic 'api/**/*.py' pattern
+    assert 'api/**/*.py' not in functions_config, \
+        "Pattern 'api/**/*.py' only matches subdirectories, use 'api/*.py' instead"
+
+
+def test_api_functions_are_valid_handlers():
+    """Test that API functions have the correct handler structure for Vercel."""
+    api_files = ['api/validate-hourly.py', 'api/sync-riemann.py']
+    
+    for api_file in api_files:
+        with open(api_file, 'r') as f:
+            content = f.read()
+        
+        # Check for required handler class
+        assert 'class handler' in content, \
+            f"{api_file} should define a 'handler' class for Vercel serverless functions"
+        
+        # Check for BaseHTTPRequestHandler
+        assert 'BaseHTTPRequestHandler' in content, \
+            f"{api_file} should extend BaseHTTPRequestHandler"
+
+
 def test_vercel_json_has_regions():
     """Test that vercel.json has regions configured."""
     with open('vercel.json', 'r') as f:
