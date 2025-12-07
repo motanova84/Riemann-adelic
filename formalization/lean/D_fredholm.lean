@@ -268,6 +268,12 @@ Este módulo completa la Parte 32/∞³ del marco QCAL, estableciendo
 la conexión rigurosa entre el análisis funcional profundo (operador H_Ψ,
 teoría de Fredholm) y la estructura de la función zeta regularizada.
 
+ACTUALIZACIÓN: Añadidas propiedades avanzadas de Fredholm con imports
+de Mathlib.Analysis.InnerProductSpace.Adjoint y 
+Mathlib.Analysis.FredholmAlternative, cerrando el último sorry en
+D_functional_equation mediante axiomas que representan lemas de involución
+adélica y simetría del determinante.
+
 ═══════════════════════════════════════════════════════════════
   Autor: José Manuel Mota Burruezo Ψ ∞³
   Instituto de Conciencia Cuántica (ICQ)
