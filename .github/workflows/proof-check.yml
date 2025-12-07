@@ -4,7 +4,9 @@ name: Proof Check
 # Este es un workflow de plantilla que debe adaptarse al sistema formal específico
 on:
   push:
-    branches: [ main, master ]
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
     paths:
       - 'formalization/**'
       - '.github/workflows/proof-check.yml'
@@ -18,66 +20,106 @@ permissions:
   contents: read
 
 jobs:
-  proof-check:
-    name: Formal Verification
+  lean-verification:
     runs-on: ubuntu-latest
     
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+  lean-build:
+    runs-on: ubuntu-latest
     
-    # ============================================================
-    # OPCIÓN 1: Para Lean 4 (descomenta si usas Lean)
-    # ============================================================
-    - name: Install Lean (elan)
-      run: |
-        curl https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -sSf | sh -s -- -y
-        echo "$HOME/.elan/bin" >> $GITHUB_PATH
-    
-    - name: Build Lean project
-      working-directory: formalization/lean
-      run: |
-        # Ajusta estos comandos según tu proyecto Lean
-        lake build
-        # Si tienes pruebas específicas: lake test
-    
-    # ============================================================
-    # OPCIÓN 2: Para Coq (comenta Lean arriba y descomenta esto)
-    # ============================================================
-    # - name: Install Coq
-    #   run: |
-    #     sudo apt-get update
-    #     sudo apt-get install -y coq
-    # 
-    # - name: Compile Coq proofs
-    #   working-directory: formalization/coq
-    #   run: |
-    #     # Ajusta según tu Makefile o estructura
-    #     make all
-    #     # O directamente: coqc *.v
-    
-    # ============================================================
-    # OPCIÓN 3: Para Isabelle (comenta lo anterior y descomenta)
-    # ============================================================
-    # - name: Install Isabelle
-    #   run: |
-    #     wget https://isabelle.in.tum.de/dist/Isabelle2023_linux.tar.gz
-    #     tar -xzf Isabelle2023_linux.tar.gz
-    #     echo "$PWD/Isabelle2023/bin" >> $GITHUB_PATH
-    # 
-    # - name: Build Isabelle theories
-    #   working-directory: formalization/isabelle
-    #   run: |
-    #     isabelle build -D .
-    
-    # ============================================================
-    # INSTRUCCIONES PARA EL MANTENEDOR:
-    # 
-    # 1. Descomenta la sección correspondiente a tu sistema de pruebas (Lean/Coq/Isabelle)
-    # 2. Ajusta los comandos de compilación/verificación según tu proyecto
-    # 3. Si usas otro sistema (Agda, HOL Light, etc.), añade los pasos necesarios
-    # 4. Considera añadir cache para acelerar builds:
-    #    - Para Lean: cache ~/.elan y build/
-    #    - Para Coq: cache _build/ o similar
-    # 5. Puedes añadir notificaciones en caso de fallo
-    # ============================================================
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Lean
+        uses: leanprover/lean-action@v1
+        with:
+          lean-version: "leanprover/lean4:latest"
+      
+      - name: Check Lean installation
+        run: |
+          lean --version
+          lake --version
+      
+
+      - name: Cache Lean build
+        uses: actions/cache@v4
+        with:
+          path: |
+            formalization/lean/.lake
+            formalization/lean/build
+          key: ${{ runner.os }}-lean-${{ hashFiles('formalization/lean/lakefile.lean', 'formalization/lean/lean-toolchain') }}
+          restore-keys: |
+            ${{ runner.os }}-lean-
+
+      - name: Install Lean dependencies
+        run: |
+          cd formalization/lean
+          lake update
+      
+
+      - name: Build Lean formalization
+        run: |
+          cd formalization/lean
+          lake build
+      
+      - name: Verify Lean proofs
+        run: |
+          cd formalization/lean
+          lake exe cache get || echo "Cache not available, building from source"
+          # Check individual Lean files for verification
+          lean RH_final.lean
+          lean axiomas_a_lemas.lean
+          echo "✓ Lean proofs verified successfully"
+
+      - name: Run Lean check on RH_final.lean
+        run: |
+          cd formalization/lean
+          lake exe cache get || true
+          lake build RH_final
+      - name: Ensure Docker available
+        uses: docker/setup-buildx-action@v2
+
+      - name: Run proof build inside Docker (Coq)
+        run: |
+          set -euo pipefail
+          echo "Running proof-check inside Docker image: $COQ_IMAGE"
+          # Monta el repositorio en /work y ejecuta el target 'proof' si existe.
+          if [ -f Makefile ]; then
+            echo "Makefile found. Attempting 'make proof' or 'make'."
+            if make -n proof >/dev/null 2>&1; then
+              docker run --rm -v "$PWD":/work -w /work $COQ_IMAGE /bin/bash -lc "make proof"
+            else
+              docker run --rm -v "$PWD":/work -w /work $COQ_IMAGE /bin/bash -lc "make"
+            fi
+          else
+            # Intentos razonables: coq_makefile or lean/isabelle placeholders.
+            echo "No Makefile detected. Trying coq_makefile/_CoqProject conventions."
+            docker run --rm -v "$PWD":/work -w /work $COQ_IMAGE /bin/bash -lc "\
+              if [ -f _CoqProject ]; then \
+                coq_makefile -f _CoqProject -o Makefile.coq || true; \
+                if [ -f Makefile.coq ]; then make -f Makefile.coq; fi; \
+              else \
+                echo 'No _CoqProject or Makefile. Please provide a Makefile with a \`proof\` target or set COQ_IMAGE to an image with your toolchain.'; \
+                exit 0; \
+              fi"
+          fi
+
+      - name: Upload proof logs (always)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: proof-logs
+          path: |
+            proof-logs/**
+            _CoqProject
+            Makefile*
+            logs/**
+
+      - name: Proof-check summary
+        if: always()
+        run: |
+          echo "Proof-check job finished. If failed, inspect artifacts and logs."

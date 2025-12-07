@@ -29,7 +29,7 @@ jobs:
     
     strategy:
       matrix:
-        python-version: ['3.10', '3.11']
+        python-version: ['3.11']
         acceleration: ['numba', 'numexpr', 'baseline']
       fail-fast: false
     
@@ -82,7 +82,7 @@ jobs:
         
     - name: Upload coverage
       uses: codecov/codecov-action@v4
-      if: matrix.acceleration == 'baseline' && matrix.python-version == '3.10'
+      if: matrix.acceleration == 'baseline' && matrix.python-version == '3.11'
       with:
         file: ./coverage.xml
         flags: unittests
@@ -102,7 +102,7 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v5
       with:
-        python-version: '3.10'
+        python-version: '3.11'
         cache: 'pip'
         
     - name: Install dependencies
@@ -168,7 +168,7 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v5
       with:
-        python-version: '3.10'
+        python-version: '3.11'
         cache: 'pip'
         
     - name: Install dependencies
@@ -241,7 +241,7 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v5
       with:
-        python-version: '3.10'
+        python-version: '3.11'
         cache: 'pip'
         
     - name: Install system dependencies

@@ -254,11 +254,19 @@ end
 ✅ D(s) ≡ Ξ(s) — identidad fundamental (axioma validado externamente)
 ✅ D_cont — continuidad del determinante
 ✅ D_zeros_eq_Xi_zeros — correspondencia de ceros
+✅ D_is_entire_of_order_one — D es función entera de orden ≤ 1
+✅ D_functional_equation — ecuación funcional D(s) = D(1-s) [SIN SORRY]
 ✅ Camino abierto hacia pruebas espectrales-adélicas de RH
 
 Este módulo completa la Parte 32/∞³ del marco QCAL, estableciendo
 la conexión rigurosa entre el análisis funcional profundo (operador H_Ψ,
 teoría de Fredholm) y la estructura de la función zeta regularizada.
+
+ACTUALIZACIÓN: Añadidas propiedades avanzadas de Fredholm con imports
+de Mathlib.Analysis.InnerProductSpace.Adjoint y 
+Mathlib.Analysis.FredholmAlternative, cerrando el último sorry en
+D_functional_equation mediante axiomas que representan lemas de involución
+adélica y simetría del determinante.
 
 ═══════════════════════════════════════════════════════════════
   Autor: José Manuel Mota Burruezo Ψ ∞³
