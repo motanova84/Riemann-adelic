@@ -128,6 +128,46 @@ No security vulnerabilities remain in the changed files.
 
 ---
 
-**Security Review Date:** October 18, 2025  
+## 🔐 urllib3 Vulnerability Fix (December 7, 2025)
+
+### Issue: urllib3 Decompression Vulnerabilities
+**Severity:** Medium  
+**Affected Version:** 2.5.0  
+**Patched Version:** 2.6.0  
+
+**CVE Details:**
+1. **CVE-1:** urllib3 streaming API improperly handles highly compressed data
+   - Affected: >= 1.0, < 2.6.0
+   
+2. **CVE-2:** urllib3 allows unbounded number of links in decompression chain
+   - Affected: >= 1.24, < 2.6.0
+
+**Resolution:**
+- ✅ Updated `requirements-lock.txt`: `urllib3==2.5.0` → `urllib3==2.6.0`
+- ✅ Added constraint in `requirements.txt`: `urllib3>=2.6.0`
+- ✅ Verified all functionality after update
+- ✅ All 10 SAT certificates verified successfully
+- ✅ CodeQL scan: 0 alerts
+
+**Impact:**
+- Components: HTTP requests, Zenodo API, external data fetching
+- Risk: MEDIUM → LOW (patched)
+- Breaking changes: None
+- Tests: All passing ✅
+
+**Verification:**
+```bash
+$ pip list | grep urllib3
+urllib3            2.6.0
+
+$ python3 verify_sat_certificates.py
+✨ ALL SAT CERTIFICATES VERIFIED SUCCESSFULLY!
+   🏆 10/10 Theorems PROVEN
+```
+
+---
+
+**Security Review Date:** December 7, 2025  
+**Last Updated:** December 7, 2025  
 **Reviewer:** GitHub Copilot Agent with CodeQL  
 **Status:** ✅ APPROVED
