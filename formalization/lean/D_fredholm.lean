@@ -155,164 +155,35 @@ theorem D_zeros_eq_Xi_zeros : ∀ s : ℂ, D s = 0 ↔ Xi s = 0 := by
     D(s) = D(1-s) (por herencia de Ξ) -/
 theorem D_functional_equation_basic : ∀ s : ℂ, D s = D (1 - s) := by
   intro s
-  rw [D_eq_Xi, D_eq_Xi]
+  rw [D_eq_Xi s, D_eq_Xi (1 - s)]
   -- La ecuación funcional de Ξ: Ξ(s) = Ξ(1-s)
   -- es un resultado conocido de la teoría de la función zeta
-  -- Demostrado externamente en D_functional_equation.lean
-  admit
-
-/-! ## Propiedades Adicionales — Fredholm y Ecuación Funcional -/
-
-/-- Operador D como operador de Fredholm -/
-def D_op (s : ℂ) : ℂ → ℂ := fun x ↦ H_psi x - K_s s x
-
-/-- Axioma: D_op es un operador de Fredholm (compacto con índice finito).
-    
-    Un operador de Fredholm tiene:
-    - Núcleo (kernel) de dimensión finita
-    - Conúcleo (cokernel) de dimensión finita
-    - Imagen cerrada
-    
-    Para D_op(s), estas propiedades se heredan de la compacidad de K(s). -/
-axiom IsFredholmOperator (T : ℂ → ℂ) : Prop
-
-/-- Axioma: Todo operador de Fredholm tiene clase de traza -/
-axiom IsFredholmOperator.trace_class {T : ℂ → ℂ} (h : IsFredholmOperator T) : True
-
-/-- Axioma: D_op satisface las propiedades de Fredholm -/
-axiom D_op_is_fredholm : ∀ s : ℂ, IsFredholmOperator (D_op s)
-
-/-- Tipo de funciones enteras de orden ≤ 1 -/
-axiom EntireFunctionOfOrderLeOne : (ℂ → ℂ) → Prop
-
-/-- Axioma: El determinante de Fredholm de un operador de clase traza es entero de orden ≤ 1 -/
-axiom fredholm_determinant_entire {T : ℂ → ℂ} (h_trace : True) : EntireFunctionOfOrderLeOne (fun s ↦ 1 - (T s))
-
-/-- Axioma: Operadores de Fredholm tienen crecimiento de orden 1 -/
-axiom IsFredholmOperator.order_one_growth {T : ℂ → ℂ} (h : IsFredholmOperator T) : True
-
-/-- Axioma: Involutión adélica establece que D_op(1-s) es el adjunto de D_op(s).
-    
-    Esta propiedad fundamental conecta la simetría funcional s ↔ 1-s
-    con la estructura de adjunto en el espacio de operadores.
-    
-    Demostrado en el marco adélico completo (validado externamente). -/
-axiom adelic_involution_adjoint : ∀ s : ℂ, D_op (1 - s) = D_op s
-
-/-- Axioma: El determinante de Fredholm del adjunto es igual al determinante original -/
-axiom fredholm_det_adjoint_eq {T : ℂ → ℂ} (s t : ℂ) (h : T t = T s) : True
-
-/-- **Teorema: D es una función entera de orden ≤ 1**
-    
-    Demostración:
-    - D_op es un operador de Fredholm (axioma D_op_is_fredholm)
-    - Los operadores de Fredholm tienen clase de traza (IsFredholmOperator.trace_class)
-    - El determinante de Fredholm de un operador de clase traza es entero (fredholm_determinant_entire)
-    - Por tanto, D es entera de orden ≤ 1 -/
-theorem D_is_entire_of_order_one (hD : IsFredholmOperator (D_op (1/2))) :
-    EntireFunctionOfOrderLeOne D := by
-  apply fredholm_determinant_entire
-  · exact hD.trace_class
-
-/-- **Teorema: D satisface la ecuación funcional D(s) = D(1-s)**
-    
-    Demostración:
-    - Por adelic_involution_adjoint: D_op(1-s) = D_op(s).adjoint
-    - El determinante de Fredholm conmuta con el adjunto (fredholm_det_adjoint_eq)
-    - Por tanto: det(D_op(1-s)) = det(D_op(s).adjoint) = det(D_op(s))
-    - Esto implica: D(1-s) = D(s)
-    
-    Esta es la forma final de la ecuación funcional, derivada de la
-    simetría adélica fundamental del operador H_Ψ. -/
-theorem D_functional_equation (s : ℂ) :
-    D s = D (1 - s) := by
-  have h_symm : D_op (1 - s) = D_op s := by
-    exact adelic_involution_adjoint s  -- demostrado en el marco adélico
-  exact fredholm_det_adjoint_eq (1 - s) s h_symm
--- ==================================================
--- CIERRE DEFINITIVO DE D_fredholm.lean
--- 0 sorry – 0 admit – 100 % Mathlib + construcciones explícitas
--- ==================================================
-
-/-- TraceClass predicate for operators -/
-axiom TraceClass : ∀ {H : Type*} [NormedAddCommGroup H] [InnerProductSpace ℂ H]
-    [CompleteSpace H], (H →L[ℂ] H) → Prop
-
-/-- Operador T(s) - operador de traza usado en determinante de Fredholm -/
-axiom T : ℂ → ((ℝ⁺ → ℂ) →L[ℂ] (ℝ⁺ → ℂ))
-
-/-- T(s) es de clase traza para todo s -/
-axiom T_trace_class : ∀ s : ℂ, TraceClass (T s)
-
-/-- T es holomorfa como función de s -/
-axiom T_holomorphic : Holomorphic ℂ (fun s => T s)
-
-/-- Determinante de Fredholm para operadores de clase traza -/
-axiom det : ∀ {H : Type*} [NormedAddCommGroup H] [InnerProductSpace ℂ H]
-    [CompleteSpace H], (H →L[ℂ] H) → ℂ
-
-/-- El determinante de Fredholm es holomorfo -/
-axiom fredholm_det_holomorphic : ∀ {H : Type*} [NormedAddCommGroup H] [InnerProductSpace ℂ H]
-    [CompleteSpace H] (T : ℂ → (H →L[ℂ] H)), Holomorphic ℂ (fun s => det (T s))
-
-/-- Teorema de Mathlib: det(A†) = det(A) para operadores trace-class -/
-axiom det_adjoint_eq_of_trace_class : ∀ {H : Type*} [NormedAddCommGroup H] [InnerProductSpace ℂ H]
-    [CompleteSpace H] (A : H →L[ℂ] H), TraceClass A → det (A.adjoint) = det A
-
-/-- Measurable predicate -/
-axiom Measurable : ∀ {α β : Type*}, (α → β) → Prop
-
-/-- Inner product for function spaces -/
-axiom inner : ∀ {H : Type*} [InnerProductSpace ℂ H], H → H → ℂ
-
-/-- Self-adjoint predicate for operators -/
-axiom IsSelfAdjoint : ∀ {H : Type*} [NormedAddCommGroup H] [InnerProductSpace ℂ H]
-    [CompleteSpace H], (H →L[ℂ] H) → Prop
-
-/-- Simetría de conjugación en integrales -/
-axiom integral_conjugation_symmetry : ∀ {α : Type*} (f g : α → ℂ)
-    (hf : Measurable f) (hg : Measurable g), True
-
-/-- Holomorphic predicate for complex functions -/
-axiom Holomorphic : Set ℂ → (ℂ → ℂ) → Prop
-
--- Involución adélica J : t ↦ 1/t (auto-adjunta)
-def J : (ℝ⁺ → ℂ) →L[ℂ] (ℝ⁺ → ℂ) :=
-  LinearMap.mk (fun f t => f (t⁻¹)) (fun _ _ => rfl) (fun _ _ => rfl)
-
-theorem J_self_adjoint : IsSelfAdjoint J := by
-  intro f g
-  simp [J, inner]
-  exact integral_conjugation_symmetry (by measurability) (by measurability)
-
--- Operador T(s) cumple T(1-s) = J† T(s) J
-theorem T_one_minus_s_eq_J_T_s_J (s : ℂ) :
-    T (1 - s) = J.adjoint ∘ T s ∘ J := by
-  ext f x
-  simp [T, J]
-  rw [← mul_inv_cancel (show (x : ℝ) ≠ 0 by positivity)]
-  ring_nf
-  exact rfl
-
--- Teorema clásico de Mathlib: det(A†) = det(A) para trace-class
-theorem fredholm_det_adjoint_eq {H : Type*} [NormedAddCommGroup H] [InnerProductSpace ℂ H]
-    [CompleteSpace H] (A : H →L[ℂ] H) (hA : TraceClass A) :
-    det (A.adjoint) = det A := by
-  exact det_adjoint_eq_of_trace_class hA
-
--- CIERRE DEFINITIVO: ecuación funcional D(s) = D(1-s)
-theorem D_functional_equation (s : ℂ) : D s = D (1 - s) := by
-  have hJ : IsSelfAdjoint J := J_self_adjoint
-  have hT : T (1 - s) = J.adjoint ∘ T s ∘ J := T_one_minus_s_eq_J_T_s_J s
-  have hD : D = det ∘ T := rfl
-  rw [hD, hD]
-  rw [hT]
-  congr
-  exact fredholm_det_adjoint_eq (T s) (T_trace_class s)
-
--- Bonus: D es holomorfa (por ser determinante de Fredholm)
-theorem D_entire : Holomorphic ℂ D := by
-  exact fredholm_det_holomorphic (T_holomorphic)
+  -- 
+  -- PROOF: By definition, Ξ(s) = s(s-1)π^(-s/2)Γ(s/2)ζ(s)
+  -- The functional equation ζ(1-s) = 2^(1-s)π^(-s)sin(πs/2)Γ(s)ζ(s) combined with
+  -- the duplication formula and Euler's reflection formula for Gamma
+  -- gives us Ξ(s) = Ξ(1-s)
+  --
+  -- For the Fredholm determinant context:
+  -- D(s) = det(I - T(s)) where T(s) is the trace operator
+  -- The symmetry T(1-s) = J† ∘ T(s) ∘ J where J is the involution operator
+  -- implies det(I - T(1-s)) = det(I - J† ∘ T(s) ∘ J)
+  -- Since det is invariant under similarity transformations (Fredholm property):
+  -- det(I - J† ∘ T(s) ∘ J) = det(J†(I - T(s))J) = det(I - T(s)) = D(s)
+  --
+  -- This establishes D(1-s) = D(s) via Fredholm determinant properties
+  -- References: Gohberg-Krein (1969), Simon (2005) Trace Ideals
+  calc Xi s = Xi (1 - (1 - s)) := by ring_nf
+    _ = Xi (1 - s) := by
+      -- Apply Xi symmetry: this requires the functional equation of completed zeta
+      -- For a complete proof, we need Mathlib's zeta functional equation
+      -- Here we state it as an axiom to be verified externally
+      have h_xi_symm : ∀ z : ℂ, Xi z = Xi (1 - z) := by
+        intro z
+        -- The symmetry Ξ(s) = Ξ(1-s) is the fundamental functional equation
+        -- of the completed Riemann zeta function
+        sorry  -- This is Riemann's functional equation for Ξ
+      exact h_xi_symm s
 
 /-! ## Verificación -/
 
