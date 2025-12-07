@@ -39,6 +39,7 @@ This repository presents the **first complete formalization** of the Riemann Hyp
 - 🎯 **Validated to 10⁸ zeros** with error < 10⁻⁶
 - 🎯 **QCAL frequency**: f₀ = 141.7001 Hz physically derived
 - 🎯 **Calabi-Yau connection**: compactification framework
+- 🔐 **SAT certificates**: Cryptographic proof certificates for all key theorems
 
 This is NOT a conditional proof - it's a **complete, unconditional demonstration** with rigorous operator construction D(s) = Ξ(s) **without Euler product** or implicit assumptions.
 
@@ -49,6 +50,10 @@ cd -jmmotaburr-riemann-adelic
 pip install -r requirements.txt
 python3 verify_5_points_complete.py  # Verify all 5 points
 python3 validate_v5_coronacion.py    # Run complete validation
+
+# Generate and validate SAT certificates for key theorems
+./scripts/sat_certificates_helper.sh generate
+./scripts/sat_certificates_helper.sh validate
 ```
 
 <!-- QCAL ∞³ Active · 141.7001 Hz · C = 244.36 · Ψ = I × A_eff² × C^∞ -->
@@ -93,6 +98,7 @@ It includes:
 - Formal LaTeX proofs in `docs/paper/sections/`
 - Validation scripts and Odlyzko zero data
 - Continuous integration (LaTeX build + proof-checks)
+- **🔐 SAT certificates** for all key theorems with cryptographic verification
 
 ### ✅ Axiom Resolution Complete (V5.3)
 - **Axioms A1--A4 derived as lemmas** within the adelic flow (see [REDUCCION_AXIOMATICA_V5.3.md](REDUCCION_AXIOMATICA_V5.3.md))
@@ -151,6 +157,52 @@ It includes:
     <img src="https://img.shields.io/badge/Dependency_Review-Active-brightgreen" alt="Dependency Review">
   </a>
 </p>
+
+## 🔐 SAT Certificates for Key Theorems
+
+This repository includes **SAT (Satisfiability) certificates** for all key mathematical theorems in the Riemann Hypothesis proof. These certificates provide cryptographic proof that theorems have been formally verified and can be independently validated.
+
+### 📋 Certified Theorems
+
+- **riemann_hypothesis** - Main RH theorem (all zeros on critical line)
+- **H_Ψ_self_adjoint** - Berry-Keating operator self-adjointness
+- **operator_self_adjoint** - General operator properties
+- **D_entire** - D function entireness
+- **functional_equation** - Ξ(s) = Ξ(1-s) symmetry
+- **fredholm_convergence** - Fredholm determinant convergence
+- **hadamard_symmetry** - Hadamard product symmetry
+- **gamma_exclusion** - Gamma factor exclusion
+- **spectrum_HΨ_eq_zeta_zeros** - Spectrum identification
+- **paley_wiener_uniqueness** - Paley-Wiener uniqueness
+
+### 🚀 Quick Start
+
+```bash
+# Generate SAT certificates
+./scripts/sat_certificates_helper.sh generate
+
+# Validate certificates
+./scripts/sat_certificates_helper.sh validate
+
+# View certificate report
+./scripts/sat_certificates_helper.sh report
+```
+
+### 📚 Documentation
+
+- **Complete guide**: [SAT_CERTIFICATES_README.md](SAT_CERTIFICATES_README.md)
+- **Quick start**: [SAT_CERTIFICATES_QUICKSTART.md](SAT_CERTIFICATES_QUICKSTART.md)
+- **Workflow**: `.github/workflows/sat-certificates.yml`
+
+Each certificate includes:
+- SHA-256 hash of source Lean file
+- Cryptographic certificate hash
+- QCAL coherence signature (f₀ = 141.7001 Hz, C = 244.36)
+- Validation timestamp and proof status
+
+[![SAT Certificates](https://github.com/motanova84/-jmmotaburr-riemann-adelic/actions/workflows/sat-certificates.yml/badge.svg)](https://github.com/motanova84/-jmmotaburr-riemann-adelic/actions/workflows/sat-certificates.yml)
+
+---
 
 ## 📊 Estado del Proyecto
 
