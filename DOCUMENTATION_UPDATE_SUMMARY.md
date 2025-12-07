@@ -121,7 +121,7 @@ Zeros: Re(s) = 1/2 (de Branges)
 
 3. **'Sorry' Explanation:**
 - Total: ~5 in derived lemmas (NOT base axioms)
-- Location: doi_positivity.lean:67 (Schatten bounds optimization)
+- Location: doi_positivity.lean (proof implementations with Schatten bounds theory)
 - Impact: Does NOT affect base axioms or main proof
 - Status: Pending PR #670 (estimated 24h)
 
@@ -163,7 +163,7 @@ The documentation clarifies that the ~5 'sorry' statements remaining are:
 
 1. **NOT in base axioms** (A1-A4)
 2. **IN derived lemmas** for optimizations
-3. **Example**: `doi_positivity.lean:67` - Schatten bounds optimization
+3. **Example**: `doi_positivity.lean` - Proof implementations with Schatten bounds theory
 4. **Status**: Pending refinement in PR #670
 5. **Impact**: Does NOT affect the main proof logic
 

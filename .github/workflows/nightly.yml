@@ -1,102 +1,142 @@
-# Nightly: ejecución programada para detectar roturas en dependencias externas a tiempo.
-# Ejecuta tests completos todos los días para detectar problemas con dependencias
-name: Nightly CI
+name: Nightly
 
+# Workflow programado para ejecutar la suite completa de tests diariamente
+# Ayuda a detectar roturas por cambios externos (dependencias, APIs, etc.)
 on:
   schedule:
-    # Todos los días a las 02:00 UTC (ajusta según conveniencia)
-    - cron: '0 2 * * *'
+    # Ejecutar diariamente a las 3 AM UTC (cron: minuto hora día mes día-semana)
+    - cron: '0 3 * * *'
   workflow_dispatch:  # Permite ejecución manual
 
 permissions:
   contents: read
-  issues: write  # Para crear issues en caso de fallo
 
 jobs:
   nightly-tests:
+    name: Nightly Full Test Suite
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
+    
     strategy:
       matrix:
-        python-version: ["3.10", "3.11", "3.12"]
+        python-version: ['3.10', '3.11', '3.12']
     
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v5
-        with:
-          python-version: ${{ matrix.python-version }}
-
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
-          pip install pytest pytest-cov
-
-      - name: Run comprehensive tests
-        run: |
-          pytest tests/ -v --tb=long --strict-markers
-
-      - name: Run extended validation
-        run: |
-          # Ejecutar scripts de validación extendidos si existen
-          if [ -f validate_v5_coronacion.py ]; then
-            python validate_v5_coronacion.py --precision 30 || echo "Extended validation completed with warnings"
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ matrix.python-version }}
+    
+    - name: Cache pip dependencies
+      uses: actions/cache@v4
+      with:
+        path: ~/.cache/pip
+        key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
+        restore-keys: |
+          ${{ runner.os }}-pip-
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+    
+    - name: Run full test suite
+      run: |
+        # Ejecutar todos los tests con máximo detalle
+        pytest tests/ -v --tb=long --durations=10
+    
+    - name: Run validation scripts
+      continue-on-error: true
+      run: |
+        # Ejecutar scripts de validación si existen
+        # Personaliza según los scripts que tengas
+        if [ -f "validate_repository.py" ]; then
+          python validate_repository.py
+        fi
+        
+        if [ -f "validate_v5_coronacion.py" ]; then
+          python validate_v5_coronacion.py --precision 30 || true
+        fi
+    
+    - name: Check for dependency updates
+      continue-on-error: true
+      run: |
+        pip list --outdated
+    
+    - name: Run demos
+      continue-on-error: true
+      run: |
+        # Ejecutar algunos demos para verificar que funcionan
+        # Personaliza según tus archivos
+        for demo in demo_*.py; do
+          if [ -f "$demo" ]; then
+            echo "Running $demo..."
+            timeout 60 python "$demo" || echo "Demo $demo failed or timed out"
           fi
-        continue-on-error: true
-
-  nightly-integration:
+        done
+    
+    - name: Upload test results
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: nightly-test-results-py${{ matrix.python-version }}
+        path: |
+          test-results/
+          logs/
+          *.log
+    
+    # Opcional: Notificar en caso de fallo
+    - name: Report failure
+      if: failure()
+      run: |
+        echo "::warning::Nightly tests failed for Python ${{ matrix.python-version }}"
+        # Aquí podrías añadir notificación a Slack, Discord, email, etc.
+  
+  # Job adicional para verificar compatibilidad con últimas versiones
+  bleeding-edge:
+    name: Test with Latest Dependencies
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
     
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
-
-      - name: Install dependencies with latest versions
-        run: |
-          python -m pip install --upgrade pip
-          # Instalar con últimas versiones para detectar incompatibilidades
-          pip install --upgrade numpy scipy matplotlib sympy mpmath pytest
-
-      - name: Run integration tests
-        run: |
-          pytest tests/ -v --tb=short
-        continue-on-error: true
-
-      - name: Check for dependency updates
-        run: |
-          pip list --outdated
-
-  notify-on-failure:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      issues: write
-    needs: [nightly-tests, nightly-integration]
-    if: failure()
+    - name: Checkout code
+      uses: actions/checkout@v4
     
-    steps:
-      - name: Create issue on failure
-        uses: actions/github-script@v7
-        with:
-          script: |
-            const title = 'Nightly CI Failed - ' + new Date().toISOString().split('T')[0];
-            const body = `The nightly CI run has failed. Please check the [workflow run](${context.payload.repository.html_url}/actions/runs/${context.runId}) for details.`;
-            
-            github.rest.issues.create({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              title: title,
-              body: body,
-              labels: ['automated', 'nightly-failure']
-            });
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+    
+    - name: Install latest dependencies
+      run: |
+        python -m pip install --upgrade pip
+        # Instalar versiones más recientes ignorando pins en requirements.txt
+        pip install --upgrade $(cat requirements.txt | cut -d'=' -f1 | cut -d'>' -f1 | cut -d'<' -f1)
+    
+    - name: Run tests with latest deps
+      continue-on-error: true
+      run: |
+        pytest tests/ -v --tb=short
+    
+    # ============================================================
+    # INSTRUCCIONES PARA EL MANTENEDOR:
+    # 
+    # 1. Este workflow se ejecuta automáticamente cada día a las 3 AM UTC
+    # 
+    # 2. Puedes ajustar el horario modificando la expresión cron:
+    #    '0 3 * * *' = 3 AM diariamente
+    #    '0 3 * * 1' = 3 AM solo los lunes
+    #    '0 */6 * * *' = Cada 6 horas
+    # 
+    # 3. Los tests con continue-on-error: true no bloquean el workflow
+    #    pero dejan constancia de fallos
+    # 
+    # 4. Considera añadir notificaciones:
+    #    - Slack: slackapi/slack-github-action
+    #    - Email: dawidd6/action-send-mail
+    #    - Discord: webhook con curl
+    # 
+    # 5. El job "bleeding-edge" detecta incompatibilidades futuras
+    #    con nuevas versiones de dependencias
+    # ============================================================

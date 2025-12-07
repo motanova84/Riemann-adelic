@@ -7,6 +7,7 @@ on:
   workflow_dispatch:
 
 jobs:
+  latex:
   latex-teoremas:
     runs-on: ubuntu-latest
     steps:
@@ -16,6 +17,7 @@ jobs:
       - name: Build PDF of core theorems
         working-directory: docs/teoremas_basicos
         run: make
+      - name: Upload PDF artifact
       - name: Upload teoremas artifact
         uses: actions/upload-artifact@v4
         with:
@@ -77,8 +79,8 @@ jobs:
           
       - name: Install dependencies
         run: |
-          python -m pip install --upgrade pip==24.3.1
-          pip install -r requirements-lock.txt
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
           
       - name: Run pytest
         run: pytest -q

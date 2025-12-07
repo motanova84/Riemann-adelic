@@ -59,7 +59,7 @@ Technical supporting lemmas:
 8. **zero_localization.lean** (13 sorries)
 9. **pw_two_lines.lean** (11 sorries)
 10. **lengths_derived.lean** (7 sorries)
-11. **doi_positivity.lean** (7 sorries)
+11. **doi_positivity.lean** (3 sorries - definitions complete, only proof implementations pending)
 12. **uniqueness_without_xi.lean** (6 sorries)
 
 ## 📚 Proof Strategies by Module

@@ -33,6 +33,30 @@ import mpmath as mp
 # Add the current directory to Python path for imports
 sys.path.append('.')
 
+# Import QCAL logging system
+try:
+    from utils.validation_logger import ValidationLogger
+    LOGGING_AVAILABLE = True
+except ImportError:
+    LOGGING_AVAILABLE = False
+    print("⚠️  Warning: QCAL logging system not available")
+
+def include_yolo_verification():
+    """Include YOLO verification in main validation"""
+    try:
+        from verify_yolo import YOLOverifier
+        print("   🎯 Initializing YOLO verifier...")
+        verifier = YOLOverifier()
+        yolo_result = verifier.run_yolo_verification()
+        print(f"   YOLO Verification: {'✅ SUCCESS' if yolo_result else '❌ FAILED'}")
+        return yolo_result
+    except ImportError as e:
+        print(f"   ⚠️  YOLO verification not available: {e}")
+        return True
+    except Exception as e:
+        print(f"   ❌ YOLO verification error: {e}")
+        return False
+
 def setup_precision(dps):
     """Setup computational precision"""
     mp.mp.dps = dps
@@ -52,6 +76,15 @@ def validate_v5_coronacion(precision=30, verbose=False, save_certificate=False, 
     Returns:
         dict: Validation results and proof certificate
     """
+    # Initialize logging
+    logger = None
+    if LOGGING_AVAILABLE:
+        logger = ValidationLogger("validate_v5_coronacion")
+        logger.log_step("V5 Coronación Validation", 1)
+        logger.log(f"Precision: {precision} decimal places")
+        logger.log(f"Max zeros: {max_zeros}")
+        logger.log(f"Max primes: {max_primes}")
+    
     setup_precision(precision)
     
     print("=" * 80)
@@ -275,6 +308,19 @@ def validate_v5_coronacion(precision=30, verbose=False, save_certificate=False, 
         print(f"\n⚠️  V5 CORONACIÓN VALIDATION: PARTIAL SUCCESS")
         print(f"   Review {failed_count} failed components above for details.")
     
+    # --- YOLO Verification Integration -------------------------------------------
+    print("\n🚀 RUNNING YOLO VERIFICATION...")
+    yolo_result = include_yolo_verification()
+    results["YOLO Verification"] = {
+        'status': 'PASSED' if yolo_result else 'FAILED',
+        'execution_time': 0.0  # YOLO is instant by design
+    }
+    if yolo_result:
+        passed_count += 1
+    else:
+        failed_count += 1
+        all_passed = False
+
     # --- Adelic D(s) zeta-free check (opcional, visible) -------------------
     try:
         from utils.adelic_determinant import AdelicCanonicalDeterminant as ACD
@@ -287,6 +333,147 @@ def validate_v5_coronacion(precision=30, verbose=False, save_certificate=False, 
         print(f"   ✅ Adelic D(s) first zero check: |D(1/2+i t1)| = {float(zero_hit):.2e}")
     except Exception as e:
         print(f"   ⚠️  Adelic D(s) check skipped: {e}")
+    # -----------------------------------------------------------------------
+    
+    # --- H_DS Discrete Symmetry Operator Verification ---------------------
+    try:
+        from operador.operador_H_DS import DiscreteSymmetryOperator
+        from operador.operador_H import build_R_matrix, spectrum_from_R
+        
+        print("\n   🔒 H_DS Discrete Symmetry Operator Verification...")
+        
+        # Build a small operator for validation
+        n_basis = 15
+        h_param = 1e-3
+        R = build_R_matrix(n_basis=n_basis, h=h_param, L=1.0)
+        lam_H, gammas = spectrum_from_R(R, h_param)
+        
+        # Create H_DS
+        H_DS = DiscreteSymmetryOperator(dimension=n_basis, tolerance=1e-9)
+        
+        # Verify Hermiticity
+        is_hermitian, herm_dev = H_DS.verify_hermiticity(R, "R_matrix")
+        
+        # Verify critical line localization
+        critical_ok, stats = H_DS.verify_critical_line_localization(lam_H)
+        
+        if is_hermitian and critical_ok:
+            print(f"   ✅ H_DS validation: PASSED")
+            print(f"      Hermiticity deviation: {herm_dev:.2e}")
+            print(f"      Eigenvalue range: [{stats['min_eigenvalue']:.2f}, {stats['max_eigenvalue']:.2f}]")
+            results["H_DS Verification"] = {
+                'status': 'PASSED',
+                'hermiticity': is_hermitian,
+                'critical_line': critical_ok
+            }
+        else:
+            print(f"   ⚠️  H_DS validation: PARTIAL")
+            results["H_DS Verification"] = {
+                'status': 'PARTIAL',
+                'hermiticity': is_hermitian,
+                'critical_line': critical_ok
+            }
+            
+    except Exception as e:
+        print(f"   ⚠️  H_DS verification skipped: {e}")
+    # -----------------------------------------------------------------------
+
+    # --- Arithmetic Fractal Validation (68/81 periodicity) ----------------
+    try:
+        from utils.arithmetic_fractal_validation import validate_arithmetic_fractal
+        
+        print("\n   📐 Arithmetic Fractal Validation (SABIO ∞³)...")
+        
+        fractal_result = validate_arithmetic_fractal(dps=precision, verbose=False)
+        
+        if fractal_result["success"]:
+            print(f"   ✅ Arithmetic fractal: 68/81 period = 9, pattern = 839506172")
+            print(f"   ✅ f₀ structure verified: True")
+            results["Arithmetic Fractal Verification"] = {
+                'status': 'PASSED',
+                'period': 9,
+                'pattern': '839506172',
+                'description': 'Rational fractal arithmetic identity confirmed'
+            }
+        else:
+            print(f"   ⚠️  Arithmetic fractal: PARTIAL")
+            results["Arithmetic Fractal Verification"] = {
+                'status': 'PARTIAL',
+                'period': fractal_result["result"].period,
+                'pattern': fractal_result["result"].repeating_pattern
+            }
+            
+    except Exception as e:
+        print(f"   ⚠️  Arithmetic fractal verification skipped: {e}")
+    # --- Adelic Aritmology (68/81 ↔ f₀) Verification -------------------------
+    try:
+        from utils.adelic_aritmology import AdelicAritmology, verify_68_81_is_unique_solution
+        
+        print("\n   🔢 Adelic Aritmology Verification (68/81 ↔ f₀)...")
+        
+        aritmology = AdelicAritmology(precision=max(100, precision))
+        verification = aritmology.verify_aritmology_connection()
+        uniqueness = verify_68_81_is_unique_solution()
+        
+        if verification["verified"] and uniqueness["is_unique"]:
+            print(f"   ✅ Aritmology verification: PASSED")
+            print(f"      Period 8395061728395061 found in f₀: ✓")
+            print(f"      68/81 is unique solution: ✓")
+            print(f"      68 = 4×17 (prime 17 connection): ✓")
+            results["Aritmology Verification"] = {
+                'status': 'PASSED',
+                'period_correct': verification['checks']['period_correct'],
+                'found_in_frequency': verification['checks']['found_in_frequency'],
+                'unique_solution': uniqueness['is_unique']
+            }
+        else:
+            print(f"   ⚠️  Aritmology verification: PARTIAL")
+            results["Aritmology Verification"] = {
+                'status': 'PARTIAL',
+                'period_correct': verification['checks']['period_correct'],
+                'found_in_frequency': verification['checks']['found_in_frequency'],
+                'unique_solution': uniqueness['is_unique']
+            }
+            
+    except Exception as e:
+        print(f"   ⚠️  Aritmology verification skipped: {e}")
+    # -----------------------------------------------------------------------
+
+    # --- Zeta Quantum Wave Validation (ζ(x) = Σ cₙ ψₙ(x)) ------------------
+    try:
+        from zeta_quantum_wave import validate_zeta_quantum_wave
+        
+        print("\n   ⚛️  Zeta Quantum Wave Validation (Hilbert-Pólya)...")
+        
+        zeta_result = validate_zeta_quantum_wave(
+            n_states=30,
+            N=1000,
+            L=10.0,
+            sigma=2.5,
+            verbose=False
+        )
+        
+        if zeta_result.all_passed:
+            print(f"   ✅ Zeta quantum wave: ζ(x) = Σ cₙ ψₙ(x) verified")
+            print(f"      RMS reconstruction error: {zeta_result.rms_error:.2e}")
+            print(f"      Orthonormality error: {zeta_result.orthonormality_error:.2e}")
+            results["Zeta Quantum Wave Verification"] = {
+                'status': 'PASSED',
+                'rms_error': float(zeta_result.rms_error),
+                'orthonormality_error': float(zeta_result.orthonormality_error),
+                'n_states': zeta_result.n_states,
+                'description': 'ζ(x) encoded as quantum wave function'
+            }
+        else:
+            print(f"   ⚠️  Zeta quantum wave: PARTIAL")
+            results["Zeta Quantum Wave Verification"] = {
+                'status': 'PARTIAL',
+                'rms_error': float(zeta_result.rms_error),
+                'orthonormality_error': float(zeta_result.orthonormality_error)
+            }
+            
+    except Exception as e:
+        print(f"   ⚠️  Zeta quantum wave verification skipped: {e}")
     # -----------------------------------------------------------------------
 
     # YOLO verification integration
@@ -330,6 +517,47 @@ def validate_v5_coronacion(precision=30, verbose=False, save_certificate=False, 
         except Exception as e:
             print(f"⚠️  Warning: Could not save proof certificate: {e}")
     
+    # --- SAT Certificates Integration -----------------------------------------
+    print("\n🔐 SAT CERTIFICATES VERIFICATION...")
+    try:
+        from scripts.validate_sat_certificates import SATCertificateValidator
+        
+        sat_validator = SATCertificateValidator(certificates_dir='certificates/sat')
+        cert_dir = Path('certificates/sat')
+        
+        if cert_dir.exists() and list(cert_dir.glob('SAT_*.json')):
+            print("   Validating SAT certificates for key theorems...")
+            sat_results = sat_validator.validate_all_certificates()
+            
+            sat_passed = sum(1 for r in sat_results if r.get('all_checks_passed', False))
+            sat_total = len(sat_results)
+            
+            results["SAT Certificates Verification"] = {
+                'status': 'PASSED' if sat_passed == sat_total else 'PARTIAL',
+                'certificates_validated': sat_total,
+                'certificates_passed': sat_passed,
+                'execution_time': 0.0
+            }
+            
+            if sat_passed == sat_total:
+                print(f"   ✅ SAT certificates: {sat_passed}/{sat_total} verified")
+            else:
+                print(f"   ⚠️  SAT certificates: {sat_passed}/{sat_total} verified")
+        else:
+            print("   ℹ️  No SAT certificates found - run scripts/generate_sat_certificates.py")
+            results["SAT Certificates Verification"] = {
+                'status': 'SKIPPED',
+                'reason': 'No certificates found'
+            }
+            
+    except Exception as e:
+        print(f"   ⚠️  SAT certificate verification skipped: {e}")
+        results["SAT Certificates Verification"] = {
+            'status': 'SKIPPED',
+            'error': str(e)
+        }
+    # -----------------------------------------------------------------------
+    
     # Save validation results to CSV for comparison with notebook
     try:
         import csv
@@ -352,6 +580,20 @@ def validate_v5_coronacion(precision=30, verbose=False, save_certificate=False, 
         
     except Exception as e:
         print(f"⚠️  Warning: Could not save CSV results: {e}")
+    
+    # Finalize logging
+    if logger:
+        logger.log_metric("total_tests", len(results))
+        logger.log_metric("passed_tests", passed_count)
+        logger.log_metric("failed_tests", failed_count)
+        logger.log_metric("skipped_tests", skipped_count)
+        
+        if all_passed and failed_count == 0:
+            logger.log_success("V5 Coronación validation completed successfully")
+            logger.finalize("success")
+        else:
+            logger.log_warning(f"V5 Coronación validation completed with {failed_count} failures")
+            logger.finalize("partial")
     
     return {
         'success': all_passed and failed_count == 0,

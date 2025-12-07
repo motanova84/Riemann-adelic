@@ -1,17 +1,18 @@
-# Coverage: ejecuta tests con coverage y sube a Codecov.
 name: Coverage
 
+# Workflow para generar reporte de cobertura y subirlo a Codecov
 on:
   push:
-    branches: [ main ]
+    branches: [ main, master ]
   pull_request:
-    branches: [ main ]
+    branches: [ main, master ]
 
 permissions:
   contents: read
 
 jobs:
   coverage:
+    name: Generate Coverage Report
     runs-on: ubuntu-latest
     
     steps:

@@ -2,8 +2,6 @@ import Lake
 open Lake DSL
 
 package «RH_final_v6» where
-  version := "6.0"
-  keywords := #["riemann", "hypothesis", "paley-wiener", "selberg", "adelic"]
   -- Require Lean 4.5.0 or higher
   preferReleaseBuild := true
 

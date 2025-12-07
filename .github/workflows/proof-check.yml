@@ -1,20 +1,20 @@
-# Proof-check: instala entorno de pruebas formales y verifica/compila pruebas.
-# Este workflow verifica la formalización en Lean 4
 name: Proof Check
 
+# Workflow para verificación formal con Coq/Lean/Isabelle
+# Este es un workflow de plantilla que debe adaptarse al sistema formal específico
 on:
   push:
     branches: [ main ]
   pull_request:
     branches: [ main ]
     paths:
-      - 'formalization/lean/**'
+      - 'formalization/**'
       - '.github/workflows/proof-check.yml'
   pull_request:
-    branches: [ main ]
+    branches: [ main, master ]
     paths:
-      - 'formalization/lean/**'
-      - '.github/workflows/proof-check.yml'
+      - 'formalization/**'
+  workflow_dispatch:  # Permite ejecución manual desde la UI de GitHub
 
 permissions:
   contents: read
@@ -30,25 +30,6 @@ jobs:
   lean-build:
     runs-on: ubuntu-latest
     
-# Proof-check: plantilla robusta para ejecutar verificación formal en una imagen reproducible (Docker)
-# Por defecto usa COQ_IMAGE (recomiendo una imagen de Coq Platform). Ajusta según tus necesidades.
-name: Proof Check
-on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
-  workflow_dispatch:
-
-env:
-  COQ_IMAGE: coqorg/coq:latest  # Cambia a una imagen de Coq Platform si la necesitas (p.ej. coqorg/coq-platform:YYYY.MM)
-
-jobs:
-  check-proofs:
-    runs-on: ubuntu-latest
-    timeout-minutes: 120
-    permissions:
-      contents: read
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4

@@ -365,9 +365,6 @@ def zero_sum(f, filename, lim_u=5):
             total += mellin_transform(f, 1j * gamma, lim_u).real
     return total
 
-def zero_sum_limited(f, filename, max_zeros, lim_u=5, progress_chunks=None):
-    """Compute zero sum using only first max_zeros from file with progress reporting."""
-
 def evaluate_xi_batch(gamma_values):
     """Vectorised computation of the Xi function on the critical line."""
 
@@ -416,11 +413,15 @@ def accelerated_prime_sum(primes, f, prime_limit=100):
             total += log_p * f(k * log_p)
     return total
 
+# Default chunk size for zero processing
+DEFAULT_CHUNK_SIZE = 1000
+
 def zero_sum_limited(f, filename, max_zeros, lim_u=5):
     """Compute zero sum using only first max_zeros from file."""
     total = mp.mpf('0')
     count = 0
-    chunk_size = progress_chunks if progress_chunks else min(10000, max(1000, max_zeros // 100))  # Adaptive chunking
+    # Adaptive chunking with safeguard for max_zeros=0
+    chunk_size = min(10000, max(DEFAULT_CHUNK_SIZE, max_zeros // 100)) if max_zeros > 0 else DEFAULT_CHUNK_SIZE
     
     print(f"Processing up to {max_zeros} zeros in chunks of {chunk_size}...")
     

@@ -21,6 +21,7 @@ wheels/
 *.egg-info/
 .installed.cfg
 *.egg
+*.whl
 
 # Jupyter Notebook
 .ipynb_checkpoints
@@ -37,6 +38,9 @@ coverage.xml
 
 # SABIO ∞⁴ generated reports
 sabio_infinity4_report_*.json
+
+# Lean validation reports
+formalization/lean/validation_report.json
 
 # Virtual environments
 venv/
@@ -63,6 +67,7 @@ data/temp_*
 data/*.tmp
 data/validation/results/*
 data/validation/certificates/*
+data/qcal_validation_certificate.json
 !data/validation/results/.gitkeep
 !data/validation/certificates/.gitkeep
 !data/validation_results.csv
@@ -88,12 +93,17 @@ logs/performance/benchmark_results_*.json
 logs/performance/benchmark_results_*_report.md
 !logs/validation/.gitkeep
 
+# NOESIS GUARDIAN 3.0 logs
+noesis_guardian/logs/*.json
+noesis_guardian/logs/*.log
+!noesis_guardian/logs/.gitkeep
+
 # CI/CD artifacts
 artifacts/
 reports/
 .pytest_cache/
 
-# LaTeX build files (for paper directory)
+# LaTeX build files (for paper directories)
 paper/*.aux
 paper/*.log
 paper/*.out
@@ -108,6 +118,22 @@ paper/*.run.xml
 paper/*.nav
 paper/*.snm
 paper/*.vrb
+
+# LaTeX build files (for docs/paper directory)
+docs/paper/*.aux
+docs/paper/*.log
+docs/paper/*.out
+docs/paper/*.fdb_latexmk
+docs/paper/*.fls
+docs/paper/*.synctex.gz
+docs/paper/*.toc
+docs/paper/*.bbl
+docs/paper/*.blg
+docs/paper/*.bcf
+docs/paper/*.run.xml
+docs/paper/*.nav
+docs/paper/*.snm
+docs/paper/*.vrb
 
 # Temporary computational files
 *.tmp
@@ -145,7 +171,6 @@ build/
 
 # Disabled workflow files
 *.disabled
-*.png
 
 # Monitoring system - evidence and sensitive data
 monitoring/evidence/
@@ -153,29 +178,25 @@ monitoring/alerts/*.json
 !monitoring/alerts/.gitkeep
 examples/__pycache__/
 
-# SABIO ∞³ validation artifacts
-sabio_validation_report.json
-quantum_radio_validation_results.json
-test.sabio
-*.sabio.tmp
+# Noesis Guardian logs (keep directory structure)
+noesis_guardian/logs/guardian_log.json
+!noesis_guardian/logs/.gitkeep
 
-# Lean validation reports (generated during CI)
-# Lean4 validation artifacts
-formalization/lean/validation_report.json
+# QCAL auto-generated state files
+tools/qcal_state.json
+# Spectral framework demo images
+*_demo.png
+*_spectrum.png
+G4_spectrum_plot.png
 
-# Lean4 build artifacts
-.lake/
-lake-packages/
-*.olean
-*.trace
-formalization/lean/validation_report.json
+# Validation notebook generated images
+evac_zeta_visualization.png
+convexity_gamma_visualization.png
+validation_summary.png
+validation_summary.txt
+G4_spectrum_plot.png
 
-# SageMath build artifacts
-*.sage.py
-.sage/
-
-# Demo H_epsilon generated plots
-demo_H_epsilon*.png
-operador_H_epsilon_comparison.png
-validation_report.json
-*.backup
+# NOESIS Guardian generated files
+.noesis_backups/
+noesis_guardian/guardian_log.json
+_codeql_detected_source_root/
