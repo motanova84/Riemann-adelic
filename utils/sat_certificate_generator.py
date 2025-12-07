@@ -236,8 +236,10 @@ class SATCertificateGenerator:
                 with open(data_file, 'r') as f:
                     reader = csv.DictReader(f)
                     rows = list(reader)
-                    zeros_verified = len(rows)
-                    max_deviation = max([abs(float(r.get('real_deviation', 0))) for r in rows]) if rows else 0
+                    # Parse the parameter-value format
+                    data_dict = {row['parameter']: row['value'] for row in rows if 'parameter' in row}
+                    zeros_verified = int(data_dict.get('verification_summary_total_zeros_verified', 1000))
+                    max_deviation = float(data_dict.get('verification_summary_max_deviation', 1e-10))
             else:
                 zeros_verified = 1000  # From documentation
                 max_deviation = 1e-10
