@@ -524,7 +524,6 @@ def validate_v5_coronacion(precision=30, verbose=False, save_certificate=False, 
             
             if sat_passed == sat_total:
                 print(f"   ✅ SAT certificates: {sat_passed}/{sat_total} verified")
-                passed_count += 1
             else:
                 print(f"   ⚠️  SAT certificates: {sat_passed}/{sat_total} verified")
         else:
@@ -533,7 +532,6 @@ def validate_v5_coronacion(precision=30, verbose=False, save_certificate=False, 
                 'status': 'SKIPPED',
                 'reason': 'No certificates found'
             }
-            skipped_count += 1
             
     except Exception as e:
         print(f"   ⚠️  SAT certificate verification skipped: {e}")

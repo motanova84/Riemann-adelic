@@ -91,8 +91,9 @@ class SATCertificateValidator:
         satisfied = sat_formula.get("satisfied", False)
         
         # Re-evaluate SAT formula
+        # Treat None as False (unknown/unverified should not satisfy)
         all_conditions = all([
-            v if v is not None else True 
+            v if v is not None else False 
             for v in variables.values()
         ])
         
@@ -105,12 +106,13 @@ class SATCertificateValidator:
         """Verify theorem dependencies are satisfied."""
         dependencies = certificate.get("dependencies", [])
         
-        # For now, just check dependencies are listed
-        # In a full implementation, we would verify each dependency's certificate
-        if isinstance(dependencies, list):
-            return True, f"Dependencies listed: {len(dependencies)} items"
-        else:
+        # NOTE: This is a simplified check. Full implementation would verify
+        # that each dependency has a valid certificate
+        if not isinstance(dependencies, list):
             return False, "Dependencies malformed"
+        
+        # Check that dependencies field is properly formatted
+        return True, f"Dependencies structure valid: {len(dependencies)} items (deep validation not implemented)"
     
     def verify_qcal_signature(self, certificate: Dict[str, Any]) -> Tuple[bool, str]:
         """Verify QCAL coherence signature."""

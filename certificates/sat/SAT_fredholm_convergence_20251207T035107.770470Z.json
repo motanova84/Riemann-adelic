@@ -1,30 +1,32 @@
 {
-  "certificate_id": "SAT_paley_wiener_uniqueness_20251207T034329.459567Z",
+  "certificate_id": "SAT_fredholm_convergence_20251207T035107.770470Z",
   "certificate_type": "SAT_THEOREM_CERTIFICATE",
-  "theorem_name": "paley_wiener_uniqueness",
-  "description": "Paley-Wiener uniqueness theorem",
-  "theorem_type": "uniqueness",
-  "timestamp": "2025-12-07T03:43:29.459567Z",
+  "theorem_name": "fredholm_convergence",
+  "description": "Fredholm determinant convergence",
+  "theorem_type": "convergence",
+  "timestamp": "2025-12-07T03:51:07.770470Z",
   "file_info": {
-    "path": "formalization/lean/RH_final_v6/PaleyWiener/paley_wiener_uniqueness.lean",
-    "sha256": "FILE_NOT_FOUND",
-    "exists": false
+    "path": "formalization/lean/RH_final_v7.lean",
+    "sha256": "9d1b4f72e4f6d9c221873bbb3cc5a9187fd730e1628e054849510bb6fc691580",
+    "exists": true
   },
-  "dependencies": [],
+  "dependencies": [
+    "SpectralEigenvalues"
+  ],
   "verification": {
     "compilation": {
       "compiles": null,
       "error_message": "[Errno 2] No such file or directory: 'lean'",
       "check_time": null
     },
-    "theorem_content_found": false,
-    "content_length": 0
+    "theorem_content_found": true,
+    "content_length": 201
   },
   "sat_formula": {
     "variables": {
       "theorem_exists": true,
       "theorem_compiles": null,
-      "file_valid": false,
+      "file_valid": true,
       "dependencies_satisfied": true,
       "no_sorry": true
     },
@@ -34,12 +36,13 @@
   },
   "proof_status": {
     "verified": false,
-    "sorry_count": 0,
+    "sorry_count": "not_computed",
     "axioms_used": [
       "propext",
       "quot.sound",
       "Classical.choice"
-    ]
+    ],
+    "note": "sorry_count requires Lean AST analysis"
   },
   "qcal_signature": {
     "base_frequency": "141.7001 Hz",
@@ -47,8 +50,8 @@
     "field_equation": "\u03a8 = I \u00d7 A_eff\u00b2 \u00d7 C^\u221e"
   },
   "cryptographic_proof": {
-    "certificate_hash": "7bef87866793b3492e7331193f3cbd16a3811e048e2dea72e22db0baa541e228",
-    "validator_signature": "c24c6e85a2cdc3841dbc44bf40de2112"
+    "certificate_hash": "53a68463d49e1eef5d65b97ff69e5b7f455b6cdadd51cddf6816d1adbbafa416",
+    "validator_signature": "218b2e236a0caf46845e75c678d21560"
   },
   "metadata": {
     "generator": "SAT Certificate Generator v1.0",

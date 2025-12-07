@@ -1,19 +1,17 @@
 {
-  "certificate_id": "SAT_riemann_hypothesis_20251207T034329.459567Z",
+  "certificate_id": "SAT_spectrum_H\u03a8_eq_zeta_zeros_20251207T035107.770470Z",
   "certificate_type": "SAT_THEOREM_CERTIFICATE",
-  "theorem_name": "riemann_hypothesis",
-  "description": "Main Riemann Hypothesis theorem - all non-trivial zeros on critical line",
-  "theorem_type": "main_theorem",
-  "timestamp": "2025-12-07T03:43:29.459567Z",
+  "theorem_name": "spectrum_H\u03a8_eq_zeta_zeros",
+  "description": "Spectrum identification: Spec(H\u03a8) = {zeta zeros}",
+  "theorem_type": "spectral_identification",
+  "timestamp": "2025-12-07T03:51:07.770470Z",
   "file_info": {
-    "path": "formalization/lean/RH_final_v6/RHComplete.lean",
-    "sha256": "30bffbb940c1c52c734cf088652a8157506c3f565d1f29365fd51a95da45dde6",
+    "path": "formalization/lean/RH_final_v6/NoExtraneousEigenvalues.lean",
+    "sha256": "a4062a8a64f9ca2f8d9f5459b67ccdce6acf613293203ab853170291e3455708",
     "exists": true
   },
   "dependencies": [
-    "NoExtraneousEigenvalues",
-    "DeterminantFredholm",
-    "RiemannSiegel"
+    "DeterminantFredholm"
   ],
   "verification": {
     "compilation": {
@@ -22,7 +20,7 @@
       "check_time": null
     },
     "theorem_content_found": true,
-    "content_length": 463
+    "content_length": 169
   },
   "sat_formula": {
     "variables": {
@@ -33,17 +31,18 @@
       "no_sorry": true
     },
     "formula": "AND(theorem_exists, theorem_compiles, file_valid, dependencies_satisfied, no_sorry)",
-    "satisfied": true,
+    "satisfied": false,
     "solver": "direct_evaluation"
   },
   "proof_status": {
-    "verified": true,
-    "sorry_count": 0,
+    "verified": false,
+    "sorry_count": "not_computed",
     "axioms_used": [
       "propext",
       "quot.sound",
       "Classical.choice"
-    ]
+    ],
+    "note": "sorry_count requires Lean AST analysis"
   },
   "qcal_signature": {
     "base_frequency": "141.7001 Hz",
@@ -51,8 +50,8 @@
     "field_equation": "\u03a8 = I \u00d7 A_eff\u00b2 \u00d7 C^\u221e"
   },
   "cryptographic_proof": {
-    "certificate_hash": "98564e532c0f0bc43da4011a6f080d221d4735a532fa46c16a7d2fef4ca1dbe5",
-    "validator_signature": "9bc990ba9fc268884b8488fafd087eea"
+    "certificate_hash": "5c24fd6388c2bee3f8e21e29ce4beb066ede3e8140f495b25491171bef1bd6da",
+    "validator_signature": "ba446cbeecd871c6abd11881f3d833ff"
   },
   "metadata": {
     "generator": "SAT Certificate Generator v1.0",

@@ -1,24 +1,26 @@
 {
-  "certificate_id": "SAT_functional_equation_20251207T034329.459567Z",
+  "certificate_id": "SAT_H_\u03a8_self_adjoint_20251207T035107.770470Z",
   "certificate_type": "SAT_THEOREM_CERTIFICATE",
-  "theorem_name": "functional_equation",
-  "description": "Functional equation \u039e(s) = \u039e(1-s)",
-  "theorem_type": "symmetry",
-  "timestamp": "2025-12-07T03:43:29.459567Z",
+  "theorem_name": "H_\u03a8_self_adjoint",
+  "description": "Berry-Keating operator self-adjointness",
+  "theorem_type": "operator_property",
+  "timestamp": "2025-12-07T03:51:07.770470Z",
   "file_info": {
     "path": "formalization/lean/RH_final_v7.lean",
     "sha256": "9d1b4f72e4f6d9c221873bbb3cc5a9187fd730e1628e054849510bb6fc691580",
     "exists": true
   },
-  "dependencies": [],
+  "dependencies": [
+    "operator_construction"
+  ],
   "verification": {
     "compilation": {
       "compiles": null,
       "error_message": "[Errno 2] No such file or directory: 'lean'",
       "check_time": null
     },
-    "theorem_content_found": true,
-    "content_length": 150
+    "theorem_content_found": false,
+    "content_length": 0
   },
   "sat_formula": {
     "variables": {
@@ -29,17 +31,18 @@
       "no_sorry": true
     },
     "formula": "AND(theorem_exists, theorem_compiles, file_valid, dependencies_satisfied, no_sorry)",
-    "satisfied": true,
+    "satisfied": false,
     "solver": "direct_evaluation"
   },
   "proof_status": {
-    "verified": true,
-    "sorry_count": 0,
+    "verified": false,
+    "sorry_count": "not_computed",
     "axioms_used": [
       "propext",
       "quot.sound",
       "Classical.choice"
-    ]
+    ],
+    "note": "sorry_count requires Lean AST analysis"
   },
   "qcal_signature": {
     "base_frequency": "141.7001 Hz",
@@ -47,8 +50,8 @@
     "field_equation": "\u03a8 = I \u00d7 A_eff\u00b2 \u00d7 C^\u221e"
   },
   "cryptographic_proof": {
-    "certificate_hash": "e6d2f5447fb6609deebaec475e2d80c6843bed1728e9645fb9edb2fb16d809a1",
-    "validator_signature": "22f972130732a9a992a729d74ba4685d"
+    "certificate_hash": "2812be30f890d381a0812067b4ccde19b00cab32de007dc5969de86f6de1b5b9",
+    "validator_signature": "a1d36fbc096859fc46b5852b2c8f2f05"
   },
   "metadata": {
     "generator": "SAT Certificate Generator v1.0",

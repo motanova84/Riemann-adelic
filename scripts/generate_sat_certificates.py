@@ -85,7 +85,7 @@ class SATCertificateGenerator:
             "dependencies": ["DeterminantFredholm"]
         },
         "paley_wiener_uniqueness": {
-            "file": "formalization/lean/RH_final_v6/PaleyWiener/paley_wiener_uniqueness.lean",
+            "file": "formalization/lean/RH_final_v6/paley_wiener_uniqueness.lean",
             "description": "Paley-Wiener uniqueness theorem",
             "type": "uniqueness",
             "dependencies": []
@@ -200,8 +200,9 @@ class SATCertificateGenerator:
         }
         
         # SAT formula: conjunction of all conditions
+        # Treat None as False (unknown/unverified should not satisfy)
         sat_formula = all([
-            v if v is not None else True 
+            v if v is not None else False 
             for v in variables.values()
         ])
         
@@ -260,8 +261,9 @@ class SATCertificateGenerator:
             "sat_formula": sat_formula,
             "proof_status": {
                 "verified": sat_formula["satisfied"],
-                "sorry_count": 0,  # To be determined by actual scan
-                "axioms_used": ["propext", "quot.sound", "Classical.choice"]
+                "sorry_count": "not_computed",  # Would require Lean parsing
+                "axioms_used": ["propext", "quot.sound", "Classical.choice"],
+                "note": "sorry_count requires Lean AST analysis"
             },
             "qcal_signature": {
                 "base_frequency": "141.7001 Hz",
