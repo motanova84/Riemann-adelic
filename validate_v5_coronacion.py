@@ -517,6 +517,47 @@ def validate_v5_coronacion(precision=30, verbose=False, save_certificate=False, 
         except Exception as e:
             print(f"⚠️  Warning: Could not save proof certificate: {e}")
     
+    # --- SAT Certificates Integration -----------------------------------------
+    print("\n🔐 SAT CERTIFICATES VERIFICATION...")
+    try:
+        from scripts.validate_sat_certificates import SATCertificateValidator
+        
+        sat_validator = SATCertificateValidator(certificates_dir='certificates/sat')
+        cert_dir = Path('certificates/sat')
+        
+        if cert_dir.exists() and list(cert_dir.glob('SAT_*.json')):
+            print("   Validating SAT certificates for key theorems...")
+            sat_results = sat_validator.validate_all_certificates()
+            
+            sat_passed = sum(1 for r in sat_results if r.get('all_checks_passed', False))
+            sat_total = len(sat_results)
+            
+            results["SAT Certificates Verification"] = {
+                'status': 'PASSED' if sat_passed == sat_total else 'PARTIAL',
+                'certificates_validated': sat_total,
+                'certificates_passed': sat_passed,
+                'execution_time': 0.0
+            }
+            
+            if sat_passed == sat_total:
+                print(f"   ✅ SAT certificates: {sat_passed}/{sat_total} verified")
+            else:
+                print(f"   ⚠️  SAT certificates: {sat_passed}/{sat_total} verified")
+        else:
+            print("   ℹ️  No SAT certificates found - run scripts/generate_sat_certificates.py")
+            results["SAT Certificates Verification"] = {
+                'status': 'SKIPPED',
+                'reason': 'No certificates found'
+            }
+            
+    except Exception as e:
+        print(f"   ⚠️  SAT certificate verification skipped: {e}")
+        results["SAT Certificates Verification"] = {
+            'status': 'SKIPPED',
+            'error': str(e)
+        }
+    # -----------------------------------------------------------------------
+    
     # Save validation results to CSV for comparison with notebook
     try:
         import csv

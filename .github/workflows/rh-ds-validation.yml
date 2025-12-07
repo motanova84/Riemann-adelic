@@ -57,6 +57,7 @@ jobs:
 
       - name: Download validation artefacts
         uses: actions/download-artifact@v4.1.8
+        uses: actions/download-artifact@v4.1.3
         with:
           pattern: rh-ds-validation-*
           path: artifacts/
