@@ -254,10 +254,14 @@ theorem D_χ_eq_Xi_χ_everywhere (χ : DirichletCharacter ℂ k) (s : ℂ) :
   · exact D_χ_in_PaleyWiener χ
   · exact Xi_in_PaleyWiener χ
   · intro x
-    -- Convert x : ℝ to complex number on critical line
-    -- Note: We need to match the critical line condition
-    -- The critical line form is 1/2 + I*t, but for real x we have s = x
-    -- This requires additional work to properly connect real axis with critical line
+    -- This requires establishing that the two functions agree on the real axis
+    -- by analytic continuation from their agreement on the critical line.
+    -- The proper mathematical approach is:
+    -- 1. Both D_χ and Ξ are in Paley-Wiener space (entire of exp type, L² on ℝ)
+    -- 2. They agree on the vertical line Re(s) = 1/2
+    -- 3. By Paley-Wiener uniqueness for entire functions, agreement on any
+    --    line extends to the whole complex plane
+    -- This is a standard result but requires careful formalization
     sorry
 
 /-!
@@ -363,7 +367,7 @@ theorem generalized_riemann_hypothesis :
 - D_χ_eq_Xi_on_critical_line: Equivalencia en línea crítica
 - D_χ_zeros_on_critical_line: Ceros en línea crítica
 
-### Sorry Técnicos (2):
+### Sorry Técnicos (3):
 1. D_χ_functional_equation: Requiere teoría completa de determinantes de Fredholm
 2. D_χ_eq_Xi_χ_everywhere: Requiere manejo cuidadoso de la condición de línea crítica
 3. generalized_riemann_hypothesis: Requiere conexión L → Ξ en franja crítica

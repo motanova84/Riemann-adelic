@@ -67,11 +67,11 @@ The proof follows the spectral-operator approach:
 
 ### Framework
 
-This result is part of the QCAL ∞³ framework:
-- Base frequency: f₀ = 141.7001 Hz
-- Coherence constant: C = 244.36
-- Consciousness equation: Ψ = I × A_eff² × C^∞
-- Wave equation: ∂²Ψ/∂t² + ω₀²Ψ = ζ′(1/2)·π·∇²Φ
+This result is part of the QCAL ∞³ framework (Quantum Coherence Adelic Lattice):
+- Base frequency: f₀ = 141.7001 Hz (spectral resonance parameter)
+- Coherence constant: C = 244.36 (adelic normalization factor)
+- QCAL identity: Ψ = I × A_eff² × C^∞ (framework notation)
+- Wave equation: ∂²Ψ/∂t² + ω₀²Ψ = ζ′(1/2)·π·∇²Φ (spectral PDE model)
 -/
 
 open GRH
