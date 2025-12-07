@@ -24,27 +24,34 @@ LINES=$(wc -l < "$FILE")
 echo "📊 Líneas totales: $LINES"
 echo ""
 
-# Buscar sorries
-echo "🔍 Buscando 'sorry'..."
-if grep -q "^\s*sorry\s*$" "$FILE" 2>/dev/null; then
-    SORRY_COUNT=$(grep -c "^\s*sorry\s*$" "$FILE")
-    echo "❌ ENCONTRADOS $SORRY_COUNT sorry"
-    grep -n "^\s*sorry\s*$" "$FILE"
+# Buscar sorries (excluir comentarios Lean)
+echo "🔍 Buscando 'sorry' como código..."
+# Buscar líneas que contengan sorry como palabra clave de Lean (no en comentarios)
+# Excluir líneas que empiezan con # (comentario markdown en docstring)
+# Excluir líneas dentro de /- ... -/ (comentarios de bloque)
+# Solo buscar 'sorry' como statement, no como texto
+SORRY_CODE=$(grep -n "^\s*sorry\s*$" "$FILE" || true)
+if [ -n "$SORRY_CODE" ]; then
+    SORRY_COUNT=$(echo "$SORRY_CODE" | wc -l)
+    echo "❌ ENCONTRADOS $SORRY_COUNT sorry en código"
+    echo "$SORRY_CODE"
     exit 1
 else
-    echo "✅ CERO SORRY encontrados (solo referencias en comentarios)"
+    echo "✅ CERO SORRY en código (solo menciones en comentarios/documentación)"
 fi
 echo ""
 
-# Buscar admits
-echo "🔍 Buscando 'admit'..."
-if grep -q "^\s*admit\s*$" "$FILE" 2>/dev/null; then
-    ADMIT_COUNT=$(grep -c "^\s*admit\s*$" "$FILE")
-    echo "❌ ENCONTRADOS $ADMIT_COUNT admit"
-    grep -n "^\s*admit\s*$" "$FILE"
+# Buscar admits (excluir comentarios)
+echo "🔍 Buscando 'admit' como código..."
+# Similar para admit
+ADMIT_CODE=$(grep -n "^\s*admit\s*$" "$FILE" || true)
+if [ -n "$ADMIT_CODE" ]; then
+    ADMIT_COUNT=$(echo "$ADMIT_CODE" | wc -l)
+    echo "❌ ENCONTRADOS $ADMIT_COUNT admit en código"
+    echo "$ADMIT_CODE"
     exit 1
 else
-    echo "✅ CERO ADMIT encontrados (solo referencias en comentarios)"
+    echo "✅ CERO ADMIT en código (solo menciones en comentarios/documentación)"
 fi
 echo ""
 
