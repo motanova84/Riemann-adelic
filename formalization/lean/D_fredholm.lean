@@ -154,26 +154,53 @@ theorem D_zeros_eq_Xi_zeros : ∀ s : ℂ, D s = 0 ↔ Xi s = 0 := by
 /-! ## Propiedades de Fredholm Avanzadas -/
 
 /-- Definición auxiliar: un operador es de Fredholm si tiene índice finito.
-    Esto es una simplificación que captura la esencia del concepto. -/
+    
+    TODO: En una implementación completa con espacios de Hilbert, esto debería verificar:
+    - T es compacto (o I - T tiene imagen cerrada)
+    - ker(T) tiene dimensión finita
+    - coker(T) tiene dimensión finita
+    - index(T) = dim(ker(T)) - dim(coker(T)) es finito
+    
+    Por ahora, usamos True como placeholder para permitir el teorema D_is_entire_of_order_one.
+    La verdadera propiedad será implementada cuando se complete la teoría de operadores. -/
 def IsFredholmOperator (T : ℂ → ℂ) : Prop :=
-  -- En una implementación completa, esto verificaría que T es compacto
-  -- y que su núcleo y conúcleo son de dimensión finita
-  True
+  True  -- STUB: será reemplazado con la caracterización completa
 
 /-- Definición auxiliar: una función es entera de orden ≤ 1 si su crecimiento
-    está acotado por exp(|z|^(1+ε)) para todo ε > 0. -/
+    está acotado por exp(|z|^(1+ε)) para todo ε > 0.
+    
+    TODO: En una implementación completa, esto debería verificar:
+    - f es holomorfa en todo ℂ (entera)
+    - ∃ A, B > 0: ∀ ε > 0, |f(z)| ≤ A·exp(B·|z|^(1+ε)) para |z| suficientemente grande
+    - Equivalentemente: lim sup_{r→∞} (log log M(r)) / log r ≤ 1
+      donde M(r) = max_{|z|=r} |f(z)|
+    
+    Por ahora, usamos un stub para permitir el teorema D_is_entire_of_order_one.
+    La verdadera condición de crecimiento será implementada con análisis complejo completo. -/
 def EntireFunctionOfOrderLeOne (f : ℂ → ℂ) : Prop :=
-  -- En una implementación completa, esto verificaría el orden de crecimiento
-  ∀ s, True
+  True  -- STUB: será reemplazado con la condición de crecimiento completa
 
 /-- Operador D como operador funcional. -/
 def D_op : ℂ → ℂ := K_s
 
-/-- Axioma auxiliar: el operador D tiene clase de traza. -/
-axiom trace_class_D : ∀ s : ℂ, True
+/-- Axioma auxiliar: el operador D tiene clase de traza.
+    
+    TODO: Esto debería ser un teorema probado a partir de las propiedades de K_s.
+    La clase de traza implica que ∑ |λₙ| < ∞ donde λₙ son los valores propios.
+    
+    STUB: Usado como placeholder hasta que se implemente la teoría completa
+    de operadores de Schatten y normas de traza. -/
+axiom trace_class_D : ∀ s : ℂ, True  -- STUB
 
-/-- Axioma auxiliar: D tiene crecimiento de orden uno. -/
-axiom order_one_growth_D : ∀ s : ℂ, True
+/-- Axioma auxiliar: D tiene crecimiento de orden uno.
+    
+    TODO: Esto debería ser un teorema derivado de la construcción de D como
+    determinante de Fredholm. El crecimiento exponencial |D(s)| ≤ C·exp(A·|s|)
+    es característico de funciones enteras de orden ≤ 1.
+    
+    STUB: Usado como placeholder hasta que se complete la teoría de
+    crecimiento de funciones enteras. -/
+axiom order_one_growth_D : ∀ s : ℂ, True  -- STUB
 
 /-- Teorema: D es una función entera de orden ≤ 1 dado que es un operador de Fredholm.
     
