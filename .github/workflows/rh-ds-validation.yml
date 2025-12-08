@@ -37,7 +37,7 @@ jobs:
           python run_complete_validation.py --precision ${{ matrix.precision }} --max-zeros 150 --generate-certificates
 
       - name: Upload validation artefacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v4.1.3
         with:
           name: rh-ds-validation-${{ matrix.precision }}-${{ github.sha }}
           path: |
@@ -56,7 +56,7 @@ jobs:
           ref: main  # Explicitly checkout main branch for scheduled runs
 
       - name: Download validation artefacts
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v4.1.3
         with:
           pattern: rh-ds-validation-*
           path: artifacts/
@@ -68,7 +68,7 @@ jobs:
           python scripts/generate_consolidated_report.py
 
       - name: Upload consolidated report
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v4.1.3
         with:
           name: rh-ds-consolidated-report
           path: reports/rh_ds_validation/
