@@ -141,7 +141,7 @@ jobs:
         fi
     
     - name: Upload Results Artifacts
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v4.4.3
       with:
         name: critical-line-results-${{ matrix.test-config.name }}-${{ github.sha }}
         path: |
@@ -194,7 +194,7 @@ jobs:
         cat critical_line_summary.md
     
     - name: Upload Summary Report
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v4.4.3
       with:
         name: summary-${{ matrix.test-config.name }}-${{ github.sha }}
         path: critical_line_summary.md
@@ -207,6 +207,7 @@ jobs:
     
     steps:
     - name: Download all artifacts
+      uses: actions/download-artifact@v4.1.8
       uses: actions/download-artifact@v4.1.3
       with:
         path: all-results/
@@ -241,7 +242,7 @@ jobs:
         cat consolidated_report.md
     
     - name: Upload Consolidated Report
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v4.4.3
       with:
         name: consolidated-critical-line-report-${{ github.sha }}
         path: |

@@ -29,7 +29,7 @@ jobs:
         run: |
           jupyter nbconvert --to notebook --execute notebooks/validacion_visual_weil.ipynb --output notebooks/validacion_visual_weil_out.ipynb --ExecutePreprocessor.timeout=1200
       - name: Guardar artefactos de resultados
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v4.4.3
         with:
           name: resultados-validacion
           path: |

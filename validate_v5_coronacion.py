@@ -33,6 +33,25 @@ import mpmath as mp
 # Add the current directory to Python path for imports
 sys.path.append('.')
 
+# Import pytest skip exception to properly handle skipped tests
+try:
+    import pytest
+    # Try to get the Skipped exception from pytest
+    try:
+        PytestSkipped = pytest.skip.Exception
+    except AttributeError:
+        # Fallback: try alternative import
+        try:
+            from _pytest.outcomes import Skipped as PytestSkipped
+        except ImportError:
+            # If pytest is not available, create a dummy class
+            class PytestSkipped(Exception):
+                pass
+except ImportError:
+    # If pytest is not available, create a dummy class
+    class PytestSkipped(Exception):
+        pass
+
 # Import QCAL logging system
 try:
     from utils.validation_logger import ValidationLogger
@@ -274,14 +293,29 @@ def validate_v5_coronacion(precision=30, verbose=False, save_certificate=False, 
             }
             print(f"   ✅ Integration: {test_name}: PASSED ({results[f'Integration: {test_name}']['execution_time']:.3f}s)")
             
-        except Exception as e:
+        except PytestSkipped as e:
+            # Handle pytest.skip() calls explicitly
             results[f"Integration: {test_name}"] = {
-                'status': 'SKIPPED' if 'skip' in str(e).lower() else 'FAILED',
+                'status': 'SKIPPED',
+                'error': str(e),
+                'execution_time': time.time() - test_start
+            }
+            print(f"   ⏭️  Integration: {test_name}: SKIPPED - {str(e)}")
+            # Skipped tests don't affect all_passed
+            
+        except Exception as e:
+            # Check if it's a pytest skip exception by other means
+            is_skipped = 'skip' in str(e).lower() or 'Skipped' in type(e).__name__
+            results[f"Integration: {test_name}"] = {
+                'status': 'SKIPPED' if is_skipped else 'FAILED',
                 'error': str(e),
                 'execution_time': time.time() - test_start
             }
             status_icon = "⏭️" if results[f"Integration: {test_name}"]['status'] == 'SKIPPED' else "❌"
             print(f"   {status_icon} Integration: {test_name}: {results[f'Integration: {test_name}']['status']} - {str(e)}")
+            # Don't count skipped tests as failures for all_passed
+            if not is_skipped:
+                all_passed = False
     
     # Final summary
     print("\n" + "=" * 80)
