@@ -7,9 +7,9 @@ This guide helps you quickly understand and use the unified RH-GRH-BSD framework
 ## Installation
 
 ```bash
-# 1. Clone the repository
-git clone https://github.com/motanova84/Riemann-adelic.git
-cd Riemann-adelic/formalization/lean
+# 1. Navigate to the formalization directory
+# (Assuming you already have the repository cloned)
+cd formalization/lean
 
 # 2. Install Lean 4 (if not already installed)
 curl https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -sSf | sh

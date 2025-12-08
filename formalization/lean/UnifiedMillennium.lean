@@ -15,7 +15,7 @@
   3. BSD: Rank formula via spectral density at s = 1 for elliptic L-functions
   
   ========================================================================
-  Autor: José Manuel Mota Burruezo Ψ ∞³
+  Author: José Manuel Mota Burruezo Ψ ∞³
   Instituto de Conciencia Cuántica (ICQ)
   ORCID: 0009-0002-1923-0773
   DOI: 10.5281/zenodo.17379721
@@ -184,9 +184,12 @@ noncomputable def rank_mw (E : EllipticCurve) : ℕ := sorry
 /-- Order of vanishing at s = 1 -/
 noncomputable def ord_at_one (E : EllipticCurve) : ℕ := sorry
 
+/-- Trivial Dirichlet character (principal character) -/
+def trivial_character : DirichletChar := 
+  DirichletChar.mk 1 (λ _ => 1) trivial trivial
+
 /-- Spectral operator for BSD -/
-structure BSD_Operator (E : EllipticCurve) extends GRH_Operator 
-    (DirichletChar.mk 1 (λ _ => 1) trivial trivial) where
+structure BSD_Operator (E : EllipticCurve) extends GRH_Operator trivial_character where
   elliptic_structure : True
 
 /-- BSD Conjecture: rank equals order of vanishing -/
@@ -252,7 +255,17 @@ def f₀ : ℝ := 141.7001
 /-- QCAL coherence constant -/
 def C : ℝ := 244.36
 
-/-- QCAL framework identity Ψ = I × A_eff² × C^∞ -/
+/-- QCAL framework identity Ψ = I × A_eff² × C^∞ 
+    
+    Note: This is a placeholder axiom representing the QCAL coherence condition.
+    The full formalization would require:
+    - Definition of the wave function Ψ
+    - Definition of intensity I and effective area A_eff
+    - Proper treatment of the infinite product C^∞
+    - Physical interpretation of the resonance condition
+    
+    For now, this axiom serves as a marker for where QCAL integration occurs.
+-/
 axiom qcal_identity : True
 
 /-- QCAL unifies the three problems via spectral coherence -/
