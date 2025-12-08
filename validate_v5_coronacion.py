@@ -35,7 +35,18 @@ sys.path.append('.')
 
 # Import pytest skip exception to properly handle skipped tests
 try:
-    from _pytest.outcomes import Skipped as PytestSkipped
+    import pytest
+    # Try to get the Skipped exception from pytest
+    try:
+        PytestSkipped = pytest.skip.Exception
+    except AttributeError:
+        # Fallback: try alternative import
+        try:
+            from _pytest.outcomes import Skipped as PytestSkipped
+        except ImportError:
+            # If pytest is not available, create a dummy class
+            class PytestSkipped(Exception):
+                pass
 except ImportError:
     # If pytest is not available, create a dummy class
     class PytestSkipped(Exception):
