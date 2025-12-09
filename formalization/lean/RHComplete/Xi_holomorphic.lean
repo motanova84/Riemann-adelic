@@ -18,24 +18,27 @@ open Complex
 
 namespace XiHolomorphic
 
-/-- Reference to the Fredholm determinant D(s) from FredholmDetEqualsXi -/
-def D : ℂ → ℂ := RHComplete.FredholmDetEqualsXi.FredholmDet
+/-- 
+  Hipótesis operativa: el determinante de Fredholm D(s) es holomorfo.
+  Esta es una propiedad fundamental de los determinantes de Fredholm
+  para operadores de clase traza, establecida en la teoría de operadores.
+-/
+axiom D_holo : Differentiable ℂ RHComplete.FredholmDetEqualsXi.FredholmDet
 
-/-- Reference to Xi function from FredholmDetEqualsXi -/
-def Xi : ℂ → ℂ := RHComplete.FredholmDetEqualsXi.Xi
-
-/-- Equivalence between D(s) and Xi(s) up to polynomial factor -/
-axiom D_eq_Xi : ∀ s : ℂ, D s * RHComplete.FredholmDetEqualsXi.P s = Xi s
-
--- Hipótesis operativa: el determinante de Fredholm D(s) es holomorfo
-axiom D_holo : Differentiable ℂ D
+/--
+  Equivalencia entre D(s) y Xi(s) según FredholmDetEqualsXi:
+  D(s) = Ξ(s) / P(s), es decir, Ξ(s) = D(s) * P(s)
+-/
+axiom D_eq_Xi : ∀ s : ℂ, 
+  RHComplete.FredholmDetEqualsXi.FredholmDet s * RHComplete.FredholmDetEqualsXi.P s = 
+  RHComplete.FredholmDetEqualsXi.Xi s
 
 -- Por equivalencia funcional, Ξ(s) también es holomorfa
-theorem Xi_is_holomorphic : Differentiable ℂ Xi := by
+theorem Xi_is_holomorphic : Differentiable ℂ RHComplete.FredholmDetEqualsXi.Xi := by
   intro s
   -- D(s) * P(s) = Xi(s), donde P(s) = s(s-1) es polynomial (holomorfo)
   -- Si D(s) es holomorfo y P(s) es holomorfo, entonces su producto Xi(s) es holomorfo
-  have h_D_diff : DifferentiableAt ℂ D s := D_holo s
+  have h_D_diff : DifferentiableAt ℂ RHComplete.FredholmDetEqualsXi.FredholmDet s := D_holo s
   have h_P_diff : DifferentiableAt ℂ RHComplete.FredholmDetEqualsXi.P s := by
     -- P(s) = s * (s - 1) es un polinomio, por tanto diferenciable
     unfold RHComplete.FredholmDetEqualsXi.P
@@ -45,7 +48,8 @@ theorem Xi_is_holomorphic : Differentiable ℂ Xi := by
       · exact differentiableAt_id
       · exact differentiableAt_const
   -- Xi(s) = D(s) * P(s) es diferenciable como producto
-  have h_prod : DifferentiableAt ℂ (fun s => D s * RHComplete.FredholmDetEqualsXi.P s) s := 
+  have h_prod : DifferentiableAt ℂ 
+    (fun s => RHComplete.FredholmDetEqualsXi.FredholmDet s * RHComplete.FredholmDetEqualsXi.P s) s := 
     DifferentiableAt.mul h_D_diff h_P_diff
   -- Reescribimos usando la equivalencia D_eq_Xi
   convert h_prod
@@ -53,7 +57,7 @@ theorem Xi_is_holomorphic : Differentiable ℂ Xi := by
   exact (D_eq_Xi t).symm
 
 -- Consecuencia: Ξ(s) ∈ 𝒪(ℂ) (entera)
-theorem Xi_is_entire : ∀ s : ℂ, AnalyticAt ℂ Xi s := by
+theorem Xi_is_entire : ∀ s : ℂ, AnalyticAt ℂ RHComplete.FredholmDetEqualsXi.Xi s := by
   intro s
   -- Una función diferenciable en todo ℂ es analítica (entera)
   apply Differentiable.analyticAt
@@ -61,7 +65,8 @@ theorem Xi_is_entire : ∀ s : ℂ, AnalyticAt ℂ Xi s := by
 
 /-- Verification: All theorems are proven -/
 theorem xi_holomorphy_complete : 
-    (Differentiable ℂ Xi) ∧ (∀ s : ℂ, AnalyticAt ℂ Xi s) := by
+    (Differentiable ℂ RHComplete.FredholmDetEqualsXi.Xi) ∧ 
+    (∀ s : ℂ, AnalyticAt ℂ RHComplete.FredholmDetEqualsXi.Xi s) := by
   constructor
   · exact Xi_is_holomorphic
   · exact Xi_is_entire
