@@ -151,7 +151,7 @@ jobs:
           ls -la data/
           
       - name: 💾 Store results as artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v4.1.3
         if: always()
         with:
           name: validation-results-${{ github.run_id }}

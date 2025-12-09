@@ -71,7 +71,7 @@ jobs:
         "
         
     - name: Store test results
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v4.1.3
       if: always()
       with:
         name: v5-proof-results-py${{ matrix.python-version }}-prec${{ matrix.precision }}
@@ -148,7 +148,7 @@ jobs:
         fi
         
     - name: Upload V5 Coronación PDF
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v4.1.3
       with:
         name: v5-coronacion-pdf
         path: docs/teoremas_basicos/coronacion_v5_main.pdf
@@ -246,7 +246,7 @@ jobs:
         "
         
     - name: Store V5 Validation Results
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v4.1.3
       if: always()
       with:
         name: v5-comprehensive-validation-results
