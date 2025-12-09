@@ -3,8 +3,8 @@
   ------------------------------------------------------
   Parte 33/∞³ — Holomorfía de Ξ(s) a través de D(s)
   Formaliza:
-    - Ξ(s) := D(s)
-    - Propiedad holomorfa de Ξ(s)
+    - Ξ(s) = D(s) * P(s) donde D(s) es el determinante de Fredholm
+    - Propiedad holomorfa de Ξ(s) deducida de D(s) holomorfo
     - Apoyo en propiedades del determinante de Fredholm
   ------------------------------------------------------
   José Manuel Mota Burruezo Ψ ∞³ — Instituto Conciencia Cuántica
