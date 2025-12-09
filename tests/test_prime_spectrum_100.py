@@ -9,10 +9,9 @@ Instituto de Conciencia Cuántica – QCAL ∞³
 import pytest
 import math
 import sys
-import os
 
-# Add parent directory to path
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+# Add project root to path (consistent with other tests in this repo)
+sys.path.insert(0, '.')
 
 from prime_spectrum_100 import (
     generate_primes,

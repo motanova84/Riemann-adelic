@@ -28,6 +28,7 @@ from __future__ import annotations
 
 import math
 import json
+from pathlib import Path
 from typing import List, Tuple, Dict, Any
 
 import mpmath as mp
@@ -296,7 +297,7 @@ def save_json_output(
     by_octave: Dict[int, List[Dict[str, Any]]],
     special: Dict[str, Dict[str, Any]],
     filename: str = "data/prime_spectrum_100.json"
-) -> None:
+) -> bool:
     """
     Guarda los resultados en formato JSON.
 
@@ -305,6 +306,9 @@ def save_json_output(
         by_octave: Diccionario de primos por octava.
         special: Diccionario de primos especiales.
         filename: Nombre del archivo de salida.
+
+    Returns:
+        True si se guardó exitosamente, False en caso contrario.
     """
     # Convertir claves de octava a string para JSON
     by_octave_str = {str(k): v for k, v in by_octave.items()}
@@ -328,10 +332,19 @@ def save_json_output(
         'special_primes': special,
     }
 
-    with open(filename, 'w', encoding='utf-8') as f:
-        json.dump(output, f, indent=2, ensure_ascii=False)
+    try:
+        # Ensure parent directory exists
+        output_path = Path(filename)
+        output_path.parent.mkdir(parents=True, exist_ok=True)
 
-    print(f"\nResultados guardados en: {filename}")
+        with open(output_path, 'w', encoding='utf-8') as f:
+            json.dump(output, f, indent=2, ensure_ascii=False)
+
+        print(f"\nResultados guardados en: {filename}")
+        return True
+    except (OSError, PermissionError) as e:
+        print(f"\nError al guardar resultados en {filename}: {e}")
+        return False
 
 
 def main() -> None:
