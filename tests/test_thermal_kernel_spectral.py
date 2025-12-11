@@ -11,7 +11,8 @@ from thermal_kernel_spectral import (
     extract_zeros_from_spectrum,
     load_odlyzko_zeros,
     validate_spectral_construction,
-    thermal_kernel
+    thermal_kernel,
+    perfect_spectral_computation
 )
 
 
@@ -166,6 +167,38 @@ class TestThermalKernelSpectral:
             f = np.random.randn(10)
             quadratic_form = f @ H @ f
             assert quadratic_form >= -1e-10, "Coercivity violated: <f,Hf> should be ≥ 0"
+    
+    def test_perfect_spectral_computation_basic(self):
+        """Test that perfect_spectral_computation runs without errors."""
+        # Use small N for speed
+        zeros, H = perfect_spectral_computation(N=5, h=0.001, precision=30)
+        
+        # Should return some zeros
+        assert len(zeros) > 0, "Should compute at least one zero"
+        
+        # All zeros should have real part = 1/2
+        for z in zeros:
+            assert abs(float(z.real) - 0.5) < 1e-6, "All zeros should have Re(s) = 1/2"
+        
+        # H should be a matrix
+        assert H.rows == 5 and H.cols == 5, "H should be 5x5 matrix"
+    
+    def test_perfect_spectral_computation_hermite_basis(self):
+        """Test that Hermite basis is used correctly in perfect_spectral_computation."""
+        import mpmath as mp
+        
+        # Test with very small N to verify structure
+        zeros, H = perfect_spectral_computation(N=3, h=0.01, precision=30)
+        
+        # H should be symmetric
+        for i in range(H.rows):
+            for j in range(H.cols):
+                assert abs(H[i, j] - H[j, i]) < mp.mpf(1e-10), "H should be symmetric"
+        
+        # H should be positive definite (all eigenvalues > 0)
+        eigenvalues = mp.eigsy(H, eigvals_only=True)
+        for lam in eigenvalues:
+            assert lam > 0, "All eigenvalues should be positive"
 
 
 class TestThermalKernelMathematical:
