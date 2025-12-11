@@ -1,0 +1,2147 @@
+{
+  "metadata": {
+    "description": "Espectro de los 100 primeros primos",
+    "author": "JMMB Ψ✧ (motanova84)",
+    "institute": "Instituto de Conciencia Cuántica – QCAL ∞³",
+    "doi": "10.5281/zenodo.17379721",
+    "orcid": "0009-0002-1923-0773"
+  },
+  "constants": {
+    "c_light": 299792458,
+    "planck_length": 1.616255e-35,
+    "scale_factor": 1.931174e+41,
+    "a4_frequency": 440.0
+  },
+  "primes": [
+    {
+      "prime": 2,
+      "equilibrium": 3.2599788193945223,
+      "frequency_hz": 49.833836823443576,
+      "midi_number": 31.292328433437945,
+      "note": "G",
+      "octave": 1,
+      "cents_deviation": 29.232843343794457,
+      "note_full": "G1"
+    },
+    {
+      "prime": 3,
+      "equilibrium": 2.9234973241672053,
+      "frequency_hz": 44.69019483794725,
+      "midi_number": 29.406320590738254,
+      "note": "F",
+      "octave": 1,
+      "cents_deviation": 40.63205907382539,
+      "note_full": "F1"
+    },
+    {
+      "prime": 5,
+      "equilibrium": 2.9989148209195915,
+      "frequency_hz": 45.843068348790815,
+      "midi_number": 29.847263886495014,
+      "note": "F#",
+      "octave": 1,
+      "cents_deviation": -15.273611350498584,
+      "note_full": "F#1"
+    },
+    {
+      "prime": 7,
+      "equilibrium": 3.4455075306134337,
+      "frequency_hz": 52.66993117655481,
+      "midi_number": 32.250575468350654,
+      "note": "G#",
+      "octave": 1,
+      "cents_deviation": 25.05754683506538,
+      "note_full": "G#1"
+    },
+    {
+      "prime": 11,
+      "equilibrium": 5.01733606670964,
+      "frequency_hz": 76.69777035030712,
+      "midi_number": 38.75703623639574,
+      "note": "D#",
+      "octave": 2,
+      "cents_deviation": -24.296376360425853,
+      "note_full": "D#2"
+    },
+    {
+      "prime": 13,
+      "equilibrium": 6.14822033413284,
+      "frequency_hz": 93.98509188555391,
+      "midi_number": 42.27600375547382,
+      "note": "F#",
+      "octave": 2,
+      "cents_deviation": 27.600375547382328,
+      "note_full": "F#2"
+    },
+    {
+      "prime": 17,
+      "equilibrium": 9.26959005300666,
+      "frequency_hz": 141.70007344021514,
+      "midi_number": 49.38404378670202,
+      "note": "C#",
+      "octave": 3,
+      "cents_deviation": 38.40437867020228,
+      "note_full": "C#3"
+    },
+    {
+      "prime": 19,
+      "equilibrium": 11.362108240600051,
+      "frequency_hz": 173.68746222023935,
+      "midi_number": 52.90788110240431,
+      "note": "F",
+      "octave": 3,
+      "cents_deviation": -9.211889759568948,
+      "note_full": "F3"
+    },
+    {
+      "prime": 23,
+      "equilibrium": 16.946023708771982,
+      "frequency_hz": 259.04627824115613,
+      "midi_number": 59.82847599070993,
+      "note": "C",
+      "octave": 4,
+      "cents_deviation": -17.152400929006717,
+      "note_full": "C4"
+    },
+    {
+      "prime": 29,
+      "equilibrium": 30.20638582696936,
+      "frequency_hz": 461.7514977004514,
+      "midi_number": 69.8353574025158,
+      "note": "A#",
+      "octave": 4,
+      "cents_deviation": -16.464259748420318,
+      "note_full": "A#4"
+    },
+    {
+      "prime": 31,
+      "equilibrium": 36.40998327608491,
+      "frequency_hz": 556.5831147521762,
+      "midi_number": 73.06912341674666,
+      "note": "C#",
+      "octave": 5,
+      "cents_deviation": 6.912341674666322,
+      "note_full": "C#5"
+    },
+    {
+      "prime": 37,
+      "equilibrium": 62.70267877382639,
+      "frequency_hz": 958.5077804241745,
+      "midi_number": 82.47943942647075,
+      "note": "A#",
+      "octave": 5,
+      "cents_deviation": 47.94394264707478,
+      "note_full": "A#5"
+    },
+    {
+      "prime": 41,
+      "equilibrium": 88.9118946906326,
+      "frequency_hz": 1359.1563311135633,
+      "midi_number": 88.5256317189746,
+      "note": "F",
+      "octave": 6,
+      "cents_deviation": -47.436828102540574,
+      "note_full": "F6"
+    },
+    {
+      "prime": 43,
+      "equilibrium": 105.48831343122599,
+      "frequency_hz": 1612.5526236665407,
+      "midi_number": 91.48524975618373,
+      "note": "G",
+      "octave": 6,
+      "cents_deviation": 48.52497561837339,
+      "note_full": "G6"
+    },
+    {
+      "prime": 47,
+      "equilibrium": 147.46865747706553,
+      "frequency_hz": 2254.2873498329345,
+      "midi_number": 97.28515195240448,
+      "note": "C#",
+      "octave": 7,
+      "cents_deviation": 28.51519524044761,
+      "note_full": "C#7"
+    },
+    {
+      "prime": 53,
+      "equilibrium": 239.8783698090168,
+      "frequency_hz": 3666.913253367834,
+      "midi_number": 105.70788850029481,
+      "note": "A#",
+      "octave": 7,
+      "cents_deviation": -29.21114997051859,
+      "note_full": "A#7"
+    },
+    {
+      "prime": 59,
+      "equilibrium": 383.45004841394046,
+      "frequency_hz": 5861.629231735603,
+      "midi_number": 113.8287154393679,
+      "note": "F#",
+      "octave": 8,
+      "cents_deviation": -17.12845606321025,
+      "note_full": "F#8"
+    },
+    {
+      "prime": 61,
+      "equilibrium": 446.75069334121457,
+      "frequency_hz": 6829.2778530571395,
+      "midi_number": 116.47389123730689,
+      "note": "G#",
+      "octave": 8,
+      "cents_deviation": 47.38912373068871,
+      "note_full": "G#8"
+    },
+    {
+      "prime": 67,
+      "equilibrium": 699.5820872139292,
+      "frequency_hz": 10694.198186630589,
+      "midi_number": 124.23817181258705,
+      "note": "E",
+      "octave": 9,
+      "cents_deviation": 23.81718125870549,
+      "note_full": "E9"
+    },
+    {
+      "prime": 71,
+      "equilibrium": 936.1215200531195,
+      "frequency_hz": 14310.07060527637,
+      "midi_number": 129.28060147563076,
+      "note": "A",
+      "octave": 9,
+      "cents_deviation": 28.060147563076043,
+      "note_full": "A9"
+    },
+    {
+      "prime": 73,
+      "equilibrium": 1080.5230814521833,
+      "frequency_hz": 16517.47263040608,
+      "midi_number": 131.7641474422067,
+      "note": "C",
+      "octave": 10,
+      "cents_deviation": -23.585255779329373,
+      "note_full": "C10"
+    },
+    {
+      "prime": 79,
+      "equilibrium": 1648.0884231559721,
+      "frequency_hz": 25193.5899281135,
+      "midi_number": 139.07291253257546,
+      "note": "G",
+      "octave": 10,
+      "cents_deviation": 7.2912532575458044,
+      "note_full": "G10"
+    },
+    {
+      "prime": 83,
+      "equilibrium": 2169.7661807745885,
+      "frequency_hz": 33168.244270320094,
+      "midi_number": 143.83386374967182,
+      "note": "C",
+      "octave": 11,
+      "cents_deviation": -16.613625032817936,
+      "note_full": "C11"
+    },
+    {
+      "prime": 89,
+      "equilibrium": 3248.369167244406,
+      "frequency_hz": 49656.36526829609,
+      "midi_number": 150.81997595335406,
+      "note": "G",
+      "octave": 11,
+      "cents_deviation": -18.002404664593996,
+      "note_full": "G11"
+    },
+    {
+      "prime": 97,
+      "equilibrium": 5477.933391258235,
+      "frequency_hz": 83738.71545593592,
+      "midi_number": 159.86696944158882,
+      "note": "E",
+      "octave": 12,
+      "cents_deviation": -13.303055841117839,
+      "note_full": "E12"
+    },
+    {
+      "prime": 101,
+      "equilibrium": 7070.079016527406,
+      "frequency_hz": 108077.13287656191,
+      "midi_number": 164.2841048240529,
+      "note": "G#",
+      "octave": 12,
+      "cents_deviation": 28.410482405288917,
+      "note_full": "G#12"
+    },
+    {
+      "prime": 103,
+      "equilibrium": 8020.436366288925,
+      "frequency_hz": 122604.82023766325,
+      "midi_number": 166.46755753145354,
+      "note": "A#",
+      "octave": 12,
+      "cents_deviation": 46.75575314535365,
+      "note_full": "A#12"
+    },
+    {
+      "prime": 107,
+      "equilibrium": 10292.804071273617,
+      "frequency_hz": 157341.48807715013,
+      "midi_number": 170.78615872998358,
+      "note": "D#",
+      "octave": 13,
+      "cents_deviation": -21.384127001641673,
+      "note_full": "D#13"
+    },
+    {
+      "prime": 109,
+      "equilibrium": 11644.314236214113,
+      "frequency_hz": 178001.41894055958,
+      "midi_number": 172.92203403133686,
+      "note": "F",
+      "octave": 13,
+      "cents_deviation": -7.796596866313621,
+      "note_full": "F13"
+    },
+    {
+      "prime": 113,
+      "equilibrium": 14864.220090136605,
+      "frequency_hz": 227222.678280222,
+      "midi_number": 177.1486511178756,
+      "note": "A",
+      "octave": 13,
+      "cents_deviation": 14.865111787560181,
+      "note_full": "A13"
+    },
+    {
+      "prime": 127,
+      "equilibrium": 34053.73369180937,
+      "frequency_hz": 520564.1821752147,
+      "midi_number": 191.50028172373118,
+      "note": "C",
+      "octave": 15,
+      "cents_deviation": -49.97182762688226,
+      "note_full": "C15"
+    },
+    {
+      "prime": 131,
+      "equilibrium": 42864.09145135202,
+      "frequency_hz": 655244.17712891,
+      "midi_number": 195.48376066700507,
+      "note": "D#",
+      "octave": 15,
+      "cents_deviation": 48.37606670050718,
+      "note_full": "D#15"
+    },
+    {
+      "prime": 137,
+      "equilibrium": 60218.099198768854,
+      "frequency_hz": 920527.1247273762,
+      "midi_number": 201.36889193172456,
+      "note": "A",
+      "octave": 15,
+      "cents_deviation": 36.8891931724562,
+      "note_full": "A15"
+    },
+    {
+      "prime": 139,
+      "equilibrium": 67353.13085907213,
+      "frequency_hz": 1029597.1595921109,
+      "midi_number": 203.30746601318265,
+      "note": "B",
+      "octave": 15,
+      "cents_deviation": 30.746601318264766,
+      "note_full": "B15"
+    },
+    {
+      "prime": 149,
+      "equilibrium": 116785.3910695162,
+      "frequency_hz": 1785245.992181398,
+      "midi_number": 212.83598082282145,
+      "note": "A",
+      "octave": 16,
+      "cents_deviation": -16.40191771785453,
+      "note_full": "A16"
+    },
+    {
+      "prime": 151,
+      "equilibrium": 130137.73445130457,
+      "frequency_hz": 1989357.288040128,
+      "midi_number": 214.7101351546517,
+      "note": "B",
+      "octave": 16,
+      "cents_deviation": -28.98648453482906,
+      "note_full": "B16"
+    },
+    {
+      "prime": 157,
+      "equilibrium": 179450.17169516653,
+      "frequency_hz": 2743174.4405801985,
+      "midi_number": 220.27266267592927,
+      "note": "E",
+      "octave": 17,
+      "cents_deviation": 27.26626759292685,
+      "note_full": "E17"
+    },
+    {
+      "prime": 163,
+      "equilibrium": 246214.8220858891,
+      "frequency_hz": 3763775.762696604,
+      "midi_number": 225.74867440676687,
+      "note": "A#",
+      "octave": 17,
+      "cents_deviation": -25.13255932331333,
+      "note_full": "A#17"
+    },
+    {
+      "prime": 167,
+      "equilibrium": 303207.1230255992,
+      "frequency_hz": 4634991.553524842,
+      "midi_number": 229.35330678706876,
+      "note": "C#",
+      "octave": 18,
+      "cents_deviation": 35.33067870687603,
+      "note_full": "C#18"
+    },
+    {
+      "prime": 173,
+      "equilibrium": 412776.9112518077,
+      "frequency_hz": 6309935.855236067,
+      "midi_number": 234.69401034133716,
+      "note": "G",
+      "octave": 18,
+      "cents_deviation": -30.598965866283834,
+      "note_full": "G18"
+    },
+    {
+      "prime": 179,
+      "equilibrium": 559469.2409374767,
+      "frequency_hz": 8552355.829659138,
+      "midi_number": 239.95836881921156,
+      "note": "C",
+      "octave": 19,
+      "cents_deviation": -4.163118078844263,
+      "note_full": "C19"
+    },
+    {
+      "prime": 181,
+      "equilibrium": 618565.0804533409,
+      "frequency_hz": 9455727.47301385,
+      "midi_number": 241.69676773766116,
+      "note": "D",
+      "octave": 19,
+      "cents_deviation": -30.323226233883815,
+      "note_full": "D19"
+    },
+    {
+      "prime": 191,
+      "equilibrium": 1015028.2495079458,
+      "frequency_hz": 15516282.454423836,
+      "midi_number": 250.27103873229794,
+      "note": "A#",
+      "octave": 19,
+      "cents_deviation": 27.103873229793862,
+      "note_full": "A#19"
+    },
+    {
+      "prime": 193,
+      "equilibrium": 1119244.7724107583,
+      "frequency_hz": 17109393.785622615,
+      "midi_number": 251.9631071319193,
+      "note": "C",
+      "octave": 20,
+      "cents_deviation": -3.6892868080713015,
+      "note_full": "C20"
+    },
+    {
+      "prime": 197,
+      "equilibrium": 1359151.922550198,
+      "frequency_hz": 20776746.991017584,
+      "midi_number": 255.3252808834177,
+      "note": "D#",
+      "octave": 20,
+      "cents_deviation": 32.528088341769035,
+      "note_full": "D#20"
+    },
+    {
+      "prime": 199,
+      "equilibrium": 1496817.615786927,
+      "frequency_hz": 22881180.81498322,
+      "midi_number": 256.9955814839682,
+      "note": "F",
+      "octave": 20,
+      "cents_deviation": -0.44185160318193084,
+      "note_full": "F20"
+    },
+    {
+      "prime": 211,
+      "equilibrium": 2648085.3234885377,
+      "frequency_hz": 40480094.876749344,
+      "midi_number": 266.87219546512785,
+      "note": "D#",
+      "octave": 21,
+      "cents_deviation": -12.780453487215482,
+      "note_full": "D#21"
+    },
+    {
+      "prime": 223,
+      "equilibrium": 4621517.808099962,
+      "frequency_hz": 70647073.8261629,
+      "midi_number": 276.5132010795119,
+      "note": "C#",
+      "octave": 22,
+      "cents_deviation": -48.67989204881269,
+      "note_full": "C#22"
+    },
+    {
+      "prime": 227,
+      "equilibrium": 5548332.270770354,
+      "frequency_hz": 84814871.61170255,
+      "midi_number": 279.6774504327812,
+      "note": "E",
+      "octave": 22,
+      "cents_deviation": -32.254956721880035,
+      "note_full": "E22"
+    },
+    {
+      "prime": 229,
+      "equilibrium": 6076131.27469452,
+      "frequency_hz": 92883098.70589516,
+      "midi_number": 281.2506366474306,
+      "note": "F",
+      "octave": 22,
+      "cents_deviation": 25.063664743061054,
+      "note_full": "F22"
+    },
+    {
+      "prime": 233,
+      "equilibrium": 7279754.018327389,
+      "frequency_hz": 111282340.7642611,
+      "midi_number": 284.3794766064169,
+      "note": "G#",
+      "octave": 22,
+      "cents_deviation": 37.94766064169153,
+      "note_full": "G#22"
+    },
+    {
+      "prime": 239,
+      "equilibrium": 9523058.008512108,
+      "frequency_hz": 145574724.60649982,
+      "midi_number": 289.02989922127546,
+      "note": "C#",
+      "octave": 23,
+      "cents_deviation": 2.9899221275456966,
+      "note_full": "C#23"
+    },
+    {
+      "prime": 241,
+      "equilibrium": 10408373.549792757,
+      "frequency_hz": 159108146.95849925,
+      "midi_number": 290.56887305705834,
+      "note": "D#",
+      "octave": 23,
+      "cents_deviation": -43.112694294165976,
+      "note_full": "D#23"
+    },
+    {
+      "prime": 251,
+      "equilibrium": 16157818.744719576,
+      "frequency_hz": 246997341.80993384,
+      "midi_number": 298.18272673387696,
+      "note": "A#",
+      "octave": 23,
+      "cents_deviation": 18.27267338769616,
+      "note_full": "A#23"
+    },
+    {
+      "prime": 257,
+      "equilibrium": 20960843.146999467,
+      "frequency_hz": 320419025.6866067,
+      "midi_number": 302.68829831418725,
+      "note": "D#",
+      "octave": 24,
+      "cents_deviation": -31.170168581274993,
+      "note_full": "D#24"
+    },
+    {
+      "prime": 263,
+      "equilibrium": 27120610.83793128,
+      "frequency_hz": 414580636.8461628,
+      "midi_number": 307.1486133833799,
+      "note": "G",
+      "octave": 24,
+      "cents_deviation": 14.861338337988172,
+      "note_full": "G24"
+    },
+    {
+      "prime": 269,
+      "equilibrium": 35001736.20542832,
+      "frequency_hz": 535055872.2103895,
+      "midi_number": 311.5650551482812,
+      "note": "C",
+      "octave": 25,
+      "cents_deviation": -43.49448517187966,
+      "note_full": "C25"
+    },
+    {
+      "prime": 271,
+      "equilibrium": 38087353.13395349,
+      "frequency_hz": 582224316.8643761,
+      "midi_number": 313.02768169332245,
+      "note": "C#",
+      "octave": 25,
+      "cents_deviation": 2.768169332244952,
+      "note_full": "C#25"
+    },
+    {
+      "prime": 277,
+      "equilibrium": 48995299.06483162,
+      "frequency_hz": 748969203.1698909,
+      "midi_number": 317.38765732040446,
+      "note": "F",
+      "octave": 25,
+      "cents_deviation": 38.765732040445755,
+      "note_full": "F25"
+    },
+    {
+      "prime": 281,
+      "equilibrium": 57875957.233763136,
+      "frequency_hz": 884723849.0106609,
+      "midi_number": 320.2715071098022,
+      "note": "G#",
+      "octave": 25,
+      "cents_deviation": 27.150710980220083,
+      "note_full": "G#25"
+    },
+    {
+      "prime": 283,
+      "equilibrium": 62878444.897981435,
+      "frequency_hz": 961194638.4792393,
+      "midi_number": 321.7067237609513,
+      "note": "A#",
+      "octave": 25,
+      "cents_deviation": -29.327623904868005,
+      "note_full": "A#25"
+    },
+    {
+      "prime": 293,
+      "equilibrium": 94815471.20596454,
+      "frequency_hz": 1449401662.4603503,
+      "midi_number": 328.81740713598856,
+      "note": "F",
+      "octave": 26,
+      "cents_deviation": -18.25928640114398,
+      "note_full": "F26"
+    },
+    {
+      "prime": 307,
+      "equilibrium": 166799564.3206755,
+      "frequency_hz": 2549790268.920172,
+      "midi_number": 338.5964606955718,
+      "note": "D#",
+      "octave": 27,
+      "cents_deviation": -40.35393044281932,
+      "note_full": "D#27"
+    },
+    {
+      "prime": 311,
+      "equilibrium": 195604551.89585045,
+      "frequency_hz": 2990119218.9067855,
+      "midi_number": 341.35435377191766,
+      "note": "F",
+      "octave": 27,
+      "cents_deviation": 35.43537719176584,
+      "note_full": "F27"
+    },
+    {
+      "prime": 313,
+      "equilibrium": 211750470.55339482,
+      "frequency_hz": 3236934649.411362,
+      "midi_number": 342.7274565561752,
+      "note": "G",
+      "octave": 27,
+      "cents_deviation": -27.254344382481577,
+      "note_full": "G27"
+    },
+    {
+      "prime": 317,
+      "equilibrium": 247985497.31708333,
+      "frequency_hz": 3790843282.2809896,
+      "midi_number": 345.46214346683524,
+      "note": "A",
+      "octave": 27,
+      "cents_deviation": 46.214346683524354,
+      "note_full": "A27"
+    },
+    {
+      "prime": 331,
+      "equilibrium": 428138290.08804417,
+      "frequency_hz": 6544758376.70579,
+      "midi_number": 354.91599685606894,
+      "note": "G",
+      "octave": 28,
+      "cents_deviation": -8.400314393105646,
+      "note_full": "G28"
+    },
+    {
+      "prime": 337,
+      "equilibrium": 539343398.9254267,
+      "frequency_hz": 8244701092.519102,
+      "midi_number": 358.9135239706943,
+      "note": "B",
+      "octave": 28,
+      "cents_deviation": -8.64760293056861,
+      "note_full": "B28"
+    },
+    {
+      "prime": 347,
+      "equilibrium": 789338878.7097389,
+      "frequency_hz": 12066270076.971514,
+      "midi_number": 365.5068121769922,
+      "note": "F#",
+      "octave": 29,
+      "cents_deviation": -49.31878230078155,
+      "note_full": "F#29"
+    },
+    {
+      "prime": 349,
+      "equilibrium": 851311948.015132,
+      "frequency_hz": 13013624644.074661,
+      "midi_number": 366.8153289924254,
+      "note": "G",
+      "octave": 29,
+      "cents_deviation": -18.46710075745932,
+      "note_full": "G29"
+    },
+    {
+      "prime": 353,
+      "equilibrium": 989669369.1651502,
+      "frequency_hz": 15128632602.986204,
+      "midi_number": 369.422433974745,
+      "note": "A",
+      "octave": 29,
+      "cents_deviation": 42.243397474499034,
+      "note_full": "A29"
+    },
+    {
+      "prime": 359,
+      "equilibrium": 1238737200.5130472,
+      "frequency_hz": 18936021041.069786,
+      "midi_number": 373.3086533953108,
+      "note": "C#",
+      "octave": 30,
+      "cents_deviation": 30.86533953107846,
+      "note_full": "C#30"
+    },
+    {
+      "prime": 367,
+      "equilibrium": 1666657282.0537763,
+      "frequency_hz": 25477443761.397778,
+      "midi_number": 378.4457012364373,
+      "note": "F#",
+      "octave": 30,
+      "cents_deviation": 44.57012364372872,
+      "note_full": "F#30"
+    },
+    {
+      "prime": 373,
+      "equilibrium": 2078159375.6606395,
+      "frequency_hz": 31767892049.990826,
+      "midi_number": 382.2658871871769,
+      "note": "A#",
+      "octave": 30,
+      "cents_deviation": 26.588718717687243,
+      "note_full": "A#30"
+    },
+    {
+      "prime": 379,
+      "equilibrium": 2587185868.9012733,
+      "frequency_hz": 39549152177.21914,
+      "midi_number": 386.05881603656985,
+      "note": "D",
+      "octave": 31,
+      "cents_deviation": 5.881603656985135,
+      "note_full": "D31"
+    },
+    {
+      "prime": 383,
+      "equilibrium": 2991490605.365721,
+      "frequency_hz": 45729577689.20353,
+      "midi_number": 388.5725859759016,
+      "note": "F",
+      "octave": 31,
+      "cents_deviation": -42.74140240984252,
+      "note_full": "F31"
+    },
+    {
+      "prime": 389,
+      "equilibrium": 3714749908.942398,
+      "frequency_hz": 56785718882.836136,
+      "midi_number": 392.3213926244395,
+      "note": "G#",
+      "octave": 31,
+      "cents_deviation": 32.13926244395111,
+      "note_full": "G#31"
+    },
+    {
+      "prime": 397,
+      "equilibrium": 4946720481.021481,
+      "frequency_hz": 75618301504.23984,
+      "midi_number": 397.2798801604009,
+      "note": "C#",
+      "octave": 32,
+      "cents_deviation": 27.988016040092134,
+      "note_full": "C#32"
+    },
+    {
+      "prime": 401,
+      "equilibrium": 5702838042.382392,
+      "frequency_hz": 87176732175.02504,
+      "midi_number": 399.7423723265433,
+      "note": "E",
+      "octave": 32,
+      "cents_deviation": -25.76276734566818,
+      "note_full": "E32"
+    },
+    {
+      "prime": 409,
+      "equilibrium": 7565142282.890414,
+      "frequency_hz": 115644943405.40373,
+      "midi_number": 404.6346181860753,
+      "note": "A",
+      "octave": 32,
+      "cents_deviation": -36.53818139247278,
+      "note_full": "A32"
+    },
+    {
+      "prime": 419,
+      "equilibrium": 10733038409.72232,
+      "frequency_hz": 164071153330.1299,
+      "midi_number": 410.6900512746965,
+      "note": "D#",
+      "octave": 33,
+      "cents_deviation": -30.99487253035136,
+      "note_full": "D#33"
+    },
+    {
+      "prime": 421,
+      "equilibrium": 11505565586.250027,
+      "frequency_hz": 175880430441.90805,
+      "midi_number": 411.89333158429486,
+      "note": "E",
+      "octave": 33,
+      "cents_deviation": -10.666841570514407,
+      "note_full": "E33"
+    },
+    {
+      "prime": 431,
+      "equilibrium": 16250947329.132029,
+      "frequency_hz": 248420956789.14725,
+      "midi_number": 417.8716345759936,
+      "note": "A#",
+      "octave": 33,
+      "cents_deviation": -12.836542400640383,
+      "note_full": "A#33"
+    },
+    {
+      "prime": 433,
+      "equilibrium": 17405422081.103,
+      "frequency_hz": 266068895500.96756,
+      "midi_number": 419.0597903248399,
+      "note": "B",
+      "octave": 33,
+      "cents_deviation": 5.979032483992341,
+      "note_full": "B33"
+    },
+    {
+      "prime": 439,
+      "equilibrium": 21366474493.138657,
+      "frequency_hz": 326619730486.808,
+      "midi_number": 422.60953529131746,
+      "note": "D#",
+      "octave": 34,
+      "cents_deviation": -39.046470868254346,
+      "note_full": "D#34"
+    },
+    {
+      "prime": 443,
+      "equilibrium": 24479048305.256527,
+      "frequency_hz": 374200252952.5382,
+      "midi_number": 424.9639183686103,
+      "note": "F",
+      "octave": 34,
+      "cents_deviation": -3.6081631389720314,
+      "note_full": "F34"
+    },
+    {
+      "prime": 449,
+      "equilibrium": 29987398738.047184,
+      "frequency_hz": 458403940105.6399,
+      "midi_number": 428.4776252968543,
+      "note": "G#",
+      "octave": 34,
+      "cents_deviation": 47.76252968542849,
+      "note_full": "G#34"
+    },
+    {
+      "prime": 457,
+      "equilibrium": 39232252317.55504,
+      "frequency_hz": 599725878149.2098,
+      "midi_number": 433.1298306794425,
+      "note": "C#",
+      "octave": 35,
+      "cents_deviation": 12.98306794424775,
+      "note_full": "C#35"
+    },
+    {
+      "prime": 461,
+      "equilibrium": 44838382689.19953,
+      "frequency_hz": 685424283454.6073,
+      "midi_number": 435.44215962372505,
+      "note": "D#",
+      "octave": 35,
+      "cents_deviation": 44.21596237250469,
+      "note_full": "D#35"
+    },
+    {
+      "prime": 463,
+      "equilibrium": 47925662581.787636,
+      "frequency_hz": 732618149095.7677,
+      "midi_number": 436.5949292580494,
+      "note": "F",
+      "octave": 35,
+      "cents_deviation": -40.50707419506239,
+      "note_full": "F35"
+    },
+    {
+      "prime": 467,
+      "equilibrium": 54731314159.61016,
+      "frequency_hz": 836653098092.5865,
+      "midi_number": 438.89374669918294,
+      "note": "G",
+      "octave": 35,
+      "cents_deviation": -10.625330081705897,
+      "note_full": "G35"
+    },
+    {
+      "prime": 479,
+      "equilibrium": 81266954983.2257,
+      "frequency_hz": 1242291560202.3403,
+      "midi_number": 445.737374788957,
+      "note": "D",
+      "octave": 36,
+      "cents_deviation": -26.26252110429732,
+      "note_full": "D36"
+    },
+    {
+      "prime": 487,
+      "equilibrium": 105508494838.62059,
+      "frequency_hz": 1612861127806.8088,
+      "midi_number": 450.256795783001,
+      "note": "F#",
+      "octave": 36,
+      "cents_deviation": 25.679578300099593,
+      "note_full": "F#36"
+    },
+    {
+      "prime": 491,
+      "equilibrium": 120131802006.41957,
+      "frequency_hz": 1836401078092.2942,
+      "midi_number": 452.5039033109632,
+      "note": "A",
+      "octave": 36,
+      "cents_deviation": -49.609668903678994,
+      "note_full": "A36"
+    },
+    {
+      "prime": 499,
+      "equilibrium": 155517306516.73166,
+      "frequency_hz": 2377323444578.6006,
+      "midi_number": 456.9733875158313,
+      "note": "C#",
+      "octave": 37,
+      "cents_deviation": -2.661248416870876,
+      "note_full": "C#37"
+    },
+    {
+      "prime": 503,
+      "equilibrium": 176820872108.16525,
+      "frequency_hz": 2702981514847.354,
+      "midi_number": 459.19594884870924,
+      "note": "D#",
+      "octave": 37,
+      "cents_deviation": 19.59488487092358,
+      "note_full": "D#37"
+    },
+    {
+      "prime": 509,
+      "equilibrium": 214185527812.39496,
+      "frequency_hz": 3274158279632.154,
+      "midi_number": 462.51481789806417,
+      "note": "G",
+      "octave": 37,
+      "cents_deviation": -48.5182101935834,
+      "note_full": "G37"
+    },
+    {
+      "prime": 521,
+      "equilibrium": 313312764273.8837,
+      "frequency_hz": 4789471967313.789,
+      "midi_number": 469.09972841653877,
+      "note": "C#",
+      "octave": 38,
+      "cents_deviation": 9.972841653876685,
+      "note_full": "C#38"
+    },
+    {
+      "prime": 523,
+      "equilibrium": 333688099901.2557,
+      "frequency_hz": 5100940601660.91,
+      "midi_number": 470.1904887164468,
+      "note": "D",
+      "octave": 38,
+      "cents_deviation": 19.048871644679366,
+      "note_full": "D38"
+    },
+    {
+      "prime": 541,
+      "equilibrium": 585458822248.8,
+      "frequency_hz": 8949646924457.926,
+      "midi_number": 479.9232983084901,
+      "note": "C",
+      "octave": 39,
+      "cents_deviation": -7.6701691509924785,
+      "note_full": "C39"
+    }
+  ],
+  "by_octave": {
+    "1": [
+      {
+        "prime": 2,
+        "equilibrium": 3.2599788193945223,
+        "frequency_hz": 49.833836823443576,
+        "midi_number": 31.292328433437945,
+        "note": "G",
+        "octave": 1,
+        "cents_deviation": 29.232843343794457,
+        "note_full": "G1"
+      },
+      {
+        "prime": 3,
+        "equilibrium": 2.9234973241672053,
+        "frequency_hz": 44.69019483794725,
+        "midi_number": 29.406320590738254,
+        "note": "F",
+        "octave": 1,
+        "cents_deviation": 40.63205907382539,
+        "note_full": "F1"
+      },
+      {
+        "prime": 5,
+        "equilibrium": 2.9989148209195915,
+        "frequency_hz": 45.843068348790815,
+        "midi_number": 29.847263886495014,
+        "note": "F#",
+        "octave": 1,
+        "cents_deviation": -15.273611350498584,
+        "note_full": "F#1"
+      },
+      {
+        "prime": 7,
+        "equilibrium": 3.4455075306134337,
+        "frequency_hz": 52.66993117655481,
+        "midi_number": 32.250575468350654,
+        "note": "G#",
+        "octave": 1,
+        "cents_deviation": 25.05754683506538,
+        "note_full": "G#1"
+      }
+    ],
+    "2": [
+      {
+        "prime": 11,
+        "equilibrium": 5.01733606670964,
+        "frequency_hz": 76.69777035030712,
+        "midi_number": 38.75703623639574,
+        "note": "D#",
+        "octave": 2,
+        "cents_deviation": -24.296376360425853,
+        "note_full": "D#2"
+      },
+      {
+        "prime": 13,
+        "equilibrium": 6.14822033413284,
+        "frequency_hz": 93.98509188555391,
+        "midi_number": 42.27600375547382,
+        "note": "F#",
+        "octave": 2,
+        "cents_deviation": 27.600375547382328,
+        "note_full": "F#2"
+      }
+    ],
+    "3": [
+      {
+        "prime": 17,
+        "equilibrium": 9.26959005300666,
+        "frequency_hz": 141.70007344021514,
+        "midi_number": 49.38404378670202,
+        "note": "C#",
+        "octave": 3,
+        "cents_deviation": 38.40437867020228,
+        "note_full": "C#3"
+      },
+      {
+        "prime": 19,
+        "equilibrium": 11.362108240600051,
+        "frequency_hz": 173.68746222023935,
+        "midi_number": 52.90788110240431,
+        "note": "F",
+        "octave": 3,
+        "cents_deviation": -9.211889759568948,
+        "note_full": "F3"
+      }
+    ],
+    "4": [
+      {
+        "prime": 23,
+        "equilibrium": 16.946023708771982,
+        "frequency_hz": 259.04627824115613,
+        "midi_number": 59.82847599070993,
+        "note": "C",
+        "octave": 4,
+        "cents_deviation": -17.152400929006717,
+        "note_full": "C4"
+      },
+      {
+        "prime": 29,
+        "equilibrium": 30.20638582696936,
+        "frequency_hz": 461.7514977004514,
+        "midi_number": 69.8353574025158,
+        "note": "A#",
+        "octave": 4,
+        "cents_deviation": -16.464259748420318,
+        "note_full": "A#4"
+      }
+    ],
+    "5": [
+      {
+        "prime": 31,
+        "equilibrium": 36.40998327608491,
+        "frequency_hz": 556.5831147521762,
+        "midi_number": 73.06912341674666,
+        "note": "C#",
+        "octave": 5,
+        "cents_deviation": 6.912341674666322,
+        "note_full": "C#5"
+      },
+      {
+        "prime": 37,
+        "equilibrium": 62.70267877382639,
+        "frequency_hz": 958.5077804241745,
+        "midi_number": 82.47943942647075,
+        "note": "A#",
+        "octave": 5,
+        "cents_deviation": 47.94394264707478,
+        "note_full": "A#5"
+      }
+    ],
+    "6": [
+      {
+        "prime": 41,
+        "equilibrium": 88.9118946906326,
+        "frequency_hz": 1359.1563311135633,
+        "midi_number": 88.5256317189746,
+        "note": "F",
+        "octave": 6,
+        "cents_deviation": -47.436828102540574,
+        "note_full": "F6"
+      },
+      {
+        "prime": 43,
+        "equilibrium": 105.48831343122599,
+        "frequency_hz": 1612.5526236665407,
+        "midi_number": 91.48524975618373,
+        "note": "G",
+        "octave": 6,
+        "cents_deviation": 48.52497561837339,
+        "note_full": "G6"
+      }
+    ],
+    "7": [
+      {
+        "prime": 47,
+        "equilibrium": 147.46865747706553,
+        "frequency_hz": 2254.2873498329345,
+        "midi_number": 97.28515195240448,
+        "note": "C#",
+        "octave": 7,
+        "cents_deviation": 28.51519524044761,
+        "note_full": "C#7"
+      },
+      {
+        "prime": 53,
+        "equilibrium": 239.8783698090168,
+        "frequency_hz": 3666.913253367834,
+        "midi_number": 105.70788850029481,
+        "note": "A#",
+        "octave": 7,
+        "cents_deviation": -29.21114997051859,
+        "note_full": "A#7"
+      }
+    ],
+    "8": [
+      {
+        "prime": 59,
+        "equilibrium": 383.45004841394046,
+        "frequency_hz": 5861.629231735603,
+        "midi_number": 113.8287154393679,
+        "note": "F#",
+        "octave": 8,
+        "cents_deviation": -17.12845606321025,
+        "note_full": "F#8"
+      },
+      {
+        "prime": 61,
+        "equilibrium": 446.75069334121457,
+        "frequency_hz": 6829.2778530571395,
+        "midi_number": 116.47389123730689,
+        "note": "G#",
+        "octave": 8,
+        "cents_deviation": 47.38912373068871,
+        "note_full": "G#8"
+      }
+    ],
+    "9": [
+      {
+        "prime": 67,
+        "equilibrium": 699.5820872139292,
+        "frequency_hz": 10694.198186630589,
+        "midi_number": 124.23817181258705,
+        "note": "E",
+        "octave": 9,
+        "cents_deviation": 23.81718125870549,
+        "note_full": "E9"
+      },
+      {
+        "prime": 71,
+        "equilibrium": 936.1215200531195,
+        "frequency_hz": 14310.07060527637,
+        "midi_number": 129.28060147563076,
+        "note": "A",
+        "octave": 9,
+        "cents_deviation": 28.060147563076043,
+        "note_full": "A9"
+      }
+    ],
+    "10": [
+      {
+        "prime": 73,
+        "equilibrium": 1080.5230814521833,
+        "frequency_hz": 16517.47263040608,
+        "midi_number": 131.7641474422067,
+        "note": "C",
+        "octave": 10,
+        "cents_deviation": -23.585255779329373,
+        "note_full": "C10"
+      },
+      {
+        "prime": 79,
+        "equilibrium": 1648.0884231559721,
+        "frequency_hz": 25193.5899281135,
+        "midi_number": 139.07291253257546,
+        "note": "G",
+        "octave": 10,
+        "cents_deviation": 7.2912532575458044,
+        "note_full": "G10"
+      }
+    ],
+    "11": [
+      {
+        "prime": 83,
+        "equilibrium": 2169.7661807745885,
+        "frequency_hz": 33168.244270320094,
+        "midi_number": 143.83386374967182,
+        "note": "C",
+        "octave": 11,
+        "cents_deviation": -16.613625032817936,
+        "note_full": "C11"
+      },
+      {
+        "prime": 89,
+        "equilibrium": 3248.369167244406,
+        "frequency_hz": 49656.36526829609,
+        "midi_number": 150.81997595335406,
+        "note": "G",
+        "octave": 11,
+        "cents_deviation": -18.002404664593996,
+        "note_full": "G11"
+      }
+    ],
+    "12": [
+      {
+        "prime": 97,
+        "equilibrium": 5477.933391258235,
+        "frequency_hz": 83738.71545593592,
+        "midi_number": 159.86696944158882,
+        "note": "E",
+        "octave": 12,
+        "cents_deviation": -13.303055841117839,
+        "note_full": "E12"
+      },
+      {
+        "prime": 101,
+        "equilibrium": 7070.079016527406,
+        "frequency_hz": 108077.13287656191,
+        "midi_number": 164.2841048240529,
+        "note": "G#",
+        "octave": 12,
+        "cents_deviation": 28.410482405288917,
+        "note_full": "G#12"
+      },
+      {
+        "prime": 103,
+        "equilibrium": 8020.436366288925,
+        "frequency_hz": 122604.82023766325,
+        "midi_number": 166.46755753145354,
+        "note": "A#",
+        "octave": 12,
+        "cents_deviation": 46.75575314535365,
+        "note_full": "A#12"
+      }
+    ],
+    "13": [
+      {
+        "prime": 107,
+        "equilibrium": 10292.804071273617,
+        "frequency_hz": 157341.48807715013,
+        "midi_number": 170.78615872998358,
+        "note": "D#",
+        "octave": 13,
+        "cents_deviation": -21.384127001641673,
+        "note_full": "D#13"
+      },
+      {
+        "prime": 109,
+        "equilibrium": 11644.314236214113,
+        "frequency_hz": 178001.41894055958,
+        "midi_number": 172.92203403133686,
+        "note": "F",
+        "octave": 13,
+        "cents_deviation": -7.796596866313621,
+        "note_full": "F13"
+      },
+      {
+        "prime": 113,
+        "equilibrium": 14864.220090136605,
+        "frequency_hz": 227222.678280222,
+        "midi_number": 177.1486511178756,
+        "note": "A",
+        "octave": 13,
+        "cents_deviation": 14.865111787560181,
+        "note_full": "A13"
+      }
+    ],
+    "15": [
+      {
+        "prime": 127,
+        "equilibrium": 34053.73369180937,
+        "frequency_hz": 520564.1821752147,
+        "midi_number": 191.50028172373118,
+        "note": "C",
+        "octave": 15,
+        "cents_deviation": -49.97182762688226,
+        "note_full": "C15"
+      },
+      {
+        "prime": 131,
+        "equilibrium": 42864.09145135202,
+        "frequency_hz": 655244.17712891,
+        "midi_number": 195.48376066700507,
+        "note": "D#",
+        "octave": 15,
+        "cents_deviation": 48.37606670050718,
+        "note_full": "D#15"
+      },
+      {
+        "prime": 137,
+        "equilibrium": 60218.099198768854,
+        "frequency_hz": 920527.1247273762,
+        "midi_number": 201.36889193172456,
+        "note": "A",
+        "octave": 15,
+        "cents_deviation": 36.8891931724562,
+        "note_full": "A15"
+      },
+      {
+        "prime": 139,
+        "equilibrium": 67353.13085907213,
+        "frequency_hz": 1029597.1595921109,
+        "midi_number": 203.30746601318265,
+        "note": "B",
+        "octave": 15,
+        "cents_deviation": 30.746601318264766,
+        "note_full": "B15"
+      }
+    ],
+    "16": [
+      {
+        "prime": 149,
+        "equilibrium": 116785.3910695162,
+        "frequency_hz": 1785245.992181398,
+        "midi_number": 212.83598082282145,
+        "note": "A",
+        "octave": 16,
+        "cents_deviation": -16.40191771785453,
+        "note_full": "A16"
+      },
+      {
+        "prime": 151,
+        "equilibrium": 130137.73445130457,
+        "frequency_hz": 1989357.288040128,
+        "midi_number": 214.7101351546517,
+        "note": "B",
+        "octave": 16,
+        "cents_deviation": -28.98648453482906,
+        "note_full": "B16"
+      }
+    ],
+    "17": [
+      {
+        "prime": 157,
+        "equilibrium": 179450.17169516653,
+        "frequency_hz": 2743174.4405801985,
+        "midi_number": 220.27266267592927,
+        "note": "E",
+        "octave": 17,
+        "cents_deviation": 27.26626759292685,
+        "note_full": "E17"
+      },
+      {
+        "prime": 163,
+        "equilibrium": 246214.8220858891,
+        "frequency_hz": 3763775.762696604,
+        "midi_number": 225.74867440676687,
+        "note": "A#",
+        "octave": 17,
+        "cents_deviation": -25.13255932331333,
+        "note_full": "A#17"
+      }
+    ],
+    "18": [
+      {
+        "prime": 167,
+        "equilibrium": 303207.1230255992,
+        "frequency_hz": 4634991.553524842,
+        "midi_number": 229.35330678706876,
+        "note": "C#",
+        "octave": 18,
+        "cents_deviation": 35.33067870687603,
+        "note_full": "C#18"
+      },
+      {
+        "prime": 173,
+        "equilibrium": 412776.9112518077,
+        "frequency_hz": 6309935.855236067,
+        "midi_number": 234.69401034133716,
+        "note": "G",
+        "octave": 18,
+        "cents_deviation": -30.598965866283834,
+        "note_full": "G18"
+      }
+    ],
+    "19": [
+      {
+        "prime": 179,
+        "equilibrium": 559469.2409374767,
+        "frequency_hz": 8552355.829659138,
+        "midi_number": 239.95836881921156,
+        "note": "C",
+        "octave": 19,
+        "cents_deviation": -4.163118078844263,
+        "note_full": "C19"
+      },
+      {
+        "prime": 181,
+        "equilibrium": 618565.0804533409,
+        "frequency_hz": 9455727.47301385,
+        "midi_number": 241.69676773766116,
+        "note": "D",
+        "octave": 19,
+        "cents_deviation": -30.323226233883815,
+        "note_full": "D19"
+      },
+      {
+        "prime": 191,
+        "equilibrium": 1015028.2495079458,
+        "frequency_hz": 15516282.454423836,
+        "midi_number": 250.27103873229794,
+        "note": "A#",
+        "octave": 19,
+        "cents_deviation": 27.103873229793862,
+        "note_full": "A#19"
+      }
+    ],
+    "20": [
+      {
+        "prime": 193,
+        "equilibrium": 1119244.7724107583,
+        "frequency_hz": 17109393.785622615,
+        "midi_number": 251.9631071319193,
+        "note": "C",
+        "octave": 20,
+        "cents_deviation": -3.6892868080713015,
+        "note_full": "C20"
+      },
+      {
+        "prime": 197,
+        "equilibrium": 1359151.922550198,
+        "frequency_hz": 20776746.991017584,
+        "midi_number": 255.3252808834177,
+        "note": "D#",
+        "octave": 20,
+        "cents_deviation": 32.528088341769035,
+        "note_full": "D#20"
+      },
+      {
+        "prime": 199,
+        "equilibrium": 1496817.615786927,
+        "frequency_hz": 22881180.81498322,
+        "midi_number": 256.9955814839682,
+        "note": "F",
+        "octave": 20,
+        "cents_deviation": -0.44185160318193084,
+        "note_full": "F20"
+      }
+    ],
+    "21": [
+      {
+        "prime": 211,
+        "equilibrium": 2648085.3234885377,
+        "frequency_hz": 40480094.876749344,
+        "midi_number": 266.87219546512785,
+        "note": "D#",
+        "octave": 21,
+        "cents_deviation": -12.780453487215482,
+        "note_full": "D#21"
+      }
+    ],
+    "22": [
+      {
+        "prime": 223,
+        "equilibrium": 4621517.808099962,
+        "frequency_hz": 70647073.8261629,
+        "midi_number": 276.5132010795119,
+        "note": "C#",
+        "octave": 22,
+        "cents_deviation": -48.67989204881269,
+        "note_full": "C#22"
+      },
+      {
+        "prime": 227,
+        "equilibrium": 5548332.270770354,
+        "frequency_hz": 84814871.61170255,
+        "midi_number": 279.6774504327812,
+        "note": "E",
+        "octave": 22,
+        "cents_deviation": -32.254956721880035,
+        "note_full": "E22"
+      },
+      {
+        "prime": 229,
+        "equilibrium": 6076131.27469452,
+        "frequency_hz": 92883098.70589516,
+        "midi_number": 281.2506366474306,
+        "note": "F",
+        "octave": 22,
+        "cents_deviation": 25.063664743061054,
+        "note_full": "F22"
+      },
+      {
+        "prime": 233,
+        "equilibrium": 7279754.018327389,
+        "frequency_hz": 111282340.7642611,
+        "midi_number": 284.3794766064169,
+        "note": "G#",
+        "octave": 22,
+        "cents_deviation": 37.94766064169153,
+        "note_full": "G#22"
+      }
+    ],
+    "23": [
+      {
+        "prime": 239,
+        "equilibrium": 9523058.008512108,
+        "frequency_hz": 145574724.60649982,
+        "midi_number": 289.02989922127546,
+        "note": "C#",
+        "octave": 23,
+        "cents_deviation": 2.9899221275456966,
+        "note_full": "C#23"
+      },
+      {
+        "prime": 241,
+        "equilibrium": 10408373.549792757,
+        "frequency_hz": 159108146.95849925,
+        "midi_number": 290.56887305705834,
+        "note": "D#",
+        "octave": 23,
+        "cents_deviation": -43.112694294165976,
+        "note_full": "D#23"
+      },
+      {
+        "prime": 251,
+        "equilibrium": 16157818.744719576,
+        "frequency_hz": 246997341.80993384,
+        "midi_number": 298.18272673387696,
+        "note": "A#",
+        "octave": 23,
+        "cents_deviation": 18.27267338769616,
+        "note_full": "A#23"
+      }
+    ],
+    "24": [
+      {
+        "prime": 257,
+        "equilibrium": 20960843.146999467,
+        "frequency_hz": 320419025.6866067,
+        "midi_number": 302.68829831418725,
+        "note": "D#",
+        "octave": 24,
+        "cents_deviation": -31.170168581274993,
+        "note_full": "D#24"
+      },
+      {
+        "prime": 263,
+        "equilibrium": 27120610.83793128,
+        "frequency_hz": 414580636.8461628,
+        "midi_number": 307.1486133833799,
+        "note": "G",
+        "octave": 24,
+        "cents_deviation": 14.861338337988172,
+        "note_full": "G24"
+      }
+    ],
+    "25": [
+      {
+        "prime": 269,
+        "equilibrium": 35001736.20542832,
+        "frequency_hz": 535055872.2103895,
+        "midi_number": 311.5650551482812,
+        "note": "C",
+        "octave": 25,
+        "cents_deviation": -43.49448517187966,
+        "note_full": "C25"
+      },
+      {
+        "prime": 271,
+        "equilibrium": 38087353.13395349,
+        "frequency_hz": 582224316.8643761,
+        "midi_number": 313.02768169332245,
+        "note": "C#",
+        "octave": 25,
+        "cents_deviation": 2.768169332244952,
+        "note_full": "C#25"
+      },
+      {
+        "prime": 277,
+        "equilibrium": 48995299.06483162,
+        "frequency_hz": 748969203.1698909,
+        "midi_number": 317.38765732040446,
+        "note": "F",
+        "octave": 25,
+        "cents_deviation": 38.765732040445755,
+        "note_full": "F25"
+      },
+      {
+        "prime": 281,
+        "equilibrium": 57875957.233763136,
+        "frequency_hz": 884723849.0106609,
+        "midi_number": 320.2715071098022,
+        "note": "G#",
+        "octave": 25,
+        "cents_deviation": 27.150710980220083,
+        "note_full": "G#25"
+      },
+      {
+        "prime": 283,
+        "equilibrium": 62878444.897981435,
+        "frequency_hz": 961194638.4792393,
+        "midi_number": 321.7067237609513,
+        "note": "A#",
+        "octave": 25,
+        "cents_deviation": -29.327623904868005,
+        "note_full": "A#25"
+      }
+    ],
+    "26": [
+      {
+        "prime": 293,
+        "equilibrium": 94815471.20596454,
+        "frequency_hz": 1449401662.4603503,
+        "midi_number": 328.81740713598856,
+        "note": "F",
+        "octave": 26,
+        "cents_deviation": -18.25928640114398,
+        "note_full": "F26"
+      }
+    ],
+    "27": [
+      {
+        "prime": 307,
+        "equilibrium": 166799564.3206755,
+        "frequency_hz": 2549790268.920172,
+        "midi_number": 338.5964606955718,
+        "note": "D#",
+        "octave": 27,
+        "cents_deviation": -40.35393044281932,
+        "note_full": "D#27"
+      },
+      {
+        "prime": 311,
+        "equilibrium": 195604551.89585045,
+        "frequency_hz": 2990119218.9067855,
+        "midi_number": 341.35435377191766,
+        "note": "F",
+        "octave": 27,
+        "cents_deviation": 35.43537719176584,
+        "note_full": "F27"
+      },
+      {
+        "prime": 313,
+        "equilibrium": 211750470.55339482,
+        "frequency_hz": 3236934649.411362,
+        "midi_number": 342.7274565561752,
+        "note": "G",
+        "octave": 27,
+        "cents_deviation": -27.254344382481577,
+        "note_full": "G27"
+      },
+      {
+        "prime": 317,
+        "equilibrium": 247985497.31708333,
+        "frequency_hz": 3790843282.2809896,
+        "midi_number": 345.46214346683524,
+        "note": "A",
+        "octave": 27,
+        "cents_deviation": 46.214346683524354,
+        "note_full": "A27"
+      }
+    ],
+    "28": [
+      {
+        "prime": 331,
+        "equilibrium": 428138290.08804417,
+        "frequency_hz": 6544758376.70579,
+        "midi_number": 354.91599685606894,
+        "note": "G",
+        "octave": 28,
+        "cents_deviation": -8.400314393105646,
+        "note_full": "G28"
+      },
+      {
+        "prime": 337,
+        "equilibrium": 539343398.9254267,
+        "frequency_hz": 8244701092.519102,
+        "midi_number": 358.9135239706943,
+        "note": "B",
+        "octave": 28,
+        "cents_deviation": -8.64760293056861,
+        "note_full": "B28"
+      }
+    ],
+    "29": [
+      {
+        "prime": 347,
+        "equilibrium": 789338878.7097389,
+        "frequency_hz": 12066270076.971514,
+        "midi_number": 365.5068121769922,
+        "note": "F#",
+        "octave": 29,
+        "cents_deviation": -49.31878230078155,
+        "note_full": "F#29"
+      },
+      {
+        "prime": 349,
+        "equilibrium": 851311948.015132,
+        "frequency_hz": 13013624644.074661,
+        "midi_number": 366.8153289924254,
+        "note": "G",
+        "octave": 29,
+        "cents_deviation": -18.46710075745932,
+        "note_full": "G29"
+      },
+      {
+        "prime": 353,
+        "equilibrium": 989669369.1651502,
+        "frequency_hz": 15128632602.986204,
+        "midi_number": 369.422433974745,
+        "note": "A",
+        "octave": 29,
+        "cents_deviation": 42.243397474499034,
+        "note_full": "A29"
+      }
+    ],
+    "30": [
+      {
+        "prime": 359,
+        "equilibrium": 1238737200.5130472,
+        "frequency_hz": 18936021041.069786,
+        "midi_number": 373.3086533953108,
+        "note": "C#",
+        "octave": 30,
+        "cents_deviation": 30.86533953107846,
+        "note_full": "C#30"
+      },
+      {
+        "prime": 367,
+        "equilibrium": 1666657282.0537763,
+        "frequency_hz": 25477443761.397778,
+        "midi_number": 378.4457012364373,
+        "note": "F#",
+        "octave": 30,
+        "cents_deviation": 44.57012364372872,
+        "note_full": "F#30"
+      },
+      {
+        "prime": 373,
+        "equilibrium": 2078159375.6606395,
+        "frequency_hz": 31767892049.990826,
+        "midi_number": 382.2658871871769,
+        "note": "A#",
+        "octave": 30,
+        "cents_deviation": 26.588718717687243,
+        "note_full": "A#30"
+      }
+    ],
+    "31": [
+      {
+        "prime": 379,
+        "equilibrium": 2587185868.9012733,
+        "frequency_hz": 39549152177.21914,
+        "midi_number": 386.05881603656985,
+        "note": "D",
+        "octave": 31,
+        "cents_deviation": 5.881603656985135,
+        "note_full": "D31"
+      },
+      {
+        "prime": 383,
+        "equilibrium": 2991490605.365721,
+        "frequency_hz": 45729577689.20353,
+        "midi_number": 388.5725859759016,
+        "note": "F",
+        "octave": 31,
+        "cents_deviation": -42.74140240984252,
+        "note_full": "F31"
+      },
+      {
+        "prime": 389,
+        "equilibrium": 3714749908.942398,
+        "frequency_hz": 56785718882.836136,
+        "midi_number": 392.3213926244395,
+        "note": "G#",
+        "octave": 31,
+        "cents_deviation": 32.13926244395111,
+        "note_full": "G#31"
+      }
+    ],
+    "32": [
+      {
+        "prime": 397,
+        "equilibrium": 4946720481.021481,
+        "frequency_hz": 75618301504.23984,
+        "midi_number": 397.2798801604009,
+        "note": "C#",
+        "octave": 32,
+        "cents_deviation": 27.988016040092134,
+        "note_full": "C#32"
+      },
+      {
+        "prime": 401,
+        "equilibrium": 5702838042.382392,
+        "frequency_hz": 87176732175.02504,
+        "midi_number": 399.7423723265433,
+        "note": "E",
+        "octave": 32,
+        "cents_deviation": -25.76276734566818,
+        "note_full": "E32"
+      },
+      {
+        "prime": 409,
+        "equilibrium": 7565142282.890414,
+        "frequency_hz": 115644943405.40373,
+        "midi_number": 404.6346181860753,
+        "note": "A",
+        "octave": 32,
+        "cents_deviation": -36.53818139247278,
+        "note_full": "A32"
+      }
+    ],
+    "33": [
+      {
+        "prime": 419,
+        "equilibrium": 10733038409.72232,
+        "frequency_hz": 164071153330.1299,
+        "midi_number": 410.6900512746965,
+        "note": "D#",
+        "octave": 33,
+        "cents_deviation": -30.99487253035136,
+        "note_full": "D#33"
+      },
+      {
+        "prime": 421,
+        "equilibrium": 11505565586.250027,
+        "frequency_hz": 175880430441.90805,
+        "midi_number": 411.89333158429486,
+        "note": "E",
+        "octave": 33,
+        "cents_deviation": -10.666841570514407,
+        "note_full": "E33"
+      },
+      {
+        "prime": 431,
+        "equilibrium": 16250947329.132029,
+        "frequency_hz": 248420956789.14725,
+        "midi_number": 417.8716345759936,
+        "note": "A#",
+        "octave": 33,
+        "cents_deviation": -12.836542400640383,
+        "note_full": "A#33"
+      },
+      {
+        "prime": 433,
+        "equilibrium": 17405422081.103,
+        "frequency_hz": 266068895500.96756,
+        "midi_number": 419.0597903248399,
+        "note": "B",
+        "octave": 33,
+        "cents_deviation": 5.979032483992341,
+        "note_full": "B33"
+      }
+    ],
+    "34": [
+      {
+        "prime": 439,
+        "equilibrium": 21366474493.138657,
+        "frequency_hz": 326619730486.808,
+        "midi_number": 422.60953529131746,
+        "note": "D#",
+        "octave": 34,
+        "cents_deviation": -39.046470868254346,
+        "note_full": "D#34"
+      },
+      {
+        "prime": 443,
+        "equilibrium": 24479048305.256527,
+        "frequency_hz": 374200252952.5382,
+        "midi_number": 424.9639183686103,
+        "note": "F",
+        "octave": 34,
+        "cents_deviation": -3.6081631389720314,
+        "note_full": "F34"
+      },
+      {
+        "prime": 449,
+        "equilibrium": 29987398738.047184,
+        "frequency_hz": 458403940105.6399,
+        "midi_number": 428.4776252968543,
+        "note": "G#",
+        "octave": 34,
+        "cents_deviation": 47.76252968542849,
+        "note_full": "G#34"
+      }
+    ],
+    "35": [
+      {
+        "prime": 457,
+        "equilibrium": 39232252317.55504,
+        "frequency_hz": 599725878149.2098,
+        "midi_number": 433.1298306794425,
+        "note": "C#",
+        "octave": 35,
+        "cents_deviation": 12.98306794424775,
+        "note_full": "C#35"
+      },
+      {
+        "prime": 461,
+        "equilibrium": 44838382689.19953,
+        "frequency_hz": 685424283454.6073,
+        "midi_number": 435.44215962372505,
+        "note": "D#",
+        "octave": 35,
+        "cents_deviation": 44.21596237250469,
+        "note_full": "D#35"
+      },
+      {
+        "prime": 463,
+        "equilibrium": 47925662581.787636,
+        "frequency_hz": 732618149095.7677,
+        "midi_number": 436.5949292580494,
+        "note": "F",
+        "octave": 35,
+        "cents_deviation": -40.50707419506239,
+        "note_full": "F35"
+      },
+      {
+        "prime": 467,
+        "equilibrium": 54731314159.61016,
+        "frequency_hz": 836653098092.5865,
+        "midi_number": 438.89374669918294,
+        "note": "G",
+        "octave": 35,
+        "cents_deviation": -10.625330081705897,
+        "note_full": "G35"
+      }
+    ],
+    "36": [
+      {
+        "prime": 479,
+        "equilibrium": 81266954983.2257,
+        "frequency_hz": 1242291560202.3403,
+        "midi_number": 445.737374788957,
+        "note": "D",
+        "octave": 36,
+        "cents_deviation": -26.26252110429732,
+        "note_full": "D36"
+      },
+      {
+        "prime": 487,
+        "equilibrium": 105508494838.62059,
+        "frequency_hz": 1612861127806.8088,
+        "midi_number": 450.256795783001,
+        "note": "F#",
+        "octave": 36,
+        "cents_deviation": 25.679578300099593,
+        "note_full": "F#36"
+      },
+      {
+        "prime": 491,
+        "equilibrium": 120131802006.41957,
+        "frequency_hz": 1836401078092.2942,
+        "midi_number": 452.5039033109632,
+        "note": "A",
+        "octave": 36,
+        "cents_deviation": -49.609668903678994,
+        "note_full": "A36"
+      }
+    ],
+    "37": [
+      {
+        "prime": 499,
+        "equilibrium": 155517306516.73166,
+        "frequency_hz": 2377323444578.6006,
+        "midi_number": 456.9733875158313,
+        "note": "C#",
+        "octave": 37,
+        "cents_deviation": -2.661248416870876,
+        "note_full": "C#37"
+      },
+      {
+        "prime": 503,
+        "equilibrium": 176820872108.16525,
+        "frequency_hz": 2702981514847.354,
+        "midi_number": 459.19594884870924,
+        "note": "D#",
+        "octave": 37,
+        "cents_deviation": 19.59488487092358,
+        "note_full": "D#37"
+      },
+      {
+        "prime": 509,
+        "equilibrium": 214185527812.39496,
+        "frequency_hz": 3274158279632.154,
+        "midi_number": 462.51481789806417,
+        "note": "G",
+        "octave": 37,
+        "cents_deviation": -48.5182101935834,
+        "note_full": "G37"
+      }
+    ],
+    "38": [
+      {
+        "prime": 521,
+        "equilibrium": 313312764273.8837,
+        "frequency_hz": 4789471967313.789,
+        "midi_number": 469.09972841653877,
+        "note": "C#",
+        "octave": 38,
+        "cents_deviation": 9.972841653876685,
+        "note_full": "C#38"
+      },
+      {
+        "prime": 523,
+        "equilibrium": 333688099901.2557,
+        "frequency_hz": 5100940601660.91,
+        "midi_number": 470.1904887164468,
+        "note": "D",
+        "octave": 38,
+        "cents_deviation": 19.048871644679366,
+        "note_full": "D38"
+      }
+    ],
+    "39": [
+      {
+        "prime": 541,
+        "equilibrium": 585458822248.8,
+        "frequency_hz": 8949646924457.926,
+        "midi_number": 479.9232983084901,
+        "note": "C",
+        "octave": 39,
+        "cents_deviation": -7.6701691509924785,
+        "note_full": "C39"
+      }
+    ]
+  },
+  "special_primes": {
+    "noetic_point": {
+      "prime": 17,
+      "equilibrium": 9.26959005300666,
+      "frequency_hz": 141.70007344021514,
+      "midi_number": 49.38404378670202,
+      "note": "C#",
+      "octave": 3,
+      "cents_deviation": 38.40437867020228,
+      "note_full": "C#3"
+    },
+    "lowest_frequency": {
+      "prime": 3,
+      "equilibrium": 2.9234973241672053,
+      "frequency_hz": 44.69019483794725,
+      "midi_number": 29.406320590738254,
+      "note": "F",
+      "octave": 1,
+      "cents_deviation": 40.63205907382539,
+      "note_full": "F1"
+    },
+    "highest_frequency": {
+      "prime": 541,
+      "equilibrium": 585458822248.8,
+      "frequency_hz": 8949646924457.926,
+      "midi_number": 479.9232983084901,
+      "note": "C",
+      "octave": 39,
+      "cents_deviation": -7.6701691509924785,
+      "note_full": "C39"
+    },
+    "near_c4": {
+      "prime": 23,
+      "equilibrium": 16.946023708771982,
+      "frequency_hz": 259.04627824115613,
+      "midi_number": 59.82847599070993,
+      "note": "C",
+      "octave": 4,
+      "cents_deviation": -17.152400929006717,
+      "note_full": "C4"
+    },
+    "near_a4": {
+      "prime": 29,
+      "equilibrium": 30.20638582696936,
+      "frequency_hz": 461.7514977004514,
+      "midi_number": 69.8353574025158,
+      "note": "A#",
+      "octave": 4,
+      "cents_deviation": -16.464259748420318,
+      "note_full": "A#4"
+    }
+  }
+}
