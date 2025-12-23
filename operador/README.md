@@ -47,6 +47,38 @@ print(f"Eigenvalues: {lam_H}")
 print(f"Gammas: {gammas}")
 ```
 
+### High Precision Implementation
+
+For computations requiring ultra-high precision (100 digits), use the `high_precision_H` function from `spectral_RH/operador/operador_H_real.py`:
+
+```python
+import sys
+sys.path.insert(0, 'spectral_RH')
+from operador.operador_H_real import high_precision_H
+
+# Parameters
+N = 200      # matrix size
+h = 0.001    # thermal parameter
+
+# Compute with 100-digit precision using mpmath
+eigenvalues = high_precision_H(N=N, h=h)
+
+# eigenvalues = [0.25 + log(1/λ) for λ in kernel_eigenvalues]
+print(f"First 5 eigenvalues: {eigenvalues[:5]}")
+```
+
+**Key features of high_precision_H:**
+- Uses mpmath with 100 decimal digits precision
+- Gaussian kernel: `exp(-(t-s)²/(4h)) / sqrt(4πh)`
+- Hermite basis on logarithmic scale (nodes from -10 to 10)
+- High precision diagonalization via `mpmath.eigsy`
+- Returns transformed eigenvalues: `0.25 + log(1/λ)`
+
+**Demo script:**
+```bash
+python demo_high_precision_H.py
+```
+
 ### Exact Fourier Solution
 
 ```python
