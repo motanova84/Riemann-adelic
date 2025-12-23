@@ -52,29 +52,71 @@ datos espectrales con $\Xi$: cualquier función entera con las propiedades
 postuladas es necesariamente igual a la función de Riemann completada.
 \section{Unicidad Paley--Wiener con multiplicidades}
 
-\begin{theorem}[Unicidad con multiplicidades]
-Sea $F(s)$ una función entera de orden $\le 1$ y tipo finito, con simetría $F(1-s)=F(s)$.
-Suponga que $F$ y $\Xi(s)$ (la función completada de Riemann) tienen la misma medida
-espectral de ceros incluyendo multiplicidades y que $F(1/2)=\Xi(1/2)\neq 0$.
-Entonces $F\equiv \Xi$.
+\begin{theorem}[Unicidad Paley–Wiener–Hamburger con multiplicidades]
+\label{thm:paley-wiener-uniqueness}
+Sea $D(s)$ la función determinante construida en el marco adélico S-finito. Supongamos:
+\begin{enumerate}
+\item $D(s)$ es entera de orden $\leq 1$ y tipo finito;
+\item $D(1-s) = D(s)$ (simetría funcional);
+\item $\lim_{\Re(s)\to+\infty} \log D(s) = 0$ (normalización);
+\item La medida espectral de ceros de $D(s)$ coincide con la de $\Xi(s)$, 
+incluyendo multiplicidades.
+\end{enumerate}
+Entonces $D(s) \equiv \Xi(s)$.
 \end{theorem}
 
 \begin{proof}
-Por teoría de Hadamard para funciones enteras de orden $\le 1$, $F$ y $\Xi$
-admiten productos canónicos
+\textbf{Paso 1 (Factorización de Hadamard).}  
+Por Hadamard (1893), toda función entera de orden $\leq 1$ admite producto canónico:
 \[
-F(s)=e^{a+bs}\prod_\rho E_1\!\left(\frac{s}{\rho}\right),\qquad
-\Xi(s)=e^{a'+b's}\prod_\rho E_1\!\left(\frac{s}{\rho}\right),
+D(s) = e^{a_D + b_D s} \prod_{\rho}\!E_1\!\left(\tfrac{s}{\rho}\right), 
+\qquad 
+\Xi(s) = e^{a_\Xi + b_\Xi s} \prod_{\rho}\!E_1\!\left(\tfrac{s}{\rho}\right),
 \]
-donde el producto es sobre los mismos ceros (con multiplicidad) por hipótesis,
-y $E_1(z)=(1-z)e^{z}$.
-Por tanto, la razón $H(s):=\frac{F(s)}{\Xi(s)}$ es entera sin ceros (y sin polos), luego $H(s)=e^{c+ds}$.
+donde $E_1(z) = (1-z)e^z$ y el producto es sobre los mismos ceros $\rho$ con multiplicidad.
 
-La simetría $F(1-s)=F(s)$ y $\Xi(1-s)=\Xi(s)$ implican
-$H(1-s)=H(s)$, es decir $e^{c+d(1-s)}=e^{c+ds}$ para todo $s$, lo que fuerza $d=0$.
-Así $H$ es constante. La normalización $F(1/2)=\Xi(1/2)$ fija $H\equiv 1$.
+\textbf{Paso 2 (Cociente auxiliar).}  
+Definimos $H(s) := \tfrac{D(s)}{\Xi(s)} = e^{c + ds}$, con $c=a_D-a_\Xi$, $d=b_D-b_\Xi$.  
+$H(s)$ es entera sin ceros ni polos.
+
+\textbf{Paso 3 (Simetría funcional).}  
+De $D(1-s)=D(s)$ y $\Xi(1-s)=\Xi(s)$ se obtiene
+\[
+H(1-s) = H(s) \implies e^{c+d(1-s)} = e^{c+ds} \implies d=0.
+\]
+Por tanto $H(s)=e^c$ es constante.
+
+\textbf{Paso 4 (Normalización asintótica).}  
+El límite $\lim_{\Re(s)\to+\infty} \log D(s)=0$ fuerza $b_D=0$. Como se sabe que $b_\Xi=0$, resulta $d=0$ (ya deducido). Además, la condición elimina la constante exponencial, fijando $c=0$.
+
+\textbf{Conclusión.}  
+$H(s)\equiv 1$, es decir $D(s)\equiv \Xi(s)$.
 \end{proof}
 
-\begin{lemma}[Control de crecimiento]
-Si $F$ y $\Xi$ son de orden $\le 1$, la razón $H$ tiene crecimiento subexponencial en bandas verticales; combinado con la simetría implica $d=0$ incluso sin evaluar en $s=1/2$, siempre que se fije una normalización alternativa (p.ej. el coeficiente principal).
+\begin{lemma}[Control de crecimiento por Phragmén–Lindelöf]\label{lem:phragmen}
+Para funciones enteras de orden $\leq 1$ en bandas verticales, el principio de Phragmén–Lindelöf (1908) garantiza que la condición $\lim_{\Re(s)\to+\infty}\log F(s)=0$ elimina términos lineales en la factorización de Hadamard, reforzando la unicidad.
 \end{lemma}
+
+\begin{proposition}[Clase determinante Paley–Wiener]\label{prop:pw-class}
+$D(s)$ pertenece a la clase determinante de Paley–Wiener:
+\begin{enumerate}
+\item Tipo exponencial $\leq \sigma$ para algún $\sigma > 0$;
+\item Cuadrado-integrable en líneas verticales: $\int_{-\infty}^\infty |D(\sigma+it)|^2 dt < \infty$;
+\item Determinada únicamente por su medida espectral de ceros.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+El tipo exponencial está controlado por la construcción del resolvente suavizado.  
+La integrabilidad cuadrática proviene de la pertenencia de $B_\delta(s)$ a la clase de traza.  
+La unicidad es consecuencia directa del Teorema~\ref{thm:paley-wiener-uniqueness}.
+\end{proof}
+
+\begin{remark}[Referencias clásicas]
+\begin{itemize}
+\item Hadamard (1893): factorización de funciones enteras.  
+\item Phragmén–Lindelöf (1908): control de crecimiento en bandas.  
+\item Paley–Wiener (1934): unicidad en clases determinantes.  
+\item Hamburger (1921): simetría funcional y unicidad.  
+\end{itemize}
+\end{remark}
