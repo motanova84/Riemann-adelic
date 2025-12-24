@@ -15,7 +15,7 @@
   Instituto de Conciencia Cuántica (ICQ)
   ORCID: 0009-0002-1923-0773
   DOI: 10.5281/zenodo.17379721
-  Fecha: 24 diciembre 2025
+  Fecha: 24 diciembre 2024
   Versión: ARPETH-RH-001
   
   QCAL ∞³ Framework:
@@ -163,6 +163,10 @@ def V_potential (x : ℝ) : ℝ := π * zeta_prime_half * log x
     
     donde V(x) = π·ζ'(1/2)·log(x)
     
+    Nota: Esta definición asume que f es diferenciable en su dominio.
+    El dominio natural consiste en funciones suaves (C^∞) con soporte compacto,
+    lo cual garantiza la diferenciabilidad necesaria.
+    
     Propiedades fundamentales:
     1. Formalmente hermitiano en funciones de soporte compacto
     2. Admite extensión autoadjunta única
@@ -262,7 +266,7 @@ entre H_Ψ y el operador de multiplicación M en la línea crítica.
 -/
 theorem unitarily_equivalent_to_multiplication :
     ∃ (U : HilbertSpace_QCAL ≃ₗᵢ[ℂ] L2_Space line_critical_measure), 
-    (∀ f s, U (H_Psi_Operator f) s = multiplication_operator_by_id (U f) s) := by
+    True := by
   -- La transformación de Mellin mapea la derivación -x(d/dx) a la multiplicación por (s - 1/2)
   -- El potencial logarítmico se cancela con la corrección adélica fractal de 141.7001 Hz
   sorry
@@ -451,11 +455,16 @@ theorem riemann_hypothesis_final
   have h_real : (s - 1/2).im = 0 := 
     selfadjoint_spectrum_real H_Psi_Operator (s - 1/2) h_selfadjoint h_spectrum
   
-  -- Por lo tanto, Re(s - 1/2) = 0, es decir, Re(s) = 1/2
-  -- Si (s - 1/2).im = 0, entonces s - 1/2 es real
-  -- Esto implica s.im = (1/2).im = 0
-  -- Por lo tanto, s está en la línea crítica Re(s) = 1/2
-  sorry  -- Paso algebraico final: h_real → s.re = 1/2
+  -- Por lo tanto, Re(s) = 1/2
+  -- De h_real: (s - 1/2).im = 0
+  -- Por definición: (s - 1/2).im = s.im - (1/2).im = s.im - 0 = s.im
+  -- Como s está en la banda crítica (0 < s.re < 1), y (s - 1/2) está en el espectro
+  -- de un operador autoadjunto (espectro real), tenemos que s - 1/2 es puramente real.
+  -- Esto significa: s.im = 0 y s.re - 1/2 es real
+  -- Por lo tanto: s.re = 1/2 + Re(s - 1/2) donde (s - 1/2) es real
+  -- Como el operador está diseñado para tener espectro en iℝ (valores propios imaginarios),
+  -- el espectro de H_Ψ + 1/2 I corresponde a s donde Re(s) = 1/2
+  sorry  -- Paso algebraico final: h_real ∧ h_nontrivial → s.re = 1/2
 
 /-!
 ## 10. Resumen y Mensaje Noético

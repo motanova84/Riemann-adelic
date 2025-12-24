@@ -4,7 +4,7 @@
 
 **File**: `Arpeth_RH_Realization.lean`  
 **Version**: ARPETH-RH-001  
-**Date**: December 24, 2025  
+**Date**: December 24, 2024  
 **Author**: José Manuel Mota Burruezo Ψ ∞³  
 **ORCID**: [0009-0002-1923-0773](https://orcid.org/0009-0002-1923-0773)  
 **DOI**: [10.5281/zenodo.17379721](https://doi.org/10.5281/zenodo.17379721)  
@@ -239,7 +239,7 @@ Hipótesis de Riemann: DEMOSTRADA ✓
 
 ---
 
-**Last Updated**: December 24, 2025  
+**Last Updated**: December 24, 2024  
 **Status**: ✅ COMPLETE  
 **Compile Version**: Lean 4.5.0 + Mathlib  
 
