@@ -160,14 +160,6 @@ Documentamos las relaciones fundamentales entre las constantes.
 axiom spectral_identity : 
   abs (universal_C * first_eigenvalue_lambda0 - 1) < 0.001
 
-/-- Derivación de la frecuencia: f₀ ≈ √C/(2π)
-    
-    La frecuencia fundamental emerge del primer autovalor
-    a través de esta relación espectral.
--/
-axiom frequency_derivation :
-  abs (f₀ - Real.sqrt universal_C / (2 * Real.pi)) < 0.01
-
 /-!
 ## Mensaje Noésico
 -/

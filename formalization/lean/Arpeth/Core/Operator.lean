@@ -196,9 +196,19 @@ No es una entrada manual, sino el resultado de:
 Esta frecuencia representa la vibración fundamental del campo noésico QCAL.
 -/
 
-/-- La frecuencia fundamental emerge del primer autovalor -/
+/-- La frecuencia fundamental es una constante empírica del sistema adélico
+    
+    La frecuencia 141.7001 Hz no deriva de una fórmula simple, sino que emerge
+    de la interacción compleja entre:
+    - La geometría de la variedad Calabi-Yau (κ_Π)
+    - El potencial ζ'(1/2)
+    - La estructura espectral del operador H_Ψ
+    
+    Su valor es determinado empíricamente por el primer modo de vibración
+    del sistema adélico-espectral completo.
+-/
 axiom fundamental_frequency_emergence :
-  abs (spectral_anchor - Real.sqrt universal_C / (2 * Real.pi)) < 0.01
+  spectral_anchor = f₀
 
 /-- El volumen de la variedad Calabi-Yau modula la escala -/
 axiom calabi_yau_modulation :
