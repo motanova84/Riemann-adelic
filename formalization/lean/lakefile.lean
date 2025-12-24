@@ -29,6 +29,11 @@ lean_lib adelic where
   globs := #[.submodules `adelic]
   roots := #[`adelic]
 
+-- Arpeth library - H_Ψ operator framework
+lean_lib Arpeth where
+  globs := #[.submodules `Arpeth]
+  roots := #[`Arpeth]
+
 -- Main executable
 @[default_target]
 lean_exe «riemann-adelic-lean» where
