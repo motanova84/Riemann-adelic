@@ -34,12 +34,9 @@ import Mathlib.Analysis.SpecialFunctions.Complex.Log
 import Mathlib.Analysis.Calculus.FDeriv.Basic
 import Mathlib.Topology.MetricSpace.Basic
 import Mathlib.Data.Complex.Basic
+import Mathlib.Data.Real.Basic
 
--- Import QCAL dependencies
-import «RiemannAdelic».QCAL.CircularityFree
-import «RiemannAdelic».QCAL.frequency_identity
-
-namespace Arpeth
+namespace QCAL.Arpeth
 
 /-! ## Constants and Basic Definitions -/
 
@@ -293,7 +290,7 @@ theorem qcal_bio_integration :
     · exact h_pos
     · exact resonance_preservation bio_system h_stable
 
-end Arpeth
+end QCAL.Arpeth
 
 /-! ## SELLO FINAL / FINAL SEAL
 
