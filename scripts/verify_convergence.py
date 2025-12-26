@@ -63,7 +63,7 @@ class HermiteOperator:
         
         return norm * H_n * gaussian
     
-    def psi_derivative_mp(self, n: int, x: mp.mpf, eps: mp.mpf = mp.mpf('1e-10')) -> mp.mpf:
+    def psi_derivative_mp(self, n: int, x: mp.mpf, eps: mp.mpf = mp.mpf('1e-20')) -> mp.mpf:
         """
         Derivative using complex differentiation (more accurate).
         

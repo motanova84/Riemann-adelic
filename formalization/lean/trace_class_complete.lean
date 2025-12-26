@@ -35,6 +35,12 @@ def delta_val : ℝ := 0.234
 
 /-! ## Auxiliary Lemmas -/
 
+-- Note: The following assumes definitions from external modules:
+-- - H_psi_operator: The Hilbert-Pólya operator on L²(ℝ)
+-- - hermite_basis: Orthonormal Hermite function basis {ψ_n}
+-- - SchattenClass: Trace class operator structure
+-- These would be imported from RiemannAdelic.Operator or similar modules
+
 /-- Logarithm growth bound -/
 lemma log_growth_bound (x : ℝ) (hx : x > 0) :
     log x ≤ x := by

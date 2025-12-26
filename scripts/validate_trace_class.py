@@ -132,12 +132,9 @@ class TraceClassValidator:
         """
         integrand = np.abs(f)**2
         dx = self.x_grid[1] - self.x_grid[0]
-        # Use trapezoid (newer numpy) or trapz (older numpy)
-        try:
-            integral = np.trapezoid(integrand, dx=dx)
-        except AttributeError:
-            from scipy.integrate import trapezoid
-            integral = trapezoid(integrand, dx=dx)
+        # Use scipy trapezoid (works with all numpy versions)
+        from scipy.integrate import trapezoid
+        integral = trapezoid(integrand, dx=dx)
         return np.sqrt(integral)
     
     def compute_operator_norms(self) -> Tuple[np.ndarray, np.ndarray]:
@@ -296,6 +293,23 @@ class TraceClassValidator:
         os.makedirs(os.path.dirname(filename), exist_ok=True)
         
         # Convert non-serializable types
+        def convert_value(val):
+            """Convert non-JSON-serializable values."""
+            if isinstance(val, (int, float, bool, str, type(None))):
+                # Handle infinity and NaN
+                if isinstance(val, float):
+                    if np.isinf(val):
+                        return "Infinity" if val > 0 else "-Infinity"
+                    elif np.isnan(val):
+                        return "NaN"
+                return val
+            elif isinstance(val, (list, tuple)):
+                return [convert_value(v) for v in val]
+            elif isinstance(val, dict):
+                return {k: convert_value(v) for k, v in val.items()}
+            else:
+                return str(val)
+        
         results_serializable = {
             'n_values': results['n_values'],
             'norms': results['norms'],
@@ -305,8 +319,8 @@ class TraceClassValidator:
                 'total_sum': float(results['convergence']['total_sum']),
                 'C': float(results['convergence']['C']),
                 'delta': float(results['convergence']['delta']),
-                'tail_estimate': float(results['convergence']['tail_estimate']),
-                'predicted_total': float(results['convergence']['predicted_total']),
+                'tail_estimate': convert_value(results['convergence']['tail_estimate']),
+                'predicted_total': convert_value(results['convergence']['predicted_total']),
                 'converges': bool(results['convergence']['converges'])
             },
             'is_trace_class': bool(results['is_trace_class'])

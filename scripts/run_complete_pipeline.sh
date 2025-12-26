@@ -80,8 +80,8 @@ fi
 print_section "2. VERIFYING CONVERGENCE (high precision)"
 
 if [ -f "scripts/verify_convergence.py" ]; then
-    # Run with timeout (60 seconds)
-    timeout 60 python3 scripts/verify_convergence.py 2>&1 || true
+    # Run with timeout (120 seconds for high precision)
+    timeout 120 python3 scripts/verify_convergence.py 2>&1 || true
     VERIFY_EXIT=$?
     
     if [ $VERIFY_EXIT -eq 0 ]; then

@@ -173,17 +173,19 @@ class HDSConnection:
             """
             Spectral determinant D(s) = ∏(1 - s/λ).
             
+            Uses log-sum to prevent overflow/underflow.
+            
             Args:
                 s: Complex argument
                 
             Returns:
                 D(s) value
             """
-            product = 1.0
+            log_product = 0.0
             for lam in eigenvalues:
                 if abs(lam) > 1e-10:  # Avoid division by zero
-                    product *= (1.0 - s / lam)
-            return product
+                    log_product += np.log(1.0 - s / lam)
+            return np.exp(log_product)
         
         return D_func, eigenvalues
     
