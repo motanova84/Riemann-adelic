@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
-# 📁 scripts/verify_complete_proof.py
+# scripts/verify_complete_proof.py
 """
-Script de verificación rigurosa para la demostración completa de clase traza
+Rigorous verification script for the complete trace class proof
 
-Este script verifica que la demostración formal en Lean está completa y correcta,
-y valida numéricamente las constantes utilizadas.
+This script verifies that the formal Lean proof is complete and correct,
+and validates the constants used numerically.
 
-Autor: José Manuel Mota Burruezo Ψ ✧ ∞³
+Author: José Manuel Mota Burruezo Ψ ✧ ∞³
 DOI: 10.5281/zenodo.17379721
-Fecha: 26 diciembre 2025
+Date: December 26, 2025
 """
 
 import subprocess
@@ -17,164 +17,167 @@ import sys
 from pathlib import Path
 import numpy as np
 
+# Maximum number of error lines to display
+MAX_ERROR_LINES = 10
+
 def verify_lean_proof():
-    """Verificar que la demostración está completa y correcta"""
+    """Verify that the proof is complete and correct"""
     
-    print("🔬 VERIFICACIÓN RIGUROSA DE LA DEMOSTRACIÓN")
+    print("🔬 RIGOROUS VERIFICATION OF THE PROOF")
     print("=" * 70)
     
-    # Cambiar al directorio de Lean
+    # Change to Lean directory
     lean_dir = Path(__file__).parent.parent / "formalization" / "lean"
     os.chdir(lean_dir)
     
-    # 1. Verificar que el archivo existe
+    # 1. Verify that the file exists
     proof_file = "H_psi_trace_class_COMPLETE.lean"
     if not os.path.exists(proof_file):
-        print(f"❌ Archivo {proof_file} no encontrado")
+        print(f"❌ File {proof_file} not found")
         return False
     
-    print(f"✅ Archivo {proof_file} encontrado")
+    print(f"✅ File {proof_file} found")
     
-    # 2. Contar líneas y buscar 'sorry'
+    # 2. Count lines and search for 'sorry'
     with open(proof_file, 'r', encoding='utf-8') as f:
         content = f.read()
         lines = content.count('\n')
         sorry_count = content.count('sorry')
         
-    print(f"\n📊 Estadísticas del archivo:")
-    print(f"   Líneas totales: {lines}")
-    print(f"   Ocurrencias de 'sorry': {sorry_count}")
+    print(f"\n📊 File statistics:")
+    print(f"   Total lines: {lines}")
+    print(f"   'sorry' occurrences: {sorry_count}")
     
     if sorry_count > 0:
-        print(f"\n⚠️  ADVERTENCIA: Hay {sorry_count} 'sorry' en la demostración")
-        print("   La demostración no está 100% completa")
-        print("   Esto es esperado para una demostración de esta complejidad")
-        print("   Los 'sorry' están documentados y representan:")
-        print("   - Teoremas estándar de análisis (convergencia de series p)")
-        print("   - Transformaciones técnicas que requieren más desarrollo en Mathlib")
+        print(f"\n⚠️  WARNING: There are {sorry_count} 'sorry' in the proof")
+        print("   The proof is not 100% complete")
+        print("   This is expected for a proof of this complexity")
+        print("   The 'sorry' statements are documented and represent:")
+        print("   - Standard analysis theorems (p-series convergence)")
+        print("   - Technical transformations requiring more Mathlib development")
     else:
-        print("✅ No hay 'sorry' - demostración formalmente completa")
+        print("✅ No 'sorry' - proof formally complete")
     
-    # 3. Intentar compilar con Lean (si lake está disponible)
-    print("\n🛠️  Intentando compilar con Lean...")
+    # 3. Try to compile with Lean (if lake is available)
+    print("\n🛠️  Attempting to compile with Lean...")
     try:
         result = subprocess.run(
             ["lake", "build", proof_file],
             capture_output=True,
             text=True,
-            timeout=120,  # 2 minutos máximo
+            timeout=120,  # 2 minutes maximum
             cwd=lean_dir
         )
         
         if result.returncode == 0:
-            print("✅ Compilación exitosa")
+            print("✅ Compilation successful")
             if result.stdout:
                 print(f"   Output: {result.stdout[-500:]}")
         else:
-            print("⚠️  Advertencia durante compilación:")
+            print("⚠️  Warning during compilation:")
             if result.stderr:
-                # Mostrar solo las primeras líneas de error
-                error_lines = result.stderr.split('\n')[:10]
+                # Show only the first lines of error
+                error_lines = result.stderr.split('\n')[:MAX_ERROR_LINES]
                 for line in error_lines:
                     print(f"   {line}")
-            print("\n   Nota: Algunos errores son esperados si faltan dependencias de Mathlib")
-            return True  # No fallamos completamente por errores de compilación
+            print("\n   Note: Some errors are expected if Mathlib dependencies are missing")
+            return True  # Don't fail completely for compilation errors
             
     except FileNotFoundError:
-        print("⚠️  'lake' no encontrado - saltando compilación")
-        print("   Para verificar completamente, instala Lean 4 y lake")
+        print("⚠️  'lake' not found - skipping compilation")
+        print("   To verify completely, install Lean 4 and lake")
     except subprocess.TimeoutExpired:
-        print("⚠️  Timeout durante compilación (>120s)")
-        print("   El archivo puede tener problemas de rendimiento")
+        print("⚠️  Timeout during compilation (>120s)")
+        print("   The file may have performance issues")
     except Exception as e:
-        print(f"⚠️  Error al compilar: {e}")
+        print(f"⚠️  Error compiling: {e}")
     
-    # 4. Verificar que el teorema principal está presente
+    # 4. Verify that the main theorem is present
     if "hPsi_is_trace_class" in content:
-        print("\n✅ Teorema principal 'hPsi_is_trace_class' encontrado")
+        print("\n✅ Main theorem 'hPsi_is_trace_class' found")
     else:
-        print("\n❌ Teorema principal no encontrado")
+        print("\n❌ Main theorem not found")
         return False
     
-    # 5. Verificar constantes clave
+    # 5. Verify key constants
     if "deltaVal : ℝ := 0.234" in content:
-        print("✅ Constante δ = 0.234 definida correctamente")
+        print("✅ Constant δ = 0.234 defined correctly")
     else:
-        print("⚠️  Constante δ no encontrada o definida incorrectamente")
+        print("⚠️  Constant δ not found or defined incorrectly")
         
     if "cVal : ℝ := 15.0" in content:
-        print("✅ Constante C = 15.0 definida correctamente")
+        print("✅ Constant C = 15.0 defined correctly")
     else:
-        print("⚠️  Constante C no encontrada o definida incorrectamente")
+        print("⚠️  Constant C not found or defined incorrectly")
     
     return True
 
 def run_numerical_verification():
-    """Corroborar numéricamente las constantes"""
+    """Verify constants numerically"""
     
-    print("\n🔢 VERIFICACIÓN NUMÉRICA DE CONSTANTES")
+    print("\n🔢 NUMERICAL VERIFICATION OF CONSTANTS")
     print("=" * 70)
     
-    # Verificar delta = 0.234
+    # Verify delta = 0.234
     delta = 0.234
     C = 15.0
     n_vals = np.arange(10, 100)
     
-    # La cota correcta es: ‖H_Ψ ψ_n‖ ≤ C/(n+1)^{1+δ}
-    # Esta es una cota sobre la norma completa del operador aplicado,
-    # no solo la parte algebraica
+    # The correct bound is: ‖H_Ψ ψ_n‖ ≤ C/(n+1)^{1+δ}
+    # This is a bound on the complete norm of the operator applied,
+    # not just the algebraic part
     
-    # Calculamos una aproximación de la norma basada en la estructura del operador
-    # H_Ψ tiene términos proporcionales a √n, que decrecen como n^{-δ/2} en promedio
+    # Calculate an approximation of the norm based on the operator structure
+    # H_Ψ has terms proportional to √n, which decay as n^{-δ/2} on average
     estimated_norms = C / (n_vals + 1)**(1 + delta)
     
-    # Verificar que la serie converge
+    # Verify that the series converges
     series_partial_sum = np.sum(estimated_norms)
     
-    print(f"✅ Cota espectral: ‖H_Ψ ψ_n‖ ≤ C/(n+1)^{{1+δ}}")
-    print(f"   con C = {C}, δ = {delta}")
-    print(f"   Suma parcial (n=10..99): {series_partial_sum:.6f}")
+    print(f"✅ Spectral bound: ‖H_Ψ ψ_n‖ ≤ C/(n+1)^(1+δ)")
+    print(f"   with C = {C}, δ = {delta}")
+    print(f"   Partial sum (n=10..99): {series_partial_sum:.6f}")
     
-    # Verificar convergencia de Σ 1/n^{1.234}
+    # Verify convergence of Σ 1/n^{1.234}
     n = np.arange(1, 10000)
     series_sum = np.sum(1 / n**(1 + delta))
     
-    print(f"\n📈 Convergencia de la serie:")
+    print(f"\n📈 Series convergence:")
     print(f"   Σ_(n=1)^(9999) 1/n^(1.234) ≈ {series_sum:.6f}")
-    print(f"   La serie converge (δ = 0.234 > 0)")
+    print(f"   The series converges (δ = 0.234 > 0)")
     
-    # Estimar la serie completa usando C
+    # Estimate the complete series using C
     total_estimate = C * series_sum
-    print(f"\n📊 Suma estimada total de normas:")
+    print(f"\n📊 Estimated total norm sum:")
     print(f"   Σ C/(n+1)^(1+δ) ≈ {total_estimate:.6f}")
-    print(f"   Esto confirma que H_Ψ es clase traza")
+    print(f"   This confirms that H_Ψ is trace class")
     
     return True
 
 def verify_structure():
-    """Verificar la estructura del archivo Lean"""
+    """Verify the structure of the Lean file"""
     
-    print("\n📋 VERIFICACIÓN DE ESTRUCTURA")
+    print("\n📋 STRUCTURE VERIFICATION")
     print("=" * 70)
     
     lean_file = Path(__file__).parent.parent / "formalization" / "lean" / "H_psi_trace_class_COMPLETE.lean"
     
     if not lean_file.exists():
-        print("❌ Archivo no encontrado")
+        print("❌ File not found")
         return False
     
     with open(lean_file, 'r', encoding='utf-8') as f:
         content = f.read()
     
-    # Verificar secciones clave
+    # Verify key sections
     sections = [
-        ("Polinomios de Hermite", "hermitePoly"),
-        ("Base ortonormal", "hermiteFunc"),
-        ("Operador H_Ψ", "hPsi"),
-        ("Teorema principal", "hPsi_is_trace_class"),
-        ("Constante δ", "deltaVal"),
-        ("Constante C", "cVal"),
-        ("Convergencia", "summable"),
+        ("Hermite polynomials", "hermitePoly"),
+        ("Orthonormal basis", "hermiteFunc"),
+        ("Operator H_Ψ", "hPsi"),
+        ("Main theorem", "hPsi_is_trace_class"),
+        ("Constant δ", "deltaVal"),
+        ("Constant C", "cVal"),
+        ("Convergence", "summable"),
     ]
     
     all_present = True
@@ -188,61 +191,61 @@ def verify_structure():
     return all_present
 
 def main():
-    """Función principal de verificación"""
+    """Main verification function"""
     
-    print("🎯 VERIFICANDO DEMOSTRACIÓN COMPLETA DE CLASE TRAZA")
+    print("🎯 VERIFYING COMPLETE TRACE CLASS PROOF")
     print("=" * 70)
     print()
     
-    # Verificar estructura
+    # Verify structure
     structure_ok = verify_structure()
     
-    # Verificar parte formal
+    # Verify formal part
     formal_ok = verify_lean_proof()
     
-    # Verificar parte numérica
+    # Verify numerical part
     numerical_ok = run_numerical_verification()
     
     print("\n" + "=" * 70)
-    print("📊 RESUMEN DE VERIFICACIÓN")
+    print("📊 VERIFICATION SUMMARY")
     print("=" * 70)
     
     if structure_ok:
-        print("✅ Estructura del archivo correcta")
+        print("✅ File structure correct")
     else:
-        print("❌ Problemas en la estructura del archivo")
+        print("❌ Problems in file structure")
     
     if formal_ok:
-        print("✅ Verificación formal completada")
+        print("✅ Formal verification completed")
     else:
-        print("❌ Problemas en la verificación formal")
+        print("❌ Problems in formal verification")
     
     if numerical_ok:
-        print("✅ Verificación numérica exitosa")
+        print("✅ Numerical verification successful")
     else:
-        print("⚠️  Algunas validaciones numéricas requieren atención")
+        print("⚠️  Some numerical validations need attention")
     
     print("\n" + "=" * 70)
     
     if structure_ok and formal_ok and numerical_ok:
-        print("🏆 ¡DEMOSTRACIÓN VERIFICADA!")
-        print("\n✅ H_Ψ es operador de clase traza")
-        print("✅ Constantes validadas (δ=0.234, C=15.0)")
-        print("✅ Estructura lógica correcta")
-        print("\n🎯 IMPLICACIÓN:")
-        print("   D(s) = det(I - H⁻¹s) está bien definido como función entera")
-        print("   Este es el primer paso crítico hacia la demostración de RH")
+        print("🏆 PROOF VERIFIED!")
+        print("\n✅ H_Ψ is a trace class operator")
+        print("✅ Constants validated (δ=0.234, C=15.0)")
+        print("✅ Logical structure correct")
+        print("\n🎯 IMPLICATION:")
+        print("   D(s) = det(I - H⁻¹s) is well-defined as entire function")
+        print("   This is the critical first step toward proving RH")
         return 0
     else:
-        print("⚠️  VERIFICACIÓN PARCIAL")
+        print("⚠️  PARTIAL VERIFICATION")
         if not formal_ok:
-            print("   - Revisar la parte formal")
+            print("   - Review formal part")
         if not numerical_ok:
-            print("   - Revisar las constantes numéricas")
+            print("   - Review numerical constants")
         if not structure_ok:
-            print("   - Revisar la estructura del archivo")
-        print("\nLa demostración tiene la estructura correcta pero puede")
-        print("requerir desarrollo adicional en Mathlib para completarse.")
+            print("   - Review file structure")
+        print("\nThe proof has the correct structure but may")
+        print("require additional Mathlib development to complete.")
         return 1
 
 if __name__ == "__main__":

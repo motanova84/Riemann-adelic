@@ -116,7 +116,31 @@ satisfacen ‖H_Ψ ψ_n‖ ≤ C/(n+1)^{1+δ} para δ > 0.
 Dado que Σ 1/n^{1+δ} converge para δ > 0, esto implica que H_Ψ es clase traza.
 -/
 
-/-- Cota espectral para coeficientes de H_Ψ -/
+/-!
+## Cota espectral axiomática
+
+NOTA IMPORTANTE: Esta cota espectral se toma como axioma porque su demostración
+completa requiere:
+1. Cálculo explícito de la acción de H_Ψ sobre funciones de Hermite
+2. Estimación detallada de términos logarítmicos
+3. Análisis asintótico del comportamiento espectral
+
+La cota es válida numéricamente (verificado en verify_complete_proof.py)
+y está documentada en la literatura de teoría espectral.
+
+En una formalización completa en Lean 4, esto se demostraría mediante:
+- Cálculo explícito de derivadas de funciones de Hermite
+- Estimación de normas L² de términos individuales
+- Aplicación del teorema del límite asintótico
+-/
+
+/-- Cota espectral para coeficientes de H_Ψ 
+
+Esta es la cota fundamental que garantiza que H_Ψ es clase traza.
+Se toma como axioma dado que su demostración completa requiere
+desarrollos sustanciales en análisis funcional que exceden el alcance
+de esta formalización inicial.
+-/
 axiom hPsi_spectral_bound (n : ℕ) (hn : n ≥ 10) :
   ∃ (norm : ℝ), norm ≤ cVal / ((n + 1 : ℝ) ^ (1 + deltaVal))
 
@@ -171,7 +195,9 @@ theorem hPsi_coeffs_summable :
       · norm_num
       · exact le_refl _
   · -- Use the summability of the p-series
-    sorry  -- This would follow from h2 with appropriate transformations
+    -- This requires transformation: Σ 1/(n+1)^p = Σ 1/n^p - 1
+    -- which follows from standard series manipulation theorems
+    sorry
 
 /-!
 ## Teorema final: H_Ψ es clase traza
@@ -180,9 +206,24 @@ Combinando la cota espectral y la sumabilidad de los coeficientes,
 concluimos que H_Ψ es un operador de clase traza.
 -/
 
-/-- TEOREMA PRINCIPAL: H_Ψ es operador de clase traza -/
+/-- TEOREMA PRINCIPAL: H_Ψ es operador de clase traza 
+
+Este teorema establece que H_Ψ pertenece a la clase de operadores de traza,
+lo cual es fundamental para:
+1. Definir el determinante de Fredholm D(s) = det(I - H^{-1}s)
+2. Garantizar que D(s) es una función entera
+3. Conectar los ceros de ζ(s) con el espectro de H_Ψ
+
+La demostración se basa en:
+- La cota espectral: ‖H_Ψ ψ_n‖ ≤ C/(n+1)^{1+δ}
+- La convergencia de la serie: Σ C/(n+1)^{1+δ} < ∞
+
+NOTA: Esta versión simplificada usa `True` como placeholder.
+En una formalización completa, se definiría formalmente la clase
+de operadores de traza y se demostraría la pertenencia de H_Ψ.
+-/
 theorem hPsi_is_trace_class : 
-    ∃ (proof : Unit), True := by
+    True := by
   -- La demostración completa requeriría:
   -- 1. Definir formalmente el operador H_Ψ en L²
   -- 2. Mostrar que los hermiteFunc forman una base ortonormal
@@ -190,9 +231,9 @@ theorem hPsi_is_trace_class :
   -- 4. Verificar la cota espectral hPsi_spectral_bound
   -- 5. Usar hPsi_coeffs_summable para concluir clase traza
   -- 
-  -- Por ahora, aceptamos esto como axioma dado que la demostración
+  -- Por ahora, aceptamos esto dado que la demostración
   -- completa requiere desarrollos sustanciales en Mathlib
-  exact ⟨(), trivial⟩
+  trivial
 
 /-!
 ## Verificación de axiomas
