@@ -130,7 +130,7 @@ jobs:
           "
           
       - name: 📤 Upload Python validation results
-        uses: actions/upload-artifact@v4.1.3
+        uses: actions/upload-artifact@v4
         if: always()
         with:
           name: python-sabio-validation-py${{ matrix.python-version }}-prec${{ matrix.precision }}
@@ -224,7 +224,7 @@ jobs:
           "
           
       - name: 📤 Upload SageMath validation results
-        uses: actions/upload-artifact@v4.1.3
+        uses: actions/upload-artifact@v4
         if: always()
         with:
           name: sage-quantum-radio-prec${{ matrix.precision_bits }}
@@ -311,7 +311,7 @@ jobs:
           echo "╚════════════════════════════════════════════════════════════════════╝"
           
       - name: 📤 Upload Lean4 verification results
-        uses: actions/upload-artifact@v4.1.3
+        uses: actions/upload-artifact@v4
         with:
           name: lean4-operator-verification
           path: test_lean4_operator.lean
@@ -369,7 +369,7 @@ jobs:
           fi
           
       - name: 📤 Upload SABIO compilation results
-        uses: actions/upload-artifact@v4.1.3
+        uses: actions/upload-artifact@v4
         with:
           name: sabio-compilation-results
           path: |
@@ -523,7 +523,7 @@ jobs:
           cat reports/sabio_integration_report.md
           
       - name: 📤 Upload integration report
-        uses: actions/upload-artifact@v4.1.3
+        uses: actions/upload-artifact@v4
         with:
           name: sabio-integration-report
           path: reports/
