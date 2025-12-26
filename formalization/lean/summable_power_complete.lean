@@ -124,10 +124,12 @@ theorem summable_power_complete (z : ℂ) (hp : 0 < p) :
   · -- Caso q ≥ p+1: ‖a_n‖^{-(p+1)} ≤ ‖a_n‖^{-q}
     refine summable_of_nonneg_of_le (by intro n; positivity) ?_ hq
     filter_upwards [h_large] with n hn
+    -- Para n grande, ‖P.zeros n‖ ≥ max 1 ‖z‖ ≥ 1
+    have h_ge_one : 1 ≤ ‖P.zeros n‖ := le_trans (le_max_left 1 ‖z‖) hn
     calc
       ‖P.zeros n‖ ^ (-((p : ℝ) + 1)) 
           ≤ ‖P.zeros n‖ ^ (-(q : ℝ)) := by
-        apply rpow_le_rpow_left_of_le_of_le (by linarith : 1 ≤ ‖P.zeros n‖)
+        apply rpow_le_rpow_left_of_le_of_le h_ge_one
         · exact hn
         · linarith
           
@@ -137,20 +139,28 @@ theorem summable_power_complete (z : ℂ) (hp : 0 < p) :
       -- Como la serie converge para algún q, converge para todo q' ≥ max(q, p+1)
       refine ⟨Nat.ceil ((p : ℝ) + 1), ?_, ?_⟩
       · exact Nat.le_ceil _
-      · apply summable_of_nonneg_of_le (by intro n; positivity) ?_ hq
-        intro n
-        apply rpow_le_rpow_left_of_le_of_le (by norm_num : 1 ≤ ‖P.zeros n‖)
-        · exact norm_nonneg _
-        · push_cast
-          exact Nat.le_ceil _
+      · -- Eventualmente los ceros son grandes
+        have h_large_q : ∀ᶠ n in atTop, 1 ≤ ‖P.zeros n‖ := 
+          h_inf.eventually_ge_atTop 1
+        refine summable_of_norm_bounded hq (λ n => ?_)
+        filter_upwards [h_large_q] with n hn_ge_one
+        calc
+          ‖‖P.zeros n‖ ^ (-(Nat.ceil ((p : ℝ) + 1) : ℝ))‖
+              = ‖P.zeros n‖ ^ (-(Nat.ceil ((p : ℝ) + 1) : ℝ)) := by simp [abs_of_nonneg]
+            _ ≤ ‖P.zeros n‖ ^ (-(q : ℝ)) := by
+              apply rpow_le_rpow_left_of_le_of_le hn_ge_one
+              · exact norm_nonneg _
+              · push_cast; exact Nat.le_ceil _
         
     rcases this with ⟨q', hq'_ge, hq'⟩
     refine summable_of_nonneg_of_le (by intro n; positivity) (λ n => ?_) hq'
     
+    filter_upwards [h_large] with n hn
+    have h_ge_one : 1 ≤ ‖P.zeros n‖ := le_trans (le_max_left 1 ‖z‖) hn
     calc
       ‖P.zeros n‖ ^ (-((p : ℝ) + 1)) 
           ≤ ‖P.zeros n‖ ^ (-(q' : ℝ)) := by
-        apply rpow_le_rpow_left_of_le_of_le (by norm_num : 1 ≤ ‖P.zeros n‖)
+        apply rpow_le_rpow_left_of_le_of_le h_ge_one
         · exact norm_nonneg _
         · exact hq'_ge
 
@@ -162,40 +172,21 @@ section ApplicationToEigenvalues
 noncomputable def eigenvalues (n : ℕ) : ℂ :=
   (1/2 : ℂ) + Complex.I * (log (n + 1) : ℂ)
 
-/-- Los autovalores satisfacen ∑ ‖λ_n‖^{-2} < ∞ -/
+/-- Los autovalores satisfacen ∑ ‖λ_n‖^{-2} < ∞ 
+    
+    NOTA: Esta demostración está incompleta. Requiere teoremas adicionales
+    de Mathlib sobre convergencia de series logarítmicas.
+-/
 lemma eigenvalues_summable_inv_sq :
     Summable (λ n => ‖eigenvalues n‖ ^ (-(2 : ℝ))) := by
-  -- Comparar con ∑ 1/(n+1)
-  apply summable_of_nonneg_of_le (by intro n; positivity) ?_ ?_
-  
-  · intro n
-    -- Acotar ‖λ_n‖^{-2} por una función más simple
-    have h_lower : Real.log (n + 1) ≤ ‖eigenvalues n‖ := by
-      unfold eigenvalues
-      simp only [Complex.norm_eq_abs]
-      have : Complex.abs ((1/2 : ℂ) + Complex.I * (log (n+1) : ℂ)) = 
-             Real.sqrt ((1/2)^2 + (log (n+1))^2) := by
-        rw [Complex.abs_apply]
-        simp [Complex.normSq_add_mul_I]
-        ring_nf
-      rw [this]
-      apply le_sqrt_of_sq_le_sq (by positivity)
-      calc
-        (log (n + 1))^2 ≤ (1/2)^2 + (log (n + 1))^2 := by linarith
-        _ = Real.sqrt ((1/2)^2 + (log (n+1))^2) ^ 2 := by
-          rw [sq_sqrt]; positivity
-    
-    -- Por tanto ‖λ_n‖^{-2} ≤ (log(n+1))^{-2}
-    calc
-      ‖eigenvalues n‖ ^ (-(2 : ℝ)) 
-          ≤ (log (n + 1)) ^ (-(2 : ℝ)) := by
-        apply rpow_le_rpow_left_of_le_of_le (by norm_num : 1 ≤ log (n + 1))
-        · apply log_pos; norm_num
-        · exact h_lower
-          
-  · -- ∑ (log(n+1))^{-2} converge
-    -- Usamos que (log n)^{-2} ~ 1/n para n grande
-    sorry  -- Esta parte requiere teoremas adicionales de Mathlib
+  -- La demostración completa requiere:
+  -- 1. Estimar ‖eigenvalues n‖ ~ log(n) para n grande
+  -- 2. Usar que ∑ 1/(n log²(n)) converge (integral test)
+  -- 3. Aplicar comparison test
+  -- 
+  -- Esto está más allá del alcance básico de Mathlib y requiere
+  -- desarrollos adicionales en teoría analítica de números.
+  sorry
 
 end ApplicationToEigenvalues
 

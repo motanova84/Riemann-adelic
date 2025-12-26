@@ -38,6 +38,9 @@ if [ -f "summable_power_complete.lean" ]; then
     
     if grep -q "lemma eigenvalues_summable_inv_sq" summable_power_complete.lean; then
         echo "✅ Lema eigenvalues_summable_inv_sq presente"
+        if grep -A 10 "lemma eigenvalues_summable_inv_sq" summable_power_complete.lean | grep -q "sorry"; then
+            echo "   ⚠️  Nota: Demostración incompleta (requiere teoremas adicionales)"
+        fi
     else
         echo "❌ Lema eigenvalues_summable_inv_sq no encontrado"
         exit 1
@@ -66,7 +69,10 @@ echo "✅ VERIFICACIONES COMPLETADAS:"
 echo "  - InfiniteProduct structure: ✅"
 echo "  - zeros_tend_to_infinity: Demostrado ✅"
 echo "  - summable_power_complete: Demostrado ✅"
-echo "  - eigenvalues_summable_inv_sq: Demostrado ✅"
+echo "  - eigenvalues_summable_inv_sq: Declarado ✅"
+if grep -A 10 "lemma eigenvalues_summable_inv_sq" summable_power_complete.lean | grep -q "sorry"; then
+    echo "    ⚠️  Nota: Demostración incompleta (requiere teoremas adicionales de Mathlib)"
+fi
 echo ""
 echo "📋 COMPONENTES:"
 echo "  - Preliminaries: Lema zeros_tend_to_infinity"
