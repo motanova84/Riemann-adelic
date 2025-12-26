@@ -3,7 +3,6 @@
   "cleanUrls": true,
   "trailingSlash": false,
   "outputDirectory": "public",
-  "framework": "nextjs",
 
   "buildCommand": "echo 'No build step required. Static HTML + Python execution only'",
   "installCommand": "pip install -r requirements.txt",
