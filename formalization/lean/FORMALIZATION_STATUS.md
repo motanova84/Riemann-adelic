@@ -68,6 +68,7 @@ The formalization is synchronized with the following current data sources:
 | `adelic/` | Adelic structures | ✅ L_chi, Fredholm determinant |
 | `paley/` | Paley-Wiener theory | ✅ Uniqueness theorems |
 | `scripts/` | Validation scripts | ✅ Automated verification |
+| `summable_power_complete.lean` | Power series convergence | ✅ Complete proofs for infinite products |
 
 ---
 
@@ -296,6 +297,13 @@ If you use this formalization, please cite:
 ---
 
 ## Change Log
+
+### 2025-12-26
+- ✅ Added `summable_power_complete.lean` with complete proofs
+  - `zeros_tend_to_infinity`: Si ∑ ‖a_n‖⁻ᵖ converge, entonces ‖a_n‖ → ∞
+  - `summable_power_complete`: Convergencia de ∑ ‖z/a_n‖^(p+1)
+  - `eigenvalues_summable_inv_sq`: Los autovalores satisfacen ∑ ‖λ_n‖^{-2} < ∞
+- ✅ Added verification script `scripts/verify_summable_power.sh`
 
 ### 2025-10-18
 - ✅ Converted A1, A2, A4 from axioms to proven theorems
