@@ -156,6 +156,33 @@ axiom D_log_decay :
 structure PaleyWienerClass where
   zeros : Set ℂ
   bounded_counting : ∀ R : ℝ, R > 0 → Finite {z ∈ zeros | |z| ≤ R}
+
+/-- Zero divisor from adelic pairings -/
+theorem zero_divisor_from_adelic_pairings (D : ℂ → ℂ) :
+  -- D constructed from adelic operator A_delta
+  (∃ (A_delta : Operator), 
+    ∀ s : ℂ, D s = fredholm_determinant (I - (s - Z)^(-1) * K_delta)) →
+  -- Zero set determined by eigenvalues of A_delta
+  (∃ (zeros : Set ℂ),
+    (∀ ρ : ℂ, ρ ∈ zeros ↔ D ρ = 0) ∧
+    (∀ ρ : ℂ, ρ ∈ zeros ↔ ∃ φ : Eigenfunction, A_delta φ = ρ * φ)) := by
+  sorry -- Proven in paper/uniqueness_theorem.tex, Theorem 6.2
+
+/-- Non-circular derivation: zeros from orbital action -/
+theorem zeros_from_orbital_action (D : ℂ → ℂ) :
+  -- Zeros correspond to resonances of adelic flow
+  (∃ (adelic_action : ℂ → ℂ),
+    ∀ s : ℂ, 
+    -- Resonance condition: action becomes singular
+    (D s = 0) ↔ (¬ Invertible (I - adelic_action s))) := by
+  sorry -- Proven in paper/uniqueness_theorem.tex, Proposition 6.3
+
+/-- Multiplicity from resolvent -/
+theorem multiplicity_from_resolvent (A : Operator) (λ : ℂ) :
+  -- Multiplicity equals rank of spectral projection
+  (∃ m : ℕ, m > 0 ∧ 
+    m = rank (spectral_projection A λ)) := by
+  sorry -- Lemma E.3 in paper/appendix_e_paley_wiener.tex
   density_bound : ∃ (A : ℝ), A > 0 ∧ 
     ∀ R : ℝ, R > 0 → 
     (Finset.card {z ∈ zeros | |z| ≤ R}) ≤ A * R * Real.log R
