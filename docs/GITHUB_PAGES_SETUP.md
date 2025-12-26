@@ -8,7 +8,7 @@ This document explains the GitHub Pages deployment configuration for the Riemann
 
 ### Key Files
 
-1. **`riemann_viewer.html`** - Main interactive dashboard
+1. **`public/index.html`** - Main interactive dashboard
 2. **`.github/workflows/pages.yml`** - GitHub Actions workflow for deployment
 3. **`data/`** - Directory containing verification results and certificates
 
