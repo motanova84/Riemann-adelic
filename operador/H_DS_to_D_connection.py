@@ -14,22 +14,39 @@ import mpmath as mp
 from typing import Tuple, Callable, List, Dict, Any, Optional
 from pathlib import Path
 
-# Importar operadores existentes - intentar primero el módulo operador
+# Importar operadores existentes - usando importlib para evitar problemas de path
 HDS_AVAILABLE = False
 DS_AVAILABLE = False
 
 try:
-    import sys
-    sys.path.insert(0, '.')
-    from operador.operador_H_DS import DiscreteSymmetryOperator as OperadorHDS
-    HDS_AVAILABLE = True
-except ImportError as e:
+    # No modificar sys.path - usar importlib en su lugar
+    import importlib.util
+    
+    # Intentar importar desde operador/operador_H_DS.py
+    spec = importlib.util.spec_from_file_location(
+        "operador_hds", 
+        "operador/operador_H_DS.py"
+    )
+    if spec and spec.loader:
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        OperadorHDS = module.DiscreteSymmetryOperator
+        HDS_AVAILABLE = True
+except (ImportError, FileNotFoundError, AttributeError):
     pass
 
 try:
-    from operators.discrete_symmetry_operator import DiscreteSymmetryOperator as OperatorsDS
-    DS_AVAILABLE = True
-except ImportError:
+    # Intentar importar desde operators/discrete_symmetry_operator.py
+    spec = importlib.util.spec_from_file_location(
+        "operators_ds",
+        "operators/discrete_symmetry_operator.py"
+    )
+    if spec and spec.loader:
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        OperatorsDS = module.DiscreteSymmetryOperator
+        DS_AVAILABLE = True
+except (ImportError, FileNotFoundError, AttributeError):
     pass
 
 

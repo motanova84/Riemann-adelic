@@ -128,12 +128,25 @@ def check_python_modules() -> Dict[str, bool]:
         print(f"  {status} {name}")
         
         if exists:
-            # Verificar importabilidad
+            # Verificar importabilidad usando importlib
             try:
-                module_name = path.replace('/', '.').replace('.py', '')
-                __import__(module_name)
-                print(f"     {Colors.GREEN}✓ Importable{Colors.END}")
-            except ImportError as e:
+                import importlib.util
+                from pathlib import Path
+                
+                # Convertir path relativo a absoluto
+                abs_path = Path(path).absolute()
+                
+                # Crear spec para el módulo
+                spec = importlib.util.spec_from_file_location(
+                    name.replace('.py', ''),
+                    abs_path
+                )
+                
+                if spec and spec.loader:
+                    module = importlib.util.module_from_spec(spec)
+                    spec.loader.exec_module(module)
+                    print(f"     {Colors.GREEN}✓ Importable{Colors.END}")
+            except Exception as e:
                 print(f"     {Colors.YELLOW}⚠️  Error de importación: {e}{Colors.END}")
     
     return results

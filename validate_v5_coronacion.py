@@ -370,11 +370,20 @@ def validate_v5_coronacion(precision=30, verbose=False, save_certificate=False, 
     # -----------------------------------------------------------------------
     
     # --- H_DS Discrete Symmetry Operator Verification ---------------------
+    print("\n   🔒 H_DS Discrete Symmetry Operator Verification...")
+    
     try:
-        from operador.H_DS_to_D_connection import HDSConnection
-        import numpy as np
+        # Import using importlib to avoid package issues
+        import importlib.util
+        spec = importlib.util.spec_from_file_location(
+            "hds_conn", 
+            "operador/H_DS_to_D_connection.py"
+        )
+        hds_module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(hds_module)
+        HDSConnection = hds_module.HDSConnection
         
-        print("\n   🔒 H_DS Discrete Symmetry Operator Verification...")
+        import numpy as np
         
         # Build a small operator for validation
         n_basis = 20

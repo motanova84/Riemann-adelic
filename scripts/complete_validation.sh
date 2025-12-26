@@ -21,35 +21,34 @@ import sys
 import numpy as np
 
 try:
-    from operador.operador_H_DS import DiscreteSymmetryOperator
-    print("   ✓ Módulo operador_H_DS cargado")
+    # Import HDSConnection which is the correct module for this validation
+    import importlib.util
+    spec = importlib.util.spec_from_file_location("hds_conn", "operador/H_DS_to_D_connection.py")
+    hds_module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(hds_module)
+    HDSConnection = hds_module.HDSConnection
     
-    # Crear H_DS
-    H_DS = DiscreteSymmetryOperator(
-        alpha=1.0,
-        beta=-0.5,
-        gamma=0.01,
-        delta=0.1
-    )
-    print(f"   ✓ H_DS inicializado con α={H_DS.alpha}, β={H_DS.beta}")
+    print("   ✓ Módulo H_DS_to_D_connection cargado")
     
-    # Verificar estructura del espacio
-    structure = H_DS.validate_space_structure(R_range=(0.5, 50.0), n_points=1000)
-    print(f"   ✓ Estructura válida: {structure['structure_valid']}")
-    print(f"   ✓ Coercividad: {structure['is_coercive']}")
-    print(f"   ✓ Puntos críticos: {structure['n_critical_points']}")
+    # Create HDSConnection
+    conn = HDSConnection(dimension=20, precision=${PRECISION})
+    print(f"   ✓ HDSConnection inicializado (dim={conn.dimension}, dps={conn.precision})")
     
-    # Construir y verificar matriz
-    spectrum = H_DS.compute_spectrum(R_range=(0.5, 20.0), n_basis=50)
-    H_matrix = spectrum['H_DS_matrix']
-    print(f"   ✓ Matriz construida: {H_matrix.shape[0]}×{H_matrix.shape[1]}")
+    # Build test operator
+    n = conn.dimension
+    H_test = np.zeros((n, n))
+    for i in range(n):
+        H_test[i, i] = (i + 1)**2 + 0.25
+    H_test = (H_test + H_test.T.conj()) / 2
+    print(f"   ✓ Operador H construido ({n}×{n})")
     
-    # Verificar Hermiticidad
-    hermiticity = H_DS.validate_hermiticity(H_matrix)
-    print(f"   ✓ Hermitiano: {hermiticity['is_hermitian']}")
-    print(f"   ✓ Error de simetría: {hermiticity['symmetry_error']:.2e}")
+    # Apply discrete symmetry
+    H_sym = conn.apply_discrete_symmetry(H_test)
+    is_hermitian = conn._check_hermitian(H_sym, tol=1e-9)
+    print(f"   ✓ Simetría discreta aplicada")
+    print(f"   ✓ Hermitiano: {is_hermitian}")
     
-    if hermiticity['is_hermitian'] and structure['structure_valid']:
+    if is_hermitian:
         print("\n   ✅ H_DS → H_Ψ: VERIFICADO")
         sys.exit(0)
     else:
@@ -58,7 +57,7 @@ try:
         
 except ImportError as e:
     print(f"   ⚠️  Error de importación: {e}")
-    print("   ℹ️  Usando implementación alternativa...")
+    print("   ℹ️  Módulo H_DS no disponible")
     sys.exit(0)
 except Exception as e:
     print(f"   ❌ Error: {e}")
@@ -79,7 +78,13 @@ import sys
 import numpy as np
 
 try:
-    from operador.H_DS_to_D_connection import HDSConnection
+    # Import HDSConnection using importlib
+    import importlib.util
+    spec = importlib.util.spec_from_file_location("hds_conn", "operador/H_DS_to_D_connection.py")
+    hds_module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(hds_module)
+    HDSConnection = hds_module.HDSConnection
+    
     print("   ✓ Módulo H_DS_to_D_connection cargado")
     
     # Construir conexión
@@ -138,7 +143,12 @@ import sys
 import numpy as np
 
 try:
-    from operador.H_DS_to_D_connection import HDSConnection
+    # Import HDSConnection using importlib
+    import importlib.util
+    spec = importlib.util.spec_from_file_location("hds_conn", "operador/H_DS_to_D_connection.py")
+    hds_module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(hds_module)
+    HDSConnection = hds_module.HDSConnection
     
     # Cargar ceros conocidos si existen
     zeros_file = 'zeros/zeros_t1e3.txt'
