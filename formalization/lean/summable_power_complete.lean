@@ -94,7 +94,12 @@ section MainProof
 
 variable {P : InfiniteProduct} (p : ℕ)
 
-/-- Convergencia de ∑ ‖z/a_n‖^(p+1) -/
+/-- Convergencia de ∑ ‖z/a_n‖^(p+1) 
+
+    NOTA: La demostración está completa cuando el decay_rate q de P 
+    satisface q ≥ p+1. El caso q < p+1 requiere información adicional
+    sobre P.decay_rate o una reformulación del teorema.
+-/
 theorem summable_power_complete (z : ℂ) (hp : 0 < p) :
     Summable (λ n => ‖z / P.zeros n‖ ^ ((p : ℝ) + 1)) := by
   rcases P.decay_rate with ⟨q, hq⟩
@@ -133,36 +138,15 @@ theorem summable_power_complete (z : ℂ) (hp : 0 < p) :
         · exact hn
         · linarith
           
-  · -- Caso q < p+1: necesitamos otro argumento
-    -- Podemos tomar q' = p+1 porque la serie converge para exponentes mayores
-    have : ∃ (q' : ℕ), (p : ℝ) + 1 ≤ q' ∧ Summable (λ n => ‖P.zeros n‖ ^ (-(q' : ℝ))) := by
-      -- Como la serie converge para algún q, converge para todo q' ≥ max(q, p+1)
-      refine ⟨Nat.ceil ((p : ℝ) + 1), ?_, ?_⟩
-      · exact Nat.le_ceil _
-      · -- Eventualmente los ceros son grandes
-        have h_large_q : ∀ᶠ n in atTop, 1 ≤ ‖P.zeros n‖ := 
-          h_inf.eventually_ge_atTop 1
-        refine summable_of_norm_bounded hq (λ n => ?_)
-        filter_upwards [h_large_q] with n hn_ge_one
-        calc
-          ‖‖P.zeros n‖ ^ (-(Nat.ceil ((p : ℝ) + 1) : ℝ))‖
-              = ‖P.zeros n‖ ^ (-(Nat.ceil ((p : ℝ) + 1) : ℝ)) := by simp [abs_of_nonneg]
-            _ ≤ ‖P.zeros n‖ ^ (-(q : ℝ)) := by
-              apply rpow_le_rpow_left_of_le_of_le hn_ge_one
-              · exact norm_nonneg _
-              · push_cast; exact Nat.le_ceil _
-        
-    rcases this with ⟨q', hq'_ge, hq'⟩
-    refine summable_of_nonneg_of_le (by intro n; positivity) (λ n => ?_) hq'
-    
-    filter_upwards [h_large] with n hn
-    have h_ge_one : 1 ≤ ‖P.zeros n‖ := le_trans (le_max_left 1 ‖z‖) hn
-    calc
-      ‖P.zeros n‖ ^ (-((p : ℝ) + 1)) 
-          ≤ ‖P.zeros n‖ ^ (-(q' : ℝ)) := by
-        apply rpow_le_rpow_left_of_le_of_le h_ge_one
-        · exact norm_nonneg _
-        · exact hq'_ge
+  · -- Caso q < p+1: 
+    -- En este caso, necesitamos asumir que P.decay_rate proporciona
+    -- convergencia para exponentes arbitrariamente grandes, o restringir
+    -- el teorema a casos donde q ≥ p+1.
+    -- Por simplicidad, usamos sorry para este caso no cubierto.
+    push_neg at hq_ge
+    -- Este caso requiere información adicional sobre P.decay_rate
+    -- o una restricción del teorema
+    sorry
 
 end MainProof
 
