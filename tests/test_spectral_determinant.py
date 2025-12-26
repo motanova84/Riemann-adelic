@@ -248,6 +248,7 @@ class TestQCALIntegration:
         content = lean_file.read_text()
         
         # Check for QCAL references
+        # QCAL constants: f₀ = 141.7001 Hz (base frequency), C = 244.36 (coherence)
         assert "QCAL" in content or "Coherencia" in content
         assert "141.7001" in content or "244.36" in content
 
