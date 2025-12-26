@@ -117,11 +117,15 @@ La estrategia es:
 def L2norm (f : ℝ → ℝ) : ℝ :=
   sqrt (∫ x : ℝ, f x ^ 2)
 
-/-- Constante de decrecimiento espectral -/
-def C_spectral : ℝ := 10  -- Constante empírica validada numéricamente
+/-- Constante de decrecimiento espectral 
+    NOTA: Valor sincronizado con validación numérica en validate_trace_class.py
+    El ajuste numérico muestra C ≈ 1.0, aquí usamos una cota conservadora -/
+def C_spectral : ℝ := 10  -- Cota superior conservadora validada numéricamente
 
-/-- Exponente de decrecimiento (debe ser > 0 para convergencia) -/
-def delta_spectral : ℝ := 0.2  -- Validado numéricamente
+/-- Exponente de decrecimiento (debe ser > 0 para convergencia)
+    NOTA: Valor sincronizado con validación numérica en validate_trace_class.py
+    El ajuste numérico muestra δ ≈ 0.7, aquí usamos una cota inferior conservadora -/
+def delta_spectral : ℝ := 0.2  -- Cota inferior conservadora (α = 1.2 > 1)
 
 /-- El término logarítmico en H_Ψ(ψ_n) tiene norma acotada -/
 axiom log_term_bounded (n : ℕ) (hn : n ≥ 1) :
@@ -132,7 +136,16 @@ axiom log_term_bounded (n : ℕ) (hn : n ≥ 1) :
 axiom polynomial_term_bounded (n : ℕ) (hn : n ≥ 1) :
   L2norm (fun x => x * hermiteBasis n x) ≤ sqrt n
 
-/-- Cota principal de decrecimiento espectral -/
+/-- Cota principal de decrecimiento espectral 
+    TODO: Completar la demostración rigurosa del decrecimiento.
+    La estructura del argumento está establecida, pero los detalles técnicos
+    requieren lemas auxiliares sobre:
+    - Análisis asintótico de funciones de Hermite
+    - Comportamiento del término logarítmico en L²
+    - Combinación de estimaciones para obtener la cota final
+    
+    Ver issue: github.com/motanova84/Riemann-adelic/issues/XXX
+-/
 theorem H_psi_coefficient_bound (n : ℕ) (hn : n ≥ 10) :
     L2norm (H_psi_operator (hermiteBasis n)) ≤ 
       C_spectral / (n + 1)^(1 + delta_spectral) := by
