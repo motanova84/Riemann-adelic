@@ -1,23 +1,32 @@
-# Proof-check: instala entorno de pruebas formales y verifica/compila pruebas.
-# Este workflow verifica la formalización en Lean 4
 name: Proof Check
 
+# Workflow para verificación formal con Coq/Lean/Isabelle
+# Este es un workflow de plantilla que debe adaptarse al sistema formal específico
 on:
   push:
     branches: [ main ]
-    paths:
-      - 'formalization/lean/**'
-      - '.github/workflows/proof-check.yml'
   pull_request:
     branches: [ main ]
     paths:
-      - 'formalization/lean/**'
+      - 'formalization/**'
       - '.github/workflows/proof-check.yml'
+  pull_request:
+    branches: [ main, master ]
+    paths:
+      - 'formalization/**'
+  workflow_dispatch:  # Permite ejecución manual desde la UI de GitHub
 
 permissions:
   contents: read
 
 jobs:
+  lean-verification:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
   lean-build:
     runs-on: ubuntu-latest
     
@@ -29,6 +38,12 @@ jobs:
         uses: leanprover/lean-action@v1
         with:
           lean-version: "leanprover/lean4:latest"
+      
+      - name: Check Lean installation
+        run: |
+          lean --version
+          lake --version
+      
 
       - name: Cache Lean build
         uses: actions/cache@v4
@@ -44,14 +59,67 @@ jobs:
         run: |
           cd formalization/lean
           lake update
+      
 
       - name: Build Lean formalization
         run: |
           cd formalization/lean
           lake build
+      
+      - name: Verify Lean proofs
+        run: |
+          cd formalization/lean
+          lake exe cache get || echo "Cache not available, building from source"
+          # Check individual Lean files for verification
+          lean RH_final.lean
+          lean axiomas_a_lemas.lean
+          echo "✓ Lean proofs verified successfully"
 
       - name: Run Lean check on RH_final.lean
         run: |
           cd formalization/lean
           lake exe cache get || true
           lake build RH_final
+      - name: Ensure Docker available
+        uses: docker/setup-buildx-action@v2
+
+      - name: Run proof build inside Docker (Coq)
+        run: |
+          set -euo pipefail
+          echo "Running proof-check inside Docker image: $COQ_IMAGE"
+          # Monta el repositorio en /work y ejecuta el target 'proof' si existe.
+          if [ -f Makefile ]; then
+            echo "Makefile found. Attempting 'make proof' or 'make'."
+            if make -n proof >/dev/null 2>&1; then
+              docker run --rm -v "$PWD":/work -w /work $COQ_IMAGE /bin/bash -lc "make proof"
+            else
+              docker run --rm -v "$PWD":/work -w /work $COQ_IMAGE /bin/bash -lc "make"
+            fi
+          else
+            # Intentos razonables: coq_makefile or lean/isabelle placeholders.
+            echo "No Makefile detected. Trying coq_makefile/_CoqProject conventions."
+            docker run --rm -v "$PWD":/work -w /work $COQ_IMAGE /bin/bash -lc "\
+              if [ -f _CoqProject ]; then \
+                coq_makefile -f _CoqProject -o Makefile.coq || true; \
+                if [ -f Makefile.coq ]; then make -f Makefile.coq; fi; \
+              else \
+                echo 'No _CoqProject or Makefile. Please provide a Makefile with a \`proof\` target or set COQ_IMAGE to an image with your toolchain.'; \
+                exit 0; \
+              fi"
+          fi
+
+      - name: Upload proof logs (always)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: proof-logs
+          path: |
+            proof-logs/**
+            _CoqProject
+            Makefile*
+            logs/**
+
+      - name: Proof-check summary
+        if: always()
+        run: |
+          echo "Proof-check job finished. If failed, inspect artifacts and logs."

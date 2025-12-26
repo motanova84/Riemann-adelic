@@ -7,6 +7,7 @@ on:
   workflow_dispatch:
 
 jobs:
+  latex:
   latex-teoremas:
     runs-on: ubuntu-latest
     steps:
@@ -16,6 +17,7 @@ jobs:
       - name: Build PDF of core theorems
         working-directory: docs/teoremas_basicos
         run: make
+      - name: Upload PDF artifact
       - name: Upload teoremas artifact
         uses: actions/upload-artifact@v4
         with:

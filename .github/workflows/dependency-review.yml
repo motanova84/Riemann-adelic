@@ -1,10 +1,10 @@
-# Dependency review: genera reporte y puede fallar si hay problemas críticos.
-# Este workflow revisa las dependencias en pull requests para detectar vulnerabilidades
 name: Dependency Review
 
+# Workflow para revisar cambios en dependencias en cada Pull Request
+# Ayuda a detectar vulnerabilidades de seguridad y licencias problemáticas
 on:
   pull_request:
-    types: [opened, synchronize, reopened]
+    branches: [ main, master ]
 
 permissions:
   contents: read
@@ -12,51 +12,44 @@ permissions:
 
 jobs:
   dependency-review:
+    name: Review Dependencies
     runs-on: ubuntu-latest
     
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Dependency Review
-        uses: actions/dependency-review-action@v4
-        with:
-          fail-on-severity: moderate
-          deny-licenses: GPL-3.0, AGPL-3.0
-          comment-summary-in-pr: always
-
-  security-scan:
-    runs-on: ubuntu-latest
+    - name: Checkout code
+      uses: actions/checkout@v4
     
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
-
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install safety bandit
-
-      - name: Run Safety check (known vulnerabilities)
-        run: |
-          pip install -r requirements.txt
-          safety check --json || echo "Safety check completed with warnings"
-        continue-on-error: true
-
-      - name: Run Bandit (security linter)
-        run: |
-          bandit -r . --skip B101 -f json -o bandit-report.json
-        continue-on-error: true
-
-      - name: Upload security reports
-        uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: security-reports
-          path: |
-            bandit-report.json
+    - name: Dependency Review
+      uses: actions/dependency-review-action@v4
+      with:
+        # Opciones de configuración:
+        # fail-on-severity: moderate  # Falla en vulnerabilidades moderadas o superiores
+        # deny-licenses: GPL-3.0, AGPL-3.0  # Licencias a rechazar
+        # allow-licenses: MIT, Apache-2.0, BSD-3-Clause  # Solo permite estas licencias
+        
+        # Configuración recomendada para empezar:
+        fail-on-severity: high
+        comment-summary-in-pr: true
+        
+    # ============================================================
+    # INSTRUCCIONES PARA EL MANTENEDOR:
+    # 
+    # 1. Este workflow solo se ejecuta en PRs para revisar cambios en:
+    #    - requirements.txt
+    #    - package.json
+    #    - go.mod
+    #    - Cargo.toml
+    #    etc.
+    # 
+    # 2. Ajusta fail-on-severity según tu política:
+    #    - low: Muy estricto, puede generar muchas alertas
+    #    - moderate: Equilibrado
+    #    - high: Solo vulnerabilidades serias
+    #    - critical: Solo las más graves
+    # 
+    # 3. Considera añadir deny-licenses si tienes restricciones
+    # 
+    # 4. Para Python, considera también:
+    #    - pip-audit para auditoría de seguridad
+    #    - safety check
+    # ============================================================

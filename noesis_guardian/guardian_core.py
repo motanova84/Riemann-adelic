@@ -36,6 +36,9 @@ if __name__ == "__main__":
 else:
     from .modules.coherency_hooks import CoherencyHooks
 
+# Log file path for Guardian activity
+LOGFILE = "noesis_guardian/logs/guardian_log.json"
+
 
 class Notifier:
     """Simple notification handler for Guardian alerts."""
@@ -147,6 +150,15 @@ class NoesisGuardian:
         self.logs_dir.mkdir(parents=True, exist_ok=True)
 
         self.log_file = self.logs_dir / "guardian_log.json"
+        
+        # Initialize components for compatibility with tests
+        from .modules.watcher import RepoWatcher
+        from .modules.autorepair_engine import AutoRepairEngine
+        from .modules.spectral_monitor import SpectralMonitor
+        
+        self.watcher = RepoWatcher()
+        self.repair_engine = AutoRepairEngine()
+        self.spectral_monitor = SpectralMonitor()
 
     @staticmethod
     def _find_repo_root() -> Path:
@@ -555,280 +567,44 @@ class NoesisGuardian:
         Args:
             data: Datos a registrar
         """
-        try:
-            log_dir = Path(self.log_path).parent
-            log_dir.mkdir(parents=True, exist_ok=True)
-
-            with open(self.log_path, "a", encoding="utf-8") as f:
-                f.write(json.dumps(data, default=str) + "\n")
-        except Exception as e:
-            Notifier.error(f"Error writing log: {e}")
-
-    def run_cycle(self) -> Dict[str, Any]:
-        """
-        Ejecuta un ciclo completo de monitoreo y reparación.
-
+        Run the Guardian and produce a log entry.
+        
+        This is an alias for run_cycle() for backward compatibility.
+        
         Returns:
-            Resultado del ciclo incluyendo estado, coherencia y acciones
+            Dictionary with complete cycle results.
         """
-        self._cycle_count += 1
-        cycle_start = time.time()
-
-        # 1. Escanear repositorio
-        state = self.watcher.scan_repo()
-
-        # 2. Verificar coherencia espectral
-        coherence = self.spectral.check_spectral_coherence()
-
-        # 3. Calcular señal NOESIS
-        signal = self.noesis_signal()
-
-        # 4. Construir registro completo
-        full_state = {
-            "timestamp": datetime.now().isoformat(),
-            "cycle": self._cycle_count,
-            "state": state,
-            "spectral": coherence,
-            "signal": signal,
-            "duration_ms": 0,  # Se actualizará al final
+        entry = {
+            "timestamp": datetime.now(timezone.utc).isoformat(),
+            "repo": self.get_repo_state(),
+            "spectral": self.spectral_monitor.check(),
         }
+        return entry
 
-        # 5. Registrar estado
-        self.log(full_state)
-
-        # 6. Evaluar si se necesita reparación
-        needs_repair = (
-            state.get("collisions", 0) > 0
-            or state.get("missing", 0) > 0
-            or state.get("lean_status") not in ["ok", "not_found"]
-            or coherence.get("coherent") is False
-        )
-
-        repair_report = None
-        if needs_repair:
-            # Ejecutar reparación
-            repair_report = self.repair.full_repair(state)
-            full_state["repair"] = repair_report
-
-            # Enviar alerta
-            Notifier.alert("⚠️ Reparación ejecutada", full_state)
-
-            # Sincronizar certificado AIK
-            AikSync.sync_certificate(full_state)
-
-        # 7. Actualizar estado en SABIO
-        SabioBridge.update_state(full_state)
-
-        # 8. Calcular duración
-        duration_ms = (time.time() - cycle_start) * 1000
-        full_state["duration_ms"] = duration_ms
-
-        # 9. Imprimir resumen
-        print(f"🧠 Ciclo Guardian 2.0 #{self._cycle_count} completado.")
-        print(f"   → Señal: {signal['state']}")
-        print(f"   → Coherencia: {coherence['coherent']}")
-        print(f"   → Duración: {duration_ms:.2f}ms")
-
-        if repair_report:
-            print(f"   → Reparaciones: {len(repair_report.get('actions', []))}")
-
-        return full_state
-
-    def run(self, interval: Optional[int] = None, max_cycles: Optional[int] = None) -> None:
+    def log(self, entry: Dict[str, Any]) -> None:
         """
-        Ejecuta el Guardian en modo continuo.
-
+        Log an entry to the log file.
+        
         Args:
-            interval: Intervalo entre ciclos en segundos (default: 1800)
-            max_cycles: Número máximo de ciclos (None = infinito)
+            entry: Entry data to log
         """
-        if interval is None:
-            interval = self.DEFAULT_CYCLE_INTERVAL
-
-        self._running = True
-        cycles_run = 0
-
-        print("=" * 60)
-        print("NOESIS GUARDIAN 2.0 — Iniciando")
-        print("=" * 60)
-        print(f"Frecuencia: {self.F0_HZ} Hz")
-        print(f"Coherencia: C = {self.COHERENCE_CONSTANT}")
-        print(f"Intervalo: {interval}s ({interval // 60} minutos)")
-        print("=" * 60)
-
-        try:
-            while self._running:
-                self.run_cycle()
-                cycles_run += 1
-
-                if max_cycles and cycles_run >= max_cycles:
-                    print(f"\n✅ Completados {max_cycles} ciclos. Finalizando.")
-                    break
-
-                if self._running:
-                    time.sleep(interval)
-
-        except KeyboardInterrupt:
-            print("\n\n⏹️  Guardian detenido por el usuario.")
-
-        finally:
-            self._running = False
-
-    def stop(self) -> None:
-        """Detiene el Guardian."""
-        self._running = False
-
-    def get_status(self) -> Dict[str, Any]:
-        """
-        Obtiene el estado actual del Guardian.
-
-        Returns:
-            Estado del Guardian
-        """
-        return {
-            "running": self._running,
-            "cycles": self._cycle_count,
-            "f0_hz": self.F0_HZ,
-            "coherence": self.COHERENCE_CONSTANT,
-            "repo_root": str(self.repo_root),
-            "log_path": self.log_path,
-        }
-
-    def quick_check(self) -> Dict[str, Any]:
-        """
-        Realiza una verificación rápida del sistema.
-
-        Returns:
-            Resultado de la verificación rápida
-        """
-        state = self.watcher.scan_repo()
-        coherence = self.spectral.check_spectral_coherence()
-        signal = self.noesis_signal()
-
-        return {
-            "timestamp": datetime.now().isoformat(),
-            "healthy": (
-                state.get("collisions", 0) == 0
-                and state.get("missing", 0) == 0
-                and coherence.get("coherent", False)
-            ),
-            "state_summary": {
-                "collisions": state.get("collisions", 0),
-                "missing": state.get("missing", 0),
-                "lean_status": state.get("lean_status"),
-            },
-            "coherent": coherence.get("coherent", False),
-            "signal_state": signal.get("state"),
-            "vitality": signal.get("vitality"),
-        }
+        self._save_log(entry)
 
 
 def main():
-    """Punto de entrada principal del Guardian."""
-    import argparse
-
-    parser = argparse.ArgumentParser(
-        description="NOESIS Guardian 2.0 - Sistema de monitoreo y autorreparación QCAL",
-        formatter_class=argparse.RawDescriptionHelpFormatter,
-        epilog="""
-Ejemplos:
-  python -m noesis_guardian.guardian_core                    # Ejecutar continuo
-  python -m noesis_guardian.guardian_core --interval 600     # Cada 10 minutos
-  python -m noesis_guardian.guardian_core --cycles 1         # Un solo ciclo
-  python -m noesis_guardian.guardian_core --quick            # Verificación rápida
-        """,
-    )
-
-    parser.add_argument(
-        "--interval",
-        type=int,
-        default=1800,
-        help="Intervalo entre ciclos en segundos (default: 1800)",
-    )
-    parser.add_argument(
-        "--cycles",
-        type=int,
-        default=None,
-        help="Número máximo de ciclos (default: infinito)",
-    )
-    parser.add_argument(
-        "--quick",
-        action="store_true",
-        help="Ejecutar verificación rápida y salir",
-    )
-
-    args = parser.parse_args()
-
+    """Main entry point for Guardian execution."""
     guardian = NoesisGuardian()
+    result = guardian.run_cycle()
 
-    if args.quick:
-        print("=" * 60)
-        print("NOESIS GUARDIAN 2.0 — Verificación Rápida")
-        print("=" * 60)
+    # Exit with appropriate code
+    hooks = result.get("hooks", {})
+    all_passed = all(h.get("ok", False) for h in hooks.values())
 
-        result = guardian.quick_check()
-
-        print("\n📊 Estado del Sistema:")
-        print(f"   Timestamp: {result['timestamp']}")
-        print(f"   Saludable: {'✅' if result['healthy'] else '❌'}")
-        print(f"   Coherente: {'✅' if result['coherent'] else '❌'}")
-        print(f"   Estado: {result['signal_state']}")
-        print(f"   Vitalidad: {result['vitality']:.2%}")
-
-        print("\n📋 Detalles:")
-        summary = result["state_summary"]
-        print(f"   Colisiones: {summary['collisions']}")
-        print(f"   Faltantes: {summary['missing']}")
-        print(f"   Lean: {summary['lean_status']}")
-
-        return 0 if result["healthy"] else 1
-
-    guardian.run(interval=args.interval, max_cycles=args.cycles)
-    return 0
+    sys.exit(0 if all_passed else 1)
 
 
 if __name__ == "__main__":
-    exit(main())
-Guardian Core - Central Orchestration for Noesis Guardian
-----------------------------------------------------------
-
-Sistema de validación, coherencia y análisis estructural del repositorio.
-Este módulo orquesta todos los componentes del Guardian para mantener
-la integridad del repositorio QCAL Riemann-adelic.
-
-Author: José Manuel Mota Burruezo (JMMB Ψ ✧)
-"""
-
-from datetime import datetime
-import json
-import os
-
-from noesis_guardian.modules.watcher import RepoWatcher
-from noesis_guardian.modules.autorepair_engine import AutoRepairEngine
-from noesis_guardian.modules.spectral_monitor import SpectralMonitor
-from noesis_guardian.modules.ai_notifier import Notifier
-from noesis_guardian.modules.sabio_bridge import SabioBridge
-from noesis_guardian.modules.aik_sync import AikSync
-
-LOGFILE = "noesis_guardian/logs/guardian_log.json"
-
-
-class NoesisGuardian:
-    """Main guardian class for repository monitoring and maintenance."""
-
-    def __init__(self) -> None:
-        """Initialize the guardian with all monitoring modules."""
-        self.watcher = RepoWatcher()
-        self.repair = AutoRepairEngine()
-        self.spectral = SpectralMonitor()
-
-    def _log(self, entry: dict) -> None:
-        """Log an entry to the guardian log file."""
-        # Ensure logs directory exists
-LOGFILE = os.path.join(
-    os.path.dirname(os.path.abspath(__file__)), "logs", "guardian_log.json"
-)
-
+    main()
 
 class NoesisGuardian:
     """

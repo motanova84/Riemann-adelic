@@ -33,6 +33,14 @@ import mpmath as mp
 # Add the current directory to Python path for imports
 sys.path.append('.')
 
+# Import QCAL logging system
+try:
+    from utils.validation_logger import ValidationLogger
+    LOGGING_AVAILABLE = True
+except ImportError:
+    LOGGING_AVAILABLE = False
+    print("⚠️  Warning: QCAL logging system not available")
+
 def include_yolo_verification():
     """Include YOLO verification in main validation"""
     try:
@@ -68,6 +76,15 @@ def validate_v5_coronacion(precision=30, verbose=False, save_certificate=False, 
     Returns:
         dict: Validation results and proof certificate
     """
+    # Initialize logging
+    logger = None
+    if LOGGING_AVAILABLE:
+        logger = ValidationLogger("validate_v5_coronacion")
+        logger.log_step("V5 Coronación Validation", 1)
+        logger.log(f"Precision: {precision} decimal places")
+        logger.log(f"Max zeros: {max_zeros}")
+        logger.log(f"Max primes: {max_primes}")
+    
     setup_precision(precision)
     
     print("=" * 80)
@@ -459,6 +476,53 @@ def validate_v5_coronacion(precision=30, verbose=False, save_certificate=False, 
         print(f"   ⚠️  Zeta quantum wave verification skipped: {e}")
     # -----------------------------------------------------------------------
 
+    # --- Arpeth Bioinformatics Validation (RNA Stability at 141.7001 Hz) -----
+    try:
+        from utils.arpeth_bioinformatics import validate_biological_coherence
+        
+        print("\n   🧬 Arpeth Bioinformatics: RNA Stability via QCAL Coherence...")
+        
+        # Test with sample RNA sequences
+        test_sequences = [
+            "AUGCGCGCGUGA",  # With palindromic structure
+            "AUGGUGCACGUGACUGACGCUGCACACAAG",  # Beta-globin fragment
+        ]
+        
+        arpeth_results = []
+        for seq in test_sequences:
+            result = validate_biological_coherence(seq, precision=max(30, precision))
+            arpeth_results.append({
+                'sequence_length': len(seq),
+                'stability_score': result['stability_score'],
+                'qcal_validated': result['qcal_validated'],
+                'resonance_match': result['resonance_match']
+            })
+        
+        # Overall validation: at least one sequence should show coherence
+        avg_stability = sum(r['stability_score'] for r in arpeth_results) / len(arpeth_results)
+        any_validated = any(r['qcal_validated'] for r in arpeth_results)
+        
+        if avg_stability > 0.3 and any_validated:
+            print(f"   ✅ Arpeth bioinformatics: RNA coherence at 141.7001 Hz verified")
+            print(f"      Average stability score: {avg_stability:.4f}")
+            print(f"      Sequences validated: {sum(r['qcal_validated'] for r in arpeth_results)}/{len(arpeth_results)}")
+            results["Arpeth Bioinformatics Verification"] = {
+                'status': 'PASSED',
+                'average_stability': avg_stability,
+                'sequences_tested': len(test_sequences),
+                'description': 'RNA stability via Ψ_Life = I × A_eff² × C^∞'
+            }
+        else:
+            print(f"   ⚠️  Arpeth bioinformatics: PARTIAL")
+            results["Arpeth Bioinformatics Verification"] = {
+                'status': 'PARTIAL',
+                'average_stability': avg_stability
+            }
+            
+    except Exception as e:
+        print(f"   ⚠️  Arpeth bioinformatics verification skipped: {e}")
+    # -----------------------------------------------------------------------
+
     # YOLO verification integration
     yolo_success = include_yolo_verification()
     if yolo_success:
@@ -500,6 +564,47 @@ def validate_v5_coronacion(precision=30, verbose=False, save_certificate=False, 
         except Exception as e:
             print(f"⚠️  Warning: Could not save proof certificate: {e}")
     
+    # --- SAT Certificates Integration -----------------------------------------
+    print("\n🔐 SAT CERTIFICATES VERIFICATION...")
+    try:
+        from scripts.validate_sat_certificates import SATCertificateValidator
+        
+        sat_validator = SATCertificateValidator(certificates_dir='certificates/sat')
+        cert_dir = Path('certificates/sat')
+        
+        if cert_dir.exists() and list(cert_dir.glob('SAT_*.json')):
+            print("   Validating SAT certificates for key theorems...")
+            sat_results = sat_validator.validate_all_certificates()
+            
+            sat_passed = sum(1 for r in sat_results if r.get('all_checks_passed', False))
+            sat_total = len(sat_results)
+            
+            results["SAT Certificates Verification"] = {
+                'status': 'PASSED' if sat_passed == sat_total else 'PARTIAL',
+                'certificates_validated': sat_total,
+                'certificates_passed': sat_passed,
+                'execution_time': 0.0
+            }
+            
+            if sat_passed == sat_total:
+                print(f"   ✅ SAT certificates: {sat_passed}/{sat_total} verified")
+            else:
+                print(f"   ⚠️  SAT certificates: {sat_passed}/{sat_total} verified")
+        else:
+            print("   ℹ️  No SAT certificates found - run scripts/generate_sat_certificates.py")
+            results["SAT Certificates Verification"] = {
+                'status': 'SKIPPED',
+                'reason': 'No certificates found'
+            }
+            
+    except Exception as e:
+        print(f"   ⚠️  SAT certificate verification skipped: {e}")
+        results["SAT Certificates Verification"] = {
+            'status': 'SKIPPED',
+            'error': str(e)
+        }
+    # -----------------------------------------------------------------------
+    
     # Save validation results to CSV for comparison with notebook
     try:
         import csv
@@ -522,6 +627,20 @@ def validate_v5_coronacion(precision=30, verbose=False, save_certificate=False, 
         
     except Exception as e:
         print(f"⚠️  Warning: Could not save CSV results: {e}")
+    
+    # Finalize logging
+    if logger:
+        logger.log_metric("total_tests", len(results))
+        logger.log_metric("passed_tests", passed_count)
+        logger.log_metric("failed_tests", failed_count)
+        logger.log_metric("skipped_tests", skipped_count)
+        
+        if all_passed and failed_count == 0:
+            logger.log_success("V5 Coronación validation completed successfully")
+            logger.finalize("success")
+        else:
+            logger.log_warning(f"V5 Coronación validation completed with {failed_count} failures")
+            logger.finalize("partial")
     
     return {
         'success': all_passed and failed_count == 0,
