@@ -300,8 +300,6 @@ axiom QCAL_equation : True
 
 end WeierstrassConvergenceComplete
 
-end
-
 /-!
 ═══════════════════════════════════════════════════════════════
   WEIERSTRASS_CONVERGENCE_COMPLETE.LEAN — V7.0 CERTIFICADO
