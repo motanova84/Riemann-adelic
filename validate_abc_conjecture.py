@@ -56,13 +56,29 @@ def prime_factors(n: int) -> List[int]:
 
 def radical(n: int) -> int:
     """
-    Noetic radical: product of distinct prime factors
+    Noetic radical: product of distinct prime factors.
     
-    In QCAL framework, this represents the "resonance bandwidth"
-    available to the number.
+    In the standard arithmetic setting, for n > 0 this coincides with the
+    usual radical rad(n) = ∏_{p | n} p, i.e. the product of the distinct
+    prime divisors of n.
+    
+    QCAL conventions and edge cases:
+        - For n > 0, this exactly matches the classical radical.
+        - For n = 0, we *define* rad(0) := 1. This keeps the relevant
+          spectral/arithmetic formulas total when an intermediate product
+          accidentally vanishes. The ABC search below only calls
+          ``radical`` with n > 0, so this convention does not affect the
+          numerical validation results.
+        - For n < 0, we take rad(n) := rad(|n|), i.e. we ignore the sign
+          and work with the absolute value.
     """
-    if n <= 0:
+    if n == 0:
+        # QCAL convention: define rad(0) := 1 to keep spectral formulas total.
+        # This branch is not used in the ABC-search loops below, which only
+        # pass strictly positive integers to ``radical``.
         return 1
+    # For negative inputs, use the standard convention rad(n) = rad(|n|).
+    n = abs(n)
     primes = set(prime_factors(n))
     result = 1
     for p in primes:
