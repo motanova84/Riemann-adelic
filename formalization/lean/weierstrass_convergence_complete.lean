@@ -135,7 +135,7 @@ theorem weierstrass_product_convergence_complete {K : Set ℂ} (hK : IsCompact K
       exact le_of_lt this
     calc
       abs (z / P.zeros n) = abs z / abs (P.zeros n) := by
-        rw [map_div₀, Complex.abs_ofReal, abs_norm]
+        rw [map_div₀]
       _ ≤ R / (2 * R) := by
         apply div_le_div _ hz_bound le_rfl _
         · exact abs_nonneg _
@@ -213,9 +213,10 @@ theorem D_well_defined_complete :
     ∃ (D : ℂ → ℂ), Entire D ∧ 
       ∀ s, D s = ∏' n, (1 - s / eigenvalues n) := by
   -- 1. Verificar que eigenvalues satisfacen condiciones
+  -- Los eigenvalues crecen cuadraticamente, dando decay ∑ 1/(n+1)⁴
   have h_decay : ∃ (p : ℕ), Summable (fun n => ‖eigenvalues n‖ ^ (-(p : ℝ))) := by
     use 2
-    exact eigenvalues_summable_inv_sq
+    exact eigenvalues_summable_inv_fourth
     
   -- 2. Construir estructura InfiniteProduct
   let P : InfiniteProduct := {

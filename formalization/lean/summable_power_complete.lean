@@ -106,18 +106,20 @@ theorem summable_power_fixed (P : InfiniteProduct) (z : ℂ) (p : ℕ)
 
 /-! ## Application to Eigenvalues -/
 
-/-- Eigenvalue sequence with quadratic decay (∑ 1/n²) -/
+/-- Eigenvalue sequence with quadratic growth: eigenvalues n = (n+1)²
+    This gives decay ∑ 1/|eigenvalues n|² = ∑ 1/(n+1)⁴ -/
 def eigenvalues (n : ℕ) : ℂ := (n + 1 : ℂ)^2
 
-/-- The eigenvalue sequence has summable inverse square -/
-theorem eigenvalues_summable_inv_sq :
+/-- The eigenvalue sequence has summable inverse fourth power
+    Since eigenvalues n = (n+1)², we have ‖eigenvalues n‖^(-2) = 1/(n+1)⁴ -/
+theorem eigenvalues_summable_inv_fourth :
     Summable (fun n => ‖eigenvalues n‖ ^ (-2 : ℝ)) := by
   sorry
 
 /-- For eigenvalues with quadratic growth, power series converge -/
 theorem eigenvalues_power_summable (z : ℂ) :
     Summable (fun n => (abs (z / eigenvalues n))^3) := by
-  have h := eigenvalues_summable_inv_sq
+  have h := eigenvalues_summable_inv_fourth
   have P : InfiniteProduct := {
     zeros := eigenvalues
     decay_rate := ⟨2, h⟩

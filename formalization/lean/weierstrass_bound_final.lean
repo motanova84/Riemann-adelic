@@ -59,7 +59,9 @@ def E₀ (z : ℂ) : ℂ := 1 - z
 /-- Weierstrass elementary factor E_1(z) = (1-z)·e^z -/
 def E₁ (z : ℂ) : ℂ := (1 - z) * exp z
 
-/-- General Weierstrass elementary factor E_p(z) = (1-z)·exp(∑_{k=1}^p z^k/k) -/
+/-- General Weierstrass elementary factor E_p(z) = (1-z)·exp(∑_{k=1}^p z^k/k)
+    Note: Finset.range p = {0, ..., p-1}, so z^(k+1)/(k+1) for k in range p
+    gives exactly z + z²/2 + ... + z^p/p -/
 def E (p : ℕ) (z : ℂ) : ℂ :=
   (1 - z) * exp (∑ k in Finset.range p, z^(k+1) / (k+1))
 
