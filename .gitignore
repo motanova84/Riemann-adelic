@@ -204,3 +204,7 @@ _codeql_detected_source_root/
 # Ultimate Algorithm generated outputs (keep directory structure)
 output/ultimate_algorithm_results.json
 output/ultimate_algorithm_visualization.png
+
+# Pipeline execution logs
+logs/pipeline_*/
+data/pipeline_report_*.json
