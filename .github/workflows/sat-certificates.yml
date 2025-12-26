@@ -64,7 +64,7 @@ jobs:
         fi
     
     - name: Upload certificates as artifacts
-      uses: actions/upload-artifact@v4.1.3
+      uses: actions/upload-artifact@v4
       with:
         name: sat-certificates
         path: certificates/sat/
@@ -106,7 +106,7 @@ jobs:
         fi
     
     - name: Upload validation report
-      uses: actions/upload-artifact@v4.1.3
+      uses: actions/upload-artifact@v4
       with:
         name: sat-validation-report
         path: certificates/sat/validation_report.json

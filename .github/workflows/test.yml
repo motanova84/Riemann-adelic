@@ -39,7 +39,7 @@ jobs:
           pytest -s operador/tests_operador_extended.py > convergence.log
 
       - name: Upload convergence table
-        uses: actions/upload-artifact@v4.1.3
+        uses: actions/upload-artifact@v4
         with:
           name: convergence-table
           path: convergence.log
