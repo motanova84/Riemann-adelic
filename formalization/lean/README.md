@@ -176,6 +176,10 @@ The formalization is fully synchronized with the latest validation data:
 - `arch_factor.lean`: Weil index computation and stationary-phase rigidity of $\pi^{-s/2}\Gamma(s/2)$.
 - `de_branges.lean`: Hermite--Biehler properties, Hamiltonian positivity, and self-adjointness.
 - `positivity.lean`: Weil--Guinand quadratic form and positivity criterion leading to the critical line.
+- `summable_power_complete.lean`: Convergence of power series for infinite products and eigenvalue bounds. Includes:
+  - `zeros_tend_to_infinity`: If ∑ ‖a_n‖⁻ᵖ converges, then ‖a_n‖ → ∞
+  - `summable_power_complete`: Convergence of ∑ ‖z/a_n‖^(p+1)
+  - `eigenvalues_summable_inv_sq`: Eigenvalues satisfy ∑ ‖λ_n‖^{-2} < ∞
 
 Each file currently contains skeletal declarations to be refined during the
 formalisation effort.

@@ -205,3 +205,7 @@ _codeql_detected_source_root/
 output/ultimate_algorithm_results.json
 output/ultimate_algorithm_visualization.png
 trace_class_complete_validation.png
+
+# Pipeline execution logs
+logs/pipeline_*/
+data/pipeline_report_*.json
