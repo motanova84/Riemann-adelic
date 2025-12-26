@@ -12,8 +12,8 @@ import sys
 import json
 from pathlib import Path
 
-# Add parent directory to path
-sys.path.insert(0, str(Path(__file__).parent))
+# Add project root (parent of tests/) to path for direct execution
+sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from validate_abc_conjecture import (
     radical, prime_factors, gcd, quality,
