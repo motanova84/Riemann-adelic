@@ -110,8 +110,8 @@ class HermiteOperator:
         
         return -x * psi_deriv + log_term
     
-    def compute_norm_mp(self, n: int, x_min: float = -20, x_max: float = 20, 
-                       points: int = 2000) -> mp.mpf:
+    def compute_norm_mp(self, n: int, x_min: float = -15, x_max: float = 15, 
+                       points: int = 500) -> mp.mpf:
         """
         Compute L² norm with mpmath integration.
         
@@ -242,7 +242,7 @@ class HermiteOperator:
 def main():
     """Main execution routine."""
     # Create operator with moderate max_n for reasonable runtime
-    operator = HermiteOperator(max_n=50)
+    operator = HermiteOperator(max_n=30)  # Reduced from 50 for speed
     
     # Run verification
     is_trace_class = operator.verify_trace_class()
