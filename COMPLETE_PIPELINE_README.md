@@ -62,7 +62,7 @@ lake build RHComplete.RH_Complete_Proof_Final
 
 ## Expected Results
 
-When running the complete pipeline, you should see:
+When running the complete pipeline with all dependencies installed, you should see:
 
 ```
 🏆 CONCLUSIÓN: H_Ψ ES OPERADOR DE CLASE TRAZA
@@ -85,8 +85,11 @@ When running the complete pipeline, you should see:
      ✅ Ecuación funcional D(1-s)=D(s) ✅ VALIDADO
      ✅ Ceros ↔ espectro demostrado ✅ VALIDADO
 
-🎯 RESULTADO FINAL: RIEMANN HYPOTHESIS PROVEN
+🎯 RESULTADO FINAL: RH Framework Validated
 ```
+
+**Note**: The complete validation requires all Python dependencies to be installed.
+The pipeline will gracefully skip unavailable validations and report which tests passed.
 
 ## Architecture
 
@@ -202,4 +205,5 @@ Creative Commons BY-NC-SA 4.0
 
 ---
 
-**Status**: ✅ PROVEN - V5.4 Final Coronación Complete
+**Status**: ✅ Framework Complete - V5.4 Final Coronación
+**Validation**: Numerical validation via Python pipeline required for full verification
