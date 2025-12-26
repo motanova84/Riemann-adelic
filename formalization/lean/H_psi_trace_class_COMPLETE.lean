@@ -95,11 +95,16 @@ theorem H_psi_trace_class_complete_proved :
     apply Summable.of_nonneg_of_le
     · intro n
       unfold H_psi_norm
-      apply add_nonneg <;> apply Real.sqrt_nonneg
+      apply div_nonneg
+      · norm_num
+      · apply Real.rpow_pos_of_pos
+        simp
     · intro n
       by_cases hn : n < 10
-      · le_refl
-      · push_neg at hn
+      · -- Para n < 10, H_psi_norm coincide con spectral_bound por definición
+        rfl
+      · -- Para n ≥ 10, usamos la cota espectral demostrada
+        push_neg at hn
         exact H_psi_norm_bounded n hn
     · exact h
   · -- La suma está acotada por C = 100 (verificación numérica)
