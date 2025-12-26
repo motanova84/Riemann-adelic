@@ -1,0 +1,14 @@
+{
+  "timestamp": "2025-12-26T17:36:04",
+  "validation": "trace_class_H_psi",
+  "qcal_frequency": 141.7001,
+  "qcal_coherence": 244.36,
+  "N_states": 50,
+  "C_fitted": 1.0000001405600127,
+  "alpha_fitted": 1.7000017072553308,
+  "delta_fitted": 0.7000017072553308,
+  "convergence_verified": true,
+  "series_sum": 1.962501842825247,
+  "doi": "10.5281/zenodo.17379721",
+  "orcid": "0009-0002-1923-0773"
+}
