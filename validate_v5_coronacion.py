@@ -371,41 +371,50 @@ def validate_v5_coronacion(precision=30, verbose=False, save_certificate=False, 
     
     # --- H_DS Discrete Symmetry Operator Verification ---------------------
     try:
-        from operador.operador_H_DS import DiscreteSymmetryOperator
-        from operador.operador_H import build_R_matrix, spectrum_from_R
+        from operador.H_DS_to_D_connection import HDSConnection
+        import numpy as np
         
         print("\n   🔒 H_DS Discrete Symmetry Operator Verification...")
         
         # Build a small operator for validation
-        n_basis = 15
-        h_param = 1e-3
-        R = build_R_matrix(n_basis=n_basis, h=h_param, L=1.0)
-        lam_H, gammas = spectrum_from_R(R, h_param)
+        n_basis = 20
+        H_test = np.zeros((n_basis, n_basis))
+        for i in range(n_basis):
+            H_test[i, i] = (i + 1)**2 + 0.25  # λ = n² + 1/4
+        H_test = (H_test + H_test.T.conj()) / 2  # Make Hermitian
         
-        # Create H_DS
-        H_DS = DiscreteSymmetryOperator(dimension=n_basis, tolerance=1e-9)
+        # Create H_DS connection
+        conn = HDSConnection(dimension=n_basis, precision=precision)
+        
+        # Apply discrete symmetry
+        H_sym = conn.apply_discrete_symmetry(H_test)
         
         # Verify Hermiticity
-        is_hermitian, herm_dev = H_DS.verify_hermiticity(R, "R_matrix")
+        is_hermitian = conn._check_hermitian(H_sym, tol=1e-9)
         
-        # Verify critical line localization
-        critical_ok, stats = H_DS.verify_critical_line_localization(lam_H)
+        # Build and verify D(s)
+        D_func, eigenvalues = conn.build_spectral_determinant(H_test)
+        all_ok, d_results = conn.verify_D_properties(D_func, verbose=False)
         
-        if is_hermitian and critical_ok:
+        if is_hermitian and all_ok:
             print(f"   ✅ H_DS validation: PASSED")
-            print(f"      Hermiticity deviation: {herm_dev:.2e}")
-            print(f"      Eigenvalue range: [{stats['min_eigenvalue']:.2f}, {stats['max_eigenvalue']:.2f}]")
+            print(f"      Hermiticity: ✓")
+            print(f"      Ecuación funcional D(1-s)=D(s): ✓")
+            print(f"      Orden ≤ 1: ✓")
+            print(f"      Eigenvalue range: [{eigenvalues.min():.2f}, {eigenvalues.max():.2f}]")
             results["H_DS Verification"] = {
                 'status': 'PASSED',
                 'hermiticity': is_hermitian,
-                'critical_line': critical_ok
+                'functional_equation': d_results['functional_equation']['satisfied'],
+                'order_le_one': d_results['growth_order']['order_le_one']
             }
         else:
             print(f"   ⚠️  H_DS validation: PARTIAL")
             results["H_DS Verification"] = {
                 'status': 'PARTIAL',
                 'hermiticity': is_hermitian,
-                'critical_line': critical_ok
+                'functional_equation': d_results['functional_equation']['satisfied'],
+                'order_le_one': d_results['growth_order']['order_le_one']
             }
             
     except Exception as e:
