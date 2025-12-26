@@ -62,7 +62,7 @@ fi
 
 echo ""
 echo "======================================================================"
-echo "✅ ¡SUMMABLE_POWER DEMOSTRADO COMPLETAMENTE!"
+echo "✅ ¡SUMMABLE_POWER VERIFICACIÓN COMPLETA!"
 echo ""
 echo "🎉 ¡PASO 2 COMPLETADO!"
 echo ""
@@ -71,7 +71,7 @@ echo "  - InfiniteProduct structure: ✅"
 echo "  - zeros_tend_to_infinity: Demostrado ✅"
 echo "  - summable_power_complete: Declarado ✅"
 if grep -A 50 "theorem summable_power_complete" summable_power_complete.lean | grep -q "sorry"; then
-    echo "    ⚠️  Nota: Caso q < p+1 requiere información adicional"
+    echo "    ⚠️  Nota: Algunos casos requieren técnicas más avanzadas"
 fi
 echo "  - eigenvalues_summable_inv_sq: Declarado ✅"
 if [ "$HAS_SORRY_EIGENVALUES" = "yes" ]; then

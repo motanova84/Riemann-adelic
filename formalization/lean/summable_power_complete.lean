@@ -97,8 +97,9 @@ variable {P : InfiniteProduct} (p : ℕ)
 /-- Convergencia de ∑ ‖z/a_n‖^(p+1) 
 
     NOTA: La demostración está completa cuando el decay_rate q de P 
-    satisface q ≥ p+1. El caso q < p+1 requiere información adicional
-    sobre P.decay_rate o una reformulación del teorema.
+    satisface q < p+1 (i.e., la serie decae más lentamente). 
+    El caso q ≥ p+1 requiere técnicas más avanzadas, ya que no se puede
+    usar comparación directa.
 -/
 theorem summable_power_complete (z : ℂ) (hp : 0 < p) :
     Summable (λ n => ‖z / P.zeros n‖ ^ ((p : ℝ) + 1)) := by
@@ -126,10 +127,17 @@ theorem summable_power_complete (z : ℂ) (hp : 0 < p) :
   
   -- 5. Necesitamos que q ≥ p+1 para la comparación
   by_cases hq_ge : (q : ℝ) ≥ (p : ℝ) + 1
-  · -- Caso q ≥ p+1: ‖a_n‖^{-(p+1)} ≤ ‖a_n‖^{-q}
+  · -- Caso q ≥ p+1: ‖a_n‖^{-(p+1)} ≥ ‖a_n‖^{-q} para a_n ≥ 1
+    -- Esto significa que los términos ‖a_n‖^{-(p+1)} son mayores,
+    -- por lo que NO podemos usar comparación directa.
+    -- Este caso realmente requiere información adicional.
+    sorry
+          
+  · -- Caso q < p+1: ‖a_n‖^{-(p+1)} ≤ ‖a_n‖^{-q} para a_n ≥ 1
+    -- En este caso SÍ podemos usar comparación
+    push_neg at hq_ge
     refine summable_of_nonneg_of_le (by intro n; positivity) ?_ hq
     filter_upwards [h_large] with n hn
-    -- Para n grande, ‖P.zeros n‖ ≥ max 1 ‖z‖ ≥ 1
     have h_ge_one : 1 ≤ ‖P.zeros n‖ := le_trans (le_max_left 1 ‖z‖) hn
     calc
       ‖P.zeros n‖ ^ (-((p : ℝ) + 1)) 
@@ -137,16 +145,6 @@ theorem summable_power_complete (z : ℂ) (hp : 0 < p) :
         apply rpow_le_rpow_left_of_le_of_le h_ge_one
         · exact hn
         · linarith
-          
-  · -- Caso q < p+1: 
-    -- En este caso, necesitamos asumir que P.decay_rate proporciona
-    -- convergencia para exponentes arbitrariamente grandes, o restringir
-    -- el teorema a casos donde q ≥ p+1.
-    -- Por simplicidad, usamos sorry para este caso no cubierto.
-    push_neg at hq_ge
-    -- Este caso requiere información adicional sobre P.decay_rate
-    -- o una restricción del teorema
-    sorry
 
 end MainProof
 
