@@ -109,8 +109,8 @@
     "total_sum": 235.76020260861978,
     "C": 0.9548365633094472,
     "delta": -1.5108810458790036,
-    "tail_estimate": Infinity,
-    "predicted_total": Infinity,
+    "tail_estimate": "Infinity",
+    "predicted_total": "Infinity",
     "converges": false
   },
   "is_trace_class": false
