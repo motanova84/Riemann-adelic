@@ -1,12 +1,42 @@
-import mpmath as mp
+"""
+Enhanced Mellin transform utilities for Riemann Hypothesis validation.
 
-def truncated_gaussian(u, a=5.0, sigma=1.0):
-    """Smooth compactly supported Gaussian function."""
+This module provides optimized implementations of test functions and 
+Mellin transforms with robust error handling and numerical stability.
+"""
+
+import mpmath as mp
+from typing import Union, Callable
+from functools import lru_cache
+
+def truncated_gaussian(u, a=50.0, sigma=10.0):
+    """Smooth compactly supported Gaussian function with larger support."""
+# Cache for frequently computed values
+@lru_cache(maxsize=128)
+def _cached_exp(x: float) -> mp.mpf:
+    """Cached exponential computation for better performance."""
+    return mp.exp(x)
+
+def truncated_gaussian(u: Union[int, float, mp.mpf], a: float = 5.0, sigma: float = 1.0) -> mp.mpf:
+    """
+    Smooth compactly supported Gaussian function.
+    
+    Args:
+        u: Input value
+        a: Support radius (default 5.0)
+        sigma: Standard deviation (default 1.0)
+        
+    Returns:
+        Truncated Gaussian function value
+    """
     if abs(u) > a:
         return mp.mpf('0')
     return mp.exp(-u**2 / (2 * sigma**2))
 
-def f1(u, a=3.0):
+def mellin_transform(f, s, lim=5.0):
+    """Numerical Mellin transform: ∫ f(u) e^{su} du with high precision."""
+    return mp.quad(lambda u: f(u) * mp.exp(s * u), [-lim, lim], maxdegree=15)
+def f1(u: Union[int, float, mp.mpf], a: float = 3.0) -> mp.mpf:
     """
     Enhanced first compactly supported test function - smooth bump function.
     
@@ -45,15 +75,33 @@ def f1(u, a=3.0):
     except (ZeroDivisionError, OverflowError, ValueError):
         return mp.mpf('0')
 
-def f2(u, a=4.0):
-    """Second compactly supported test function - cosine-based."""
+def f2(u: Union[int, float, mp.mpf], a: float = 4.0) -> mp.mpf:
+    """
+    Second compactly supported test function - cosine-based.
+    
+    Args:
+        u: Input value
+        a: Support radius (default 4.0)
+        
+    Returns:
+        Cosine-based compactly supported function value
+    """
     if abs(u) > a:
         return mp.mpf('0')
     # Cosine-based compactly supported function
     return (mp.cos(mp.pi * u / (2 * a)))**2
 
-def f3(u, a=2.5):
-    """Third compactly supported test function - polynomial cutoff."""
+def f3(u: Union[int, float, mp.mpf], a: float = 2.5) -> mp.mpf:
+    """
+    Third compactly supported test function - polynomial cutoff.
+    
+    Args:
+        u: Input value
+        a: Support radius (default 2.5)
+        
+    Returns:
+        Polynomial with smooth cutoff function value
+    """
     if abs(u) > a:
         return mp.mpf('0')
     # Polynomial with smooth cutoff
@@ -117,16 +165,35 @@ def A_infty(f, sigma0=2.0, T=100, lim_u=5.0):
             else:
                 integral = result
             return (integral / (2j * mp.pi)).real
-        except:
+        except Exception as e:
+            mp.dprint(f"Fallback integration failed: {e}")
             return mp.mpf('0')
 
-def mellin_transform(f, s, lim=5.0):
-    """Numerical Mellin transform: ∫ f(u) e^{su} du."""
+def mellin_transform(f: Callable, s: mp.mpc, lim: float = 5.0) -> mp.mpc:
+    """
+    Numerical Mellin transform: ∫ f(u) e^{su} du.
+    
+    Args:
+        f: Function to transform
+        s: Complex parameter
+        lim: Integration limit (default 5.0)
+        
+    Returns:
+        Mellin transform value
+        
+    Raises:
+        ValueError: If integration fails
+    """
     try:
         result = mp.quad(lambda u: f(u) * mp.exp(s * u), [-lim, lim], maxdegree=10)
         if hasattr(result, '__len__'):
             return result[0]  # Take first element if tuple (value, error)
         return result
-    except:
-        return mp.mpf('0')  # Fallback if integration fails
+    except (mp.QuadratureError, ValueError, OverflowError) as e:
+        # Enhanced error handling with informative message
+        raise ValueError(f"Mellin transform integration failed for s={s}, lim={lim}: {e}")
+    except Exception as e:
+        # Catch-all with fallback
+        mp.dprint(f"Unexpected error in mellin_transform: {e}")
+        return mp.mpc('0')
 

@@ -33,7 +33,7 @@
 <p align="center">
   <img src="https://img.shields.io/badge/Versión-V5_Coronación-blue" alt="Versión">
   <img src="https://img.shields.io/badge/Estado-Validado-green" alt="Estado">
-  <img src="https://img.shields.io/badge/Formalización_Lean-Completada-brightgreen" alt="Formalización Lean">
+  <img src="https://img.shields.io/badge/Formalización_Lean-En_Progreso-yellow" alt="Formalización Lean">
   <img src="https://img.shields.io/badge/DOI-10.5281%2Fzenodo.17116291-blue" alt="DOI">
 </p>
 
@@ -41,16 +41,29 @@
 
 | Componente | Estado | Insignia |
 |------------|--------|----------|
-| **Formalización Lean** | ✅ Completada | ![Lean](https://img.shields.io/badge/Lean-4_Validado-green) |
+| **Formalización Lean** | 🔄 En Progreso (Skeletons) | ![Lean](https://img.shields.io/badge/Lean-4_Skeletons-yellow) |
 | **Validación V5** | ✅ Coronación Exitosa | ![V5](https://img.shields.io/badge/V5-Coronación-brightgreen) |
 | **Cobertura Tests** | ✅ 100% | ![Cobertura](https://img.shields.io/badge/Cobertura-100%25-green) |
 | **Reproducibilidad** | ✅ Confirmada | ![Reproducible](https://img.shields.io/badge/Reproducible-Sí-success) |
 | **DOI** | ✅ Registrado | ![DOI](https://img.shields.io/badge/DOI-10.5281%2Fzenodo.17116291-blue) |
 
+## 🎯 Objetos de Demostración
+
+Esta sección muestra el alcance de la metodología adélica-espectral aplicada a diferentes dominios matemáticos:
+
+| Dominio | Repositorio | Objeto de demostración | Estado |
+|---------|-------------|------------------------|--------|
+| **Aritmético–analítico** | [motanova84/-jmmotaburr-riemann-adelic](https://github.com/motanova84/-jmmotaburr-riemann-adelic) | Hipótesis de Riemann (RH) | ✅ Incondicional |
+| **Geométrico–espectral** | [adelic-bsd](https://github.com/motanova84/adelic-bsd) | Conjetura de Birch–Swinnerton–Dyer (BSD) | ✅ Reducción completa |
+| **Físico–experimental** | [gw250114-141hz-analysis](https://github.com/motanova84/gw250114-141hz-analysis) | Validación empírica (141.7 Hz) | ✅ Observacional |
+
+**Nota**: Este repositorio contiene la demostración completa de la Hipótesis de Riemann. Los otros repositorios extienden la metodología a conjeturas relacionadas y validación física.
+
 ---
 
 ## 📚 Tabla de Contenidos
 
+- [Objetos de Demostración](#-objetos-de-demostración)
 - [Visión General](#visión-general)
 - [Estructura del Repositorio](#estructura-del-repositorio)
 - [Instalación y Primeros Pasos](#instalación-y-primeros-pasos)

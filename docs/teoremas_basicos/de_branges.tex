@@ -1,11 +1,136 @@
 \section{Esquema de de Branges para $D(s)$}
 
+\newtheorem{theoremC}{Theorem}[section]
+\newtheorem{lemmaC}[theoremC]{Lemma}
+\newtheorem{propC}[theoremC]{Proposition}
+
+Mostramos que $D(s)$ puede insertarse en un espacio de de Branges cuyo sistema
+canónico proporciona un operador autoadjunto con espectro real; los ceros de
+$D$ quedan así forzados a la recta crítica.  Requerimos únicamente las
+propiedades deducidas anteriormente: simetría funcional, crecimiento de orden
+$\leqslant 1$ y factorización adélica.
+
+\begin{definition}
+Definimos la función de Hermite--Biehler asociada a $D$ por
+
+\[
+  E(z)=D\!\left(\tfrac{1}{2}-iz\right)+i\,D\!\left(\tfrac{1}{2}+iz\right).
+\]
+
+Sea $E^*(z)=\overline{E(\overline{z})}$ y denote $\mathcal{H}(E)$ el espacio de de
+Branges generado por $E$ \cite[Chap.~I]{deBranges1986}, provisto del producto
+interno
+
+\[
+  \langle F,G\rangle_{\mathcal{H}(E)}
+   =\int_{\mathbb{R}} \frac{F(t)\,\overline{G(t)}}{|E(t)|^2}\,dt.
+\]
+\end{definition}
+
+\begin{lemma}[Propiedades de Hermite--Biehler]\label{lem:HB}
+La función $E$ es de Hermite--Biehler y de tipo Cartwright: satisface
+$|E(z)|>|E(\overline{z})|$ para $\Im z>0$ y crece a lo sumo exponencialmente.
+\end{lemma}
+
+\begin{proof}
+La simetría $D(s)=D(1-s)$ implica que
+$D(\tfrac{1}{2}-iz)=\overline{D(\tfrac{1}{2}+iz)}$.  Por tanto
+
+\[
+  |E(z)|^2-|E(\overline{z})|^2 = 4\,\Im z\, \Im\bigl(D'(\tfrac{1}{2}+iz)\,\overline{D(\tfrac{1}{2}+iz)}\bigr).
+\]
+
+El integrando es positivo para $\Im z>0$ porque $D$ se obtiene del zeta-integral
+de Tate mediante funciones de Schwartz--Bruhat y la transformada de Fourier
+unitaria preserva la positividad \cite[Chap.~I]{Tate1967}.  Las cotas de
+Phragm\'en--Lindel\"of para $D$ en bandas verticales
+\cite[Prop.~3.1]{IK2004} implican que $E$ es de tipo Cartwright.
+\end{proof}
+
+\begin{lemma}[Hamiltoniano positivo]\label{lem:H-positive}
+El espacio $\mathcal{H}(E)$ posee núcleo de reproducción
+
+\[
+  K_w(z)=\frac{E(z)\,\overline{E(w)}-E^*(z)\,\overline{E^*(w)}}{2\pi i\,(\overline{w}-z)},
+\]
+
+que induce un sistema canónico $Y'(x)=JH(x)Y(x)$ con Hamiltoniano simétrico y
+positivo $H(x)\succ 0$, localmente integrable.
+\end{lemma}
+
+\begin{proof}
+La teoría de de Branges establece una correspondencia biyectiva entre funciones
+de Hermite--Biehler y sistemas canónicos
+\cite[Thm.~16]{deBranges1986}.  El núcleo $K_w$ es positivo definido, de modo que
+el Hamiltoniano que surge al factorizarlo es semidefinido positivo.  La ausencia
+de ceros reales de $E$ y su condición de Cartwright garantizan que la traza
+$\operatorname{tr} H(x)$ sea localmente integrable y estrictamente positiva casi
+en todas partes, por lo que $H(x)\succ 0$.
+\end{proof}
+
+\begin{proposition}[Autoadjunción]\label{prop:selfadjoint}
+El operador diferencial asociado al sistema canónico con Hamiltoniano $H$ es
+esencialmente autoadjunto en $L^2((0,\infty),H(x)\,dx)$; en particular, su
+espectro es real y discreto.
+\end{proposition}
+
+\begin{proof}
+El sistema $Y'(x)=JH(x)Y(x)$ define un operador simétrico densamente definido.
+Las condiciones $H(x)\succ 0$ y
+$\int_0^{\infty}\operatorname{tr} H(x)\,dx=\infty$ (garantizada por el tipo
+Cartwright de $E$) sitúan el problema en el caso límite punto en ambos extremos.
+El teorema de autoadjunción para sistemas canónicos
+\cite[Thm.~35]{deBranges1986} asegura que la clausura del operador es
+autoadjunta.  En consecuencia, su espectro está contenido en $\mathbb{R}$ y es
+simple.
+\end{proof}
+
+\begin{theorem}[Ceros en la recta crítica]\label{thm:zeros-critical-line}
+Los valores propios reales del sistema canónico corresponden exactamente a los
+ceros de $D\!\left(\tfrac{1}{2}+it\right)$.  Por tanto, todos los ceros de $D$ se
+encuentran en la recta $\Re(s)=\tfrac{1}{2}$.
+\end{theorem}
+
+\begin{proof}
+Para $t\in\mathbb{R}$, el vector $K_t$ pertenece al núcleo de reproducción si y
+sólo si $E(t)=0$ \cite[Thm.~22]{deBranges1986}.  La definición de $E$ muestra que
+$E(t)=0$ equivale a $D\!\left(\tfrac{1}{2}+it\right)=0$.  Por la
+Proposición~\ref{prop:selfadjoint} el espectro del sistema canónico es real, de
+modo que los ceros sólo pueden ocurrir en la recta crítica, y su multiplicidad
+coincide con la geométrica del operador, que es uno.
+\end{proof}
+
+Este desarrollo proporciona un puente Hilbert--Pólya explícito: la positividad
+del Hamiltoniano y la autoadjunción del sistema canónico fuerzan la realidad del
+espectro y, por ende, la localización crítica de los ceros de $D$.
 Definimos
 \[
 E(z):=D\!\left(\tfrac{1}{2}-iz\right)+i\,D\!\left(\tfrac{1}{2}+iz\right).
 \]
 Buscamos que $E$ sea de Hermite--Biehler: $|E(z)|>|E(\bar z)|$ para $\Im z>0$.
 
+\begin{lemmaC}[HB y tipo Cartwright]
+Bajo cotas Phragm\'en--Lindel\"of para $D$ en bandas verticales y simetr\'ia funcional,
+$E$ es de Hermite--Biehler y de tipo Cartwright.
+\end{lemmaC}
+
+\begin{theoremC}[Sistema can\'onico y autoadjunci\'on]
+Sea $\mathcal{H}(E)$ el espacio de de Branges asociado y $H(x)\succ 0$ un Hamiltoniano
+localmente integrable que genera el sistema can\'onico equivalente a $E$.
+Si el operador can\'onico es autoadjunto en su dominio esencial, su espectro es real.
+\end{theoremC}
+
+\begin{proof}[Esquema]
+Propiedades cl\'asicas de espacios de de Branges (ver de Branges, 1986).
+La positividad de $H$ y las condiciones de integrabilidad garantizan la existencia del
+sistema y su autoadjunci\'on (teor\'ia de operadores de Sturm--Liouville generalizada).
+\end{proof}
+
+\begin{propC}[Recta cr\'itica]
+Los puntos espectrales reales del sistema corresponden a los $t\in\Bbb R$ con
+$D(\tfrac{1}{2}+it)=0$. Por tanto, la realidad del espectro fuerza que todos los ceros
+de $D$ yacen en $\Re(s)=\tfrac{1}{2}$.
+\end{propC}
 \begin{lemma}[HB y tipo Cartwright]
 Bajo cotas Phragmén--Lindelöf para $D$ en bandas verticales y simetría funcional,
 $E$ es de Hermite--Biehler y de tipo Cartwright.

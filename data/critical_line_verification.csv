@@ -1,38 +1,38 @@
 parameter,value
-verification_summary_total_zeros_verified,50
-verification_summary_precision_used,15
+verification_summary_total_zeros_verified,1000
+verification_summary_precision_used,30
 verification_summary_tolerance_used,1e-12
 verification_summary_axiomatic_compliance,True
 verification_summary_mathematical_validity,REAL
 verification_summary_real_contribution_verified,True
-verification_summary_execution_time_seconds,5.5858893394470215
+verification_summary_execution_time_seconds,20.204602003097534
 critical_line_certificate_certificate_type,Riemann Hypothesis Axiomatic Verification
 critical_line_certificate_verification_timestamp,2024.09
-critical_line_certificate_precision_used,15
+critical_line_certificate_precision_used,30
 critical_line_certificate_tolerance_threshold,1e-12
-critical_line_certificate_critical_line_verification_total_zeros,50
-critical_line_certificate_critical_line_verification_critical_line_zeros,50
+critical_line_certificate_critical_line_verification_total_zeros,1000
+critical_line_certificate_critical_line_verification_critical_line_zeros,1000
 critical_line_certificate_critical_line_verification_axiom_violations,0
 critical_line_certificate_critical_line_verification_max_deviation,0.0
 critical_line_certificate_critical_line_verification_mean_deviation,0.0
 critical_line_certificate_critical_line_verification_statistical_confidence,100.0
 critical_line_certificate_critical_line_verification_axiomatic_validation,True
 critical_line_certificate_critical_line_verification_verification_details,"[{'zero_index': 0, 'imaginary_part': 14.134725141735, 'assumed_real_part': 0.5, 'critical_line_deviation': 0.0, 'satisfies_axiom': True}, {'zero_index': 1, 'imaginary_part': 21.022039638772, 'assumed_real_part': 0.5, 'critical_line_deviation': 0.0, 'satisfies_axiom': True}, {'zero_index': 2, 'imaginary_part': 25.010857580146, 'assumed_real_part': 0.5, 'critical_line_deviation': 0.0, 'satisfies_axiom': True}, {'zero_index': 3, 'imaginary_part': 30.42487612586, 'assumed_real_part': 0.5, 'critical_line_deviation': 0.0, 'satisfies_axiom': True}, {'zero_index': 4, 'imaginary_part': 32.935061587739, 'assumed_real_part': 0.5, 'critical_line_deviation': 0.0, 'satisfies_axiom': True}, {'zero_index': 5, 'imaginary_part': 37.586178158826, 'assumed_real_part': 0.5, 'critical_line_deviation': 0.0, 'satisfies_axiom': True}, {'zero_index': 6, 'imaginary_part': 40.918719012147, 'assumed_real_part': 0.5, 'critical_line_deviation': 0.0, 'satisfies_axiom': True}, {'zero_index': 7, 'imaginary_part': 43.327073280915, 'assumed_real_part': 0.5, 'critical_line_deviation': 0.0, 'satisfies_axiom': True}, {'zero_index': 8, 'imaginary_part': 48.005150881167, 'assumed_real_part': 0.5, 'critical_line_deviation': 0.0, 'satisfies_axiom': True}, {'zero_index': 9, 'imaginary_part': 49.773832477672, 'assumed_real_part': 0.5, 'critical_line_deviation': 0.0, 'satisfies_axiom': True}]"
-critical_line_certificate_distribution_analysis_total_zeros_checked,50
-critical_line_certificate_distribution_analysis_symmetry_analysis_positive_zeros,50
-critical_line_certificate_distribution_analysis_symmetry_analysis_total_zeros,50
+critical_line_certificate_distribution_analysis_total_zeros_checked,1000
+critical_line_certificate_distribution_analysis_symmetry_analysis_positive_zeros,1000
+critical_line_certificate_distribution_analysis_symmetry_analysis_total_zeros,1000
 critical_line_certificate_distribution_analysis_symmetry_analysis_symmetry_expected,True
-critical_line_certificate_distribution_analysis_spacing_analysis_mean_spacing,2.8026463783809183
+critical_line_certificate_distribution_analysis_spacing_analysis_mean_spacing,1.2264084960536186
 critical_line_certificate_distribution_analysis_spacing_analysis_min_spacing,0.09647404039999685
 critical_line_certificate_distribution_analysis_spacing_analysis_max_spacing,57.540803410628
-critical_line_certificate_distribution_analysis_spacing_analysis_spacing_regularity,2.8608420394192047
+critical_line_certificate_distribution_analysis_spacing_analysis_spacing_regularity,1.4812217079044507
 critical_line_certificate_distribution_analysis_simplicity_check_suspicious_close_pairs,0
-critical_line_certificate_distribution_analysis_simplicity_check_min_expected_spacing,0.04989845366019523
+critical_line_certificate_distribution_analysis_simplicity_check_min_expected_spacing,0.041246245238211826
 critical_line_certificate_distribution_analysis_simplicity_check_all_zeros_simple,True
 critical_line_certificate_distribution_analysis_axiom_compliance,True
 critical_line_certificate_functional_equation_consistency_functional_equation_check,True
-critical_line_certificate_functional_equation_consistency_positive_zeros_analyzed,50
-critical_line_certificate_functional_equation_consistency_assumed_negative_counterparts,50
+critical_line_certificate_functional_equation_consistency_positive_zeros_analyzed,1000
+critical_line_certificate_functional_equation_consistency_assumed_negative_counterparts,1000
 critical_line_certificate_functional_equation_consistency_consistency_score,100.0
 critical_line_certificate_functional_equation_consistency_note,Functional equation symmetry assumed under RH axioms
 critical_line_certificate_axiomatic_compliance,True
@@ -44,14 +44,14 @@ critical_line_certificate_contribution_assessment_numerical_stability,VERIFIED
 critical_line_certificate_proof_elements_axiom_statement,All non-trivial zeros ρ of ζ(s) satisfy Re(ρ) = 1/2
 critical_line_certificate_proof_elements_verification_method,Numerical verification with axiomatic assumptions
 critical_line_certificate_proof_elements_confidence_level,100.0
-critical_line_certificate_proof_elements_supporting_evidence,"['Verified 50 zeros on critical line', 'Distribution analysis shows axiomatic compliance: True', 'Functional equation consistency: 100.00%']"
-explicit_formula_validation_arithmetic_side,2.837762208319258
-explicit_formula_validation_spectral_side,2.179746212530541e-07
-explicit_formula_validation_absolute_error,2.8377619903446365
-explicit_formula_validation_relative_error,0.9999999231878482
+critical_line_certificate_proof_elements_supporting_evidence,"['Verified 1000 zeros on critical line', 'Distribution analysis shows axiomatic compliance: True', 'Functional equation consistency: 100.00%']"
+explicit_formula_validation_arithmetic_side,2.8377622083192584
+explicit_formula_validation_spectral_side,1.961438593943563e-06
+explicit_formula_validation_absolute_error,2.837760246880664
+explicit_formula_validation_relative_error,0.9999993088079797
 explicit_formula_validation_critical_line_assumption_used,True
-explicit_formula_validation_zeros_used,50
-explicit_formula_validation_total_zeros_available,50
+explicit_formula_validation_zeros_used,100
+explicit_formula_validation_total_zeros_available,1000
 explicit_formula_validation_primes_used,168
 explicit_formula_validation_test_function,truncated_gaussian
 explicit_formula_validation_note,Simplified explicit formula demonstration with critical line assumption
