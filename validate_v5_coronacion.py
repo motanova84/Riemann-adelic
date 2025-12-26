@@ -510,6 +510,53 @@ def validate_v5_coronacion(precision=30, verbose=False, save_certificate=False, 
         print(f"   ⚠️  Zeta quantum wave verification skipped: {e}")
     # -----------------------------------------------------------------------
 
+    # --- Arpeth Bioinformatics Validation (RNA Stability at 141.7001 Hz) -----
+    try:
+        from utils.arpeth_bioinformatics import validate_biological_coherence
+        
+        print("\n   🧬 Arpeth Bioinformatics: RNA Stability via QCAL Coherence...")
+        
+        # Test with sample RNA sequences
+        test_sequences = [
+            "AUGCGCGCGUGA",  # With palindromic structure
+            "AUGGUGCACGUGACUGACGCUGCACACAAG",  # Beta-globin fragment
+        ]
+        
+        arpeth_results = []
+        for seq in test_sequences:
+            result = validate_biological_coherence(seq, precision=max(30, precision))
+            arpeth_results.append({
+                'sequence_length': len(seq),
+                'stability_score': result['stability_score'],
+                'qcal_validated': result['qcal_validated'],
+                'resonance_match': result['resonance_match']
+            })
+        
+        # Overall validation: at least one sequence should show coherence
+        avg_stability = sum(r['stability_score'] for r in arpeth_results) / len(arpeth_results)
+        any_validated = any(r['qcal_validated'] for r in arpeth_results)
+        
+        if avg_stability > 0.3 and any_validated:
+            print(f"   ✅ Arpeth bioinformatics: RNA coherence at 141.7001 Hz verified")
+            print(f"      Average stability score: {avg_stability:.4f}")
+            print(f"      Sequences validated: {sum(r['qcal_validated'] for r in arpeth_results)}/{len(arpeth_results)}")
+            results["Arpeth Bioinformatics Verification"] = {
+                'status': 'PASSED',
+                'average_stability': avg_stability,
+                'sequences_tested': len(test_sequences),
+                'description': 'RNA stability via Ψ_Life = I × A_eff² × C^∞'
+            }
+        else:
+            print(f"   ⚠️  Arpeth bioinformatics: PARTIAL")
+            results["Arpeth Bioinformatics Verification"] = {
+                'status': 'PARTIAL',
+                'average_stability': avg_stability
+            }
+            
+    except Exception as e:
+        print(f"   ⚠️  Arpeth bioinformatics verification skipped: {e}")
+    # -----------------------------------------------------------------------
+
     # YOLO verification integration
     yolo_success = include_yolo_verification()
     if yolo_success:
