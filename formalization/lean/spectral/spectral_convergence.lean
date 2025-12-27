@@ -206,31 +206,6 @@ theorem spectral_sum_converges (f : ℂ → ℂ) (h_entire : Entire f)
       · exact spectral_density_summable α α_pos
 
 /-!
-## Alternative Formulation
--/
-
-/-- Simplified version with explicit decay assumption -/
-theorem spectral_sum_converges_simple (f : ℂ → ℂ) (h_entire : Entire f)
-    (C M : ℝ) (hC : C > 0) (hM : M ≥ 0)
-    (h_bound : ∀ z, ‖f z‖ ≤ C * exp (M * ‖z‖))
-    (h_decay : ∃ β > M, Summable (fun n => Real.exp (β * |(ρ n).im|))) :
-    Summable (λ n => f (ρ n)) := by
-  obtain ⟨β, hβ, h_sum⟩ := h_decay
-  apply Summable.of_norm_bounded (λ n => C * Real.exp (M * (|(ρ n).im| + 1)))
-  · intro n
-    have h_norm_bound : ‖ρ n‖ ≤ |(ρ n).im| + 1 := by
-      rw [Complex.norm_eq_abs]
-      calc
-        abs (ρ n) ≤ |(ρ n).re| + |(ρ n).im| := Complex.abs_add_le_abs_re_add_abs_im _
-        _ = 1/2 + |(ρ n).im| := by rw [critical_line_property n]; norm_num
-        _ ≤ 1 + |(ρ n).im| := by linarith
-    calc
-      ‖f (ρ n)‖ ≤ C * Real.exp (M * ‖ρ n‖) := h_bound (ρ n)
-      _ ≤ C * Real.exp (M * (|(ρ n).im| + 1)) := by gcongr
-  · -- Majorant converges (simplified proof structure)
-    sorry
-
-/-!
 ## Certificate and Validation
 -/
 
