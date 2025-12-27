@@ -144,7 +144,7 @@ axiom polynomial_term_bounded (n : ℕ) (hn : n ≥ 1) :
     - Comportamiento del término logarítmico en L²
     - Combinación de estimaciones para obtener la cota final
     
-    Ver issue: github.com/motanova84/Riemann-adelic/issues/XXX
+    TODO: crear issue en GitHub con los detalles técnicos de esta demostración.
 -/
 theorem H_psi_coefficient_bound (n : ℕ) (hn : n ≥ 10) :
     L2norm (H_psi_operator (hermiteBasis n)) ≤ 
