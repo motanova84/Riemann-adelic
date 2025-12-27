@@ -126,7 +126,7 @@ theorem H_epsilon_is_hermitian (ε : ℝ) (N : ℕ) :
   · simp [h]
   · simp [h]
     ring_nf
-    -- Para i≠j: ε/((i-j)² + 1) es real, por tanto auto-conjugado
+    -- For i ≠ j: ε/((i - j)² + 1) is real, hence self-conjugate
     -- Both sides evaluate to the same real value
     have h_ij_real : ε / (((i : ℂ) - (j : ℂ))^2 + 1) = ε / (((j : ℂ) - (i : ℂ))^2 + 1) := by
       congr 1
