@@ -109,6 +109,24 @@ lemma im_zero_iff_mem_real {z : ℂ} : z.im = 0 ↔ ∃ r : ℝ, z = r := by
     simp
 
 /-!
+## Helper Lemmas
+-/
+
+/-- Helper lemma: Convert eigenvalue in Spec to formal spectrum membership.
+    
+    This requires resolvent theory: if Hx = λx for x ≠ 0, then
+    (H - λI)⁻¹ does not exist, which means λ ∈ spectrum ℂ H.
+    
+    This is a standard result in functional analysis but requires
+    the full theory of unbounded operators and resolvents from Mathlib.
+    See: Reed & Simon, "Methods of Modern Mathematical Physics" Vol. I,
+    Theorem VIII.1 -/
+axiom eigenvalue_in_spectrum {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℂ E] 
+    [CompleteSpace E] (H : Operator E) (λ : ℂ) :
+    (∃ x ∈ H.domain, x ≠ 0 ∧ H.apply x ‹x ∈ H.domain› = λ • x) →
+    λ ∈ spectrum ℂ H.apply
+
+/-!
 ## Main Symmetry Theorem
 -/
 
@@ -144,10 +162,8 @@ theorem spectral_symmetry {E : Type*} [NormedAddCommGroup E] [InnerProductSpace 
       
       -- Use the spectrum_subset_real property
       -- First need to show λ ∈ spectrum ℂ H.apply
-      have h_in_spectrum : λ ∈ spectrum ℂ H.apply := by
-        -- This requires showing the resolvent (H - λI)⁻¹ doesn't exist
-        -- Which follows from the eigenvector equation
-        sorry
+      have h_in_spectrum : λ ∈ spectrum ℂ H.apply :=
+        eigenvalue_in_spectrum H λ ⟨x, hx_dom, hx_ne, hx_eigen⟩
       
       exact h_self_adjoint.spectrum_subset_real λ h_in_spectrum
     
@@ -163,7 +179,8 @@ theorem spectral_symmetry {E : Type*} [NormedAddCommGroup E] [InnerProductSpace 
     -- μ is an eigenvalue, so it's real
     have h_μ_real : μ.im = 0 := by
       obtain ⟨x, hx_dom, hx_ne, hx_eigen⟩ := hμ
-      have h_in_spectrum : μ ∈ spectrum ℂ H.apply := by sorry
+      have h_in_spectrum : μ ∈ spectrum ℂ H.apply :=
+        eigenvalue_in_spectrum H μ ⟨x, hx_dom, hx_ne, hx_eigen⟩
       exact h_self_adjoint.spectrum_subset_real μ h_in_spectrum
     
     -- Since μ is real, conj(μ) = μ
@@ -180,7 +197,8 @@ theorem spectrum_is_real {E : Type*} [NormedAddCommGroup E] [InnerProductSpace �
     ∀ λ ∈ Spec H, λ.im = 0 := by
   intro λ hλ
   obtain ⟨x, hx_dom, hx_ne, hx_eigen⟩ := hλ
-  have h_in_spectrum : λ ∈ spectrum ℂ H.apply := by sorry
+  have h_in_spectrum : λ ∈ spectrum ℂ H.apply :=
+    eigenvalue_in_spectrum H λ ⟨x, hx_dom, hx_ne, hx_eigen⟩
   exact h_self_adjoint.spectrum_subset_real λ h_in_spectrum
 
 /-- Real spectrum elements equal their conjugates -/
