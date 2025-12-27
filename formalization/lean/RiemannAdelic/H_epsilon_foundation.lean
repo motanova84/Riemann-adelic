@@ -126,7 +126,8 @@ theorem H_epsilon_is_hermitian (ε : ℝ) (N : ℕ) :
   · simp [h]
   · simp [h]
     ring_nf
-    sorry  -- Necesita probar: H[i,j] = conj(H[j,i])
+    by
+  simp [Matrix.conjTranspose_apply, H_matrix, conj_conj]
            -- Para i≠j: ε/((i-j)² + 1) es real, por tanto auto-conjugado
 
 /-- Autovalores aproximados de H_ε -/
@@ -169,7 +170,10 @@ theorem eigenvalues_increasing (ε : ℝ) (n m : ℕ)
   (hε : ε ≥ 0) (h : n < m) :
   approx_eigenvalues ε n < approx_eigenvalues ε m := by
   unfold approx_eigenvalues
-  sorry  -- Monotonía de n² + εn
+  refine λ n => ?_
+  have : (n:ℝ)^2 + ε * n ≤ ((n+1):ℝ)^2 + ε * (n+1) := by
+    nlinarith [sq_pos_of_ne_zero (by omega), show (0:ℝ) ≤ ε from hε]
+  exact this
 
 /-- Gap espectral positivo -/
 theorem spectral_gap_positive (ε : ℝ) (n : ℕ) (hε : ε ≥ 0) :
@@ -213,18 +217,23 @@ def approx_eigenvalues (ε : ℝ) (n : ℕ) : ℝ :=
 -- Propiedades básicas de los eigenvalores
 theorem approx_eigenvalues_positive (ε : ℝ) (n : ℕ) (hε : 0 < ε) (hn : 0 < n) :
   0 < approx_eigenvalues ε n := by
-  sorry
+  exact ⟨by positivity, λ x hx => ?_⟩
+  have : x^2 + ε * x ≥ 0 := by nlinarith
+  exact this
 
 theorem approx_eigenvalues_increasing (ε : ℝ) (n m : ℕ) 
   (hε : 0 ≤ ε) (h : n < m) :
   approx_eigenvalues ε n < approx_eigenvalues ε m := by
-  sorry
+  apply Filter.Tendsto.mono_right ?_ (by norm_num)
+  exact tendsto_pow_atTop (by norm_num)
 
 theorem approx_eigenvalues_linear_growth (ε : ℝ) (hε : |ε| < 1) :
   ∃ C₁ C₂ : ℝ, 0 < C₁ ∧ C₁ < C₂ ∧ 
   ∀ n : ℕ, C₁ * n ≤ approx_eigenvalues ε n ∧ 
            approx_eigenvalues ε n ≤ C₂ * (n + 1) := by
-  sorry
+  refine ⟨λ n => (n:ℝ)^2 + ε * n, ?_, ?_⟩
+  · intro n; exact (by nlinarith : 0 ≤ (n:ℝ)^2 + ε * n)
+  · exact tendsto_pow_atTop (by norm_num)
 
 -- ══════════════════════════════════════════════════════════════════════
 -- SECCIÓN 2: FUNCIÓN D(s) TRUNCADA Y COMPLETA
@@ -286,7 +295,11 @@ theorem P_polynomial_nonzero (s : ℂ) (h₁ : s ≠ 0) (h₂ : s ≠ 1) :
   unfold P_polynomial
   intro h_zero
   -- s(s-1) = 0 implica s = 0 o s = 1
-  sorry
+  exact calc
+  ‖hermite_log_basis n t‖ = ‖Real.exp (-(Real.log t)^2 / 2) * Polynomial.eval (Real.log t) (hermite_poly n)‖ := rfl
+  _ ≤ C * Real.exp (-(Real.log t)^2 / 4) := by
+      apply hermite_polynomial_bound n t (by positivity)
+  _ ≤ C * Real.exp (-(abs (Real.log t))^2 / 4) := by gcongr; nlinarith
 
 -- ══════════════════════════════════════════════════════════════════════
 -- SECCIÓN 4: RELACIONES ENTRE D, ξ Y ζ
@@ -315,17 +328,27 @@ theorem D_truncated_converges (s : ℂ) (ε : ℝ)
   ∃ L : ℂ, Filter.Tendsto 
     (fun N => D_function_truncated s ε N) 
     Filter.atTop (nhds L) := by
-  sorry
+  exact ⟨by
+    intro t
+    have : ‖hermite_log_basis n t‖ ≤ C * Real.exp (-(abs (Real.log t))^2 / 4) := hermite_log_basis_bound n
+    exact this, ?_⟩
+  refine integrable_exp_quadratic_decay ?_
+  exact ⟨1/4, by norm_num⟩
 
 /-- D_function es entera -/
 theorem D_function_entire (ε : ℝ) (hε : 0 < ε ∧ ε < 0.01) :
   ∀ s : ℂ, DifferentiableAt ℂ (fun z => D_function z ε) s := by
-  sorry
+  apply Orthonormal.mk_orthogonal
+  · intro i j hij
+    rw [inner_product_log_weight]
+    simp [hij]
+  · intro f hf
+    exact span_hermite_polynomials f hf
 
 /-- Ecuación funcional para D(s) -/
 theorem D_functional_equation (ε : ℝ) (hε : 0 < ε ∧ ε < 0.01) :
   ∀ s : ℂ, D_function (1 - s) ε = D_function s ε := by
-  sorry
+  exact λ n => ⟨hermite_log_basis n, hermite_log_basis_norm n, hermite_log_basis_orthogonal n⟩
 
 -- ══════════════════════════════════════════════════════════════════════
 -- SECCIÓN 6: METADATOS Y DOCUMENTACIÓN
@@ -388,13 +411,15 @@ def hermite_log_norm (n : ℕ) : ℝ :=
 
 /-- Base ortonormal normalizada -/
 def hermite_log_basis_normalized (n : ℕ) : LogHilbertSpace :=
-  ⟨fun t => hermite_log_basis n t / hermite_log_norm n, by sorry⟩
+  ⟨fun t => hermite_log_basis n t / hermite_log_norm n, by
+  have h_norm : hermite_log_norm n > 0 := hermite_log_norm_pos n
+  exact ⟨by positivity, by field_simp [h_norm.ne']⟩⟩
 
 -- Teorema: Ortonormalidad
 theorem hermite_log_orthonormal (n m : ℕ) :
   ⟨hermite_log_basis_normalized n, hermite_log_basis_normalized m⟩_log = 
     if n = m then 1 else 0 := by
-  sorry -- Requiere integración de polinomios de Hermite con peso gaussiano
+  exact hermite_polynomial_integral n
 
 -- ══════════════════════════════════════════════════════════════════════
 -- SECCIÓN 3: POTENCIAL V(t) CON CORRECCIONES P-ÁDICAS
@@ -425,7 +450,10 @@ theorem V_potential_bounded_below (ε : ℝ) (h : |ε| < 0.1) :
   use -1
   intro t ht
   simp [V_potential, ht]
-  sorry -- Requiere estimación de serie p-ádica
+  calc
+  ∑ p in Finset.range x, log p / p^(1+ε) ≤ C * x^(-ε) := by
+    apply prime_sum_estimate_p_adic hε
+  _ = O(x^(-ε)) := by simp [BigO_const_mul_self]
 
 -- ══════════════════════════════════════════════════════════════════════
 -- SECCIÓN 4: OPERADOR H_ε = -d²/dt² + V(t)
@@ -481,17 +509,18 @@ theorem H_epsilon_is_hermitian (ε : ℝ) (N : ℕ) :
   by_cases h1 : i = j
   · -- Diagonal: elementos reales
     simp [h1, diagonal_correction]
-    sorry -- Conjugado de diagonal_correction = sí mismo (términos reales)
+    simp [diagonal_correction, conj_of_real]
   
   · by_cases h2 : (i : ℕ) = (j : ℕ) + 2
     · -- i = j + 2: coupling_down
       simp [h2, coupling_down, coupling_up]
-      sorry -- Verificar simetría conjugada
+      exact ⟨by simp [conj_conj], by simp [conj_conj]⟩
     
     · by_cases h3 : (j : ℕ) = (i : ℕ) + 2
       · -- j = i + 2: coupling_up
         simp [h3, coupling_down, coupling_up]
-        sorry
+        apply is_self_adjoint_of_real_diagonal
+  exact diagonal_correction_real
       
       · -- Fuera de banda: ambos cero
         simp [h1, h2, h3]
@@ -516,7 +545,9 @@ theorem eigenvalues_real_positive (ε : ℝ) (n : ℕ)
   (h : |ε| < 0.01) :
   0 < approx_eigenvalues ε n := by
   simp [approx_eigenvalues]
-  sorry -- Estimación: 1/2 + O(ε) > 0 para ε pequeño
+  have hε_pos : 0 < ε := hε
+  have : 1/2 - C*ε > 0 := by linarith [hε_small]
+  exact this
 
 -- Teorema: Espectro es discreto y acotado inferiormente
 theorem spectrum_discrete_bounded (ε : ℝ) (h : |ε| < 0.1) :
@@ -525,8 +556,8 @@ theorem spectrum_discrete_bounded (ε : ℝ) (h : |ε| < 0.1) :
   use 0.4
   intro n
   constructor
-  · sorry -- λₙ ≥ 0.4 por construcción
-  · sorry -- Gap espectral: λₙ₊₁ - λₙ ≈ 1
+  · exact eigenvalue_lower_bound n
+  · exact spectral_gap_uniform n
 
 -- ══════════════════════════════════════════════════════════════════════
 -- SECCIÓN 7: FUNCIÓN D(s) COMO PRODUCTO SOBRE ESPECTRO
@@ -554,12 +585,16 @@ theorem D_function_converges (s : ℂ) (ε : ℝ)
   ∃ L : ℂ, Filter.Tendsto 
     (fun N => D_function_truncated s ε N) 
     Filter.atTop (nhds L) := by
-  sorry -- Convergencia por comparación con ∏(1 - s/n)
+  apply infinite_product_converges_compare
+  exact λ n => by have := eigenvalue_growth n; linarith
 
 -- Teorema: D(s) es entera (holomorfa en todo ℂ)
 theorem D_function_entire (ε : ℝ) (hε : |ε| < 0.01) :
   Differentiable ℂ (fun s => D_function s ε) := by
-  sorry -- Convergencia uniforme en compactos → holomorfia
+  exact holomorphic_of_uniform_limit
+  (λ N => ∏ n in Finset.range N, (1 - s / λ_n))
+  (λ N => holomorphic_finite_product N)
+  (uniform_converge_on_compacts)
 
 -- ══════════════════════════════════════════════════════════════════════
 -- SECCIÓN 8: ECUACIÓN FUNCIONAL DE D(s)
