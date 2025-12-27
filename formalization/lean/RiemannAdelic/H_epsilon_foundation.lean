@@ -642,23 +642,23 @@ theorem H_epsilon_is_hermitian (ε : ℝ) (N : ℕ) :
   simp [H_epsilon_matrix, H_epsilon_matrix_element]
   
   by_cases h1 : i = j
-  · -- Diagonal: elementos reales
+  · -- Diagonal: real elements
     simp [h1, diagonal_correction]
-    -- diagonal_correction es suma de términos complejos pero su parte imaginaria se cancela
-    sorry -- Requiere probar que diagonal_correction es real para índice real
+    -- diagonal_correction is a sum of complex terms but its imaginary part cancels out
+    sorry -- Requires proving that diagonal_correction is real for real index
   
   · by_cases h2 : (i : ℕ) = (j : ℕ) + 2
     · -- i = j + 2: coupling_down
       simp [h2, coupling_down, coupling_up]
-      -- Verificar simetría: conj(coupling_down i j) = coupling_up j i
-      sorry -- Requiere algebra de raíces cuadradas
+      -- Verify symmetry: conj(coupling_down i j) = coupling_up j i
+      sorry -- Requires square root algebra
     
     · by_cases h3 : (j : ℕ) = (i : ℕ) + 2
       · -- j = i + 2: coupling_up
         simp [h3, coupling_down, coupling_up]
-        sorry -- Simétrico al caso anterior
+        sorry -- Symmetric to previous case
       
-      · -- Fuera de banda: ambos cero
+      · -- Out of band: both zero
         simp [h1, h2, h3]
 
 -- ══════════════════════════════════════════════════════════════════════
