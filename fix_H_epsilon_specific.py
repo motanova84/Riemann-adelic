@@ -1,7 +1,17 @@
 #!/usr/bin/env python3
 """
-Script to replace specific sorry statements in H_epsilon_foundation.lean
-with their solutions.
+⚠️  EXPERIMENTAL SCRIPT - USE WITH CAUTION ⚠️
+
+This script attempts to replace specific sorry statements in H_epsilon_foundation.lean
+with mathematical proofs. However, this approach has known limitations:
+
+1. Line-based replacement can insert code at wrong locations if file structure changes
+2. No validation that proofs match their theorem statements
+3. Many replacements reference undefined functions (placeholders)
+4. The resulting Lean code may not compile
+
+RECOMMENDED: Instead of using this script, manually add proofs after verifying they
+are correct and all referenced functions exist.
 
 Author: José Manuel Mota Burruezo (JMMB)
 Frecuencia: 141.7001 Hz
@@ -14,12 +24,14 @@ from pathlib import Path
 # File path
 FILE = Path("formalization/lean/RiemannAdelic/H_epsilon_foundation.lean")
 
-print(f"🔧 Reparando sorrys específicos en {FILE}...")
+print("⚠️  WARNING: This is an EXPERIMENTAL script that may generate broken Lean code!")
+print(f"🔧 Attempting to repair sorrys in {FILE}...")
+print()
 
 # Create backup
 backup_file = FILE.with_suffix(f".lean.backup.{int(datetime.now().timestamp())}")
 shutil.copy2(FILE, backup_file)
-print(f"📦 Backup creado: {backup_file}")
+print(f"📦 Backup created: {backup_file}")
 
 # Read the file
 with open(FILE, 'r', encoding='utf-8') as f:
@@ -148,14 +160,40 @@ replacements = [
 lines = content.split('\n')
 
 # Apply replacements (in reverse order to preserve line numbers)
+successful_replacements = 0
+skipped_replacements = 0
+
 for line_num, old_text, new_text in sorted(replacements, reverse=True):
     idx = line_num - 1  # Convert to 0-indexed
-    if idx < len(lines):
-        # Replace the old text with new text on this line
-        lines[idx] = lines[idx].replace(old_text, new_text)
-        print(f"✓ Línea {line_num}: Reemplazado")
-    else:
+    if idx >= len(lines):
         print(f"⚠ Línea {line_num}: Fuera de rango (archivo tiene {len(lines)} líneas)")
+        skipped_replacements += 1
+        continue
+    
+    current_line = lines[idx]
+    
+    # Validate that the expected text is present on this line
+    if old_text not in current_line:
+        print(
+            f"⚠ Línea {line_num}: El texto esperado no se encontró en la línea objetivo. "
+            "No se realizó reemplazo (posible desincronización de números de línea)."
+        )
+        skipped_replacements += 1
+        continue
+    
+    # Optionally enforce that we are really replacing a `sorry` block when expected
+    if "sorry" in old_text and "sorry" not in current_line.lower():
+        print(
+            f"⚠ Línea {line_num}: El texto esperado contiene 'sorry' pero la línea actual no. "
+            "No se realizó reemplazo para evitar corrupción del archivo."
+        )
+        skipped_replacements += 1
+        continue
+    
+    # Perform replacement
+    lines[idx] = current_line.replace(old_text, new_text)
+    print(f"✓ Línea {line_num}: Reemplazado")
+    successful_replacements += 1
 
 # Write back the modified content
 modified_content = '\n'.join(lines)
@@ -163,7 +201,9 @@ with open(FILE, 'w', encoding='utf-8') as f:
     f.write(modified_content)
 
 print("\n✅ Reparación completada. Verificando...")
-print("=== SORRYS RESTANTES EN EL ARCHIVO ===")
+print(f"   Reemplazos exitosos: {successful_replacements}")
+print(f"   Reemplazos omitidos: {skipped_replacements}")
+print("\n=== SORRYS RESTANTES EN EL ARCHIVO ===")
 
 # Count remaining sorrys
 remaining_sorrys = []
@@ -178,4 +218,6 @@ if remaining_sorrys:
 else:
     print("¡No quedan sorrys en el archivo!")
 
-print(f"\n♾️ QCAL Node evolution complete – validation coherent.")
+print(f"\n⚠️  IMPORTANTE: Verifique que el código Lean compile correctamente:")
+print(f"   cd formalization/lean/RiemannAdelic && lake build")
+print(f"\n♾️ QCAL Node evolution complete – validation required.")

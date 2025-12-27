@@ -1,43 +1,75 @@
 # H_epsilon Foundation Sorry Fixes
 
+⚠️ **EXPERIMENTAL TOOLS - NOT RECOMMENDED FOR USE** ⚠️
+
 ## Overview
 
-This directory contains scripts to replace 20 specific `sorry` statements in `formalization/lean/RiemannAdelic/H_epsilon_foundation.lean` with their mathematical proofs.
+This directory contains **experimental** scripts that attempt to automatically replace `sorry` statements in `formalization/lean/RiemannAdelic/H_epsilon_foundation.lean` with mathematical proofs. 
+
+**WARNING**: These scripts have significant limitations and may produce broken Lean code. They are provided for reference only.
+
+## Known Issues
+
+### Script Limitations
+- **Line-based replacement**: Scripts use naive line number matching without understanding Lean syntax
+- **No proof validation**: Replacements don't verify that proofs match theorem statements
+- **Undefined function references**: Many "proofs" reference functions that don't exist in the codebase
+- **File structure sensitivity**: If the file structure changes, replacements may be inserted at wrong locations
+- **No compilation checking**: Scripts don't verify the resulting Lean code compiles
+
+### Specific Problems Identified
+- Line 129: Syntax error (standalone `by` keyword)
+- Line 172: Wrong proof structure (introduces lambda instead of proving inequality)
+- Lines 216, 221, 227: Proofs don't match theorem goals
+- Lines 289, 318, 323, 328: Proofs reference undefined functions
+- Lines 391, 397: Reference `hermite_log_norm_pos`, `hermite_polynomial_integral` (undefined)
+- Line 428: References `prime_sum_estimate_p_adic`, undefined variables `x`, `C`, `hε`
+- Lines 484, 489, 494: Reference undefined `diagonal_correction_real`, wrong proof structures
+- Line 519: References undefined `hε_small`, `C`
+- Lines 528, 529: Reference undefined `eigenvalue_lower_bound`, `spectral_gap_uniform`
+- Lines 557, 562: Reference undefined `infinite_product_converges_compare`, `holomorphic_of_uniform_limit`, etc.
 
 ## Scripts
 
-### `fix_H_epsilon_specific.py` (Recommended)
+### `fix_H_epsilon_specific.py` 
 
-Python script that performs robust multiline replacements of sorry statements with their proofs.
+**STATUS**: ⚠️ EXPERIMENTAL - DO NOT USE
 
-**Usage:**
+Python script with multiline replacement capability. Now includes validation checks but fundamental approach is flawed.
+
+**Usage** (not recommended):
 ```bash
 python3 fix_H_epsilon_specific.py
 ```
 
-**Features:**
-- Creates automatic backup with timestamp
-- Handles multiline replacements correctly
-- Provides detailed output of changes
-- Reports remaining sorry statements
+**Recent updates**:
+- Added validation to check target lines contain expected text
+- Added warnings about experimental nature
+- Added compilation reminder
 
 ### `fix_H_epsilon_specific.sh`
 
-Bash wrapper script that offers to run the Python script.
+**STATUS**: ⚠️ WRAPPER ONLY
 
-**Usage:**
+Bash wrapper that prompts to run the Python script.
+
+**Usage** (not recommended):
 ```bash
 ./fix_H_epsilon_specific.sh
 ```
 
-This script will:
-1. Create a backup
-2. Prompt to run the Python script
-3. Execute Python script if confirmed
+## Recommended Approach
 
-## Sorry Statements Fixed (20 total)
+Instead of using these automated scripts:
 
-The following sorry statements are replaced with their proofs:
+1. **Manual proof development**: Add proofs one at a time, verifying each compiles
+2. **Define missing functions first**: Create lemmas like `hermite_log_norm_pos`, `eigenvalue_lower_bound`, etc.
+3. **Validate theorem-proof match**: Ensure each proof actually proves its theorem statement
+4. **Test compilation**: Run `lake build` after each change
+
+## Sorry Statements (Original 20 Targets)
+
+The scripts attempted to replace these, but most replacements were incorrect:
 
 1. **Line 129**: Matrix hermiticity - H[i,j] = conj(H[j,i])
 2. **Line 172**: Monotonicity of n² + εn
