@@ -7,7 +7,6 @@ Author: José Manuel Mota Burruezo (JMMB)
 Frecuencia: 141.7001 Hz
 """
 
-import re
 import shutil
 from datetime import datetime
 from pathlib import Path
