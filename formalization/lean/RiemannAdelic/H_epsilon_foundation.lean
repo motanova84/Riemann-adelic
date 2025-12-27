@@ -126,9 +126,8 @@ theorem H_epsilon_is_hermitian (ε : ℝ) (N : ℕ) :
   · simp [h]
   · simp [h]
     ring_nf
-    by
-  simp [Matrix.conjTranspose_apply, H_matrix, conj_conj]
-           -- Para i≠j: ε/((i-j)² + 1) es real, por tanto auto-conjugado
+    simp [Matrix.conjTranspose_apply, H_matrix, conj_conj]
+      -- Para i≠j: ε/((i-j)² + 1) es real, por tanto auto-conjugado
 
 /-- Autovalores aproximados de H_ε -/
 def approx_eigenvalues (ε : ℝ) (n : ℕ) : ℝ :=
