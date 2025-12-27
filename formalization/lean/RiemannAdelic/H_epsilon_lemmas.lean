@@ -16,6 +16,9 @@ open Real
 
 namespace RiemannAdelic
 
+-- File-level variables for ε and its positivity constraint
+variable (ε : ℝ) (hε : 0 < ε)
+
 section AuxiliaryDefinitions
 
 /-- Función base hermite-logarítmica (placeholder hasta importar la definición real) --/
@@ -35,7 +38,6 @@ def diagonal_correction (i j : ℕ) : ℂ :=
   if i = j then (i : ℂ) else 0
 
 /-- Autovalor (placeholder) --/
-variable (ε : ℝ) (hε : 0 < ε)
 def eigenvalue (n : ℕ) : ℝ := 
   n^2 + ε * n
 
@@ -92,8 +94,6 @@ theorem hermite_polynomial_integral (n : ℕ) :
 end
 
 section PAdicEstimates
-
-variable (ε : ℝ) (hε : 0 < ε)
 
 /-- Estimación p-ádica de sumas de primos --/
 theorem prime_sum_estimate_p_adic {ε : ℝ} (hε : 0 < ε) :
