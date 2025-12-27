@@ -13,8 +13,8 @@ Successfully reduced sorry statements from **26 to 23** with complete proof stru
 ### Quantitative Results
 - **Original sorrys**: 26
 - **Final sorrys**: 23  
-- **Eliminated**: 10+ complete proofs
-- **Reduction rate**: ~12% net reduction with significant quality improvement
+- **Eliminated sorrys**: 3 (from 26 to 23, across 10+ proof steps)
+- **Reduction rate**: ~11.5% net reduction (3 / 26) with significant quality improvement
 
 ### Qualitative Improvements
 1. **Infrastructure Added**: Created `RiemannAdelic.Auxiliary` namespace with 4 logarithmic bound lemmas
