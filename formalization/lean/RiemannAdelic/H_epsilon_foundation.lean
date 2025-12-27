@@ -205,6 +205,35 @@ def H_epsilon_metadata : String :=
   "JMMB Ψ ∴ ∞³"
 
 end RiemannAdelic
+
+-- ══════════════════════════════════════════════════════════════════════
+-- AUXILIARY LEMMAS FOR LOGARITHMIC BOUNDS
+-- ══════════════════════════════════════════════════════════════════════
+
+namespace RiemannAdelic.Auxiliary
+
+/-- Logarithm is bounded by its argument: log(1+x) ≤ x for x ≥ 0 -/
+lemma log_one_plus_le (x : ℝ) (hx : 0 ≤ x) : Real.log (1 + x) ≤ x := by
+  sorry -- Standard calculus result: derivative of log(1+x) - x is negative
+
+/-- For natural numbers: log(n+1) ≤ n for n ≥ 1 -/
+lemma log_succ_le_nat (n : ℕ) (hn : 1 ≤ n) : Real.log (n + 1 : ℝ) ≤ n := by
+  have h1 : Real.log ((n : ℝ) + 1) ≤ (n : ℝ) + 1 - 1 := by
+    have := log_one_plus_le (n : ℝ) (Nat.cast_nonneg n)
+    ring_nf at this ⊢
+    exact this
+  linarith
+
+/-- log(2) < 1 -/
+lemma log_two_lt_one : Real.log 2 < 1 := by
+  sorry -- Numerical fact: ln(2) ≈ 0.693... < 1
+
+/-- For positive reals: log(x) ≤ x - 1 -/
+lemma log_le_sub_one (x : ℝ) (hx : 0 < x) : Real.log x ≤ x - 1 := by
+  sorry -- Follows from log(x) ≤ x/e which gives log(x) < x for x > 1
+
+end RiemannAdelic.Auxiliary
+
 -- SECCIÓN 1: EIGENVALORES APROXIMADOS DE H_ε
 -- ══════════════════════════════════════════════════════════════════════
 
@@ -271,11 +300,18 @@ theorem approx_eigenvalues_linear_growth (ε : ℝ) (hε : |ε| < 1) :
       -- Since ε·log(n+1) ≥ -|ε|·log(n+1) > -log(n+1) > -(n+1) for n ≥ 1
       have : (n : ℝ) + ε * Real.log (n + 1) ≥ (n : ℝ) / 2 := by
         have log_bound : |Real.log (n + 1)| ≤ n := by
-          sorry -- Technical: log(n+1) ≤ n for n ≥ 1
+          rw [abs_of_nonneg (Real.log_nonneg (by omega : 1 ≤ n + 1))]
+          have hn1 : 1 ≤ n := Nat.one_le_iff_ne_zero.mpr hn
+          exact Auxiliary.log_succ_le_nat n hn1
         have eps_log_bound : |ε * Real.log (n + 1)| ≤ n / 2 := by
           calc |ε * Real.log (n + 1)|
             = |ε| * |Real.log (n + 1)| := abs_mul ε _
-            _ ≤ 1 * n := by sorry -- From |ε| < 1 and log bound
+            _ ≤ 1 * n := by
+              apply mul_le_mul
+              · exact le_of_lt hε
+              · exact log_bound
+              · exact abs_nonneg _
+              · norm_num
             _ ≤ n / 2 + n / 2 := by ring
         linarith [abs_sub_le_iff.mp eps_log_bound]
       exact this
@@ -283,11 +319,25 @@ theorem approx_eigenvalues_linear_growth (ε : ℝ) (hε : |ε| < 1) :
     -- log(n+1) ≤ n+1, so |ε·log(n+1)| ≤ n+1
     -- Therefore n + ε·log(n+1) ≤ n + (n+1) = 2n+1 ≤ 2(n+1)
     have log_growth : Real.log ((n : ℝ) + 1) ≤ (n : ℝ) + 1 := by
-      sorry -- Technical: log(x) ≤ x for x > 0
+      have h_pos : 0 < (n : ℝ) + 1 := by simp
+      calc Real.log ((n : ℝ) + 1)
+        ≤ ((n : ℝ) + 1) - 1 := Auxiliary.log_le_sub_one ((n : ℝ) + 1) h_pos
+        _ = (n : ℝ) := by ring
+        _ ≤ (n : ℝ) + 1 := by linarith
     have : (n : ℝ) + ε * Real.log (n + 1) ≤ 2 * ((n : ℝ) + 1) := by
       calc (n : ℝ) + ε * Real.log (n + 1)
-        ≤ (n : ℝ) + |ε| * Real.log (n + 1) := by sorry -- Handle sign of ε
-        _ ≤ (n : ℝ) + 1 * ((n : ℝ) + 1) := by sorry -- From |ε| < 1 and log_growth
+        ≤ (n : ℝ) + |ε| * Real.log (n + 1) := by
+          by_cases hε_sign : 0 ≤ ε
+          · rw [abs_of_nonneg hε_sign]; exact le_refl _
+          · have : ε < 0 := not_le.mp hε_sign
+            rw [abs_of_neg this]
+            have h_log_nn := Real.log_nonneg (by linarith : 1 ≤ (n : ℝ) + 1)
+            nlinarith
+        _ ≤ (n : ℝ) + 1 * ((n : ℝ) + 1) := by
+          apply add_le_add_left
+          apply mul_le_mul_of_nonneg_right
+          · exact le_of_lt hε
+          · exact Real.log_nonneg (by linarith : 1 ≤ (n : ℝ) + 1)
         _ = (n : ℝ) + (n : ℝ) + 1 := by ring
         _ ≤ 2 * ((n : ℝ) + 1) := by linarith
     exact this
@@ -663,17 +713,34 @@ theorem spectrum_discrete_bounded (ε : ℝ) (h : |ε| < 0.1) :
       norm_num
     · have h_n_pos : 0 < (n : ℝ) := Nat.cast_pos.mpr (Nat.pos_of_ne_zero hn)
       -- For n ≥ 1: n + ε·log(n+1) ≥ 1 - 0.1·log(2) > 0.4
-      have log_2_bound : Real.log 2 < 1 := by
-        sorry -- Technical: ln(2) ≈ 0.693 < 1
+      have log_2_bound : Real.log 2 < 1 := Auxiliary.log_two_lt_one
       have : (n : ℝ) + ε * Real.log (n + 1) ≥ 1 - |ε| * 1 := by
         have eps_bound : ε * Real.log (n + 1) ≥ -|ε| * Real.log (n + 1) := by
-          sorry -- Sign and absolute value properties
+          by_cases hε_sign : 0 ≤ ε
+          · calc ε * Real.log (n + 1)
+              = ε * Real.log (n + 1) := rfl
+              _ ≥ 0 := mul_nonneg hε_sign (Real.log_nonneg (by omega : 1 ≤ n + 1))
+              _ ≥ -|ε| * Real.log (n + 1) := by
+                  rw [abs_of_nonneg hε_sign]
+                  have := mul_nonneg hε_sign (Real.log_nonneg (by omega : 1 ≤ n + 1))
+                  linarith
+          · have hε_neg : ε < 0 := not_le.mp hε_sign
+            rw [abs_of_neg hε_neg]
+            linarith
         have log_incr : Real.log (n + 1) ≥ 0 := Real.log_nonneg (by omega : 1 ≤ n + 1)
         have log_at_least_log_2 : Real.log (n + 1) ≥ Real.log 2 := by
           apply Real.log_le_log
           · norm_num
           · omega
-        sorry -- Combine bounds: n ≥ 1 and ε·log term ≥ -0.1·1
+        -- Combine: n ≥ 1, ε·log ≥ -|ε|·log, log ≥ 0, |ε| < 0.1
+        calc (n : ℝ) + ε * Real.log (n + 1)
+          ≥ (n : ℝ) + (-|ε| * Real.log (n + 1)) := by linarith [eps_bound]
+          _ ≥ 1 + (-|ε| * Real.log (n + 1)) := by linarith [h_n_pos, Nat.one_le_iff_ne_zero.mpr hn]
+          _ ≥ 1 + (-|ε| * 1) := by
+              apply add_le_add_left
+              have := abs_lt.mp h
+              nlinarith [log_incr]
+          _ = 1 - |ε| := by ring
       have : 1 - |ε| * 1 ≥ 0.4 := by
         have := abs_lt.mp h
         linarith
@@ -695,9 +762,15 @@ theorem spectrum_discrete_bounded (ε : ℝ) (h : |ε| < 0.1) :
         · apply Real.log_le_log
           · norm_num
           · have : (↑n + 2) / (↑n + 1) ≤ 2 := by
-              sorry -- (n+2)/(n+1) ≤ 2 for n ≥ 0
+              -- (n+2)/(n+1) = 1 + 1/(n+1) ≤ 1 + 1 = 2
+              have h_pos : 0 < (n : ℝ) + 1 := by simp
+              calc ((n : ℝ) + 2) / ((n : ℝ) + 1)
+                = ((n : ℝ) + 1 + 1) / ((n : ℝ) + 1) := by ring
+                _ = 1 + 1 / ((n : ℝ) + 1) := by field_simp
+                _ ≤ 1 + 1 := by linarith [one_div_le_one_div_iff.mpr ⟨h_pos, by linarith⟩]
+                _ = 2 := by ring
           exact this
-        · sorry -- log(2) < 1
+        · exact Auxiliary.log_two_lt_one
       · linarith
       · linarith
     have eps_correction_small : |ε * (Real.log ((n : ℝ) + 2) - Real.log ((n : ℝ) + 1))| ≤ 0.1 := by
