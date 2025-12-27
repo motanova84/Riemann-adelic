@@ -2,6 +2,44 @@
 
 ## Overview
 
+This repository includes two web interfaces:
+
+1. **Next.js Dashboard** (NEW) - Modern, interactive dashboard for exploring the Riemann Hypothesis proof
+2. **API Server** - Backend API for mathematical computations and validations
+
+## Next.js Dashboard (Recommended)
+
+### 🎨 Modern Interactive Interface
+
+A beautiful, responsive dashboard built with Next.js 14, TypeScript, and Tailwind CSS.
+
+**Features:**
+- Real-time proof status and validation results
+- Interactive cards displaying key information
+- Optimized Geist fonts for professional typography
+- Responsive design for all devices
+- Spanish language interface
+
+### Quick Start
+
+```bash
+# Install dependencies
+npm install
+
+# Start development server
+npm run dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+### Documentation
+
+See [NEXTJS_README.md](NEXTJS_README.md) for complete documentation and [QUICKSTART_NEXTJS.md](QUICKSTART_NEXTJS.md) for quick reference.
+
+---
+
+## API Server (Legacy)
+
 This web interface provides an interactive demonstration of the enhanced mathematical functions implemented for the Riemann Hypothesis validation project.
 
 ## Enhanced Functions
