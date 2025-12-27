@@ -264,18 +264,33 @@ theorem approx_eigenvalues_linear_growth (ε : ℝ) (hε : |ε| < 1) :
   constructor
   · -- Lower bound: n/2 ≤ n + ε·log(n+1)
     by_cases hn : n = 0
-    · simp [hn]
-    · have : 0 < (n : ℝ) := Nat.cast_pos.mpr (Nat.pos_of_ne_zero hn)
-      have h_log_bound : ε * Real.log (n + 1) ≥ -|ε| * Real.log (n + 1) := by
-        cases' (le_or_lt ε 0) with hε_neg hε_pos
-        · calc ε * Real.log (n + 1) 
-            ≥ ε * 0 := by sorry -- needs log bound
-            _ = 0 := by ring
-            _ ≥ -|ε| * Real.log (n + 1) := by sorry
-        · linarith [abs_of_pos hε_pos]
-      sorry -- complete bound
+    · simp [hn]; norm_num
+    · have h_n_pos : 0 < (n : ℝ) := Nat.cast_pos.mpr (Nat.pos_of_ne_zero hn)
+      -- For n ≥ 1: ε·log(n+1) ≥ -1·log(n+1) ≥ -n (since log grows slower than linear)
+      -- Therefore n + ε·log(n+1) ≥ n - n = 0, but we need better bound
+      -- Since ε·log(n+1) ≥ -|ε|·log(n+1) > -log(n+1) > -(n+1) for n ≥ 1
+      have : (n : ℝ) + ε * Real.log (n + 1) ≥ (n : ℝ) / 2 := by
+        have log_bound : |Real.log (n + 1)| ≤ n := by
+          sorry -- Technical: log(n+1) ≤ n for n ≥ 1
+        have eps_log_bound : |ε * Real.log (n + 1)| ≤ n / 2 := by
+          calc |ε * Real.log (n + 1)|
+            = |ε| * |Real.log (n + 1)| := abs_mul ε _
+            _ ≤ 1 * n := by sorry -- From |ε| < 1 and log bound
+            _ ≤ n / 2 + n / 2 := by ring
+        linarith [abs_sub_le_iff.mp eps_log_bound]
+      exact this
   · -- Upper bound: n + ε·log(n+1) ≤ 2(n+1)
-    sorry -- needs log growth bound
+    -- log(n+1) ≤ n+1, so |ε·log(n+1)| ≤ n+1
+    -- Therefore n + ε·log(n+1) ≤ n + (n+1) = 2n+1 ≤ 2(n+1)
+    have log_growth : Real.log ((n : ℝ) + 1) ≤ (n : ℝ) + 1 := by
+      sorry -- Technical: log(x) ≤ x for x > 0
+    have : (n : ℝ) + ε * Real.log (n + 1) ≤ 2 * ((n : ℝ) + 1) := by
+      calc (n : ℝ) + ε * Real.log (n + 1)
+        ≤ (n : ℝ) + |ε| * Real.log (n + 1) := by sorry -- Handle sign of ε
+        _ ≤ (n : ℝ) + 1 * ((n : ℝ) + 1) := by sorry -- From |ε| < 1 and log_growth
+        _ = (n : ℝ) + (n : ℝ) + 1 := by ring
+        _ ≤ 2 * ((n : ℝ) + 1) := by linarith
+    exact this
 
 -- ══════════════════════════════════════════════════════════════════════
 -- SECCIÓN 2: FUNCIÓN D(s) TRUNCADA Y COMPLETA
@@ -458,8 +473,15 @@ def hermite_log_basis_normalized (n : ℕ) : LogHilbertSpace :=
     use ‖hermite_poly n (log t) * exp (-(log t)^2 / 2)‖ / hermite_log_norm n
     apply div_le_of_nonneg_of_le_mul
     · exact hermite_log_norm n
-    · sorry -- needs hermite_log_norm > 0
-    · sorry -- needs bound on hermite polynomial
+    · -- hermite_log_norm > 0
+      apply Real.sqrt_pos.mpr
+      apply mul_pos
+      · apply mul_pos
+        · apply pow_pos; norm_num
+        · exact Nat.cast_pos.mpr (Nat.factorial_pos n)
+      · apply Real.sqrt_pos.mpr; exact Real.pi_pos
+    · -- Hermite polynomial bound
+      sorry -- Needs: Hermite polynomial growth bound |Hₙ(x)| ≤ C·eˣ²/⁴·√n!
     ⟩
 
 -- Teorema: Ortonormalidad
@@ -504,7 +526,13 @@ theorem V_potential_bounded_below (ε : ℝ) (h : |ε| < 0.1) :
   -- (log t)² ≥ 0, and |ε·W(t)| < ε·Σ(1/p) < 0.1·2 for small ε
   have h_sq_nonneg : 0 ≤ (log t)^2 := sq_nonneg _
   have h_correction_bounded : |p_adic_correction ε t| ≤ |ε| * 2 := by
-    sorry -- Requires bounding the p-adic series
+    unfold p_adic_correction
+    simp [ht]
+    -- The p-adic correction is bounded by |ε| * Σ(1/p) where sum is over all primes
+    -- This sum is approximately: 1/2 + 1/3 + 1/5 + 1/7 + ... 
+    -- For finitely many terms, this is bounded
+    -- The cosine term oscillates between -1 and 1, so we can bound by the absolute sum
+    sorry -- Requires: ∑_{p prime} 1/p is bounded (approximately by log log of cutoff)
   have : (log t)^2 + p_adic_correction ε t ≥ 0 - |ε| * 2 := by
     have := abs_sub_le_iff.mp h_correction_bounded
     linarith
@@ -633,26 +661,57 @@ theorem spectrum_discrete_bounded (ε : ℝ) (h : |ε| < 0.1) :
     by_cases hn : n = 0
     · simp [hn, Real.log_one]
       norm_num
-    · have : 0 < (n : ℝ) := Nat.cast_pos.mpr (Nat.pos_of_ne_zero hn)
+    · have h_n_pos : 0 < (n : ℝ) := Nat.cast_pos.mpr (Nat.pos_of_ne_zero hn)
       -- For n ≥ 1: n + ε·log(n+1) ≥ 1 - 0.1·log(2) > 0.4
-      have h_log_bound : Real.log (n + 1) ≤ Real.log (n + 1) := le_refl _
-      have : (n : ℝ) + ε * Real.log (n + 1) ≥ 1 - |ε| * Real.log 2 := by
-        sorry -- needs detailed bound
+      have log_2_bound : Real.log 2 < 1 := by
+        sorry -- Technical: ln(2) ≈ 0.693 < 1
+      have : (n : ℝ) + ε * Real.log (n + 1) ≥ 1 - |ε| * 1 := by
+        have eps_bound : ε * Real.log (n + 1) ≥ -|ε| * Real.log (n + 1) := by
+          sorry -- Sign and absolute value properties
+        have log_incr : Real.log (n + 1) ≥ 0 := Real.log_nonneg (by omega : 1 ≤ n + 1)
+        have log_at_least_log_2 : Real.log (n + 1) ≥ Real.log 2 := by
+          apply Real.log_le_log
+          · norm_num
+          · omega
+        sorry -- Combine bounds: n ≥ 1 and ε·log term ≥ -0.1·1
+      have : 1 - |ε| * 1 ≥ 0.4 := by
+        have := abs_lt.mp h
+        linarith
       linarith
   · -- Gap espectral: λₙ₊₁ - λₙ ≈ 1
     simp [approx_eigenvalues]
     ring_nf
     -- Gap = 1 + ε·(log(n+2) - log(n+1))
-    have h_log_diff : Real.log ((n : ℝ) + 2) - Real.log ((n : ℝ) + 1) > 0 := by
+    have h_log_diff_pos : Real.log ((n : ℝ) + 2) - Real.log ((n : ℝ) + 1) > 0 := by
       apply sub_pos.mpr
       apply Real.log_lt_log
       · simp
       · linarith
-    have h_log_bound : Real.log ((n : ℝ) + 2) - Real.log ((n : ℝ) + 1) ≤ 1 := by
-      sorry -- needs log difference bound
-    have : |ε * (Real.log ((n : ℝ) + 2) - Real.log ((n : ℝ) + 1))| ≤ |ε| * 1 := by
-      sorry -- bound the correction
-    linarith
+    have h_log_diff_bound : Real.log ((n : ℝ) + 2) - Real.log ((n : ℝ) + 1) ≤ 1 := by
+      -- log(n+2) - log(n+1) = log((n+2)/(n+1)) ≤ log(2) < 1 for all n
+      rw [←Real.log_div]
+      · apply le_of_lt
+        apply lt_of_le_of_lt
+        · apply Real.log_le_log
+          · norm_num
+          · have : (↑n + 2) / (↑n + 1) ≤ 2 := by
+              sorry -- (n+2)/(n+1) ≤ 2 for n ≥ 0
+          exact this
+        · sorry -- log(2) < 1
+      · linarith
+      · linarith
+    have eps_correction_small : |ε * (Real.log ((n : ℝ) + 2) - Real.log ((n : ℝ) + 1))| ≤ 0.1 := by
+      calc |ε * (Real.log ((n : ℝ) + 2) - Real.log ((n : ℝ) + 1))|
+        = |ε| * |Real.log ((n : ℝ) + 2) - Real.log ((n : ℝ) + 1)| := abs_mul ε _
+        _ ≤ 0.1 * 1 := by
+            apply mul_le_mul
+            · exact le_of_lt (abs_lt.mp h).2
+            · exact le_of_lt (abs_sub_lt_iff.mpr ⟨h_log_diff_pos, h_log_diff_bound⟩).2
+            · exact abs_nonneg _
+            · norm_num
+        _ = 0.1 := by ring
+    -- 1 + ε·Δlog ≥ 1 - 0.1 = 0.9
+    linarith [abs_sub_le_iff.mp eps_correction_small]
 
 -- ══════════════════════════════════════════════════════════════════════
 -- SECCIÓN 7: FUNCIÓN D(s) COMO PRODUCTO SOBRE ESPECTRO
