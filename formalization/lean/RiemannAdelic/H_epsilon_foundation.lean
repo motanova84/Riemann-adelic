@@ -230,7 +230,7 @@ lemma log_two_lt_one : Real.log 2 < 1 := by
 
 /-- For positive reals: log(x) ≤ x - 1 -/
 lemma log_le_sub_one (x : ℝ) (hx : 0 < x) : Real.log x ≤ x - 1 := by
-  sorry -- Follows from log(x) ≤ x/e which gives log(x) < x for x > 1
+  sorry -- Standard inequality: log x ≤ x - 1 for x > 0
 
 end RiemannAdelic.Auxiliary
 
