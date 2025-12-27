@@ -77,6 +77,11 @@ resultados/*.json
 resultados/certificates/
 !resultados/.gitkeep
 
+# Checksum files
+*.md5
+
+# Generated HTML output
+docs/validation.html
 # Generated HTML output  
 docs/validation*.html
 docs/temp_*
