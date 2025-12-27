@@ -126,8 +126,13 @@ theorem H_epsilon_is_hermitian (ε : ℝ) (N : ℕ) :
   · simp [h]
   · simp [h]
     ring_nf
-    sorry  -- Necesita probar: H[i,j] = conj(H[j,i])
-           -- Para i≠j: ε/((i-j)² + 1) es real, por tanto auto-conjugado
+    -- Para i≠j: ε/((i-j)² + 1) es real, por tanto auto-conjugado
+    -- Both sides evaluate to the same real value
+    have h_ij_real : ε / (((i : ℂ) - (j : ℂ))^2 + 1) = ε / (((j : ℂ) - (i : ℂ))^2 + 1) := by
+      congr 1
+      ring
+    rw [Complex.conj_ofReal']
+    exact h_ij_real
 
 /-- Autovalores aproximados de H_ε -/
 def approx_eigenvalues (ε : ℝ) (n : ℕ) : ℝ :=
@@ -169,7 +174,14 @@ theorem eigenvalues_increasing (ε : ℝ) (n m : ℕ)
   (hε : ε ≥ 0) (h : n < m) :
   approx_eigenvalues ε n < approx_eigenvalues ε m := by
   unfold approx_eigenvalues
-  sorry  -- Monotonía de n² + εn
+  have h1 : (n : ℝ) < (m : ℝ) := Nat.cast_lt.mpr h
+  have h2 : (n : ℝ) + 1 < (m : ℝ) + 1 := by linarith
+  have h3 : ((n : ℝ) + 1)^2 < ((m : ℝ) + 1)^2 := by nlinarith [sq_nonneg (n : ℝ), sq_nonneg (m : ℝ)]
+  have h4 : ε * ((n : ℝ) + 1) ≤ ε * ((m : ℝ) + 1) := by
+    apply mul_le_mul_of_nonneg_left
+    · linarith
+    · exact hε
+  linarith
 
 /-- Gap espectral positivo -/
 theorem spectral_gap_positive (ε : ℝ) (n : ℕ) (hε : ε ≥ 0) :
@@ -213,18 +225,57 @@ def approx_eigenvalues (ε : ℝ) (n : ℕ) : ℝ :=
 -- Propiedades básicas de los eigenvalores
 theorem approx_eigenvalues_positive (ε : ℝ) (n : ℕ) (hε : 0 < ε) (hn : 0 < n) :
   0 < approx_eigenvalues ε n := by
-  sorry
+  unfold approx_eigenvalues
+  have h1 : 0 < (n : ℝ) := Nat.cast_pos.mpr hn
+  have h2 : 0 < Real.log (n + 1) := by
+    apply Real.log_pos
+    have : 1 < n + 1 := by omega
+    exact Nat.one_lt_cast.mpr this
+  have h3 : 0 < ε * Real.log (n + 1) := mul_pos hε h2
+  linarith
 
 theorem approx_eigenvalues_increasing (ε : ℝ) (n m : ℕ) 
   (hε : 0 ≤ ε) (h : n < m) :
   approx_eigenvalues ε n < approx_eigenvalues ε m := by
-  sorry
+  unfold approx_eigenvalues
+  have h1 : (n : ℝ) < (m : ℝ) := Nat.cast_lt.mpr h
+  have h2 : Real.log (n + 1) < Real.log (m + 1) := by
+    apply Real.log_lt_log
+    · simp
+    · have : n + 1 < m + 1 := Nat.add_lt_add_right h 1
+      exact Nat.cast_lt.mpr this
+  have h3 : ε * Real.log (n + 1) ≤ ε * Real.log (m + 1) := by
+    cases' (le_or_lt ε 0) with hε_neg hε_pos
+    · linarith
+    · exact mul_le_mul_of_nonneg_left (le_of_lt h2) hε
+  linarith
 
 theorem approx_eigenvalues_linear_growth (ε : ℝ) (hε : |ε| < 1) :
   ∃ C₁ C₂ : ℝ, 0 < C₁ ∧ C₁ < C₂ ∧ 
   ∀ n : ℕ, C₁ * n ≤ approx_eigenvalues ε n ∧ 
            approx_eigenvalues ε n ≤ C₂ * (n + 1) := by
-  sorry
+  use 1/2, 2
+  constructor
+  · norm_num
+  constructor
+  · norm_num
+  intro n
+  unfold approx_eigenvalues
+  constructor
+  · -- Lower bound: n/2 ≤ n + ε·log(n+1)
+    by_cases hn : n = 0
+    · simp [hn]
+    · have : 0 < (n : ℝ) := Nat.cast_pos.mpr (Nat.pos_of_ne_zero hn)
+      have h_log_bound : ε * Real.log (n + 1) ≥ -|ε| * Real.log (n + 1) := by
+        cases' (le_or_lt ε 0) with hε_neg hε_pos
+        · calc ε * Real.log (n + 1) 
+            ≥ ε * 0 := by sorry -- needs log bound
+            _ = 0 := by ring
+            _ ≥ -|ε| * Real.log (n + 1) := by sorry
+        · linarith [abs_of_pos hε_pos]
+      sorry -- complete bound
+  · -- Upper bound: n + ε·log(n+1) ≤ 2(n+1)
+    sorry -- needs log growth bound
 
 -- ══════════════════════════════════════════════════════════════════════
 -- SECCIÓN 2: FUNCIÓN D(s) TRUNCADA Y COMPLETA
@@ -286,7 +337,11 @@ theorem P_polynomial_nonzero (s : ℂ) (h₁ : s ≠ 0) (h₂ : s ≠ 1) :
   unfold P_polynomial
   intro h_zero
   -- s(s-1) = 0 implica s = 0 o s = 1
-  sorry
+  have : s = 0 ∨ s - 1 = 0 := by
+    apply mul_eq_zero.mp h_zero
+  cases this with
+  | inl h => exact h₁ h
+  | inr h => exact h₂ (sub_eq_zero.mp h)
 
 -- ══════════════════════════════════════════════════════════════════════
 -- SECCIÓN 4: RELACIONES ENTRE D, ξ Y ζ
@@ -315,17 +370,27 @@ theorem D_truncated_converges (s : ℂ) (ε : ℝ)
   ∃ L : ℂ, Filter.Tendsto 
     (fun N => D_function_truncated s ε N) 
     Filter.atTop (nhds L) := by
-  sorry
+  -- Convergence follows from comparison with ∏(1 - s/n)
+  -- For Re(s) < 1/2, the product ∏(1 - s/λₙ) converges absolutely
+  use D_function s ε
+  sorry -- Requires Weierstrass product theory and comparison
 
 /-- D_function es entera -/
 theorem D_function_entire (ε : ℝ) (hε : 0 < ε ∧ ε < 0.01) :
   ∀ s : ℂ, DifferentiableAt ℂ (fun z => D_function z ε) s := by
-  sorry
+  intro s
+  -- D is entire as an infinite product of entire functions
+  -- Each factor (1 - z/λₙ) is entire
+  -- Convergence is uniform on compact sets
+  sorry -- Requires complex analysis: uniform convergence implies holomorphy
 
 /-- Ecuación funcional para D(s) -/
 theorem D_functional_equation (ε : ℝ) (hε : 0 < ε ∧ ε < 0.01) :
   ∀ s : ℂ, D_function (1 - s) ε = D_function s ε := by
-  sorry
+  intro s
+  -- Follows from modular symmetry of the operator H_ε
+  -- The transformation t ↦ 1/t maps the spectrum to itself
+  sorry -- Requires spectral theory and modular invariance
 
 -- ══════════════════════════════════════════════════════════════════════
 -- SECCIÓN 6: METADATOS Y DOCUMENTACIÓN
@@ -388,13 +453,23 @@ def hermite_log_norm (n : ℕ) : ℝ :=
 
 /-- Base ortonormal normalizada -/
 def hermite_log_basis_normalized (n : ℕ) : LogHilbertSpace :=
-  ⟨fun t => hermite_log_basis n t / hermite_log_norm n, by sorry⟩
+  ⟨fun t => hermite_log_basis n t / hermite_log_norm n, by
+    intro t ht
+    use ‖hermite_poly n (log t) * exp (-(log t)^2 / 2)‖ / hermite_log_norm n
+    apply div_le_of_nonneg_of_le_mul
+    · exact hermite_log_norm n
+    · sorry -- needs hermite_log_norm > 0
+    · sorry -- needs bound on hermite polynomial
+    ⟩
 
 -- Teorema: Ortonormalidad
 theorem hermite_log_orthonormal (n m : ℕ) :
   ⟨hermite_log_basis_normalized n, hermite_log_basis_normalized m⟩_log = 
     if n = m then 1 else 0 := by
-  sorry -- Requiere integración de polinomios de Hermite con peso gaussiano
+  -- Orthonormality follows from the orthogonality of Hermite polynomials
+  -- ∫ Hₙ(x)Hₘ(x)e^(-x²)dx = δₙₘ·√π·2ⁿ·n!
+  -- Under the change of variables x = log t, dx = dt/t
+  sorry -- Requires Hermite polynomial orthogonality + change of variables
 
 -- ══════════════════════════════════════════════════════════════════════
 -- SECCIÓN 3: POTENCIAL V(t) CON CORRECCIONES P-ÁDICAS
@@ -425,7 +500,15 @@ theorem V_potential_bounded_below (ε : ℝ) (h : |ε| < 0.1) :
   use -1
   intro t ht
   simp [V_potential, ht]
-  sorry -- Requiere estimación de serie p-ádica
+  -- V(t) = (log t)² + ε·W(t) where W is p-adic correction
+  -- (log t)² ≥ 0, and |ε·W(t)| < ε·Σ(1/p) < 0.1·2 for small ε
+  have h_sq_nonneg : 0 ≤ (log t)^2 := sq_nonneg _
+  have h_correction_bounded : |p_adic_correction ε t| ≤ |ε| * 2 := by
+    sorry -- Requires bounding the p-adic series
+  have : (log t)^2 + p_adic_correction ε t ≥ 0 - |ε| * 2 := by
+    have := abs_sub_le_iff.mp h_correction_bounded
+    linarith
+  linarith
 
 -- ══════════════════════════════════════════════════════════════════════
 -- SECCIÓN 4: OPERADOR H_ε = -d²/dt² + V(t)
@@ -481,17 +564,19 @@ theorem H_epsilon_is_hermitian (ε : ℝ) (N : ℕ) :
   by_cases h1 : i = j
   · -- Diagonal: elementos reales
     simp [h1, diagonal_correction]
-    sorry -- Conjugado de diagonal_correction = sí mismo (términos reales)
+    -- diagonal_correction es suma de términos complejos pero su parte imaginaria se cancela
+    sorry -- Requiere probar que diagonal_correction es real para índice real
   
   · by_cases h2 : (i : ℕ) = (j : ℕ) + 2
     · -- i = j + 2: coupling_down
       simp [h2, coupling_down, coupling_up]
-      sorry -- Verificar simetría conjugada
+      -- Verificar simetría: conj(coupling_down i j) = coupling_up j i
+      sorry -- Requiere algebra de raíces cuadradas
     
     · by_cases h3 : (j : ℕ) = (i : ℕ) + 2
       · -- j = i + 2: coupling_up
         simp [h3, coupling_down, coupling_up]
-        sorry
+        sorry -- Simétrico al caso anterior
       
       · -- Fuera de banda: ambos cero
         simp [h1, h2, h3]
@@ -516,7 +601,25 @@ theorem eigenvalues_real_positive (ε : ℝ) (n : ℕ)
   (h : |ε| < 0.01) :
   0 < approx_eigenvalues ε n := by
   simp [approx_eigenvalues]
-  sorry -- Estimación: 1/2 + O(ε) > 0 para ε pequeño
+  by_cases hn : n = 0
+  · simp [hn]
+    have : |ε * Real.log 1| < 0.01 := by
+      rw [Real.log_one, mul_zero, abs_zero]
+      norm_num
+    linarith
+  · have h_n_pos : 0 < (n : ℝ) := Nat.cast_pos.mpr (Nat.pos_of_ne_zero hn)
+    have h_log_pos : 0 < Real.log (n + 1) := by
+      apply Real.log_pos
+      omega
+    -- For small ε, the correction term is dominated by n
+    have h_bound : |ε * Real.log (n + 1)| < 1 * Real.log (n + 1) := by
+      rw [abs_mul, mul_comm 1]
+      apply mul_lt_mul
+      · exact h
+      · exact le_refl _
+      · exact Real.log_nonneg (by omega : 1 ≤ n + 1)
+      · norm_num
+    linarith
 
 -- Teorema: Espectro es discreto y acotado inferiormente
 theorem spectrum_discrete_bounded (ε : ℝ) (h : |ε| < 0.1) :
@@ -525,8 +628,31 @@ theorem spectrum_discrete_bounded (ε : ℝ) (h : |ε| < 0.1) :
   use 0.4
   intro n
   constructor
-  · sorry -- λₙ ≥ 0.4 por construcción
-  · sorry -- Gap espectral: λₙ₊₁ - λₙ ≈ 1
+  · -- λₙ ≥ 0.4 por construcción
+    simp [approx_eigenvalues]
+    by_cases hn : n = 0
+    · simp [hn, Real.log_one]
+      norm_num
+    · have : 0 < (n : ℝ) := Nat.cast_pos.mpr (Nat.pos_of_ne_zero hn)
+      -- For n ≥ 1: n + ε·log(n+1) ≥ 1 - 0.1·log(2) > 0.4
+      have h_log_bound : Real.log (n + 1) ≤ Real.log (n + 1) := le_refl _
+      have : (n : ℝ) + ε * Real.log (n + 1) ≥ 1 - |ε| * Real.log 2 := by
+        sorry -- needs detailed bound
+      linarith
+  · -- Gap espectral: λₙ₊₁ - λₙ ≈ 1
+    simp [approx_eigenvalues]
+    ring_nf
+    -- Gap = 1 + ε·(log(n+2) - log(n+1))
+    have h_log_diff : Real.log ((n : ℝ) + 2) - Real.log ((n : ℝ) + 1) > 0 := by
+      apply sub_pos.mpr
+      apply Real.log_lt_log
+      · simp
+      · linarith
+    have h_log_bound : Real.log ((n : ℝ) + 2) - Real.log ((n : ℝ) + 1) ≤ 1 := by
+      sorry -- needs log difference bound
+    have : |ε * (Real.log ((n : ℝ) + 2) - Real.log ((n : ℝ) + 1))| ≤ |ε| * 1 := by
+      sorry -- bound the correction
+    linarith
 
 -- ══════════════════════════════════════════════════════════════════════
 -- SECCIÓN 7: FUNCIÓN D(s) COMO PRODUCTO SOBRE ESPECTRO
@@ -554,12 +680,17 @@ theorem D_function_converges (s : ℂ) (ε : ℝ)
   ∃ L : ℂ, Filter.Tendsto 
     (fun N => D_function_truncated s ε N) 
     Filter.atTop (nhds L) := by
-  sorry -- Convergencia por comparación con ∏(1 - s/n)
+  use D_function s ε
+  -- Convergence by comparison with ∏(1 - s/n) which converges for Re(s) < 1
+  -- Since λₙ ~ n, the products have similar convergence properties
+  sorry -- Requires Weierstrass product convergence theory
 
 -- Teorema: D(s) es entera (holomorfa en todo ℂ)
 theorem D_function_entire (ε : ℝ) (hε : |ε| < 0.01) :
   Differentiable ℂ (fun s => D_function s ε) := by
-  sorry -- Convergencia uniforme en compactos → holomorfia
+  -- Entire function as a Weierstrass product
+  -- Uniform convergence on compact sets → holomorphy everywhere
+  sorry -- Requires: Weierstrass product theory + Morera's theorem
 
 -- ══════════════════════════════════════════════════════════════════════
 -- SECCIÓN 8: ECUACIÓN FUNCIONAL DE D(s)
@@ -574,7 +705,15 @@ theorem H_epsilon_modular_invariant (ε : ℝ) :
   ∀ f : LogHilbertSpace, 
     ∃ g : LogHilbertSpace, 
       modular_transform g.val = f.val := by
-  sorry -- Requiere análisis funcional profundo
+  intro f
+  -- The existence of g follows from the modular invariance of L²(ℝ⁺, dt/t)
+  -- Under t ↦ 1/t, the measure dt/t is preserved
+  use ⟨modular_transform (modular_transform f.val), by
+    intro t ht
+    -- Show that double modular transform satisfies the bound
+    sorry -- Requires functional analysis
+    ⟩
+  sorry -- Show that modular_transform is involutive
 
 /-- Ecuación funcional: D(s) = Φ(s) · D(1-s)
     donde Φ(s) es un factor exponencial
@@ -586,7 +725,10 @@ def functional_factor (s : ℂ) : ℂ :=
 theorem D_functional_equation_approximate (s : ℂ) (ε : ℝ) 
   (hε : |ε| < 0.001) :
   ‖D(s, ε) - functional_factor s * D(1 - s, ε)‖ < ε^2 := by
-  sorry -- Sigue de simetría modular + correcciones de orden ε²
+  -- Follows from modular symmetry + corrections of order ε²
+  -- The operator H_ε is approximately modular invariant
+  -- Error terms are O(ε²) from perturbation theory
+  sorry -- Requires: modular invariance + perturbation theory + spectral analysis
 
 -- ══════════════════════════════════════════════════════════════════════
 -- SECCIÓN 9: CEROS DE D(s) Y RH
@@ -600,7 +742,11 @@ def is_zero_of_D (ρ : ℂ) (ε : ℝ) : Prop :=
 theorem zero_implies_eigenvalue (ρ : ℂ) (ε : ℝ) 
   (h : is_zero_of_D ρ ε) (hε : |ε| < 0.01) :
   ∃ n : ℕ, ‖ρ - (approx_eigenvalues ε n : ℂ)‖ < ε := by
-  sorry -- D es producto → cero = polo de algún término
+  -- D is a product, so a zero must come from one of the factors
+  -- D(s) = ∏(1 - s/λₙ) = 0  ⟹  s = λₙ for some n
+  -- With O(ε) corrections from the approximation
+  unfold is_zero_of_D D_function at h
+  sorry -- Requires: product zero lemma + spectral approximation bound
 
 /-- TEOREMA CENTRAL (versión débil): 
     Todos los ceros de D_N están cerca de Re(s) = 1/2
@@ -610,10 +756,35 @@ theorem D_zeros_near_critical_line (N : ℕ) (ε : ℝ) (ρ : ℂ)
   (h_eps : |ε| < 0.001)
   (h_large : 10 < N) :
   |ρ.re - 1/2| < 0.1 := by
-  sorry -- Requiere:
-        -- 1. Hermiticidad → autovalores reales
-        -- 2. Simetría funcional → si ρ es cero, 1-ρ también
-        -- 3. Combinando: ρ ≈ 1 - ρ → Re(ρ) ≈ 1/2
+  -- Key steps:
+  -- 1. Hermiticidad → eigenvalues are real
+  -- 2. Functional symmetry → if ρ is zero, then 1-ρ is also zero
+  -- 3. Combining: ρ ≈ 1 - ρ → Re(ρ) ≈ 1/2
+  
+  -- From hermiticity, eigenvalues λₙ are real
+  have h_real_eigenvalues : ∀ n < N, (approx_eigenvalues ε n : ℂ).im = 0 := by
+    intro n hn
+    simp [approx_eigenvalues]
+  
+  -- From functional equation (approximate), D(s) ≈ Φ(s)·D(1-s)
+  have h_functional : ‖D_N(1 - ρ, ε)‖ < ε := by
+    sorry -- Requires approximate functional equation for truncated product
+  
+  -- If D_N(ρ) = 0 and D_N(1-ρ) ≈ 0, then ρ ≈ 1-ρ
+  have h_symmetric : ‖ρ - (1 - ρ)‖ < 0.2 := by
+    sorry -- Requires: zero localization + continuity
+  
+  -- Therefore Re(ρ) ≈ 1/2
+  have : |ρ.re - (1 - ρ).re| < 0.2 := by
+    sorry -- From norm bound to real part bound
+  
+  -- Simplify: Re(1-ρ) = 1 - Re(ρ)
+  have : |(2 * ρ.re - 1)| < 0.2 := by
+    simp [Complex.sub_re, Complex.one_re] at this
+    ring_nf at this ⊢
+    exact this
+  
+  linarith
 
 -- ══════════════════════════════════════════════════════════════════════
 -- SECCIÓN 10: CONEXIÓN CON ζ(s) (SKETCH)
@@ -650,10 +821,19 @@ theorem riemann_hypothesis_from_D
   left
   
   -- ζ(s) = 0 → ξ(s) = 0 (en strip crítico)
-  have h_xi : xi_function s = 0 := by sorry
+  have h_xi : xi_function s = 0 := by
+    unfold xi_function
+    -- ξ(s) = π^(-s/2) * Γ(s/2) * ζ(s)
+    -- Since ζ(s) = 0 and Γ(s/2) ≠ 0 (for s in critical strip)
+    sorry -- Requires: Gamma function properties + xi definition
   
-  -- ξ(s) = 0 → D(s, ε) → 0 para ε → 0
-  have h_D : ∀ ε > 0, is_zero_of_D s ε := by sorry
+  -- ξ(s) = 0 → D(s, ε) → 0 for ε → 0
+  have h_D : ∀ ε > 0, is_zero_of_D s ε := by
+    intro ε hε_pos
+    unfold is_zero_of_D
+    -- From axiom D_equals_xi_limit: D(s,ε) → ξ(s)/P(s) as ε → 0
+    -- Since ξ(s) = 0, we have D(s,ε) → 0
+    sorry -- Requires: limit axiom + xi = 0 implies limit is 0
   
   -- RH para D → Re(s) = 1/2
   exact h_RH_D 0.001 (by norm_num) s (h_D 0.001 (by norm_num))
