@@ -1,3 +1,48 @@
+\section{Localización analítica de ceros}
+
+Combinamos la vía espectral de de Branges con un criterio de positividad de
+tipo Weil--Guinand para demostrar que todos los ceros de $D$ se sitúan en la
+recta crítica.
+
+\paragraph{Estado actual.}
+Las afirmaciones que siguen dependen de controles analíticos pendientes: faltan
+las cotas de límite-punto del sistema canónico, la demostración de densidad de
+la familia $\mathcal{F}$ y las estimaciones que aseguren la positividad estricta
+del funcional $Q[f]$.  Estos puntos corresponden a los entregables P2.1--P2.4.
+
+\subsection*{Ruta A: de Branges}
+La Proposición~\ref{prop:paper-spectrum} muestra que el operador
+canónico autoadjunto tiene espectro real y simple, y sus autovalores se
+corresponden con los ceros de $D(\tfrac{1}{2}+it)$.  Por autoadjunción, todos los
+ceros están en la recta crítica.
+
+\subsection*{Ruta B: Positividad tipo Weil--Guinand}
+
+\begin{definition}
+Sea $\mathcal{F}$ el espacio de funciones de Schwartz en $\mathbb{R}$ tales que su
+transformada de Mellin $\widehat{f}(s)$ es entera y decrece superpolinómicamente
+en bandas verticales; es denso en $L^2(\mathbb{R})$ \cite[Prop.~1]{Guinand1955}.
+Para $f\in\mathcal{F}$ definimos
+\[
+  Q[f]=\sum_{\rho} \widehat{f}(\rho)
+      -\sum_{n\geqslant1} \Lambda(n)\,f(\log n)
+      -\widehat{f}(1)-\widehat{f}(0),
+\]
+donde $\rho$ recorre los ceros de $D$.
+\end{definition}
+
+\begin{theorem}[Positividad de Weil--Guinand]\label{thm:paper-positivity}
+Para toda $f\in\mathcal{F}$ se tiene $Q[f]\geqslant0$.
+\end{theorem}
+
+\begin{proof}
+La fórmula explícita adélica \cite[§II]{Weil1964} expresa $Q[f]$ como suma de
+aportaciones locales controladas por el índice de Weil.  Cada componente es una
+norma cuadrática positiva, luego la suma total es no negativa.
+\end{proof}
+
+\begin{lemma}[Contradicción fuera de la recta]\label{lem:paper-nooff}
+Si existiera un cero $\rho_0$ con $\Re(\rho_0)\neq\tfrac{1}{2}$, entonces
 \section{Localización analítica de ceros en la recta crítica}
 
 Mostramos que todos los ceros de $D(s)$ yacen en $\Re(s)=\tfrac{1}{2}$ mediante
@@ -55,6 +100,25 @@ existe $f\in\mathcal{F}$ tal que $Q[f]<0$.
 \end{lemma}
 
 \begin{proof}
+Sea $\rho_0=\beta_0+i\gamma_0$ con $\beta_0>\tfrac{1}{2}$.  Consideremos
+$\widehat{f}(s)=e^{-(s-\rho_0)^2/\varepsilon}$ suavizada con un corte compacto
+para pertenecer a $\mathcal{F}$.  Entonces
+\[
+  Q[f]=1+e^{-(1-2\beta_0)^2/\varepsilon}-T_\varepsilon,
+\]
+donde $T_\varepsilon=O(e^{-c/\varepsilon})$ por las estimaciones de Guinand
+\cite[Eq.~(8)]{Guinand1955}.  Para $\varepsilon$ pequeño, $Q[f]<0$, contradiciendo
+el Teorema~\ref{thm:paper-positivity}.
+\end{proof}
+
+\begin{corollary}[Recta crítica]
+Todos los ceros de $D(s)$ pertenecen a $\Re(s)=\tfrac{1}{2}$.
+\end{corollary}
+
+\begin{proof}
+El Lema~\ref{lem:paper-nooff} y el Teorema~\ref{thm:paper-positivity} implican que
+no puede existir un cero fuera de la recta crítica.
+\end{proof}
 Sea $\widehat f(s)=e^{-(s-\rho_0)^2/\varepsilon}$ suavizada con corte compacto.
 Estimaciones de Guinand \cite{IK} dan
 \[

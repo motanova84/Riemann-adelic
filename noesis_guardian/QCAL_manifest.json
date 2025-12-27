@@ -1,0 +1,13 @@
+{
+  "name": "Noesis Guardian 3.0",
+  "author": "José Manuel Mota Burruezo (JMMB Ψ ✧)",
+  "repository": "Riemann-adelic",
+  "frequency_hz": 141.7001,
+  "fractal_ratio": "68/81",
+  "description": "Módulo técnico de monitorización y mantenimiento ligero del sistema RH-spectral.",
+  "created_at": "2025-11-30",
+  "notes": [
+    "Este archivo es puramente descriptivo.",
+    "No implementa física ni consciencia. Es metadata simbólica."
+  ]
+}
