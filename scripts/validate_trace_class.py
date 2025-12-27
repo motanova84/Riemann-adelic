@@ -143,13 +143,21 @@ def H_psi_on_hermite(n, x):
     # con potenciales confinantes
     # Los autovalores típicamente decrecen como 1/n^α con α > 1 para clase traza
     # (esto garantiza Σ 1/n^α < ∞)
-    # 
-    # El valor α = 1.7 es consistente con:
-    # - Operadores de Schrödinger con potenciales logarítmicos
-    # - Análisis asintótico de autovalores en espacios confinados
-    # - Requisitos teóricos para clase traza (α > 1)
-    # - Sincronizado con constantes en trace_class_proof.lean
-    decay_exponent = 1.7  # Exponente teórico para operadores confinantes
+    #
+    # El valor α = 1.7 es un PARÁMETRO TEÓRICO DE MODELO, no un valor
+    # obtenido por ajuste numérico en este script. En particular, α = 1.7:
+    # - Es consistente con operadores de Schrödinger con potenciales logarítmicos
+    # - Refleja análisis asintótico de autovalores en espacios confinados
+    # - Satisface los requisitos teóricos para clase traza (α > 1)
+    # - Está sincronizado con las constantes en trace_class_proof.lean
+    #
+    # ⚠️ IMPORTANTE: Debido a esta sincronización, este script NO proporciona
+    # una verificación numérica independiente del exponente de decaimiento.
+    # En cambio, valida que un modelo numérico construido con el exponente
+    # teórico α = 1.7 reproduce el comportamiento de clase traza asumido en
+    # la formalización en Lean. Es, por tanto, una validación de consistencia
+    # del modelo teórico, no un cálculo autónomo de α.
+    decay_exponent = 1.7  # Exponente teórico de decaimiento fijado por el modelo
     decay_factor = 1.0 / ((n + 1) ** decay_exponent)
     
     # Combinación que simula el elemento de matriz
