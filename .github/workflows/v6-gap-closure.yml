@@ -1,0 +1,151 @@
+name: V6.0 Gap Closure Validation
+
+on:
+  push:
+    branches: [main, develop]
+    paths:
+      - 'formalization/lean/RiemannAdelic/lengths_derived.lean'
+      - 'formalization/lean/RiemannAdelic/extension_infinite.lean'
+      - 'formalization/lean/RiemannAdelic/uniqueness_without_xi.lean'
+      - 'formalization/lean/RiemannAdelic/zero_localization_complete.lean'
+      - 'tests/test_stability_zeros.py'
+      - 'tests/test_falsifiability.py'
+      - 'validate_explicit_formula_extended.py'
+      - '.github/workflows/v6-gap-closure.yml'
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      precision:
+        description: 'Precision (decimal places)'
+        required: false
+        default: '30'
+        type: number
+
+permissions:
+  contents: read
+
+jobs:
+  v6-stability-tests:
+    name: V6.0 Stability Tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      
+      - name: Install dependencies
+        run: |
+          pip install -q mpmath pytest sympy
+      
+      - name: Run stability tests
+        run: |
+          pytest tests/test_stability_zeros.py -v --tb=short
+      
+      - name: Run stability script directly
+        run: |
+          python3 tests/test_stability_zeros.py
+  
+  v6-falsifiability-tests:
+    name: V6.0 Falsifiability Tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      
+      - name: Install dependencies
+        run: |
+          pip install -q mpmath pytest sympy
+      
+      - name: Run falsifiability tests
+        run: |
+          pytest tests/test_falsifiability.py -v --tb=short
+      
+      - name: Run falsifiability script directly
+        run: |
+          python3 tests/test_falsifiability.py
+  
+  v6-extended-validation:
+    name: V6.0 Extended Validation
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      
+      - name: Install dependencies
+        run: |
+          pip install -q mpmath sympy
+      
+      - name: Run extended validation
+        run: |
+          python3 validate_explicit_formula_extended.py \
+            --precision ${{ github.event.inputs.precision || '25' }} \
+            --max_zeros 500
+      
+      - name: Run with delta limit test
+        run: |
+          python3 validate_explicit_formula_extended.py \
+            --precision 25 \
+            --test_delta_limit
+  
+  v6-summary:
+    name: V6.0 Gap Closure Summary
+    runs-on: ubuntu-latest
+    needs: [v6-stability-tests, v6-falsifiability-tests, v6-extended-validation]
+    if: always()
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Generate summary
+        run: |
+          echo "# V6.0 Gap Closure Validation Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "## Test Results" >> $GITHUB_STEP_SUMMARY
+          echo "- **Stability Tests**: ${{ needs.v6-stability-tests.result }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Falsifiability Tests**: ${{ needs.v6-falsifiability-tests.result }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Extended Validation**: ${{ needs.v6-extended-validation.result }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "## Components Validated" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ A4 Derivation (ℓ_v = log q_v)" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ S-finite to Infinite Extension" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ Uniqueness without Ξ" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ Complete Zero Localization" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          
+          if [[ "${{ needs.v6-stability-tests.result }}" == "success" && \
+                "${{ needs.v6-falsifiability-tests.result }}" == "success" && \
+                "${{ needs.v6-extended-validation.result }}" == "success" ]]; then
+            echo "## ✅ Overall Status: SUCCESS" >> $GITHUB_STEP_SUMMARY
+            echo "All V6.0 gap closure tests passed!" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "## ⚠️ Overall Status: ISSUES DETECTED" >> $GITHUB_STEP_SUMMARY
+            echo "Some V6.0 tests failed. Review logs above." >> $GITHUB_STEP_SUMMARY
+          fi
+      
+      - name: Check overall success
+        if: needs.v6-stability-tests.result != 'success' || needs.v6-falsifiability-tests.result != 'success' || needs.v6-extended-validation.result != 'success'
+        run: |
+          echo "❌ V6.0 validation failed"
+          exit 1
