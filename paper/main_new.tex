@@ -1,0 +1,44 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{hyperref}
+\usepackage{tcolorbox}
+
+\title{A Proof of the Riemann Hypothesis via S-Finite Adelic Systems}
+\author{José Manuel Mota Burruezo}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We present a resolution of the Riemann Hypothesis using S-finite adelic spectral systems.
+A canonical entire function $D(s)$ is constructed as a Fredholm determinant in restricted
+adelic frameworks, without assuming $\zeta(s)$, its Euler product, or its functional equation.
+RH is established unconditionally within this operator framework; the BSD extension is
+conditional on modularity and finiteness of the Tate–Shafarevich group.
+\end{abstract}
+
+\input{sections/01_introduction}
+\input{sections/02_preliminaries}
+\input{sections/03_local_length}
+\input{sections/04_hilbert_space}
+\input{sections/05_operator_resolvent}
+\input{sections/06_functional_equation}
+\input{sections/07_growth_order}
+\input{sections/08_pw_uniqueness}
+\input{sections/09_inversion_primes}
+\input{sections/10_numerics}
+\input{sections/11_bsd_extension}
+\input{sections/12_limitations}
+
+\appendix
+\input{appendix/A_trace_doi}
+\input{appendix/B_debranges}
+\input{appendix/C_pw_multiplicities}
+\input{appendix/D_archimedean}
+\input{appendix/E_algorithms}
+\input{appendix/F_reproducibility}
+
+\bibliographystyle{alpha}
+\bibliography{biblio}
+\end{document}

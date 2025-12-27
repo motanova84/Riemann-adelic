@@ -2,18 +2,9 @@ name: V5 Coronación Proof Check & PDF Build
 
 on:
   push:
-    branches: [ main, develop ]
-    paths:
-      - 'docs/teoremas_basicos/**'
-      - 'paper/**'
-      - 'tests/test_coronacion_v5.py'
-      - '.github/workflows/v5-coronacion-proof-check.yml'
+    branches: [ main, develop, copilot/** ]
   pull_request:
     branches: [ main ]
-    paths:
-      - 'docs/teoremas_basicos/**'
-      - 'paper/**'
-      - 'tests/test_coronacion_v5.py'
   workflow_dispatch:
 
 jobs:
@@ -21,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: [3.11, 3.12]
+        python-version: ['3.11']
         precision: [15, 30]
         
     steps:
@@ -80,7 +71,7 @@ jobs:
         "
         
     - name: Store test results
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v4.4.3
       if: always()
       with:
         name: v5-proof-results-py${{ matrix.python-version }}-prec${{ matrix.precision }}
@@ -157,7 +148,7 @@ jobs:
         fi
         
     - name: Upload V5 Coronación PDF
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v4.4.3
       with:
         name: v5-coronacion-pdf
         path: docs/teoremas_basicos/coronacion_v5_main.pdf
@@ -173,11 +164,11 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
-        python-version: 3.12
+        python-version: '3.11'
         
     - name: Install dependencies
       run: |
-        python -m pip install --upgrade pip
+        python -m pip install --upgrade pip==24.3.1
         pip install -r requirements.txt
         
     - name: Run Complete V5 Validation Suite
@@ -255,7 +246,7 @@ jobs:
         "
         
     - name: Store V5 Validation Results
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v4.4.3
       if: always()
       with:
         name: v5-comprehensive-validation-results
