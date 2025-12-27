@@ -313,7 +313,9 @@ theorem approx_eigenvalues_linear_growth (ε : ℝ) (hε : |ε| < 1) :
               · exact abs_nonneg _
               · norm_num
             _ ≤ n / 2 + n / 2 := by ring
-        linarith [abs_sub_le_iff.mp eps_log_bound]
+        have h_eps : -(n / 2 : ℝ) ≤ ε * Real.log (n + 1) :=
+          (abs_le.mp eps_log_bound).1
+        linarith
       exact this
   · -- Upper bound: n + ε·log(n+1) ≤ 2(n+1)
     -- log(n+1) ≤ n+1, so |ε·log(n+1)| ≤ n+1
