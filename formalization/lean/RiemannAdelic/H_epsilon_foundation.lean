@@ -214,7 +214,7 @@ namespace RiemannAdelic.Auxiliary
 
 /-- Logarithm is bounded by its argument: log(1+x) ≤ x for x ≥ 0 -/
 lemma log_one_plus_le (x : ℝ) (hx : 0 ≤ x) : Real.log (1 + x) ≤ x := by
-  sorry -- Standard calculus result: derivative of log(1+x) - x is negative
+  sorry -- Standard calculus result: use the derivative test on f(x) = log(1+x) - x to show f is nonincreasing, hence log(1+x) ≤ x for x ≥ 0
 
 /-- For natural numbers: log(n+1) ≤ n for n ≥ 1 -/
 lemma log_succ_le_nat (n : ℕ) (hn : 1 ≤ n) : Real.log (n + 1 : ℝ) ≤ n := by
