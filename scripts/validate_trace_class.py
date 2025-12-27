@@ -264,7 +264,7 @@ def validate_decreasing_property(N=50, x_range=(-10, 10), n_points=1000):
             n_vals, 
             norms_array,
             p0=[1.0, 1.7],  # Valores iniciales para C y α
-            bounds=([0, 1.0], [100, 3])  # Cotas: C > 0, 1.0 < α < 3 (para convergencia)
+            bounds=([0, 1.0], [100, 3])  # Cotas: C ≥ 0, 1.0 ≤ α ≤ 3 (para convergencia)
         )
         C_fit, alpha_fit = popt
         perr = np.sqrt(np.diag(pcov))  # Errores estándar
