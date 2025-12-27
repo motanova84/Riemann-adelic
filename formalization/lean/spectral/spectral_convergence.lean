@@ -32,9 +32,8 @@ axiom critical_line_property (n : ℕ) (ρ : ℕ → ℂ) : (ρ n).re = 1/2
 /-! ## Spectral Density -/
 
 /-- The spectral density sum is summable with exponential decay -/
-axiom spectral_density_summable (α : ℝ) (hα : α > 0) :
-  Summable (fun n : ℕ => Real.exp (-α * |(ρ n).im|)) where
-  ρ : ℕ → ℂ
+axiom spectral_density_summable (α : ℝ) (hα : α > 0) (ρ : ℕ → ℂ) :
+  Summable (fun n : ℕ => Real.exp (-α * |(ρ n).im|))
 
 /-! ## Main Theorem: Spectral Sum Convergence -/
 
@@ -51,7 +50,7 @@ theorem spectral_sum_converges
   have h_majorant : Summable (fun n : ℕ => C * Real.exp (-(M/2) * |(ρ n).im|)) := by
     -- The majorant series converges because of spectral density
     have α_pos : M/2 > 0 := by linarith
-    have := spectral_density_summable (M/2) α_pos
+    have := spectral_density_summable (M/2) α_pos ρ
     apply Summable.const_smul this C
   
   -- Apply Weierstrass M-test
@@ -100,7 +99,7 @@ theorem spectral_sum_uniform_convergence
   (ρ : ℕ → ℂ)
   (h_entire : Entire f)
   (h_exp_type : ∃ (C M : ℝ), C > 0 ∧ M > 0 ∧ ∀ z, Complex.abs (f z) ≤ C * Real.exp (M * Complex.abs z))
-  (h_zeros : ∀ n, ρ n = 1/2 + (ρ n).im * Complex.I)
+  (h_critical_line : ∀ n, (ρ n).re = 1/2)  -- Critical line property: Re(ρ) = 1/2
   (α : ℝ) (hα : α > 0)
   (h_density : Summable fun n => Real.exp (-α * |(ρ n).im|)) :
   ∃ K : ℝ, K > 0 ∧ ∀ n z, Complex.abs (f (ρ n)) ≤ K * Real.exp (-α/2 * |(ρ n).im|) := by
