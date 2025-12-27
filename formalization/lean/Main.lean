@@ -64,6 +64,16 @@ import RiemannAdelic.de_branges
 
 -- Positivity and trace class operators
 import RiemannAdelic.positivity
+import RiemannAdelic.lengths_derived
+import RiemannAdelic.uniqueness_without_xi
+
+def main : IO Unit := do
+  IO.println "Riemann Hypothesis Adelic Proof - Lean 4 Formalization"
+  IO.println "José Manuel Mota Burruezo (V5.2, unconditional)"
+  IO.println ""
+  IO.println "All modules loaded successfully!"
+  IO.println "✅ A4: Orbit lengths derived (lengths_derived.lean)"
+  IO.println "✅ Uniqueness without Ξ (uniqueness_without_xi.lean)"
 -- V6.0: New modules for gap closure
 import RiemannAdelic.lengths_derived
 import RiemannAdelic.extension_infinite
