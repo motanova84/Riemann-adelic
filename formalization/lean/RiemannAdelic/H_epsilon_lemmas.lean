@@ -16,6 +16,31 @@ open Real
 
 namespace RiemannAdelic
 
+section AuxiliaryDefinitions
+
+/-- Función base hermite-logarítmica (placeholder hasta importar la definición real) --/
+def hermite_log_basis (n : ℕ) : ℝ → ℂ := 
+  λ t => if t > 0 then 
+    (hermitePolynomial n).eval (Real.log t) * Complex.exp (-(Real.log t)^2 / 2)
+  else 
+    0
+
+/-- Norma hermite-log (placeholder) --/
+def hermite_log_norm (n : ℕ) : ℝ := 
+  Real.sqrt (∫ t in Set.Ioi (0 : ℝ), 
+    Complex.abs (hermite_log_basis n t) ^ 2 / t)
+
+/-- Corrección diagonal (placeholder) --/
+def diagonal_correction (i j : ℕ) : ℂ := 
+  if i = j then (i : ℂ) else 0
+
+/-- Autovalor (placeholder) --/
+variable (ε : ℝ) (hε : 0 < ε)
+def eigenvalue (n : ℕ) : ℝ := 
+  n^2 + ε * n
+
+end
+
 section HermiteLemmas
 
 /-- Los polinomios de Hermite están acotados por una gaussiana --/
@@ -133,31 +158,6 @@ theorem uniform_converge_on_compacts (eigenvalue : ℕ → ℂ) :
   --   nlinarith
   -- · intro K hK
   --   exact eigenvalue_growth_lower_bound K hK
-
-end
-
-section AuxiliaryDefinitions
-
-/-- Función base hermite-logarítmica (placeholder hasta importar la definición real) --/
-def hermite_log_basis (n : ℕ) : ℝ → ℂ := 
-  λ t => if t > 0 then 
-    (hermitePolynomial n).eval (Real.log t) * Complex.exp (-(Real.log t)^2 / 2)
-  else 
-    0
-
-/-- Norma hermite-log (placeholder) --/
-def hermite_log_norm (n : ℕ) : ℝ := 
-  Real.sqrt (∫ t in Set.Ioi (0 : ℝ), 
-    Complex.abs (hermite_log_basis n t) ^ 2 / t)
-
-/-- Corrección diagonal (placeholder) --/
-def diagonal_correction (i j : ℕ) : ℂ := 
-  if i = j then (i : ℂ) else 0
-
-/-- Autovalor (placeholder) --/
-variable (ε : ℝ) (hε : 0 < ε)
-def eigenvalue (n : ℕ) : ℝ := 
-  n^2 + ε * n
 
 end
 
