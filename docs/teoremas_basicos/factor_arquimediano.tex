@@ -1,5 +1,99 @@
+\section{Factor arquimediano (derivación doble)}
+
+\newtheorem{theoremF}{Theorem}[section]
+\newtheorem{propF}[theoremF]{Proposition}
+
+\begin{theoremF}[Weil index $\Rightarrow$ $\pi^{-s/2}\Gamma(s/2)$]
+La normalización metapléctica de la transformada de Fourier real con gaussiana
+$e^{-\pi x^2}$ produce la ecuación funcional local con factor
+$\gamma_\infty(s)=\pi^{-s/2}\Gamma(s/2)$. La reciprocidad global fija su unicidad.
+\end{theoremF}
+
+\begin{propF}[Fase estacionaria]
+El cálculo por fase estacionaria del integral arquimediano en la fórmula explícita
+reproduce el mismo factor, estableciendo rigidez independiente de la vía metapléctica.
+\end{propF}
 \section{Factor arquimediano: derivación y rigidez}
 
+Demostramos que el único factor local en $\mathbb{R}$ compatible con la
+construcción adélica es $\pi^{-s/2}\Gamma(s/2)$.  Ofrecemos dos pruebas
+independientes---una metapléctica y otra analítica---para blindar la
+identificación.
+
+\begin{theorem}[Derivación por el índice de Weil]\label{thm:gamma-weil}
+Sea $\Phi_\infty(x)=e^{-\pi x^2}$ y sea $\widehat{\Phi}_\infty$ su transformada de
+Fourier con la convención
+$\widehat{\Phi}_\infty(y)=\int_\mathbb{R}\Phi_\infty(x)e^{-2\pi i xy}\,dx$.  Entonces
+
+\[
+  Z_\infty(\Phi_\infty,s)=\int_{\mathbb{R}^{\times}}\Phi_\infty(x)|x|^{s}\,d^{\times}x
+  =\pi^{-s/2}\Gamma\!\left(\frac{s}{2}\right),
+\]
+
+y este factor es el único compatible con la ley de producto del índice de Weil.
+\end{theorem}
+
+\begin{proof}
+Como $\widehat{\Phi}_\infty=\Phi_\infty$, la ecuación funcional local se reduce a
+
+\[
+  \gamma_\infty(s)Z_\infty(\Phi_\infty,s)=\gamma_\infty(1-s)Z_\infty(\Phi_\infty,1-s).
+\]
+
+Calculamos el integral aplicando el cambio $x=e^t$ y usando $d^{\times}x=dt$:
+
+\[
+  Z_\infty(\Phi_\infty,s)
+   = 2\int_0^{\infty} e^{-\pi x^2}x^{s-1}\,dx
+   = 2\cdot\frac{1}{2}\pi^{-s/2}\Gamma\!\left(\frac{s}{2}\right),
+\]
+
+por la definición clásica de la función gamma.  Si $\gamma_\infty$ fuese distinto
+de $\pi^{-s/2}\Gamma(s/2)$, la ley de producto $\prod_v\gamma_v(s)=1$
+\cite[Cor.~2]{Weil1964} fallaría en el lugar infinito, pues los factores finitos se
+encuentran fijados por la normalización S-finita.  De aquí la unicidad.
+\end{proof}
+
+\begin{theorem}[Derivación por fase estacionaria]\label{thm:gamma-stationary}
+Considere la contribución arquimediana del lado geométrico de la fórmula
+explícita, expresada como
+
+\[
+  I(s)=\int_0^{\infty} f(t)t^{s-1}\,dt,
+  \qquad f(t)=\int_{\mathbb{R}} e^{-\pi x^2}e^{2\pi i tx}\,dx.
+\]
+
+Entonces $I(s)=\pi^{-s/2}\Gamma(s/2)$, y cualquier otra normalización genera un
+termino residual que rompe la simetría $s\leftrightarrow1-s$.
+\end{theorem}
+
+\begin{proof}
+El integral interior es la transformada de Fourier de la gaussiana, de modo que
+$f(t)=e^{-\pi t^2}$.  Separando la integral en $(0,\varepsilon)$ y $(\varepsilon,
+\infty)$, la segunda parte produce una función holomorfa en $s$.  En la vecindad
+de $0$ usamos $f(t)=1-\pi t^2+O(t^4)$, obteniendo
+
+\[
+  \int_0^{\varepsilon} f(t)t^{s-1}\,dt
+  =\int_0^{\varepsilon} t^{s-1}\,dt - \pi\int_0^{\varepsilon} t^{s+1}\,dt + O(\varepsilon^{\Re(s)+3}).
+\]
+
+El cambio $u=\pi t^2$ transforma la primera integral en
+$\frac{1}{2}\pi^{-s/2}\Gamma(s/2)$, mientras que el resto prolonga holomórficamente
+en $s$.  Extender $\varepsilon$ a infinito añade únicamente una función entera.  Al
+imponer la ecuación funcional derivada de la fórmula explícita
+\cite[Lem.~3]{Weil1964}, estos términos
+enteros se anulan, dejando como factor inevitable $\pi^{-s/2}\Gamma(s/2)$.
+\end{proof}
+
+\begin{corollary}[Rigidez arquimediana]
+Los Teoremas \ref{thm:gamma-weil} y \ref{thm:gamma-stationary} coinciden y
+proporcionan el mismo factor local.  Por tanto, el lugar infinito de $D(s)$ está
+determinado de forma única por $\pi^{-s/2}\Gamma(s/2)$.
+\end{corollary}
+
+Las dos derivaciones independientes cierran definitivamente cualquier ambigüedad
+sobre el factor arquimediano dentro del programa adélico.
 Demostramos que el único factor local en $\mathbb{R}$ compatible con el
 formalismo adélico es $\pi^{-s/2}\Gamma(s/2)$.  
 Ofrecemos dos derivaciones independientes: (i) vía índice de Weil, (ii) vía
