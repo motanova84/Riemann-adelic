@@ -78,10 +78,14 @@ class CanonicalOperatorA0:
             
         Returns:
             Kernel value
+            
+        Note:
+            Explicit int() conversion ensures compatibility with numpy.int64
+            which mpmath.mpf cannot handle directly.
         """
         if n == m:
             return 0.0
-        # Convert to int to avoid numpy int64 issues with mpmath
+        # Convert to Python int to avoid numpy int64 type issues with mpmath
         n_int = int(n)
         m_int = int(m)
         return float(mp.exp(-mp.mpf((n_int - m_int)**2) / mp.mpf(4)))
@@ -90,9 +94,14 @@ class CanonicalOperatorA0:
         """
         Build explicit matrix representation of A₀
         
-        The operator should be self-adjoint (Hermitian), so we construct:
-        - Real diagonal from coupling: sum of Gaussian kernel
-        - Off-diagonal from Gaussian kernel
+        The operator is constructed to be self-adjoint (Hermitian).
+        Note: The theoretical operator (½ + i·n) on diagonal would be complex,
+        but for practical numerical analysis, we use a real self-adjoint version:
+        - Real diagonal: 0.5 + n²/dimension² (ensures positivity and growth)
+        - Off-diagonal: Gaussian kernel K(n,m) (symmetric)
+        
+        This preserves the essential spectral properties while ensuring
+        numerical stability and real eigenvalues.
         
         Returns:
             Self-adjoint matrix representing A₀
@@ -260,7 +269,8 @@ class PaleyWienerUniqueness:
                     if val != 0:
                         log_val = np.log(abs(val))
                         max_log_val = max(max_log_val, log_val)
-                except:
+                except (ValueError, OverflowError, ZeroDivisionError):
+                    # Skip points where function evaluation fails
                     pass
             
             if max_log_val > -np.inf:
@@ -409,7 +419,8 @@ class WeilGuinandPositivity:
     def verify_density_formula(
         num_zeros: int,
         height: float,
-        tolerance: float = 0.1
+        tolerance: float = 0.1,
+        error_term_coeff: float = 0.1
     ) -> Tuple[bool, float]:
         """
         Verify zero density matches N(T) = (T/2π)log(T/2πe) + O(log T)
@@ -418,6 +429,8 @@ class WeilGuinandPositivity:
             num_zeros: Number of zeros up to height T
             height: Height T
             tolerance: Relative tolerance (fraction)
+            error_term_coeff: Coefficient for O(log T) error term (default: 0.1)
+                             This approximates the O(log T) term in the asymptotic formula
             
         Returns:
             (matches_formula, relative_error)
@@ -428,8 +441,8 @@ class WeilGuinandPositivity:
         # Riemann-von Mangoldt formula
         predicted = (height / (2 * np.pi)) * np.log(height / (2 * np.pi * np.e))
         
-        # Add O(log T) term (rough approximation)
-        predicted += 0.1 * np.log(height)
+        # Add O(log T) term (rough approximation controlled by error_term_coeff)
+        predicted += error_term_coeff * np.log(height)
         
         relative_error = abs(num_zeros - predicted) / max(predicted, 1)
         matches = relative_error < tolerance

@@ -73,7 +73,12 @@ We define the operator A₀ and establish its key properties:
 - Discrete eigenvalues
 -/
 
-/-- The operator A₀ has real spectrum -/
+/-- The operator A₀ has real spectrum
+    
+    TODO: This should be proven from the construction of A₀ as a self-adjoint operator.
+    For now, we assume this as an axiom to focus on the higher-level structure.
+    A complete proof would require full spectral theory from Mathlib.
+-/
 axiom operator_A0_real_spectrum :
   ∃ (λ : ℕ → ℝ), (∀ n, 0 < λ n) ∧ StrictMono λ
 
@@ -245,10 +250,21 @@ theorem riemann_hypothesis_spectral :
 The positivity condition ensures no zeros off the critical line.
 -/
 
-/-- Weil-Guinand quadratic form is non-negative -/
+/-- Weil-Guinand quadratic form is non-negative
+    
+    TODO: Implement the actual quadratic form:
+    Q[f] = Σ_ρ |∫f(x)x^{ρ-½}dx|² / |ρ(1-ρ)| ≥ 0
+    
+    This requires:
+    1. Definition of the quadratic form over test functions
+    2. Sum over zeros with proper convergence
+    3. Proof of non-negativity
+    
+    For now, this is a placeholder axiom.
+-/
 axiom weil_guinand_positivity :
   ∀ (f : ℝ → ℂ), 
-    -- Q[f] ≥ 0 for all test functions
+    -- TODO: Replace with actual positivity condition Q[f] ≥ 0
     True  -- Placeholder
 
 /-- Positivity implies operator H_Ψ - ¼I is positive -/
