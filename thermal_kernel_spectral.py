@@ -734,6 +734,156 @@ def plot_results(result, filename='thermal_kernel_validation.png'):
     plt.close()
 
 
+def improved_K_t_real(x, y, t):
+    """
+    Improved kernel with more robust integration.
+    
+    Uses wider integration limits [-500, 500] and higher precision parameters
+    to capture the kernel behavior more accurately.
+    
+    Args:
+        x, y: positive real numbers
+        t: thermal parameter
+        
+    Returns:
+        Kernel value K_t(x,y)
+    """
+    from scipy import integrate
+    
+    if x <= 0 or y <= 0:
+        return 0.0
+    
+    log_diff = np.log(x) - np.log(y)
+    
+    def integrand(u):
+        return np.exp(-t * (u**2 + 0.25)) * np.cos(u * log_diff)
+    
+    # Use quad with wider limits and higher precision
+    result, error = integrate.quad(
+        integrand, -500, 500, 
+        limit=1000, 
+        epsabs=1e-10, 
+        epsrel=1e-10
+    )
+    return result * np.exp(-t/4) / np.sqrt(4 * np.pi * t)
+
+
+def improved_basis_func(x, k, a, b):
+    """
+    Improved basis using Legendre polynomials in logarithmic scale.
+    
+    Maps x ∈ [a,b] to z ∈ [-1,1] via logarithmic scaling, then
+    evaluates Legendre polynomial P_k(z).
+    
+    Args:
+        x: evaluation point
+        k: polynomial degree
+        a, b: interval bounds
+        
+    Returns:
+        Basis function value
+    """
+    # Map to [-1, 1] via log-scaling
+    z = (np.log(x) - np.log(a)) / (np.log(b) - np.log(a)) * 2 - 1
+    
+    if k == 0:
+        return 1.0
+    elif k == 1:
+        return z
+    else:
+        # Use Legendre polynomial recursion
+        return np.polynomial.legendre.legval(z, [0]*k + [1])
+
+
+def build_improved_H(n_basis=10, t=0.01, a=0.1, b=10.0):
+    """
+    Construction of improved H with optimized parameters.
+    
+    Uses improved kernel integration and Legendre polynomial basis
+    to build the operator H matrix more accurately.
+    
+    Args:
+        n_basis: number of basis functions
+        t: thermal parameter
+        a, b: integration interval bounds
+        
+    Returns:
+        H: improved operator matrix
+    """
+    from scipy import integrate
+    
+    H = np.zeros((n_basis, n_basis))
+    
+    print("Building improved H matrix...")
+    for i in range(n_basis):
+        for j in range(i, n_basis):
+            # Compute H[i,j] = ∫∫ φ_i(x) K(x,y) φ_j(y) dx dy
+            def integrand_outer(x):
+                def integrand_inner(y):
+                    basis_i = improved_basis_func(x, i, a, b)
+                    basis_j = improved_basis_func(y, j, a, b)
+                    kernel = improved_K_t_real(x, y, t)
+                    return basis_i * kernel * basis_j
+                
+                # Inner integration over y
+                result_y, error_y = integrate.quad(
+                    integrand_inner, a, b, 
+                    epsabs=1e-8, 
+                    epsrel=1e-8,
+                    limit=100
+                )
+                return result_y
+            
+            # Outer integration over x
+            result_x, error_x = integrate.quad(
+                integrand_outer, a, b, 
+                epsabs=1e-8, 
+                epsrel=1e-8,
+                limit=100
+            )
+            H[i,j] = result_x
+            H[j,i] = result_x
+            
+            if (i * n_basis + j) % 10 == 0:
+                print(f"  H[{i},{j}] = {result_x:.6f}")
+    
+    return H
+
+
+def validate_with_simple_case():
+    """
+    Validation with a simple known case.
+    
+    Creates a test case with diagonal approximation to verify
+    the eigenvalue-to-zero extraction process.
+    
+    Returns:
+        zeros_computed: list of computed test zeros
+    """
+    print("=== VALIDATION WITH SIMPLE CASE ===")
+    
+    # Test case: approximate diagonal kernel
+    n_test = 5
+    H_test = np.eye(n_test) * 0.25  # Minimum theoretical value
+    
+    for i in range(n_test):
+        H_test[i,i] = 0.25 + (i * 0.1)**2  # Simulates γ = i*0.1
+    
+    eigenvalues = np.linalg.eigvalsh(H_test)
+    print("Test eigenvalues:", eigenvalues)
+    
+    zeros_computed = []
+    for λ in eigenvalues:
+        if λ > 0.25:
+            γ = np.sqrt(λ - 0.25)
+            zeros_computed.append(0.5 + 1j * γ)
+        else:
+            zeros_computed.append(0.5 + 0j)  # Ensure complex type
+    
+    print("Computed test zeros:", zeros_computed)
+    return zeros_computed
+
+
 if __name__ == "__main__":
     import argparse
     
@@ -750,10 +900,23 @@ if __name__ == "__main__":
                        help='Run convergence study')
     parser.add_argument('--plot', action='store_true',
                        help='Generate visualization plots')
+    parser.add_argument('--validate_simple', action='store_true',
+                       help='Run simple validation case')
+    parser.add_argument('--improved', action='store_true',
+                       help='Use improved integration method')
     
     args = parser.parse_args()
     
-    if args.convergence:
+    if args.validate_simple:
+        # Run simple validation
+        validate_with_simple_case()
+    elif args.improved:
+        # Test improved H construction (may be slow)
+        print("\n=== BUILDING IMPROVED H ===")
+        H_improved = build_improved_H(n_basis=5, t=0.1)
+        print("Improved H constructed")
+        print("Eigenvalues:", np.linalg.eigvalsh(H_improved))
+    elif args.convergence:
         # Run convergence study
         convergence_study(
             n_basis_values=[10, 15, 20, 25],
