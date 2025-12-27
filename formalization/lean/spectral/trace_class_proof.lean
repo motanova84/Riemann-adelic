@@ -174,7 +174,7 @@ theorem H_psi_series_converges :
 theorem H_psi_is_trace_class :
     ∃ (trace : ℝ), trace = ∑' n : ℕ, L2norm (H_psi_operator (hermiteBasis n)) := by
   use ∑' n : ℕ, L2norm (H_psi_operator (hermiteBasis n))
-  exact H_psi_series_converges.tsum_eq.symm
+  exact (H_psi_series_converges.hasSum.tsum_eq).symm
 
 /-!
 ## Consecuencia: Determinante Espectral Bien Definido
