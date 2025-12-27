@@ -191,18 +191,36 @@ theorem spectral_sum_converges (f : ℂ → ℂ) (h_entire : Entire f)
         exact spectral_density_summable α' hα'_pos
     · -- When M < 0: exp(M·|Im(ρ)|) → 0, so convergence is clear
       push_neg at hM
+      have hM_neg : M < 0 := hM
+      -- Choose α = -M > 0 so that exp(M·x) = exp((-α)·x)
+      let α : ℝ := -M
+      have α_pos : α > 0 := by
+        unfold α
+        exact neg_pos.mpr hM_neg
       apply Summable.of_nonneg_of_le
       · intro n
         apply mul_nonneg
         · exact le_of_lt h_const
         · exact le_of_lt (Real.exp_pos _)
       · intro n
-        -- exp(M·x) ≤ exp(-α·x) for M < 0 and suitable α
-        have : M < 0 := hM
-        -- Choose α = -M/2 > 0
-        have h_α_choice : -M / 2 > 0 := by linarith
-        -- Then M·x < (-α)·x for all x > 0
-        sorry
+        -- For this choice of α we have exp(M·x) = exp((-α)·x)
+        have h_exp_eq :
+            Real.exp (M * |(ρ n).im|) =
+              Real.exp ((-α) * |(ρ n).im|) := by
+          have hM_eq : M = -α := by
+            unfold α
+            ring
+          simpa [hM_eq, mul_comm, mul_left_comm, mul_assoc] 
+        -- Turn equality into the required inequality
+        have h_exp_le :
+            Real.exp (M * |(ρ n).im|) ≤
+              Real.exp ((-α) * |(ρ n).im|) :=
+          le_of_eq h_exp_eq
+        have h_const_nonneg : 0 ≤ C * Real.exp M :=
+          le_of_lt h_const
+        have h_mul_le :=
+          mul_le_mul_of_nonneg_left h_exp_le h_const_nonneg
+        simpa [mul_assoc] using h_mul_le
       · exact spectral_density_summable α α_pos
 
 /-!
