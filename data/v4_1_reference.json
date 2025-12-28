@@ -1,0 +1,23 @@
+{
+  "paper": {
+    "title": "A Complete Proof of the Riemann Hypothesis via S-Finite Adelic Systems (Final Conditional Version V4.1)",
+    "author": "Jos\u00e9 Manuel Mota Burruezo",
+    "date": "September 14, 2025",
+    "doi": "10.5281/zenodo.17161831"
+  },
+  "repository": {
+    "url": "https://github.com/motanova84/-jmmotaburr-riemann-adelic",
+    "commit": "9c97492",
+    "timestamp": "2025-12-28T11:33:00.714325"
+  },
+  "validation": {
+    "target_precision": "10^-6",
+    "status": "Framework implemented, evolved to V5.3",
+    "recommended_method": "v5_coronacion"
+  },
+  "qcal": {
+    "frequency_f0": "141.7001 Hz",
+    "coherence_C": "244.36",
+    "signature": "\u03a8 = I \u00d7 A_eff\u00b2 \u00d7 C^\u221e"
+  }
+}
