@@ -315,7 +315,13 @@ def main():
     print("="*70)
     print("\nQCAL ∞³ Integration:")
     print("  Base Frequency: f₀ = 141.7001 Hz")
-    print("  Coherence: C = 244.36")
+        plot_results(result)
+    except ImportError as e:
+        print("\n⚠ Warning: Could not generate plots because matplotlib or a required "
+              f"plotting backend is not available: {e}")
+    except OSError as e:
+        print("\n⚠ Warning: Could not generate plots due to an OS or file system issue "
+              f"(e.g., missing directory, permission problem, or display backend error): {e}")
     print("  Equation: Ψ = I × A_eff² × C^∞")
     print("="*70)
     
