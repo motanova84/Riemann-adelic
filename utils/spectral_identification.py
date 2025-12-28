@@ -479,7 +479,7 @@ class WeilGuinandPositivity:
                 Eigenvalues of H_Ψ.
             tolerance:
                 Non-negative tolerance used for the positivity check, applied to
-                the shifted spectrum λ_n - 1/4. If None (default), a scale-aware
+                the shifted spectrum (λ_n - 1/4). If None (default), a scale-aware
                 tolerance is chosen automatically based on the magnitude of the
                 shifted eigenvalues and the machine epsilon of their dtype.
                 The positivity check is: λ_n ≥ ¼ - tolerance (not strict λ_n ≥ ¼).
