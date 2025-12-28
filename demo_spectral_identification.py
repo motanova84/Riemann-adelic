@@ -285,11 +285,10 @@ def plot_results(result):
         gamma_squared_plot = np.array([])
     
     ax.scatter(lambda_shifted, gamma_squared_plot, alpha=0.6)
-    max_val = (
-        max(lambda_shifted.max(), gamma_squared_plot.max())
-        if len(lambda_shifted) > 0 and len(gamma_squared_plot) > 0
-        else 1
-    )
+    if n_points > 0:
+        max_val = max(lambda_shifted.max(), gamma_squared_plot.max())
+    else:
+        max_val = 1
     ax.plot([0, max_val], [0, max_val], 'r--', label='γ² = λ - ¼')
     ax.set_xlabel('λ - ¼')
     ax.set_ylabel('γ²')
