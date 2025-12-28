@@ -365,18 +365,28 @@ class SpectralCorrespondence:
         Verify bijective correspondence between eigenvalues and zeros
         
         Args:
-            eigenvalues: Array of operator eigenvalues
-            zeros: Array of zeta zeros (complex)
-            tolerance: Maximum allowed error
-            
-        Returns:
-            (correspondence_valid, list of (λ, ρ, error) tuples)
-        """
-        correspondences = []
-        
-        for i, lambda_n in enumerate(eigenvalues):
-            if lambda_n < 0.25:
+            # Find closest actual zero on the critical line by imaginary part
+            if zeros.size == 0:
                 continue
+            
+            # Restrict to zeros on the critical line within tolerance
+            mask = np.abs(zeros.real - 0.5) < tolerance
+            zeros_on_line = zeros[mask]
+            
+            if zeros_on_line.size == 0:
+                continue
+            
+            # Select zero whose imaginary part is closest to predicted γ
+            imag_diffs = np.abs(zeros_on_line.imag - rho_pred.imag)
+            closest_idx = int(np.argmin(imag_diffs))
+            rho_actual = zeros_on_line[closest_idx]
+            
+            # Verify relation γ² = λ - ¼
+            gamma = abs(rho_actual.imag)
+            lambda_from_zero = gamma**2 + 0.25
+            
+            error = abs(lambda_n - lambda_from_zero)
+            correspondences.append((lambda_n, rho_actual, error))
             
             # Find closest actual zero
             if i < len(zeros):
