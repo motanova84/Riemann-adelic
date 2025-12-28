@@ -420,28 +420,46 @@ class WeilGuinandPositivity:
         num_zeros: int,
         height: float,
         tolerance: float = 0.1,
-        error_term_coeff: float = 0.1
+        error_term_coeff: Optional[float] = None,
     ) -> Tuple[bool, float]:
         """
         Verify zero density matches N(T) = (T/2π)log(T/2πe) + O(log T)
+        
+        This implements a numerical consistency check against the
+        Riemann–von Mangoldt zero-counting formula, including a
+        controllable approximation of the O(log T) error term.
         
         Args:
             num_zeros: Number of zeros up to height T
             height: Height T
             tolerance: Relative tolerance (fraction)
-            error_term_coeff: Coefficient for O(log T) error term (default: 0.1)
-                             This approximates the O(log T) term in the asymptotic formula
-            
+            error_term_coeff: Coefficient for the O(log T) error term.
+                If None (default), a coefficient compatible with rigorous
+                bounds for the error term in the Riemann–von Mangoldt
+                formula is used (cf. Trudgian-type bounds, |S(T)| ≤ c log T),
+                currently c ≈ 0.137. Passing an explicit float value
+                overrides this and should be regarded as a heuristic
+                adjustment; setting error_term_coeff = 0.0 removes the
+                O(log T) correction and uses only the main term.
+        
         Returns:
             (matches_formula, relative_error)
         """
         if height <= 0:
             return False, np.inf
         
-        # Riemann-von Mangoldt formula
+        if error_term_coeff is None:
+            # Default coefficient for the O(log T) term based on known
+            # analytic bounds for the error term in the Riemann–von
+            # Mangoldt formula (see, e.g., Trudgian 2014). This avoids
+            # using an arbitrary constant while keeping a conservative
+            # upper estimate for the magnitude of the error term.
+            error_term_coeff = 0.137
+        
+        # Riemann-von Mangoldt formula (main term)
         predicted = (height / (2 * np.pi)) * np.log(height / (2 * np.pi * np.e))
         
-        # Add O(log T) term (rough approximation controlled by error_term_coeff)
+        # Add O(log T) term, with coefficient controlled by error_term_coeff
         predicted += error_term_coeff * np.log(height)
         
         relative_error = abs(num_zeros - predicted) / max(predicted, 1)
