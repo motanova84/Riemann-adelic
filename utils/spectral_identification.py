@@ -364,9 +364,9 @@ class SpectralCorrespondence:
         """
         if lambda_n < 0.25:
             raise ValueError(
-                f"Eigenvalue λ = {lambda_n} is < 1/4; need λ ≥ 1/4 so that "
-                "γ = sqrt(λ - 1/4) is real in the spectral correspondence "
-                "ρ = 1/2 + iγ."
+                f"Eigenvalue lambda = {lambda_n} is < 1/4; need lambda >= 1/4 so that "
+                "gamma = sqrt(lambda - 1/4) is real in the spectral correspondence "
+                "rho = 1/2 + i*gamma."
             )
         
         gamma = np.sqrt(lambda_n - 0.25)
