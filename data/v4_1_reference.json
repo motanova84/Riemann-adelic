@@ -7,8 +7,8 @@
   },
   "repository": {
     "url": "https://github.com/motanova84/-jmmotaburr-riemann-adelic",
-    "commit": "9c97492",
-    "timestamp": "2025-12-28T11:33:00.714325"
+    "commit": "0b76b57",
+    "timestamp": "2025-12-28T11:33:52.118860"
   },
   "validation": {
     "target_precision": "10^-6",
