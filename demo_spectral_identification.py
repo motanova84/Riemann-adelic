@@ -335,6 +335,9 @@ def main():
     except OSError as e:
         print("\n⚠ Warning: Could not generate plots due to an OS or file system issue "
               f"(e.g., missing directory, permission problem, or display backend error): {e}")
+    except Exception as e:
+        print("\n⚠ Warning: An unexpected error occurred while generating plots. "
+              f"This does not affect the core spectral verification: {e}")
     
     # Final message
     print("\n" + "="*70)
