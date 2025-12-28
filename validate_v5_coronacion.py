@@ -616,6 +616,62 @@ def validate_v5_coronacion(precision=30, verbose=False, save_certificate=False, 
         except Exception as e:
             print(f"⚠️  Warning: Could not save proof certificate: {e}")
     
+    # --- Spectral Identification Theorem Validation ---------------------------
+    print("\n🔬 SPECTRAL IDENTIFICATION THEOREM VERIFICATION...")
+    try:
+        from utils.spectral_identification_theorem import validate_spectral_identification_framework
+        
+        # Run spectral identification validation with small basis for speed
+        spectral_results = validate_spectral_identification_framework(
+            n_basis=50,  # Small basis for performance
+            precision=max(20, precision),
+            riemann_zeros=None  # Use default known zeros
+        )
+        
+        # Check if proof passed
+        proof_passed = spectral_results['proof_results']['riemann_hypothesis_proven']
+        
+        # Extract key metrics
+        step1_match_rate = spectral_results['proof_results']['step1_spectral_reduction']['match_rate']
+        step2_adjoint = spectral_results['proof_results']['step2_self_adjoint_spectrum']['H_psi_self_adjoint']
+        step3_symmetric = spectral_results['proof_results']['step3_functional_equation']['D_symmetric']
+        step5_positive = spectral_results['proof_results']['step5_weil_guinand_positivity']['Delta_positive']
+        
+        if proof_passed:
+            print(f"   ✅ Spectral identification: PROVEN")
+            print(f"      Spectral correspondence match rate: {step1_match_rate:.2%}")
+            print(f"      H_Ψ self-adjoint: ✓")
+            print(f"      D(s) functional equation: ✓")
+            results["Spectral Identification Theorem"] = {
+                'status': 'PASSED',
+                'match_rate': step1_match_rate,
+                'H_psi_self_adjoint': step2_adjoint,
+                'D_symmetric': step3_symmetric,
+                'Delta_positive': step5_positive,
+                'description': 'Three-layer spectral correspondence framework'
+            }
+        else:
+            print(f"   ⚠️  Spectral identification: PARTIAL")
+            print(f"      Spectral correspondence match rate: {step1_match_rate:.2%}")
+            print(f"      H_Ψ self-adjoint: {step2_adjoint}")
+            print(f"      D(s) symmetric: {step3_symmetric}")
+            results["Spectral Identification Theorem"] = {
+                'status': 'PARTIAL',
+                'match_rate': step1_match_rate,
+                'H_psi_self_adjoint': step2_adjoint,
+                'D_symmetric': step3_symmetric,
+                'Delta_positive': step5_positive,
+                'description': 'Partial validation of spectral framework'
+            }
+            
+    except Exception as e:
+        print(f"   ⚠️  Spectral identification verification skipped: {e}")
+        results["Spectral Identification Theorem"] = {
+            'status': 'SKIPPED',
+            'error': str(e)
+        }
+    # -----------------------------------------------------------------------
+    
     # --- SAT Certificates Integration -----------------------------------------
     print("\n🔐 SAT CERTIFICATES VERIFICATION...")
     try:

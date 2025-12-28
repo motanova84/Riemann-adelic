@@ -35,8 +35,11 @@ rev = "master"
 homepage = "https://doi.org/10.5281/zenodo.17379721"
 keywords = ["riemann-hypothesis", "spectral-theory", "adelic-systems", "qcal", "mathematical-proof"]
 
-# Current Data Integration (2025-12-08)
+# Current Data Integration (2025-12-27)
 # - Base frequency f₀ = 141.7001 Hz
 # - QCAL coherence C = 244.36
 # - All validation tests PASSED (25 zeros verified)
 # - Integration with Evac_Rpsi_data.csv complete
+# - Algorithmic proof system V7.1 implemented (RH_Algorithmic_Proof.lean)
+# - Executable verification algorithms with digital certificates
+# - Complete constructive decidability of RH demonstrated

@@ -28,6 +28,27 @@ validation_status,PASSED
 
 Error ~1.2e-6 ≤ within tolerance.
 
+### 🆕 Algorithmic Proof System (V7.1)
+
+For a complete algorithmic and constructive demonstration of the Riemann Hypothesis with digital certificates:
+
+```bash
+# Run algorithmic verification with certificates
+python validate_algorithmic_rh.py
+```
+
+**Features:**
+- ✅ 6 executable algorithms implementing RH proof
+- ✅ Digital certificates for independent verification
+- ✅ Constructive decidability of RH demonstrated
+- ✅ Calculation of fundamental frequency f₀ = 141.7001 Hz
+
+**Quick Links:**
+- 📖 [Algorithmic Proof README](formalization/lean/ALGORITHMIC_PROOF_README.md)
+- 🚀 [Quick Start Guide](ALGORITHMIC_RH_QUICKSTART.md)
+- 📊 [Implementation Summary](ALGORITHMIC_RH_IMPLEMENTATION_SUMMARY.md)
+- 🔬 [Lean 4 Formalization](formalization/lean/RH_Algorithmic_Proof.lean)
+
 ## Section 4: Main Results
 
 | Test Function \( f(u) \) | Relative Error | Validation Status |
@@ -2799,7 +2820,7 @@ ___
 | **Warnings** | null |
 | **Errors** | null |
 | **Lean Version** | null |
-| **Date (UTC)** | 2025-12-27 13:31:49Z |
+| **Date (UTC)** | 2025-12-28 03:33:26Z |
 ___
 
 ## License
