@@ -250,22 +250,39 @@ theorem riemann_hypothesis_spectral :
   sorry  -- Requires full density formula argument
 
 /-!
-# Weil-Guinand Positivity
+/-- 
+  Opaque predicate representing the Weil-Guinand quadratic-form
+  positivity condition `Q[f] ≥ 0`.
 
-The positivity condition ensures no zeros off the critical line.
+  This is currently a *stub* standing in for the analytic statement
+  that the Weil-Guinand quadratic form
+
+  `Q[f] = Σ_ρ |∫ f(x) x^{ρ - 1/2} dx|² / |ρ (1 - ρ)|`
+
+  is non-negative for the relevant class of test functions `f`.
+  It must be replaced by a concrete definition and proof before the
+  formalization can be considered complete.
 -/
+axiom WeilGuinandPositivity : (ℝ → ℂ) → Prop
 
-/-- Weil-Guinand quadratic form is non-negative
-    
+/-- Weil-Guinand quadratic form is non-negative (placeholder axiom).
+
     TODO: Implement the actual quadratic form:
-    Q[f] = Σ_ρ |∫f(x)x^{ρ-½}dx|² / |ρ(1-ρ)| ≥ 0
-    
+    `Q[f] = Σ_ρ |∫ f(x) x^{ρ-½} dx|² / |ρ(1-ρ)| ≥ 0`
+
     This requires:
     1. Definition of the quadratic form over test functions
     2. Sum over zeros with proper convergence
     3. Proof of non-negativity
-    
-    For now, this is a placeholder axiom.
+
+    For now, we assume a global positivity axiom formulated in terms
+    of the abstract predicate `WeilGuinandPositivity`.
+    Any results depending on this axiom should be regarded as
+    conditional on the eventual construction of `Q` and its
+    positivity. -/
+axiom weil_guinand_positivity :
+  ∀ (f : ℝ → ℂ),
+    WeilGuinandPositivity f
 -/
 axiom weil_guinand_positivity :
   ∀ (f : ℝ → ℂ), 
