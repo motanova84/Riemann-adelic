@@ -1,19 +1,13 @@
-Test Name,Status,Execution Time (s),Error
-Step 1: Axioms → Lemmas,PASSED,4.5299530029296875e-06,
-Step 2: Archimedean Rigidity,PASSED,0.00014972686767578125,
-Step 3: Paley-Wiener Uniqueness,PASSED,2.86102294921875e-06,
-Step 4A: de Branges Localization,PASSED,0.0004258155822753906,
-Step 4B: Weil-Guinand Localization,PASSED,1.430511474609375e-06,
-Step 5: Coronación Integration,PASSED,0.00014328956604003906,
-Stress: Spectral Measure Perturbation,PASSED,5.507469177246094e-05,
-Stress: Growth Bounds Validation,PASSED,4.76837158203125e-06,
-Stress: Zero Subsets Consistency,PASSED,9.322166442871094e-05,
-Stress: Proof Certificate Generation,PASSED,0.0001418590545654297,
-Integration: Explicit Formula Integration,PASSED,0.7328486442565918,
-YOLO Verification,PASSED,0.0,
-Arithmetic Fractal Verification,PASSED,0,
-Aritmology Verification,PASSED,0,
-Zeta Quantum Wave Verification,PASSED,0,
-Arpeth Bioinformatics Verification,PARTIAL,0,
-Spectral Identification Theorem,PARTIAL,0,
-SAT Certificates Verification,PASSED,0.0,
+parameter,value
+arithmetic_side,2.73958035893656456553159562173
+zero_side,-0.0039846996591562257153114227321
+absolute_error,2.74356505859572079124690704446
+relative_error,1.00145449270949766365012457505
+validation_status,FAILED
+target_precision,0.000000999999999999999954748111825886
+P,100
+K,5
+T,20
+max_zeros,200
+precision_dps,30
+lim_u,3.0
