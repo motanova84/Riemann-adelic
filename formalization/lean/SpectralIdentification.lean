@@ -102,7 +102,7 @@ satisfying certain growth and symmetry conditions.
 
 /-- Conditions for Paley-Wiener uniqueness -/
 structure PaleyWienerConditions (F : ℂ → ℂ) : Prop where
-  /-- F is entire (holomorphic everywhere) -/
+  /-- F is complex differentiable everywhere on ℂ -/
   entire : Differentiable ℂ F
   /-- F has exponential type at most 1 -/
   order_bound : ∃ A B, B > 0 ∧ ∀ s, ‖F s‖ ≤ A * Real.exp (B * ‖s‖)
