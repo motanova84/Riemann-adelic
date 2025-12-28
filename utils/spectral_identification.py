@@ -322,11 +322,11 @@ class PaleyWienerUniqueness:
         # 25% failure threshold = len(test_radii) * 20 * 0.25 = len(test_radii) * 5
         if evaluation_failures > len(test_radii) * 5:
             import warnings
-            warnings.warn(
             total_attempts = len(test_radii) * 20
             warnings.warn(
                 f"Order estimation had {evaluation_failures} evaluation failures "
-                f"out of {total_attempts} attempts. Results may be unreliable.",
+                f"out of {total_attempts} attempts (~{100*evaluation_failures/total_attempts:.1f}%). "
+                "Results may be unreliable.",
                 RuntimeWarning
             )
         

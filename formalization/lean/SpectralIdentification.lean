@@ -268,7 +268,7 @@ The positivity condition ensures no zeros off the critical line.
   It must be replaced by a concrete definition and proof before the
   formalization can be considered complete.
 -/
-axiom WeilGuinandPositivity : (ℝ → ℂ) → Prop
+axiom WeilGuinandPositivityPredicate : (ℝ → ℂ) → Prop
 
 /-- 
   Global placeholder axiom stating that an appropriate
@@ -276,7 +276,7 @@ axiom WeilGuinandPositivity : (ℝ → ℂ) → Prop
 
   This is intentionally a single propositional stub instead of the
   (trivial) universally quantified predicate
-  `∀ f, WeilGuinandPositivity f`.
+  `∀ f, WeilGuinandPositivityPredicate f`.
 
   Any result that uses this axiom should be regarded as *conditional*
   on the eventual construction of the quadratic form `Q` and a
