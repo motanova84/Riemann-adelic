@@ -324,9 +324,10 @@ class PaleyWienerUniqueness:
         if evaluation_failures > len(test_radii) * 5:
             import warnings
             warnings.warn(
+            total_attempts = len(test_radii) * 20
+            warnings.warn(
                 f"Order estimation had {evaluation_failures} evaluation failures "
-                f"out of {len(test_radii) * 20} total attempts (~{100*evaluation_failures/(len(test_radii)*20):.1f}%). "
-                "Results may be unreliable.",
+                f"out of {total_attempts} attempts. Results may be unreliable.",
                 RuntimeWarning
             )
         
