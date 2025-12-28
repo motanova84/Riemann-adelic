@@ -626,9 +626,9 @@ class SpectralIdentificationVerifier:
         print(f"  Functional equation: {satisfies_fe} (error: {fe_error:.2e})")
         
         # Test order of growth
-        # Note: max_terms in fredholm_determinant defaults to 50, which may be
-        # insufficient for very large radii. For production use, consider scaling
-        # max_terms proportionally with the radius being tested.
+        # Note: fredholm_determinant has a max_terms parameter with default 50.
+        # Consider passing a larger max_terms value proportional to the test radii,
+        # as the default of 50 may be insufficient for very large radii.
         test_radii = [5.0, 10.0, 20.0, 40.0]
         is_order_bounded, estimated_order = PaleyWienerUniqueness.check_entire_order(
             self.operator.fredholm_determinant,
