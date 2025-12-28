@@ -271,11 +271,21 @@ Riemann-adelic/
 
 ## Known Limitations
 
+⚠️ **CRITICAL LIMITATIONS - Validation Status**
+
+The numerical implementation has fundamental limitations that affect the framework's validity:
+
+1. **Positivity Constraint Violation**: The theoretical proof requires ALL eigenvalues λ ≥ ¼ for the spectral correspondence γ² = λ - ¼ to work. However, the finite-dimensional numerical implementation produces many eigenvalues < ¼. This violates a key theoretical requirement and means the numerical results cannot serve as direct evidence for the proof.
+
+2. **Functional Equation Failure**: The Paley-Wiener uniqueness condition requires D(s) = D(1-s), but the numerical Fredholm determinant shows large errors in this functional equation. This indicates the numerical implementation fails to satisfy one of the critical uniqueness conditions.
+
+3. **Approximation vs Theory Gap**: The theoretical operator has complex diagonal (½ + i·n), but the implementation uses real diagonal for numerical stability. This is a fundamental deviation from the mathematical specification that affects the validity of the framework.
+
 ### Numerical Implementation
 
 1. **Finite Dimension:** Operator discretization at finite dimension
-2. **Positivity:** Not all eigenvalues ≥ ¼ in finite approximation
-3. **Functional Equation:** Large errors in numerical D(s) symmetry
+2. **Positivity:** Not all eigenvalues ≥ ¼ in finite approximation (CRITICAL - see above)
+3. **Functional Equation:** Large errors in numerical D(s) symmetry (CRITICAL - see above)
 4. **Density Formula:** Approximate O(log T) term
 
 ### Lean4 Formalization

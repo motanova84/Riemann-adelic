@@ -1,5 +1,15 @@
 # Spectral Identification Framework for Riemann Hypothesis
 
+⚠️ **IMPORTANT: Validation Status**
+
+This implementation demonstrates the **conceptual framework** of spectral identification for the Riemann Hypothesis. However, the numerical implementation has critical limitations:
+
+1. **Positivity Constraint**: Many eigenvalues are < ¼, violating the theoretical requirement λ ≥ ¼
+2. **Functional Equation**: Large numerical errors in D(s) = D(1-s) symmetry
+3. **Operator Approximation**: Uses real diagonal instead of theoretical complex diagonal
+
+These limitations mean the numerical results should be interpreted as a **proof-of-concept implementation** rather than direct numerical evidence for the proof. The framework demonstrates the mathematical structure correctly, but finite-dimensional approximation introduces deviations from theoretical requirements.
+
 ## Overview
 
 This document describes the rigorous three-layer spectral identification framework for proving the Riemann Hypothesis via operator theory. The implementation consists of:
