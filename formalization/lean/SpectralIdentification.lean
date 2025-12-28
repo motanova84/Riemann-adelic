@@ -162,7 +162,7 @@ theorem round_trip_zero (ρ : ℂ) (hρ : ρ.re = 1/2) :
   unfold eigenvalue_to_zero zero_to_eigenvalue
   simp [hρ]
   ext <;> simp
-  · exact abs_of_nonneg (sqrt_nonneg _)
+  · simpa using (Real.sqrt_sq_eq_abs ρ.im)
 
 /-!
 # Main Theorems
