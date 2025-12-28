@@ -19,6 +19,9 @@ httpx>=0.27.0
 # Parallel computing
 joblib>=1.3.0
 
+# System and process monitoring
+psutil>=5.9.0
+
 # Quantum computing for consciousness adelic bridge
 qiskit>=1.5.0
 
