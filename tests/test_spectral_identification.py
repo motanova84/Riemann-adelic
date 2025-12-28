@@ -85,9 +85,13 @@ class TestCanonicalOperatorA0:
         The finite-dimensional approximation of the operator produces a mix
         of positive and negative eigenvalues. We check that a reasonable
         proportion (>40%) are positive, indicating the operator has the
-        expected spectral character. This threshold is empirically determined
-        from the discrete approximation; the theoretical operator would have
-        all eigenvalues ≥ 1/4 in the infinite-dimensional limit.
+        expected spectral character. 
+        
+        This 40% threshold is empirically determined from the discrete 
+        approximation with dimension=40 and the specific operator construction
+        using diagonal 0.5 + n²/dimension². For different dimensions or 
+        construction methods, this threshold may need adjustment. The theoretical
+        infinite-dimensional operator would have all eigenvalues ≥ 1/4.
         """
         op = CanonicalOperatorA0(dimension=40)
         eigenvalues = op.compute_spectrum()

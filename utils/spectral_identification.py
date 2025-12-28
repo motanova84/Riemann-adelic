@@ -189,13 +189,28 @@ class CanonicalOperatorA0:
         
         Args:
             s: Complex parameter
-            max_terms: Maximum number of eigenvalue terms to use
+            max_terms: Maximum number of eigenvalue terms to include.
+                      Default is 50. For operators with dimension > max_terms,
+                      only the first max_terms eigenvalues are used, which may
+                      reduce accuracy. Consider setting max_terms = dimension
+                      for full accuracy, or increasing max_terms proportionally
+                      with the radius when testing order bounds.
             
         Returns:
             D(s) value
         """
         if self.eigenvalues is None:
             self.compute_spectrum()
+        
+        # Warn if truncating eigenvalues
+        if len(self.eigenvalues) > max_terms:
+            import warnings
+            warnings.warn(
+                f"Fredholm determinant truncating {len(self.eigenvalues)} eigenvalues "
+                f"to {max_terms} terms. This may reduce accuracy for large |s|. "
+                f"Consider increasing max_terms or setting it equal to dimension.",
+                RuntimeWarning
+            )
         
         # Use product formula
         result = complex(1.0, 0.0)
@@ -290,8 +305,11 @@ class PaleyWienerUniqueness:
                         log_val = np.log(abs(val))
                         max_log_val = max(max_log_val, log_val)
                 except (ValueError, OverflowError, ZeroDivisionError) as e:
-                    # Count evaluation failures - could indicate numerical issues
+                    # Count and log evaluation failures - could indicate numerical issues
                     evaluation_failures += 1
+                    # Log individual failures at debug level
+                    import logging
+                    logging.debug(f"Function evaluation failed at s={s}: {type(e).__name__}: {e}")
                     # Skip points where function evaluation fails
                     pass
             
@@ -301,10 +319,13 @@ class PaleyWienerUniqueness:
                 orders.append(estimated_order)
         
         # Log warning if many failures occurred
-        if evaluation_failures > len(test_radii) * 5:  # More than ~25% failures
+        # Note: len(test_radii) radii × 20 theta samples per radius = total evaluation attempts
+        # 25% failure threshold = len(test_radii) * 20 * 0.25 = len(test_radii) * 5
+        if evaluation_failures > len(test_radii) * 5:
             import warnings
             warnings.warn(
-                f"Order estimation had {evaluation_failures} evaluation failures. "
+                f"Order estimation had {evaluation_failures} evaluation failures "
+                f"out of {len(test_radii) * 20} total attempts (~{100*evaluation_failures/(len(test_radii)*20):.1f}%). "
                 "Results may be unreliable.",
                 RuntimeWarning
             )
@@ -448,7 +469,10 @@ class WeilGuinandPositivity:
         """
         Check if operator H_Ψ - ¼I is positive.
         
-        This requires all eigenvalues λ_n ≥ ¼ up to a numerical tolerance.
+        This checks if all eigenvalues λ_n satisfy λ_n ≥ ¼ - tolerance,
+        allowing for numerical tolerance below the theoretical bound of ¼.
+        The check is: min(λ_n - ¼) ≥ -tolerance, which is equivalent to
+        min(λ_n) ≥ ¼ - tolerance.
         
         Args:
             eigenvalues:
@@ -458,6 +482,7 @@ class WeilGuinandPositivity:
                 the shifted spectrum λ_n - 1/4. If None (default), a scale-aware
                 tolerance is chosen automatically based on the magnitude of the
                 shifted eigenvalues and the machine epsilon of their dtype.
+                The positivity check is: λ_n ≥ ¼ - tolerance (not strict λ_n ≥ ¼).
         
         Returns:
             (is_positive, minimum_shifted_eigenvalue)

@@ -187,7 +187,7 @@ theorem spectral_identification :
     ∃ (H : Type) [NormedAddCommGroup H] [InnerProductSpace ℂ H]
       (A : H →L[ℂ] H)
       (σ : ℕ → ℝ),
-    (∀ n, 0 < σ n) ∧  -- Positive spectrum
+    (∀ n, (1 / 4 : ℝ) ≤ σ n) ∧  -- Spectrum satisfies λ ≥ 1/4 (required for eigenvalue_to_zero)
     (∀ ρ : ℂ, (∃ n : ℕ, ρ = eigenvalue_to_zero (σ n) (by
       have := operator_A0_real_spectrum
       sorry)) → 
@@ -284,7 +284,6 @@ axiom WeilGuinandPositivity : (ℝ → ℂ) → Prop
 -/
 axiom WeilGuinandPositivityStub : Prop
 
-/-- Positivity implies operator H_Ψ - ¼I is positive -/
 /-- Positivity implies operator H_Ψ - ¼I is positive -/
 theorem positivity_implies_shifted_positive :
     ∀ λ : ℝ, 

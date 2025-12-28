@@ -285,6 +285,7 @@ def plot_results(result):
         gamma_squared_plot = np.array([])
     
     ax.scatter(lambda_shifted, gamma_squared_plot, alpha=0.6)
+    # Compute max_val only if we have data points to avoid ValueError
     if n_points > 0:
         max_val = max(lambda_shifted.max(), gamma_squared_plot.max())
     else:
