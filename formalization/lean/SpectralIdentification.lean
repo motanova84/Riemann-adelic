@@ -78,9 +78,12 @@ We define the operator A₀ and establish its key properties:
     TODO: This should be proven from the construction of A₀ as a self-adjoint operator.
     For now, we assume this as an axiom to focus on the higher-level structure.
     A complete proof would require full spectral theory from Mathlib.
+    
+    Note: The eigenvalues must satisfy λ ≥ 1/4 for the spectral correspondence
+    to work properly (γ² = λ - 1/4 requires λ ≥ 1/4 for real γ).
 -/
 axiom operator_A0_real_spectrum :
-  ∃ (λ : ℕ → ℝ), (∀ n, 0 < λ n) ∧ StrictMono λ
+  ∃ (λ : ℕ → ℝ), (∀ n, (1 / 4 : ℝ) ≤ λ n) ∧ StrictMono λ
 
 /-- Self-adjointness implies real eigenvalues -/
 theorem self_adjoint_implies_real_eigenvalues
@@ -104,7 +107,9 @@ satisfying certain growth and symmetry conditions.
 structure PaleyWienerConditions (F : ℂ → ℂ) : Prop where
   /-- F is complex differentiable everywhere on ℂ -/
   entire : Differentiable ℂ F
-  /-- F has exponential type at most 1 -/
+  /-- F has exponential type of (order) 1: there exist constants `A, B > 0`
+      such that `‖F s‖ ≤ A * exp (B * ‖s‖)` for all `s` (this is the ρ = 1
+      special case of the general bound `‖F s‖ ≤ A * exp (B * ‖s‖^ρ)` with `ρ ≤ 1`). -/
   order_bound : ∃ A B, B > 0 ∧ ∀ s, ‖F s‖ ≤ A * Real.exp (B * ‖s‖)
   /-- Functional equation: F(s) = F(1-s) -/
   functional_eq : ∀ s, F s = F (1 - s)

@@ -273,10 +273,23 @@ def plot_results(result):
     # Plot 4: Correspondence γ² vs λ - ¼
     ax = axes[1, 1]
     gamma_squared = np.array([z.imag**2 for z in result.zeros])
-    lambda_shifted = result.eigenvalues[result.eigenvalues >= 0.25][:len(gamma_squared)] - 0.25
+    lambda_valid = result.eigenvalues[result.eigenvalues >= 0.25] - 0.25
+
+    # Ensure both arrays have the same length for plotting
+    n_points = min(len(lambda_valid), len(gamma_squared))
+    if n_points > 0:
+        lambda_shifted = lambda_valid[:n_points]
+        gamma_squared_plot = gamma_squared[:n_points]
+    else:
+        lambda_shifted = np.array([])
+        gamma_squared_plot = np.array([])
     
-    ax.scatter(lambda_shifted, gamma_squared, alpha=0.6)
-    max_val = max(lambda_shifted.max(), gamma_squared.max()) if len(lambda_shifted) > 0 else 1
+    ax.scatter(lambda_shifted, gamma_squared_plot, alpha=0.6)
+    max_val = (
+        max(lambda_shifted.max(), gamma_squared_plot.max())
+        if len(lambda_shifted) > 0 and len(gamma_squared_plot) > 0
+        else 1
+    )
     ax.plot([0, max_val], [0, max_val], 'r--', label='γ² = λ - ¼')
     ax.set_xlabel('λ - ¼')
     ax.set_ylabel('γ²')
@@ -307,7 +320,7 @@ def main():
     print("="*70)
     
     # Run demonstrations
-    op, eigenvalues = demo_operator_construction()
+    demo_operator_construction()
     demo_paley_wiener()
     demo_spectral_correspondence()
     demo_weil_positivity()

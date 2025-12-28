@@ -44,8 +44,18 @@ class CanonicalOperatorA0:
     """
     Layer 1: Construction of Canonical Operator A₀
     
+    ⚠️ IMPORTANT IMPLEMENTATION NOTE:
+    The theoretical operator specified in the problem statement has a complex
+    diagonal (½ + i·n), which would produce complex eigenvalues. For numerical
+    stability and to ensure real eigenvalues (required for self-adjointness),
+    this implementation uses a REAL diagonal: 0.5 + n²/dimension².
+    
+    This is a fundamental approximation that preserves the essential spectral
+    properties while enabling practical numerical analysis. The theoretical
+    framework's validity depends on this being an acceptable approximation.
+    
     The operator A₀ is defined on ℓ²(ℤ) by:
-        (A₀ψ)(n) = (½ + i·n)ψ(n) + Σ_{m≠n} K(n,m)ψ(m)
+        (A₀ψ)(n) = diagonal(n)·ψ(n) + Σ_{m≠n} K(n,m)ψ(m)
     
     where K(n,m) = exp(-|n-m|²/4) is a Gaussian kernel.
     
@@ -186,9 +196,11 @@ class CanonicalOperatorA0:
         result = complex(1.0, 0.0)
         s_shifted = s - 0.5
         
+        # Tolerance scales with current mpmath precision to avoid spurious zeros
+        tolerance = 10.0 ** (-(mp.mp.dps - 5))
         for i in range(min(max_terms, len(self.eigenvalues))):
             lambda_n = self.eigenvalues[i]
-            if abs(lambda_n) > 1e-10:  # Avoid division by zero
+            if abs(lambda_n) > tolerance:  # Avoid division by (near) zero
                 factor = 1.0 + (s_shifted ** 2) / lambda_n
                 result *= factor
         
@@ -311,7 +323,11 @@ class SpectralCorrespondence:
             Corresponding zero (taking positive imaginary part)
         """
         if lambda_n < 0.25:
-            raise ValueError(f"Eigenvalue {lambda_n} < ¼, no real γ")
+            raise ValueError(
+                f"Eigenvalue λ = {lambda_n} is < 1/4; need λ ≥ 1/4 so that "
+                "γ = sqrt(λ - 1/4) is real in the spectral correspondence "
+                "ρ = 1/2 + iγ."
+            )
         
         gamma = np.sqrt(lambda_n - 0.25)
         return complex(0.5, gamma)
@@ -362,9 +378,6 @@ class SpectralCorrespondence:
             if lambda_n < 0.25:
                 continue
             
-            # Predicted zero from eigenvalue
-            rho_pred = SpectralCorrespondence.eigenvalue_to_zero(lambda_n)
-            
             # Find closest actual zero
             if i < len(zeros):
                 rho_actual = zeros[i]
@@ -396,22 +409,44 @@ class WeilGuinandPositivity:
     """
     
     @staticmethod
-    def check_operator_positivity(eigenvalues: np.ndarray) -> Tuple[bool, float]:
+    def check_operator_positivity(
+        eigenvalues: np.ndarray,
+        tolerance: Optional[float] = None
+    ) -> Tuple[bool, float]:
         """
-        Check if operator H_Ψ - ¼I is positive
+        Check if operator H_Ψ - ¼I is positive.
         
-        This requires all eigenvalues λ_n ≥ ¼
+        This requires all eigenvalues λ_n ≥ ¼ up to a numerical tolerance.
         
         Args:
-            eigenvalues: Eigenvalues of H_Ψ
-            
+            eigenvalues:
+                Eigenvalues of H_Ψ.
+            tolerance:
+                Non-negative tolerance used for the positivity check, applied to
+                the shifted spectrum λ_n - 1/4. If None (default), a scale-aware
+                tolerance is chosen automatically based on the magnitude of the
+                shifted eigenvalues and the machine epsilon of their dtype.
+        
         Returns:
             (is_positive, minimum_shifted_eigenvalue)
         """
         shifted_eigenvalues = eigenvalues - 0.25
         min_eigenvalue = np.min(shifted_eigenvalues)
         
-        is_positive = min_eigenvalue >= -1e-10  # Small tolerance for numerical errors
+        # If no explicit tolerance is provided, choose a scale-aware tolerance
+        # based on machine precision and the magnitude of the spectrum.
+        if tolerance is None:
+            # Determine appropriate floating dtype for numerical epsilon
+            if np.issubdtype(shifted_eigenvalues.dtype, np.floating):
+                dtype = shifted_eigenvalues.dtype
+            else:
+                dtype = np.float64
+            eps = np.finfo(dtype).eps
+            scale = max(1.0, float(np.max(np.abs(shifted_eigenvalues))))
+            # Safety factor accounts for accumulation of rounding errors
+            tolerance = 10.0 * eps * scale
+        
+        is_positive = min_eigenvalue >= -tolerance
         
         return is_positive, min_eigenvalue
     
