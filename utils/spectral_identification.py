@@ -54,6 +54,11 @@ class CanonicalOperatorA0:
     properties while enabling practical numerical analysis. The theoretical
     framework's validity depends on this being an acceptable approximation.
     
+    NOTE: This could also be considered a "NumericalCanonicalOperatorA0" or
+    "RealApproximationA0" to distinguish it from the theoretical complex operator.
+    Users should be aware they are working with a real approximation when
+    comparing numerical results to the mathematical theory.
+    
     The operator A₀ is defined on ℓ²(ℤ) by:
         (A₀ψ)(n) = diagonal(n)·ψ(n) + Σ_{m≠n} K(n,m)ψ(m)
     
@@ -267,6 +272,7 @@ class PaleyWienerUniqueness:
         """
         # Sample on circles of different radii
         orders = []
+        evaluation_failures = 0  # Track failures for diagnostics
         
         for r in test_radii:
             if r < 1:
@@ -281,7 +287,9 @@ class PaleyWienerUniqueness:
                     if val != 0:
                         log_val = np.log(abs(val))
                         max_log_val = max(max_log_val, log_val)
-                except (ValueError, OverflowError, ZeroDivisionError):
+                except (ValueError, OverflowError, ZeroDivisionError) as e:
+                    # Count evaluation failures - could indicate numerical issues
+                    evaluation_failures += 1
                     # Skip points where function evaluation fails
                     pass
             
@@ -289,6 +297,15 @@ class PaleyWienerUniqueness:
                 # Estimate order from log|F| ~ r^order
                 estimated_order = max_log_val / np.log(r) if r > 1 else 0
                 orders.append(estimated_order)
+        
+        # Log warning if many failures occurred
+        if evaluation_failures > len(test_radii) * 5:  # More than ~25% failures
+            import warnings
+            warnings.warn(
+                f"Order estimation had {evaluation_failures} evaluation failures. "
+                "Results may be unreliable.",
+                RuntimeWarning
+            )
         
         if orders:
             avg_order = np.mean(orders)
@@ -365,6 +382,22 @@ class SpectralCorrespondence:
         Verify bijective correspondence between eigenvalues and zeros
         
         Args:
+            eigenvalues: Array of operator eigenvalues
+            zeros: Array of zeta zeros (complex)
+            tolerance: Maximum allowed error
+            
+        Returns:
+            (correspondence_valid, list of (λ, ρ, error) tuples)
+        """
+        correspondences = []
+        
+        for i, lambda_n in enumerate(eigenvalues):
+            if lambda_n < 0.25:
+                continue
+            
+            # Predicted zero from eigenvalue
+            rho_pred = SpectralCorrespondence.eigenvalue_to_zero(lambda_n)
+            
             # Find closest actual zero on the critical line by imaginary part
             if zeros.size == 0:
                 continue
@@ -387,22 +420,9 @@ class SpectralCorrespondence:
             
             error = abs(lambda_n - lambda_from_zero)
             correspondences.append((lambda_n, rho_actual, error))
-            
-            # Find closest actual zero
-        max_error = max((err for _, _, err in correspondences), default=0.0)
-                rho_actual = zeros[i]
-                
-                # Check if on critical line
-                if abs(rho_actual.real - 0.5) < tolerance:
-                    # Verify relation γ² = λ - ¼
-                    gamma = abs(rho_actual.imag)
-                    lambda_from_zero = gamma**2 + 0.25
-                    
-                    error = abs(lambda_n - lambda_from_zero)
-                    correspondences.append((lambda_n, rho_actual, error))
         
         # Check if all errors are within tolerance
-        max_error = max([err for _, _, err in correspondences]) if correspondences else 0
+        max_error = max((err for _, _, err in correspondences), default=0.0)
         valid = max_error < tolerance
         
         return valid, correspondences
@@ -481,11 +501,13 @@ class WeilGuinandPositivity:
             error_term_coeff: Coefficient for the O(log T) error term.
                 If None (default), a coefficient compatible with rigorous
                 bounds for the error term in the Riemann–von Mangoldt
-                formula is used (cf. Trudgian-type bounds, |S(T)| ≤ c log T),
-                currently c ≈ 0.137. Passing an explicit float value
-                overrides this and should be regarded as a heuristic
-                adjustment; setting error_term_coeff = 0.0 removes the
-                O(log T) correction and uses only the main term.
+                formula is used. Specifically, we use c ≈ 0.137 based on
+                Trudgian, T. (2014). "An improved upper bound for the argument
+                of the Riemann zeta-function on the critical line II."
+                J. Number Theory, 134, 280-292. DOI: 10.1016/j.jnt.2013.08.008.
+                Passing an explicit float value overrides this and should be
+                regarded as a heuristic adjustment; setting error_term_coeff = 0.0
+                removes the O(log T) correction and uses only the main term.
         
         Returns:
             (matches_formula, relative_error)
@@ -496,9 +518,12 @@ class WeilGuinandPositivity:
         if error_term_coeff is None:
             # Default coefficient for the O(log T) term based on known
             # analytic bounds for the error term in the Riemann–von
-            # Mangoldt formula (see, e.g., Trudgian 2014). This avoids
-            # using an arbitrary constant while keeping a conservative
-            # upper estimate for the magnitude of the error term.
+            # Mangoldt formula. See Trudgian, T. (2014). "An improved upper
+            # bound for the argument of the Riemann zeta-function on the
+            # critical line II." J. Number Theory, 134, 280-292.
+            # DOI: 10.1016/j.jnt.2013.08.008
+            # This avoids using an arbitrary constant while keeping a
+            # conservative upper estimate for the magnitude of the error term.
             error_term_coeff = 0.137
         
         # Riemann-von Mangoldt formula (main term)
@@ -574,6 +599,9 @@ class SpectralIdentificationVerifier:
         print(f"  Functional equation: {satisfies_fe} (error: {fe_error:.2e})")
         
         # Test order of growth
+        # Note: max_terms in fredholm_determinant defaults to 50, which may be
+        # insufficient for very large radii. For production use, consider scaling
+        # max_terms proportionally with the radius being tested.
         test_radii = [5.0, 10.0, 20.0, 40.0]
         is_order_bounded, estimated_order = PaleyWienerUniqueness.check_entire_order(
             self.operator.fredholm_determinant,

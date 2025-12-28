@@ -315,13 +315,7 @@ def main():
     print("="*70)
     print("\nQCAL ∞³ Integration:")
     print("  Base Frequency: f₀ = 141.7001 Hz")
-        plot_results(result)
-    except ImportError as e:
-        print("\n⚠ Warning: Could not generate plots because matplotlib or a required "
-              f"plotting backend is not available: {e}")
-    except OSError as e:
-        print("\n⚠ Warning: Could not generate plots due to an OS or file system issue "
-              f"(e.g., missing directory, permission problem, or display backend error): {e}")
+    print("  Coherence: C = 244.36")
     print("  Equation: Ψ = I × A_eff² × C^∞")
     print("="*70)
     
@@ -335,8 +329,12 @@ def main():
     # Generate plots
     try:
         plot_results(result)
-    except Exception as e:
-        print(f"\n⚠ Warning: Could not generate plots: {e}")
+    except ImportError as e:
+        print("\n⚠ Warning: Could not generate plots because matplotlib or a required "
+              f"plotting backend is not available: {e}")
+    except OSError as e:
+        print("\n⚠ Warning: Could not generate plots due to an OS or file system issue "
+              f"(e.g., missing directory, permission problem, or display backend error): {e}")
     
     # Final message
     print("\n" + "="*70)

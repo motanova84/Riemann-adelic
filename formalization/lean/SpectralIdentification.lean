@@ -250,6 +250,11 @@ theorem riemann_hypothesis_spectral :
   sorry  -- Requires full density formula argument
 
 /-!
+# Weil-Guinand Positivity
+
+The positivity condition ensures no zeros off the critical line.
+-/
+
 /-- 
   Opaque predicate representing the Weil-Guinand quadratic-form
   positivity condition `Q[f] ≥ 0`.
@@ -283,11 +288,6 @@ axiom WeilGuinandPositivity : (ℝ → ℂ) → Prop
 axiom weil_guinand_positivity :
   ∀ (f : ℝ → ℂ),
     WeilGuinandPositivity f
--/
-axiom weil_guinand_positivity :
-  ∀ (f : ℝ → ℂ), 
-    -- TODO: Replace with actual positivity condition Q[f] ≥ 0
-    True  -- Placeholder
 
 /-- Positivity implies operator H_Ψ - ¼I is positive -/
 theorem positivity_implies_shifted_positive :
