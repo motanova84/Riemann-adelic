@@ -202,7 +202,9 @@ class CanonicalOperatorA0:
         s_shifted = s - 0.5
         
         # Tolerance scales with current mpmath precision to avoid spurious zeros
-        tolerance = 10.0 ** (-(mp.mp.dps - 5))
+        # and is clamped to remain numerically meaningful even at very low or very high dps.
+        tolerance_raw = 10.0 ** (-(mp.mp.dps - 5))
+        tolerance = min(max(tolerance_raw, 1e-30), 1e-2)
         for i in range(min(max_terms, len(self.eigenvalues))):
             lambda_n = self.eigenvalues[i]
             if abs(lambda_n) > tolerance:  # Avoid division by (near) zero
