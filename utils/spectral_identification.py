@@ -127,16 +127,18 @@ class CanonicalOperatorA0:
         # Build matrix - make it Hermitian by construction
         matrix = np.zeros((self.dimension, self.dimension), dtype=float)
         
+        # Exploit symmetry: fill diagonal and upper triangle, then mirror
         for i, n in enumerate(n_range):
-            for j, m in enumerate(n_range):
-                if i == j:
-                    # Diagonal: Use a real value based on position
-                    # We use 0.5 + n²/dimension² to ensure positivity and growth
-                    matrix[i, i] = 0.5 + (n**2) / (self.dimension**2)
-                else:
-                    # Off-diagonal: Gaussian kernel (symmetric)
-                    kernel_val = self.gaussian_kernel(n, m)
-                    matrix[i, j] = kernel_val
+            # Diagonal: Use a real value based on position
+            # We use 0.5 + n²/dimension² to ensure positivity and growth
+            matrix[i, i] = 0.5 + (n**2) / (self.dimension**2)
+            
+            # Off-diagonal: Gaussian kernel (symmetric), fill upper triangle only
+            for j in range(i + 1, self.dimension):
+                m = n_range[j]
+                kernel_val = self.gaussian_kernel(n, m)
+                matrix[i, j] = kernel_val
+                matrix[j, i] = kernel_val
         
         self.matrix = matrix
         return matrix
