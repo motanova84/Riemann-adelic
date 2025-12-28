@@ -389,7 +389,7 @@ class SpectralCorrespondence:
             correspondences.append((lambda_n, rho_actual, error))
             
             # Find closest actual zero
-            if i < len(zeros):
+        max_error = max((err for _, _, err in correspondences), default=0.0)
                 rho_actual = zeros[i]
                 
                 # Check if on critical line
