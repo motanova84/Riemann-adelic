@@ -1,15 +1,4 @@
 Test Name,Status,Execution Time (s),Error
-Step 1: Axioms → Lemmas,PASSED,3.0994415283203125e-06,
-Step 2: Archimedean Rigidity,PASSED,0.000133514404296875,
-Step 3: Paley-Wiener Uniqueness,PASSED,3.337860107421875e-06,
-Step 4A: de Branges Localization,PASSED,0.0003905296325683594,
-Step 4B: Weil-Guinand Localization,PASSED,2.384185791015625e-06,
-Step 5: Coronación Integration,PASSED,0.00014448165893554688,
-Stress: Spectral Measure Perturbation,PASSED,4.2438507080078125e-05,
-Stress: Growth Bounds Validation,PASSED,5.0067901611328125e-06,
-Stress: Zero Subsets Consistency,PASSED,8.20159912109375e-05,
-Stress: Proof Certificate Generation,PASSED,0.00012803077697753906,
-Integration: Explicit Formula Integration,SKIPPED,0.00908803939819336,Integration test requires full explicit formula setup: No module named 'sympy'
 Step 1: Axioms → Lemmas,PASSED,3.5762786865234375e-06,
 Step 2: Archimedean Rigidity,PASSED,0.00014829635620117188,
 Step 3: Paley-Wiener Uniqueness,PASSED,2.384185791015625e-06,
