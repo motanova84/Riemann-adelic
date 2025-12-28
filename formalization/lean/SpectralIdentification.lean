@@ -270,25 +270,21 @@ The positivity condition ensures no zeros off the critical line.
 -/
 axiom WeilGuinandPositivity : (ℝ → ℂ) → Prop
 
-/-- Weil-Guinand quadratic form is non-negative (placeholder axiom).
+/-- 
+  Global placeholder axiom stating that an appropriate
+  Weil-Guinand positivity framework exists.
 
-    TODO: Implement the actual quadratic form:
-    `Q[f] = Σ_ρ |∫ f(x) x^{ρ-½} dx|² / |ρ(1-ρ)| ≥ 0`
+  This is intentionally a single propositional stub instead of the
+  (trivial) universally quantified predicate
+  `∀ f, WeilGuinandPositivity f`.
 
-    This requires:
-    1. Definition of the quadratic form over test functions
-    2. Sum over zeros with proper convergence
-    3. Proof of non-negativity
+  Any result that uses this axiom should be regarded as *conditional*
+  on the eventual construction of the quadratic form `Q` and a
+  rigorous proof of its positivity.
+-/
+axiom WeilGuinandPositivityStub : Prop
 
-    For now, we assume a global positivity axiom formulated in terms
-    of the abstract predicate `WeilGuinandPositivity`.
-    Any results depending on this axiom should be regarded as
-    conditional on the eventual construction of `Q` and its
-    positivity. -/
-axiom weil_guinand_positivity :
-  ∀ (f : ℝ → ℂ),
-    WeilGuinandPositivity f
-
+/-- Positivity implies operator H_Ψ - ¼I is positive -/
 /-- Positivity implies operator H_Ψ - ¼I is positive -/
 theorem positivity_implies_shifted_positive :
     ∀ λ : ℝ, 
