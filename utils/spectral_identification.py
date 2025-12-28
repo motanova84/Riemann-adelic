@@ -311,7 +311,6 @@ class PaleyWienerUniqueness:
                     import logging
                     logging.debug(f"Function evaluation failed at s={s}: {type(e).__name__}: {e}")
                     # Skip points where function evaluation fails
-                    pass
             
             if max_log_val > -np.inf:
                 # Estimate order from log|F| ~ r^order
