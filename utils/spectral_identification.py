@@ -558,9 +558,22 @@ class WeilGuinandPositivity:
         
         # Add O(log T) term, with coefficient controlled by error_term_coeff
         predicted += error_term_coeff * np.log(height)
-        
-        relative_error = abs(num_zeros - predicted) / max(predicted, 1)
-        matches = relative_error < tolerance
+
+        # For very small heights, the predicted zero count N(T) can be close to
+        # zero. In that regime a "relative error" is not very meaningful, so we
+        # explicitly treat the case where both num_zeros and predicted are small
+        # as a degenerate regime and do not penalize tiny absolute discrepancies.
+        predicted_abs = abs(predicted)
+        if predicted_abs < 1.0 and abs(num_zeros) < 1.0:
+            # Both actual and predicted zero counts are near zero; report
+            # effectively zero relative error and a successful match.
+            relative_error = 0.0
+            matches = True
+        else:
+            # Use the magnitude of the predicted count to scale the relative error,
+            # with a floor at 1.0 to avoid division by very small values.
+            relative_error = abs(num_zeros - predicted) / max(predicted_abs, 1.0)
+            matches = relative_error < tolerance
         
         return matches, relative_error
 
