@@ -74,12 +74,24 @@ axiom selfadjoint_spectrum_real :
   ∀ (H : SelfAdjointOperator) (λ : ℝ), λ ∈ Spectrum H → 
     ∃ (v : H.carrier), True  -- El autovector existe y es real
 
-/-- El espectro de H_Ψ es discreto y de multiplicidad 1.
-    Para operadores tipo Sturm-Liouville, casi todos los autovalores
-    tienen multiplicidad 1. Esto es esencial para el argumento de contradicción. -/
+/-- El espectro de `H_Ψ` es discreto y de multiplicidad 1.
+
+    Matemáticamente, esto significa que cada autovalor de `H_Ψ` tiene
+    un espacio propio de dimensión 1 (no hay degeneración espectral).
+
+    ⚠ Nota de formalización (Lean):
+    En esta versión preliminar, NO implementamos todavía la teoría completa
+    de valores y vectores propios en espacios de Hilbert dentro de Lean.
+    Por ello, codificamos esta propiedad como un axioma con valor `True`,
+    que debe interpretarse como:
+      "Para todo λ en el espectro de `H_Ψ`, la multiplicidad geométrica de λ es 1".
+
+    Es decir, esta constante es un *marcador axiomático* de la propiedad
+    "multiplicidad 1", sin que su contenido lógico refleje aún dicha estructura.
+    Cuando se desarrolle la teoría espectral correspondiente, este axioma
+    debería reemplazarse por un enunciado más preciso y demostrarse. -/
 axiom spectrum_multiplicity_one :
-  ∀ λ ∈ Spectrum H_psi, 
-    ∀ (v w : ℕ), True  -- Cada autovalor tiene exactamente 1 autovector independiente
+  ∀ λ ∈ Spectrum H_psi, True
 
 /-!
 ## Sección 3: La Biyección Completa Espectro ↔ Ceros
@@ -279,12 +291,12 @@ theorem todos_los_ceros_hasta_cualquier_altura :
 
 En análisis no estándar, podemos considerar extensiones hiperreales.
 El teorema sigue siendo válido por el principio de transferencia.
+
+Nota: Una formalización rigurosa del principio de transferencia
+requeriría un desarrollo explícito de análisis no estándar en Lean.
+Aquí solo lo mencionamos a nivel conceptual, sin introducir axiomas
+adicionales en el núcleo del sistema.
 -/
-
--- Principio de transferencia (esquemático)
-axiom transfer_principle {P : ℂ → Prop} :
-  (∀ z : ℂ, P z) → (∀ z : ℂ, P z)  -- Trivial, pero ilustra el concepto
-
 theorem incluso_hiperreales :
     ∀ (ρ : ℂ), NonTrivialZero ρ → ρ.re = 1/2 := by
   exact todos_los_ceros_en_linea_critica
