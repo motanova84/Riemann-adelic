@@ -256,28 +256,16 @@ The positivity condition ensures no zeros off the critical line.
 -/
 
 /-- 
-  Opaque predicate representing the Weil-Guinand quadratic-form
-  positivity condition `Q[f] ≥ 0`.
+  Global placeholder axiom stating that an appropriate
+  Weil-Guinand positivity framework exists.
 
-  This is currently a *stub* standing in for the analytic statement
-  that the Weil-Guinand quadratic form
+  This is intentionally a single propositional stub, standing in for
+  the fully developed analytic statement that the Weil-Guinand
+  quadratic form
 
   `Q[f] = Σ_ρ |∫ f(x) x^{ρ - 1/2} dx|² / |ρ (1 - ρ)|`
 
   is non-negative for the relevant class of test functions `f`.
-  It must be replaced by a concrete definition and proof before the
-  formalization can be considered complete.
--/
-axiom WeilGuinandPositivityPredicate : (ℝ → ℂ) → Prop
-
-/-- 
-  Global placeholder axiom stating that an appropriate
-  Weil-Guinand positivity framework exists.
-
-  This is intentionally a single propositional stub instead of the
-  (trivial) universally quantified predicate
-  `∀ f, WeilGuinandPositivityPredicate f`.
-
   Any result that uses this axiom should be regarded as *conditional*
   on the eventual construction of the quadratic form `Q` and a
   rigorous proof of its positivity.
