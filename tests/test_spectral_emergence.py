@@ -133,14 +133,19 @@ class TestHilbertPolyaOperator:
         
         V = H_psi.potential(H_psi.x)
         
-        # Check symmetry
+        # Check symmetry around x = 0
         mid = len(V) // 2
         V_left = V[:mid]
         V_right = V[mid+1:][::-1]  # Reverse right half
         
-        # Should be approximately equal
-        if len(V_left) == len(V_right):
-            np.testing.assert_allclose(V_left, V_right, rtol=1e-10)
+        # Compare overlapping region to avoid silently skipping when lengths differ
+        n = min(len(V_left), len(V_right))
+        np.testing.assert_allclose(
+            V_left[:n],
+            V_right[:n],
+            rtol=1e-10,
+            err_msg="Potential must be symmetric: V(-x) ≈ V(x)",
+        )
             
     def test_potential_confining(self):
         """Test that potential V(x) → ∞ as |x| → ∞."""
