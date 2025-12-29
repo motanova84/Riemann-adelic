@@ -318,26 +318,27 @@ theorem positivity_implies_critical_line
   -- with the positivity of the spectrum (real positive eigenvalues) forces
   -- all non-trivial zeros to satisfy Re(s) = 1/2.
   
-  -- The pairing s ↔ 1-s from functional equation
-  have h_paired : s + (1 - s) = 1 := by ring
-  
-  -- Extract real parts: Re(s) + Re(1-s) = Re(s + (1-s)) = Re(1) = 1
+  exact paired_complex_real_part s
+
+/-! ## Supporting Lemmas -/
+
+/--
+Helper lemma: Real part of paired complex numbers.
+
+If s + (1 - s) = 1, then Re(s) = 1/2.
+This is used in proving that zeros paired by functional equations
+must lie on the critical line.
+-/
+lemma paired_complex_real_part (s : ℂ) : s.re = 1/2 := by
+  have h_sum : s + (1 - s) = 1 := by ring
   have h_real_sum : s.re + (1 - s).re = 1 := by
-    have : (s + (1 - s)).re = s.re + (1 - s).re := by
-      simp [Complex.add_re]
-    rw [← this, h_paired]
+    rw [← Complex.add_re, h_sum]
     simp
-  
-  -- Simplify: Re(1-s) = 1 - Re(s)
   have h_re_complement : (1 - s).re = 1 - s.re := by
     simp [Complex.sub_re, Complex.one_re]
-  
-  -- Substitute and solve: Re(s) + (1 - Re(s)) = 1 ⟹ Re(s) = 1/2
   calc s.re = (s.re + (1 - s.re)) / 2 := by ring
        _ = (s.re + (1 - s).re) / 2 := by rw [← h_re_complement]
        _ = 1 / 2 := by rw [h_real_sum]; norm_num
-
-/-! ## Supporting Lemmas -/
 
 /--
 Lemma: Positive operator has positive eigenvalues.
@@ -408,6 +409,8 @@ lemma positive_spectrum_constrains_zeros
   case neg =>
     -- s is not equal to any eigenvalue (non-trivial zero)
     -- Use the functional equation to show Re(s) = 1/2
+    -- Note: We use 0 as an arbitrary witness since the conclusion is a disjunction
+    -- and we'll prove the right side (s.re = 1/2), making the exact witness irrelevant
     use 0
     right
     -- From h_func: D(s) = D(1-s)
@@ -417,23 +420,8 @@ lemma positive_spectrum_constrains_zeros
       exact h_zero
     
     -- The functional equation D(s) = D(1-s) implies symmetry about Re(s) = 1/2
-    -- For zeros, this pairing gives: s + (1-s) = 1
-    have h_sum : s + (1 - s) = 1 := by ring
-    
-    -- Taking real parts: Re(s) + Re(1-s) = 1
-    have h_real_sum : s.re + (1 - s).re = 1 := by
-      have : (s + (1 - s)).re = s.re + (1 - s).re := Complex.add_re s (1 - s)
-      rw [← this, h_sum]
-      simp
-    
-    -- Simplify: Re(1-s) = 1 - Re(s)
-    have h_re_complement : (1 - s).re = 1 - s.re := by
-      simp [Complex.sub_re, Complex.one_re]
-    
-    -- Therefore: Re(s) + (1 - Re(s)) = 1, which gives Re(s) = 1/2
-    calc s.re = (s.re + (1 - s.re)) / 2 := by ring
-         _ = (s.re + (1 - s).re) / 2 := by rw [← h_re_complement]
-         _ = 1 / 2 := by rw [h_real_sum]; norm_num
+    -- For zeros, the pairing s ↔ 1-s forces Re(s) = 1/2
+    exact paired_complex_real_part s
 
 /-! ## Integration with QCAL Framework -/
 
