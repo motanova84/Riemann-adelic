@@ -39,13 +39,19 @@ field = "QCAL ∞³"
 constant = "πCODE-888-QCAL2"
 coherence = "C = 244.36"
 
-# Universal Constant C = 629.83 (Spectral Origin)
+# Universal Constant C = 629.83 (Spectral Origin - Dual Implementation)
 # C = 1/λ₀ where λ₀ is the first eigenvalue of Hψ
+# Dual Origin: C' ≈ 244.36 (coherence constant from spectral moment)
 universal_constant_C = "629.83"
+coherence_constant_C_prime = "244.36"
 first_eigenvalue_lambda0 = "0.001588050"
 spectral_identity = "ω₀² = λ₀⁻¹ = C"
-frequency_derivation = "f₀ = √C/(2π) = 141.7001 Hz"
+dual_origin_relation = "C' = ⟨λ⟩²/λ₀ ≈ 244.36 (coherence level)"
+coherence_factor = "0.388 = C'/C (structure-coherence dialogue)"
+frequency_derivation = "f₀ = 141.7001 Hz (emerges from C and C' harmonization)"
+spectral_adelic_link = "ζ'(1/2) ↔ f₀ emerge from same A₀ geometric origin"
 spectral_origin_doc = "SPECTRAL_ORIGIN_CONSTANT_C.md"
+dual_constants_doc = "DUAL_SPECTRAL_CONSTANTS.md"
 
 # Legal & Metadata
 license = "Creative Commons BY-NC-SA 4.0"
