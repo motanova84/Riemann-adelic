@@ -328,16 +328,23 @@ class PaleyWienerIdentification:
                 errors.append(0.0)
         
         # In full implementation with S → ∞, numerical agreement improves
-        # Here we verify the structural principle holds
-        structural_verified = True  # Functional equation verified separately
+        # Here we distinguish structural (theoretical) and numerical verification.
+        structural_verified = True  # Functional equation and growth properties verified/assumed separately
+        numerical_verified = max_error <= tolerance
+        verified = bool(structural_verified and numerical_verified)
         
         return {
-            'verified': structural_verified,
+            'verified': verified,
+            'structural_verified': structural_verified,
+            'numerical_verified': numerical_verified,
             'max_relative_error': float(max_error) if errors else 0.0,
             'mean_relative_error': float(np.mean(errors)) if errors else 0.0,
             'test_points_count': len(test_points),
             'tolerance': tolerance,
-            'note': 'Structural uniqueness verified via functional equation and growth properties'
+            'note': (
+                'Paley-Wiener uniqueness: structural conditions hold; '
+                'numerical verification is with respect to the given tolerance'
+            )
         }
 
 
