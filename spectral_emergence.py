@@ -47,6 +47,7 @@ Coherence Constants: C = 629.83 (primary), C' = 244.36 (coherence)
 
 import numpy as np
 import mpmath as mp
+import warnings
 from typing import Tuple, List, Dict, Any
 from scipy.linalg import eigh
 
@@ -220,12 +221,11 @@ class FredholmDeterminant:
             self.functional_equation_verified = (relative_error < tolerance)
             return self.functional_equation_verified
         except Exception as e:
-            # For this simplified implementation, assume structural validity
-            # In production, specific exceptions should be handled
-            import warnings
-            warnings.warn(f"Functional equation verification failed: {e}. Assuming structural validity.")
-            self.functional_equation_verified = True
-            return True
+            # Treat unexpected errors as verification failure rather than assuming validity.
+            # This preserves diagnostic information and avoids masking real issues.
+            warnings.warn(f"Functional equation verification failed: {e}. Marking as not verified.")
+            self.functional_equation_verified = False
+            return False
 
 
 # =============================================================================
@@ -319,11 +319,11 @@ class PaleyWienerIdentification:
                 errors.append(float(rel_error))
                 max_error = max(max_error, rel_error)
             except (ValueError, ZeroDivisionError, OverflowError) as e:
-                # For points where computation fails, mark as structural
-                # This can happen for points far from critical line
-                import warnings
+                # For points where computation fails, we emit a warning and
+                # exclude them from numerical error statistics to avoid
+                # artificially reducing the reported mean_relative_error.
                 warnings.warn(f"Computation failed at s={s}: {e}")
-                errors.append(0.0)
+                continue
         
         # In full implementation with S → ∞, numerical agreement improves
         # Here we distinguish structural (theoretical) and numerical verification.
@@ -500,8 +500,31 @@ class HilbertPolyaOperator:
         if self.eigenvalues is None:
             self.compute_spectrum()
         
-        # Imaginary parts: γ_n = √λ_n
-        gamma_n = np.sqrt(np.abs(self.eigenvalues))
+        # Work on a copy to avoid mutating stored eigenvalues
+        lambdas = np.array(self.eigenvalues, copy=True)
+        
+        # Treat tiny negative eigenvalues as numerical noise and clamp to zero
+        small_negative_mask = (lambdas < 0.0) & (lambdas >= -NUMERICAL_ZERO_THRESHOLD)
+        if np.any(small_negative_mask):
+            lambdas[small_negative_mask] = 0.0
+        
+        # Detect genuinely negative eigenvalues (beyond numerical tolerance)
+        significantly_negative_mask = lambdas < -NUMERICAL_ZERO_THRESHOLD
+        if np.any(significantly_negative_mask):
+            warnings.warn(
+                (
+                    "HilbertPolyaOperator.zeros_from_spectrum: detected negative eigenvalues "
+                    "below the numerical threshold. The mapping λ_n = |Im(ρ_n)|² requires "
+                    "λ_n ≥ 0; corresponding zeros will have NaN imaginary parts."
+                ),
+                RuntimeWarning,
+            )
+        
+        # Allocate γ_n and compute γ_n = √λ_n only where λ_n is non-negative
+        gamma_n = np.empty_like(lambdas, dtype=float)
+        nonnegative_mask = ~significantly_negative_mask
+        gamma_n[nonnegative_mask] = np.sqrt(lambdas[nonnegative_mask])
+        gamma_n[significantly_negative_mask] = np.nan
         
         # Zeros on critical line: ρ_n = 1/2 + iγ_n
         zeros = 0.5 + 1j * gamma_n
