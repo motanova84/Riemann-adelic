@@ -42,7 +42,7 @@ def get_current_commit():
             check=True
         )
         return result.stdout.strip()
-    except:
+    except (subprocess.CalledProcessError, FileNotFoundError, OSError):
         return "unknown"
 
 def run_v5_coronacion(precision=25, verbose=False):
