@@ -214,7 +214,7 @@ class TestDocumentation:
     
     def test_qcal_beacon_constants(self):
         """Verify .qcal_beacon contains dual origin documentation."""
-        with open('.qcal_beacon', 'r') as f:
+        with open('.qcal_beacon', 'r', encoding='utf-8') as f:
             beacon_content = f.read()
         
         assert 'universal_constant_C = "629.83"' in beacon_content
@@ -228,7 +228,7 @@ class TestDocumentation:
         assert os.path.exists('DUAL_SPECTRAL_CONSTANTS.md'), \
             "DUAL_SPECTRAL_CONSTANTS.md should exist"
         
-        with open('DUAL_SPECTRAL_CONSTANTS.md', 'r') as f:
+        with open('DUAL_SPECTRAL_CONSTANTS.md', 'r', encoding='utf-8') as f:
             content = f.read()
         
         assert 'Dual Origin' in content or 'dual origin' in content
@@ -242,7 +242,7 @@ class TestDocumentation:
         assert os.path.exists('DUAL_ORIGIN_C_IMPLEMENTATION.md'), \
             "DUAL_ORIGIN_C_IMPLEMENTATION.md should exist"
         
-        with open('DUAL_ORIGIN_C_IMPLEMENTATION.md', 'r') as f:
+        with open('DUAL_ORIGIN_C_IMPLEMENTATION.md', 'r', encoding='utf-8') as f:
             content = f.read()
         
         assert 'Arpeth' in content
