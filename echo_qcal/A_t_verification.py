@@ -30,8 +30,11 @@ class TemporalAlignmentVerifier:
         self.block9_hash = "0000000069e244f73c833322384c2f7fd72bec1dbe0b2f3b4f0a84d21f923f74"
         
         # Umbrales de verificación
-        self.coherence_threshold = 99.95  # % mínimo
-        self.delta_t_threshold = 0.010  # 10 ms máximo
+        # Estos valores representan los criterios estrictos del teorema QCAL:
+        # - coherence_threshold: 99.95% asegura que el timestamp está dentro del 0.05% de τ₀
+        # - delta_t_threshold: 10 ms permite variación máxima de sincronización temporal
+        self.coherence_threshold = 99.95  # % mínimo requerido para verificación QCAL
+        self.delta_t_threshold = 0.010  # 10 ms máximo de desviación temporal
         
     def verify_temporal_alignment(self) -> Dict[str, Any]:
         """Verifica la alineación temporal del Bloque 9 con τ₀
@@ -62,8 +65,10 @@ class TemporalAlignmentVerifier:
         phase = (self.block9_timestamp / self.tau0) % 1
         
         # 6. Análisis estadístico bayesiano
-        window = 7200  # 2 horas en segundos
-        epsilon = 0.010  # 10 ms
+        # La ventana de 2 horas representa el período razonable de minado del Bloque 9
+        # después del Bloque 0 (Genesis), considerando la dificultad inicial de Bitcoin
+        window = 7200  # 2 horas en segundos (ventana de búsqueda temporal)
+        epsilon = 0.010  # 10 ms (precisión de alineación esperada)
         
         # Probabilidad bajo hipótesis nula (timestamp aleatorio)
         p_value = (2 * epsilon) / window
@@ -93,6 +98,8 @@ class TemporalAlignmentVerifier:
                 'delta_T_ms': delta_T * 1000,
                 'coherence_percent': coherence,
                 'phase': phase,
+                # Fase de inversión: 0.5 ± 0.01 representa punto medio del ciclo τ₀
+                # Este rango estrecho (2%) asegura verdadera inversión de fase
                 'phase_description': 'INVERSIÓN' if 0.49 < phase < 0.51 else 'OTRO'
             },
             'statistical_analysis': {

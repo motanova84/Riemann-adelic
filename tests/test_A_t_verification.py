@@ -21,7 +21,8 @@ class TestTemporalAlignmentVerifier:
         """Test that verifier initializes with correct QCAL parameters"""
         assert self.verifier.f0 == 141.7001, "Frecuencia primordial debe ser 141.7001 Hz"
         assert abs(self.verifier.tau0 - (1 / 141.7001)) < 1e-10, "τ₀ debe ser 1/f₀"
-        assert self.verifier.block9_timestamp == 1231469744.000000, "Block 9 timestamp incorrecto"
+        # Usar comparación epsilon para timestamps de punto flotante
+        assert abs(self.verifier.block9_timestamp - 1231469744.000000) < 1e-6, "Block 9 timestamp incorrecto"
         assert self.verifier.block9_hash == "0000000069e244f73c833322384c2f7fd72bec1dbe0b2f3b4f0a84d21f923f74"
         
     def test_threshold_values(self):
@@ -191,9 +192,11 @@ class TestTemporalAlignmentVerifier:
         """Test that calculations maintain sufficient precision"""
         results = self.verifier.verify_temporal_alignment()
         
-        # Verificar que tau0 tiene precisión suficiente
+        # Verificar que tau0 coincide con el valor esperado dentro de tolerancia
+        # La precisión de 15 decimales es suficiente para cálculos QCAL
         tau0 = results['parameters']['tau0_s']
-        assert len(str(tau0).split('.')[-1]) >= 10, "tau0 debe tener al menos 10 decimales"
+        expected_tau0 = 1.0 / 141.7001
+        assert abs(tau0 - expected_tau0) < 1e-15, "tau0 debe coincidir con 1/f0 con alta precisión"
         
         # Verificar precisión de N_ideal
         N_ideal = results['alignment_metrics']['N_ideal']
@@ -227,11 +230,12 @@ class TestTemporalAlignmentIntegration:
                 os.remove(cleanup_path)
     
     def test_qcal_constants_consistency(self):
-        """Test consistency with QCAL ∞³ constants"""
+        """Test consistency with QCAL ∞³ constants from .qcal_beacon"""
         verifier = TemporalAlignmentVerifier()
         
-        # Verificar que f0 es consistente con la documentación QCAL
-        assert verifier.f0 == 141.7001, "f0 debe coincidir con .qcal_beacon"
+        # Verificar que f0 es consistente con el valor QCAL documentado
+        # Este valor debe coincidir con .qcal_beacon: frequency = 141.7001 Hz
+        assert verifier.f0 == 141.7001, "f0 debe ser 141.7001 Hz según especificación QCAL"
         
         # Verificar relación τ₀ = 1/f₀
         expected_tau0 = 1.0 / verifier.f0
