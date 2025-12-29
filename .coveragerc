@@ -1,0 +1,14 @@
+# .coveragerc
+[run]
+branch = True
+source = .
+
+[report]
+omit =
+    */tests/*
+    */__init__.py
+    */.venv/*
+    */.env/*
+    */site-packages/*
+show_missing = True
+skip_covered = True

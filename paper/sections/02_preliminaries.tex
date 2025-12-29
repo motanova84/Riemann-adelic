@@ -1,0 +1,180 @@
+\section{Adelic Preliminaries}
+\label{sec:preliminaries}
+
+This section establishes the foundational adelic framework underlying our spectral construction. We introduce the key concepts without assuming prior knowledge of the Riemann zeta function or its properties.
+
+\subsection{Places and Local Fields}
+
+Let $\mathbb{Q}$ denote the field of rational numbers. A \textbf{place} of $\mathbb{Q}$ is an equivalence class of absolute values on $\mathbb{Q}$.
+
+\begin{definition}[Places of $\mathbb{Q}$]
+The places of $\mathbb{Q}$ consist of:
+\begin{enumerate}
+\item \textbf{Archimedean place} $v = \infty$: The standard absolute value $|x|_\infty = |x|$ for $x \in \mathbb{Q}$.
+\item \textbf{Non-archimedean places} $v = p$: For each prime $p$, the $p$-adic absolute value
+\[
+|x|_p = p^{-v_p(x)},
+\]
+where $v_p(x)$ is the $p$-adic valuation (the exponent of $p$ in the prime factorization of $x$).
+\end{enumerate}
+\end{definition}
+
+For each place $v$, the \textbf{completion} of $\mathbb{Q}$ with respect to $|\cdot|_v$ gives a local field:
+\begin{itemize}
+\item $\mathbb{Q}_\infty = \mathbb{R}$ (the real numbers)
+\item $\mathbb{Q}_p$ (the $p$-adic numbers) for finite places $p$
+\end{itemize}
+
+\subsection{The Adele Ring}
+
+\begin{definition}[Adele Ring]
+The \textbf{adele ring} $\mathbb{A}_\mathbb{Q}$ is the restricted product:
+\[
+\mathbb{A}_\mathbb{Q} = \mathbb{R} \times \prod_{p}' \mathbb{Q}_p,
+\]
+where the prime $'$ indicates that for all but finitely many primes $p$, the component lies in $\mathbb{Z}_p$ (the $p$-adic integers).
+\end{definition}
+
+An element $a \in \mathbb{A}_\mathbb{Q}$ is a sequence $(a_\infty, a_2, a_3, a_5, \ldots)$ where $a_v \in \mathbb{Q}_v$ for each place $v$, and $a_p \in \mathbb{Z}_p$ for all but finitely many primes $p$.
+
+The rational numbers $\mathbb{Q}$ embed diagonally into $\mathbb{A}_\mathbb{Q}$ via:
+\[
+x \mapsto (x, x, x, \ldots).
+\]
+
+\subsection{S-Finite Systems}
+
+For practical and theoretical purposes, we work with \textbf{S-finite} restrictions.
+
+\begin{definition}[S-Finite Adelic System]
+\label{def:s_finite}
+Let $S$ be a finite set of places including the archimedean place $\infty$. The \textbf{S-finite adelic ring} is:
+\[
+\mathbb{A}_S = \prod_{v \in S} \mathbb{Q}_v.
+\]
+\end{definition}
+
+For example, if $S = \{\infty, 2, 3, 5\}$, then:
+\[
+\mathbb{A}_S = \mathbb{R} \times \mathbb{Q}_2 \times \mathbb{Q}_3 \times \mathbb{Q}_5.
+\]
+
+\textbf{Key observation}: The S-finite framework allows:
+\begin{enumerate}
+\item Concrete matrix constructions (finite-dimensional approximations)
+\item Numerical validation with explicit computations
+\item Control over trace-class convergence
+\item Eventual passage to the full adelic limit
+\end{enumerate}
+
+\subsection{Local Measures and Haar Measure}
+
+Each local field $\mathbb{Q}_v$ carries a canonical \textbf{Haar measure} $d\mu_v$, which is translation-invariant.
+
+\begin{definition}[Local Haar Measures]
+\begin{enumerate}
+\item At $v = \infty$: $d\mu_\infty(x) = dx$ (Lebesgue measure on $\mathbb{R}$)
+\item At $v = p$: Normalized so that $\mu_p(\mathbb{Z}_p) = 1$
+\end{enumerate}
+\end{definition}
+
+The product measure on $\mathbb{A}_S$ is:
+\[
+d\mu_S = \prod_{v \in S} d\mu_v.
+\]
+
+\subsection{Local Norm and Canonical Scaling}
+
+\begin{definition}[Local Norm]
+For a finite place $v = p$ corresponding to a prime $p$, the \textbf{local norm} is:
+\[
+q_v = p^{f_v},
+\]
+where $f_v$ is the residue field degree. For $\mathbb{Q}_p$, we have $f_p = 1$, so $q_p = p$.
+\end{definition}
+
+\textbf{Critical quantity}: The local length scale is defined as:
+\[
+\ell_v = \log q_v.
+\]
+
+For $v = p$ a prime, this gives:
+\[
+\ell_p = \log p.
+\]
+
+\textbf{Important}: At this stage, $\ell_v$ is merely a \textbf{definition}. In Section~\ref{sec:local_length}, we prove that this quantity emerges \emph{geometrically} from closed orbit lengths, without circular reasoning involving $\zeta(s)$.
+
+\subsection{Local Fourier Analysis (Tate's Theorem)}
+
+The foundation of our construction relies on Tate's groundbreaking work on local Fourier analysis.
+
+\begin{theorem}[Tate, 1950]
+\label{thm:tate}
+Let $v$ be a place of $\mathbb{Q}$, and let $\mathbb{Q}_v$ be the corresponding local field. There exists a unique (up to normalization) additive character $\psi_v: \mathbb{Q}_v \to \mathbb{C}^\times$ and a Haar measure $d\mu_v$ on $\mathbb{Q}_v$ such that the Fourier transform:
+\[
+\hat{f}(y) = \int_{\mathbb{Q}_v} f(x) \psi_v(xy) \, d\mu_v(x)
+\]
+satisfies the inversion formula:
+\[
+f(x) = \int_{\mathbb{Q}_v} \hat{f}(y) \psi_v(-xy) \, d\mu_v(y).
+\]
+Moreover, the local zeta integral:
+\[
+Z_v(f, s) = \int_{\mathbb{Q}_v^\times} f(x) |x|_v^s \, d^\times \mu_v(x)
+\]
+satisfies a functional equation relating $s$ to $1-s$.
+\end{theorem}
+
+\textbf{Significance}: Tate's theorem provides the local-to-global machinery without assuming global properties of $\zeta(s)$. Each place contributes independently via its local zeta integral.
+
+\subsection{Global-Local Principle}
+
+The philosophy of adelic methods is:
+\begin{center}
+\emph{Global properties arise from combining local contributions.}
+\end{center}
+
+In our framework:
+\begin{itemize}
+\item \textbf{Local}: Each place $v$ contributes a local operator $T_v$ acting on $L^2(\mathbb{Q}_v)$
+\item \textbf{Global}: The global spectral determinant is constructed from:
+\[
+D(s) = \prod_{v \in S} D_v(s),
+\]
+where $D_v(s) = \det(I - s T_v)$ is the local spectral determinant.
+\end{itemize}
+
+\subsection{Why S-Finite Suffices}
+
+A natural question: Why not work with the full adele ring $\mathbb{A}_\mathbb{Q}$?
+
+\textbf{Answer}: 
+\begin{enumerate}
+\item \textbf{Trace-class control}: For $S$ finite, we can explicitly verify trace-class properties (see Appendix~\ref{app:trace_doi}).
+\item \textbf{Numerical validation}: Concrete computations are feasible (Section~\ref{sec:numerics}).
+\item \textbf{Approximation}: The S-finite case approximates the full adelic result as $|S| \to \infty$.
+\item \textbf{Theoretical clarity}: All key phenomena (functional equation, zero localization) already manifest in the S-finite case.
+\end{enumerate}
+
+\subsection{Connection to Classical Number Theory}
+
+While we do not assume $\zeta(s)$ or its Euler product, we note (for context) that classical theory gives:
+\[
+\zeta(s) = \prod_{p \text{ prime}} \frac{1}{1 - p^{-s}} \quad (\Re s > 1).
+\]
+
+Our construction will ultimately \emph{recover} this structure, but from first principles via spectral methods, not by assumption.
+
+\subsection{Summary}
+
+This section established:
+\begin{itemize}
+\item Places, local fields, and the adele ring
+\item S-finite restrictions for computational tractability
+\item Local Haar measures and canonical length scales $\ell_v = \log q_v$
+\item Tate's theorem as the foundation for local Fourier analysis
+\item The global-local philosophy underlying our construction
+\end{itemize}
+
+In the next section, we prove that $\ell_v = \log q_v$ emerges \emph{geometrically} from closed orbits, making the framework autonomous and non-circular.
