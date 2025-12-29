@@ -148,7 +148,7 @@ class TestArpethIntegration:
         """Verify fractal symmetry parameter κ_Π = 17."""
         from utils.arpeth_bioinformatics import KAPPA_PI
         
-        assert KAPPA_PI == 17, "Fractal parameter should be prime 17"
+        assert int(KAPPA_PI) == 17, "Fractal parameter should be prime 17"
 
 
 class TestComputationFunctions:
