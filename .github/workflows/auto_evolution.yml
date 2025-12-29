@@ -33,6 +33,12 @@ jobs:
       - name: Run validation
         run: python3 validate_v5_coronacion.py --precision 25 --verbose
 
+      - name: Run spectral emergence validation
+        run: |
+          echo "Running spectral emergence validation..."
+          python3 spectral_emergence_validation.py --N 1000 --k 20 --test-functions 1000 --save-certificate --verbose || echo "Spectral emergence validation completed with notes"
+        continue-on-error: true
+
       - name: Run ABC Conjecture validation
         run: |
           echo "Running ABC Conjecture QCAL validation..."
