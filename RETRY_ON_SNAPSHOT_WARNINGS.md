@@ -80,12 +80,12 @@ def test_numerical_stability():
 
 ### Disabling Retry for Specific Tests
 
-To disable retry for specific tests:
+To disable retry for specific tests, use the flaky marker with reruns=0:
 
 ```python
 import pytest
 
-@pytest.mark.no_retry
+@pytest.mark.flaky(reruns=0)
 def test_should_fail_immediately():
     """Test that should fail without retry."""
     assert False
