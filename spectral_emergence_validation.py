@@ -14,7 +14,7 @@ Key Features:
 
 Author: José Manuel Mota Burruezo Ψ ∞³
 Institution: Instituto de Conciencia Cuántica (ICQ)
-Date: December 2025
+Date: 2025-12-29
 DOI: 10.5281/zenodo.17379721
 ORCID: 0009-0002-1923-0773
 
@@ -46,8 +46,10 @@ class NumpyEncoder(json.JSONEncoder):
             return float(obj)
         elif isinstance(obj, np.ndarray):
             return obj.tolist()
-        elif isinstance(obj, (np.bool_, np.bool)):
+        elif isinstance(obj, np.bool_):
             return bool(obj)
+        elif isinstance(obj, bool):  # Handle built-in bool
+            return obj
         return super().default(obj)
 
 # QCAL Constants
@@ -197,8 +199,9 @@ class SpectralEmergenceValidator:
         mean_error = np.mean(errors)
         
         # Relaxed threshold for conceptual validation
-        # Exact machine precision requires dedicated fine-tuned implementation
-        # For conceptual demonstration, errors < 1e-6 are acceptable
+        # NOTE: SELF_ADJOINT_THRESHOLD (1e-25) is for production fine-tuned implementations
+        # This validation uses simplified discretization, so we use 1e-6 threshold
+        # For exact machine precision, see hilbert_polya_numerical_proof.py
         relaxed_threshold = 1e-6
         passed = max_error < relaxed_threshold
         

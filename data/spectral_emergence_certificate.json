@@ -1,15 +1,15 @@
 {
-  "timestamp": "2025-12-29T16:36:10.552363",
+  "timestamp": "2025-12-29T16:40:36.790277",
   "validation_type": "spectral_emergence",
   "framework": "QCAL \u221e\u00b3",
   "all_tests_passed": true,
-  "elapsed_time_seconds": 0.06474423408508301,
+  "elapsed_time_seconds": 0.008141517639160156,
   "tests": {
     "self_adjointness": {
       "test": "self_adjointness",
-      "n_test_functions": 100,
-      "max_error": 2.384185791015625e-07,
-      "mean_error": 3.98978590965271e-08,
+      "n_test_functions": 50,
+      "max_error": 5.960464477539063e-08,
+      "mean_error": 1.1511147022247314e-08,
       "threshold": 1e-06,
       "note": "Conceptual validation with relaxed threshold",
       "passed": true,
@@ -23,16 +23,16 @@
       "passed": true,
       "status": "\u2705 PASSED",
       "eigenvalues_real": [
-        -66939870333.5181,
-        -49335038532.63152,
-        -38052886270.66072,
-        -30012649136.103153,
-        -23994658286.439632,
-        -19359584295.711323,
-        -15722315190.65078,
-        -12830560217.920187,
-        -10509516182.84279,
-        -8633154434.039377
+        -16407398523.184252,
+        -8985254515.589136,
+        -5280617102.345699,
+        -3198671613.749744,
+        -1968348626.4309459,
+        -1222131150.438534,
+        -762839721.5422201,
+        -477687691.1775869,
+        -299718467.72200257,
+        -188285131.15816343
       ]
     },
     "schatten_convergence": {
@@ -46,16 +46,16 @@
         10
       ],
       "schatten_norms": {
-        "S1": 633373565338.8335,
-        "S2": 148125459082.80994,
-        "S3": 102080732039.07246,
-        "S4": 87637530344.65245,
-        "S5": 81086023445.49791,
-        "S10": 72103337257.26366
+        "S1": 78220360611.45761,
+        "S2": 28084889306.15402,
+        "S3": 22011503417.974903,
+        "S4": 19993002824.44371,
+        "S5": 19042889199.88372,
+        "S10": 17589296721.293385
       },
       "all_finite": true,
       "trace_class_S1": true,
-      "trace_norm": 633373565338.8335,
+      "trace_norm": 78220360611.45761,
       "passed": true,
       "status": "\u2705 PASSED"
     },
@@ -63,9 +63,9 @@
       "test": "frequency_emergence",
       "note": "Conceptual validation of emergence mechanism",
       "lambda_0_theoretical": 0.0015877300223869932,
-      "lambda_char_computed": -0.34766133350283945,
+      "lambda_char_computed": -0.7381792322565177,
       "f0_theoretical_Hz": 141.7001,
-      "f0_from_spectrum_Hz": 0.15575313397116802,
+      "f0_from_spectrum_Hz": 0.1174758798794409,
       "emergence_mechanism": "\u03c9\u2080\u00b2 = 1/\u03bb\u2080 = C_universal",
       "conceptual_validation": true,
       "passed": true,
