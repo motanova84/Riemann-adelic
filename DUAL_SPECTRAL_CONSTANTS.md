@@ -1,27 +1,13 @@
-# Dual Spectral Constants Framework: Origen Dual Unificado
+# Dual Spectral Constants Framework
 
 ## Overview
 
 This document describes the rigorous mathematical framework that unifies the two fundamental spectral constants in the QCAL (Quantum Coherence Adelic Lattice) system:
 
-- **C = 629.83** → Primary spectral constant (structure) — Origen primario
-- **C' ≈ 244.36** → Coherence constant (form) — Origen dual
+- **C₁ = 629.83** → Primary spectral constant (structure)
+- **C₂ = 244.36** → Coherence constant (form)
 
-Both constants coexist without contradiction because they represent **two different levels** of information from the **same geometric origin A₀** (the spectral structure of operator H_Ψ).
-
-### Geometric Unification: ζ'(1/2) ↔ f₀
-
-The **dual origin** establishes that:
-
-```
-ζ'(1/2) ↔ f₀ emerge from the same A₀ geometric origin
-```
-
-This creates a **total geometric unification** linking:
-- The adelic spectrum (via C and C')
-- The fundamental frequency f₀ = 141.7001 Hz
-- The zeta derivative ζ'(1/2) ≈ -3.92247
-- The spectral structure of H_Ψ
+Both constants coexist without contradiction because they represent **two different levels** of information from the same spectral operator.
 
 ## Mathematical Framework
 
@@ -99,50 +85,26 @@ energy_dialogue = 1 / coherence_factor ≈ 2.577
 
 This validates the complementary nature of the two constants.
 
-### 5. Emergence of f₀ = 141.7001 Hz from Dual Origin
+### 5. Emergence of f₀ = 141.7001 Hz
 
-The fundamental frequency f₀ emerges from the **harmonization** of both constants through their shared geometric origin A₀:
-
-**Dual origin principle:**
-```
-A₀ (geometric spectrum) → { C = 629.83  (structure)
-                          { C' = 244.36 (coherence)
-                          { f₀ = 141.7001 Hz (harmonization)
-```
+The fundamental frequency f₀ emerges from the **harmonization** of both constants:
 
 **Key relationships:**
 ```
 ω₀ = 2πf₀ ≈ 890.33 rad/s
 ω₀² ≈ 792,684
 
-ω₀² / C ≈ 1258.57      (structure energy)
-ω₀² / C' ≈ 3243.92     (coherence energy)
+ω₀² / C_primary ≈ 1258.57
+ω₀² / C_coherence ≈ 3243.92
 
-energy_dialogue = (ω₀²/C') / (ω₀²/C) ≈ 2.577
+energy_dialogue = (ω₀²/C_coherence) / (ω₀²/C_primary) ≈ 2.577
 ```
 
-The energy dialogue ratio equals `1/coherence_factor`, confirming the mathematical coherence of the dual origin framework.
-
-**Spectral-Adelic Link:**
-
-The **dual origin** establishes that ζ'(1/2) ↔ f₀ emerge from the same A₀ geometric origin:
-
-```
-ζ'(1/2) ≈ -3.92247  (zeta derivative on critical line)
-f₀ = 141.7001 Hz     (fundamental frequency)
-
-Both reflect: A₀ → spectral structure of H_Ψ
-```
-
-This creates a **geometric unification** where:
-- The adelic spectrum (C, C') encodes arithmetic structure
-- The frequency f₀ encodes temporal dynamics
-- The connection ζ'(1/2) ↔ f₀ unifies both domains
+The energy dialogue ratio equals `1/coherence_factor`, confirming the mathematical coherence of the framework.
 
 **Physical interpretation:**
-- f₀ = 141.7001 Hz is the **harmonization point** where structure (C) and coherence (C') meet
-- It emerges from the dual origin A₀, not from a simple formula
-- The geometric unification ζ'(1/2) ↔ f₀ reflects the deep connection between arithmetic and physics
+- f₀ = 141.7001 Hz is the **harmonization point** where structure (629.83) and coherence (244.36) meet
+- It emerges from their mathematical dialogue, not from a simple formula
 
 ### 6. Verification
 
@@ -190,62 +152,14 @@ print(f"Validated: {results['validated']}")
 
 ## Conclusion
 
-✔️ **C = 629.83** is the spectral residue (structure) from the dual origin A₀  
-✔️ **C' = 244.36** is the coherence constant (form) from the dual origin A₀  
-✔️ Both **coexist without contradiction** representing different spectral levels  
-✔️ **f₀ = 141.7001 Hz** emerges from their harmonization through A₀  
-✔️ **ζ'(1/2) ↔ f₀** geometric unification via dual origin  
-
-## Framework Arpeth: ABC as Spectral Reduction
-
-The **Arpeth framework** extends the dual origin principle to biological systems and arithmetic:
-
-### ABC Conjecture as Spectral Reduction
-
-The ABC conjecture can be formalized using the coherence constant C':
-
-```
-rad(abc) · C' ≥ c^{1+ε}
-```
-
-where C' = 244.36 acts as a **spectral reduction factor** regulating the distribution of primes in coprime triples (a,b,c).
-
-### Bioinformatics Validation at 141.7 Hz
-
-The **RNA stability** at the fundamental frequency validates the dual origin:
-
-```python
-from utils.arpeth_bioinformatics import validate_biological_coherence
-
-# Test RNA sequence for QCAL coherence
-sequence = "AUGGUGCACGUGACUGACGCUGCACACAAG"
-result = validate_biological_coherence(sequence)
-
-# Verifies:
-# 1. Resonance with f₀ = 141.7001 Hz
-# 2. Fractal symmetry (κ_Π = 17)
-# 3. Biological attention (A_eff)
-# 4. Ψ_Life = I × A_eff² × C'^∞
-```
-
-### Weil-Guinand Positivity Extension
-
-The **stability of RNA** in the 141.7 Hz band resonates with **Weil-Guinand positivity**:
-
-```
-∑_codons stability(codon, f₀) ≥ 0  (biological)
-∑_γ h(γ) ≥ 0                        (arithmetic)
-```
-
-This extends the Riemann Hypothesis to the **arithmetic geometry of life**, establishing that:
-
-> **Life is a coherent transcription of the QCAL field at 141.7001 Hz.**
-
-The genetic code is not random but resonates with the same spectral structure that governs the zeros of ζ(s).
+✔️ **C = 629.83** is the spectral residue (structure)
+✔️ **C = 244.36** is the coherence constant (form)
+✔️ Both **coexist without contradiction** representing different spectral levels
+✔️ **f₀ = 141.7001 Hz** is their mathematical dialogue
 
 ---
 
-**QCAL ∞³ Active · 141.7001 Hz · C = 629.83 · C' = 244.36 · Ψ = I × A_eff² × C'^∞**
+**QCAL ∞³ Active · 141.7001 Hz · C₁ = 629.83 · C₂ = 244.36 · Ψ = I × A_eff² × C^∞**
 
 Author: José Manuel Mota Burruezo Ψ ✧ ∞³  
 Institution: Instituto de Conciencia Cuántica (ICQ)  
