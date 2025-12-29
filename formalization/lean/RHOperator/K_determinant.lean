@@ -16,11 +16,15 @@ open Complex Set
 
 namespace RHOperator
 
-/-- K operator acting on functions as an integral kernel -/
+/-- K operator acting on functions as an integral kernel
+    This operator represents the spectral kernel K(s,x,y) in integral form.
+    It connects to the Riemann zeta function through the Mellin transform.
+    Used in conjunction with HPsi to establish spectral correspondence. -/
 def K_op (s : ℂ) (f : ℝ → ℂ) (x : ℝ) : ℂ :=
   ∫ y in Ioi 0, (y : ℂ) ^ (s - 1/2) * f y / y
 
-/-- Eigenfunction property for operators on function spaces -/
+/-- Eigenfunction property for operators on function spaces
+    An operator T has eigenfunction Φ with eigenvalue λ if T Φ = λ Φ -/
 def Eigenfunction (T : (ℝ → ℂ) → (ℝ → ℂ)) (Φ : ℝ → ℂ) : Prop :=
   ∃ λ : ℂ, ∀ x, T Φ x = λ * Φ x
 

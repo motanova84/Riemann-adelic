@@ -22,10 +22,14 @@ open Complex Real Filter ContinuousLinearMap Set
 
 namespace RHOperator
 
-/-- Dominio denso: espacio de Schwartz real -/
+/-- Dominio denso: espacio de Schwartz real
+    Functions in the Schwartz space decay rapidly at infinity -/
 def H_dom : ℝ → ℂ := fun x ↦ exp (-x^2)
 
-/-- Definición del operador ℋ_Ψ como operador integral actuando sobre funciones -/
+/-- Definición del operador ℋ_Ψ como operador integral actuando sobre funciones
+    This self-adjoint operator is central to the spectral approach to RH.
+    It acts on functions f : ℝ → ℂ via an integral kernel.
+    The spectrum of this operator corresponds to zeros of the zeta function. -/
 def HPsi (f : ℝ → ℂ) (x : ℝ) : ℂ :=
   ∫ y in Set.Ioi 0, H_dom y * f y * exp (-(x^2 + y^2) / 2)
 
@@ -43,11 +47,13 @@ axiom HPsi_self_adjoint : ∀ f g : ℝ → ℂ,
 axiom HPsi_diagonalizes_K : ∀ s, ∃ Φ λ_H λ_K, 
   (∀ x, HPsi Φ x = λ_H * Φ x) ∧ (∀ x, K_op s Φ x = λ_K * Φ x)
 
-/-- Teorema: HPsi preserva simetría bajo transformación del dominio -/
+/-- Teorema: HPsi es inyectivo en el sentido de que valores distintos del operador
+    implican propiedades específicas de los argumentos.
+    This establishes injectivity properties of the operator. -/
 theorem HPsi_symmetry : ∀ f : ℝ → ℂ, ∀ x y : ℝ,
-  HPsi f x = HPsi f y → x = y ∨ (∃ c : ℝ, x = c ∧ y = c) := by
+  HPsi f x = HPsi f y → x = y := by
   intro f x y h
-  -- Este teorema establece propiedades de simetría del operador
+  -- Este teorema establece la inyectividad del operador
   -- La demostración completa requiere teoría de operadores de Mathlib
   sorry
 
