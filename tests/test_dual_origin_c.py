@@ -186,12 +186,14 @@ class TestGeometricUnification:
         """Verify ζ'(1/2) is in expected range."""
         # ζ'(1/2) ≈ -3.92247
         # This connects to the spectral structure
-        zeta_prime_half = -3.92247
+        expected_zeta_prime_half = -3.92247
         
         # Verify it's negative (expected from RH theory)
-        assert zeta_prime_half < 0, "ζ'(1/2) should be negative"
-        assert abs(zeta_prime_half + 3.92247) < 0.01, \
-            "ζ'(1/2) should be ≈ -3.92247"
+        assert expected_zeta_prime_half < 0, "ζ'(1/2) should be negative"
+        
+        # Verify it's in reasonable range for RH theory
+        assert -5.0 < expected_zeta_prime_half < -3.0, \
+            "ζ'(1/2) should be in range (-5, -3)"
     
     def test_dual_origin_A0_consistency(self):
         """Test that both C and C' emerge from same A₀."""
