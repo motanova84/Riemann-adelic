@@ -194,7 +194,7 @@ The "retry-on-snapshot-warnings" feature has been successfully implemented and v
 
 ---
 
-**Implementation Date:** December 29, 2025  
+**Implementation Date (static):** 2025-12-28  
 **Agent:** GitHub Copilot  
 **Repository:** motanova84/Riemann-adelic  
 **Branch:** copilot/enable-retry-on-snapshot-warnings
