@@ -191,9 +191,10 @@ class TestTemporalAlignmentVerifier:
     def test_numerical_precision(self):
         """Test that calculations maintain sufficient precision"""
         results = self.verifier.verify_temporal_alignment()
-        
-        # Verificar que tau0 coincide con el valor esperado dentro de tolerancia
-        # La precisión de 15 decimales es suficiente para cálculos QCAL
+        # Verificar que tau0 es numéricamente consistente con 1/f0 con alta precisión
+        tau0 = results['parameters']['tau0_s']
+        expected_tau0 = 1.0 / self.verifier.f0
+        assert abs(float(tau0) - expected_tau0) < 1e-12, "tau0 debe ser numéricamente consistente con 1/f0 con alta precisión"
         tau0 = results['parameters']['tau0_s']
         expected_tau0 = 1.0 / 141.7001
         assert abs(tau0 - expected_tau0) < 1e-15, "tau0 debe coincidir con 1/f0 con alta precisión"
