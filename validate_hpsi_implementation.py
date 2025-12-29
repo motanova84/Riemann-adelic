@@ -13,7 +13,10 @@ def main():
     print("=" * 70)
     print()
     
-    rhoperator_dir = Path(__file__).parent / "formalization/lean/RHOperator"
+    # Use absolute path resolution
+    script_path = Path(__file__).resolve()
+    repo_root = script_path.parent
+    rhoperator_dir = repo_root / "formalization/lean/RHOperator"
     
     if not rhoperator_dir.exists():
         print("❌ RHOperator directory not found!")
@@ -56,7 +59,7 @@ def main():
         "axiom HPsi_hermitian": "Hermitian symmetry axiom",
         "axiom HPsi_self_adjoint": "Self-adjoint axiom",
         "axiom HPsi_diagonalizes_K": "K diagonalization axiom",
-        "theorem HPsi_symmetry_axis": "Symmetry theorem"
+        "theorem HPsi_symmetry": "Symmetry theorem"
     }
     
     all_elements_present = True
@@ -110,7 +113,7 @@ def main():
     print()
     
     # Check lakefile.lean update
-    lakefile = Path(__file__).parent / "formalization/lean/lakefile.lean"
+    lakefile = repo_root / "formalization/lean/lakefile.lean"
     if lakefile.exists():
         lake_content = lakefile.read_text()
         if "lean_lib RHOperator" in lake_content:

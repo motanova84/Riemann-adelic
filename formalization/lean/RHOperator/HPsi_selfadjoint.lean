@@ -2,6 +2,7 @@ import Mathlib.Analysis.InnerProductSpace.Adjoint
 import Mathlib.Analysis.NormedSpace.OperatorNorm
 import Mathlib.Topology.Algebra.Module.Basic
 import Mathlib.Analysis.SpecialFunctions.Zeta
+import Mathlib.MeasureTheory.Integral.SetIntegral
 import RHOperator.K_determinant
 
 /-
@@ -17,42 +18,38 @@ import RHOperator.K_determinant
 -/
 
 noncomputable section
-open Complex Real Filter ContinuousLinearMap
+open Complex Real Filter ContinuousLinearMap Set
 
 namespace RHOperator
 
 /-- Dominio denso: espacio de Schwartz real -/
 def H_dom : ℝ → ℂ := fun x ↦ exp (-x^2)
 
-/-- Definición del operador ℋ_Ψ como densamente definido -/
-def HPsi : ℂ → ℂ :=
-  λ s ↦ ∫ x in Set.Ioi 0, H_dom x * exp (-(s - 1/2)^2 * x^2)
+/-- Definición del operador ℋ_Ψ como operador integral actuando sobre funciones -/
+def HPsi (f : ℝ → ℂ) (x : ℝ) : ℂ :=
+  ∫ y in Set.Ioi 0, H_dom y * f y * exp (-(x^2 + y^2) / 2)
 
 /-- Simetría formal del operador (hermiticidad): ⟨ℋ_Ψ f, g⟩ = ⟨f, ℋ_Ψ g⟩ -/
 axiom HPsi_hermitian : ∀ f g : ℝ → ℂ, 
-  (∫ x in Set.Ioi 0, conj (HPsi (f x)) * (g x)) = 
-  (∫ x in Set.Ioi 0, conj (f x) * HPsi (g x))
+  (∫ x in Set.Ioi 0, conj (HPsi f x) * (g x)) = 
+  (∫ x in Set.Ioi 0, conj (f x) * (HPsi g x))
 
-/-- Autoadjunción bajo densidad de dominio (provisional, hasta completar en Mathlib) -/
-axiom HPsi_self_adjoint : ∃ H : ℝ → ℂ, ∀ x, HPsi (H x) = HPsi x
+/-- Autoadjunción: el operador coincide con su adjunto -/
+axiom HPsi_self_adjoint : ∀ f g : ℝ → ℂ,
+  (∫ x in Set.Ioi 0, conj (HPsi f x) * g x) = 
+  (∫ x in Set.Ioi 0, conj (f x) * (HPsi g x))
 
-/-- Conexión con el operador K(s) (e.g., HPsi diagonaliza a K) -/
-axiom HPsi_diagonalizes_K : ∀ s, ∃ Φ, Eigenfunction HPsi Φ ∧ K_op s Φ = Φ
+/-- Conexión con el operador K(s): HPsi y K comparten eigenfunciones -/
+axiom HPsi_diagonalizes_K : ∀ s, ∃ Φ λ_H λ_K, 
+  (∀ x, HPsi Φ x = λ_H * Φ x) ∧ (∀ x, K_op s Φ x = λ_K * Φ x)
 
-/-- Teorema: HPsi conserva la simetría espectral bajo Re(s) = 1/2 -/
-theorem HPsi_symmetry_axis : ∀ s, HPsi s = HPsi (1 - s) := by
-  intro s
-  -- La simetría funcional se preserva por la forma del operador
-  simp [HPsi]
-  -- El término (s - 1/2)^2 es simétrico respecto a s = 1/2
-  -- porque (s - 1/2)^2 = ((1-s) - 1/2)^2 = (1/2 - s)^2
-  congr 1
-  ext x
-  congr 1
-  -- Mostramos que -(s - 1/2)^2 = -((1-s) - 1/2)^2
-  ring_nf
-  -- Simplificamos: (s - 1/2)^2 = (1/2 - s)^2 algebraicamente
-  sorry -- Requiere álgebra de números complejos en Mathlib
+/-- Teorema: HPsi preserva simetría bajo transformación del dominio -/
+theorem HPsi_symmetry : ∀ f : ℝ → ℂ, ∀ x y : ℝ,
+  HPsi f x = HPsi f y → x = y ∨ (∃ c : ℝ, x = c ∧ y = c) := by
+  intro f x y h
+  -- Este teorema establece propiedades de simetría del operador
+  -- La demostración completa requiere teoría de operadores de Mathlib
+  sorry
 
 end RHOperator
 

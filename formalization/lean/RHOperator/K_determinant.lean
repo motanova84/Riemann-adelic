@@ -1,5 +1,6 @@
 import Mathlib.Analysis.Complex.Basic
 import Mathlib.Analysis.SpecialFunctions.Complex.Log
+import Mathlib.MeasureTheory.Integral.SetIntegral
 
 /-
   K_determinant.lean
@@ -11,17 +12,17 @@ import Mathlib.Analysis.SpecialFunctions.Complex.Log
 -/
 
 noncomputable section
-open Complex
+open Complex Set
 
 namespace RHOperator
 
-/-- K operator acting on functions -/
-def K_op (s : ℂ) (f : ℂ → ℂ) : ℂ → ℂ :=
-  fun z ↦ f z * exp (-(s - 1/2)^2)
+/-- K operator acting on functions as an integral kernel -/
+def K_op (s : ℂ) (f : ℝ → ℂ) (x : ℝ) : ℂ :=
+  ∫ y in Ioi 0, (y : ℂ) ^ (s - 1/2) * f y / y
 
-/-- Eigenfunction property for operators -/
-def Eigenfunction (T : (ℂ → ℂ) → (ℂ → ℂ)) (Φ : ℂ → ℂ) : Prop :=
-  ∃ λ : ℂ, ∀ z, T Φ z = λ * Φ z
+/-- Eigenfunction property for operators on function spaces -/
+def Eigenfunction (T : (ℝ → ℂ) → (ℝ → ℂ)) (Φ : ℝ → ℂ) : Prop :=
+  ∃ λ : ℂ, ∀ x, T Φ x = λ * Φ x
 
 end RHOperator
 
