@@ -31,7 +31,7 @@ class TestRetryFunctionality:
     def test_snapshot_warning_message(self):
         """Test that includes 'snapshot' in its context (would trigger retry on failure)."""
         # Simulate a snapshot validation
-        snapshot_data = {"value": 42, "timestamp": "2025-12-29"}
+        snapshot_data = {"value": 42, "timestamp": "2024-01-15"}
         
         # This should pass
         assert snapshot_data["value"] == 42
