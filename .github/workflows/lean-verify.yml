@@ -34,7 +34,7 @@ jobs:
         run: |
           curl https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -sSf | sh -s -- -y
           export PATH="$HOME/.elan/bin:$PATH"
-          if ! command -v elan; then
+          if ! command -v elan >/dev/null 2>&1; then
             echo "❌ Elan installation failed"; exit 1
           fi
           echo "$HOME/.elan/bin" >> $GITHUB_PATH
