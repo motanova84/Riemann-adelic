@@ -203,7 +203,7 @@ def main():
     
     # Create visualization
     try:
-        fig = visualize_paradigm_shift(H_psi, eigenvalues, zeros)
+        visualize_paradigm_shift(H_psi, eigenvalues, zeros)
         print("\n   💡 Check the visualization to see the paradigm shift!")
     except ImportError as e:
         print(f"\n   ⚠️  Could not create visualization (matplotlib may not be installed): {e}")
