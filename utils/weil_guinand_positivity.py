@@ -21,6 +21,20 @@ The theorem states: Q[f] ≥ 0 for all admissible test functions.
 
 This positivity forces all zeros to the critical line Re(s) = 1/2.
 
+Numerical Validation Limitations:
+---------------------------------
+This implementation is Step 4 in the V5 Coronación proof framework and provides
+a working numerical validation framework. However, users should be aware:
+
+- The current numerical implementation shows sensitivity to the choice of test
+  functions and integration parameters
+- Mellin transform computations use finite integration limits and may require
+  adjustment for different test functions
+- Results should be interpreted as validation of the theoretical framework
+  rather than high-precision numerical verification
+- For production use, consider refining integration parameters and test function
+  selection based on specific validation requirements
+
 Author: José Manuel Mota Burruezo (JMMB Ψ✧∞³)
         Instituto de Conciencia Cuántica (ICQ)
         ORCID: 0009-0002-1923-0773
@@ -125,12 +139,18 @@ def mellin_transform(f: Callable[[float], complex],
         integrand_vals.append(fx * x_power)
     
     # Trapezoidal integration in log space
-    try:
-        # NumPy >= 2.0
-        from numpy import trapezoid
-        integral = trapezoid(integrand_vals, x_vals)
-    except ImportError:
-        # NumPy < 2.0
+    # Use trapezoid for NumPy >= 1.21 (trapz deprecated in 1.24, removed in 2.0)
+    if hasattr(np, 'trapezoid'):
+        integral = np.trapezoid(integrand_vals, x_vals)
+    else:
+        # Fallback for older NumPy versions (< 1.21)
+        # Note: trapz is deprecated and will be removed
+        import warnings
+        warnings.warn(
+            "Using deprecated np.trapz. Please upgrade to NumPy >= 1.21 for np.trapezoid",
+            DeprecationWarning,
+            stacklevel=2
+        )
         integral = np.trapz(integrand_vals, x_vals)
     
     return complex(integral)
@@ -288,7 +308,8 @@ def validate_weil_guinand_positivity(
     )
 
 
-def load_riemann_zeros(filepath: str, max_zeros: int = 100) -> List[complex]:
+def load_riemann_zeros(filepath: str, max_zeros: int = 100, 
+                       allow_fallback: bool = False) -> List[complex]:
     """
     Load Riemann zeros from file.
     
@@ -297,9 +318,14 @@ def load_riemann_zeros(filepath: str, max_zeros: int = 100) -> List[complex]:
     Args:
         filepath: Path to zeros file
         max_zeros: Maximum number of zeros to load
+        allow_fallback: If True, use synthetic zeros when file not found.
+                       If False, raise FileNotFoundError (default: False)
         
     Returns:
         List of complex zeros
+        
+    Raises:
+        FileNotFoundError: If filepath doesn't exist and allow_fallback=False
     """
     zeros = []
     
@@ -329,16 +355,23 @@ def load_riemann_zeros(filepath: str, max_zeros: int = 100) -> List[complex]:
         return zeros
     
     except FileNotFoundError:
-        logger.warning(f"File {filepath} not found, using synthetic zeros")
-        # Return first few known zeros
-        known_zeros = [
-            0.5 + 14.134725j,
-            0.5 + 21.022040j,
-            0.5 + 25.010858j,
-            0.5 + 30.424876j,
-            0.5 + 32.935062j,
-        ]
-        return known_zeros[:max_zeros]
+        if allow_fallback:
+            logger.warning(
+                f"File {filepath} not found. Using synthetic zeros as fallback. "
+                f"For production use, provide a valid zeros file or set allow_fallback=False."
+            )
+            # Return first few known zeros
+            known_zeros = [
+                0.5 + 14.134725j,
+                0.5 + 21.022040j,
+                0.5 + 25.010858j,
+                0.5 + 30.424876j,
+                0.5 + 32.935062j,
+            ]
+            return known_zeros[:max_zeros]
+        else:
+            logger.error(f"File {filepath} not found and allow_fallback=False")
+            raise
 
 
 def run_validation_suite():
@@ -352,9 +385,9 @@ def run_validation_suite():
     print("═" * 80)
     print()
     
-    # Load zeros
+    # Load zeros (allow fallback for demo purposes)
     zeros_file = "zeros/zeros_t1e8.txt"
-    zeros = load_riemann_zeros(zeros_file, max_zeros=50)
+    zeros = load_riemann_zeros(zeros_file, max_zeros=50, allow_fallback=True)
     
     # Test functions to validate
     test_functions = [
