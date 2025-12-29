@@ -49,7 +49,6 @@ import numpy as np
 import mpmath as mp
 from typing import Tuple, List, Dict, Any
 from scipy.linalg import eigh
-import warnings
 
 # =============================================================================
 # CONSTANTS
