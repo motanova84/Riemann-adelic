@@ -234,9 +234,7 @@ class TestTemporalAlignmentIntegration:
                 except OSError:
                     # Ignore cleanup errors to avoid masking the original test failure
                     pass
-            cleanup_path = saved_path or test_filename
-            if cleanup_path and os.path.exists(cleanup_path):
-                os.remove(cleanup_path)
+
     
     def test_qcal_constants_consistency(self):
         """Test consistency with QCAL ∞³ constants from .qcal_beacon"""

@@ -87,7 +87,7 @@ class TemporalAlignmentVerifier:
                 'f0_hz': self.f0,
                 'tau0_s': self.tau0,
                 'block9_timestamp': self.block9_timestamp,
-                'block9_datetime': datetime.fromtimestamp(self.block9_timestamp, tz=timezone.utc).isoformat().replace('+00:00', 'Z'),
+                'block9_datetime': datetime.fromtimestamp(self.block9_timestamp, tz=timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ'),
                 'block9_hash': self.block9_hash
             },
             'alignment_metrics': {
