@@ -1,12 +1,12 @@
-# Retry on Snapshot Warnings - Feature Documentation
+# Test Retry for Flaky and Snapshot-Related Failures - Feature Documentation
 
 ## Overview
 
-This document describes the **retry-on-snapshot-warnings** feature that has been enabled in the QCAL mathematical verification repository.
+This document describes the **retry-on-failures** feature that has been enabled in the QCAL mathematical verification repository. This feature uses a general test retry mechanism (via `pytest-rerunfailures`) that applies to all failed tests, and is particularly helpful for flaky and snapshot-related issues.
 
 ## Purpose
 
-The retry functionality helps handle flaky tests and snapshot-related warnings by automatically retrying failed tests. This is particularly useful for:
+The retry functionality helps handle flaky tests, including those that fail due to snapshot-related warnings, by automatically retrying failed tests. This is particularly useful for:
 
 - Mathematical validation tests that may exhibit numerical instability
 - Snapshot-based tests that validate mathematical certificates
