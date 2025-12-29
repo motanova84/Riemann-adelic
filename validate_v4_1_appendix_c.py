@@ -20,7 +20,6 @@ Expected results from paper:
 """
 
 import mpmath as mp
-import numpy as np
 from sympy import primerange
 import argparse
 import json
