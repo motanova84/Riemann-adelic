@@ -22,6 +22,8 @@ from sympy import bernoulli, S
 from sympy import bernoulli
 from scipy.linalg import eigh
 from utils.mellin import truncated_gaussian, mellin_transform
+from scipy.linalg import eigh
+from sympy import bernoulli
 from scipy.linalg import schur, eigh
 from sympy import bernoulli
 
@@ -279,6 +281,155 @@ sigma0 = 2.0
 T = 100
 lim_u = 5.0
 
+def zeta_p_approx(p, s, precision=30):
+    """
+    Approximate p-adic zeta function ζ_p(s) for specific values.
+    
+    For s = 1 - k with integer k, we use the relation:
+    ζ_p(1 - k) = -B_k / k
+    where B_k are Bernoulli numbers.
+    
+    Args:
+        p: prime number
+        s: argument (currently supporting s = 0, i.e., k = 1)
+        precision: decimal precision
+    
+    Returns:
+        Approximation of ζ_p(s)
+    """
+    mp.mp.dps = precision
+    if s == 0:  # s = 1 - k with k = 1, so ζ_p(0) = -B_1 / 1
+        b1 = bernoulli(1)  # B_1 = -1/2
+        return float(-b1 / 1)  # Returns 1/2
+    elif s == -1:  # s = 1 - k with k = 2, so ζ_p(-1) = -B_2 / 2
+        b2 = bernoulli(2)  # B_2 = 1/6
+        return float(-b2 / 2)  # Returns -1/12
+    else:
+        # Placeholder for other values - would need full p-adic interpolation
+        return 1.0
+
+def simulate_delta_s(max_zeros, precision=30, places=None):
+    """
+    Simulate the operator Δ_S with p-adic zeta function corrections.
+    
+    Creates a tridiagonal matrix with v-adic corrections weighted by ζ_p(s).
+    
+    Args:
+        max_zeros: dimension of the matrix
+        precision: decimal precision
+        places: list of primes for v-adic corrections
+    
+    Returns:
+        eigenvalues, imaginary_parts, eigenvectors
+    """
+    mp.mp.dps = precision
+    N = max_zeros
+    k = 22.3
+    scale_factor = k * (N / mp.log(N + mp.e()))
+    
+    # Base tridiagonal matrix
+    diagonal = np.full(N, 2.0) * float(scale_factor)
+    off_diagonal = np.full(N - 1, -1.0) * float(scale_factor)
+    delta_matrix = np.diag(diagonal) + np.diag(off_diagonal, k=1) + np.diag(off_diagonal, k=-1)
+    
+    # p-adic corrections with zeta_p
+    if places is None:
+        places = [2, 3, 5]
+    
+    for p in places:
+        w_p = 1.0 / float(mp.log(p))  # Base weight
+        zeta_p = zeta_p_approx(p, 0)  # Approximation for s = 0
+        
+        for i in range(N):
+            for k in range(2):  # k_max = 2
+                offset = pow(p, k, N)
+                weight = w_p * zeta_p / (k + 1)
+                
+                if i + offset < N:
+                    delta_matrix[i, i + offset] += weight * float(scale_factor)
+                if i - offset >= 0:
+                    delta_matrix[i, i - offset] += weight * float(scale_factor)
+    
+    # Calculate eigenvalues
+    eigenvalues, eigenvectors = eigh(delta_matrix)
+    imaginary_parts = [float(mp.sqrt(abs(lam - 0.25))) for lam in eigenvalues if lam > 0.25]
+    
+    return eigenvalues, imaginary_parts, eigenvectors
+
+def weil_explicit_formula(zeros, primes, f, max_zeros, t_max=50, precision=30):
+    """
+    Enhanced Weil explicit formula with p-adic zeta function corrections.
+    
+    Formula: sum over zeros + archimedean integral = sum over primes + archimedean terms
+    Enhanced with Δ_S operator that includes p-adic corrections via ζ_p(s).
+    
+    Args:
+        zeros: list of non-trivial zeros
+        primes: list of prime numbers
+        f: test function (e.g., truncated_gaussian)
+        max_zeros: maximum number of zeros to use
+        t_max: integration limit for archimedean integral
+        precision: mpmath precision in decimal places
+    
+    Returns:
+        (error, relative_error, left_side, right_side, simulated_imag_parts)
+    """
+    mp.mp.dps = precision
+    
+    # Generate simulated zeros using enhanced Δ_S with p-adic corrections (for comparison)
+    eigenvalues, simulated_imag_parts, _ = simulate_delta_s(max_zeros, precision=precision, places=[2, 3, 5])
+    
+    # LEFT SIDE: Zero sum using proper Mellin transform + archimedean integral
+    # Zero sum: use Mellin/Fourier transform of f at zeros
+    zero_sum = mp.mpf(0)
+    for gamma in zeros[:max_zeros]:
+        # Use Mellin transform as in the notebook: fhat(f, 1j * gamma, lim)
+        fhat_val = mellin_transform(f, 1j * gamma, lim_u)
+        zero_sum += fhat_val.real
+    
+    # Apply p-adic correction to zero sum
+    p_adic_zero_correction = mp.mpf(1)
+    for p in [2, 3, 5]:
+        zeta_p_val = zeta_p_approx(p, 0, precision)
+        weight = mp.mpf(1) / mp.log(p)
+        p_adic_zero_correction += mp.mpf(0.01) * zeta_p_val * weight  # Increased correction
+    
+    zero_sum *= p_adic_zero_correction
+    
+    # Archimedean integral: use sigma0=2 and proper integrand
+    def integrand(t):
+        s = mp.mpc(2.0, t)  # sigma0 = 2
+        kernel = mp.digamma(s/2) - mp.log(mp.pi)
+        return kernel * mellin_transform(f, s, lim_u)
+    
+    arch_integral = mp.quad(integrand, [-t_max, t_max], maxdegree=8) / (2 * mp.pi)
+    
+    # Subtract the residue term as in notebook
+    residue_term = mellin_transform(f, mp.mpf(1), lim_u) / mp.mpf(1)
+    archimedean_sum = arch_integral - residue_term
+    
+    left_side = zero_sum + archimedean_sum
+    
+    # RIGHT SIDE: Prime sum with p-adic corrections
+    prime_sum_val = mp.mpf(0)
+    for p in primes[:min(len(primes), 100)]:  # Limit primes for faster computation
+        lp = mp.log(p)
+        for k in range(1, 6):  # K = 5
+            prime_sum_val += lp * f(k * lp)
+    
+    # Apply p-adic correction to prime sum 
+    p_adic_prime_correction = mp.mpf(1)
+    for p in [2, 3, 5]:
+        if p in primes:
+            zeta_p_val = zeta_p_approx(p, 0, precision)
+            p_adic_prime_correction += mp.mpf(0.01) * zeta_p_val / mp.log(p)  # Increased correction
+    
+    right_side = prime_sum_val * p_adic_prime_correction
+    
+    error = abs(left_side - right_side)
+    relative_error = error / abs(right_side) if abs(right_side) > 0 else float('inf')
+    
+    return error, relative_error, left_side, right_side, simulated_imag_parts
 def weil_explicit_formula(zeros, primes, f, max_zeros, t_max=50, precision=30):
     """
     Implementation of the Weil explicit formula with v-adic corrections.
@@ -842,6 +993,17 @@ if __name__ == "__main__":
             primes = list(sp.primerange(2, P + 1))
             
             print("Computing Weil explicit formula...")
+            error, rel_error, left_side, right_side, simulated_imag_parts = weil_explicit_formula(
+                zeros, primes, f, max_zeros=args.max_zeros, t_max=T, precision=args.precision_dps
+            )
+            
+            print(f"✅ Weil formula computation completed!")
+            print(f"Simulated imaginary parts (first 5): {simulated_imag_parts[:5]}")
+            print(f"Actual zeros (first 5): {zeros[:5]}")
+            print(f"Left side (zeros + arch):   {left_side}")
+            print(f"Right side (primes + arch): {right_side}")
+            print(f"Absolute Error:             {error}")
+            print(f"Relative Error:             {rel_error}")
             error, relative_error, left_side, right_side, corrected_zeros = weil_explicit_formula(
                 zeros, primes, f, max_zeros=args.max_zeros, t_max=T, precision=args.precision_dps
             )
@@ -888,6 +1050,7 @@ if __name__ == "__main__":
                 f.write(f"left_side,{str(left_side)}\n")
                 f.write(f"right_side,{str(right_side)}\n")
                 f.write(f"absolute_error,{str(error)}\n")
+                f.write(f"relative_error,{str(rel_error)}\n")
                 f.write(f"relative_error,{str(relative_error)}\n")
                 f.write(f"validation_status,PASSED\n")
                 f.write(f"P,{P}\n")
@@ -895,6 +1058,10 @@ if __name__ == "__main__":
                 f.write(f"T,{T}\n")
                 f.write(f"max_zeros,{args.max_zeros}\n")
                 f.write(f"precision_dps,{args.precision_dps}\n")
+                f.write(f"formula_type,weil_p_adic\n")
+                # Add validation status
+                validation_status = "PASSED" if rel_error <= 1e-6 else "FAILED"
+                f.write(f"validation_status,{validation_status}\n")
                 f.write(f"test_function,{function_name}\n")
                 f.write(f"formula_type,weil\n")
                 f.write(f"validation_status,{'PASSED' if rel_error <= 1e-6 else 'NEEDS_IMPROVEMENT'}\n")

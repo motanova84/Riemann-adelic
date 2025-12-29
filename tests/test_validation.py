@@ -103,6 +103,7 @@ def test_weil_formula_basic():
     mp.mp.dps = 15  # Lower precision for speed
     
     try:
+        error, rel_error, left_side, right_side, simulated_parts = weil_explicit_formula(
         error, relative_error, left_side, right_side, corrected_zeros = weil_explicit_formula(
             zeros, primes, f, max_zeros=len(zeros), t_max=10, precision=15
         )
@@ -113,6 +114,9 @@ def test_weil_formula_basic():
         assert mp.isfinite(left_side), "Left side should be finite"  
         assert mp.isfinite(right_side), "Right side should be finite"
         assert error >= 0, "Error should be non-negative"
+        assert len(simulated_parts) > 0, "Should have simulated parts"
+        
+        print(f"Weil formula test: error={error}, rel_error={rel_error}, left={left_side}, right={right_side}")
         assert relative_error >= 0, "Relative error should be non-negative"
         assert len(corrected_zeros) > 0, "Should have corrected zeros"
         
@@ -136,6 +140,24 @@ def test_weil_formula_basic():
     except Exception as e:
         pytest.fail(f"Weil formula computation failed: {e}")
 
+def test_p_adic_zeta_function():
+    """Test the p-adic zeta function approximation."""
+    from validate_explicit_formula import zeta_p_approx
+    
+    # Test basic values
+    zeta_2_0 = zeta_p_approx(2, 0, precision=15)
+    zeta_3_0 = zeta_p_approx(3, 0, precision=15)
+    zeta_5_0 = zeta_p_approx(5, 0, precision=15)
+    
+    # All should be 1/2 for s=0 (since B_1 = -1/2 and ζ_p(0) = -B_1/1 = 1/2)
+    assert abs(zeta_2_0 - 0.5) < 1e-10, f"zeta_2(0) should be 1/2, got {zeta_2_0}"
+    assert abs(zeta_3_0 - 0.5) < 1e-10, f"zeta_3(0) should be 1/2, got {zeta_3_0}"
+    assert abs(zeta_5_0 - 0.5) < 1e-10, f"zeta_5(0) should be 1/2, got {zeta_5_0}"
+    
+    # Test s=-1 case
+    zeta_2_neg1 = zeta_p_approx(2, -1, precision=15)
+    expected = -1.0/12  # -B_2/2 = -1/6 / 2 = -1/12
+    assert abs(zeta_2_neg1 - expected) < 1e-10, f"zeta_2(-1) should be -1/12, got {zeta_2_neg1}"
 def test_vadic_corrections():
     """Test that v-adic corrections produce reasonable zero approximations."""
     from validate_explicit_formula import simulate_delta_s
