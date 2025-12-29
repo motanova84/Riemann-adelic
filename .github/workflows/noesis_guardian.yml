@@ -1,0 +1,75 @@
+name: Noesis Guardian
+
+on:
+  schedule:
+    - cron: "0 2 * * *"  # cada día a las 02:00 UTC
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+jobs:
+  run-guardian:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install core dependencies
+        run: |
+          pip install numpy
+
+      - name: Run Guardian cycle
+        run: |
+          mkdir -p noesis_guardian/logs
+          python noesis_guardian/guardian_core.py
+name: NOESIS Guardian
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    types: [opened, synchronize, reopened]
+  schedule:
+    - cron: "0 */6 * * *"  # Run every 6 hours
+  workflow_dispatch:  # Allow manual triggering
+
+jobs:
+  guardian:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Create logs directory
+        run: mkdir -p noesis_guardian/logs
+
+      - name: Run Guardian cycle
+        run: python noesis_guardian/guardian_core.py
+        continue-on-error: true
+
+      - name: Upload Guardian logs
+        uses: actions/upload-artifact@v4.4.3
+        with:
+          name: guardian-logs
+          path: noesis_guardian/logs/guardian_log.json
+          if-no-files-found: ignore

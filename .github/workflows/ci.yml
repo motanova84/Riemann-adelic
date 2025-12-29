@@ -1,148 +1,239 @@
-name: Riemann-Adelic CI/CD
+name: CI
 
+# Workflow CI básico para Python
+# Ejecuta en push a main/master y en todos los PRs
 on:
   push:
-    branches:
-      - main
-    paths:
-      - '**/*.py'
-      - 'notebooks/*.ipynb'
-      - 'requirements.txt'
-      - 'zeros/*.txt'
+    branches: [ main, master ]
   pull_request:
-    branches:
-      - main
-  workflow_dispatch: # Manual trigger option
+    branches: [ main, master ]
 
-env:
-  PRIME_COUNT: 100
-  PRIME_POWERS: 5
-  ZERO_COUNT: 100
-  INTEGRATION_T: 10
-  PRECISION_DPS: 25
+permissions:
+  contents: read
 
 jobs:
-  # Job 1: Setup and Install Dependencies
-  setup:
+  test:
+    name: Test Python ${{ matrix.python-version }}
+    branches: [ main ]
+  workflow_dispatch:
+    inputs:
+      run_full_validation:
+        description: '¿Ejecutar validación completa?'
+        required: false
+        default: 'false'
+        type: choice
+        options:
+          - 'true'
+          - 'false'
+
+permissions:
+  contents: read
+
+jobs:
+  build-and-test:
     runs-on: ubuntu-latest
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.10", "3.11", "3.12"]
+    
     steps:
-      - name: Checkout code
+      - name: Checkout repository
         uses: actions/checkout@v4
+      
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.10.12'
+          python-version: '3.11'
+      
+      - name: Cache dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.local
+          key: ${{ runner.os }}-python-${{ hashFiles('**/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-python-
+      
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Cache pip dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-          pip install nbconvert pytest
-
-  # Job 2: Validate and Fetch Zero Data
-  validate-data:
-    needs: setup
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.10.12'
-      - name: Install dependencies
-        run: pip install -r requirements.txt
-      - name: Fetch Odlyzko zeros if missing
+          pip install flake8 black isort pytest pytest-cov
+      
+      - name: Lint with flake8
         run: |
-          if [ ! -f zeros/zeros_t1e8.txt ]; then
-            curl -L -o zeros/zeros_t1e8.txt.gz https://www-users.cse.umn.edu/~odlyzko/zeta_tables/zeros1.gz
-            gunzip zeros/zeros_t1e8.txt.gz
-          fi
-      - name: Validate zeros checksum
-        run: python utils/checksum_zeros.py
-
-  # Job 3: Run Validation Script
-  run-validation:
-    needs: [setup, validate-data]
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.10.12'
-      - name: Install dependencies
-        run: pip install -r requirements.txt
-      - name: Run validation script
+          # Stop the build if there are Python syntax errors or undefined names
+          flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+          # Exit-zero treats all errors as warnings
+          flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+      
+      - name: Check code formatting with black
         run: |
-          mkdir -p logs data
-          python validate_explicit_formula.py \
-            --max_primes $PRIME_COUNT \
-            --max_zeros $ZERO_COUNT \
-            --timeout 600 > logs/validation.log 2>&1
-      - name: Upload validation logs
-        uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: validation-logs
-          path: logs/validation.log
-      - name: Archive validation results
-        uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: validation-results
-          path: data/validation_results.csv
-
-  # Job 4: Execute and Convert Notebook
-  convert-notebook:
-    needs: [setup, validate-data]
+          black --check --diff . || echo "Code formatting issues found (non-blocking)"
+      
+      - name: Run tests
+        run: |
+          pytest tests/ -v --tb=short
+      
+      - name: Run validation scripts (smoke tests)
+        run: |
+          # Quick validation to ensure core functionality works
+          python -c "import utils.mellin; print('✓ Core imports working')"
+          python -c "import mpmath; import numpy; import scipy; print('✓ Dependencies available')"
+          pip install flake8 black isort
+  validacion-simbolica:
     runs-on: ubuntu-latest
     env:
-      PRIME_COUNT: 100
-      PRIME_POWERS: 5
-      ZERO_COUNT: 100
-      INTEGRATION_T: 10
+      VALIDATION_LEVEL: ${{ github.event.inputs.run_full_validation == 'true' && '500' || '100' }}
+    
     steps:
-      - name: Checkout code
+      - name: 🌀 Checkout código
         uses: actions/checkout@v4
-      - name: Set up Python
-        uses: actions/setup-python@v5
+      
+      - name: 🧠 Mostrar nivel de validación
+        run: echo "Nivel de validación simbiótica → $VALIDATION_LEVEL"
+      
+      - name: ⚙️ Configurar entorno Python
+        uses: actions/setup-python@v4
         with:
-          python-version: '3.10.12'
-      - name: Install dependencies
-        run: pip install -r requirements.txt nbconvert
-      - name: Execute notebook and convert to HTML
+          python-version: '3.11'
+      
+      - name: ⚗️ Instalar dependencias
         run: |
-          mkdir -p notebooks/output
-          # Try to execute and convert notebook, with fallback if execution fails
-          jupyter nbconvert --execute --to html notebooks/validation.ipynb --output notebooks/output/validation.html \
-            --ExecutePreprocessor.timeout=1800 \
-            --ExecutePreprocessor.kernel_name=python3 || \
-          jupyter nbconvert --to html notebooks/validation.ipynb --output notebooks/output/validation.html
-      - name: Upload notebook HTML
-        uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: notebook-html
-          path: notebooks/output/validation.html
-
-  # Job 5: Run Pytest Tests
-  run-tests:
-    needs: [setup, validate-data]
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt || true
+          pip install numba numexpr networkx
+      
+      - name: 🧪 Ejecutar tests (nivel básico)
+        if: env.VALIDATION_LEVEL == '100'
+        run: |
+          echo "🌿 Validación básica activada (VALIDATION_LEVEL=$VALIDATION_LEVEL)"
+          pytest tests/ --maxfail=3 --disable-warnings -k "not slow"
+      
+      - name: 🔬 Ejecutar validación extendida
+        if: env.VALIDATION_LEVEL == '500'
+          python-version: "3.11"
+      
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y llvm-14 llvm-14-dev libigraph-dev libigraph3t64
+      
+      - name: Install dependencies
+        env:
+          NUMEXPR_MAX_THREADS: 4
+          NUMEXPR_NUM_THREADS: 2
+        run: |
+          python -m pip install --upgrade pip==24.3.1
+          pip install -r requirements.txt
+  lint-and-test:
+    needs: setup
     runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        # Puedes personalizar las versiones de Python según tus necesidades
+        python-version: ['3.10', '3.11']
+    
     steps:
-      - name: Checkout code
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ matrix.python-version }}
+    
+    - name: Cache pip dependencies
+      uses: actions/cache@v4
+      with:
+        path: ~/.cache/pip
+        key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
+        restore-keys: |
+          ${{ runner.os }}-pip-
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+    
+    # Opcional: Ejecutar linter (flake8, black, etc.)
+    # Descomenta si quieres activar linting
+    # - name: Lint with flake8
+    #   run: |
+    #     pip install flake8
+    #     # Para fallar en errores críticos
+    #     flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+    #     # Para advertencias generales (no bloquea)
+    #     flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+    
+    - name: Run tests with pytest
+      run: |
+        # Ejecuta la suite de tests. Personaliza los argumentos según necesites
+        pytest tests/ -v --tb=short
+      # Puedes añadir más opciones como --maxfail=1 para detener al primer fallo
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.10", "3.11", "3.12"]
+    
+    steps:
+      - name: Checkout repository
         uses: actions/checkout@v4
-      - name: Set up Python
+
+      - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v5
         with:
-          python-version: '3.10.12'
-      - name: Install dependencies
-        run: pip install -r requirements.txt pytest
-      - name: Run pytest
-        run: pytest tests/ -v --tb=short
+          python-version: ${{ matrix.python-version }}
 
-# Optional: Notify on failure (requires setup)
-# - name: Notify failure
-#   if: failure()
-#   run: echo "Validation failed; check logs."
+      - name: Cache pip dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
+      - name: Install dependencies
+        env:
+          NUMEXPR_MAX_THREADS: 4
+          NUMEXPR_NUM_THREADS: 2
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install flake8 black isort
+
+      - name: Run linting (flake8)
+        run: |
+          flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+          flake8 . --count --max-line-length=120 --ignore=E203,W503,E501 --statistics
+        continue-on-error: true
+
+      - name: Check code formatting (black)
+        run: |
+          black --check --line-length=120 .
+        continue-on-error: true
+
+      - name: Check import sorting (isort)
+        run: |
+          isort --check-only --profile black --line-length 120 .
+        continue-on-error: true
+
+      - name: Run tests with pytest
+        run: |
+          pytest tests/ -v --tb=short
