@@ -107,12 +107,18 @@ class TestPaleyWienerIdentification:
         
         # Test points on critical line
         test_points = [mp.mpc(0.5, t) for t in [10.0, 15.0, 20.0]]
+        tolerance = 1e-3
         
-        result = pw.verify_uniqueness(test_points, tolerance=1e-3)
+        result = pw.verify_uniqueness(test_points, tolerance=tolerance)
         
         assert 'verified' in result
         assert 'max_relative_error' in result
         assert result['test_points_count'] == len(test_points)
+        # Numerical agreement should respect the requested tolerance
+        assert isinstance(result['verified'], bool)
+        assert result['max_relative_error'] <= tolerance
+        # If errors are within tolerance, the verification flag should be True
+        assert result['verified']
 
 
 class TestHilbertPolyaOperator:
