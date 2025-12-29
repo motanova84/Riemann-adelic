@@ -71,6 +71,31 @@ python validate_algorithmic_rh.py
 - 📊 [Implementation Summary](ALGORITHMIC_RH_IMPLEMENTATION_SUMMARY.md)
 - 🔬 [Lean 4 Formalization](formalization/lean/RH_Algorithmic_Proof.lean)
 
+### 🆕 Dual Origin C Implementation (Spectral Unification)
+
+The dual spectral constants framework establishes a **geometric unification** linking the adelic spectrum with the fundamental frequency:
+
+```bash
+# Validate dual constants framework
+python -c "from operators.spectral_constants import validate_dual_constants; validate_dual_constants(verbose=True)"
+
+# Test Arpeth framework integration
+pytest tests/test_dual_origin_c.py -v
+```
+
+**Key Features:**
+- ✅ **C = 629.83** (primary constant from λ₀) — Estructura espectral
+- ✅ **C' ≈ 244.36** (coherence constant) — Coherencia emergente  
+- ✅ **Geometric unification:** ζ'(1/2) ↔ f₀ emerge from same A₀ origin
+- ✅ **Arpeth framework:** ABC as spectral reduction with bioinformatics validation
+- ✅ **Weil-Guinand extension:** RNA stability at 141.7 Hz validates RH
+
+**Documentation:**
+- 📖 [Dual Origin Implementation](DUAL_ORIGIN_C_IMPLEMENTATION.md)
+- 📊 [Dual Spectral Constants](DUAL_SPECTRAL_CONSTANTS.md)
+- 🧬 [Arpeth Bioinformatics](ARPETH_BIOINFORMATICS_README.md)
+- 🔬 [Spectral Constants](operators/spectral_constants.py)
+
 ## Section 4: Main Results
 
 | Test Function \( f(u) \) | Relative Error | Validation Status |
