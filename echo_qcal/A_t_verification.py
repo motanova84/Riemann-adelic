@@ -182,7 +182,7 @@ class TemporalAlignmentVerifier:
             filename: Nombre del archivo JSON (por defecto: A_t_verification_results.json)
             
         Returns:
-            str: Ruta completa del archivo guardado
+            str: Nombre del archivo donde se guardaron los resultados
             
         Raises:
             IOError: Si hay un error al escribir el archivo

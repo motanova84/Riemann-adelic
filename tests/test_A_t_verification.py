@@ -49,7 +49,6 @@ class TestTemporalAlignmentVerifier:
         
         assert params['f0_hz'] == 141.7001
         assert params['block9_timestamp'] == 1231469744.000000
-        assert params['block9_timestamp'] == 1231511700.000000
         assert 'block9_datetime' in params
         assert params['block9_hash'] == self.verifier.block9_hash
         
@@ -155,8 +154,11 @@ class TestTemporalAlignmentVerifier:
             
         finally:
             # Limpiar archivo de prueba
-            if os.path.exists(test_filename):
-                os.remove(test_filename)
+            if saved_path and os.path.exists(saved_path):
+                try:
+                    os.remove(saved_path)
+                except OSError:
+                    pass
     
     def test_phase_description(self):
         """Test phase description logic"""
@@ -191,10 +193,9 @@ class TestTemporalAlignmentVerifier:
     def test_numerical_precision(self):
         """Test that calculations maintain sufficient precision"""
         results = self.verifier.verify_temporal_alignment()
-        # Verificar que tau0 es numéricamente consistente con 1/f0 con alta precisión
-        tau0 = results['parameters']['tau0_s']
-        expected_tau0 = 1.0 / self.verifier.f0
-        assert abs(float(tau0) - expected_tau0) < 1e-12, "tau0 debe ser numéricamente consistente con 1/f0 con alta precisión"
+        
+        # Verificar que tau0 coincide con el valor esperado dentro de tolerancia
+        # La precisión de 15 decimales es suficiente para cálculos QCAL
         tau0 = results['parameters']['tau0_s']
         expected_tau0 = 1.0 / 141.7001
         assert abs(tau0 - expected_tau0) < 1e-15, "tau0 debe coincidir con 1/f0 con alta precisión"
@@ -225,6 +226,9 @@ class TestTemporalAlignmentIntegration:
         try:
             saved_path = verifier.save_results_to_json(results, test_filename)
             assert os.path.exists(saved_path)
+        finally:
+            cleanup_path = saved_path or test_filename
+            if cleanup_path and os.path.exists(cleanup_path):
                 try:
                     os.remove(cleanup_path)
                 except OSError:
