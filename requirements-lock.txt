@@ -33,7 +33,8 @@ joblib==1.5.2
 # Using 1.3.3 instead of 1.3.4 (which doesn't exist)
 qiskit==1.3.3
 
-# Testing framework (Configuration 1: Core dependencies)
+# Testing framework - First dependency set (pytest 8.2.0)
+# Note: This lock file contains multiple pytest versions for compatibility testing
 pytest==8.2.0
 pytest-cov==6.0.0
 pytest-rerunfailures==14.0
@@ -126,7 +127,8 @@ nbformat==5.10.4
 # (jax and jaxlib already specified above)
 opt-einsum==3.4.0
 
-# Testing infrastructure (Configuration 2: Extended dependencies)
+# Testing infrastructure - Second dependency set (pytest 9.0.1)
+# Includes additional test infrastructure packages
 pytest==9.0.1
 pytest-cov==7.0.0
 pytest-rerunfailures==14.0
