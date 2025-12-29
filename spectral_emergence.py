@@ -47,7 +47,7 @@ Coherence Constants: C = 629.83 (primary), C' = 244.36 (coherence)
 
 import numpy as np
 import mpmath as mp
-from typing import Tuple, List, Dict, Any, Optional, Callable
+from typing import Tuple, List, Dict, Any
 from scipy.linalg import eigh
 from scipy.special import gamma as scipy_gamma
 import warnings
