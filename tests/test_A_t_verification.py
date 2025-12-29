@@ -140,11 +140,12 @@ class TestTemporalAlignmentVerifier:
         try:
             saved_path = self.verifier.save_results_to_json(results, test_filename)
             
-            # Verificar que el archivo existe
-            assert os.path.exists(test_filename)
+            # Verificar que la función devuelve una ruta válida y que el archivo existe
+            assert saved_path, "save_results_to_json debe devolver una ruta no vacía"
+            assert os.path.exists(saved_path)
             
             # Verificar que el contenido es correcto
-            with open(test_filename, 'r') as f:
+            with open(saved_path, 'r') as f:
                 loaded_results = json.load(f)
             
             # Comparar campos clave
