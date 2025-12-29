@@ -692,7 +692,6 @@ if __name__ == "__main__":
                         choices=['f1', 'f2', 'f3', 'truncated_gaussian', 'gaussian'],
                         help='Test functions to use: f1 (bump), f2 (cosine), f3 (polynomial), truncated_gaussian')
     parser.add_argument('--timeout', type=int, default=300, help='Timeout in seconds')
-    parser.add_argument('--precision_dps', type=int, default=30, help='Decimal precision for mpmath')
     parser.add_argument('--error_threshold', type=float, default=1e-6, help='Required error threshold for reproducibility')
     parser.add_argument('--progress_chunks', type=int, default=None, help='Chunk size for progress reporting (auto if None)')
     parser.add_argument('--K_powers', type=int, default=10, help='Maximum powers K for prime sum')
@@ -789,7 +788,7 @@ if __name__ == "__main__":
         
         print("Computing zero side...")
         # Use only first max_zeros lines from file for faster computation
-        Z = zero_sum_limited(f, zeros_file, args.max_zeros, lim_u, args.progress_chunks)
+        Z = zero_sum_limited(f, zeros_file, args.max_zeros, lim_u)
 
         print(f"✅ Computation completed!")
         print(f"Aritmético (Primes + Arch): {A}")
