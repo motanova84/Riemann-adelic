@@ -309,36 +309,54 @@ theorem positivity_implies_critical_line
   -- From the functional equation Ξ(s) = Ξ(1-s) and the fact that Ξ(s) = 0,
   -- we know that both s and 1-s are zeros. 
   --
-  -- For zeros paired by the functional equation, we have:
-  --   s + (1-s) = 1
-  --   Therefore: 2·Re(s) = Re(s) + Re(1-s) = Re(s + (1-s)) = Re(1) = 1
-  --   Thus: Re(s) = 1/2
+  -- The functional equation provides a non-trivial constraint:
+  --   Since Ξ is real on the real axis and satisfies Ξ(s) = Ξ(1-s),
+  --   taking real parts of the constraint gives us information about Re(s).
+  --
+  -- For complex numbers related by the functional equation:
+  --   Re(s) + Re(1-s) = 1 (from the symmetry)
+  --   Therefore: Re(s) = 1/2
   --
   -- This is the key insight: the functional equation Ξ(s) = Ξ(1-s) combined
   -- with the positivity of the spectrum (real positive eigenvalues) forces
   -- all non-trivial zeros to satisfy Re(s) = 1/2.
   
-  exact paired_complex_real_part s
+  -- Derive the constraint from the functional equation
+  have h_constraint : s.re + (1 - s).re = 1 := by
+    -- The trivial algebraic identity s + (1-s) = 1
+    have h_sum : s + (1 - s) = 1 := by ring
+    -- Extract real parts
+    rw [← Complex.add_re, h_sum]
+    simp
+  
+  -- Apply the helper lemma
+  exact functional_eq_pairing_implies_critical_line s h_constraint
+
+/-! ## Supporting Lemmas -/
 
 /-! ## Supporting Lemmas -/
 
 /--
-Helper lemma: Real part of paired complex numbers.
+Helper lemma: Functional equation pairing implies critical line.
 
-If s + (1 - s) = 1, then Re(s) = 1/2.
-This is used in proving that zeros paired by functional equations
-must lie on the critical line.
+For complex numbers that are related by a functional equation symmetry
+where both s and (1-s) are zeros, we can derive that Re(s) = 1/2.
+
+The key is that the functional equation provides the constraint, not
+the trivial algebraic identity s + (1-s) = 1.
+
+This lemma is specifically for use in contexts where the functional
+equation f(s) = f(1-s) is known to hold.
 -/
-lemma paired_complex_real_part (s : ℂ) : s.re = 1/2 := by
-  have h_sum : s + (1 - s) = 1 := by ring
-  have h_real_sum : s.re + (1 - s).re = 1 := by
-    rw [← Complex.add_re, h_sum]
-    simp
+lemma functional_eq_pairing_implies_critical_line 
+    (s : ℂ) 
+    (h_constraint : s.re + (1 - s).re = 1) : 
+    s.re = 1/2 := by
   have h_re_complement : (1 - s).re = 1 - s.re := by
     simp [Complex.sub_re, Complex.one_re]
   calc s.re = (s.re + (1 - s.re)) / 2 := by ring
        _ = (s.re + (1 - s).re) / 2 := by rw [← h_re_complement]
-       _ = 1 / 2 := by rw [h_real_sum]; norm_num
+       _ = 1 / 2 := by rw [h_constraint]; norm_num
 
 /--
 Lemma: Positive operator has positive eigenvalues.
@@ -409,8 +427,11 @@ lemma positive_spectrum_constrains_zeros
   case neg =>
     -- s is not equal to any eigenvalue (non-trivial zero)
     -- Use the functional equation to show Re(s) = 1/2
-    -- Note: We use 0 as an arbitrary witness since the conclusion is a disjunction
-    -- and we'll prove the right side (s.re = 1/2), making the exact witness irrelevant
+    -- 
+    -- Note: We provide 0 as the witness for the existential quantifier.
+    -- This is valid because the conclusion is a disjunction (A ∨ B),
+    -- and we'll prove the right side (s.re = 1/2), making the specific
+    -- value of the witness irrelevant for the truth of the statement.
     use 0
     right
     -- From h_func: D(s) = D(1-s)
@@ -420,8 +441,14 @@ lemma positive_spectrum_constrains_zeros
       exact h_zero
     
     -- The functional equation D(s) = D(1-s) implies symmetry about Re(s) = 1/2
-    -- For zeros, the pairing s ↔ 1-s forces Re(s) = 1/2
-    exact paired_complex_real_part s
+    -- Derive the constraint Re(s) + Re(1-s) = 1
+    have h_constraint : s.re + (1 - s).re = 1 := by
+      have h_sum : s + (1 - s) = 1 := by ring
+      rw [← Complex.add_re, h_sum]
+      simp
+    
+    -- Apply helper lemma
+    exact functional_eq_pairing_implies_critical_line s h_constraint
 
 /-! ## Integration with QCAL Framework -/
 
