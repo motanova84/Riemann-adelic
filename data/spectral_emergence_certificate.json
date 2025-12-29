@@ -12,11 +12,13 @@
     },
     "paley_wiener_uniqueness": {
       "verified": true,
+      "verified_structural": true,
+      "verified_numerical": false,
       "max_relative_error": 316236019653302.7,
       "mean_relative_error": 31780212963833.574,
       "test_points_count": 10,
       "tolerance": 1e-06,
-      "note": "Structural uniqueness verified via functional equation and growth properties"
+      "note": "WARNING: Numerical Paley–Wiener test currently fails: D(s) and \u039e(s) disagree at sampled points (max_relative_error \u2248 3.16e14 \u226b tolerance=1e-6). Only structural uniqueness (functional equation + growth bounds) is validated here; the D(s) implementation is a simplified prototype and not yet numerically accurate enough to match \u039e(s)."
     },
     "hilbert_polya_self_adjoint": {
       "verified": true,
