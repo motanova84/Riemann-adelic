@@ -22,6 +22,11 @@ lean_lib RiemannAdelic where
   globs := #[.submodules `RiemannAdelic]
   roots := #[`RiemannAdelic]
 
+-- RHOperator library - Operator theory for RH
+lean_lib RHOperator where
+  globs := #[.submodules `RHOperator]
+  roots := #[`RHOperator]
+
 -- Main executable
 @[default_target]
 lean_exe «riemann-adelic-lean» where
