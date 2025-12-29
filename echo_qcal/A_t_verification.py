@@ -12,7 +12,6 @@ Author: José Manuel Mota Burruezo Ψ ✧ ∞³
 Institution: Instituto de Conciencia Cuántica (ICQ)
 """
 
-import numpy as np
 from datetime import datetime
 import json
 from typing import Dict, Any
