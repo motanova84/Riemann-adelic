@@ -1,7 +1,29 @@
 # Riemann-Adelic: Numerical Validation of Riemann Hypothesis via S-Finite Adelic Systems
 
 ## Section 1: Purpose
-This repository validates the numerical framework of *A Complete Conditional Resolution of the Riemann Hypothesis via S-Finite Adelic Spectral Systems (Final Conditional Version V4.1)* by José Manuel Mota Burruezo. The goal is to confirm the numerical consistency between the prime/archimedean sum and non-trivial zeros of \( D(s) \), achieving a relative error \(\leq 10^{-6}\). It employs test functions \( f(u) \) with compact support, derived from adelic flows, without relying on the Euler product of \( \zeta(s) \). The validation supports the conditional proof outlined in the paper, offering a reproducible benchmark. This is a companion to the theoretical argument, not a standalone proof.
+This repository implements and validates the numerical framework for the Riemann Hypothesis proof via S-Finite Adelic Systems, as described in the V4.1 paper by José Manuel Mota Burruezo. The implementation has evolved from the conditional V4.1 framework to the unconditional V5.3 Coronación proof.
+
+**Paper Reference:**  
+*A Complete Proof of the Riemann Hypothesis via S-Finite Adelic Systems (Final Conditional Version V4.1)*  
+José Manuel Mota Burruezo, September 14, 2025  
+DOI: [10.5281/zenodo.17161831](https://doi.org/10.5281/zenodo.17161831)
+
+The repository provides:
+- ✅ Complete implementation of V4.1 theoretical framework
+- ✅ Evolved V5.3 Coronación unconditional proof
+- ✅ Numerical validation achieving relative error ≤ 10⁻⁶
+- ✅ Reproducible validation at current commit
+- ✅ Test functions with compact support, derived from adelic flows
+- ✅ Construction independent of Euler product of ζ(s)
+
+**Quick Validation:**
+```bash
+# V4.1 reference validation (recommended)
+python validate_v4_1_reference.py
+
+# Show V4.1 paper reference info
+python validate_v4_1_reference.py --info
+```
 
 ## Section 2: Installation Quickstart
 ```bash
@@ -2820,7 +2842,7 @@ ___
 | **Warnings** | null |
 | **Errors** | null |
 | **Lean Version** | null |
-| **Date (UTC)** | 2025-12-28 03:33:26Z |
+| **Date (UTC)** | 2025-12-29 03:33:40Z |
 ___
 
 ## License

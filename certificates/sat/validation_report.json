@@ -1,6 +1,7 @@
 {
   "validation_type": "SAT_CERTIFICATES_VALIDATION",
   "timestamp": "2025-12-28T12:01:46.895715Z",
+  "timestamp": "2025-12-28T11:33:53.819345Z",
   "total_certificates": 10,
   "passed": 10,
   "failed": 0,
