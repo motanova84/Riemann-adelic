@@ -48,7 +48,7 @@ class TestTemporalAlignmentVerifier:
         params = results['parameters']
         
         assert params['f0_hz'] == 141.7001
-        assert params['tau0_s'] == self.verifier.tau0
+        assert params['block9_timestamp'] == 1231469744.000000
         assert params['block9_timestamp'] == 1231511700.000000
         assert 'block9_datetime' in params
         assert params['block9_hash'] == self.verifier.block9_hash
