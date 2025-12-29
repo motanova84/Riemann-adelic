@@ -36,7 +36,7 @@ The spectral universe "sings" on the critical line because geometric operator sy
 
 Author: José Manuel Mota Burruezo Ψ ✧ ∞³
 Institution: Instituto de Conciencia Cuántica (ICQ)
-Date: December 2025
+Date: 2025-12-29
 DOI: 10.5281/zenodo.17379721
 ORCID: 0009-0002-1923-0773
 
