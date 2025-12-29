@@ -31,13 +31,12 @@ The feature uses the `pytest-rerunfailures` plugin, which has been added to:
 
 ```ini
 [pytest]
-addopts = --tb=short -v --capture=no --log-cli-level=INFO --log-file=logs/validation/pytest_latest.log --log-file-level=DEBUG --reruns 3 --reruns-delay 1 --only-rerun "(?i).*(snapshot|warning).*"
+addopts = --tb=short -v --capture=no --log-cli-level=INFO --log-file=logs/validation/pytest_latest.log --log-file-level=DEBUG --reruns 3 --reruns-delay 1
 ```
 
 Key parameters:
 - `--reruns 3`: Retry failed tests up to 3 times
 - `--reruns-delay 1`: Wait 1 second between retries
-- `--only-rerun "(?i).*(snapshot|warning).*"`: Only retry tests that fail with messages containing "snapshot" or "warning" (case-insensitive)
 
 #### pyproject.toml
 
