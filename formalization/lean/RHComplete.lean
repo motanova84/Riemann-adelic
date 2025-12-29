@@ -43,10 +43,12 @@ import Mathlib.Topology.Basic
 -- Import all proof components
 import RHComplete.NuclearityExplicit
 import RHComplete.FredholmDetEqualsXi
+import RHComplete.Xi_holomorphic
 import RHComplete.UniquenessWithoutRH
 import RHComplete.RiemannSiegel
 import RHComplete.NoExtraneousEigenvalues
 import RHComplete.SpectralDeterminant
+import RHComplete.K_determinant
 
 -- Import base modules from RH_final_v6
 import RH_final_v6.Riemann_Hypothesis_noetic

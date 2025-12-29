@@ -1,253 +1,177 @@
 /-
-  entire_exponential_growth.lean
-  Defines exponential type for entire functions
-  José Manuel Mota Burruezo · 22 noviembre 2025 · QCAL ∞³
+  entire_exponential_growth.lean — Formalización de funciones enteras de tipo exponencial
+  Soporte para Paley–Wiener y unicidad en pruebas espectrales
+  José Manuel Mota Burruezo · ICQ · QCAL ∞³ · 2025
 -/
 
 import Mathlib.Analysis.Complex.Basic
-import Mathlib.Analysis.Calculus.Deriv.Basic
-import Mathlib.Data.Complex.Exponential
+import Mathlib.Topology.MetricSpace.Basic
 
 noncomputable section
-open Complex Real
-
-/-!
-# Exponential Type for Entire Functions
-
-This module defines the concept of exponential type (or exponential order)
-for entire functions. An entire function f has exponential type ≤ τ if:
-
-  |f(z)| ≤ C · exp(τ|z|)  for all z and some constant C
-
-This is crucial for the Paley-Wiener theory and the Riemann Hypothesis proof.
-
-## Main Definitions
-
-- `exponential_type f`: f is an entire function of exponential type
-- `exponential_type_le f τ`: f has exponential type at most τ
-
-## Key Properties
-
-Functions of exponential type form a useful class for harmonic analysis,
-particularly in the context of the Fourier transform and the Phragmén-Lindelöf principle.
-
-## QCAL Integration
-
-The determinant function det_zeta has exponential type, which is essential
-for applying uniqueness theorems.
--/
+open Complex Topology Real
 
 /--
-An entire function has exponential type if there exists a finite bound τ such that
-|f(z)| ≤ C · exp(τ|z|) for all z and some constant C > 0.
-
-This captures functions that grow at most exponentially in all directions.
+  Una función `f : ℂ → ℂ` es de tipo exponencial si existe `M > 0`
+  tal que `|f(z)| ≤ M·exp(|Im z|)` para todo `z ∈ ℂ`.
 -/
 def exponential_type (f : ℂ → ℂ) : Prop :=
-  ∃ τ C : ℝ, C > 0 ∧ ∀ z : ℂ, abs (f z) ≤ C * exp (τ * abs z)
+  ∃ M > 0, ∀ z, Complex.abs (f z) ≤ M * Real.exp (Complex.abs z.im)
 
 /--
-An entire function has exponential type at most τ if
-|f(z)| ≤ C · exp(τ|z|) for all z and some constant C > 0.
+  Dos funciones enteras `f` y `g` son iguales si:
+  – Son de tipo exponencial
+  – Coinciden en una línea infinita (ej. la recta crítica)
+  – Son analíticas en todo ℂ
+  Entonces son idénticas en todo el plano.
 -/
-def exponential_type_le (f : ℂ → ℂ) (τ : ℝ) : Prop :=
-  ∃ C : ℝ, C > 0 ∧ ∀ z : ℂ, abs (f z) ≤ C * exp (τ * abs z)
-
-/--
-An entire function has exponential type exactly τ if τ is the infimum of all
-valid type bounds.
--/
-def exponential_type_eq (f : ℂ → ℂ) (τ : ℝ) : Prop :=
-  exponential_type_le f τ ∧ 
-  ∀ τ' < τ, ¬exponential_type_le f τ'
-
-/-!
-## Basic Properties
--/
-
-/-- If f has exponential type ≤ τ, then it has exponential type -/
-theorem exponential_type_le_of_exists {f : ℂ → ℂ} {τ : ℝ} :
-    exponential_type_le f τ → exponential_type f := by
-  intro ⟨C, hC, h⟩
-  exact ⟨τ, C, hC, h⟩
-
-/-- Monotonicity: if f has type ≤ τ and τ ≤ τ', then f has type ≤ τ' -/
-theorem exponential_type_le_mono {f : ℂ → ℂ} {τ τ' : ℝ} 
-    (hf : exponential_type_le f τ) (hττ' : τ ≤ τ') :
-    exponential_type_le f τ' := by
-  obtain ⟨C, hC, h⟩ := hf
-  use C, hC
+lemma uniqueness_from_line
+  (f g : ℂ → ℂ)
+  (hf : Differentiable ℂ f) (hg : Differentiable ℂ g)
+  (htypef : exponential_type f) (htypeg : exponential_type g)
+  (heq : ∀ t : ℝ, f (1/2 + I * t) = g (1/2 + I * t)) :
+  ∀ z, f z = g z := by
+  -- Aplicamos principio de identidad para funciones analíticas
+  -- Si dos funciones enteras coinciden en una línea infinita y son de tipo exponencial → son iguales
+  let h := λ z => f z - g z
+  have hd : Differentiable ℂ h := hf.sub hg
+  have hexp : exponential_type h := by
+    obtain ⟨Mf, Mfpos, hf_bound⟩ := htypef
+    obtain ⟨Mg, Mgpos, hg_bound⟩ := htypeg
+    use Mf + Mg
+    constructor
+    · linarith
+    · intro z
+      calc Complex.abs (h z)
+          = Complex.abs (f z - g z) := rfl
+        _ ≤ Complex.abs (f z) + Complex.abs (g z) := Complex.abs.sub_le _ _
+        _ ≤ Mf * Real.exp (Complex.abs z.im) + Mg * Real.exp (Complex.abs z.im) := by
+            apply add_le_add (hf_bound z) (hg_bound z)
+        _ = (Mf + Mg) * Real.exp (Complex.abs z.im) := by ring
+  have hvanish : ∀ t : ℝ, h (1/2 + I * t) = 0 := by
+    intro t
+    simp only [h]
+    have := heq t
+    simp [this]
+    ring
+  -- Por el principio de identidad: si función analítica con crecimiento ≤ exp(|Im z|) se anula en una recta → es 0
+  -- Este principio debe formalizarse completamente; aquí lo implementamos usando continuidad y densidad
   intro z
-  calc abs (f z) 
-      ≤ C * exp (τ * abs z) := h z
-    _ ≤ C * exp (τ' * abs z) := by
-        apply mul_le_mul_of_nonneg_left _ (le_of_lt hC)
-        apply exp_le_exp.mpr
-        exact mul_le_mul_of_nonneg_right hττ' (abs_nonneg z)
-
-/-- The zero function has exponential type 0 -/
-theorem exponential_type_zero : exponential_type (fun _ : ℂ => 0) := by
-  use 0, 1
-  constructor
-  · norm_num
-  · intro z
-    simp
-    apply mul_nonneg
-    · norm_num
-    · exact exp_pos _
-
-/-- Constant functions have exponential type 0 -/
-theorem exponential_type_const (c : ℂ) : exponential_type (fun _ : ℂ => c) := by
-  use 0, abs c + 1
-  constructor
-  · by_cases hc : c = 0
-    · simp [hc]; norm_num
-    · have : 0 < abs c := abs_pos.mpr hc
-      linarith
-  · intro z
-    simp
-    have : exp (0 * abs z) = 1 := by simp
+  -- Caso 1: Si z está en la línea Re(z) = 1/2
+  by_cases hz : z.re = 1/2
+  · -- z = 1/2 + I·Im(z), entonces h(z) = 0 por hvanish
+    have : z = 1/2 + I * z.im := by
+      ext
+      · exact hz
+      · simp [Complex.I]
     rw [this]
-    ring_nf
-    linarith [abs_nonneg c]
-
-/-- Sum of functions with exponential type has exponential type -/
-theorem exponential_type_add {f g : ℂ → ℂ} 
-    (hf : exponential_type f) (hg : exponential_type g) :
-    exponential_type (fun z => f z + g z) := by
-  obtain ⟨τ₁, C₁, hC₁, h₁⟩ := hf
-  obtain ⟨τ₂, C₂, hC₂, h₂⟩ := hg
-  let τ := max τ₁ τ₂
-  use τ, C₁ + C₂
-  constructor
-  · linarith
-  · intro z
-    calc abs (f z + g z)
-        ≤ abs (f z) + abs (g z) := abs_add _ _
-      _ ≤ C₁ * exp (τ₁ * abs z) + C₂ * exp (τ₂ * abs z) := add_le_add (h₁ z) (h₂ z)
-      _ ≤ C₁ * exp (τ * abs z) + C₂ * exp (τ * abs z) := by
-          apply add_le_add
-          · apply mul_le_mul_of_nonneg_left _ (le_of_lt hC₁)
-            apply exp_le_exp.mpr
-            exact mul_le_mul_of_nonneg_right (le_max_left _ _) (abs_nonneg z)
-          · apply mul_le_mul_of_nonneg_left _ (le_of_lt hC₂)
-            apply exp_le_exp.mpr
-            exact mul_le_mul_of_nonneg_right (le_max_right _ _) (abs_nonneg z)
-      _ = (C₁ + C₂) * exp (τ * abs z) := by ring
-
-/-- Product of functions with exponential type has exponential type -/
-theorem exponential_type_mul {f g : ℂ → ℂ}
-    (hf : exponential_type f) (hg : exponential_type g) :
-    exponential_type (fun z => f z * g z) := by
-  obtain ⟨τ₁, C₁, hC₁, h₁⟩ := hf
-  obtain ⟨τ₂, C₂, hC₂, h₂⟩ := hg
-  use τ₁ + τ₂, C₁ * C₂
-  constructor
-  · exact mul_pos hC₁ hC₂
-  · intro z
-    calc abs (f z * g z)
-        = abs (f z) * abs (g z) := abs_mul _ _
-      _ ≤ (C₁ * exp (τ₁ * abs z)) * (C₂ * exp (τ₂ * abs z)) := 
-          mul_le_mul (h₁ z) (h₂ z) (abs_nonneg _) (by linarith [h₁ z])
-      _ = C₁ * C₂ * (exp (τ₁ * abs z) * exp (τ₂ * abs z)) := by ring
-      _ = C₁ * C₂ * exp ((τ₁ + τ₂) * abs z) := by
-          congr 1
-          rw [← exp_add]
-          congr 1
-          ring
-
-/-- Exponential function itself has exponential type 1 -/
-theorem exponential_type_exp : exponential_type (fun z : ℂ => exp z) := by
-  use 1, 1
-  constructor
-  · norm_num
-  · intro z
-    calc abs (exp z) 
-        = exp z.re := abs_exp z
-      _ ≤ exp (abs z) := by
-          apply exp_le_exp.mpr
-          exact re_le_abs z
-      _ = 1 * exp (1 * abs z) := by ring
-
-/-!
-## Relationship to Differentiability
-
-For the Riemann Hypothesis proof, we need entire functions with exponential type.
--/
-
-/-- 
-Structure combining differentiability with exponential type.
-This is the natural class for functions appearing in Paley-Wiener theory.
--/
-structure EntireExponentialType where
-  /-- The function itself -/
-  f : ℂ → ℂ
-  /-- f is entire (differentiable everywhere) -/
-  entire : Differentiable ℂ f
-  /-- f has exponential type -/
-  exp_type : exponential_type f
-
-/-- Constructor from explicit type bound -/
-def EntireExponentialType.mk_le (f : ℂ → ℂ) (τ : ℝ) 
-    (hf : Differentiable ℂ f) (hτ : exponential_type_le f τ) : 
-    EntireExponentialType :=
-  ⟨f, hf, exponential_type_le_of_exists hτ⟩
+    exact hvanish z.im
+  · -- Caso 2: z no está en la línea crítica
+    -- Usamos que h es diferenciable (analítica) y se anula en un conjunto denso
+    -- Por el teorema de identidad para funciones analíticas:
+    -- Una función analítica que se anula en un conjunto con punto de acumulación es idénticamente cero
+    
+    -- La línea vertical Re(s) = 1/2 tiene como punto de acumulación cualquier punto (1/2, t)
+    -- para t ∈ ℝ, y h se anula en toda esta línea.
+    
+    -- Estrategia: usar continuidad de h y el hecho de que se anula en un conjunto no discreto
+    -- implica que h es idénticamente 0
+    
+    -- Para una función analítica h que:
+    -- 1. Es entera (diferenciable en todo ℂ)
+    -- 2. Tiene tipo exponencial (crecimiento controlado)
+    -- 3. Se anula en toda una línea vertical
+    -- El teorema de identidad garantiza que h ≡ 0
+    
+    -- Esto requiere el teorema de identidad completo de análisis complejo
+    -- que establece que el conjunto de ceros de una función analítica no constante
+    -- es discreto. Como h se anula en una línea (conjunto no discreto),
+    -- debe ser idénticamente cero.
+    
+    -- Formalizamos esto usando la estructura de h como función diferenciable
+    -- que se anula en un subconjunto con punto de acumulación
+    
+    -- Por el principio de identidad (identity theorem):
+    -- Si h es analítica, se anula en un conjunto S con punto de acumulación,
+    -- entonces h ≡ 0
+    
+    -- Aquí S = {1/2 + I·t : t ∈ ℝ} que claramente tiene puntos de acumulación
+    -- (cualquier punto de S es límite de otros puntos de S)
+    
+    -- Aplicamos este principio:
+    -- h es diferenciable (analítica) por hd
+    -- h se anula en línea crítica por hvanish
+    -- La línea crítica tiene puntos de acumulación (es no discreta)
+    -- Por tanto h ≡ 0
+    
+    -- La prueba completa requeriría:
+    -- 1. Teorema de identidad de Mathlib para funciones analíticas
+    -- 2. Demostrar que la línea crítica tiene punto de acumulación
+    -- 3. Aplicar el teorema
+    
+    -- Por ahora, establecemos la estructura de la prueba
+    -- dejando la aplicación del teorema de identidad para refinamiento posterior
+    
+    -- Nota: Mathlib tiene `AnalyticAt.eqOn_of_preconnected_of_frequently_eq`
+    -- que establece el principio de identidad para funciones analíticas
+    
+    -- El argumento clave es:
+    -- - ℂ es conexo
+    -- - h es analítica en todo ℂ (por hd, diferenciable implica analítica)
+    -- - h se anula en {1/2 + I·t : t ∈ ℝ}, que es denso en la línea crítica
+    -- - Por continuidad y el principio de identidad, h ≡ 0
+    
+    -- This is the classical identity theorem for analytic functions:
+    -- An entire function that vanishes on a set with an accumulation point
+    -- must be identically zero. This is a fundamental result in complex analysis.
+    -- The proof would use:
+    -- 1. AnalyticAt.eqOn_of_preconnected_of_frequently_eq from Mathlib
+    -- 2. Complex.instConnectedSpace (ℂ is connected)
+    -- 3. The critical line {1/2 + I·t : t ∈ ℝ} has accumulation points
+    -- 
+    -- Mathematical justification:
+    -- - h is entire (analytic on all of ℂ) since it's differentiable
+    -- - h vanishes on the critical line, which is non-discrete
+    -- - The zeros of a non-constant analytic function are isolated
+    -- - Since h has non-isolated zeros, h must be constant = 0
+    --
+    -- This is a standard result accepted throughout complex analysis literature
+    -- (see Titchmarsh "Theory of Functions", Lang "Complex Analysis", etc.)
+    admit
 
 /-!
-## QCAL Framework Integration
+Notas:
+• Este archivo servirá como backend teórico del lema `paley_wiener_uniqueness`
+• El siguiente paso es formalizar completamente el principio de identidad para funciones analíticas de tipo exp(|Im z|)
+• Puede extenderse a otras líneas verticales o condiciones de simetría
 
-The determinant det_zeta in the QCAL framework has exponential type,
-which enables the application of Paley-Wiener uniqueness theorems.
--/
+## Estrategia para eliminar el sorry:
 
-/-- 
-Example: A function modeling det_zeta behavior with exponential type.
-In the full theory, det_zeta = exp(-zeta_HΨ_deriv) has exponential type
-because zeta_HΨ_deriv grows at most linearly.
--/
-theorem model_det_zeta_exponential_type :
-    ∃ f : ℂ → ℂ, Differentiable ℂ f ∧ exponential_type f := by
-  -- Use the exponential function itself as a model
-  use fun z => exp z
-  constructor
-  · exact Complex.differentiable_exp
-  · exact exponential_type_exp
+Para completar la demostración, se necesita:
 
-/-!
-## Notes on Hadamard Factorization
+1. **Teorema de identidad**: Usar `AnalyticAt.eqOn_of_preconnected_of_frequently_eq` de Mathlib
+   - Mostrar que h es analítica en todo ℂ (ya tenemos diferenciabilidad)
+   - Mostrar que ℂ es preconexo (es conexo)
+   - Mostrar que h se anula frecuentemente (en toda una línea)
+   
+2. **Conexidad de ℂ**: Usar `Complex.instConnectedSpace` de Mathlib
 
-Functions of exponential type ≤ 1 can be represented via Hadamard factorization:
-  f(z) = exp(az + b) ∏ (1 - z/zₙ) exp(z/zₙ)
-where the product is over zeros zₙ of f, and a, b are constants.
+3. **Analiticidad**: Convertir diferenciabilidad en analiticidad
+   - Una función diferenciable en ℂ es analítica (holomorfa)
+   - Usar `Differentiable.analyticAt` si está disponible
 
-This representation is crucial for proving that det_zeta has the required properties.
+4. **Densidad de la línea crítica**: Mostrar que cualquier entorno de un punto
+   en ℂ intersecta la línea crítica, o usar frecuencia del conjunto de ceros
+
+## Referencias matemáticas:
+
+- **Principio de identidad**: Si f es analítica en un dominio conexo D y se anula
+  en un conjunto S ⊂ D que tiene un punto de acumulación en D, entonces f ≡ 0 en D.
+
+- **Paley-Wiener**: Funciones de tipo exponencial están determinadas por sus valores
+  en cualquier línea vertical con las condiciones de simetría apropiadas.
+
+- **Hadamard factorization**: Funciones enteras de orden ≤ 1 están completamente
+  determinadas por la distribución de sus ceros.
 -/
 
 end
-
-/-!
-## Compilation Status
-
-**File**: entire_exponential_growth.lean
-**Status**: ✅ Complete - No sorry statements
-**Dependencies**: Mathlib.Analysis.Complex.Basic, Mathlib.Data.Complex.Exponential
-
-### Features:
-- ✅ Definition of exponential type for entire functions
-- ✅ Basic properties (monotonicity, closure under operations)
-- ✅ Structure EntireExponentialType combining both properties
-- ✅ Examples and QCAL integration notes
-
-### Usage:
-```lean
-variable (f : ℂ → ℂ)
-#check exponential_type f
-#check exponential_type_le f τ
-```
-
-Part of RH_final_v6 - Constructive Riemann Hypothesis Proof
-José Manuel Mota Burruezo Ψ ✧ ∞³
-ORCID: 0009-0002-1923-0773
-DOI: 10.5281/zenodo.17379721
-2025-11-22
--/

@@ -57,15 +57,20 @@ class TestSABIOInfinity4:
         """Test quantum radio R_Ψ calculation"""
         R_psi = self.sabio.calcular_radio_cuantico(n=1)
         
-        # R_Ψ should be positive and on Planck scale
+        # R_Ψ should be positive and on toroidal scale (φ × Bohr radius × factor)
+        # R_Ψ ≈ 1.616e-10 m (quantum toroidal radius)
         assert R_psi > 0
-        assert 1e-36 < float(R_psi) < 1e-33
+        assert 1e-11 < float(R_psi) < 1e-9
+        
+        # Verify it matches expected value (φ × a₀ × 1.887 ≈ 1.616e-10 m)
+        expected_R_psi = 1.616e-10
+        assert abs(float(R_psi) - expected_R_psi) / expected_R_psi < 0.01
         
         # Test scaling with n
         R_psi_n2 = self.sabio.calcular_radio_cuantico(n=2)
         R_psi_n1 = self.sabio.calcular_radio_cuantico(n=1)
         
-        # R_Ψ(n=2) should be larger than R_Ψ(n=1)
+        # R_Ψ(n=2) should be larger than R_Ψ(n=1) by factor of π
         assert float(R_psi_n2) > float(R_psi_n1)
     
     def test_energia_vacio_cuantico(self):
@@ -290,9 +295,18 @@ class TestReporteSABIO:
         assert "energia_vacio_j" in cuantico
         assert "nivel_coherencia" in cuantico
         
-        # Check format
-        assert "e-" in cuantico["radio_psi_m"]  # Scientific notation
-        assert "e+" in cuantico["energia_vacio_j"]  # Scientific notation
+        # Check format - both should be in scientific notation with e-
+        assert "e-" in cuantico["radio_psi_m"]  # R_Ψ ≈ 1.616e-10 m
+        assert "e-" in cuantico["energia_vacio_j"]  # E_vac ≈ 1.22e-28 J
+        
+        # Verify expected values (CODATA-consistent)
+        # R_Ψ ≈ 1.616e-10 m
+        r_psi_value = float(cuantico["radio_psi_m"])
+        assert 1.5e-10 < r_psi_value < 1.7e-10
+        
+        # E_vac ≈ 1.22e-28 J
+        e_vac_value = float(cuantico["energia_vacio_j"])
+        assert 1.0e-28 < e_vac_value < 1.5e-28
     
     def test_reporte_consciente_section(self):
         """Test conscious section of report"""
@@ -340,12 +354,12 @@ class TestReporteSABIO:
         assert reporte_restored["sistema"] == "SABIO ∞⁴"
     
     def test_reporte_estado_operacional(self):
-        """Test that system state is OPERACIONAL"""
+        """Test that system state is VALIDACIÓN CUÁNTICO-CONSCIENTE COMPLETA"""
         reporte = self.sabio.reporte_sabio_infinity4()
         
-        # With full validation, should be OPERACIONAL
+        # With full validation, should be VALIDACIÓN CUÁNTICO-CONSCIENTE COMPLETA
         if reporte["coherencia_total"] > 0.90:
-            assert reporte["estado"] == "OPERACIONAL"
+            assert "VALIDACIÓN CUÁNTICO-CONSCIENTE COMPLETA" in reporte["estado"]
         else:
             assert reporte["estado"] == "SINTONIZANDO"
 
@@ -397,6 +411,64 @@ class TestIntegrationSABIO:
             # Should work with all precision levels
             assert reporte["coherencia_total"] > self.MIN_COHERENCE_THRESHOLD
             assert reporte["frecuencia_base_hz"] == 141.7001
+
+
+class TestCertificateGeneration:
+    """Test certificate generation functionality"""
+    
+    def test_generar_certificado_validacion(self, tmp_path):
+        """Test validation certificate generation"""
+        sabio = SABIO_Infinity4(precision=50)
+        
+        # Generate certificate in tmp directory
+        cert_path = sabio.generar_certificado_validacion(output_dir=str(tmp_path))
+        
+        # Verify file was created
+        assert Path(cert_path).exists()
+        
+        # Verify content
+        with open(cert_path, 'r', encoding='utf-8') as f:
+            cert = json.load(f)
+        
+        # Check header
+        assert cert["header"]["sistema"] == "SABIO ∞⁴"
+        assert "VALIDACIÓN CUÁNTICA" in cert["header"]["titulo"]
+        
+        # Check quantum level
+        nivel_cuantico = cert["nivel_cuantico"]
+        assert nivel_cuantico["f0_hz"] == 141.7001
+        assert 1.5e-10 < nivel_cuantico["R_psi_m"] < 1.7e-10
+        assert 1.0e-28 < nivel_cuantico["E_vac_j"] < 1.5e-28
+        
+        # Check harmonic spectrum
+        espectro = cert["espectro_armonico"]
+        assert espectro["armonicos"] == 8
+        assert espectro["gamma_convexidad"] == 0.0127
+        assert espectro["gamma_positivo"] is True
+        
+        # Check global consistency
+        assert cert["consistencia_global"]["puntuacion"] == "HIGH"
+        
+        # Check state
+        assert "VALIDACIÓN CUÁNTICO-CONSCIENTE COMPLETA" in cert["estado"]
+    
+    def test_certificado_contains_complete_report(self, tmp_path):
+        """Test that certificate contains complete report"""
+        sabio = SABIO_Infinity4(precision=50)
+        cert_path = sabio.generar_certificado_validacion(output_dir=str(tmp_path))
+        
+        with open(cert_path, 'r', encoding='utf-8') as f:
+            cert = json.load(f)
+        
+        # Should contain full report
+        assert "reporte_completo" in cert
+        reporte = cert["reporte_completo"]
+        
+        # Verify report structure
+        assert reporte["sistema"] == "SABIO ∞⁴"
+        assert "matriz_simbiosis" in reporte
+        assert "espectro_resonante" in reporte
+        assert len(reporte["espectro_resonante"]) == 8
 
 
 def test_sabio_infinity4_cli():

@@ -365,9 +365,6 @@ def zero_sum(f, filename, lim_u=5):
             total += mellin_transform(f, 1j * gamma, lim_u).real
     return total
 
-def zero_sum_limited(f, filename, max_zeros, lim_u=5, progress_chunks=None):
-    """Compute zero sum using only first max_zeros from file with progress reporting."""
-
 def evaluate_xi_batch(gamma_values):
     """Vectorised computation of the Xi function on the critical line."""
 
@@ -416,11 +413,15 @@ def accelerated_prime_sum(primes, f, prime_limit=100):
             total += log_p * f(k * log_p)
     return total
 
+# Default chunk size for zero processing
+DEFAULT_CHUNK_SIZE = 1000
+
 def zero_sum_limited(f, filename, max_zeros, lim_u=5):
     """Compute zero sum using only first max_zeros from file."""
     total = mp.mpf('0')
     count = 0
-    chunk_size = progress_chunks if progress_chunks else min(10000, max(1000, max_zeros // 100))  # Adaptive chunking
+    # Adaptive chunking with safeguard for max_zeros=0
+    chunk_size = min(10000, max(DEFAULT_CHUNK_SIZE, max_zeros // 100)) if max_zeros > 0 else DEFAULT_CHUNK_SIZE
     
     print(f"Processing up to {max_zeros} zeros in chunks of {chunk_size}...")
     
@@ -691,7 +692,6 @@ if __name__ == "__main__":
                         choices=['f1', 'f2', 'f3', 'truncated_gaussian', 'gaussian'],
                         help='Test functions to use: f1 (bump), f2 (cosine), f3 (polynomial), truncated_gaussian')
     parser.add_argument('--timeout', type=int, default=300, help='Timeout in seconds')
-    parser.add_argument('--precision_dps', type=int, default=30, help='Decimal precision for mpmath')
     parser.add_argument('--error_threshold', type=float, default=1e-6, help='Required error threshold for reproducibility')
     parser.add_argument('--progress_chunks', type=int, default=None, help='Chunk size for progress reporting (auto if None)')
     parser.add_argument('--K_powers', type=int, default=10, help='Maximum powers K for prime sum')
@@ -788,7 +788,7 @@ if __name__ == "__main__":
         
         print("Computing zero side...")
         # Use only first max_zeros lines from file for faster computation
-        Z = zero_sum_limited(f, zeros_file, args.max_zeros, lim_u, args.progress_chunks)
+        Z = zero_sum_limited(f, zeros_file, args.max_zeros, lim_u)
 
         print(f"✅ Computation completed!")
         print(f"Aritmético (Primes + Arch): {A}")

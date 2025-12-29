@@ -2,8 +2,6 @@ import Lake
 open Lake DSL
 
 package «RH_final_v6» where
-  version := "6.0"
-  keywords := #["riemann", "hypothesis", "paley-wiener", "selberg", "adelic"]
   -- Require Lean 4.5.0 or higher
   preferReleaseBuild := true
 
@@ -13,11 +11,14 @@ lean_lib «RH_final_v6» where
   roots := #[`RH_final_v6]
 
 -- Require mathlib4 for complete mathematical library support
+-- Using stable v4.5.0 tag to match lean-toolchain
 require mathlib from git
-  "https://github.com/leanprover-community/mathlib4" @ "master"
+  "https://github.com/leanprover-community/mathlib4" @ "v4.5.0"
 
+-- Let Lake resolve aesop version compatible with mathlib v4.5.0
 require aesop from git
-  "https://github.com/leanprover-community/aesop" @ "master"
+  "https://github.com/leanprover-community/aesop"
 
+-- Let Lake resolve proofwidgets version compatible with mathlib v4.5.0
 require proofwidgets from git
-  "https://github.com/leanprover-community/proofwidgets4" @ "master"
+  "https://github.com/leanprover-community/proofwidgets4"

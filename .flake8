@@ -21,3 +21,4 @@ exclude =
     docs
 per-file-ignores =
     __init__.py:F401
+    noesis_guardian/guardian_core.py:E402

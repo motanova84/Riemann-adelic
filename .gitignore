@@ -21,6 +21,7 @@ wheels/
 *.egg-info/
 .installed.cfg
 *.egg
+*.whl
 
 # Jupyter Notebook
 .ipynb_checkpoints
@@ -37,6 +38,9 @@ coverage.xml
 
 # SABIO ∞⁴ generated reports
 sabio_infinity4_report_*.json
+
+# Lean validation reports
+formalization/lean/validation_report.json
 
 # Virtual environments
 venv/
@@ -63,6 +67,7 @@ data/temp_*
 data/*.tmp
 data/validation/results/*
 data/validation/certificates/*
+data/qcal_validation_certificate.json
 !data/validation/results/.gitkeep
 !data/validation/certificates/.gitkeep
 !data/validation_results.csv
@@ -72,6 +77,11 @@ resultados/*.json
 resultados/certificates/
 !resultados/.gitkeep
 
+# Checksum files
+*.md5
+
+# Generated HTML output
+docs/validation.html
 # Generated HTML output  
 docs/validation*.html
 docs/temp_*
@@ -87,6 +97,11 @@ logs/validation/*
 logs/performance/benchmark_results_*.json
 logs/performance/benchmark_results_*_report.md
 !logs/validation/.gitkeep
+
+# NOESIS GUARDIAN 3.0 logs
+noesis_guardian/logs/*.json
+noesis_guardian/logs/*.log
+!noesis_guardian/logs/.gitkeep
 
 # CI/CD artifacts
 artifacts/
@@ -162,5 +177,44 @@ build/
 # Disabled workflow files
 *.disabled
 
+# Generated visualization files (thermal kernel demo)
+eigenvalue_dist.png
+zero_comparison.png
+# Monitoring system - evidence and sensitive data
+monitoring/evidence/
+monitoring/alerts/*.json
+!monitoring/alerts/.gitkeep
+examples/__pycache__/
+
+# Noesis Guardian logs (keep directory structure)
+noesis_guardian/logs/guardian_log.json
+!noesis_guardian/logs/.gitkeep
+
+# QCAL auto-generated state files
+tools/qcal_state.json
 # Spectral framework demo images
 *_demo.png
+*_spectrum.png
+G4_spectrum_plot.png
+
+# Validation notebook generated images
+evac_zeta_visualization.png
+convexity_gamma_visualization.png
+validation_summary.png
+validation_summary.txt
+G4_spectrum_plot.png
+
+# NOESIS Guardian generated files
+.noesis_backups/
+noesis_guardian/guardian_log.json
+_codeql_detected_source_root/
+
+# Ultimate Algorithm generated outputs (keep directory structure)
+output/ultimate_algorithm_results.json
+output/ultimate_algorithm_visualization.png
+trace_class_complete_validation.png
+
+# Pipeline execution logs
+logs/pipeline_*/
+data/pipeline_report_*.json
+*.backup.*
