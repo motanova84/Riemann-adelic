@@ -28,7 +28,7 @@ jobs:
           NUMEXPR_MAX_THREADS: 4
           NUMEXPR_NUM_THREADS: 2
         run: |
-          pip install numpy scipy pytest
+          pip install numpy scipy pytest mpmath
 
       - name: Run basic operator tests
         run: |
