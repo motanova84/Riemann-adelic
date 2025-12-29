@@ -216,12 +216,14 @@ class TestTemporalAlignmentIntegration:
         
         # Paso 3: Guardar a JSON
         test_filename = "test_integration_results.json"
+        saved_path = None
         try:
             saved_path = verifier.save_results_to_json(results, test_filename)
-            assert os.path.exists(test_filename)
+            assert os.path.exists(saved_path)
         finally:
-            if os.path.exists(test_filename):
-                os.remove(test_filename)
+            cleanup_path = saved_path or test_filename
+            if cleanup_path and os.path.exists(cleanup_path):
+                os.remove(cleanup_path)
     
     def test_qcal_constants_consistency(self):
         """Test consistency with QCAL ∞³ constants"""
