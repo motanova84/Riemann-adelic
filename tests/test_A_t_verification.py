@@ -21,8 +21,8 @@ class TestTemporalAlignmentVerifier:
         """Test that verifier initializes with correct QCAL parameters"""
         assert self.verifier.f0 == 141.7001, "Frecuencia primordial debe ser 141.7001 Hz"
         assert abs(self.verifier.tau0 - (1 / 141.7001)) < 1e-10, "τ₀ debe ser 1/f₀"
-        assert self.verifier.block9_timestamp == 1231511700.000000, "Block 9 timestamp incorrecto"
-        assert self.verifier.block9_hash == "000000008d9dc510f23c2657fc4f67bea30078cc05a90eb89e84cc475c080805"
+        assert self.verifier.block9_timestamp == 1231469744.000000, "Block 9 timestamp incorrecto"
+        assert self.verifier.block9_hash == "0000000069e244f73c833322384c2f7fd72bec1dbe0b2f3b4f0a84d21f923f74"
         
     def test_threshold_values(self):
         """Test that thresholds are correctly set"""

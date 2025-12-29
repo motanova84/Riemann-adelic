@@ -12,7 +12,7 @@ Author: José Manuel Mota Burruezo Ψ ✧ ∞³
 Institution: Instituto de Conciencia Cuántica (ICQ)
 """
 
-from datetime import datetime
+from datetime import datetime, timezone
 import json
 from typing import Dict, Any
 
@@ -25,9 +25,9 @@ class TemporalAlignmentVerifier:
         self.f0 = 141.7001  # Hz - Frecuencia Primordial
         self.tau0 = 1 / self.f0  # 0.00705715000705715 s
         
-        # Bloque 9 de Bitcoin (2009-01-09 17:15:00 UTC)
-        self.block9_timestamp = 1231511700.000000  # Unix timestamp
-        self.block9_hash = "000000008d9dc510f23c2657fc4f67bea30078cc05a90eb89e84cc475c080805"
+        # Bloque 9 de Bitcoin (2009-01-09 02:55:44 UTC)
+        self.block9_timestamp = 1231469744.000000  # Unix timestamp real del Bloque 9
+        self.block9_hash = "0000000069e244f73c833322384c2f7fd72bec1dbe0b2f3b4f0a84d21f923f74"
         
         # Umbrales de verificación
         self.coherence_threshold = 99.95  # % mínimo
@@ -54,8 +54,9 @@ class TemporalAlignmentVerifier:
         # 3. Calcular diferencia absoluta
         delta_T = abs(T_ideal - self.block9_timestamp)
         
-        # 4. Calcular coherencia porcentual
-        coherence = (1 - delta_T / self.tau0) * 100
+        # 4. Calcular coherencia porcentual (acotada en [0, 100] %)
+        coherence_raw = (1 - delta_T / self.tau0) * 100
+        coherence = max(0.0, min(100.0, coherence_raw))
         
         # 5. Calcular fase relativa (debe ser ≈ 0.5 para inversión)
         phase = (self.block9_timestamp / self.tau0) % 1
@@ -81,7 +82,7 @@ class TemporalAlignmentVerifier:
                 'f0_hz': self.f0,
                 'tau0_s': self.tau0,
                 'block9_timestamp': self.block9_timestamp,
-                'block9_datetime': datetime.utcfromtimestamp(self.block9_timestamp).isoformat() + 'Z',
+                'block9_datetime': datetime.fromtimestamp(self.block9_timestamp, tz=timezone.utc).isoformat().replace('+00:00', 'Z'),
                 'block9_hash': self.block9_hash
             },
             'alignment_metrics': {
@@ -175,11 +176,18 @@ class TemporalAlignmentVerifier:
             
         Returns:
             str: Ruta completa del archivo guardado
+            
+        Raises:
+            IOError: Si hay un error al escribir el archivo
         """
-        with open(filename, 'w') as f:
-            json.dump(results, f, indent=2, default=str)
-        print(f"\n💾 Resultados guardados en: {filename}")
-        return filename
+        try:
+            with open(filename, 'w') as f:
+                json.dump(results, f, indent=2, default=str)
+            print(f"\n💾 Resultados guardados en: {filename}")
+            return filename
+        except (IOError, OSError) as e:
+            print(f"\n❌ Error al guardar resultados: {e}")
+            raise
 
 
 # ============================================================================
@@ -207,15 +215,15 @@ def main():
     verifier.generate_verification_report(results)
     
     # Guardar resultados
-    json_file = verifier.save_results_to_json(results)
+    verifier.save_results_to_json(results)
     
     # Verificación final del teorema (parcial)
     if results['verification_passed']:
-        print(f"\n🌟 CAPA Aₜ: {'✅ VERIFICADA' if results['verification_passed'] else '❌ NO VERIFICADA'}")
+        print("\n🌟 CAPA Aₜ: ✅ VERIFICADA")
         print(f"   Teorema ℂₛ parcial: Cₖ ∧ Aₜ = {results['verification_passed']}")
         print(f"   Próximo paso: Verificar Capa Semántica (Aᵤ)")
     else:
-        print(f"\n⚠️  CAPA Aₜ: {'✅ VERIFICADA' if results['verification_passed'] else '❌ NO VERIFICADA'}")
+        print("\n⚠️  CAPA Aₜ: ❌ NO VERIFICADA")
         print(f"   El teorema ℂₛ requiere las tres capas verificadas")
     
     return results
