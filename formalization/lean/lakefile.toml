@@ -12,20 +12,19 @@ defaultTargets = ["Main"]
 name = "mathlib"
 src = "git"
 url = "https://github.com/leanprover-community/mathlib4"
-rev = "master"  # Using master for stable CI (fixed commit refs get deleted from mathlib history)
-rev = "master"  # Use master branch - will be resolved to a specific commit by lake update
+rev = "v4.5.0"  # Using v4.5.0 to match lean-toolchain and lakefile.lean
 
 [[dependency]]
 name = "aesop"
 src = "git"
 url = "https://github.com/leanprover-community/aesop"
-rev = "master"
+# Let Lake resolve compatible version based on mathlib dependencies
 
 [[dependency]]
 name = "proofwidgets"
 src = "git"
 url = "https://github.com/leanprover-community/proofwidgets4"
-rev = "main"
+# Let Lake resolve compatible version based on mathlib dependencies
 
 [package]
 description = "Formalización constructiva de la Hipótesis de Riemann adélica (V7.0 Coronación Final)"
