@@ -28,6 +28,7 @@ qiskit>=1.5.0
 # Testing framework
 pytest==8.3.3
 pytest-cov==6.0.0
+pytest-rerunfailures>=14.0  # Retry functionality for flaky tests and snapshot warnings
 
 # Advanced mathematical libraries for acceleration and expansion
 # JIT compilation and performance optimization

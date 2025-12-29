@@ -258,6 +258,8 @@ This repository contains numerical validation code for the paper:
 > ```
 >
 > Si ves errores de "file not found" o "no such file or directory", revisa tu ruta de trabajo.
+>
+> **🔄 Retry on Snapshot Warnings:** Este repositorio tiene habilitada la funcionalidad de reintentos automáticos para tests con advertencias de snapshot. Los tests se reintentarán automáticamente hasta 3 veces con 1 segundo de espera entre intentos. Ver [RETRY_ON_SNAPSHOT_WARNINGS.md](RETRY_ON_SNAPSHOT_WARNINGS.md) para más detalles.
 
 # Riemann-Adelic: The Definitive Proof of the Riemann Hypothesis
 

@@ -17,6 +17,7 @@ matplotlib>=3.7.0
 # Testing framework with coverage
 pytest==8.2.0
 pytest-cov==6.0.0
+pytest-rerunfailures>=14.0  # Retry functionality for flaky tests and snapshot warnings
 pytest-benchmark>=4.0.0  # For performance testing
 
 # Data validation and integrity
