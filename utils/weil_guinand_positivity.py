@@ -36,7 +36,7 @@ References:
 import numpy as np
 import mpmath as mp
 from sympy import factorint, isprime
-from typing import Callable, List, Tuple, Optional
+from typing import Callable, List, Optional
 from dataclasses import dataclass
 import logging
 
