@@ -645,8 +645,9 @@ class SpectralIdentificationVerifier:
         # Consider passing a larger max_terms value proportional to the test radii,
         # as the default of 50 may be insufficient for very large radii.
         test_radii = [5.0, 10.0, 20.0, 40.0]
+        max_terms = int(max(test_radii) * 2)
         is_order_bounded, estimated_order = PaleyWienerUniqueness.check_entire_order(
-            self.operator.fredholm_determinant,
+            lambda s: self.operator.fredholm_determinant(s, max_terms=max_terms),
             test_radii
         )
         details['order_bounded'] = is_order_bounded
