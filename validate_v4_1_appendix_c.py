@@ -102,9 +102,13 @@ class V41Validator:
             Φ_f(s) (complex number)
         """
         # Adaptive quadrature for smooth functions
-        result = mp.quad(lambda u: f(u) * mp.exp(s * u), [-u_max, u_max], 
-                        maxdegree=10, error=True)
-        return result[0] if isinstance(result, tuple) else result
+        value, _error = mp.quad(
+            lambda u: f(u) * mp.exp(s * u),
+            [-u_max, u_max],
+            maxdegree=10,
+            error=True,
+        )
+        return value
     
     def prime_sum_contribution(self, f, p, k_max=10):
         """
