@@ -466,62 +466,6 @@ def weil_explicit_formula(zeros, primes, f, max_zeros, t_max=50, precision=30):
     relative_error = error / abs(right_side) if abs(right_side) > 0 else float('inf')
     
     return error, relative_error, left_side, right_side, simulated_imag_parts
-def weil_explicit_formula(zeros, primes, f, max_zeros, t_max=50, precision=30):
-    """
-    Implementation of the Weil explicit formula with v-adic corrections.
-    Based on the refinement approach in the problem statement.
-    """
-    mp.mp.dps = precision
-    
-    # Left side: suma sobre ceros escalada + integral archimedeana
-    # S-finite adelic flows scaling: 22.3 * max_zeros / log(max_zeros + e)
-    max_zeros = len(zeros)
-    if max_zeros > 0:
-        adelic_scaling = mp.mpf(22.3) * max_zeros / mp.log(max_zeros + mp.e)
-        zero_sum = adelic_scaling * sum(f(mp.mpc(0, rho)) for rho in zeros) / max_zeros
-    else:
-        zero_sum = mp.mpf(0)
-    # Simulate Delta_S eigenvalues with v-adic corrections
-    eigenvalues, simulated_imag_parts, _ = simulate_delta_s(max_zeros, precision, places=[2, 3, 5])
-    
-    # Use the actual zeros but apply v-adic corrections as small perturbations
-    # This is more realistic for demonstrating the v-adic improvement
-    corrected_zeros = []
-    for i, actual_zero in enumerate(zeros[:max_zeros]):
-        if i < len(simulated_imag_parts):
-            # Apply v-adic correction as a small perturbation to the actual zero
-            correction = (simulated_imag_parts[i] - 1.0) * 0.001  # Small correction factor
-            corrected_zeros.append(float(actual_zero) + correction)
-        else:
-            corrected_zeros.append(float(actual_zero))
-    
-    # Left side: sum over corrected zeros + archimedean integral
-    zero_sum = sum(f(mp.mpc(0, rho)) for rho in corrected_zeros[:len(zeros)])
-    
-    # Archimedean integral  
-    arch_sum = mp.quad(lambda t: f(mp.mpc(0, t)), [-t_max, t_max])
-    
-    # Término de residuo
-    residual_term = mp.zeta(1) if abs(1) < 1e-10 else 0
-    left_side = zero_sum + arch_sum + residual_term
-
-    # Right side: sum over primes using von Mangoldt function
-    von_mangoldt = {p**k: mp.log(p) for p in primes for k in range(1, 6)}
-    prime_sum_val = sum(v * f(mp.log(n)) for n, v in von_mangoldt.items() if n <= max(primes)**5)
-    
-    # Archimedean factor adjusted by S-finite adelic normalization
-    # Γ(s/2)π^{-s/2} adjusted by S (finite set of places)
-    s_finite_places = len(primes) if primes else 1  # Number of finite places in S
-    arch_factor = mp.gamma(0.5) / mp.power(mp.pi, 0.5) * mp.log(s_finite_places + 1)
-    right_side = prime_sum_val + arch_factor
-    prime_sum = sum(v * f(mp.log(n)) for n, v in von_mangoldt.items() if n <= max(primes)**5)
-    right_side = prime_sum
-
-    error = abs(left_side - right_side)
-    relative_error = error / abs(right_side) if right_side != 0 else float('inf')
-    return error, relative_error, left_side, right_side
-    
-    return error, relative_error, left_side, right_side, corrected_zeros
 
 # --- Añadir funciones corregidas ---
 def fourier_gaussian(t, scale=1.0):
@@ -1048,8 +992,6 @@ if __name__ == "__main__":
             primes = list(sp.primerange(2, P + 1))
             
             print("Computing Weil explicit formula...")
-            error, relative_error, left_side, right_side = weil_explicit_formula(
-                zeros, primes, f, max_zeros=args.max_zeros, t_max=T, precision=args.precision_dps
             error, rel_error, left_side, right_side, simulated_imag_parts = weil_explicit_formula(
                 zeros, primes, f, max_zeros=args.max_zeros, t_max=T, precision=args.precision_dps
             )
@@ -1061,9 +1003,6 @@ if __name__ == "__main__":
             print(f"Right side (primes + arch): {right_side}")
             print(f"Absolute Error:             {error}")
             print(f"Relative Error:             {rel_error}")
-            error, relative_error, left_side, right_side, corrected_zeros = weil_explicit_formula(
-                zeros, primes, f, max_zeros=args.max_zeros, t_max=T, precision=args.precision_dps
-            )
             
             print(f"✅ Weil formula computation completed!")
             print(f"Corrected zeros (first 5): {corrected_zeros[:5]}")
