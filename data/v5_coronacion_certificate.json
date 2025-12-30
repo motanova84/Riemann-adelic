@@ -1,56 +1,57 @@
 {
-  "timestamp": "2025-12-08T10:04:33.867825",
-  "precision": 30,
+  "timestamp": "2025-12-30T00:27:27.381986",
+  "precision": 15,
   "validation_results": {
     "Step 1: Axioms \u2192 Lemmas": {
       "status": "PASSED",
       "theory": "Adelic theory (Tate, Weil) + Birman-Solomyak",
-      "execution_time": 9.059906005859375e-06
+      "execution_time": 4.291534423828125e-06
     },
     "Step 2: Archimedean Rigidity": {
       "status": "PASSED",
       "theory": "Weil index + stationary phase analysis",
-      "execution_time": 0.0001590251922607422
+      "execution_time": 0.00015616416931152344
     },
     "Step 3: Paley-Wiener Uniqueness": {
       "status": "PASSED",
       "theory": "Paley-Wiener uniqueness (Hamburger, 1921)",
-      "execution_time": 5.9604644775390625e-06
+      "execution_time": 2.384185791015625e-06
     },
     "Step 4A: de Branges Localization": {
       "status": "PASSED",
       "theory": "de Branges theory + self-adjoint operators",
-      "execution_time": 0.0006051063537597656
+      "execution_time": 0.012669801712036133
     },
     "Step 4B: Weil-Guinand Localization": {
       "status": "PASSED",
       "theory": "Weil-Guinand positivity + explicit formula",
-      "execution_time": 4.76837158203125e-06
+      "execution_time": 1.9073486328125e-06
     },
     "Step 5: Coronaci\u00f3n Integration": {
       "status": "PASSED",
       "theory": "Logical integration of all previous steps",
-      "execution_time": 0.0001595020294189453
+      "execution_time": 0.00017833709716796875
     },
     "Stress: Spectral Measure Perturbation": {
       "status": "PASSED",
-      "execution_time": 5.793571472167969e-05
+      "execution_time": 5.269050598144531e-05
     },
     "Stress: Growth Bounds Validation": {
       "status": "PASSED",
-      "execution_time": 6.198883056640625e-06
+      "execution_time": 4.0531158447265625e-06
     },
     "Stress: Zero Subsets Consistency": {
       "status": "PASSED",
-      "execution_time": 9.131431579589844e-05
+      "execution_time": 8.153915405273438e-05
     },
     "Stress: Proof Certificate Generation": {
       "status": "PASSED",
-      "execution_time": 0.00017189979553222656
+      "execution_time": 0.0001354217529296875
     },
     "Integration: Explicit Formula Integration": {
-      "status": "PASSED",
-      "execution_time": 0.23227238655090332
+      "status": "FAILED",
+      "error": "'(' was never closed (validate_explicit_formula.py, line 1051)",
+      "execution_time": 0.01644730567932129
     },
     "YOLO Verification": {
       "status": "PASSED",
@@ -75,6 +76,10 @@
       "orthonormality_error": 4.37891715524431e-09,
       "n_states": 30,
       "description": "\u03b6(x) encoded as quantum wave function"
+    },
+    "Arpeth Bioinformatics Verification": {
+      "status": "PARTIAL",
+      "average_stability": 0.44289434917795933
     }
   },
   "proof_certificate": {
@@ -84,5 +89,5 @@
     "zero_localization": true,
     "coronation_complete": true
   },
-  "riemann_hypothesis_status": "PROVEN"
+  "riemann_hypothesis_status": "PARTIAL"
 }
