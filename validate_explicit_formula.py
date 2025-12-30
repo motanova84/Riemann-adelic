@@ -412,10 +412,6 @@ def weil_explicit_formula(zeros, primes, f, max_zeros, t_max=50, precision=30):
     zero_sum = scale_factor * sum(f(mp.mpc(0, rho)) for rho in zeros)
     
     # Archimedean integral (approximation)
-        (error, relative_error, left_side, right_side, simulated_imag_parts)
-    """
-    mp.mp.dps = precision
-    
     # Generate simulated zeros using enhanced Δ_S with p-adic corrections (for comparison)
     eigenvalues, simulated_imag_parts, _ = simulate_delta_s(max_zeros, precision=precision, places=[2, 3, 5])
     
