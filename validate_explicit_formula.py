@@ -305,7 +305,6 @@ def approximate_delta_s(zeros, max_zeros, precision=30):
         eigenvalues.append(lambda_n)
     return eigenvalues
 
-def weil_explicit_formula(zeros, primes, f, max_zeros, t_max=50, precision=30):
 def zeta_p_approx(p, s, precision=30):
     """
     Approximate p-adic zeta function ζ_p(s) for specific values.
