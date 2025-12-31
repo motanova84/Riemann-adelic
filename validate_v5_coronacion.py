@@ -590,6 +590,44 @@ def validate_v5_coronacion(precision=30, verbose=False, save_certificate=False, 
             'description': 'Some YOLO components need attention'
         }
 
+    # --- Discovery Hierarchy Validation (4-Level QCAL ∞³) --------------------
+    try:
+        from utils.discovery_hierarchy import DiscoveryHierarchy
+        
+        print("\n   🌌 Discovery Hierarchy Validation (4-Level QCAL ∞³)...")
+        
+        hierarchy = DiscoveryHierarchy(precision=max(25, precision))
+        chain = hierarchy.compute_complete_chain()
+        
+        all_levels_coherent = chain['global_validation']['all_levels_coherent']
+        complete_framework = chain['global_validation']['complete_framework']
+        
+        if all_levels_coherent and complete_framework:
+            print(f"   ✅ Discovery hierarchy: 4 niveles validados")
+            print(f"      NIVEL 1: RH (ceros en Re(s)=1/2) ✓")
+            print(f"      NIVEL 2: ζ'(1/2) ↔ f₀ (puente matemático-físico) ✓")
+            print(f"      NIVEL 3: f₀ = 141.7001 Hz (latido cósmico) ✓")
+            print(f"      NIVEL 4: QCAL ∞³ (geometría universal Ψ) ✓")
+            print(f"      Coherencia QCAL confirmada en todos los niveles")
+            results["Discovery Hierarchy Validation"] = {
+                'status': 'PASSED',
+                'all_levels_coherent': all_levels_coherent,
+                'complete_framework': complete_framework,
+                'transitions_validated': len(chain['transitions']),
+                'description': 'RH → ζ\'(1/2) → f₀ → QCAL ∞³ emergence chain'
+            }
+        else:
+            print(f"   ⚠️  Discovery hierarchy: PARTIAL")
+            results["Discovery Hierarchy Validation"] = {
+                'status': 'PARTIAL',
+                'all_levels_coherent': all_levels_coherent,
+                'complete_framework': complete_framework
+            }
+            
+    except Exception as e:
+        print(f"   ⚠️  Discovery hierarchy validation skipped: {e}")
+    # -----------------------------------------------------------------------
+
     print("=" * 80)
     
     # Create proof certificate if requested

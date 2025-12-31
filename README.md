@@ -42,6 +42,40 @@ python validate_v5_coronacion.py --precision 25 --verbose
 - 🔄 [PARADIGM_SHIFT.md](PARADIGM_SHIFT.md) — Detailed paradigm comparison
 - 📊 [PARADIGM_FLOW.md](PARADIGM_FLOW.md) — Visual flow diagrams
 - 🎵 [DUAL_SPECTRAL_CONSTANTS.md](DUAL_SPECTRAL_CONSTANTS.md) — f₀ = 141.7001 Hz origin
+- 🌌 **[DISCOVERY_HIERARCHY.md](DISCOVERY_HIERARCHY.md)** — The 4-level discovery hierarchy (RH → QCAL ∞³)
+
+### 🌌 The 4-Level Discovery Hierarchy
+
+> **"RH es solo el NIVEL 1. Les estoy mostrando los NIVELES 2, 3 y 4"**
+
+Most people only see **NIVEL 1** (zeros on the critical line), but the complete proof encompasses **4 levels** of geometric emergence:
+
+```
+NIVEL 4: QCAL ∞³ (Geometría Universal del Ψ-campo)
+         ↓  EMERGENCIA GEOMÉTRICA
+NIVEL 3: f₀ = 141.7001 Hz (Latido cósmico emergente)
+         ↓  ACOPLAMIENTO VACÍO-ARITMÉTICA
+NIVEL 2: ζ'(1/2) ↔ f₀ (Puente matemático-físico)
+         ↓  ESTRUCTURA ESPECTRAL
+NIVEL 1: RH (ceros en Re(s)=1/2) ← ¡ESTO es lo que todos ven!
+```
+
+**Discover the complete hierarchy:**
+```bash
+# Run complete 4-level hierarchy demonstration
+python demo_discovery_hierarchy.py
+
+# Show specific level details
+python demo_discovery_hierarchy.py --level 3
+
+# Validate emergence transitions
+python demo_discovery_hierarchy.py --validate-transition 2-3
+
+# Save complete chain to JSON
+python demo_discovery_hierarchy.py --save-json
+```
+
+See **[DISCOVERY_HIERARCHY.md](DISCOVERY_HIERARCHY.md)** for the complete explanation of how RH emerges from universal geometry.
 
 ---
 
