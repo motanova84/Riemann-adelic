@@ -23,14 +23,14 @@ jobs:
         continue-on-error: true
         run: |
           cd formalization/lean
-          lake build || echo "⚠️ Build completed with issues (expected for skeleton proofs)"
+          ~/.elan/bin/lake build || echo "⚠️ Build completed with issues (expected for skeleton proofs)"
 
       - name: Check axioms
         continue-on-error: true
         run: |
           cd formalization/lean
           echo "Checking axioms used by RiemannAdelic..."
-          lake exe print-axioms RiemannAdelic 2>&1 | tee axioms.txt || {
+          ~/.elan/bin/lake exe print-axioms RiemannAdelic 2>&1 | tee axioms.txt || {
             echo "ℹ️ Axiom check could not run (library may not be fully built)"
             exit 0
           }

@@ -209,6 +209,15 @@ import spectral.schatten_paley_lemmas
 -- mirror_spectrum: zeros paired under reflection
 import spectral.xi_mirror_spectrum
 
+-- NEW: Critical Spectral Theorems (27 December 2025)
+-- Three fundamental theorems for spectral approach to RH
+-- 1. Spectral Convergence (Weierstrass M-test)
+import spectral.spectral_convergence
+-- 2. Exponential Type (Growth estimates for entire functions of order ≤ 1)
+import spectral.exponential_type
+-- 3. Operator Symmetry (Self-adjoint operators have real spectrum)
+import spectral.operator_symmetry
+
 -- NEW: Generalized Riemann Hypothesis (7 December 2025)
 -- GRH for Dirichlet L-functions - all non-trivial zeros on Re(s) = 1/2
 -- Extends RH proof to full family of L(s,χ) via spectral operators H_{Ψ,χ}

@@ -262,6 +262,28 @@ theorem approx_eigenvalues_positive (ε : ℝ) (n : ℕ) (hε : 0 < ε) (hn : 0 
     exact Nat.one_lt_cast.mpr this
   have h3 : 0 < ε * Real.log (n + 1) := mul_pos hε h2
   linarith
+  -- Desplegamos la definición: approx_eigenvalues ε n = (n : ℝ) + ε * log (n + 1)
+  unfold approx_eigenvalues
+  -- Primero, 0 < (n : ℝ) porque 0 < n
+  have hn' : 0 < (n : ℝ) := by
+    exact_mod_cast hn
+  -- Ahora probamos que log (n + 1) ≥ 0, usando que (n + 1 : ℝ) ≥ 1
+  have h1 : (1 : ℝ) ≤ (n : ℝ) + 1 := by
+    have h0 : (0 : ℝ) ≤ (n : ℝ) := by
+      exact_mod_cast (Nat.zero_le n)
+    linarith
+  have hlog_nonneg : 0 ≤ Real.log ((n : ℝ) + 1) :=
+    Real.log_nonneg h1
+  -- Reescribimos log (n + 1) como log ((n : ℝ) + 1)
+  have hlog_nonneg' : 0 ≤ Real.log (n + 1) := by
+    simpa [Nat.cast_add, Nat.cast_one] using hlog_nonneg
+  -- Entonces ε * log (n + 1) ≥ 0 porque ε > 0 y log (n + 1) ≥ 0
+  have hterm_nonneg : 0 ≤ ε * Real.log (n + 1) :=
+    mul_nonneg (le_of_lt hε) hlog_nonneg'
+  -- Finalmente, suma de un término positivo y uno no negativo es positiva
+  have hpos : 0 < (n : ℝ) + ε * Real.log (n + 1) :=
+    add_pos_of_nonneg_of_pos hterm_nonneg hn'
+  exact hpos
 
 theorem approx_eigenvalues_increasing (ε : ℝ) (n m : ℕ) 
   (hε : 0 ≤ ε) (h : n < m) :

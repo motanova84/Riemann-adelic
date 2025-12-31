@@ -33,7 +33,8 @@ jobs:
       - name: ⚙️ Install Lean 4 (elan)
         run: |
           curl https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -sSf | sh -s -- -y
-          if [ ! -f "$HOME/.elan/bin/elan" ]; then
+          export PATH="$HOME/.elan/bin:$PATH"
+          if ! command -v elan >/dev/null 2>&1; then
             echo "❌ Elan installation failed"; exit 1
           fi
           echo "$HOME/.elan/bin" >> $GITHUB_PATH

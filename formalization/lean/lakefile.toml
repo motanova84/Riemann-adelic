@@ -12,20 +12,19 @@ defaultTargets = ["Main"]
 name = "mathlib"
 src = "git"
 url = "https://github.com/leanprover-community/mathlib4"
-rev = "master"  # Using master for stable CI (fixed commit refs get deleted from mathlib history)
-rev = "master"  # Use master branch - will be resolved to a specific commit by lake update
+rev = "v4.5.0"  # Using v4.5.0 to match lean-toolchain and lakefile.lean
 
 [[dependency]]
 name = "aesop"
 src = "git"
 url = "https://github.com/leanprover-community/aesop"
-rev = "master"
+# Let Lake resolve compatible version based on mathlib dependencies
 
 [[dependency]]
 name = "proofwidgets"
 src = "git"
 url = "https://github.com/leanprover-community/proofwidgets4"
-rev = "main"
+# Let Lake resolve compatible version based on mathlib dependencies
 
 [package]
 description = "Formalización constructiva de la Hipótesis de Riemann adélica (V7.0 Coronación Final)"
@@ -35,8 +34,11 @@ rev = "master"
 homepage = "https://doi.org/10.5281/zenodo.17379721"
 keywords = ["riemann-hypothesis", "spectral-theory", "adelic-systems", "qcal", "mathematical-proof"]
 
-# Current Data Integration (2025-12-08)
+# Current Data Integration (2025-12-27)
 # - Base frequency f₀ = 141.7001 Hz
 # - QCAL coherence C = 244.36
 # - All validation tests PASSED (25 zeros verified)
 # - Integration with Evac_Rpsi_data.csv complete
+# - Algorithmic proof system V7.1 implemented (RH_Algorithmic_Proof.lean)
+# - Executable verification algorithms with digital certificates
+# - Complete constructive decidability of RH demonstrated

@@ -107,7 +107,7 @@ jobs:
           echo "🔊 Verificando firma vibracional f₀ = ${{ matrix.frecuencia }} Hz"
           
           # Extraer frecuencia del .qcal_beacon
-          beacon_freq=$(grep "^frequency" .qcal_beacon | sed 's/.*= *\([0-9.]*\).*/\1/')
+          beacon_freq=$(grep "^frequency =" .qcal_beacon | sed 's/.*= *\([0-9.]*\).*/\1/' | xargs)
           echo "   Beacon: ${beacon_freq} Hz"
           echo "   Target: ${{ matrix.frecuencia }} Hz"
           
@@ -274,8 +274,8 @@ jobs:
           fi
           
           # Extraer metadatos clave
-          frequency=$(grep "^frequency" .qcal_beacon | sed 's/.*= *\([0-9.]*\).*/\1/')
-          coherence=$(grep "^coherence" .qcal_beacon | grep -o '[0-9.]*' | head -1)
+          frequency=$(grep "^frequency =" .qcal_beacon | sed 's/.*= *\([0-9.]*\).*/\1/' | xargs)
+          coherence=$(grep "^coherence =" .qcal_beacon | grep -o '[0-9.]*' | head -1 | xargs)
           
           echo "   Frequency: ${frequency} Hz"
           echo "   Coherence: ${coherence}"
