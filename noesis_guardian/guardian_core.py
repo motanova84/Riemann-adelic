@@ -745,39 +745,6 @@ def main():
 
     return report
 
-        # Registro "cognitivo" simbólico
-        SabioBridge.update(entry)
-
-        print("🧠 Guardian 3.0 ciclo completado.")
-        print("   → missing:", repo_state["missing"])
-        print("   → coherent:", spectral_state["coherent"])
-        self.log(entry)
-
-        # Separate handling for repo errors vs spectral incoherence
-        needs_alert = False
-
-        # Only repair file system if there are actual missing files
-        if repo_state["errors"]:
-            self.repair_engine.repair(repo_state)
-            needs_alert = True
-
-        # Alert on spectral incoherence (but don't trigger file repair)
-        if not spectral_state["coherent"]:
-            needs_alert = True
-
-        if needs_alert:
-            Notifier.alert("Guardian detectó problemas", entry)
-            AikSync.emit(entry)
-
-        SabioBridge.update(entry)
-
-        print("🧠 Guardian 3.0 ciclo completado.")
-        print("   → Coherencia:", spectral_state["coherent"])
-
-        return entry
-
 
 if __name__ == "__main__":
-    guardian = NoesisGuardian()
-    guardian.run_cycle()
-    guardian.run()
+    main()
