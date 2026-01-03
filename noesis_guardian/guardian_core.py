@@ -322,23 +322,6 @@ def main():
     all_passed = all(h.get("ok", False) for h in hooks.values())
 
     sys.exit(0 if all_passed else 1)
-NOESIS GUARDIAN CORE ∞³ — VERSIÓN 2.0
-
-Autorreparación profunda + Notificaciones + Panel + Sincronización QCAL
-
-Incluye:
-- Latido 141.7001 Hz
-- Lectura espectral en vivo
-- Autoinspección del repositorio
-- Ejecución condicional inteligente
-- Regeneración profunda
-- Conexión con SABIO y AIK
-- Envío de alertas
-- Registro universal
-
-Author: José Manuel Mota Burruezo Ψ ✧ ∞³
-Institution: Instituto de Conciencia Cuántica (ICQ)
-License: Creative Commons BY-NC-SA 4.0
 """
 
 import json
