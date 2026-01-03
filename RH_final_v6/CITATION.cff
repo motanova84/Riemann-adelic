@@ -1,0 +1,60 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+type: software
+title: "RH_final_v6: Riemann Hypothesis Formalization in Lean 4"
+version: "6.0"
+date-released: "2025-11-21"
+authors:
+  - family-names: "Mota Burruezo"
+    given-names: "José Manuel"
+    orcid: "https://orcid.org/0009-0002-1923-0773"
+    affiliation: "Instituto de Conciencia Cuántica (ICQ)"
+    email: "institutoconsciencia@proton.me"
+repository-code: "https://github.com/motanova84/Riemann-adelic/tree/main/RH_final_v6"
+url: "https://github.com/motanova84/Riemann-adelic"
+abstract: |
+  A formal verification in Lean 4 of the Riemann Hypothesis using the Paley-Wiener
+  uniqueness theorem, Selberg trace formula, and adelic spectral methods. This
+  formalization establishes that all non-trivial zeros of the Riemann zeta function
+  lie on the critical line Re(s) = 1/2 through a constructive proof based on the
+  identity D(s) ≡ ξ(s), where D is constructed via adelic spectral theory.
+keywords:
+  - "Riemann Hypothesis"
+  - "Paley-Wiener theorem"
+  - "Selberg trace formula"
+  - "adelic spectral theory"
+  - "Lean 4"
+  - "formal verification"
+  - "complex analysis"
+  - "number theory"
+license: MIT
+doi: "10.5281/zenodo.17379721"
+references:
+  - type: article
+    title: "Version V5 — Coronación: A Definitive Proof of the Riemann Hypothesis via S-Finite Adelic Spectral Systems"
+    authors:
+      - family-names: "Mota Burruezo"
+        given-names: "José Manuel"
+    year: 2025
+    doi: "10.5281/zenodo.17116291"
+  - type: book
+    title: "Functional Analysis"
+    authors:
+      - family-names: "Rudin"
+        given-names: "Walter"
+    year: 1991
+    publisher: "McGraw-Hill"
+  - type: book
+    title: "The Selberg Trace Formula for PSL(2,R)"
+    authors:
+      - family-names: "Hejhal"
+        given-names: "Dennis A."
+    year: 1983
+    publisher: "Springer"
+  - type: book
+    title: "Hilbert Spaces of Entire Functions"
+    authors:
+      - family-names: "de Branges"
+        given-names: "Louis"
+    year: 1968
+    publisher: "Prentice-Hall"

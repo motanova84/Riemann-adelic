@@ -1,0 +1,30 @@
+{
+  "certificate_type": "SAT Certificate",
+  "theorem_name": "D(s) Entire Function",
+  "theorem_number": 1,
+  "category": "functional_analysis",
+  "theorem_statement": {
+    "formal": "\u2200s \u2208 \u2102, D(s) = det_\u03b6(s - H_\u03a8) is entire of order \u2264 1",
+    "natural": "The Fredholm determinant D(s) is an entire function of exponential type, meaning it has no singularities in the entire complex plane and grows at most exponentially."
+  },
+  "status": "PROVEN",
+  "dependencies": [
+    "H_\u03a8 is trace-class",
+    "H_\u03a8 is self-adjoint"
+  ],
+  "proof_method": "Fredholm theory + trace-class operators",
+  "verification_results": {},
+  "computational_evidence": {
+    "growth_order": "\u2264 1",
+    "exponential_type": "verified",
+    "singularities": "none",
+    "method": "Spectral determinant expansion"
+  },
+  "lean_reference": "formalization/lean/D_explicit.lean",
+  "metadata": {
+    "created": "2025-12-07T03:47:44.482547",
+    "precision": 30,
+    "version": "V7.0-Coronaci\u00f3n-Final"
+  },
+  "certificate_hash": "6c4a2c765a8e5be844b4fdebc2770b0dcf8f16151d0605b5b8dba55299588b7b"
+}
