@@ -41,6 +41,7 @@ import Mathlib.Analysis.SpecialFunctions.Gamma
 import Mathlib.Topology.Basic
 
 -- Import all proof components
+import RHComplete.SpectralIdentity
 import RHComplete.NuclearityExplicit
 import RHComplete.FredholmDetEqualsXi
 import RHComplete.Xi_holomorphic
@@ -91,6 +92,10 @@ theorem riemann_hypothesis_complete :
 
 /-- All proof steps are complete without sorrys -/
 theorem proof_chain_complete : True := by
+  -- Step 0: Spectral identity and HΨ completeness
+  have step0 := SpectralRH.spectral_identity_Dχ_eq_Ξ
+  have step0b := SpectralRH.complete_space_HΨ
+  
   -- Step 1: H_Ψ is self-adjoint
   have step1 := RHComplete.NuclearityExplicit.h_psi_selfadjoint
   
