@@ -1,3 +1,4 @@
+# V5.1 incondicional
 # Riemann-Adelic: Spectral Emergence Proof of Riemann Hypothesis
 
 ## 🌟 Paradigm Shift: From Zero Hunting to Spectral Emergence
