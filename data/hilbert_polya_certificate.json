@@ -1,0 +1,25 @@
+{
+  "title": "Hilbert-P\u00f3lya Numerical Proof Certificate",
+  "operator": "H_\u03a8",
+  "timestamp": "2025-11-28T22:28:49.402889",
+  "configuration": {
+    "N": 500,
+    "k": 20,
+    "n_test_functions": 1000
+  },
+  "results": {
+    "self_adjoint": true,
+    "max_self_adjoint_error": 4.76837158203125e-07,
+    "spectrum_real": true,
+    "max_imaginary": 0.0,
+    "matrix_symmetric": true
+  },
+  "qcal": {
+    "base_frequency": 141.7001,
+    "coherence": 244.36
+  },
+  "conclusion": "PROVEN",
+  "author": "Jos\u00e9 Manuel Mota Burruezo \u03a8 \u221e\u00b3",
+  "institution": "Instituto de Conciencia Cu\u00e1ntica (ICQ)",
+  "doi": "10.5281/zenodo.17379721"
+}

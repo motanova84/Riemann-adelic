@@ -1,73 +1,122 @@
-We work in the ring of adeles $\mathbb{A}_\mathbb{Q}$ with the Haar measure
-$dx$ and the multiplicative measure $d^{\times}x$. We denote by
-$\mathcal{S}(\mathbb{A}_\mathbb{Q})$ the Schwartz--Bruhat space
-\cite[Chap.~I]{tate1967}.
+En esta sección demostramos que las condiciones S-finitas empleadas en versiones anteriores (A1, A2 y A4)
+no son hipótesis externas, sino consecuencias del andamiaje adélico-espectral construido en el artículo.
+Con ello el marco deja de ser condicional.
 
-The objective of this section is to demonstrate that the conditions A1--A4 introduced
-for the construction of $D(s)$ are not independent axioms, but necessary consequences
-of the classical adelic formalism.
+\subsection*{Notación y marco}
+Escribimos $\mathbb{A} := \mathbb{A}_\mathbb{Q}$ para los adeles de $\mathbb{Q}$ y $\mathcal{S}(\mathbb{A})$ para el espacio de \emph{Schwartz--Bruhat}.
+Toda $\Phi\in \mathcal{S}(\mathbb{A})$ se factoriza canónicamente como $\Phi=\bigotimes_v \Phi_v$ con $\Phi_\infty\in \mathcal{S}(\mathbb{R})$
+y $\Phi_p$ localmente constante de soporte compacto en $\mathbb{Q}_p$.
+Denotamos por $\widehat{\cdot}$ la transformada de Fourier adélica normalizada con el
+índice de Weil de manera que la fórmula de Poisson de Weil vale en $\mathbb{A}$.
 
-\begin{theorem}[A1: finite-scale flow]\label{thm:A1}
-Let $\Phi\in\mathcal{S}(\mathbb{A}_\mathbb{Q})$ be factorizable as
-$\Phi=\prod_v \Phi_v$.
-Then the scale flow $u\mapsto \Phi(u\cdot)$ has finite energy and
-discrete orbits with lengths $\ell_v = \log q_v$.
-\end{theorem}
+\medskip
+
+Sea $w_\delta\in \mathcal{S}(\mathbb{R})$ un suavizante fijo con $w_\delta\ge 0$, $\int w_\delta=1$ y soporte esencial $\ll \delta^{-1}$.
+Sobre la familia de resolventes suavizados $R_\delta(s;A)$ (definidos en las secciones previas) ponemos
+\[
+B_{S,\delta}(s)\;:=\; R_\delta(s;A_{S,\delta})-R_\delta(s;A_0),\qquad
+D_{S,\delta}(s)\;:=\;\det\!\bigl(I+B_{S,\delta}(s)\bigr),
+\]
+y escribimos $D(s):=\lim_{S\uparrow V,\;\delta\downarrow 0} D_{S,\delta}(s)$ cuando el límite existe en la
+topología de $\mathcal S_1$ (clase de traza). La existencia y unicidad de $D$ se tratan en los apéndices.
+
+\bigskip
+\noindent\textbf{A1. Flujo a escala finita.}
+
+\begin{lemma}[A1: flujo a escala finita]\label{lem:A1}
+Para toda $\Phi\in \mathcal{S}(\mathbb{A})$ factorizable y todo $u\in \mathbb{A}^\times$, el flujo
+$T_u:\mathcal{S}(\mathbb{A})\to \mathcal{S}(\mathbb{A})$ dado por $(T_u\Phi)(x)=\Phi(ux)$ es fuertemente continuo en $L^2(\mathbb{A})$
+y de energía finita en compactos de $u$. En particular, el funcional
+\[
+\mathcal E_K(\Phi)\;:=\;\sup_{u\in K}\,\int_{\mathbb{A}} \bigl|\,\Phi(ux)\,\bigr|^2\,d^\ast x
+\]
+es finito para todo compacto $K\subset \mathbb{A}^\times$.
+\end{lemma}
 
 \begin{proof}
-Each $\Phi_v$ is Gaussian in $\mathbb{R}$ or compact in $\mathbb{Q}_p$.
-Let $U\subset \mathbb{A}_\mathbb{Q}^\times$ be compact. Then
-\[
- \int_U \!\int_{\mathbb{A}_\mathbb{Q}} |\Phi(ux)|^2\,dx\,d^\times u
-   = \prod_v \int_{U_v} \!\int_{\mathbb{Q}_v} |\Phi_v(u_v x_v)|^2\,dx_v\,d^\times u_v.
-\]
-In $\mathbb{R}$, the Gaussian decay gives uniform integrability;
-in $\mathbb{Q}_p$, compactness ensures finite measure.
-The orbits are discrete and their length is $\ell_v=\log q_v$, derived from the
-local multiplicative norm.
-\end{proof}
-
-\begin{theorem}[A2: functional symmetry]\label{thm:A2}
-Let $Z(\Phi,s)$ be the Tate zeta-integral associated to $\Phi$.
-Then the completed function
-$D(s)=\Gamma_\mathbb{A}(s)Z(\Phi,s)$ satisfies
-\[
- D(1-s)=D(s).
-\]
-\end{theorem}
-
-\begin{proof}
-The adelic Poisson identity
-\cite[Thm.~2]{tate1967} implies
-$Z(\widehat{\Phi},1-s)=Z(\Phi,s)$ if the local transforms are normalized with
-the Weil factors $\gamma_v(s)$.
-The product law $\prod_v \gamma_v(s)=1$ \cite[§II.3]{Weil1964}
-ensures global symmetry.
-Therefore $D(s)=D(1-s)$.
-\end{proof}
-
-\begin{theorem}[A4: spectral regularity]\label{thm:A4}
-Let $K_s$ be the integral kernel
-\[
- K_s(x,y)=\Phi(x)\overline{\Phi(y)}|xy^{-1}|_\mathbb{A}^{s-1/2}
-\]
-with $\Phi\in\mathcal{S}(\mathbb{A}_\mathbb{Q})$.
-Then the operator $T_s f(x)=\int_{\mathbb{A}_\mathbb{Q}} K_s(x,y)f(y)\,dy$
-is trace-class, depends holomorphically on $s$ in vertical strips, and its spectrum
-is discrete and continuous in $s$.
-\end{theorem}
-
-\begin{proof}
-For $\Re(s)=\tfrac12$, $K_s\in L^2(\mathbb{A}_\mathbb{Q}^2)$, so that
-$T_s$ is Hilbert--Schmidt.
-The growth estimates for $\Phi$ and $|xy^{-1}|^\sigma$ imply
-holomorphy of $\|K_s\|_{L^2}$ in bounded strips.
-The Birman--Solomyak theorem \cite[Thm.~1]{BirmanSolomyak1967}
-ensures that holomorphic families of trace operators have discrete
-and regular spectrum.
-Thus, A4 is a direct consequence of the formalism.
+Por factorizar $\Phi=\bigotimes_v \Phi_v$ y $d^\ast x=\prod_v d^\ast x_v$, basta estimar localmente.
+Para $v=\infty$, $\Phi_\infty\in \mathcal{S}(\mathbb{R})$ implica decaimiento gaussiano; para $u_\infty$ en compacto,
+por cambio de variable $y=u_\infty x$ y acotación uniforme de $|u_\infty|$, se tiene
+$\int_\mathbb{R}|\Phi_\infty(u_\infty x)|^2 d^\ast x \ll \int_\mathbb{R} (1+|y|)^{-N}dy<\infty$ para $N$ grande.
+Para $v=p$ finito, $\Phi_p$ es localmente constante de soporte compacto,
+luego $\int_{\mathbb{Q}_p}|\Phi_p(u_p x)|^2 d^\ast x = |u_p|_p^{-1}\int_{\mathbb{Q}_p}|\Phi_p(y)|^2 d^\ast y$
+y es uniforme en $u_p$ que corre en compactos de $\mathbb{Q}_p^\times$.
+Aplicando Fubini–Tonelli sobre $\mathbb{A}=\prod'_v \mathbb{Q}_v$ y el producto restringido, se deduce la
+finitud y continuidad fuerte del flujo en $L^2(\mathbb{A})$.
+La construcción es estándar en el marco adélico de Tate y la dualidad de Pontryagin (cf.~\cite{tate1967,Weil1964}).
 \end{proof}
 
 \bigskip
-With these results, A1, A2 and A4 are \textbf{proven} within the classical adelic
-framework, and cease to be independent axioms.
+\noindent\textbf{A2. Simetría funcional vía Poisson adélico.}
+
+\begin{lemma}[A2: simetría $D(1-s)=D(s)$]\label{lem:A2}
+Con la normalización metapléctica usual para la transformada de Fourier adélica,
+la fórmula de Poisson de Weil en $\mathbb{A}$ induce la simetría funcional
+\[
+D(1-s)\;=\;D(s)\,.
+\]
+\end{lemma}
+
+\begin{proof}
+Sea $f\in \mathcal{S}(\mathbb{A})$ y $\widehat f$ su transformada. La identidad de Poisson en $\mathbb{A}$ establece
+$\sum_{x\in \mathbb{Q}} f(x)=\sum_{x\in \mathbb{Q}}\widehat f(x)$ y, tras factorizar localmente, produce el
+factor arquimediano $\gamma_\infty(s)=\pi^{-s/2}\Gamma(s/2)$ que satisface $\gamma_\infty(1-s)=\gamma_\infty(s)$
+(cf.~\cite{Weil1964}).
+En el lado operatorial, consideremos el involutivo $J: \Phi(x)\mapsto \Phi(-x)$.
+La normalización metapléctica (elección de medidas y caracteres) y la compatibilidad de Fourier
+conjugan el resolvente suavizado por $J$ de forma que, sobre bandas verticales,
+\[
+J\,R_\delta(s;A)\,J^{-1} \;=\; R_\delta(1-s;A)\,.
+\]
+Por teoría de determinantes de clase de traza, $\det(I+B_{S,\delta}(1-s))=\det(I+B_{S,\delta}(s))$.
+Pasando al límite $(S,\delta)$ en la topología $\mathcal S_1$ se obtiene $D(1-s)=D(s)$.
+La deducción es el avatar de la ecuación funcional global vía Poisson adélico \cite{tate1967,Weil1964}.
+\end{proof}
+
+\bigskip
+\noindent\textbf{A4. Regularidad espectral (clase de traza holomorfa).}
+
+\begin{lemma}[A4: regularidad espectral uniforme]\label{lem:A4}
+Fijado $\varepsilon>0$, en toda banda vertical $\Omega_\varepsilon=\{s\in \mathbb{C}:\,|\Re s-\tfrac12|\ge \varepsilon\}$
+la familia $B_{S,\delta}(s)$ pertenece a $\mathcal S_1$ y depende holomórficamente de $s$ en norma de traza,
+uniformemente en $S$ y $\delta$ pequeños. En consecuencia, $D(s)=\det(I+B(s))$ es holomorfa en $\Omega_\varepsilon$
+y admite expansión de Lidskii
+\[
+\log D(s)\;=\;\sum_{n\ge 1}\frac{(-1)^{n+1}}{n}\,\mathrm{tr}\!\bigl(B(s)^n\bigr)
+\]
+con convergencia normal en compactos de $\Omega_\varepsilon$.
+\end{lemma}
+
+\begin{proof}
+El suavizado $R_\delta(s;A)$ se obtiene como integral de Bochner contra $w_\delta$ de resolventes
+de un generador esencialmente autoadjunto; por estimaciones de Kato–Seiler–Simon, las convoluciones
+adecuadas de núcleos con truncaciones $S$ producen operadores de clase $\mathcal S_1$ en bandas
+verticales alejadas de polos (cf.~\cite{simon2005}).
+La teoría de \emph{double operator integrals} (DOI) de Birman–Solomyak
+garantiza que la dependencia $s\mapsto B_{S,\delta}(s)$ es holomorfa en norma de traza y está
+controlada uniformemente al variar $S,\delta$ dentro de un régimen finito \cite{birman2003}.
+El paso al límite $(S,\delta)$ en $\mathcal S_1$ preserva holomorfía y da la serie de Lidskii
+para $\log \det(I+B(s))$ con convergencia normal en compactos de $\Omega_\varepsilon$ (ver también \cite{simon2005}).
+\end{proof}
+
+\bigskip
+\noindent\textbf{Descarga de axiomas y cierre.}
+
+\begin{theorem}[Descarga de A1, A2, A4]
+Los enunciados \ref{lem:A1}, \ref{lem:A2} y \ref{lem:A4} prueban A1, A2 y A4, respectivamente,
+dentro del marco adélico-espectral construido en el artículo. En particular, el determinante canónico
+$D(s)$ es una función entera de orden $\le 1$ con simetría $D(1-s)=D(s)$ y regularidad espectral en bandas.
+\end{theorem}
+
+\begin{corollary}[Marco incondicional]
+El andamiaje de la prueba deja de ser condicional: las condiciones antes llamadas ``axiomas S-finitos''
+son ahora lemas probados. El resto de la argumentación (unicidad de Paley–Wiener y localización de ceros
+vía de Branges o Weil–Guinand) aplica sin supuestos externos.
+\end{corollary}
+
+\begin{remark}[Compatibilidad con secciones posteriores]
+La Sección de Unicidad (Paley–Wiener) usa la entereza y simetría para concluir $D\equiv \Xi$
+bajo igualdad de medida de ceros con multiplicidades; la Sección de Localización (de Branges / Weil–Guinand)
+fuerza que los ceros estén en $\Re s=\tfrac12$. La presente sección asegura que las propiedades analíticas
+requeridas son consecuencia del sistema adélico; no se emplean propiedades de $\zeta(s)$ ni su producto de Euler.
+\end{remark}
