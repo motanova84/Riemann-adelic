@@ -330,14 +330,69 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any, Dict, Optional
 
-from .watcher import RepoWatcher
-from .autorepair_engine import AutoRepairEngine
-from .spectral_monitor import SpectralMonitor
-from .ai_notifier import Notifier
-from .sabio_bridge import SabioBridge
-from .aik_sync import AikSync
+
+class RepoWatcher:
+    """Local placeholder implementation for repository watching.
+
+    The real implementation should be provided in a dedicated module.
+    This stub is designed to avoid import errors and to be minimally
+    compatible with typical usage patterns in NoesisGuardian.
+    """
+
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
+        self._config = kwargs
+
+    def start(self) -> None:
+        """Start watching the repository (no-op placeholder)."""
+        return None
+
+    def run(self) -> Dict[str, Any]:
+        """Run a single watch cycle and return an empty result."""
+        return {}
 
 
+class AutoRepairEngine:
+    """Local placeholder implementation for automatic repair engine."""
+
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
+        self._config = kwargs
+
+    def run(self) -> Dict[str, Any]:
+        """Execute auto-repair logic (no-op placeholder)."""
+        return {}
+
+
+class SpectralMonitor:
+    """Local placeholder implementation for spectral monitoring."""
+
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
+        self._config = kwargs
+
+    def run(self) -> Dict[str, Any]:
+        """Execute spectral monitoring (no-op placeholder)."""
+        return {}
+
+
+class SabioBridge:
+    """Local placeholder implementation for Sabio bridge integration."""
+
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
+        self._config = kwargs
+
+    def sync(self) -> None:
+        """Synchronize with external Sabio systems (no-op placeholder)."""
+        return None
+
+
+class AikSync:
+    """Local placeholder implementation for Aik synchronization."""
+
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
+        self._config = kwargs
+
+    def sync(self) -> None:
+        """Perform Aik synchronization (no-op placeholder)."""
+        return None
 class NoesisGuardian:
     """
     Central coordinator for QCAL ∞³ ecosystem monitoring.
