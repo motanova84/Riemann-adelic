@@ -1,0 +1,51 @@
+# Advanced ML and GPU acceleration dependencies
+# These require numpy>=2.0 and may conflict with Qiskit dependencies
+# Use separately from requirements-core.txt for AI/ML specific tasks
+# (qcal-ai, nasa-gravity, advanced optimization, etc.)
+
+# Automatic differentiation and GPU acceleration
+jax>=0.4.20
+jaxlib>=0.4.20
+
+# GPU acceleration (optional, Linux x86_64 only)
+cupy-cuda12x; platform_system == "Linux" and platform_machine == "x86_64"
+
+# Machine Learning and optimization
+scikit-learn>=1.3.0
+xgboost>=2.0.0
+
+# JIT compilation and performance optimization
+numba>=0.58.0
+llvmlite>=0.41.0
+
+# Web services and dashboards
+fastapi>=0.111
+uvicorn[standard]>=0.30
+websockets>=12.0
+dash>=2.17
+plotly>=5.22
+
+# Advanced numerical methods
+numexpr>=2.8.5
+bottleneck>=1.3.7
+
+# Graph theory and combinatorics
+networkx>=3.1
+python-igraph>=0.10.8
+
+# Tensor operations and decompositions
+tensorly>=0.8.1
+opt-einsum>=3.3.0
+
+# Advanced statistical tools
+statsmodels>=0.14.0
+patsy>=0.5.3
+
+# Sparse matrix operations
+sparse>=0.14.0
+
+# Optimization and root finding
+nlopt>=2.7.1
+
+# Note: This file requires numpy>=2.0 compatible environment
+# Install separately from requirements-core.txt

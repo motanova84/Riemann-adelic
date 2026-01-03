@@ -9,6 +9,8 @@ import mpmath as mp
 from typing import Union, Callable
 from functools import lru_cache
 
+def truncated_gaussian(u, a=50.0, sigma=10.0):
+    """Smooth compactly supported Gaussian function with larger support."""
 # Cache for frequently computed values
 @lru_cache(maxsize=128)
 def _cached_exp(x: float) -> mp.mpf:
@@ -31,6 +33,9 @@ def truncated_gaussian(u: Union[int, float, mp.mpf], a: float = 5.0, sigma: floa
         return mp.mpf('0')
     return mp.exp(-u**2 / (2 * sigma**2))
 
+def mellin_transform(f, s, lim=5.0):
+    """Numerical Mellin transform: ∫ f(u) e^{su} du with high precision."""
+    return mp.quad(lambda u: f(u) * mp.exp(s * u), [-lim, lim], maxdegree=15)
 def f1(u: Union[int, float, mp.mpf], a: float = 3.0) -> mp.mpf:
     """
     Enhanced first compactly supported test function - smooth bump function.
