@@ -1,4 +1,11 @@
 \documentclass[12pt]{article}
+\usepackage{amsmath,amssymb,amsthm,hyperref,mathtools}
+\usepackage[margin=3cm]{geometry}
+
+\title{Adelic Framework Towards a Proof of the Riemann Hypothesis}
+\author{Jos\'e Manuel Mota Burruezo}
+\date{\today}
+
 \usepackage[utf8]{inputenc}
 \usepackage{amsmath, amssymb, amsthm, mathtools}
 \usepackage[hidelinks]{hyperref}
@@ -27,6 +34,21 @@ via S-Finite Adelic Spectral Systems}
 \begin{document}
 
 \maketitle
+\tableofcontents
+
+\input{sections/intro.tex}
+\input{sections/construction_D.tex}
+\input{sections/axiomas_a_lemas.tex}
+\input{sections/factor_arquimediano.tex}
+\input{sections/unicidad_paley_wiener.tex}
+\input{sections/de_branges.tex}
+\input{sections/localizacion_ceros.tex}
+\input{sections/conclusion.tex}
+
+\bibliographystyle{plain}
+\bibliography{references}
+
+\end{document}
 
 \begin{abstract}
 This paper presents a complete \textbf{unconditional} resolution of the Riemann Hypothesis, based on a spectral framework built from S-finite adelic systems.  
@@ -78,6 +100,9 @@ This construction is offered as a rigorous, unconditional framework for expert s
 
 \section{Conclusion}
 \input{sections/conclusion}
+
+\section{Validación Integral del Marco QCAL}
+\input{sections/validacion_integral_qcal}
 
 \appendix
 

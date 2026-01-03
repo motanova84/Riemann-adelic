@@ -5,7 +5,6 @@
 -- A4: Spectral regularity (proven from Birman-Solomyak theory)
 
 import Mathlib.Analysis.Complex.Basic
-import Mathlib.NumberTheory.ZetaFunction
 import Mathlib.Analysis.Fourier.PoissonSummation
 import Mathlib.MeasureTheory.Integral.Basic
 import Mathlib.Analysis.Schwartz

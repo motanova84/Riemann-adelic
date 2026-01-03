@@ -3,6 +3,9 @@
 -- Tests the transition from axiomatic to constructive approach
 
 import RiemannAdelic.axioms_to_lemmas
+import RiemannAdelic.entire_order
+import RiemannAdelic.functional_eq
+import RiemannAdelic.de_branges
 
 -- Test that new constructive lemmas are properly declared
 #check lemma_A1_finite_scale_flow

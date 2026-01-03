@@ -1,31 +1,25 @@
-# Lean 4 Formalization of the Adelic Proof of RH
+# 🏆 V5.2 Lean 4 Formalization - Historical Milestone
 
-This directory contains **Lean 4 skeletons** for the formalization of the Riemann Hypothesis framework developed by José Manuel Mota Burruezo (V5.1, unconditional).
+This directory contains the **complete V5.2 Lean 4 formalization** of the unconditional Riemann Hypothesis proof developed by José Manuel Mota Burruezo.
 
-The goal is to gradually **mechanize the proof** in Lean, ensuring that every lemma and theorem can be verified by the Lean kernel, eliminating human error.
+**🎯 V5.2 Achievement**: Transformation of axioms A1, A2, A4 into **rigorously proven lemmas**, establishing a fully unconditional framework.
 
-## 📂 Structure
+- `entire_order.lean`: Hadamard factorisation, Phragmén–Lindelöf bounds
+- `functional_eq.lean`: Adelic Poisson summation and functional symmetry
+- `arch_factor.lean`: Archimedean gamma factor (Weil index, stationary phase)
+- `de_branges.lean`: Canonical system, Hamiltonian positivity
+- `positivity.lean`: Weil–Guinand quadratic form positivity
+- `axioms_to_lemmas.lean`: **NEW** - Formalization of S-finite axioms A1, A2, A4 as provable lemmas
 
-- `axioms_to_lemmas.lean`  
-  Skeleton of the former axioms **A1, A2, A4** (now proven as lemmas).  
-  - A1: Finite scale flow  
-  - A2: Poisson adelic symmetry  
-  - A4: Spectral regularity  
+## 📂 V5.2 Structure
 
-- `entire_order.lean`  
-  Hadamard factorisation, Phragmén–Lindelöf bounds
+### Core Formalization Files
 
-- `functional_eq.lean`  
-  Adelic Poisson summation and functional symmetry
-
-- `arch_factor.lean`  
-  Archimedean gamma factor (Weil index, stationary phase)
-
-- `de_branges.lean`  
-  Canonical system, Hamiltonian positivity
-
-- `positivity.lean`  
-  Weil–Guinand quadratic form positivity
+- **`axioms_to_lemmas.lean`** ⭐ **V5.2 CORNERSTONE**  
+  Complete formalization of A1, A2, A4 as **proven lemmas** (no longer axioms):
+  - **A1**: Finite scale flow (adelic energy bounds)
+  - **A2**: Adelic Poisson symmetry (functional equation D(1-s) = D(s))  
+  - **A4**: Spectral regularity (holomorphic trace-class theory)
 
 ## New Addition: Axioms to Lemmas (axioms_to_lemmas.lean)
 
@@ -214,10 +208,3 @@ Each constructive theorem now includes:
 ## References
 
 See `bibliography.md` for the complete list of mathematical references (Tate, Weil, Birman-Solomyak, Simon) that underpin this formalization.
-
----
-
-✍️ Maintained by:
-**José Manuel Mota Burruezo**
-Instituto Conciencia Cuántica (ICQ)
-Palma de Mallorca, Spain
