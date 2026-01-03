@@ -1,0 +1,16 @@
+{
+  "timestamp": "2025-11-30T14:12:10.576156",
+  "author": "Jos\u00e9 Manuel Mota Burruezo \u03a8 \u2727 \u221e\u00b3",
+  "institution": "Instituto de Conciencia Cu\u00e1ntica (ICQ)",
+  "doi": "10.5281/zenodo.17116291",
+  "qcal_frequency": 141.7001,
+  "qcal_coherence": 244.36,
+  "results": {
+    "Punto 1 - Formalizaci\u00f3n Lean 4": true,
+    "Punto 2 - Reducci\u00f3n Espectral": true,
+    "Punto 3 - No Criterio de Li": true,
+    "Punto 4 - Reproducibilidad": true,
+    "Punto 5 - Derivaci\u00f3n F\u00edsica": true
+  },
+  "overall_status": "COMPLETO"
+}

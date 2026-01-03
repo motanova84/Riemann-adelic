@@ -133,7 +133,7 @@ def simulate_deployment():
         
         # Copy main files as workflow would
         import shutil
-        shutil.copy("riemann_viewer.html", f"{temp_dir}/index.html")
+        shutil.copy("public/index.html", f"{temp_dir}/index.html")
         shutil.copy("README.md", f"{temp_dir}/README.md")
         
         # Copy data directory if it exists
@@ -175,8 +175,8 @@ def main():
     # 2. Check HTML dashboard
     print("\n🌐 HTML DASHBOARD")
     print("-" * 30)
-    html_exists = check_file_exists("riemann_viewer.html", "Main dashboard")
-    html_valid = check_html_file("riemann_viewer.html") if html_exists else False
+    html_exists = check_file_exists("public/index.html", "Main dashboard")
+    html_valid = check_html_file("public/index.html") if html_exists else False
     checks.extend([html_exists, html_valid])
     
     # 3. Check data files
