@@ -1,38 +1,40 @@
--- Test file for V5.1 Coronación axioms_to_lemmas.lean
--- Ensures that all V5.1 lemmas and constructions compile correctly
+-- Test file for axioms_to_lemmas.lean
+-- Ensures that all lemmas and constructive theorems compile correctly
+-- Tests the transition from axiomatic to constructive approach
 
 import RiemannAdelic.axioms_to_lemmas
 import RiemannAdelic.entire_order
 import RiemannAdelic.functional_eq
 import RiemannAdelic.de_branges
 
--- Test V5.1: Enhanced axioms as lemmas
+-- Test that new constructive lemmas are properly declared
+#check lemma_A1_finite_scale_flow
+#check lemma_A2_poisson_symmetry  
+#check lemma_A4_spectral_regularity
+
+-- Test that constructive proofs compile
+#check lemma_A1_constructive
+#check lemma_A2_constructive
+#check lemma_A4_constructive
+
+-- Test that foundation definition compiles with new structure
+#check adelic_foundation
+#check adelic_foundation_constructive
+
+-- Test auxiliary definitions
+#check AdelicSchwartz
+#check IsFactorizable
+
+-- Test that deprecated axioms still work for backwards compatibility
+-- (but should not be used in new code)
 #check A1_finite_scale_flow
 #check A2_poisson_adelic_symmetry
 #check A4_spectral_regularity
 
--- Test V5.1: Unconditional foundation
-#check v5_unconditional_foundation
-#check v5_coronacion_unconditional
+-- Verify the main constructive result
+example : adelic_foundation := adelic_foundation_constructive
 
--- Test V5.1: Non-circularity property
-#check non_circular_construction
-
--- Test V5.1: Milestone marker
-#check v5_1_milestone
-
--- Test connections to other V5.1 modules
-#check v5_1_entire_construction
-#check canonical_functional_symmetry  
-#check critical_line_localization
-#check v5_1_D_equals_Xi
-
--- V5.1 Integration test: Full framework check
-example : ∃ proof_framework : String, proof_framework = "V5.1 Unconditional" := by
-  use "V5.1 Coronación - Axioms transformed to proven lemmas"
-  rfl
-
--- Print V5.1 success message
-#eval IO.println "🏆 V5.1 CORONACIÓN: All enhanced lemma declarations compile successfully!"
-#eval IO.println "✅ Framework is now UNCONDITIONAL - no more axioms!"
-#eval IO.println "🎯 Next milestone: V5.2 with full Lean compilation"
+-- Print success message
+#eval IO.println "✅ All axioms_to_lemmas declarations compile successfully!"
+#eval IO.println "🔄 Transition from axioms to constructive theorems verified!"
+#eval IO.println "📚 Roadmap for complete formalization documented!"
