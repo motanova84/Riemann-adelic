@@ -8,9 +8,7 @@ from .hook_calabi_yau_resonance import CalabiYauResonance
 
 __all__ = ['CalabiYauResonance']
 #!/usr/bin/env python3
-"""
-Noesis Guardian 3.0 - Modules package
-"""
+"""Noesis Guardian 3.0 - Modules package
 NOESIS GUARDIAN 3.0 — Modules Package
 NOESIS GUARDIAN 3.0 — Modules
 
