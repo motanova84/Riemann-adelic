@@ -672,7 +672,7 @@ class NoesisGuardian:
     def run_cycle(self) -> None:
         """Run a single monitoring and maintenance cycle."""
         repo_state = self.watcher.scan()
-        spectral_state = self.spectral.check()
+        spectral_state = self.spectral_monitor.check()
     def run(self) -> dict:
         """
         Execute a complete Guardian monitoring cycle.
