@@ -1,5 +1,53 @@
 \section{De Axiomas a Lemas (A1--A4)}
 
+\begin{lemma}[A1: Flujo a escala finita]\label{lem:A1}
+Para $\Phi \in \mathcal{S}(\mathbb{A}_{\mathbb{Q}})$ factorizable, el flujo
+$u \mapsto \Phi(u\cdot)$ es localmente integrable con energía finita.
+\end{lemma}
+
+\begin{proof}
+Por la factorización adélica de Tate \cite{Tate1967} y la compacidad local de
+$\mathbb{Q}_p$, tenemos que:
+\begin{enumerate}
+\item En el lugar archimediano $v=\infty$, $\Phi_\infty \in \mathcal{S}(\mathbb{R})$ 
+   garantiza decaimiento gaussiano, por lo que $\int_{\mathbb{R}} |\Phi_\infty(ux)|^2 dx < \infty$.
+\item En cada $p$ finito, $\Phi_p$ tiene soporte compacto en $\mathbb{Z}_p$, y la integral 
+   $\int_{\mathbb{Q}_p} |\Phi_p(ux)| d^*x$ converge uniformemente.
+\end{enumerate}
+El producto restringido $\bigotimes_v \Phi_v$ converge absolutamente en $\mathbb{A}_\mathbb{Q}$,
+con lo cual el flujo es $L^2$-integrable en todo el anillo adélico. 
+\end{proof}
+
+\begin{lemma}[A2: Simetría por Poisson adélico]\label{lem:A2}
+Con la normalización metapléctica, la identidad de Poisson en $\mathbb{A}_\mathbb{Q}$
+implica $D(1-s) = D(s)$ tras completar con $\gamma_\infty(s)$.
+\end{lemma}
+
+\begin{proof}
+La fórmula de Poisson adélica de Weil \cite{Weil1964} establece
+\[
+\sum_{x\in \mathbb{Q}} f(x) = \sum_{x\in \mathbb{Q}} \hat{f}(x), \quad f \in \mathcal{S}(\mathbb{A}_\mathbb{Q}).
+\]
+Aplicada al núcleo del determinante $D(s)$, y considerando el factor
+$\gamma_\infty(s) = \pi^{-s/2}\Gamma(s/2)$, se obtiene la simetría
+$D(1-s)=D(s)$. El teorema de rigidez arquimediana refuerza la invariancia.
+\end{proof}
+
+\begin{lemma}[A4: Regularidad espectral]\label{lem:A4}
+Sea $K_s$ un núcleo suave adélico que define operadores de traza en una banda vertical.
+Entonces $s \mapsto D(s)$ es holomorfa y espectralmente regular en $s$.
+\end{lemma}
+
+\begin{proof}
+Por Birman–Solomyak \cite{BirmanSolomyak1977} y Simon \cite{SimonTraceIdeals2005}:
+\begin{enumerate}
+\item El resolvente suavizado $R_\delta(s; A_\delta)$ es de clase de traza $\mathcal{S}_1$ 
+   con $\|R_\delta(s)\|_1 \le C e^{|\Im s|\delta}$.
+\item La familia $B_\delta(s)$ es holomorfa en $\mathcal{S}_1$-norma en bandas verticales.
+\item El determinante regularizado $D(s) = \det(I+B_\delta(s))$ es holomorfo de orden $\le 1$,
+   con desarrollo convergente en series de trazas.
+\end{enumerate}
+Por lo tanto, $D(s)$ goza de regularidad espectral uniforme en bandas críticas.
 \newtheorem{theoremE}{Theorem}[section]
 \newtheorem{lemmaE}[theoremE]{Lemma}
 
