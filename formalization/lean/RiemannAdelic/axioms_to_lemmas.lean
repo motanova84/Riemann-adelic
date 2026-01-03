@@ -3,7 +3,6 @@
 -- Reference: docs/paper/sections/axiomas_a_lemas.tex
 
 import Mathlib.Analysis.Complex.Basic
-import Mathlib.NumberTheory.ZetaFunction
 import Mathlib.Analysis.Fourier.PoissonSummation
 import Mathlib.MeasureTheory.Integral.Basic
 import Mathlib.Analysis.NormedSpace.Basic

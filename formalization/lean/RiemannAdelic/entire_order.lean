@@ -3,6 +3,9 @@
 
 import Mathlib.Analysis.Complex.Basic
 import Mathlib.Analysis.Analytic.Basic
+import Mathlib.Algebra.BigOperators.Infinite
+import Mathlib.Topology.MetricSpace.Basic
+import Mathlib.Data.Real.Basic
 
 -- V5.1: Enhanced entire function theory for D(s) ≡ Ξ(s)
 def entire_finite_order (f : ℂ → ℂ) (order : ℝ) : Prop := 

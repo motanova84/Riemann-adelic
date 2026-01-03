@@ -1,0 +1,67 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "outputDirectory": "public",
+
+  "buildCommand": "echo 'No build step required. Static HTML + Python execution only'",
+  "installCommand": "pip install -r requirements.txt",
+
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "X-Riemann-Adelic-Validation", "value": "V5-Coronación" },
+        { "key": "X-QCAL-Frequency", "value": "141.7001Hz" },
+        { "key": "X-Noesis-Version", "value": "∞³" }
+      ]
+    }
+  ],
+
+  "rewrites": [
+    {
+      "source": "/validate",
+      "destination": "/validate_v5_coronacion.py"
+    },
+    {
+      "source": "/demo",
+      "destination": "/demo_paradigm_shift.py"
+    },
+    {
+      "source": "/notebook",
+      "destination": "/notebooks/validation.ipynb"
+    }
+  ],
+
+  "crons": [
+    {
+      "path": "/api/validate-hourly",
+      "schedule": "0 * * * *"
+    },
+    {
+      "path": "/api/sync-riemann",
+      "schedule": "14 14 * * *"
+    }
+  ],
+
+  "functions": {
+    "api/*.py": {
+      "maxDuration": 60,
+      "memory": 2048
+    },
+    "notebooks/*.ipynb": {
+      "maxDuration": 300,
+      "memory": 4096
+    }
+  },
+
+  "images": {
+    "formats": ["image/webp"],
+    "sizes": [512, 1080, 2048],
+    "minimumCacheTTL": 60,
+    "dangerouslyAllowSVG": false
+  },
+
+  "regions": ["fra1", "iad1", "gru1"],
+  "functionFailoverRegions": ["hnd1"]
+}

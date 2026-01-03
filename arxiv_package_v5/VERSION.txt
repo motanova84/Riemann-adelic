@@ -1,0 +1,3 @@
+Version V5 — Coronación ArXiv Package
+Generated: 2025-09-25 06:45:57 UTC
+Repository: https://github.com/motanova84/-jmmotaburr-riemann-adelic

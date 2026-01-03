@@ -28,8 +28,16 @@ import tempfile
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 import mpmath as mp
-from validate_explicit_formula import prime_sum, archimedean_sum, zero_sum_limited, weil_explicit_formula
-from utils.mellin import truncated_gaussian
+
+# Import functions only when needed to avoid circular imports
+def _import_validation_functions():
+    """Lazy import to avoid circular dependency."""
+    try:
+        from validate_explicit_formula import prime_sum, archimedean_sum, zero_sum_limited, weil_explicit_formula
+        from utils.mellin import truncated_gaussian
+        return prime_sum, archimedean_sum, zero_sum_limited, weil_explicit_formula, truncated_gaussian
+    except ImportError:
+        return None, None, None, None, None
 
 @dataclass
 class PerformanceMetrics:
@@ -87,6 +95,23 @@ class PerformanceMonitor:
         T = params.get('integration_t', 10)
         sigma0 = params.get('sigma0', 2.0)
         lim_u = params.get('lim_u', 3.0)
+        
+        # Import functions lazily to avoid circular imports
+        prime_sum, archimedean_sum, zero_sum_limited, weil_explicit_formula, truncated_gaussian = _import_validation_functions()
+        
+        if not all([prime_sum, archimedean_sum, zero_sum_limited, truncated_gaussian]):
+            print("  ⚠️ Validation functions not available, skipping benchmark")
+            return PerformanceMetrics(
+                timestamp=datetime.now().isoformat(),
+                test_name=test_name,
+                parameters=params,
+                execution_time=0.0,
+                memory_peak=0.0,
+                memory_samples=[],
+                error_metrics={},
+                convergence_data={},
+                metadata={"status": "skipped", "reason": "circular_import_avoidance"}
+            )
         
         f = truncated_gaussian
         zeros_file = "zeros/zeros_t1e8.txt"

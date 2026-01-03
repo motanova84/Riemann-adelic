@@ -8,7 +8,7 @@ import RiemannAdelic.de_branges
 
 -- Test V5.1: Enhanced axioms as lemmas
 #check A1_finite_scale_flow
-#check A2_poisson_adelic_symmetry  
+#check A2_poisson_adelic_symmetry
 #check A4_spectral_regularity
 
 -- Test V5.1: Unconditional foundation
