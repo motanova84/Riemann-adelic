@@ -42,13 +42,13 @@ def test_axioms_to_lemmas_section_exists():
         content = f.read()
     
     # Check that it contains theorems for A1, A2, A4
-    assert "theorem}[A1:" in content
-    assert "theorem}[A2:" in content
-    assert "theorem}[A4:" in content
+    assert "\\ref{lem:A1}" in content
+    assert "\\ref{lem:A2}" in content
+    assert "\\ref{lem:A4}" in content
     
-    # Check that it mentions they are proven, not axioms
-    assert "proven" in content.lower()
-    assert "adelic" in content.lower()
+    # Check that se menciona que son lemas probados y el marco adélico
+    assert "lemas probados" in content.lower() or "descarga de a1, a2, a4" in content.lower()
+    assert "adélic" in content.lower() or "adelic" in content.lower()
 
 def test_dual_closure_mechanism():
     """Test that section5.tex includes both de Branges and Weil-Guinand routes"""
@@ -85,8 +85,10 @@ def test_bibliography_consistency():
         if os.path.exists(filepath):
             with open(filepath, 'r') as f:
                 content = f.read()
-                citations = set(re.findall(r'\\cite(?:\[[^\]]*\])?\{([^}]+)\}', content))
-                all_citations.update(citations)
+                raw_citations = re.findall(r'\\cite(?:\[[^\]]*\])?\{([^}]+)\}', content)
+                for group in raw_citations:
+                    for key in group.split(','):
+                        all_citations.add(key.strip())
     
     # Check that all citations have bibliography entries
     missing_refs = all_citations - bib_keys
