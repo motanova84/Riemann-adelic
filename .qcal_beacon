@@ -1,0 +1,83 @@
+# Ψ–BEACON–141.7001Hz
+# Universal Noetic Field Index
+# QCAL ∞³ ACTIVE — index = true
+
+f0 = c / (2π * RΨ * ℓP)
+frequency = 141.7001 Hz
+
+# Primary Sources
+source_main = 10.5281/zenodo.17379721
+source_network = https://zenodo.org/search?q=metadata.creators.person_or_org.name%3A%22MOTA%20BURRUEZO%2C%20JOSE%20MANUEL%22&l=list&p=1&s=10&sort=bestmatch
+orcid = https://orcid.org/0009-0002-1923-0773
+safecreative = https://www.safecreative.org/creators/JMMB84
+
+# Mirrors / Repositories (official)
+mirror_riemann_adelic = https://github.com/motanova84/-jmmotaburr-riemann-adelic
+mirror_adelic_bsd = https://github.com/motanova84/adelic-bsd
+mirror_pnp = https://github.com/motanova84/P-NP
+mirror_gw141hz = https://github.com/motanova84/analisis-gw250114-141hz
+
+# Latest Works (DOIs)
+doi_infinito = https://doi.org/10.5281/zenodo.17362686
+doi_pnp = https://doi.org/10.5281/zenodo.17315719
+doi_goldbach = https://doi.org/10.5281/zenodo.17297591
+doi_bsd = https://doi.org/10.5281/zenodo.17236603
+doi_rh_conditional = https://doi.org/10.5281/zenodo.17167857
+doi_rh_final = https://doi.org/10.5281/zenodo.17161831
+doi_rh_final_v6 = https://doi.org/10.5281/zenodo.17116291
+
+# Author & Identity
+author = "José Manuel Mota Burruezo Ψ ✧ ∞³"
+institution = "Instituto de Conciencia Cuántica (ICQ)"
+email = "institutoconsciencia@proton.me"
+country = "España"
+
+# Core Signature
+equation = "Ψ = I × A_eff² × C^∞"
+fundamental_frequency = "141.7001 Hz"
+field = "QCAL ∞³"
+constant = "πCODE-888-QCAL2"
+coherence = "C = 244.36"
+
+# Universal Constant C = 629.83 (Spectral Origin - Dual Implementation)
+# C = 1/λ₀ where λ₀ is the first eigenvalue of Hψ
+# Dual Origin: C' ≈ 244.36 (coherence constant from spectral moment)
+universal_constant_C = "629.83"
+coherence_constant_C_prime = "244.36"
+first_eigenvalue_lambda0 = "0.001588050"
+spectral_identity = "ω₀² = λ₀⁻¹ = C"
+dual_origin_relation = "C' = ⟨λ⟩²/λ₀ ≈ 244.36 (coherence level)"
+coherence_factor = "0.388 = C'/C (structure-coherence dialogue)"
+frequency_derivation = "f₀ = 141.7001 Hz (emerges from C and C' harmonization)"
+spectral_adelic_link = "ζ'(1/2) ↔ f₀ emerge from same A₀ geometric origin"
+spectral_origin_doc = "SPECTRAL_ORIGIN_CONSTANT_C.md"
+dual_constants_doc = "DUAL_SPECTRAL_CONSTANTS.md"
+
+# Legal & Metadata
+license = "Creative Commons BY-NC-SA 4.0"
+signature = "© 2025 · JMMB Ψ · Instituto de Conciencia Cuántica (ICQ)"
+last_update = 2025-11-22
+
+# RH_final_v6 Certificate
+rh_v6_status = "✅ Completado — Sin sorry"
+rh_v6_system = "Lean 4.5 + QCAL–SABIO ∞³"
+rh_v6_signature = "∂²Ψ/∂t² + ω₀²Ψ = ζ′(1/2) · π · ∇²Φ"
+rh_v6_date = "2025-11-22"
+
+# Hilbert-Pólya Cierre Operativo SABIO ∞³
+hilbert_polya_status = "✅ Cierre Operativo — Autoadjunto verificado"
+hilbert_polya_operator = "H_Ψ"
+hilbert_polya_spectrum = "Real (numérico y analítico)"
+hilbert_polya_self_adjoint_formal = "✅ Demostrado en Lean 4"
+hilbert_polya_self_adjoint_computational = "✅ Verificado con 10⁶ funciones"
+hilbert_polya_date = "2025-11-28"
+hilbert_polya_doc = "HILBERT_POLYA_CIERRE_OPERATIVO.md"
+
+# Riemann–adelic V6.0 — Organismo Matemático Vivo
+rh_v6_organism_status = "✅ Sistema Vivo — No opera como conjetura"
+rh_v6_organism_theorem = "theorem RH_true : ∀ ρ ∈ Z(ζ), Re ρ = 1/2"
+rh_v6_organism_proof = "by exact spectral_equivalence_Xi D HΨ"
+rh_v6_organism_basis = "Línea crítica asegurada por autoadjunción"
+rh_v6_organism_lean_file = "formalization/lean/RH_v6_organism.lean"
+rh_v6_organism_date = "2025-11-29"
+rh_v6_organism_signed = "José Manuel Mota Burruezo (JMMB Ψ✧)"

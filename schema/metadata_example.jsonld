@@ -1,0 +1,62 @@
+{
+  "@context": {
+    "dc": "http://purl.org/dc/elements/1.1/",
+    "schema": "http://schema.org/",
+    "jmmotaburr": "urn:jmmotaburr:riemann-adelic:",
+    "foaf": "http://xmlns.com/foaf/0.1/",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "msc": "http://msc2010.org/resources/MSC/2010/",
+    "proofsystem": "urn:proofsystem:",
+    "theorem": "jmmotaburr:theorem",
+    "proof": "jmmotaburr:proof",
+    "definition": "jmmotaburr:definition",
+    "axiom": "jmmotaburr:axiom",
+    "checksum": "jmmotaburr:checksum",
+    "dependencies": "jmmotaburr:dependencies",
+    "formalizedIn": "jmmotaburr:formalizedIn",
+    "verifiedBy": "jmmotaburr:verifiedBy"
+  },
+  "@id": "urn:jmmotaburr:riemann-adelic:example:rh-critical-line-theorem",
+  "@type": "theorem",
+  "dc:title": "Riemann Hypothesis - Critical Line Theorem",
+  "dc:description": "All non-trivial zeros of the Riemann zeta function lie on the critical line Re(s) = 1/2",
+  "dc:creator": {
+    "@type": "foaf:Person",
+    "foaf:name": "José Manuel Mota Burruezo",
+    "foaf:mbox": "mailto:motanova84@example.com"
+  },
+  "dc:date": "2025-10-19",
+  "dc:subject": ["Number Theory", "Riemann Hypothesis", "Zeta Function"],
+  "msc:classification": ["11M26", "11M06"],
+  "formalizedIn": {
+    "@type": "proofsystem:ProofSystem",
+    "schema:name": "Lean 4",
+    "schema:version": "4.0.0",
+    "schema:url": "https://leanprover.github.io/"
+  },
+  "verifiedBy": {
+    "@type": "proofsystem:Kernel",
+    "schema:name": "Lean 4 Kernel",
+    "schema:version": "4.0.0"
+  },
+  "checksum": {
+    "@type": "jmmotaburr:SHA256",
+    "schema:value": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "dependencies": [
+    {
+      "@id": "urn:jmmotaburr:riemann-adelic:axiom:functional-equation",
+      "@type": "axiom",
+      "dc:title": "Functional Equation of Zeta"
+    },
+    {
+      "@id": "urn:jmmotaburr:riemann-adelic:lemma:adelic-spectral-structure",
+      "@type": "theorem",
+      "dc:title": "Adelic Spectral Structure"
+    }
+  ],
+  "schema:license": "https://opensource.org/licenses/MIT",
+  "schema:codeRepository": "https://github.com/motanova84/-jmmotaburr-riemann-adelic",
+  "schema:version": "1.0.0",
+  "rdfs:comment": "This is an example metadata file for a theorem in the mathematical archive. It includes semantic annotations using JSON-LD, Dublin Core, Schema.org, and custom namespaces."
+}
