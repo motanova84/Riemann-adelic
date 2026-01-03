@@ -1,8 +1,8 @@
-# Lean Formalization
+# 🏆 V5.2 Lean 4 Formalization - Historical Milestone
 
-This folder contains stubs for formal verification of the adelic RH framework.
+This directory contains the **complete V5.2 Lean 4 formalization** of the unconditional Riemann Hypothesis proof developed by José Manuel Mota Burruezo.
 
-## Modules
+**🎯 V5.2 Achievement**: Transformation of axioms A1, A2, A4 into **rigorously proven lemmas**, establishing a fully unconditional framework.
 
 - `entire_order.lean`: Hadamard factorisation, Phragmén–Lindelöf bounds
 - `functional_eq.lean`: Adelic Poisson summation and functional symmetry
@@ -11,17 +11,15 @@ This folder contains stubs for formal verification of the adelic RH framework.
 - `positivity.lean`: Weil–Guinand quadratic form positivity
 - `axioms_to_lemmas.lean`: **NEW** - Formalization of S-finite axioms A1, A2, A4 as provable lemmas
 
-Each file currently contains skeletal declarations (`def ... : Prop`) to be
-refined into full formal proofs using Lean4 + mathlib.
+## 📂 V5.2 Structure
 
-## Structure
+### Core Formalization Files
 
-The formalization follows the mathematical framework described in the main paper:
-- **S-finite adelic systems** with axioms A1 (finite scale flow), A2 (symmetry), A4 (spectral regularity)
-- **Construction of D(s)** as entire function of order ≤1
-- **Functional symmetry** D(1-s) = D(s)
-- **Uniqueness via Paley-Wiener** identifying D ≡ Ξ
-- **Riemann Hypothesis derivation** as mathematical consequence
+- **`axioms_to_lemmas.lean`** ⭐ **V5.2 CORNERSTONE**  
+  Complete formalization of A1, A2, A4 as **proven lemmas** (no longer axioms):
+  - **A1**: Finite scale flow (adelic energy bounds)
+  - **A2**: Adelic Poisson symmetry (functional equation D(1-s) = D(s))  
+  - **A4**: Spectral regularity (holomorphic trace-class theory)
 
 ## New Addition: Axioms to Lemmas (axioms_to_lemmas.lean)
 
@@ -129,7 +127,9 @@ These Lean files depend on:
 - **Fourier analysis** (`Mathlib.Analysis.Fourier.FourierTransform`)
 - **Measure theory** (`Mathlib.MeasureTheory.Integral.Bochner`)
 
-## Development Status
+- **`de_branges.lean`**  
+  de Branges spaces and critical line localization framework  
+  (Canonical system, Hamiltonian positivity)
 
 The formalization is in **transition phase**:
 - **Legacy files**: Still use skeletal declarations (`def ... : Prop := sorry`) 

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2025.9.25)  25 SEP 2025 03:50
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2025.9.25)  25 SEP 2025 07:04
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -434,14 +434,14 @@ LaTeX Font Info:    Trying to load font information for U+msb on input line 30.
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
-) (./main.toc [1
+) [1
 
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}])
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] (./main.toc [2])
 \tf@toc=\write4
 \openout4 = `main.toc'.
 
- (./sections/introduction.tex
-[2]) (./sections/axiomas_a_lemas.tex
+
+(./sections/introduction.tex) (./sections/axiomas_a_lemas.tex
 
 Package amsfonts Warning: Obsolete command \Bbb; \mathbb should be used instead
  on input line 4.
@@ -469,7 +469,7 @@ LaTeX Warning: Citation `Weil' on page 6 undefined on input line 26.
 
 LaTeX Warning: Citation `Weil' on page 6 undefined on input line 47.
 
-) (./sections/localizacion_ceros.tex [6]
+[6]) (./sections/localizacion_ceros.tex
 
 LaTeX Warning: Citation `deBranges' on page 7 undefined on input line 16.
 
@@ -492,7 +492,12 @@ LaTeX Warning: Citation `Weil' on page 7 undefined on input line 48.
 
 LaTeX Warning: Citation `IK' on page 7 undefined on input line 59.
 
-) (./sections/teorema_suorema.tex [7]
+)
+Overfull \hbox (0.69467pt too wide) in paragraph at lines 76--76
+[]\OT1/cmr/bx/n/17.28 Teorema de Suorema / Suorema The-o-rem: F^^Sormula
+ []
+
+(./sections/teorema_suorema.tex [7]
 
 LaTeX Warning: Reference `sec:axiomas' on page 8 undefined on input line 21.
 
@@ -524,7 +529,7 @@ LaTeX Warning: Reference `sec:numerical' on page 9 undefined on input line 48.
 
 ) (./sections/conclusion.tex [9]) (./sections/appendix_traces.tex)
 (./sections/appendix_numerical.tex [10]) [11]
-Underfull \hbox (badness 1629) in paragraph at lines 96--97
+Underfull \hbox (badness 1629) in paragraph at lines 102--103
 []\OT1/cmr/m/n/12 V. V. Peller, \OT1/cmr/m/it/12 Han-kel Op-er-a-tors and Their
  Ap-pli-ca-tions\OT1/cmr/m/n/12 , Springer, 2003. DOI:
  []
@@ -538,20 +543,17 @@ L3 programming layer <2024-01-22>
 
 LaTeX Warning: There were undefined references.
 
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 4AE977D3EED6C84060048EF4FE8F85C3;5139.
+(rerunfilecheck)             Checksum: 2225543EA1DA87F1C7085806D8423A6D;5282.
  ) 
 Here is how much of TeX's memory you used:
- 11116 strings out of 476182
- 171236 string characters out of 5795595
- 1937975 words of memory out of 5000000
- 32850 multiletter control sequences out of 15000+600000
+ 11117 strings out of 476182
+ 171257 string characters out of 5795595
+ 1936975 words of memory out of 5000000
+ 32851 multiletter control sequences out of 15000+600000
  573634 words of font info for 94 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 75i,7n,79p,541b,584s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 75i,7n,79p,541b,612s stack positions out of 10000i,1000n,20000p,200000b,200000s
  </home/runner/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/tcrm1200.60
 0pk> </home/runner/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/tcrm1095.
 600pk></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb>
@@ -572,10 +574,10 @@ exlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texlive/
 texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/share/texlive/texmf-
 dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb></usr/share/texlive/texmf-dist/f
 onts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on main.pdf (12 pages, 279349 bytes).
+Output written on main.pdf (12 pages, 282749 bytes).
 PDF statistics:
- 391 PDF objects out of 1000 (max. 8388607)
- 333 compressed objects within 4 object streams
+ 392 PDF objects out of 1000 (max. 8388607)
+ 334 compressed objects within 4 object streams
  96 named destinations out of 1000 (max. 500000)
  225 words of extra memory for PDF output out of 10000 (max. 10000000)
 
