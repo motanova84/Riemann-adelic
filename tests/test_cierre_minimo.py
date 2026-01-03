@@ -81,6 +81,38 @@ class TestOperadorH:
         # Average error should be very small
         avg_error = sum(errors) / len(errors) if errors else 0
         assert avg_error < 0.5
+    
+    def test_H_positive_definite(self):
+        """Test that H operator is positive definite (coercivity)"""
+        from operador.operador_H_real import build_H_real
+        
+        # Test with different matrix sizes
+        for n_basis in [5, 10, 50]:
+            H = build_H_real(n_basis=n_basis, t=0.01)
+            
+            # Compute eigenvalues
+            eigenvalues = np.linalg.eigvalsh(H)
+            
+            # All eigenvalues must be positive for positive definiteness
+            assert np.all(eigenvalues > 0), \
+                f"H with n_basis={n_basis} has negative eigenvalues: min={np.min(eigenvalues)}"
+            
+            # Minimum eigenvalue should be reasonable (> 1/4)
+            assert np.min(eigenvalues) > 0.25, \
+                f"Minimum eigenvalue {np.min(eigenvalues)} is too small"
+    
+    def test_coercivity_random_vectors(self):
+        """Test coercivity: <f, Hf> ≥ 0 for random vectors"""
+        from operador.operador_H_real import build_H_real
+        
+        H = build_H_real(n_basis=10, t=0.01)
+        
+        # Test with random vectors
+        for _ in range(10):
+            f = np.random.randn(10)
+            quadratic_form = f @ H @ f
+            assert quadratic_form >= -1e-10, \
+                f"Coercivity violated: <f,Hf> = {quadratic_form} should be ≥ 0"
 
 
 class TestLeanFiles:
