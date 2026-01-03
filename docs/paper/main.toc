@@ -1,8 +1,8 @@
 \contentsline {section}{\numberline {1}Introduction}{3}{section.1}%
 \contentsline {subsection}{\numberline {1.1}Main Contributions}{3}{subsection.1.1}%
 \contentsline {subsection}{\numberline {1.2}Structure of the Paper}{3}{subsection.1.2}%
-\contentsline {section}{\numberline {2}Axiomatic Scale Flow and Spectral System}{3}{section.2}%
-\contentsline {section}{\numberline {3}De Axiomas a Lemas (A1--A4)}{3}{section.3}%
+\contentsline {section}{\numberline {2}Axiomatic Scale Flow and Spectral System}{4}{section.2}%
+\contentsline {section}{\numberline {3}De Axiomas a Lemas (A1--A4)}{4}{section.3}%
 \contentsline {section}{\numberline {4}Archimedean Rigidity}{4}{section.4}%
 \contentsline {section}{\numberline {5}Teorema de Rigidez Arquimediana}{4}{section.5}%
 \contentsline {section}{\numberline {6}Paley-Wiener Uniqueness}{5}{section.6}%
@@ -13,7 +13,7 @@
 \contentsline {section}{\numberline {11}Factor arquimediano: derivación y rigidez}{6}{section.11}%
 \contentsline {section}{\numberline {12}Critical Line Localization}{7}{section.12}%
 \contentsline {section}{\numberline {13}Localización analítica de ceros en la recta crítica}{7}{section.13}%
-\contentsline {section}{\numberline {14}Teorema de Suorema: Complete Resolution}{8}{section.14}%
+\contentsline {section}{\numberline {14}Teorema de Suorema / Suorema Theorem: Fórmula Explícita Completa}{8}{section.14}%
 \contentsline {subsection}{\numberline {14.1}Implicaciones y Perspectivas}{9}{subsection.14.1}%
 \contentsline {subsection}{\numberline {14.2}Marco Conceptual}{9}{subsection.14.2}%
 \contentsline {section}{\numberline {15}Conclusion}{9}{section.15}%
