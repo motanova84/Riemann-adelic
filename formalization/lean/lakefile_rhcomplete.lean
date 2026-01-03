@@ -12,7 +12,6 @@ DOI: 10.5281/zenodo.17379721
 -/
 
 package RHComplete where
-  version := "1.0.0"
   -- Configure Lean compilation with unicode support and strict auto-implicit
   moreLeanArgs := #[
     "-Dpp.unicode.fun=true",

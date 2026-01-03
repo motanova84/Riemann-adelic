@@ -6,6 +6,10 @@ package rh_final_v6 where
   leanOptions := #[⟨`relaxedAutoImplicit, false⟩]
 
 lean_lib RHFinal where
+  roots := #[`paley_wiener_uniqueness, `selberg_trace, `H_psi_complete, `D_limit_equals_xi, 
+             `SpectralIdentification, `Operator.Hψ, `PaleyWiener.Unicity, 
+             `Spectral.MellinIdentification, `Zeta.FunctionalEquation]
+  roots := #[`paley_wiener_uniqueness, `selberg_trace, `H_psi_complete, `D_limit_equals_xi, `spectrum_eq_zeros]
   roots := #[
     `spectrum_HΨ_equals_zeta_zeros,
     `H_psi_complete,
@@ -37,4 +41,4 @@ lean_lib RHFinal where
     `Riemann_Hypothesis_noetic,
     `NuclearityExplicit
   ]
-  roots := #[`paley_wiener_uniqueness, `selberg_trace, `H_psi_complete, `D_limit_equals_xi, `spectral_convergence_from_kernel]
+  roots := #[`paley_wiener_uniqueness, `selberg_trace, `H_psi_complete, `D_limit_equals_xi, `spectral_convergence_from_kernel, `zeros_xi_structure]

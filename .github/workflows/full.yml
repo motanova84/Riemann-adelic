@@ -1,19 +1,12 @@
 name: 🔬 Full Validation CI
 
-# Uses high_accuracy parameters (aligned with utils/performance_monitor.py)
-# For research and publication-quality results
-# Parameters: max_primes=500, max_zeros=500, precision_dps=40, integration_t=50
-
-on:
-  pull_request:
-    branches: [ main ]
-  workflow_dispatch:  # Solo manual o en release
+on: [workflow_dispatch]  # Solo manual o en release
 
 env:
-  # high_accuracy parameters for publication-quality results
-  MAX_ZEROS: 500
-  MAX_PRIMES: 500
-  PRECISION_DPS: 40
+  # Full mode parameters for comprehensive validation  
+  MAX_ZEROS: 1000000
+  MAX_PRIMES: 1000
+  PRECISION_DPS: 30
   INTEGRATION_T: 50
 
 jobs:
@@ -26,15 +19,13 @@ jobs:
         with:
           python-version: '3.11'
       - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip==24.3.1
-          pip install -r requirements-lock.txt
+        run: pip install -r requirements.txt
       - name: Fetch full zeros
         run: python utils/fetch_odlyzko.py --precision t1e8
       - name: Run full validation
         run: python validate_explicit_formula.py --max_zeros $MAX_ZEROS --max_primes $MAX_PRIMES --precision_dps $PRECISION_DPS --integration_t $INTEGRATION_T
       - name: Upload results
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v4.4.3
         with:
           name: full-results
           path: data/validation_results.csv

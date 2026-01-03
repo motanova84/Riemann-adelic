@@ -1,6 +1,21 @@
-# RH v4.2 Simulation & Validation Notebook
+# RH v4.2 Simulation & Validation Notebooks
 
-This directory contains `rh_v42_sim.ipynb`, the simulation and validation notebook for the Riemann Hypothesis explicit formula validation as specified in the problem statement.
+This directory contains Jupyter notebooks for Riemann Hypothesis validation and simulation.
+
+## 📓 Available Notebooks
+
+### zeta_zero_validation.ipynb
+**Author**: José Manuel Mota Burruezo (JMMB Ψ✧)  
+**License**: CC-BY-4.0
+
+Validates location of non-trivial zeros of ζ(s) up to high precision:
+- Computes first 50 zeros with 50 decimal digits precision
+- Evaluates absolute error from the critical line Re(s) = 0.5
+- Generates visualization of deviation from critical line
+- Confirms precision sub-14 decimal places → compatible with RH
+
+### rh_v42_sim.ipynb
+The simulation and validation notebook for the Riemann Hypothesis explicit formula validation as specified in the problem statement.
 
 ## 📓 Notebook Contents
 

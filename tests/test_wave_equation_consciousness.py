@@ -318,5 +318,188 @@ class TestNumericalStability:
         assert np.all(np.isfinite(Psi)), "Solution should remain finite over long times"
 
 
+class TestWeakSolutionNoetic:
+    """
+    Test suite for WeakSolutionNoetic class (Theorem 15).
+    
+    Tests the existence, uniqueness, and properties of weak solutions
+    for the noetic wave equation.
+    """
+    
+    @pytest.fixture(autouse=True)
+    def setup(self):
+        """Setup test environment."""
+        from utils.wave_equation_consciousness import WeakSolutionNoetic
+        self.solver = WeakSolutionNoetic(f0=141.7001, precision=15)
+        self.tolerance = 1e-6
+        
+    def test_initialization(self):
+        """Test proper initialization of the weak solution solver."""
+        assert self.solver.f0 == 141.7001
+        assert self.solver.precision == 15
+        assert self.solver.omega_0 > 0
+        assert self.solver.C_qcal == 244.36
+        
+    def test_green_function_causality(self):
+        """Test that Green function respects causality (G=0 for t < tau)."""
+        t = np.linspace(-0.01, 0.01, 100)
+        tau = 0.0
+        G = self.solver.green_function(t, tau)
+        
+        # G should be 0 for t <= tau
+        assert np.all(G[t <= tau] == 0), "Green function should be 0 for t <= tau"
+        
+    def test_green_function_positive(self):
+        """Test that Green function is positive for small t > tau."""
+        t = np.linspace(0.0001, 0.001, 100)  # Small positive times
+        tau = 0.0
+        G = self.solver.green_function(t, tau)
+        
+        # G should be positive for small t > tau (first quarter period)
+        period = 2 * np.pi / self.solver.omega_0
+        mask = (t > tau) & (t < tau + period / 4)
+        assert np.all(G[mask] > 0), "Green function should be positive for small t > tau"
+        
+    def test_homogeneous_solution_initial_conditions(self):
+        """Test that homogeneous solution satisfies initial conditions."""
+        t = np.array([0.0])
+        Psi_0, Psi_1 = 1.5, 2.0
+        
+        Psi_h = self.solver.homogeneous_solution(t, Psi_0, Psi_1)
+        
+        assert abs(Psi_h[0] - Psi_0) < self.tolerance, "Ψ(0) should equal Ψ₀"
+        
+    def test_homogeneous_solution_period(self):
+        """Test that homogeneous solution has correct period."""
+        T = 2 * np.pi / self.solver.omega_0  # Period
+        t = np.array([0.0, T])
+        
+        Psi_h = self.solver.homogeneous_solution(t, Psi_0=1.0, Psi_1=0.0)
+        
+        # Should return to same value after one period
+        assert abs(Psi_h[0] - Psi_h[1]) < self.tolerance
+        
+    def test_weak_solution_existence(self):
+        """Test that weak solution exists (is computable)."""
+        t = np.linspace(0, 0.01, 100)
+        Psi_0, Psi_1 = 1.0, 0.0
+        
+        # Simple constant source
+        def laplacian_Phi(tau):
+            return 1.0
+        
+        Psi = self.solver.weak_solution(t, Psi_0, Psi_1, laplacian_Phi, dt=1e-4)
+        
+        # Solution should exist (finite values)
+        assert np.all(np.isfinite(Psi)), "Weak solution should be finite"
+        
+    def test_weak_solution_uniqueness(self):
+        """Test that weak solution is unique (determined by initial conditions)."""
+        t = np.linspace(0, 0.01, 100)
+        Psi_0, Psi_1 = 1.5, 0.5
+        
+        def laplacian_Phi(tau):
+            return np.sin(self.solver.omega_0 * tau)
+        
+        # Compute solution twice
+        Psi1 = self.solver.weak_solution(t, Psi_0, Psi_1, laplacian_Phi, dt=1e-4)
+        Psi2 = self.solver.weak_solution(t, Psi_0, Psi_1, laplacian_Phi, dt=1e-4)
+        
+        # Solutions should be identical
+        assert np.allclose(Psi1, Psi2, rtol=1e-10), "Solution should be unique"
+        
+    def test_weak_solution_initial_condition(self):
+        """Test that weak solution satisfies initial conditions at t=0."""
+        t = np.linspace(0, 0.01, 100)
+        Psi_0, Psi_1 = 2.0, 1.0
+        
+        def laplacian_Phi(tau):
+            return 0.5
+        
+        Psi = self.solver.weak_solution(t, Psi_0, Psi_1, laplacian_Phi, dt=1e-4)
+        
+        # At t=0, only homogeneous solution contributes
+        assert abs(Psi[0] - Psi_0) < self.tolerance, "Ψ(0) should equal Ψ₀"
+        
+    def test_energy_non_negative(self):
+        """Test that energy is non-negative."""
+        Psi = np.array([1.0, 0.5, -0.5])
+        dPsi_dt = np.array([0.5, 1.0, 0.3])
+        
+        E = self.solver.energy(Psi, dPsi_dt)
+        
+        assert np.all(E >= 0), "Energy should be non-negative"
+        
+    def test_energy_zero_for_zero_solution(self):
+        """Test that energy is zero for zero solution."""
+        Psi = np.zeros(10)
+        dPsi_dt = np.zeros(10)
+        
+        E = self.solver.energy(Psi, dPsi_dt)
+        
+        assert np.allclose(E, 0), "Energy should be zero for zero solution"
+        
+    def test_verify_existence_uniqueness(self):
+        """Test the verification method for Theorem 15."""
+        t = np.linspace(0, 0.01, 50)
+        Psi_0, Psi_1 = 1.0, 0.0
+        
+        def laplacian_Phi(tau):
+            return 1.0
+        
+        result = self.solver.verify_existence_uniqueness(t, Psi_0, Psi_1, laplacian_Phi)
+        
+        assert result['exists'], "Solution should exist"
+        assert result['unique'], "Solution should be unique"
+        assert result['stable'], "Solution should be stable"
+        assert 'solution' in result
+        assert 'energy' in result
+        assert 'message' in result
+        
+    def test_get_parameters(self):
+        """Test parameter retrieval."""
+        params = self.solver.get_parameters()
+        
+        assert 'f0_Hz' in params
+        assert 'omega_0_rad_s' in params
+        assert 'zeta_prime_half' in params
+        assert 'C_qcal' in params
+        assert 'precision_dps' in params
+        
+        assert params['f0_Hz'] == 141.7001
+        assert params['C_qcal'] == 244.36
+
+
+class TestTheorem15Integration:
+    """Tests for integration of Theorem 15 with existing wave equation framework."""
+    
+    @pytest.fixture(autouse=True)
+    def setup(self):
+        """Setup test environment."""
+        from utils.wave_equation_consciousness import WaveEquationConsciousness, WeakSolutionNoetic
+        self.wave_eq = WaveEquationConsciousness(f0=141.7001, precision=15)
+        self.solver = WeakSolutionNoetic(f0=141.7001, precision=15)
+        
+    def test_consistent_parameters(self):
+        """Test that parameters are consistent between classes."""
+        assert self.wave_eq.f0 == self.solver.f0
+        assert abs(self.wave_eq.omega_0 - self.solver.omega_0) < 1e-10
+        assert abs(self.wave_eq.zeta_prime_half - self.solver.zeta_prime_half) < 1e-6
+        
+    def test_homogeneous_solutions_match(self):
+        """Test that homogeneous solutions match between implementations."""
+        t = np.linspace(0, 0.01, 100)
+        A, B = 1.0, 0.5
+        
+        # WaveEquationConsciousness implementation
+        Psi_wec = self.wave_eq.homogeneous_solution(t, A=A, B=B)
+        
+        # WeakSolutionNoetic implementation (Psi_1 = B * omega_0 for equivalent)
+        Psi_wsn = self.solver.homogeneous_solution(t, Psi_0=A, Psi_1=B * self.solver.omega_0)
+        
+        # Both should be equivalent
+        assert np.allclose(Psi_wec, Psi_wsn, rtol=1e-6)
+
+
 if __name__ == "__main__":
     pytest.main([__file__, "-v"])

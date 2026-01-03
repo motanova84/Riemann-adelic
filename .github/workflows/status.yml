@@ -11,9 +11,7 @@ jobs:
   status:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-        with:
-          ref: main  # Explicitly checkout main branch for scheduled runs
+      - uses: actions/checkout@v3
       
       - name: Set up Python
         uses: actions/setup-python@v5

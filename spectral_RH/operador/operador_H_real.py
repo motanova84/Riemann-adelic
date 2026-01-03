@@ -28,6 +28,13 @@ geométrica, no al revés. Esto invierte completamente el enfoque tradicional.
 
 NOTA: Esta es una versión simplificada que demuestra el concepto.
 Una implementación completa requeriría integración numérica costosa del núcleo térmico.
+
+ACTUALIZACIÓN: Para una implementación mejorada con integración robusta y base de
+Legendre, consulte thermal_kernel_spectral.py que incluye:
+- improved_K_t_real: Kernel con integración mejorada [-500, 500]
+- improved_basis_func: Base de polinomios de Legendre en escala logarítmica
+- build_improved_H: Construcción mejorada de H con doble integración
+Ver IMPROVED_THERMAL_KERNEL_README.md para más detalles.
 """
 
 import numpy as np

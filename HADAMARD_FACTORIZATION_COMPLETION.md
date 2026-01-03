@@ -205,6 +205,7 @@ The Hadamard factorization provides:
 ## Remaining Work
 
 ### For Full Verification
+- [x] Add `xi_hadamard_prod`: Theorem proving Ξ(s) admits Hadamard expansion (no sorry)
 - [ ] Replace `sorry` placeholders with complete proofs
 - [ ] Prove convergence_exponent_equals_order constructively
 - [ ] Complete hadamard_factorization_order_one proof

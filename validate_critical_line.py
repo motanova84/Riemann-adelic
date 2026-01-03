@@ -52,8 +52,8 @@ Examples:
         """
     )
     
-    parser.add_argument('--max_zeros', type=int, default=1000,
-                       help='Maximum number of zeros to verify (default: 1000)')
+    parser.add_argument('--max_zeros', type=int, default=None,
+                       help='Maximum number of zeros to verify (default: no limit)')
     
     parser.add_argument('--precision', type=int, default=30,
                        help='Decimal precision for calculations (default: 30)')
@@ -89,8 +89,9 @@ def load_zeros_for_verification(zeros_file: str, max_zeros: int = None,
     
     Args:
         zeros_file: Path to zeros file
-        max_zeros: Maximum number of zeros to load
-        t_min, t_max: Height range constraints
+        max_zeros: Maximum number of zeros to load (None means no limit)
+        t_min: Minimum imaginary part (None means no lower limit)
+        t_max: Maximum imaginary part (None means no upper limit)
         
     Returns:
         List of imaginary parts of zeros to verify
@@ -100,18 +101,20 @@ def load_zeros_for_verification(zeros_file: str, max_zeros: int = None,
     
     imaginary_parts = []
     
-    if t_min is not None and t_max is not None:
+    # Use height-based loading if any height constraint is specified
+    if t_min is not None or t_max is not None:
         # Use height-based loading
         imaginary_parts = load_zeros_near_t(zeros_file, t_min, t_max)
         imaginary_parts = [float(t) for t in imaginary_parts]
         
-        if max_zeros:
+        # Apply max_zeros limit if specified
+        if max_zeros is not None:
             imaginary_parts = imaginary_parts[:max_zeros]
     else:
         # Load sequentially from file
         with open(zeros_file, 'r') as f:
             for i, line in enumerate(f):
-                if max_zeros and i >= max_zeros:
+                if max_zeros is not None and i >= max_zeros:
                     break
                 try:
                     t = float(line.strip())
@@ -261,10 +264,10 @@ def main():
         # Load zeros for verification
         print("📂 Loading zeros for verification...")
         imaginary_parts = load_zeros_for_verification(
-            args.zeros_file, 
-            args.max_zeros,
-            args.t_min,
-            args.t_max
+            zeros_file=args.zeros_file, 
+            max_zeros=args.max_zeros,
+            t_min=args.t_min,
+            t_max=args.t_max
         )
         print(f"✅ Loaded {len(imaginary_parts)} zeros")
         
