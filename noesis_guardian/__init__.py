@@ -1,5 +1,30 @@
 """
-NOESIS GUARDIAN 3.0 - Main Package
+Noesis Guardian - QCAL System Monitor
+
+This module provides continuous monitoring and validation of QCAL ∞³ coherence
+through various hooks that check mathematical consistency.
+
+Components:
+- hook_calabi_yau_resonance: Symbolic Calabi-Yau internal resonance monitoring
+- guardian_core: Core orchestration and notification system
+"""
+
+__version__ = "1.0.0"
+__author__ = "José Manuel Mota Burruezo"
+#!/usr/bin/env python3
+"""
+NOESIS GUARDIAN 3.0
+Sistema técnico de monitorización y mantenimiento ligero del repositorio.
+"""
+
+__version__ = "3.0.0"
+"""NOESIS GUARDIAN 3.0 — Main Package
+
+Sistema técnico de validación, análisis y autoreparación del repositorio.
+Un sistema profesional real que vigila el repositorio, repara archivos básicos,
+calcula coherencia matemática técnica, genera hashes, produce logs y emite diagnósticos.
+
+Author: José Manuel Mota Burruezo (JMMB Ψ ✧)
 
 Sistema tecnico de validacion, analisis y autoreparacion del repositorio.
 Un sistema profesional real que vigila el repositorio, repara archivos basicos,
