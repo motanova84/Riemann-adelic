@@ -29,6 +29,9 @@ import RiemannAdelic.V54_Consolidated
 import RiemannAdelic.RiemannOperator
 import RiemannAdelic.BerryKeatingOperator
 
+-- NEW: Spectral operator H_Ψ core (Part 28/∞³)
+import HPsi_core
+
 -- Entire function theory
 import RiemannAdelic.entire_order
 import RiemannAdelic.xi_entire_proof
