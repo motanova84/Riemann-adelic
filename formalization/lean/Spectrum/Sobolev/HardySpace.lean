@@ -18,7 +18,7 @@ namespace Spectrum.Sobolev
 
 /-- Smooth functions with compact support on ℝ —/
 def Cc∞ (α : Type*) [TopologicalSpace α] : Type* :=
-  {f : α → ℂ | HasCompactSupport f ∧ ContDiff ℝ ⊤ (fun x => (f x).re) ∧ ContDiff ℝ ⊤ (fun x => (f x).im)}
+  Subtype (fun f : α → ℂ => HasCompactSupport f ∧ ContDiff ℂ ⊤ f)
 
 /-- Instance for embedding into function type —/
 instance {α : Type*} [TopologicalSpace α] : CoeFun (Cc∞ α) (fun _ => α → ℂ) where

@@ -24,7 +24,7 @@ namespace Spectrum
 abbrev ℋ := Lp ℂ 2 (volume : Measure ℝ)
 
 /-- Dominio del operador H_Ψ: funciones suaves de soporte compacto —/
-def D_HPsi : Set ℋ := { f : ℋ | ∃ g : Spectrum.Sobolev.Cc∞ ℝ, True }  -- embedding representation
+def D_HPsi : Set ℋ := sorry  -- Dense embedding of Cc∞ into L²
 
 /-- Definición formal del operador diferencial H_Ψ —/
 def H_Ψ : ℋ → ℋ := fun f => sorry  -- operador diferencial - (d²/dx²) formal
@@ -38,5 +38,8 @@ axiom H_Ψ_spectrum_real : ∀ (λ : ℂ), (∃ f : ℋ, f ≠ 0 ∧ f ∈ D_HPs
 
 /-- Definición de la función zeta como traza del resolvente de H_Ψ —/
 def ζ_HPsi (s : ℂ) : ℂ := sorry  -- Trace(resolvent(H_Ψ, s)) formal
+
+/-- Axioma: Conexión entre ζ_HPsi y la función zeta de Riemann —/
+axiom ζ_HPsi_eq_zeta : ∀ s : ℂ, s.re > 1 → ζ_HPsi s = riemannZeta s
 
 end Spectrum
