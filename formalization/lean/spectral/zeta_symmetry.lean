@@ -23,9 +23,10 @@ def Eigenvalue (H : (ℝ → ℂ) → (ℝ → ℂ)) (ψ : ℝ → ℂ) : ℂ :=
   if h : Eigenstate H ψ then Classical.choose h else 0
 
 -- Base H_Ψ operator (simplified for spectral analysis)
+-- H_Ψ := -x·d/dx + π·ζ'(1/2)·log(x) where ζ' is the derivative
 def H_ψ (f : ℝ → ℂ) (x : ℝ) : ℂ :=
   if x ≤ 0 then 0 
-  else -↑x * deriv f x + Real.pi * riemannZeta (1/2 : ℂ) * log x * f x
+  else -↑x * deriv f x + Real.pi * (deriv riemannZeta (1/2 : ℂ)) * log x * f x
 
 -- Operador de reflexión funcional sobre el plano complejo
 def functional_reflection (s : ℂ) : ℂ := 1 - s
