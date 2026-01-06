@@ -1,6 +1,8 @@
 # V5.1 incondicional
 # Riemann-Adelic: Spectral Emergence Proof of Riemann Hypothesis
 
+> 📖 **¿Buscas un resumen rápido?** → [README-RESUMEN.md](README-RESUMEN.md) — Resumen en español con los 7 puntos esenciales: qué es, qué contiene, quickstart (3 comandos), DOI del paper, formalización, resultados, y licencias.
+
 ## 🧠 Philosophical Foundation: Mathematical Realism
 
 > **"Hay un mundo (y una estructura matemática) independiente de opiniones; una afirmación es verdadera si corresponde a esa realidad, aunque nadie lo sepa o lo acepte todavía."**
