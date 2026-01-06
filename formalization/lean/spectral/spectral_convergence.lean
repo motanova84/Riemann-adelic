@@ -329,7 +329,7 @@ theorem spectral_sum_converges
       calc 
         Real.sqrt ((ρ n).re ^ 2 + (ρ n).im ^ 2) 
           = Real.sqrt ((1/2)^2 + (ρ n).im ^ 2) := by
-            congr 1
+            congr 2
             rw [critical_line_property n ρ]
         _ = Real.sqrt (1/4 + (ρ n).im ^ 2) := by norm_num
         _ ≤ Real.sqrt ((1/2 + |(ρ n).im|) ^ 2) := by
@@ -338,15 +338,19 @@ theorem spectral_sum_converges
             calc (1/4 : ℝ) + (ρ n).im ^ 2
               ≤ 1/4 + |(ρ n).im| ^ 2 := by
                 gcongr
-                exact sq_abs _
+                apply sq_le_sq'
+                · exact neg_nonpos_of_nonneg (abs_nonneg _)
+                · exact le_abs_self _
             _ ≤ (1/2 + |(ρ n).im|) ^ 2 := by
-                rw [add_sq]
-                ring_nf
-                have : (0 : ℝ) ≤ 2 * (1/2) * |(ρ n).im| := by
-                  apply mul_nonneg
-                  · norm_num
-                  · exact hx
-                linarith
+                have h1 : 1/4 ≤ (1/2)^2 := by norm_num
+                have h2 : 0 ≤ 1/2 := by norm_num
+                have h3 : 0 ≤ |(ρ n).im| := abs_nonneg _
+                calc 1/4 + |(ρ n).im| ^ 2
+                  ≤ (1/2)^2 + |(ρ n).im| ^ 2 := by linarith
+                _ ≤ (1/2 + |(ρ n).im|) ^ 2 := by
+                    rw [add_sq]
+                    ring_nf
+                    linarith [mul_nonneg h2 h3]
         _ = |1/2 + |(ρ n).im|| := Real.sqrt_sq_eq_abs (1/2 + |(ρ n).im|)
         _ = 1/2 + |(ρ n).im| := abs_of_nonneg (by linarith : 0 ≤ 1/2 + |(ρ n).im|)
     
