@@ -1,0 +1,108 @@
+name: Environment Integrity Check
+
+on:
+  push:
+    branches: [ main, develop, copilot/** ]
+    paths:
+      - 'ENV.lock'
+      - 'requirements-lock.txt'
+      - 'requirements.txt'
+      - 'environment_checksums.json'
+      - '.github/workflows/environment-integrity.yml'
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'ENV.lock'
+      - 'requirements-lock.txt'
+      - 'requirements.txt'
+      - 'environment_checksums.json'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify-integrity:
+    name: Verify Environment Integrity
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      
+      - name: Verify environment lock files
+        run: |
+          echo "🔐 Verifying environment integrity..."
+          python verify_environment_integrity.py --verbose
+      
+      - name: Check for consistency
+        run: |
+          echo "📊 Checking lock file consistency..."
+          # Count packages in each file
+          ENV_COUNT=$(grep -c '==' ENV.lock || echo 0)
+          REQ_COUNT=$(grep -c '==' requirements-lock.txt || echo 0)
+          
+          echo "ENV.lock packages: $ENV_COUNT"
+          echo "requirements-lock.txt packages: $REQ_COUNT"
+          
+          if [ "$ENV_COUNT" -eq 0 ] || [ "$REQ_COUNT" -eq 0 ]; then
+            echo "❌ Lock files appear to be empty or invalid"
+            exit 1
+          fi
+      
+      - name: Verify checksums are current
+        run: |
+          echo "🔑 Verifying checksums are up-to-date..."
+          
+          # Compute current checksums
+          ENV_CHECKSUM=$(sha256sum ENV.lock | cut -d' ' -f1)
+          REQ_CHECKSUM=$(sha256sum requirements-lock.txt | cut -d' ' -f1)
+          
+          echo "Current ENV.lock checksum: $ENV_CHECKSUM"
+          echo "Current requirements-lock.txt checksum: $REQ_CHECKSUM"
+          
+          # Check if they match what's in environment_checksums.json
+          python -c "
+          import json
+          import sys
+          
+          with open('environment_checksums.json', 'r') as f:
+              saved = json.load(f)
+          
+          env_checksum = '$ENV_CHECKSUM'
+          req_checksum = '$REQ_CHECKSUM'
+          
+          if saved.get('ENV.lock') != env_checksum:
+              print(f'❌ ENV.lock checksum mismatch!')
+              print(f'   Saved:   {saved.get(\"ENV.lock\", \"N/A\")}')
+              print(f'   Current: {env_checksum}')
+              sys.exit(1)
+          
+          if saved.get('requirements-lock.txt') != req_checksum:
+              print(f'❌ requirements-lock.txt checksum mismatch!')
+              print(f'   Saved:   {saved.get(\"requirements-lock.txt\", \"N/A\")}')
+              print(f'   Current: {req_checksum}')
+              sys.exit(1)
+          
+          print('✅ All checksums match!')
+          "
+      
+      - name: Summary
+        if: always()
+        run: |
+          echo "## Environment Integrity Check Results" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "✅ **Status**: Verification complete" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Checked Files" >> $GITHUB_STEP_SUMMARY
+          echo "- \`ENV.lock\`" >> $GITHUB_STEP_SUMMARY
+          echo "- \`requirements-lock.txt\`" >> $GITHUB_STEP_SUMMARY
+          echo "- \`environment_checksums.json\`" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "For more information, see [ENV_LOCK_GUIDE.md](ENV_LOCK_GUIDE.md)" >> $GITHUB_STEP_SUMMARY
