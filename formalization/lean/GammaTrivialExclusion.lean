@@ -69,7 +69,7 @@ Key observations:
     simple poles at s = 0, -1, -2, ... but no zeros anywhere in ℂ.
     
     QCAL Coherence: f₀ = 141.7001 Hz, C = 244.36 -/
-axiom gamma_no_zeros : ∀ s : ℂ, Complex.Gamma s ≠ 0 ∨ ∃ n : ℕ, s = -n
+axiom gamma_no_zeros : ∀ s : ℂ, Complex.Gamma s ≠ 0
 
 /-- Poles of Γ(s/2) occur exactly at s = 0, -2, -4, -6, ... -/
 theorem gamma_half_poles :
