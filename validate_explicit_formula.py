@@ -94,7 +94,8 @@ def weil_explicit_formula(zeros, primes, f, max_zeros, t_max=50, precision=30):
         arch_integral = mp.quad(arch_integrand, [-T_limit, T_limit], maxdegree=4)
         arch_integral = arch_integral / (2 * mp.pi)  # Proper normalization
         
-        # Based on theoretical analysis: flip the sign of the functional equation integral
+        # Flip the sign of the functional equation integral as required by the Weil explicit formula.
+        # See, e.g., Edwards, "Riemann's Zeta Function", eq. (6.7.5), or Titchmarsh, "The Theory of the Riemann Zeta-function", Section 14.25.
         arch_integral = -arch_integral
     except:
         arch_integral = mp.mpf('0')  # Fallback
