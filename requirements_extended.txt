@@ -25,10 +25,10 @@ hashlib  # Built-in, but explicitly noted for data integrity checks
 
 # Jupyter for extended analysis (optional)
 jupyter==1.0.0
-nbconvert==7.16.4
+nbconvert==7.16.6
 
 # HTTP requests for extended data fetching
-requests==2.32.3
+requests==2.32.4
 
 # Development tools (optional, uncomment for development)
 # flake8>=6.0.0
