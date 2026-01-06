@@ -17,7 +17,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.12'
+          python-version: '3.11'
       - name: Install dependencies
         run: pip install -r requirements.txt
       - name: Fetch full zeros
@@ -25,7 +25,7 @@ jobs:
       - name: Run full validation
         run: python validate_explicit_formula.py --max_zeros $MAX_ZEROS --max_primes $MAX_PRIMES --precision_dps $PRECISION_DPS --integration_t $INTEGRATION_T
       - name: Upload results
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v4.4.3
         with:
           name: full-results
           path: data/validation_results.csv

@@ -1,5 +1,57 @@
 \section{Factor arquimediano: derivación y rigidez}
 
+Mostramos que el factor local en $\mathbb{R}$ queda fijado por los principios
+metaplécticos y por un cálculo alternativo de fase estacionaria; ambos caminos
+convergen en $\pi^{-s/2}\Gamma(s/2)$.
+
+\paragraph{Estado actual.}
+El desarrollo detalla la ruta esperada pero no sustituye a una demostración
+completa: es necesario justificar rigurosamente la unicidad de la normalización
+metapléctica y cerrar el cálculo de fase estacionaria con estimaciones de
+resto, tal como exigen los entregables P3.1--P3.2.
+
+\begin{theorem}[Índice de Weil]\label{thm:paper-weil}
+Sea $\Phi_\infty(x)=e^{-\pi x^2}$ y sea $\widehat{\Phi}_\infty$ su transformada de
+Fourier.  Entonces
+\[
+  Z_\infty(\Phi_\infty,s)=\int_{\mathbb{R}^{\times}}\Phi_\infty(x)|x|^{s}\,d^{\times}x
+  =\pi^{-s/2}\Gamma\!\left(\frac{s}{2}\right),
+\]
+y este es el único factor local compatible con la ley de producto del índice de
+Weil.
+\end{theorem}
+
+\begin{proof}
+La identidad $\widehat{\Phi}_\infty=\Phi_\infty$ reduce la ecuación funcional
+local a $\gamma_\infty(s)Z_\infty(\Phi_\infty,s)=\gamma_\infty(1-s)Z_\infty(\Phi_\infty,1-s)$.
+Un cálculo directo produce
+$Z_\infty(\Phi_\infty,s)=\pi^{-s/2}\Gamma(s/2)$, y cualquier otra elección de
+$\gamma_\infty$ contradice la ley de producto $\prod_v\gamma_v(s)=1$
+\cite[Cor.~2]{Weil1964}.
+\end{proof}
+
+\begin{proposition}[Fase estacionaria]\label{prop:paper-stationary}
+Sea
+\[
+  I(s)=\int_0^{\infty} f(t)t^{s-1}\,dt,
+  \qquad f(t)=\int_{\mathbb{R}} e^{-\pi x^2}e^{2\pi i tx}\,dx.
+\]
+Entonces $I(s)=\pi^{-s/2}\Gamma(s/2)$, por lo que la fórmula explícita produce el
+mismo factor.
+\end{proposition}
+
+\begin{proof}
+Como $f(t)=e^{-\pi t^2}$, separamos $(0,\varepsilon)$ y $(\varepsilon,\infty)$.  El
+primer intervalo se analiza con el cambio $u=\pi t^2$, obteniendo
+$\tfrac{1}{2}\pi^{-s/2}\Gamma(s/2)$ más términos holomorfos.  La imposición de la
+ecuación funcional de la fórmula explícita
+\cite[Lem.~3]{Weil1964}
+excluye esos términos, dejando el factor gamma estándar.
+\end{proof}
+
+\begin{corollary}[Rigidez arquimediana]
+Los resultados anteriores fijan de manera única el factor local en $\mathbb{R}$
+de $D(s)$ como $\pi^{-s/2}\Gamma(s/2)$.
 Demostramos que el único factor local en $\mathbb{R}$ compatible con el
 formalismo adélico es $\pi^{-s/2}\Gamma(s/2)$.  
 Ofrecemos dos derivaciones independientes: (i) vía índice de Weil, (ii) vía
