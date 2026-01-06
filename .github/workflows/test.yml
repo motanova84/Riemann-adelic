@@ -28,7 +28,8 @@ jobs:
           NUMEXPR_MAX_THREADS: 4
           NUMEXPR_NUM_THREADS: 2
         run: |
-          pip install numpy scipy pytest
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
 
       - name: Run basic operator tests
         run: |
@@ -39,7 +40,7 @@ jobs:
           pytest -s operador/tests_operador_extended.py > convergence.log
 
       - name: Upload convergence table
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v4.4.3
         with:
           name: convergence-table
           path: convergence.log

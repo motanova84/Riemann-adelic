@@ -24,10 +24,19 @@ lean_lib RiemannAdelic where
   globs := #[.submodules `RiemannAdelic]
   roots := #[`RiemannAdelic]
 
+-- RHOperator library - Operator theory for RH
+lean_lib RHOperator where
+  globs := #[.submodules `RHOperator]
+  roots := #[`RHOperator]
 -- Adelic library - L-function spectral reconstruction
 lean_lib adelic where
   globs := #[.submodules `adelic]
   roots := #[`adelic]
+
+-- Arpeth library - H_Ψ operator framework
+lean_lib Arpeth where
+  globs := #[.submodules `Arpeth]
+  roots := #[`Arpeth]
 
 -- Main executable
 @[default_target]
@@ -40,8 +49,10 @@ lean_exe «riemann-adelic-lean» where
 require mathlib from git
   "https://github.com/leanprover-community/mathlib4" @ "v4.5.0"
 
+-- Let Lake resolve aesop version compatible with mathlib v4.5.0
 require aesop from git
-  "https://github.com/leanprover-community/aesop" @ "master"
+  "https://github.com/leanprover-community/aesop"
 
+-- Let Lake resolve proofwidgets version compatible with mathlib v4.5.0
 require proofwidgets from git
-  "https://github.com/leanprover-community/proofwidgets4" @ "main"
+  "https://github.com/leanprover-community/proofwidgets4"

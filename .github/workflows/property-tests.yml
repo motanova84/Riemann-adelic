@@ -57,7 +57,7 @@ jobs:
     
     - name: Upload test results on failure
       if: failure()
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v4.4.3
       with:
         name: property-test-failures
         path: |

@@ -20,6 +20,7 @@ Este repositorio incluye múltiples workflows de GitHub Actions para diferentes 
 - **riemann-validation-with-test-functions.yml** - Validación con funciones de test
 - **v5-coronacion-proof-check.yml** - Verificación de prueba V5
 - **critical-line-verification.yml** - Verificación de línea crítica
+- **validate_algorithm.yml** - Validación del algoritmo último QCAL ∞³
 
 ### Tests Específicos
 - **test.yml** - Tests de operadores
@@ -51,6 +52,7 @@ Los workflows nuevos están diseñados para no solaparse con los existentes:
 - **dependency-review.yml** - Solo en `pull_request`
 - **release.yml** - Solo en tags `v*.*.*`
 - **nightly.yml** - Cron diario + manual dispatch
+- **validate_algorithm.yml** - `push` a `main` (validación del algoritmo último)
 
 ## Recomendaciones
 
@@ -73,3 +75,37 @@ Todos los workflows nuevos usan cache para:
 - Resultados de compilación
 
 Esto reduce significativamente el tiempo de ejecución.
+
+## Workflow: validate_algorithm.yml
+
+### Propósito
+Ejecuta el algoritmo último de validación QCAL ∞³ que combina todas las validaciones matemáticas del framework en un solo proceso unificado.
+
+### Trigger
+- `push` a la rama `main`
+
+### Funcionalidad
+1. **Setup**: Configura Python 3.11 y instala dependencias (numpy, networkx, matplotlib, scipy)
+2. **Ejecución**: Ejecuta `src/ultimate_algorithm.py` que realiza:
+   - Validación de coherencia QCAL (Ψ = I × A_eff² × C^∞)
+   - Validación de propiedades espectrales (eigenvalues en la línea crítica)
+   - Validación de estructura adélica (red de números primos)
+   - Validación de ceros de Riemann en la línea crítica
+   - Generación de visualización de resultados
+3. **Verificación**: Genera hash SHA256 del archivo de resultados para trazabilidad
+
+### Salidas
+- `output/ultimate_algorithm_results.json` - Resultados de validación en formato JSON
+- `output/ultimate_algorithm_visualization.png` - Visualización de resultados
+- Hash SHA256 del archivo de resultados
+
+### Dependencias
+- numpy: Cálculos numéricos
+- networkx: Análisis de grafos (estructura adélica)
+- matplotlib: Visualización de resultados
+- scipy: Funciones matemáticas especiales
+
+### Notas
+- Este workflow complementa las validaciones existentes con una validación unificada
+- No reemplaza los workflows de validación específicos (v5-coronacion, critical-line, etc.)
+- Los resultados pueden ser comparados con validaciones previas usando el hash SHA256

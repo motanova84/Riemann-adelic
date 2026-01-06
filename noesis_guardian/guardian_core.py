@@ -1,34 +1,25 @@
 #!/usr/bin/env python3
 """
-NOESIS GUARDIAN 3.0 — CORE
-Sistema técnico de monitorización y mantenimiento ligero del repositorio.
+Guardian Core — QCAL ∞³ Ecosystem Monitor
 
-No es un sistema consciente, ni autónomo en sentido fuerte:
-simplemente automatiza chequeos y pequeñas reparaciones estructurales.
+Central orchestration module for the Noesis Guardian system. This module
+coordinates all monitoring hooks and provides notification capabilities
+for the QCAL ecosystem.
 
-Author: José Manuel Mota Burruezo (JMMB Ψ ✧)
-System: QCAL–SABIO ∞³
+Integration Points:
+    - hook_calabi_yau_resonance: Symbolic Calabi-Yau internal resonance
+    - Future hooks can be added following the same pattern
 
-This is the core Guardian module that orchestrates coherency checks
-and validation of the QCAL framework.
+The guardian maintains QCAL coherence through continuous validation of:
+    - Spectral properties of the Hψ operator
+    - Geometric correspondences (symbolic Calabi-Yau)
+    - Frequency alignment with f0 = 141.7001 Hz
+    - QCAL constant C = 244.36
 
-Features:
-- Repository state monitoring
-- Spectral validation
-- Coherency hooks execution
-- Logging and notification
-- AIK synchronization (optional)
-
-Security Guarantees:
-- ❌ Does NOT modify Lean files
-- ❌ Does NOT write to critical files
-- ❌ Does NOT create infinite loops
-- ❌ Does NOT affect formal proofs
-- ✔️ Only executes existing Python code
-- ✔️ Captures failures
-- ✔️ Records logs
-- ✔️ Emits minimal alerts
-"""
+Author: José Manuel Mota Burruezo
+Date: December 2025
+Guardian Core - Central Orchestration for Noesis Guardian
+----------------------------------------------------------
 
 import hashlib
 import json
@@ -52,10 +43,23 @@ LOGFILE = "noesis_guardian/logs/guardian_log.json"
 class Notifier:
     """Simple notification handler for Guardian alerts."""
 
-    @staticmethod
-    def alert(message: str, data: Optional[Dict] = None) -> None:
-        """
-        Send an alert notification.
+import json
+import os
+import logging
+import re
+from datetime import datetime, timezone
+from typing import Dict, Any, Optional, List
+
+from noesis_guardian.modules.hook_calabi_yau_resonance import CalabiYauResonance
+
+
+def _sanitize_timestamp(timestamp: str) -> str:
+    """Sanitize timestamp for use in filenames by replacing special characters."""
+    return re.sub(r'[:.]+', '-', timestamp)
+import logging
+from datetime import datetime
+from pathlib import Path
+from typing import Any, Callable, Dict, Optional
 
         Args:
             message: Alert message
@@ -69,8 +73,15 @@ class Notifier:
                 print(f"   {status} {title}")
 
 
-class AikSync:
-    """AIK synchronization handler for Guardian entries."""
+# Configure logging
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+)
+logger = logging.getLogger('noesis_guardian')
+    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+)
+logger = logging.getLogger("NoesisGuardian")
 
     @staticmethod
     def emit(entry: Dict) -> None:
@@ -88,7 +99,35 @@ class AikSync:
 
 class NoesisGuardian:
     """
-    NOESIS Guardian 3.0 — Core Controller
+    Notification system for QCAL monitoring alerts.
+
+    This class handles alerting when anomalies are detected
+    in the QCAL ecosystem monitoring hooks.
+    """
+
+    @staticmethod
+    def alert(message: str, context: Optional[Dict[str, Any]] = None) -> None:
+        """
+        Send an alert notification.
+
+        Args:
+            message: Alert message to display.
+            context: Optional context dictionary with additional details.
+        """
+        logger.warning(f"ALERT: {message}")
+        if context:
+            logger.warning(f"Context: {json.dumps(context, indent=2, default=str)}")
+
+    @staticmethod
+    def info(message: str) -> None:
+        """Log an informational message."""
+        logger.info(message)
+
+    @staticmethod
+    def success(message: str) -> None:
+        """Log a success message."""
+        logger.info(f"✓ {message}")
+    Alert notification system for Guardian events.
 
     Orchestrates validation cycles, coherency checks, and logging
     for the QCAL ∞³ framework.
@@ -272,7 +311,299 @@ class NoesisGuardian:
 
         print(f"📝 Log saved to: {self.log_file}")
 
+
+def main():
+    """Main entry point for Guardian execution."""
+    guardian = NoesisGuardian()
+    result = guardian.run_cycle()
+
+    # Exit with appropriate code
+    hooks = result.get("hooks", {})
+    all_passed = all(h.get("ok", False) for h in hooks.values())
+
+    sys.exit(0 if all_passed else 1)
+"""
+
+import json
+import time
+from datetime import datetime
+from pathlib import Path
+from typing import Any, Dict, Optional
+
+
+class RepoWatcher:
+    """Local placeholder implementation for repository watching.
+
+    The real implementation should be provided in a dedicated module.
+    This stub is designed to avoid import errors and to be minimally
+    compatible with typical usage patterns in NoesisGuardian.
+    """
+
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
+        self._config = kwargs
+
+    def start(self) -> None:
+        """Start watching the repository (no-op placeholder)."""
+        return None
+
     def run(self) -> Dict[str, Any]:
+        """Run a single watch cycle and return an empty result."""
+        return {}
+
+
+class AutoRepairEngine:
+    """Local placeholder implementation for automatic repair engine."""
+
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
+        self._config = kwargs
+
+    def run(self) -> Dict[str, Any]:
+        """Execute auto-repair logic (no-op placeholder)."""
+        return {}
+
+
+class SpectralMonitor:
+    """Local placeholder implementation for spectral monitoring."""
+
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
+        self._config = kwargs
+
+    def run(self) -> Dict[str, Any]:
+        """Execute spectral monitoring (no-op placeholder)."""
+        return {}
+
+
+class SabioBridge:
+    """Local placeholder implementation for Sabio bridge integration."""
+
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
+        self._config = kwargs
+
+    def sync(self) -> None:
+        """Synchronize with external Sabio systems (no-op placeholder)."""
+        return None
+
+
+class AikSync:
+    """Local placeholder implementation for Aik synchronization."""
+
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
+        self._config = kwargs
+
+    def sync(self) -> None:
+        """Perform Aik synchronization (no-op placeholder)."""
+        return None
+class NoesisGuardian:
+    """
+    Central coordinator for QCAL ∞³ ecosystem monitoring.
+
+    This class orchestrates all monitoring hooks and maintains
+    a log of validation results for the QCAL framework.
+
+    Attributes:
+        QCAL_COHERENCE (float): The QCAL coherence constant C = 244.36.
+        FUNDAMENTAL_FREQUENCY (float): The fundamental frequency f0 = 141.7001 Hz.
+        results_log (list): Log of all monitoring results.
+
+    Example:
+        >>> guardian = GuardianCore()
+        >>> report = guardian.run_full_check()
+        >>> print(report['overall_status'])
+        'ok'
+    """
+
+    QCAL_COHERENCE: float = 244.36  # C constant
+    FUNDAMENTAL_FREQUENCY: float = 141.7001  # Hz
+
+    def __init__(self, log_dir: Optional[str] = None):
+        """
+        Initialize the Guardian Core.
+
+        Args:
+            log_dir: Optional directory for storing validation logs.
+        """
+        self.results_log: List[Dict[str, Any]] = []
+        self.log_dir = log_dir or "data"
+        self._ensure_log_dir()
+
+    def _ensure_log_dir(self) -> None:
+        """Ensure the log directory exists."""
+        if not os.path.exists(self.log_dir):
+            os.makedirs(self.log_dir, exist_ok=True)
+
+    def run_calabi_yau_check(
+        self,
+        spectrum_path: Optional[str] = None
+    ) -> Dict[str, Any]:
+        """
+        Execute the Calabi-Yau resonance monitoring check.
+
+        Args:
+            spectrum_path: Optional path to spectrum data file.
+
+        Returns:
+            Dictionary containing the Calabi-Yau resonance report.
+        """
+        Notifier.info("Running Calabi-Yau resonance check...")
+
+        cy_report = CalabiYauResonance.run(spectrum_path)
+
+        if cy_report["status"] != "ok":
+            Notifier.alert(
+                "⚠️ Symbolic Calabi–Yau resonance deviation",
+                cy_report
+            )
+        else:
+            Notifier.success("Calabi-Yau resonance stable")
+
+        return cy_report
+
+    def run_full_check(
+        self,
+        spectrum_path: Optional[str] = None
+    ) -> Dict[str, Any]:
+        """
+        Execute all monitoring hooks and compile a complete report.
+
+        This method runs all available monitoring hooks and aggregates
+        their results into a comprehensive status report.
+
+        Args:
+            spectrum_path: Optional path to spectrum data file.
+
+        Returns:
+            Dictionary containing:
+            - timestamp: ISO format timestamp
+            - overall_status: Combined status ('ok' or 'anomaly')
+            - calabi_yau_resonance: CY resonance check results
+            - qcal_constants: QCAL framework constants
+            - message: Summary message
+        """
+        timestamp = datetime.now(timezone.utc).isoformat().replace('+00:00', 'Z')
+
+        Notifier.info("=" * 60)
+        Notifier.info("Starting QCAL ∞³ Guardian Full Check")
+        Notifier.info("=" * 60)
+
+        # Initialize entry with metadata
+        entry: Dict[str, Any] = {
+            "timestamp": timestamp,
+            "guardian_version": "1.0.0",
+            "qcal_constants": {
+                "C": self.QCAL_COHERENCE,
+                "f0_hz": self.FUNDAMENTAL_FREQUENCY
+            }
+        }
+
+        # Run Calabi-Yau resonance check
+        cy_report = self.run_calabi_yau_check(spectrum_path)
+        entry["calabi_yau_resonance"] = cy_report
+
+        # Determine overall status
+        if cy_report["status"] != "ok":
+            entry["overall_status"] = "anomaly"
+            entry["message"] = "QCAL coherence check detected anomalies"
+        else:
+            entry["overall_status"] = "ok"
+            entry["message"] = "QCAL ∞³ coherence verified - all checks passed"
+
+        # Log the result
+        self.results_log.append(entry)
+
+        # Final summary
+        Notifier.info("=" * 60)
+        if entry["overall_status"] == "ok":
+            Notifier.success(entry["message"])
+        else:
+            Notifier.alert(entry["message"])
+        Notifier.info("=" * 60)
+
+        return entry
+
+    def save_report(
+        self,
+        report: Dict[str, Any],
+        filename: Optional[str] = None
+    ) -> str:
+        """
+        Save a monitoring report to a JSON file.
+
+        Args:
+            report: The report dictionary to save.
+            filename: Optional filename. If None, uses timestamp-based name.
+
+        Returns:
+            Path to the saved report file.
+        """
+        if filename is None:
+            timestamp = report.get(
+                "timestamp",
+                datetime.now(timezone.utc).isoformat().replace('+00:00', 'Z')
+            )
+            safe_timestamp = _sanitize_timestamp(timestamp)
+            filename = f"guardian_report_{safe_timestamp}.json"
+
+        filepath = os.path.join(self.log_dir, filename)
+
+        with open(filepath, 'w', encoding='utf-8') as f:
+            json.dump(report, f, indent=2, default=str)
+    Central orchestration for the Noesis Guardian system.
+
+    Orquesta todos los componentes del sistema de monitoreo
+    y autorreparación del repositorio QCAL.
+
+    Attributes:
+        watcher: Vigilante del repositorio
+        repair: Motor de reparación automática
+        spectral: Monitor de coherencia espectral
+    """
+
+    # Constantes QCAL
+    F0_HZ = 141.7001  # Frecuencia fundamental
+    COHERENCE_CONSTANT = 244.36  # C = 244.36
+    DEFAULT_CYCLE_INTERVAL = 1800  # 30 minutos
+    DEFAULT_LOG_FILENAME = "guardian_log_v2.json"
+
+    def __init__(self, repo_root: Optional[Path] = None, log_path: Optional[str] = None):
+        """
+        Inicializa el Guardian NOESIS.
+
+        Args:
+            repo_root: Ruta raíz del repositorio (opcional)
+            log_path: Ruta para el archivo de log (opcional)
+        """
+        if repo_root is None:
+            repo_root = Path(__file__).resolve().parents[1]
+
+        self.repo_root = Path(repo_root)
+        self.log_path = log_path or str(
+            self.repo_root / "noesis_guardian" / self.DEFAULT_LOG_FILENAME
+        )
+
+        # Inicializar componentes
+        self.watcher = RepoWatcher(self.repo_root)
+        self.repair = AutoRepairEngine(self.repo_root)
+        self.spectral = SpectralMonitor()
+
+        # Estado interno
+        self._running = False
+        self._cycle_count = 0
+
+    def noesis_signal(self) -> Dict[str, Any]:
+        """
+        Calcula la señal NOESIS del sistema.
+
+        Returns:
+            Señal NOESIS con estado vital del organismo
+        """
+        return self.spectral.compute_noesis_signal()
+
+    def log(self, data: Dict[str, Any]) -> None:
+        """
+        Registra datos en el log del Guardian.
+
+        Args:
+            data: Datos a registrar
         """
         Run the Guardian and produce a log entry.
         
@@ -313,3 +644,107 @@ def main():
 if __name__ == "__main__":
     main()
 
+class NoesisGuardian:
+    """
+    Core Guardian class that orchestrates repository monitoring and maintenance.
+
+    This class coordinates multiple monitoring and repair components to ensure
+    the QCAL repository maintains structural integrity and coherence.
+    """
+
+    def __init__(self) -> None:
+        """Initialize all Guardian components."""
+        self.watcher = RepoWatcher()
+        self.repair_engine = AutoRepairEngine()
+        self.spectral_monitor = SpectralMonitor()
+
+    def log(self, entry: dict) -> None:
+        """
+        Append a log entry to the Guardian log file.
+
+        Args:
+            entry: Dictionary containing log data to record.
+        """
+        os.makedirs(os.path.dirname(LOGFILE), exist_ok=True)
+        with open(LOGFILE, "a") as f:
+            f.write(json.dumps(entry) + "\n")
+
+    def run_cycle(self) -> None:
+        """Run a single monitoring and maintenance cycle."""
+        repo_state = self.watcher.scan()
+        spectral_state = self.spectral_monitor.check()
+    def run(self) -> dict:
+        """
+        Execute a complete Guardian monitoring cycle.
+
+        Returns:
+            Dictionary containing the results of the monitoring cycle.
+        """
+        repo_state = self.watcher.scan()
+        spectral_state = self.spectral_monitor.check()
+
+        entry = {
+            "timestamp": datetime.now().isoformat(),
+            "repo": repo_state,
+            "spectral": spectral_state,
+        }
+
+        self._log(entry)
+
+    def get_latest_report(self) -> Optional[Dict[str, Any]]:
+        """
+        Get the most recent monitoring report.
+
+        Returns:
+            The latest report dictionary, or None if no reports exist.
+        """
+        if self.results_log:
+            return self.results_log[-1]
+        return None
+
+
+def main():
+    """Main entry point for guardian monitoring."""
+    print()
+    print("=" * 70)
+    print("  NOESIS GUARDIAN — QCAL ∞³ Ecosystem Monitor")
+    print("  José Manuel Mota Burruezo Ψ ✧ ∞³")
+    print("=" * 70)
+    print()
+
+    # Initialize guardian
+    guardian = GuardianCore()
+
+    # Run full check
+    report = guardian.run_full_check()
+
+    # Display results
+    print()
+    print("Report Summary:")
+    print(f"  Timestamp: {report['timestamp']}")
+    print(f"  Overall Status: {report['overall_status']}")
+    print(f"  Message: {report['message']}")
+    print()
+
+    # Display Calabi-Yau results
+    cy = report.get('calabi_yau_resonance', {})
+    print("Calabi-Yau Resonance:")
+    print(f"  Status: {cy.get('status', 'N/A')}")
+    print(f"  Resonance Score: {cy.get('resonance_score', 0):.4f}")
+    print(f"  Frequency (f₀): {cy.get('f0_hz', 'N/A')} Hz")
+    print(f"  QCAL Coherence (C): {cy.get('qcal_coherence', 'N/A')}")
+    print()
+
+    # Save report
+    guardian.save_report(report, "guardian_latest_report.json")
+
+    print("=" * 70)
+    print("  ♾️ QCAL Node evolution complete – validation coherent")
+    print("=" * 70)
+    print()
+
+    return report
+
+
+if __name__ == "__main__":
+    main()

@@ -77,6 +77,11 @@ resultados/*.json
 resultados/certificates/
 !resultados/.gitkeep
 
+# Checksum files
+*.md5
+
+# Generated HTML output
+docs/validation.html
 # Generated HTML output  
 docs/validation*.html
 docs/temp_*
@@ -172,6 +177,9 @@ build/
 # Disabled workflow files
 *.disabled
 
+# Generated visualization files (thermal kernel demo)
+eigenvalue_dist.png
+zero_comparison.png
 # Monitoring system - evidence and sensitive data
 monitoring/evidence/
 monitoring/alerts/*.json
@@ -200,3 +208,13 @@ G4_spectrum_plot.png
 .noesis_backups/
 noesis_guardian/guardian_log.json
 _codeql_detected_source_root/
+
+# Ultimate Algorithm generated outputs (keep directory structure)
+output/ultimate_algorithm_results.json
+output/ultimate_algorithm_visualization.png
+trace_class_complete_validation.png
+
+# Pipeline execution logs
+logs/pipeline_*/
+data/pipeline_report_*.json
+*.backup.*
