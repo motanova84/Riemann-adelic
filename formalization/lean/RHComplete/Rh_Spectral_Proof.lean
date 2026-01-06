@@ -9,6 +9,7 @@ import Mathlib.LinearAlgebra.Eigenspace.Basic
 import Mathlib.Topology.MetricSpace.Completion
 import Mathlib.Data.Real.Basic
 import Mathlib.NumberTheory.ZetaFunction
+import Mathlib.NumberTheory.DirichletCharacter.Basic
 
 
 noncomputable section
@@ -34,7 +35,7 @@ def Dχ (χ : DirichletCharacter ℤ) (s : ℂ) : ℂ :=
 
 -- Definimos Ξ(s) como la continuación holomorfa de ζ(s) multiplicada por Gamma(s/2) y π^{-s/2}
 def Ξ (s : ℂ) : ℂ :=
-  π ** (-s / 2) * Complex.Gamma (s / 2) * riemannZeta s
+  s * (s - 1) * π^(-s / 2) * Complex.Gamma (s / 2) * riemannZeta s
 
 
 -- Axioma temporal (hasta formalización completa de Hadamard y determinantes funcionales)
@@ -42,7 +43,6 @@ axiom spectral_identity : ∀ (χ : DirichletCharacter ℤ) (s : ℂ), Dχ χ s 
 
 
 -- Teorema declarado como núcleo espectral ∞³
-@[theorem]
 def RH_spectral_equivalence : Prop :=
   ∀ (χ : DirichletCharacter ℤ), ∀ (s : ℂ), Dχ χ s = Ξ s
 
