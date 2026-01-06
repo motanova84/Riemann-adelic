@@ -171,19 +171,21 @@ theorem spectral_sum_converges (f : ℂ → ℂ) (h_entire : Entire f)
         · exact le_of_lt h_const
         · exact le_of_lt (Real.exp_pos _)
       · intro n
-        -- Technical lemma: M-weighted exponential is summable
-        -- This requires: For M ≥ 0 and α > M, if ∑exp(-α|Im(ρ_n)|) < ∞,
-        -- then the bound C·exp(M·|Im(ρ_n)|) is also summable when combined
-        -- with the decay rate from spectral density.
-        -- 
-        -- Mathematical justification:
-        -- The Riemann-von Mangoldt formula gives N(T) ~ (T/2π)log(T/2π)
-        -- for the number of zeros with |Im(ρ)| ≤ T.
-        -- This implies average spacing ~ 2π/log(T), making the sum
-        -- ∑exp(M·|Im(ρ_n)|) / exp(α'·|Im(ρ_n)|) convergent for α' > M.
-        -- 
-        -- This is a standard result in analytic number theory but requires
-        -- detailed estimates on zero density that are beyond the current scope.
+        -- NOTE: This step has a fundamental mathematical issue when M ≥ 0.
+        -- For M > 0, the sum ∑ C * exp(M * |Im(ρ_n)|) does NOT converge in general,
+        -- even with spectral_density_summable, because the density of Riemann zeros
+        -- (~ log(T)/(2π)) is not strong enough to overcome exponential growth.
+        --
+        -- The correct theorem statement should either:
+        -- (1) Restrict to M < 0 (functions of exponential decay), OR  
+        -- (2) Use a different notion of "exponential type" (order ≤ 1 with type < ∞)
+        --
+        -- For the application to Riemann zeros and entire functions of order 1,
+        -- the proper statement uses |f(z)| ≤ C_ε * exp(ε * |z|) for all ε > 0,
+        -- where C_ε depends on ε. This is handled in the second version below.
+        --
+        -- We leave this as a structural sorry, acknowledging the theorem as stated
+        -- is too strong without additional hypotheses.
         sorry
       · -- The key is: spectral_density_summable gives us the majorant
         -- when α > M, which can always be chosen
@@ -322,32 +324,43 @@ theorem spectral_sum_converges
       h_bound (ρ n)
     
     -- Bound the norm using critical line property
-    have h_norm : Complex.abs (ρ n) ≤ |(ρ n).im| + 1 := by
+    have h_norm : Complex.abs (ρ n) ≤ 1/2 + |(ρ n).im| := by
       rw [Complex.abs_apply]
       calc 
         Real.sqrt ((ρ n).re ^ 2 + (ρ n).im ^ 2) 
-          ≤ Real.sqrt ((1/2)^2 + (ρ n).im ^ 2) := by
-            apply Real.sqrt_le_sqrt
-            apply add_le_add_right
+          = Real.sqrt ((1/2)^2 + (ρ n).im ^ 2) := by
+            congr 2
             rw [critical_line_property n ρ]
-            norm_num
-        _ ≤ Real.sqrt (1 + (ρ n).im ^ 2) := by
+        _ = Real.sqrt (1/4 + (ρ n).im ^ 2) := by norm_num
+        _ ≤ Real.sqrt ((1/2 + |(ρ n).im|) ^ 2) := by
             apply Real.sqrt_le_sqrt
-            norm_num
-            apply add_le_add_right
-            apply sq_nonneg
-        _ ≤ 1 + |(ρ n).im| := by
-            sorry -- Standard inequality: sqrt(1 + x²) ≤ 1 + |x|
+            have hx : 0 ≤ |(ρ n).im| := abs_nonneg _
+            calc (1/4 : ℝ) + (ρ n).im ^ 2
+              ≤ 1/4 + |(ρ n).im| ^ 2 := by
+                gcongr
+                apply sq_le_sq'
+                · exact neg_nonpos_of_nonneg (abs_nonneg _)
+                · exact le_abs_self _
+            _ ≤ (1/2 + |(ρ n).im|) ^ 2 := by
+                have h1 : 1/4 ≤ (1/2)^2 := by norm_num
+                have h2 : 0 ≤ 1/2 := by norm_num
+                have h3 : 0 ≤ |(ρ n).im| := abs_nonneg _
+                calc 1/4 + |(ρ n).im| ^ 2
+                  ≤ (1/2)^2 + |(ρ n).im| ^ 2 := by linarith
+                _ ≤ (1/2 + |(ρ n).im|) ^ 2 := by
+                    rw [add_sq]
+                    ring_nf
+                    linarith [mul_nonneg h2 h3]
+        _ = |1/2 + |(ρ n).im|| := Real.sqrt_sq_eq_abs (1/2 + |(ρ n).im|)
+        _ = 1/2 + |(ρ n).im| := abs_of_nonneg (by linarith : 0 ≤ 1/2 + |(ρ n).im|)
     
     calc Complex.abs (f (ρ n))
       ≤ C * Real.exp (M * Complex.abs (ρ n)) := h_bound_n
-    _ ≤ C * Real.exp (M * (1 + |(ρ n).im|)) := by
+    _ ≤ C * Real.exp (M * (1/2 + |(ρ n).im|)) := by
         apply mul_le_mul_of_nonneg_left
         · apply Real.exp_le_exp.mpr
           apply mul_le_mul_of_nonneg_left h_norm (le_of_lt hM)
         · exact le_of_lt hC
-    _ = C * Real.exp (M * (1/2 + |(ρ n).im|)) := by
-        sorry -- Simplification M * (1 + |Im|) = M * (1/2 + |Im|) + M/2
   
   · -- Show the majorant series converges
     exact h_majorant
@@ -363,6 +376,19 @@ theorem spectral_sum_uniform_convergence
   (α : ℝ) (hα : α > 0)
   (h_density : Summable fun n => Real.exp (-α * |(ρ n).im|)) :
   ∃ K : ℝ, K > 0 ∧ ∀ n z, Complex.abs (f (ρ n)) ≤ K * Real.exp (-α/2 * |(ρ n).im|) := by
-  sorry -- Follows from spectral_sum_converges with explicit bounds
+  -- NOTE: This theorem statement appears to have a logical error.
+  -- The hypothesis h_exp_type gives |f(z)| ≤ C * exp(M * |z|) with M > 0 (growth).
+  -- The conclusion claims |f(ρ_n)| ≤ K * exp(-α/2 * |Im(ρ_n)|) (decay).
+  -- For ρ_n on the critical line with |Im(ρ_n)| → ∞, we have |ρ_n| ~ |Im(ρ_n)|,
+  -- so |f(ρ_n)| ≤ C * exp(M * |Im(ρ_n)|) which GROWS, but the conclusion has DECAY.
+  -- These are incompatible for M > 0.
+  --
+  -- The correct statement should either:
+  -- (1) Require M < α/2 (so the growth is overcome by the decay), OR
+  -- (2) Change the conclusion to match the growth bound
+  --
+  -- As stated, this theorem cannot be proven. We leave this as a structural sorry
+  -- to indicate the need for a corrected statement.
+  sorry -- Theorem statement needs correction: growth bound incompatible with decay conclusion
 
 end SpectralConvergence
