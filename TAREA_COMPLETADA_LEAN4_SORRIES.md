@@ -67,7 +67,7 @@ theorem spectral_symmetry (H : Operator E) (h_self_adjoint : IsSelfAdjoint H) :
    - **Explicación**: La densidad de ceros de Riemann (~log(T)/(2π)) no es suficiente
    - **Solución recomendada**: Restringir teorema a M < 0
 
-2. **Línea 388**: Error lógico en enunciado del teorema
+2. **Línea 392**: Error lógico en enunciado del teorema
    - **Issue**: Hipótesis tiene crecimiento (M > 0) pero conclusión tiene decaimiento
    - **Explicación**: |f(z)| ≤ C·exp(M·|z|) vs |f(ρ_n)| ≤ K·exp(-α/2·|Im|)
    - **Solución recomendada**: Cambiar enunciado para que sea consistente
