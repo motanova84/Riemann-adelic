@@ -127,7 +127,6 @@ def weil_explicit_formula(zeros, primes, f, max_zeros, t_max=50, precision=30):
     print(f"Prime sum: {prime_sum_val}")
     
     # RIGHT SIDE: Residue term removed (now part of left side)
-    print(f"Prime sum: {prime_sum_val}")
     
     # Remove sign flip - use standard form now that left side is corrected
     right_side = prime_sum_val
