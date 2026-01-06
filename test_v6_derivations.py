@@ -10,9 +10,13 @@ Tests:
 
 import sys
 import os
+from pathlib import Path
 
-# Add parent directory to path
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+# Add repository root to path for imports
+REPO_ROOT = Path(__file__).parent.absolute()
+sys.path.insert(0, str(REPO_ROOT))
+sys.path.insert(0, str(REPO_ROOT / 'scripts'))
+
 
 def test_scaling_factor():
     """Test analytical scaling factor derivation"""
@@ -21,8 +25,7 @@ def test_scaling_factor():
     print("=" * 70)
     
     try:
-        # Import the validator
-        sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'scripts'))
+        # Import the validator from scripts directory
         from validate_explicit_formula_extended import ExplicitFormulaValidator
         
         # Create validator

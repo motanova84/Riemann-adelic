@@ -93,6 +93,12 @@ class EOVLagrangian:
         """
         Compute ζ'(1/2) using high-precision arithmetic
         
+        Note: ζ'(1/2) is a well-known mathematical constant.
+        Value: ζ'(1/2) ≈ -3.92264613...
+        
+        We compute it numerically for flexibility and to demonstrate
+        the calculation, but in production this could be pre-computed.
+        
         Returns:
             Value of ζ'(1/2)
         """
@@ -100,10 +106,14 @@ class EOVLagrangian:
         s = mp.mpf(0.5)
         
         # Numerical derivative using central difference
+        # h chosen for optimal balance of truncation vs roundoff error
+        # at the given precision (25 decimal places)
         h = mp.mpf(1e-8)
         zeta_plus = mp.zeta(s + h)
         zeta_minus = mp.zeta(s - h)
         
+        # Central difference: f'(x) ≈ [f(x+h) - f(x-h)] / (2h)
+        # Error: O(h²) for smooth functions
         zeta_prime = (zeta_plus - zeta_minus) / (2 * h)
         
         return float(zeta_prime)
