@@ -218,3 +218,5 @@ trace_class_complete_validation.png
 logs/pipeline_*/
 data/pipeline_report_*.json
 *.backup.*
+requirements-lock.txt.backup
+*.backup
