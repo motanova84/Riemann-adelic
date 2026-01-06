@@ -35,7 +35,7 @@ def Dχ (χ : DirichletCharacter ℤ) (s : ℂ) : ℂ :=
 
 -- Definimos Ξ(s) como la continuación holomorfa de ζ(s) multiplicada por Gamma(s/2) y π^{-s/2}
 def Ξ (s : ℂ) : ℂ :=
-  s * (s - 1) * π^(-s / 2) * Complex.Gamma (s / 2) * riemannZeta s
+  s * (s - 1) * (π^(-s / 2)) * Complex.Gamma (s / 2) * riemannZeta s
 
 
 -- Axioma temporal (hasta formalización completa de Hadamard y determinantes funcionales)
