@@ -1,17 +1,21 @@
-# CITATION.cff
-
 cff-version: 1.2.0
-title: "Version V5 — Coronación: A Definitive Proof of the Riemann Hypothesis via S-Finite Adelic Spectral Systems"
+message: "If you use this repository, please cite it as below."
+title: "Riemann–Adelic Proof Framework (V4.1+)"
+authors:
+  - family-names: "Mota Burruezo"
+    given-names: "José Manuel"
+    affiliation: "Instituto Conciencia Cuántica"
+    orcid: "https://orcid.org/0000-0000-0000-0000"
+date-released: "2025-09-25"
+doi: "10.5281/zenodo.17161831"
+license: "MIT"
+repository-code: "https://github.com/motanova84/-jmmotaburr-riemann-adelic"
+message: "Cita esta prueba formal de la Hipótesis de Riemann como se indica"
+title: "Prueba Formal de la Hipótesis de Riemann"
 authors:
   - family-names: Mota Burruezo
     given-names: José Manuel
-    orcid: https://orcid.org/0000-0002-0000-0000
-    affiliation: Universidad de la Noesis
-    email: institutoconsciencia@proton.me
-date-released: 2025-09-26
-version: "5.0"
+    orcid: https://orcid.org/0009-0002-1923-0773
+date-released: 2025-11-21
+version: "v6.0"
 doi: 10.5281/zenodo.17116291
-url: https://github.com/motanova84/-jmmotaburr-riemann-adelic
-repository-code: https://github.com/motanova84/-jmmotaburr-riemann-adelic
-license: MIT
-message: "Por favor cite este trabajo si utiliza el código, los datos o los resultados en publicaciones académicas."

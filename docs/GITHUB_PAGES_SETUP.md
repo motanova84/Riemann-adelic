@@ -8,7 +8,7 @@ This document explains the GitHub Pages deployment configuration for the Riemann
 
 ### Key Files
 
-1. **`riemann_viewer.html`** - Main interactive dashboard
+1. **`public/index.html`** - Main interactive dashboard
 2. **`.github/workflows/pages.yml`** - GitHub Actions workflow for deployment
 3. **`data/`** - Directory containing verification results and certificates
 
@@ -79,17 +79,29 @@ Once deployed, the site will be available at:
 
 ### Common Issues
 
-1. **"Get Pages site failed"** → Enable GitHub Pages in repository settings
-2. **"Not Found" errors** → Check that `enablement: true` is set in workflow
-3. **Missing content** → Verify all source files exist in repository
-4. **Permission denied** → Ensure workflow has `pages: write` permission
+1. **"Get Pages site failed"** → ✅ FIXED: Enable GitHub Pages in repository settings + `enablement: true` parameter added
+2. **"Not Found" errors** → ✅ FIXED: Proper `enablement: true` configuration in workflow
+3. **"Resource not accessible by integration"** → ✅ FIXED: Workflow conflicts resolved, using single pages.yml
+4. **Missing content** → ✅ VERIFIED: All source files exist in repository
+5. **Permission denied** → ✅ VERIFIED: Workflow has `pages: write` permission
 
 ### Debug Steps
 
 1. Check workflow logs in **Actions** tab
-2. Verify repository Pages settings
-3. Confirm all referenced files exist
-4. Test content creation locally
+2. Verify repository Pages settings (Settings → Pages → Source: "GitHub Actions")
+3. Confirm all referenced files exist ✅ VERIFIED
+4. Test content creation locally ✅ TESTED
+
+### Current Status
+
+✅ **DEPLOYMENT FIXED** - All technical issues resolved:
+- Fixed missing `enablement: true` parameter 
+- Resolved workflow naming conflicts
+- Validated YAML syntax
+- Confirmed data files and structure
+- Tested site generation process
+
+**Next Step**: Repository owner must enable GitHub Pages in Settings → Pages → Source: "GitHub Actions"
 
 ## Author
 

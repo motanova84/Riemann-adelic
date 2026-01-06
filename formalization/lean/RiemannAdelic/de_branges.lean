@@ -1,37 +1,42 @@
--- Canonical system, Hamiltonian positivity
--- de Branges theory for entire functions
+-- Canonical system, Hamiltonian positivity (V5.1 enhanced)
+-- de Branges theory for critical line localization
 
-import Mathlib.Analysis.InnerProductSpace.Basic
+import Mathlib.Analysis.InnerProductSpace.Basic  
 import Mathlib.LinearAlgebra.Matrix.Hermitian
+import RiemannAdelic.entire_order
 
--- de Branges space of entire functions
-def de_branges_space (E : ℂ → ℂ) : Set (ℂ → ℂ) := 
-  -- Proof outline: H(E) = {f entire : |f(z)| ≤ |f(z̄)||E(z)|/|E(z̄)| for Im(z) > 0}
-  -- Use Hermite-Biehler property and reproducing kernel structure
-  -- Apply Hilbert space completion with appropriate inner product
-  {f : ℂ → ℂ | ∃ (bound : ℝ), ∀ z : ℂ, 
-    z.im > 0 → |f z| ≤ bound * |E z| / |E (z.re - z.im * Complex.I)|}
+-- V5.1: de Branges space for critical line analysis
+def de_branges_space_critical (E : ℂ → ℂ) : Set (ℂ → ℂ) := 
+  {f : ℂ → ℂ | entire_finite_order f 1 ∧ 
+    ∀ s : ℂ, s.re > 1/2 → Complex.abs (f s) ≤ Complex.abs (E s)}
 
--- Canonical system
-def canonical_system (H : ℂ → Matrix (Fin 2) (Fin 2) ℂ) : Prop := 
-  -- Proof outline: J d/dx [y₁; y₂] = zH(x)[y₁; y₂] where J = [[0,1];[-1,0]]
-  -- H(x) is 2×2 Hermitian matrix measure on ℝ
-  -- Solutions give entire functions with prescribed zero distribution
-  ∀ x : ℝ, (H x).IsHermitian ∧ 
-    ∃ (J : Matrix (Fin 2) (Fin 2) ℂ), J = ![![0, 1], ![-1, 0]]
+-- V5.1: Canonical Hamiltonian system for adelic flow
+def adelic_canonical_system (H : ℂ → Matrix (Fin 2) (Fin 2) ℂ) : Prop := 
+  ∀ s : ℂ, ∃ h₁₁ h₁₂ h₂₂ : ℂ,
+    H s = ![![h₁₁, h₁₂], ![Complex.conj h₁₂, h₂₂]] ∧
+    h₁₁.im = 0 ∧ h₂₂.im = 0  -- Real diagonal entries
 
--- Hamiltonian positivity condition
-def hamiltonian_positive (H : ℂ → Matrix (Fin 2) (Fin 2) ℂ) : Prop := 
-  -- Proof outline: H(x) ≥ 0 for all x ∈ ℝ (positive semidefinite)
-  -- Use spectral theorem for Hermitian matrices
-  -- Establish connection to reproducing kernel positivity
-  ∀ x : ℝ, (H x).PosSemidef
+-- V5.1: Positivity condition (spectral regularity from A4)
+def spectral_positivity (H : ℂ → Matrix (Fin 2) (Fin 2) ℂ) : Prop := 
+  adelic_canonical_system H ∧
+  ∀ s : ℂ, s.re = 1/2 → ∃ λ₁ λ₂ : ℝ, λ₁ ≥ 0 ∧ λ₂ ≥ 0 ∧
+    Matrix.eigenvalues (H s) = {λ₁, λ₂}
 
--- de Branges theorem application
-def de_branges_theorem (f : ℂ → ℂ) : Prop := 
-  -- Proof outline: If f ∈ H(E) and zeros of f lie on real axis,
-  -- then f has Hermite-Biehler property E(z)E*(z̄) - f(z)f*(z̄) ≥ 0
-  -- Apply to show all zeros of entire functions in de Branges spaces
-  -- are real when appropriate conditions hold
-  ∃ (E : ℂ → ℂ), f ∈ de_branges_space E ∧ 
-    (∀ z : ℂ, f z = 0 → z.im = 0)
+-- V5.1: Critical line localization theorem (main result)
+theorem critical_line_localization (D : ℂ → ℂ) (H : ℂ → Matrix (Fin 2) (Fin 2) ℂ) :
+  spectral_positivity H →
+  (∀ s : ℂ, D (1-s) = D s) →  -- A2 symmetry
+  entire_finite_order D 1 →    -- Order ≤ 1 from construction  
+  (∀ ρ : ℂ, D ρ = 0 → ρ.re = 1/2) := by  -- All zeros on critical line!
+  sorry -- This is the culminating result of V5.1
+
+-- V5.1: Connection to Paley-Wiener uniqueness
+def v5_1_uniqueness_framework (D Ξ : ℂ → ℂ) : Prop :=
+  (∃ H : ℂ → Matrix (Fin 2) (Fin 2) ℂ, spectral_positivity H) ∧
+  critical_line_localization D H ∧  -- Apply to D(s)
+  critical_line_localization Ξ H    -- Apply to Ξ(s)
+
+-- V5.1: Final identification D ≡ Ξ (Theorem 4.2 reference)
+theorem v5_1_D_equals_Xi (D Ξ : ℂ → ℂ) :
+  v5_1_uniqueness_framework D Ξ → ∀ s : ℂ, D s = Ξ s := by
+  sorry -- Paley-Wiener + zero multiplicities → D ≡ Ξ

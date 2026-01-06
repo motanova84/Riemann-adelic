@@ -1,0 +1,23 @@
+{
+  "timestamp": "Thu Sep 25 04:41:13 UTC 2025",
+  "repository": "-jmmotaburr-riemann-adelic",
+  "workflows": [
+    "comprehensive-ci.yml",
+    "v5-coronacion-proof-check.yml",
+    "copilot-automerge.yml",
+    "full.yml",
+    "quick.yml",
+    "validate-on-push.yml",
+    "riemann-validation-with-test-functions.yml",
+    "latex-and-proof.yml",
+    "critical-line-verification.yml"
+  ],
+  "status": {
+    "copilot_workflow": true,
+    "branch_protection_guide": true,
+    "requirements_file": true,
+    "test_suite": true,
+    "validation_script": true,
+    "latex_document": true
+  }
+}

@@ -10,7 +10,7 @@
 
 ### 1. Created Missing Files
 
-#### `riemann_viewer.html` - Interactive Dashboard
+#### `public/index.html` - Interactive Dashboard
 - Modern responsive HTML dashboard for Riemann Hypothesis verification
 - Professional styling with CSS Grid and gradients
 - Real-time metrics display showing:

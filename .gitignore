@@ -21,6 +21,7 @@ wheels/
 *.egg-info/
 .installed.cfg
 *.egg
+*.whl
 
 # Jupyter Notebook
 .ipynb_checkpoints
@@ -34,6 +35,12 @@ htmlcov/
 .tox/
 coverage.xml
 *.cover
+
+# SABIO ∞⁴ generated reports
+sabio_infinity4_report_*.json
+
+# Lean validation reports
+formalization/lean/validation_report.json
 
 # Virtual environments
 venv/
@@ -50,14 +57,31 @@ ENV/
 
 # OS files
 .DS_Store
+Thumbs.db__pycache__/
 Thumbs.db
 
 # Generated validation results (keep structure but not data)
-data/validation_results*.csv
+data/validation_results_*.csv
 data/validation_output*.csv
 data/temp_*
 data/*.tmp
+data/validation/results/*
+data/validation/certificates/*
+data/qcal_validation_certificate.json
+!data/validation/results/.gitkeep
+!data/validation/certificates/.gitkeep
+!data/validation_results.csv
 
+# Generated 141.7 Hz validation outputs
+resultados/*.json
+resultados/certificates/
+!resultados/.gitkeep
+
+# Checksum files
+*.md5
+
+# Generated HTML output
+docs/validation.html
 # Generated HTML output  
 docs/validation*.html
 docs/temp_*
@@ -69,13 +93,22 @@ zeros/*.tmp
 zeros/*.gz
 logs/*.log
 logs/temp_*
+logs/validation/*
+logs/performance/benchmark_results_*.json
+logs/performance/benchmark_results_*_report.md
+!logs/validation/.gitkeep
+
+# NOESIS GUARDIAN 3.0 logs
+noesis_guardian/logs/*.json
+noesis_guardian/logs/*.log
+!noesis_guardian/logs/.gitkeep
 
 # CI/CD artifacts
 artifacts/
 reports/
 .pytest_cache/
 
-# LaTeX build files (for paper directory)
+# LaTeX build files (for paper directories)
 paper/*.aux
 paper/*.log
 paper/*.out
@@ -90,6 +123,22 @@ paper/*.run.xml
 paper/*.nav
 paper/*.snm
 paper/*.vrb
+
+# LaTeX build files (for docs/paper directory)
+docs/paper/*.aux
+docs/paper/*.log
+docs/paper/*.out
+docs/paper/*.fdb_latexmk
+docs/paper/*.fls
+docs/paper/*.synctex.gz
+docs/paper/*.toc
+docs/paper/*.bbl
+docs/paper/*.blg
+docs/paper/*.bcf
+docs/paper/*.run.xml
+docs/paper/*.nav
+docs/paper/*.snm
+docs/paper/*.vrb
 
 # Temporary computational files
 *.tmp
@@ -109,3 +158,63 @@ zeros/*_t1e12.txt
 .mypy_cache/
 .dmypy.json
 dmypy.json
+
+# Node.js dependencies
+node_modules/
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Next.js build output
+.next/
+out/
+next-env.d.ts
+
+# Build artifacts
+dist/
+build/
+
+# Disabled workflow files
+*.disabled
+
+# Generated visualization files (thermal kernel demo)
+eigenvalue_dist.png
+zero_comparison.png
+# Monitoring system - evidence and sensitive data
+monitoring/evidence/
+monitoring/alerts/*.json
+!monitoring/alerts/.gitkeep
+examples/__pycache__/
+
+# Noesis Guardian logs (keep directory structure)
+noesis_guardian/logs/guardian_log.json
+!noesis_guardian/logs/.gitkeep
+
+# QCAL auto-generated state files
+tools/qcal_state.json
+# Spectral framework demo images
+*_demo.png
+*_spectrum.png
+G4_spectrum_plot.png
+
+# Validation notebook generated images
+evac_zeta_visualization.png
+convexity_gamma_visualization.png
+validation_summary.png
+validation_summary.txt
+G4_spectrum_plot.png
+
+# NOESIS Guardian generated files
+.noesis_backups/
+noesis_guardian/guardian_log.json
+_codeql_detected_source_root/
+
+# Ultimate Algorithm generated outputs (keep directory structure)
+output/ultimate_algorithm_results.json
+output/ultimate_algorithm_visualization.png
+trace_class_complete_validation.png
+
+# Pipeline execution logs
+logs/pipeline_*/
+data/pipeline_report_*.json
+*.backup.*
