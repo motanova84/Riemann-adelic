@@ -1,0 +1,32 @@
+name: Python Validation and Tests
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          pip install --upgrade pip==24.3.1
+          pip install -r requirements.txt
+
+      - name: Run unit tests
+        run: pytest -v
+
+      - name: Run V5 Coronación validation
+        run: |
+          python3 validate_v5_coronacion.py --precision 25

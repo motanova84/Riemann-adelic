@@ -1,0 +1,96 @@
+{
+  "n_zeros_compared": 10,
+  "max_absolute_error": 4.973799150320701e-13,
+  "max_relative_error": 2.161579891459752e-14,
+  "mean_absolute_error": 3.023359340659226e-13,
+  "mean_relative_error": 1.0717261774144352e-14,
+  "precision_target_met": true,
+  "sampled_errors": [
+    {
+      "zero_index": 1,
+      "computed_value": 14.134725141735,
+      "reference_value": 14.134725141734695,
+      "absolute_error": 3.055333763768431e-13,
+      "relative_error": 2.161579891459752e-14
+    },
+    {
+      "zero_index": 2,
+      "computed_value": 21.022039638772,
+      "reference_value": 21.022039638771556,
+      "absolute_error": 4.440892098500626e-13,
+      "relative_error": 2.1124934472629194e-14
+    },
+    {
+      "zero_index": 3,
+      "computed_value": 25.010857580146,
+      "reference_value": 25.01085758014569,
+      "absolute_error": 3.090860900556436e-13,
+      "relative_error": 1.2358076450005643e-14
+    },
+    {
+      "zero_index": 4,
+      "computed_value": 30.42487612586,
+      "reference_value": 30.424876125859512,
+      "absolute_error": 4.867217739956686e-13,
+      "relative_error": 1.5997494023713747e-14
+    },
+    {
+      "zero_index": 5,
+      "computed_value": 32.935061587739,
+      "reference_value": 32.93506158773919,
+      "absolute_error": 1.9184653865522705e-13,
+      "relative_error": 5.824994076423594e-15
+    },
+    {
+      "zero_index": 6,
+      "computed_value": 37.586178158826,
+      "reference_value": 37.586178158825675,
+      "absolute_error": 3.268496584496461e-13,
+      "relative_error": 8.696006736000052e-15
+    },
+    {
+      "zero_index": 7,
+      "computed_value": 40.918719012147,
+      "reference_value": 40.9187190121475,
+      "absolute_error": 4.973799150320701e-13,
+      "relative_error": 1.2155314903294344e-14
+    },
+    {
+      "zero_index": 8,
+      "computed_value": 43.327073280915,
+      "reference_value": 43.327073280915,
+      "absolute_error": 0.0,
+      "relative_error": 0.0
+    },
+    {
+      "zero_index": 9,
+      "computed_value": 48.005150881167,
+      "reference_value": 48.00515088116716,
+      "absolute_error": 1.6342482922482304e-13,
+      "relative_error": 3.404318624669421e-15
+    },
+    {
+      "zero_index": 10,
+      "computed_value": 49.773832477672,
+      "reference_value": 49.7738324776723,
+      "absolute_error": 2.984279490192421e-13,
+      "relative_error": 5.995679540109993e-15
+    }
+  ],
+  "error_distribution": {
+    "below_1e-6": 10,
+    "below_1e-7": 10,
+    "below_1e-8": 10,
+    "below_1e-9": 10,
+    "below_1e-10": 10
+  },
+  "metadata": {
+    "computation_precision_dps": 50,
+    "zeros_file": "zeros/zeros_t1e8.txt",
+    "verification_date": "2025-11-22T12:03:44.349969",
+    "author": "Jos\u00e9 Manuel Mota Burruezo \u03a8 \u221e\u00b3",
+    "doi": "10.5281/zenodo.17379721",
+    "qcal_frequency": "141.7001 Hz",
+    "coherence_constant": "C = 244.36"
+  }
+}

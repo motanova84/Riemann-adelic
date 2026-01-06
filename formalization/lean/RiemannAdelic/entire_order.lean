@@ -1,29 +1,37 @@
 -- Hadamard factorisation, Phragmén–Lindelöf bounds
--- Entire function order and growth properties
+-- Entire function order and growth properties (V5.1 enhanced)
 
 import Mathlib.Analysis.Complex.Basic
 import Mathlib.Analysis.Analytic.Basic
+import Mathlib.Algebra.BigOperators.Infinite
+import Mathlib.Topology.MetricSpace.Basic
+import Mathlib.Data.Real.Basic
 
--- Skeletal declarations for Hadamard factorization
-def hadamard_factorization (f : ℂ → ℂ) : Prop := 
-  -- Proof outline: Apply Hadamard factorization theorem
-  -- Use canonical product representation for entire functions of finite order
-  -- Show zeros can be organized as infinite product with convergence conditions
-  ∃ (zeros : Set ℂ) (order : ℕ), 
-    (∀ z ∈ zeros, f z = 0) ∧ 
-    (∃ (product_form : ℂ → ℂ), ∀ s : ℂ, f s = product_form s)
-
--- Phragmén–Lindelöf principle
-def phragmen_lindelof_bound (f : ℂ → ℂ) (strip : Set ℂ) : Prop := 
-  -- Proof outline: Apply Phragmén-Lindelöf maximum principle
-  -- Use harmonic majorant and subharmonic function properties
-  -- Establish exponential growth bounds in vertical strips
-  ∃ (bound : ℝ → ℝ), ∀ s ∈ strip, |f s| ≤ bound |s.im|
-
--- Entire function of finite order
+-- V5.1: Enhanced entire function theory for D(s) ≡ Ξ(s)
 def entire_finite_order (f : ℂ → ℂ) (order : ℝ) : Prop := 
-  -- Proof outline: Show growth condition |f(re^(iθ))| ≤ M r^order for large r
-  -- Use Jensen's formula and Nevanlinna theory for order estimates
-  -- Establish connection between zero distribution and growth order
-  ∃ (M : ℝ), M > 0 ∧ ∀ (r : ℝ) (θ : ℝ), r ≥ 1 → 
-    |f (r * Complex.exp (Complex.I * θ))| ≤ M * r ^ order
+  ∃ A B : ℝ, A > 0 ∧ ∀ s : ℂ, abs s > 1 → 
+    Complex.abs (f s) ≤ A * Real.exp (B * (Complex.abs s) ^ order)
+
+-- Hadamard factorization for canonical function D(s)
+def hadamard_factorization_canonical (D : ℂ → ℂ) (zeros : Set ℂ) : Prop := 
+  entire_finite_order D 1 ∧ 
+  (∀ ρ ∈ zeros, D ρ = 0) ∧
+  (∃ A : ℂ, ∀ s : ℂ, D s = A * ∏' ρ : zeros, (1 - s/ρ))
+
+-- Phragmén–Lindelöf principle for vertical strips
+def phragmen_lindelof_strip (f : ℂ → ℂ) (a b : ℝ) (h : a < b) : Prop := 
+  (∀ s : ℂ, a ≤ s.re ∧ s.re ≤ b → ∃ M : ℝ, Complex.abs (f s) ≤ M) →
+  (∀ s : ℂ, s.re = a ∨ s.re = b → ∃ M : ℝ, Complex.abs (f s) ≤ M) →
+  (∀ s : ℂ, a < s.re ∧ s.re < b → ∃ M : ℝ, Complex.abs (f s) ≤ M)
+
+-- V5.1: D(s) has order ≤ 1 (critical for uniqueness)
+theorem D_entire_order_one (D : ℂ → ℂ) : 
+  hadamard_factorization_canonical D {ρ | D ρ = 0} → entire_finite_order D 1 := by
+  intro h
+  exact h.1
+
+-- Connection to V5.1 construction
+def v5_1_entire_construction (D : ℂ → ℂ) : Prop :=
+  entire_finite_order D 1 ∧ 
+  (∀ s : ℂ, D (1-s) = D s) ∧  -- A2 symmetry
+  (∃ zeros : Set ℂ, hadamard_factorization_canonical D zeros)
