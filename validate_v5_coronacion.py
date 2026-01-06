@@ -28,12 +28,65 @@ Outputs:
 - Integration with existing explicit formula validation
 """
 
+# Import only what we need for the directory check
+import sys
+from pathlib import Path
+
+
+def verify_repository_root():
+    """
+    Verify that the script is being executed from the repository root directory.
+    
+    This check ensures that all relative paths and imports will work correctly.
+    The repository root is identified by the presence of key marker files.
+    
+    Raises:
+        SystemExit: If the script is not being run from the repository root.
+    """
+    cwd = Path.cwd()
+    
+    # Define marker files that should exist in the repository root
+    marker_files = [
+        'validate_v5_coronacion.py',  # This script itself
+        'requirements.txt',            # Python dependencies
+        'README.md',                   # Main README
+        '.qcal_beacon',               # QCAL configuration file
+    ]
+    
+    # Check if all marker files exist in the current directory
+    missing_files = [f for f in marker_files if not (cwd / f).exists()]
+    
+    if missing_files:
+        print("=" * 80)
+        print("❌ ERROR: Script must be executed from the repository root directory")
+        print("=" * 80)
+        print()
+        print(f"Current working directory: {cwd}")
+        print()
+        print("Missing expected files:")
+        for file in missing_files:
+            print(f"  - {file}")
+        print()
+        print("To fix this issue:")
+        print("  1. Navigate to the repository root directory")
+        print("  2. Run the script from there:")
+        print()
+        print("     cd /path/to/Riemann-adelic")
+        print("     python validate_v5_coronacion.py [options]")
+        print()
+        print("=" * 80)
+        sys.exit(1)
+
+
+# Verify we're in the correct directory BEFORE any other imports
+verify_repository_root()
+
+# Now safe to import everything else
 import argparse
 import json
-import sys
+import os
 import time
 from datetime import datetime
-from pathlib import Path
 
 import mpmath as mp
 
