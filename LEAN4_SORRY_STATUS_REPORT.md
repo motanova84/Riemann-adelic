@@ -116,9 +116,9 @@ sorry
 
 ---
 
-##### Sorry #2: Uniform convergence theorem (line ~375)
+##### Sorry #2: Uniform convergence theorem (line 392)
 
-**Location**: Line 387 in `spectral_sum_uniform_convergence`
+**Location**: Line 392 in `spectral_sum_uniform_convergence`
 
 **Issue**: **Logical error in theorem statement**
 
