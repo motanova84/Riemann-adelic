@@ -155,6 +155,35 @@ def validate_v5_coronacion(precision=30, verbose=False, save_certificate=False, 
     Returns:
         dict: Validation results and proof certificate
     """
+    # Verify environment integrity first
+    print("🔐 Verifying environment integrity...")
+    try:
+        import subprocess
+        result = subprocess.run(
+            [sys.executable, 'verify_environment_integrity.py'],
+            capture_output=True,
+            text=True,
+            timeout=30
+        )
+        
+        if result.returncode == 0:
+            print("   ✅ Environment integrity verified")
+        else:
+            # Warnings are acceptable (exit code 0 or 1 with warnings)
+            if "warning" in result.stdout.lower() and "error" not in result.stdout.lower():
+                print("   ⚠️  Environment integrity verified with warnings")
+                if verbose:
+                    print(f"      {result.stdout}")
+            else:
+                print("   ❌ Environment integrity check failed")
+                if verbose:
+                    print(result.stdout)
+                print("   ⚠️  Continuing validation - results may not be fully reproducible")
+    except FileNotFoundError:
+        print("   ⚠️  Environment integrity checker not found - skipping")
+    except Exception as e:
+        print(f"   ⚠️  Environment integrity check error: {e} - skipping")
+    
     # Initialize logging
     logger = None
     if LOGGING_AVAILABLE:

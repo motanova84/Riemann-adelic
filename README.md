@@ -1928,6 +1928,34 @@ pip install -r requirements-lock.txt
 **Nota:** `requirements-lock.txt` contiene versiones específicas de todas las dependencias validadas con Python 3.11.
 > **For CI/CD and reproducible builds**: Use `requirements-lock.txt` instead of `requirements.txt` to ensure exact dependency versions. See [REPRODUCIBILITY.md](REPRODUCIBILITY.md) for details.
 
+### 🔐 Environment Integrity Verification
+
+After installation, verify environment integrity and reproducibility:
+
+```bash
+# Verify lock files and checksums
+python verify_environment_integrity.py
+
+# Expected output:
+# ✅ Verification PASSED
+# ⚠️  3 warning(s): ...
+```
+
+**What it checks:**
+- ✅ ENV.lock and requirements-lock.txt exist and are consistent
+- ✅ SHA256 checksums match expected values
+- ⚠️ Installed packages match lock files (warning if mismatched)
+- ⚠️ Python version matches 3.11 (warning if different)
+
+**Tools available:**
+- `verify_environment_integrity.py` - Verify integrity
+- `generate_env_lock.py` - Regenerate ENV.lock
+- `clean_requirements_lock.py` - Clean requirements-lock.txt
+
+📖 Complete guide: [ENV_LOCK_GUIDE.md](ENV_LOCK_GUIDE.md)
+
+**Automatic verification:** The `validate_v5_coronacion.py` script automatically verifies environment integrity before running validation.
+
 ### 🔧 System Dependencies (for advanced libraries)
 
 Some advanced mathematical libraries require system-level dependencies:
