@@ -1,31 +1,102 @@
 # Core computational dependencies
+pandas>=2.0.0
 mpmath==1.3.0
 numpy>=1.22.4,<2.3
 scipy>=1.13.0
 sympy==1.12
-matplotlib>=3.7.0
+matplotlib>=3.10.1
 
 # Jupyter and notebook execution
-jupyter==1.0.0
+jupyter>=1.0.0
 nbconvert==7.16.4
 mistune==2.0.5
 
 # HTTP requests for data fetching
-requests==2.32.3
+requests==2.32.4
+urllib3>=2.6.0  # Security: CVE fixes for decompression vulnerabilities
+httpx>=0.27.0
+
+# Parallel computing
+joblib>=1.3.0
+
+# System and process monitoring
+psutil>=5.9.0
 
 # Quantum computing for consciousness adelic bridge
-qiskit>=0.45.0
+qiskit>=1.5.0
 
 # Testing framework
-pytest==8.2.0
+pytest==8.3.3
 pytest-cov==6.0.0
+pytest-rerunfailures>=14.0  # Retry functionality for flaky tests and snapshot warnings
+
+# Advanced mathematical libraries for acceleration and expansion
+# JIT compilation and performance optimization
+numba>=0.60.0  # Just-in-time compilation for numerical functions, numpy 2.0 compatible
+llvmlite>=0.41.0  # Required by numba
+
+# Machine Learning and optimization
+scikit-learn>=1.3.0  # Machine learning algorithms and optimization
+xgboost>=2.0.0  # Gradient boosting for pattern analysis
+
+# Automatic differentiation and GPU acceleration
+jax>=0.8.0  # Composable transformations and GPU support
+jaxlib>=0.8.0  # JAX backend
+cupy-cuda12x; platform_system == "Linux" and platform_machine == "x86_64"  # Optional GPU acceleration
+
+# Web services and dashboards
+fastapi>=0.111
+uvicorn[standard]>=0.30
+websockets>=12.0
+dash>=2.17
+plotly>=5.22
+flask>=3.1.0  # Required for Vercel Python serverless functions
+
+# Advanced numerical methods
+numexpr>=2.8.5  # Fast numerical expression evaluator
+bottleneck>=1.3.7  # Fast array operations with NaN support
+
+# Graph theory and combinatorics
+networkx>=3.1  # Graph algorithms and network analysis
+python-igraph>=0.10.8  # Fast graph library
+
+# Tensor operations and decompositions
+tensorly>=0.8.1  # Tensor decomposition methods
+opt-einsum>=3.3.0  # Optimized Einstein summation
+
+# Advanced statistical tools
+statsmodels>=0.14.0  # Statistical modeling and hypothesis testing
+patsy>=0.5.3  # Statistical formulas (required by statsmodels)
+
+# Sparse matrix operations
+sparse>=0.14.0  # Sparse multi-dimensional arrays
+
+# Optimization and root finding
+nlopt>=2.7.1  # Nonlinear optimization library
+
+# Cryptography for AIK Beacons
+ecdsa>=0.18.0  # ECDSA signatures for mathematical proof certification
+
+# Development and code quality tools
+flake8>=6.0.0
+black>=23.0.0
+isort>=5.12.0
+
+# Metadata validation and processing
+jsonschema>=4.0.0
+rdflib>=6.0.0
 
 # Parallel computation
 joblib>=1.3.0
 
 # Optional: Development and code quality tools
-# Uncomment these lines for development
-# flake8>=6.0.0
-# black>=23.0.0
-# isort>=5.12.0
 # pre-commit>=3.0.0
+
+# Optional: Advanced plagiarism monitoring features
+# Uncomment for enhanced monitoring capabilities
+# ssdeep>=3.4  # Fuzzy hashing for similarity detection
+# simhash>=2.1.2  # Near-duplicate detection
+# pdfminer.six>=20221105  # PDF text extraction
+# beautifulsoup4>=4.12.0  # HTML parsing for web scraping
+# pyppeteer>=1.0.2  # Automated screenshots for evidence
+# python-whois>=0.8.0  # WHOIS lookups for investigation

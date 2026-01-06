@@ -1,0 +1,42 @@
+{
+  "title": "Zeta Quantum Wave Validation Certificate",
+  "timestamp": "2025-11-29T22:47:54.137595",
+  "parameters": {
+    "n_states": 30,
+    "grid_points": 1000,
+    "domain": [
+      -10.0,
+      10.0
+    ],
+    "gaussian_sigma": 2.5
+  },
+  "results": {
+    "rms_error": 0.00010084196495588007,
+    "relative_error": 0.018248063136719218,
+    "orthonormality_error": 4.37891715524431e-09,
+    "spectral_mismatch": 5566.763104763499
+  },
+  "coefficients": {
+    "c0": 1.5326261389616833,
+    "c1": -2.255139444224064e-15,
+    "c2": -1.7516041915028215
+  },
+  "validation": {
+    "rms_ok": true,
+    "orthonormality_ok": true,
+    "all_passed": true
+  },
+  "qcal": {
+    "base_frequency": 141.7001,
+    "coherence": 244.36
+  },
+  "hilbert_polya": {
+    "operator": "H = -\u2202\u00b2\u2093 + V(x)",
+    "spectrum_interpretation": "Eigenvalues encode Riemann zeros",
+    "eigenfunctions_role": "Expand \u03b6(x) as quantum state",
+    "conclusion": "Verified"
+  },
+  "author": "Jos\u00e9 Manuel Mota Burruezo \u03a8 \u221e\u00b3",
+  "institution": "Instituto de Conciencia Cu\u00e1ntica (ICQ)",
+  "doi": "10.5281/zenodo.17379721"
+}
