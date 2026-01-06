@@ -6,7 +6,7 @@ This document describes the verification of the quantum energy-frequency relatio
 
 ## Background
 
-The fundamental frequency f₀ = 141.7001 Hz emerges from minimizing the vacuum energy equation introduced in Section 6 of the paper (Acto II: Corrección Adélica Fractal):
+The fundamental frequency f₀ = 141.7001 Hz emerges from minimizing the vacuum energy equation introduced in Section 6 of the paper "Riemann-Adelic: The Definitive Proof of the Riemann Hypothesis" (Acto II: Corrección Adélica Fractal, see `paper/section6.tex`):
 
 ```
 E_vac(R_Ψ) = α/R_Ψ⁴ + β·ζ'(1/2)/R_Ψ² + γ·Λ²·R_Ψ² + δ·sin²(log R_Ψ/log π)

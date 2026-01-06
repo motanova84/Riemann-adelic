@@ -20,12 +20,7 @@ Date: January 2026
 """
 
 import numpy as np
-from typing import Dict, Tuple
-import sys
-from pathlib import Path
-
-# Add utils to path for vacuum energy calculations
-sys.path.insert(0, str(Path(__file__).parent / "utils"))
+from typing import Dict
 
 
 class PsiEnergyVerifier:
