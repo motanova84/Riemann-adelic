@@ -108,7 +108,7 @@ theorem gamma_nonzero_in_strip (s : ℂ) (hs : in_critical_strip s) :
   have h_re_half : 0 < (s/2).re ∧ (s/2).re < 1/2 := by
     constructor
     · calc (s/2).re = s.re / 2 := by simp [Complex.div_re]
-            _ > 0 / 2 := by apply div_pos hs.1; norm_num
+            _ > 0 / 2 := by linarith [hs.1]
             _ = 0 := by norm_num
     · calc (s/2).re = s.re / 2 := by simp [Complex.div_re]
             _ < 1 / 2 := by apply div_lt_div_of_pos_right hs.2; norm_num
