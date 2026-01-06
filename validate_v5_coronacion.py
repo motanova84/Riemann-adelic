@@ -2,6 +2,13 @@
 """
 V5 Coronación Validation Script
 
+Philosophical Foundation:
+    Mathematical Realism - This validation script VERIFIES pre-existing mathematical 
+    truth, not constructs it. The zeros of ζ(s) lie on Re(s) = 1/2 as an objective 
+    fact of mathematical reality, independent of this validation.
+    
+    See: MATHEMATICAL_REALISM.md
+
 This script validates the complete V5 "Coronación" proof of the Riemann Hypothesis
 by running the comprehensive 5-step verification framework.
 

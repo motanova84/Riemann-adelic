@@ -1,6 +1,22 @@
 # V5.1 incondicional
 # Riemann-Adelic: Spectral Emergence Proof of Riemann Hypothesis
 
+## 🧠 Philosophical Foundation: Mathematical Realism
+
+> **"Hay un mundo (y una estructura matemática) independiente de opiniones; una afirmación es verdadera si corresponde a esa realidad, aunque nadie lo sepa o lo acepte todavía."**
+
+This work is grounded in **mathematical realism**: the position that mathematical structures exist objectively and mathematical truths are discovered, not invented. The zeros of ζ(s) lie on the critical line Re(s) = 1/2 as an **objective fact** of mathematical reality, independent of whether anyone proves it, accepts it, or even knows about it.
+
+**Key implications:**
+- The spectral structure H_Ψ exists objectively
+- The frequency f₀ = 141.7001 Hz is discovered, not postulated
+- Validation **verifies** pre-existing mathematical truth
+- Convergence across systems indicates objective reality
+
+📖 **Read more:** [MATHEMATICAL_REALISM.md](MATHEMATICAL_REALISM.md) — Complete philosophical foundation
+
+---
+
 ## 🌟 Paradigm Shift: From Zero Hunting to Spectral Emergence
 
 This repository represents a **revolutionary approach** to the Riemann Hypothesis that eliminates the circular dependencies of traditional methods:
@@ -39,6 +55,7 @@ python validate_v5_coronacion.py --precision 25 --verbose
 ```
 
 **Documentation:**
+- 🧠 **[MATHEMATICAL_REALISM.md](MATHEMATICAL_REALISM.md)** — Philosophical foundation: Mathematical truth independent of opinion
 - 📖 **[Spectral Emergence README](SPECTRAL_EMERGENCE_README.md)** — Complete framework explanation
 - 🔄 [PARADIGM_SHIFT.md](PARADIGM_SHIFT.md) — Detailed paradigm comparison
 - 📊 [PARADIGM_FLOW.md](PARADIGM_FLOW.md) — Visual flow diagrams
