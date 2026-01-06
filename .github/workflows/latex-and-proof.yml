@@ -19,7 +19,7 @@ jobs:
         run: make
       - name: Upload PDF artifact
       - name: Upload teoremas artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v4.4.3
         with:
           name: teoremas-basicos
           path: docs/teoremas_basicos/main.pdf
@@ -38,7 +38,7 @@ jobs:
           pdflatex main.tex
           pdflatex main.tex
       - name: Upload RH paper artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v4.4.3
         with:
           name: rh-paper
           path: docs/paper/main.pdf

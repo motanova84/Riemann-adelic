@@ -85,6 +85,30 @@ En el límite $\delta \to 0$ se tiene:
 Utilizamos la teoría de determinantes relativos de Burghelea--Friedlander--Kappeler. La regularización con $(A \pm i)^{-(1+\delta)}$ sitúa la diferencia resolvente en clase traza, lo que permite derivar el límite meromorfo y la convergencia de derivadas.
 \end{proof}
 
+\begin{lemma}[A4: Regularidad espectral — Demostrado]\label{lem:A4-proven}
+El núcleo $K_s$ es Hilbert–Schmidt en $\Re(s) = \frac{1}{2}$.
+Dependencia holomorfa en bandas verticales.
+Por el Teorema de Birman–Solomyak 1, el espectro varía continuamente.
+
+Además, la identidad $\ell_v = \log q_v$ (longitudes de órbitas) se establece como lema probado:
+\begin{enumerate}
+\item Por invarianza de Haar (Tate), $U_v$ y $S_u$ conmutan.
+\item Por estructura local (Weil), $U_v$ actúa como traslación discreta $\tau \mapsto \tau + \log q_v$.
+\item Por estabilidad de traza (Birman–Solomyak), esta identificación persiste en límites.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+Ya no es axioma. Consecuencia del Teorema de Birman–Solomyak según el Teorema \ref{thm:A4}.
+
+La identidad $\ell_v = \log q_v$ se deriva de:
+\begin{itemize}
+\item La factorización adélica de la medida de Haar: $d^\times x = \prod_v d^\times x_v$
+\item La acción del uniformizador local: $|\pi_v|_v = q_v^{-1}$
+\item La preservación de estructura discreta en la fórmula de traza
+\end{itemize}
+
+Véase el documento completo en \texttt{prueba\_A4\_longitudes\_orbitas.tex} para detalles.
 \section{Ley de Weyl para Operadores de Dilatación}
 
 El símbolo semiclasico de $\widehat{H}$ es

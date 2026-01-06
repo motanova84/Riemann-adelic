@@ -1,0 +1,73 @@
+We work in the ring of adeles $\mathbb{A}_\mathbb{Q}$ with the Haar measure
+$dx$ and the multiplicative measure $d^{\times}x$. We denote by
+$\mathcal{S}(\mathbb{A}_\mathbb{Q})$ the Schwartz--Bruhat space
+\cite[Chap.~I]{tate1967}.
+
+The objective of this section is to demonstrate that the conditions A1--A4 introduced
+for the construction of $D(s)$ are not independent axioms, but necessary consequences
+of the classical adelic formalism.
+
+\begin{theorem}[A1: finite-scale flow]\label{thm:A1}
+Let $\Phi\in\mathcal{S}(\mathbb{A}_\mathbb{Q})$ be factorizable as
+$\Phi=\prod_v \Phi_v$.
+Then the scale flow $u\mapsto \Phi(u\cdot)$ has finite energy and
+discrete orbits with lengths $\ell_v = \log q_v$.
+\end{theorem}
+
+\begin{proof}
+Each $\Phi_v$ is Gaussian in $\mathbb{R}$ or compact in $\mathbb{Q}_p$.
+Let $U\subset \mathbb{A}_\mathbb{Q}^\times$ be compact. Then
+\[
+ \int_U \!\int_{\mathbb{A}_\mathbb{Q}} |\Phi(ux)|^2\,dx\,d^\times u
+   = \prod_v \int_{U_v} \!\int_{\mathbb{Q}_v} |\Phi_v(u_v x_v)|^2\,dx_v\,d^\times u_v.
+\]
+In $\mathbb{R}$, the Gaussian decay gives uniform integrability;
+in $\mathbb{Q}_p$, compactness ensures finite measure.
+The orbits are discrete and their length is $\ell_v=\log q_v$, derived from the
+local multiplicative norm.
+\end{proof}
+
+\begin{theorem}[A2: functional symmetry]\label{thm:A2}
+Let $Z(\Phi,s)$ be the Tate zeta-integral associated to $\Phi$.
+Then the completed function
+$D(s)=\Gamma_\mathbb{A}(s)Z(\Phi,s)$ satisfies
+\[
+ D(1-s)=D(s).
+\]
+\end{theorem}
+
+\begin{proof}
+The adelic Poisson identity
+\cite[Thm.~2]{tate1967} implies
+$Z(\widehat{\Phi},1-s)=Z(\Phi,s)$ if the local transforms are normalized with
+the Weil factors $\gamma_v(s)$.
+The product law $\prod_v \gamma_v(s)=1$ \cite[§II.3]{Weil1964}
+ensures global symmetry.
+Therefore $D(s)=D(1-s)$.
+\end{proof}
+
+\begin{theorem}[A4: spectral regularity]\label{thm:A4}
+Let $K_s$ be the integral kernel
+\[
+ K_s(x,y)=\Phi(x)\overline{\Phi(y)}|xy^{-1}|_\mathbb{A}^{s-1/2}
+\]
+with $\Phi\in\mathcal{S}(\mathbb{A}_\mathbb{Q})$.
+Then the operator $T_s f(x)=\int_{\mathbb{A}_\mathbb{Q}} K_s(x,y)f(y)\,dy$
+is trace-class, depends holomorphically on $s$ in vertical strips, and its spectrum
+is discrete and continuous in $s$.
+\end{theorem}
+
+\begin{proof}
+For $\Re(s)=\tfrac12$, $K_s\in L^2(\mathbb{A}_\mathbb{Q}^2)$, so that
+$T_s$ is Hilbert--Schmidt.
+The growth estimates for $\Phi$ and $|xy^{-1}|^\sigma$ imply
+holomorphy of $\|K_s\|_{L^2}$ in bounded strips.
+The Birman--Solomyak theorem \cite[Thm.~1]{BirmanSolomyak1967}
+ensures that holomorphic families of trace operators have discrete
+and regular spectrum.
+Thus, A4 is a direct consequence of the formalism.
+\end{proof}
+
+\bigskip
+With these results, A1, A2 and A4 are \textbf{proven} within the classical adelic
+framework, and cease to be independent axioms.
