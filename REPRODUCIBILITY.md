@@ -1,4 +1,54 @@
-# CI/CD Reproducibility Guide
+# Reproducibility Guide
+
+This document provides minimalist instructions to reproduce the Riemann Hypothesis proof validation results.
+
+## Quick Start: One-Click Audit
+
+```bash
+make audit
+# OR
+./scripts/audit.sh
+```
+
+This generates a complete audit report in `data/audit_report.json`.
+
+## Environment Requirements
+
+### Tested Operating System
+- **Ubuntu 24.04 LTS** (Linux kernel 6.11.0-1018-azure x86_64)
+- Also compatible with: Ubuntu 22.04, Debian 11+, macOS 12+
+
+### Python Version (Exact)
+- **Python 3.12.3** (recommended)
+- Also compatible with: Python 3.11.x
+
+### Dataset Hash Verification
+The zero dataset must match this SHA-256 hash:
+```
+412ab7ba54a5041ff12324650e8936995795c6abb7cfdb97d7a765a2c4ce7869  Evac_Rpsi_data.csv
+```
+
+Verify with:
+```bash
+sha256sum Evac_Rpsi_data.csv
+```
+
+### Single-Command Reproduction
+
+Generate a complete reproduction report:
+```bash
+make audit
+```
+
+This command runs all validation steps and produces `data/audit_report.json` containing:
+- Test results (pytest)
+- V5 Coronación validation at 30 decimal places precision
+- Lean 4 formalization build status
+- Sorry count (incomplete proofs)
+
+---
+
+## CI/CD Reproducibility Guide
 
 This document describes the reproducibility measures implemented in this repository's CI/CD pipelines.
 

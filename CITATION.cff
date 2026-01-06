@@ -1,21 +1,29 @@
 cff-version: 1.2.0
 message: "If you use this repository, please cite it as below."
-title: "Riemann–Adelic Proof Framework (V4.1+)"
+title: "Riemann–Adelic Proof Framework: Formal Verification of the Riemann Hypothesis"
 authors:
   - family-names: "Mota Burruezo"
     given-names: "José Manuel"
-    affiliation: "Instituto Conciencia Cuántica"
-    orcid: "https://orcid.org/0000-0000-0000-0000"
-date-released: "2025-09-25"
-doi: "10.5281/zenodo.17161831"
-license: "MIT"
-repository-code: "https://github.com/motanova84/-jmmotaburr-riemann-adelic"
-message: "Cita esta prueba formal de la Hipótesis de Riemann como se indica"
-title: "Prueba Formal de la Hipótesis de Riemann"
-authors:
-  - family-names: Mota Burruezo
-    given-names: José Manuel
-    orcid: https://orcid.org/0009-0002-1923-0773
-date-released: 2025-11-21
+    affiliation: "Instituto de Conciencia Cuántica"
+    orcid: "https://orcid.org/0009-0002-1923-0773"
+date-released: "2025-11-21"
 version: "v6.0"
-doi: 10.5281/zenodo.17116291
+doi: "10.5281/zenodo.17379721"
+license: "MIT"
+repository-code: "https://github.com/motanova84/Riemann-adelic"
+url: "https://github.com/motanova84/Riemann-adelic"
+keywords:
+  - Riemann Hypothesis
+  - formal verification
+  - Lean 4
+  - spectral theory
+  - number theory
+  - adelic analysis
+  - QCAL framework
+abstract: |
+  Complete formal verification framework for the Riemann Hypothesis using
+  the QCAL (Quantum Coherence Adelic Lattice) approach. Implements 5-step
+  validation: Axioms → Lemmas → Archimedean rigidity → Paley-Wiener 
+  uniqueness → Zero localization → Coronación. Includes Python validation
+  scripts and Lean 4 formal proofs.
+
