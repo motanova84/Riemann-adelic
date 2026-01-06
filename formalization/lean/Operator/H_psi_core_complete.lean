@@ -64,13 +64,14 @@ axiom mul_polynomial_schwartz : ∀ (f : SchwarzSpace) (p : ℝ → ℝ),
 /-- H_Ψ preserves Schwarz space -/
 theorem H_psi_preserves_schwartz (f : SchwarzSpace) : SchwarzSpace := by
   have h1 : SchwarzSpace := deriv_schwartz f
+  -- The polynomial p(x) = -x can be expressed as coeffs[0] + coeffs[1]*x where
+  -- coeffs[0] = 0 and coeffs[1] = -1
   have h_poly : ∀ x, ∃ (n : ℕ) (coeffs : Fin (n+1) → ℝ), (-x) = ∑ i, coeffs i * x^(i : ℕ) := by
     intro x
     use 1
-    intro i
-    fin_cases i
-    · exact 0
-    · exact -1
+    use fun i => if i = 0 then 0 else -1
+    simp [Finset.sum_fin_eq_sum_range, Finset.sum_range_succ]
+    ring
   have h2 : (fun x => (-x) • h1 x) ∈ SchwarzSpace := mul_polynomial_schwartz h1 (fun x => -x) h_poly
   exact h2
 

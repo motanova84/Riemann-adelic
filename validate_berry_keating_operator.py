@@ -184,15 +184,14 @@ def validate_berry_keating_operator() -> int:
     print_section("Check 5: Axiom Inventory")
     axiom_count, axioms = validate_axiom_count(content)
     
-    # Expected axiom count (6-7 is acceptable)
-    expected_min = 6
-    expected_max = 7
-    axiom_count_ok = expected_min <= axiom_count <= expected_max
+    # Expected axiom count is exactly 7
+    expected_count = 7
+    axiom_count_ok = axiom_count == expected_count
     
     if axiom_count_ok:
-        print(f"\n{GREEN}✓ Axiom count within expected range ({expected_min}-{expected_max}){RESET}")
+        print(f"\n{GREEN}✓ Axiom count matches expected ({expected_count}){RESET}")
     else:
-        print(f"\n{YELLOW}⚠ Axiom count ({axiom_count}) outside expected range{RESET}")
+        print(f"\n{YELLOW}⚠ Axiom count ({axiom_count}) differs from expected ({expected_count}){RESET}")
     
     # Final summary
     print_section("Validation Summary")

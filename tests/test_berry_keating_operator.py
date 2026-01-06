@@ -142,10 +142,9 @@ class TestBerryKeatingOperator(unittest.TestCase):
         self.assertIn('1/2', self.content)
     
     def test_axiom_count(self):
-        """Test that axiom count is reasonable (6-7 expected)."""
+        """Test that axiom count is exactly 7 as documented."""
         axiom_count = len(re.findall(r'\baxiom\s+\w+', self.content))
-        self.assertGreaterEqual(axiom_count, 6, "Too few axioms")
-        self.assertLessEqual(axiom_count, 8, "Too many axioms")
+        self.assertEqual(axiom_count, 7, f"Expected exactly 7 axioms, found {axiom_count}")
     
     def test_qcal_integration(self):
         """Test that QCAL framework integration is documented."""
