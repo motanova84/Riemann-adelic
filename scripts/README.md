@@ -2,6 +2,32 @@
 
 This directory contains numerical verification scripts for the V5.2 adelic proof framework.
 
+## 🔐 RAM-II Synchronization
+
+### `sellado_ram_qcal.sh`
+
+**Purpose**: RAM-II (Realismo Matemático) synchronization script for QCAL ∞³ framework
+
+**What it does**:
+- Integrates the RAM-II-2026-0115-RMATH philosophical foundation
+- Updates `.qcal_beacon` with Mathematical Realism metadata
+- Validates QCAL coherence with f₀ = 141.7001 Hz
+- Records the mathematical realism declaration: "La matemática es una realidad preexistente"
+
+**Usage**:
+```bash
+./scripts/sellado_ram_qcal.sh
+```
+
+**Output**:
+- Updates `.qcal_beacon` with RAM-II entry
+- Confirms QCAL ∞³ coherence
+- ✅ RAM-II synchronization complete
+
+**Reference**: See `MATHEMATICAL_REALISM.md` for philosophical foundation
+
+---
+
 ## 🆕 New V5.2 Scripts
 
 ### `verify_a4_commutativity.py`
