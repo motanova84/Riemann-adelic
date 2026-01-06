@@ -166,20 +166,22 @@ class EnvironmentVerifier:
         req_packages = self.parse_requirements_file(req_lock)
         
         # Check that all packages in requirements-lock are in ENV.lock
-        missing_packages = []
-        version_mismatches = []
+        # Use set operations for efficiency
+        missing_packages = set(req_packages.keys()) - set(env_packages.keys())
         
-        for pkg, version in req_packages.items():
-            if pkg not in env_packages:
-                missing_packages.append(f"{pkg}=={version}")
-            elif env_packages[pkg] != version:
+        # Check for version mismatches
+        version_mismatches = []
+        for pkg in req_packages.keys():
+            if pkg in env_packages and env_packages[pkg] != req_packages[pkg]:
                 version_mismatches.append(
-                    f"{pkg}: requirements-lock={version}, ENV.lock={env_packages[pkg]}"
+                    f"{pkg}: requirements-lock={req_packages[pkg]}, ENV.lock={env_packages[pkg]}"
                 )
         
         if missing_packages:
+            # Show only first 5 for brevity
+            missing_list = sorted(missing_packages)[:5]
             self.warnings.append(
-                f"Packages in requirements-lock.txt missing from ENV.lock: {', '.join(missing_packages[:5])}"
+                f"Packages in requirements-lock.txt missing from ENV.lock: {', '.join(f'{p}=={req_packages[p]}' for p in missing_list)}"
             )
         
         if version_mismatches:

@@ -102,8 +102,19 @@ def clean_requirements_lock(input_file, output_file):
             for pkg_line in packages.values():
                 f.write(pkg_line + '\n')
     
+    total_packages = sum([
+        len([p for p in core if p not in packages]),
+        len([p for p in jupyter if p not in packages]),
+        len([p for p in testing if p not in packages]),
+        len([p for p in accel if p not in packages]),
+        len([p for p in quantum if p not in packages]),
+        len([p for p in ml if p not in packages]),
+        len([p for p in network if p not in packages]),
+        len(packages)
+    ])
+    
     print(f"✅ Cleaned requirements-lock.txt written to {output_file}")
-    print(f"   Total packages: {len(packages) + sum([1 for cat in [core, jupyter, testing, accel, quantum, ml, network] for p in cat if p in packages])}")
+    print(f"   Total packages: {total_packages}")
 
 if __name__ == "__main__":
     input_file = "requirements-lock.txt"
