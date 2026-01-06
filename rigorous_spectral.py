@@ -40,7 +40,7 @@ def rigorous_spectral_computation(N, h, precision=200):
     mp.dps = precision
     
     # Use more quadrature points than basis functions for accuracy
-    Nq = max(N * 3, 100)
+    Nq = max(N * 3, 20)
     nodes, weights = roots_legendre(Nq)
     
     # Domain scale factor
