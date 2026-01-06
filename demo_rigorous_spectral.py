@@ -20,7 +20,7 @@ def demo_convergence():
     print("Using practical N values for reasonable computation time.")
     print()
     
-    N_values = [3, 5, 7]  # Reduced for reasonable computation time
+    N_values = [3, 5, 7]  # Number of Legendre basis functions - reduced for reasonable computation time
     h = 0.01
     precision = 30
     
