@@ -111,7 +111,7 @@ theorem gamma_nonzero_in_strip (s : ℂ) (hs : in_critical_strip s) :
             _ > 0 / 2 := by linarith [hs.1]
             _ = 0 := by norm_num
     · calc (s/2).re = s.re / 2 := by simp [Complex.div_re]
-            _ < 1 / 2 := by apply div_lt_div_of_pos_right hs.2; norm_num
+            _ < 1 / 2 := by linarith [hs.2]
   -- s/2 is not a non-positive integer, so not a pole
   -- and Γ has no zeros by gamma_no_zeros
   cases gamma_no_zeros (s/2) with
