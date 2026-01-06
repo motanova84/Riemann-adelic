@@ -1,7 +1,7 @@
 # Makefile for Riemann-Adelic Formal Verification
 # Builds and verifies all Lean 4 formal content
 
-.PHONY: all pdf figs tables proof clean help
+.PHONY: all pdf figs tables proof audit clean help
 
 # Default target
 all: pdf figs tables proof
@@ -42,6 +42,11 @@ proof:
 	cd formalization/lean && lake build
 	@echo "✓ Proof verification complete!"
 
+# Audit target: run comprehensive one-click audit
+audit:
+	@echo "Running one-click audit..."
+	./scripts/audit.sh
+
 # Clean build artifacts
 clean:
 	@echo "Cleaning build artifacts..."
@@ -59,8 +64,12 @@ help:
 	@echo "  figs      - Generate figures"
 	@echo "  tables    - Generate tables"
 	@echo "  proof     - Build and verify all Lean 4 formal proofs"
+	@echo "  audit     - Run one-click comprehensive audit (tests, validation, lean build, sorry count)"
 	@echo "  clean     - Clean build artifacts"
 	@echo "  help      - Show this help message"
+	@echo ""
+	@echo "Quick audit:"
+	@echo "  make audit"
 	@echo ""
 	@echo "Docker usage (reproducible build):"
 	@echo "  docker run --rm -v \"\$$PWD\":/work -w /work leanprovercommunity/lean:4.5.0 /bin/bash -lc \"make proof\""

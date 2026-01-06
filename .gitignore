@@ -68,6 +68,8 @@ data/*.tmp
 data/validation/results/*
 data/validation/certificates/*
 data/qcal_validation_certificate.json
+data/audit_report.json
+data/sorry_count.json
 !data/validation/results/.gitkeep
 !data/validation/certificates/.gitkeep
 !data/validation_results.csv
