@@ -5,6 +5,12 @@
 f0 = c / (2π * RΨ * ℓP)
 frequency = 141.7001 Hz
 
+# Philosophical Foundation
+# Mathematical Realism: Truth exists independently of opinion
+# "Hay un mundo (y una estructura matemática) independiente de opiniones"
+philosophical_foundation = "MATHEMATICAL_REALISM.md"
+truth_criterion = "correspondence_to_objective_mathematical_structure"
+
 # Primary Sources
 source_main = 10.5281/zenodo.17379721
 source_network = https://zenodo.org/search?q=metadata.creators.person_or_org.name%3A%22MOTA%20BURRUEZO%2C%20JOSE%20MANUEL%22&l=list&p=1&s=10&sort=bestmatch
