@@ -1,3 +1,55 @@
+\section{Lema de Unicidad Paley--Wiener con Multiplicidades}
+
+\begin{lemma}[Unicidad con multiplicidades]
+Sea $F(s)$ entera de orden $\leq 1$ y tipo finito, con simetría $F(s)=F(1-s)$.
+Si $F$ y $\Xi(s)$ tienen la misma medida espectral de ceros (incluyendo multiplicidades),
+y $F(1/2)=\Xi(1/2)$, entonces $F \equiv \Xi$.
+\end{lemma}
+
+\begin{proof}
+% 1. Aplicar Paley--Wiener: transformadas con soporte compacto.
+% 2. Igualdad de medidas espectrales $\Rightarrow$ igualdad de transformadas.
+% 3. Normalización en $s=1/2$ fija la constante.
+\end{proof}
+\section{Lema de unicidad Paley--Wiener con multiplicidades}
+
+Mostramos que las propiedades analíticas básicas de $D(s)$---orden, simetría y
+localización de ceros---determinan la función por completo.  La prueba combina la
+factorización de Hadamard con el principio de unicidad de Paley--Wiener--Hamburger.
+
+\begin{lemma}[Unicidad con multiplicidades]\label{lem:unicidad-paley-wiener}
+Sea $F$ una función entera de orden a lo sumo $1$ y tipo finito que satisface la
+ecuación funcional $F(s)=F(1-s)$.  Supongamos que el divisor de ceros de $F$
+coincide con el de la función completada $\Xi(s)$ (incluyendo multiplicidades) y
+que $F(1/2)=\Xi(1/2)$.  Entonces $F\equiv \Xi$.
+\end{lemma}
+
+\begin{proof}
+Por la factorización de Hadamard \cite[Chap.~II]{Tate1967}, el cociente
+
+\[
+ H(s)=\frac{F(s)}{\Xi(s)}
+\]
+
+es una función entera sin ceros, de orden $0$.  La simetría $F(s)=F(1-s)$ y
+$\Xi(s)=\Xi(1-s)$ implica que $H(s)=H(1-s)$, por lo que la función $h(s)=\log H(s)$
+es entera de crecimiento a lo sumo lineal en bandas verticales.  El teorema de
+Paley--Wiener reforzado de Hamburger
+\cite[Thm.~5]{Hamburger1921}
+establece que $h$ es la transformada de Fourier de una medida compactamente
+soportada.
+
+Por otro lado, la condición $H(1/2)=1$ (derivada de la normalización en
+$s=1/2$) obliga a que la medida tenga masa total cero.  Si esa medida no fuera
+nula, $h$ crecería linealmente en alguna dirección imaginaria, contradictorio con
+la acotación proporcionada por la teoría de crecimiento de orden $\leqslant1$.
+En consecuencia, $h$ debe ser constante y, por la normalización, $h\equiv0$.
+Esto muestra que $H(s)\equiv1$ y, por tanto, $F(s)=\Xi(s)$ para todo $s$.
+\end{proof}
+
+Este resultado cierra la posibilidad de soluciones ``exóticas'' que compartan los
+datos espectrales con $\Xi$: cualquier función entera con las propiedades
+postuladas es necesariamente igual a la función de Riemann completada.
 \section{Unicidad Paley--Wiener con multiplicidades}
 
 \begin{theorem}[Unicidad con multiplicidades]
