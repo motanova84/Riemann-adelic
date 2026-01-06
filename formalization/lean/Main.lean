@@ -142,6 +142,12 @@ import RiemannAdelic.SelbergTraceStrong
 -- Heat Kernel Convergence (formalization in progress)
 import RiemannAdelic.heat_kernel_to_delta_plus_primes
 
+-- Explicit Adelic Kernel (NEW - January 2026)
+-- Explicit construction of adelic thermal kernel with prime corrections
+-- Formalizes Python implementation in operador/operador_H.py::kernel_adelic_ultimus
+-- K_adelic(t,s;h,N) = K_gauss(t,s;h) + Σ_p Σ_k [prime corrections]
+import adelic.explicit_kernel
+
 -- Weil Explicit Formula (spectral derivation)
 import spectral.Fredholm_Det_Xi
 import spectral.Weil_explicit
@@ -234,6 +240,11 @@ def main : IO Unit := do
   IO.println "    - Eliminates axiom H_model_spectrum"
   IO.println "    - Proves spectrum transfer from adelic via isometry"
   IO.println "    - Complete spectral theorem without axioms"
+  IO.println "  • NEW: Explicit Adelic Kernel (adelic/explicit_kernel.lean - January 2026)"
+  IO.println "    - Explicit construction: K_adelic(t,s;h,N) = K_gauss + Σ_p Σ_k [corrections]"
+  IO.println "    - Formalizes Python implementation in operador/operador_H.py"
+  IO.println "    - Gaussian base + prime power corrections from p-adic places"
+  IO.println "    - Convergence validation and computational interface"
   IO.println "  • NEW: Final Spectrum Theorem (spectrum_HΨ_equals_zeta_zeros)"
   IO.println "    - Spectrum(H_Ψ) = Zeta Zeros (proven, not axiom)"
   IO.println "    - Riemann Hypothesis corollary"
