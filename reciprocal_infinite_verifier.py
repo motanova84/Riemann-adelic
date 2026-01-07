@@ -314,14 +314,20 @@ def generate_spectral_certificate(
     if timestamp is None:
         timestamp = datetime.now(timezone.utc).isoformat()
     
-    # Generate certificate ID
-    cert_id = f"QCAL-∞³-SPECTRAL-{timestamp}"
+    # Sanitize timestamp for certificate ID (replace problematic characters)
+    sanitized_ts = timestamp.replace(':', '-').replace('+', '-')
+    cert_id = f"QCAL-∞³-SPECTRAL-{sanitized_ts}"
     
-    # Get fundamental frequency with full precision
-    f0_str = str(mp.mpf(str(summary['f0_hz'])))
+    # Get fundamental frequency (already a float from summary)
+    f0_str = str(summary['f0_hz'])
+    spectral_const_str = str(summary['spectral_constant_C_zeta'])
     
-    # Compute SHA256 hash of the certificate data
-    hash_data = f"{cert_id}:{summary['verified_count']}:{f0_str}:{precision}"
+    # Compute SHA256 hash including all integrity-critical fields
+    hash_data = (
+        f"{cert_id}:{summary['num_zeros_verified']}:{summary['verified_count']}:"
+        f"{summary['failed_count']}:{summary['success_rate']}:{f0_str}:"
+        f"{spectral_const_str}:{precision}"
+    )
     hash_sha256 = hashlib.sha256(hash_data.encode()).hexdigest()
     
     # Build certificate
@@ -342,7 +348,7 @@ def generate_spectral_certificate(
         },
         "f0_hz": f0_str,
         "coherence_constant": str(QCAL_COHERENCE),
-        "spectral_constant_C_zeta": str(summary['spectral_constant_C_zeta']),
+        "spectral_constant_C_zeta": spectral_const_str,
         "hash_sha256": hash_sha256,
         "witness": "reciprocal_infinite_verifier.py --infinite"
     }
