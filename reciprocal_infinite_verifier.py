@@ -350,7 +350,7 @@ def generate_spectral_certificate(
         "coherence_constant": str(QCAL_COHERENCE),
         "spectral_constant_C_zeta": spectral_const_str,
         "hash_sha256": hash_sha256,
-        "witness": "reciprocal_infinite_verifier.py --infinite"
+        "witness": "reciprocal_infinite_verifier.py"
     }
     
     if include_quote:
