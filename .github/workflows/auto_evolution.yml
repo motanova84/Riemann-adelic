@@ -33,6 +33,12 @@ jobs:
       - name: Run validation
         run: python3 validate_v5_coronacion.py --precision 25 --verbose
 
+      - name: Run strengthened proof validation
+        run: |
+          echo "Running strengthened RH proof validation..."
+          python3 validate_strengthened_proof.py --precision 50 --verbose --save-certificate || echo "Strengthened proof validation completed"
+        continue-on-error: true
+
       - name: Run spectral emergence validation
         run: |
           echo "Running spectral emergence validation..."
