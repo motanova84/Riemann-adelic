@@ -610,7 +610,8 @@ DOI: 10.5281/zenodo.17379721
         test_functions = max(test_functions, 500000)  # More test functions
         precision = max(precision, 50)  # Higher precision
         print("\n🔄 Running in INFINITE MODE — Extended Schatten validation enabled")
-        print(f"   Enhanced parameters: N={N}, k={k}, test_functions={test_functions}\n")
+        print(f"   Enhanced parameters: N={N}, k={k}, test_functions={test_functions}")
+        print("   ⚠️  Note: This mode requires significant computational time (several minutes).\n")
     
     # Create validator
     validator = SpectralEmergenceValidator(
