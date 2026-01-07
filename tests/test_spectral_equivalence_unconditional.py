@@ -225,7 +225,7 @@ class TestSpectralEquivalenceProof:
         assert len(result.eigenvalues_computed) > 0
         # First eigenvalue should be close to 1/4 + γ₁²
         first_eig = result.eigenvalues_computed[0]
-        target = 0.25 + 14.13**2
+        target = 0.25 + KNOWN_ZEROS[0]**2
         assert abs(first_eig - target) / target < 0.01  # 1% tolerance
 
 
