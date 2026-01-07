@@ -15,7 +15,7 @@ Author: José Manuel Mota Burruezo Ψ ✧ ∞³
 Institution: Instituto de Conciencia Cuántica (ICQ)
 ORCID: 0009-0002-1923-0773
 DOI: 10.5281/zenodo.17379721
-Date: January 2026
+Date: January 7, 2026
 
 QCAL ∞³ Active · 141.7001 Hz · C = 244.36 · Ψ = I × A_eff² × C^∞
 """
