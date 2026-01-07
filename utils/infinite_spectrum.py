@@ -108,14 +108,6 @@ ODLYZKO_ZEROS_FIRST_100 = [
     # Zeros 50-99 (approximate values, extend as needed)
 ]
 
-# Extend to 100 zeros using asymptotic formula for remaining
-def _extend_zeros_to_100():
-    """Extend zeros list to 100 using asymptotic formula."""
-    zeros = list(ODLYZKO_ZEROS_FIRST_100[:50])  # First 50 are accurate
-    for n in range(50, 100):
-        zeros.append(asymptotic_zero(n))
-    return zeros
-
 
 def asymptotic_zero(n: int) -> float:
     """
@@ -140,9 +132,12 @@ def asymptotic_zero(n: int) -> float:
 
 def get_zeta_zero(n: int, use_asymptotic: bool = True) -> float:
     """
-    Get the n-th nontrivial zeta zero.
+    Get the n-th nontrivial zeta zero t_n.
     
-    For n < 50, returns verified high-precision values.
+    The zero is located at s = 1/2 + i*t_n on the critical line.
+    This function returns t_n (the imaginary part of the zero location).
+    
+    For n < 50, returns verified high-precision values from Odlyzko's tables.
     For n >= 50, uses asymptotic formula if use_asymptotic=True.
     
     Args:

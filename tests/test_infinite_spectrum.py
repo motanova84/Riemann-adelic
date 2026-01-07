@@ -323,13 +323,28 @@ class TestIntegration:
             assert isinstance(ev, complex)
     
     def test_critical_line_property(self):
-        """All zeros should be on critical line Re(s) = 1/2."""
+        """Verify zeros are consistent with critical line hypothesis.
+        
+        This test verifies that:
+        1. The eigenvalue structure λ = i(t - 1/2) is correct
+        2. The zeros t_n from Odlyzko's tables are positive (as expected)
+        3. The imaginary part of eigenvalues increases with n
+        
+        Note: The actual verification that ζ(1/2 + it_n) = 0 requires
+        mpmath.zeta evaluation, which is tested separately. This test
+        validates the structural properties of the zero sequence.
+        """
         for n in range(30):
             t_n = get_zeta_zero(n)
-            # The zero is at s = 1/2 + i*t_n
-            # Real part is 1/2 by construction
-            s = 0.5 + 1j * t_n
-            assert abs(s.real - 0.5) < 1e-15
+            # Zeros should be positive
+            assert t_n > 0, f"Zero {n} should be positive"
+            # The eigenvalue imaginary part should equal t_n - 0.5
+            ev = eigenvalue(n)
+            assert abs(ev.imag - (t_n - 0.5)) < 1e-15
+        
+        # Verify zeros are increasing (structural property)
+        for n in range(29):
+            assert get_zeta_zero(n) < get_zeta_zero(n + 1)
 
 
 # =============================================================================
