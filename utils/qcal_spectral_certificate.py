@@ -85,17 +85,18 @@ def compute_gamma_n(n: int, precision: int = 50) -> mp.mpf:
     try:
         rho = mp.zetazero(n)
         return mp.im(rho)
-    except Exception:
+    except (ValueError, RuntimeError, OverflowError):
         # Fallback: use approximation from data file
         try:
             data_path = Path(__file__).parent.parent / "data" / "zeta_zeros.json"
             if data_path.exists():
                 with open(data_path) as f:
                     zeros = json.load(f)
-                if n <= len(zeros.get("zeros", [])):
-                    return mp.mpf(str(zeros["zeros"][n-1]["gamma"]))
-        except Exception:
-            pass
+                zeros_list = zeros.get("zeros", [])
+                if n > 0 and n <= len(zeros_list):
+                    return mp.mpf(str(zeros_list[n-1]["gamma"]))
+        except (OSError, json.JSONDecodeError, KeyError, IndexError, TypeError):
+            pass  # Continue to fallback approximations
         
         # Very basic approximation for known zeros
         known_zeros = [
@@ -164,8 +165,14 @@ def verify_hilbert_polya_identity(n_zeros: int = 10, precision: int = 100) -> Tu
         
         # Verify: γ_n² = λ_n (or equivalently γ_n = √λ_n)
         predicted_gamma = mp.sqrt(lambda_n)
-        error = abs(gamma_n - predicted_gamma) / gamma_n if gamma_n != 0 else mp.mpf("inf")
-        errors.append(float(error))
+        
+        # Handle edge case where gamma_n is zero (shouldn't happen for valid zeros)
+        if gamma_n == 0:
+            # Use absolute error when relative error is undefined
+            error = float(abs(predicted_gamma))
+        else:
+            error = float(abs(gamma_n - predicted_gamma) / gamma_n)
+        errors.append(error)
         
         # Compute correlation term
         correlations.append((float(gamma_n), float(mp.sqrt(lambda_n))))
@@ -277,16 +284,15 @@ def generate_certificate_hash(data: Dict[str, Any]) -> str:
         data: Certificate data to hash
         
     Returns:
-        Hash string (SHA-256)
+        Full SHA-256 hash string (64 hex characters)
     """
     # Create a deterministic string representation
     hash_input = json.dumps(data, sort_keys=True, default=str)
     
-    # Compute SHA-256 hash
-    hash_bytes = hashlib.sha256(hash_input.encode('utf-8')).hexdigest()
+    # Compute SHA-256 hash and get hex representation
+    hash_hex = hashlib.sha256(hash_input.encode('utf-8')).hexdigest()
     
-    # Return truncated hash for display (b3f2a1c9e8d7... format)
-    return hash_bytes
+    return hash_hex
 
 
 def generate_spectral_certificate(

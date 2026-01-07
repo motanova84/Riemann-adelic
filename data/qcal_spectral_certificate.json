@@ -1,7 +1,7 @@
 {
   "title": "QCAL-∞³-SPECTRAL Mathematical Validity Certificate",
   "subtitle": "Acta de Validez Matemática",
-  "timestamp": "2026-01-07T10:20:06.711030",
+  "timestamp": "2026-01-07T10:23:14.874021",
   "framework": "QCAL ∞³",
   "author": "José Manuel Mota Burruezo Ψ ✧ ∞³",
   "institution": "Instituto de Conciencia Cuántica (ICQ)",
@@ -39,7 +39,7 @@
   },
   "cryptographic_seal": {
     "algorithm": "SHA-256",
-    "hash": "7ab39737e9eefeb84a7a7fc202b680f66a306ccf689257b9fd055ad841cc4c18",
+    "hash": "53707e1b02bbeff85cca02943759e484ddb53b36a2bf4b923090bebd48698e08",
     "interpretation": "Links this historical moment with the Riemann-adelic code state"
   },
   "conclusion": {

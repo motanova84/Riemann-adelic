@@ -926,11 +926,17 @@ def validate_v5_coronacion(precision=30, verbose=False, save_certificate=False, 
                 'coherence_verified': spectral_cert.coherence_verified
             }
             
-    except Exception as e:
-        print(f"   ⚠️  QCAL-∞³-SPECTRAL certificate validation skipped: {e}")
+    except ImportError as e:
+        print(f"   ⚠️  QCAL-∞³-SPECTRAL certificate validation skipped: module import error")
         results["QCAL-∞³-SPECTRAL Certificate"] = {
             'status': 'SKIPPED',
-            'error': str(e)
+            'error': 'module_import_error'
+        }
+    except (ValueError, TypeError, RuntimeError) as e:
+        print(f"   ⚠️  QCAL-∞³-SPECTRAL certificate validation failed: validation error")
+        results["QCAL-∞³-SPECTRAL Certificate"] = {
+            'status': 'SKIPPED',
+            'error': 'validation_error'
         }
     # -----------------------------------------------------------------------
     

@@ -23,6 +23,12 @@ import json
 class TestQCALSpectralCertificate:
     """Test suite for QCAL-∞³-SPECTRAL certificate generator."""
     
+    # Test tolerance constants
+    CORRELATION_TOLERANCE = 1e-6
+    PRECISION_TOLERANCE = 1e-10
+    FREQUENCY_TOLERANCE = 0.0001
+    COHERENCE_TOLERANCE = 0.01
+    
     @pytest.fixture(autouse=True)
     def setup(self):
         """Setup test environment."""
@@ -49,21 +55,21 @@ class TestQCALSpectralCertificate:
     
     def test_qcal_frequency_constant(self):
         """Test QCAL fundamental frequency constant."""
-        assert abs(float(self.QCAL_FREQUENCY) - 141.7001) < 0.0001
+        assert abs(float(self.QCAL_FREQUENCY) - 141.7001) < self.FREQUENCY_TOLERANCE
     
     def test_qcal_coherence_constant(self):
         """Test QCAL coherence constant."""
-        assert abs(float(self.QCAL_COHERENCE) - 244.36) < 0.01
+        assert abs(float(self.QCAL_COHERENCE) - 244.36) < self.COHERENCE_TOLERANCE
     
     def test_gamma_n_computation(self):
         """Test computation of zeta zeros (γ_n values)."""
         # First zeta zero
         gamma_1 = self.compute_gamma_n(1, precision=30)
-        assert abs(float(gamma_1) - 14.134725141734) < 1e-6
+        assert abs(float(gamma_1) - 14.134725141734) < self.CORRELATION_TOLERANCE
         
         # Second zeta zero
         gamma_2 = self.compute_gamma_n(2, precision=30)
-        assert abs(float(gamma_2) - 21.022039638772) < 1e-6
+        assert abs(float(gamma_2) - 21.022039638772) < self.CORRELATION_TOLERANCE
     
     def test_lambda_n_computation(self):
         """Test computation of eigenvalues (λ_n values)."""
@@ -73,7 +79,7 @@ class TestQCALSpectralCertificate:
         
         # Verify identity
         expected_lambda_1 = float(gamma_1) ** 2
-        assert abs(float(lambda_1) - expected_lambda_1) < 1e-6
+        assert abs(float(lambda_1) - expected_lambda_1) < self.CORRELATION_TOLERANCE
     
     def test_hilbert_polya_identity(self):
         """Test Hilbert-Pólya identity: γ_n = √λ_n."""
@@ -82,14 +88,14 @@ class TestQCALSpectralCertificate:
         # Should be verified with high correlation
         assert verified
         assert details["correlation"] > 0.999
-        assert details["max_relative_error"] < 1e-8
+        assert details["max_relative_error"] < self.PRECISION_TOLERANCE
     
     def test_correlation_coefficient(self):
         """Test correlation coefficient computation."""
         correlation = self.compute_correlation_coefficient(n_points=10, precision=30)
         
         # Correlation should be essentially 1.0
-        assert abs(float(correlation) - 1.0) < 1e-6
+        assert abs(float(correlation) - 1.0) < self.CORRELATION_TOLERANCE
     
     def test_certificate_generation(self):
         """Test full certificate generation."""
@@ -109,7 +115,7 @@ class TestQCALSpectralCertificate:
         # Check validity criteria
         assert result.hilbert_polya_confirmed
         assert result.coherence_verified
-        assert abs(float(result.fundamental_frequency) - 141.7001) < 0.0001
+        assert abs(float(result.fundamental_frequency) - 141.7001) < self.FREQUENCY_TOLERANCE
     
     def test_certificate_all_criteria(self):
         """Test that all certificate criteria can be satisfied."""
@@ -122,7 +128,7 @@ class TestQCALSpectralCertificate:
         
         # All criteria should be satisfied at sufficient precision
         assert result.all_criteria_satisfied
-        assert abs(float(result.correlation) - 1.0) < 1e-6
+        assert abs(float(result.correlation) - 1.0) < self.CORRELATION_TOLERANCE
     
     def test_certificate_structure(self):
         """Test certificate JSON structure."""
