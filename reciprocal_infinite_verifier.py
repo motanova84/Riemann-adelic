@@ -325,10 +325,13 @@ def generate_spectral_certificate(
     f0_str = str(summary['f0_hz'])
     spectral_const_str = str(summary['spectral_constant_C_zeta'])
     
+    # Normalize success rate to a fixed-precision string for hash stability
+    success_rate_str = f"{summary['success_rate']:.12f}"
+    
     # Compute SHA256 hash including all integrity-critical fields
     hash_data = (
         f"{cert_id}:{summary['num_zeros_verified']}:{summary['verified_count']}:"
-        f"{summary['failed_count']}:{summary['success_rate']}:{f0_str}:"
+        f"{summary['failed_count']}:{success_rate_str}:{f0_str}:"
         f"{spectral_const_str}:{precision}"
     )
     hash_sha256 = hashlib.sha256(hash_data.encode()).hexdigest()
