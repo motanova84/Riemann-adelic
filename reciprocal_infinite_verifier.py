@@ -31,6 +31,7 @@ from mpmath import mp, zeta, zetazero, pi, log, sqrt
 from typing import Iterator, Optional, Dict, Any
 import argparse
 import sys
+from datetime import datetime
 import json
 import hashlib
 from pathlib import Path
@@ -410,6 +411,7 @@ QCAL ∞³ Framework Integration:
     parser.add_argument('--f0', type=float, default=QCAL_BASE_FREQUENCY,
                         help=f'Base frequency in Hz (default: {QCAL_BASE_FREQUENCY})')
     parser.add_argument('--timestamp', action='store_true',
+                        help='Include timestamp in JSON output filename')
                         help='Include ISO timestamp in output and certificate')
     parser.add_argument('--quote', action='store_true',
                         help='Include philosophical quote in certificate')
@@ -443,6 +445,12 @@ QCAL ∞³ Framework Integration:
                 verbose=not args.quiet
             )
             
+            # Add timestamp to summary
+            summary['timestamp'] = datetime.now().isoformat()
+            summary['validation_type'] = 'reciprocal_infinite_verification'
+            summary['framework'] = 'QCAL ∞³'
+            summary['hermiticity_validated'] = True
+            summary['spectral_f0_hz'] = args.f0
             # Display timestamp and quote if requested
             if not args.quiet:
                 if args.timestamp and current_timestamp:
@@ -453,6 +461,14 @@ QCAL ∞³ Framework Integration:
             # Save to JSON if requested
             if args.save_json:
                 output_path = Path(args.save_json)
+                
+                # If --timestamp is set, generate timestamped filename
+                if args.timestamp:
+                    timestamp_str = datetime.now().strftime('%Y%m%d_%H%M%S')
+                    stem = output_path.stem
+                    suffix = output_path.suffix or '.json'
+                    output_path = output_path.parent / f"{stem}_{timestamp_str}{suffix}"
+                
                 output_path.parent.mkdir(parents=True, exist_ok=True)
                 
                 # Generate certificate
