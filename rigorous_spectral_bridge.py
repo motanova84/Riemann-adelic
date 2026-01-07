@@ -73,6 +73,9 @@ class RigorousSpectralBridge:
         """
         Initialize the spectral bridge with specified precision.
         
+        Note: This sets global mpmath precision. For concurrent usage in
+        larger applications, consider using mpmath context managers.
+        
         Args:
             precision_dps: Decimal places of precision for mpmath calculations
         """
@@ -101,15 +104,15 @@ class RigorousSpectralBridge:
         """
         Inverse map from spectrum to ζ zero imaginary part.
         
+        For z = i(t - 1/2), the inverse is:
+            t = -iz + 1/2 = im(z) + 1/2
+        
         Args:
             eigenvalue: Element z ∈ Spec(𝓗_Ψ)
             
         Returns:
             Imaginary part t such that ζ(1/2 + i·t) = 0
         """
-        # z = i(t - 1/2) => t = -iz + 1/2
-        # -iz = -i * (a + bi) = -ai - bi² = b - ai
-        # So re(-iz) = b = im(z), and t = im(z) + 1/2
         return eigenvalue.imag + mp.mpf("0.5")
     
     def verify_bijection(self, zeros_imaginary: List[mp.mpf], 
@@ -181,7 +184,10 @@ class RigorousSpectralBridge:
     def verify_order_preservation(self, zeros_imaginary: List[mp.mpf],
                                   eigenvalues: List[mp.mpc]) -> bool:
         """
-        Verify order preservation: im(s₁) < im(s₂) ⟷ re(z₁) < re(z₂).
+        Verify order preservation: im(s₁) < im(s₂) ⟷ im(z₁) < im(z₂).
+        
+        Note: For the spectral map z = i(t - 1/2), we have re(z) = 0 (pure imaginary),
+        so the ordering is determined by the imaginary parts of the eigenvalues.
         
         Args:
             zeros_imaginary: Sorted list of imaginary parts
