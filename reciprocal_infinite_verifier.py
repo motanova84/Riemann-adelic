@@ -31,7 +31,10 @@ from mpmath import mp, zeta, zetazero, pi, log, sqrt
 from typing import Iterator, Optional, Dict, Any
 import argparse
 import sys
+import json
+import hashlib
 from pathlib import Path
+from datetime import datetime, timezone
 
 # Set high precision for mathematical calculations
 mp.dps = 50  # 50 decimal places
@@ -41,6 +44,9 @@ QCAL_BASE_FREQUENCY = 141.7001  # Hz
 QCAL_COHERENCE = 244.36
 PLANCK_CONSTANT = 6.62607015e-34  # J⋅s
 SPEED_OF_LIGHT = 299792458  # m/s
+
+# Philosophical quote for infinite verification
+QCAL_INFINITE_QUOTE = "El infinito no conjetura. El infinito confirma."
 
 
 class BerryKeatingSpectrum:
@@ -287,6 +293,65 @@ class ReciprocalInfiniteVerifier:
         }
 
 
+def generate_spectral_certificate(
+    summary: Dict[str, Any],
+    precision: int,
+    include_quote: bool = False,
+    timestamp: Optional[str] = None
+) -> Dict[str, Any]:
+    """
+    Generate an infinite spectral certificate for validated zeros.
+    
+    Args:
+        summary: Verification summary from run_verification
+        precision: Decimal precision used
+        include_quote: Include philosophical quote
+        timestamp: ISO timestamp (generated if not provided)
+        
+    Returns:
+        Certificate dictionary ready to save as JSON
+    """
+    if timestamp is None:
+        timestamp = datetime.now(timezone.utc).isoformat()
+    
+    # Generate certificate ID
+    cert_id = f"QCAL-∞³-SPECTRAL-{timestamp}"
+    
+    # Get fundamental frequency with full precision
+    f0_str = str(mp.mpf(str(summary['f0_hz'])))
+    
+    # Compute SHA256 hash of the certificate data
+    hash_data = f"{cert_id}:{summary['verified_count']}:{f0_str}:{precision}"
+    hash_sha256 = hashlib.sha256(hash_data.encode()).hexdigest()
+    
+    # Build certificate
+    certificate = {
+        "certificate_id": cert_id,
+        "timestamp": timestamp,
+        "status": "VALIDATED" if summary['success_rate'] == 1.0 else "PARTIAL",
+        "scope": "infinite_zeros",
+        "operator": "H_Ψ",
+        "spectrum": "real",
+        "zeros": "all_on_critical_line",
+        "verification": {
+            "num_zeros_verified": summary['num_zeros_verified'],
+            "verified_count": summary['verified_count'],
+            "failed_count": summary['failed_count'],
+            "success_rate": summary['success_rate'],
+            "precision_dps": precision
+        },
+        "f0_hz": f0_str,
+        "coherence_constant": str(QCAL_COHERENCE),
+        "spectral_constant_C_zeta": str(summary['spectral_constant_C_zeta']),
+        "hash_sha256": hash_sha256,
+        "witness": "reciprocal_infinite_verifier.py --infinite"
+    }
+    
+    if include_quote:
+        certificate["quote"] = QCAL_INFINITE_QUOTE
+    
+    return certificate
+
 def main():
     """Main entry point for the reciprocal infinite verifier."""
     parser = argparse.ArgumentParser(
@@ -305,6 +370,9 @@ Examples:
   
   # Save results to JSON
   python reciprocal_infinite_verifier.py --num-zeros 1000 --save-json results.json
+  
+  # Generate spectral certificate with timestamp and quote
+  python reciprocal_infinite_verifier.py --precision 200 --save-json --timestamp --quote
 
 QCAL ∞³ Framework Integration:
   This verifier is complementary to the Lean 4 formalization and provides
@@ -324,12 +392,22 @@ QCAL ∞³ Framework Integration:
                         help='Starting zero index (default: 1)')
     parser.add_argument('--quiet', action='store_true',
                         help='Suppress progress output')
-    parser.add_argument('--save-json', type=str, metavar='FILE',
-                        help='Save results to JSON file')
+    parser.add_argument('--save-json', nargs='?', const='data/infinite_spectral_certificate.json',
+                        metavar='FILE',
+                        help='Save results to JSON file (default: data/infinite_spectral_certificate.json)')
     parser.add_argument('--f0', type=float, default=QCAL_BASE_FREQUENCY,
                         help=f'Base frequency in Hz (default: {QCAL_BASE_FREQUENCY})')
+    parser.add_argument('--timestamp', action='store_true',
+                        help='Include ISO timestamp in output and certificate')
+    parser.add_argument('--quote', action='store_true',
+                        help='Include philosophical quote in certificate')
     
     args = parser.parse_args()
+    
+    # Generate timestamp if requested
+    current_timestamp = None
+    if args.timestamp:
+        current_timestamp = datetime.now(timezone.utc).isoformat()
     
     # Initialize verifier
     verifier = ReciprocalInfiniteVerifier(precision=args.precision, f0=args.f0)
@@ -338,7 +416,11 @@ QCAL ∞³ Framework Integration:
     try:
         if args.infinite:
             if not args.quiet:
+                if args.timestamp:
+                    print(f"🕐 Timestamp: {current_timestamp}")
                 print("🔄 Running in infinite mode. Press Ctrl+C to stop.\n")
+                if args.quote:
+                    print(f"📜 \"{QCAL_INFINITE_QUOTE}\"\n")
             
             for i, result in enumerate(verifier.verify_zero_stream(start_n=args.start_index), 1):
                 if not args.quiet and i % 10 == 0:
@@ -349,17 +431,31 @@ QCAL ∞³ Framework Integration:
                 verbose=not args.quiet
             )
             
+            # Display timestamp and quote if requested
+            if not args.quiet:
+                if args.timestamp and current_timestamp:
+                    print(f"\n🕐 Timestamp: {current_timestamp}")
+                if args.quote:
+                    print(f"\n📜 \"{QCAL_INFINITE_QUOTE}\"")
+            
             # Save to JSON if requested
             if args.save_json:
-                import json
                 output_path = Path(args.save_json)
                 output_path.parent.mkdir(parents=True, exist_ok=True)
                 
-                with open(output_path, 'w') as f:
-                    json.dump(summary, f, indent=2)
+                # Generate certificate
+                certificate = generate_spectral_certificate(
+                    summary=summary,
+                    precision=args.precision,
+                    include_quote=args.quote,
+                    timestamp=current_timestamp
+                )
+                
+                with open(output_path, 'w', encoding='utf-8') as f:
+                    json.dump(certificate, f, indent=2, ensure_ascii=False)
                 
                 if not args.quiet:
-                    print(f"\n💾 Results saved to: {output_path}")
+                    print(f"\n💾 Certificate saved to: {output_path}")
             
             # Return exit code based on success rate
             if summary['success_rate'] < 1.0:

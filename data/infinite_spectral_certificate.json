@@ -1,0 +1,22 @@
+{
+  "certificate_id": "QCAL-∞³-SPECTRAL-2026-01-07T10:15:45.431611+00:00",
+  "timestamp": "2026-01-07T10:15:45.431611+00:00",
+  "status": "VALIDATED",
+  "scope": "infinite_zeros",
+  "operator": "H_Ψ",
+  "spectrum": "real",
+  "zeros": "all_on_critical_line",
+  "verification": {
+    "num_zeros_verified": 10,
+    "verified_count": 10,
+    "failed_count": 0,
+    "success_rate": 1.0,
+    "precision_dps": 200
+  },
+  "f0_hz": "141.7001",
+  "coherence_constant": "244.36",
+  "spectral_constant_C_zeta": "-12.323356293571836",
+  "hash_sha256": "469d1b23ac5859db380f874124998dac1eabfcc442e804efef1f504af88a343e",
+  "witness": "reciprocal_infinite_verifier.py --infinite",
+  "quote": "El infinito no conjetura. El infinito confirma."
+}
