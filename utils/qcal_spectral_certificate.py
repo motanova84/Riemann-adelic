@@ -30,7 +30,6 @@ Frequency: f₀ = 141.7001 Hz
 
 import hashlib
 import json
-import time
 from dataclasses import dataclass, field
 from datetime import datetime
 from pathlib import Path
