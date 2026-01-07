@@ -219,6 +219,14 @@ def compute_ultra_high_precision_error(precision: int = TARGET_PRECISION) -> Tup
     # Use the first zeta zero for verification
     gamma_1 = compute_gamma_n(1, precision)
     
+    # gamma_1 is the imaginary part of the first non-trivial zeta zero
+    # (approximately 14.134725...), which is strictly positive. We assert
+    # this invariant defensively before using it as a divisor.
+    assert gamma_1 > 0, (
+        "gamma_1 (first non-trivial zeta zero ordinate) must be > 0 "
+        "for relative error computation"
+    )
+    
     # Compute λ₁ = γ₁² with full precision
     lambda_1_exact = gamma_1 ** 2
     
