@@ -1,59 +1,58 @@
 import Lake
 open Lake DSL
 
-package riemannAdelic {
-  -- configura opciones de compilación
-  moreLeanArgs := #["-DautoImplicit=false", "-Dlinter=false"]
-}
-
-@[default_target]
-lean_lib RiemannAdelic where
-  globs := #[
-    "axioms_to_lemmas",
-    "schwartz_adelic",
-    "D_explicit",
-    "functional_eq",
-    "de_branges",
-    "entire_order",
-    "positivity",
-    "RH_final",
-    -- FASE OMEGA modules
-    "H_epsilon_hermitian",
-    "D_function_fredholm",
-    "selberg_trace_formula",
-    "functional_equation_D",
-    "hadamard_connection",
-    "RH_from_positivity",
-    "RH_final_connection",
-    "FaseOmega"
-  ]
-package riemannAdelic
-
-@[default_target]
-lean_lib RiemannAdelic
 package «riemann-adelic-lean» where
-  -- Version and configuration
-  version := "5.1"
-  -- Require Lean 4.5.0 or higher
+  -- Configuration for Lake build system
   preferReleaseBuild := true
+  moreLeanArgs := #["-DautoImplicit=false"]
 
-lean_lib «RiemannAdelic» where
-  -- Library configuration for the Riemann Adelic proof modules
+-- RHComplete library - Complete RH proof modules
+lean_lib RHComplete where
+  globs := #[.submodules `RHComplete]
+  roots := #[`RHComplete]
+
+lean_lib «QCAL» where
+  -- QCAL library for universal verification
+  roots := #[`QCAL]
+
+-- RH_final_v6 library
+lean_lib RH_final_v6 where
+  globs := #[.submodules `RH_final_v6]
+
+-- RiemannAdelic library - Base modules
+lean_lib RiemannAdelic where
   globs := #[.submodules `RiemannAdelic]
   roots := #[`RiemannAdelic]
 
+-- RHOperator library - Operator theory for RH
+lean_lib RHOperator where
+  globs := #[.submodules `RHOperator]
+  roots := #[`RHOperator]
+-- Adelic library - L-function spectral reconstruction
+lean_lib adelic where
+  globs := #[.submodules `adelic]
+  roots := #[`adelic]
+
+-- Arpeth library - H_Ψ operator framework
+lean_lib Arpeth where
+  globs := #[.submodules `Arpeth]
+  roots := #[`Arpeth]
+
+-- Main executable
 @[default_target]
 lean_exe «riemann-adelic-lean» where
   root := `Main
   supportInterpreter := true
 
 -- Require mathlib4 for complete mathematical library support
+-- Using stable v4.5.0 tag to ensure CI stability
 require mathlib from git
-  "https://github.com/leanprover-community/mathlib4" @ "07a2d4e5c3c9e55bb6e37bbf5132fd47d75b9ce2"
+  "https://github.com/leanprover-community/mathlib4" @ "v4.5.0"
 
+-- Let Lake resolve aesop version compatible with mathlib v4.5.0
 require aesop from git
-  "https://github.com/leanprover-community/aesop" @ "main"
+  "https://github.com/leanprover-community/aesop"
 
+-- Let Lake resolve proofwidgets version compatible with mathlib v4.5.0
 require proofwidgets from git
-  "https://github.com/leanprover-community/proofwidgets4" @ "main"
-  "https://github.com/leanprover-community/mathlib4.git" @ "master"
+  "https://github.com/leanprover-community/proofwidgets4"

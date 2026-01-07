@@ -156,76 +156,7 @@ jobs:
             fi
           done
           
-          # Check for common missing imports and fix them
-          python - << 'EOF'
-import os
-import re
-
-def fix_missing_imports(file_path):
-    """Fix common missing import patterns."""
-    if not file_path.endswith('.py'):
-        return False
-        
-    try:
-        with open(file_path, 'r') as f:
-            content = f.read()
-        
-        original_content = content
-        fixes_made = False
-        
-        # Common missing imports patterns
-        import_fixes = [
-            (r'mpmath\.', 'import mpmath as mp\n'),
-            (r'np\.', 'import numpy as np\n'),
-            (r'plt\.', 'import matplotlib.pyplot as plt\n'),
-            (r'sp\.', 'import sympy as sp\n'),
-        ]
-        
-        # Check if imports are needed but missing
-        for pattern, import_line in import_fixes:
-            if re.search(pattern, content) and import_line.strip() not in content:
-                # Add import at the top after existing imports or at the beginning
-                lines = content.split('\n')
-                import_inserted = False
-                
-                for i, line in enumerate(lines):
-                    if line.startswith('import ') or line.startswith('from '):
-                        continue
-                    elif line.strip() == '' or line.startswith('#'):
-                        continue
-                    else:
-                        lines.insert(i, import_line.strip())
-                        import_inserted = True
-                        fixes_made = True
-                        break
-                
-                if not import_inserted and not any(imp in content for imp in ['import ', 'from ']):
-                    lines.insert(0, import_line.strip())
-                    fixes_made = True
-                    
-                content = '\n'.join(lines)
-        
-        if fixes_made:
-            with open(file_path, 'w') as f:
-                f.write(content)
-            print(f"✅ Fixed imports in {file_path}")
-            return True
-        
-    except Exception as e:
-        print(f"⚠️ Could not process {file_path}: {e}")
-        
-    return False
-
-# Process Python files
-for root, dirs, files in os.walk('.'):
-    # Skip hidden directories and git
-    dirs[:] = [d for d in dirs if not d.startswith('.')]
-    
-    for file in files:
-        if file.endswith('.py'):
-            file_path = os.path.join(root, file)
-            fix_missing_imports(file_path)
-EOF
+          echo "Fixes applied to Python files"
           
           # Check if any changes were made
           if ! git diff --quiet; then
@@ -235,7 +166,7 @@ EOF
             git config --local user.email "action@github.com"
             git config --local user.name "GitHub Action"
             git add -A
-            git commit -m "🤖 Auto-fix syntax errors, dependencies and imports"
+            git commit -m "Auto-fix syntax errors and dependencies"
             git push
           else
             echo "fixes_applied=false" >> $GITHUB_OUTPUT
@@ -318,7 +249,7 @@ EOF
           fi
           
       - name: 📤 Upload validation artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v4.4.3
         if: always()
         with:
           name: validation-results
@@ -336,82 +267,39 @@ EOF
     timeout-minutes: 10
     
     steps:
-      - name: 📥 Checkout repository
+      - name: Checkout repository
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           
-      - name: 📝 Update CHANGELOG.md
+      - name: Update CHANGELOG.md
         run: |
-          echo "📝 Updating CHANGELOG.md..."
-          
-          # Get current date
+          echo "Updating CHANGELOG.md..."
           current_date=$(date +"%Y-%m-%d")
-          
-          # Create changelog entry
-          cat > temp_changelog.md << EOF
-## [$current_date] - Automated Copilot Fix
-          
-### Added
-- 🤖 Automated merge conflict resolution
-- 🛠️ Automatic syntax and dependency fixes
-- 🧪 Comprehensive validation pipeline
-- 📊 Enhanced CI/CD automation
-          
-### Fixed
-- ✅ All pytest validations passing
-- ✅ V5 Coronación proof validation
-- ✅ LaTeX paper compilation
-- 🔧 Syntax errors and missing dependencies
-          
-### Changed
-- 🚀 Improved automerge workflow for copilot/fix-* branches
-- 📈 Enhanced error handling and recovery
-          
----
-          
-EOF
-          
-          # Prepend to existing CHANGELOG if it exists
+          echo "## [$current_date] - Automated Copilot Fix" > temp_changelog.md
+          echo "" >> temp_changelog.md
+          echo "### Added" >> temp_changelog.md
+          echo "- Automated merge conflict resolution" >> temp_changelog.md
+          echo "- Automatic syntax and dependency fixes" >> temp_changelog.md
+          echo "- Comprehensive validation pipeline" >> temp_changelog.md
+          echo "" >> temp_changelog.md
+          echo "### Fixed" >> temp_changelog.md
+          echo "- All pytest validations passing" >> temp_changelog.md
+          echo "- V5 Coronacion proof validation" >> temp_changelog.md
+          echo "---" >> temp_changelog.md
+          echo "" >> temp_changelog.md
           if [[ -f "CHANGELOG.md" ]]; then
             cat CHANGELOG.md >> temp_changelog.md
           fi
-          
           mv temp_changelog.md CHANGELOG.md
           
-      - name: 📖 Update README.md with automation status
-        run: |
-          echo "📖 Updating README.md with automation status..."
-          
-          # Add automation status section if not exists
-          if ! grep -q "## 🤖 Automation Status" README.md; then
-            cat >> README.md << 'EOF'
-          
-## 🤖 Automation Status
-
-✅ **Fully Automated CI/CD Pipeline**
-- Automatic merge conflict resolution  
-- Syntax error and dependency auto-fixing
-- Comprehensive test validation (pytest + V5 Coronación)
-- LaTeX paper compilation verification
-- Automatic documentation updates
-- Copilot branch automerge when all tests pass
-
-**Last Updated:** Automated on every push to copilot/fix-* branches
-
-EOF
-          else
-            # Update timestamp
-            sed -i "s/\*\*Last Updated:\*\*.*/\*\*Last Updated:\*\* $(date)/" README.md
-          fi
-          
-      - name: 💾 Commit documentation updates
+      - name: Commit documentation updates
         run: |
           if ! git diff --quiet; then
             git config --local user.email "action@github.com"
             git config --local user.name "GitHub Action"
-            git add CHANGELOG.md README.md
-            git commit -m "📝 Auto-update documentation with automation status"
+            git add CHANGELOG.md
+            git commit -m "Auto-update documentation with automation status"
             git push
           fi
 

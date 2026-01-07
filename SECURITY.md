@@ -4,6 +4,30 @@
 
 This repository contains original mathematical research on the Riemann Hypothesis (Version V5 — Coronación) by José Manuel Mota Burruezo. The work is protected by copyright and intellectual property laws.
 
+## Environment Integrity and Reproducibility
+
+This repository implements security measures to ensure the integrity and reproducibility of computational results:
+
+- ✅ **ENV.lock**: Complete environment snapshot with all dependencies
+- ✅ **Checksums**: SHA256 hashes for all lock files
+- ✅ **Verification**: Automated integrity checking scripts
+- ✅ **Reproducibility**: Deterministic builds across environments
+
+### Verifying Environment Integrity
+
+Before running any validation or proof verification:
+
+```bash
+python verify_environment_integrity.py
+```
+
+This ensures:
+- Lock files haven't been tampered with
+- Dependencies match expected versions
+- Environment is reproducible
+
+See [ENV_LOCK_GUIDE.md](ENV_LOCK_GUIDE.md) for detailed documentation.
+
 ## Automated Monitoring
 
 We employ an **automated plagiarism detection and monitoring system** that:

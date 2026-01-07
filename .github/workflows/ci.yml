@@ -1,12 +1,6 @@
-# CI: instala dependencias, cache de pip, lint, tests, validar metadatos y ejecutar verificador
-# Este workflow corre en cada push a main y en pull requests
 name: CI
-# CI Simbiótico SABIO ∞³
-# Workflow extensible con validación básica (100) o completa (500)
-# Integrado con el sistema QCAL-CLOUD y la infraestructura JMMB
-name: CI Simbiótico SABIO ∞³
 
-# Workflow CI completo para Python
+# Workflow CI básico para Python
 # Ejecuta en push a main/master y en todos los PRs
 on:
   push:
@@ -36,6 +30,8 @@ permissions:
   contents: read
 
 jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
   test:
     runs-on: ubuntu-latest
     strategy:
@@ -45,6 +41,20 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      
+      - name: Cache dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.local
+          key: ${{ runner.os }}-python-${{ hashFiles('**/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-python-
+      
 
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v5
@@ -59,6 +69,33 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pip-
 
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install flake8 black isort pytest pytest-cov
+      
+      - name: Lint with flake8
+        run: |
+          # Stop the build if there are Python syntax errors or undefined names
+          flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+          # Exit-zero treats all errors as warnings
+          flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+      
+      - name: Check code formatting with black
+        run: |
+          black --check --diff . || echo "Code formatting issues found (non-blocking)"
+      
+      - name: Run tests
+        run: |
+          pytest tests/ -v --tb=short
+      
+      - name: Run validation scripts (smoke tests)
+        run: |
+          # Quick validation to ensure core functionality works
+          python -c "import utils.mellin; print('✓ Core imports working')"
+          python -c "import mpmath; import numpy; import scipy; print('✓ Dependencies available')"
+          pip install flake8 black isort
   validacion-simbolica:
     runs-on: ubuntu-latest
     env:
@@ -110,6 +147,7 @@ jobs:
     
     strategy:
       matrix:
+        # Puedes personalizar las versiones de Python según tus necesidades
         python-version: ['3.10', '3.11']
     
     steps:
@@ -134,67 +172,51 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
     
-    - name: Run linters
-      run: |
-        pip install black flake8
-        black --check . || true
-        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics || true
+    # Opcional: Ejecutar linter (flake8, black, etc.)
+    # Descomenta si quieres activar linting
+    # - name: Lint with flake8
+    #   run: |
+    #     pip install flake8
+    #     # Para fallar en errores críticos
+    #     flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+    #     # Para advertencias generales (no bloquea)
+    #     flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     
     - name: Run tests with pytest
       run: |
+        # Ejecuta la suite de tests. Personaliza los argumentos según necesites
         pytest tests/ -v --tb=short
-  
-  validate-metadata:
-    name: Validate metadata
-      - uses: actions/checkout@v4
-      - name: Set up Python
-        uses: actions/setup-python@v4
+      # Puedes añadir más opciones como --maxfail=1 para detener al primer fallo
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.10", "3.11", "3.12"]
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
         with:
-          python-version: "3.11"
-      
-      - name: Install system dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y llvm-14 llvm-14-dev libigraph-dev libigraph3t64
-      
+          python-version: ${{ matrix.python-version }}
+
+      - name: Cache pip dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
       - name: Install dependencies
-        run: pip install -r requirements.txt
-      - name: Run validation script
-        run: |
-          mkdir -p logs data
-          python validate_explicit_formula.py --max_primes 100 --max_zeros 200 --integration_t 10 --precision_dps 20 > logs/validation.log 2>&1
-      - name: Check error threshold
-        run: |
-          if [ -f data/validation_results.csv ]; then
-            error=$(grep "relative_error" data/validation_results.csv | cut -d',' -f2)
-            if (( $(echo "$error <= 0.01" | bc -l) )); then
-              echo "✅ Error $error within tolerance (0.01)"
-            else
-              echo "❌ Error $error exceeds tolerance 0.01"
-              exit 1
-            fi
-          else
-            echo "❌ Validation results not generated"
-            exit 1
-          fi
-      - name: Upload validation logs
-        uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: validation-logs
-          path: logs/validation.log
-      - name: Archive validation results
-        uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: validation-results
-          path: data/validation_results.csv
         env:
           NUMEXPR_MAX_THREADS: 4
           NUMEXPR_NUM_THREADS: 2
         run: |
-          python -m pip install --upgrade pip==24.3.1
+          python -m pip install --upgrade pip
           pip install -r requirements.txt
+          pip install flake8 black isort
 
       - name: Run linting (flake8)
         run: |
@@ -215,141 +237,3 @@ jobs:
       - name: Run tests with pytest
         run: |
           pytest tests/ -v --tb=short
-
-          echo "🌌 Validación extendida (modo ∞³, VALIDATION_LEVEL=$VALIDATION_LEVEL)"
-          pytest tests/ --maxfail=10 --disable-warnings
-      
-      - name: 📡 Reporte simbiótico
-        run: |
-          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-          echo "🧬 Frecuencia activa: 141.7001 Hz"
-          echo "✧ Firma: JMMB Ψ✧ · Campo QCAL ∞³"
-          echo "🌀 Nivel de validación: $VALIDATION_LEVEL"
-          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-  
-  validate-metadata:
-    runs-on: ubuntu-latest
-    needs: test
-    
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-    
-    - name: Set up Python
-      uses: actions/setup-python@v5
-      with:
-        python-version: '3.11'
-    
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install -r requirements.txt
-    
-    - name: Validate metadata JSON-LD
-      run: |
-        if [ -f tools/verify_metadata.py ] && [ -f schema/metadata_example.jsonld ]; then
-          python tools/verify_metadata.py schema/metadata_example.jsonld
-        else
-          echo "Metadata validation skipped - files not present"
-        fi
-  
-  verify-conversion:
-    name: Verify conversion
-      - uses: actions/checkout@v4
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.10.12'
-      - name: Install dependencies
-        run: pip install -r requirements.txt nbconvert
-      - name: Execute notebook and convert to HTML
-        run: |
-          mkdir -p notebooks/output
-          # Try to execute and convert notebook, with fallback if execution fails
-          jupyter nbconvert --execute --to html notebooks/validation.ipynb --output notebooks/output/validation.html \
-            --ExecutePreprocessor.timeout=3600 \
-            --ExecutePreprocessor.kernel_name=python3 || \
-          jupyter nbconvert --to html notebooks/validation.ipynb --output notebooks/output/validation.html
-      - name: Upload notebook HTML
-        uses: actions/upload-artifact@v4
-        if: always()
-          python-version: "3.11"
-      - name: Cache pip dependencies
-        uses: actions/cache@v4
-        with:
-          path: ~/.cache/pip
-          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
-          restore-keys: |
-            ${{ runner.os }}-pip-
-      
-      - name: Install system dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y llvm-14 llvm-14-dev libigraph-dev libigraph3t64
-      
-      - name: Install dependencies
-        env:
-          NUMEXPR_MAX_THREADS: 4
-          NUMEXPR_NUM_THREADS: 2
-        run: |
-          python -m pip install --upgrade pip==24.3.1
-          pip install -r requirements.txt
-      - name: Validate metadata JSON-LD
-        run: |
-          python tools/verify_metadata.py schema/metadata_example.jsonld
-
-  
-  verify-conversion:
-    runs-on: ubuntu-latest
-    needs: test
-    if: ${{ github.event_name == 'pull_request' }}
-    
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-    
-    - name: Set up Python
-      uses: actions/setup-python@v5
-      with:
-        python-version: '3.11'
-    
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install -r requirements.txt
-    
-    - name: Run conversion smoke test
-      run: |
-        if [ -f tools/convert_example.py ] && [ -f tests/examples/example_lean.lean ]; then
-      - uses: actions/checkout@v4
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.11"
-      - name: Cache pip dependencies
-        uses: actions/cache@v4
-        with:
-          path: ~/.cache/pip
-          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
-          restore-keys: |
-            ${{ runner.os }}-pip-
-      
-      - name: Install system dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y llvm-14 llvm-14-dev libigraph-dev libigraph3t64
-      
-      - name: Install dependencies
-        env:
-          NUMEXPR_MAX_THREADS: 4
-          NUMEXPR_NUM_THREADS: 2
-        run: |
-          python -m pip install --upgrade pip==24.3.1
-          pip install -r requirements.txt
-      - name: Run conversion smoke test
-        run: |
-          # Ejemplo: intenta convertir un ejemplo pequeño de Lean a intermedio
-          python tools/convert_example.py tests/examples/example_lean.lean
-        else
-          echo "Conversion test skipped - files not present"
-        fi

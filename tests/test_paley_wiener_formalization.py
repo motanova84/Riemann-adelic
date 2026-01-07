@@ -182,6 +182,89 @@ class TestMainIntegration:
         assert "Paley-Wiener theory" in content or "uniqueness" in content, \
             "Main.lean does not mention Paley-Wiener in output"
 
+    def test_main_imports_identity_principle(self):
+        """Verify Main.lean imports identity_principle_exp_type"""
+        file_path = Path("formalization/lean/Main.lean")
+        content = file_path.read_text()
+        
+        assert "import paley.identity_principle_exp_type" in content, \
+            "Main.lean does not import identity_principle_exp_type"
+
+
+class TestIdentityPrincipleFormalization:
+    """Test the Identity Principle for Exponential Type formalization"""
+
+    def test_identity_principle_file_exists(self):
+        """Verify identity_principle_exp_type.lean exists"""
+        file_path = Path("formalization/lean/paley/identity_principle_exp_type.lean")
+        assert file_path.exists(), f"File not found: {file_path}"
+
+    def test_identity_principle_has_exponential_type_def(self):
+        """Verify exponential_type definition is declared"""
+        file_path = Path("formalization/lean/paley/identity_principle_exp_type.lean")
+        content = file_path.read_text()
+        
+        # Check for definition
+        assert "def exponential_type" in content, \
+            "Definition 'exponential_type' not found"
+        
+        # Check for growth bound in definition
+        assert "Real.exp" in content, \
+            "Exponential growth not found in definition"
+
+    def test_identity_principle_has_main_lemma(self):
+        """Verify the main identity principle lemma is declared"""
+        file_path = Path("formalization/lean/paley/identity_principle_exp_type.lean")
+        content = file_path.read_text()
+        
+        # Check for lemma declaration
+        assert "lemma identity_principle_exp_line" in content, \
+            "Main lemma 'identity_principle_exp_line' not found"
+        
+        # Check for hypotheses
+        assert "Differentiable" in content, \
+            "Differentiable hypothesis not found"
+        assert "exponential_type" in content, \
+            "exponential_type hypothesis not found"
+
+    def test_identity_principle_imports_correct(self):
+        """Verify correct imports in identity_principle_exp_type.lean"""
+        file_path = Path("formalization/lean/paley/identity_principle_exp_type.lean")
+        content = file_path.read_text()
+        
+        required_imports = [
+            "Mathlib.Analysis.Complex.Basic",
+            "Mathlib.Topology.MetricSpace.Basic",
+            "Mathlib.Analysis.Analytic.Basic",
+        ]
+        
+        for imp in required_imports:
+            assert imp in content, f"Required import '{imp}' not found"
+
+    def test_identity_principle_header(self):
+        """Verify identity_principle_exp_type.lean has proper header"""
+        file_path = Path("formalization/lean/paley/identity_principle_exp_type.lean")
+        content = file_path.read_text()
+        
+        # Check for header comment
+        assert "identity_principle_exp_type.lean" in content, \
+            "File header missing file name"
+        assert "José Manuel Mota Burruezo" in content, \
+            "Author name not found in header"
+        assert "QCAL" in content, \
+            "QCAL reference not found in header"
+
+    def test_identity_principle_has_documentation(self):
+        """Verify the file has proper documentation"""
+        file_path = Path("formalization/lean/paley/identity_principle_exp_type.lean")
+        content = file_path.read_text()
+        
+        # Check for mathematical documentation
+        assert "recta crítica" in content or "critical line" in content, \
+            "Critical line mention not found"
+        assert "principio de identidad" in content or "identity theorem" in content, \
+            "Identity principle reference not found"
+
 
 class TestFileHeaders:
     """Test file headers and documentation"""

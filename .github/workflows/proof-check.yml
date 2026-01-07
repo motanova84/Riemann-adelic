@@ -1,26 +1,85 @@
-# Proof-check: plantilla robusta para ejecutar verificación formal en una imagen reproducible (Docker)
-# Por defecto usa COQ_IMAGE (recomiendo una imagen de Coq Platform). Ajusta según tus necesidades.
 name: Proof Check
+
+# Workflow para verificación formal con Coq/Lean/Isabelle
+# Este es un workflow de plantilla que debe adaptarse al sistema formal específico
 on:
   push:
     branches: [ main ]
   pull_request:
     branches: [ main ]
-  workflow_dispatch:
+    paths:
+      - 'formalization/**'
+      - '.github/workflows/proof-check.yml'
+  pull_request:
+    branches: [ main, master ]
+    paths:
+      - 'formalization/**'
+  workflow_dispatch:  # Permite ejecución manual desde la UI de GitHub
 
-env:
-  COQ_IMAGE: coqorg/coq:latest  # Cambia a una imagen de Coq Platform si la necesitas (p.ej. coqorg/coq-platform:YYYY.MM)
+permissions:
+  contents: read
 
 jobs:
-  check-proofs:
+  lean-verification:
     runs-on: ubuntu-latest
-    timeout-minutes: 120
-    permissions:
-      contents: read
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+  lean-build:
+    runs-on: ubuntu-latest
+    
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Set up Lean
+        uses: leanprover/lean-action@v1
+        with:
+          lean-version: "leanprover/lean4:latest"
+      
+      - name: Check Lean installation
+        run: |
+          lean --version
+          lake --version
+      
+
+      - name: Cache Lean build
+        uses: actions/cache@v4
+        with:
+          path: |
+            formalization/lean/.lake
+            formalization/lean/build
+          key: ${{ runner.os }}-lean-${{ hashFiles('formalization/lean/lakefile.lean', 'formalization/lean/lean-toolchain') }}
+          restore-keys: |
+            ${{ runner.os }}-lean-
+
+      - name: Install Lean dependencies
+        run: |
+          cd formalization/lean
+          lake update
+      
+
+      - name: Build Lean formalization
+        run: |
+          cd formalization/lean
+          lake build
+      
+      - name: Verify Lean proofs
+        run: |
+          cd formalization/lean
+          lake exe cache get || echo "Cache not available, building from source"
+          # Check individual Lean files for verification
+          lean RH_final.lean
+          lean axiomas_a_lemas.lean
+          echo "✓ Lean proofs verified successfully"
+
+      - name: Run Lean check on RH_final.lean
+        run: |
+          cd formalization/lean
+          lake exe cache get || true
+          lake build RH_final
       - name: Ensure Docker available
         uses: docker/setup-buildx-action@v2
 

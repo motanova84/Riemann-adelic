@@ -32,6 +32,8 @@ class TestRHFinalV6Structure:
             "selberg_trace.lean",
             "H_psi_complete.lean",
             "D_limit_equals_xi.lean",
+            "spectrum_eq_zeros.lean",
+            "spectrum_HΨ_equals_zeta_zeros.lean",
         ]
         
         for filename in required_files:
@@ -282,6 +284,8 @@ class TestRHFinalV6Content:
             "selberg_trace.lean",
             "H_psi_complete.lean",
             "D_limit_equals_xi.lean",
+            "spectrum_eq_zeros.lean",
+            "spectrum_HΨ_equals_zeta_zeros.lean",
         ]
         
         for filename in lean_files:
@@ -291,6 +295,64 @@ class TestRHFinalV6Content:
             # Should have noncomputable section for complex analysis
             assert "noncomputable" in content, \
                 f"{filename} should have noncomputable section"
+    
+    def test_spectrum_version_a_structure(self):
+        """Test structure of spectrum_HΨ_equals_zeta_zeros.lean (Version A)."""
+        spectrum_file = self.rh_v6_dir / "spectrum_HΨ_equals_zeta_zeros.lean"
+        content = spectrum_file.read_text()
+        
+        # Should be Version A - proof without axioms
+        assert "Versión A" in content or "Version A" in content, \
+            "Should be marked as Version A"
+        
+        # Should define H_model
+        assert "H_model" in content, "Should define H_model operator"
+        
+        # Should have constructive self-adjoint proof (not axiom)
+        assert "theorem H_model_selfAdjoint" in content, \
+            "Should have theorem (not axiom) for self-adjointness"
+        
+        # Should define explicit isometry U
+        assert "def U_map" in content or "U_map" in content, \
+            "Should define explicit isometry U"
+        
+        # Should use Hermite functions
+        assert "hermite" in content.lower(), \
+            "Should use Hermite functions for basis"
+        
+        # Should define spectral equivalence
+        assert "spectrum" in content.lower(), \
+            "Should define spectrum"
+        
+        # Should reference zeta zeros
+        assert "zeta" in content.lower() or "ζ" in content, \
+            "Should reference zeta function"
+        
+        # Should have QCAL integration
+        assert "141.7001" in content, "Should have QCAL base frequency"
+        
+        # Should be properly documented
+        assert "DOI" in content or "doi" in content, \
+            "Should have DOI reference"
+        assert "ORCID" in content or "orcid" in content, \
+            "Should have ORCID reference"
+    
+    def test_spectrum_version_a_no_main_axioms(self):
+        """Test that Version A eliminates main axioms."""
+        spectrum_file = self.rh_v6_dir / "spectrum_HΨ_equals_zeta_zeros.lean"
+        content = spectrum_file.read_text()
+        
+        # Count axiom declarations
+        axiom_pattern = r'\baxiom\s+H_model_selfAdjoint'
+        h_model_axiom = re.findall(axiom_pattern, content)
+        
+        # H_model_selfAdjoint should be a theorem, not an axiom
+        assert len(h_model_axiom) == 0, \
+            "H_model_selfAdjoint should be a theorem, not an axiom"
+        
+        # Should have theorem instead
+        assert "theorem H_model_selfAdjoint" in content, \
+            "Should have constructive proof as theorem"
 
 
 if __name__ == "__main__":

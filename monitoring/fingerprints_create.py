@@ -54,7 +54,7 @@ def create_fingerprints():
         "paper/main.pdf",
         "paper/main.tex",
         "paper_standalone.tex",
-        "trabajos/riemann_adelic_approach_jmmb84.pdf",
+        "RIEMANNJMMB84.pdf",
     ]
     
     for file_path in paper_files:

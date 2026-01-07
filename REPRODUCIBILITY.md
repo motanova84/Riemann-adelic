@@ -1,6 +1,77 @@
-# CI/CD Reproducibility Guide
+# Reproducibility Guide
+
+This document provides minimalist instructions to reproduce the Riemann Hypothesis proof validation results.
+
+## Quick Start: One-Click Audit
+
+```bash
+make audit
+# OR
+./scripts/audit.sh
+```
+
+This generates a complete audit report in `data/audit_report.json`.
+
+## Environment Requirements
+
+### Tested Operating System
+- **Ubuntu 24.04 LTS** (Linux kernel 6.11.0-1018-azure x86_64)
+- Also compatible with: Ubuntu 22.04, Debian 11+, macOS 12+
+
+### Python Version (Exact)
+- **Python 3.12.3** (recommended)
+- Also compatible with: Python 3.11.x
+
+### Dataset Hash Verification
+The zero dataset must match this SHA-256 hash:
+```
+412ab7ba54a5041ff12324650e8936995795c6abb7cfdb97d7a765a2c4ce7869  Evac_Rpsi_data.csv
+```
+
+Verify with:
+```bash
+sha256sum Evac_Rpsi_data.csv
+```
+
+### Single-Command Reproduction
+
+Generate a complete reproduction report:
+```bash
+make audit
+```
+
+This command runs all validation steps and produces `data/audit_report.json` containing:
+- Test results (pytest)
+- V5 Coronación validation at 30 decimal places precision
+- Lean 4 formalization build status
+- Sorry count (incomplete proofs)
+
+---
+
+## CI/CD Reproducibility Guide
 
 This document describes the reproducibility measures implemented in this repository's CI/CD pipelines.
+
+## Quick Start
+
+### Verify Environment Integrity
+
+```bash
+python verify_environment_integrity.py
+```
+
+This ensures your environment matches the expected configuration.
+
+### Install Dependencies
+
+```bash
+pip install -r requirements-lock.txt
+```
+
+### See Also
+
+- [ENV_LOCK_GUIDE.md](ENV_LOCK_GUIDE.md) - Detailed guide on ENV.lock usage
+- [SECURITY.md](SECURITY.md) - Security policies including integrity verification
 
 ## Overview
 
@@ -10,15 +81,46 @@ To ensure reproducible builds and consistent results across different environmen
 2. **Standardized Python Version** - Consistent Python version across all workflows
 3. **Pinned Build Tools** - Fixed versions of pip and other build tools
 4. **Reproducible Data** - Checksums and versioning for computational data
+5. **Environment Integrity** - Automated verification of lock files and checksums
 
 ## Dependency Management
 
 ### Requirements Files
 
-This repository maintains two requirements files:
+This repository maintains three related files:
 
 - **`requirements.txt`**: Base requirements with version ranges for development flexibility
 - **`requirements-lock.txt`**: Pinned versions for CI/CD reproducibility
+- **`ENV.lock`**: Complete environment snapshot generated from requirements-lock.txt
+
+### Environment Integrity Verification
+
+To ensure environment integrity:
+
+```bash
+# Verify current environment
+python verify_environment_integrity.py
+
+# Generate new checksums after updates
+python verify_environment_integrity.py --generate-checksums
+
+# Regenerate ENV.lock from requirements-lock.txt
+python generate_env_lock.py
+```
+
+### Checksums
+
+All lock files have SHA256 checksums stored in `environment_checksums.json`:
+
+```json
+{
+  "ENV.lock": "05b062ec...",
+  "requirements-lock.txt": "3ed739a3...",
+  "requirements.txt": "fb2a8513..."
+}
+```
+
+These checksums are automatically verified to detect unauthorized modifications.
 
 ### Using Requirements-Lock
 
@@ -36,17 +138,31 @@ To update dependencies while maintaining reproducibility:
 1. Update `requirements.txt` with new version constraints
 2. Create a clean virtual environment:
    ```bash
-   python3.11 -m venv venv
-   source venv/bin/activate
+   python3.11 -m venv venv_clean
+   source venv_clean/bin/activate
    ```
 3. Install and freeze dependencies:
    ```bash
    pip install --upgrade pip==24.3.1
    pip install -r requirements.txt
-   pip freeze > requirements-lock.txt
+   pip freeze > requirements-lock.txt.new
    ```
-4. Manually clean `requirements-lock.txt` to remove system packages
-5. Test the changes locally and in CI before merging
+4. Clean the lock file:
+   ```bash
+   python clean_requirements_lock.py
+   mv requirements-lock.txt.clean requirements-lock.txt
+   ```
+5. Regenerate ENV.lock and checksums:
+   ```bash
+   python generate_env_lock.py
+   python verify_environment_integrity.py --generate-checksums
+   ```
+6. Test the changes locally and in CI before merging
+7. Commit all updated files:
+   ```bash
+   git add requirements.txt requirements-lock.txt ENV.lock environment_checksums.json
+   git commit -m "Update dependencies: <description>"
+   ```
 
 ## Python Version Standardization
 

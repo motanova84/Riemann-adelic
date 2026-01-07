@@ -1,5 +1,9 @@
 \section{Esquema de de Branges para $D(s)$}
 
+\newtheorem{theoremC}{Theorem}[section]
+\newtheorem{lemmaC}[theoremC]{Lemma}
+\newtheorem{propC}[theoremC]{Proposition}
+
 Mostramos que $D(s)$ puede insertarse en un espacio de de Branges cuyo sistema
 canónico proporciona un operador autoadjunto con espectro real; los ceros de
 $D$ quedan así forzados a la recta crítica.  Requerimos únicamente las
@@ -105,6 +109,28 @@ E(z):=D\!\left(\tfrac{1}{2}-iz\right)+i\,D\!\left(\tfrac{1}{2}+iz\right).
 \]
 Buscamos que $E$ sea de Hermite--Biehler: $|E(z)|>|E(\bar z)|$ para $\Im z>0$.
 
+\begin{lemmaC}[HB y tipo Cartwright]
+Bajo cotas Phragm\'en--Lindel\"of para $D$ en bandas verticales y simetr\'ia funcional,
+$E$ es de Hermite--Biehler y de tipo Cartwright.
+\end{lemmaC}
+
+\begin{theoremC}[Sistema can\'onico y autoadjunci\'on]
+Sea $\mathcal{H}(E)$ el espacio de de Branges asociado y $H(x)\succ 0$ un Hamiltoniano
+localmente integrable que genera el sistema can\'onico equivalente a $E$.
+Si el operador can\'onico es autoadjunto en su dominio esencial, su espectro es real.
+\end{theoremC}
+
+\begin{proof}[Esquema]
+Propiedades cl\'asicas de espacios de de Branges (ver de Branges, 1986).
+La positividad de $H$ y las condiciones de integrabilidad garantizan la existencia del
+sistema y su autoadjunci\'on (teor\'ia de operadores de Sturm--Liouville generalizada).
+\end{proof}
+
+\begin{propC}[Recta cr\'itica]
+Los puntos espectrales reales del sistema corresponden a los $t\in\Bbb R$ con
+$D(\tfrac{1}{2}+it)=0$. Por tanto, la realidad del espectro fuerza que todos los ceros
+de $D$ yacen en $\Re(s)=\tfrac{1}{2}$.
+\end{propC}
 \begin{lemma}[HB y tipo Cartwright]
 Bajo cotas Phragmén--Lindelöf para $D$ en bandas verticales y simetría funcional,
 $E$ es de Hermite--Biehler y de tipo Cartwright.
