@@ -229,9 +229,15 @@ class TestExtractExactFrequency:
         n = np.arange(1, 101)
         eigenvalues = ALPHA_SPECTRAL * n ** 2
 
-        for method in ["mean", "gap", "density"]:
+        expected_methods = {
+            "mean": "eigenvalue_mean",
+            "gap": "eigenvalue_gap",
+            "density": "spectral_density"
+        }
+
+        for method, expected_name in expected_methods.items():
             result = extract_exact_frequency(eigenvalues=eigenvalues, method=method)
-            assert result.method == f"eigenvalue_{method}" or result.method == f"spectral_{method}"
+            assert result.method == expected_name, f"Expected {expected_name} for method {method}, got {result.method}"
 
     def test_scaling_method_requires_curvature(self):
         """Test that scaling method requires curvature parameter."""
