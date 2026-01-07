@@ -90,8 +90,20 @@ Definiciones de los objetos matemáticos centrales del teorema.
 /-- La función zeta de Riemann extendida analíticamente. -/
 axiom riemannZeta : ℂ → ℂ
 
-/-- La función Xi de Riemann completa:
-    Ξ(s) = (1/2)s(s-1)π^(-s/2)Γ(s/2)ζ(s) -/
+/-- La función Xi de Riemann completa.
+    
+    **Definición Matemática**:
+    Ξ(s) = (1/2)s(s-1)π^(-s/2)Γ(s/2)ζ(s)
+    
+    **Propiedades Clave**:
+    - Función entera de orden 1 y tipo ≤ π/4
+    - Satisface la ecuación funcional Ξ(s) = Ξ(1-s)
+    - Sus ceros coinciden con los ceros no triviales de ζ(s)
+    - Es real y positiva en la línea real
+    
+    **Relación con ζ(s)**:
+    La función Xi "normaliza" la función zeta eliminando los factores
+    Gamma y potencias de π, dejando una función entera simétrica. -/
 axiom riemannXi : ℂ → ℂ
 
 /-- Estructura de operador autoadjunto en espacio de Hilbert. -/
@@ -101,7 +113,20 @@ structure SelfAdjointOperator where
   /-- Verificación de autoadjuntez -/
   is_self_adjoint : True
 
-/-- Espectro de un operador autoadjunto. -/
+/-- Espectro de un operador autoadjunto.
+    
+    **Definición**:
+    El espectro Spectrum(H) de un operador H consiste en todos los valores λ
+    tales que (H - λI) no tiene inverso acotado.
+    
+    **Propiedades para Operadores Autoadjuntos**:
+    - El espectro es un subconjunto cerrado de ℝ (valores reales)
+    - Para operadores compactos, consiste en autovalores discretos
+    - Los autovalores corresponden a soluciones de Hψ = λψ
+    
+    **En el contexto de RH**:
+    El espectro de 𝓗_Ψ corresponde a las partes imaginarias de los
+    ceros de ζ(s) en la línea crítica Re(s) = 1/2. -/
 axiom Spectrum : SelfAdjointOperator → Set ℝ
 
 /-- El operador espectral 𝓗_Ψ (H-Psi). -/
