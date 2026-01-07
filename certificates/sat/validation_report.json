@@ -1,23 +1,23 @@
 {
   "validation_type": "SAT_CERTIFICATES_VALIDATION",
-  "timestamp": "2025-12-30T00:27:27.433710Z",
+  "timestamp": "2026-01-07T00:36:00.272686Z",
   "total_certificates": 20,
-  "passed": 20,
-  "failed": 0,
+  "passed": 6,
+  "failed": 14,
   "results": [
     {
       "theorem": "D_entire",
       "certificate_id": "SAT_D_entire_20251207T035107.770470Z",
-      "validation_timestamp": "2025-12-30T00:27:27.433710Z",
-      "all_checks_passed": true,
+      "validation_timestamp": "2026-01-07T00:36:00.272686Z",
+      "all_checks_passed": false,
       "checks": {
         "certificate_hash": {
           "passed": true,
           "message": "Hash verified successfully"
         },
         "file_hash": {
-          "passed": true,
-          "message": "File hash verified successfully"
+          "passed": false,
+          "message": "File has been modified (hash mismatch)"
         },
         "sat_formula": {
           "passed": true,
@@ -36,16 +36,16 @@
     {
       "theorem": "functional_equation",
       "certificate_id": "SAT_functional_equation_20251207T035107.770470Z",
-      "validation_timestamp": "2025-12-30T00:27:27.433710Z",
-      "all_checks_passed": true,
+      "validation_timestamp": "2026-01-07T00:36:00.272686Z",
+      "all_checks_passed": false,
       "checks": {
         "certificate_hash": {
           "passed": true,
           "message": "Hash verified successfully"
         },
         "file_hash": {
-          "passed": true,
-          "message": "File hash verified successfully"
+          "passed": false,
+          "message": "File has been modified (hash mismatch)"
         },
         "sat_formula": {
           "passed": true,
@@ -64,7 +64,7 @@
     {
       "theorem": "paley_wiener_uniqueness",
       "certificate_id": "SAT_paley_wiener_uniqueness_20251229T141006.849123Z",
-      "validation_timestamp": "2025-12-30T00:27:27.433710Z",
+      "validation_timestamp": "2026-01-07T00:36:00.272686Z",
       "all_checks_passed": true,
       "checks": {
         "certificate_hash": {
@@ -92,16 +92,16 @@
     {
       "theorem": "H_\u03a8_self_adjoint",
       "certificate_id": "SAT_H_\u03a8_self_adjoint_20251207T035107.770470Z",
-      "validation_timestamp": "2025-12-30T00:27:27.433710Z",
-      "all_checks_passed": true,
+      "validation_timestamp": "2026-01-07T00:36:00.272686Z",
+      "all_checks_passed": false,
       "checks": {
         "certificate_hash": {
           "passed": true,
           "message": "Hash verified successfully"
         },
         "file_hash": {
-          "passed": true,
-          "message": "File hash verified successfully"
+          "passed": false,
+          "message": "File has been modified (hash mismatch)"
         },
         "sat_formula": {
           "passed": true,
@@ -120,16 +120,16 @@
     {
       "theorem": "operator_self_adjoint",
       "certificate_id": "SAT_operator_self_adjoint_20251229T141006.849123Z",
-      "validation_timestamp": "2025-12-30T00:27:27.433710Z",
-      "all_checks_passed": true,
+      "validation_timestamp": "2026-01-07T00:36:00.272686Z",
+      "all_checks_passed": false,
       "checks": {
         "certificate_hash": {
           "passed": true,
           "message": "Hash verified successfully"
         },
         "file_hash": {
-          "passed": true,
-          "message": "File hash verified successfully"
+          "passed": false,
+          "message": "File has been modified (hash mismatch)"
         },
         "sat_formula": {
           "passed": true,
@@ -148,7 +148,7 @@
     {
       "theorem": "riemann_hypothesis",
       "certificate_id": "SAT_riemann_hypothesis_20251207T035107.770470Z",
-      "validation_timestamp": "2025-12-30T00:27:27.433710Z",
+      "validation_timestamp": "2026-01-07T00:36:00.272686Z",
       "all_checks_passed": true,
       "checks": {
         "certificate_hash": {
@@ -176,7 +176,7 @@
     {
       "theorem": "spectrum_H\u03a8_eq_zeta_zeros",
       "certificate_id": "SAT_spectrum_H\u03a8_eq_zeta_zeros_20251229T141006.849123Z",
-      "validation_timestamp": "2025-12-30T00:27:27.433710Z",
+      "validation_timestamp": "2026-01-07T00:36:00.272686Z",
       "all_checks_passed": true,
       "checks": {
         "certificate_hash": {
@@ -204,7 +204,7 @@
     {
       "theorem": "spectrum_H\u03a8_eq_zeta_zeros",
       "certificate_id": "SAT_spectrum_H\u03a8_eq_zeta_zeros_20251207T035107.770470Z",
-      "validation_timestamp": "2025-12-30T00:27:27.433710Z",
+      "validation_timestamp": "2026-01-07T00:36:00.272686Z",
       "all_checks_passed": true,
       "checks": {
         "certificate_hash": {
@@ -232,16 +232,16 @@
     {
       "theorem": "gamma_exclusion",
       "certificate_id": "SAT_gamma_exclusion_20251229T141006.849123Z",
-      "validation_timestamp": "2025-12-30T00:27:27.433710Z",
-      "all_checks_passed": true,
+      "validation_timestamp": "2026-01-07T00:36:00.272686Z",
+      "all_checks_passed": false,
       "checks": {
         "certificate_hash": {
           "passed": true,
           "message": "Hash verified successfully"
         },
         "file_hash": {
-          "passed": true,
-          "message": "File hash verified successfully"
+          "passed": false,
+          "message": "File has been modified (hash mismatch)"
         },
         "sat_formula": {
           "passed": true,
@@ -260,16 +260,16 @@
     {
       "theorem": "operator_self_adjoint",
       "certificate_id": "SAT_operator_self_adjoint_20251207T035107.770470Z",
-      "validation_timestamp": "2025-12-30T00:27:27.433710Z",
-      "all_checks_passed": true,
+      "validation_timestamp": "2026-01-07T00:36:00.272686Z",
+      "all_checks_passed": false,
       "checks": {
         "certificate_hash": {
           "passed": true,
           "message": "Hash verified successfully"
         },
         "file_hash": {
-          "passed": true,
-          "message": "File hash verified successfully"
+          "passed": false,
+          "message": "File has been modified (hash mismatch)"
         },
         "sat_formula": {
           "passed": true,
@@ -288,16 +288,16 @@
     {
       "theorem": "hadamard_symmetry",
       "certificate_id": "SAT_hadamard_symmetry_20251229T141006.849123Z",
-      "validation_timestamp": "2025-12-30T00:27:27.433710Z",
-      "all_checks_passed": true,
+      "validation_timestamp": "2026-01-07T00:36:00.272686Z",
+      "all_checks_passed": false,
       "checks": {
         "certificate_hash": {
           "passed": true,
           "message": "Hash verified successfully"
         },
         "file_hash": {
-          "passed": true,
-          "message": "File hash verified successfully"
+          "passed": false,
+          "message": "File has been modified (hash mismatch)"
         },
         "sat_formula": {
           "passed": true,
@@ -316,16 +316,16 @@
     {
       "theorem": "hadamard_symmetry",
       "certificate_id": "SAT_hadamard_symmetry_20251207T035107.770470Z",
-      "validation_timestamp": "2025-12-30T00:27:27.433710Z",
-      "all_checks_passed": true,
+      "validation_timestamp": "2026-01-07T00:36:00.272686Z",
+      "all_checks_passed": false,
       "checks": {
         "certificate_hash": {
           "passed": true,
           "message": "Hash verified successfully"
         },
         "file_hash": {
-          "passed": true,
-          "message": "File hash verified successfully"
+          "passed": false,
+          "message": "File has been modified (hash mismatch)"
         },
         "sat_formula": {
           "passed": true,
@@ -344,7 +344,7 @@
     {
       "theorem": "riemann_hypothesis",
       "certificate_id": "SAT_riemann_hypothesis_20251229T141006.849123Z",
-      "validation_timestamp": "2025-12-30T00:27:27.433710Z",
+      "validation_timestamp": "2026-01-07T00:36:00.272686Z",
       "all_checks_passed": true,
       "checks": {
         "certificate_hash": {
@@ -372,16 +372,16 @@
     {
       "theorem": "H_\u03a8_self_adjoint",
       "certificate_id": "SAT_H_\u03a8_self_adjoint_20251229T141006.849123Z",
-      "validation_timestamp": "2025-12-30T00:27:27.433710Z",
-      "all_checks_passed": true,
+      "validation_timestamp": "2026-01-07T00:36:00.272686Z",
+      "all_checks_passed": false,
       "checks": {
         "certificate_hash": {
           "passed": true,
           "message": "Hash verified successfully"
         },
         "file_hash": {
-          "passed": true,
-          "message": "File hash verified successfully"
+          "passed": false,
+          "message": "File has been modified (hash mismatch)"
         },
         "sat_formula": {
           "passed": true,
@@ -400,16 +400,16 @@
     {
       "theorem": "functional_equation",
       "certificate_id": "SAT_functional_equation_20251229T141006.849123Z",
-      "validation_timestamp": "2025-12-30T00:27:27.433710Z",
-      "all_checks_passed": true,
+      "validation_timestamp": "2026-01-07T00:36:00.272686Z",
+      "all_checks_passed": false,
       "checks": {
         "certificate_hash": {
           "passed": true,
           "message": "Hash verified successfully"
         },
         "file_hash": {
-          "passed": true,
-          "message": "File hash verified successfully"
+          "passed": false,
+          "message": "File has been modified (hash mismatch)"
         },
         "sat_formula": {
           "passed": true,
@@ -428,16 +428,16 @@
     {
       "theorem": "fredholm_convergence",
       "certificate_id": "SAT_fredholm_convergence_20251229T141006.849123Z",
-      "validation_timestamp": "2025-12-30T00:27:27.433710Z",
-      "all_checks_passed": true,
+      "validation_timestamp": "2026-01-07T00:36:00.272686Z",
+      "all_checks_passed": false,
       "checks": {
         "certificate_hash": {
           "passed": true,
           "message": "Hash verified successfully"
         },
         "file_hash": {
-          "passed": true,
-          "message": "File hash verified successfully"
+          "passed": false,
+          "message": "File has been modified (hash mismatch)"
         },
         "sat_formula": {
           "passed": true,
@@ -456,16 +456,16 @@
     {
       "theorem": "fredholm_convergence",
       "certificate_id": "SAT_fredholm_convergence_20251207T035107.770470Z",
-      "validation_timestamp": "2025-12-30T00:27:27.433710Z",
-      "all_checks_passed": true,
+      "validation_timestamp": "2026-01-07T00:36:00.272686Z",
+      "all_checks_passed": false,
       "checks": {
         "certificate_hash": {
           "passed": true,
           "message": "Hash verified successfully"
         },
         "file_hash": {
-          "passed": true,
-          "message": "File hash verified successfully"
+          "passed": false,
+          "message": "File has been modified (hash mismatch)"
         },
         "sat_formula": {
           "passed": true,
@@ -484,7 +484,7 @@
     {
       "theorem": "paley_wiener_uniqueness",
       "certificate_id": "SAT_paley_wiener_uniqueness_20251207T035107.770470Z",
-      "validation_timestamp": "2025-12-30T00:27:27.433710Z",
+      "validation_timestamp": "2026-01-07T00:36:00.272686Z",
       "all_checks_passed": true,
       "checks": {
         "certificate_hash": {
@@ -512,16 +512,16 @@
     {
       "theorem": "D_entire",
       "certificate_id": "SAT_D_entire_20251229T141006.849123Z",
-      "validation_timestamp": "2025-12-30T00:27:27.433710Z",
-      "all_checks_passed": true,
+      "validation_timestamp": "2026-01-07T00:36:00.272686Z",
+      "all_checks_passed": false,
       "checks": {
         "certificate_hash": {
           "passed": true,
           "message": "Hash verified successfully"
         },
         "file_hash": {
-          "passed": true,
-          "message": "File hash verified successfully"
+          "passed": false,
+          "message": "File has been modified (hash mismatch)"
         },
         "sat_formula": {
           "passed": true,
@@ -540,16 +540,16 @@
     {
       "theorem": "gamma_exclusion",
       "certificate_id": "SAT_gamma_exclusion_20251207T035107.770470Z",
-      "validation_timestamp": "2025-12-30T00:27:27.433710Z",
-      "all_checks_passed": true,
+      "validation_timestamp": "2026-01-07T00:36:00.272686Z",
+      "all_checks_passed": false,
       "checks": {
         "certificate_hash": {
           "passed": true,
           "message": "Hash verified successfully"
         },
         "file_hash": {
-          "passed": true,
-          "message": "File hash verified successfully"
+          "passed": false,
+          "message": "File has been modified (hash mismatch)"
         },
         "sat_formula": {
           "passed": true,
