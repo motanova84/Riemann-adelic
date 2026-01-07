@@ -733,12 +733,12 @@ def validate_v5_coronacion(precision=30, verbose=False, save_certificate=False, 
         proof_result = infinite_verifier.prove_all_infinite_zeros_verified()
         
         if proof_result.all_infinite_verified:
-            print(f"   ✅ Infinite zeros verification: COMPLETUD INFINITA")
-            print(f"      Base finita (10¹³ ceros): ✓")
-            print(f"      Reciprocidad [𝓗_Ψ, K] = 0: ✓")
-            print(f"      Densidad (Riemann-von Mangoldt): ✓")
-            print(f"      Continuidad t ↦ i(t-1/2): ✓")
-            print(f"      Igualdad espectral: ✓")
+            print(f"   ✅ Infinite zeros verification: INFINITE COMPLETENESS")
+            print(f"      Finite base (10¹³ zeros): ✓")
+            print(f"      Reciprocity [𝓗_Ψ, K] = 0: ✓")
+            print(f"      Density (Riemann-von Mangoldt): ✓")
+            print(f"      Continuity t ↦ i(t-1/2): ✓")
+            print(f"      Spectral equality: ✓")
             print(f"      Signature: {proof_result.signature}")
             results["Infinite Zeros Verification"] = {
                 'status': 'PASSED',
