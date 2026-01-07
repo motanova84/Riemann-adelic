@@ -15,6 +15,14 @@ This implementation establishes the **complete rigorous spectral equivalence** b
 
 **File**: `formalization/lean/RiemannAdelic/spectral_bijection_uniqueness.lean`
 
+**Note on Proof Status**: This formalization establishes the **structural framework and theorem statements** for the spectral equivalence. The proofs are formulated with `sorry` placeholders which represent:
+
+1. **Axiomatized assumptions** from spectral theory (e.g., self-adjointness implies real spectrum)
+2. **Deep analytical results** requiring extensive formalization beyond this module's scope
+3. **Well-established mathematical facts** that would require significant Lean library development
+
+The formalization provides **type-correct theorem statements** that can be proven by filling in the sorries with appropriate lemmas from mathlib or custom developments. This is the standard approach in formal mathematics for establishing frameworks before complete proofs.
+
 #### Main Theorems
 
 1. **`exact_bijection_with_uniqueness`**

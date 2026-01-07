@@ -192,7 +192,21 @@ def generate_complete_certificate(num_zeros: int = 100) -> Dict[str, Any]:
     
     # Run numerical validation
     print("Running numerical validation...")
-    validation_results = run_complete_validation(num_zeros=num_zeros, verbose=False)
+    try:
+        validation_results = run_complete_validation(num_zeros=num_zeros, verbose=False)
+        if not validation_results['all_passed']:
+            print("⚠️  Warning: Some validations failed")
+            print("Certificate will include failure information")
+    except Exception as e:
+        print(f"❌ Error during validation: {e}")
+        print("Generating partial certificate with error information")
+        # Create a minimal error certificate
+        return {
+            'error': str(e),
+            'status': 'VALIDATION_FAILED',
+            'timestamp': datetime.now().isoformat()
+        }
+    
     print(f"✓ Validated {num_zeros} zeros\n")
     
     # Generate certificates

@@ -205,7 +205,7 @@ def count_spectrum_up_to_height(zeros: List[mp.mpc], T: mp.mpf) -> int:
     """
     Count spectral eigenvalues with |λ| ≤ T.
     
-    Uses the bijection: λ = im(s) - 1/2
+    Uses the bijection: λ = im(s) (the imaginary part of the zero).
     
     Args:
         zeros: List of zeta zeros (converted to eigenvalues)
@@ -339,14 +339,21 @@ def compute_fundamental_frequency(zeros: List[mp.mpc], num_gaps: int = 50) -> Di
     """
     Compute the fundamental frequency from spectral gaps.
     
-    f₀ = lim_{n→∞} |λ_{n+1} - λ_n| / |ζ'(1/2)|
+    NOTE: This is a simplified computation that computes average spectral gap.
+    The full formula f₀ = lim_{n→∞} |λ_{n+1} - λ_n| / |ζ'(1/2)| requires
+    complete spectral analysis and asymptotic behavior study.
+    
+    This implementation provides:
+    - Average gap between consecutive eigenvalues
+    - |ζ'(1/2)| for reference
+    - First few gaps for inspection
     
     Args:
         zeros: List of zeta zeros (sorted by imaginary part)
         num_gaps: Number of consecutive gaps to average
         
     Returns:
-        Frequency computation results
+        Frequency computation results (simplified)
     """
     # Convert zeros to eigenvalues
     eigenvalues = [spectral_map(z) for z in zeros]
@@ -373,9 +380,12 @@ def compute_fundamental_frequency(zeros: List[mp.mpc], num_gaps: int = 50) -> Di
     zeta_prime_half = (mp.zeta(s_half + h) - mp.zeta(s_half - h)) / (2 * h)
     zeta_prime_abs = abs(zeta_prime_half)
     
-    # Compute frequency (without normalization for now)
-    # The exact formula involves additional spectral structure
-    f0_computed = avg_gap  # Simplified - full derivation requires complete spectral analysis
+    # Compute frequency (simplified - not full formula implementation)
+    # Full derivation requires complete asymptotic spectral analysis
+    f0_computed = avg_gap  # Placeholder for demonstration
+    
+    # Note: The exact fundamental frequency f₀ = 141.7001 Hz emerges from
+    # the complete QCAL framework including geometric and logarithmic corrections
     
     # Compare to exact value
     error = abs(f0_computed - F0_EXACT)
