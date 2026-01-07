@@ -525,5 +525,6 @@ class TestPerformance:
 
 
 if __name__ == '__main__':
-    # Run all tests
-    pytest.main([__file__, '-v'])
+    # This file is intended to be run via pytest, not directly
+    print("Run tests with: pytest tests/test_universal_l_functions.py -v")
+    print("Or run all tests with: pytest tests/ -v")

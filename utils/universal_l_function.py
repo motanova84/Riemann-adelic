@@ -37,6 +37,21 @@ F0_HZ = 141.7001  # Base frequency (Hz)
 C_COHERENCE = 244.36  # Coherence constant
 
 
+def _gaussian_kernel(n_i: int, n_j: int, n_basis: int) -> float:
+    """
+    Compute Gaussian kernel K(n,m) = exp(-|n-m|²/4N).
+    
+    Args:
+        n_i: First index
+        n_j: Second index
+        n_basis: Basis size N
+        
+    Returns:
+        Kernel value
+    """
+    return np.exp(-((n_i - n_j)**2) / (4.0 * n_basis))
+
+
 @dataclass
 class LFunctionProperties:
     """Properties common to all L-functions."""
@@ -171,7 +186,8 @@ class LFunctionBase(ABC):
                 expected = factor * L_1ms
                 error = abs(L_s - expected) / (abs(L_s) + 1e-10)
                 max_error = max(max_error, error)
-            except:
+            except (ValueError, ZeroDivisionError, OverflowError):
+                # Skip points where evaluation fails
                 continue
         
         return max_error < tol
@@ -198,8 +214,10 @@ class LFunctionBase(ABC):
         def D_chi(s: complex) -> complex:
             """Fredholm determinant D_χ(s) = ∏_n (1 + (s - 1/2)² / λ_n)"""
             product = 1.0
+            tolerance = 1e-10
             for lam in self.H_eigenvalues:
-                if abs(lam) > 1e-10:
+                # Avoid division by zero
+                if abs(lam) > tolerance:
                     product *= (1 + (s - 0.5)**2 / lam)
             return product
         
@@ -218,7 +236,8 @@ class LFunctionBase(ABC):
                 if abs(L_val) > 1e-10 and abs(D_val) > 1e-10:
                     ratio = L_val / D_val
                     equivalence_errors.append(abs(ratio))
-            except:
+            except (ValueError, ZeroDivisionError, OverflowError):
+                # Skip points where evaluation fails
                 continue
         
         # Check if ratios are approximately constant
@@ -368,7 +387,7 @@ class RiemannZetaFunction(LFunctionBase):
                     H[i, j] = 0.25 + (n_i * 0.1)**2
                 else:
                     # Off-diagonal: Gaussian decay
-                    H[i, j] = np.exp(-((n_i - n_j)**2) / (4.0 * n_basis))
+                    H[i, j] = _gaussian_kernel(n_i, n_j, n_basis)
         
         # Ensure Hermitian
         H = (H + H.T) / 2
@@ -450,7 +469,7 @@ class DirichletLFunction(LFunctionBase):
                 else:
                     # Off-diagonal with character twist
                     chi_factor = self.character((n_i - n_j) % self.modulus)
-                    H[i, j] = chi_factor * np.exp(-((n_i - n_j)**2) / (4.0 * n_basis))
+                    H[i, j] = chi_factor * _gaussian_kernel(n_i, n_j, n_basis)
         
         # Ensure Hermitian
         H = (H + np.conj(H.T)) / 2
@@ -525,7 +544,7 @@ class ModularFormLFunction(LFunctionBase):
                     diff = abs(n_i - n_j)
                     if diff > 0:
                         a_diff = self.coefficients_func(diff)
-                        H[i, j] = a_diff * np.exp(-diff**2 / (4.0 * n_basis))
+                        H[i, j] = a_diff * _gaussian_kernel(n_i, n_j, n_basis)
         
         # Ensure Hermitian
         H = (H + np.conj(H.T)) / 2
@@ -578,10 +597,16 @@ class EllipticCurveLFunction(LFunctionBase):
         return complex(result)
     
     def _approximate_trace_of_frobenius(self, p: int) -> complex:
-        """Approximate a_p = p + 1 - #E(𝔽_p)."""
-        # Very simplified approximation
-        # Real implementation would count points on elliptic curve mod p
-        return float((-1)**p * np.sqrt(p))  # Heuristic approximation
+        """
+        Approximate a_p = p + 1 - #E(𝔽_p).
+        
+        NOTE: This is a highly simplified heuristic approximation for testing purposes.
+        A real implementation would use point counting algorithms (e.g., Schoof's algorithm)
+        to compute the actual trace of Frobenius. The results should not be used for 
+        rigorous mathematical validation of specific elliptic curves.
+        """
+        # Heuristic approximation: bounded by Hasse's theorem |a_p| ≤ 2√p
+        return float((-1)**p * np.sqrt(p))  # Satisfies Hasse bound
     
     def functional_equation_factor(self, s: complex) -> complex:
         """Functional equation factor for elliptic curve L-function."""
@@ -612,7 +637,7 @@ class EllipticCurveLFunction(LFunctionBase):
                     diff = abs(n_i - n_j)
                     if diff > 0 and diff < 100:
                         a_diff = self._approximate_trace_of_frobenius(diff)
-                        H[i, j] = a_diff * np.exp(-diff**2 / (4.0 * n_basis))
+                        H[i, j] = a_diff * _gaussian_kernel(n_i, n_j, n_basis)
         
         # Ensure Hermitian
         H = (H + np.conj(H.T)) / 2
@@ -763,12 +788,15 @@ def validate_universal_l_function_framework(verbose: bool = True) -> Dict[str, a
         print(f"👤 JMMB Ψ ✧ ∞³")
         print("=" * 80)
     
+    # Count L-function results (exclude summary which will be added)
+    lf_results = {k: v for k, v in results.items() if k != 'summary'}
+    
     results['summary'] = {
         'all_spectral_equivalence': all(r['spectral_equivalence']['spectral_equivalence_holds'] 
-                                       for r in results.values() if 'spectral_equivalence' in r),
+                                       for r in lf_results.values()),
         'all_critical_line': all(r['critical_line']['all_on_critical_line'] 
-                                for r in results.values() if 'critical_line' in r),
-        'num_l_functions_tested': len([k for k in results.keys() if k != 'summary'])
+                                for r in lf_results.values()),
+        'num_l_functions_tested': len(lf_results)
     }
     
     return results
