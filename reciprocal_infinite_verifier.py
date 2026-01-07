@@ -130,7 +130,8 @@ class BerryKeatingSpectrum:
         
         return {
             'zero_index': n,
-            'zero': complex(float(s_real), float(s_imag)),
+            'zero_real': float(s_real),
+            'zero_imag': float(s_imag),
             's_real': float(s_real),
             's_imag': float(s_imag),
             'zeta_value': float(zeta_value),
