@@ -12,7 +12,9 @@
   },
   "verification_modules": {
     "trillion_zeros": {
-      "count": "1,000,000,000,000+",
+      "count": "1000000000000",
+      "count_display": "1,000,000,000,000+",
+      "count_description": "Minimum verified zeros (actual count exceeds this value)",
       "status": "✅ VERIFIED",
       "evidence": "Computational verification via X-GUMP/LMFDB infrastructure"
     },
@@ -60,6 +62,9 @@
     "infinite_mathematical_validation": "✅ Confirmada",
     "lean_executable_no_sorry": "✅ Verificado",
     "sha3_512_seal": "8cb4cd3264dab19b53c12ab1357fec5c2c2e88316534ae408738eb5be41dabb81e07e6f818d453787801e06e382a0c9fdcb70798ac9124c191e5da0efacf9128",
+    "sha3_512_input": "QCAL_INFINITE_SEAL_GENESIS_IS_COMPLETE_141.700010083578160030654028447231151926974628612204",
+    "sha3_512_encoding": "UTF-8",
+    "sha3_512_algorithm": "SHA3-512 (FIPS 202)",
     "qcal_kernel_runtime": "✅ En marcha"
   },
   "qcal_constants": {
