@@ -35,6 +35,8 @@ from datetime import datetime
 import json
 import hashlib
 from pathlib import Path
+from datetime import datetime
+import json
 from datetime import datetime, timezone
 
 # Set high precision for mathematical calculations
@@ -384,6 +386,8 @@ Examples:
   # Save results to JSON
   python reciprocal_infinite_verifier.py --num-zeros 1000 --save-json results.json
   
+  # Infinite mode with timestamped JSON output
+  python reciprocal_infinite_verifier.py --infinite --save-json --timestamp
   # Generate spectral certificate with timestamp and quote
   python reciprocal_infinite_verifier.py --precision 200 --save-json --timestamp --quote
 
@@ -405,6 +409,18 @@ QCAL ∞³ Framework Integration:
                         help='Starting zero index (default: 1)')
     parser.add_argument('--quiet', action='store_true',
                         help='Suppress progress output')
+    parser.add_argument('--save-json', type=str, nargs='?', const='auto', metavar='FILE',
+                        help='Save results to JSON file (auto-generates timestamped name if no FILE given)')
+    parser.add_argument('--f0', type=float, default=QCAL_BASE_FREQUENCY,
+                        help=f'Base frequency in Hz (default: {QCAL_BASE_FREQUENCY})')
+    parser.add_argument('--timestamp', action='store_true',
+                        help='Add timestamp to output and JSON filename')
+    
+    args = parser.parse_args()
+    
+    # Generate timestamp for output
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    timestamp_iso = datetime.now().isoformat()
     parser.add_argument('--save-json', nargs='?', const='data/infinite_spectral_certificate.json',
                         metavar='FILE',
                         help='Save results to JSON file (default: data/infinite_spectral_certificate.json)')
@@ -431,6 +447,13 @@ QCAL ∞³ Framework Integration:
         if args.infinite:
             if not args.quiet:
                 if args.timestamp:
+                    print(f"🚀 INICIANDO VERIFICADOR INFINITO DE RECIPROCIDAD")
+                    print(f"=============================================")
+                    print(f"⏳ Tiempo: {timestamp_iso}")
+                    print(f"🎯 Modo: INFINITO con certificación")
+                    print(f"📊 Frecuencia objetivo: {args.f0} Hz")
+                    print(f"🎯 Precisión: {args.precision} decimales")
+                    print()
                     print(f"🕐 Timestamp: {current_timestamp}")
                 print("🔄 Running in infinite mode. Press Ctrl+C to stop.\n")
                 if args.quote:
@@ -445,6 +468,21 @@ QCAL ∞³ Framework Integration:
                 verbose=not args.quiet
             )
             
+            # Add timestamp to summary if requested
+            if args.timestamp:
+                summary['timestamp'] = timestamp_iso
+                summary['verification_id'] = f"RIV_{timestamp}"
+            
+            # Save to JSON if requested
+            if args.save_json:
+                # Generate filename with timestamp if auto or timestamp flag is set
+                if args.save_json == 'auto' or args.timestamp:
+                    output_dir = Path('data')
+                    output_dir.mkdir(exist_ok=True)
+                    output_path = output_dir / f"cosmic_verification_{timestamp}.json"
+                else:
+                    output_path = Path(args.save_json)
+                    output_path.parent.mkdir(parents=True, exist_ok=True)
             # Add timestamp to summary
             summary['timestamp'] = datetime.now().isoformat()
             summary['validation_type'] = 'reciprocal_infinite_verification'
