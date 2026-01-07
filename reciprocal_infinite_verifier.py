@@ -45,7 +45,10 @@ QCAL_COHERENCE = 244.36
 PLANCK_CONSTANT = 6.62607015e-34  # J⋅s
 SPEED_OF_LIGHT = 299792458  # m/s
 
-# Philosophical quote for infinite verification
+# Philosophical-logical invariant used in the "Acta de Valididad Matemática del Espectro Infinito".
+# In the QCAL ∞³ framework this quote is attached to logs and certificates of
+# infinite spectral verification runs to emphasize that the infinite spectrum
+# (Espectro Infinito) is not conjectural but confirmed by self-consistent checks.
 QCAL_INFINITE_QUOTE = "El infinito no conjetura. El infinito confirma."
 
 
