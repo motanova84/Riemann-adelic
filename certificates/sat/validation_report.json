@@ -1,6 +1,7 @@
 {
   "validation_type": "SAT_CERTIFICATES_VALIDATION",
   "timestamp": "2026-01-07T00:35:46.283247Z",
+  "timestamp": "2026-01-07T00:36:00.272686Z",
   "total_certificates": 20,
   "passed": 6,
   "failed": 14,
@@ -9,6 +10,7 @@
       "theorem": "D_entire",
       "certificate_id": "SAT_D_entire_20251207T035107.770470Z",
       "validation_timestamp": "2026-01-07T00:35:46.283247Z",
+      "validation_timestamp": "2026-01-07T00:36:00.272686Z",
       "all_checks_passed": false,
       "checks": {
         "certificate_hash": {
@@ -37,6 +39,7 @@
       "theorem": "functional_equation",
       "certificate_id": "SAT_functional_equation_20251207T035107.770470Z",
       "validation_timestamp": "2026-01-07T00:35:46.283247Z",
+      "validation_timestamp": "2026-01-07T00:36:00.272686Z",
       "all_checks_passed": false,
       "checks": {
         "certificate_hash": {
@@ -65,6 +68,7 @@
       "theorem": "paley_wiener_uniqueness",
       "certificate_id": "SAT_paley_wiener_uniqueness_20251229T141006.849123Z",
       "validation_timestamp": "2026-01-07T00:35:46.283247Z",
+      "validation_timestamp": "2026-01-07T00:36:00.272686Z",
       "all_checks_passed": true,
       "checks": {
         "certificate_hash": {
@@ -93,6 +97,7 @@
       "theorem": "H_\u03a8_self_adjoint",
       "certificate_id": "SAT_H_\u03a8_self_adjoint_20251207T035107.770470Z",
       "validation_timestamp": "2026-01-07T00:35:46.283247Z",
+      "validation_timestamp": "2026-01-07T00:36:00.272686Z",
       "all_checks_passed": false,
       "checks": {
         "certificate_hash": {
@@ -121,6 +126,7 @@
       "theorem": "operator_self_adjoint",
       "certificate_id": "SAT_operator_self_adjoint_20251229T141006.849123Z",
       "validation_timestamp": "2026-01-07T00:35:46.283247Z",
+      "validation_timestamp": "2026-01-07T00:36:00.272686Z",
       "all_checks_passed": false,
       "checks": {
         "certificate_hash": {
