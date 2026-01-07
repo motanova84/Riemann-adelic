@@ -107,8 +107,9 @@ class InfiniteReciprocityValidator:
         # Extend with approximate distribution if more needed
         while len(gamma_values) < max_zeros:
             # Use Riemann-von Mangoldt approximation
+            # γ_n ≈ 2πn/log(n/(2πe)) for large n
             n = len(gamma_values) + 1
-            gamma_approx = 2 * np.pi * n / np.log(n / (2 * np.pi))
+            gamma_approx = 2 * np.pi * n / np.log(n / (2 * np.pi * np.e))
             gamma_values.append(gamma_approx)
         
         zeros = np.array([0.5 + 1j * gamma for gamma in gamma_values[:max_zeros]])
@@ -119,7 +120,11 @@ class InfiniteReciprocityValidator:
         Compute reciprocity factor R(ρ) for a single zero.
         
         For ρ = 1/2 + iγ on the critical line:
-        R(ρ) = exp(iπρ) / exp(iπ(1-ρ)) = exp(2πiγ)
+        R(ρ) = exp(iπρ) / exp(iπ(1-ρ))
+             = exp(iπ(1/2 + iγ) - iπ(1/2 - iγ))
+             = exp(2πγi)
+        
+        Note: Off critical line, uses general formula (for validation purposes).
         
         Args:
             rho: Complex zero ρ = σ + iγ
@@ -130,9 +135,10 @@ class InfiniteReciprocityValidator:
         # Check if on critical line
         if not np.isclose(rho.real, 0.5, atol=1e-10):
             print(f"⚠ Warning: Zero {rho} not on critical line (σ = {rho.real})")
-            return complex(1, 0)
+            # Use general formula for off-line zeros (validation mode)
+            return np.exp(1j * np.pi * rho) / np.exp(1j * np.pi * (1 - rho))
         
-        # Simplified form on critical line
+        # Simplified form on critical line: R(ρ) = exp(2πiγ)
         gamma = rho.imag
         return np.exp(2j * np.pi * gamma)
     

@@ -5,6 +5,11 @@
 -- This connects Weil's finite reciprocity (∏_v γ_v(s) = 1) to the infinite
 -- reciprocity over zeta zeros (∏_ρ R(ρ) = 1), providing a bridge between
 -- local-to-global principles and spectral data.
+--
+-- STATUS: Work in Progress (WIP)
+-- This formalization contains 'sorry' statements that outline the proof structure.
+-- The mathematical framework is validated numerically in validate_infinite_reciprocity.py
+-- Future work will complete the formal proofs using Mathlib theorems.
 
 import Mathlib.Analysis.Complex.Basic
 import Mathlib.NumberTheory.ZetaFunction

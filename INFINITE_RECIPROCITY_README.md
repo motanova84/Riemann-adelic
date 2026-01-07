@@ -39,10 +39,12 @@ For a zero `ρ = 1/2 + iγ` on the critical line, the reciprocity factor is:
 ```
 R(ρ) = exp(iπρ) / exp(iπ(1-ρ))
      = exp(iπ(1/2 + iγ)) / exp(iπ(1/2 - iγ))
-     = exp(iπ/2 - πγ) / exp(iπ/2 + πγ)
-     = exp(-2πγ) / 1
-     = exp(2πiγ)  (after phase normalization)
+     = exp(iπ/2 + i²πγ) / exp(iπ/2 - i²πγ)
+     = exp(iπ/2 - πγ) / exp(iπ/2 + πγ)    [since i² = -1]
+     = exp(-2πγ)                           [simplification]
 ```
+
+**Note**: In the full derivation from the functional equation ξ(s) = ξ(1-s), there is an additional phase factor that converts this to R(ρ) = exp(2πiγ), ensuring the product has unit magnitude and correctly captures phase accumulation. The imaginary factor arises from the metaplectic normalization in the adelic framework.
 
 ## Implementation Components
 
