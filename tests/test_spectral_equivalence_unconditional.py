@@ -273,7 +273,9 @@ class TestPositiveInnerProducts:
     
     def test_positive_definite_matrix(self):
         """Positive definite matrix should pass."""
-        A = np.eye(10) + 0.1 * np.random.randn(10, 10)
+        # Use a fixed seed for deterministic test results
+        rng = np.random.default_rng(seed=42)
+        A = np.eye(10) + 0.1 * rng.standard_normal((10, 10))
         A = A @ A.T  # Make positive definite
         all_pos, min_val = verify_positive_inner_products(A, n_tests=50)
         assert all_pos

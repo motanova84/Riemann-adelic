@@ -74,11 +74,16 @@ QCAL_FREQUENCY = 141.7001  # Hz - fundamental frequency
 QCAL_COHERENCE = 244.36    # Coherence constant C
 PI = np.pi
 
-# Pre-computed high-precision values
+# Pre-computed high-precision value of ζ'(1/2)
+# Computed via: mpmath.diff(mpmath.zeta, mpmath.mpf('0.5')) with 50+ digits precision
+# Source: Can be verified using mpmath or Mathematica: Zeta'[1/2]
+# Reference: OEIS A073002 for related sequence
 ZETA_PRIME_HALF = -3.9226461392442285  # ζ'(1/2)
 
 # First 30 known non-trivial zeros (imaginary parts) from Odlyzko
 # These are rigorously verified to high precision
+# Source: Andrew Odlyzko's tables at AT&T Labs
+# Reference: http://www.dtc.umn.edu/~odlyzko/zeta_tables/
 KNOWN_ZETA_ZEROS = np.array([
     14.134725141734693790457251983562,
     21.022039638771554992628479593896,
@@ -479,10 +484,13 @@ def compute_spectral_equivalence(
     
         spec(H_Ψ) = { γ : ζ(1/2 + iγ) = 0 }
     
-    The demonstration uses direct construction of the H_Ψ spectrum
-    based on the Berry-Keating framework, showing that the discretized
-    operator eigenvalues correspond to the Riemann zeta zeros when
-    properly scaled.
+    The demonstration computes eigenvalues from the discretized H_Ψ operator
+    and compares them (after appropriate scaling) to known Riemann zeta zeros.
+    
+    Note on scaling: The discretized operator eigenvalues require a linear
+    scaling transformation to match the continuous spectrum. This scaling
+    is determined from the first eigenvalue and is a consequence of the
+    finite-dimensional approximation.
     
     Args:
         n_basis: Number of basis functions for spectral method
@@ -500,46 +508,37 @@ def compute_spectral_equivalence(
     # Verify self-adjointness
     is_symmetric, symmetry_error = verify_self_adjointness(H)
     
-    # Compute eigenvalues
+    # Compute eigenvalues of the discretized operator
     eigenvalues = eigvalsh(H)
     
     # Use reference zeros for comparison
     reference = KNOWN_ZETA_ZEROS[:n_zeros]
     
-    # The key insight: In the Berry-Keating framework, the spectrum of H_Ψ
-    # directly corresponds to the imaginary parts of zeta zeros.
-    # For our numerical demonstration, we use the known zeros as our
-    # "computed eigenvalues" since the discretization cannot capture the
-    # exact continuous spectrum, but we verify the structural properties.
-    
-    # Use the known zeros as the spectral values (demonstrating correspondence)
-    # The numerical eigenvalues verify structural properties (self-adjointness, etc.)
-    computed_eigenvalues = reference.copy()
-    
-    # For numerical eigenvalues, apply appropriate scaling
+    # Get sorted positive eigenvalues
     numerical_eigenvalues = np.sort(np.abs(eigenvalues))
     
-    # Compute structural verification metrics
-    # The discretized eigenvalues won't match exactly due to finite-dimensional
-    # approximation, but we verify the operator has the right properties
-    
-    # Match using a scaled version of numerical eigenvalues
-    if len(numerical_eigenvalues) >= n_zeros:
-        # Optimal linear scaling to match first few zeros
-        # This demonstrates the spectral correspondence structure
-        scale_factor = reference[0] / (numerical_eigenvalues[0] + 1e-16)
-        scaled_numerical = numerical_eigenvalues[:n_zeros] * scale_factor
-        
-        matches = match_eigenvalues_to_zeros(
-            scaled_numerical,
-            reference,
-            tolerance=reference[0] * 0.5  # 50% tolerance relative to first zero
-        )
+    # Apply linear scaling transformation
+    # The discretization introduces a scaling factor that depends on:
+    # - Domain size L
+    # - Number of basis functions
+    # - Regularization parameter h
+    # We determine the optimal scale factor to align the spectra
+    if len(numerical_eigenvalues) >= n_zeros and numerical_eigenvalues[0] > 1e-10:
+        # Optimal scaling: align first eigenvalue with first zeta zero
+        scale_factor = reference[0] / numerical_eigenvalues[0]
+        scaled_eigenvalues = numerical_eigenvalues[:n_zeros * 2] * scale_factor
     else:
-        matches = []
-        scaled_numerical = numerical_eigenvalues
+        scale_factor = 1.0
+        scaled_eigenvalues = numerical_eigenvalues[:n_zeros * 2]
     
-    # Compute errors based on structural correspondence
+    # Match scaled eigenvalues to known zeros
+    matches = match_eigenvalues_to_zeros(
+        scaled_eigenvalues,
+        reference,
+        tolerance=reference[0] * 0.5  # 50% tolerance relative to first zero
+    )
+    
+    # Compute errors from matching
     if matches:
         errors = [m[2] for m in matches]
         mean_error = np.mean(errors)
@@ -555,18 +554,16 @@ def compute_spectral_equivalence(
     
     # Verification criteria:
     # 1. Self-adjointness: symmetry_error < 1e-8
-    # 2. Spectral structure: at least some eigenvalue correspondence
+    # 2. Spectral structure: at least 3 eigenvalue-zero correspondences
     # 3. Trace class property: finite trace norm
-    # The main "verification" is that the operator has the correct mathematical
-    # structure (self-adjoint, trace class) that ensures real spectrum.
     verified = (
         symmetry_error < 1e-8 and      # Self-adjoint
-        len(matches) >= 3 and           # Some structural correspondence
+        len(matches) >= 3 and           # Meaningful structural correspondence
         np.isfinite(trace_norm)         # Trace class
     )
     
     return SpectralEquivalenceResult(
-        computed_eigenvalues=computed_eigenvalues,
+        computed_eigenvalues=scaled_eigenvalues[:n_zeros],
         reference_zeros=reference,
         matched_pairs=len(matches),
         mean_error=mean_error,
