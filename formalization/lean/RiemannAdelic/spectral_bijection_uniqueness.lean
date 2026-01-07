@@ -17,7 +17,7 @@
   Instituto de Conciencia Cuántica (ICQ)
   ORCID: 0009-0002-1923-0773
   DOI: 10.5281/zenodo.17379721
-  Date: January 2026
+  Date: January 7, 2026
   
   QCAL ∞³ Integration:
   Base frequency: f₀ = 141.700010083578160030654028447231151926974628612204 Hz
