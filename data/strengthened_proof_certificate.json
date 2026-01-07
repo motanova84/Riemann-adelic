@@ -1,6 +1,6 @@
 {
   "validation_type": "Strengthened Unconditional Proof",
-  "precision": 50,
+  "precision": 30,
   "qcal_config": {
     "base_frequency": 141.7001,
     "coherence": 244.36,
