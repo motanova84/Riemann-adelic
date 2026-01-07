@@ -4,7 +4,7 @@
   "qcal_config": {
     "base_frequency": 141.7001,
     "coherence": 244.36,
-    "fundamental_frequency": 141.70001008357815
+    "fundamental_frequency": "141.700010083578160030654028447231151926974628612204"
   },
   "tests": [
     {

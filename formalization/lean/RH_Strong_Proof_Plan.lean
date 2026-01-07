@@ -95,13 +95,16 @@ theorem RH_final_proof :
   -- Por la equivalencia espectral fuerte, z está en el espectro
   have h_spec : z ∈ Spec ℂ H_psi := by
     rw [StrongSpectralEquivalence]
+    -- TODO: Complete proof using uniqueness from strong spectral equivalence
+    -- Strategy: Show that s corresponds to unique t via bijection
     -- Usamos la existencia única del cero correspondiente
     use s.im
     constructor
     · -- Demostrar z = I * (s.im - 1/2)
       rfl
     · -- Demostrar RiemannZeta (1/2 + I * s.im) = 0
-      -- Esto requiere usar la unicidad fuerte
+      -- TODO: Apply strong zero uniqueness theorem here
+      -- This requires using the bijection and analyticity
       sorry
   
   -- Obtener el único t que corresponde a z
@@ -112,6 +115,8 @@ theorem RH_final_proof :
     have : I * (s.im - 1/2 : ℂ) = I * (t - 1/2 : ℂ) := by
       rw [← hz_def, hz_eq]
     -- De I * (s.im - 1/2) = I * (t - 1/2), obtenemos s.im = t
+    -- TODO: Complete algebraic manipulation
+    -- Strategy: Apply complex number equality and cancel I
     sorry
   
   -- Ahora tenemos dos ceros: s y (1/2 + I * t)
@@ -119,7 +124,12 @@ theorem RH_final_proof :
   -- Por unicidad fuerte, deben ser el mismo punto
   have h_same : s = 1/2 + I * t := by
     rw [← him] at hζ_zero
-    -- Usar strong_zero_uniqueness
+    -- TODO: Complete proof using strong_zero_uniqueness
+    -- Strategy: Apply epsilon-ball uniqueness theorem
+    -- 1. Show both s and (1/2 + I*t) are zeros
+    -- 2. Show they have same imaginary part
+    -- 3. Show they are within epsilon distance
+    -- 4. Conclude they must be equal
     obtain ⟨ε, hε, huniq_zeros⟩ := strong_zero_uniqueness
     -- Si están suficientemente cerca, son iguales
     sorry

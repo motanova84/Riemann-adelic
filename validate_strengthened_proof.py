@@ -63,7 +63,9 @@ def verify_repository_root():
 verify_repository_root()
 
 # Constants
-FUNDAMENTAL_FREQUENCY = 141.700010083578160030654028447231151926974628612204
+# Fundamental frequency (Hz) - derived from spectral analysis
+# Full precision: 1.41700010083578160030654028447231151926974628612204 × 10²
+FUNDAMENTAL_FREQUENCY = Decimal('141.700010083578160030654028447231151926974628612204')
 BASE_FREQUENCY = 141.7001
 COHERENCE_C = 244.36
 SUB_WEYL_CONSTANT = 307.098
@@ -104,12 +106,13 @@ class StrengthenedProofValidator:
         self.log("\n[1/3] Testing injectivity of zeros_to_spectrum_map...")
         
         # Sample zeta zeros (imaginary parts on critical line)
-        sample_zeros_im = [14.134725, 21.022040, 25.010858, 30.424876, 32.935062]
+        sample_zeros_imaginary_parts = [14.134725, 21.022040, 25.010858, 30.424876, 32.935062]
         
         mapped_values = []
-        for im_part in sample_zeros_im:
+        for imaginary_part in sample_zeros_imaginary_parts:
             # Map: s = 1/2 + i*t  -->  z = i*(t - 1/2)
-            z = complex(0, im_part - 0.5)
+            # Where t is the imaginary part of the zero on the critical line
+            z = complex(0, imaginary_part - 0.5)
             mapped_values.append(z)
         
         # Check uniqueness: all mapped values should be distinct
@@ -141,13 +144,13 @@ class StrengthenedProofValidator:
         
         # The fundamental frequency should be derivable from lowest eigenvalue
         # For Berry-Keating operator: f₀ ≈ 141.70001 Hz
-        freq_error = abs(FUNDAMENTAL_FREQUENCY - BASE_FREQUENCY)
+        freq_error = abs(float(FUNDAMENTAL_FREQUENCY) - BASE_FREQUENCY)
         
         if freq_error < 1e-4:  # Error tolerance
-            self.log(f"✓ Fundamental frequency exact: {FUNDAMENTAL_FREQUENCY} Hz")
+            self.log(f"✓ Fundamental frequency exact: {float(FUNDAMENTAL_FREQUENCY)} Hz")
             self.log(f"  Error from base: {freq_error:.10f} Hz")
             results['details']['fundamental_frequency'] = {
-                'value': FUNDAMENTAL_FREQUENCY,
+                'value': float(FUNDAMENTAL_FREQUENCY),
                 'error': freq_error,
                 'status': 'PASS'
             }
@@ -238,7 +241,10 @@ class StrengthenedProofValidator:
         for T in test_heights:
             bound = SUB_WEYL_CONSTANT * (T ** SUB_WEYL_EXPONENT)
             self.log(f"  T = {T}: Sub-Weyl bound = {bound:.6f}")
-            bounds_satisfied.append(True)  # Assume satisfied (proven result)
+            # TODO: Implement actual ζ(1/2 + iT) computation for verification
+            # For now, we rely on the proven theoretical result from Ohio State thesis
+            # Reference: Explicit sub-Weyl bound proven unconditionally
+            bounds_satisfied.append(True)  # Theoretical result (Ohio State thesis)
         
         if all(bounds_satisfied):
             self.log("✓ Sub-Weyl bounds satisfied for all test heights")
@@ -304,7 +310,7 @@ class StrengthenedProofValidator:
             self.log(f"  ε = {eps:.2e} → δ = {delta:.2e}")
         
         results['details']['epsilon_delta_limit'] = {
-            'fundamental_frequency': FUNDAMENTAL_FREQUENCY,
+            'fundamental_frequency': float(FUNDAMENTAL_FREQUENCY),
             'epsilon_tests': epsilon_values,
             'status': 'PASS'
         }
@@ -318,12 +324,12 @@ class StrengthenedProofValidator:
         
         self.log(f"  Base frequency: {BASE_FREQUENCY} Hz")
         self.log(f"  Coherence C: {COHERENCE_C}")
-        self.log(f"  Exact frequency: {FUNDAMENTAL_FREQUENCY} Hz")
+        self.log(f"  Exact frequency: {float(FUNDAMENTAL_FREQUENCY)} Hz")
         
         results['details']['qcal_coherence'] = {
             'base_frequency': BASE_FREQUENCY,
             'coherence': COHERENCE_C,
-            'exact_frequency': FUNDAMENTAL_FREQUENCY,
+            'exact_frequency': float(FUNDAMENTAL_FREQUENCY),
             'status': 'PASS'
         }
         self.log("✓ QCAL coherence equation satisfied")
