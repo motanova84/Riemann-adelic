@@ -17,7 +17,7 @@ The conflict is caused by:
 ```
 
 ### Analysis
-At the time of the failure (November 2025), scipy 1.16.0 had not been released yet. The latest scipy version was around 1.15.x. The error indicates that pip was trying to satisfy two conflicting scipy requirements from different sources.
+At the time of the failure (2025-11-24), scipy 1.16.0 had not been released yet. The latest scipy version was around 1.15.x. The error indicates that pip was trying to satisfy two conflicting scipy requirements from different sources.
 
 ## Resolution
 
@@ -28,13 +28,13 @@ The nightly.yml workflow was completely rewritten on 2026-01-08. The new version
 - Includes better job organization
 
 ### 2. Dependency Consolidation
-Verified all scipy version specifications are now consistent:
+Verified all scipy version specifications are now consistent (as of Jan 2026):
 - **requirements.txt**: `scipy>=1.13.0`
-- **requirements-lock.txt**: `scipy==1.16.3` (now available and satisfies >=1.13.0)
+- **requirements-lock.txt**: `scipy==1.16.3` (scipy 1.16.3 was released after the failure and satisfies >=1.13.0)
 - **requirements-core.txt**: `scipy>=1.11`
 - **requirements_extended.txt**: `scipy>=1.13.0`
 
-All versions are compatible and can be installed together.
+All versions are compatible and can be installed together. Note: No changes to requirements files were made in this PR as they were already correct.
 
 ### 3. Workflow Formatting
 Fixed indentation and formatting issues in nightly.yml:
@@ -76,5 +76,8 @@ The new workflow design prevents similar issues by:
 ## Related Files Changed
 - `.github/workflows/nightly.yml` - Fixed formatting and indentation
 
-## Date Fixed
-2026-01-08
+## Timeline
+- **Failure Date**: 2025-11-24
+- **Workflow Recreated**: 2026-01-08 (new nightly.yml created)
+- **Formatting Fix**: 2026-01-08 (this PR)
+- **Documentation Added**: 2026-01-08 (this PR)
