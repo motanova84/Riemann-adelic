@@ -344,7 +344,7 @@ class InfiniteSpectralExtension:
         # Level ∞: Countable
         print(f"   [2/3] Constructing countable infinite level (max = {N_countable})...")
         level_countable = self.construct_countable_level(N_countable)
-        self.levels[-1] = level_countable  # Use -1 as marker for ∞
+        self.levels[1000000] = level_countable  # Use large integer as marker for ∞
         print(f"         ✓ Asymptotic: λₙ ~ n for large n")
         print(f"         ✓ Coherence: {level_countable.coherence:.6f}")
         print()
@@ -352,7 +352,7 @@ class InfiniteSpectralExtension:
         # Level ∞³: Continuum
         print(f"   [3/3] Constructing continuum level ∞³ (samples = {N_continuum})...")
         level_continuum = self.construct_continuum_level(N_continuum)
-        self.levels[-3] = level_continuum
+        self.levels[1000003] = level_continuum  # Use large integer as marker for ∞³
         print(f"         ✓ Spectral density: ρ(λ) ~ λ/2π")
         print(f"         ✓ Coherence: {level_continuum.coherence:.6f}")
         print()
@@ -414,9 +414,9 @@ class InfiniteSpectralExtension:
         
         # Check 3: Spectral nesting (approximate for infinite levels)
         print("   [3/4] Checking spectral nesting...")
-        if 0 in self.levels and -1 in self.levels:
+        if 0 in self.levels and 1000000 in self.levels:
             finite_max = self.levels[0].eigenvalues[-1]
-            countable_max = self.levels[-1].eigenvalues[-1]
+            countable_max = self.levels[1000000].eigenvalues[-1]
             nesting_ok = finite_max <= countable_max * 1.1  # Allow 10% tolerance
             report["checks"]["spectral_nesting"] = nesting_ok
             print(f"         {'✓' if nesting_ok else '✗'} σ(finite) ⊂ σ(countable)")
@@ -429,8 +429,8 @@ class InfiniteSpectralExtension:
         print("   [4/4] Checking trace class property...")
         # For trace class: Tr(e^{-βH}) = Σ e^{-βλₙ} < ∞
         beta = 1.0
-        if -1 in self.levels:
-            eigenvalues = self.levels[-1].eigenvalues
+        if 1000000 in self.levels:
+            eigenvalues = self.levels[1000000].eigenvalues
             trace = np.sum(np.exp(-beta * eigenvalues))
             trace_class_ok = np.isfinite(trace)
             report["checks"]["trace_class"] = {
@@ -496,7 +496,14 @@ class InfiniteSpectralExtension:
         
         # Add level data
         for key, level in self.levels.items():
-            level_name = {0: "finite", -1: "countable_infinite", -3: "continuum_infinite_cubed"}.get(key, f"level_{key}")
+            if key == 0:
+                level_name = "finite"
+            elif key == 1000000:
+                level_name = "countable_infinite"
+            elif key == 1000003:
+                level_name = "continuum_infinite_cubed"
+            else:
+                level_name = f"level_{key}"
             certificate["spectral_tower"][level_name] = {
                 "dimension": level.dimension,
                 "num_eigenvalues": len(level.eigenvalues),

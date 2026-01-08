@@ -122,7 +122,7 @@ Defined on L²(ℝ₊, dx/x) as (H_Ψ f)(x) = -x · f'(x) + V_resonant(x) · f(x
 /-- Domain of H_Ψ: Schwartz functions on ℝ₊ -/
 def Domain_Hpsi : Type := { f : ℝ → ℂ // 
   Differentiable ℝ f ∧ 
-  (∀ x > 0, f x = f x) ∧
+  (∀ x ≤ 0, f x = 0) ∧  -- Support on ℝ₊
   (∃ C, ∀ x > 0, ‖f x‖ ≤ C) }
 
 /-- Action of H_Ψ on functions -/
