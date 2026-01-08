@@ -2751,6 +2751,33 @@ Licencia:
 - Manuscrito: CC-BY 4.0
 - Código: MIT License
 
+### ⚖️ Nota sobre Dependencias GPU
+
+Las dependencias principales del proyecto están distribuidas bajo licencias de código abierto (MIT, BSD, Apache 2.0, etc.) y están incluidas en `requirements.txt`.
+
+**Los paquetes opcionales de aceleración GPU** (como `cupy-cuda12x` para soporte NVIDIA CUDA) están disponibles pero no son necesarios para la funcionalidad principal. Estos paquetes pueden tener términos de licencia específicos de sus respectivos proveedores:
+
+- **CuPy (cupy-cuda12x)**: Incluido condicionalmente en `requirements.txt` solo para sistemas Linux x86_64. Licenciado bajo MIT License, pero requiere NVIDIA CUDA toolkit.
+- **Paquetes NVIDIA**: Si requiere entrenamiento distribuido o características GPU avanzadas con paquetes específicos de NVIDIA (por ejemplo, `nvidia-nccl-cu12`), puede instalarlos por separado. Por favor, revise los términos de licencia de NVIDIA antes de la instalación.
+
+Para requisitos específicos de GPU, puede crear un archivo separado `requirements-nvidia.txt` si es necesario:
+
+```bash
+# requirements-nvidia.txt (ejemplo)
+nvidia-nccl-cu12>=2.18.0  # NVIDIA Collective Communications Library (verificar términos de licencia NVIDIA)
+```
+
+**Instalación:**
+```bash
+# Instalación estándar (CPU y GPU opcional vía cupy)
+pip install -r requirements.txt
+
+# Paquetes adicionales específicos de NVIDIA (si es necesario)
+pip install -r requirements-nvidia.txt  # Crear este archivo según necesidad
+```
+
+Todas las dependencias en el `requirements.txt` principal han sido auditadas para compatibilidad de licencia con la licencia MIT de este proyecto y son adecuadas para distribución de código abierto.
+
 ## Contacto y Créditos
 
 - Autor principal: José Manuel Mota Burruezo
@@ -3346,3 +3373,30 @@ ___
 ## License
 - Manuscript: CC-BY 4.0 (DOI: 10.5281/zenodo.17161831)
 - Code: MIT License (see LICENSE-CODE)
+
+### ⚖️ Note on GPU Dependencies
+
+This project's main dependencies are distributed under open-source licenses (MIT, BSD, Apache 2.0, etc.) and are included in `requirements.txt`.
+
+**Optional GPU acceleration packages** (such as `cupy-cuda12x` for NVIDIA CUDA support) are available but not required for core functionality. These packages may have specific license terms from their respective vendors:
+
+- **CuPy (cupy-cuda12x)**: Included conditionally in `requirements.txt` for Linux x86_64 systems only. Licensed under MIT License, but requires NVIDIA CUDA toolkit.
+- **NVIDIA packages**: If you require distributed training or advanced GPU features with NVIDIA-specific packages (e.g., `nvidia-nccl-cu12`), you may install them separately. Please review NVIDIA's license terms before installation.
+
+For GPU-specific requirements, you can create a separate `requirements-nvidia.txt` file if needed:
+
+```bash
+# requirements-nvidia.txt (example)
+nvidia-nccl-cu12>=2.18.0  # NVIDIA Collective Communications Library (check NVIDIA license terms)
+```
+
+**Installation:**
+```bash
+# Standard installation (CPU and optional GPU via cupy)
+pip install -r requirements.txt
+
+# Additional NVIDIA-specific packages (if needed)
+pip install -r requirements-nvidia.txt  # Create this file as needed
+```
+
+All dependencies in the main `requirements.txt` have been audited for license compatibility with this project's MIT license and are suitable for open-source distribution.
