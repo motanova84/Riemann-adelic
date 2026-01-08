@@ -2764,7 +2764,7 @@ Para requisitos específicos de GPU, puede crear un archivo separado `requiremen
 
 ```bash
 # requirements-nvidia.txt (ejemplo)
-nvidia-nccl-cu12>=2.18.0  # NVIDIA Collective Communications Library (verificar términos de licencia NVIDIA)
+nvidia-nccl-cu12  # NVIDIA Collective Communications Library (verificar términos de licencia NVIDIA)
 ```
 
 **Instalación:**
@@ -3387,7 +3387,7 @@ For GPU-specific requirements, you can create a separate `requirements-nvidia.tx
 
 ```bash
 # requirements-nvidia.txt (example)
-nvidia-nccl-cu12>=2.18.0  # NVIDIA Collective Communications Library (check NVIDIA license terms)
+nvidia-nccl-cu12  # NVIDIA Collective Communications Library (check NVIDIA license terms)
 ```
 
 **Installation:**

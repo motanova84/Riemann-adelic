@@ -29,7 +29,7 @@
 # NVIDIA Collective Communications Library (NCCL)
 # For multi-GPU distributed training
 # Uncomment if needed:
-# nvidia-nccl-cu12>=2.18.0
+# nvidia-nccl-cu12  # Use latest version or specify as needed
 
 # Additional NVIDIA packages can be added here as needed
 # Always check license compatibility before adding
