@@ -1,0 +1,80 @@
+{
+  "title": "Infinite Spectral Extension of H_Ψ — QCAL ∞³ Certificate",
+  "timestamp": "2026-01-08T21:39:38.300852+00:00",
+  "author": "José Manuel Mota Burruezo Ψ ✧ ∞³",
+  "orcid": "0009-0002-1923-0773",
+  "institution": "Instituto de Conciencia Cuántica (ICQ)",
+  "doi": "10.5281/zenodo.17379721",
+  "agent": "Noesis ∞³ Agent",
+  "constants": {
+    "f0_hz": 141.7001,
+    "C_coherence": 244.36,
+    "precision_dps": 30
+  },
+  "spectral_tower": {
+    "finite": {
+      "dimension": 50,
+      "num_eigenvalues": 50,
+      "lambda_min": 1.25,
+      "lambda_max": 49.4711840125027,
+      "coherence": 0.5902892918053122,
+      "is_selfadjoint": true,
+      "metadata": {
+        "type": "finite",
+        "N": 50,
+        "timestamp": "2026-01-08T21:39:38.296321+00:00"
+      }
+    },
+    "countable_infinite": {
+      "dimension": null,
+      "num_eigenvalues": 500,
+      "lambda_min": 1.25,
+      "lambda_max": 499.5015,
+      "coherence": 0.6301101349309424,
+      "is_selfadjoint": true,
+      "metadata": {
+        "type": "countable_infinite",
+        "max_computed": 500,
+        "timestamp": "2026-01-08T21:39:38.296975+00:00"
+      }
+    },
+    "continuum_infinite_cubed": {
+      "dimension": null,
+      "num_eigenvalues": 5000,
+      "lambda_min": 0.5096867485653903,
+      "lambda_max": 99.99926271160953,
+      "coherence": 0.504441699410777,
+      "is_selfadjoint": true,
+      "metadata": {
+        "type": "continuum_infinite_cubed",
+        "N_sample": 5000,
+        "lambda_max": 100.0,
+        "timestamp": "2026-01-08T21:39:38.300460+00:00"
+      }
+    }
+  },
+  "verification": {
+    "timestamp": "2026-01-08T21:39:38.300877+00:00",
+    "f0_hz": 141.7001,
+    "C_coherence": 244.36,
+    "checks": {
+      "self_adjoint": true,
+      "coherence_bounds": {
+        "passed": true,
+        "min": 0.504441699410777,
+        "values": [
+          0.5902892918053122,
+          0.6301101349309424,
+          0.504441699410777
+        ]
+      },
+      "spectral_nesting": "True",
+      "trace_class": {
+        "passed": "True",
+        "trace": 0.5441420334746755,
+        "beta": 1.0
+      }
+    },
+    "overall": true
+  }
+}
