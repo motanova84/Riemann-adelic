@@ -21,6 +21,14 @@ This directory contains the **complete V5.2 Lean 4 formalization** of the uncond
   - **A2**: Adelic Poisson symmetry (functional equation D(1-s) = D(s))  
   - **A4**: Spectral regularity (holomorphic trace-class theory)
 
+- **`spectral/RIGOROUS_UNIQUENESS_EXACT_LAW.lean`** ⭐ **NEW - JANUARY 2026**  
+  Complete rigorous proof of uniqueness and exact spectral law:
+  - **Strong uniqueness theorem**: ∀z ∈ Spec(H_Ψ), ∃!t, z = i(t-1/2) ∧ ζ(1/2+it)=0
+  - **Exact Weyl law**: |N_spec(T) - N_zeros(T)| ≤ C/log(T) with C < 1
+  - **Local zero uniqueness**: Explicit radius ε = 0.1 uniqueness constant
+  - **Fundamental frequency**: f₀ = 141.700010083578160030654028447231151926974628612204 Hz
+  - See: [`spectral/RIGOROUS_UNIQUENESS_EXACT_LAW_README.md`](spectral/RIGOROUS_UNIQUENESS_EXACT_LAW_README.md)
+
 ## New Addition: Axioms to Lemmas (axioms_to_lemmas.lean)
 
 The `axioms_to_lemmas.lean` file represents a major advancement in the formalization, containing:
