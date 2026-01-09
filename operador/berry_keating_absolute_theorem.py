@@ -58,6 +58,14 @@ QCAL_FUNDAMENTAL_FREQUENCY = 141.7001  # Hz
 ZETA_PRIME_HALF = mp.mpf("-3.9226461392442285")
 C_ZETA = float(mp.pi * ZETA_PRIME_HALF)
 
+# Numerical constants for spectral computation
+# Minimum log argument to prevent log(0) in asymptotic formula
+MIN_LOG_ARG = 2.0
+# Scale factor for off-diagonal coupling strength (empirically tuned)
+THERMAL_COUPLING_SCALE = 0.01
+# Scale factor for adelic corrections (small perturbation)
+ADELIC_CORRECTION_SCALE = 0.001
+
 
 @dataclass
 class BerryKeatingAbsoluteConfig:
@@ -125,7 +133,7 @@ class BerryKeatingAbsoluteOperator:
         extended = list(known_gammas)
         for n in range(len(known_gammas) + 1, max_zeros + 1):
             # Asymptotic: γ_n ~ 2πn / log(n)
-            gamma_est = 2 * np.pi * n / np.log(max(n / (2 * np.pi * np.e), 2.0))
+            gamma_est = 2 * np.pi * n / np.log(max(n / (2 * np.pi * np.e), MIN_LOG_ARG))
             extended.append(gamma_est)
 
         return np.array(extended[:max_zeros])
@@ -207,7 +215,7 @@ class BerryKeatingAbsoluteOperator:
             correction += term
 
         # Scale factor for numerical stability
-        return correction * h * 0.001
+        return correction * h * ADELIC_CORRECTION_SCALE
 
     def build_absolute_operator(self) -> np.ndarray:
         """
@@ -246,7 +254,7 @@ class BerryKeatingAbsoluteOperator:
 
                 # Scale by geometric mean of eigenvalues
                 coupling *= np.sqrt(lambda_diagonal[i] * lambda_diagonal[j])
-                coupling *= self.config.thermal_h * 0.01
+                coupling *= self.config.thermal_h * THERMAL_COUPLING_SCALE
 
                 # Adelic correction
                 adelic = self._compute_adelic_correction(
