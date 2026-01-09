@@ -19,6 +19,11 @@ This module implements spectral operators for the Riemann Hypothesis:
    - Implements H = -x(d/dx) + πζ'(1/2)log x
    - Self-adjoint operator in L²(ℝ⁺, dx/x)
    - Connects to Hilbert-Pólya conjecture and Berry-Keating approach
+
+5. berry_keating_absolute_theorem.py: Berry-Keating Absolute Theorem
+   - Unified spectral framework for Riemann zeros
+   - Three-way equivalence: zeros ⟺ eigenvalues ⟺ absolute spectrum
+   - Non-circular validation with adelic corrections
 """
 from .operador_H import K_t, R_t_matrix, approximate_spectrum
 
@@ -57,6 +62,15 @@ from .hilbert_polya_operator import (
     demonstrate_hilbert_polya
 )
 
+from .berry_keating_absolute_theorem import (
+    BerryKeatingAbsoluteOperator,
+    BerryKeatingAbsoluteConfig,
+    validate_berry_keating_absolute,
+    demonstrate_berry_keating_absolute,
+    C_ZETA,
+    QCAL_COHERENCE
+)
+
 __all__ = [
     # operador_H exports
     'K_gauss',
@@ -84,5 +98,12 @@ __all__ = [
     'HilbertPolyaConfig',
     'ZETA_PRIME_HALF',
     'QCAL_FUNDAMENTAL_FREQUENCY',
-    'demonstrate_hilbert_polya'
+    'demonstrate_hilbert_polya',
+    # berry_keating_absolute_theorem exports
+    'BerryKeatingAbsoluteOperator',
+    'BerryKeatingAbsoluteConfig',
+    'validate_berry_keating_absolute',
+    'demonstrate_berry_keating_absolute',
+    'C_ZETA',
+    'QCAL_COHERENCE'
 ]
