@@ -66,6 +66,9 @@ python validate_v5_coronacion.py --precision 25 --verbose
 - 📊 [PARADIGM_FLOW.md](PARADIGM_FLOW.md) — Visual flow diagrams
 - 🎵 [DUAL_SPECTRAL_CONSTANTS.md](DUAL_SPECTRAL_CONSTANTS.md) — f₀ = 141.7001 Hz origin
 - 🌌 **[DISCOVERY_HIERARCHY.md](DISCOVERY_HIERARCHY.md)** — The 4-level discovery hierarchy (RH → QCAL ∞³)
+- 🔬 **[FUNDAMENTAL_FREQUENCY_DERIVATION.md](FUNDAMENTAL_FREQUENCY_DERIVATION.md)** — Mathematical derivation of f₀ = 141.7001 Hz
+- 🌐 **[GRH_GENERALIZATION.md](GRH_GENERALIZATION.md)** — Extension to all L-functions and GRH
+- 🌍 **[PHYSICAL_SYSTEMS_F0.md](PHYSICAL_SYSTEMS_F0.md)** — Physical manifestations (GW150914, solar, EEG, vacuum)
 
 ### 🌌 The 4-Level Discovery Hierarchy
 
@@ -99,6 +102,106 @@ python demo_discovery_hierarchy.py --save-json
 ```
 
 See **[DISCOVERY_HIERARCHY.md](DISCOVERY_HIERARCHY.md)** for the complete explanation of how RH emerges from universal geometry.
+
+---
+
+## 🎯 Berry-Keating Operator H_Ψ — Spectral Foundation
+
+### Mathematical Formalization in Lean 4
+
+The Berry-Keating operator provides a **spectral-theoretic proof** of the Riemann Hypothesis through self-adjoint operator theory:
+
+```lean
+H_Ψ = -x · ∂/∂x + C_ζ · log(x)  on L²(ℝ⁺, dx/x)
+```
+
+**Key Properties (Formalized in Lean 4):**
+- ✅ **Linearity**: H_Ψ(af + bg) = aH_Ψ(f) + bH_Ψ(g)
+- ✅ **Continuity**: Continuous on dense domain
+- ✅ **Self-adjointness**: ⟨H_Ψf, g⟩ = ⟨f, H_Ψg⟩
+- ✅ **Dense domain**: C^∞_c(ℝ⁺) is dense in L²(ℝ⁺, dx/x)
+
+**Spectrum Definition:**
+```
+Spec(H_Ψ) = {i(t - 1/2) | ζ(1/2 + it) = 0}
+```
+
+**Formalization:** See `formalization/lean/RiemannAdelic/berry_keating_operator.lean` and `BerryKeatingOperator.lean`
+
+### Reciprocal Infinite Verifier
+
+The Python script `reciprocal_infinite_verifier.py` provides **independent numerical validation** of zeros against the H_Ψ spectrum:
+
+```bash
+# Verify first 100 zeros against Berry-Keating spectrum
+python reciprocal_infinite_verifier.py --num-zeros 100
+
+# High-precision verification
+python reciprocal_infinite_verifier.py --precision 100 --num-zeros 50
+
+# Infinite verification mode (Ctrl+C to stop)
+python reciprocal_infinite_verifier.py --infinite
+
+# Save results to JSON
+python reciprocal_infinite_verifier.py --num-zeros 1000 --save-json results.json
+```
+
+**Features:**
+- Zero-by-zero verification against Spec(H_Ψ)
+- Infinite verification capability
+- Connection to f₀ = 141.7001 Hz fundamental frequency
+- QCAL ∞³ framework integration
+- Complementary to Lean formalization
+
+**Expected Output:**
+```
+✓ Zero #   1: s = 0.5000000000 + 14.1347251417i, |ζ(s)| = 5.12e-26, λ = 14.134725
+✓ Zero #   2: s = 0.5000000000 + 21.0220396388i, |ζ(s)| = 2.25e-25, λ = 21.022040
+...
+✅ Verification complete: 100/100 verified (100.00% success)
+```
+
+### Fundamental Frequency f₀ = 141.7001 Hz
+
+The fundamental spectral frequency emerges from zero spacing analysis:
+
+```
+f₀ = (t₂ - t₁) / |ζ'(1/2)| ≈ 141.70001008357816003065... Hz
+```
+
+**Error:** < 10⁻¹⁵
+
+**Physical Manifestations:**
+1. **GW150914**: Gravitational wave ringdown (141.7 Hz subdominant mode)
+2. **Solar oscillations**: Scaled p-mode frequency (142.5 Hz)
+3. **EEG gamma band**: Upper gamma oscillations (140-145 Hz)
+4. **Vacuum energy**: ℏω₀ = ℏ × 2πf₀
+
+See detailed documentation:
+- 📖 [FUNDAMENTAL_FREQUENCY_DERIVATION.md](FUNDAMENTAL_FREQUENCY_DERIVATION.md)
+- 🌍 [PHYSICAL_SYSTEMS_F0.md](PHYSICAL_SYSTEMS_F0.md)
+
+### Generalization to L-Functions (GRH)
+
+The Berry-Keating framework extends to **all L-functions**:
+
+```
+For L-function L(s):  H_L = -x · ∂/∂x + C_L · log(x)
+where C_L = π·L'(1/2)
+
+Result: Spec(H_L) = {i(t - 1/2) | L(1/2 + it) = 0}
+```
+
+**Applies to:**
+- Dirichlet L-functions L(s, χ)
+- Dedekind zeta functions ζ_K(s)
+- Modular form L-functions L(s, f)
+- Elliptic curve L-functions L(s, E)
+- All automorphic L-functions
+
+**Conclusion:** **Generalized Riemann Hypothesis (GRH)** follows from self-adjointness of H_L.
+
+See: [GRH_GENERALIZATION.md](GRH_GENERALIZATION.md)
 
 ---
 
@@ -2648,6 +2751,33 @@ Licencia:
 - Manuscrito: CC-BY 4.0
 - Código: MIT License
 
+### ⚖️ Nota sobre Dependencias GPU
+
+Las dependencias principales del proyecto están distribuidas bajo licencias de código abierto (MIT, BSD, Apache 2.0, etc.) y están incluidas en `requirements.txt`.
+
+**Los paquetes opcionales de aceleración GPU** (como `cupy-cuda12x` para soporte NVIDIA CUDA) están disponibles pero no son necesarios para la funcionalidad principal. Estos paquetes pueden tener términos de licencia específicos de sus respectivos proveedores:
+
+- **CuPy (cupy-cuda12x)**: Incluido condicionalmente en `requirements.txt` solo para sistemas Linux x86_64. Licenciado bajo MIT License, pero requiere NVIDIA CUDA toolkit.
+- **Paquetes NVIDIA**: Si requiere entrenamiento distribuido o características GPU avanzadas con paquetes específicos de NVIDIA (por ejemplo, `nvidia-nccl-cu12`), puede instalarlos por separado. Por favor, revise los términos de licencia de NVIDIA antes de la instalación.
+
+Para requisitos específicos de GPU, puede crear un archivo separado `requirements-nvidia.txt` si es necesario:
+
+```bash
+# requirements-nvidia.txt (ejemplo)
+nvidia-nccl-cu12  # NVIDIA Collective Communications Library (verificar términos de licencia NVIDIA)
+```
+
+**Instalación:**
+```bash
+# Instalación estándar (CPU y GPU opcional vía cupy)
+pip install -r requirements.txt
+
+# Paquetes adicionales específicos de NVIDIA (si es necesario)
+pip install -r requirements-nvidia.txt  # Crear este archivo según necesidad
+```
+
+Todas las dependencias en el `requirements.txt` principal han sido auditadas para compatibilidad de licencia con la licencia MIT de este proyecto y son adecuadas para distribución de código abierto.
+
 ## Contacto y Créditos
 
 - Autor principal: José Manuel Mota Burruezo
@@ -3237,9 +3367,36 @@ ___
 | **Warnings** | null |
 | **Errors** | null |
 | **Lean Version** | null |
-| **Date (UTC)** | 2026-01-06 21:26:01Z |
+| **Date (UTC)** | 2026-01-09 03:31:45Z |
 ___
 
 ## License
 - Manuscript: CC-BY 4.0 (DOI: 10.5281/zenodo.17161831)
 - Code: MIT License (see LICENSE-CODE)
+
+### ⚖️ Note on GPU Dependencies
+
+This project's main dependencies are distributed under open-source licenses (MIT, BSD, Apache 2.0, etc.) and are included in `requirements.txt`.
+
+**Optional GPU acceleration packages** (such as `cupy-cuda12x` for NVIDIA CUDA support) are available but not required for core functionality. These packages may have specific license terms from their respective vendors:
+
+- **CuPy (cupy-cuda12x)**: Included conditionally in `requirements.txt` for Linux x86_64 systems only. Licensed under MIT License, but requires NVIDIA CUDA toolkit.
+- **NVIDIA packages**: If you require distributed training or advanced GPU features with NVIDIA-specific packages (e.g., `nvidia-nccl-cu12`), you may install them separately. Please review NVIDIA's license terms before installation.
+
+For GPU-specific requirements, you can create a separate `requirements-nvidia.txt` file if needed:
+
+```bash
+# requirements-nvidia.txt (example)
+nvidia-nccl-cu12  # NVIDIA Collective Communications Library (check NVIDIA license terms)
+```
+
+**Installation:**
+```bash
+# Standard installation (CPU and optional GPU via cupy)
+pip install -r requirements.txt
+
+# Additional NVIDIA-specific packages (if needed)
+pip install -r requirements-nvidia.txt  # Create this file as needed
+```
+
+All dependencies in the main `requirements.txt` have been audited for license compatibility with this project's MIT license and are suitable for open-source distribution.

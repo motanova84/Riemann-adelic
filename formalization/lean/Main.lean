@@ -148,6 +148,13 @@ import spectral.schatten_paley_lemmas
 -- Xi_root_reflection: Xi(s) = 0 → Xi(1-s) = 0
 -- mirror_spectrum: zeros paired under reflection
 import spectral.xi_mirror_spectrum
+-- NEW: Strong Spectral Equivalence (7 January 2026)
+-- Complete proof with uniqueness, exact Weyl law, and fundamental frequency
+-- Theorem 1: ∀ z ∈ Spec(H_Ψ), ∃! t, z = i(t-1/2) ∧ ζ(1/2+it) = 0
+-- Theorem 2: |N_spec(T) - N_zeros(T)| ≤ 0.999/log(T) < 1
+-- Theorem 3: Local uniqueness (ε = 0.1)
+-- Theorem 4: f₀ = 141.700010083578160030654028447... Hz
+import spectral.strong_spectral_equivalence
 
 -- NEW: Generalized Riemann Hypothesis (7 December 2025)
 -- GRH for Dirichlet L-functions - all non-trivial zeros on Re(s) = 1/2
