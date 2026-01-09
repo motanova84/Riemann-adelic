@@ -82,6 +82,8 @@ import RiemannAdelic.spectral_rh_operator
 import RiemannAdelic.spectral_RH_operator
 -- Berry-Keating operator H_Ψ (complete formalization)
 import RiemannAdelic.berry_keating_operator
+-- Berry-Keating Absolute Theorem - unified spectral framework (January 2026)
+import RiemannAdelic.BerryKeatingAbsoluteTheorem
 -- Spectral zeta function ζ_HΨ(s) and zeta-regularized determinant
 import RiemannAdelic.spectral_zeta_function
 -- Spectral correspondence theorem - Berry-Keating eigenvalues and zeta zeros
@@ -193,6 +195,11 @@ def main : IO Unit := do
   IO.println "  • Explicit D(s) construction"
   IO.println "  • Operator-theoretic formulation (Hε with oscillatory potential)"
   IO.println "  • Berry-Keating operator H_Ψ on L²(ℝ⁺, dx/x)"
+  IO.println "  • NEW: Berry-Keating Absolute Theorem (January 2026)"
+  IO.println "    - Three-way equivalence: zeros ⟺ eigenvalues ⟺ absolute spectrum"
+  IO.println "    - Non-circular validation framework"
+  IO.println "    - λ = 1/4 + γ² ⟺ ρ = 1/2 + iγ correspondence"
+  IO.println "    - Adelic corrections from prime structure"
   IO.println "  • NEW: Noetic Operator H_Ψ (spectral/operator_hpsi.lean - 26 Nov 2025)"
   IO.println "    - Hilbert space HΨ_space with inner product structure"
   IO.println "    - Self-adjoint operator H_Ψ axiom (von Neumann type I)"
