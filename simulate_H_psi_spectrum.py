@@ -44,7 +44,7 @@ def psi_n(x: np.ndarray, n: int) -> np.ndarray:
     Función de base tipo Schwartz usando polinomios de Hermite normalizados.
     
     Calcula ψₙ(x) = (2^n n! √π)^(-1/2) · exp(-x²/2) · Hₙ(x),
-    donde Hₙ es el n-ésimo polinomio de Hermite (probabilista).
+    donde Hₙ es el n-ésimo polinomio de Hermite (físico/physicist).
     
     Estas funciones forman una base ortonormal en L²(ℝ) y pertenecen al espacio
     de Schwartz 𝒮(ℝ) (funciones suaves con decaimiento rápido).
@@ -60,6 +60,7 @@ def psi_n(x: np.ndarray, n: int) -> np.ndarray:
         - Las funciones de Hermite son autofunciones del operador armónico cuántico
         - Satisfacen ∫ ψₙ(x)ψₘ(x)dx = δₙₘ (ortonormalidad)
         - Decaen exponencialmente: |ψₙ(x)| ~ exp(-x²/2) para |x| → ∞
+        - Se usan los polinomios de Hermite físicos (physicist), no probabilistas
     """
     from scipy.special import eval_hermite
     from math import factorial, sqrt, pi
