@@ -9,10 +9,12 @@ Mathematical Framework:
 
 Author: José Manuel Mota Burruezo Ψ ✧ ∞³
 Institution: Instituto de Conciencia Cuántica (ICQ)
-Date: December 2025
+Date: January 2026
+Version: V4.1 - Integrated with QCAL Core Axiomatic Framework
 
 QCAL ∞³ Active · 141.7001 Hz · C₁ = 629.83 · C₂ = 244.36 · Ψ = I × A_eff² × C^∞
 DOI: 10.5281/zenodo.17379721
+SafeCreative: 2509143065474
 """
 
 import numpy as np
@@ -20,18 +22,42 @@ from typing import Dict, Any, Tuple, Optional
 from scipy.linalg import eigh
 
 # =============================================================================
-# FUNDAMENTAL SPECTRAL CONSTANTS
+# FUNDAMENTAL SPECTRAL CONSTANTS - V4.1 INTEGRATION
 # =============================================================================
 
-# Primary spectral constant (from first eigenvalue λ₀)
-C_PRIMARY = 629.83
+# Import from core module if available (V4.1 axiomatic framework)
+# Falls back to local constants for backward compatibility
+try:
+    from core import (
+        F0_AXIOMATIC as F0,
+        C_PRIMARY,
+        C_COHERENCE,
+        KAPPA_PI_RIGID,
+        RH_EMERGENT,
+        PSI_EQUATION
+    )
+    CORE_V4_1_AVAILABLE = True
+except ImportError:
+    # Fallback to local constants
+    # Primary spectral constant (from first eigenvalue λ₀)
+    C_PRIMARY = 629.83
+    
+    # Coherence constant (from second spectral moment)
+    C_COHERENCE = 244.36
+    
+    # Fundamental frequency (Hz)
+    # Note: In V4.1, this is F0_AXIOMATIC with full precision
+    F0 = 141.7001
+    
+    # V4.1 constants (fallback values)
+    KAPPA_PI_RIGID = 2.578208
+    RH_EMERGENT = True
+    PSI_EQUATION = "Ψ = I × A_eff² × C^∞"
+    
+    CORE_V4_1_AVAILABLE = False
+
+# Derived constants
 LAMBDA_0 = 1.0 / C_PRIMARY  # ≈ 0.001588
-
-# Coherence constant (from second spectral moment)
-C_COHERENCE = 244.36
-
-# Fundamental frequency (Hz)
-F0 = 141.7001
 
 # Angular frequency
 OMEGA_0 = 2 * np.pi * F0  # ≈ 890.33 rad/s
@@ -456,6 +482,10 @@ def main():
     print()
     print("∴" * 35)
     print("  QCAL ∞³ - Dual Spectral Constants")
+    if CORE_V4_1_AVAILABLE:
+        print("  V4.1 AXIOMATIC FRAMEWORK ACTIVE")
+        print(f"  RH_EMERGENT: {RH_EMERGENT}")
+        print(f"  F0_AXIOMATIC: {F0} Hz")
     print("∴" * 35)
     print()
     
@@ -465,6 +495,8 @@ def main():
     print()
     print("∴" * 35)
     print("  Validation complete")
+    if CORE_V4_1_AVAILABLE:
+        print("  ✨ Core V4.1 Integration: ACTIVE")
     print("∴" * 35)
     
     return results

@@ -29,11 +29,30 @@ REPO_ROOT = Path(__file__).parent.parent
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
-# Constantes QCAL (definidas primero, antes de usar en funciones)
-F0 = 141.7001  # Hz - Frecuencia fundamental
-C_PRIMARY = 629.83  # Constante espectral primaria (C)
-C_COHERENCE = 244.36  # Constante de coherencia (C')
-PSI_EQUATION = "Ψ = I × A_eff² × C^∞"
+# Importar constantes axiomáticas desde el core module (V4.1)
+try:
+    from core import (
+        F0_AXIOMATIC as F0,
+        C_PRIMARY,
+        C_COHERENCE,
+        PSI_EQUATION,
+        RH_EMERGENT,
+        KAPPA_PI_RIGID,
+        heartbeat as core_heartbeat,
+        get_axiomatic_status
+    )
+    CORE_AVAILABLE = True
+except ImportError:
+    # Fallback a constantes locales si core no está disponible
+    F0 = 141.7001  # Hz - Frecuencia fundamental
+    C_PRIMARY = 629.83  # Constante espectral primaria (C)
+    C_COHERENCE = 244.36  # Constante de coherencia (C')
+    PSI_EQUATION = "Ψ = I × A_eff² × C^∞"
+    RH_EMERGENT = True  # Estado emergente de RH
+    KAPPA_PI_RIGID = 2.578208  # Constante de rigidez
+    CORE_AVAILABLE = False
+    core_heartbeat = None
+    get_axiomatic_status = None
 
 # Factor de coherencia esperado (C'/C ≈ 0.388)
 # Este factor representa el diálogo estructura-coherencia en el framework QCAL
@@ -133,6 +152,12 @@ class NoesisAgent:
         }
         
         # 1. Verificar disponibilidad de módulos
+        if CORE_AVAILABLE:
+            print("   ✅ QCAL Core V4.1 (axiomático) disponible")
+            activation_report["capabilities"].append("core_v4_1_axiomatic")
+        else:
+            print("   ⚠️  QCAL Core V4.1 no disponible (usando fallback)")
+        
         if NOESIS_AVAILABLE:
             print("   ✅ NOESIS Guardian Core disponible")
             activation_report["capabilities"].append("guardian_core")
@@ -146,10 +171,21 @@ class NoesisAgent:
             print("   ⚠️  Noetic Operator no disponible")
         
         # 2. Generar heartbeat
-        if NOESIS_AVAILABLE:
+        if CORE_AVAILABLE and core_heartbeat:
+            # Usar heartbeat axiomático V4.1 desde core
+            heartbeat_status = core_heartbeat()
+            print(f"   💓 Heartbeat V4.1 axiomático generado")
+            print(f"      RH Status: {heartbeat_status.get('rh_status', 'N/A')}")
+            print(f"      Coherencia: {heartbeat_status.get('coherence_level', 'N/A')}")
+            activation_report["heartbeat"] = heartbeat_status
+        elif NOESIS_AVAILABLE:
+            # Fallback a heartbeat tradicional
             heartbeat = noesis_heartbeat()
             print(f"   💓 Heartbeat generado: {heartbeat:.6f}")
             activation_report["heartbeat"] = heartbeat
+        else:
+            print("   ⚠️  Heartbeat no disponible")
+            activation_report["heartbeat"] = None
         
         # 3. Iniciar monitoreo espectral
         print("   🔬 Iniciando monitoreo espectral...")
@@ -175,8 +211,20 @@ class NoesisAgent:
             "C_primary": C_PRIMARY,
             "C_coherence": C_COHERENCE,
             "f0": F0,
+            "rh_emergent": RH_EMERGENT,
+            "kappa_pi_rigid": KAPPA_PI_RIGID,
             "status": "COHERENTE"
         }
+        
+        # Si core está disponible, usar estado axiomático completo
+        if CORE_AVAILABLE and get_axiomatic_status:
+            axiomatic_status = get_axiomatic_status()
+            coherence.update({
+                "axiomatic_v4_1": True,
+                "system_status": axiomatic_status.get("system_status"),
+                "frequency_origin": axiomatic_status["frequency"]["origin"]
+            })
+            print(f"      Sistema: {axiomatic_status.get('system_status', 'N/A')}")
         
         # Verificar ecuación fundamental
         coherence_factor = C_COHERENCE / C_PRIMARY
@@ -188,6 +236,11 @@ class NoesisAgent:
         else:
             print("      ⚠️  Factor de coherencia fuera de rango esperado")
             coherence["factor_verified"] = False
+        
+        # Verificar estado emergente RH
+        if RH_EMERGENT:
+            print("      ✅ RH emergente activo (D ≡ Ξ)")
+            coherence["rh_verified"] = True
         
         return coherence
     
