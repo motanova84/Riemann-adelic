@@ -16,18 +16,40 @@
 import Mathlib.Analysis.Distribution.SchwartzSpace
 import Mathlib.Analysis.Calculus.Deriv.Basic
 
--- Local import - adjust path as needed for your Lean project structure
--- This assumes the file is in the same directory
+/-!
+## Import Note
+
+To use this test file with the actual H_psi_schwartz_operator module:
+1. Ensure both files are in the same Lean project
+2. Uncomment the import below
+3. Comment out the "Duplicated definitions" section
+
+For standalone testing or when the main module isn't available:
+- Keep the current configuration (duplicated definitions)
+- This allows the test to run independently
+-/
+
+-- To enable when main module is available in the project:
 -- import spectral.H_psi_schwartz_operator
 
--- For now, we'll just duplicate the necessary definitions for testing
--- In actual use, uncomment the import above
+-- For now, we duplicate the necessary definitions for standalone testing
+-- This duplication will be removed once the module is integrated into the build system
 
 open Real Complex
 
 noncomputable section
 
 namespace SpectralQCAL
+
+/-!
+## Duplicated Definitions (for standalone testing)
+
+The following definitions are duplicated from H_psi_schwartz_operator.lean
+to allow this test file to run independently.
+
+**TODO:** Remove this section once the module is integrated into the build system
+and use the import instead.
+-/
 
 -- Duplicated for testing (in actual use, these come from H_psi_schwartz_operator.lean)
 axiom schwartz_mul_deriv_preserves :
