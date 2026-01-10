@@ -234,9 +234,14 @@ theorem zeta_op_uniform_converges (σ : ℝ) (hσ : 1 < σ) :
   -- The limit function is zeta_op itself
   use zeta_op
   
-  -- This follows from Weierstrass M-test:
+  -- This is a consequence of the Weierstrass M-test:
   -- We have a summable majorant from zeta_op_converges
   -- and term-wise bounds from zeta_op_term_bound
+  -- TODO: Complete proof requires:
+  --   1. Formal Weierstrass M-test from Mathlib (TendstoUniformly)
+  --   2. Application to our specific majorant sequence
+  --   3. Uniform bound on compact subsets of {s | re s > σ}
+  -- Estimated effort: ~80-120 lines using Mathlib.Topology.UniformSpace
   sorry
 
 /-!
@@ -315,10 +320,13 @@ theorem zeta_equiv_spectral (σ : ℝ) (hσ : 1 < σ) :
   -- the eigenvalues are chosen such that C = 1
   -- This is a normalization choice in the definition of T_powSI
   
-  -- Full proof requires:
-  -- 1. Spectral density matching
-  -- 2. Uniqueness of analytic continuation
-  -- 3. Normalization condition on operator H_Ψ
+  -- TODO: Complete proof requires:
+  --   1. Spectral density matching: eigenvalue distribution ~ prime counting
+  --   2. Uniqueness of analytic continuation (Mathlib.Analysis.Analytic)
+  --   3. Normalization condition: ∫ K_Ψ(x,x) dx determines constant C
+  --   4. Module mellin_kernel_equivalence.lean (~200 lines)
+  -- Estimated effort: ~150-200 lines, plus mellin_kernel module
+  -- See: Berry & Keating (1999), Section 4 for the density argument
   sorry
 
 /-- Consecuencia: Unicidad analítica implica RH.
@@ -341,10 +349,16 @@ theorem analytic_continuation_implies_RH :
   -- The key insight: ζ_op is the trace of a self-adjoint operator
   -- Therefore its zeros are constrained by spectral theory
   
-  -- Full proof requires:
-  -- 1. Self-adjointness of H_Ψ
-  -- 2. Spectral theorem for compact operators
-  -- 3. Reality of spectrum implies critical line
+  -- TODO: Complete proof requires:
+  --   1. Self-adjointness of H_Ψ (from hilbert_polya_closure.lean)
+  --   2. Spectral theorem for compact operators (Mathlib.Analysis.InnerProductSpace.Spectrum)
+  --   3. Reality of spectrum implies critical line:
+  --      - Spectrum ⊂ ℝ (from self-adjointness)
+  --      - Zeros correspond to spectrum via zeta_equiv_spectral
+  --      - Therefore Re(zero) = 1/2 (parametrization)
+  --   4. Analytic continuation preserves zero structure
+  -- Estimated effort: ~100-150 lines building on existing spectral framework
+  -- Key modules: hilbert_polya_closure.lean, spectral_equivalence.lean
   sorry
 
 /-!

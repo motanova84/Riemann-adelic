@@ -35,6 +35,10 @@ QCAL_FREQUENCY = 141.7001  # Hz
 QCAL_COHERENCE = 244.36
 OMEGA_0 = 2 * np.pi * QCAL_FREQUENCY
 
+# Validation constants
+MIN_N_FOR_LOG = 2  # Minimum n to avoid log(0) or log(1) issues in eigenvalue model
+COHERENCE_RELAXATION_FACTOR = 10  # Relaxation factor for coherence test with model eigenvalues
+
 
 def T_powSI(n: int) -> float:
     """
@@ -50,7 +54,8 @@ def T_powSI(n: int) -> float:
     """
     if n == 0:
         return 1.0
-    log_n = np.log(max(n, 2))
+    # Use MIN_N_FOR_LOG to ensure log is well-defined and positive
+    log_n = np.log(max(n, MIN_N_FOR_LOG))
     # Approximate eigenvalue based on zero spacing
     return float(n + n / (2 * log_n))
 
@@ -249,7 +254,9 @@ def test_spectral_coherence(n_max: int = 100) -> dict:
     asymptotic_deviations = deviations[start_idx:]
     asymptotic_max = max(asymptotic_deviations)
     
-    satisfies_relation = asymptotic_max < 10 / QCAL_COHERENCE  # Relaxed for numerical model
+    # Use relaxed tolerance for model eigenvalues (not exact spectral solution)
+    # The factor of 10 accounts for the approximate nature of our eigenvalue model
+    satisfies_relation = asymptotic_max < COHERENCE_RELAXATION_FACTOR / QCAL_COHERENCE
     
     print(f"\nAsymptotic analysis (n > {start_idx}):")
     print(f"  Max deviation: {asymptotic_max:.6f}")
