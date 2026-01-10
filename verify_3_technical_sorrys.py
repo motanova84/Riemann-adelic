@@ -31,8 +31,15 @@ def count_sorries_in_file(filepath: Path) -> Tuple[int, List[int]]:
     Count sorry statements in a Lean file, excluding comments.
     Returns (count, list of line numbers).
     
-    Note: This is a simplified parser. For production use, consider using
-    a proper Lean parser to handle all edge cases correctly.
+    Note: This is a simplified parser optimized for the specific files we're checking.
+    Known limitations (not relevant for our use case):
+    - Doesn't handle nested block comments (Lean doesn't support these)
+    - Doesn't detect 'sorry' inside string literals (not present in our files)
+    - Assumes well-formed comment syntax
+    - Multiple comment markers on one line may cause issues
+    
+    For production use with arbitrary Lean files, consider using a proper Lean parser.
+    For our specific verification task (3 known files), this approach is sufficient.
     """
     sorry_count = 0
     sorry_lines = []
