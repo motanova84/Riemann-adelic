@@ -20,6 +20,7 @@ Author: José Manuel Mota Burruezo
 Date: December 2025
 Guardian Core - Central Orchestration for Noesis Guardian
 ----------------------------------------------------------
+"""
 
 import hashlib
 import json
@@ -79,9 +80,6 @@ logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
 )
 logger = logging.getLogger('noesis_guardian')
-    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
-)
-logger = logging.getLogger("NoesisGuardian")
 
     @staticmethod
     def emit(entry: Dict) -> None:
@@ -127,11 +125,6 @@ class NoesisGuardian:
     def success(message: str) -> None:
         """Log a success message."""
         logger.info(f"✓ {message}")
-    Alert notification system for Guardian events.
-
-    Orchestrates validation cycles, coherency checks, and logging
-    for the QCAL ∞³ framework.
-    """
 
     def __init__(self, repo_root: Optional[Path] = None):
         """
@@ -322,7 +315,7 @@ def main():
     all_passed = all(h.get("ok", False) for h in hooks.values())
 
     sys.exit(0 if all_passed else 1)
-"""
+
 
 import json
 import time
