@@ -30,6 +30,9 @@ def count_sorries_in_file(filepath: Path) -> Tuple[int, List[int]]:
     """
     Count sorry statements in a Lean file, excluding comments.
     Returns (count, list of line numbers).
+    
+    Note: This is a simplified parser. For production use, consider using
+    a proper Lean parser to handle all edge cases correctly.
     """
     sorry_count = 0
     sorry_lines = []
@@ -40,25 +43,53 @@ def count_sorries_in_file(filepath: Path) -> Tuple[int, List[int]]:
             in_block_comment = False
             
             for i, line in enumerate(lines, 1):
-                # Check for block comment end first (before checking for start)
+                # Check if we're in a block comment
                 if in_block_comment:
                     if '-/' in line:
                         in_block_comment = False
+                        # Check for code after the block comment close on same line
+                        after_comment = line.split('-/', 1)[-1]
+                        if re.search(r'\bsorry\b', after_comment):
+                            sorry_count += 1
+                            sorry_lines.append(i)
                     continue
                 
                 # Check for block comment start
                 if '/-' in line:
-                    in_block_comment = True
-                    # If the comment closes on the same line, handle it
+                    # Check for code before the block comment on same line
+                    before_comment = line.split('/-', 1)[0]
+                    if re.search(r'\bsorry\b', before_comment):
+                        sorry_count += 1
+                        sorry_lines.append(i)
+                    
+                    # Check if comment closes on the same line
                     if '-/' in line and line.index('-/') > line.index('/-'):
-                        in_block_comment = False
-                    continue
+                        # Single-line block comment, check after closing
+                        after_comment = line.split('-/', 1)[-1]
+                        if re.search(r'\bsorry\b', after_comment):
+                            # Already counted if before comment had it
+                            if i not in sorry_lines:
+                                sorry_count += 1
+                                sorry_lines.append(i)
+                        continue
+                    else:
+                        # Multi-line block comment starts
+                        in_block_comment = True
+                        continue
                 
-                # Skip line comments
+                # Skip line comments (but only if they're at the start)
                 if re.match(r'^\s*--', line):
                     continue
                 
-                # Check for sorry (word boundary)
+                # For lines with inline comments, only check code before '--'
+                if '--' in line:
+                    code_part = line.split('--', 1)[0]
+                    if re.search(r'\bsorry\b', code_part):
+                        sorry_count += 1
+                        sorry_lines.append(i)
+                    continue
+                
+                # Check for sorry (word boundary) in regular code
                 if re.search(r'\bsorry\b', line):
                     sorry_count += 1
                     sorry_lines.append(i)
