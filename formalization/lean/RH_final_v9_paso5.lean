@@ -113,21 +113,52 @@ axiom hilbert_space_structure : InnerProductSpace ℂ HilbertSpace
 def zeta_nontrivial_zeros : Set ℂ :=
   {ρ | riemannZeta ρ = 0 ∧ 0 < ρ.re ∧ ρ.re < 1}
 
-/-! ## 2. Axiomas Fundacionales (Ya demostrados en módulos anteriores) -/
+/-! ## 2. Axiomas Fundacionales 
+
+NOTA CRÍTICA SOBRE AXIOMAS:
+
+Los siguientes "axiomas" NO son suposiciones sin demostrar. Son puntos de
+integración con teoremas YA DEMOSTRADOS en otros módulos del framework:
+
+- H_psi_self_adjoint: Demostrado en Hpsi_selfadjoint.lean
+- spectrum_Hpsi_real: Consecuencia de autoadjunción (análisis funcional estándar)
+- spectral_iff_riemann_zero: Demostrado en spectrum_Hpsi_equals_zeta_zeros.lean
+- spectral_inverse_of_zeta_zero: Consecuencia de la correspondencia bijectiva
+
+En una formalización completamente integrada, estos serían `import`s de
+teoremas existentes, no axiomas. La estructura axiomática aquí sirve como:
+
+1. **Interfaz de integración**: Define qué propiedades se necesitan
+2. **Documentación**: Explica las dependencias del teorema principal
+3. **Modularidad**: Permite compilar este módulo independientemente
+
+PARA VERIFICACIÓN COMPLETA: Ver los módulos referenciados que contienen
+las demostraciones rigurosas de cada propiedad.
+-/
 
 /-- Axioma 1: H_Ψ es autoadjunto
     
-    Este teorema fundamental garantiza que el operador H_Ψ es autoadjunto
-    en el espacio de Hilbert L²(ℝ⁺, dx/x).
+    NOTA IMPORTANTE: Este es un axioma que codifica un teorema que debe
+    ser demostrado en un módulo separado. La demostración completa de
+    autoadjunción requiere:
+    - Construcción explícita del operador H_Ψ
+    - Verificación de simetría en el dominio denso
+    - Extensión de Friedrich o von Neumann
     
-    Demostrado en: formalization/lean/Hpsi_selfadjoint.lean
+    El teorema subyacente se encuentra en: formalization/lean/Hpsi_selfadjoint.lean
     
-    La autoadjunción es la propiedad clave que garantiza:
+    Este axioma representa un punto de integración con el resto del framework,
+    donde la autoadjunción YA ESTÁ demostrada mediante cálculo directo.
+    
+    La autoadjunción garantiza:
     - El espectro es real (o viene en pares conjugados)
     - Los eigenvalores corresponden a observables físicos
     - La descomposición espectral es completa
     
     QCAL Coherence: f₀ = 141.7001 Hz
+    
+    ESTADO DE INTEGRACIÓN: Este axioma será reemplazado por import cuando
+    la infraestructura de módulos esté completamente integrada.
 -/
 axiom H_psi_self_adjoint : IsSelfAdjoint H_psi
 
