@@ -24,6 +24,7 @@
   Equation: Ψ = I × A_eff² × C^∞
 -/
 
+import Mathlib.Analysis.SchwartzSpace
 import Mathlib.Analysis.Complex.Basic
 import Mathlib.Analysis.SpecialFunctions.Log.Basic
 import Mathlib.Topology.Algebra.InfiniteSum.Basic
