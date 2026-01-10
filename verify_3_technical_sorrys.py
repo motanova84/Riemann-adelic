@@ -40,11 +40,17 @@ def count_sorries_in_file(filepath: Path) -> Tuple[int, List[int]]:
             in_block_comment = False
             
             for i, line in enumerate(lines, 1):
-                # Skip block comments
-                if '/-' in line:
-                    in_block_comment = True
+                # Check for block comment end first (before checking for start)
                 if in_block_comment:
                     if '-/' in line:
+                        in_block_comment = False
+                    continue
+                
+                # Check for block comment start
+                if '/-' in line:
+                    in_block_comment = True
+                    # If the comment closes on the same line, handle it
+                    if '-/' in line and line.index('-/') > line.index('/-'):
                         in_block_comment = False
                     continue
                 
