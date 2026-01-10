@@ -24,55 +24,26 @@ Guardian Core - Central Orchestration for Noesis Guardian
 
 import hashlib
 import json
+import logging
+import os
+import re
 import subprocess
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any, Dict, Optional
+from typing import Any, Dict, Optional, List
 
 # Handle both package import and direct script execution
 if __name__ == "__main__":
     sys.path.insert(0, str(Path(__file__).parent.parent))
     from noesis_guardian.modules.coherency_hooks import CoherencyHooks
+    from noesis_guardian.modules.hook_calabi_yau_resonance import CalabiYauResonance
 else:
     from .modules.coherency_hooks import CoherencyHooks
+    from .modules.hook_calabi_yau_resonance import CalabiYauResonance
 
 # Log file path for Guardian activity
 LOGFILE = "noesis_guardian/logs/guardian_log.json"
-
-
-class Notifier:
-    """Simple notification handler for Guardian alerts."""
-
-import json
-import os
-import logging
-import re
-from datetime import datetime, timezone
-from typing import Dict, Any, Optional, List
-
-from noesis_guardian.modules.hook_calabi_yau_resonance import CalabiYauResonance
-
-
-def _sanitize_timestamp(timestamp: str) -> str:
-    """Sanitize timestamp for use in filenames by replacing special characters."""
-    return re.sub(r'[:.]+', '-', timestamp)
-import logging
-from datetime import datetime
-from pathlib import Path
-from typing import Any, Callable, Dict, Optional
-
-        Args:
-            message: Alert message
-            data: Optional additional data
-        """
-        print(f"🚨 ALERT: {message}")
-        if data:
-            # Print summary of hook results
-            for title, result in data.items():
-                status = "✅" if result.get("ok", False) else "❌"
-                print(f"   {status} {title}")
-
 
 # Configure logging
 logging.basicConfig(
@@ -81,40 +52,31 @@ logging.basicConfig(
 )
 logger = logging.getLogger('noesis_guardian')
 
-    @staticmethod
-    def emit(entry: Dict) -> None:
-        """
-        Emit entry to AIK synchronization system.
 
-        Args:
-            entry: Guardian entry data
-        """
-        # Generate AIK hash for entry
-        entry_json = json.dumps(entry, sort_keys=True, default=str)
-        aik_hash = hashlib.sha256(entry_json.encode()).hexdigest()[:16]
-        print(f"🔗 AIK Hash: {aik_hash}")
+def _sanitize_timestamp(timestamp: str) -> str:
+    """Sanitize timestamp for use in filenames by replacing special characters."""
+    return re.sub(r'[:.]+', '-', timestamp)
 
 
-class NoesisGuardian:
-    """
-    Notification system for QCAL monitoring alerts.
-
-    This class handles alerting when anomalies are detected
-    in the QCAL ecosystem monitoring hooks.
-    """
+class Notifier:
+    """Simple notification handler for Guardian alerts."""
 
     @staticmethod
-    def alert(message: str, context: Optional[Dict[str, Any]] = None) -> None:
+    def alert(message: str, data: Optional[Dict[str, Any]] = None) -> None:
         """
         Send an alert notification.
 
         Args:
-            message: Alert message to display.
-            context: Optional context dictionary with additional details.
+            message: Alert message
+            data: Optional additional data
         """
         logger.warning(f"ALERT: {message}")
-        if context:
-            logger.warning(f"Context: {json.dumps(context, indent=2, default=str)}")
+        if data:
+            logger.warning(f"Context: {json.dumps(data, indent=2, default=str)}")
+            # Print summary of hook results
+            for title, result in data.items():
+                status = "✅" if result.get("ok", False) else "❌"
+                print(f"   {status} {title}")
 
     @staticmethod
     def info(message: str) -> None:
@@ -154,132 +116,12 @@ class NoesisGuardian:
         self.spectral_monitor = SpectralMonitor()
 
     @staticmethod
-    def _find_repo_root() -> Path:
-        """Find the repository root by looking for .git directory."""
-        current = Path.cwd()
-        while current != current.parent:
-            if (current / '.git').exists():
-                return current
-            current = current.parent
-        return Path.cwd()
-
-    def get_repo_state(self) -> Dict[str, Any]:
+    def emit(entry: Dict) -> None:
         """
-        Get current repository state information.
-
-        Returns:
-            Dictionary with repository state details.
-        """
-        state = {
-            "path": str(self.repo_root),
-            "timestamp": datetime.now(timezone.utc).isoformat(),
-        }
-
-        try:
-            # Get current commit hash
-            result = subprocess.run(
-                ["git", "rev-parse", "HEAD"],
-                cwd=self.repo_root,
-                capture_output=True,
-                text=True,
-                timeout=10
-            )
-            if result.returncode == 0:
-                state["commit"] = result.stdout.strip()
-
-            # Get current branch
-            result = subprocess.run(
-                ["git", "rev-parse", "--abbrev-ref", "HEAD"],
-                cwd=self.repo_root,
-                capture_output=True,
-                text=True,
-                timeout=10
-            )
-            if result.returncode == 0:
-                state["branch"] = result.stdout.strip()
-
-        except Exception as e:
-            state["error"] = str(e)
-
-        return state
-
-    def get_spectral_state(self) -> Dict[str, Any]:
-        """
-        Get spectral validation state.
-
-        Returns:
-            Dictionary with spectral state information.
-        """
-        state = {
-            "base_frequency": 141.7001,  # Hz - QCAL base frequency
-            "coherence_constant": 244.36,  # C constant
-        }
-
-        # Check for spectral data file
-        spectral_file = self.repo_root / "Evac_Rpsi_data.csv"
-        if spectral_file.exists():
-            state["data_file"] = str(spectral_file)
-            state["data_exists"] = True
-        else:
-            state["data_exists"] = False
-
-        return state
-
-    def run_cycle(self) -> Dict[str, Any]:
-        """
-        Run a complete Guardian validation cycle.
-
-        Returns:
-            Dictionary with complete cycle results.
-        """
-        print("🧠 NOESIS Guardian 3.0 — Starting cycle...")
-        print("=" * 60)
-
-        # Build entry
-        entry: Dict[str, Any] = {
-            "timestamp": datetime.now(timezone.utc).isoformat(),
-            "version": "3.0.0",
-        }
-
-        # Get repository state
-        print("\n📂 Checking repository state...")
-        entry["repo"] = self.get_repo_state()
-
-        # Get spectral state
-        print("\n📊 Checking spectral state...")
-        entry["spectral"] = self.get_spectral_state()
-
-        # -------------------------
-        #  COHERENCY HOOKS
-        # -------------------------
-        print("\n🔍 Running coherency hooks...")
-        hook_report = CoherencyHooks.run_all()
-        entry["hooks"] = hook_report
-
-        # Check for failures
-        if any(not h["ok"] for h in hook_report.values()):
-            Notifier.alert("❌ Hook de coherencia falló", hook_report)
-            AikSync.emit(entry)
-
-        # Save log
-        self._save_log(entry)
-
-        print("\n" + "=" * 60)
-        print("🧠 Guardian 3.0 ciclo completado.")
-
-        # Print summary
-        passed = sum(1 for h in hook_report.values() if h["ok"])
-        total = len(hook_report)
-        print(f"📈 Hooks: {passed}/{total} passed")
-
-        return entry
-
-    def _save_log(self, entry: Dict[str, Any]) -> None:
-        """
-        Save entry to log file.
+        Emit entry to AIK synchronization system.
 
         Args:
-            entry: Entry data to save
+            entry: Guardian entry data
         """
         # Load existing log or create new
         log_data = []
@@ -375,18 +217,22 @@ class SabioBridge:
     def sync(self) -> None:
         """Synchronize with external Sabio systems (no-op placeholder)."""
         return None
+        # Generate AIK hash for entry
+        entry_json = json.dumps(entry, sort_keys=True, default=str)
+        aik_hash = hashlib.sha256(entry_json.encode()).hexdigest()[:16]
+        print(f"🔗 AIK Hash: {aik_hash}")
 
 
 class AikSync:
-    """Local placeholder implementation for Aik synchronization."""
+    """Aik synchronization placeholder."""
 
-    def __init__(self, *args: Any, **kwargs: Any) -> None:
-        self._config = kwargs
+    @staticmethod
+    def emit(entry: Dict[str, Any]) -> None:
+        """Emit an entry to AIK sync (no-op placeholder)."""
+        pass
 
-    def sync(self) -> None:
-        """Perform Aik synchronization (no-op placeholder)."""
-        return None
-class NoesisGuardian:
+
+class GuardianCore:
     """
     Central coordinator for QCAL ∞³ ecosystem monitoring.
 
@@ -540,149 +386,9 @@ class NoesisGuardian:
 
         with open(filepath, 'w', encoding='utf-8') as f:
             json.dump(report, f, indent=2, default=str)
-    Central orchestration for the Noesis Guardian system.
 
-    Orquesta todos los componentes del sistema de monitoreo
-    y autorreparación del repositorio QCAL.
-
-    Attributes:
-        watcher: Vigilante del repositorio
-        repair: Motor de reparación automática
-        spectral: Monitor de coherencia espectral
-    """
-
-    # Constantes QCAL
-    F0_HZ = 141.7001  # Frecuencia fundamental
-    COHERENCE_CONSTANT = 244.36  # C = 244.36
-    DEFAULT_CYCLE_INTERVAL = 1800  # 30 minutos
-    DEFAULT_LOG_FILENAME = "guardian_log_v2.json"
-
-    def __init__(self, repo_root: Optional[Path] = None, log_path: Optional[str] = None):
-        """
-        Inicializa el Guardian NOESIS.
-
-        Args:
-            repo_root: Ruta raíz del repositorio (opcional)
-            log_path: Ruta para el archivo de log (opcional)
-        """
-        if repo_root is None:
-            repo_root = Path(__file__).resolve().parents[1]
-
-        self.repo_root = Path(repo_root)
-        self.log_path = log_path or str(
-            self.repo_root / "noesis_guardian" / self.DEFAULT_LOG_FILENAME
-        )
-
-        # Inicializar componentes
-        self.watcher = RepoWatcher(self.repo_root)
-        self.repair = AutoRepairEngine(self.repo_root)
-        self.spectral = SpectralMonitor()
-
-        # Estado interno
-        self._running = False
-        self._cycle_count = 0
-
-    def noesis_signal(self) -> Dict[str, Any]:
-        """
-        Calcula la señal NOESIS del sistema.
-
-        Returns:
-            Señal NOESIS con estado vital del organismo
-        """
-        return self.spectral.compute_noesis_signal()
-
-    def log(self, data: Dict[str, Any]) -> None:
-        """
-        Registra datos en el log del Guardian.
-
-        Args:
-            data: Datos a registrar
-        """
-        Run the Guardian and produce a log entry.
-        
-        This is an alias for run_cycle() for backward compatibility.
-        
-        Returns:
-            Dictionary with complete cycle results.
-        """
-        entry = {
-            "timestamp": datetime.now(timezone.utc).isoformat(),
-            "repo": self.get_repo_state(),
-            "spectral": self.spectral_monitor.check(),
-        }
-        return entry
-
-    def log(self, entry: Dict[str, Any]) -> None:
-        """
-        Log an entry to the log file.
-        
-        Args:
-            entry: Entry data to log
-        """
-        self._save_log(entry)
-
-
-def main():
-    """Main entry point for Guardian execution."""
-    guardian = NoesisGuardian()
-    result = guardian.run_cycle()
-
-    # Exit with appropriate code
-    hooks = result.get("hooks", {})
-    all_passed = all(h.get("ok", False) for h in hooks.values())
-
-    sys.exit(0 if all_passed else 1)
-
-
-if __name__ == "__main__":
-    main()
-
-class NoesisGuardian:
-    """
-    Core Guardian class that orchestrates repository monitoring and maintenance.
-
-    This class coordinates multiple monitoring and repair components to ensure
-    the QCAL repository maintains structural integrity and coherence.
-    """
-
-    def __init__(self) -> None:
-        """Initialize all Guardian components."""
-        self.watcher = RepoWatcher()
-        self.repair_engine = AutoRepairEngine()
-        self.spectral_monitor = SpectralMonitor()
-
-    def log(self, entry: dict) -> None:
-        """
-        Append a log entry to the Guardian log file.
-
-        Args:
-            entry: Dictionary containing log data to record.
-        """
-        os.makedirs(os.path.dirname(LOGFILE), exist_ok=True)
-        with open(LOGFILE, "a") as f:
-            f.write(json.dumps(entry) + "\n")
-
-    def run_cycle(self) -> None:
-        """Run a single monitoring and maintenance cycle."""
-        repo_state = self.watcher.scan()
-        spectral_state = self.spectral_monitor.check()
-    def run(self) -> dict:
-        """
-        Execute a complete Guardian monitoring cycle.
-
-        Returns:
-            Dictionary containing the results of the monitoring cycle.
-        """
-        repo_state = self.watcher.scan()
-        spectral_state = self.spectral_monitor.check()
-
-        entry = {
-            "timestamp": datetime.now().isoformat(),
-            "repo": repo_state,
-            "spectral": spectral_state,
-        }
-
-        self._log(entry)
+        Notifier.info(f"Report saved to: {filepath}")
+        return filepath
 
     def get_latest_report(self) -> Optional[Dict[str, Any]]:
         """
@@ -694,6 +400,10 @@ class NoesisGuardian:
         if self.results_log:
             return self.results_log[-1]
         return None
+
+
+# Alias for backward compatibility with old code
+NoesisGuardian = GuardianCore
 
 
 def main():
@@ -737,6 +447,10 @@ def main():
     print()
 
     return report
+
+
+if __name__ == "__main__":
+    main()
 
 
 if __name__ == "__main__":
