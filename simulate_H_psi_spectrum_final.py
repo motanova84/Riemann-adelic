@@ -45,9 +45,14 @@ def psi_n_normalized(x, n):
         
     Returns:
         Array con valores de ψ_n normalizados
+        
+    Note:
+        Uses scipy's factorial which is optimized for performance.
+        For very large n, consider using gammaln for numerical stability.
     """
     Hn = hermite(n)
-    normalization = 1.0 / np.sqrt(2**n * factorial(n) * np.sqrt(np.pi))
+    # Use scipy's optimized factorial; for n <= 20 this is efficient
+    normalization = 1.0 / np.sqrt(2**n * float(factorial(n)) * np.sqrt(np.pi))
     return normalization * Hn(x) * np.exp(-x**2 / 2)
 
 
@@ -62,8 +67,14 @@ def H_psi_matrix_normalized(N=20, x_range=10, dx=0.1):
         
     Returns:
         Matriz (N×N) del operador H_Ψ
+        
+    Note:
+        Uses np.linspace instead of np.arange for more predictable
+        behavior with floating-point step sizes.
     """
-    x = np.arange(-x_range, x_range, dx)
+    # Use linspace for consistent array length (avoids floating-point precision issues)
+    num_points = int(2 * x_range / dx) + 1
+    x = np.linspace(-x_range, x_range, num_points)
     M = np.zeros((N, N), dtype=complex)
     
     for i in range(N):
@@ -82,7 +93,8 @@ def validate_orthonormality(N=10, x_range=10, dx=0.1):
     
     Verifica que <ψ_i | ψ_j> = δ_{ij}
     """
-    x = np.arange(-x_range, x_range, dx)
+    num_points = int(2 * x_range / dx) + 1
+    x = np.linspace(-x_range, x_range, num_points)
     print("Validación de ortonormalidad de la base:")
     print()
     
