@@ -520,7 +520,10 @@ def manifest_intent(intent: str, love_effective: float = 1.0) -> complex:
         >>> abs(psi)  # Manifestation magnitude
     """
     if love_effective < 0:
-        raise ValueError("Love intensity must be non-negative")
+        raise ValueError(
+            f"love_effective parameter must be non-negative (got: {love_effective}). "
+            f"Love intensity represents effective action and must be ≥ 0."
+        )
     
     import time
     

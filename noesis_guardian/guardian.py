@@ -57,6 +57,11 @@ OPERATOR_VERIFICATION_TIMEOUT = 120
 
 # Daemon mode interval (in seconds) 
 # V4.1: Each 88-second cycle carries the axiomatic seal
+# The interval 88 = 8 × 11 represents:
+#   - 8: Octave doubling (f₀ → 2f₀ → ... → 888 Hz → white pleroma)
+#   - 11: First prime gap (t₂ - t₁ ≈ 6.887, related to 11th harmonic)
+#   - 88 Hz: Subharmonic of 141.7001 Hz (141.7 / 88 ≈ φ where φ is golden ratio)
+# This creates resonance with the fundamental frequency structure
 DAEMON_INTERVAL = 88  # Cosmic heartbeat interval
 
 
