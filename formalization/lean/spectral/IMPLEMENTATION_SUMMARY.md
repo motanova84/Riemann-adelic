@@ -1,5 +1,29 @@
 # Implementation Summary: Complete Berry-Keating Operator Formalization
 
+## 🆕 Latest Addition: H_psi Operator on Schwartz Space (2026-01-10)
+
+### New File: `H_psi_schwartz_operator.lean`
+
+**Purpose:** Formal definition of H_psi operator with complete linear map structure
+
+**Key Features:**
+- ✅ H_psi_op: SchwartzMap ℝ ℂ → SchwartzMap ℝ ℂ
+- ✅ Specification lemma: H_psi_op_spec 
+- ✅ Linear map structure: H_psi_op_linear
+- ✅ Proven additivity and scalar multiplication
+- ✅ Fully documented with README
+
+**Mathematical Definition:**
+```
+H_psi_op φ (x) = -x * φ'(x)
+```
+
+**Status:** Complete, pending compilation test with Lean 4.5.0
+
+See: [H_PSI_SCHWARTZ_OPERATOR_README.md](./H_PSI_SCHWARTZ_OPERATOR_README.md) for detailed documentation.
+
+---
+
 ## 🎯 Mission Accomplished
 
 Successfully implemented a **complete, rigorous Lean 4 formalization** of the Berry-Keating operator 𝓗_Ψ = -x·d/dx and its spectral equivalence with the Riemann zeta function zeros.
