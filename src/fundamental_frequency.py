@@ -366,7 +366,7 @@ def demonstrate_fundamental_frequency():
         
         # Plot 2: Frequency vs R_Ψ
         plt.subplot(1, 2, 2)
-        f_values = [calc.compute_fundamental_frequency(R, use_calabi_yau=False) for R in R_values]
+        f_values = [calc.compute_fundamental_frequency(method="planck_scale", R_psi=R) for R in R_values]
         plt.semilogx(R_values, f_values)
         plt.axhline(141.7001, color='r', linestyle='--', label='f₀ = 141.7001 Hz')
         plt.axvline(np.pi**8, color='g', linestyle='--', alpha=0.5, label=f'π^8')

@@ -29,6 +29,35 @@ REPO_ROOT = Path(__file__).parent.parent
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
+# Constantes QCAL (definidas primero, antes de usar en funciones)
+F0 = 141.7001  # Hz - Frecuencia fundamental
+C_PRIMARY = 629.83  # Constante espectral primaria (C)
+C_COHERENCE = 244.36  # Constante de coherencia (C')
+PSI_EQUATION = "Ψ = I × A_eff² × C^∞"
+
+# Factor de coherencia esperado (C'/C ≈ 0.388)
+# Este factor representa el diálogo estructura-coherencia en el framework QCAL
+# Derivado de: C_COHERENCE / C_PRIMARY = 244.36 / 629.83 ≈ 0.387978
+EXPECTED_COHERENCE_FACTOR = 0.388
+
+
+def _create_fallback_heartbeat():
+    """
+    Crear función de heartbeat alternativa sin dependencias externas.
+    
+    Uses the base frequency 141.7001 Hz combined with the golden ratio
+    and Euler's number to create the coherence signature.
+    
+    Returns:
+        Callable that generates heartbeat signal
+    """
+    def heartbeat():
+        import math
+        phi = (1 + math.sqrt(5)) / 2
+        return math.sin(F0 * phi) + math.cos(F0 / math.e)
+    return heartbeat
+
+
 # Importar módulos NOESIS con manejo de errores
 NOESIS_AVAILABLE = False
 NOETIC_OPERATOR_AVAILABLE = False
@@ -48,24 +77,12 @@ try:
         print("✅ NOESIS Guardian cargado exitosamente")
     else:
         print(f"⚠️  NOESIS Guardian no encontrado en {guardian_path}")
-        
-        # Definir función de heartbeat alternativa
-        def noesis_heartbeat():
-            import math
-            phi = (1 + math.sqrt(5)) / 2
-            return math.sin(F0 * phi) + math.cos(F0 / math.e)
-        
+        noesis_heartbeat = _create_fallback_heartbeat()
         NOESIS_AVAILABLE = True
         
 except Exception as e:
     print(f"⚠️  Error cargando NOESIS Guardian: {e}")
-    
-    # Definir función de heartbeat alternativa
-    def noesis_heartbeat():
-        import math
-        phi = (1 + math.sqrt(5)) / 2
-        return math.sin(F0 * phi) + math.cos(F0 / math.e)
-    
+    noesis_heartbeat = _create_fallback_heartbeat()
     NOESIS_AVAILABLE = True
 
 # Importar operador noético
@@ -75,12 +92,6 @@ try:
 except ImportError as e:
     print(f"⚠️  Noetic Operator no disponible: {e}")
     NOETIC_OPERATOR_AVAILABLE = False
-
-# Constantes QCAL
-F0 = 141.7001  # Hz - Frecuencia fundamental
-C_PRIMARY = 629.83  # Constante espectral primaria
-C_COHERENCE = 244.36  # Constante de coherencia
-PSI_EQUATION = "Ψ = I × A_eff² × C^∞"
 
 
 class NoesisAgent:
@@ -171,7 +182,7 @@ class NoesisAgent:
         coherence_factor = C_COHERENCE / C_PRIMARY
         print(f"      Factor de coherencia: {coherence_factor:.6f}")
         
-        if abs(coherence_factor - 0.388) < 0.001:
+        if abs(coherence_factor - EXPECTED_COHERENCE_FACTOR) < 0.001:
             print("      ✅ Factor de coherencia verificado")
             coherence["factor_verified"] = True
         else:

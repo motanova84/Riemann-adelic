@@ -74,9 +74,9 @@ class UltimateAlgorithm:
     
     def __init__(self):
         """Initialize the Ultimate Algorithm with QCAL parameters."""
-        self.base_frequency = 141.7001  # Hz
-        self.coherence_constant = 244.36  # C'
-        self.primary_constant = 629.83  # C
+        self.base_frequency = 141.7001  # Hz - f₀
+        self.coherence_constant = 244.36  # C' (C_coherence)
+        self.primary_constant = 629.83  # C (C_primary)
         self.precision = 25
         self.results = {}
         
