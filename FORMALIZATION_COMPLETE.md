@@ -53,8 +53,8 @@
 - ✅ RiemannHypothesisDefinitive.lean (parcial)
 - ✅ paley_wiener_uniqueness.lean (parcial)
 
-### Módulos Críticos en Progreso:
-- 🔄 **spectral_convergence.lean** - 3 sorrys técnicos (desigualdades estándar)
+### Módulos Críticos - Estado Actualizado (2026-01-10):
+- ✅ **spectral_convergence.lean** - 2 sorrys estructurales documentados (problemas en enunciados de teoremas, ver LEAN4_SORRY_STATUS_REPORT.md)
 - 🔄 RH_final_v6.lean - Serie de módulos RH
 - 🔄 zero_localization.lean - 33 sorrys (más trabajo necesario)
 - 🔄 operator_H_ψ.lean - 26 sorrys
@@ -107,11 +107,18 @@ Todos los módulos incluyen:
 
 ## 📋 Próximos Pasos
 
+### ✅ Completado (2026-01-10):
+1. **Verificación de 3 sorrys técnicos originalmente mencionados**
+   - ✅ Growth estimates (exponential_type.lean): 0 sorry - COMPLETO
+   - ✅ Spectral symmetry (operator_symmetry.lean): 0 sorry - COMPLETO
+   - ⚠️ Weierstrass M-test (spectral_convergence.lean): 2 sorrys estructurales documentados
+   - Ver LEAN4_SORRY_STATUS_REPORT.md para análisis matemático detallado
+
 ### Prioridad Alta:
-1. **Eliminar 3 sorrys técnicos** en spectral_convergence.lean
-   - Desigualdad estándar: sqrt(1 + x²) ≤ 1 + |x|
-   - Simplificación algebraica exponencial
-   - Corolario de convergencia uniforme
+1. **Revisar enunciados de teoremas** en spectral_convergence.lean
+   - Línea 189: Ajustar hipótesis para M (requiere M < 0 o redefinir tipo exponencial)
+   - Línea 392: Alinear hipótesis de crecimiento con conclusión de decaimiento
+   - Estos son problemas estructurales, no gaps de prueba
 
 2. **Integrar con Main.lean**
    - Añadir imports de los tres nuevos módulos

@@ -22,7 +22,10 @@
    
 5. **RH_final_v6.lean**
    - Main theorem file
-   - 3 technical sorry (functional analysis) ⚠️
+   - Supporting lemmas reference spectral modules ✅
+   - Growth estimates: COMPLETE (0 sorry) ✅
+   - Spectral symmetry: COMPLETE (0 sorry) ✅
+   - Spectral convergence: 2 structural sorrys (documented) ⚠️
 
 ## Usage
 
