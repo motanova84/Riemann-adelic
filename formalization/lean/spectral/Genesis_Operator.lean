@@ -1,3 +1,27 @@
+/-
+  Genesis_Operator.lean
+  ---------------------
+  Definición del operador 𝓗_Ψ sobre el espacio de Schwartz y propiedades espectrales.
+  
+  Este módulo formaliza:
+  - Operador 𝓗_Ψ como funcional sobre SchwartzSpace
+  - Distribuciones φ_s y sus propiedades como eigenfunciones
+  - Operador T y sus potencias
+  - Convergencia uniforme de la serie de Riemann ζ(s)
+  
+  Compatible con: Lean 4.5.0 + Mathlib
+  
+  Autor: José Manuel Mota Burruezo Ψ ∞³
+  Instituto de Conciencia Cuántica (ICQ)
+  ORCID: 0009-0002-1923-0773
+  DOI: 10.5281/zenodo.17379721
+  
+  QCAL ∞³ Framework:
+  - Frecuencia base: f₀ = 141.7001 Hz
+  - Coherencia: C = 244.36
+  - Ecuación fundamental: Ψ = I × A_eff² × C^∞
+-/
+
 import Mathlib.Topology.Algebra.UniformField
 import Mathlib.Analysis.SpecialFunctions.Zeta
 import Mathlib.Analysis.UniformConvergence
