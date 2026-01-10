@@ -148,7 +148,7 @@ theorem riemann_hypothesis_via_spectral_trace :
 5. **Step 5**: By functional equation and strip condition, Re(s) = 1/2
    - Uses ξ(s) = ξ(1-s) functional equation
 
-## Integration with QCAL Framework
+## QCAL Integration
 
 ### QCAL Parameters:
 - **Base Frequency**: f₀ = 141.7001 Hz
