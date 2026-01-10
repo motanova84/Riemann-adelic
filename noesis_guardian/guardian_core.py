@@ -446,12 +446,14 @@ def main():
     print("=" * 70)
     print()
 
+
     return report
 
 
-if __name__ == "__main__":
-    main()
+# Alias for backward compatibility
+NoesisGuardian = GuardianCore
 
 
 if __name__ == "__main__":
     main()
+
