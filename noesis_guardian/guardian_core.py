@@ -18,6 +18,8 @@ The guardian maintains QCAL coherence through continuous validation of:
 
 Author: José Manuel Mota Burruezo
 Date: December 2025
+Guardian Core - Central Orchestration for Noesis Guardian
+----------------------------------------------------------
 """
 
 import hashlib
@@ -86,6 +88,33 @@ class Notifier:
         """Log a success message."""
         logger.info(f"✓ {message}")
 
+    def __init__(self, repo_root: Optional[Path] = None):
+        """
+        Initialize the Guardian.
+
+        Args:
+            repo_root: Path to repository root. If None, auto-detected.
+        """
+        if repo_root:
+            self.repo_root = Path(repo_root)
+        else:
+            # Auto-detect repository root
+            self.repo_root = self._find_repo_root()
+
+        self.logs_dir = Path(__file__).parent / "logs"
+        self.logs_dir.mkdir(parents=True, exist_ok=True)
+
+        self.log_file = self.logs_dir / "guardian_log.json"
+        
+        # Initialize components for compatibility with tests
+        from .modules.watcher import RepoWatcher
+        from .modules.autorepair_engine import AutoRepairEngine
+        from .modules.spectral_monitor import SpectralMonitor
+        
+        self.watcher = RepoWatcher()
+        self.repair_engine = AutoRepairEngine()
+        self.spectral_monitor = SpectralMonitor()
+
     @staticmethod
     def emit(entry: Dict) -> None:
         """
@@ -94,6 +123,100 @@ class Notifier:
         Args:
             entry: Guardian entry data
         """
+        # Load existing log or create new
+        log_data = []
+        if self.log_file.exists():
+            try:
+                with open(self.log_file, 'r') as f:
+                    log_data = json.load(f)
+                    if not isinstance(log_data, list):
+                        log_data = [log_data]
+            except (json.JSONDecodeError, FileNotFoundError):
+                log_data = []
+
+        # Append new entry
+        log_data.append(entry)
+
+        # Keep only last 100 entries
+        log_data = log_data[-100:]
+
+        # Save
+        with open(self.log_file, 'w') as f:
+            json.dump(log_data, f, indent=2, default=str)
+
+        print(f"📝 Log saved to: {self.log_file}")
+
+
+def main():
+    """Main entry point for Guardian execution."""
+    guardian = NoesisGuardian()
+    result = guardian.run_cycle()
+
+    # Exit with appropriate code
+    hooks = result.get("hooks", {})
+    all_passed = all(h.get("ok", False) for h in hooks.values())
+
+    sys.exit(0 if all_passed else 1)
+
+
+import json
+import time
+from datetime import datetime
+from pathlib import Path
+from typing import Any, Dict, Optional
+
+
+class RepoWatcher:
+    """Local placeholder implementation for repository watching.
+
+    The real implementation should be provided in a dedicated module.
+    This stub is designed to avoid import errors and to be minimally
+    compatible with typical usage patterns in NoesisGuardian.
+    """
+
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
+        self._config = kwargs
+
+    def start(self) -> None:
+        """Start watching the repository (no-op placeholder)."""
+        return None
+
+    def run(self) -> Dict[str, Any]:
+        """Run a single watch cycle and return an empty result."""
+        return {}
+
+
+class AutoRepairEngine:
+    """Local placeholder implementation for automatic repair engine."""
+
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
+        self._config = kwargs
+
+    def run(self) -> Dict[str, Any]:
+        """Execute auto-repair logic (no-op placeholder)."""
+        return {}
+
+
+class SpectralMonitor:
+    """Local placeholder implementation for spectral monitoring."""
+
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
+        self._config = kwargs
+
+    def run(self) -> Dict[str, Any]:
+        """Execute spectral monitoring (no-op placeholder)."""
+        return {}
+
+
+class SabioBridge:
+    """Local placeholder implementation for Sabio bridge integration."""
+
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
+        self._config = kwargs
+
+    def sync(self) -> None:
+        """Synchronize with external Sabio systems (no-op placeholder)."""
+        return None
         # Generate AIK hash for entry
         entry_json = json.dumps(entry, sort_keys=True, default=str)
         aik_hash = hashlib.sha256(entry_json.encode()).hexdigest()[:16]
@@ -323,12 +446,14 @@ def main():
     print("=" * 70)
     print()
 
+
     return report
 
 
-if __name__ == "__main__":
-    main()
+# Alias for backward compatibility
+NoesisGuardian = GuardianCore
 
 
 if __name__ == "__main__":
     main()
+
