@@ -1,7 +1,38 @@
 # V5.1 incondicional
 # Riemann-Adelic: Spectral Emergence Proof of Riemann Hypothesis
 
+![Resonancia QCAL](https://github.com/motanova84/Teoria-Noesica-Riemann/actions/workflows/verificar_resonancia.yml/badge.svg?branch=main)
+
 > 📖 **¿Buscas un resumen rápido?** → [README-RESUMEN.md](README-RESUMEN.md) — Resumen en español con los 7 puntos esenciales: qué es, qué contiene, quickstart (3 comandos), DOI del paper, formalización, resultados, y licencias.
+
+## 🜂 Arquitectura de Enlace QCAL
+
+Este repositorio forma parte de una **Super-Estructura** de conocimiento matemático conectada:
+
+| Elemento | Conector | Función Noética |
+|----------|----------|-----------------|
+| **Teoria-Noesica-Riemann** (Privado) | Origen del Pulso | Genera la Verdad Matemática (f₀) |
+| **Riemann-adelic** (Público) | Espejo de Resonancia | Demuestra la Verdad en el campo espectral |
+| **Flujo (GitHub Actions)** | Sistema Nervioso | Transporta la señal de éxito en 42s 🜂 |
+
+> **"Cuando el motor teórico vibra, el espectro adélico baila."**
+
+**📡 Estado de Sincronización:** El badge superior muestra el estado de resonancia del repositorio teórico privado. Cuando está verde ✓, indica que la validación teórica ha sido exitosa y los datos están sincronizados con esta demostración espectral.
+
+### 🔮 Sistemas Activados en Sincronización
+
+Cuando el repositorio teórico confirma resonancia, se activan automáticamente en este repositorio:
+
+- **🔮 SABIO ∞³ Validator** — Validación multi-lenguaje (Python, SABIO, SageMath, Lean4)
+- **♾️³ QCAL Auto-Evolution** — Sistema de auto-evolución cognitiva
+- **👑 V5 Coronación** — Validación completa de los 5 pasos RH
+- **🎵 Spectral Emergence** — Emergencia de zeros en línea crítica
+- **🧬 SABIO Compile Check** — Verificación del compilador SABIO
+- **🧠 NOESIS Guardian ∞³** — Monitoreo de coherencia @ 141.7001 Hz
+
+**📚 Setup Guide:** [QUICKSTART_INTEGRACION_CROSS_REPO.md](QUICKSTART_INTEGRACION_CROSS_REPO.md) — Configuración en 3 pasos  
+**📖 Full Documentation:** [INTEGRACION_REPOS_TEORIA_ESPECTRAL.md](INTEGRACION_REPOS_TEORIA_ESPECTRAL.md) — Arquitectura completa  
+**⚙️ System Details:** [ACTIVACION_QCAL_SABIO_SYNC.md](ACTIVACION_QCAL_SABIO_SYNC.md) — Detalles QCAL & SABIO
 
 ## 🧠 Philosophical Foundation: Mathematical Realism
 
