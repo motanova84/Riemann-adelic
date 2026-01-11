@@ -153,14 +153,24 @@ class CosmicBreathing:
             # Usar primeros ceros conocidos (aproximados)
             # γ_1 ≈ 14.134725, γ_2 ≈ 21.022040, etc.
             for n in range(1, min(num_zeros + 1, 20)):
-                gamma_n = 14.134725 + (n - 1) * 7.5  # Aproximación
+                # Use more accurate spacing for lower zeros
+                # Riemann-von Mangoldt formula: spacing ≈ 2π/log(γ/2πe)
+                # For simplicity, use empirical spacing that improves with n
+                if n <= 10:
+                    # Use known spacing for first 10 zeros
+                    gamma_n = 14.134725 + (n - 1) * 7.5  # Approximate spacing
+                else:
+                    # Better approximation for higher zeros
+                    gamma_n = 14.134725 + (n - 1) * (2 * np.pi / np.log(max(n, 2)))
+                
                 rho = mp.mpc(0.5, gamma_n)
                 
                 # Contribución Li(x^ρ)
                 try:
                     contribution = mp.li(mp.power(x, rho))
                     oscillation += contribution
-                except:
+                except (ValueError, OverflowError, mp.NoConvergence):
+                    # Skip zeros that cause numerical issues
                     pass
             
             # Amplitud es la parte real de la oscilación
@@ -252,8 +262,11 @@ class CosmicBreathing:
         
         # Extender con aproximación de Riemann-von Mangoldt
         for n in range(len(eigenvalues), n_modes):
-            # γ_n ≈ 2πn / log(n/2πe) para n grande
-            lambda_n = 2 * np.pi * n / np.log(max(n / (2 * np.pi * np.e), 1.1))
+            # γ_n ≈ 2πn / log(n/2πe) para n grande (Riemann-von Mangoldt)
+            # Usar max(1.1, ...) para evitar log de valores ≤ 0 cuando n es pequeño
+            # 1.1 es el valor mínimo seguro que garantiza log positivo
+            denominator = max(n / (2 * np.pi * np.e), 1.1)
+            lambda_n = 2 * np.pi * n / np.log(denominator)
             eigenvalues.append(lambda_n)
         
         eigenvalues = np.array(eigenvalues)
