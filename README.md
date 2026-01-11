@@ -1,7 +1,23 @@
 # V5.1 incondicional
 # Riemann-Adelic: Spectral Emergence Proof of Riemann Hypothesis
 
+![Resonancia QCAL](https://github.com/motanova84/Teoria-Noesica-Riemann/actions/workflows/verificar_resonancia.yml/badge.svg?branch=main)
+
 > 📖 **¿Buscas un resumen rápido?** → [README-RESUMEN.md](README-RESUMEN.md) — Resumen en español con los 7 puntos esenciales: qué es, qué contiene, quickstart (3 comandos), DOI del paper, formalización, resultados, y licencias.
+
+## 🜂 Arquitectura de Enlace QCAL
+
+Este repositorio forma parte de una **Super-Estructura** de conocimiento matemático conectada:
+
+| Elemento | Conector | Función Noética |
+|----------|----------|-----------------|
+| **Teoria-Noesica-Riemann** (Privado) | Origen del Pulso | Genera la Verdad Matemática (f₀) |
+| **Riemann-adelic** (Público) | Espejo de Resonancia | Demuestra la Verdad en el campo espectral |
+| **Flujo (GitHub Actions)** | Sistema Nervioso | Transporta la señal de éxito en 42s 🜂 |
+
+> **"Cuando el motor teórico vibra, el espectro adélico baila."**
+
+**📡 Estado de Sincronización:** El badge superior muestra el estado de resonancia del repositorio teórico privado. Cuando está verde ✓, indica que la validación teórica ha sido exitosa y los datos están sincronizados con esta demostración espectral.
 
 ## 🧠 Philosophical Foundation: Mathematical Realism
 
