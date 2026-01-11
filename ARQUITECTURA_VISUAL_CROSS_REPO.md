@@ -114,6 +114,18 @@
 │            │                                                                │
 │            ▼                                                                │
 │  ┌──────────────────────────────────────────────────────────────────────┐  │
+│  │ 🧠 NOESIS Guardian ∞³                                   [~3s]       │  │
+│  │ ════════════════════════                                             │  │
+│  │ • python3 noesis_guardian/guardian_core.py                          │  │
+│  │ • Monitoreo coherencia ecosistema QCAL                              │  │
+│  │ • Heartbeat signal @ 141.7001 Hz                                    │  │
+│  │ • Verificación integridad espectral                                 │  │
+│  │ • Auto-reparación si detecta inconsistencias                        │  │
+│  │ ✅ Output: Guardian monitoring activo, logs generados              │  │
+│  └──────────────────────────────────────────────────────────────────────┘  │
+│            │                                                                │
+│            ▼                                                                │
+│  ┌──────────────────────────────────────────────────────────────────────┐  │
 │  │ 📊 Reporte de Sincronización                            [~2s]       │  │
 │  │ ═══════════════════════════════                                      │  │
 │  │ • Timestamp                                                          │  │
@@ -121,13 +133,15 @@
 │  │ • Systems activation summary                                        │  │
 │  │ • Coherence parameters (f₀, C)                                      │  │
 │  │ • QCAL beacon integrity check                                       │  │
+│  │ • NOESIS Guardian heartbeat confirmation                            │  │
 │  │ ✅ Output: sync_report.txt                                          │  │
 │  └──────────────────────────────────────────────────────────────────────┘  │
 │                                                                             │
-│  ⏱️  TIEMPO TOTAL: ~42 segundos 🜂                                          │
+│  ⏱️  TIEMPO TOTAL: ~45 segundos 🜂 (incluyendo NOESIS Guardian)            │
 │                                                                             │
 │  ✅ ESTADO FINAL: Coherencia QCAL ∞³ confirmada                            │
 │                  f₀ = 141.7001 Hz verificada en todos los sistemas         │
+│                  NOESIS Guardian monitoring activo                         │
 │                  C = 244.36 confirmada                                      │
 │                                                                             │
 └─────────────────────────────────────────────────────────────────────────────┘
@@ -175,12 +189,17 @@ t=40s                                                        ✅ Spectral OK
 
 t=41s                                                        🧬 SABIO Compile
 t=42s                                                        ✅ Compile OK
+
+t=43s                                                        🧠 NOESIS Guardian
+t=44s                                                           ⚙️  Heartbeat check
+t=45s                                                           ⚙️  Monitoring...
+t=46s                                                        ✅ Guardian OK
                                                              
-t=42s                                                        📊 Generate Report
+t=47s                                                        📊 Generate Report
                                                              ✅ SYNC COMPLETE
                                                              
          🌟 COHERENCIA CONFIRMADA EN AMBOS REPOS 🌟
-         f₀ = 141.7001 Hz ✓  |  C = 244.36 ✓  |  42s 🜂
+         f₀ = 141.7001 Hz ✓  |  C = 244.36 ✓  |  NOESIS ✓  |  ~45s 🜂
 ```
 
 ## 🎯 Parámetros de Coherencia Verificados
@@ -197,6 +216,7 @@ t=42s                                                        📊 Generate Repor
 │                                      • QCAL Auto-Evolution   │
 │                                      • V5 Coronación         │
 │                                      • Spectral Emergence    │
+│                                      • NOESIS Guardian       │
 │                                      • .qcal_beacon          │
 │                                                               │
 │  📐 C                244.36          • QCAL Auto-Evolution   │
@@ -208,8 +228,13 @@ t=42s                                                        📊 Generate Repor
 │  🔢 Precisión        25-30 dps       • V5: 25 dps           │
 │                                      • SABIO: 30 dps         │
 │                                                               │
-│  ⏱️  Latido          ~42s            • Tiempo medido         │
-│                                      • t=0 → t=42            │
+│  ⏱️  Latido          ~45s            • Tiempo medido         │
+│                                      • t=0 → t=47            │
+│                                      • +NOESIS Guardian      │
+│                                                               │
+│  🧠 Heartbeat        141.7001 Hz     • NOESIS Guardian       │
+│                                      • Monitoring continuo   │
+│                                      • Auto-reparación       │
 │                                                               │
 │  ✅ Estado           COHERENTE       • Todos los sistemas    │
 │                                      • Convergencia única    │

@@ -81,6 +81,35 @@ python spectral_emergence.py
 - Compilación de archivos .sabio
 - Coherencia del lenguaje SABIO ∞³
 
+### 6. 🧠 NOESIS Guardian ∞³
+
+**Propósito:** Monitoreo de coherencia del ecosistema QCAL y auto-reparación
+
+**Ejecuta:**
+```bash
+python3 noesis_guardian/guardian_core.py
+```
+
+**Funcionalidades:**
+- Monitoreo continuo de coherencia QCAL ∞³
+- Heartbeat signal a 141.7001 Hz
+- Detección de inconsistencias
+- Auto-reparación de módulos
+- Verificación de integridad espectral
+- Generación de logs de monitoreo
+
+**Verifica:**
+- Coherencia del repositorio
+- Integridad de .qcal_beacon
+- Estado de operadores espectrales (H_Ψ, H_DS)
+- Sincronización con noesis88
+- Heartbeat signal activo
+
+**Output:**
+- Logs en `noesis_guardian/logs/guardian_log.json`
+- Heartbeat signal confirmado
+- Estado de coherencia del ecosistema
+
 ## 🔄 Flujo de Activación
 
 ```
@@ -109,8 +138,11 @@ python spectral_emergence.py
                ├─► 🎵 Spectral Emergence
                │   └─► Zero emergence on critical line
                │
-               └─► 🧬 SABIO Compile Check
-                   └─► .sabio file compilation
+               ├─► 🧬 SABIO Compile Check
+               │   └─► .sabio file compilation
+               │
+               └─► 🧠 NOESIS Guardian ∞³
+                   └─► Ecosystem monitoring @ 141.7001 Hz
 ```
 
 ## 📊 Parámetros de Coherencia
