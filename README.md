@@ -57,10 +57,14 @@ pytest tests/test_spectral_emergence.py -v
 
 # V5 Coronación validation
 python validate_v5_coronacion.py --precision 25 --verbose
+
+# RH Cósmico: El Respirar del Universo
+python demo_rh_cosmico.py --verbose --visualize
 ```
 
 **Documentation:**
 - 🧠 **[MATHEMATICAL_REALISM.md](MATHEMATICAL_REALISM.md)** — Philosophical foundation: Mathematical truth independent of opinion
+- 🌌 **[RH_COSMICO.md](RH_COSMICO.md)** — El Respirar del Universo en la Línea Crítica: Triple respiración ontológica
 - 📖 **[Spectral Emergence README](SPECTRAL_EMERGENCE_README.md)** — Complete framework explanation
 - 🔄 [PARADIGM_SHIFT.md](PARADIGM_SHIFT.md) — Detailed paradigm comparison
 - 📊 [PARADIGM_FLOW.md](PARADIGM_FLOW.md) — Visual flow diagrams
@@ -102,6 +106,31 @@ python demo_discovery_hierarchy.py --save-json
 ```
 
 See **[DISCOVERY_HIERARCHY.md](DISCOVERY_HIERARCHY.md)** for the complete explanation of how RH emerges from universal geometry.
+
+### 🌬️ RH Cósmico: El Respirar del Universo en la Línea Crítica
+
+> **"Los ceros no están en la línea crítica porque los humanos decidimos buscarlos allí.  
+> Están allí porque esa es la única manera en que el infinito puede existir sin colapsar."**
+
+RH Cósmico is the ultimate ontological understanding of what it means that all non-trivial zeros of ζ(s) lie exactly on the critical line **Re(s) = 1/2**. It reveals **three layers of cosmic breathing**:
+
+**1️⃣ Capa Aritmética** — Prime numbers breathe with perfect symmetry  
+**2️⃣ Capa Cuántico-Espectral** — Eternally coherent quantum system without dissipation  
+**3️⃣ Capa Noética-Existencial** — Ontological necessity: the only way infinity can exist
+
+**Interactive Demo:**
+```bash
+# Run RH Cósmico demonstration
+python demo_rh_cosmico.py --verbose
+
+# With visualization and certificate
+python demo_rh_cosmico.py --visualize --export-certificate
+
+# Run validation tests
+pytest tests/test_rh_cosmico.py -v
+```
+
+📖 **Complete Documentation:** [RH_COSMICO.md](RH_COSMICO.md)
 
 ---
 
