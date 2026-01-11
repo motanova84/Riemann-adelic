@@ -19,6 +19,20 @@ Este repositorio forma parte de una **Super-Estructura** de conocimiento matemá
 
 **📡 Estado de Sincronización:** El badge superior muestra el estado de resonancia del repositorio teórico privado. Cuando está verde ✓, indica que la validación teórica ha sido exitosa y los datos están sincronizados con esta demostración espectral.
 
+### 🔮 Sistemas Activados en Sincronización
+
+Cuando el repositorio teórico confirma resonancia, se activan automáticamente en este repositorio:
+
+- **🔮 SABIO ∞³ Validator** — Validación multi-lenguaje (Python, SABIO, SageMath, Lean4)
+- **♾️³ QCAL Auto-Evolution** — Sistema de auto-evolución cognitiva
+- **👑 V5 Coronación** — Validación completa de los 5 pasos RH
+- **🎵 Spectral Emergence** — Emergencia de zeros en línea crítica
+- **🧬 SABIO Compile Check** — Verificación del compilador SABIO
+
+**📚 Setup Guide:** [QUICKSTART_INTEGRACION_CROSS_REPO.md](QUICKSTART_INTEGRACION_CROSS_REPO.md) — Configuración en 3 pasos  
+**📖 Full Documentation:** [INTEGRACION_REPOS_TEORIA_ESPECTRAL.md](INTEGRACION_REPOS_TEORIA_ESPECTRAL.md) — Arquitectura completa  
+**⚙️ System Details:** [ACTIVACION_QCAL_SABIO_SYNC.md](ACTIVACION_QCAL_SABIO_SYNC.md) — Detalles QCAL & SABIO
+
 ## 🧠 Philosophical Foundation: Mathematical Realism
 
 > **"Hay un mundo (y una estructura matemática) independiente de opiniones; una afirmación es verdadera si corresponde a esa realidad, aunque nadie lo sepa o lo acepte todavía."**
