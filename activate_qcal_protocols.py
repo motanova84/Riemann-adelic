@@ -37,6 +37,7 @@ import os
 import json
 import time
 import subprocess
+import math
 from pathlib import Path
 from datetime import datetime
 from typing import Dict, List, Tuple, Any
@@ -59,6 +60,9 @@ F0_HZ = 141.7001  # Fundamental frequency
 C_PRIMARY = 629.83  # Universal constant C
 C_COHERENCE = 244.36  # Coherence constant C'
 PHI_GOLDEN = 1.618033988749895  # Golden ratio
+
+# Success thresholds
+ACTIVATION_SUCCESS_THRESHOLD = 0.7  # 70% of phases must pass
 
 
 class QCALProtocolActivator:
@@ -128,7 +132,8 @@ class QCALProtocolActivator:
             guardian_script = self.repo_root / "noesis_guardian" / "guardian_core.py"
             
             if not guardian_script.exists():
-                print("⚠️  guardian_core.py no encontrado - creando módulo de emergencia")
+                print(f"  ⚠️  guardian_core.py no encontrado en {guardian_script}")
+                print("      Creando módulo de emergencia...")
                 return self._create_emergency_guardian()
             
             result = subprocess.run(
@@ -166,10 +171,7 @@ class QCALProtocolActivator:
         print("   🔧 Activando modo de emergencia NOESIS...")
         
         # Heartbeat calculation
-        import math
-        from math import sin, cos, e, pi
-        
-        heartbeat = sin(F0_HZ * PHI_GOLDEN) + cos(F0_HZ / e)
+        heartbeat = math.sin(F0_HZ * PHI_GOLDEN) + math.cos(F0_HZ / math.e)
         
         print(f"   ✓ Heartbeat generado: {heartbeat:.6f}")
         print(f"   ✓ Frecuencia: {F0_HZ} Hz")
@@ -222,7 +224,7 @@ class QCALProtocolActivator:
         sabio_script = self.repo_root / "sabio-validator.py"
         
         if not sabio_script.exists():
-            print("   ℹ️  sabio-validator.py no encontrado - omitiendo")
+            print(f"   ℹ️  sabio-validator.py no encontrado en {sabio_script} - omitiendo")
             self.results['sabio_validator'] = {'passed': True, 'skipped': True}
             return True
         
@@ -265,7 +267,7 @@ class QCALProtocolActivator:
         v5_script = self.repo_root / "validate_v5_coronacion.py"
         
         if not v5_script.exists():
-            print("❌ validate_v5_coronacion.py no encontrado")
+            print(f"❌ validate_v5_coronacion.py no encontrado en {v5_script}")
             self.results['v5_coronacion'] = {'passed': False, 'missing': True}
             return False
         
@@ -445,7 +447,7 @@ class QCALProtocolActivator:
             timeout = " (timeout)" if result.get('timeout') else ""
             print(f"  {status} {phase}{skipped}{timeout}")
         
-        overall_success = passed_phases >= total_phases * 0.7  # 70% threshold
+        overall_success = passed_phases >= total_phases * ACTIVATION_SUCCESS_THRESHOLD
         
         print("\n" + "=" * 80)
         if overall_success:

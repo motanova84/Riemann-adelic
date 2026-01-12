@@ -19,6 +19,7 @@ DOI: 10.5281/zenodo.17379721
 import sys
 import json
 import subprocess
+import math
 from pathlib import Path
 from datetime import datetime
 from typing import Dict, List, Tuple
@@ -30,6 +31,10 @@ REPO_ROOT = Path(__file__).parent.absolute()
 F0_HZ = 141.7001
 C_PRIMARY = 629.83
 C_COHERENCE = 244.36
+PHI = 1.618033988749895  # Golden ratio
+
+# Validation thresholds
+VALIDATION_SUCCESS_THRESHOLD = 0.8  # 80% of validations must pass
 
 
 class IntegralValidator:
@@ -52,10 +57,20 @@ class IntegralValidator:
         """Validar coherencia de constantes matemáticas"""
         print("🔢 Validando Constantes Matemáticas Fundamentales...")
         
-        # Read .qcal_beacon
+        # Read .qcal_beacon with error handling
         beacon = self.repo_root / ".qcal_beacon"
-        with open(beacon, 'r') as f:
-            beacon_content = f.read()
+        try:
+            if not beacon.exists():
+                print(f"  ❌ .qcal_beacon no encontrado en {beacon}")
+                self.results['mathematical_constants'] = {'passed': False, 'error': 'beacon_missing'}
+                return False
+            
+            with open(beacon, 'r', encoding='utf-8') as f:
+                beacon_content = f.read()
+        except Exception as e:
+            print(f"  ❌ Error leyendo .qcal_beacon: {e}")
+            self.results['mathematical_constants'] = {'passed': False, 'error': str(e)}
+            return False
         
         checks = {
             'frequency_141_7001': str(F0_HZ) in beacon_content,
@@ -113,9 +128,16 @@ class IntegralValidator:
         else:
             print("  ℹ️  Ejecutando validación V5 Coronación...")
             
+            # Verify script exists
+            v5_script = self.repo_root / "validate_v5_coronacion.py"
+            if not v5_script.exists():
+                print(f"  ❌ Script no encontrado: {v5_script}")
+                self.results['rh_demonstration'] = {'passed': False, 'error': 'script_missing'}
+                return False
+            
             try:
                 result = subprocess.run(
-                    [sys.executable, "validate_v5_coronacion.py", "--precision", "15"],
+                    [sys.executable, str(v5_script), "--precision", "15"],
                     capture_output=True,
                     text=True,
                     timeout=180,
@@ -245,8 +267,6 @@ class IntegralValidator:
         print(f"  {'✓' if factor_ok else '✗'} Factor de coherencia: {'OK' if factor_ok else 'desviación'}")
         
         # Heartbeat calculation
-        import math
-        PHI = 1.618033988749895
         heartbeat = math.sin(F0_HZ * PHI) + math.cos(F0_HZ / math.e)
         
         print(f"  💓 Heartbeat signal: {heartbeat:.6f}")
@@ -346,7 +366,7 @@ class IntegralValidator:
             'signature': 'Ψ = I × A_eff² × C^∞'
         }
         
-        success = passed_validations >= total_validations * 0.8  # 80% threshold
+        success = passed_validations >= total_validations * VALIDATION_SUCCESS_THRESHOLD
         
         print(f"\nValidaciones completadas: {passed_validations}/{total_validations} ({certificate['validation_results']['success_rate']})")
         print(f"Tiempo total: {elapsed:.1f} segundos")
@@ -421,7 +441,7 @@ class IntegralValidator:
             # Generar certificado
             certificate = self.generate_integral_certificate(save_file=True)
             
-            return certificate['validation_results']['passed'] >= certificate['validation_results']['total'] * 0.8
+            return certificate['validation_results']['passed'] >= certificate['validation_results']['total'] * VALIDATION_SUCCESS_THRESHOLD
             
         except Exception as e:
             print(f"\n❌ Error en validación integral: {e}")
