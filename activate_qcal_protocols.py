@@ -127,13 +127,20 @@ class QCALProtocolActivator:
         """Activar NOESIS Guardian ∞³"""
         print("🧠 Fase 2: Activando NOESIS Guardian ∞³...")
         
+        # Verificar sincronización con noesis88
+        noesis88_sync = self._verify_noesis88_sync()
+        if noesis88_sync:
+            print("   ✓ Sincronización noesis88: Activa")
+        else:
+            print("   ⚠️  Sincronización noesis88: No detectada (modo local)")
+        
         try:
             # Ejecutar guardian core
             guardian_script = self.repo_root / "noesis_guardian" / "guardian_core.py"
             
             if not guardian_script.exists():
                 print(f"  ⚠️  guardian_core.py no encontrado en {guardian_script}")
-                print("      Creando módulo de emergencia...")
+                print("      Creando módulo de emergencia con enlace noesis88...")
                 return self._create_emergency_guardian()
             
             result = subprocess.run(
@@ -150,13 +157,15 @@ class QCALProtocolActivator:
                 print("✅ NOESIS Guardian activado correctamente")
                 print(f"   Heartbeat: @ {F0_HZ} Hz")
                 print(f"   Coherencia: C = {C_COHERENCE}")
+                print(f"   Enlace noesis88: {'✓' if noesis88_sync else 'Modo local'}")
             else:
                 print(f"⚠️  NOESIS Guardian warning: {result.stderr[:200]}")
             
             self.results['noesis_guardian'] = {
                 'passed': success,
                 'output': result.stdout,
-                'frequency': F0_HZ
+                'frequency': F0_HZ,
+                'noesis88_sync': noesis88_sync
             }
             
             return success
@@ -166,8 +175,33 @@ class QCALProtocolActivator:
             self.results['noesis_guardian'] = {'passed': False, 'error': str(e)}
             return False
     
+    def _verify_noesis88_sync(self) -> bool:
+        """Verificar sincronización con sistema noesis88"""
+        try:
+            # Verificar .qcal_beacon para estado de sincronización
+            beacon = self.repo_root / ".qcal_beacon"
+            if beacon.exists():
+                with open(beacon, 'r', encoding='utf-8') as f:
+                    content = f.read()
+                    if 'noesis88_sync_status' in content and 'Sincronizado' in content:
+                        return True
+            
+            # Verificar si existe directorio o referencia a noesis88
+            noesis88_markers = [
+                self.repo_root / "noesis88",
+                self.repo_root / ".noesis88_link",
+            ]
+            
+            for marker in noesis88_markers:
+                if marker.exists():
+                    return True
+            
+            return False
+        except Exception:
+            return False
+    
     def _create_emergency_guardian(self) -> bool:
-        """Crear módulo de emergencia de NOESIS Guardian"""
+        """Crear módulo de emergencia de NOESIS Guardian con enlace noesis88"""
         print("   🔧 Activando modo de emergencia NOESIS...")
         
         # Heartbeat calculation
@@ -177,23 +211,80 @@ class QCALProtocolActivator:
         print(f"   ✓ Frecuencia: {F0_HZ} Hz")
         print(f"   ✓ Coherencia: {C_COHERENCE}")
         
+        # Intentar enlazar con noesis88 si está disponible
+        noesis88_linked = self._try_link_noesis88()
+        if noesis88_linked:
+            print(f"   ✓ Enlace noesis88: Establecido")
+        else:
+            print(f"   ℹ️  Enlace noesis88: Modo local (sin enlace externo)")
+        
         self.results['noesis_guardian'] = {
             'passed': True,
             'mode': 'emergency',
             'heartbeat': heartbeat,
             'frequency': F0_HZ,
-            'coherence': C_COHERENCE
+            'coherence': C_COHERENCE,
+            'noesis88_linked': noesis88_linked
         }
         
         return True
+    
+    def _try_link_noesis88(self) -> bool:
+        """Intentar establecer enlace con sistema noesis88"""
+        try:
+            # Buscar referencias a noesis88 en el ecosistema
+            # 1. Verificar si existe como submódulo git
+            gitmodules = self.repo_root / ".gitmodules"
+            if gitmodules.exists():
+                with open(gitmodules, 'r') as f:
+                    if 'noesis88' in f.read():
+                        print("      → noesis88 detectado como submódulo git")
+                        return True
+            
+            # 2. Verificar directorio hermano
+            parent_dir = self.repo_root.parent
+            noesis88_sibling = parent_dir / "noesis88"
+            if noesis88_sibling.exists():
+                print(f"      → noesis88 detectado en {noesis88_sibling}")
+                # Crear enlace simbólico si no existe
+                link_path = self.repo_root / ".noesis88_link"
+                if not link_path.exists():
+                    try:
+                        link_path.symlink_to(noesis88_sibling)
+                        print(f"      → Enlace simbólico creado: {link_path}")
+                    except Exception:
+                        pass  # Puede fallar en algunos sistemas
+                return True
+            
+            # 3. Verificar variable de entorno
+            noesis88_path = os.environ.get('NOESIS88_PATH')
+            if noesis88_path and Path(noesis88_path).exists():
+                print(f"      → noesis88 detectado via NOESIS88_PATH: {noesis88_path}")
+                return True
+            
+            return False
+        except Exception as e:
+            print(f"      ⚠️  Error verificando noesis88: {e}")
+            return False
     
     def activate_amda(self) -> bool:
         """Activar AMDA (Autonomous Mathematical Discovery Agent)"""
         print("\n🔬 Fase 3: Activando AMDA...")
         
+        # Verificar sincronización noesis88
+        noesis88_sync = self._verify_noesis88_sync()
+        if noesis88_sync:
+            print("   ✓ Sistema noesis88 detectado - usando módulos enlazados")
+        
         if not AGENTS_AVAILABLE:
             print("   📦 Módulo de agentes no disponible - modo simulado")
-            self.results['amda'] = {'passed': True, 'mode': 'simulated'}
+            print("   ℹ️  Para activación completa, asegurar enlace con noesis88")
+            self.results['amda'] = {
+                'passed': True,
+                'mode': 'simulated',
+                'noesis88_sync': noesis88_sync,
+                'recommendation': 'Link noesis88 repository for full AMDA functionality'
+            }
             return True
         
         try:
@@ -206,15 +297,26 @@ class QCALProtocolActivator:
                 print("✅ AMDA activado correctamente")
                 print("   Dominios de descubrimiento: 4 activos")
                 print("   Conexión QCAL ∞³: establecida")
+                print(f"   Enlace noesis88: {'✓' if noesis88_sync else 'Modo local'}")
             else:
                 print("⚠️  AMDA: advertencias en activación")
+                if not noesis88_sync:
+                    print("   💡 Sugerencia: Enlazar repositorio noesis88 para funcionalidad completa")
             
+            activation['noesis88_sync'] = noesis88_sync
             self.results['amda'] = activation
             return success
             
         except Exception as e:
             print(f"⚠️  Error activando AMDA (continuando): {e}")
-            self.results['amda'] = {'passed': True, 'mode': 'fallback', 'note': str(e)}
+            if not noesis88_sync:
+                print("   💡 El enlace con noesis88 puede resolver este error")
+            self.results['amda'] = {
+                'passed': True,
+                'mode': 'fallback',
+                'note': str(e),
+                'noesis88_sync': noesis88_sync
+            }
             return True
     
     def run_sabio_validator(self) -> bool:

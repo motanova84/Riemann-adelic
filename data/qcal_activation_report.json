@@ -1,11 +1,11 @@
 {
-  "timestamp": "2026-01-12T08:54:15.525369",
+  "timestamp": "2026-01-12T09:11:15.203236",
   "mode": "fast",
   "precision": 15,
-  "elapsed_seconds": 6.531824111938477,
+  "elapsed_seconds": 0.4656944274902344,
   "total_phases": 7,
-  "passed_phases": 4,
-  "success_rate": "57.1%",
+  "passed_phases": 2,
+  "success_rate": "28.6%",
   "qcal_constants": {
     "f0_Hz": 141.7001,
     "C_primary": 629.83,
@@ -24,22 +24,23 @@
     },
     "noesis_guardian": {
       "passed": false,
-      "output": "\n======================================================================\n  NOESIS GUARDIAN \u2014 QCAL \u221e\u00b3 Ecosystem Monitor\n  Jos\u00e9 Manuel Mota Burruezo \u03a8 \u2727 \u221e\u00b3\n======================================================================\n\n",
-      "frequency": 141.7001
+      "output": "",
+      "frequency": 141.7001,
+      "noesis88_sync": true
     },
     "amda": {
-      "timestamp": "2026-01-12T08:54:09.205034",
+      "timestamp": "2026-01-12T09:11:14.870599",
       "coordination": "DUAL_AGENT_MODE",
       "agents": {
         "noesis": {
           "agent": "NOESIS GUARDIAN \u221e\u00b3",
           "status": "ACTIVADO",
-          "timestamp": "2026-01-12T08:54:09.205076",
+          "timestamp": "2026-01-12T09:11:14.870621",
           "frequency": 141.7001,
           "capabilities": [
             "guardian_core"
           ],
-          "heartbeat": -0.22748285225779163,
+          "heartbeat": -0.22748285225780016,
           "spectral_monitoring": "ACTIVO",
           "coherence_status": {
             "equation": "\u03a8 = I \u00d7 A_eff\u00b2 \u00d7 C^\u221e",
@@ -53,7 +54,7 @@
         "amda": {
           "agent": "AMDA (Autonomous Mathematical Discovery Agent)",
           "status": "ACTIVADO",
-          "timestamp": "2026-01-12T08:54:09.205541",
+          "timestamp": "2026-01-12T09:11:14.870668",
           "frequency": 141.7001,
           "discovery_domains": [
             "spectral_patterns",
@@ -70,16 +71,17 @@
           "discovery_engine": "ACTIVO"
         }
       },
-      "coordination_status": "ACTIVA"
+      "coordination_status": "ACTIVA",
+      "noesis88_sync": true
     },
     "sabio_validator": {
-      "passed": true,
-      "output": "\n======================================================================\n\ud83d\udd2c SABIO \u221e\u00b3 Validation Report\n======================================================================\nPrecision: 15 decimal places\nTimestamp: 1768208049.2586648\n\n\ud83d\udccb Vibrational Frequency:\n   f\u2080 computed: 141.700100 Hz\nf\u2080 target: 141.7001 Hz\n\u0394f: 0.000000e+00 Hz\nValidation: \u2705 PASS\n\n\ud83d\udccb Beacon Structure:\n   \u2705 Beacon structure valid\n\n\ud83d\udccb Coherence:\n   \u2705 Coherence C = 244.36 validated\n\n\ud83d\udccb Doi Reference:\n   \u2705 Primary DOI validated: 10.528"
+      "passed": false,
+      "output": ""
     },
     "v5_coronacion": {
-      "passed": true,
+      "passed": false,
       "precision": 15,
-      "output": "\ud83d\udd10 Verifying environment integrity...\n   \u2705 Environment integrity verified\n\ud83d\udd27 Computational precision set to 15 decimal places\n================================================================================\n\ud83c\udfc6 V5 CORONACI\u00d3N: COMPLETE RIEMANN HYPOTHESIS PROOF VALIDATION\n================================================================================\nTimestamp: 2026-01-12T08:54:10.350814\nPrecision: 15 decimal places\nMax zeros: 1000\nMax primes: 1000\n\n\ud83d\udd0d RUNNING V5 CORONACI\u00d3N VALIDATION STEPS...\n\n\ud83d\udccb Step 1: Axioms \u2192 Lemmas\n   Description: Verify A1, A2, A4 are proven consequences, not axioms\n   Theory: Adelic theory (Tate, Weil) + Birman-Solomyak\n   \u2705 Step 1: Axioms \u2192 Lemmas: PASSED (0.000s)\n\n\ud83d\udccb Step 2: Archimedean Rigidity\n   Description: Double derivation of \u03b3\u221e(s) = \u03c0^(-s/2)\u0393(s/2)\n   Theory: Weil index + stationary phase analysis\n   \u2705 Step 2: Archimedean Rigidity: PASSED (0.000s)\n\n\ud83d\udccb Step 3: Paley-Wiener Uniqueness\n   Description: Unique identification D(s) \u2261 \u039e(s)\n   Theory: Paley-Wiener unique"
+      "output": ""
     },
     "spectral_emergence": {
       "passed": false,
