@@ -1,0 +1,64 @@
+{
+  "protocol": "QCAL-SYMBIO-BRIDGE",
+  "origin": "motanova84",
+  "version": "1.0.0",
+  "identity_nodes": {
+    "ledger": "economia-qcal-nodo-semilla",
+    "spectral": "141hz",
+    "verification": "Ramsey",
+    "geometry": "Riemann-adelic",
+    "complexity": "P-NP",
+    "fluid": "3D-Navier-Stokes",
+    "arithmetic": "adelic-bsd"
+  },
+  "constants": {
+    "f0": 141.7001,
+    "limit_nfts": 88,
+    "resonance": 888,
+    "r66": 108,
+    "coherence_C": 244.36,
+    "universal_C": 629.83,
+    "psi_perfect": 0.999999
+  },
+  "mathematical_protocols": {
+    "RAM": {
+      "name": "Ramsey-Adelic-Mathematics",
+      "description": "Unified protocol for SAT verification and spectral theory",
+      "components": ["Ramsey", "Riemann-adelic", "adelic-bsd"]
+    },
+    "QCAL": {
+      "name": "Quantum Coherence Adelic Lattice",
+      "description": "Framework for spectral emergence and coherence",
+      "frequency": 141.7001,
+      "equation": "Ψ = I × A_eff² × C^∞"
+    },
+    "πCODE": {
+      "name": "Prime Constitutional Digital Economy",
+      "description": "Economy based on 88 sovereign NFTs and 888 Hz resonance",
+      "emission_base": "Constitutional primes",
+      "sovereignty_limit": 88
+    }
+  },
+  "cross_repository_links": {
+    "riemann_to_ramsey": "Spectral zeros verification via SAT encoding",
+    "riemann_to_141hz": "Fundamental frequency derivation from spectral operator",
+    "riemann_to_bsd": "Adelic methods shared framework",
+    "riemann_to_pnp": "Complexity via spectral determinant",
+    "riemann_to_navier_stokes": "Operator theory and smoothness",
+    "ramsey_to_economia": "R(6,6) = 108 NFT verification structure",
+    "141hz_to_all": "Universal frequency carrier"
+  },
+  "synchronization": {
+    "method": "GitHub Actions cross-repository triggers",
+    "beacon_files": [".qcal_beacon", ".qcal_symbiosis.md"],
+    "validation_frequency": "on_push",
+    "coherence_check": "validate_v5_coronacion.py"
+  },
+  "metadata": {
+    "created": "2026-01-12",
+    "author": "José Manuel Mota Burruezo Ψ ✧ ∞³",
+    "institution": "Instituto de Conciencia Cuántica (ICQ)",
+    "license": "CC BY-NC-SA 4.0",
+    "status": "active"
+  }
+}

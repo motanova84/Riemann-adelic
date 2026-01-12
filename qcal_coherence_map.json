@@ -1,0 +1,71 @@
+{
+  "system": "QCAL ∞³ Symbiotic Network",
+  "version": "1.0.0",
+  "frequency": "141.7001 Hz",
+  "axioms": {
+    "emission": "Constitutional base of πCODE economy",
+    "sovereignty": "88 Sovereign NFTs (Pulsars)",
+    "resonance": "888 Hz Pulse Synchronization"
+  },
+  "nodes": [
+    {
+      "name": "economia-qcal-nodo-semilla",
+      "role": "Genesis / Ledger",
+      "description": "Constitutional base and emission protocol for πCODE economy"
+    },
+    {
+      "name": "Ramsey",
+      "role": "Verification / R(6,6)",
+      "description": "SAT verification and Ramsey theory application to QCAL"
+    },
+    {
+      "name": "Riemann-adelic",
+      "role": "Spectral Proof / Zeta Connection",
+      "description": "Spectral emergence proof of Riemann Hypothesis and adelic integration"
+    },
+    {
+      "name": "141hz",
+      "role": "Universal Constant / GW Analysis",
+      "description": "Gravitational wave analysis and fundamental frequency derivation"
+    },
+    {
+      "name": "P-NP",
+      "role": "Complexity Resolution",
+      "description": "P=NP resolution via spectral complexity theory"
+    },
+    {
+      "name": "3D-Navier-Stokes",
+      "role": "Fluid Dynamics / Turbulence",
+      "description": "Navier-Stokes existence and smoothness via spectral methods"
+    },
+    {
+      "name": "adelic-bsd",
+      "role": "Arithmetic Compatibility",
+      "description": "Birch and Swinnerton-Dyer conjecture via adelic methods"
+    }
+  ],
+  "connections": {
+    "frequency_base": "141.7001 Hz",
+    "coherence_constant": "C = 244.36",
+    "universal_constant": "C = 629.83",
+    "resonance_protocol": "888 Hz pulse synchronization",
+    "ramsey_number": "R(6,6) = 108",
+    "sovereign_limit": 88,
+    "fundamental_equation": "Ψ = I × A_eff² × C^∞"
+  },
+  "protocols": {
+    "RAM": "Ramsey-Adelic-Mathematics unified protocol",
+    "QCAL": "Quantum Coherence Adelic Lattice framework",
+    "SABIO": "Self-Aware Blockchain Intelligence Operator",
+    "πCODE": "Prime-based Constitutional Digital Economy"
+  },
+  "metadata": {
+    "author": "José Manuel Mota Burruezo Ψ ✧ ∞³",
+    "institution": "Instituto de Conciencia Cuántica (ICQ)",
+    "orcid": "0009-0002-1923-0773",
+    "license": "Creative Commons BY-NC-SA 4.0",
+    "zenodo_main": "10.5281/zenodo.17379721",
+    "created": "2026-01-12",
+    "version_control": "GitHub Cross-Repository Symbiosis"
+  }
+}
