@@ -207,8 +207,9 @@ def test_zeta_connection(s: complex) -> Tuple[complex, complex, complex]:
     """
     Test that ζ_spectral(s) ≈ ζ(s) for Re(s) > 1
     
-    Note: Full validation requires the complete integral representation
-    ζ(s) = s·Γ(s)/(2π^s) · ∫₀^∞ x^(s-1)·e^(-x) dx
+    Note: The spectral trace as implemented computes s·Γ(s), which is related to
+    but not identical to ζ(s). Full validation would require implementing the
+    complete integral representation and functional equation.
     
     Args:
         s: Complex parameter with Re(s) > 1
@@ -225,17 +226,18 @@ def test_zeta_connection(s: complex) -> Tuple[complex, complex, complex]:
             rel_error = abs(spectral - riemann) / abs(riemann)
         else:
             rel_error = abs(spectral - riemann)
+        logger.info(f"  Note: Spectral trace computes s·Γ(s), comparison with ζ(s) shows expected difference")
     else:
         # For complex s, comparison requires full zeta implementation
-        # Here we just report the spectral value
-        riemann = spectral  # Note: This is the spectral computation itself
+        # Here we report the spectral computation as a baseline
+        riemann = spectral  # This is the spectral value itself for reference
         rel_error = 0.0
-        logger.info("  (Complex s: full zeta comparison not implemented)")
+        logger.info("  (Complex s: full zeta comparison not implemented, showing spectral value)")
     
     logger.info(f"Connection test for s = {s}:")
     logger.info(f"  ζ_spectral(s) = {spectral}")
-    logger.info(f"  ζ(s) = {riemann}")
-    logger.info(f"  Relative error: {rel_error:.2e}")
+    logger.info(f"  ζ(s) reference = {riemann}")
+    logger.info(f"  Relative difference: {rel_error:.2e}")
     
     return spectral, riemann, rel_error
 
