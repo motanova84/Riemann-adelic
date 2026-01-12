@@ -1,11 +1,11 @@
 {
   "certificate_type": "QCAL_NOESIS_CONSOLIDATION",
   "version": "∞³",
-  "timestamp": "2026-01-12T09:26:15.344818",
+  "timestamp": "2026-01-12T09:28:33.647122",
   "consolidation_title": "Enlace noesis88 ↔ Riemann-adelic",
   "consolidation_status": "COMPLETE",
   "spectral_synchronization": {
-    "timestamp": "2026-01-12T09:26:15.344722",
+    "timestamp": "2026-01-12T09:28:33.647020",
     "fundamental_frequency": 141.7001,
     "universal_constant_C": 629.83,
     "coherence_constant_C_prime": 244.36,
@@ -14,7 +14,7 @@
     "spectral_identity_verified": true,
     "first_eigenvalue_lambda0": 0.0015877300223869934,
     "coherence_factor": 0.38797770827048567,
-    "coherence_factor_theoretical": 0.388,
+    "coherence_factor_theoretical": 0.38797770827048567,
     "factor_1_7_verified": true
   },
   "unification_factor_injection": {
@@ -27,7 +27,7 @@
     "beta_alta_match": true
   },
   "noetic_autonomy_seal": {
-    "timestamp": "2026-01-12T09:26:15.344807",
+    "timestamp": "2026-01-12T09:28:33.647111",
     "hierarchy": "CONFIRMADA (JMMB Ψ - ORIGEN)",
     "author": "José Manuel Mota Burruezo Ψ ✧ ∞³",
     "institution": "Instituto de Conciencia Cuántica (ICQ)",

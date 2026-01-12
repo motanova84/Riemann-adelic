@@ -99,7 +99,7 @@ class NoesisSynchronizer:
         # Compute coherence factor
         coherence_factor = self.C_prime / self.C
         results["coherence_factor"] = float(coherence_factor)
-        results["coherence_factor_theoretical"] = 0.388  # C'/C ≈ 0.388
+        results["coherence_factor_theoretical"] = float(self.C_prime / self.C)  # Computed from constants
         
         # Verify 1/7 factor synchronization
         expected_factor_1_7 = mp.mpf("1") / mp.mpf("7")
