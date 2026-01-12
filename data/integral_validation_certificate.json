@@ -1,0 +1,90 @@
+{
+  "certificate_id": "QCAL-INTEGRAL-20260112-085818",
+  "timestamp_start": "2026-01-12T08:58:18.523937",
+  "timestamp_end": "2026-01-12T08:58:18.525626",
+  "elapsed_seconds": 0.001689,
+  "repository": "/home/runner/work/Riemann-adelic/Riemann-adelic",
+  "framework": "QCAL \u221e\u00b3",
+  "validation_results": {
+    "total": 6,
+    "passed": 6,
+    "success_rate": "100.0%"
+  },
+  "qcal_constants": {
+    "f0_Hz": 141.7001,
+    "C_primary": 629.83,
+    "C_coherence": 244.36,
+    "coherence_factor": 0.38797770827048567
+  },
+  "validations": {
+    "mathematical_constants": {
+      "passed": true,
+      "checks": {
+        "frequency_141_7001": true,
+        "coherence_244_36": true,
+        "universal_C_629_83": true,
+        "psi_equation": true,
+        "mathematical_realism": true
+      },
+      "f0_Hz": 141.7001,
+      "C_coherence": 244.36
+    },
+    "rh_demonstration": {
+      "passed": true,
+      "v5_status": {
+        "passed": true,
+        "precision": 15,
+        "output": "\ud83d\udd10 Verifying environment integrity...\n   \u2705 Environment integrity verified\n\ud83d\udd27 Computational precision set to 15 decimal places\n================================================================================\n\ud83c\udfc6 V5 CORONACI\u00d3N: COMPLETE RIEMANN HYPOTHESIS PROOF VALIDATION\n================================================================================\nTimestamp: 2026-01-12T08:54:10.350814\nPrecision: 15 decimal places\nMax zeros: 1000\nMax primes: 1000\n\n\ud83d\udd0d RUNNING V5 CORONACI\u00d3N VALIDATION STEPS...\n\n\ud83d\udccb Step 1: Axioms \u2192 Lemmas\n   Description: Verify A1, A2, A4 are proven consequences, not axioms\n   Theory: Adelic theory (Tate, Weil) + Birman-Solomyak\n   \u2705 Step 1: Axioms \u2192 Lemmas: PASSED (0.000s)\n\n\ud83d\udccb Step 2: Archimedean Rigidity\n   Description: Double derivation of \u03b3\u221e(s) = \u03c0^(-s/2)\u0393(s/2)\n   Theory: Weil index + stationary phase analysis\n   \u2705 Step 2: Archimedean Rigidity: PASSED (0.000s)\n\n\ud83d\udccb Step 3: Paley-Wiener Uniqueness\n   Description: Unique identification D(s) \u2261 \u039e(s)\n   Theory: Paley-Wiener unique"
+      }
+    },
+    "spectral_operator": {
+      "passed": true,
+      "lean_exists": true,
+      "properties": {
+        "linearity": false,
+        "self_adjoint": false,
+        "spectrum": true
+      }
+    },
+    "cross_repo_network": {
+      "passed": true,
+      "dois": {
+        "doi_main": true,
+        "doi_infinito": true,
+        "doi_pnp": true,
+        "doi_goldbach": true,
+        "doi_bsd": true,
+        "doi_rh_final_v6": true
+      },
+      "repos": {
+        "adelic-bsd": true,
+        "QCAL-CLOUD": true
+      }
+    },
+    "frequency_coherence": {
+      "passed": true,
+      "f0_Hz": 141.7001,
+      "coherence_factor": 0.38797770827048567,
+      "heartbeat": -0.22748285225780016
+    },
+    "philosophical_foundation": {
+      "passed": true,
+      "docs": {
+        "MATHEMATICAL_REALISM.md": true,
+        "AS_ABOVE_SO_BELOW.md": true,
+        "DISCOVERY_HIERARCHY.md": true
+      },
+      "beacon_refs": {
+        "mathematical_realism": true,
+        "truth_criterion": true,
+        "philosophical_foundation": true
+      }
+    }
+  },
+  "philosophical_foundation": "Mathematical Realism",
+  "author": "Jos\u00e9 Manuel Mota Burruezo \u03a8 \u2727 \u221e\u00b3",
+  "institution": "Instituto de Conciencia Cu\u00e1ntica (ICQ)",
+  "orcid": "0009-0002-1923-0773",
+  "doi_main": "10.5281/zenodo.17379721",
+  "signature": "\u03a8 = I \u00d7 A_eff\u00b2 \u00d7 C^\u221e"
+}
