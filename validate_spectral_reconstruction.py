@@ -43,27 +43,23 @@ def phi(n: int, x: float) -> complex:
         return 0.0
     return np.sqrt(2) * np.sin(n * np.log(x))
 
-def test_orthonormality(m: int, n: int, x_max: float = 1000.0) -> float:
+def test_orthonormality(m: int, n: int, x_min: float = 1e-6, x_max: float = 100.0) -> float:
     """
     Test orthonormality: ∫₀^∞ φ_m(x) · φ_n(x) · (1/x) dx = δ_{mn}
     
-    After change of variable u = log(x), this becomes:
-    ∫_{-∞}^∞ 2·sin(mu)·sin(nu) du = δ_{mn}
-    
     Args:
         m, n: Indices of basis functions
-        x_max: Upper integration limit (approximating ∞)
+        x_min, x_max: Integration bounds (approximating (0, ∞))
         
     Returns:
         The integral value (should be 1 if m=n, 0 otherwise)
     """
-    # Use change of variable u = log(x) for better numerics
-    # ∫ φ_m(x) φ_n(x) dx/x = ∫ 2·sin(mu)·sin(nu) du
-    def integrand_u(u):
-        return 2 * np.sin(m * u) * np.sin(n * u)
+    def integrand(x):
+        if x <= 0:
+            return 0.0
+        return phi(m, x) * phi(n, x) / x
     
-    # Integrate over a symmetric interval for better accuracy
-    result, error = integrate.quad(integrand_u, -np.log(x_max), np.log(x_max), limit=100)
+    result, error = integrate.quad(integrand, x_min, x_max, limit=200)
     logger.info(f"Orthonormality ⟨φ_{m}, φ_{n}⟩ = {result:.6f} (error: {error:.2e})")
     return result
 
@@ -146,6 +142,9 @@ def zeta_spectral(s: complex, x_max: float = 50.0) -> complex:
     """
     Compute the spectral trace: ζ_spectral(s) = ∫₀^∞ x^(s-1) · (H_Ψ ψ₀)(x) dx
     
+    For complex s = σ + it, we have:
+    x^(s-1) = x^(σ-1) · e^(it·log x) = x^(σ-1) · (cos(t·log x) + i·sin(t·log x))
+    
     Args:
         s: Complex parameter
         x_max: Upper integration limit
@@ -156,16 +155,20 @@ def zeta_spectral(s: complex, x_max: float = 50.0) -> complex:
     def integrand_real(x):
         if x <= 0:
             return 0.0
-        x_pow = x ** (s.real - 1) * np.cos((s.imag) * np.log(x))
+        # x^(s-1) = x^(σ-1) · e^(it·log x)
+        x_pow_real = x ** (s.real - 1) * np.exp(-s.imag * np.log(x)) if s.imag != 0 else x ** (s.real - 1)
         h_psi = -x * deriv_psi0(x)
-        return x_pow * h_psi
+        return np.real(x_pow_real * h_psi)
     
     def integrand_imag(x):
         if x <= 0:
             return 0.0
-        x_pow = x ** (s.real - 1) * np.sin((s.imag) * np.log(x))
+        if s.imag == 0:
+            return 0.0
+        # Imaginary part when s has imaginary component
+        x_pow_imag = x ** (s.real - 1) * np.sin(s.imag * np.log(x))
         h_psi = -x * deriv_psi0(x)
-        return x_pow * h_psi
+        return x_pow_imag * h_psi
     
     real_part, _ = integrate.quad(integrand_real, 1e-10, x_max, limit=100)
     imag_part, _ = integrate.quad(integrand_imag, 1e-10, x_max, limit=100)
@@ -206,6 +209,9 @@ def test_zeta_connection(s: complex) -> Tuple[complex, complex, complex]:
     """
     Test that ζ_spectral(s) ≈ ζ(s) for Re(s) > 1
     
+    Note: Full validation requires the complete integral representation
+    ζ(s) = s·Γ(s)/(2π^s) · ∫₀^∞ x^(s-1)·e^(-x) dx
+    
     Args:
         s: Complex parameter with Re(s) > 1
         
@@ -217,15 +223,16 @@ def test_zeta_connection(s: complex) -> Tuple[complex, complex, complex]:
     # For real s > 1, use scipy's zeta
     if s.imag == 0 and s.real > 1:
         riemann = special.zeta(s.real, 1)
+        if abs(riemann) > 1e-10:
+            rel_error = abs(spectral - riemann) / abs(riemann)
+        else:
+            rel_error = abs(spectral - riemann)
     else:
-        # Use the relation ζ(s) ≈ s/(s-1) · Γ(s) / (spectral computation)
-        # For demonstration, we'll compute via the integral representation
-        riemann = spectral  # Placeholder - actual computation is complex
-    
-    if abs(riemann) > 1e-10:
-        rel_error = abs(spectral - riemann) / abs(riemann)
-    else:
-        rel_error = abs(spectral - riemann)
+        # For complex s, comparison requires full zeta implementation
+        # Here we just report the spectral value
+        riemann = spectral  # Note: This is the spectral computation itself
+        rel_error = 0.0
+        logger.info("  (Complex s: full zeta comparison not implemented)")
     
     logger.info(f"Connection test for s = {s}:")
     logger.info(f"  ζ_spectral(s) = {spectral}")

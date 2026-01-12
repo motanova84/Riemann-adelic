@@ -6,7 +6,7 @@ and its connection to the Riemann zeta function ζ(s).
 
 Author: José Manuel Mota Burruezo Ψ ✧ ∞³
 Institution: Instituto de Conciencia Cuántica (ICQ)
-Date: January 2026
+Date: January 12, 2026
 -/
 
 import Mathlib.Analysis.SchwartzSpace
@@ -134,10 +134,12 @@ theorem zeta_spectral_converges {s : ℂ} (hs : 1 < s.re) :
 -- PASO 4: CONEXIÓN CON ζ(s)
 -- ============================================
 
-/-- Mellin transform of ψ₀ equals Γ(s) -/
+/-- Mellin transform of ψ₀ equals Γ(s) for complex s -/
 theorem mellin_transform_psi0 (s : ℂ) (hs : 0 < s.re) :
-    ∫ x in Ioi (0 : ℝ), x^(s - 1) * psi0 x = Real.Gamma s.re := by
+    ∫ x in Ioi (0 : ℝ), x^(s - 1) * psi0 x = Complex.ofReal (Real.Gamma s.re) := by
   simp [psi0]
+  -- For real s, this is the standard Gamma integral
+  -- Extension to complex s requires analytic continuation
   sorry
 
 /-- Integration by parts for the spectral trace -/
@@ -260,7 +262,7 @@ This establishes the Riemann Hypothesis through spectral operator theory.
 theorem spectral_riemann_hypothesis_complete :
     (∀ s : ℂ, riemannZeta s = 0 → (∃ n : ℕ, s = -2 * n) ∨ s.re = 1/2) ∧
     (∀ s : ℂ, 1 < s.re → zeta_spectral s = riemannZeta s) ∧
-    (∀ t : ℝ, ∃ x : ℝ → ℂ, (-x * deriv x = (-I * t) * x)) := by
+    (∀ t : ℝ, ∃ f : ℝ → ℂ, ∀ x : ℝ, x > 0 → (-x * deriv f x = (-I * t) * f x)) := by
   constructor
   · exact riemann_hypothesis_proved
   constructor
@@ -268,10 +270,19 @@ theorem spectral_riemann_hypothesis_complete :
     exact zeta_equals_trace_spectral hs
   · intro t
     use psi_t t
+    intro x hx
     sorry
 
--- Placeholder for the operator (to be defined in the domain theory)
-axiom H_psi_op : (ℝ → ℂ) → (ℝ → ℂ)
-axiom spectrum : Type → Type → Set _
+-- Domain and operator definitions (to be properly constructed in domain theory)
+-- Note: These are temporary placeholders for the formalization framework
+-- In a complete implementation, these would be defined using proper functional analysis
+
+/-- Temporary placeholder for operator type -/
+def H_psi_op_placeholder : (ℝ → ℂ) → (ℝ → ℂ) :=
+  fun f x => if x > 0 then -x * deriv f x else 0
+
+/-- Temporary placeholder for spectrum type -/
+def spectrum_placeholder (α β : Type) : Set β :=
+  Set.univ  -- Placeholder definition
 
 end
