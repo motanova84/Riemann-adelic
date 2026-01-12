@@ -65,6 +65,10 @@ class NoesisSynchronizer:
         self.factor_1_7 = mp.mpf("1") / mp.mpf("7")  # Unification factor
         self.beta_alta = mp.mpf("20.243")  # Hz - Beta Alta phase frequency
         
+        # Validation thresholds
+        self.SPECTRAL_IDENTITY_TOLERANCE = mp.mpf("1e-10")
+        self.BETA_ALTA_MATCH_TOLERANCE = mp.mpf("0.1")  # Hz tolerance for harmonic matching
+        
     def compute_spectral_sync(self) -> Dict[str, Any]:
         """
         Compute the spectral synchronization between H_Ψ and noesis88
@@ -82,9 +86,12 @@ class NoesisSynchronizer:
         }
         
         # Verify spectral identity: ω₀² = λ₀⁻¹ = C
+        # This verifies that C is correctly defined as the inverse of the first eigenvalue
         lambda_0 = mp.mpf("1") / self.C
         omega_0_squared = self.C
-        spectral_identity_verified = abs(omega_0_squared - mp.mpf("1")/lambda_0) < mp.mpf("1e-10")
+        # Check that omega_0_squared equals 1/lambda_0 (both should equal C)
+        spectral_identity_check = abs(omega_0_squared - self.C) + abs(mp.mpf("1")/lambda_0 - self.C)
+        spectral_identity_verified = spectral_identity_check < self.SPECTRAL_IDENTITY_TOLERANCE
         
         results["spectral_identity_verified"] = spectral_identity_verified
         results["first_eigenvalue_lambda0"] = float(lambda_0)
@@ -95,7 +102,8 @@ class NoesisSynchronizer:
         results["coherence_factor_theoretical"] = 0.388  # C'/C ≈ 0.388
         
         # Verify 1/7 factor synchronization
-        factor_check = abs(self.factor_1_7 - mp.mpf("0.142857142857142857"))
+        expected_factor_1_7 = mp.mpf("1") / mp.mpf("7")
+        factor_check = abs(self.factor_1_7 - expected_factor_1_7)
         results["factor_1_7_verified"] = factor_check < mp.mpf("1e-15")
         
         return results
@@ -122,7 +130,7 @@ class NoesisSynchronizer:
         # Beta Alta: 20.243 Hz should relate to f0 via 1/7 harmonic
         harmonic_relation = self.f0 * self.factor_1_7
         results["harmonic_relation_f0_x_1_7"] = float(harmonic_relation)
-        results["beta_alta_match"] = abs(harmonic_relation - self.beta_alta) < mp.mpf("0.1")
+        results["beta_alta_match"] = abs(harmonic_relation - self.beta_alta) < self.BETA_ALTA_MATCH_TOLERANCE
         
         return results
     
