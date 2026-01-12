@@ -16,7 +16,6 @@ Date: January 2026
 import numpy as np
 from scipy import integrate, special
 from scipy.special import zeta
-import matplotlib.pyplot as plt
 from typing import Callable, Tuple
 import logging
 
