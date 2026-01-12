@@ -1,16 +1,16 @@
 {
-  "timestamp": "2026-01-10T03:02:44.233389",
+  "timestamp": "2026-01-12T08:54:09.205034",
   "coordination": "DUAL_AGENT_MODE",
   "agents": {
     "noesis": {
       "agent": "NOESIS GUARDIAN \u221e\u00b3",
       "status": "ACTIVADO",
-      "timestamp": "2026-01-10T03:02:44.233416",
+      "timestamp": "2026-01-12T08:54:09.205076",
       "frequency": 141.7001,
       "capabilities": [
         "guardian_core"
       ],
-      "heartbeat": -0.22748285225780016,
+      "heartbeat": -0.22748285225779163,
       "spectral_monitoring": "ACTIVO",
       "coherence_status": {
         "equation": "\u03a8 = I \u00d7 A_eff\u00b2 \u00d7 C^\u221e",
@@ -24,7 +24,7 @@
     "amda": {
       "agent": "AMDA (Autonomous Mathematical Discovery Agent)",
       "status": "ACTIVADO",
-      "timestamp": "2026-01-10T03:02:44.233506",
+      "timestamp": "2026-01-12T08:54:09.205541",
       "frequency": 141.7001,
       "discovery_domains": [
         "spectral_patterns",
