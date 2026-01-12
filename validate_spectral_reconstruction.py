@@ -256,8 +256,9 @@ def run_validation():
     for m, n in [(1, 1), (1, 2), (2, 2), (2, 3)]:
         result = test_orthonormality(m, n)
         expected = 1.0 if m == n else 0.0
-        # Note: For oscillatory integrals, numerical precision is limited
-        tolerance = 0.1 if m != n else 0.2  # Allow more tolerance for diagonal
+        # Note: For oscillatory integrals, numerical precision is limited.
+        # Use tighter tolerance on the diagonal (m = n), and slightly looser off-diagonal.
+        tolerance = 0.05 if m != n else 0.01
         if abs(result - expected) < tolerance:
             logger.info(f"  ✓ Passed: |{result:.4f} - {expected}| < {tolerance}")
         else:
