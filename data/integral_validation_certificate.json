@@ -1,8 +1,8 @@
 {
-  "certificate_id": "QCAL-INTEGRAL-20260112-085818",
-  "timestamp_start": "2026-01-12T08:58:18.523937",
-  "timestamp_end": "2026-01-12T08:58:18.525626",
-  "elapsed_seconds": 0.001689,
+  "certificate_id": "QCAL-INTEGRAL-20260112-090358",
+  "timestamp_start": "2026-01-12T09:03:58.279452",
+  "timestamp_end": "2026-01-12T09:03:58.280222",
+  "elapsed_seconds": 0.00077,
   "repository": "/home/runner/work/Riemann-adelic/Riemann-adelic",
   "framework": "QCAL \u221e\u00b3",
   "validation_results": {
