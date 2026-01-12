@@ -15,7 +15,6 @@ Date: January 2026
 
 import numpy as np
 from scipy import integrate, special
-from scipy.special import zeta
 from typing import Callable, Tuple
 import logging
 
@@ -154,10 +153,10 @@ def zeta_spectral(s: complex, x_max: float = 50.0) -> complex:
     def integrand_real(x):
         if x <= 0:
             return 0.0
-        # x^(s-1) = x^(σ-1) · e^(it·log x)
-        x_pow_real = x ** (s.real - 1) * np.exp(-s.imag * np.log(x)) if s.imag != 0 else x ** (s.real - 1)
+        # x^(s-1) = x^(σ-1) · (cos(t·log x) + i·sin(t·log x))
+        x_pow_real = x ** (s.real - 1) * np.cos(s.imag * np.log(x)) if s.imag != 0 else x ** (s.real - 1)
         h_psi = -x * deriv_psi0(x)
-        return np.real(x_pow_real * h_psi)
+        return x_pow_real * h_psi
     
     def integrand_imag(x):
         if x <= 0:
@@ -271,10 +270,11 @@ def run_validation():
         for x in [1.0, 2.0, 5.0]:
             lhs, rhs = test_eigenfunction(t, x)
             diff = abs(lhs - rhs)
-            if diff < 0.1:
-                logger.info(f"  ✓ Passed for t={t}, x={x}: diff = {diff:.4f}")
+            tolerance = 1e-4
+            if diff < tolerance:
+                logger.info(f"  ✓ Passed for t={t}, x={x}: diff = {diff:.4f} < tol={tolerance:g}")
             else:
-                logger.warning(f"  ⚠ Marginal for t={t}, x={x}: diff = {diff:.4f}")
+                logger.warning(f"  ⚠ Marginal for t={t}, x={x}: diff = {diff:.4f} ≥ tol={tolerance:g}")
     
     # Test 3: Mellin transform
     logger.info("\n[TEST 3] Mellin transform of ψ₀")
@@ -284,11 +284,12 @@ def run_validation():
         mellin = mellin_transform_psi0(s)
         gamma = special.gamma(s_val)
         diff = abs(mellin - gamma)
+        tolerance = 1e-6
         logger.info(f"s = {s_val}: Mellin = {mellin:.6f}, Γ(s) = {gamma:.6f}, diff = {diff:.6f}")
-        if diff < 0.5:
-            logger.info(f"  ✓ Passed: difference within tolerance")
+        if diff < tolerance:
+            logger.info(f"  ✓ Passed: difference within tolerance (|Δ| < {tolerance:.1e})")
         else:
-            logger.warning(f"  ⚠ Marginal: difference = {diff:.4f}")
+            logger.warning(f"  ⚠ Marginal: difference = {diff:.4f} (tolerance {tolerance:.1e})")
     
     # Test 4: Connection with ζ(s)
     logger.info("\n[TEST 4] Connection between spectral trace and ζ(s)")
@@ -296,16 +297,15 @@ def run_validation():
     for s_val in [2.0, 3.0, 4.0]:
         s = complex(s_val, 0.0)
         spectral, riemann, error = test_zeta_connection(s)
+        # Use the returned error to provide a quantitative validation
         logger.info(
-            f"s = {s_val}: ζ_spectral(s) = {spectral:.10f}, ζ(s) = {riemann:.10f}, "
-            f"relative error = {error:.3e}"
+            f"s = {s_val}: ζ_spectral(s) = {spectral:.6f}, ζ(s) = {riemann:.6f}, error = {error:.6e}"
         )
-        # Basic pass/fail assessment; detailed validation uses higher-precision routines
-        tolerance = 1e-2
-        if error < tolerance:
-            logger.info(f"  ✓ Passed: relative error {error:.3e} < {tolerance:.1e}")
+        # Basic threshold; detailed spectral/zeta comparison is handled in dedicated validation scripts
+        if abs(error) < 1e-2:
+            logger.info("  ✓ Passed: |ζ_spectral(s) - ζ(s)| within tolerance")
         else:
-            logger.warning(f"  ⚠ Marginal: relative error {error:.3e} ≥ {tolerance:.1e}")
+            logger.warning(f"  ⚠ Marginal: |ζ_spectral(s) - ζ(s)| = {abs(error):.6e}")
     logger.info("\n" + "=" * 60)
     logger.info("✅ VALIDACIÓN COMPLETADA EXITOSAMENTE")
     logger.info("=" * 60)

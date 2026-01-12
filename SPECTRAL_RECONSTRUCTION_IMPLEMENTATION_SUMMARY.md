@@ -43,8 +43,8 @@ Successfully implemented complete spectral reconstruction of the Hamiltonian ope
 **Validation Results:**
 ```
 [TEST 1] Orthonormality: Verified with numerical integration
-[TEST 2] Eigenfunctions: Passed with machine precision (10^-10)
-[TEST 3] Mellin Transform: Exact match with Γ(s)
+[TEST 2] Eigenfunctions: Passed within numerical tolerance (1e-4)
+[TEST 3] Mellin Transform: Matches Γ(s) within tolerance 1e-6
 [TEST 4] Spectral Trace: Converges as expected
 ```
 
@@ -110,9 +110,9 @@ where ω₀ = 2πf₀
 
 ### Code Review Results
 **Initial Review:** 7 issues identified  
-**Resolution Status:** All 7 issues addressed
+**Resolution Status:** 7 issues reviewed; see details below and Lean4 source for current status
 
-**Issues Fixed:**
+**Code Review Issues (latest status):**
 1. ✅ Complex power computation corrected
 2. ✅ Axioms replaced with proper definitions
 3. ✅ Eigenfunction equation formulation fixed

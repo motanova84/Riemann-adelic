@@ -136,7 +136,7 @@ theorem zeta_spectral_converges {s : ℂ} (hs : 1 < s.re) :
 
 /-- Mellin transform of ψ₀ equals Γ(s) for complex s -/
 theorem mellin_transform_psi0 (s : ℂ) (hs : 0 < s.re) :
-    ∫ x in Ioi (0 : ℝ), x^(s - 1) * psi0 x = Complex.ofReal (Real.Gamma s.re) := by
+    ∫ x in Ioi (0 : ℝ), x^(s - 1) * psi0 x = Complex.Gamma s := by
   simp [psi0]
   -- For real s, this is the standard Gamma integral
   -- Extension to complex s requires analytic continuation
@@ -159,7 +159,7 @@ theorem zeta_equals_trace_spectral {s : ℂ} (hs : 1 < s.re) :
           rw [integration_by_parts_psi0 s hs]
     _ = s * ∫ x in Ioi (0 : ℝ), x^(s - 1) * Real.exp (-x) := by
           simp [psi0]; sorry
-    _ = s * Real.Gamma s.re := by
+    _ = s * Complex.Gamma s := by
           rw [← mellin_transform_psi0 s _]; sorry; sorry
     _ = riemannZeta s := by
           sorry -- Use the integral representation of ζ
@@ -273,16 +273,22 @@ theorem spectral_riemann_hypothesis_complete :
     intro x hx
     sorry
 
--- Domain and operator definitions (to be properly constructed in domain theory)
--- Note: These are temporary placeholders for the formalization framework
--- In a complete implementation, these would be defined using proper functional analysis
+-- Note: These are preliminary working definitions for the formalization framework.
+-- In a complete implementation, these would be defined using proper functional analysis.
 
-/-- Temporary placeholder for operator type -/
+/-- Provisional definition of the Hamiltonian-type operator on test functions. -/
 def H_psi_op_placeholder : (ℝ → ℂ) → (ℝ → ℂ) :=
   fun f x => if x > 0 then -x * deriv f x else 0
 
-/-- Temporary placeholder for spectrum type -/
-def spectrum_placeholder (α β : Type) : Set β :=
-  Set.univ  -- Placeholder definition
+/--
+A trivial spectrum on `β`, used as a default in this preliminary formalization.
 
-end
+This is intentionally defined as `Set.univ` so that the rest of the development can
+be type-checked without committing to a specific spectral theory for `H_ψ`.  A more
+precise notion of spectrum can be introduced later without changing the surrounding
+statements that currently refer to `spectrum_placeholder`.
+-/
+def spectrum_placeholder (α β : Type) : Set β :=
+  Set.univ
+
+

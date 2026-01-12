@@ -125,8 +125,8 @@ python validate_spectral_reconstruction.py
 ```
 
 **Test Results:**
-- ✅ Eigenfunction property verified within numerical tolerance 1e-1 (see validate_spectral_reconstruction.py)
-- ✅ Mellin transform matches Γ(s) exactly
+- ✅ Eigenfunction property verified within numerical tolerance 1e-4 (see validate_spectral_reconstruction.py)
+- ✅ Mellin transform agrees numerically with Γ(s) within the validation tolerance
 - ✅ Spectral trace converges as expected
 - ⚠️ Orthonormality requires extended precision for oscillatory integrals
 
