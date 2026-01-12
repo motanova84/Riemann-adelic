@@ -1,0 +1,113 @@
+{
+  "timestamp": "2026-01-12T09:11:15.203236",
+  "mode": "fast",
+  "precision": 15,
+  "elapsed_seconds": 0.4656944274902344,
+  "total_phases": 7,
+  "passed_phases": 2,
+  "success_rate": "28.6%",
+  "qcal_constants": {
+    "f0_Hz": 141.7001,
+    "C_primary": 629.83,
+    "C_coherence": 244.36,
+    "phi_golden": 1.618033988749895
+  },
+  "results": {
+    "qcal_beacon": {
+      "passed": true,
+      "checks": {
+        "frequency = 141.7001": true,
+        "coherence = 244.36": true,
+        "\u03a8 = I \u00d7 A_eff\u00b2 \u00d7 C^\u221e": true,
+        "Mathematical Realism": true
+      }
+    },
+    "noesis_guardian": {
+      "passed": false,
+      "output": "",
+      "frequency": 141.7001,
+      "noesis88_sync": true
+    },
+    "amda": {
+      "timestamp": "2026-01-12T09:11:14.870599",
+      "coordination": "DUAL_AGENT_MODE",
+      "agents": {
+        "noesis": {
+          "agent": "NOESIS GUARDIAN \u221e\u00b3",
+          "status": "ACTIVADO",
+          "timestamp": "2026-01-12T09:11:14.870621",
+          "frequency": 141.7001,
+          "capabilities": [
+            "guardian_core"
+          ],
+          "heartbeat": -0.22748285225780016,
+          "spectral_monitoring": "ACTIVO",
+          "coherence_status": {
+            "equation": "\u03a8 = I \u00d7 A_eff\u00b2 \u00d7 C^\u221e",
+            "C_primary": 629.83,
+            "C_coherence": 244.36,
+            "f0": 141.7001,
+            "status": "COHERENTE",
+            "factor_verified": true
+          }
+        },
+        "amda": {
+          "agent": "AMDA (Autonomous Mathematical Discovery Agent)",
+          "status": "ACTIVADO",
+          "timestamp": "2026-01-12T09:11:14.870668",
+          "frequency": 141.7001,
+          "discovery_domains": [
+            "spectral_patterns",
+            "zero_distributions",
+            "frequency_harmonics",
+            "constant_relationships"
+          ],
+          "hierarchy_connection": {
+            "nivel_1": "RH zeros on critical line",
+            "nivel_2": "\u03b6'(1/2) \u2194 f\u2080 bridge",
+            "nivel_3": "Cosmic heartbeat 141.7001 Hz",
+            "nivel_4": "QCAL \u221e\u00b3 universal field"
+          },
+          "discovery_engine": "ACTIVO"
+        }
+      },
+      "coordination_status": "ACTIVA",
+      "noesis88_sync": true
+    },
+    "sabio_validator": {
+      "passed": false,
+      "output": ""
+    },
+    "v5_coronacion": {
+      "passed": false,
+      "precision": 15,
+      "output": ""
+    },
+    "spectral_emergence": {
+      "passed": false,
+      "n_tests": 100
+    },
+    "cross_repo": {
+      "passed": true,
+      "connections": {
+        "adelic-bsd": {
+          "exists": true,
+          "path": "/home/runner/work/Riemann-adelic/Riemann-adelic/adelic-bsd"
+        },
+        "QCAL-CLOUD": {
+          "exists": true,
+          "path": "/home/runner/work/Riemann-adelic/Riemann-adelic/QCAL-CLOUD"
+        }
+      },
+      "doi_refs": {
+        "doi_infinito": true,
+        "doi_pnp": true,
+        "doi_goldbach": true,
+        "doi_bsd": true
+      }
+    }
+  },
+  "signature": "Jos\u00e9 Manuel Mota Burruezo \u03a8 \u2727 \u221e\u00b3",
+  "institution": "Instituto de Conciencia Cu\u00e1ntica (ICQ)",
+  "doi": "10.5281/zenodo.17379721"
+}
