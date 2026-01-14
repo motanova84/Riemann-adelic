@@ -67,9 +67,9 @@ class SuperfluidState:
     
     def is_superfluid(self) -> bool:
         """Check if system is in superfluid regime."""
-        return (self.psi > 0.95 and  # Relaxed from 1.0
-                self.nu_eff < 0.05 and  # Relaxed from 0.0
-                self.coherence > 240.0)  # Slightly relaxed
+        return (self.psi > RiemannPNPSuperfluidBridge.SUPERFLUID_PSI_MIN and
+                self.nu_eff < RiemannPNPSuperfluidBridge.SUPERFLUID_NU_MAX and
+                self.coherence > RiemannPNPSuperfluidBridge.SUPERFLUID_C_MIN)
 
 
 @dataclass
@@ -109,6 +109,18 @@ class RiemannPNPSuperfluidBridge:
     # Spectral constants (from .qcal_beacon)
     C_COHERENCE = 244.36  # Coherence constant
     C_PRIMARY = 629.83  # Universal constant
+    
+    # Reference constants for superfluid computation
+    C0_REFERENCE = 100.0  # Reference coherence for tanh saturation
+    NU_BASE = 1.0  # Base viscosity scale (normalized units)
+    
+    # Thresholds for superfluid detection
+    SUPERFLUID_PSI_MIN = 0.95  # Minimum Ψ for superfluid regime
+    SUPERFLUID_NU_MAX = 0.05  # Maximum ν_eff for superfluid regime
+    SUPERFLUID_C_MIN = 240.0  # Minimum coherence for superfluid
+    
+    # Numerical precision thresholds
+    VISCOSITY_ZERO_THRESHOLD = 1e-10  # Below this, treat as zero viscosity
     
     # Riemann zeta constants
     ZETA_HALF = -1.46035450880958681  # ζ(1/2)
@@ -164,16 +176,20 @@ class RiemannPNPSuperfluidBridge:
         
         # Compute wave function amplitude
         # In the limit, C^∞ → saturation when C > 1
-        # We use: Ψ = I × A_eff² × tanh(C/C₀)
-        C0 = 100.0  # Reference coherence
-        psi = intensity * (effective_area ** 2) * np.tanh(coherence / C0)
+        # We use tanh saturation: Ψ = I × A_eff² × tanh(C/C₀)
+        # where C₀ = 100.0 is the reference coherence scale
+        # At C = C₀, tanh(1) ≈ 0.76
+        # At C = 244.36, tanh(2.44) ≈ 0.98 (near saturation)
+        psi = intensity * (effective_area ** 2) * np.tanh(coherence / self.C0_REFERENCE)
         
         # Effective viscosity (decreases with Ψ)
-        nu_base = 1.0  # Base viscosity
-        nu_eff = nu_base * (1.0 - psi)
+        # ν_eff = ν_base × (1 - Ψ) where ν_base is normalized base viscosity
+        # As Ψ → 1, ν_eff → 0 (superfluid)
+        nu_eff = self.NU_BASE * (1.0 - psi)
         
         # Spectral alignment (increases with coherence)
-        alignment = 1.0 - np.exp(-coherence / C0)
+        # Uses same C₀ reference for consistency
+        alignment = 1.0 - np.exp(-coherence / self.C0_REFERENCE)
         
         # Laminar flow achieved when Ψ > 0.95
         laminar = psi > 0.95
@@ -333,7 +349,7 @@ class RiemannPNPSuperfluidBridge:
         # This is different from classical fluid dynamics
         # In quantum regime, zero viscosity → perfect flow
         
-        if viscosity < 1e-10:
+        if viscosity < self.VISCOSITY_ZERO_THRESHOLD:
             # Perfect superfluid → perfect laminar
             return 1.0
         
@@ -412,7 +428,7 @@ class RiemannPNPSuperfluidBridge:
         nu = superfluid_state.nu_eff
         
         if nu < 1e-10:
-            nu = 1e-10  # Prevent division by zero
+            nu = 1e-10  # Prevent division by zero (use VISCOSITY_ZERO_THRESHOLD)
         
         flow_rate = zero_density * psi * align / nu
         
