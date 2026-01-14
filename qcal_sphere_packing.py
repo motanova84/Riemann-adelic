@@ -93,7 +93,9 @@ class EmpaquetamientoCósmico:
             d: Dimensión del espacio
             
         Returns:
-            Densidad de empaquetamiento (0 < δ < 1)
+            Densidad efectiva de empaquetamiento δ_ψ(d) > 0 calculada vía
+            la fórmula QCAL ∞³ (no necesariamente acotada por 1 en esta
+            implementación heurística).
         """
         # Factor volumétrico base (volumen de esfera unitaria en d dimensiones)
         vol_factor = (np.pi ** (d/2)) / gamma(d/2 + 1)
