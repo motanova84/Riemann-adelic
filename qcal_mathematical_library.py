@@ -32,7 +32,7 @@ from dataclasses import dataclass
 import warnings
 
 try:
-    from mpmath import mp, mpf, zeta as mp_zeta, sqrt, pi as mp_pi
+    from mpmath import mp, mpf, zeta as mp_zeta
     MPMATH_AVAILABLE = True
 except ImportError:
     MPMATH_AVAILABLE = False
