@@ -12,7 +12,7 @@ Institution: Instituto de Conciencia Cuántica (ICQ)
 
 import numpy as np
 import matplotlib.pyplot as plt
-from qcal_sphere_packing import EmpaquetamientoCósmico, ValidadorMonteCarlo
+from qcal_sphere_packing import EmpaquetamientoCósmico
 from qcal_mathematical_library import BibliotecaMatematicaQCAL
 
 def demo_visual_completo():
