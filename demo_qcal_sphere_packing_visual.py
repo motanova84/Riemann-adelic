@@ -81,7 +81,7 @@ def demo_visual_completo():
     print("-" * 80)
     
     # Figura 1: Densidades y convergencia
-    fig = plt.figure(figsize=(16, 10))
+    plt.figure(figsize=(16, 10))
     
     # Plot 1: Densidades en escala logarítmica
     ax1 = plt.subplot(2, 3, 1)
