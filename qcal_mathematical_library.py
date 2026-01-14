@@ -26,7 +26,7 @@ Referencias:
 """
 
 import numpy as np
-from scipy.special import gamma, zeta as scipy_zeta
+from scipy.special import gamma
 from typing import Dict, List, Tuple, Any
 from dataclasses import dataclass
 import warnings
