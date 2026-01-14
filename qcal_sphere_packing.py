@@ -236,8 +236,8 @@ class EmpaquetamientoCósmico:
         """
         red = self.construir_red_cosmica(d_test)
         
-        # Validación de convergencia
-        dims, ratios = self.analizar_convergencia_infinita()
+        # Validación de convergencia en la misma dimensión máxima que el test
+        dims, ratios = self.analizar_convergencia_infinita(d_max=d_test)
         convergencia_teorica = self.phi ** (-1)
         convergencia_observada = ratios[-1]
         error_convergencia = abs(convergencia_observada - convergencia_teorica)
