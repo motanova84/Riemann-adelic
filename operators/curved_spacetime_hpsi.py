@@ -69,7 +69,7 @@ References:
 import numpy as np
 from typing import Optional, Tuple, Dict, Any, Callable
 from scipy.linalg import eigh
-from scipy.integrate import quad
+from scipy.integrate import quad, trapezoid
 import sympy
 from sympy import primerange
 
@@ -82,6 +82,9 @@ C_UNIVERSAL = 629.83  # Universal spectral constant
 
 # Consciousness coupling constant
 ALPHA_PSI = 0.1  # Strength of consciousness-metric coupling
+
+# Numerical stability
+NORM_EPSILON = 1e-10  # Epsilon for normalization
 
 # Numerical parameters
 DEFAULT_N_POINTS = 400
@@ -385,10 +388,9 @@ class CurvedSpacetimeHpsi:
         
         # Normalize with curved volume element
         for i in range(eigenvectors.shape[1]):
-            from scipy.integrate import trapezoid
             integrand = np.abs(eigenvectors[:, i])**2 * self.Omega
             norm = np.sqrt(trapezoid(integrand, self.x))
-            eigenvectors[:, i] /= (norm + 1e-10)
+            eigenvectors[:, i] /= (norm + NORM_EPSILON)
         
         self._eigenvalues = eigenvalues
         self._eigenfunctions = eigenvectors

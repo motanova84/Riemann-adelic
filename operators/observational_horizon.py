@@ -57,12 +57,16 @@ References:
 import numpy as np
 from typing import Optional, Tuple, List, Dict, Any, Callable
 from dataclasses import dataclass
+import logging
 
 try:
     import matplotlib.pyplot as plt
     HAS_MATPLOTLIB = True
 except ImportError:
     HAS_MATPLOTLIB = False
+
+# Set up logger
+logger = logging.getLogger(__name__)
 
 # QCAL Constants
 F0 = 141.7001  # Fundamental frequency (Hz)
@@ -276,7 +280,7 @@ class ObservationalHorizon:
             save_path: Path to save figure (optional)
         """
         if not HAS_MATPLOTLIB:
-            print("  Matplotlib not available - skipping plot")
+            logger.info("Matplotlib not available - skipping plot")
             return
         
         if coherence_levels is None:
@@ -310,7 +314,7 @@ class ObservationalHorizon:
         
         if save_path:
             plt.savefig(save_path, dpi=300, bbox_inches='tight')
-            print(f"  Figure saved: {save_path}")
+            logger.info(f"Figure saved: {save_path}")
         else:
             plt.show()
         

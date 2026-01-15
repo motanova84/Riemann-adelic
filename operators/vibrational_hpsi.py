@@ -53,6 +53,7 @@ import numpy as np
 from typing import Optional, Tuple, List, Callable, Dict, Any
 from scipy.linalg import eigh
 from scipy.sparse import diags
+from scipy.integrate import trapezoid
 import sympy
 from sympy import primerange
 
@@ -67,6 +68,10 @@ DEFAULT_N_POINTS = 500  # Grid points for discretization
 DEFAULT_X_MIN = 0.1    # Minimum x (avoid log(0))
 DEFAULT_X_MAX = 50.0   # Maximum x
 DEFAULT_N_PRIMES = 100  # Number of primes in potential
+
+# Numerical stability constants
+LOG_X_EPSILON = 1e-10  # Epsilon for log(x) to avoid log(0)
+NORM_EPSILON = 1e-10   # Epsilon for normalization to avoid division by zero
 
 
 class VibrationalOperatorHpsi:
@@ -255,10 +260,8 @@ class VibrationalOperatorHpsi:
         
         # Normalize eigenfunctions
         for i in range(eigenvectors.shape[1]):
-            # Use scipy.integrate.trapezoid for newer numpy compatibility
-            from scipy.integrate import trapezoid
             norm = np.sqrt(trapezoid(np.abs(eigenvectors[:, i])**2, self.x))
-            eigenvectors[:, i] /= norm
+            eigenvectors[:, i] /= (norm + NORM_EPSILON)
         
         self._eigenvalues = eigenvalues
         self._eigenfunctions = eigenvectors
