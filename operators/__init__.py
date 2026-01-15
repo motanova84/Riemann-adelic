@@ -119,7 +119,7 @@ __all__ = [
     'build_padic_potential',
     'compute_first_eigenvalue',
     'compute_C_from_lambda',
-    # Spectral hierarchy (new)
+    # Spectral hierarchy
     'compute_spectral_mean',
     'compute_C_coherence',
     'compute_f0_from_hierarchy',
@@ -129,19 +129,19 @@ __all__ = [
     'analyze_f0_C_relationship',
     'validate_operator_self_adjoint',
     'run_complete_noetic_validation',
-    # Constants - spectral hierarchy
+    # Constants from noetic_operator
     'F0_TARGET',
-    'C_PRIMARY',
-    'C_COHERENCE',
     'C_TARGET',
     'LAMBDA_0_TARGET',
     'EULER_MASCHERONI',
-    'PHI',
     'DELTA_FRACTAL',
     'O4_REFINEMENT',
     # Spectral constants exports
+    'C_PRIMARY',
+    'C_COHERENCE',
     'F0_SPECTRAL',
     'OMEGA_0_SPECTRAL',
+    'PHI',
     'EULER_GAMMA',
     'COHERENCE_FACTOR',
     'SpectralLevel',

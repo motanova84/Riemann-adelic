@@ -32,8 +32,7 @@ DOI: 10.5281/zenodo.17379721
 
 import numpy as np
 from typing import Tuple, List, Optional, Dict
-from scipy.linalg import eigh, norm
-from scipy.sparse.linalg import eigsh
+from scipy.linalg import eigh
 
 
 class HorizonDetector:
