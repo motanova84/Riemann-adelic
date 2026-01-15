@@ -18,8 +18,8 @@ import matplotlib.pyplot as plt
 import sys
 import os
 
-# Add operators directory to path
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'operators'))
+# Add parent directory to path for operators module
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from operators.curved_spacetime_operator import (
     generate_consciousness_field,

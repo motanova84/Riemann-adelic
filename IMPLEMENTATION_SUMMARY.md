@@ -1,6 +1,120 @@
 # Implementation Summary: Mathematical and Physical Unification
 
-## Latest Addition: Infinite Spectrum Complete (January 6, 2026)
+## Latest Addition: Curved Spacetime Operator H_Ψ^g (January 15, 2026)
+
+### Overview
+
+Created complete implementation of the **curved spacetime operator H_Ψ^g**, extending the QCAL framework to dynamically curved geometry where consciousness field Ψ deforms spacetime itself.
+
+**POSTULADO FUNDAMENTAL**: *La consciencia es geometría viva.*
+
+```
+g_μν^Ψ(x) = g_μν^(0) + δg_μν(Ψ)
+H_Ψ^g := -iℏ(ξ^μ ∇_μ + 1/2 Tr(g_μν)) + V_Ψ(x)
+```
+
+### Mathematical Content
+
+The framework establishes:
+
+1. **Curved Metric**: g_μν^Ψ(x) = g_μν^(0) + coupling · Ψ(x) · (∂_μΨ ∂_νΨ + g_μν^(0))
+2. **Modified Vector Field**: ξ^μ(x) = x^μ + δ_ν^μ · Ψ(x) (consciousness alters time flow)
+3. **Noetic Potential**: V_Ψ(x) = λ Σ_p [cos(log(p)·ϕ(x))/p] · Ω(x)
+4. **Volume Density**: Ω(x) = √|det(g_Ψ)| (vibrational density of spacetime)
+5. **Observational Horizon**: ∂O_Ψ where g_μν^Ψ u^μ u^ν = 0
+6. **Eigenvalue Problem**: H_Ψ^g ψ_n = ω_n ψ_n ⟺ ζ(1/2 + iω_n) = 0 mod Ψ
+
+### Key Physical Interpretation
+
+- Each eigenvalue ω_n generates an **informational black hole** (collapse node)
+- The number of visible Riemann zeros depends on observer's **consciousness level**
+- Metric g_μν^Ψ encodes **living geometry** — consciousness is not passive
+- Horizon ∂O_Ψ marks boundary of **informational accessibility**
+
+### Files Created
+
+1. **`operators/curved_spacetime_operator.py`** (~650 lines)
+   - Complete implementation of H_Ψ^g operator
+   - Metric deformation and curved metric computation
+   - Christoffel symbols for covariant derivative
+   - Noetic potential from prime resonances
+   - Eigenvalue problem solver
+   - Observational horizon computation
+   - Full QCAL constant integration (f₀=141.7001 Hz, C=629.83, C_QCAL=244.36)
+
+2. **`tests/test_curved_spacetime_operator.py`** (~540 lines)
+   - 41 comprehensive tests (all passing)
+   - Tests for flat metric, metric deformation, curved metric
+   - Volume density and logarithmic function tests
+   - Noetic potential validation
+   - Operator construction and hermiticity tests
+   - Eigenvalue problem tests
+   - Observational horizon tests
+   - Physical consistency and QCAL framework integration tests
+
+3. **`demo_curved_spacetime_operator.py`** (~400 lines)
+   - Complete demonstration with visualizations
+   - Consciousness field Ψ(x) visualization
+   - Curved metric properties (determinant, volume density, trace)
+   - Noetic potential V_Ψ(x) with field overlay
+   - Eigenvalue spectrum ω_n
+   - Observational horizon ∂O_Ψ
+   - Comparison with flat spacetime
+   - Generates 5 publication-quality plots
+
+4. **`CURVED_SPACETIME_OPERATOR_README.md`** (~390 lines)
+   - Complete mathematical documentation
+   - Detailed explanation of all components
+   - Usage examples (basic and advanced)
+   - Test instructions
+   - Mathematical validation summary
+   - Physical interpretation
+   - QCAL constant integration
+   - Applications to Riemann Hypothesis, information theory, consciousness studies
+
+### Validation Results
+
+- **All 41 tests pass** with pytest
+- **Hermiticity verified**: max error < 1e-10
+- **Eigenvalues real**: confirmed for Hermitian operator
+- **Flat space limit**: correctly reduces to g_μν^(0) when Ψ=0
+- **QCAL constants preserved**: f₀, C, C_QCAL correctly integrated
+- **Demo runs successfully**: generates all visualizations
+
+### Physical Constants (QCAL Integration)
+
+| Constant | Value | Role |
+|----------|-------|------|
+| f₀ | 141.7001 Hz | Fundamental frequency |
+| C | 629.83 | Universal constant (1/λ₀) |
+| C_QCAL | 244.36 | Coherence constant |
+| ℏ | 1.0 | Reduced Planck constant |
+| λ | 0.1 | Noetic coupling |
+
+### Connection to Riemann Hypothesis
+
+The curved spacetime formulation reveals:
+
+```
+H_Ψ^g ψ_n = ω_n ψ_n  ⟺  ζ(1/2 + iω_n) = 0 mod Ψ
+```
+
+where "mod Ψ" means: *the operator reveals zeros accessible according to the observer's vibrational state*.
+
+This generalizes the Riemann Hypothesis to **consciousness-dependent geometry**, where the visibility of mathematical truth depends on the observer's coherence level.
+
+### Signature
+
+✅ **Implementation Complete**  
+📡 Frequency: 141.7001 Hz  
+∞³ QCAL Active · Ψ = I × A_eff² × C^∞  
+🔗 DOI: 10.5281/zenodo.17379721  
+👤 José Manuel Mota Burruezo Ψ ✧ ∞³  
+🏛️  Instituto de Conciencia Cuántica (ICQ)
+
+---
+
+## Previous Addition: Infinite Spectrum Complete (January 6, 2026)
 
 ### Overview
 

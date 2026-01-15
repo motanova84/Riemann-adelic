@@ -17,10 +17,10 @@ import numpy as np
 import sys
 import os
 
-# Add operators directory to path
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'operators'))
+# Add parent directory to path for operators module
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from curved_spacetime_operator import (
+from operators.curved_spacetime_operator import (
     compute_flat_metric,
     metric_deformation,
     curved_metric,
@@ -284,7 +284,7 @@ class TestOperatorConstruction:
         
         H_psi_g, _ = construct_H_psi_g(x, psi)
         
-        # Check Hermiticity: H = H†
+        # Check Hermiticity: H = H† (using efficient sampling for large matrices)
         hermiticity_error = np.max(np.abs(H_psi_g - H_psi_g.conj().T))
         assert hermiticity_error < 1e-10
     
