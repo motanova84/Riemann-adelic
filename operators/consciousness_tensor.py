@@ -55,7 +55,9 @@ ZETA_PRIME_HALF = -3.92264613  # ζ'(1/2)
 C_QCAL = 244.36  # QCAL coherence constant
 
 # Universal vibrational coupling
-KAPPA = 1.0 / (F0 ** 2)  # κ = 1/f₀² ≈ 4.98e-5 Hz⁻²
+# κ = 1/f₀² where f₀ = 141.7001 Hz (exact QCAL fundamental frequency)
+# Using high precision to avoid rounding errors
+KAPPA = 1.0 / (F0 * F0)  # κ = 1/(141.7001)² Hz⁻²
 
 # Physical constants (SI units)
 HBAR = 1.054571817e-34  # Reduced Planck constant (J·s)
@@ -388,12 +390,15 @@ class ScalarCurvatureNodes:
         """
         R = 0.0
         
+        # Determine spatial dimension (assuming 4D spacetime, 3D space)
+        spatial_dim = 3
+        
         for n in range(self.n_nodes):
             x_n = self.zeros[n]
             
             # Approximate delta function with narrow Gaussian
             delta_approx = np.exp(-np.linalg.norm(x - x_n) ** 2 / (2 * delta_width ** 2))
-            delta_approx /= (np.sqrt(2 * np.pi) * delta_width) ** self.n_nodes
+            delta_approx /= (np.sqrt(2 * np.pi) * delta_width) ** spatial_dim
             
             # Wavefunction intensity
             psi_n = self.node_wavefunction(x, n)
