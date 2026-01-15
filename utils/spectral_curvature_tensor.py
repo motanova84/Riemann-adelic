@@ -30,7 +30,7 @@ ORCID: 0009-0002-1923-0773
 """
 
 import numpy as np
-from typing import Tuple, Dict, Optional, List
+from typing import Tuple, Dict, Optional, List, Any
 from mpmath import mp, zeta
 from scipy.constants import pi
 
@@ -200,14 +200,18 @@ class SpectralCurvatureTensor:
         Gamma = np.zeros((n, n, n))
         
         # Compute derivatives numerically using finite differences
-        h = 1e-5  # Step size for numerical derivative
+        # Step size for numerical derivative (chosen for balance between
+        # accuracy and numerical stability in spectral calculations)
+        h = 1e-5
         
         for k in range(n):
             for i in range(n):
                 for j in range(n):
                     # Numerical derivatives of metric components
-                    # This is a simplified version; full implementation would
-                    # compute spatial derivatives properly
+                    # NOTE: This is a simplified implementation focusing on
+                    # dominant diagonal contributions. A full implementation
+                    # would compute spatial derivatives of all metric components
+                    # using finite differences on the grid.
                     
                     # For spectral space, dominant contribution is from diagonal
                     if i == j == k:
@@ -370,7 +374,7 @@ class SpectralCurvatureTensor:
     def verify_critical_flatness(
         self,
         tolerance: float = 1e-6
-    ) -> Dict[str, any]:
+    ) -> Dict[str, Any]:
         """
         Verify the critical flatness condition: G_ab^Ψ = 0 ⟺ ℜ(s) = 1/2.
         

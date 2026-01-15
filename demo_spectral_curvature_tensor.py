@@ -182,14 +182,14 @@ def plot_zero_density_and_curvature():
     ax2.fill_between(t_values, 0, curvatures, alpha=0.3, color='green')
     
     # Plot 3: Relationship
-    ax3.scatter(zero_densities, curvatures, c=t_values, cmap='viridis', 
+    scatter = ax3.scatter(zero_densities, curvatures, c=t_values, cmap='viridis', 
                 s=10, alpha=0.6)
     ax3.set_xlabel('Zero Density ρ(t)', fontsize=12)
     ax3.set_ylabel('Local Curvature', fontsize=12)
     ax3.set_title('Curvature vs Zero Density (color = t)', fontsize=14, fontweight='bold')
     ax3.grid(True, alpha=0.3)
     
-    cbar = plt.colorbar(ax3.collections[0], ax=ax3)
+    cbar = plt.colorbar(scatter, ax=ax3)
     cbar.set_label('t = ℑ(s)', fontsize=10)
     
     plt.tight_layout()
