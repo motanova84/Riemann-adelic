@@ -16,8 +16,12 @@ from vibrational_black_holes import (
     VibrationalBlackHoleField,
     verify_critical_line_as_event_horizon,
     QCAL_BASE_FREQUENCY,
-    COHERENCE_CONSTANT_C
+    COHERENCE_CONSTANT_C,
+    COHERENCE_WIDTH_SIGMA
 )
+
+# Test constants
+PHASE_SIGNATURE_TOLERANCE = 1e-10  # Tolerance for phase signature tests
 
 
 class TestVibrationalBlackHole:
@@ -79,7 +83,7 @@ class TestVibrationalBlackHole:
         bh = VibrationalBlackHole(t=14.134725, real_part=0.5)
         
         # Should be very close to 1
-        assert abs(bh.phase_signature - 1.0) < 1e-10
+        assert abs(bh.phase_signature - 1.0) < PHASE_SIGNATURE_TOLERANCE
     
     def test_phase_signature_off_critical_line(self):
         """Test phase signature decreases off critical line."""

@@ -27,9 +27,11 @@ from vibrational_black_holes import (
 )
 
 try:
-    import matplotlib.pyplot as plt
     import matplotlib
-    matplotlib.use('Agg')  # Non-interactive backend
+    # Allow environment variable to override backend
+    backend = os.environ.get('MPLBACKEND', 'Agg')
+    matplotlib.use(backend)
+    import matplotlib.pyplot as plt
     HAS_MATPLOTLIB = True
 except ImportError:
     HAS_MATPLOTLIB = False

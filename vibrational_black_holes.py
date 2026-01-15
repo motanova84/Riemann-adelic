@@ -44,6 +44,12 @@ PLANCK_CONSTANT = 6.62607015e-34  # J⋅s
 SPEED_OF_LIGHT = 299792458  # m/s
 PLANCK_LENGTH = 1.616255e-35  # m
 
+# Calculation Parameters
+SMALL_T_THRESHOLD = 1e-10  # Threshold for small imaginary parts
+FREQUENCY_NORMALIZATION_T0 = 100.0  # Normalization constant for frequency calculation
+COHERENCE_WIDTH_SIGMA = 1e-6  # Coherence width for phase signature
+MINIMUM_SPECTRAL_MASS = 1e-50  # Minimum spectral mass threshold
+
 
 @dataclass
 class VibrationalBlackHole:
@@ -111,7 +117,7 @@ class VibrationalBlackHole:
         Returns:
             Event horizon radius in Planck lengths
         """
-        if abs(self.t) < 1e-10:
+        if abs(self.t) < SMALL_T_THRESHOLD:
             return float('inf')
         return COHERENCE_CONSTANT_C * PLANCK_LENGTH / np.sqrt(abs(self.t))
     
@@ -141,8 +147,7 @@ class VibrationalBlackHole:
         Returns:
             Frequency in Hz
         """
-        T_0 = 100.0  # Normalization constant
-        return QCAL_BASE_FREQUENCY * (1.0 + abs(self.t) / T_0)
+        return QCAL_BASE_FREQUENCY * (1.0 + abs(self.t) / FREQUENCY_NORMALIZATION_T0)
     
     def _calculate_topological_charge(self) -> int:
         """
@@ -169,9 +174,8 @@ class VibrationalBlackHole:
         Returns:
             Phase signature (0 to 1, 1 means exactly on critical line)
         """
-        sigma = 1e-6  # Coherence width
         deviation = abs(self.real_part - 0.5)
-        return np.exp(-(deviation ** 2) / (sigma ** 2))
+        return np.exp(-(deviation ** 2) / (COHERENCE_WIDTH_SIGMA ** 2))
 
 
 class VibrationalBlackHoleField:
@@ -283,7 +287,7 @@ class VibrationalBlackHoleField:
         k_B = 1.380649e-23  # Boltzmann constant
         
         # Spectral adaptation: T ∝ 1/M_spectral
-        if bh.spectral_mass < 1e-50:
+        if bh.spectral_mass < MINIMUM_SPECTRAL_MASS:
             return float('inf')
         
         return (PLANCK_CONSTANT * SPEED_OF_LIGHT) / (2 * np.pi * k_B * bh.spectral_mass)
