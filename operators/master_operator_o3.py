@@ -44,7 +44,10 @@ import mpmath as mp
 from typing import Callable, Tuple, Optional, Dict, List
 from numpy.typing import NDArray
 
-from .dirac_spectral_operator import DiracSpectralOperator
+try:
+    from .dirac_spectral_operator import DiracSpectralOperator
+except ImportError:
+    from dirac_spectral_operator import DiracSpectralOperator
 
 
 class MasterOperatorO3:
