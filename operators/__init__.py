@@ -92,6 +92,12 @@ from .spectral_constants import (
     validate_dual_constants
 )
 
+from .horizon_detector import (
+    HorizonDetector,
+    detect_horizons_from_operator,
+    validate_horizon_riemann_correspondence
+)
+
 __all__ = [
     'construct_H_psi',
     'compute_spectrum',
@@ -132,14 +138,10 @@ __all__ = [
     'EULER_MASCHERONI',
     'PHI',
     'DELTA_FRACTAL',
-    'O4_REFINEMENT'
+    'O4_REFINEMENT',
     # Spectral constants exports
-    'C_PRIMARY',
-    'C_COHERENCE',
-    'LAMBDA_0',
     'F0_SPECTRAL',
     'OMEGA_0_SPECTRAL',
-    'PHI',
     'EULER_GAMMA',
     'COHERENCE_FACTOR',
     'SpectralLevel',
@@ -148,5 +150,9 @@ __all__ = [
     'compute_coherence_factor',
     'derive_f0_from_constants',
     'verify_f0_coherence',
-    'validate_dual_constants'
+    'validate_dual_constants',
+    # Horizon detector exports
+    'HorizonDetector',
+    'detect_horizons_from_operator',
+    'validate_horizon_riemann_correspondence',
 ]
