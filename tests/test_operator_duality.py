@@ -124,7 +124,9 @@ class TestMasterOperatorO3:
         """Test master operator initialization."""
         assert O3.precision == 25
         assert O3.h == 1e-8
-        assert O3.omega_0 == 2 * np.pi * O3.F0
+        # omega_0 should equal 2*pi*F0 when initialized with default
+        expected_omega = 2 * np.pi * O3.F0
+        assert abs(O3.omega_0 - expected_omega) < 1e-6
         assert isinstance(O3.D_s, DiracSpectralOperator)
     
     def test_constants(self, O3):

@@ -177,7 +177,8 @@ class DiracSpectralOperator:
                 
                 # Spectral signature: where derivative has special behavior
                 spectral_signature.append(abs(D_s_zeta))
-            except Exception:
+            except (ValueError, ZeroDivisionError, OverflowError) as e:
+                # Handle numerical issues gracefully
                 spectral_signature.append(0.0)
         
         return np.array(spectral_signature)
