@@ -57,7 +57,12 @@ References:
 import numpy as np
 from typing import Optional, Tuple, List, Dict, Any, Callable
 from dataclasses import dataclass
-import matplotlib.pyplot as plt
+
+try:
+    import matplotlib.pyplot as plt
+    HAS_MATPLOTLIB = True
+except ImportError:
+    HAS_MATPLOTLIB = False
 
 # QCAL Constants
 F0 = 141.7001  # Fundamental frequency (Hz)
@@ -270,6 +275,10 @@ class ObservationalHorizon:
             coherence_levels: Array of coherence values (default: linspace)
             save_path: Path to save figure (optional)
         """
+        if not HAS_MATPLOTLIB:
+            print("  Matplotlib not available - skipping plot")
+            return
+        
         if coherence_levels is None:
             coherence_levels = np.linspace(0.1, 1.0, 20)
         

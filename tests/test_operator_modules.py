@@ -78,9 +78,10 @@ class TestVibrationalOperatorHpsi:
         op = VibrationalOperatorHpsi(n_points=100, n_primes=10)
         eigenvalues, eigenfunctions = op.compute_spectrum(n_eigenvalues=5)
         
+        from scipy.integrate import trapezoid
         for i in range(5):
             phi = eigenfunctions[:, i]
-            norm_squared = np.trapz(np.abs(phi)**2, op.x)
+            norm_squared = trapezoid(np.abs(phi)**2, op.x)
             assert np.isclose(norm_squared, 1.0, rtol=1e-2)
     
     def test_zero_as_black_hole(self):

@@ -385,8 +385,9 @@ class CurvedSpacetimeHpsi:
         
         # Normalize with curved volume element
         for i in range(eigenvectors.shape[1]):
+            from scipy.integrate import trapezoid
             integrand = np.abs(eigenvectors[:, i])**2 * self.Omega
-            norm = np.sqrt(np.trapz(integrand, self.x))
+            norm = np.sqrt(trapezoid(integrand, self.x))
             eigenvectors[:, i] /= (norm + 1e-10)
         
         self._eigenvalues = eigenvalues

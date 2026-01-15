@@ -50,7 +50,7 @@ References:
 """
 
 import numpy as np
-from typing import Optional, Tuple, List, Callable
+from typing import Optional, Tuple, List, Callable, Dict, Any
 from scipy.linalg import eigh
 from scipy.sparse import diags
 import sympy
@@ -255,7 +255,9 @@ class VibrationalOperatorHpsi:
         
         # Normalize eigenfunctions
         for i in range(eigenvectors.shape[1]):
-            norm = np.sqrt(np.trapz(np.abs(eigenvectors[:, i])**2, self.x))
+            # Use scipy.integrate.trapezoid for newer numpy compatibility
+            from scipy.integrate import trapezoid
+            norm = np.sqrt(trapezoid(np.abs(eigenvectors[:, i])**2, self.x))
             eigenvectors[:, i] /= norm
         
         self._eigenvalues = eigenvalues
