@@ -33,7 +33,7 @@ References:
 """
 
 import numpy as np
-from typing import List, Tuple, Dict, Optional
+from typing import List, Tuple, Dict, Optional, Any
 from dataclasses import dataclass
 import mpmath as mp
 
@@ -101,7 +101,7 @@ class VibrationalBlackHole:
         Formula: M_spectral = ℏ × t / (2π × f₀)
         
         Returns:
-            Spectral mass in dimensionless units
+            Spectral mass in kg
         """
         return (PLANCK_CONSTANT * abs(self.t)) / (2 * np.pi * QCAL_BASE_FREQUENCY)
     
@@ -115,7 +115,7 @@ class VibrationalBlackHole:
         Formula: r_H = C × ℓ_P / √t  (spectral Schwarzschild-like radius)
         
         Returns:
-            Event horizon radius in Planck lengths
+            Event horizon radius in meters
         """
         if abs(self.t) < SMALL_T_THRESHOLD:
             return float('inf')
@@ -342,7 +342,7 @@ class VibrationalBlackHoleField:
         
         return (coherence + freq_balance) / 2
     
-    def generate_field_report(self) -> Dict[str, any]:
+    def generate_field_report(self) -> Dict[str, Any]:
         """
         Generate comprehensive report of the vibrational black hole field.
         
@@ -367,7 +367,7 @@ class VibrationalBlackHoleField:
 
 
 def verify_critical_line_as_event_horizon(zeros_t: List[float], 
-                                          tolerance: float = 1e-10) -> Dict[str, any]:
+                                          tolerance: float = 1e-10) -> Dict[str, Any]:
     """
     Verify that the critical line Re(s) = 1/2 acts as an event horizon.
     
