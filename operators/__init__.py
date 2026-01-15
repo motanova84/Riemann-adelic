@@ -20,6 +20,10 @@ Modules:
     - spectral_constants: Dual spectral constants framework unifying
                          C_PRIMARY = 629.83 (structure) and 
                          C_COHERENCE = 244.36 (form) to derive f₀ = 141.7001 Hz
+    - dirac_spectral_operator: 𝔻_s = i d/ds Dirac spectral operator acting on
+                               complex s-plane, dual to H_Ψ
+    - master_operator_o3: 𝒪_∞³ = 𝔻_s ⊗ 𝟙 + 𝟙 ⊗ H_Ψ master operator unifying
+                         complex and real perspectives
 """
 
 from .riemann_operator import (
@@ -92,6 +96,10 @@ from .spectral_constants import (
     validate_dual_constants
 )
 
+from .dirac_spectral_operator import DiracSpectralOperator
+
+from .master_operator_o3 import MasterOperatorO3
+
 __all__ = [
     'construct_H_psi',
     'compute_spectrum',
@@ -132,7 +140,7 @@ __all__ = [
     'EULER_MASCHERONI',
     'PHI',
     'DELTA_FRACTAL',
-    'O4_REFINEMENT'
+    'O4_REFINEMENT',
     # Spectral constants exports
     'C_PRIMARY',
     'C_COHERENCE',
@@ -148,5 +156,8 @@ __all__ = [
     'compute_coherence_factor',
     'derive_f0_from_constants',
     'verify_f0_coherence',
-    'validate_dual_constants'
+    'validate_dual_constants',
+    # Operator duality exports
+    'DiracSpectralOperator',
+    'MasterOperatorO3'
 ]
