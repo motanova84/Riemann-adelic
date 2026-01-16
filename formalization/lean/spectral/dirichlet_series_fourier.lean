@@ -108,6 +108,9 @@ axiom spectral_density_integrable :
     - Connection between discrete sum and continuous integral (Poisson summation)
     
     This lemma is key for interpreting ζ(s) as a spectral density! -/
+-- Placeholder for Fourier integral until Mathlib interface is determined
+axiom fourier_integral : (ℝ → ℝ) → (ℝ → ℂ)
+
 lemma dirichlet_series_fourier {f : ℝ → ℝ} (a : ℕ → ℝ) (s : ℂ) 
   (hf_meas : Measurable f)
   (hf_int : Integrable f)
@@ -115,7 +118,7 @@ lemma dirichlet_series_fourier {f : ℝ → ℝ} (a : ℕ → ℝ) (s : ℂ)
   -- The Dirichlet series sum
   (∑' n : ℕ, a n / (n : ℂ) ^ s) = 
   -- Equals a Fourier-type integral
-  ∫ t in Set.Ioi 0, (fourierIntegral f) t * Complex.exp (-s * Complex.log t) := by
+  ∫ t in Set.Ioi 0, (fourier_integral f) t * Complex.exp (-s * Complex.log t) := by
   -- Proof strategy:
   -- 
   -- 1. Express the Dirichlet series in exponential form:

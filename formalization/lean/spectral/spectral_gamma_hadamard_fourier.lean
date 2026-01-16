@@ -20,9 +20,9 @@ import Mathlib.Analysis.Complex.Basic
 import Mathlib.NumberTheory.ZetaFunction
 
 -- Import the three new spectral modules
-import «gamma_half_plus_it»
-import «hadamard_factorization»
-import «dirichlet_series_fourier»
+import .gamma_half_plus_it
+import .hadamard_factorization
+import .dirichlet_series_fourier
 
 noncomputable section
 open Complex Real
