@@ -14,12 +14,20 @@ Instituto de Conciencia Cuántica (ICQ)
 import numpy as np
 from typing import Dict, List
 import json
+import os
+import sys
 from datetime import datetime
 
-# Import GW250114 analyzer
-import sys
-sys.path.append('/home/runner/work/Riemann-adelic/Riemann-adelic/gw_141hz_tests')
+# Import GW250114 analyzer using relative import
+# Get the directory of this script
+script_dir = os.path.dirname(os.path.abspath(__file__))
+gw_tests_dir = os.path.join(script_dir, 'gw_141hz_tests')
+sys.path.insert(0, gw_tests_dir)
+
 from test_gw250114_ringdown import GW250114RingdownAnalyzer, F0_QCAL
+
+# Mathematical constants
+TWO_PI = 2.0 * np.pi  # 2π for angular frequency calculations
 
 class RedDePresencia:
     """
@@ -147,13 +155,14 @@ class RedDePresencia:
         
         # Spacetime vibrates at this frequency
         # Curvature is encoded in the frequency
-        omega = 2 * np.pi * freq
+        omega = TWO_PI * freq
         
         # Curvature scalar (conceptual)
         curvature = omega ** 2
         
         # Expected curvature from QCAL
-        expected_curvature = (2 * np.pi * F0_QCAL) ** 2
+        omega_expected = TWO_PI * F0_QCAL
+        expected_curvature = omega_expected ** 2
         
         curvature_match = abs(curvature - expected_curvature) / expected_curvature < 0.05
         
@@ -171,7 +180,7 @@ class RedDePresencia:
         Nodo Espectral: H_Ψ eigenvalue validation
         """
         freq = detection['frequency']
-        omega = 2 * np.pi * freq
+        omega = TWO_PI * freq
         
         # First eigenvalue of H_Ψ
         lambda_0 = 1.0 / (omega ** 2) if omega > 0 else 0
@@ -280,7 +289,7 @@ def main():
     
     # Ringdown model: damped sinusoid at 141.7 Hz
     gamma = 50.0  # damping rate
-    signal = np.exp(-gamma * t) * np.sin(2 * np.pi * F0_QCAL * t)
+    signal = np.exp(-gamma * t) * np.sin(TWO_PI * F0_QCAL * t)
     noise = np.random.normal(0, 0.05, len(signal))
     ringdown_data = signal + noise
     
@@ -319,7 +328,12 @@ def main():
         print()
     
     # Save report
-    report_file = '/home/runner/work/Riemann-adelic/Riemann-adelic/data/gw250114_validation_report.json'
+    repo_root = os.path.dirname(os.path.abspath(__file__))
+    report_file = os.path.join(repo_root, 'data', 'gw250114_validation_report.json')
+    
+    # Ensure data directory exists
+    os.makedirs(os.path.dirname(report_file), exist_ok=True)
+    
     with open(report_file, 'w') as f:
         json.dump(report, f, indent=2)
     print(f"Reporte guardado: {report_file}")

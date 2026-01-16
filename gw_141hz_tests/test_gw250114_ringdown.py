@@ -23,6 +23,9 @@ F0_QCAL = 141.7001  # Hz - QCAL base frequency
 C_COHERENCE = 244.36  # Coherence constant
 C_UNIVERSAL = 629.83  # Universal spectral constant
 
+# Mathematical constants
+TWO_PI = 2.0 * np.pi  # 2π for angular frequency calculations
+
 class GW250114RingdownAnalyzer:
     """
     Analyzer for GW250114 ringdown at 141.7001 Hz
@@ -85,11 +88,14 @@ class GW250114RingdownAnalyzer:
         f1 = 1.0 - 0.63 * (1 - spin)**0.3
         f2 = 1.0 - 0.84 * (1 - spin)**0.42
         
+        # Common factor for frequency calculations
+        freq_factor = (c**3 / (G * mass_total * M_solar)) / TWO_PI
+        
         # Frequency (Hz)
-        f_qnm = (c**3 / (G * mass_total * M_solar)) * f1 / (2 * np.pi)
+        f_qnm = freq_factor * f1
         
         # Damping rate (Hz)
-        gamma = (c**3 / (G * mass_total * M_solar)) * f2 / (2 * np.pi)
+        gamma = freq_factor * f2
         
         return f_qnm, gamma
     
@@ -185,7 +191,8 @@ class GW250114RingdownAnalyzer:
         
         # Connection to Riemann spectral system
         # The spectrum must match the critical line distribution
-        omega_0_squared = (2 * np.pi * freq)**2
+        omega = TWO_PI * freq
+        omega_0_squared = omega ** 2
         
         # Spectral identity: ω₀² = λ₀⁻¹ = C
         lambda_0 = 1.0 / omega_0_squared if omega_0_squared > 0 else 0
@@ -248,7 +255,7 @@ def main():
     t = np.linspace(0, duration, int(sampling_rate * duration))
     
     # Ringdown model: damped sinusoid at 141.7 Hz
-    signal = np.exp(-gamma * 2 * np.pi * t) * np.sin(2 * np.pi * F0_QCAL * t)
+    signal = np.exp(-gamma * TWO_PI * t) * np.sin(TWO_PI * F0_QCAL * t)
     # Add realistic noise
     noise = np.random.normal(0, 0.1, len(signal))
     ringdown_data = signal + noise

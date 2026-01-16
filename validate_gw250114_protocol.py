@@ -164,9 +164,16 @@ def validate_gw250114_protocol():
 
 def save_report(report):
     """Save validation report to file"""
-    report_file = '/home/runner/work/Riemann-adelic/Riemann-adelic/data/gw250114_protocol_validation.json'
+    import os
+    
+    # Use relative path from repo root
+    repo_root = os.path.dirname(os.path.abspath(__file__))
+    report_file = os.path.join(repo_root, 'data', 'gw250114_protocol_validation.json')
     
     try:
+        # Ensure data directory exists
+        os.makedirs(os.path.dirname(report_file), exist_ok=True)
+        
         with open(report_file, 'w') as f:
             json.dump(report, f, indent=2)
         print(f"✓ Reporte guardado: {report_file}")
