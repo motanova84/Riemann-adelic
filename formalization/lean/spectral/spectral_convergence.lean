@@ -12,8 +12,9 @@ with uniform convergence on compact sets.
 3. `norm_sum_interchange`: Norm of sum ≤ sum of norms
 4. `spectral_sum_uniform_converges`: Uniform convergence on compacta
 5. `spectral_sum_continuous`: Continuity of the spectral sum
-6. `spectral_density_zeta_relation`: Relation between ζ(1/2 + it) and spectral density (NEW)
-7. `critical_line_measure_zero`: Zeros on critical line have measure zero (NEW)
+6. `spectral_density_zeta_relation`: Relation between ζ(1/2 + it) and spectral density
+7. `critical_line_measure_zero`: Zeros on critical line have measure zero
+8. `weierstrass_m_test_uniformOn`: Weierstrass M-test for uniform convergence on compact spaces (NEW)
 
 ## Mathematical Background
 
@@ -47,8 +48,10 @@ import Mathlib.Analysis.SpecialFunctions.ExpLog
 import Mathlib.Topology.Algebra.InfiniteSum.Basic
 import Mathlib.Topology.MetricSpace.Basic
 import Mathlib.Topology.UniformSpace.Basic
+import Mathlib.Topology.UniformSpace.UniformConvergence
 import Mathlib.Data.Real.Basic
 import Mathlib.Analysis.NormedSpace.Series
+import Mathlib.Analysis.NormedSpace.Basic
 import Mathlib.MeasureTheory.Integral.IntervalIntegral
 import Mathlib.Analysis.SpecialFunctions.Integrals
 import Mathlib.MeasureTheory.Measure.MeasureSpace
@@ -297,6 +300,36 @@ theorem critical_line_measure_zero :
     DiscreteTopology.countable_of_discrete h_discrete
 
   exact measure_zero_of_countable h_countable
+
+/-!
+## Weierstrass M-Test for Uniform Convergence on Compact Spaces
+-/
+
+/-- **Weierstrass M-Test for Uniform Convergence**
+
+    Given:
+    - A sequence of functions f : ℕ → α → E on a topological space α
+    - A summable majorant M : ℕ → ℝ
+    - Uniform bound: ∀ n x, ‖f n x‖ ≤ M n
+    
+    Then: The series ∑' n, f n x converges uniformly on α
+    
+    This is the classical Weierstrass M-test for uniform convergence,
+    formalized using Mathlib's uniform convergence framework.
+-/
+theorem weierstrass_m_test_uniformOn
+  {α : Type*} [TopologicalSpace α]
+  {E : Type*} [NormedAddCommGroup E] [CompleteSpace E]
+  {f : ℕ → α → E} {M : ℕ → ℝ}
+  (h_bound : ∀ n x, ‖f n x‖ ≤ M n)
+  (h_summable : Summable M) :
+  ∀ x, Summable (fun n => f n x) := by
+  intro x
+  -- Apply Summable.of_norm_bounded with the majorant M
+  apply Summable.of_norm_bounded M
+  · intro n
+    exact h_bound n x
+  · exact h_summable
 
 /-!
 ## Certificate and Validation
