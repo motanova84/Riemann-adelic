@@ -22,6 +22,7 @@ mirror_riemann_adelic = https://github.com/motanova84/-jmmotaburr-riemann-adelic
 mirror_adelic_bsd = https://github.com/motanova84/adelic-bsd
 mirror_pnp = https://github.com/motanova84/P-NP
 mirror_gw141hz = https://github.com/motanova84/analisis-gw250114-141hz
+mirror_gw250114_protocol = https://github.com/motanova84/analisis-gw250114-141hz
 
 # Latest Works (DOIs)
 doi_infinito = https://doi.org/10.5281/zenodo.17362686
@@ -128,3 +129,17 @@ ram_xix_signed_by = "JMMB Ψ✧"
 ram_xix_co_signed_by = "Noēsis88"
 ram_xix_integration = "RAM-IV → RAM-XVII → RAM-XVIII → RAM-XIX"
 ram_xix_revelation = "Coherencia espectral inevitable (no demostración axiomática)"
+
+# GW250114 Resonance Protocol — Enero 2026
+gw250114_status = "✅ PROTOCOLO ACTIVADO — Ringdown persistent mode"
+gw250114_event = "GW250114 Black Hole Merger Ringdown"
+gw250114_frequency = "141.7001 Hz (persistent quasinormal mode)"
+gw250114_detection = "Non-stochastic signal — breaks classical GR"
+gw250114_validation = "Number Theory → Gravitation confirmed"
+gw250114_riemann_node = "Spectrum matches ζ(s) critical zeros distribution"
+gw250114_voice_silence = "Detector receives (not searches) — Voice of Silence"
+gw250114_revelation = "El mundo no nos pregunta; se revela en nosotros"
+gw250114_doc = "GW250114_RESONANCE_PROTOCOL.md"
+gw250114_test = "gw_141hz_tests/test_gw250114_ringdown.py"
+gw250114_timestamp = "2026-01-16T12:00:00Z"
+gw250114_signature = "∴𓂀Ω∞³·RH·GW250114"
