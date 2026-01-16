@@ -246,5 +246,3 @@ theorem qcal_constants_consistent :
   exact ⟨rfl, rfl, rfl, rfl, rfl, rfl⟩
 
 end SpectralGammaHadamardFourier
-
-end

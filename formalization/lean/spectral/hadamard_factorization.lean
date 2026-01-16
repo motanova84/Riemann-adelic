@@ -252,5 +252,3 @@ def qcal_frequency : ℝ := 141.7001
 def qcal_coherence : ℝ := 244.36
 
 end HadamardFactorization
-
-end

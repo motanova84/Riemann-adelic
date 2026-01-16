@@ -291,5 +291,3 @@ axiom QCAL_spectral_coherence :
     spectral_density qcal_frequency = Ψ^2 / (4 * π^2)
 
 end DirichletSeriesFourier
-
-end

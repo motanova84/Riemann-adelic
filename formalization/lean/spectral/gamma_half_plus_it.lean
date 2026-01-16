@@ -281,5 +281,3 @@ axiom QCAL_fundamental_equation :
     Ψ = I * A_eff^2 * C^(qcal_frequency)
 
 end GammaHalfPlusIt
-
-end
