@@ -3,7 +3,7 @@
 
   spectral_density_theorems.lean
   --------------------------------------------------------
-  Formaliza:
+  Formalizes:
     - Weierstrass M-test para convergencia uniforme
     - Cálculo exacto de |χ(1/2 + it)| 
     - Relación entre ζ(1/2 + it) y densidad espectral
@@ -117,28 +117,12 @@ theorem weierstrass_m_test_uniformOn {α : Type*} [TopologicalSpace α] [Compact
   intro ε hε
   
   -- De h_summable obtenemos N tal que la cola de la serie es pequeña
-  obtain ⟨N, hN⟩ := (summable_iff_vanishing_norm M).mp h_summable ε hε
-  use N
-  
-  intro n hn x _
-  -- Necesitamos mostrar |∑_{k<n} f_k(x) - g(x)| < ε
-  -- Esto es |∑_{k<n} f_k(x) - ∑_{k=0}^∞ f_k(x)| = |∑_{k≥n} f_k(x)|
-  
-  have h_tail : |(∑ k in Finset.range n, f k x) - g x| = |∑' k, f (k + n) x| := by
-    sorry -- Technical: tsum_eq_zero_add for finite partial sums
-  
-  calc
-    dist (∑ k in Finset.range n, f k x) (g x)
-      = |(∑ k in Finset.range n, f k x) - g x| := by rw [Real.dist_eq]
-    _ = |∑' k, f (k + n) x| := h_tail
-    _ ≤ ∑' k, |f (k + n) x| := by sorry -- Absolute value of series
-    _ ≤ ∑' k, M (k + n) := by
-        apply tsum_le_tsum
-        · intro k
-          exact h_bound (k + n) x
-        · sorry -- Summability of |f (k + n) x|
-        · sorry -- Summability of M (k + n)
-    _ < ε := by sorry -- From hN with appropriate shift
+  -- Using Cauchy criterion: for large N, tail of series is small
+  sorry -- Technical: Need to use Cauchy criterion for summable sequences
+  --   This requires showing that for ε > 0, ∃ N such that ∀ n ≥ N,
+  --   dist (partial_sum n) (limit) < ε uniformly in x
+  --   The key is that M summable implies ∑_{k≥n} M_k → 0 as n → ∞
+  --   and |∑_{k≥n} f_k(x)| ≤ ∑_{k≥n} M_k uniformly in x
 
 /-!
 ## Section 2: Chi Function and Its Properties
