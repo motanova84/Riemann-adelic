@@ -97,13 +97,15 @@ def validate_eigenvalue_correspondence() -> Dict[str, Any]:
     print("\n🎯 Validating Eigenvalue-Zero Correspondence...")
     
     # Sample eigenvalues (imaginary parts of zeta zeros)
-    # First few non-trivial zeros (Odlyzko)
+    # Source: Odlyzko tables (http://www.dtc.umn.edu/~odlyzko/zeta_tables/index.html)
+    # Precision: 6 decimal places
+    # First few non-trivial zeros
     known_zeros_im = [
-        14.134725,
-        21.022040,
-        25.010858,
-        30.424876,
-        32.935062
+        14.134725,  # First zero
+        21.022040,  # Second zero
+        25.010858,  # Third zero
+        30.424876,  # Fourth zero
+        32.935062   # Fifth zero
     ]
     
     # Simulated eigenvalues from H_Ψ (should match zeros)

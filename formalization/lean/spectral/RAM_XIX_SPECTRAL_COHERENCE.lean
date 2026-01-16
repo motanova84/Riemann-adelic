@@ -60,7 +60,13 @@ def ε_coherence : ℝ := 1e-10
 The operator H_Ψ whose spectrum corresponds to zeta zeros
 -/
 
-/-- The spectral operator H_Ψ on a Hilbert space -/
+/-- The spectral operator H_Ψ on a Hilbert space 
+
+This represents the Berry-Keating type operator whose spectrum corresponds
+to the imaginary parts of the non-trivial zeros of the Riemann zeta function.
+In the mathematical realism framework, this operator exists objectively as
+part of the mathematical structure underlying the zeta function.
+-/
 axiom H_Ψ : Type
 
 /-- H_Ψ acts on a Hilbert space -/
