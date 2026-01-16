@@ -20,7 +20,7 @@ import Mathlib.NumberTheory.ZetaFunction
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
 
 noncomputable section
-open Complex Real Filter Topology
+open Complex Real
 
 namespace GammaHalfPlusIt
 

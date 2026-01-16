@@ -108,7 +108,13 @@ axiom spectral_density_integrable :
     - Connection between discrete sum and continuous integral (Poisson summation)
     
     This lemma is key for interpreting ζ(s) as a spectral density! -/
--- Placeholder for Fourier integral until Mathlib interface is determined
+
+-- TODO: Replace with Mathlib's FourierTransform implementation when available.
+-- This is a placeholder axiom for the Fourier integral operator.
+-- The actual Mathlib module is Mathlib.Analysis.Fourier.FourierTransform
+-- but the exact function name and signature may differ from this placeholder.
+-- See: https://leanprover-community.github.io/mathlib4_docs/Mathlib/Analysis/Fourier/FourierTransform.html
+/-- Placeholder for Fourier integral until Mathlib interface is determined -/
 axiom fourier_integral : (ℝ → ℝ) → (ℝ → ℂ)
 
 lemma dirichlet_series_fourier {f : ℝ → ℝ} (a : ℕ → ℝ) (s : ℂ) 

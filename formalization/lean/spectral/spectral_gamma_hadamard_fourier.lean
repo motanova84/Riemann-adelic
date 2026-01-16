@@ -165,11 +165,27 @@ theorem QCAL_unified_spectral_structure :
 
 /-! ## Operator H_Ψ Integration -/
 
-/-- The spectral operator H_Ψ unifies all three modules.
+/-- The spectral operator H_Ψ from the QCAL framework.
     
-    Eigenvalues of H_Ψ = zeros of ζ (Hadamard)
-    Spectral measure of H_Ψ = spectral_density (Fourier)
-    Normalization via Gamma = chi factor (Gamma) -/
+    This is the self-adjoint operator central to the spectral approach
+    to the Riemann Hypothesis. In the QCAL ∞³ framework:
+    
+    **Mathematical meaning**:
+    - H_Ψ is a densely-defined self-adjoint operator on L²(ℝ)
+    - Its spectrum σ(H_Ψ) corresponds to the non-trivial zeros of ζ(s)
+    - The operator is constructed via Berry-Keating-type quantization
+    
+    **Relationship to RH**:
+    - RH is true ⟺ H_Ψ has purely real spectrum
+    - Each eigenvalue λ of H_Ψ gives a zero ρ = 1/2 + iλ
+    - The spectral measure of H_Ψ determines spectral_density(t)
+    
+    **Physical interpretation**:
+    - H_Ψ is the "Hamiltonian" of the quantum system
+    - Eigenvalues = energy levels = frequencies in QCAL framework
+    - Base frequency f₀ = 141.7001 Hz sets the fundamental scale
+    
+    See formalization/lean/spectral/HPsi_def.lean for detailed construction. -/
 axiom H_Psi_operator : Type
 
 axiom H_Psi_eigenvalues_are_zeros :

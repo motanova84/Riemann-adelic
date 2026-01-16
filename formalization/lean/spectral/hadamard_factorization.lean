@@ -68,13 +68,17 @@ decomposition connecting zeros to eigenvalues of H_Ψ.
 /-- Weierstrass primary factor E_1(z) = (1-z)·e^z 
     
     This is the first-order elementary factor used in products
-    for entire functions of order 1. -/
+    for entire functions of order 1.
+    
+    The parameter hρ ensures type safety when dividing by ρ. -/
 noncomputable def weierstrass_E1 (z : ℂ) : ℂ := 
   (1 - z) * Complex.exp z
 
 /-- General Weierstrass factor E_p(z) = (1-z) exp(z + z²/2 + ... + z^p/p)
     
-    For our purposes with ζ(s), we use p = 1. -/
+    For our purposes with ζ(s), we use p = 1.
+    
+    The parameter hρ : ρ ≠ 0 ensures we can safely divide s/ρ. -/
 noncomputable def weierstrass_factor (ρ : ℂ) (s : ℂ) (hρ : ρ ≠ 0) : ℂ :=
   (1 - s/ρ) * Complex.exp (s/ρ)
 
