@@ -90,7 +90,7 @@ def plot_curvature_vs_critical_line():
         einstein_components.append(curv_data['einstein_component'])
     
     # Create figure
-    fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(12, 10))
+    _fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(12, 10))
     
     # Plot 1: Local curvature
     ax1.plot(sigma_values, local_curvatures, 'b-', linewidth=2, label='Local Curvature')
