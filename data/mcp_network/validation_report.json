@@ -1,0 +1,41 @@
+{
+  "timestamp": "2026-01-16T10:50:24.315065",
+  "data_dir": "/home/runner/work/Riemann-adelic/Riemann-adelic/data/mcp_network",
+  "tests": {
+    "server_count": {
+      "passed": true,
+      "expected": 5,
+      "actual": 5,
+      "message": "5/5 servidores ✓"
+    },
+    "frequencies": {
+      "passed": true,
+      "total_servers": 5,
+      "invalid_servers": [],
+      "message": "Todas las frecuencias son válidas"
+    },
+    "coherence": {
+      "passed": true,
+      "average": 1.0,
+      "min": 1.0,
+      "max": 1.0,
+      "threshold": 0.95,
+      "message": "Coherencia global: 1.000000 ✓"
+    },
+    "entropy": {
+      "passed": true,
+      "average": 0.0,
+      "max": 0.0,
+      "threshold": 0.01,
+      "message": "Entropía global: 0.000000 ✓"
+    },
+    "observers": {
+      "passed": false,
+      "observer_count": 0,
+      "recent_events": 0,
+      "message": "0 observadores activos ⚠"
+    }
+  },
+  "passed": false,
+  "message": "FALLOS DETECTADOS ⚠"
+}
