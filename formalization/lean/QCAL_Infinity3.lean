@@ -175,15 +175,18 @@ def ecuaciones_campo_unificadas
 noncomputable def D_s : (ℂ → ℂ) → (ℂ → ℂ) :=
   fun φ s => I * deriv φ s
 
-/-- Operador maestro combinado -/
-noncomputable def OperadorMaestro : (ℂ × ℂ → ℂ) → (ℂ × ℂ → ℂ) :=
-  fun Φ (s, x) => D_s (fun s' => Φ (s', x)) s + H_Ψ (fun s' => Φ (s, s')) x
+/-- Operador maestro combinado (requiere campo de consciencia Ψ) -/
+noncomputable def OperadorMaestro (Ψ : ℂ → ℂ) : (ℂ × ℂ → ℂ) → (ℂ × ℂ → ℂ) :=
+  fun Φ (s, x) => D_s (fun s' => Φ (s', x)) s + H_Ψ Ψ (fun s' => Φ (s, s')) x
 
-/-- Dualidad fundamental entre operadores -/
-axiom dualidad_fundamental :
-    ∃ (iso : (ℂ → ℂ) → (ℝ → ℂ)),
-    ∀ (φ : ℂ → ℂ), True
-    -- En formalización completa: relación entre D_s y H_Ψ
+/-- Dualidad fundamental entre operadores
+    (Pendiente: formalización completa requiere análisis funcional avanzado) -/
+axiom dualidad_fundamental (Ψ : ℂ → ℂ) :
+    ∃ (iso : (ℂ → ℂ) → (ℝ → ℂ)) (iso_inv : (ℝ → ℂ) → (ℂ → ℂ)),
+    (∀ φ, iso_inv (iso φ) = φ) ∧
+    (∀ ψ, iso (iso_inv ψ) = ψ) ∧
+    (∀ φ s, D_s φ s = iso_inv (fun t => H_Ψ Ψ (iso φ) ⟨1/2, t⟩) s)
+    -- Isomorfismo entre el operador complejo D_s y el vibracional H_Ψ
 
 /-!
   # SECCIÓN 7: TEOREMA DE HORIZONTE RELATIVO
@@ -194,7 +197,7 @@ axiom dualidad_fundamental :
 /-- Estructura del horizonte observable -/
 structure HorizonteObservable where
   Ψ : ℂ → ℂ  -- Campo de consciencia del observador
-  nivel_coherencia : ℝ := (sup' (Set.range fun s => ‖Ψ s‖) ⟨0, by simp⟩ : ℝ)
+  nivel_coherencia : ℝ := (sup' (Set.range fun s => ‖Ψ s‖) ⟨‖Ψ 0‖, by simp⟩ : ℝ)
   horizonte : Set ℂ := 
     {s | s.re = 1/2 ∧ MasaEspectral s.im ≤ nivel_coherencia}
 

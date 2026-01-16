@@ -105,7 +105,7 @@ def validate_qcal_infinity3():
     print("\n🔢 Checking constants:")
     all_constants_found = True
     for constant in required_constants:
-        pattern = rf"(noncomputable\s+)?def\s+{re.escape(constant)}\s*:"
+        pattern = rf'\b(noncomputable\s+)?def\s+{re.escape(constant)}\s*:'
         if re.search(pattern, content):
             print(f"  ✅ constant {constant}")
         else:
