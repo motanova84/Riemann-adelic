@@ -34,8 +34,8 @@ def plot_einstein_tensor_heatmap():
     # Compute Einstein tensor
     einstein = tensor.compute_einstein_tensor()
     
-    # Create figure
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 6))
+    # Create figure (figure object not used explicitly)
+    _, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 6))
     
     # Plot 1: Einstein tensor heatmap
     im1 = ax1.imshow(einstein, cmap='RdBu_r', aspect='auto')
