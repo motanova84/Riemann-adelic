@@ -16,8 +16,14 @@ from mcp_network import F0_BASE, F0_HARMONIC
 
 def clear_screen() -> None:
     """Limpia la pantalla de la consola."""
-    import os
-    os.system('cls' if os.name == 'nt' else 'clear')
+    import subprocess
+    import sys
+    
+    # Use subprocess.run for safer execution
+    if sys.platform == 'win32':
+        subprocess.run(['cmd', '/c', 'cls'], check=False)
+    else:
+        subprocess.run(['clear'], check=False)
 
 
 def load_network_state(data_dir: Path) -> Optional[Dict[str, Any]]:

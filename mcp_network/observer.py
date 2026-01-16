@@ -103,7 +103,8 @@ class Observer:
                     callback(event)
                 except Exception as e:
                     # Log error but don't fail
-                    print(f"Error in callback: {e}")
+                    import logging
+                    logging.warning(f"Error in observer callback: {e}")
     
     def get_event_history(self, limit: int = 100) -> List[ObserverEventData]:
         """
