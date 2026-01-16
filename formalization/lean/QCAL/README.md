@@ -126,16 +126,14 @@ formalization/lean/QCAL/
 │   ├── libbridge.c                   # C FFI bridge
 │   └── libbridge.so                  # Compiled shared library
 ├── UniversalKernel.lean              # High-level API
+├── SpectralConvergence.lean          # Spectral convergence theorems for RH
 ├── cy_fundamental_frequency.lean     # Script 19: CY³ → f₀
 ├── operator_Hpsi_frequency.lean      # Script 20: Hψ integration with f₀
 ├── casimir_ligo_frequency.lean       # Script 21: Casimir + LIGO → f₀
+├── frequency_identity.lean           # Script 18: Frequency scaling identity
+├── Arpeth_Bio_Coherence.lean         # Arpeth biological coherence
+├── CircularityFree.lean              # Circularity-free verification
 └── README.md                         # This file
-│   ├── Bridge.lean          # Lean FFI interface
-│   ├── libbridge.c          # C FFI bridge
-│   └── libbridge.so         # Compiled shared library
-├── UniversalKernel.lean     # High-level API
-├── frequency_identity.lean  # Script 18: Frequency scaling identity
-└── README.md                # This file
 
 tools/
 ├── universal_kernel.py      # Python verifier
@@ -196,6 +194,32 @@ Integrates f₀ into the noetic operator Hψ := -Δ + ω₀².
 
 ### Script 21: Physical Validation (`casimir_ligo_frequency.lean`)
 Validates f₀ through Casimir effect and LIGO O4 observations.
+
+## Spectral Convergence Module (`SpectralConvergence.lean`)
+
+This module provides a complete formalization of spectral convergence theorems for the Riemann zeta function on the critical line.
+
+### Key Results
+
+1. **Chi Function Properties**
+   - `chi(s)`: Riemann functional factor χ(s) = 2^s π^{s-1} sin(πs/2) Γ(1-s)
+   - `abs_chi_half_line`: |χ(1/2 + it)| = √(π/2)
+
+2. **Spectral Density**
+   - `spectral_density(t)`: ρ(t) = √(∑ |sin(nt)/n|²)
+   - `spectral_density_zeta_relation`: |ζ(1/2 + it)| = ρ(t) · √(π/2)
+   - `spectral_density_continuous`: Continuity of spectral density
+
+3. **Zero Properties**
+   - `zeta_zeros_isolated`: Zeros are isolated
+   - `zeta_zeros_discrete`: Zeros are discrete in vertical strips
+   - `critical_line_measure_zero`: Off-critical-line zeros have measure zero
+
+4. **QCAL Integration**
+   - `QuantumConsciousnessOperator`: Quantum consciousness operator
+   - `noetic_presence_measure`: Noetic presence measure
+   - `full_spectral_convergence_theorem`: Complete convergence theorem
+
 ### Compatibility
 
 This module is compatible with all QCAL operators:
