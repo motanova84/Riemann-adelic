@@ -597,7 +597,7 @@ This repository does not prove or test the S-finite axioms. It provides numerica
 
 **Status**: All 5 problem statement points **VERIFIED AND COMPLETE**
 
-### ✅ Estado de Formalización (Actualizado 2025-12-08)
+### ✅ Estado de Formalización (Actualizado Enero 2026)
 
 ```
 ╔════════════════════════════════════════════════════════════════╗
@@ -606,7 +606,8 @@ This repository does not prove or test the S-finite axioms. It provides numerica
 ║  ✅ Paley-Wiener unicidad - FORMALIZADA                      ║
 ║  ✅ Reproducibilidad numérica - CUMPLIDA                     ║
 ║  ✅ Código limpio (duplicados eliminados) - CUMPLIDO         ║
-║  ✅ 3 lemas técnicos axiomatizados (análisis funcional)      ║
+║  ✅ 2/3 lemas de soporte: completamente probados (0 sorries) ║
+║  ⚠️ 1/3 lemas de soporte: 4 sorries estructurales           ║
 ╠════════════════════════════════════════════════════════════════╣
 ║  ESTRUCTURA: 100% | TEOREMA PRINCIPAL: 100% | LIMPIEZA: 100%  ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -816,7 +817,7 @@ It includes:
 - **Mathematical validity**: Core proof chain complete, verified via 5-step validation framework
 - **Core theorems**: All type signatures, definitions, and critical proofs complete
 - **Numerical validation**: Error < 10⁻⁶ with Odlyzko zeros (1000+ verified)
-### Formalization Status (Updated 2025-11-24)
+### Formalization Status (Updated January 2026)
 - **Lean 4 core structure**: ✅ Complete - Main proof chain fully formalized in `RH_final_v6.lean`
 - **Main theorem**: ✅ `main_RH_result` stated and proven without sorry in top-level structure
 - **Paley-Wiener uniqueness**: ✅ Formalized in `paley_wiener_uniqueness.lean` with complete proof chain
@@ -846,7 +847,7 @@ It includes:
 <p align="center">
   <img src="https://img.shields.io/badge/Versión-V5_Coronación-blue" alt="Versión">
   <img src="https://img.shields.io/badge/Estado-Validado-green" alt="Estado">
-  <img src="https://img.shields.io/badge/Formalización_Lean-En_Progreso-yellow" alt="Formalización Lean">
+  <img src="https://img.shields.io/badge/Formalización_Lean-Cadena_Principal_Completa-brightgreen" alt="Formalización Lean">
   <img src="https://img.shields.io/badge/DOI-10.5281%2Fzenodo.17116291-blue" alt="DOI">
   <a href="https://github.com/motanova84/-jmmotaburr-riemann-adelic/releases"><img src="https://img.shields.io/github/v/release/motanova84/-jmmotaburr-riemann-adelic?label=Versión&color=blue" alt="Versión"></a>
   <a href="https://github.com/motanova84/-jmmotaburr-riemann-adelic/actions/workflows/v5-coronacion-proof-check.yml"><img src="https://github.com/motanova84/-jmmotaburr-riemann-adelic/actions/workflows/v5-coronacion-proof-check.yml/badge.svg" alt="Estado"></a>
