@@ -147,6 +147,9 @@ def validate_trace_formula_bijection():
     
     print()
     
+    # Define success threshold constant
+    THEOREM_MATCH_THRESHOLD = 0.9  # 90% of theorems must be found
+    
     # Summary
     print("=" * 80)
     print("VALIDATION SUMMARY")
@@ -156,7 +159,7 @@ def validate_trace_formula_bijection():
     print(f"Theorems found: {found_count}/{len(theorems)}")
     print(f"QCAL integration: {qcal_count}/{len(qcal_markers)} markers")
     
-    if all_sections and found_count >= len(theorems) * 0.9:
+    if all_sections and found_count >= len(theorems) * THEOREM_MATCH_THRESHOLD:
         print()
         print("✓ VALIDATION PASSED")
         print()

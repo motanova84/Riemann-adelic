@@ -202,6 +202,9 @@ end TraceFormulaSetup
 
 namespace BijectionEvidence
 
+/-- Precision threshold for numerical evidence from Odlyzko's computations -/
+def numerical_precision : ℝ := 10^(-10)
+
 /-- Indicator that a real number is the imaginary part of a zeta zero -/
 def is_zeta_zero_imaginary_part (γ : ℝ) : Prop :=
   ∃ s : ℂ, riemannZeta s = 0 ∧ s ∉ {-2, -4, -6} ∧ s.im = γ
@@ -301,10 +304,12 @@ axiom spectrum_zeta_bijection_conjecture :
     The first N eigenvalues match the first N zero heights to high precision.
     
     Based on Odlyzko's computations of 10^13 zeros.
+    
+    Note: Uses numerical_precision = 10^{-10} for high-accuracy verification.
 -/
 axiom numerical_evidence (N : ℕ) :
     ∀ n < N, 
-    |TraceFormulaSetup.eigenvalue_sequence H_psi n - riemannZeta_zero_height n| < 10^(-10)
+    |TraceFormulaSetup.eigenvalue_sequence H_psi n - riemannZeta_zero_height n| < numerical_precision
 
 end BijectionEvidence
 
@@ -401,11 +406,19 @@ namespace Consequences
 
 open TraceFormulaSetup BijectionEvidence ConstructiveTrace
 
-/-- Subset of spectrum contained in reals -/
-axiom spectrum_subset_real {H : Type*} [NormedAddCommGroup H] 
+/-- Precision threshold for first eigenvalue tests (less stringent than full numerical evidence) -/
+def eigenvalue_test_precision : ℝ := 10^(-6)
+
+/-- Self-adjoint operators have real spectrum -/
+axiom spectrum_is_real {H : Type*} [NormedAddCommGroup H] 
     [InnerProductSpace ℂ H] [CompleteSpace H]
     (T : H →L[ℂ] H) [IsSelfAdjoint T] : 
-    ∀ λ ∈ Set.univ, λ ∈ Set.univ → λ ∈ (Set.univ : Set ℝ)
+    ∀ λ : ℂ, λ ∈ spectrum ℂ T → λ.im = 0
+
+/-- Spectrum of an operator (to be properly defined using Mathlib) -/
+axiom spectrum {𝕜 : Type*} [NontriviallyNormedField 𝕜] 
+    {E : Type*} [NormedAddCommGroup E] [NormedSpace 𝕜 E] 
+    (T : E →L[𝕜] E) : Set 𝕜
 
 /-- **Theorem: RH Equivalent to Reality of Spectrum**
     
@@ -433,7 +446,7 @@ theorem RH_iff_self_adjoint :
     intro s hs
     -- By bijection, zeros correspond to eigenvalues
     have h_bij := spectrum_zeta_bijection_conjecture
-    -- Self-adjoint operators have real spectrum
+    -- Self-adjoint operators have real spectrum (spectrum_is_real)
     -- Therefore s = 1/2 + iγ for real γ, giving Re(s) = 1/2
     sorry
 
