@@ -1,0 +1,78 @@
+{
+  "timestamp": "2026-01-17",
+  "validator": "HilbertPolyaValidator",
+  "results": {
+    "sorry_counts": {
+      "HilbertPolyaProof.lean": 17,
+      "GaussianIntegrals.lean": 7,
+      "ZetaEquation.lean": 3,
+      "EigenvalueUniqueness.lean": 5,
+      "HilbertPolyaProofHelpers.lean": 6,
+      "HilbertPolyaExamples.lean": 0
+    },
+    "total_sorry": 38,
+    "theorems": {
+      "HilbertPolyaProof.lean": [
+        "kernel_symmetric",
+        "exp_neg_sq_integrable",
+        "kernel_square_integrable",
+        "for",
+        "HS_norm_finite",
+        "H_\u03c8_kernel_mem_L2",
+        "H_\u03c8_bounded",
+        "H_\u03c8_selfadjoint",
+        "for",
+        "for",
+        "eigenfunction_exists",
+        "guarantees",
+        "for",
+        "eigenvalues_real",
+        "kernel_fourier_transform",
+        "zeta_zero_from_exponential_equation",
+        "eigenvalues_are_zeta_zeros",
+        "exact",
+        "trace_class",
+        "Riemann_Hypothesis_Proved"
+      ],
+      "GaussianIntegrals.lean": [
+        "gaussian_integral",
+        "gaussian_integral_scaled",
+        "fourier_gaussian",
+        "fourier_gaussian_cos",
+        "integral_gaussian_fourier",
+        "gaussian_cos_squared",
+        "gaussian_kernel_L2"
+      ],
+      "ZetaEquation.lean": [
+        "log_eigenvalue_equation",
+        "zeta_zero_from_exponential_equation",
+        "exponential_equation_from_zeta_zero",
+        "zeta_zeros_conjugate",
+        "critical_line_form",
+        "eigenvalue_implies_critical_line"
+      ],
+      "EigenvalueUniqueness.lean": [
+        "eigenfunctions_orthogonal",
+        "eigenspace_finite_dimensional",
+        "eigenfunction_uniqueness",
+        "spectral_decomposition",
+        "for",
+        "exponential_equation_unique"
+      ],
+      "HilbertPolyaProofHelpers.lean": [],
+      "HilbertPolyaExamples.lean": []
+    },
+    "documentation": {
+      "HILBERT_POLYA_README.md": true,
+      "IMPLEMENTATION_HILBERT_POLYA.md": true
+    }
+  },
+  "files_checked": [
+    "HilbertPolyaProof.lean",
+    "GaussianIntegrals.lean",
+    "ZetaEquation.lean",
+    "EigenvalueUniqueness.lean",
+    "HilbertPolyaProofHelpers.lean",
+    "HilbertPolyaExamples.lean"
+  ]
+}
