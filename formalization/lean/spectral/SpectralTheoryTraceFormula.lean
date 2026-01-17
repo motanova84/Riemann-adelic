@@ -84,11 +84,21 @@ theorem spectrum_discrete :
   intro K hK_compact
   exact H_psi_compact_resolvent H_psi K hK_compact
 
-/-- Enumerate eigenvalues with multiplicity -/
+/-- Enumerate eigenvalues with multiplicity
+    
+    Construction strategy:
+    1. For each n ∈ ℕ, use spectrum_discrete to show finitely many 
+       eigenvalues in [-n, n]
+    2. Order these finite sets by absolute value, then by sign
+    3. Concatenate ordered sets to form sequence
+    4. Use axiom of choice to select from each finite set
+    
+    This is well-defined but requires classical choice.
+-/
 def eigenvalue_sequence : ℕ → ℝ := by
-  -- Order eigenvalues by absolute value, then by sign
-  -- This is constructible from the discrete spectrum property
-  sorry  -- Construction requires choice from finite sets
+  sorry  -- Construction: requires choice from enumeration of finite sets
+         -- For each interval [-n,n], use Classical.choice on the finite
+         -- eigenvalue set, order them, and concatenate
 
 /-- The sequence contains all eigenvalues -/
 axiom eigenvalue_sequence_complete :

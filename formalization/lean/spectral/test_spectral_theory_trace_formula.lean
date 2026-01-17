@@ -8,7 +8,7 @@ Author: José Manuel Mota Burruezo Ψ ✧ ∞³
 Date: 2026-01-17
 -/
 
-import SpectralTheoryQCAL
+import SpectralTheoryTraceFormula
 
 open SpectralTheoryQCAL
 open Complex
