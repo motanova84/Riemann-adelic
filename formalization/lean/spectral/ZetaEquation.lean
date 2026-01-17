@@ -43,10 +43,12 @@ axiom hadamard_product_form : ∀ s : ℂ,
     -- ξ(s) = ξ(0) · ∏ (1 - s/ρ) where ρ ranges over zeros
     True  -- Placeholder for actual Hadamard product
 
-/-- Functional equation of zeta function -/
+/-- Functional equation of zeta function (simplified form) -/
 axiom zeta_functional_equation : ∀ s : ℂ,
-    riemannZeta s = -- ... relates ζ(s) to ζ(1-s)
-    riemannZeta (1 - s)  -- Simplified form
+    -- Full form: π^(-s/2) Γ(s/2) ζ(s) = π^(-(1-s)/2) Γ((1-s)/2) ζ(1-s)
+    -- This is a placeholder for the complete functional equation
+    -- In practice, we'd import this from a zeta function library
+    True  -- Placeholder - actual equation relates ζ(s) to ζ(1-s) via xi function
 
 /-! ## Main Connection Theorem -/
 

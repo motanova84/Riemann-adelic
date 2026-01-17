@@ -58,12 +58,13 @@ theorem kernel_symmetric : ∀ x y : ℝ, K x y = K y x := by
 
 /-- Helper: exponential of negative square is integrable -/
 theorem exp_neg_sq_integrable : Integrable (fun u : ℝ => Real.exp (-2 * u^2)) := by
-  -- This is a standard Gaussian integral
-  -- The function exp(-2u²) is continuous and decays rapidly
-  apply Integrable.const_mul
-  · -- exp(-u²) is integrable (standard Gaussian)
-    sorry -- This requires Gaussian integration theory from Mathlib
-  · norm_num
+  -- This is a scaled Gaussian integral
+  -- exp(-2u²) is integrable because it's a Gaussian with parameter a = 2
+  -- Can use scaling: ∫ exp(-2u²) du = √(π/2) by substitution v = √2 · u
+  sorry -- Requires:
+  -- 1. Gaussian integral formula from Mathlib
+  -- 2. Scaling/substitution for integrals
+  -- 3. Change of variables: u → v/√2
 
 /-- Kernel is square-integrable over ℝ² -/
 theorem kernel_square_integrable : 
@@ -85,11 +86,15 @@ noncomputable def HS_norm : ℝ :=
 /-- HS norm is finite -/
 theorem HS_norm_finite : HS_norm < ∞ := by
   simp only [HS_norm]
-  -- √x < ∞ for any finite x
-  apply Real.sqrt_nonneg
+  -- Need to show: Real.sqrt (∫∫|K|²) < ∞
   -- The integral is finite by kernel_square_integrable
-  -- In practice, we'd show: ∫∫|K|² ≤ C for some constant C
-  -- This follows from Gaussian decay and boundedness of cosine
+  -- Therefore its square root is also finite
+  have h_integral_finite : (∫ (xy : ℝ × ℝ), ‖K xy.1 xy.2‖^2) < ∞ := by
+    -- This follows from kernel_square_integrable
+    -- An integrable function has finite integral
+    sorry -- Requires extracting finiteness from Integrable
+  -- Square root of finite number is finite
+  sorry -- Requires: Real.sqrt preserves finiteness
 
 /-! ## Operator Construction -/
 
@@ -236,8 +241,8 @@ theorem trace_class :
 
 /-! ## Riemann Hypothesis Proof -/
 
-/-- Trivial zeros of zeta function -/
-def trivial_zeros : Set ℂ := {s | ∃ n : ℕ, s = -2 * (n + 1 : ℂ)}
+/-- Trivial zeros of zeta function (negative even integers) -/
+def trivial_zeros : Set ℂ := {s | ∃ n : ℕ, 0 < n ∧ s = -(2 * (n : ℂ))}
 
 /-- **Main Theorem**: All non-trivial zeta zeros lie on Re(s)=1/2 -/
 theorem Riemann_Hypothesis_Proved :

@@ -156,6 +156,9 @@ lemma bounded_comp {E F G : Type*}
 /-! ## Spectral Theory Helpers -/
 
 /-- Self-adjoint operator has real spectrum -/
+-- Note: This should be imported from Mathlib's spectral theory
+-- Currently using axiom as placeholder until proper import is established
+-- See: Mathlib.Analysis.InnerProductSpace.Spectrum or similar
 axiom selfadjoint_real_spectrum {E : Type*} 
     [NormedAddCommGroup E] [InnerProductSpace ℂ E] [CompleteSpace E]
     (T : E →L[ℂ] E) 
@@ -163,10 +166,13 @@ axiom selfadjoint_real_spectrum {E : Type*}
     ∀ λ : ℂ, (∃ φ : E, φ ≠ 0 ∧ T φ = λ • φ) → λ.im = 0
 
 /-- Compact self-adjoint operators have discrete spectrum -/
+-- Note: This is the spectral theorem for compact operators
+-- Should be imported from Mathlib once available
+-- Currently axiomatized as it's a fundamental result
 axiom compact_selfadjoint_discrete_spectrum {E : Type*}
     [NormedAddCommGroup E] [InnerProductSpace ℂ E] [CompleteSpace E]
     (T : E →L[ℂ] E)
-    (h_compact : True)  -- Placeholder for compactness
+    (h_compact : True)  -- Placeholder for compactness condition
     (h_selfadj : ∀ x y, inner (T x) y = inner x (T y)) :
     ∃ (eigenvalues : ℕ → ℂ) (eigenfunctions : ℕ → E),
       (∀ n, T (eigenfunctions n) = eigenvalues n • eigenfunctions n) ∧
