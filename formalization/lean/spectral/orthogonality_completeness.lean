@@ -45,7 +45,7 @@ open MeasureTheory Filter Topology Complex
 open scoped ENNReal NNReal Topology
 
 variable (L2_multiplicative : Type _) [NormedAddCommGroup L2_multiplicative] 
-  [InnerProductSpace ℂ L2_multiplicative] [CompleteSpace L2_multiplicative]
+  [InnerProductSpace ℂ L2_multiplicative] [CompleteSpace L2_multiplicative] [MetricSpace L2_multiplicative]
 
 section Orthogonality
 
@@ -289,9 +289,10 @@ theorem span_psi_dense :
     
   exact this
 
-/-- Membership in closure iff frequently approaches -/
-axiom mem_closure_iff_frequently {α : Type*} [TopologicalSpace α] (s : Set α) (x : α) :
-  x ∈ closure s ↔ ∃ U : Set α, x ∈ U ∧ U.Nonempty
+/-- Density provides approximation for any point -/
+axiom Dense.exists_mem_open {α : Type*} [TopologicalSpace α] [MetricSpace α] 
+  {s : Set α} (hs : Dense s) (x : α) (δ : ℝ) (hδ : δ > 0) :
+  ∃ y ∈ s, dist x y < δ
 
 /-- Topological closure equals algebraic closure for submodules -/
 axiom Submodule.topologicalClosure_coe {E : Type*} [NormedAddCommGroup E] [NormedSpace ℂ E]
@@ -308,25 +309,18 @@ theorem system_is_complete :
   intro f δ hδ
   -- Get approximation from dense span
   have h_dense := span_psi_dense
-  rcases h_dense.exists_dist_lt δ hδ with ⟨g, hg, h_dist⟩
+  -- Use density to find approximation within δ/2
+  have hδ2 : δ/2 > 0 := by linarith
+  rcases Dense.exists_mem_open h_dense f (δ/2) hδ2 with ⟨g, hg_mem, hg_dist⟩
   
-  -- g is in the closure of the union of spans
-  rcases mem_closure_iff_frequently.mp hg with ⟨U, hU, hU_mem⟩
+  -- g is in the closure, so can be approximated by finite sums
+  -- For some fixed ε, R, use span_psi_cut to approximate g
+  sorry  -- This requires extracting ε, R from the iSup structure
   
-  -- Use fact that finite linear combinations are dense in each span
-  have : ∀ (ε R : ℝ) (hε : ε > 0) (hR : R > ε), 
-         Dense (Submodule.span ℂ {f : L2_multiplicative | ∃ t : ℝ, f = psi_cut ε R hε hR t}) := by
-    intro ε R hε hR
-    exact Submodule.topologicalClosure_coe _ |>.symm ▸ dense_span_iff_finite.mpr ?_
-    
-  rcases this with ⟨n, t, c, ε, R, hε, hR, h_approx⟩
-  refine ⟨n, t, c, ε, R, hε, hR, ?_⟩
-  calc
-    ‖f - ∑ i, c i • (psi_cut ε R hε hR (t i) : L2_multiplicative)‖
-        ≤ ‖f - g‖ + ‖g - ∑ i, c i • (psi_cut ε R hε hR (t i) : L2_multiplicative)‖ :=
-      norm_sub_le _ _ _
-    _ < δ/2 + δ/2 := by linarith [h_dist, h_approx]
-    _ = δ := by ring
+  -- The complete proof would:
+  -- 1. Extract ε, R such that g is close to span_psi_cut ε R
+  -- 2. Approximate g by finite sum within δ/2
+  -- 3. Use triangle inequality to bound total error
 
 end Completeness
 
