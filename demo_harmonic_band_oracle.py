@@ -213,8 +213,8 @@ def main():
     try:
         zeros = load_riemann_zeros_from_file("zeros/zeros_t1e3.txt", max_zeros=200)
         print(f"      ✓ Loaded {len(zeros)} Riemann zeros from file")
-    except:
-        print("      ⚠ Using fallback zeros (file not found)")
+    except (FileNotFoundError, IOError, OSError) as e:
+        print(f"      ⚠ Using fallback zeros (file not found: {e})")
         zeros = load_riemann_zeros_from_file("nonexistent.txt", max_zeros=200)
     
     oracle.set_riemann_zeros(zeros)
