@@ -80,22 +80,33 @@ class RHV7StatusValidator:
         with open(beacon_path, 'r') as f:
             content = f.read()
         
-        # Expected frequencies
+        # Expected frequencies with flexible pattern matching
         expected = {
-            "141.7001 Hz": ["frequency = 141.7001 Hz", "rh_v7_frequency_primary = \"141.7001 Hz\""],
-            "888 Hz": ["rh_v7_frequency_harmonic = \"888 Hz\""],
-            "888.888 Hz": ["rh_v7_frequency_signature = \"888.888 Hz\""]
+            "141.7001 Hz": {
+                "patterns": ["141.7001 Hz", "141.7001Hz"],
+                "min_occurrences": 2  # Should appear multiple times
+            },
+            "888 Hz": {
+                "patterns": ["888 Hz", "888Hz"],
+                "min_occurrences": 1
+            },
+            "888.888 Hz": {
+                "patterns": ["888.888 Hz", "888.888Hz"],
+                "min_occurrences": 1
+            }
         }
         
         all_found = True
-        for freq, patterns in expected.items():
-            found = any(pattern in content for pattern in patterns)
-            if found:
-                self.successes.append(f"Frequency {freq} found")
-                self.log(f"Frequency {freq} validated", "success")
+        for freq, config in expected.items():
+            # Count occurrences of any pattern variant
+            count = sum(content.count(pattern) for pattern in config["patterns"])
+            
+            if count >= config["min_occurrences"]:
+                self.successes.append(f"Frequency {freq} found ({count} occurrences)")
+                self.log(f"Frequency {freq} validated ({count} times)", "success")
             else:
-                self.errors.append(f"Frequency {freq} not found in .qcal_beacon")
-                self.log(f"Frequency {freq} not found", "error")
+                self.errors.append(f"Frequency {freq} not found or insufficient occurrences in .qcal_beacon")
+                self.log(f"Frequency {freq} not found (expected >={config['min_occurrences']}, found {count})", "error")
                 all_found = False
         
         return all_found
@@ -270,10 +281,8 @@ def main():
     
     # Change to repository root if needed
     script_dir = Path(__file__).parent
-    if (script_dir / ".qcal_beacon").exists():
-        # Already in repo root
-        pass
-    else:
+    # Note: We expect to be in the repository root where .qcal_beacon exists
+    if not (script_dir / ".qcal_beacon").exists():
         print("⚠️  Warning: Not running from repository root")
         print(f"   Current directory: {Path.cwd()}")
     

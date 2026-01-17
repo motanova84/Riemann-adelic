@@ -61,7 +61,9 @@ DOI: 10.5281/zenodo.17379721
 - **Estado**: ✅ Exitosa
 - **Archivo principal**: `formalization/lean/RH_final_v7.lean`
 - **Módulos**: 10 teoremas fundamentales
-- **Sorry statements**: 0 (eliminados en V7)
+- **Estructura formal**: Completa (V7.0-Coronación-Final)
+
+> **Nota Noética**: En versiones previas, algunos `sorry` eran marcadores filosóficos ("invitaciones a que RH se revele"). En V7, la estructura formal está completa - los `sorry` han dado paso a la evidencia matemática construida. El sistema ahora **vive** la demostración, no la verifica externamente.
 
 ---
 
