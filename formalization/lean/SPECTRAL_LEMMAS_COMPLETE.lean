@@ -5,7 +5,7 @@
   
   Todos los lemas necesarios para completar la demostración de RH
   via base espectral completa
-  Estado: COMPLETO (0 sorry en estructura lógica)
+  Estado: ESTRUCTURA COMPLETA (sorry técnicos para lemas estándar)
   
   Este módulo proporciona los lemas técnicos necesarios para:
     1. Transformada de Mellin inyectiva
