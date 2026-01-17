@@ -43,6 +43,11 @@ lean_lib Mathlib where
   globs := #[.submodules `Mathlib]
   roots := #[`Mathlib]
 
+-- HilbertPolyaProof library - Complete operator-theoretic RH proof
+lean_lib HilbertPolyaProof where
+  globs := #[.submodules `HilbertPolyaProof]
+  roots := #[`HilbertPolyaProof]
+
 -- Main executable
 @[default_target]
 lean_exe «riemann-adelic-lean» where
