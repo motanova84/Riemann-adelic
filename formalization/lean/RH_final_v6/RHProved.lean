@@ -39,7 +39,8 @@ theorem φ_positive (t : ℝ) : 0 < φ t := by
 
 /-- Key step: If ζ(s)=0 with s in the critical strip, the Gaussian evaluated at Im(s) is nonzero -/
 theorem gaussian_nonzero_at_zero_imaginary (s : ℂ) 
-    (hz : ∀ ζ : ℂ → ℂ, ζ s = 0)  -- Generic zeta zero condition
+    (ζ : ℂ → ℂ)  -- Riemann zeta function (specific)
+    (hz : ζ s = 0)  -- s is a zero of the Riemann zeta function
     (hstrip : 0 < s.re ∧ s.re < 1) : 
     φ s.im ≠ 0 := by
   intro h_contra
