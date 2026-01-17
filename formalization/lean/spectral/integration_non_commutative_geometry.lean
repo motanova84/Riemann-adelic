@@ -230,11 +230,13 @@ namespace SpectralQCAL.Integration
 These would be replaced by actual imports in production.
 -/
 
--- Placeholder for demonstration purposes
-axiom Compact_Hpsi_Operator : Type
-axiom spectrum_is_discrete : Compact_Hpsi_Operator → Prop
-axiom spectral_zero_bijection : Prop
-axiom riemann_zeta : ℂ → ℂ
+-- Placeholder axioms for demonstration purposes
+-- These would be replaced by actual imports in production
+-- Using distinct names to avoid conflicts when imports are enabled
+axiom Compact_Hpsi_Operator_Placeholder : Type
+axiom spectrum_is_discrete_placeholder : Compact_Hpsi_Operator_Placeholder → Prop
+axiom spectral_zero_bijection_placeholder : Prop
+axiom riemann_zeta_placeholder : ℂ → ℂ
 
 /-!
 # Integration Theorem Statement
@@ -261,7 +263,7 @@ This is what we're aiming for in the full integration.
     - Constructive at every step
 -/
 axiom riemann_hypothesis_ncg :
-  ∀ ρ : ℂ, riemann_zeta ρ = 0 → ρ.re ≠ 0 → ρ.re ≠ 1 → ρ.re = 1/2
+  ∀ ρ : ℂ, riemann_zeta_placeholder ρ = 0 → ρ.re ≠ 0 → ρ.re ≠ 1 → ρ.re = 1/2
 
 end SpectralQCAL.Integration
 
