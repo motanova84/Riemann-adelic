@@ -3,14 +3,14 @@
   "validator": "HilbertPolyaValidator",
   "results": {
     "sorry_counts": {
-      "HilbertPolyaProof.lean": 17,
+      "HilbertPolyaProof.lean": 19,
       "GaussianIntegrals.lean": 7,
       "ZetaEquation.lean": 3,
       "EigenvalueUniqueness.lean": 5,
       "HilbertPolyaProofHelpers.lean": 6,
       "HilbertPolyaExamples.lean": 0
     },
-    "total_sorry": 38,
+    "total_sorry": 40,
     "theorems": {
       "HilbertPolyaProof.lean": [
         "kernel_symmetric",
@@ -59,7 +59,9 @@
         "for",
         "exponential_equation_unique"
       ],
-      "HilbertPolyaProofHelpers.lean": [],
+      "HilbertPolyaProofHelpers.lean": [
+        "for"
+      ],
       "HilbertPolyaExamples.lean": []
     },
     "documentation": {
