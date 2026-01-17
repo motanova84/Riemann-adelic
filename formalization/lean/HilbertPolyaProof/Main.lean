@@ -28,7 +28,7 @@ theorem Hilbert_Polya_System_Complete :
     
     -- 2. Resolvent is compact
     (∀ λ : ℂ, λ ∉ spectrum (integralOperator (fun x y => H_psi_kernel x y sorry sorry)) →
-        CompactOperator sorry) ∧
+        CompactOperator (((integralOperator (fun x y => H_psi_kernel x y sorry sorry)) - λ • 1)⁻¹)) ∧
     
     -- 3. Spectral-zeta bijection
     (let H := integralOperator (fun x y => H_psi_kernel x y sorry sorry)

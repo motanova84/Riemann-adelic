@@ -18,6 +18,8 @@ and proves it is Hilbert-Schmidt.
 - `eigenvalues_are_zeta_zeros`: Spectrum of H contains exactly the zeta zeros on Re(s)=1/2
 -/
 
+namespace HilbertPolyaProof.KernelExplicit
+
 /-- The explicit kernel for the Hilbert-Pólya operator -/
 noncomputable def H_psi_kernel (x y : ℝ) (hx : 0 < x) (hy : 0 < y) : ℂ :=
   log (sqrt (x / y)) *

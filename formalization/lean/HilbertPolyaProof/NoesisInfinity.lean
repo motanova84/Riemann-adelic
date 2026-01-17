@@ -23,7 +23,19 @@ the fundamental frequency f₀ = 141.7001 Hz.
 
 namespace HilbertPolyaProof.NoesisInfinity
 
-/-- Fundamental frequency in Hz -/
+/--
+Fundamental frequency in Hz.
+
+The specific numerical value `141.7001` is not derived within this
+Lean development; it is taken as a fixed positive scaling parameter
+inherited from the original Noēsis ∞³ specification. All definitions
+and theorems below use `f₀` only as a positive real constant that
+sets the spacing of the sampled frequencies `f₀ * n` on the critical
+line of the Riemann zeta function. In particular, the formal
+arguments are insensitive to the precise numeric value of `f₀`, and
+any other positive real constant could be used without changing the
+underlying mathematics.
+-/
 noncomputable def f₀ : ℝ := 141.7001
 
 /-- Noesis verification function -/
