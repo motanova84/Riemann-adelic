@@ -118,6 +118,19 @@ class CriticalLineStability:
         
         return A_squared
     
+    def _calculate_resonance_phase(self, t: float) -> mp.mpf:
+        """
+        Calculate resonance phase with f₀.
+        
+        Args:
+            t: Imaginary part
+            
+        Returns:
+            Phase value (mod 2π)
+        """
+        return mp.fmod(2 * mp.pi * self.f0 * mp.mpf(t) / self.omega_0, 
+                       2 * mp.pi)
+    
     def _resonance_check(self, s: Union[complex, mp.mpc],
                         psi: float) -> bool:
         """
@@ -147,8 +160,7 @@ class CriticalLineStability:
         t = abs(float(s_mp.imag))
         
         # Compute phase with f₀
-        phase = mp.fmod(2 * mp.pi * self.f0 * mp.mpf(t) / self.omega_0, 
-                       2 * mp.pi)
+        phase = self._calculate_resonance_phase(t)
         
         # Resonance occurs when phase is close to 0 or 2π
         resonant = (abs(phase) < mp.mpf(0.1) or 

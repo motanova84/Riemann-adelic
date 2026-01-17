@@ -93,12 +93,18 @@ class O_Infinity_Cubed:
             Chi factor value
         """
         s_mp = mp.mpc(s)
+        
+        # Compute s/2 and (1-s)/2
         s_half = s_mp / 2
         one_minus_s_half = (1 - s_mp) / 2
         
-        # χ(s) simplified form
-        chi = mp.power(mp.pi, (mp.mpf(-1)/2 - s_mp)) * \
-              mp.gamma(s_half) / mp.gamma(one_minus_s_half)
+        # Compute exponent for π term: -1/2 - s
+        pi_exponent = mp.mpf(-1)/2 - s_mp
+        
+        # Compute χ(s) = π^(-1/2-s) · Γ(s/2) / Γ((1-s)/2)
+        pi_term = mp.power(mp.pi, pi_exponent)
+        gamma_ratio = mp.gamma(s_half) / mp.gamma(one_minus_s_half)
+        chi = pi_term * gamma_ratio
         
         return chi
     

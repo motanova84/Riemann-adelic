@@ -188,6 +188,18 @@ class PsiCutEigenfunction:
         
         return R_term - eps_term
     
+    def _calculate_resonance_phase(self, t: float) -> float:
+        """
+        Calculate resonance phase with f₀.
+        
+        Args:
+            t: Imaginary part of zero
+            
+        Returns:
+            Phase value
+        """
+        return 2 * np.pi * F0 * t / OMEGA_0
+    
     def generate_adelic_string(self, 
                               t_values: np.ndarray,
                               x_range: Tuple[float, float] = (0.1, 10.0),
@@ -216,7 +228,8 @@ class PsiCutEigenfunction:
             psi_vals = self.psi_cut(x_vals, t, epsilon, R)
             
             # Compute resonance with f₀
-            resonance = np.abs(psi_vals) * np.cos(2 * np.pi * F0 * t / OMEGA_0)
+            phase = self._calculate_resonance_phase(t)
+            resonance = np.abs(psi_vals) * np.cos(phase)
             
             strings[t] = {
                 'x': x_vals,
