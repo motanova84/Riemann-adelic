@@ -30,11 +30,28 @@ open scoped ENNReal NNReal Topology
 noncomputable section FinalProof
 
 /-- Tipo para funciones adélicas - representadas como funciones sobre reales con valores complejos
-    Esta es una simplificación del espacio adélico completo para fines de formalización -/
+    NOTA: Esta es una simplificación extrema del espacio adélico completo.
+    Una implementación completa requeriría:
+    - Producto adélico ∏_p ℚ_p × ℝ
+    - Estructura de módulo sobre SL(2,ℤ)
+    - Condiciones de crecimiento apropiadas
+    Esta simplificación es solo para establecer la estructura lógica del argumento. -/
 def AdelicFunction : Type := ℝ → ℂ
 
 /-- Norma L² para funciones adélicas -/
 axiom adelicNorm : AdelicFunction → ℝ
+
+/-- La norma es no negativa -/
+axiom adelicNorm_nonneg : ∀ f : AdelicFunction, adelicNorm f ≥ 0
+
+/-- La norma es definida (cero solo para función cero) -/
+axiom adelicNorm_def : ∀ f : AdelicFunction, adelicNorm f = 0 → f = 0
+
+/-- Desigualdad triangular -/
+axiom adelicNorm_triangle : ∀ f g : AdelicFunction, adelicNorm (f + g) ≤ adelicNorm f + adelicNorm g
+
+/-- Homogeneidad -/
+axiom adelicNorm_homog : ∀ (c : ℂ) (f : AdelicFunction), adelicNorm (c • f) = Complex.abs c * adelicNorm f
 
 /-- Operador de Hilbert-Pólya en espacio adélico -/
 axiom H_adelic : AdelicFunction → AdelicFunction
@@ -135,6 +152,17 @@ end NoesisSystem
 
 /-!
 ## DECLARACIÓN FINAL
+
+NOTA IMPORTANTE: Esta formalización es una estructura esquemática de la demostración.
+Muchos teoremas dependen de axiomas que representan resultados profundos de análisis 
+funcional y teoría espectral. Una formalización completa requeriría:
+- Teoría completa de operadores en espacios de Hilbert
+- Espacios adélicos formalizados completamente
+- Teoría espectral de operadores compactos
+- Propiedades analíticas de la función zeta
+
+Esta implementación establece la estructura lógica y las relaciones entre teoremas,
+siguiendo el enfoque de Hilbert-Pólya para la Hipótesis de Riemann.
 -/
 
 #check Riemann_Hypothesis
@@ -142,21 +170,24 @@ end NoesisSystem
 #check Noesis_verifies_RH
 
 /-!
-## CERTIFICACIÓN V5 CORONACIÓN COMPLETADA
+## CERTIFICACIÓN V5 CORONACIÓN - ESTRUCTURA FORMAL
 
-🔥 CERTIFICACIÓN V5 CORONACIÓN COMPLETADA
-🎯 HIPÓTESIS DE RIEMANN DEMOSTRADA
-🧠 SISTEMA NOĒSIS ∞³ ACTIVO
-📊 VERIFICACIÓN LEAN 4: OK
+🔥 ESTRUCTURA V5 CORONACIÓN IMPLEMENTADA
+🎯 HIPÓTESIS DE RIEMANN - ESQUEMA FORMAL DE DEMOSTRACIÓN
+🧠 SISTEMA NOĒSIS ∞³ DEFINIDO
+📊 LEAN 4: ESTRUCTURA LÓGICA ESTABLECIDA
 
 ✅ KERNEL ADÉLICO DEFINIDO
-✅ OPERADOR COMPACTO AUTOADJUNTO
-✅ BIYECCIÓN ESPECTRO-CEROS
-✅ RH FORMALMENTE PROBADA
+✅ OPERADOR COMPACTO AUTOADJUNTO (esquemático)
+✅ BIYECCIÓN ESPECTRO-CEROS (axiomática)
+✅ RH ESTRUCTURA FORMAL COMPLETA
 ✅ NOĒSIS IMPLEMENTADO
 
 🧬 Ψ = I × A_eff² × C^∞
 🌀 ESTADO: SER
+
+NOTA: Esta es una formalización esquemática que establece la estructura lógica.
+La demostración completa requiere bibliotecas extensas de análisis funcional.
 -/
 
 end
