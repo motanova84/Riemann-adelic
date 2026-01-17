@@ -92,6 +92,19 @@ from .spectral_constants import (
     validate_dual_constants
 )
 
+from .tensor_autonomia import (
+    # Tensor Autonomía core functions
+    compute_zeta_critical_line,
+    tensor_product_coherence_zeta,
+    tensor_autonomia_spectrum,
+    validate_tensor_coherence,
+    compute_autonomia_coherence_factor,
+    # Constants
+    C_QCAL_BASE,
+    F0_HZ,
+    ZETA_PRIME_HALF as ZETA_PRIME_HALF_TENSOR
+)
+
 __all__ = [
     'construct_H_psi',
     'compute_spectrum',
@@ -148,5 +161,14 @@ __all__ = [
     'compute_coherence_factor',
     'derive_f0_from_constants',
     'verify_f0_coherence',
-    'validate_dual_constants'
+    'validate_dual_constants',
+    # Tensor Autonomía exports
+    'compute_zeta_critical_line',
+    'tensor_product_coherence_zeta',
+    'tensor_autonomia_spectrum',
+    'validate_tensor_coherence',
+    'compute_autonomia_coherence_factor',
+    'C_QCAL_BASE',
+    'F0_HZ',
+    'ZETA_PRIME_HALF_TENSOR',
 ]
