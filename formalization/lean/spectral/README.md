@@ -6,6 +6,44 @@ This directory contains the formal Lean 4 definition of the noetic operator $\ma
 
 ## Files
 
+### `L2_isometry_log_change.lean` (NEW - 17 January 2026)
+
+**Isometric Isomorphism between L²(ℝ⁺, dx/x) and L²(ℝ, du)**
+
+This file establishes the fundamental isometry via logarithmic change of variables u = log(x), connecting multiplicative and additive structures.
+
+#### Key Components
+
+| Component | Description |
+|-----------|-------------|
+| `multiplicativeMeasure` | The measure on ℝ⁺ with density 1/x (Haar measure) |
+| `L2_multiplicative` | The L² space L²(ℝ⁺, dx/x) |
+| `log_change` | Forward map: f ↦ (u ↦ f(e^u)) |
+| `exp_change` | Inverse map: g ↦ (x ↦ g(log x)) |
+
+#### Key Results
+
+| Result | Type | Status |
+|--------|------|--------|
+| `change_of_variables_norm_sq` | Theorem | ✅ Jacobian identity: ∫\|f(x)\|² dx/x = ∫\|f(e^u)\|² du |
+| `log_change_norm` | Theorem | ✅ Norm preservation (forward) |
+| `exp_change_norm` | Theorem | ✅ Norm preservation (inverse) |
+| `log_exp_inverse` | Theorem | ✅ log_change ∘ exp_change = id |
+| `exp_log_inverse` | Theorem | ✅ exp_change ∘ log_change = id |
+| `L2_multiplicative_iso_L2_R` | Definition | ✅ Linear isometric isomorphism |
+
+#### Mathematical Significance
+
+The logarithmic change of variables establishes:
+- **Measure preservation**: dx/x = du under u = log(x)
+- **Mellin ↔ Fourier**: Connects Mellin transform with Fourier transform
+- **Multiplicative ↔ Additive**: Bridges number theory with harmonic analysis
+- **Spectral equivalence**: H_Ψ on (ℝ⁺, dx/x) ≅ Schrödinger operator on (ℝ, du)
+
+See [`L2_ISOMETRY_README.md`](L2_ISOMETRY_README.md) for detailed documentation.
+
+---
+
 ### `spectral_density_theorems.lean` (NEW - 16 January 2026)
 
 **Weierstrass M-test, Chi Function Magnitude, and Spectral Density Relation**
