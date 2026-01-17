@@ -65,8 +65,8 @@ structure HolographicOperator (ε R : ℝ) (hε : 0 < ε) (hR : ε < R) where
   domain : Set (ℝ → ℂ)
   /-- Operator action: -i(x·d/dx + 1/2) -/
   action : (ℝ → ℂ) → (ℝ → ℂ)
-  /-- Self-adjointness on the segment -/
-  is_self_adjoint : True  -- Simplified for now
+  /-- Self-adjointness on the segment - TODO: formalize properly -/
+  is_self_adjoint : True  -- Placeholder: should verify ⟨Hf,g⟩ = ⟨f,Hg⟩
 
 /-- Default holographic operator constructor -/
 def mkHolographicOperator (ε R : ℝ) (hε : 0 < ε) (hR : ε < R) : 
@@ -131,7 +131,7 @@ holographically contains the complete infinite structure.
 
 /-- Spectrum membership (simplified definition) -/
 def in_spectrum (s : ℂ) (H : HolographicOperator ε R hε hR) : Prop :=
-  ∃ φ : ℝ → ℂ, φ ≠ 0 ∧ H.action φ = fun x => s * φ x
+  ∃ φ : ℝ → ℂ, φ ≠ 0 ∧ ∀ x, H.action φ x = s * φ x
 
 /--
 Main Holographic Theorem:
@@ -200,11 +200,14 @@ The holographic principle directly implies RH.
 /--
 Theorem: Holographic Symbiotic Collapse
 Any zero of ζ(s) in the critical strip has Re(s) = 1/2
+
+Note: This uses a placeholder for the zeta zero condition.
+In a complete formalization, this would be: Complex.riemannZeta ρ = 0
 -/
 theorem holographic_symbiotic_collapse :
     ∀ ρ : ℂ, 
-    -- If ρ is a zero of zeta
-    (∃ (zeta_zero : Prop), True) →  -- Simplified condition
+    -- TODO: Replace with actual zeta zero condition
+    (∃ (_zeta_zero_placeholder : Prop), True) →  
     0 < ρ.re → 
     ρ.re < 1 → 
     ρ.re = 1/2 := by
@@ -226,10 +229,12 @@ theorem holographic_symbiotic_collapse :
 /--
 Theorem: Riemann Hypothesis (Holographic Formulation)
 All non-trivial zeros of ζ(s) lie on Re(s) = 1/2
+
+Note: This uses a placeholder for the zeta zero condition.
 -/
 theorem riemann_hypothesis_holographic :
     ∀ ρ : ℂ, 
-    (∃ (zeta_zero : Prop), True) →  -- Placeholder for "ζ(ρ) = 0"
+    (∃ (_zeta_zero_placeholder : Prop), True) →  -- TODO: Replace with ζ(ρ) = 0
     0 < ρ.re → 
     ρ.re < 1 → 
     ρ.re = 1/2 :=

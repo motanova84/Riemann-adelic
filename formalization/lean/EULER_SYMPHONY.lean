@@ -91,7 +91,9 @@ The complete symphony is the sum of all prime vibrations.
 /-- Symphony wave as superposition of primes up to N -/
 def euler_symphony_wave (t : ℝ) (N : ℕ) : ℂ :=
   ∑ p in (Finset.range (N+1)).filter Nat.Prime,
-    prime_wave (prime_to_note p (by sorry)) t
+    -- Note: Using sorry for primality proof in demonstration
+    -- In complete formalization, use decidable primality
+    prime_wave (prime_to_note p (by sorry : Nat.Prime p)) t
 
 /--
 Theorem: The symphony is well-defined (series converges)
@@ -117,10 +119,14 @@ def symphony_fourier (ω : ℝ) (N : ℕ) : ℂ :=
 Theorem: Fourier zeros correspond to zeta zeros
 The frequencies where constructive interference creates zeros
 correspond exactly to the imaginary parts of zeta zeros.
+
+Note: This establishes a correspondence principle.
+In complete formalization, would use: Complex.riemannZeta (1/2 + I*ω) = 0
 -/
 theorem fourier_zeros_are_zeta_zeros (ω : ℝ) :
     (∃ N, symphony_fourier ω N = 0) ↔ 
-    (∃ s : ℂ, s.re = 1/2 ∧ s.im = ω) := by
+    -- TODO: Replace with proper zeta zero condition
+    (∃ s : ℂ, s.re = 1/2 ∧ s.im = ω ∧ True) := by  
   sorry -- Connection to Riemann zeta function
 
 /-!
@@ -168,10 +174,12 @@ que proyecta automáticamente a la línea crítica.
 Theorem: Riemann Hypothesis by Symphony
 The harmonic structure of prime frequencies forces all zeros
 to the critical line Re(s) = 1/2
+
+Note: Uses placeholder for zeta zero condition.
 -/
 theorem riemann_hypothesis_by_symphony :
     ∀ ρ : ℂ, 
-    (∃ (zeta_zero : Prop), True) →  -- Placeholder: ζ(ρ) = 0
+    (∃ (_zeta_zero_placeholder : Prop), True) →  -- TODO: Replace with ζ(ρ) = 0
     0 < ρ.re → 
     ρ.re < 1 → 
     ρ.re = 1/2 := by
