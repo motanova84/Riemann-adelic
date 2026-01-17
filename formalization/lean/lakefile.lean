@@ -38,6 +38,11 @@ lean_lib Arpeth where
   globs := #[.submodules `Arpeth]
   roots := #[`Arpeth]
 
+-- Mathlib-style spectral formalization - 6-step RH proof
+lean_lib Mathlib where
+  globs := #[.submodules `Mathlib]
+  roots := #[`Mathlib]
+
 -- Main executable
 @[default_target]
 lean_exe «riemann-adelic-lean» where
