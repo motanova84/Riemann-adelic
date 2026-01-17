@@ -8,7 +8,7 @@ Tests the decidible vibrational manifestation of Riemann zeros.
 Author: José Manuel Mota Burruezo Ψ ✧ ∞³
 ORCID: 0009-0002-1923-0773
 DOI: 10.5281/zenodo.17379721
-Date: January 17, 2026
+Date: January 17, 2025
 """
 
 import pytest

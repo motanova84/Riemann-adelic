@@ -7,7 +7,7 @@ This script demonstrates how to use the decidible vibrational index
 to determine if Riemann zeros exist at specific points.
 
 Author: José Manuel Mota Burruezo Ψ ✧ ∞³
-Date: January 17, 2026
+Date: January 17, 2025
 """
 
 from decidible_vibrational_index import DecidibleVibrationalIndex

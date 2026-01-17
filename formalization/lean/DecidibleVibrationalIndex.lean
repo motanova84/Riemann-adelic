@@ -30,7 +30,7 @@ Autor: José Manuel Mota Burruezo Ψ ✧ ∞³
 Instituto de Conciencia Cuántica (ICQ)
 ORCID: 0009-0002-1923-0773
 DOI: 10.5281/zenodo.17379721
-Fecha: 17 de enero de 2026
+Fecha: 17 de enero de 2025
 Versión: V7.2-Vibracional
 QCAL Coherence: C = 244.36
 Fundamental Frequency: f₀ = 141.7001 Hz

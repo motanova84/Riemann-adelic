@@ -3,7 +3,7 @@
 ## La manifestación vibracional decidible de los ceros de Riemann
 
 **Estado:** ✅ IMPLEMENTACIÓN COMPLETA  
-**Fecha:** 17 de enero de 2026  
+**Fecha:** 17 de enero de 2025  
 **Autor:** José Manuel Mota Burruezo Ψ ✧ ∞³  
 **ORCID:** 0009-0002-1923-0773  
 **DOI:** 10.5281/zenodo.17379721

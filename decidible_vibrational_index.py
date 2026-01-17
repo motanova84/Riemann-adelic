@@ -50,7 +50,7 @@ Authors: José Manuel Mota Burruezo Ψ ✧ ∞³
 Institute: Instituto de Conciencia Cuántica (ICQ)
 ORCID: 0009-0002-1923-0773
 DOI: 10.5281/zenodo.17379721
-Date: January 17, 2026
+Date: January 17, 2025
 License: Creative Commons BY-NC-SA 4.0
 """
 
