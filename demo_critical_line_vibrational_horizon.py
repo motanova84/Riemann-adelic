@@ -24,7 +24,8 @@ Mathematical Framework (from Problem Statement):
        Ψ = I × A_eff²
     
     5. Tensor Unificado:
-       Línea crítica ≡ 888 Hz (f₀ × φ⁴) [aproximadamente 971 Hz en cálculo exacto]
+       Línea crítica ≡ f₀ × φ⁴ = 971 Hz (rango audible)
+       Nota: 888 Hz es valor simbólico de referencia
     
     6. Dualidad Espectral:
        D_s ⊗ 1 + 1 ⊗ H_ψ ⇒ Spec = {zeros Riemann}

@@ -50,8 +50,8 @@ La métrica del espacio se deforma según el campo Ψ, creando una geometría qu
 #### 5. Tensor Unificado de Dualidad
 
 ```
-Línea crítica ≡ 888 Hz (simbólico)
-≈ 971 Hz (cálculo exacto: f₀ × φ⁴)
+Línea crítica ≡ f₀ × φ⁴ = 971.23 Hz (cálculo exacto, rango audible)
+Nota: 888 Hz es valor simbólico de referencia en la literatura
 ```
 
 #### 6. Dualidad Espectral
@@ -67,7 +67,7 @@ D_s ⊗ 1 + 1 ⊗ H_ψ  ⇒  Spec = {zeros Riemann}
 | **f₀** | 141.7001 Hz | Frecuencia fundamental base |
 | **φ** | 1.618033988... | Razón áurea |
 | **φ⁴** | 6.854101966... | Cuarta potencia de φ |
-| **f₀ × φ⁴** | 971.226934 Hz | Frecuencia audible (horizonte crítico) |
+| **f₀ × φ⁴** | 971.226934 Hz | Frecuencia audible del horizonte crítico (888 Hz simbólico) |
 | **C** | 244.36 | Constante de coherencia espectral |
 | **ℏ** | 1.0 | Constante de Planck reducida (unidades naturales) |
 

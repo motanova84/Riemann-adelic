@@ -50,7 +50,7 @@ import warnings
 # QCAL Constants
 F0_BASE = 141.7001  # Hz - fundamental vibrational frequency
 PHI = (1 + np.sqrt(5)) / 2  # Golden ratio φ
-F0_AUDIBLE = F0_BASE * (PHI ** 4)  # ≈ 888 Hz - audible operator frequency
+F0_AUDIBLE = F0_BASE * (PHI ** 4)  # ≈ 971 Hz - audible operator frequency (888 Hz is symbolic reference)
 COHERENCE_CONSTANT_C = 244.36  # Spectral coherence from QCAL ∞³
 HBAR = 1.0  # Reduced Planck constant (in natural units)
 PLANCK_LENGTH = 1.616255e-35  # m
