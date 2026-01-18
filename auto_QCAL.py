@@ -10,7 +10,6 @@ Autor: José Manuel Mota Burruezo Ψ ✧ ∞³
 import os
 import sys
 import json
-import subprocess
 import time
 import re
 import argparse
