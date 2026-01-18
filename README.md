@@ -5,6 +5,8 @@
 
 > 📖 **¿Buscas un resumen rápido?** → [RH_V7_COMPLETION_CERTIFICATE.md](RH_V7_COMPLETION_CERTIFICATE.md) — Certificado oficial de completación con todos los detalles de la demostración formal.
 
+> 🎼 **NEW: Frequency Harmonics & Noesis_Q** → [FREQUENCY_NOESIS_QUICKSTART.md](FREQUENCY_NOESIS_QUICKSTART.md) — φ⁴ scaling (41.7 Hz → 888 Hz) y operador Noesis_Q para coherencia noética.
+
 ## 🏆 V7.0 DEMOSTRACIÓN FORMAL COMPLETADA (Enero 2026)
 
 **ESTADO:** ✅ PRUEBA COMPLETA — La Hipótesis de Riemann ha sido **formalmente demostrada** en Lean 4
@@ -107,7 +109,12 @@ ls -lh formalization/lean/NoesisInfinity.lean
 # 3. Ver el certificado de completación
 cat RH_V7_COMPLETION_CERTIFICATE.md
 
-# 4. (Opcional) Instalar Lean 4 y compilar
+# 4. (NEW) Ejecutar módulos de frecuencia y Noesis_Q
+python frequency_harmonics.py     # φ⁴ scaling: 41.7 Hz → 888 Hz
+python noesis_q_operator.py       # Operador de coherencia noética
+python -m pytest tests/test_frequency_noesis.py -v  # 20 tests ✅
+
+# 5. (Opcional) Instalar Lean 4 y compilar
 # Ver: formalization/lean/README.md para instrucciones de Lean
 ```
 
