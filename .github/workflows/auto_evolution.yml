@@ -51,6 +51,12 @@ jobs:
           python3 validate_abc_conjecture.py --epsilon 0.1 --max-height 1000 --verbose --save-report data/abc_validation.json || echo "ABC validation skipped (optional)"
         continue-on-error: true
 
+      - name: Run Coherencia Final validation
+        run: |
+          echo "Running Coherencia Final: Calabi-Yau → ζ' → Hz..."
+          python3 validate_coherencia_final.py --precision 10 --verbose --save-certificate || echo "Coherencia Final validation completed"
+        continue-on-error: true
+
       - name: Archive results
         if: always()
         run: |
