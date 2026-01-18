@@ -53,9 +53,14 @@ class FormalizationStatusCounter:
                 in_comment_block = False
                 for line in f:
                     # Track multi-line comment blocks
-                    if "/-" in line:
+                    # Handle single-line block comments (both /- and -/ on same line)
+                    if "/-" in line and "-/" in line:
+                        # Single-line block comment - remove it and process the rest
+                        line = re.sub(r'/\-.*?\-/', '', line)
+                    elif "/-" in line:
                         in_comment_block = True
-                    if "-/" in line:
+                        continue
+                    elif "-/" in line:
                         in_comment_block = False
                         continue
                     

@@ -84,8 +84,17 @@ jobs:
         run: |
           git config user.name "qcal-bot"
           git config user.email "bot@qcal.cloud"
-          git add data/formalization_status.json data/formalization_status.md README.md 2>/dev/null || true
-          git add data/logs_${{ github.run_number }}.tar.gz 2>/dev/null || true
+          
+          # Add files with explicit error checking
+          if ! git add data/formalization_status.json data/formalization_status.md README.md 2>&1; then
+            echo "Warning: Could not add formalization status files"
+          fi
+          
+          if ! git add data/logs_${{ github.run_number }}.tar.gz 2>&1; then
+            echo "Note: No log archive to commit"
+          fi
+          
+          # Check if there are changes to commit
           if git diff --cached --quiet; then
             echo "No changes to commit"
           else

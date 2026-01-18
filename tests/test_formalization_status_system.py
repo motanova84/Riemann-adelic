@@ -4,7 +4,7 @@ Test script to verify the formalization status tracking system.
 """
 
 import json
-import os
+import subprocess
 import sys
 from pathlib import Path
 
@@ -14,15 +14,18 @@ def test_counter_script():
     print("Testing count_formalization_status.py...")
     
     # Run the counter
-    result = os.system(
-        "python3 scripts/count_formalization_status.py "
-        "--json /tmp/test_status.json "
-        "--markdown /tmp/test_status.md "
-        "> /dev/null 2>&1"
+    result = subprocess.run(
+        [
+            "python3", "scripts/count_formalization_status.py",
+            "--json", "/tmp/test_status.json",
+            "--markdown", "/tmp/test_status.md"
+        ],
+        capture_output=True,
+        text=True
     )
     
-    if result != 0:
-        print("❌ Counter script failed to run")
+    if result.returncode != 0:
+        print(f"❌ Counter script failed to run: {result.stderr}")
         return False
     
     # Check JSON output
@@ -99,15 +102,18 @@ Final content.
 """)
     
     # Run the updater
-    result = os.system(
-        f"python3 scripts/update_readme_status.py "
-        f"--status-json /tmp/test_status.json "
-        f"--readme {test_readme} "
-        f"> /dev/null 2>&1"
+    result = subprocess.run(
+        [
+            "python3", "scripts/update_readme_status.py",
+            "--status-json", "/tmp/test_status.json",
+            "--readme", test_readme
+        ],
+        capture_output=True,
+        text=True
     )
     
-    if result != 0:
-        print("❌ README updater script failed to run")
+    if result.returncode != 0:
+        print(f"❌ README updater script failed to run: {result.stderr}")
         return False
     
     # Check that README was updated
