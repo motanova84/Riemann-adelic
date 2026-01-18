@@ -36,8 +36,8 @@ axiom zeta : ℂ → ℂ
 /-- Operador H_psi (axiomático) -/
 axiom H_psi : (ℝ → ℝ) → (ℝ → ℝ)
 
-/-- Operador H_psi es simétrico -/
-axiom H_psi_symmetric : ∀ f g : ℝ → ℝ, True  -- Inner product symmetry placeholder
+/-- Operador H_psi es simétrico (autoadjunto) -/
+axiom H_psi_symmetric : ∀ f g : ℝ → ℝ, inner_L2 (H_psi f) g = inner_L2 f (H_psi g)
 
 /-- Definición de zeta_zero_bijection como una función computable
     En lugar de axiom, definimos explícitamente la transformación -/
@@ -51,8 +51,8 @@ def zeta_zero_bijection (t : ℝ) : ℝ :=
     
     Teorema: La biyección preserva los ceros de zeta en la línea crítica.
     
-    Demostración: Por construcción, zeta_zero_bijection es la identidad en t,
-    reflejando que los ceros en Re(s)=1/2 están parametrizados por su parte imaginaria. -/
+    Demostración: Por construcción, zeta_zero_bijection es la identidad en t.
+    La dirección backward requiere la correspondencia espectral axiomática. -/
 lemma zeta_zero_bijection_equiv (t : ℝ) :
   zeta (1/2 + I * t) = 0 ↔ zeta_zero_bijection t = t := by
   unfold zeta_zero_bijection
@@ -63,13 +63,16 @@ lemma zeta_zero_bijection_equiv (t : ℝ) :
     rfl  -- zeta_zero_bijection t = t por definición
   · -- Dirección backward: t = t → zeta(1/2 + it) = 0
     intro _
-    -- Esta dirección es trivial en el sentido de que la ecuación t = t
-    -- siempre es verdadera, pero conectarla con zeta(1/2 + it) = 0
-    -- requiere la teoría espectral completa que establece la correspondencia
-    -- entre el espectro de H_ψ y los ceros de zeta
-    -- JUSTIFICACIÓN: Esta equivalencia se fundamenta en la correspondencia
-    -- espectral axiomática que relaciona ceros de zeta con eigenvalores de H_ψ
-    trivial  -- La implicación es estructural vía la construcción del operador
+    -- NOTA: Esta dirección NO es trivial para todo t.
+    -- Requiere que t sea efectivamente la parte imaginaria de un cero de zeta.
+    -- Esta dirección debe establecerse mediante la correspondencia espectral
+    -- que relaciona el espectro de H_ψ con los ceros de zeta.
+    -- La demostración completa requiere:
+    -- 1. Teorema espectral que establece Spec(H_ψ) ↔ {Im(ρ) : ζ(ρ)=0}
+    -- 2. Verificar que t ∈ Spec(H_ψ)
+    -- 3. Concluir que zeta(1/2 + it) = 0
+    -- Por ahora, esto queda como axioma implícito en la construcción.
+    sorry  -- Requiere axioma de correspondencia espectral completa
 
 /-!
 ## Unicidad espectral
@@ -125,15 +128,8 @@ def xi_equiv_d_spectrum (s : ℂ) : ℂ :=
     
     Teorema: La función xi y la función D coinciden espectralmente.
     
-    Demostración: Por construcción adélica, D(s) = Ξ(s) donde Ξ es la función
-    xi completada. Esta equivalencia se deriva de la teoría espectral de Fredholm.
-    
-    La demostración se basa en:
-    1. D se construye como determinante de Fredholm del operador H_ψ
-    2. Por teoría espectral, este determinante coincide con xi por construcción
-    3. Ambas funciones satisfacen la misma ecuación funcional
-    4. Por unicidad de Paley-Wiener, D ≡ Ξ
--/
+    Demostración: Esta identidad es profunda y requiere teoría de Fredholm completa.
+    Se fundamenta en la construcción de Berry-Keating del operador H_ψ. -/
 lemma xi_equiv_holds (s : ℂ) : 
   xi_equiv_d_spectrum s = D s := by
   unfold xi_equiv_d_spectrum
@@ -142,19 +138,18 @@ lemma xi_equiv_holds (s : ℂ) :
   -- 2. xi(s) es la función zeta completada
   -- 3. Estos coinciden por la correspondencia espectral
   
-  -- DEMOSTRACIÓN ESTRUCTURAL:
-  -- El determinante de Fredholm D(s) asociado al operador H_ψ
-  -- se define de manera que reproduce exactamente la función xi(s).
-  -- Esto no es una coincidencia sino una construcción intencional
-  -- que aprovecha la correspondencia espectral entre:
-  -- - Los eigenvalores de H_ψ
-  -- - Los ceros de la función zeta
+  -- DEMOSTRACIÓN REQUERIDA:
+  -- La identidad D(s) = xi(s) no es trivial ni estructural.
+  -- Requiere una demostración rigurosa que involucra:
+  -- 1. Construcción explícita del determinante de Fredholm D(s) = det(I - K_s)
+  -- 2. Cálculo del producto de Hadamard para D(s)
+  -- 3. Comparación con el producto de Hadamard para xi(s)
+  -- 4. Verificación de la ecuación funcional D(s) = D(1-s)
+  -- 5. Unicidad vía teorema de Paley-Wiener
   
-  -- Por definición de la construcción adélica del operador H_ψ,
-  -- tenemos D ≡ xi por construcción, no por casualidad.
-  -- Esta es la esencia del enfoque de Berry-Keating.
-  
-  trivial  -- La identidad es estructural por la construcción del operador
+  -- Esta es una de las identidades centrales de la teoría y requiere
+  -- desarrollo matemático sustancial, no solo una afirmación estructural.
+  sorry  -- Requiere teoría de Fredholm completa + producto de Hadamard
 
 /-!
 ## Identidad de producto interno para H_ψ en L²
@@ -171,12 +166,16 @@ axiom inner_self_eq_norm_sq : ∀ f : ℝ → ℝ, inner_L2 f f = (norm_L2 f)^2
 
 /-- Identidad de producto interno para H_ψ en L²
     
-    Teorema: El producto interno de H_ψ(f) consigo mismo es igual a su norma al cuadrado.
+    Lema: Para funciones en el dominio de H_ψ, el producto interno satisface
+    una relación especial cuando H_ψ es autoadjunto.
     
-    Demostración: Por la propiedad fundamental del producto interno en espacios de Hilbert. -/
+    NOTA: La formulación original era incorrecta. Debería ser:
+    ⟨H_ψ f, H_ψ f⟩ = ∥H_ψ f∥² (producto interno de H_ψ f consigo mismo)
+-/
 lemma hilbert_space_identity (f : ℝ → ℝ) :
-  inner_L2 (H_psi f) f = (norm_L2 (H_psi f))^2 := by
+  inner_L2 (H_psi f) (H_psi f) = (norm_L2 (H_psi f))^2 := by
   -- Aplicar la relación fundamental entre producto interno y norma
+  -- para la función H_psi f
   rw [inner_self_eq_norm_sq]
 
 /-!
@@ -191,44 +190,14 @@ def self_adjoint (T : (ℝ → ℝ) → (ℝ → ℝ)) : Prop :=
     
     Teorema: El operador H_ψ es autoadjunto, es decir, ⟨H_ψ f, g⟩ = ⟨f, H_ψ g⟩.
     
-    Demostración: Usamos la simetría formal ya probada y las hipótesis sobre
-    el espacio de Schwartz.
-    
-    El operador H_ψ es autoadjunto porque:
-    1. Tiene un kernel simétrico K(x,y) = conj(K(y,x))
-    2. Opera en el espacio de Schwartz que es denso en L²
-    3. Las funciones de Schwartz decaen rápidamente, garantizando integrabilidad
-    4. Por construcción de Berry-Keating, el operador es Hermitiano
--/
+    Demostración: Usamos directamente el axioma H_psi_symmetric que establece
+    la propiedad de autoadjuntez para el operador H_ψ. -/
 theorem D_self_adjoint_on_H_psi : 
   self_adjoint H_psi := by
   unfold self_adjoint
   intros f g
-  -- Usar simetría formal ya probada en H_psi_symmetric
-  -- Para funciones de Schwartz, la autoadjuntez se sigue de:
-  -- 1. La simetría del kernel del operador
-  -- 2. Las propiedades de decaimiento rápido de funciones de Schwartz
-  -- 3. La integrabilidad de los productos
-  
-  -- La simetría del operador implica autoadjuntez
-  have h_symm := H_psi_symmetric f g
-  -- Por construcción del operador H_psi con kernel simétrico K(x,y) = conj(K(y,x))
-  -- y la propiedad de que f, g son funciones de Schwartz (decaimiento rápido),
-  -- podemos intercambiar el orden de integración:
-  --
-  -- ⟨H_ψ f, g⟩ = ∫∫ K(x,y) f(y) conj(g(x)) dy dx
-  --           = ∫∫ conj(K(y,x)) f(y) conj(g(x)) dy dx   (simetría del kernel)
-  --           = conj(∫∫ K(y,x) conj(f(y)) g(x) dy dx)   (conjugación)
-  --           = conj(∫∫ K(y,x) g(x) conj(f(y)) dx dy)   (Fubini)
-  --           = ∫∫ conj(K(y,x)) conj(g(x)) f(y) dy dx   (conjugación)
-  --           = ∫∫ K(x,y) conj(g(x)) f(y) dy dx         (simetría)
-  --           = ⟨f, H_ψ g⟩
-  --
-  -- COMPLETADO: La demostración formal completa requiere teoría de
-  -- operadores integrales en espacios de Hilbert, pero la estructura
-  -- es clara y se basa en axiomas estándar de análisis funcional
-  
-  trivial  -- Autoadjuntez por simetría del kernel (H_psi_symmetric)
+  -- Aplicar directamente el axioma de simetría
+  exact H_psi_symmetric f g
 
 /-!
 ## Verificación Final de Coherencia
@@ -263,10 +232,10 @@ end  -- noncomputable section
    - uniqueness_spectral_line: Completo con demostración por extensionalidad
    - H_psi_determines_function: Completo con demostración de kernel trivial
 
-✅ Eliminación de sorry (salvo casos pendientes de estructura):
-   - zeta_zero_bijection_equiv: Requiere teoría completa de zeta
-   - xi_equiv_holds: Requiere estructura interna de D (teoría de Fredholm)
-   - D_self_adjoint_on_H_psi: Requiere hipótesis Schwartz completas
+✅ Eliminación parcial de sorry (algunos requieren teoría adicional):
+   - zeta_zero_bijection_equiv: Una dirección completa, la otra requiere correspondencia espectral
+   - xi_equiv_holds: Requiere teoría de Fredholm completa + producto de Hadamard
+   - Otros teoremas: Completamente demostrados usando axiomas apropiados
 
 ✅ El teorema de autoadjunción de H_ψ fue preparado con definición formal
 
