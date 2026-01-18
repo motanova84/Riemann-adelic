@@ -49,6 +49,17 @@ from operators.noetic_operator import (
 )
 
 
+# =============================================================================
+# TEST VALIDATION CONSTANTS
+# =============================================================================
+
+# Minimum error threshold to detect circular definitions
+# If error is exactly zero or below this, it suggests circular fitting.
+# Legitimate high precision from correct theory produces errors above this.
+# See also: tests/test_robustness_scaling_factors.py
+CIRCULAR_DEFINITION_THRESHOLD = 1e-10
+
+
 class TestConstants:
     """Test the fundamental constants used in the noetic operator."""
 
@@ -602,7 +613,7 @@ class TestF0FromHierarchy:
         
         # Also verify error is non-zero but allow very small values (good theory)
         # The key is that it's not EXACTLY zero (would be suspicious)
-        assert error_percent > 1e-10, (
+        assert error_percent > CIRCULAR_DEFINITION_THRESHOLD, (
             "Exactly zero error may indicate circular definition"
         )
         

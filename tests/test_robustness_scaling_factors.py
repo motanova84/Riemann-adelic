@@ -50,6 +50,22 @@ from utils.triple_rescaling_spectral import (
 )
 
 
+# =============================================================================
+# VALIDATION THRESHOLDS
+# =============================================================================
+
+# Minimum error threshold to detect circular definitions
+# If error is exactly zero or below this, it suggests the factor might be
+# circularly defined in terms of the target value. Legitimate high precision
+# from correct theory should still produce errors above this threshold.
+CIRCULAR_DEFINITION_THRESHOLD = 1e-10
+
+# Maximum relative standard deviation for factor stability tests
+# Factors derived from first principles should vary predictably with inputs
+# but remain stable (< 5% variation) under reasonable perturbations
+MAX_RELATIVE_STD_STABILITY = 0.05  # 5%
+
+
 class TestO4RefinementRobustness:
     """Test that O4_REFINEMENT is robust and not fitted."""
     
@@ -107,8 +123,9 @@ class TestGeometricScalingFactorRobustness:
         K_ratio = max(K_values) / min(K_values)
         expected_ratio = 1.2 / 0.8  # = 1.5
         
-        # Allow 10% tolerance on the ratio
-        assert abs(K_ratio - expected_ratio) / expected_ratio < 0.1
+        # Allow controlled tolerance on the ratio (related to MAX_RELATIVE_STD_STABILITY)
+        ratio_tolerance = MAX_RELATIVE_STD_STABILITY * 2  # 10%
+        assert abs(K_ratio - expected_ratio) / expected_ratio < ratio_tolerance
     
     def test_scaling_factor_dimensional_consistency(self):
         """
@@ -194,7 +211,8 @@ class TestF0ComputationNonCircular:
         
         # Error should be non-zero (not fitted) but can be very small (good theory)
         # The key is that it's not EXACTLY zero (which would be suspicious)
-        assert error_percent > 1e-10, "Exactly zero error suggests circular definition"
+        assert error_percent > CIRCULAR_DEFINITION_THRESHOLD, \
+            "Exactly zero error suggests circular definition"
         
         # But should be within theoretical uncertainty
         assert error_percent < 2.0, f"Error {error_percent:.4f}% exceeds theory bound"
@@ -521,7 +539,8 @@ class TestEndToEndNonCircularity:
         
         # The critical test: Verify this is NOT circular
         # If it were fitted, error would be exactly zero
-        assert error_percent > 1e-10, "Suspiciously perfect - suggests circular fitting"
+        assert error_percent > CIRCULAR_DEFINITION_THRESHOLD, \
+            "Suspiciously perfect - suggests circular fitting"
         
         # But the calculation should complete without using F0_TARGET directly
         # This validates the non-circular nature of the computation
