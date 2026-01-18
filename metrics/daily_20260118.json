@@ -1,23 +1,23 @@
 {
-  "timestamp": "2026-01-18T16:58:56.790574",
+  "timestamp": "2026-01-18T17:02:24.445146",
   "frequency": 141.7001,
-  "optimized": false,
+  "optimized": true,
   "files": {
-    "total_files": 1906,
+    "total_files": 1911,
     "by_type": {
-      ".py": 675,
-      ".md": 755,
+      ".py": 676,
+      ".md": 759,
       ".lean": 476
     }
   },
   "qcal": {
-    "qcal_references": 1130,
-    "frequency_references": 1029,
-    "infinity_cubed_references": 1079,
-    "psi_state_references": 1207
+    "qcal_references": 1135,
+    "frequency_references": 1034,
+    "infinity_cubed_references": 1084,
+    "psi_state_references": 1212
   },
   "density": {
-    "qcal_density": 0.5929,
-    "frequency_density": 0.5399
+    "qcal_density": 0.5939,
+    "frequency_density": 0.5411
   }
 }
