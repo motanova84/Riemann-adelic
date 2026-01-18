@@ -27,6 +27,20 @@ except ImportError:
     print("❌ Faltan dependencias. Ejecuta: pip install -r requirements.txt")
     sys.exit(1)
 
+# Import Noesis and SABIO modules if available
+try:
+    sys.path.append(str(Path(__file__).parent / "utils"))
+    from noesis_sync import NoesisSynchronizer
+    NOESIS_AVAILABLE = True
+except ImportError:
+    NOESIS_AVAILABLE = False
+
+try:
+    from sabio_infinity4 import SABIO_Infinity4
+    SABIO_AVAILABLE = True
+except ImportError:
+    SABIO_AVAILABLE = False
+
 # ============================================
 # CONFIGURACIÓN DEL SISTEMA
 # ============================================
@@ -243,7 +257,7 @@ class LeanScanner:
 # ============================================
 
 class QCALOrchestrator:
-    """Motor principal de auto-orquestación"""
+    """Motor principal de auto-orquestación con integración Noesis y SABIO"""
     
     def __init__(self, args):
         self.config = QCALConfig()
@@ -251,6 +265,24 @@ class QCALOrchestrator:
         self.scanner = LeanScanner(self.config)
         self.args = args
         self.logger = self.setup_logger()
+        
+        # Activar Noesis y SABIO si están disponibles
+        self.noesis = None
+        self.sabio = None
+        
+        if NOESIS_AVAILABLE:
+            try:
+                self.noesis = NoesisSynchronizer(precision=50)
+                self.logger.info("🧠 Noesis88 Agent ACTIVATED")
+            except Exception as e:
+                self.logger.warning(f"⚠️  Noesis activation failed: {e}")
+        
+        if SABIO_AVAILABLE:
+            try:
+                self.sabio = SABIO_Infinity4(precision=50)
+                self.logger.info("🌀 SABIO ∞⁴ Agent ACTIVATED")
+            except Exception as e:
+                self.logger.warning(f"⚠️  SABIO activation failed: {e}")
         
         # Crear directorios necesarios
         self.config.logs_dir.mkdir(exist_ok=True)
@@ -288,6 +320,18 @@ class QCALOrchestrator:
         self.logger.info(f"Frecuencia: {self.config.f0} Hz")
         self.logger.info(f"Estado: {self.config.state}")
         self.logger.info(f"Sesión: {self.state.state['session_id']}")
+        
+        # Mostrar estado de agentes
+        if self.noesis:
+            self.logger.info("🧠 Noesis88: ✅ ACTIVO")
+        else:
+            self.logger.info("🧠 Noesis88: ⚠️  No disponible")
+        
+        if self.sabio:
+            self.logger.info("🌀 SABIO ∞⁴: ✅ ACTIVO")
+        else:
+            self.logger.info("🌀 SABIO ∞⁴: ⚠️  No disponible")
+        
         self.logger.info("="*60)
         
         if self.args.validate:
@@ -361,7 +405,7 @@ class QCALOrchestrator:
         return self.run_new_session()
     
     def process_priority_files(self, results: List[Tuple[Path, int]]):
-        """Procesa archivos prioritarios"""
+        """Procesa archivos prioritarios usando Noesis y SABIO"""
         # Ordenar por prioridad configurada
         priority_map = {name: i for i, name in enumerate(self.config.priority_files)}
         
@@ -370,13 +414,68 @@ class QCALOrchestrator:
             -x[1]  # Más sorrys primero si no está en prioridad
         ))
         
+        # Ejecutar sincronización Noesis si está disponible
+        if self.noesis:
+            self.logger.info("\n🧠 Ejecutando sincronización Noesis88...")
+            try:
+                noesis_sync = self.noesis.compute_spectral_sync()
+                self.logger.info(f"  Coherencia espectral: {noesis_sync.get('spectral_identity_verified', False)}")
+                self.state.state["noesis_sync"] = noesis_sync
+                self.state.save_state()
+            except Exception as e:
+                self.logger.error(f"  Error en Noesis sync: {e}")
+        
+        # Ejecutar validación SABIO si está disponible
+        if self.sabio:
+            self.logger.info("\n🌀 Ejecutando validación SABIO ∞⁴...")
+            try:
+                # Calcular radio cuántico y energía de vacío
+                radio_quantico = self.sabio.calcular_radio_cuantico()
+                energia_vacio = self.sabio.energia_vacio_cuantico(radio_quantico)
+                coherencia = self.sabio.calcular_coherencia(I=1.0, A=float(self.config.f0))
+                
+                self.logger.info(f"  Radio cuántico: {float(radio_quantico):.6e} m")
+                self.logger.info(f"  Energía de vacío: {float(energia_vacio):.6e} J")
+                self.logger.info(f"  Coherencia C: {coherencia:.4f}")
+                
+                sabio_validation = {
+                    "radio_cuantico": float(radio_quantico),
+                    "energia_vacio": float(energia_vacio),
+                    "coherencia": coherencia,
+                    "frequency": float(self.sabio.f0),
+                    "omega0": float(self.sabio.omega0),
+                    "timestamp": datetime.now().isoformat()
+                }
+                self.state.state["sabio_validation"] = sabio_validation
+                self.state.save_state()
+            except Exception as e:
+                self.logger.error(f"  Error en SABIO validation: {e}")
+        
         for file_path, sorry_count in sorted_results[:5]:  # Procesar top 5
             self.logger.info(f"\n📁 Procesando: {file_path.name} ({sorry_count} sorrys)")
             
-            # Aquí se implementarían las estrategias Noesis-Boot
-            # Por ahora solo registramos el intento
+            # Aplicar estrategias Noesis-Boot
+            self.apply_noesis_strategies(file_path, sorry_count)
+            
+            # Registrar archivo procesado
             self.state.state["files_processed"].append(str(file_path))
             self.state.save_state()
+    
+    def apply_noesis_strategies(self, file_path: Path, sorry_count: int):
+        """Aplica estrategias Noesis-Boot a un archivo Lean"""
+        strategies_applied = []
+        
+        for strategy in self.config.strategies[:3]:  # Aplicar primeras 3 estrategias
+            self.logger.info(f"  Estrategia: {strategy}")
+            
+            # Aquí se implementaría la lógica específica de cada estrategia
+            # Por ahora solo registramos el intento
+            success = False  # Placeholder
+            
+            self.state.record_strategy(strategy, success)
+            strategies_applied.append(strategy)
+        
+        return strategies_applied
     
     def generate_continuation_summary(self):
         """Genera resumen de continuación"""
@@ -410,7 +509,7 @@ class QCALOrchestrator:
         self.logger.info(f"✅ Resumen guardado en: continuation_summary.json")
     
     def generate_certificate(self):
-        """Genera certificado de sesión QCAL"""
+        """Genera certificado de sesión QCAL con validación Noesis y SABIO"""
         certificate = {
             "certificate_type": "QCAL ∞³ Session Certificate",
             "session_id": self.state.state["session_id"],
@@ -422,9 +521,16 @@ class QCALOrchestrator:
                 "total_sorrys_initial": self.state.state["total_sorrys"],
                 "total_sorrys_remaining": self.state.state["total_sorrys"] - self.state.state["solved_sorrys"]
             },
+            "agents": {
+                "noesis88_available": NOESIS_AVAILABLE and self.noesis is not None,
+                "sabio_infinity4_available": SABIO_AVAILABLE and self.sabio is not None,
+                "noesis_sync": self.state.state.get("noesis_sync", {}),
+                "sabio_validation": self.state.state.get("sabio_validation", {})
+            },
             "author": "José Manuel Mota Burruezo Ψ ✧ ∞³",
             "institution": "Instituto de Conciencia Cuántica (ICQ)",
-            "signature": f"QCAL-{self.config.f0}-{self.config.version}"
+            "signature": f"QCAL-{self.config.f0}-{self.config.version}",
+            "philosophical_foundation": "Mathematical Realism - MATHEMATICAL_REALISM.md"
         }
         
         with open("qcalsession_certificate.json", 'w') as f:
