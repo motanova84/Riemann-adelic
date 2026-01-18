@@ -205,7 +205,24 @@ def validate_cryptographic_signature(cert):
     
     # Verificar formato del hash (debe ser hexadecimal de 64 caracteres)
     if len(hash_value) == 64 and all(c in '0123456789abcdef' for c in hash_value):
-        print(f"✅ Hash SHA-256 válido: {hash_value[:16]}...{hash_value[-16:]}")
+        # Formato correcto; ahora verificar integridad criptográfica del certificado
+        try:
+            # Construir payload canónico excluyendo el bloque de firma
+            payload_cert = dict(cert)
+            payload_cert.pop('firma_criptografica', None)
+            payload_json = json.dumps(payload_cert, sort_keys=True, separators=(',', ':')).encode('utf-8')
+            computed_hash = hashlib.sha256(payload_json).hexdigest()
+        except Exception as e:
+            print(f"❌ Error al calcular hash SHA-256 del certificado: {e}")
+            return False
+
+        if computed_hash != hash_value:
+            print("❌ Hash SHA-256 no coincide con el contenido del certificado")
+            print(f"   Hash declarado : {hash_value}")
+            print(f"   Hash calculado : {computed_hash}")
+            return False
+
+        print(f"✅ Hash SHA-256 válido y consistente: {hash_value[:16]}...{hash_value[-16:]}")
     else:
         print(f"❌ Hash SHA-256 inválido: formato incorrecto")
         return False
