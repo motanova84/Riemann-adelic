@@ -199,12 +199,15 @@ class TestNoesisQOperator:
         
         validation = noesis_q.validate_h_psi_selfadjoint()
         
-        # All properties should be verified
+        # All properties should be described (as design expectations)
         assert validation["self_adjoint"] is True
         assert validation["spectrum_real"] is True
         assert validation["compact_resolvent"] is True
         assert validation["hilbert_polya_applicable"] is True
-        assert validation["status"] == "VERIFIED"
+        # Status should be PLACEHOLDER since this is a design expectation
+        assert validation["status"] == "PLACEHOLDER"
+        assert validation["verification_kind"] == "DESIGN_EXPECTATION_PLACEHOLDER"
+        assert validation["verified_in_lean4"] is False
     
     def test_spectral_tensor_product(self):
         """Test spectral tensor product ∇Ψ ⊗ ζ(s)."""
