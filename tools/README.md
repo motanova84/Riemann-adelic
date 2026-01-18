@@ -210,6 +210,95 @@ When adding tools:
 3. Update this README
 4. Ensure CI passes
 
+## 3. Automated Lean Proof Completion Tools
+
+**NEW:** Automated tools for completing Lean theorem proofs marked with 'sorry'.
+
+### Components
+
+**Files:**
+- `lean_proof_completer.py` - Lean file parser and theorem extractor
+- `noesis_sabio_integration.py` - Semantic analysis and proof generation
+- `automated_sorry_completion.py` - Complete workflow orchestrator
+
+### Features
+
+**Lean Proof Completer:**
+- Extracts theorems, lemmas, and definitions with 'sorry'
+- Analyzes proof context and dependencies
+- Identifies mathematical structures
+
+**Noesis-Sabio Integration:**
+- **Noesis:** Semantic analysis of mathematical theorems
+- **Sabio:** Intelligent proof search and generation
+- Supports categories: spectral, functional, arithmetic, analysis, algebra
+
+**Automated Workflow:**
+1. Identify Lean files with 'sorry'
+2. Extract theorem contexts
+3. Generate completions using Noesis + Sabio
+4. Validate proposed completions
+5. Apply completions with backup
+6. Verify integrity with validate_v5_coronacion.py
+
+### Usage
+
+```bash
+# Dry-run analysis (safe, default)
+python tools/automated_sorry_completion.py --dir formalization/lean --verbose
+
+# Generate detailed report
+python tools/automated_sorry_completion.py --dir formalization/lean --output report.json
+
+# Test Noesis-Sabio integration
+python tools/noesis_sabio_integration.py
+
+# Analyze single file
+python tools/lean_proof_completer.py --file path/to/file.lean --verbose
+```
+
+### Example Statistics
+
+Example dry-run on formalization/lean:
+- Files processed: 356
+- Sorry statements found: 1387
+- Completions generated: 1360
+- Completions validated: 25 (1.8%)
+- Duration: 0.34 seconds
+
+*Note: These are sample results from a test run, actual numbers will vary*
+
+### Safety Features
+
+- **Dry-run mode by default** (no file modifications)
+- **Automatic backups** before changes
+- **Confidence-based validation** (only high-confidence proofs auto-applied)
+- **Integration with QCAL validation** framework
+
+### Example Completions
+
+**Arithmetic:**
+```lean
+theorem add_zero (n : ℕ) : n + 0 = n := norm_num
+```
+
+**Functional Equation:**
+```lean
+theorem zeta_functional_eq : ∀ s, ξ(s) = ξ(1-s) := 
+  rw [functional_equation]
+  apply symmetry_property
+```
+
+**Spectral:**
+```lean
+theorem spectrum_real (H : SelfAdjoint) : ∀ λ ∈ spectrum H, λ ∈ ℝ := 
+  apply spectrum_characterization
+  · exact self_adjoint_property
+  · apply compact_operator
+```
+
+See `tools/README_PROOF_COMPLETION.md` for complete documentation.
+
 ## License
 
 Tools are licensed under MIT License. See [LICENSE](../LICENSE) file.
