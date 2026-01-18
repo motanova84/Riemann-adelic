@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-01-18T17:02:24.445146",
+  "timestamp": "2026-01-18T17:05:09.076566",
   "frequency": 141.7001,
   "optimized": true,
   "files": {
@@ -14,7 +14,7 @@
     "qcal_references": 1135,
     "frequency_references": 1034,
     "infinity_cubed_references": 1084,
-    "psi_state_references": 1212
+    "psi_state_references": 1213
   },
   "density": {
     "qcal_density": 0.5939,
