@@ -257,14 +257,16 @@ python tools/noesis_sabio_integration.py
 python tools/lean_proof_completer.py --file path/to/file.lean --verbose
 ```
 
-### Statistics
+### Example Statistics
 
-Latest run on formalization/lean:
+Example dry-run on formalization/lean:
 - Files processed: 356
 - Sorry statements found: 1387
 - Completions generated: 1360
 - Completions validated: 25 (1.8%)
 - Duration: 0.34 seconds
+
+*Note: These are sample results from a test run, actual numbers will vary*
 
 ### Safety Features
 

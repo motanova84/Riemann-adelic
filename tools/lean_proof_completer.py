@@ -190,8 +190,11 @@ class LeanFileParser:
             
             i += 1
             
-            # Safety limit
+            # Safety limit: stop parsing if block exceeds 500 lines
+            # This prevents infinite loops on malformed Lean files
             if i - start_idx > 500:
+                if self.verbose:
+                    print(f"Warning: Theorem block parsing terminated after 500 lines at line {start_idx}")
                 break
         
         return None

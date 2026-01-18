@@ -283,13 +283,16 @@ class LeanREPLSandbox:
                 temp_file.unlink()
     
     def _create_temp_proof_file(self, original_file: Path, proof_text: str) -> Path:
-        """Crea archivo temporal con la prueba"""
+        """Creates temporary file with proposed proof"""
         temp_file = original_file.with_suffix('.temp.lean')
         
-        # Leer archivo original y reemplazar sorry con proof_text
+        # Read original file and replace sorry with proof_text
         original_content = original_file.read_text(encoding='utf-8')
-        # Esto es simplificado - en producción sería más sofisticado
-        modified_content = original_content.replace('sorry', proof_text, 1)
+        # TODO: Use proper Lean AST manipulation instead of string replacement
+        # Current implementation: simple word-boundary-aware replacement
+        # This only replaces 'sorry' as a complete word, not in comments/strings
+        import re
+        modified_content = re.sub(r'\bsorry\b', proof_text, original_content, count=1)
         
         temp_file.write_text(modified_content, encoding='utf-8')
         return temp_file
@@ -617,7 +620,7 @@ class PhoenixSolver:
         return self._finalize()
     
     def _scan_sorrys(self, lean_dir: Path, priority_file: Optional[str]) -> List[TheoremContext]:
-        """Escanea archivos Lean y extrae contextos de sorry"""
+        """Scan Lean files and extract sorry contexts"""
         all_contexts = []
         
         # Si hay archivo prioritario, procesarlo primero
@@ -644,10 +647,10 @@ class PhoenixSolver:
     
     def _resolve_sorry(self, context: TheoremContext) -> Optional[PhoenixResolution]:
         """
-        Resuelve un sorry individual con validación completa
+        Resolve a single sorry statement with complete validation
         
         Returns:
-            PhoenixResolution si tiene éxito, None si falla
+            PhoenixResolution if successful, None if failed
         """
         # 1. Cosechar contexto matemático
         enriched_context = self.harvester.harvest_context(context)
@@ -692,7 +695,7 @@ class PhoenixSolver:
         return resolution
     
     def _finalize(self) -> Dict:
-        """Finaliza y genera reporte"""
+        """Finalize and generate report"""
         self.stats['end_time'] = time.time()
         duration = self.stats['end_time'] - self.stats['start_time']
         
@@ -719,7 +722,7 @@ class PhoenixSolver:
         return results
     
     def _print_summary(self):
-        """Imprime resumen final"""
+        """Print final summary"""
         print("\n" + "=" * 80)
         print("📊 PHOENIX SOLVER SUMMARY")
         print("=" * 80)

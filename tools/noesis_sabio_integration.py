@@ -15,7 +15,7 @@ import subprocess
 import sys
 from dataclasses import dataclass
 from pathlib import Path
-from typing import List, Dict, Optional, Any
+from typing import List, Dict, Optional, Any, Tuple
 
 
 @dataclass
@@ -112,7 +112,7 @@ class NoesisAnalyzer:
             confidence=confidence
         )
     
-    def _identify_category(self, statement: str) -> tuple[str, List[str]]:
+    def _identify_category(self, statement: str) -> Tuple[str, List[str]]:
         """Identify the mathematical category of the theorem"""
         statement_lower = statement.lower()
         

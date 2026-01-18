@@ -198,6 +198,8 @@ class AutomatedSorryCompletion:
         involve running Lean type checker on proposed completions.
         """
         validated = []
+        needs_review = []
+        rejected = []
         
         for completion in completions:
             confidence = completion.get('noesis_analysis', {}).get('confidence', 0)
@@ -209,9 +211,15 @@ class AutomatedSorryCompletion:
                 validated.append(completion)
             elif confidence >= 0.5:
                 completion['validation_status'] = 'NEEDS_REVIEW'
-                # Still include for reporting, but don't auto-apply
+                needs_review.append(completion)
             else:
                 completion['validation_status'] = 'REJECTED'
+                rejected.append(completion)
+        
+        # Store all categories for reporting
+        self.results['validated_completions'] = validated
+        self.results['needs_review_completions'] = needs_review
+        self.results['rejected_completions'] = rejected
         
         return validated
     
