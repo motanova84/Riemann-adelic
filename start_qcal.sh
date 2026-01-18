@@ -21,11 +21,31 @@ fi
 # Activar entorno virtual
 source venv/bin/activate
 
-# Instalar dependencias Python
-echo "📥 Instalando dependencias Python..."
-pip install -q -r requirements.txt
+# Instalar dependencias Python con verificación
+echo "📥 Verificando archivo requirements.txt..."
+if [ ! -f "requirements.txt" ]; then
+    echo "❌ Archivo requirements.txt no encontrado. Abortando."
+    exit 1
+fi
+
+echo "📥 Instalando dependencias Python con hashes requeridos..."
+# Actualizar herramientas básicas de empaquetado de forma silenciosa
+pip install -q --upgrade pip setuptools wheel
+
+# Usar instalación con hashes requeridos para mayor seguridad.
+# Asegúrate de que requirements.txt incluya hashes (opción --require-hashes).
+pip install -q --require-hashes -r requirements.txt
+
+# Auditoría de vulnerabilidades conocidas en dependencias
+echo "🛡️ Ejecutando auditoría de seguridad de dependencias (pip-audit)..."
+pip install -q pip-audit
+if ! pip-audit; then
+    echo "⚠️ Advertencia: pip-audit ha encontrado posibles vulnerabilidades en las dependencias."
+    echo "   Revisa el reporte anterior antes de usar este entorno en producción."
+fi
 
 # Construir proyecto Lean (si existe)
+if [ -d "formalization/lean" ] && command -v lake >/dev/null 2>&1; then
 if [ -d "formalization/lean" ] && command -v lake >/dev/null 2>&1; then
     echo "🏗️ Construyendo proyecto Lean..."
     cd formalization/lean && lake build && cd ../..
