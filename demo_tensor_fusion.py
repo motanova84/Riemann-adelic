@@ -155,8 +155,8 @@ def visualize_tensor_fusion(cert):
     # Mostrar si es posible
     try:
         plt.show()
-    except:
-        print("ℹ️  Visualización generada (no se puede mostrar en este entorno)")
+    except (ImportError, RuntimeError) as e:
+        print(f"ℹ️  Visualización generada (no se puede mostrar en este entorno: {e})")
 
 
 def print_fusion_summary(cert):

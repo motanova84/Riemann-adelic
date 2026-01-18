@@ -123,7 +123,7 @@ def test_validation_script_runs():
     """Test that the validation script runs successfully."""
     try:
         result = subprocess.run(
-            ['python', 'validate_tensor_fusion.py'],
+            [sys.executable, 'validate_tensor_fusion.py'],
             capture_output=True,
             text=True,
             timeout=30

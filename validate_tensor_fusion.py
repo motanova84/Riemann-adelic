@@ -224,8 +224,8 @@ def validate_cryptographic_signature(cert):
     try:
         dt = datetime.fromisoformat(timestamp.replace('Z', '+00:00'))
         print(f"✅ Timestamp válido: {timestamp}")
-    except:
-        print(f"❌ Timestamp inválido: {timestamp}")
+    except (ValueError, TypeError) as e:
+        print(f"❌ Timestamp inválido: {timestamp} - {e}")
         return False
     
     # Verificar coherencia en firma
