@@ -35,6 +35,10 @@ class EnvironmentVerifier:
     CHECKSUM_FILE = "environment_checksums.json"
     EXPECTED_PYTHON_VERSION = "3.11"
     
+    # Section markers in ENV.lock
+    DATASET_SECTION_MARKER = "DATASET CHECKSUMS"
+    PYTHON_PACKAGES_MARKER = "PYTHON PACKAGES"
+    
     def __init__(self, verbose: bool = False):
         """
         Initialize the environment verifier.
@@ -339,29 +343,35 @@ class EnvironmentVerifier:
         current_dataset = None
         
         with open(env_lock, 'r') as f:
-            for line in f:
-                line = line.strip()
-                
-                # Detect dataset checksums section
-                if 'DATASET CHECKSUMS' in line:
-                    in_dataset_section = True
+            lines = f.readlines()
+        
+        for i, line in enumerate(lines):
+            line = line.strip()
+            
+            # Detect dataset checksums section
+            if self.DATASET_SECTION_MARKER in line:
+                in_dataset_section = True
+                continue
+            
+            # Exit section when we hit the next major section
+            if in_dataset_section and self.PYTHON_PACKAGES_MARKER in line:
+                break
+            
+            # Parse dataset name and checksum
+            if in_dataset_section and line.startswith('# ') and ':' in line:
+                # Skip header lines
+                if 'These checksums' in line or '──────' in line:
                     continue
                 
-                # Exit section when we hit the next major section
-                if in_dataset_section and line.startswith('# ─────') and 'PYTHON PACKAGES' in next(f, ''):
-                    break
-                
-                # Parse dataset name and checksum
-                if in_dataset_section and line.startswith('# ') and ':' in line and '# These' not in line:
-                    # Line like: "# Evac_Rpsi_data.csv:"
-                    dataset_name = line.lstrip('#').strip().rstrip(':').strip()
-                    current_dataset = dataset_name
-                elif in_dataset_section and current_dataset and line.startswith('#   '):
-                    # Next line with checksum like: "#   412ab7ba54a5041..."
-                    checksum = line.lstrip('#').strip()
-                    if len(checksum) == 64:  # SHA-256 is 64 hex chars
-                        recorded_checksums[current_dataset] = checksum
-                    current_dataset = None
+                # Line like: "# Evac_Rpsi_data.csv:"
+                dataset_name = line.lstrip('#').strip().rstrip(':').strip()
+                current_dataset = dataset_name
+            elif in_dataset_section and current_dataset and line.startswith('#   '):
+                # Next line with checksum like: "#   412ab7ba54a5041..."
+                checksum = line.lstrip('#').strip()
+                if len(checksum) == 64:  # SHA-256 is 64 hex chars
+                    recorded_checksums[current_dataset] = checksum
+                current_dataset = None
         
         if not recorded_checksums:
             self.log("No dataset checksums found in ENV.lock", "INFO")

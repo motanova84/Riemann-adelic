@@ -31,6 +31,16 @@ from pathlib import Path
 from typing import Dict, Set, Optional, Any
 
 
+# QCAL configuration parameters to extract from .qcal_beacon
+QCAL_PARAMS = [
+    'frequency',
+    'fundamental_frequency',
+    'coherence',
+    'universal_constant_C',
+    'coherence_constant_C_prime',
+]
+
+
 def compute_file_checksum(filepath: Path) -> Optional[str]:
     """Compute SHA256 checksum of a file."""
     if not filepath.exists():
@@ -174,8 +184,7 @@ def get_qcal_configuration(repo_root: Path) -> Dict[str, Any]:
                         value = value.strip().strip('"')
                         
                         # Extract key QCAL parameters
-                        if key in ['frequency', 'fundamental_frequency', 'coherence', 
-                                   'universal_constant_C', 'coherence_constant_C_prime']:
+                        if key in QCAL_PARAMS:
                             config[key] = value
         except Exception as e:
             print(f"Warning: Could not read .qcal_beacon: {e}", file=sys.stderr)
