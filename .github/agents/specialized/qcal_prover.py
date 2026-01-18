@@ -5,8 +5,6 @@ Valida teoremas, demostraciones y coherencia matemática del sistema QCAL ∞³
 """
 
 import json
-import yaml
-import subprocess
 from pathlib import Path
 from datetime import datetime
 from typing import Dict, List, Optional, Tuple

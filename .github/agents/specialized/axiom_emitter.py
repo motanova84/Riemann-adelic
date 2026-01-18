@@ -6,7 +6,6 @@ Genera nuevos axiomas desde patrones encontrados en el código QCAL ∞³
 
 import json
 import re
-import ast
 from pathlib import Path
 from datetime import datetime
 from typing import Dict, List, Set, Optional
@@ -203,8 +202,13 @@ namespace QCAL
 -- Axiomas Fundamentales
 axiom qcal_frequency : ℝ := 141.7001
 axiom qcal_resonance : ℝ := 888.014
-axiom psi_state : Prop := true
 axiom coherence_threshold : ℝ := 0.888
+
+-- Estado Ψ como estructura algebraica
+structure PsiState where
+  I : ℝ
+  A_eff : ℝ
+  C_infinity : ℝ
 
 -- Axiomas Generados desde Patrones
 """
@@ -212,7 +216,7 @@ axiom coherence_threshold : ℝ := 0.888
         for i, axiom in enumerate(axioms, 1):
             lean_content += f"\n-- Axioma {i}: {axiom['id']}\n"
             lean_content += f"-- {axiom['statement']}\n"
-            lean_content += f"axiom {axiom['id'].lower()} : Prop := true\n"
+            lean_content += f"axiom {axiom['id'].lower()} : Prop\n"
         
         lean_content += f"\nend QCAL\n-- ∴ Axiom generation complete ∞³\n"
         
