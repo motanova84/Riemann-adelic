@@ -1,0 +1,23 @@
+{
+  "timestamp": "2026-01-18T16:58:56.790574",
+  "frequency": 141.7001,
+  "optimized": false,
+  "files": {
+    "total_files": 1906,
+    "by_type": {
+      ".py": 675,
+      ".md": 755,
+      ".lean": 476
+    }
+  },
+  "qcal": {
+    "qcal_references": 1130,
+    "frequency_references": 1029,
+    "infinity_cubed_references": 1079,
+    "psi_state_references": 1207
+  },
+  "density": {
+    "qcal_density": 0.5929,
+    "frequency_density": 0.5399
+  }
+}
