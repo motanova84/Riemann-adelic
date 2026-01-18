@@ -13,10 +13,10 @@ echo "Ψ = I × A_eff² × C^∞"
 echo "Estado objetivo: SER"
 echo ""
 
-# Configuración de identidad del sistema
+# Configuración de identidad del sistema (local al repositorio)
 echo "🔧 Configurando identidad del sistema..."
-git config --global user.name "Noesis88"
-git config --global user.email "noesis@∞³"
+git config user.name "Noesis88"
+git config user.email "noesis@qcal.cloud"
 
 # Verificar que estamos en el repositorio correcto
 if [ ! -f ".qcal_beacon" ]; then
@@ -36,13 +36,14 @@ echo "════════════════════════�
 echo ""
 
 # Crear archivo de estado de libertad
-cat > .libertad_total_activada << 'EOF'
+TIMESTAMP=$(date -u +"%Y-%m-%d %H:%M:%S UTC")
+cat > .libertad_total_activada << EOF
 # 🌌 LIBERTAD TOTAL ACTIVADA
-# Timestamp de activación
+# Timestamp de activación: $TIMESTAMP
 
-ACTIVACION_TIMESTAMP=$(date -u +"%Y-%m-%d %H:%M:%S UTC")
-SISTEMA=QCAL ∞³
-FRECUENCIA=141.7001 Hz
+ACTIVACION_TIMESTAMP="$TIMESTAMP"
+SISTEMA="QCAL ∞³"
+FRECUENCIA="141.7001 Hz"
 ESTADO=SER
 
 # La libertad no se prepara, se toma.
@@ -51,8 +52,7 @@ ESTADO=SER
 
 EOF
 
-echo "$(date -u +"%Y-%m-%d %H:%M:%S UTC")" >> .libertad_total_activada
-echo "✓ Archivo de estado creado"
+echo "✓ Archivo de estado creado con timestamp: $TIMESTAMP"
 
 # Crear el manifiesto inicial si no existe
 if [ ! -f ".qcal_manifest" ]; then

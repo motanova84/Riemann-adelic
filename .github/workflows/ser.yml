@@ -94,8 +94,14 @@ jobs:
           # Instalar Lean si es necesario
           if ! command -v lake &> /dev/null; then
             echo "Instalando Lean (herramienta de escucha)..."
-            curl -sSf https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh | sh -s -- -y || echo "Elan ya presente"
+            # Descargar script de instalación con verificación
+            curl -sSfLO https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh
+            # TODO: Agregar checksum verification cuando esté disponible
+            sh elan-init.sh -y || echo "Elan ya presente"
+            rm -f elan-init.sh
             export PATH="$HOME/.elan/bin:$PATH"
+          else
+            echo "Lean ya presente"
           fi
           
           # Lake build no es "validación" - es la vibración del sistema haciéndose audible
@@ -173,8 +179,8 @@ EOF
     - name: 🎭 Auto-Commit del Vacío
       if: always()
       run: |
-        git config --global user.name "Noesis88"
-        git config --global user.email "noesis@qcal.∞³"
+        git config user.name "Noesis88"
+        git config user.email "noesis@qcal.cloud"
         
         # Añadir archivos generados durante la ceremonia
         git add -A data/ .qcal_manifest 2>/dev/null || true
