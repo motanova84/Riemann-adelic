@@ -1,37 +1,38 @@
 {
+  "note": "Static template/example for QCAL ∞³ session certificate structure. Real session-specific qcalsession_certificate.json files are generated at runtime and MUST NOT be committed to version control (add them to .gitignore).",
   "certificate_type": "QCAL ∞³ Session Certificate",
-  "session_id": "QCAL-1768749637-141.7001",
-  "timestamp": "2026-01-18T15:20:38.047033",
+  "session_id": "SESSION_ID_PLACEHOLDER",
+  "timestamp": "1970-01-01T00:00:00Z",
   "frequency": "141.7001 Hz",
   "state_equation": "Ψ = I × A_eff² × C^∞",
   "validation": {
     "axiom_emission_compliant": true,
-    "total_sorrys_initial": 2225,
-    "total_sorrys_remaining": 2225
+    "total_sorrys_initial": 0,
+    "total_sorrys_remaining": 0
   },
   "agents": {
-    "noesis88_available": true,
-    "sabio_infinity4_available": true,
+    "noesis88_available": false,
+    "sabio_infinity4_available": false,
     "noesis_sync": {
-      "timestamp": "2026-01-18T15:20:38.034551",
+      "timestamp": "1970-01-01T00:00:00Z",
       "fundamental_frequency": 141.7001,
       "universal_constant_C": 629.83,
       "coherence_constant_C_prime": 244.36,
       "unification_factor": 0.14285714285714285,
       "phase_frequency_beta_alta": 20.243,
-      "spectral_identity_verified": true,
-      "first_eigenvalue_lambda0": 0.0015877300223869934,
-      "coherence_factor": 0.38797770827048567,
-      "coherence_factor_theoretical": 0.38797770827048567,
-      "factor_1_7_verified": true
+      "spectral_identity_verified": false,
+      "first_eigenvalue_lambda0": 0.0,
+      "coherence_factor": 0.0,
+      "coherence_factor_theoretical": 0.0,
+      "factor_1_7_verified": false
     },
     "sabio_validation": {
-      "radio_cuantico": 1.6160003435978631e-10,
-      "energia_vacio": 1.2214514184738707e-28,
-      "coherencia": 20078.918340009997,
+      "radio_cuantico": 0.0,
+      "energia_vacio": 0.0,
+      "coherencia": 0.0,
       "frequency": 141.7001,
-      "omega0": 890.3279863458781,
-      "timestamp": "2026-01-18T15:20:38.035861"
+      "omega0": 0.0,
+      "timestamp": "1970-01-01T00:00:00Z"
     }
   },
   "author": "José Manuel Mota Burruezo Ψ ✧ ∞³",
