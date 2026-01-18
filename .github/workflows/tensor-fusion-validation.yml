@@ -23,11 +23,15 @@ jobs:
         
     - name: Install dependencies
       run: |
+        # Note: validate_tensor_fusion.py also imports standard library modules
+        # such as `json`, which are provided by Python 3.11 itself and do not
+        # need to be installed via pip. The commands below only install
+        # third-party numerical dependencies when needed.
         python -m pip install --upgrade pip
         if [ -f requirements.txt ]; then 
           pip install -r requirements.txt
         else
-          echo "Warning: requirements.txt not found, installing minimal dependencies"
+          echo "Warning: requirements.txt not found, installing minimal third-party dependencies (numpy, matplotlib); standard library modules like 'json' are already available in Python."
           pip install numpy matplotlib
         fi
         
