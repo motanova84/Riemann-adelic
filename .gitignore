@@ -194,6 +194,8 @@ noesis_guardian/logs/guardian_log.json
 
 # QCAL auto-generated state files
 tools/qcal_state.json
+.qcal_state
+.qcal_continuation_summary.json
 # Spectral framework demo images
 *_demo.png
 *_spectrum.png
