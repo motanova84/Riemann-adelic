@@ -9,6 +9,7 @@ import sys
 import subprocess
 import json
 import time
+import re
 from pathlib import Path
 from typing import Dict, Any, Optional
 
@@ -16,11 +17,13 @@ class NoesisBoot:
     """Motor de reintento recursivo infinito"""
     
     def __init__(self, session_id: str, error_count: int = 0, quantum_state: str = "INCOHERENT", 
-                 timeout: int = 300):
+                 timeout: int = 300, max_attempts: int = None):
         self.session_id = session_id
         self.error_count = error_count
         self.quantum_state = quantum_state
-        self.max_attempts = float('inf')  # Literalmente infinito
+        # Usar infinito si no se especifica, sino usar el límite dado
+        # Esto permite limitar en CI/testing pero ser infinito en producción
+        self.max_attempts = max_attempts if max_attempts is not None else float('inf')
         self.attempt = 0
         self.timeout = timeout  # Timeout configurable para validación Lean
         
@@ -112,8 +115,6 @@ class NoesisBoot:
     def check_quantum_coherence(self) -> bool:
         """Verifica coherencia cuántica (Axioma de Emisión)"""
         print(f"\n[{self.attempt}] 🌌 Validando coherencia cuántica...")
-        
-        import re
         
         coherence_score = 0
         requirements = {
@@ -246,7 +247,6 @@ class NoesisBoot:
                     
                     # Solo reemplazar sorry standalone al final de pruebas triviales
                     # Esto es conservador y solo afecta casos muy simples
-                    import re
                     # Patrón: "trivial := by sorry" -> "trivial := by trivial"
                     new_content = re.sub(r':= by sorry\b', ':= by trivial', new_content)
                     
@@ -341,8 +341,9 @@ theorem frequency_validation : f₀ = 141.7001 := rfl
 theorem system_state : NoesisSystem.state = "I × A_eff² × C^∞" := rfl
 
 -- Axioma base para RH (a ser reemplazado por teorema completo)
+-- Nota: Excluye ceros triviales en enteros negativos pares
 axiom Riemann_Hypothesis_Base :
-    ∀ s : ℂ, riemannZeta s = 0 → s ∉ {-2, -4, -6, ...} → s.re = 1/2
+    ∀ s : ℂ, riemannZeta s = 0 → (∀ n : ℤ, n < 0 → Even n → s ≠ n) → s.re = 1/2
 
 """
     
@@ -417,6 +418,8 @@ def main():
     parser.add_argument("--quantum-state", default="INCOHERENT", help="Estado cuántico inicial")
     parser.add_argument("--timeout", type=int, default=300, 
                         help="Timeout en segundos para validación Lean (default: 300)")
+    parser.add_argument("--max-attempts", type=int, default=None,
+                        help="Límite de intentos (default: infinito). Útil para testing/CI.")
     
     args = parser.parse_args()
     
@@ -425,7 +428,8 @@ def main():
         session_id=args.session_id,
         error_count=args.error_count,
         quantum_state=args.quantum_state,
-        timeout=args.timeout
+        timeout=args.timeout,
+        max_attempts=args.max_attempts
     )
     
     try:
