@@ -40,11 +40,19 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Dict, List, Optional, Tuple
 
-# QCAL Constants from .qcal_beacon
-FUNDAMENTAL_FREQUENCY = 141.7001  # Hz
-COHERENCE_CONSTANT = 244.36  # C = 244.36
-PI_CODE = "πCODE-888-QCAL2"
-UNIVERSAL_CONSTANT_C = 629.83
+# QCAL Constants Configuration from .qcal_beacon
+class QCALConstants:
+    """QCAL ∞³ constants from .qcal_beacon configuration."""
+    FUNDAMENTAL_FREQUENCY = 141.7001  # Hz - emerges from spectral origin
+    COHERENCE_CONSTANT = 244.36  # C' - coherence constant from spectral moment
+    PI_CODE = "πCODE-888-QCAL2"  # Economic efficiency identifier
+    UNIVERSAL_CONSTANT_C = 629.83  # C - universal constant (1/λ₀)
+    
+# Legacy compatibility
+FUNDAMENTAL_FREQUENCY = QCALConstants.FUNDAMENTAL_FREQUENCY
+COHERENCE_CONSTANT = QCALConstants.COHERENCE_CONSTANT
+PI_CODE = QCALConstants.PI_CODE
+UNIVERSAL_CONSTANT_C = QCALConstants.UNIVERSAL_CONSTANT_C
 
 # Paths
 REPO_ROOT = Path(__file__).parent.absolute()
@@ -187,9 +195,10 @@ class NoesisBoot:
     - Tactic suggestion based on context
     """
     
-    def __init__(self, lean_dir: Path, state: QCALState):
+    def __init__(self, lean_dir: Path, state: QCALState, build_timeout: int = 600):
         self.lean_dir = lean_dir
         self.state = state
+        self.build_timeout = build_timeout
         self.mathlib_tactics = self._discover_mathlib_tactics()
     
     def _discover_mathlib_tactics(self) -> List[str]:
@@ -274,20 +283,20 @@ class NoesisBoot:
     
     def build_lean_project(self) -> Tuple[bool, str]:
         """Build the Lean project using lake."""
-        print("🔨 Building Lean project...")
+        print(f"🔨 Building Lean project (timeout: {self.build_timeout}s)...")
         try:
             result = subprocess.run(
                 ["lake", "build"],
                 cwd=self.lean_dir,
                 capture_output=True,
                 text=True,
-                timeout=600  # 10 minute timeout
+                timeout=self.build_timeout
             )
             success = result.returncode == 0
             output = result.stdout + "\n" + result.stderr
             return success, output
         except subprocess.TimeoutExpired:
-            return False, "Build timeout after 10 minutes"
+            return False, f"Build timeout after {self.build_timeout} seconds"
         except Exception as e:
             return False, f"Build error: {str(e)}"
     
@@ -321,8 +330,9 @@ class QCALValidator:
     - Coherence constant C = 244.36
     """
     
-    def __init__(self, validation_script: Path):
+    def __init__(self, validation_script: Path, validation_timeout: int = 300):
         self.validation_script = validation_script
+        self.validation_timeout = validation_timeout
     
     def validate_frequency_coherence(self) -> bool:
         """Validate that frequency coherence is maintained."""
@@ -355,14 +365,14 @@ class QCALValidator:
     
     def run_v5_validation(self) -> Tuple[bool, str]:
         """Run the V5 Coronación validation."""
-        print("🔬 Running V5 Coronación validation...")
+        print(f"🔬 Running V5 Coronación validation (timeout: {self.validation_timeout}s)...")
         try:
             result = subprocess.run(
                 [sys.executable, str(self.validation_script), "--precision", "25"],
                 cwd=REPO_ROOT,
                 capture_output=True,
                 text=True,
-                timeout=300  # 5 minute timeout
+                timeout=self.validation_timeout
             )
             success = result.returncode == 0
             output = result.stdout + "\n" + result.stderr
@@ -409,8 +419,10 @@ class AutoQCAL:
     def __init__(self, args):
         self.args = args
         self.state = QCALState()
-        self.noesis = NoesisBoot(LEAN_DIR, self.state)
-        self.validator = QCALValidator(VALIDATION_SCRIPT)
+        self.noesis = NoesisBoot(LEAN_DIR, self.state, 
+                                  build_timeout=args.build_timeout)
+        self.validator = QCALValidator(VALIDATION_SCRIPT,
+                                        validation_timeout=args.validation_timeout)
     
     def print_banner(self):
         """Print QCAL system banner."""
@@ -602,6 +614,20 @@ Examples:
         "--full-validation",
         action="store_true",
         help="Run full V5 Coronación validation at the end"
+    )
+    
+    parser.add_argument(
+        "--build-timeout",
+        type=int,
+        default=600,
+        help="Timeout for Lean build in seconds (default: 600)"
+    )
+    
+    parser.add_argument(
+        "--validation-timeout",
+        type=int,
+        default=300,
+        help="Timeout for V5 validation in seconds (default: 300)"
     )
     
     args = parser.parse_args()

@@ -70,7 +70,7 @@ Manages orchestration state for continuity across sessions.
 ```json
 {
   "session_id": 1,
-  "total_sorries": 2285,
+  "total_sorries": 2316,
   "resolved_sorries": 0,
   "failed_files": [],
   "successful_strategies": ["spectral_theorem", "exact_mod_cast"],
@@ -346,7 +346,7 @@ The persistent state file tracks:
 {
   "timestamp": "2026-01-18T15:30:00.123456",
   "session_id": 2,
-  "total_sorries": 2285,
+  "total_sorries": 2316,
   "resolved_sorries": 15,
   "failed_files": [
     {
