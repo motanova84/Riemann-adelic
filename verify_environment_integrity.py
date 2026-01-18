@@ -321,6 +321,86 @@ class EnvironmentVerifier:
             self.errors.append(f"Failed to verify checksums: {e}")
             return False
     
+    def verify_dataset_checksums(self) -> bool:
+        """
+        Verify that dataset checksums match those recorded in ENV.lock.
+        
+        Returns:
+            True if dataset checksums match or cannot be verified
+        """
+        env_lock = self.repo_root / "ENV.lock"
+        
+        if not self.verify_file_exists(env_lock):
+            return False
+        
+        # Parse dataset checksums from ENV.lock
+        recorded_checksums = {}
+        in_dataset_section = False
+        current_dataset = None
+        
+        with open(env_lock, 'r') as f:
+            for line in f:
+                line = line.strip()
+                
+                # Detect dataset checksums section
+                if 'DATASET CHECKSUMS' in line:
+                    in_dataset_section = True
+                    continue
+                
+                # Exit section when we hit the next major section
+                if in_dataset_section and line.startswith('# ─────') and 'PYTHON PACKAGES' in next(f, ''):
+                    break
+                
+                # Parse dataset name and checksum
+                if in_dataset_section and line.startswith('# ') and ':' in line and '# These' not in line:
+                    # Line like: "# Evac_Rpsi_data.csv:"
+                    dataset_name = line.lstrip('#').strip().rstrip(':').strip()
+                    current_dataset = dataset_name
+                elif in_dataset_section and current_dataset and line.startswith('#   '):
+                    # Next line with checksum like: "#   412ab7ba54a5041..."
+                    checksum = line.lstrip('#').strip()
+                    if len(checksum) == 64:  # SHA-256 is 64 hex chars
+                        recorded_checksums[current_dataset] = checksum
+                    current_dataset = None
+        
+        if not recorded_checksums:
+            self.log("No dataset checksums found in ENV.lock", "INFO")
+            return True
+        
+        # Verify each dataset
+        mismatches = []
+        missing_files = []
+        
+        for dataset_name, expected_checksum in recorded_checksums.items():
+            filepath = self.repo_root / dataset_name
+            
+            if not filepath.exists():
+                missing_files.append(dataset_name)
+                continue
+            
+            actual_checksum = self.compute_file_checksum(filepath)
+            if actual_checksum != expected_checksum:
+                mismatches.append(
+                    f"{dataset_name}: expected={expected_checksum[:16]}..., actual={actual_checksum[:16]}..."
+                )
+        
+        if missing_files:
+            self.warnings.append(
+                f"Dataset files not found: {', '.join(missing_files)}"
+            )
+        
+        if mismatches:
+            self.errors.append(
+                f"Dataset checksum mismatches: {', '.join(mismatches)}. "
+                "Dataset files may have been modified."
+            )
+            return False
+        
+        if recorded_checksums and not missing_files and not mismatches:
+            self.log(f"Dataset checksums verified: {len(recorded_checksums)} files", "SUCCESS")
+        
+        return True
+    
     def check_python_version(self) -> bool:
         """
         Check that Python version matches expected version.
@@ -369,6 +449,10 @@ class EnvironmentVerifier:
         # Verify installed packages
         self.log("\n📦 Verifying installed packages...", "INFO")
         self.verify_installed_packages()
+        
+        # Verify dataset checksums
+        self.log("\n🔬 Verifying dataset checksums...", "INFO")
+        self.verify_dataset_checksums()
         
         # Handle checksums
         if generate_checksums:

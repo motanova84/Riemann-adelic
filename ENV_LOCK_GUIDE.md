@@ -515,7 +515,100 @@ When publishing validation results:
 - **verify_environment_integrity.py**: Verification script
 - **generate_env_lock.py**: Generation script
 
+## Additional Considerations
+
+### LIGO/Gravitational Wave Data
+
+For GW150914 and GW250114 analyses, this repository uses data from:
+- **GWOSC** (Gravitational Wave Open Science Center): https://gwosc.org/
+- Data is fetched dynamically during analysis runs
+- No local LIGO data files are stored in the repository
+
+To ensure reproducibility with LIGO data:
+1. Document the GWOSC data version/release used
+2. Note the detector (LIGO Hanford H1, LIGO Livingston L1, Virgo)
+3. Record observation run (O1, O2, O3, O4)
+4. Save analysis parameters (sampling rate, frequency range)
+
+**Example documentation:**
+```python
+# LIGO Data Source Configuration
+gw_event = "GW150914"  # or "GW250114"
+detector = "H1"  # LIGO Hanford
+observation_run = "O1"  # First observing run
+data_url = "https://gwosc.org/eventapi/html/GWTC-1-confident/GW150914/"
+sampling_rate = 4096  # Hz
+frequency_band = (20, 2048)  # Hz
+```
+
+### LALSuite (Optional)
+
+LALSuite is **not required** for basic QCAL validation but may be useful for advanced gravitational wave analysis:
+
+```bash
+# Optional: Install LALSuite for advanced GW analysis
+conda install -c conda-forge lalsuite
+```
+
+If LALSuite is used, document version:
+```bash
+python -c "import lal; print(lal.__version__)"
+```
+
+### Random Seeds and Reproducibility
+
+For analyses involving random sampling or Monte Carlo methods:
+
+1. **Set seeds explicitly** in scripts:
+   ```python
+   import numpy as np
+   import random
+   
+   RANDOM_SEED = 42  # Document this value
+   np.random.seed(RANDOM_SEED)
+   random.seed(RANDOM_SEED)
+   ```
+
+2. **Document in ENV.lock** (for custom scripts):
+   - Add seed value to script header comments
+   - Include in validation certificates (JSON files in `data/`)
+
+3. **CI/CD Consistency**:
+   - Use same seeds in GitHub Actions workflows
+   - Document in workflow YAML files
+
+### GPU Acceleration (Optional)
+
+QCAL validations can use GPU acceleration with:
+- **JAX**: Already in requirements (supports CPU and GPU)
+- **CuPy**: Optional for CUDA-enabled GPUs
+
+If using GPU:
+```bash
+# Check CUDA version
+nvidia-smi
+
+# Install CuPy for specific CUDA version (example: CUDA 12.x)
+pip install cupy-cuda12x
+```
+
+Document in ENV.lock comment:
+```python
+# GPU Configuration (if used)
+# CUDA Version: 12.1
+# CuPy: 13.0.0
+# GPU: NVIDIA A100 (or specific model)
+```
+
 ## Version History
+
+- **2026-01-18**: Enhanced comprehensive version
+  - Added system information capture
+  - Added mathematical toolchain detection (Lean 4, Git, GCC)
+  - Added QCAL ∞³ configuration extraction
+  - Added dataset checksum verification
+  - Implemented dataset integrity validation in verify script
+  - Updated documentation with external auditor guidelines
 
 - **2026-01-06**: Initial version
   - Created ENV.lock from requirements-lock.txt
@@ -531,6 +624,6 @@ For questions or issues:
 
 ---
 
-**Last Updated**: 2026-01-06  
-**Maintained by**: José Manuel Mota Burruezo  
-**License**: MIT
+**Last Updated**: 2026-01-18  
+**Maintained by**: José Manuel Mota Burruezo Ψ ✧ ∞³  
+**License**: Creative Commons BY-NC-SA 4.0
