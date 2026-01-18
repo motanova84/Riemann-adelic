@@ -198,7 +198,7 @@ class FrequencyHarmonics:
     
     def validate_gw250114_resonance(self) -> Dict[str, Any]:
         """
-        Validate the GW250114 gravitational wave detection at 141.7 Hz.
+        Validate the GW250114 gravitational wave detection at 141.7001 Hz.
         
         The persistent quasinormal mode at 141.7001 Hz matches the QCAL
         fundamental frequency f₀, confirming the connection between

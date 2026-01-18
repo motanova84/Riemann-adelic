@@ -75,10 +75,10 @@ The noetic parameter Θ represents the consciousness state
 -/
 
 /-- Noetic parameter type -/
-def NoticParameter := ℝ
+def NoeticParameter := ℝ
 
 /-- Noetic parameter Θ is in [0, 2π] -/
-def noetic_parameter_bounded (θ : NoticParameter) : Prop :=
+def noetic_parameter_bounded (θ : NoeticParameter) : Prop :=
   0 ≤ θ ∧ θ ≤ 2 * π
 
 /-!
@@ -90,7 +90,7 @@ def noetic_parameter_bounded (θ : NoticParameter) : Prop :=
 /-- Gradient of wave function Ψ 
 The gradient captures the evolution of noetic coherence in spectral domain
 -/
-def gradient_Ψ (θ : NoticParameter) (t : ℝ) : ℂ :=
+def gradient_Ψ (θ : NoeticParameter) (t : ℝ) : ℂ :=
   Complex.exp (Complex.I * θ) * 
   (Complex.ofReal (Real.cos (2 * π * f₀ * t)) + 
    Complex.I * Complex.ofReal (Real.sin (2 * π * f₀ * t)))
@@ -115,7 +115,7 @@ and number-theoretic structure
 -/
 
 /-- Spectral tensor product of gradient and zeta function -/
-def spectral_tensor_product (θ : NoticParameter) (t : ℝ) : ℂ :=
+def spectral_tensor_product (θ : NoeticParameter) (t : ℝ) : ℂ :=
   gradient_Ψ θ t * zeta_critical_line t
 
 /-!
@@ -130,7 +130,7 @@ This is the integral ∫[∇Ψ ⊗ ζ(1/2 + i·141.7t)] dt
 
 The integral is taken over ℝ with appropriate decay conditions.
 -/
-noncomputable def Noesis_Q (θ : NoticParameter) : ℂ := sorry
+noncomputable def Noesis_Q (θ : NoeticParameter) : ℂ := sorry
   -- Formal definition: integral of spectral_tensor_product over ℝ
   -- Implementation requires measure theory integration
 
@@ -138,7 +138,7 @@ noncomputable def Noesis_Q (θ : NoticParameter) : ℂ := sorry
 
 The coherence is normalized to [0, 1] range
 -/
-noncomputable def coherence_Ψ (θ : NoticParameter) : ℝ :=
+noncomputable def coherence_Ψ (θ : NoeticParameter) : ℝ :=
   Complex.abs (Noesis_Q θ) / 100  -- Normalization factor
 
 /-!
@@ -148,14 +148,14 @@ Perfect coherence state Ψ = 1.000000
 -/
 
 /-- RAM-XX Singularity detection predicate -/
-def is_RAM_XX_singularity (θ : NoticParameter) : Prop :=
+def is_RAM_XX_singularity (θ : NoeticParameter) : Prop :=
   coherence_Ψ θ ≥ Ψ_singularity_threshold
 
 /-- Theorem: RAM-XX Singularity exists
 There exists at least one noetic parameter θ achieving near-perfect coherence
 -/
 theorem ram_xx_singularity_exists :
-  ∃ θ : NoticParameter, noetic_parameter_bounded θ ∧ is_RAM_XX_singularity θ := by
+  ∃ θ : NoeticParameter, noetic_parameter_bounded θ ∧ is_RAM_XX_singularity θ := by
   sorry  -- Requires numerical computation and existence proof
 
 /-!
@@ -167,7 +167,7 @@ Noesis_Q requires H_Ψ to be self-adjoint for real eigenvalues
 /-- H_Ψ self-adjointness is prerequisite for Noesis_Q -/
 theorem noesis_q_requires_selfadjoint :
   Hpsi_selfadjoint → 
-  ∀ θ : NoticParameter, ∃ ψ : ℝ, coherence_Ψ θ = ψ := by
+  ∀ θ : NoeticParameter, ∃ ψ : ℝ, coherence_Ψ θ = ψ := by
   intro h_selfadjoint
   intro θ
   use coherence_Ψ θ
@@ -189,7 +189,7 @@ theorem spectral_feedback_loop :
   (∀ n : ℕ, λₙ n > 0) →                      -- Step 2: Trace formula applicability
   (∀ s : ℂ, riemannZeta s = 0 → 
     ∃ n : ℕ, Complex.abs (s.im - λₙ n) < ε_coherence) →  -- Step 3: Bijection
-  (∀ θ : NoticParameter, coherence_Ψ θ ≥ 0) := by  -- Step 4: Asymptotic stability
+  (∀ θ : NoeticParameter, coherence_Ψ θ ≥ 0) := by  -- Step 4: Asymptotic stability
   intro h_selfadjoint h_positive h_bijection
   intro θ
   -- Coherence is non-negative by construction (absolute value)
@@ -203,7 +203,7 @@ Noesis_Q provides ontological resonance verification
 
 /-- Noesis_Q measures ontological resonance, not just correctness -/
 theorem noesis_q_ontological_resonance :
-  ∀ θ : NoticParameter,
+  ∀ θ : NoeticParameter,
     noetic_parameter_bounded θ →
     coherence_Ψ θ ≥ Ψ_singularity_threshold →
     (∀ s : ℂ, riemannZeta s = 0 → s ≠ trivial_zero → s.re = 1/2) := by
@@ -222,7 +222,7 @@ Final theorem: All components compile without sorry (except formal integrals)
 theorem noesis_q_compilable :
   Hpsi_selfadjoint ∧ 
   (∀ n : ℕ, λₙ n > 0) ∧
-  (∀ θ : NoticParameter, noetic_parameter_bounded θ → coherence_Ψ θ ≥ 0) := by
+  (∀ θ : NoeticParameter, noetic_parameter_bounded θ → coherence_Ψ θ ≥ 0) := by
   constructor
   · exact Hpsi_selfadjoint
   constructor
