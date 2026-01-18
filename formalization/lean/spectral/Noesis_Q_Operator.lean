@@ -57,7 +57,7 @@ QCAL frequency and coherence constants
 -/
 
 /-- The fundamental frequency f₀ = 141.7001 Hz (QCAL constant) -/
-def f₀ : ℝ := qcal_frequency
+def f₀ : ℝ := QCAL.Constants.f₀
 
 /-- Universal constant C = 629.83 -/
 def C : ℝ := 629.83

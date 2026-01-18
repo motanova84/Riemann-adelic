@@ -57,7 +57,14 @@ theorem phi_pos : φ > 0 := by
 
 /-- φ satisfies the golden ratio equation: φ² = φ + 1 -/
 theorem phi_golden_equation : φ ^ 2 = φ + 1 := by
-  sorry  -- Algebraic verification
+  unfold φ
+  -- We use that (√5)² = 5 and clear denominators algebraically.
+  have h_sqrt5_sq : (Real.sqrt 5) ^ 2 = (5 : ℝ) := by
+    have h_nonneg : (0 : ℝ) ≤ 5 := by norm_num
+    -- Real.mul_self_sqrt gives √5 * √5 = 5; we rewrite it as (√5)² = 5.
+    simpa [pow_two, mul_comm] using (Real.mul_self_sqrt h_nonneg)
+  -- Clear denominators and simplify the resulting polynomial identity.
+  field_simp [pow_two, h_sqrt5_sq, mul_add, add_mul]
 
 /-!
 ## Golden Ratio Powers
@@ -94,7 +101,7 @@ Core frequency constants from the spectral structure
 def f_base : ℝ := 41.7
 
 /-- Fundamental frequency: f₀ = 141.7001 Hz (from QCAL_Constants) -/
-def f₀ : ℝ := qcal_frequency
+def f₀ : ℝ := QCAL.Constants.f₀
 
 /-- High harmonic frequency: 888 Hz -/
 def f_high : ℝ := 888
@@ -105,7 +112,7 @@ theorem f_base_pos : f_base > 0 := by norm_num
 /-- Fundamental frequency is positive -/
 theorem f₀_pos : f₀ > 0 := by
   unfold f₀
-  exact qcal_frequency_pos
+  exact QCAL.Constants.f₀_pos
 
 /-- High harmonic frequency is positive -/
 theorem f_high_pos : f_high > 0 := by norm_num
@@ -249,14 +256,11 @@ theorem harmonic_validation_complete :
   (f₀ < f_high) ∧
   (280 < f_base_phi4) ∧
   (f_base_phi4 < 300) := by
-  constructor; exact f_base_pos
-  constructor; exact f₀_pos
-  constructor; exact f_high_pos
-  constructor; sorry  -- φ⁴ > 6
-  constructor; sorry  -- 41.7 < 141.7001
-  constructor; sorry  -- 141.7001 < 888
-  constructor; sorry  -- 280 < f_base × φ⁴
-  sorry  -- f_base × φ⁴ < 300
+  repeat (constructor)
+  all_goals {
+    simp [f_base, f₀, f_high, φ, φ_fourth, f_base_phi4]
+    norm_num
+  }
 
 end FrequencyHarmonics
 

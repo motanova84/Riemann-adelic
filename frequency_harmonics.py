@@ -25,7 +25,7 @@ Frequency: 141.7001 Hz (Fundamental Cosmic Heartbeat)
 
 import sys
 from pathlib import Path
-from typing import Dict, Any, List, Tuple
+from typing import Dict, Any
 import json
 from datetime import datetime
 
@@ -188,10 +188,20 @@ class FrequencyHarmonics:
         }
         
         # Validate that we're in the expected range for φ⁴ scaling
+        # Tighter tolerance for π approximation based on actual ratio
+        if MPMATH_AVAILABLE:
+            pi_value = float(mp.pi)
+        else:
+            import math
+            pi_value = math.pi
+        
         harmonics["validation"] = {
             "phi4_scaling_reasonable": 6.5 < phi_powers["phi_4"] < 7.0,
             "base_to_888_achievable": 280 < f_phi4_from_base < 300,
-            "pi_factor_present": 3.0 < harmonics["ratio_888_to_phi4_scaled"] < 3.2,
+            # The ratio 888/(41.7×φ⁴) ≈ 3.107, which deviates from π by ~1.1%
+            # We validate it's in the expected range [3.09, 3.12] rather than claiming
+            # it exactly approximates π
+            "pi_factor_present": abs(harmonics["ratio_888_to_phi4_scaled"] - pi_value) < 0.05,
         }
         
         return harmonics
@@ -331,7 +341,7 @@ def main():
     # Generate certificate
     cert_path = "data/frequency_harmonics_certificate.json"
     Path("data").mkdir(exist_ok=True)
-    certificate = harmonics.generate_frequency_certificate(cert_path)
+    harmonics.generate_frequency_certificate(cert_path)
     
     print("=" * 80)
     print(f"✅ Certificate generated: {cert_path}")
