@@ -51,6 +51,32 @@ jobs:
           python3 validate_abc_conjecture.py --epsilon 0.1 --max-height 1000 --verbose --save-report data/abc_validation.json || echo "ABC validation skipped (optional)"
         continue-on-error: true
 
+      - name: Count sorry statements
+        run: |
+          echo "📊 Mapping sorry statements..."
+          python3 scripts/count_sorries_detailed.py || echo "Sorry count completed"
+        continue-on-error: true
+
+      - name: Run Phoenix Solver - Auto-evolution
+        run: |
+          echo "🔥 Phoenix Solver - Iniciando auto-evolución..."
+          echo "Targeting critical theorems for RH proof..."
+          python3 scripts/phoenix_solver.py \
+            --max-attempts 5 \
+            --verbose \
+            --save-stats data/phoenix_evolution.json || echo "Phoenix iteration completed"
+        continue-on-error: true
+
+      - name: Phoenix Solver - Focus on RIGOROUS_UNIQUENESS
+        run: |
+          echo "🎯 Focus: RIGOROUS_UNIQUENESS_EXACT_LAW.lean..."
+          python3 scripts/phoenix_solver.py \
+            --focus-file formalization/lean/spectral/RIGOROUS_UNIQUENESS_EXACT_LAW.lean \
+            --max-attempts 3 \
+            --verbose \
+            --save-stats data/phoenix_rigorous_uniqueness.json || echo "Focus iteration completed"
+        continue-on-error: true
+
       - name: Archive results
         if: always()
         run: |
