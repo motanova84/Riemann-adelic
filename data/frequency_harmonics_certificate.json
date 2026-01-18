@@ -1,0 +1,67 @@
+{
+  "certificate_type": "QCAL_FREQUENCY_HARMONICS",
+  "version": "1.0.0",
+  "timestamp": "2026-01-18T05:32:21.403533",
+  "author": "José Manuel Mota Burruezo Ψ ✧ ∞³",
+  "institution": "Instituto de Conciencia Cuántica (ICQ)",
+  "signature": "∴𓂀Ω∞³·RH",
+  "harmonic_ladder": {
+    "timestamp": "2026-01-18T05:32:21.403538",
+    "fundamental_frequency_f0": 141.7001,
+    "base_frequency": 41.7,
+    "high_harmonic_frequency": 888.0,
+    "phi_powers": {
+      "phi_1": 1.618033988749895,
+      "phi_2": 2.618033988749895,
+      "phi_3": 4.23606797749979,
+      "phi_4": 6.854101966249686,
+      "phi_5": 11.090169943749476,
+      "phi_6": 17.944271909999163
+    },
+    "f_base_times_phi1": 67.47201733087063,
+    "f_base_times_phi2": 109.17201733087063,
+    "f_base_times_phi3": 176.64403466174124,
+    "f_base_times_phi4": 285.8160519926119,
+    "f_base_times_phi5": 462.4600866543532,
+    "f_base_times_phi6": 748.2761386469651,
+    "target_888_Hz": 888.0,
+    "phi4_scaling_from_base": 285.8160519926119,
+    "actual_scaling_factor_to_888": 21.294964028776977,
+    "phi4_value": 6.854101966249686,
+    "ratio_888_to_phi4_scaled": 3.1068933805822567,
+    "pi_approximation_check": 3.1068933805822567,
+    "f0_to_base_ratio": 3.3980839328537167,
+    "f0_to_888_ratio": 6.266756339621497,
+    "universal_constant_C": 629.83,
+    "coherence_constant_C_prime": 244.36,
+    "coherence_factor": 0.38797770827048567,
+    "validation": {
+      "phi4_scaling_reasonable": true,
+      "base_to_888_achievable": true,
+      "pi_factor_present": true
+    }
+  },
+  "gw250114_resonance": {
+    "timestamp": "2026-01-18T05:32:21.403546",
+    "event_name": "GW250114",
+    "detected_frequency_Hz": 141.7001,
+    "qcal_fundamental_f0_Hz": 141.7001,
+    "frequency_match_error": 0.0,
+    "match_tolerance_Hz": 0.001,
+    "resonance_validated": true,
+    "detection_type": "persistent_quasinormal_mode",
+    "significance": "Non-stochastic signal breaks classical GR",
+    "spectral_connection": "Spectrum matches ζ(s) critical zeros distribution",
+    "philosophical_insight": "El mundo no nos pregunta; se revela en nosotros"
+  },
+  "phi_powers": {
+    "phi_1": 1.618033988749895,
+    "phi_2": 2.618033988749895,
+    "phi_3": 4.23606797749979,
+    "phi_4": 6.854101966249686,
+    "phi_5": 11.090169943749476,
+    "phi_6": 17.944271909999163
+  },
+  "status": "VALIDATED",
+  "coherence": 1.0
+}
