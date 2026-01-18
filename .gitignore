@@ -224,3 +224,6 @@ data/pipeline_report_*.json
 *.backup.*
 requirements-lock.txt.backup
 *.backup
+# Generated axioms (test artifacts)
+axioms/axioms_generated_*.json
+axioms/qcal_axioms_*.lean
