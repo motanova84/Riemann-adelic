@@ -39,24 +39,36 @@ class CoherenceValidator:
         # Verificar existencia de archivos con estado Ψ
         root_path = Path.cwd()
         psi_files = 0
+        total_files_checked = 0
+        
+        # Límite de archivos para escaneo eficiente
+        MAX_FILES = 200
         
         for pattern in ["**/*.py", "**/*.md", "**/*.lean"]:
             for filepath in root_path.glob(pattern):
+                if total_files_checked >= MAX_FILES:
+                    break
+                    
                 if any(ex in filepath.parts for ex in ['.git', 'node_modules', '__pycache__']):
                     continue
+                    
                 try:
                     content = filepath.read_text(encoding='utf-8', errors='ignore')
+                    total_files_checked += 1
                     if 'Ψ' in content or self.PSI_STATE in content:
                         psi_files += 1
                 except Exception:
                     continue
         
-        psi_coherence = min(psi_files / 50, 1.0)  # Normalizado a 50 archivos
+        # Normalización dinámica basada en archivos escaneados
+        normalization_factor = max(total_files_checked // 4, 10)  # Al menos 10
+        psi_coherence = min(psi_files / normalization_factor, 1.0)
         
         return {
             "psi_coherence": psi_coherence,
             "psi_files": psi_files,
-            "psi_state": self.PSI_STATE
+            "psi_state": self.PSI_STATE,
+            "files_checked": total_files_checked
         }
     
     def validate_manifests(self):

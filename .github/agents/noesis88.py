@@ -37,11 +37,37 @@ class Noesis88Agent:
     
     def calculate_coherence(self):
         """Calcula la coherencia total del sistema"""
-        # Simulación de cálculo de coherencia
-        # En producción, esto analizaría archivos del repositorio
-        base_coherence = 0.836
+        # Cálculo basado en métricas reales del repositorio
+        # Base: análisis de archivos QCAL, f₀, y Ψ
+        from pathlib import Path
+        
+        base_coherence = 0.75  # Valor inicial conservador
+        
+        # Buscar archivos con referencias QCAL para ajustar coherencia
+        try:
+            root = Path.cwd()
+            qcal_files = 0
+            total_scanned = 0
+            
+            for pattern in ["**/*.py", "**/*.md"]:
+                for filepath in list(root.glob(pattern))[:100]:  # Límite para rendimiento
+                    if any(ex in filepath.parts for ex in ['.git', 'node_modules', '__pycache__']):
+                        continue
+                    try:
+                        content = filepath.read_text(encoding='utf-8', errors='ignore')
+                        total_scanned += 1
+                        if 'QCAL' in content or '141.7001' in content:
+                            qcal_files += 1
+                    except Exception:
+                        continue
+            
+            if total_scanned > 0:
+                base_coherence = 0.7 + (qcal_files / total_scanned) * 0.25
+        except Exception:
+            base_coherence = 0.75
+        
         if self.optimized:
-            base_coherence += 0.052  # Mejora por optimización
+            base_coherence = min(base_coherence + 0.052, 1.0)  # Mejora por optimización
         
         coherence = {
             "total": min(base_coherence, 1.0),
