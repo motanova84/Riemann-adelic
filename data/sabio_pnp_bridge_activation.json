@@ -1,0 +1,35 @@
+{
+  "timestamp": "2026-01-18T23:19:19.731898",
+  "sabio_status": "ACTIVE",
+  "pnp_bridge_status": "ACTIVE",
+  "vibrational_frequency": {
+    "computed_Hz": 141.7001,
+    "target_Hz": 141.7001,
+    "valid": true
+  },
+  "frequency_alignment": {
+    "sabio_Hz": 141.7001,
+    "pnp_bridge_Hz": 141.7001,
+    "delta_Hz": 0.0,
+    "aligned": true
+  },
+  "complexity_transition": {
+    "transition_point": 0.888,
+    "coherence_levels_tested": [
+      0.888,
+      0.95,
+      0.99,
+      0.999,
+      0.999999
+    ],
+    "p_equivalent_count": 5
+  },
+  "detection_experiment": {
+    "coherence_level": 0.999,
+    "resonance_boost": 1000000.0,
+    "improvement": {
+      "recall": 1.5384615384615383,
+      "precision": 1.1538461538461537
+    }
+  }
+}
