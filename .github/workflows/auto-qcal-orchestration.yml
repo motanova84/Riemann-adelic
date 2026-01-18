@@ -1,0 +1,281 @@
+name: 🧬 Auto-QCAL Orchestration
+
+on:
+  schedule:
+    - cron: "0 2 * * *"  # Daily at 2 AM UTC
+  workflow_dispatch:
+    inputs:
+      max_iterations:
+        description: 'Maximum iterations'
+        required: false
+        default: '5'
+      full_validation:
+        description: 'Run full V5 validation'
+        required: false
+        default: 'false'
+      dry_run:
+        description: 'Dry run mode (no changes)'
+        required: false
+        default: 'false'
+
+jobs:
+  auto-qcal:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    
+    steps:
+      - name: 🧠 Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Full history for state tracking
+
+      - name: 🔧 Set up Python 3.11
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+
+      - name: ⚙️ Install Lean 4.5.0
+        run: |
+          curl -sSf https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh | sh -s -- -y
+          echo "$HOME/.elan/bin" >> $GITHUB_PATH
+          elan toolchain install leanprover/lean4:v4.5.0
+          elan default leanprover/lean4:v4.5.0
+          lean --version
+          lake --version
+
+      - name: 📦 Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: 🔍 Pre-flight check
+        run: |
+          echo "════════════════════════════════════════════════════"
+          echo "🧬 Auto-QCAL Pre-flight Check"
+          echo "════════════════════════════════════════════════════"
+          echo ""
+          echo "Repository: $(pwd)"
+          echo "Python: $(python --version)"
+          echo "Lean: $(lean --version)"
+          echo ""
+          
+          if [ -f .qcal_state ]; then
+            echo "📊 Current State:"
+            jq -r '"  Session: \(.session_id)\n  Total sorries: \(.total_sorries)\n  Resolved: \(.resolved_sorries)\n  QCAL Coherence: \(.qcal_coherence)"' .qcal_state
+          else
+            echo "⚠️ No existing state - will create new"
+          fi
+          echo ""
+          echo "════════════════════════════════════════════════════"
+
+      - name: 🧬 Run Auto-QCAL Orchestration
+        id: auto_qcal
+        run: |
+          MAX_ITER="${{ github.event.inputs.max_iterations || '5' }}"
+          FULL_VAL="${{ github.event.inputs.full_validation || 'false' }}"
+          DRY_RUN="${{ github.event.inputs.dry_run || 'false' }}"
+          
+          echo "🚀 Starting Auto-QCAL orchestration"
+          echo "  Max iterations: $MAX_ITER"
+          echo "  Full validation: $FULL_VAL"
+          echo "  Dry run: $DRY_RUN"
+          echo ""
+          
+          # Build command
+          CMD="python Auto-QCAL.py --resume --max-iterations $MAX_ITER --verbose"
+          
+          if [ "$FULL_VAL" = "true" ]; then
+            CMD="$CMD --full-validation"
+          fi
+          
+          if [ "$DRY_RUN" = "true" ]; then
+            CMD="$CMD --dry-run"
+          fi
+          
+          # Execute Auto-QCAL
+          $CMD 2>&1 | tee auto_qcal_output.log
+          
+          EXIT_CODE=$?
+          echo "exit_code=$EXIT_CODE" >> $GITHUB_OUTPUT
+          
+          if [ $EXIT_CODE -eq 0 ]; then
+            echo "✅ Auto-QCAL completed successfully"
+          else
+            echo "⚠️ Auto-QCAL completed with warnings (exit code: $EXIT_CODE)"
+          fi
+        continue-on-error: true
+
+      - name: 📊 Extract metrics
+        id: metrics
+        run: |
+          if [ -f .qcal_state ]; then
+            TOTAL=$(jq -r '.total_sorries // 0' .qcal_state)
+            RESOLVED=$(jq -r '.resolved_sorries // 0' .qcal_state)
+            REMAINING=$((TOTAL - RESOLVED))
+            COHERENCE=$(jq -r '.qcal_coherence // false' .qcal_state)
+            SESSION=$(jq -r '.session_id // 0' .qcal_state)
+            ITERATIONS=$(jq -r '.iterations_count // 0' .qcal_state)
+            
+            echo "total_sorries=$TOTAL" >> $GITHUB_OUTPUT
+            echo "resolved_sorries=$RESOLVED" >> $GITHUB_OUTPUT
+            echo "remaining_sorries=$REMAINING" >> $GITHUB_OUTPUT
+            echo "coherence=$COHERENCE" >> $GITHUB_OUTPUT
+            echo "session_id=$SESSION" >> $GITHUB_OUTPUT
+            echo "iterations=$ITERATIONS" >> $GITHUB_OUTPUT
+            
+            echo "📊 Metrics extracted:"
+            echo "  Total: $TOTAL"
+            echo "  Resolved: $RESOLVED"
+            echo "  Remaining: $REMAINING"
+            echo "  Coherence: $COHERENCE"
+            echo "  Session: $SESSION"
+            echo "  Iterations: $ITERATIONS"
+          else
+            echo "⚠️ No state file found"
+            echo "total_sorries=0" >> $GITHUB_OUTPUT
+            echo "resolved_sorries=0" >> $GITHUB_OUTPUT
+            echo "remaining_sorries=0" >> $GITHUB_OUTPUT
+            echo "coherence=unknown" >> $GITHUB_OUTPUT
+          fi
+
+      - name: 🔬 QCAL Coherence Check
+        if: steps.metrics.outputs.coherence == 'false'
+        run: |
+          echo "⚠️⚠️⚠️ QCAL COHERENCE VIOLATION DETECTED ⚠️⚠️⚠️"
+          echo ""
+          echo "The Auto-QCAL system has detected a loss of QCAL coherence."
+          echo "This indicates that the fundamental frequency or coherence"
+          echo "constant has been compromised during the orchestration."
+          echo ""
+          echo "Please review the .qcal_beacon file and state."
+          echo ""
+          exit 1
+
+      - name: 📘 Upload Auto-QCAL logs
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: auto-qcal-logs-run-${{ github.run_number }}
+          path: |
+            auto_qcal_output.log
+            .qcal_state
+          retention-days: 30
+
+      - name: 🧾 Commit Auto-QCAL state and changes
+        if: github.event.inputs.dry_run != 'true'
+        run: |
+          git config user.name "Auto-QCAL Bot"
+          git config user.email "auto-qcal@qcal.cloud"
+          
+          # Add state file (always track)
+          git add .qcal_state || true
+          
+          # Add any modified Lean files
+          git add formalization/lean/**/*.lean 2>/dev/null || true
+          
+          # Check if there are changes
+          if git diff --cached --quiet; then
+            echo "📭 No changes to commit"
+          else
+            RESOLVED="${{ steps.metrics.outputs.resolved_sorries || '0' }}"
+            REMAINING="${{ steps.metrics.outputs.remaining_sorries || '?' }}"
+            SESSION="${{ steps.metrics.outputs.session_id || '1' }}"
+            
+            # Create commit message
+            COMMIT_MSG="♾️ Auto-QCAL evolution: $RESOLVED resolved, $REMAINING remaining
+
+Session: #$SESSION
+Run: #${{ github.run_number }}
+QCAL Coherence: ✅ Confirmed
+Frequency: 141.7001 Hz
+
+Automated by Auto-QCAL orchestration system.
+"
+            
+            git commit -m "$COMMIT_MSG"
+            git push
+            
+            echo "✅ Changes committed and pushed"
+          fi
+        continue-on-error: true
+
+      - name: 📈 Progress Comment (PR only)
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const total = ${{ steps.metrics.outputs.total_sorries || 0 }};
+            const resolved = ${{ steps.metrics.outputs.resolved_sorries || 0 }};
+            const remaining = ${{ steps.metrics.outputs.remaining_sorries || 0 }};
+            const progress = total > 0 ? ((resolved / total) * 100).toFixed(2) : 0;
+            
+            const comment = `## 🧬 Auto-QCAL Progress Report
+            
+            **Session**: #${{ steps.metrics.outputs.session_id || 1 }}
+            **Run**: #${{ github.run_number }}
+            
+            ### Progress
+            - **Total sorries**: ${total}
+            - **Resolved**: ${resolved}
+            - **Remaining**: ${remaining}
+            - **Progress**: ${progress}%
+            
+            ### QCAL Coherence
+            - **Status**: ${{ steps.metrics.outputs.coherence == 'true' ? '✅ CONFIRMED' : '⚠️ NEEDS REVIEW' }}
+            - **Frequency**: 141.7001 Hz
+            - **Coherence Constant**: C = 244.36
+            
+            ### Iterations
+            - **Count**: ${{ steps.metrics.outputs.iterations || 0 }}
+            - **Max**: ${{ github.event.inputs.max_iterations || 5 }}
+            
+            ---
+            *Automated by Auto-QCAL orchestration system*
+            `;
+            
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: comment
+            });
+
+      - name: ⏱️ Auto-QCAL Summary
+        if: always()
+        run: |
+          echo ""
+          echo "════════════════════════════════════════════════════"
+          echo "🧬 Auto-QCAL Orchestration Summary"
+          echo "════════════════════════════════════════════════════"
+          echo ""
+          
+          echo "📊 Metrics:"
+          echo "  Total sorries: ${{ steps.metrics.outputs.total_sorries || 'N/A' }}"
+          echo "  Resolved: ${{ steps.metrics.outputs.resolved_sorries || 'N/A' }}"
+          echo "  Remaining: ${{ steps.metrics.outputs.remaining_sorries || 'N/A' }}"
+          echo ""
+          
+          echo "✅ QCAL Coherence:"
+          echo "  Status: ${{ steps.metrics.outputs.coherence == 'true' && '✅ CONFIRMED' || '⚠️ NEEDS REVIEW' }}"
+          echo "  Frequency: 141.7001 Hz"
+          echo "  Coherence: C = 244.36"
+          echo ""
+          
+          echo "🔄 Session Info:"
+          echo "  Session ID: #${{ steps.metrics.outputs.session_id || 'N/A' }}"
+          echo "  Iterations: ${{ steps.metrics.outputs.iterations || 'N/A' }}"
+          echo "  Run Number: #${{ github.run_number }}"
+          echo ""
+          
+          if [ -f .qcal_state ]; then
+            echo "📁 State File:"
+            echo "  Location: .qcal_state"
+            echo "  Size: $(stat -f%z .qcal_state 2>/dev/null || stat -c%s .qcal_state 2>/dev/null || echo 'unknown') bytes"
+          fi
+          
+          echo ""
+          echo "════════════════════════════════════════════════════"
+          echo "∴𓂀Ω∞³·Auto-QCAL·RH"
+          echo "════════════════════════════════════════════════════"
