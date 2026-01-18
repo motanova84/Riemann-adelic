@@ -23,6 +23,10 @@ from validate_harmonic_coherence import HarmonicValidator
 class TestHarmonicValidator(unittest.TestCase):
     """Test suite for HarmonicValidator class."""
     
+    # Mathematical constants for testing
+    PHI_FOURTH_EXPECTED = 6.854101966249686
+    HARMONIC_PRODUCT_EXPECTED = 285.816051992611904
+    
     def setUp(self):
         """Set up test fixtures."""
         self.validator = HarmonicValidator(verbose=False)
@@ -56,7 +60,7 @@ class TestHarmonicValidator(unittest.TestCase):
         
         self.assertAlmostEqual(phi_4_direct, expected, places=10)
         self.assertAlmostEqual(phi_4_simplified, expected, places=10)
-        self.assertAlmostEqual(phi_4_direct, 6.854101966249686, places=10)
+        self.assertAlmostEqual(phi_4_direct, self.PHI_FOURTH_EXPECTED, places=10)
     
     def test_phi_fourth_gt_six(self):
         """Test that φ⁴ > 6."""
@@ -64,7 +68,7 @@ class TestHarmonicValidator(unittest.TestCase):
         
         self.assertTrue(result['success'])
         self.assertGreater(result['phi_fourth'], 6.0)
-        self.assertAlmostEqual(result['phi_fourth'], 6.854101966249686, places=6)
+        self.assertAlmostEqual(result['phi_fourth'], self.PHI_FOURTH_EXPECTED, places=6)
     
     def test_frequency_constants(self):
         """Test that frequency constants are defined correctly."""
@@ -105,7 +109,7 @@ class TestHarmonicValidator(unittest.TestCase):
         product = self.validator.F_BASE * phi_4
         
         # 41.7 × 6.854... ≈ 285.816
-        self.assertAlmostEqual(product, 285.816, places=2)
+        self.assertAlmostEqual(product, self.HARMONIC_PRODUCT_EXPECTED, places=10)
     
     def test_f_base_relationship_to_f0(self):
         """Test the relationship between f_base and f₀."""
@@ -190,6 +194,10 @@ class TestHarmonicValidator(unittest.TestCase):
 class TestNumericalPrecision(unittest.TestCase):
     """Test numerical precision of calculations."""
     
+    # Mathematical constants for testing
+    PHI_FOURTH_EXPECTED = 6.854101966249686
+    HARMONIC_PRODUCT_EXPECTED = 285.816051992611904
+    
     def test_phi_fourth_identity(self):
         """Test that φ⁴ = 3φ + 2 holds with high precision."""
         phi = (1 + sqrt(5)) / 2
@@ -208,7 +216,7 @@ class TestNumericalPrecision(unittest.TestCase):
         product = f_base * phi_4
         
         # Expected value: 285.8160519926119...
-        self.assertAlmostEqual(product, 285.816051992611904, places=10)
+        self.assertAlmostEqual(product, self.HARMONIC_PRODUCT_EXPECTED, places=10)
     
     def test_threshold_margins(self):
         """Test that harmonic product has sufficient margin from boundaries."""

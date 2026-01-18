@@ -367,9 +367,11 @@ class HarmonicValidator:
         Args:
             filepath: Path to save the certificate
         """
+        from datetime import datetime
+        
         certificate = {
             'title': 'QCAL Harmonic Validation Certificate',
-            'date': '2026-01-18',
+            'date': datetime.now().strftime('%Y-%m-%d'),
             'author': 'José Manuel Mota Burruezo Ψ ✧ ∞³',
             'institution': 'Instituto de Conciencia Cuántica (ICQ)',
             'orcid': '0009-0002-1923-0773',
