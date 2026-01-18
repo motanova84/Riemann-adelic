@@ -214,8 +214,12 @@ def derive_f0_from_constants(
     
     # Scaling factor: f₀ = K × √(C₁ × C₂)
     # 
-    # MATHEMATICAL DERIVATION (not a fitted parameter):
-    # The scaling factor K emerges from three independent sources:
+    # IMPORTANT CLARIFICATION:
+    # In this analytical function, K is computed AS f₀/√(C₁×C₂) for analysis purposes.
+    # This is NOT the predictive derivation - it's the INVERSE calculation to understand
+    # the relationship.
+    #
+    # The PREDICTIVE derivation of K (independent of f₀) comes from:
     #
     # 1. Spectral Zeta Function Residue:
     #    From ζ_H(s) = Σ_k λ_k^(-s), the residue at s=1/2 gives:
@@ -230,16 +234,19 @@ def derive_f0_from_constants(
     #    From toroidal compactification:
     #    ξ_topo ≈ 1.379
     #
-    # Combined: K = (1/(2π)) · μ_adelic · ξ_topo = 0.3610 ± 0.0005
+    # Predictive formula: K = (1/(2π)) · μ_adelic · ξ_topo = 0.3610 ± 0.0005
     #
     # Alternative derivation from golden ratio structure:
     # K = √(C_coh/C_prim) · √(φ/(2π)) = √0.388 · √(1.618/(2π)) ≈ 0.361
     #
-    # This factor is derived from:
-    # - Spectral geometry (mathematical)
-    # - Number theory (μ_adelic)
-    # - Topology (ξ_topo)
-    # None of these use f₀ as input, so K cannot be "fitted" to produce f₀.
+    # The analytical computation here (K = f₀/√(C₁×C₂)) serves to:
+    # - Verify dimensional consistency
+    # - Check that predictive K ≈ analytical K (validates theory)
+    # - Analyze the mathematical relationship structure
+    #
+    # For the non-circular predictive derivation, see:
+    # - compute_f0_from_hierarchy() in noetic_operator.py
+    # - SCALING_FACTORS_DERIVATION.md Section 2
     #
     # Robustness validation:
     # - Varies < 0.5% for different operator discretizations
@@ -247,7 +254,7 @@ def derive_f0_from_constants(
     # - Varies < 0.8% for different boundary conditions
     #
     # See SCALING_FACTORS_DERIVATION.md for complete derivation.
-    scaling_factor = f0_target / geometric_mean  # ≈ 0.361
+    scaling_factor = f0_target / geometric_mean  # ≈ 0.361 (analytical)
     
     return {
         'f0_target': f0_target,
