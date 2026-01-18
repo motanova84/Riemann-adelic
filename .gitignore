@@ -224,3 +224,4 @@ data/pipeline_report_*.json
 *.backup.*
 requirements-lock.txt.backup
 *.backup
+data/noesis_session_test-*.json
