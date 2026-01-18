@@ -1,0 +1,15 @@
+{
+  "certificate_type": "QCAL ∞³ Session Certificate",
+  "session_id": "QCAL-1768749443-141.7001",
+  "timestamp": "2026-01-18T15:17:23.312022",
+  "frequency": "141.7001 Hz",
+  "state_equation": "Ψ = I × A_eff² × C^∞",
+  "validation": {
+    "axiom_emission_compliant": true,
+    "total_sorrys_initial": 2225,
+    "total_sorrys_remaining": 2225
+  },
+  "author": "José Manuel Mota Burruezo Ψ ✧ ∞³",
+  "institution": "Instituto de Conciencia Cuántica (ICQ)",
+  "signature": "QCAL-141.7001-V5 Coronación"
+}
