@@ -51,6 +51,14 @@ jobs:
           python3 validate_abc_conjecture.py --epsilon 0.1 --max-height 1000 --verbose --save-report data/abc_validation.json || echo "ABC validation skipped (optional)"
         continue-on-error: true
 
+      - name: Count formalization status (sorry/axiom/admit)
+        run: |
+          echo "Counting formalization status..."
+          python3 scripts/count_formalization_status.py --json data/formalization_status.json --markdown data/formalization_status.md
+          echo "Updating README with current status..."
+          python3 scripts/update_readme_status.py
+        continue-on-error: false
+
       - name: Archive results
         if: always()
         run: |
@@ -76,9 +84,12 @@ jobs:
         run: |
           git config user.name "qcal-bot"
           git config user.email "bot@qcal.cloud"
-          if [ -f data/logs_${{ github.run_number }}.tar.gz ]; then
-            git add data/logs_${{ github.run_number }}.tar.gz
-            git commit -m "Auto-evolution #${{ github.run_number }}" || echo "No changes to commit"
-            git push || echo "Push failed or no changes to push"
+          git add data/formalization_status.json data/formalization_status.md README.md 2>/dev/null || true
+          git add data/logs_${{ github.run_number }}.tar.gz 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "♾️ Auto-evolution #${{ github.run_number }} - Updated formalization status" || echo "Commit failed"
+            git push || echo "Push failed"
           fi
         continue-on-error: true
