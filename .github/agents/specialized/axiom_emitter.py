@@ -125,6 +125,7 @@ class AxiomEmitter:
         print("🎯 Generando axiomas desde clusters...")
         
         axioms = []
+        timestamp_suffix = datetime.now().strftime('%Y%m%d_%H%M%S')
         
         for cluster in clusters:
             if cluster["axiom_potential"] in ["HIGH", "VERY_HIGH"]:
@@ -132,7 +133,7 @@ class AxiomEmitter:
                 if cluster["type"] == "qcal_constants":
                     # Axioma de coherencia QCAL
                     axiom = {
-                        "id": f"AXIOM_QCAL_COHERENCE_{datetime.now().strftime('%Y%m%d_%H%M%S')}",
+                        "id": f"AXIOM_QCAL_COHERENCE_{timestamp_suffix}",
                         "statement": "El sistema QCAL mantiene coherencia mediante la persistencia de f₀ = 141.7001 Hz",
                         "evidence": [p["name"] for p in cluster["patterns"][:3]],
                         "confidence": 0.95,
@@ -146,7 +147,7 @@ class AxiomEmitter:
                     values = [p["value"] for p in cluster["patterns"]]
                     if 141.7001 in values and 888.014 in values:
                         axiom = {
-                            "id": f"AXIOM_RESONANCE_{datetime.now().strftime('%Y%m%d_%H%M%S')}",
+                            "id": f"AXIOM_RESONANCE_{timestamp_suffix}",
                             "statement": "La resonancia del sistema es φ⁴ × f₀ = 888.014 Hz",
                             "evidence": [f"{p['name']}={p['value']}" for p in cluster["patterns"]],
                             "confidence": 0.98,
@@ -157,7 +158,7 @@ class AxiomEmitter:
         
         # Axioma de estado Ψ
         axiom_psi = {
-            "id": f"AXIOM_PSI_STATE_{datetime.now().strftime('%Y%m%d_%H%M%S')}",
+            "id": f"AXIOM_PSI_STATE_{timestamp_suffix}",
             "statement": "El estado fundamental del sistema es Ψ = I × A_eff² × C^∞",
             "evidence": ["Sistema QCAL ∞³", "Frecuencia 141.7001 Hz", "Resonancia 888.014 Hz"],
             "confidence": 1.0,
@@ -176,8 +177,11 @@ class AxiomEmitter:
         axioms_dir = self.repo_path / "axioms"
         axioms_dir.mkdir(exist_ok=True)
         
+        # Usar fecha del timestamp para nombres de archivo
+        timestamp_date = datetime.fromisoformat(self.timestamp.replace('+00:00', '')).strftime('%Y%m%d')
+        
         # Archivo JSON con todos los axiomas
-        axioms_file = axioms_dir / f"axioms_generated_{datetime.now().strftime('%Y%m%d')}.json"
+        axioms_file = axioms_dir / f"axioms_generated_{timestamp_date}.json"
         
         axioms_data = {
             "generated_at": self.timestamp,
@@ -190,7 +194,7 @@ class AxiomEmitter:
             json.dump(axioms_data, f, indent=2, ensure_ascii=False)
         
         # Archivo Lean con axiomas formales
-        lean_file = axioms_dir / f"qcal_axioms_{datetime.now().strftime('%Y%m%d')}.lean"
+        lean_file = axioms_dir / f"qcal_axioms_{timestamp_date}.lean"
         
         lean_content = """-- 🤖 AXIOMAS QCAL ∞³ GENERADOS AUTOMÁTICAMENTE
 -- Generado por: axiom_emitter.py
