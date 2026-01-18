@@ -369,7 +369,8 @@ class EnvironmentVerifier:
             elif in_dataset_section and current_dataset and line.startswith('#   '):
                 # Next line with checksum like: "#   412ab7ba54a5041..."
                 checksum = line.lstrip('#').strip()
-                if len(checksum) == 64:  # SHA-256 is 64 hex chars
+                # SHA-256 is 64 hex characters
+                if len(checksum) == 64 and all(c in '0123456789abcdef' for c in checksum.lower()):
                     recorded_checksums[current_dataset] = checksum
                 current_dataset = None
         

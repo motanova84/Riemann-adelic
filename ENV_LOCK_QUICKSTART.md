@@ -26,8 +26,8 @@ ENV.lock ensures results are **independent of hidden environmental changes**.
 
 ✅ **QCAL ∞³ Configuration**
 - Frequency: **141.7001 Hz**
-- Coherence C: **244.36**
-- Universal C: **629.83**
+- Coherence C (spectral moment): **244.36**
+- Universal C (eigenvalue): **629.83**
 
 ✅ **Dataset Integrity** (SHA-256 checksums)
 - `Evac_Rpsi_data.csv`: Spectral validation data
@@ -104,7 +104,10 @@ cd formalization/lean && lake build
 5. **Verify QCAL configuration**
    ```bash
    grep -A 4 "QCAL ∞³ CONFIGURATION" ENV.lock
-   # Expected: 141.7001 Hz, C = 244.36, C = 629.83
+   # Expected:
+   # - Frequency: 141.7001 Hz
+   # - Coherence C (from spectral moment): C = 244.36
+   # - Universal C (eigenvalue-based): 629.83
    ```
 
 6. **Run verification**
