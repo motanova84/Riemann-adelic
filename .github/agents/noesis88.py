@@ -232,7 +232,12 @@ class Noesis88Agent:
         }
     
     def generate_adelic_kernel(self) -> str:
-        """Genera el kernel adélico"""
+        """Genera el kernel adélico
+        
+        Note: This returns a Lean code template for the adelic kernel.
+        In production, this would be loaded from a template file.
+        """
+        # TODO: Move this to an external template file for better maintainability
         return """
 /-- Kernel adélico para H_ψ -/
 noncomputable def H_psi_kernel (x y : ℝ⁺) : ℂ :=

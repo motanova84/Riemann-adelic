@@ -166,12 +166,12 @@ echo "==================================" | tee -a "$LOG_FILE"
 
 run_with_log "GENERATE_REPORTS" "
     mkdir -p reports
-    DATE=\$(date +%Y-%m-%d)
+    REPORT_DATE=\$(date +%Y-%m-%d)
     
-    cat > reports/daily_\${DATE}.md << 'EOFR'
+    cat > reports/daily_\${REPORT_DATE}.md << 'EOFR'
 # 🌌 QCAL ∞³ - Reporte Diario
 
-**Fecha:** \${DATE}
+**Fecha:** '\${REPORT_DATE}'
 **Frecuencia:** 141.7001 Hz
 **Estado:** Ψ = I × A_eff² × C^∞
 
@@ -184,7 +184,7 @@ run_with_log "GENERATE_REPORTS" "
 Próxima ejecución programada para mañana a las 00:00 UTC.
 EOFR
     
-    echo 'Reporte generado en reports/daily_\${DATE}.md'
+    echo \"Reporte generado en reports/daily_\${REPORT_DATE}.md\"
 " || true
 
 # ============================================

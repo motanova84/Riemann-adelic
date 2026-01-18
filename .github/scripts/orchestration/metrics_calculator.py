@@ -67,10 +67,12 @@ class MetricsCalculator:
         }
     
     def calculate_proof_length(self) -> Dict:
-        """Calculate average proof length"""
+        """Calculate average proof length (stub implementation)"""
+        # TODO: Implement actual proof length calculation
+        # This would require parsing Lean files and measuring proof blocks
         return {
-            "avg_length": 50,
-            "note": "Placeholder calculation"
+            "status": "not_implemented",
+            "note": "Stub implementation - actual proof length calculation not yet implemented"
         }
     
     def calculate_import_count(self) -> Dict:
