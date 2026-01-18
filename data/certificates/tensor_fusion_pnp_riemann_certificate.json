@@ -88,7 +88,6 @@
   },
   
   "firma_criptografica": {
-    "hash_sha256": "a7f9c3e1b8d4a6f2c9e5d8b3a1f6c9e2d5b8a3f1c6e9b2d5a8c3f6e1b9d4a7c2",
     "input": "2026-01-14T13:05:25Z | Ψ=0.999999 | P-NP⊗Riemann | 151.7001Hz",
     "qcal_signature": "∴𓂀Ω∞³",
     "timestamp": "2026-01-14T13:05:25.231Z",
