@@ -44,13 +44,23 @@ class Noesis88Agent:
         base_coherence = 0.75  # Valor inicial conservador
         
         # Buscar archivos con referencias QCAL para ajustar coherencia
+        # Límite de archivos para evitar tiempo de procesamiento excesivo
+        MAX_FILES_TO_SCAN = 100  # Configurable: ajusta según necesidades de precisión vs rendimiento
+        
         try:
             root = Path.cwd()
             qcal_files = 0
             total_scanned = 0
             
+            # Escanear archivos Python y Markdown de forma determinística (ordenados)
+            all_files = []
             for pattern in ["**/*.py", "**/*.md"]:
-                for filepath in list(root.glob(pattern))[:100]:  # Límite para rendimiento
+                all_files.extend(list(root.glob(pattern)))
+            
+            # Ordenar para consistencia
+            all_files.sort()
+            
+            for filepath in all_files[:MAX_FILES_TO_SCAN]:
                     if any(ex in filepath.parts for ex in ['.git', 'node_modules', '__pycache__']):
                         continue
                     try:

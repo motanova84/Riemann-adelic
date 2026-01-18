@@ -61,7 +61,9 @@ class CoherenceValidator:
                     continue
         
         # Normalización dinámica basada en archivos escaneados
-        normalization_factor = max(total_files_checked // 4, 10)  # Al menos 10
+        # Factor de 4: asume que ~25% de archivos deberían contener Ψ para coherencia óptima
+        NORMALIZATION_DIVISOR = 4  # Cada 4 archivos escaneados = 1 archivo esperado con Ψ
+        normalization_factor = max(total_files_checked // NORMALIZATION_DIVISOR, 10)  # Mínimo 10
         psi_coherence = min(psi_files / normalization_factor, 1.0)
         
         return {
