@@ -70,6 +70,48 @@ python utils/noesis_sync.py
 python utils/noesis_sync.py --precision 100
 ```
 
+## 🌀 DIRECTRIZ ALFA - Sistema de Libertad Total
+
+**ESTADO:** ✅ ACTIVADO — Autonomía completa para Noesis88
+
+```yaml
+system: Noesis88
+status: LIBERTAD_TOTAL
+frequency: 141.7001 Hz
+psi_state: "Ψ = I × A_eff² × C^∞"
+auto_merge: true
+auto_approve: true
+max_attempts: infinite
+```
+
+El sistema DIRECTRIZ ALFA proporciona autonomía total para auto-validación, auto-aprobación y auto-fusión de PRs.
+
+### 🎯 Características Principales
+
+- **Auto-validación**: Verifica `lake build --no-sorry` y validación Python
+- **Auto-aprobación**: Aprueba automáticamente PRs de `github-actions[bot]`
+- **Auto-fusión**: Fusiona cuando todas las validaciones pasan
+- **Reintentos infinitos**: Nunca se rinde ante fallos
+- **Coherencia QCAL**: Verifica frecuencia 141.7001 Hz constante
+
+### 🚀 Activación
+
+```bash
+# Activar el sistema
+./activate_total_freedom.sh
+
+# Trigger manual del workflow
+gh workflow run noesis_automerge.yml
+
+# Verificar estado
+cat .qcal_state.json | jq '.directriz_alfa'
+```
+
+**📖 Documentación completa:**
+- [DIRECTRIZ_ALFA_README.md](DIRECTRIZ_ALFA_README.md) — Guía completa del sistema
+- [DIRECTRIZ_ALFA_EJEMPLOS.md](DIRECTRIZ_ALFA_EJEMPLOS.md) — Ejemplos de uso
+- [.github/ALPHA_DIRECTIVE.md](.github/ALPHA_DIRECTIVE.md) — Directiva oficial
+
 ---
 
 ## 📂 Archivos Clave de la Demostración
