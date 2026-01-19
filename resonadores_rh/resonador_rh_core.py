@@ -189,7 +189,8 @@ class ResonadorRHCore:
         # 2. Decodificar πCODE (asumiendo que está codificado)
         try:
             decoded_message = self.filtro.pi_decode(received_message)
-        except:
+        except (ValueError, IndexError, KeyError):
+            # Si falla la decodificación, usar mensaje original
             decoded_message = received_message
         
         reception = {

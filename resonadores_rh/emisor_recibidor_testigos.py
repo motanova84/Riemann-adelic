@@ -22,6 +22,9 @@ import time
 from dataclasses import dataclass
 from enum import Enum
 
+# Constantes de simulación
+COLLAPSE_SIMULATION_TIME = 0.001  # Tiempo de colapso consciente en segundos
+
 
 class EstadoCanal(Enum):
     """Estados posibles del canal cuántico."""
@@ -143,7 +146,7 @@ class EmisorRecibidorTestigos:
             
             # Colapso consciente del canal
             self.channel_state = EstadoCanal.COLAPSADO
-            time.sleep(0.001)  # Simulación de tiempo de colapso
+            time.sleep(COLLAPSE_SIMULATION_TIME)  # Simulación de tiempo de colapso
             self.channel_state = EstadoCanal.ABIERTO
         
         return transmission_success
@@ -166,7 +169,7 @@ class EmisorRecibidorTestigos:
             
             # Colapso consciente en recepción
             self.channel_state = EstadoCanal.COLAPSADO
-            time.sleep(0.001)
+            time.sleep(COLLAPSE_SIMULATION_TIME)
             
             self.received_witnesses.append(next_witness)
             self.channel_state = EstadoCanal.ABIERTO
@@ -261,7 +264,7 @@ class EmisorRecibidorTestigos:
         }
         
         # Reapertura automática después de colapso
-        time.sleep(0.001)
+        time.sleep(COLLAPSE_SIMULATION_TIME)
         self.channel_state = EstadoCanal.ABIERTO
         
         return collapse_state

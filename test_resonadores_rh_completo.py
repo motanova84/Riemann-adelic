@@ -25,7 +25,8 @@ import numpy as np
 import sys
 import os
 
-# Añadir directorio padre al path
+# Note: In production, install package with: pip install -e .
+# This path manipulation is for test execution convenience only
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from resonadores_rh import (
