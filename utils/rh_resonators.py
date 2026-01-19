@@ -43,12 +43,17 @@ import mpmath as mp
 
 # QCAL ∞³ Constants
 F0_FUNDAMENTAL = 141.7001  # Hz - base vibrational frequency  
-COHERENCE_C = 244.36       # Coherence constant
-UNIVERSAL_C = 629.83       # Universal spectral constant
+COHERENCE_C = 244.36       # Coherence constant (from spectral moment C')
+UNIVERSAL_C = 629.83       # Universal spectral constant: C = 1/λ₀ where λ₀ is first eigenvalue of H_Ψ
 COHERENCE_FACTOR = COHERENCE_C / UNIVERSAL_C  # ≈ 0.388 structure-coherence dialogue
 PLANCK_CONSTANT = 6.62607015e-34  # J⋅s
 SPEED_OF_LIGHT = 299792458  # m/s
 PLANCK_LENGTH = 1.616255e-35  # m
+
+# Resonator Parameters
+FREQUENCY_LOG_SCALE = 10.0  # Logarithmic scaling factor for harmonic number calculation
+COHERENCE_DECAY_T = 100.0   # Characteristic decay scale for coherence contribution
+COHERENCE_NORM_FACTOR = 5.0  # Normalization factor for global coherence (asymptotic approach to 1.0)
 
 
 @dataclass
@@ -92,9 +97,9 @@ class ResonatorMode:
         Returns:
             Frequency in Hz
         """
-        # Harmonic series based on zero height
         # Use logarithmic scaling to keep frequencies near f₀
-        harmonic_number = 1.0 + np.log1p(abs(self.zero_t)) / 10.0
+        # harmonic_number approaches f₀ × (1 + log(t)/FREQUENCY_LOG_SCALE)
+        harmonic_number = 1.0 + np.log1p(abs(self.zero_t)) / FREQUENCY_LOG_SCALE
         return F0_FUNDAMENTAL * harmonic_number
     
     def _calculate_amplitude(self) -> float:
@@ -146,8 +151,7 @@ class ResonatorMode:
         Returns:
             Coherence contribution (dimensionless)
         """
-        T_decay = 100.0  # Characteristic decay scale
-        return (self.amplitude ** 2) * np.exp(-abs(self.zero_t) / T_decay)
+        return (self.amplitude ** 2) * np.exp(-abs(self.zero_t) / COHERENCE_DECAY_T)
     
     def evaluate_at_time(self, t: float) -> complex:
         """
@@ -203,6 +207,9 @@ class RHResonatorSystem:
         
         Perfect coherence: Ψ ≈ 1.0
         
+        The normalization uses: Ψ = 1 - exp(-total × √N / COHERENCE_NORM_FACTOR)
+        This ensures asymptotic approach to unity as N → ∞
+        
         Returns:
             Global coherence Ψ (dimensionless, 0 to 1)
         """
@@ -211,7 +218,7 @@ class RHResonatorSystem:
         total_coherence = sum(mode.coherence_contribution for mode in self.modes)
         # Normalize to achieve near-unity coherence with sufficient modes
         # Use a power law to approach 1.0 asymptotically
-        return 1.0 - np.exp(-total_coherence * np.sqrt(self.n_modes) / 5.0)
+        return 1.0 - np.exp(-total_coherence * np.sqrt(self.n_modes) / COHERENCE_NORM_FACTOR)
     
     def _find_dominant_frequency(self) -> float:
         """
@@ -367,7 +374,7 @@ class RHResonatorSystem:
         certificate = {
             'system': 'RH ∞³ Resonators',
             'version': '1.0',
-            'timestamp': str(np.datetime64('now')),
+            'timestamp': str(np.datetime64('now')),  # ISO format timestamp
             'author': 'José Manuel Mota Burruezo Ψ ✧ ∞³',
             'institute': 'Instituto de Conciencia Cuántica (ICQ)',
             'doi': '10.5281/zenodo.17379721',
