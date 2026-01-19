@@ -25,7 +25,7 @@ principles operating at the fundamental frequency f₀ = 141.7001 Hz.
 Critical Constant
 -----------------
 The critical epsilon emerges from cosmic coherence:
-    ε_critical = (ℏ × 141.7001) / (k_B × 2.725 K) ≈ 2.64 × 10⁻¹²
+    ε_critical = (ℏ × 141.7001) / (k_B × 2.725 K) ≈ 3.97 × 10⁻¹⁰
 
 For ε > ε_critical, ABC is trivially true by coherence conservation.
 For ε ≤ ε_critical, case-by-case analysis is required.
@@ -55,6 +55,14 @@ EPSILON_CRITICAL = float((H_BAR * Decimal(str(F0))) / (K_B * T_COSMIC))
 KAPPA_PI = 2.5782  # Spectral invariant from H_Ψ eigenvalue distribution
 UNIVERSAL_C = 629.83  # Universal constant C = 1/λ₀
 COHERENCE_C = 244.36  # Coherence constant from Ψ = I × A_eff² × C^∞
+
+
+# Shared utility functions
+def _gcd(a: int, b: int) -> int:
+    """Greatest common divisor (Euclidean algorithm)."""
+    while b:
+        a, b = b, a % b
+    return a
 
 
 def radical(n: int) -> int:
@@ -243,12 +251,7 @@ def verify_abc_hybrid(a: int, b: int, c: int, eps: float) -> Dict:
         return {'valid': False, 'error': 'All numbers must be positive'}
     
     # Check coprimality
-    def gcd(x: int, y: int) -> int:
-        while y:
-            x, y = y, x % y
-        return x
-    
-    if gcd(a, b) != 1 or gcd(b, c) != 1 or gcd(a, c) != 1:
+    if _gcd(a, b) != 1 or _gcd(b, c) != 1 or _gcd(a, c) != 1:
         return {'valid': False, 'error': 'Numbers must be coprime'}
     
     # Check a + b = c
@@ -293,32 +296,34 @@ def verify_abc_hybrid(a: int, b: int, c: int, eps: float) -> Dict:
 def find_exceptional_triples(max_height: int, epsilon: float = 0.1, 
                             min_quality: float = 1.0) -> List[Tuple[int, int, int, float]]:
     """
-    Find ABC triples with high quality q(a,b,c) > min_quality.
+    Find ABC triples with high quality q(a,b,c) >= min_quality.
     
     Quality is defined as q = log(c) / log(rad(abc)).
     ABC conjecture states only finitely many triples have q > 1 + ε.
     
+    Note: For computational feasibility, the search is limited to a maximum
+    of 100,000 even if max_height is larger. This is to prevent excessive
+    computation time for large heights.
+    
     Args:
-        max_height: Maximum value of c to search
+        max_height: Maximum value of c to search (hard limit: 100,000)
         epsilon: Quality threshold
         min_quality: Minimum quality to report
         
     Returns:
         List of (a, b, c, quality) tuples sorted by quality descending
     """
-    def gcd(x: int, y: int) -> int:
-        while y:
-            x, y = y, x % y
-        return x
-    
     exceptional = []
     
-    for c in range(3, min(max_height + 1, 100000)):  # Limit for performance
+    # Limit for computational feasibility
+    practical_limit = min(max_height, 100000)
+    
+    for c in range(3, practical_limit + 1):
         for a in range(1, c):
             b = c - a
             if a >= b:
                 break
-            if gcd(a, b) != 1:
+            if _gcd(a, b) != 1:
                 continue
             
             rad_abc = radical(a * b * c)
@@ -365,12 +370,7 @@ def mersenne_fermat_special_cases() -> List[Dict]:
                     continue
                 
                 # Check if coprime
-                def gcd(x: int, y: int) -> int:
-                    while y:
-                        x, y = y, x % y
-                    return x
-                
-                if gcd(a, b) == 1:
+                if _gcd(a, b) == 1:
                     result = verify_abc_hybrid(a, b, c, 0.1)
                     if result.get('valid'):
                         special_cases.append({
