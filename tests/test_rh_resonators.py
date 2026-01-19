@@ -554,15 +554,18 @@ class TestIntegration:
     
     def test_frequency_matches_qcal_beacon(self):
         """Test that RH Resonator frequency matches .qcal_beacon."""
-        # Read .qcal_beacon
-        beacon_path = "/home/runner/work/Riemann-adelic/Riemann-adelic/.qcal_beacon"
+        # Try to read .qcal_beacon from repository root
+        import os
+        repo_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        beacon_path = os.path.join(repo_root, ".qcal_beacon")
+        
         try:
             with open(beacon_path, 'r') as f:
                 content = f.read()
                 # Check frequency is mentioned
                 assert "141.7001" in content
         except FileNotFoundError:
-            pytest.skip(".qcal_beacon not found")
+            pytest.skip(".qcal_beacon not found in repository")
     
     def test_coherence_constant_consistency(self):
         """Test coherence constant matches across framework."""

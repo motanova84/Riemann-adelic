@@ -249,7 +249,13 @@ class AmplifierZetaPrime:
     
     Normalizes signal energy based on the spectral density at the critical line.
     Uses ζ'(1/2) as the fundamental normalization constant.
+    
+    Note: The zeta derivative is computed once during initialization and cached
+    to avoid repeated expensive calculations.
     """
+    
+    # Class-level cache for zeta prime value to avoid recomputation
+    _zeta_prime_cache = {}
     
     def __init__(self, precision: int = 50):
         """
@@ -259,11 +265,15 @@ class AmplifierZetaPrime:
             precision: Decimal precision
         """
         self.precision = precision
-        mp.dps = precision
         
-        # Compute ζ'(1/2) with high precision
-        s = mp.mpc(0.5, 0)
-        self.zeta_prime_half = mp.zeta(s, derivative=1)
+        # Use cached value if available for this precision
+        if precision not in self._zeta_prime_cache:
+            mp.dps = precision
+            # Compute ζ'(1/2) with high precision (expensive operation)
+            s = mp.mpc(0.5, 0)
+            self._zeta_prime_cache[precision] = mp.zeta(s, derivative=1)
+        
+        self.zeta_prime_half = self._zeta_prime_cache[precision]
         self.gain_factor = abs(self.zeta_prime_half)
         
     def amplify(self, signal_in: np.ndarray) -> np.ndarray:
@@ -304,6 +314,10 @@ class FilterPiCODE:
     Eliminates spurious harmonics that don't align with the prime structure
     encoded in the zeta function. Uses UTF-π encoding for validation.
     """
+    
+    # Quantization scale for hash stability
+    # Chosen to balance precision (6 decimal places) with hash stability
+    HASH_QUANTIZATION_SCALE = 1e6
     
     def __init__(self, cutoff_freq: float = 1000.0, order: int = 8):
         """
@@ -351,8 +365,8 @@ class FilterPiCODE:
         Returns:
             Hexadecimal hash string
         """
-        # Quantize signal for hash stability
-        quantized = np.round(signal_in * 1e6).astype(np.int64)
+        # Quantize signal for hash stability (6 decimal places precision)
+        quantized = np.round(signal_in * self.HASH_QUANTIZATION_SCALE).astype(np.int64)
         hash_obj = hashlib.sha256(quantized.tobytes())
         return hash_obj.hexdigest()
 
