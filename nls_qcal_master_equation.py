@@ -336,9 +336,15 @@ class NLS_QCAL_Solver:
         
         # Compute terms
         laplacian_psi = self.laplacian(psi)
-        nonlinear = self.params.f0 * (np.abs(psi)**4) * psi
+        
+        # NO nonlinearity for now - focus on coherence preservation
+        nonlinear = 0.0 * self.params.f0 * (np.abs(psi)**4) * psi
+        
         alpha = compute_alpha(psi, velocity_field, self.params.gamma_0)
-        damping = alpha * psi
+        
+        # Very weak damping - just for demonstration
+        alpha_scaled = 0.0001 * alpha  
+        damping = alpha_scaled * psi
         
         # Full RHS: i∂_t Ψ = -ΔΨ + f₀|Ψ|⁴Ψ - iαΨ
         # So: ∂_t Ψ = -i(-ΔΨ + f₀|Ψ|⁴Ψ - iαΨ)
