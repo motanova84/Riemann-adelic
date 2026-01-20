@@ -248,10 +248,10 @@ def demo_4_navier_stokes():
     plt.figure(figsize=(12, 5))
     
     plt.subplot(1, 2, 1)
-    vel_matrix = np.array(velocities)
+    vel_matrix = np.abs(np.array(velocities))  # Take absolute value for plotting
     plt.imshow(vel_matrix.T, aspect='auto', cmap='RdBu_r', 
                interpolation='nearest')
-    plt.colorbar(label='Velocity')
+    plt.colorbar(label='|Velocity|')
     plt.xlabel('Time step')
     plt.ylabel('Mode')
     plt.title('Velocity Field Evolution')
