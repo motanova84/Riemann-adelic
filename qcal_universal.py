@@ -101,11 +101,22 @@ class O_infinity_3:
         """
         Construct discrete Laplacian operator on uniform grid.
         
+        Uses periodic boundary conditions, which means the system is treated
+        as living on a circle/torus. This is appropriate for:
+        - Systems with translational symmetry
+        - Quantum systems in a box with periodic BCs
+        - Spectral methods that avoid boundary artifacts
+        
+        For different boundary conditions (Dirichlet, Neumann), modify
+        the edge entries of the matrix accordingly.
+        
         Returns:
-            Discretized -Δ operator matrix
+            Discretized -Δ operator matrix with periodic BCs
         """
         n = self.dimension
         # 1D Laplacian with periodic boundary conditions
+        # -Δψ ≈ (ψ_{i+1} - 2ψ_i + ψ_{i-1}) / dx²
+        # With periodic: ψ_0 connects to ψ_{n-1}
         laplacian = np.zeros((n, n))
         for i in range(n):
             laplacian[i, i] = 2.0
@@ -239,14 +250,35 @@ class Projection:
         self._build_projection_matrix()
         
     def _build_projection_matrix(self):
-        """Build the projection matrix from spectral data."""
+        """
+        Build the projection matrix from spectral data.
+        
+        CURRENT IMPLEMENTATION: Simplified version using identity matrix
+        as a placeholder. This provides correct dimensionality but does not
+        implement the full Fourier-like encoding with base frequency modulation.
+        
+        FULL IMPLEMENTATION would include:
+        1. Fourier transform encoding with f₀ modulation
+        2. Spectral weighting by eigenvalue importance
+        3. Resonant coupling to master operator modes
+        4. Phase factors from base frequency
+        
+        For production use, replace with proper spectral encoding.
+        Current implementation is adequate for:
+        - Testing framework functionality
+        - Demonstrations with C(S) ≥ 0.888
+        - Systems where identity projection is approximately correct
+        
+        WARNING: Accuracy may degrade for systems with C(S) < 0.888
+        """
         # Simplified implementation
         n = len(self.spectrum.eigenvalues)
         self.dimension = n
         
+        # TODO: Implement full spectral encoding
         # For now, use identity - full implementation would use
         # Fourier-like encoding with base frequency modulation
-        # This will be expanded in projection.encode() method
+        # This will be expanded in future versions
         self.projection_matrix = np.eye(n, dtype=complex)
         
     def tune_to_f0(self, frequency: float):
@@ -432,13 +464,27 @@ class UniversalSimulator:
         eigenvalues, eigenvectors = np.linalg.eigh(H_system)
         
         # Estimate coherence from eigenvalue spread
+        # Coherence measures how "focused" the spectrum is around f₀
+        # Formula: C = 1 / (1 + ΔE/f₀) where ΔE is eigenvalue range
+        # - C → 1 when ΔE ≪ f₀ (highly coherent, narrow spectrum)
+        # - C → 0 when ΔE ≫ f₀ (incoherent, broad spectrum)
+        # This relates to the system's ability to maintain phase coherence
         eigenvalue_range = np.max(eigenvalues) - np.min(eigenvalues)
         coherence = 1.0 / (1.0 + eigenvalue_range / self.base_freq)
         
-        # Estimate entropy from eigenvalue density
+        # Estimate topological entropy
+        # NOTE: This is a simplified heuristic, not rigorous topological entropy
+        # True h_top requires analyzing orbit growth rates in phase space
+        # Here we use: h ≈ -Σ λᵢ² / N as a measure of spectral spread
+        # - Small h: concentrated spectrum (low entropy)
+        # - Large h: distributed spectrum (high entropy)
+        # For proper entropy, consider:
+        #   - von Neumann entropy: -Tr(ρ ln ρ) for quantum systems
+        #   - Shannon entropy: -Σ pᵢ ln pᵢ for classical probability
+        #   - Topological entropy: lim_{n→∞} (1/n) log N(n,ε) for dynamical systems
         entropy = -np.sum(eigenvalues ** 2) / len(eigenvalues)
         if entropy < 0:
-            entropy = abs(entropy)
+            entropy = abs(entropy)  # Ensure non-negative
         
         return SystemSpectrum(
             eigenvalues=eigenvalues,
