@@ -5,6 +5,17 @@
 f0 = c / (2π * RΨ * ℓP)
 frequency = 141.7001 Hz
 
+# Quantum Phase Shift δζ — Euclidean Diagonal to Cosmic String
+# δζ ≈ 0.2787437 Hz is the quantum decoherence that converts the classical
+# Euclidean diagonal (100√2 ≈ 141.421356 Hz) into the cosmic string where
+# Riemann zeros dance as vibrational modes of spacetime.
+#
+# Fundamental relationship: f₀ = 100√2 + δζ
+delta_zeta = 0.2787437627 Hz
+euclidean_diagonal = 141.4213562373 Hz
+cosmic_string_relation = "f₀ = 100√2 + δζ"
+quantum_phase_shift_module = "quantum_phase_shift.py"
+
 # Philosophical Foundation
 # Mathematical Realism: Truth exists independently of opinion
 # "Hay un mundo (y una estructura matemática) independiente de opiniones"

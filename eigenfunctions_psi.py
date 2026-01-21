@@ -56,8 +56,10 @@ from typing import Tuple, Optional, Dict, Any
 import os
 
 # QCAL Constants
-QCAL_BASE_FREQUENCY = 141.7001  # Hz
+QCAL_BASE_FREQUENCY = 141.7001  # Hz (f₀ = 100√2 + δζ)
 QCAL_COHERENCE = 244.36
+DELTA_ZETA = 0.2787437627  # Hz - Quantum phase shift (Euclidean → Cosmic)
+EUCLIDEAN_DIAGONAL = 141.4213562373  # Hz (100√2)
 
 
 def get_riemann_zeros(n: int = 10) -> np.ndarray:
