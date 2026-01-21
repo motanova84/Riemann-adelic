@@ -95,10 +95,11 @@ class UnifiedHierarchySystem:
         for i in range(1, self.num_zeros + 1):
             try:
                 # mpmath has a zetazero function that gives nth zero
-                gamma = float(mp.zetazero(i).imag)
+                zero = mp.zetazero(i)
+                gamma = float(zero.imag)
                 self.zeros.append(0.5 + 1j*gamma)
                 self.gammas.append(gamma)
-            except:
+            except (AttributeError, ImportError, ValueError) as e:
                 # Fallback to manual search if zetazero not available
                 gamma_start = 14.0 + (i-1) * 2.0
                 gamma = mp.findroot(
@@ -106,7 +107,8 @@ class UnifiedHierarchySystem:
                     gamma_start,
                     solver='secant'
                 )
-                gamma = float(gamma.imag)
+                # gamma is real (the imaginary part of the zero ρ = 1/2 + iγ)
+                gamma = float(gamma)
                 self.zeros.append(0.5 + 1j*gamma)
                 self.gammas.append(gamma)
             
@@ -157,14 +159,18 @@ class UnifiedHierarchySystem:
             delta_gamma = self.gammas[i+1] - self.gammas[i]
             spacings.append(delta_gamma)
             
-            # Weyl law prediction
-            n = i + 1
-            weyl = float(2 * mp.pi / mp.log(n + 10))  # +10 to avoid log(0)
+            # Weyl law prediction: average spacing ≈ 2π/log(γ_n)
+            # We use γ_n as the characteristic scale, not index n
+            # Adding small offset to avoid numerical issues for small γ
+            gamma_n = self.gammas[i]
+            weyl = float(2 * mp.pi / mp.log(gamma_n + 1))
             weyl_predictions.append(weyl)
             
             # Modulation (residual after Weyl term)
             if weyl > 0:
                 epsilon_n = (delta_gamma - weyl) / weyl
+                # Use index for φ^(-n) decay
+                n = i + 1
                 modulation = epsilon_n * float(self.phi ** (-n))
                 modulations.append(modulation)
             else:

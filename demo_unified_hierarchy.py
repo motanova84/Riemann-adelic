@@ -88,7 +88,7 @@ def demonstrate_system_3(hierarchy: UnifiedHierarchySystem):
     
     sys3 = hierarchy.system3_qcal_codons()
     
-    print("\nCodens are 'chords' in the spectral space of ζ(s).")
+    print("\nCodons are 'chords' in the spectral space of ζ(s).")
     print(f"Resonance criterion: {sys3['resonance_criterion']}")
     
     print("\nDigit → Frequency mapping:")

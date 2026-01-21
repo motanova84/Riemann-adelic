@@ -85,7 +85,7 @@ class TestSystem1FractalModulation:
             assert phi_decay[i] > phi_decay[i+1]
         
         # First term should be 1/φ
-        assert phi_decay[0] == pytest.approx(1/1.618033989, rel=1e-6)
+        assert phi_decay[0] == pytest.approx(1/float(hierarchy.phi), rel=1e-6)
 
 
 class TestSystem2AnalyticMoments:
