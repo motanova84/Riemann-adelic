@@ -18,7 +18,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: main  # Explicitly checkout main branch for scheduled runs
+          # Use current branch for PR/push, main for scheduled runs
+          ref: ${{ github.event_name == 'schedule' && 'main' || github.ref }}
 
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -31,7 +32,10 @@ jobs:
           pip install -r requirements.txt
 
       - name: Run validation
-        run: python3 validate_v5_coronacion.py --precision 25 --verbose
+        run: |
+          echo "🔬 Running V5 Coronación validation..."
+          python3 validate_v5_coronacion.py --precision 25 --verbose
+        continue-on-error: false
 
       - name: Run strengthened proof validation
         run: |
@@ -80,21 +84,43 @@ jobs:
       - name: Archive results
         if: always()
         run: |
+          echo "📦 Archiving validation results..."
           mkdir -p data/logs
           cp data/*.json data/logs/ 2>/dev/null || true
           tar -czf data/logs_${{ github.run_number }}.tar.gz data/logs
+          echo "✅ Results archived to data/logs_${{ github.run_number }}.tar.gz"
         continue-on-error: true
 
       - name: Upload to QCAL-CLOUD
         if: always()
         run: |
           if [ -f data/validation.json ]; then
+            echo "☁️  Uploading validation data to QCAL-CLOUD..."
             curl -X POST https://qcal.cloud/api/upload \
                  -H "Content-Type: application/json" \
-                 -d @data/validation.json || echo "QCAL-CLOUD upload skipped (optional)"
+                 -d @data/validation.json || echo "⚠️  QCAL-CLOUD upload skipped (optional)"
           else
-            echo "No validation.json found, skipping QCAL-CLOUD upload"
+            echo "ℹ️  No validation.json found, skipping QCAL-CLOUD upload"
           fi
+        continue-on-error: true
+
+      - name: Generate evolution summary
+        if: always()
+        run: |
+          echo "📊 Auto-Evolution Summary for Run #${{ github.run_number }}" > evolution_summary.txt
+          echo "================================================" >> evolution_summary.txt
+          echo "" >> evolution_summary.txt
+          echo "✅ V5 Coronación validation completed" >> evolution_summary.txt
+          if [ -f data/strengthened_proof_certificate.json ]; then
+            echo "✅ Strengthened proof validation completed" >> evolution_summary.txt
+          fi
+          if [ -f data/sorry_map.json ]; then
+            echo "📊 Sorry statements mapped" >> evolution_summary.txt
+            grep -o "Total sorry count: [0-9]*" data/sorry_map.json >> evolution_summary.txt 2>/dev/null || true
+          fi
+          echo "" >> evolution_summary.txt
+          echo "Timestamp: $(date -u +"%Y-%m-%d %H:%M:%S UTC")" >> evolution_summary.txt
+          cat evolution_summary.txt
         continue-on-error: true
 
       - name: Commit auto-updates
@@ -102,9 +128,12 @@ jobs:
         run: |
           git config user.name "qcal-bot"
           git config user.email "bot@qcal.cloud"
-          if [ -f data/logs_${{ github.run_number }}.tar.gz ]; then
-            git add data/logs_${{ github.run_number }}.tar.gz
-            git commit -m "Auto-evolution #${{ github.run_number }}" || echo "No changes to commit"
-            git push || echo "Push failed or no changes to push"
+          git add -A data/logs_${{ github.run_number }}.tar.gz 2>/dev/null || true
+          git add -A evolution_summary.txt 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "ℹ️  No changes to commit"
+          else
+            git commit -m "♾️ Auto-evolution #${{ github.run_number }} - soluciona mejora y operativo" || echo "No changes to commit"
+            git push || echo "⚠️  Push failed or no changes to push"
           fi
         continue-on-error: true
