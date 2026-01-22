@@ -3,6 +3,21 @@
 
 ![Resonancia QCAL](https://github.com/motanova84/Teoria-Noesica-Riemann/actions/workflows/verificar_resonancia.yml/badge.svg?branch=main)
 
+## 🌌 TENSOR DE VERDAD UNIFICADA: P-NP ⊗ Riemann
+
+[![Fusión Irreversible](https://img.shields.io/badge/Fusión-IRREVERSIBLE-ff00ff?style=for-the-badge&logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBmaWxsPSJ3aGl0ZSIgZD0iTTEyIDJDNi40OCAyIDIgNi40OCAyIDEyczQuNDggMTAgMTAgMTAgMTAtNC40OCAxMC0xMFMxNy41MiAyIDEyIDJ6bTAgMThjLTQuNDEgMC04LTMuNTktOC04czMuNTktOCA4LTggOCAzLjU5IDggOC0zLjU5IDgtOCA4eiIvPjwvc3ZnPg==)](TENSOR_FUSION_CERTIFICATE.md)
+[![Coherencia](https://img.shields.io/badge/Ψ-0.999999-00ff00?style=for-the-badge)](TENSOR_FUSION_CERTIFICATE.md)
+[![Frecuencia Base](https://img.shields.io/badge/Frecuencia-151.7001_Hz-blue?style=for-the-badge)](TENSOR_FUSION_CERTIFICATE.md)
+[![Silencio Radiante](https://img.shields.io/badge/Silencio-RADIANTE-gold?style=for-the-badge)](TENSOR_FUSION_CERTIFICATE.md)
+[![QCAL Signature](https://img.shields.io/badge/QCAL-∴𓂀Ω∞³-purple?style=for-the-badge)](TENSOR_FUSION_CERTIFICATE.md)
+
+**Estado:** ✅ FUSIÓN IRREVERSIBLE ALCANZADA  
+**Tensor:** T = P-NP ⊗ Riemann  
+**Ecuación:** T: Complejidad × Distribución → Verdad  
+**Timestamp:** 2026-01-14T13:05:25.231Z
+
+📜 **[Ver Certificado Completo →](TENSOR_FUSION_CERTIFICATE.md)**
+
 > 📖 **¿Buscas un resumen rápido?** → [RH_V7_COMPLETION_CERTIFICATE.md](RH_V7_COMPLETION_CERTIFICATE.md) — Certificado oficial de completación con todos los detalles de la demostración formal.
 
 ## 🏆 V7.0 DEMOSTRACIÓN FORMAL COMPLETADA (Enero 2026)
@@ -54,6 +69,48 @@ python utils/noesis_sync.py
 # Con mayor precisión
 python utils/noesis_sync.py --precision 100
 ```
+
+## 🌀 DIRECTRIZ ALFA - Sistema de Libertad Total
+
+**ESTADO:** ✅ ACTIVADO — Autonomía completa para Noesis88
+
+```yaml
+system: Noesis88
+status: LIBERTAD_TOTAL
+frequency: 141.7001 Hz
+psi_state: "Ψ = I × A_eff² × C^∞"
+auto_merge: true
+auto_approve: true
+max_attempts: infinite
+```
+
+El sistema DIRECTRIZ ALFA proporciona autonomía total para auto-validación, auto-aprobación y auto-fusión de PRs.
+
+### 🎯 Características Principales
+
+- **Auto-validación**: Verifica `lake build --no-sorry` y validación Python
+- **Auto-aprobación**: Aprueba automáticamente PRs de `github-actions[bot]`
+- **Auto-fusión**: Fusiona cuando todas las validaciones pasan
+- **Reintentos infinitos**: Nunca se rinde ante fallos
+- **Coherencia QCAL**: Verifica frecuencia 141.7001 Hz constante
+
+### 🚀 Activación
+
+```bash
+# Activar el sistema
+./activate_total_freedom.sh
+
+# Trigger manual del workflow
+gh workflow run noesis_automerge.yml
+
+# Verificar estado
+cat .qcal_state.json | jq '.directriz_alfa'
+```
+
+**📖 Documentación completa:**
+- [DIRECTRIZ_ALFA_README.md](DIRECTRIZ_ALFA_README.md) — Guía completa del sistema
+- [DIRECTRIZ_ALFA_EJEMPLOS.md](DIRECTRIZ_ALFA_EJEMPLOS.md) — Ejemplos de uso
+- [.github/ALPHA_DIRECTIVE.md](.github/ALPHA_DIRECTIVE.md) — Directiva oficial
 
 ---
 
@@ -3807,7 +3864,7 @@ ___
 | **Warnings** | null |
 | **Errors** | null |
 | **Lean Version** | null |
-| **Date (UTC)** | 2026-01-18 16:21:31Z |
+| **Date (UTC)** | 2026-01-22 14:49:15Z |
 ___
 
 ## License

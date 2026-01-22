@@ -227,3 +227,4 @@ requirements-lock.txt.backup
 # Generated axioms (test artifacts)
 axioms/axioms_generated_*.json
 axioms/qcal_axioms_*.lean
+data/noesis_session_test-*.json
