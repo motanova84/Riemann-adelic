@@ -590,20 +590,14 @@ DOI: 10.5281/zenodo.17379721
     parser.add_argument(
         '--infinite-mode',
         action='store_true',
-        help='Generate certificate for infinite verification proof'
+        help='Run in infinite/extended mode with higher precision and Schatten S→∞ validation, and generate certificate for infinite verification proof'
     )
     parser.add_argument(
         '--quote',
         nargs='?',
         const='La verdad no se descubre, se ejecuta.',
         default=None,
-        help='Add custom quote to certificate (default: "La verdad no se descubre, se ejecuta.")'
-        help='Run in infinite/extended mode with higher precision and Schatten S→∞ validation'
-    )
-    parser.add_argument(
-        '--quote',
-        action='store_true',
-        help='Include inspirational quote and author signature in output'
+        help='Add custom quote to certificate (default: "La verdad no se descubre, se ejecuta.") and include inspirational quote and author signature in output'
     )
     
     args = parser.parse_args()
