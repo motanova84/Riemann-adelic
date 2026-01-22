@@ -593,17 +593,16 @@ DOI: 10.5281/zenodo.17379721
         help='Generate certificate for infinite verification proof'
     )
     parser.add_argument(
-        '--quote',
-        nargs='?',
-        const='La verdad no se descubre, se ejecuta.',
-        default=None,
-        help='Add custom quote to certificate (default: "La verdad no se descubre, se ejecuta.")'
+        '--infinite',
+        action='store_true',
         help='Run in infinite/extended mode with higher precision and Schatten S→∞ validation'
     )
     parser.add_argument(
         '--quote',
-        action='store_true',
-        help='Include inspirational quote and author signature in output'
+        nargs='?',
+        const='La verdad no se descubre, se ejecuta.',
+        default=None,
+        help='Add custom quote to certificate (default: "La verdad no se descubre, se ejecuta.") and include inspirational quote and author signature in output'
     )
     
     args = parser.parse_args()
