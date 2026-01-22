@@ -237,3 +237,7 @@ logs/20*/
 !reports/.gitkeep
 !axioms/.gitkeep
 !metrics/.gitkeep
+# Generated axioms (test artifacts)
+axioms/axioms_generated_*.json
+axioms/qcal_axioms_*.lean
+data/noesis_session_test-*.json

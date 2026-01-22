@@ -1,0 +1,44 @@
+{
+  "system": "RH \u221e\u00b3 Resonators",
+  "version": "1.0",
+  "timestamp": "2026-01-19T06:54:53",
+  "author": "Jos\u00e9 Manuel Mota Burruezo \u03a8 \u2727 \u221e\u00b3",
+  "institute": "Instituto de Conciencia Cu\u00e1ntica (ICQ)",
+  "doi": "10.5281/zenodo.17379721",
+  "system_parameters": {
+    "n_zeros": 50,
+    "zero_range": [
+      14.134725,
+      143.111846
+    ],
+    "fundamental_frequency": 141.7001,
+    "coherence_constant": 244.36,
+    "universal_constant": 629.83
+  },
+  "mathematical_validation": {
+    "global_coherence": 0.4528139376654491,
+    "coherence_threshold": 0.95,
+    "coherence_achieved": false,
+    "n_modes": 50,
+    "total_energy": 4.238983003460504e-29,
+    "spectral_width": 9.43099683926805,
+    "mode_orthogonality": false,
+    "min_frequency_separation": 0.10649398470039273,
+    "mathematical_validation": false
+  },
+  "physical_validation": {
+    "target_frequency": 141.7001,
+    "dominant_frequency": 195.00266562200727,
+    "frequency_error": 53.30256562200728,
+    "tolerance": 1.417001,
+    "frequency_match": false,
+    "coherence_constant": 244.36,
+    "universal_constant": 629.83,
+    "coherence_factor": 0.38797770827048567,
+    "coherence_factor_target": 0.388,
+    "coherence_factor_error": 2.2291729514345437e-05,
+    "physical_validation": false
+  },
+  "overall_status": "PENDING_VALIDATION",
+  "signature": "\u2234\ud80c\udc80\u03a9\u221e\u00b3\u00b7RH\u00b7RESONATORS"
+}
