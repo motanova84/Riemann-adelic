@@ -590,12 +590,7 @@ DOI: 10.5281/zenodo.17379721
     parser.add_argument(
         '--infinite-mode',
         action='store_true',
-        help='Generate certificate for infinite verification proof'
-    )
-    parser.add_argument(
-        '--infinite',
-        action='store_true',
-        help='Run in infinite/extended mode with higher precision and Schatten S→∞ validation'
+        help='Run in infinite/extended mode with higher precision and Schatten S→∞ validation, and generate certificate for infinite verification proof'
     )
     parser.add_argument(
         '--quote',

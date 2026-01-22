@@ -116,7 +116,8 @@ jobs:
           fi
           if [ -f data/sorry_map.json ]; then
             echo "📊 Sorry statements mapped" >> evolution_summary.txt
-            grep -o "Total sorry count: [0-9]*" data/sorry_map.json >> evolution_summary.txt 2>/dev/null || true
+            # Extract total count from JSON using Python
+            python3 -c "import json; data=json.load(open('data/sorry_map.json')); print(f\"Total sorry count: {data.get('total', 'N/A')}\")" >> evolution_summary.txt 2>/dev/null || echo "Total count: N/A" >> evolution_summary.txt
           fi
           echo "" >> evolution_summary.txt
           echo "Timestamp: $(date -u +"%Y-%m-%d %H:%M:%S UTC")" >> evolution_summary.txt
@@ -128,8 +129,8 @@ jobs:
         run: |
           git config user.name "qcal-bot"
           git config user.email "bot@qcal.cloud"
-          git add -A data/logs_${{ github.run_number }}.tar.gz 2>/dev/null || true
-          git add -A evolution_summary.txt 2>/dev/null || true
+          git add data/logs_${{ github.run_number }}.tar.gz 2>/dev/null || true
+          git add evolution_summary.txt 2>/dev/null || true
           if git diff --cached --quiet; then
             echo "ℹ️  No changes to commit"
           else
