@@ -113,8 +113,9 @@ class TestWetLabExperimentalValidator:
         
         # The difference between experimental and theoretical should be small
         # (within a few standard deviations)
+        MAX_SIGMA_THRESHOLD = 5  # Maximum acceptable deviation in sigma
         diff = abs(result['mean'] - self.validator.results.psi_experimental)
-        assert diff < 5 * result['std']  # Within 5σ
+        assert diff < MAX_SIGMA_THRESHOLD * result['std']  # Within 5σ
     
     def test_gaussian_error_propagation(self):
         """Test Gaussian analytical error propagation."""
