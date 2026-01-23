@@ -45,7 +45,8 @@ theorem test_with_sorry (P : Prop) : P → P := by
   qcal_cleanup_tactic
   -- El sistema detectará el sorry y sugerirá estrategias
   intro h
-  exact h
+  -- Demostración intencionalmente incompleta para probar la detección de `sorry`
+  sorry
 
 /-!
 ## Test 4: Ejemplo de Teoría Espectral
