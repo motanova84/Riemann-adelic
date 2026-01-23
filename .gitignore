@@ -194,6 +194,8 @@ noesis_guardian/logs/guardian_log.json
 
 # QCAL auto-generated state files
 tools/qcal_state.json
+.qcal_state
+.qcal_continuation_summary.json
 # Spectral framework demo images
 *_demo.png
 *_spectrum.png
@@ -223,3 +225,20 @@ data/pipeline_report_*.json
 requirements-lock.txt.backup
 *.backup
 /output/*.json
+
+# Orchestration system generated files
+venv_qcal/
+axioms/*.json
+metrics/*.json
+dependencies.json
+reports/noesis88/
+reports/qcal_prover/
+reports/axiom_emitter/
+logs/20*/
+!reports/.gitkeep
+!axioms/.gitkeep
+!metrics/.gitkeep
+# Generated axioms (test artifacts)
+axioms/axioms_generated_*.json
+axioms/qcal_axioms_*.lean
+data/noesis_session_test-*.json
