@@ -1,5 +1,5 @@
 {
-  "total": 2237,
+  "total": 2242,
   "by_file": {
     "lean/RH_final_v7.lean": 1,
     "lean/EULER_SYMPHONY.lean": 10,
@@ -322,6 +322,7 @@
     "lean/RiemannAdelic/mellin_identity.lean": 7,
     "lean/RiemannAdelic/DeterminantFredholm.lean": 8,
     "lean/RiemannAdelic/D_explicit.lean": 9,
+    "lean/RiemannAdelic/operator_H_psi_complete.lean": 5,
     "lean/RiemannAdelic/functional_eq.lean": 1,
     "lean/RiemannAdelic/doi_positivity.lean": 2,
     "lean/RiemannAdelic/Symmetry.lean": 1,
@@ -372,7 +373,7 @@
     "RH_final_v6": 257,
     "adelic": 1,
     "Operator": 17,
-    "RiemannAdelic": 900,
+    "RiemannAdelic": 905,
     "Analysis": 6,
     "Zeta": 23,
     "Integral": 5,
@@ -12336,6 +12337,36 @@
       "line": 348,
       "theorem": null,
       "context": "sorry  -- PROOF: Expand log(T/(2\u03c0)) = log T - log(2\u03c0)"
+    },
+    {
+      "file": "lean/RiemannAdelic/operator_H_psi_complete.lean",
+      "line": 3,
+      "theorem": null,
+      "context": "# Completaci\u00f3n de bloques sorry y axiom (2 sorry justificados permanecen)"
+    },
+    {
+      "file": "lean/RiemannAdelic/operator_H_psi_complete.lean",
+      "line": 18,
+      "theorem": null,
+      "context": "# - 2 sorry justificados (requieren teor\u00eda profunda) \u26a0\ufe0f"
+    },
+    {
+      "file": "lean/RiemannAdelic/operator_H_psi_complete.lean",
+      "line": 78,
+      "theorem": null,
+      "context": "sorry  -- Requiere axioma de correspondencia espectral completa"
+    },
+    {
+      "file": "lean/RiemannAdelic/operator_H_psi_complete.lean",
+      "line": 155,
+      "theorem": null,
+      "context": "sorry  -- Requiere teor\u00eda de Fredholm completa + producto de Hadamard"
+    },
+    {
+      "file": "lean/RiemannAdelic/operator_H_psi_complete.lean",
+      "line": 238,
+      "theorem": null,
+      "context": "\u2705 Eliminaci\u00f3n parcial de sorry (algunos requieren teor\u00eda adicional):"
     },
     {
       "file": "lean/RiemannAdelic/functional_eq.lean",

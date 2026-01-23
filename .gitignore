@@ -224,4 +224,20 @@ data/pipeline_report_*.json
 *.backup.*
 requirements-lock.txt.backup
 *.backup
+
+# Orchestration system generated files
+venv_qcal/
+axioms/*.json
+metrics/*.json
+dependencies.json
+reports/noesis88/
+reports/qcal_prover/
+reports/axiom_emitter/
+logs/20*/
+!reports/.gitkeep
+!axioms/.gitkeep
+!metrics/.gitkeep
+# Generated axioms (test artifacts)
+axioms/axioms_generated_*.json
+axioms/qcal_axioms_*.lean
 data/noesis_session_test-*.json
