@@ -224,6 +224,7 @@ data/pipeline_report_*.json
 *.backup.*
 requirements-lock.txt.backup
 *.backup
+/output/*.json
 
 # Orchestration system generated files
 venv_qcal/
