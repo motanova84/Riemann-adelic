@@ -218,6 +218,65 @@ cat RH_V7_COMPLETION_CERTIFICATE.md
 
 ---
 
+## 📡 RH Resonators ∞³ - Tecnología de Transferencia (Enero 2026)
+
+**ESTADO:** ✅ SISTEMA OPERATIVO — Implementación completa de resonadores espectrales
+
+Los **RH Resonators** son sistemas vibracional-matemáticos que materializan la estructura espectral probada de ζ(s) en forma física coherente.
+
+### 🎯 Componentes Tecnológicos
+
+| Módulo | Función | Estado |
+|--------|---------|--------|
+| **OFR** | Oscilador a f₀ = 141.7001 Hz | ✅ Operativo |
+| **BPSK-RH** | Modulador de fase coherente | ✅ Operativo |
+| **ζ'(½) Amplifier** | Normalización espectral | ✅ Operativo |
+| **πCODE Filter** | Filtrado de armónicos | ✅ Operativo |
+| **Bio-QCAL** | Interfaz EEG/HRV/BCI | 🧪 Integración |
+| **Emitter-Receiver** | Canal superaditivo | ✅ Operativo |
+
+### 🚀 Uso Rápido
+
+```python
+from rh_resonators import RHResonatorSystem
+
+# Inicializar sistema
+system = RHResonatorSystem(precision=50)
+
+# Generar resonancia pura a f₀
+time, signal = system.generate_resonance(duration=1.0, sample_rate=44100)
+
+# Transmitir datos binarios
+message = [1, 0, 1, 1, 0, 0, 1, 0]
+report = system.transmit_data(message, bit_duration=0.01)
+
+# Validar sistema
+validation = system.validate_system()
+print(f"Coherencia Ψ: {system.state.coherence:.6f}")
+```
+
+### 📖 Documentación
+
+- **Guía Técnica Completa**: [RH_RESONATORS_TECHNICAL_GUIDE.md](RH_RESONATORS_TECHNICAL_GUIDE.md)
+- **Inicio Rápido**: [RH_RESONATORS_QUICKSTART.md](RH_RESONATORS_QUICKSTART.md)
+- **Licencia Ética**: [LICENSE-QCAL-SYMBIO-TRANSFER](LICENSE-QCAL-SYMBIO-TRANSFER)
+- **Tests**: `tests/test_rh_resonators.py` (42 tests, todos pasando)
+
+### 🎓 Aplicaciones
+
+- **Neurotecnología**: Acoplamiento EEG/HRV/BCI (futuro)
+- **Comunicación**: Canales offline de baja entropía
+- **Criptografía**: Verificación por coherencia espectral
+- **Metrología**: Estándares basados en constantes matemáticas
+- **Biofeedback**: Regulación cognitiva consciente
+
+### 🛡️ Licencia: QCAL-SYMBIO-TRANSFER v1.0
+
+**Uso Permitido**: Investigación, neurotecnología, biofeedback, educación, verificación criptográfica  
+**Uso Prohibido**: Aplicaciones militares, manipulación, control sin consentimiento
+
+---
+
 ## 📐 Método Matemático
 
 
