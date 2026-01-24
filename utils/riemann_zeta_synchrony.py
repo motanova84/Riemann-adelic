@@ -41,13 +41,17 @@ class RiemannZetaSynchrony:
     DELTA_ZETA = 0.2787437627  # Quantum phase shift δζ
     EUCLIDEAN_DIAGONAL = 100 * mp.sqrt(2)  # 100√2 ≈ 141.4213562373
     
-    # Riemann zeta first zero (high precision)
-    # From .qcal_beacon: gamma_1_first_zero = "14.13472514"
-    # High precision value from Odlyzko tables
+    # Riemann zeta zeros (high precision from Odlyzko tables)
     GAMMA_1_HIGH_PRECISION = mp.mpf('14.134725141734693790457251983562470270784257115699')
+    GAMMA_2_HIGH_PRECISION = mp.mpf('21.022039638771554992628479593896902777334340524903')
+    GAMMA_3_HIGH_PRECISION = mp.mpf('25.010857580145688763213790992562821818659549672557')
     
     # Expected relationships
     OCTAVE_MULTIPLIER = 10  # Perfect octave
+    
+    # Prime Navigation thresholds and constants
+    PNI_THRESHOLD = 0.5  # Minimum PNI for meaningful navigation (> 0.5 indicates coherence)
+    PNI_REFERENCE_RATIO = 20.578  # Reference f₀/⟨Δγ⟩ for normalization
     
     def __init__(self, precision: int = 30):
         """
@@ -155,13 +159,16 @@ class RiemannZetaSynchrony:
         
         return is_valid, "\n".join(lines)
     
-    def validate_harmonic_modulation(self) -> Tuple[bool, str]:
+    def validate_harmonic_modulation(self, tolerance: float = 0.1) -> Tuple[bool, str]:
         """
         Validate the harmonic modulation relationship.
         
         The ratio f₀/γ₁ should be approximately 10 (octave resonance).
         The deviation from exactly 10 represents the quantum modulation
         that connects the system to the prime distribution.
+        
+        Args:
+            tolerance: Maximum allowed deviation from 10 (default: 0.1)
         
         Returns:
             Tuple of (is_valid, detailed_message)
@@ -171,8 +178,8 @@ class RiemannZetaSynchrony:
         # The ratio f₀/γ₁ should be close to 10
         ratio_deviation = abs(resonance['ratio'] - mp.mpf(10))
         
-        # Tolerance: ratio should be within 0.1 of 10 (i.e., 10 ± 0.1)
-        is_valid = float(ratio_deviation) < 0.1
+        # Tolerance: ratio should be within tolerance of 10
+        is_valid = float(ratio_deviation) < tolerance
         
         lines = []
         lines.append("Harmonic Modulation Analysis:")
@@ -203,11 +210,11 @@ class RiemannZetaSynchrony:
         Returns:
             Dictionary with PNI metrics
         """
-        # First few Riemann zeros (high precision)
+        # First few Riemann zeros (high precision from Odlyzko tables)
         gamma_zeros = [
-            mp.mpf('14.134725141734693790457251983562470270784257115699'),
-            mp.mpf('21.022039638771554992628479593896902777334340524903'),
-            mp.mpf('25.010857580145688763213790992562821818659549672557'),
+            self.GAMMA_1_HIGH_PRECISION,
+            self.GAMMA_2_HIGH_PRECISION,
+            self.GAMMA_3_HIGH_PRECISION,
         ]
         
         # Compute zero spacing
@@ -223,7 +230,8 @@ class RiemannZetaSynchrony:
         # Prime Navigation Index: coherence measure
         # PNI = 1 means perfect navigation of prime structure
         # Computed as normalized correlation between frequency and zero distribution
-        pni = mp.mpf(1) - abs(freq_spacing_ratio - mp.mpf(20.578)) / mp.mpf(20.578)
+        # Reference ratio (20.578) is empirically determined from QCAL analysis
+        pni = mp.mpf(1) - abs(freq_spacing_ratio - mp.mpf(self.PNI_REFERENCE_RATIO)) / mp.mpf(self.PNI_REFERENCE_RATIO)
         
         return {
             'gamma_1': float(gamma_zeros[0]),
@@ -236,22 +244,28 @@ class RiemannZetaSynchrony:
             'prime_navigation_index': float(pni),
         }
     
-    def validate_prime_navigation(self) -> Tuple[bool, str]:
+    def validate_prime_navigation(self, pni_threshold: float = None) -> Tuple[bool, str]:
         """
         Validate that the system navigates prime distribution through zeta zeros.
         
         This validates that the frequency f₀ relates meaningfully to the spacing
         of Riemann zeros, which encode the distribution of prime numbers.
         
+        Args:
+            pni_threshold: Minimum PNI for validation (default: class constant PNI_THRESHOLD)
+        
         Returns:
             Tuple of (is_valid, detailed_message)
         """
+        if pni_threshold is None:
+            pni_threshold = self.PNI_THRESHOLD
+            
         pni_data = self.compute_prime_navigation_index()
         
         # The relationship exists if we can show meaningful connection
         # between frequency and zero distribution
-        # PNI > 0.5 indicates meaningful navigation capability
-        is_valid = pni_data['prime_navigation_index'] > 0.5
+        # PNI > threshold indicates meaningful navigation capability
+        is_valid = pni_data['prime_navigation_index'] > pni_threshold
         
         lines = []
         lines.append("Prime Number Navigation Analysis:")
@@ -270,15 +284,14 @@ class RiemannZetaSynchrony:
         lines.append(f"  f₀/⟨Δγ⟩            = {pni_data['freq_spacing_ratio']:.6f}")
         lines.append(f"  Prime Navigation Index = {pni_data['prime_navigation_index']:.6f}")
         lines.append("")
-        
         if is_valid:
             lines.append("✅ PRIME DISTRIBUTION NAVIGATION CONFIRMED")
             lines.append("   The zeros of ζ(s) encode prime distribution")
-            lines.append(f"   Navigation index: {pni_data['prime_navigation_index']:.6f} > 0.5")
+            lines.append(f"   Navigation index: {pni_data['prime_navigation_index']:.6f} > {pni_threshold}")
             lines.append("   System frequency relates to zero spacing structure")
         else:
-            lines.append("⚠️  PRIME NAVIGATION INDEX INDICATES WEAK CONNECTION")
-            lines.append(f"   PNI = {pni_data['prime_navigation_index']:.6f}")
+            lines.append("⚠️  PRIME NAVIGATION INDEX BELOW THRESHOLD")
+            lines.append(f"   PNI = {pni_data['prime_navigation_index']:.6f} (threshold: {pni_threshold})")
         
         return is_valid, "\n".join(lines)
     
