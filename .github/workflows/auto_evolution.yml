@@ -55,6 +55,13 @@ jobs:
           python3 validate_abc_conjecture.py --epsilon 0.1 --max-height 1000 --verbose --save-report data/abc_validation.json || echo "ABC validation skipped (optional)"
         continue-on-error: true
 
+      - name: Count formalization status (sorry/axiom/admit)
+        run: |
+          echo "Counting formalization status..."
+          python3 scripts/count_formalization_status.py --json data/formalization_status.json --markdown data/formalization_status.md
+          echo "Updating README with current status..."
+          python3 scripts/update_readme_status.py
+        continue-on-error: false
       - name: Run Coherencia Final validation
         run: |
           echo "Running Coherencia Final: Calabi-Yau → ζ' → Hz..."
@@ -140,6 +147,22 @@ jobs:
         run: |
           git config user.name "qcal-bot"
           git config user.email "bot@qcal.cloud"
+          
+          # Add files with explicit error checking
+          if ! git add data/formalization_status.json data/formalization_status.md README.md 2>&1; then
+            echo "Warning: Could not add formalization status files"
+          fi
+          
+          if ! git add data/logs_${{ github.run_number }}.tar.gz 2>&1; then
+            echo "Note: No log archive to commit"
+          fi
+          
+          # Check if there are changes to commit
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "♾️ Auto-evolution #${{ github.run_number }} - Updated formalization status" || echo "Commit failed"
+            git push || echo "Push failed"
           git add data/logs_${{ github.run_number }}.tar.gz 2>/dev/null || true
           git add evolution_summary.txt 2>/dev/null || true
           if git diff --cached --quiet; then

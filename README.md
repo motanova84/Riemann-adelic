@@ -3292,7 +3292,26 @@ monitor.export_report(report, "hook_b_report.json")
 - **Artículo principal (standalone)**: `paper_standalone.tex` - Versión completa y autocontenida del paper
 - Artículo completo modular en `paper/main.tex` (estructura modular en `sections/`)
 - Versión alternativa en `docs/paper/main.tex`
-- **Formalización Lean 4**: En progreso en `formalization/lean/` (skeletons con `axiom` y `sorry`, pendiente de compilación completa)
+<!-- AUTO-GENERATED: Formalization Status - DO NOT EDIT MANUALLY -->
+### 📊 Estado de Formalización Lean 4 (Actualizado Automáticamente)
+
+![Formalization Status](https://img.shields.io/badge/Formalización-24%25%20Complete-red)
+
+**📝 Estado:** EN DESARROLLO (3569 statements pendientes)
+
+- **Archivos Lean totales:** 472
+- **Statements `sorry`:** 1961 (en 316 archivos)
+- **Statements `admit`:** 33 (en 9 archivos)
+- **Statements `axiom`:** 1575 (en 264 archivos)
+- **Total incompleto:** **3569**
+
+*Última actualización: 2026-01-18T14:12:03.349609*
+
+> ⚠️ **Nota:** La formalización está en progreso activo. Algunos archivos contienen 
+> `axiom` y `sorry` statements que representan pruebas por completar. El objetivo es 
+> reducir este número a cero mediante formalizaciones completas.
+
+<!-- END AUTO-GENERATED: Formalization Status -->
 - Referencias a literatura clásica y moderna
 
 ### Estado de la Formalización Lean 4
