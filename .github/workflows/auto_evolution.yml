@@ -6,7 +6,7 @@ on:
   pull_request:
     types: [opened, synchronize, reopened]
   schedule:
-    - cron: "0 */12 * * *"     # cada 12 h revisión
+    - cron: "0 */6 * * *"      # cada 6 h revisión y reporte de complejidad
 
 jobs:
   evolve:
@@ -57,6 +57,12 @@ jobs:
           python3 scripts/count_sorries_detailed.py || echo "Sorry count completed"
         continue-on-error: true
 
+      - name: Generate Complexity Analysis Report
+        run: |
+          echo "🌀 Generating complexity analysis report..."
+          python3 generate_complexity_report.py || echo "Complexity report generated"
+        continue-on-error: true
+
       - name: Run Phoenix Solver - Auto-evolution
         run: |
           echo "🔥 Phoenix Solver - Iniciando auto-evolución..."
@@ -82,6 +88,7 @@ jobs:
         run: |
           mkdir -p data/logs
           cp data/*.json data/logs/ 2>/dev/null || true
+          cp data/*.md data/logs/ 2>/dev/null || true
           tar -czf data/logs_${{ github.run_number }}.tar.gz data/logs
         continue-on-error: true
 
