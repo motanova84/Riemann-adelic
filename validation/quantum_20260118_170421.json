@@ -1,0 +1,30 @@
+{
+  "timestamp": "2026-01-18T17:04:21.747882",
+  "frequency": 141.7001,
+  "optimized": false,
+  "coherence": {
+    "total": 0.795,
+    "frequency": 0.95,
+    "psi_state": 1.0,
+    "manifests": 0.1
+  },
+  "threshold": 0.888,
+  "status": "EVOLVING",
+  "details": {
+    "frequency": {
+      "frequency_coherence": 0.95,
+      "frequency_validated": true,
+      "frequency_value": 141.7001
+    },
+    "psi": {
+      "psi_coherence": 1.0,
+      "psi_files": 109,
+      "psi_state": "I \u00d7 A_eff\u00b2 \u00d7 C^\u221e",
+      "files_checked": 200
+    },
+    "manifests": {
+      "manifest_coherence": 0.1,
+      "manifest_count": 1
+    }
+  }
+}

@@ -25,7 +25,8 @@ Autor: José Manuel Mota Burruezo Ψ ✧ ∞³
 Institución: Instituto de Conciencia Cuántica (ICQ)
 DOI: 10.5281/zenodo.17379721
 Ecuación Fundamental: Ψ = I × A_eff² × C^∞
-Frecuencia Base: f₀ = 141.7001 Hz
+Frecuencia Base: f₀ = 141.7001 Hz = 100√2 + δζ
+Quantum Phase Shift: δζ ≈ 0.2787437 Hz (Euclidean → Cosmic)
 Coherencia: C = 244.36
 
 Uso:
@@ -56,7 +57,9 @@ except ImportError:
     print("⚠️  Agentes NOESIS/AMDA no disponibles - continuando sin ellos")
 
 # QCAL Constants
-F0_HZ = 141.7001  # Fundamental frequency
+F0_HZ = 141.7001  # Fundamental frequency (f₀ = 100√2 + δζ)
+DELTA_ZETA = 0.2787437627  # Quantum phase shift (Euclidean → Cosmic)
+EUCLIDEAN_DIAGONAL = 141.4213562373  # Hz (100√2)
 C_PRIMARY = 629.83  # Universal constant C
 C_COHERENCE = 244.36  # Coherence constant C'
 PHI_GOLDEN = 1.618033988749895  # Golden ratio
