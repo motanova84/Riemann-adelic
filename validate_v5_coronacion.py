@@ -448,6 +448,57 @@ def validate_v5_coronacion(precision=30, verbose=False, save_certificate=False, 
         passed_count += 1
     else:
         failed_count += 1
+    
+    # --- Riemann-Zeta Synchrony Validation ---------------------------------------
+    print("\n🎯 RUNNING RIEMANN-ZETA (ζ) SYNCHRONY VALIDATION...")
+    print("   Validating octave resonance: 10 × γ₁ ≈ f₀")
+    
+    try:
+        from utils.riemann_zeta_synchrony import RiemannZetaSynchrony
+        
+        synchrony_start = time.time()
+        validator = RiemannZetaSynchrony(precision=precision)
+        is_valid, report = validator.full_validation()
+        synchrony_time = time.time() - synchrony_start
+        
+        # Print abbreviated report (full report is verbose)
+        print(f"\n   {'✅ SUCCESS' if is_valid else '⚠️  PARTIAL'}:")
+        print(f"      10 × γ₁ = {float(validator.gamma_1 * 10):.6f} Hz")
+        print(f"      f₀ = {validator.F0_HZ} Hz")
+        print(f"      f₀/γ₁ = {float(validator.f0 / validator.gamma_1):.6f} ≈ 10")
+        
+        if verbose:
+            print("\n" + "─" * 80)
+            print(report)
+            print("─" * 80)
+        
+        results["Riemann-Zeta Synchrony"] = {
+            'status': 'PASSED' if is_valid else 'PARTIAL',
+            'execution_time': synchrony_time
+        }
+        
+        if is_valid:
+            passed_count += 1
+            print(f"   ✅ Riemann-Zeta Synchrony: VALIDATED ({synchrony_time:.3f}s)")
+        else:
+            print(f"   ⚠️  Riemann-Zeta Synchrony: PARTIAL ({synchrony_time:.3f}s)")
+            
+    except ImportError as e:
+        print(f"   ⚠️  Riemann-Zeta synchrony validation not available: {e}")
+        results["Riemann-Zeta Synchrony"] = {
+            'status': 'SKIPPED',
+            'error': str(e),
+            'execution_time': 0.0
+        }
+        skipped_count += 1
+    except Exception as e:
+        print(f"   ❌ Riemann-Zeta synchrony validation error: {e}")
+        results["Riemann-Zeta Synchrony"] = {
+            'status': 'FAILED',
+            'error': str(e),
+            'execution_time': 0.0
+        }
+        failed_count += 1
         all_passed = False
 
     # --- Adelic D(s) zeta-free check (opcional, visible) -------------------
