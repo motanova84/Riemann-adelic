@@ -1,16 +1,17 @@
 Test Name,Status,Execution Time (s),Error
-Step 1: Axioms → Lemmas,PASSED,3.814697265625e-06,
-Step 2: Archimedean Rigidity,PASSED,0.0001380443572998047,
+Step 1: Axioms → Lemmas,PASSED,4.0531158447265625e-06,
+Step 2: Archimedean Rigidity,PASSED,0.00012159347534179688,
 Step 3: Paley-Wiener Uniqueness,PASSED,2.6226043701171875e-06,
-Step 4A: de Branges Localization,PASSED,0.000385284423828125,
-Step 4B: Weil-Guinand Localization,PASSED,1.9073486328125e-06,
-Step 5: Coronación Integration,PASSED,0.0001392364501953125,
-Stress: Spectral Measure Perturbation,PASSED,4.410743713378906e-05,
-Stress: Growth Bounds Validation,PASSED,4.0531158447265625e-06,
-Stress: Zero Subsets Consistency,PASSED,8.177757263183594e-05,
-Stress: Proof Certificate Generation,PASSED,0.0001537799835205078,
-Integration: Explicit Formula Integration,SKIPPED,0.008753776550292969,Integration test requires full explicit formula setup: No module named 'sympy'
+Step 4A: de Branges Localization,PASSED,0.00037360191345214844,
+Step 4B: Weil-Guinand Localization,PASSED,2.1457672119140625e-06,
+Step 5: Coronación Integration,PASSED,0.00011992454528808594,
+Stress: Spectral Measure Perturbation,PASSED,4.3392181396484375e-05,
+Stress: Growth Bounds Validation,PASSED,3.814697265625e-06,
+Stress: Zero Subsets Consistency,PASSED,7.462501525878906e-05,
+Stress: Proof Certificate Generation,PASSED,0.00010371208190917969,
+Integration: Explicit Formula Integration,SKIPPED,0.0005025863647460938,Integration test requires full explicit formula setup: No module named 'sympy'
 YOLO Verification,PASSED,0.0,
+Riemann-Zeta Synchrony,SKIPPED,0.0,No module named 'psutil'
 Arithmetic Fractal Verification,PASSED,0,
 Zeta Quantum Wave Verification,PASSED,0,
 Spectral Identification Theorem,SKIPPED,0,No module named 'psutil'

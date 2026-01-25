@@ -20,6 +20,10 @@ Modules:
     - spectral_constants: Dual spectral constants framework unifying
                          C_PRIMARY = 629.83 (structure) and 
                          C_COHERENCE = 244.36 (form) to derive f₀ = 141.7001 Hz
+    - dirac_spectral_operator: 𝔻_s = i d/ds Dirac spectral operator acting on
+                               complex s-plane, dual to H_Ψ
+    - master_operator_o3: 𝒪_∞³ = 𝔻_s ⊗ 𝟙 + 𝟙 ⊗ H_Ψ master operator unifying
+                         complex and real perspectives
 """
 
 from .riemann_operator import (
@@ -92,6 +96,15 @@ from .spectral_constants import (
     validate_dual_constants
 )
 
+from .horizon_detector import (
+    HorizonDetector,
+    detect_horizons_from_operator,
+    validate_horizon_riemann_correspondence
+)
+from .dirac_spectral_operator import DiracSpectralOperator
+
+from .master_operator_o3 import MasterOperatorO3
+
 __all__ = [
     'construct_H_psi',
     'compute_spectrum',
@@ -113,7 +126,7 @@ __all__ = [
     'build_padic_potential',
     'compute_first_eigenvalue',
     'compute_C_from_lambda',
-    # Spectral hierarchy (new)
+    # Spectral hierarchy
     'compute_spectral_mean',
     'compute_C_coherence',
     'compute_f0_from_hierarchy',
@@ -123,20 +136,16 @@ __all__ = [
     'analyze_f0_C_relationship',
     'validate_operator_self_adjoint',
     'run_complete_noetic_validation',
-    # Constants - spectral hierarchy
+    # Constants from noetic_operator
     'F0_TARGET',
-    'C_PRIMARY',
-    'C_COHERENCE',
     'C_TARGET',
     'LAMBDA_0_TARGET',
     'EULER_MASCHERONI',
-    'PHI',
     'DELTA_FRACTAL',
-    'O4_REFINEMENT'
+    'O4_REFINEMENT',
     # Spectral constants exports
     'C_PRIMARY',
     'C_COHERENCE',
-    'LAMBDA_0',
     'F0_SPECTRAL',
     'OMEGA_0_SPECTRAL',
     'PHI',
@@ -148,5 +157,12 @@ __all__ = [
     'compute_coherence_factor',
     'derive_f0_from_constants',
     'verify_f0_coherence',
-    'validate_dual_constants'
+    'validate_dual_constants',
+    # Horizon detector exports
+    'HorizonDetector',
+    'detect_horizons_from_operator',
+    'validate_horizon_riemann_correspondence',
+    # Operator duality exports
+    'DiracSpectralOperator',
+    'MasterOperatorO3'
 ]
