@@ -1,0 +1,14 @@
+{
+  "timestamp": "auto",
+  "metrics": {
+    "complexity": {
+      "total_files": 455,
+      "total_lines": 117429,
+      "avg_lines_per_file": 258.0857142857143
+    },
+    "proof_length": {
+      "avg_length": 50,
+      "note": "Placeholder calculation"
+    }
+  }
+}

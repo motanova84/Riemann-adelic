@@ -14,6 +14,24 @@ This generates a complete audit report in `data/audit_report.json`.
 
 ## Environment Requirements
 
+### Comprehensive Environment Lock
+
+This repository uses **ENV.lock** for complete environment reproducibility. It captures:
+
+- **System information**: OS, kernel, architecture
+- **Python toolchain**: Version, implementation, compiler
+- **Mathematical tools**: Lean 4, Git, GCC versions
+- **QCAL ∞³ configuration**: 141.7001 Hz, coherence constants C and C'
+- **Dataset checksums**: SHA-256 hashes for Evac_Rpsi_data.csv and validation data
+- **Python packages**: 70+ packages with exact versions
+
+**Verify your environment matches:**
+```bash
+python verify_environment_integrity.py --verbose
+```
+
+See [ENV_LOCK_GUIDE.md](ENV_LOCK_GUIDE.md) for detailed documentation.
+
 ### Tested Operating System
 - **Ubuntu 24.04 LTS** (Linux kernel 6.11.0-1018-azure x86_64)
 - Also compatible with: Ubuntu 22.04, Debian 11+, macOS 12+
@@ -23,14 +41,19 @@ This generates a complete audit report in `data/audit_report.json`.
 - Also compatible with: Python 3.11.x
 
 ### Dataset Hash Verification
-The zero dataset must match this SHA-256 hash:
+The zero dataset must match this SHA-256 hash (automatically verified by ENV.lock):
 ```
 412ab7ba54a5041ff12324650e8936995795c6abb7cfdb97d7a765a2c4ce7869  Evac_Rpsi_data.csv
 ```
 
-Verify with:
+Verify manually:
 ```bash
 sha256sum Evac_Rpsi_data.csv
+```
+
+Or use the comprehensive verification:
+```bash
+python verify_environment_integrity.py
 ```
 
 ### Single-Command Reproduction

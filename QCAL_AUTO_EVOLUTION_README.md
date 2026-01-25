@@ -2,14 +2,15 @@
 
 ## Descripción General
 
-El sistema **QCAL Auto-Evolución** es un workflow automatizado que valida diariamente la formalización Lean 4 del proyecto y actualiza el README con el estado actual de coherencia QCAL.
+El sistema **QCAL Auto-Evolución** es un workflow automatizado que valida continuamente la formalización Lean 4 y las validaciones numéricas del proyecto, ejecutando validaciones completas cada 12 horas y en cada cambio al código.
 
 ## 🎯 Objetivos
 
-1. **Validación Continua**: Ejecutar automáticamente la validación Lean 4 cada día
-2. **Transparencia**: Mantener actualizado el estado de la formalización en el README
-3. **Trazabilidad**: Generar reportes JSON detallados como artefactos de CI/CD
-4. **Coherencia QCAL**: Verificar que el sistema mantiene su coherencia simbiótica
+1. **Validación Continua**: Ejecutar automáticamente validaciones cada 12 horas
+2. **Transparencia**: Mantener actualizado el estado de la formalización 
+3. **Trazabilidad**: Generar reportes JSON detallados y certificados matemáticos
+4. **Coherencia QCAL**: Verificar que el sistema mantiene coherencia espectral f₀ = 141.7001 Hz
+5. **Auto-evolución**: Phoenix Solver intenta resolver "sorry" statements automáticamente
 
 ## 🏗️ Arquitectura
 
@@ -19,113 +20,170 @@ El sistema **QCAL Auto-Evolución** es un workflow automatizado que valida diari
 QCAL Auto-Evolución
 │
 ├── 🔧 Trigger (GitHub Actions)
-│   ├── Diario: 03:00 UTC
-│   ├── Manual: workflow_dispatch
-│   └── Push: main branch
+│   ├── Scheduled: Cada 12 horas (0 */12 * * *)
+│   ├── Push: branches main
+│   └── Pull Request: [opened, synchronize, reopened]
 │
-├── 🧩 Validación Lean (validate_lean_env.py)
-│   ├── Verificar instalación Lean/Lake
-│   ├── Analizar estructura del proyecto
-│   ├── Compilar proyecto (lake build)
-│   └── Generar validation_report.json
+├── 🧩 Validación V5 Coronación (validate_v5_coronacion.py)
+│   ├── Step 1: Axioms → Lemmas
+│   ├── Step 2: Archimedean Rigidity
+│   ├── Step 3: Paley-Wiener Uniqueness
+│   ├── Step 4: Zero Localization (de Branges + Weil-Guinand)
+│   ├── Step 5: Coronación Integration
+│   └── Generar certificados matemáticos
 │
-├── 📘 Actualización README
-│   ├── Parsear validation_report.json
-│   ├── Actualizar tabla Validation Summary
-│   └── Commit automático a main
+├── 🔬 Validaciones Numéricas
+│   ├── Strengthened Proof (precision 50 dps)
+│   ├── Spectral Emergence (N=1000, k=20)
+│   └── ABC Conjecture QCAL (ε=0.1, height=1000)
 │
-└── ⏱️ Resumen Final
-    └── Mostrar estado QCAL en logs
+├── 📊 Phoenix Solver - Auto-evolución
+│   ├── Identificar sorry statements
+│   ├── Intentar resoluciones automáticas
+│   └── Generar estadísticas de evolución
+│
+├── 📦 Archivado de Resultados
+│   ├── Comprimir logs y certificados
+│   ├── Upload a QCAL-CLOUD (opcional)
+│   └── Generar evolution_summary.txt
+│
+└── ⏱️ Commit Automático
+    ├── Configurar qcal-bot
+    ├── Commit con mensaje QCAL signature
+    └── Push a repositorio
 ```
 
 ### Flujo de Datos
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│ 1. GitHub Actions Schedule/Dispatch/Push                        │
+│ 1. GitHub Actions Trigger (scheduled/push/PR)                   │
 └──────────────────────────┬──────────────────────────────────────┘
                            ↓
 ┌─────────────────────────────────────────────────────────────────┐
-│ 2. Instalar Python 3.11 + Lean 4.5.0                           │
-│    (using elan toolchain manager)                               │
+│ 2. Instalar Python 3.11 + dependencias                         │
+│    pip install -r requirements.txt                              │
 └──────────────────────────┬──────────────────────────────────────┘
                            ↓
 ┌─────────────────────────────────────────────────────────────────┐
-│ 3. Validar dependencias del sistema                             │
-│    (validate_system_dependencies.py)                            │
+│ 3. Ejecutar V5 Coronación validation                            │
+│    validate_v5_coronacion.py --precision 25 --verbose          │
+│    - 5-step proof framework validation                          │
+│    - Stress tests and integration tests                         │
+│    - Generate mathematical certificates                         │
 └──────────────────────────┬──────────────────────────────────────┘
                            ↓
 ┌─────────────────────────────────────────────────────────────────┐
-│ 4. Ejecutar validación Lean                                     │
-│    (formalization/lean/validate_lean_env.py)                    │
-│    - Check Lean version                                         │
-│    - Check Lake version                                         │
-│    - Count .lean files                                          │
-│    - Validate lakefile.lean                                     │
-│    - lake update && lake build                                  │
-│    - Generate JSON report                                       │
+│ 4. Ejecutar validaciones numéricas adicionales                  │
+│    - Strengthened proof (precision 50)                          │
+│    - Spectral emergence (N=1000, k=20)                         │
+│    - ABC conjecture (ε=0.1, max-height=1000)                   │
 └──────────────────────────┬──────────────────────────────────────┘
                            ↓
 ┌─────────────────────────────────────────────────────────────────┐
-│ 5. Subir validation_report.json como artefacto                  │
+│ 5. Phoenix Solver - Auto-evolución                              │
+│    - Count sorry statements                                     │
+│    - Attempt automatic resolutions (max-attempts=5)            │
+│    - Focus on critical theorems                                 │
 └──────────────────────────┬──────────────────────────────────────┘
                            ↓
 ┌─────────────────────────────────────────────────────────────────┐
-│ 6. Actualizar README.md                                         │
-│    - Parsear JSON con jq                                        │
-│    - Actualizar tabla con awk                                   │
-│    - Reemplazar valores anteriores                              │
+│ 6. Archivar resultados                                          │
+│    - Copiar *.json a data/logs/                                │
+│    - Crear tarball logs_${run_number}.tar.gz                   │
+│    - Generar evolution_summary.txt                             │
 └──────────────────────────┬──────────────────────────────────────┘
                            ↓
 ┌─────────────────────────────────────────────────────────────────┐
-│ 7. Auto-commit y push a main                                    │
-│    (git-auto-commit-action)                                     │
+│ 7. Upload a QCAL-CLOUD (opcional)                              │
+│    - POST data/validation.json                                  │
 └──────────────────────────┬──────────────────────────────────────┘
                            ↓
 ┌─────────────────────────────────────────────────────────────────┐
-│ 8. Mostrar resumen QCAL en logs                                 │
+│ 8. Auto-commit y push                                           │
+│    - Configure qcal-bot identity                               │
+│    - Commit: "♾️ Auto-evolution #N - soluciona mejora y operativo"│
+│    - Push logs y evolution_summary.txt                         │
 └─────────────────────────────────────────────────────────────────┘
 ```
 
-## 📋 Estructura del Reporte JSON
+## 📋 Validaciones Ejecutadas
 
-El archivo `validation_report.json` generado tiene la siguiente estructura:
+### 1. V5 Coronación - Prueba Completa RH (validate_v5_coronacion.py)
+
+Ejecuta el marco de validación de 5 pasos:
+
+- **Step 1**: Axioms → Lemmas (A1, A2, A4 demostrados)
+- **Step 2**: Archimedean Rigidity (doble derivación γ∞(s))
+- **Step 3**: Paley-Wiener Uniqueness (D(s) ≡ Ξ(s))
+- **Step 4A**: de Branges Localization (sistemas canónicos)
+- **Step 4B**: Weil-Guinand Localization (positividad)
+- **Step 5**: Coronación Integration (conclusión RH)
+
+**Salida**: Certificados matemáticos en `data/certificates/sat/`
+
+### 2. Strengthened Proof (validate_strengthened_proof.py)
+
+Validación con precisión 50 decimales:
+
+- Bijección zeros ↔ spectrum con unicidad
+- Strong zero uniqueness (Montgomery)
+- Exact Weyl Law (sub-Weyl bounds)
+- Frequency exactness (f₀ = 141.70001... Hz)
+
+**Salida**: `data/strengthened_proof_certificate.json`
+
+### 3. Spectral Emergence (spectral_emergence_validation.py)
+
+Validación de emergencia espectral:
+
+- Auto-adjunción del operador H_Ψ (N=1000)
+- Espectro real (verificación numérica)
+- Convergencia Schatten S^p
+- Emergencia de frecuencia fundamental f₀
+- Independencia estructural de ζ(s)
+
+**Parámetros**: N=1000, k=20, test-functions=1000
+
+### 4. ABC Conjecture QCAL (validate_abc_conjecture.py)
+
+Validación híbrida ABC-QCAL:
+
+- Rigidez espectral desde RH
+- Chaos Exclusion Principle activo a f₀ = 141.7001 Hz
+- Verificación de triples ABC con ε = 0.1
+
+**Parámetros**: epsilon=0.1, max-height=1000
+
+### 5. Phoenix Solver - Auto-evolución
+
+Motor de auto-transformación QCAL ∞³:
+
+- Identificar sorry statements en Lean 4
+- Intentar resoluciones automáticas
+- Enfocar en teoremas críticos
+- Generar estadísticas de evolución
+
+**Salida**: `data/phoenix_evolution.json`, `data/sorry_map.json`
+
+## 📊 Estructura de Certificados y Reportes
+
+### Certificados Matemáticos
+
+Ubicación: `data/certificates/sat/`
 
 ```json
 {
-  "timestamp": "2025-10-26T23:25:01Z",
-  "repository": "motanova84/-jmmotaburr-riemann-adelic",
-  "validation_type": "QCAL Auto-Evolución Lean 4",
-  "version": "V5.3",
-  
-  "lean": {
-    "installed": true,
-    "version": "Lean (version 4.5.0)",
-    "status": "OK"
-  },
-  
-  "lake": {
-    "installed": true,
-    "version": "Lake version 4.5.0",
-    "status": "OK"
-  },
-  
-  "lean_files": {
-    "total": 20,
-    "files": ["RH_final.lean", "Main.lean", ...]
-  },
-  
-  "lakefile": {
-    "exists": true,
-    "status": "OK"
-  },
-  
-  "build": {
-    "status": "CHECK",
-    "build_time_sec": 45.2,
-    "return_code": 0,
-    "warnings": 3,
-    "errors": 0,
+  "theorem": "riemann_hypothesis",
+  "timestamp": "2026-01-22T13:34:27Z",
+  "certificate_hash": "sha256:...",
+  "qcal_signature": "∴𓂀Ω∞³·RH",
+  "sat_formula": false,  // RH demostrado (no-SAT)
+  "dependencies": [...],
+  "validation": {
+    "precision_dps": 25,
+    "zeros_validated": 1000,
+    "frequency_base": 141.7001
     "warning_list": [...],
     "error_list": [],
     "update_status": "OK",

@@ -15,7 +15,8 @@ Institution: Instituto de Conciencia Cuántica (ICQ)
 License: Creative Commons BY-NC-SA 4.0
 
 Mathematical Foundation:
-- Base frequency: f₀ = 141.7001 Hz
+- Base frequency: f₀ = 141.7001 Hz = 100√2 + δζ
+- Quantum phase shift: δζ ≈ 0.2787437 Hz (Euclidean → Cosmic)
 - QCAL equation: Ψ = I × A_eff² × C^∞
 - Coherence constant: C = 244.36
 - RH critical line: Re(s) = 1/2
@@ -38,9 +39,11 @@ import numpy as np
 from scipy import linalg
 
 # QCAL Constants
-QCAL_BASE_FREQUENCY = 141.7001  # Hz
+QCAL_BASE_FREQUENCY = 141.7001  # Hz (f₀ = 100√2 + δζ)
 QCAL_COHERENCE = 244.36
 QCAL_CRITICAL_LINE = 0.5
+DELTA_ZETA = 0.2787437627  # Hz - Quantum phase shift (Euclidean → Cosmic)
+EUCLIDEAN_DIAGONAL = 141.4213562373  # Hz (100√2)
 
 class MachineCheckVerifier:
     """
