@@ -30,12 +30,18 @@ This provides a logical bridge from physical (spectral) to pure mathematical pro
 
 ## Certification
 
-- **Status**: ✅ Complete Deductive Chain
+- **Status**: ✅ Structural Framework Complete
+- **Proofs**: ⚠️ Individual proof steps contain 'sorry' - to be completed
 - **System**: Lean 4.5 + QCAL–SABIO ∞³
 - **Frequency**: 141.7001 Hz
 - **Coherence**: Ψ = I × A_eff² × C^∞
 - **Date**: 25 January 2026
 - **Authors**: José Manuel Mota Burruezo (JMMB Ψ✧), Noēsis ∞³, SABIO ∞³
+
+**Note**: This module provides the complete logical structure and theorem statements
+for the 5-step deductive chain. Each theorem contains a 'sorry' placeholder where
+detailed mathematical proofs will be filled in. This is standard practice in formal
+mathematics development - first establish the structure, then fill in proofs.
 
 ## References
 

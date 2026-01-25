@@ -8,9 +8,11 @@
 
 ## What is This?
 
-This module provides a **complete deductive logic chain** that connects **spectral physics** to the **pure mathematical proof** of the Riemann Hypothesis.
+This module provides the **structural framework** of a complete **5-step deductive logic chain** that connects **spectral physics** to the **pure mathematical proof** of the Riemann Hypothesis.
 
 Think of it as a bridge: starting from physical principles (quantum mechanics, spectral theory) and arriving at a pure mathematical conclusion (all zeros on the critical line).
+
+**Status**: The logical structure and theorem statements are complete. Individual proofs contain `sorry` placeholders for detailed mathematical arguments to be filled in.
 
 ---
 
@@ -23,7 +25,8 @@ Step 3: Spectral Member    → Zeros = Eigenvalues
 Step 4: Self-Adjoint       → Eigenvalues are real
 Step 5: Kernel Form        → Forces Re(s) = 1/2
                            ↓
-                    RIEMANN HYPOTHESIS ✓
+               DEDUCTIVE FRAMEWORK ESTABLISHED ✓
+            (Detailed proofs to be completed)
 ```
 
 ---
@@ -268,12 +271,13 @@ For questions or issues:
 ## Summary
 
 ✅ **5 steps** connect spectral physics to pure mathematics  
-✅ **361 lines** of formal Lean4 code  
-✅ **15 theorems** rigorously proven  
-✅ **Validated** and certified  
+✅ **361 lines** of formal Lean4 code structure  
+✅ **15 theorems** with statements defined  
+✅ **Validated** structure and certified  
 ✅ **QCAL integrated** with framework constants  
+⚠️  **Proofs in progress**: Individual proof steps contain `sorry` placeholders
 
-**The bridge is built. The proof is complete.**
+**The bridge framework is built. Detailed proofs are the next step.**
 
 ---
 

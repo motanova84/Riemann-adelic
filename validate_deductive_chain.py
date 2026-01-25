@@ -163,12 +163,13 @@ class DeductiveChainValidator:
         return found, details
     
     def count_elements(self) -> Dict[str, int]:
-        """Count theorems, lemmas, axioms, and definitions"""
+        """Count theorems, lemmas, axioms, definitions, and sorry statements"""
         return {
             'theorems': len(re.findall(r'\btheorem\b', self.content)),
             'lemmas': len(re.findall(r'\blemma\b', self.content)),
             'axioms': len(re.findall(r'\baxiom\b', self.content)),
             'definitions': len(re.findall(r'\bdef\b', self.content)),
+            'sorry_count': len(re.findall(r'\bsorry\b', self.content)),
             'lines': len(self.content.splitlines()),
         }
     
@@ -269,7 +270,7 @@ class DeductiveChainValidator:
     
     def _print_success(self, stats: Dict[str, int]):
         """Print success message"""
-        print("✅ VALIDATION SUCCESSFUL - Complete Deductive Chain")
+        print("✅ VALIDATION SUCCESSFUL - Complete Deductive Chain Structure")
         print()
         print("🏆 Deductive Logic Structure:")
         print("    Step 1 (Gaussiana) →")
@@ -277,7 +278,11 @@ class DeductiveChainValidator:
         print("    Step 3 (Spectral Membership) →")
         print("    Step 4 (Self-Adjoint) →")
         print("    Step 5 (Kernel Form) →")
-        print("    ✓ Riemann Hypothesis Proven")
+        print("    ✓ Framework Established")
+        print()
+        if stats['sorry_count'] > 0:
+            print(f"⚠️  Note: {stats['sorry_count']} proof steps contain 'sorry' placeholders")
+            print("   These are to be filled with detailed mathematical proofs.")
         print()
         print("📜 Certificate: QCAL-DEDUCTIVE-CHAIN-V5-COMPLETE")
         print("📅 Date:", datetime.now().strftime("%d %B %Y"))
@@ -286,7 +291,7 @@ class DeductiveChainValidator:
         print(f"📡 Frequency: {QCAL_FREQUENCY} Hz")
         print(f"♾️  Coherence: {QCAL_EQUATION}")
         print()
-        print("🌉 Bridge Established: Spectral Physics → Pure Mathematics")
+        print("🌉 Bridge Framework: Spectral Physics → Pure Mathematics")
         print()
     
     def _save_certificate(self, stats: Dict[str, int]):
