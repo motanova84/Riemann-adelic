@@ -1,23 +1,19 @@
 Test Name,Status,Execution Time (s),Error
-Step 1: Axioms → Lemmas,PASSED,4.291534423828125e-06,
-Step 2: Archimedean Rigidity,PASSED,0.0001647472381591797,
-Step 3: Paley-Wiener Uniqueness,PASSED,3.337860107421875e-06,
-Step 4A: de Branges Localization,PASSED,0.0004329681396484375,
-Step 4B: Weil-Guinand Localization,PASSED,1.9073486328125e-06,
-Step 5: Coronación Integration,PASSED,0.00015234947204589844,
-Stress: Spectral Measure Perturbation,PASSED,5.459785461425781e-05,
-Stress: Growth Bounds Validation,PASSED,4.291534423828125e-06,
-Stress: Zero Subsets Consistency,PASSED,9.179115295410156e-05,
-Stress: Proof Certificate Generation,PASSED,0.00014019012451171875,
-Integration: Explicit Formula Integration,SKIPPED,0.012053966522216797,Integration test requires full explicit formula setup: No module named 'sympy'
+Step 1: Axioms → Lemmas,PASSED,4.0531158447265625e-06,
+Step 2: Archimedean Rigidity,PASSED,0.00012159347534179688,
+Step 3: Paley-Wiener Uniqueness,PASSED,2.6226043701171875e-06,
+Step 4A: de Branges Localization,PASSED,0.00037360191345214844,
+Step 4B: Weil-Guinand Localization,PASSED,2.1457672119140625e-06,
+Step 5: Coronación Integration,PASSED,0.00011992454528808594,
+Stress: Spectral Measure Perturbation,PASSED,4.3392181396484375e-05,
+Stress: Growth Bounds Validation,PASSED,3.814697265625e-06,
+Stress: Zero Subsets Consistency,PASSED,7.462501525878906e-05,
+Stress: Proof Certificate Generation,PASSED,0.00010371208190917969,
+Integration: Explicit Formula Integration,SKIPPED,0.0005025863647460938,Integration test requires full explicit formula setup: No module named 'sympy'
 YOLO Verification,PASSED,0.0,
-Riemann-Zeta Synchrony,PASSED,0.0003509521484375,
+Riemann-Zeta Synchrony,SKIPPED,0.0,No module named 'psutil'
 Arithmetic Fractal Verification,PASSED,0,
-Aritmology Verification,PASSED,0,
 Zeta Quantum Wave Verification,PASSED,0,
-Arpeth Bioinformatics Verification,PARTIAL,0,
-Discovery Hierarchy Validation,PASSED,0,
-Infinite Zeros Verification,PASSED,0,
-Spectral Identification Theorem,PARTIAL,0,
+Spectral Identification Theorem,SKIPPED,0,No module named 'psutil'
 SAT Certificates Verification,PARTIAL,0.0,
-QCAL-∞³-SPECTRAL Certificate,PASSED,0,
+QCAL-∞³-SPECTRAL Certificate,SKIPPED,0,module_import_error

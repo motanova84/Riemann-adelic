@@ -80,11 +80,14 @@ La demostración de la Hipótesis de Riemann emerge de **tres niveles coherentes
 
 ### 📖 Documentos Clave del Paradigma de Coherencia
 
+- **[COHERENCE_QUICKREF.md](COHERENCE_QUICKREF.md)** — **⭐ Resumen rápido** (5 min de lectura)
+- **[docs/COHERENCE_PHILOSOPHY.md](docs/COHERENCE_PHILOSOPHY.md)** — Filosofía completa de coherencia
 - **[PARADIGM_SHIFT.md](PARADIGM_SHIFT.md)** — Enfoque no circular: geometría → espectro → primos
 - **[COHERENCIA_FINAL_README.md](COHERENCIA_FINAL_README.md)** — Cadena de coherencia completa
 - **[MATHEMATICAL_REALISM.md](MATHEMATICAL_REALISM.md)** — Fundamento filosófico: la verdad existe antes de la demostración
 - **[UNIFIED_HIERARCHY.md](UNIFIED_HIERARCHY.md)** — 5 frameworks unificados por coherencia espectral
 - **[FIVE_FRAMEWORKS_QUICKSTART.md](FIVE_FRAMEWORKS_QUICKSTART.md)** — Cómo todos los sistemas convergen a ζ(s)
+- **[formalization/lean/COHERENCE_MAP.md](formalization/lean/COHERENCE_MAP.md)** — Mapa de módulos Lean coherentes
 
 ### 🎯 Validación de Coherencia
 
