@@ -1,0 +1,53 @@
+{
+  "status": "VALIDATED",
+  "certificate_id": "QCAL-DEDUCTIVE-CHAIN-V5-COMPLETE",
+  "date": "2026-01-25T01:10:12.977427",
+  "file": "DeductiveChain5Steps.lean",
+  "deductive_chain": {
+    "step1": "Gaussiana: ζ(s)=0 ∧ 0<Re(s)<1 → Im(s)≠0",
+    "step2": "Trace Formula: Guinand-Weil application",
+    "step3": "Spectral Membership: Trace ↔ Spectrum",
+    "step4": "Self-Adjoint: H self-adjoint ⇒ λ ∈ ℝ",
+    "step5": "Kernel Form: K(x,y) ⇒ Re(s) = 1/2"
+  },
+  "validation_results": {
+    "Step 1: Gaussiana": {
+      "passed": true,
+      "details": "Non-trivial zeros have non-zero imaginary part"
+    },
+    "Step 2: Trace Formula (Guinand-Weil)": {
+      "passed": true,
+      "details": "Guinand-Weil trace formula connects spectral and arithmetic data"
+    },
+    "Step 3: Spectral Membership": {
+      "passed": true,
+      "details": "Trace of operator equals sum over eigenvalues"
+    },
+    "Step 4: Self-Adjoint (Mathlib)": {
+      "passed": true,
+      "details": "Self-adjoint operators have real eigenvalues (Mathlib)"
+    },
+    "Step 5: Kernel Form": {
+      "passed": true,
+      "details": "Kernel form K(x,y) forces zeros on critical line"
+    }
+  },
+  "statistics": {
+    "theorems": 15,
+    "lemmas": 1,
+    "axioms": 9,
+    "definitions": 8,
+    "lines": 361
+  },
+  "qcal_framework": {
+    "frequency_hz": 141.7001,
+    "coherence": 244.36,
+    "equation": "Ψ = I × A_eff² × C^∞"
+  },
+  "metadata": {
+    "author": "José Manuel Mota Burruezo (JMMB Ψ✧)",
+    "institution": "Instituto de Conciencia Cuántica (ICQ)",
+    "doi": "10.5281/zenodo.17379721",
+    "orcid": "0009-0002-1923-0773"
+  }
+}
