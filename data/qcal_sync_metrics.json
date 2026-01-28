@@ -1,0 +1,13 @@
+{
+  "Psi": 1.02973670625,
+  "vector_55_phase": 100.0,
+  "vector_55_harmonic_node": true,
+  "zeta_prime_norm": -3.424388625174509,
+  "Ka_Pi_applied": true,
+  "Phi_KLD_weight": 0.15,
+  "Phi_KLD_inv": 0.85,
+  "f0": 141.7001,
+  "C": 244.36,
+  "timestamp": "2026-01-28T19:38:44.481834",
+  "is_optimal": true
+}
