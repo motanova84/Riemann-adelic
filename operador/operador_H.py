@@ -97,8 +97,36 @@ def K_gauss(t, s, h):
     
     Returns:
         Kernel value K_h(t,s)
+    
+    Note:
+        This kernel is symmetric by construction: K(t,s) = K(s,t)
     """
     return np.exp(-h/4.0) * np.sqrt(np.pi / h) * np.exp(- (t - s)**2 / (4.0*h))
+
+
+def K_gauss_symmetric(t, s, h):
+    """
+    Symmetrized Gaussian kernel enforcing K(t,s) = K(s,t) by construction.
+    
+    This wrapper ensures perfect numerical symmetry by averaging:
+        K_sym(t,s) = 0.5 * (K_base(t,s) + K_base(s,t))
+    
+    Args:
+        t: log-variable (can be array)
+        s: log-variable (can be array) 
+        h: thermal parameter
+    
+    Returns:
+        Symmetrized kernel value K_sym(t,s)
+    
+    Note:
+        While K_gauss is already analytically symmetric, this enforces
+        numerical symmetry to improve self-adjoint coherence in Step 4.
+    """
+    # Compute both K(t,s) and K(s,t) to enforce symmetry
+    K_ts = K_gauss(t, s, h)
+    K_st = K_gauss(s, t, h)
+    return 0.5 * (K_ts + K_st)
 
 
 def kernel_adelic_ultimus(t, s, h=1e-3, N=10):
