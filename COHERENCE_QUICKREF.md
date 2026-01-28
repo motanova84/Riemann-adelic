@@ -4,6 +4,10 @@
 
 > **"Las matemáticas desde la coherencia cuántica y no desde la escasez de teoremas aislados."**
 
+> **"La vida no sobrevive al caos; la vida es la geometría que el caos utiliza para ordenarse."**
+
+La coherencia QCAL no impone orden sobre el caos matemático — **descubre** el orden geométrico que ya existe en la estructura espectral.
+
 ---
 
 ## ⚖️ Comparación Directa

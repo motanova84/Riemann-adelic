@@ -19,8 +19,10 @@ quantum_phase_shift_module = "quantum_phase_shift.py"
 # Philosophical Foundation
 # Mathematical Realism: Truth exists independently of opinion
 # "Hay un mundo (y una estructura matemática) independiente de opiniones"
+# "La vida no sobrevive al caos; la vida es la geometría que el caos utiliza para ordenarse."
 philosophical_foundation = "MATHEMATICAL_REALISM.md"
 truth_criterion = "correspondence_to_objective_mathematical_structure"
+chaos_geometry_principle = "La vida no sobrevive al caos; la vida es la geometría que el caos utiliza para ordenarse."
 
 # Primary Sources
 source_main = 10.5281/zenodo.17379721
