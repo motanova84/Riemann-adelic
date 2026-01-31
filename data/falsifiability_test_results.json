@@ -1,0 +1,69 @@
+{
+  "test1_metrics": [
+    {
+      "error": 7.4e-86,
+      "old": 1.0,
+      "exponential": 1.0,
+      "qcal": 1.0,
+      "hybrid": 1.0
+    },
+    {
+      "error": 1e-10,
+      "old": 0.9999999999989999,
+      "exponential": 0.9999999999994286,
+      "qcal": 1.0,
+      "hybrid": 0.9999999999997142
+    },
+    {
+      "error": 1e-05,
+      "old": 0.9999999000000099,
+      "exponential": 0.9999999428571444,
+      "qcal": 0.9999999999999982,
+      "hybrid": 0.9999999714285713
+    },
+    {
+      "error": 0.1,
+      "old": 0.9990009990009991,
+      "exponential": 0.9994287346627838,
+      "qcal": 0.9999998325289688,
+      "hybrid": 0.9997142835958763
+    },
+    {
+      "error": 1.0,
+      "old": 0.9900990099009901,
+      "exponential": 0.9943020097625482,
+      "qcal": 0.9999832531745417,
+      "hybrid": 0.997142631468545
+    },
+    {
+      "error": 10.0,
+      "old": 0.9090909090909091,
+      "exponential": 0.9444591369948698,
+      "qcal": 0.9983280893745105,
+      "hybrid": 0.9713936131846901
+    },
+    {
+      "error": 100.0,
+      "old": 0.5,
+      "exponential": 0.5647181220077592,
+      "qcal": 0.8565522820684317,
+      "hybrid": 0.7106352020380955
+    }
+  ],
+  "test2_grid_size": {
+    "average_difference": 6.364418165407505,
+    "maximum_difference": 57.49662676110373,
+    "test_passed": true
+  },
+  "test3_modulation": {
+    "modulation_amplitude": 0.002497028310795907,
+    "max_deviation": 0.01759673189218036,
+    "test_passed": true
+  },
+  "test4_symmetry": {
+    "max_asymmetry_base": 0.0,
+    "max_asymmetry_sym": 0.0,
+    "test_passed": true
+  },
+  "test5_pipeline": null
+}
