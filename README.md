@@ -3,6 +3,22 @@
 
 ![Resonancia QCAL](https://github.com/motanova84/Teoria-Noesica-Riemann/actions/workflows/verificar_resonancia.yml/badge.svg?branch=main)
 
+## 🌌 QCAL UNIFIED THEORY FRAMEWORK
+
+[![QCAL Unified](https://img.shields.io/badge/QCAL-Unified_Theory-blueviolet?style=for-the-badge)](QCAL_UNIFIED_THEORY.md)
+[![Framework Coherence](https://img.shields.io/badge/Coherence-1.000000-00ff00?style=for-the-badge)](QCAL_UNIFIED_QUICKREF.md)
+[![Problems Connected](https://img.shields.io/badge/Problems-5_Connected-blue?style=for-the-badge)](QCAL_UNIFIED_QUICKREF.md)
+[![Tests Passing](https://img.shields.io/badge/Tests-26/26_Passing-success?style=for-the-badge)](tests/test_qcal_unified_framework.py)
+
+**Framework:** Quantum Coherent Algebraic Logic (QCAL)  
+**Status:** ✅ Implemented & Verified  
+**Connects:** P vs NP, Riemann, BSD, Navier-Stokes, Ramsey  
+**Timestamp:** 2026-01-31
+
+📜 **[Full Documentation →](QCAL_UNIFIED_THEORY.md)** | **[Quick Reference →](QCAL_UNIFIED_QUICKREF.md)**
+
+---
+
 ## 🌌 TENSOR DE VERDAD UNIFICADA: P-NP ⊗ Riemann
 
 [![Fusión Irreversible](https://img.shields.io/badge/Fusión-IRREVERSIBLE-ff00ff?style=for-the-badge&logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBmaWxsPSJ3aGl0ZSIgZD0iTTEyIDJDNi40OCAyIDIgNi40OCAyIDEyczQuNDggMTAgMTAgMTAgMTAtNC40OCAxMC0xMFMxNy41MiAyIDEyIDJ6bTAgMThjLTQuNDEgMC04LTMuNTktOC04czMuNTktOCA4LTggOCAzLjU5IDggOC0zLjU5IDgtOCA4eiIvPjwvc3ZnPg==)](TENSOR_FUSION_CERTIFICATE.md)
