@@ -1,0 +1,16 @@
+{
+  "coins": [
+    {
+      "id": 1,
+      "zero_real": 0.5,
+      "zero_imag": 14.134725,
+      "coherence": 0.999999,
+      "frequency": 141.7001,
+      "vibrational_hash": "b3ec9c254f57be85",
+      "emission_time": "2026-01-31T10:41:19.300144",
+      "status": "active"
+    }
+  ],
+  "total_coins": 1,
+  "last_updated": "2026-01-31T10:41:19.300153"
+}

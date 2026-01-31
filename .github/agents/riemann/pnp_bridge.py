@@ -104,12 +104,12 @@ class PNPSpectralBridge:
         
         # Resonance focuses search: only check coherent regions
         # Assumption: coherence localizes to ~1% of total region
-        coherence_factor = 1.0 - coherence_level  # Higher coherence = smaller search
+        coherence_factor = max(1.0 - coherence_level, 0.001)  # Minimum 0.1% search
         effective_range = range_size * coherence_factor
         
         # Points to check in coherent approach
         resolution = 0.01
-        points_to_check = int(effective_range / resolution)
+        points_to_check = max(int(effective_range / resolution), 1)  # At least 1 point
         
         # Coherence provides O(1) guidance per point
         complexity_per_point = 1.0  # Constant time with coherence
