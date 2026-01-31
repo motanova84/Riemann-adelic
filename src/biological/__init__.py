@@ -36,6 +36,14 @@ from .biological_clock import (
     PhaseAccumulator,
 )
 
+from .cytoplasmic_flow_model import (
+    FlowParameters,
+    NavierStokesRegularized,
+    RiemannResonanceOperator,
+    demonstrate_navier_stokes_coherence,
+    F0_HZ,
+)
+
 __all__ = [
     'EnvironmentalSpectralField',
     'SpectralComponent',
@@ -46,6 +54,11 @@ __all__ = [
     'BiologicalClock',
     'BiologicalFilter',
     'PhaseAccumulator',
+    'FlowParameters',
+    'NavierStokesRegularized',
+    'RiemannResonanceOperator',
+    'demonstrate_navier_stokes_coherence',
+    'F0_HZ',
 ]
 
 __version__ = '1.0.0'
