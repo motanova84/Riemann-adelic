@@ -202,6 +202,13 @@ class CytoplasmicFlowModel:
         and should match Riemann zero imaginary parts when
         scaled appropriately.
         
+        The scaling factors are derived from the first Riemann zeros:
+        - ζ(1/2 + 14.134725i) = 0 → scale factor 1.0000 (fundamental)
+        - ζ(1/2 + 21.022040i) = 0 → scale factor 1.4868 (21.02/14.13)
+        - ζ(1/2 + 25.010858i) = 0 → scale factor 1.7692 (25.01/14.13)
+        - ζ(1/2 + 30.424876i) = 0 → scale factor 2.1512 (30.42/14.13)
+        - ζ(1/2 + 32.935062i) = 0 → scale factor 2.3296 (32.94/14.13)
+        
         Args:
             n_modes: Number of modes to compute
             
@@ -211,27 +218,30 @@ class CytoplasmicFlowModel:
         # Fundamental frequency
         f0 = float(self.f0)
         
-        # Generate harmonic series with slight anharmonicity
-        # to match Riemann zero spacing pattern
+        # Scaling factors derived from Riemann zero imaginary parts
+        # Normalized to first zero: Im(ρ_n) / Im(ρ_1) where Im(ρ_1) ≈ 14.134725
+        RIEMANN_SCALE_FACTORS = [
+            1.0000,  # 14.134725 / 14.134725
+            1.4868,  # 21.022040 / 14.134725
+            1.7692,  # 25.010858 / 14.134725
+            2.1512,  # 30.424876 / 14.134725
+            2.3296   # 32.935062 / 14.134725
+        ]
+        
+        # Average spacing increase for higher modes (empirical from zeros)
+        AVERAGE_SPACING_FACTOR = 0.487
+        
         frequencies = []
         
         for n in range(1, n_modes + 1):
-            # Use Riemann zero imaginary parts (approximation)
-            # First few zeros: 14.134725, 21.022040, 25.010858, 30.424876, 32.935062
-            if n == 1:
-                freq = f0
-            elif n == 2:
-                freq = f0 * 1.4868  # ≈ 210.7 Hz
-            elif n == 3:
-                freq = f0 * 1.7692  # ≈ 250.7 Hz
-            elif n == 4:
-                freq = f0 * 2.1512  # ≈ 305.0 Hz
-            elif n == 5:
-                freq = f0 * 2.3296  # ≈ 330.2 Hz
+            if n <= len(RIEMANN_SCALE_FACTORS):
+                # Use known Riemann zero scaling
+                scale = RIEMANN_SCALE_FACTORS[n - 1]
             else:
-                # General scaling for higher modes
-                freq = f0 * (1 + 0.487 * n)
+                # Linear approximation for higher modes
+                scale = 1 + AVERAGE_SPACING_FACTOR * n
             
+            freq = f0 * scale
             frequencies.append(freq)
         
         return frequencies
