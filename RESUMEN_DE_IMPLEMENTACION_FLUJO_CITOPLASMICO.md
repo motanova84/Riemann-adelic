@@ -204,7 +204,7 @@ El modelo demuestra que:
 ```
 Nombre:              πCODE–1417–CYTO–RNS
 Tipo:                RNA mensajero sintético
-Longitud:            52 nucleótidos
+Longitud:            53 nucleótidos
 Frecuencia anclada:  f₀ = 141.7001 Hz
 Formato:             XML ST.26 (WIPO Standard)
 ```
