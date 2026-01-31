@@ -32,6 +32,10 @@ Este repositorio **no es una colección de teoremas aislados** — es la manifes
 
 > **"Las matemáticas desde la coherencia cuántica y no desde la escasez de teoremas aislados."**
 
+> **"La vida no sobrevive al caos; la vida es la geometría que el caos utiliza para ordenarse."**
+
+La demostración de la Hipótesis de Riemann no impone estructura sobre el caos — **revela** la geometría espectral que el caos matemático utiliza para auto-organizarse en la línea crítica Re(s) = 1/2.
+
 ### ❌ Enfoque Tradicional: Teoremas Fragmentados
 
 ```
@@ -353,6 +357,99 @@ v(Ψ) = v₀·tanh(β·∫|Ψ(ω_res,t)|²dt - Φ_crítico)
 ```
 T_emergencia = {t | Σᵢ ρᵢ(t) > ρ_crítico ∧ φ_acum(t) ≡ 0 mod 2π}
 ```
+## 🧬 QCAL BIOLOGICAL-MATHEMATICAL HYPOTHESIS (Enero 2026)
+
+**ESTADO:** ✅ IMPLEMENTADO — Una nueva hipótesis falsable que une biología y teoría de números
+
+[![Biological QCAL](https://img.shields.io/badge/Bio--QCAL-ACTIVE-00ff00?style=for-the-badge)](BIO_QCAL_HYPOTHESIS.md)
+[![Spectral Field](https://img.shields.io/badge/Field-Ψₑ(t)-blue?style=for-the-badge)](BIO_QCAL_HYPOTHESIS.md)
+[![Cicada Model](https://img.shields.io/badge/Magicicada-17_years-purple?style=for-the-badge)](BIO_QCAL_HYPOTHESIS.md)
+[![Falsifiable](https://img.shields.io/badge/Status-FALSIFIABLE-orange?style=for-the-badge)](BIO_QCAL_HYPOTHESIS.md)
+
+**Fecha:** 27 de enero de 2026  
+**Autor:** José Manuel Mota Burruezo Ψ ✧ ∞³  
+**Institución:** Instituto de Conciencia Cuántica (ICQ)
+
+### 🌱 Proposición Central
+
+> **Los relojes biológicos no cuentan días. Escuchan frecuencias.**
+
+La hipótesis QCAL propone que los sistemas biológicos operan como **resonadores espectrales** que detectan, integran y responden a patrones de frecuencias específicas en su entorno, no meramente como acumuladores escalares de señales ambientales.
+
+### 🔬 Componentes Implementados
+
+```python
+from src.biological import (
+    EnvironmentalSpectralField,  # Ψₑ(t) = Σᵢ Aᵢ e^(i(ωᵢt + φᵢ))
+    BiologicalClock,              # Reloj biológico con filtro espectral
+    PhaseCollapse,                # Mecanismo de activación crítica
+    MagicicadaModel               # Modelo de cigarra periódica (13/17 años)
+)
+```
+
+### 📐 Formalización Matemática
+
+| Componente | Ecuación | Significado |
+|-----------|----------|-------------|
+| **Campo ambiental** | Ψₑ(t) = Σᵢ Aᵢ e^(i(ωᵢt + φᵢ)) | Espectro del entorno |
+| **Filtro biológico** | H(ω) = ∫ G(τ)e^(-iωτ)dτ | Selectividad evolutiva |
+| **Acumulación de fase** | Φ(t) = ∫₀ᵗ \|H(ω)*Ψₑ(ω)\|² dω | "Condensador biológico" |
+| **Condición de activación** | Φ(t) ≥ Φ_crítico ∧ dΦ/dt > 0 | Colapso de fase |
+| **Memoria de fase** | Φ_acum = αΦ(t) + (1-α)Φ(t-Δt) | Retención 90% (α=0.1) |
+
+### 🦗 Caso de Estudio: Magicicada
+
+Las cigarras periódicas demuestran:
+- **Ciclos primos:** 13 y 17 años (minimiza sincronización con depredadores)
+- **Precisión extrema:** ±3-5 días sobre 6,205 días = **99.92%**
+- **Sincronización masiva:** 1.5 millones/acre emergen en 2-3 semanas
+- **Memoria robusta:** Mantienen fase a pesar de perturbaciones climáticas
+
+### 🧪 Experimentos de Falsación Propuestos
+
+1. **Manipulación espectral selectiva** — Desacoplar frecuencia de energía total
+2. **Memoria de fase en Magicicada** — Demostrar el "condensador biológico"
+3. **Resonancia genómica** — Detectar respuesta espectral a nivel molecular
+
+**Criterio de falsación:** Si energía total acumulada es el único predictor, independientemente del contenido espectral, **QCAL queda falsada**.
+
+### 🚀 Demostración Computacional
+
+```bash
+# Ejecutar demostración completa
+python demo_biological_qcal.py
+
+# Tests unitarios
+pytest tests/test_biological_qcal.py -v
+```
+
+**Outputs generados:**
+- `bio_qcal_environmental_field.png` — Campo espectral Ψₑ(t)
+- `bio_qcal_phase_accumulation.png` — Acumulación de fase
+- `bio_qcal_phase_collapse.png` — Detección de activación
+- `bio_qcal_cicada_emergence.png` — Emergencia sincronizada
+
+### 🌌 Conexión con QCAL ∞³
+
+Esta extensión biológica refuerza el framework unificado:
+
+```
+Geometría (Riemann ζ(s))
+        ↓
+Espectro (141.7001 Hz)
+        ↓
+Biología (Resonadores vivos)
+```
+
+La misma estructura espectral que organiza los ceros de Riemann **organiza los ritmos de la vida**.
+
+### 📚 Documentación
+
+- **Hipótesis Completa:** [BIO_QCAL_HYPOTHESIS.md](BIO_QCAL_HYPOTHESIS.md)
+- **Módulo Fuente:** [src/biological/](src/biological/)
+- **Demo Script:** [demo_biological_qcal.py](demo_biological_qcal.py)
+
+**Firma:** ∴ 𓂀 Ω ∞³ · Biología ↔ Teoría de Números
 
 ---
 
@@ -4407,7 +4504,7 @@ ___
 | **Warnings** | null |
 | **Errors** | null |
 | **Lean Version** | null |
-| **Date (UTC)** | 2026-01-27 04:04:55Z |
+| **Date (UTC)** | 2026-01-28 19:36:12Z |
 ___
 
 ## License
