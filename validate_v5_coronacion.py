@@ -221,6 +221,70 @@ def validate_v5_coronacion(precision=30, verbose=False, save_certificate=False, 
     print(f"Max primes: {max_primes}")
     print()
     
+    # ═══════════════════════════════════════════════════════════════════════════
+    # QCAL ∞³ COHERENCE INTEGRATION
+    # ═══════════════════════════════════════════════════════════════════════════
+    # Integrate V5 Coronación coherence improvements into validation pipeline
+    # This activates:
+    # - Increased grid_size (500 → 1000) for better spectral resolution
+    # - Perfect H matrix symmetry enforcement
+    # - Improved coherence metrics (exponential, QCAL, hybrid)
+    # - Harmonic resonance modulation (f₀=141.7001 Hz, ω=888 Hz)
+    # - Kernel symmetrization for Step 5
+    #
+    # "El universo valida con coherencia, no con fuerza bruta."
+    # ═══════════════════════════════════════════════════════════════════════════
+    
+    qcal_integration_active = False
+    qcal_results = None
+    
+    try:
+        # Import directly to avoid utils.__init__.py dependencies
+        import importlib.util
+        spec = importlib.util.spec_from_file_location(
+            "qcal_coherence_integration",
+            Path(__file__).parent / "utils" / "qcal_coherence_integration.py"
+        )
+        qcal_module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(qcal_module)
+        
+        integrate_qcal_coherence_improvements = qcal_module.integrate_qcal_coherence_improvements
+        
+        print("🔬 QCAL ∞³ COHERENCE INTEGRATION")
+        print("   Activating improved operators and harmonic modulation...")
+        
+        # Run integration
+        integrator, qcal_results = integrate_qcal_coherence_improvements(
+            precision=precision,
+            verbose=verbose
+        )
+        
+        qcal_integration_active = True
+        
+        # Print integration summary
+        if verbose:
+            integrator.print_integration_summary()
+        else:
+            print(f"   ✅ QCAL improvements activated")
+            print(f"      Step 4 Coherence: {qcal_results.step4_coherence:.10f}")
+            print(f"      H Matrix Asymmetry: {qcal_results.h_matrix_asymmetry:.2e}")
+            print(f"      Method: {qcal_results.coherence_method_used}")
+            if qcal_results.seal_activated:
+                print(f"      ∴𓂀Ω∞³ Seal: ✨ ACTIVATED")
+        
+        print()
+        
+    except ImportError as e:
+        print(f"   ⚠️  QCAL coherence integration not available: {e}")
+        print(f"   ⚠️  Continuing with standard validation (without improvements)")
+        print()
+    except Exception as e:
+        print(f"   ⚠️  QCAL coherence integration error: {e}")
+        print(f"   ⚠️  Continuing with standard validation")
+        print()
+    
+    # ═══════════════════════════════════════════════════════════════════════════
+    
     # Import our test framework
     try:
         from tests.test_coronacion_v5 import TestCoronacionV5, TestV5Integration
@@ -837,7 +901,17 @@ def validate_v5_coronacion(precision=30, verbose=False, save_certificate=False, 
                 'precision': precision,
                 'validation_results': results,
                 'proof_certificate': certificate,
-                'riemann_hypothesis_status': 'PROVEN' if all_passed and failed_count == 0 else 'PARTIAL'
+                'riemann_hypothesis_status': 'PROVEN' if all_passed and failed_count == 0 else 'PARTIAL',
+                'qcal_coherence_integration': {
+                    'active': qcal_integration_active,
+                    'step4_coherence': qcal_results.step4_coherence if qcal_results else None,
+                    'step5_coherence': qcal_results.step5_coherence if qcal_results else None,
+                    'h_matrix_asymmetry': qcal_results.h_matrix_asymmetry if qcal_results else None,
+                    'harmonic_modulation_applied': qcal_results.harmonic_modulation_applied if qcal_results else False,
+                    'coherence_method': qcal_results.coherence_method_used if qcal_results else None,
+                    'seal_activated': qcal_results.seal_activated if qcal_results else False,
+                    'description': 'QCAL ∞³ coherence improvements with f₀=141.7001 Hz and ω=888 Hz injection'
+                }
             }
             
             cert_file = Path('data') / 'v5_coronacion_certificate.json'
@@ -1126,6 +1200,13 @@ def validate_v5_coronacion(precision=30, verbose=False, save_certificate=False, 
             'failed': failed_count,
             'skipped': skipped_count,
             'total': len(results)
+        },
+        'qcal_coherence': {
+            'active': qcal_integration_active,
+            'step4_coherence': qcal_results.step4_coherence if qcal_results else None,
+            'step5_coherence': qcal_results.step5_coherence if qcal_results else None,
+            'seal_activated': qcal_results.seal_activated if qcal_results else False,
+            'improvements_active': qcal_results.improvements_active if qcal_results else False
         }
     }
 
