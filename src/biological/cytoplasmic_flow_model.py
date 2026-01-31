@@ -194,8 +194,7 @@ class NavierStokesRegularized:
         
         En régimen viscoso, la vorticidad es suave y difusiva.
         
-        Note: Uses uniform step size h for all directions for simplicity.
-        For production use, consider dy=h and dz=h for isotropic grid.
+        Note: Uses uniform step size for all spatial directions (isotropic grid).
         
         Returns:
             Componentes (ωx, ωy, ωz) de la vorticidad
@@ -204,22 +203,22 @@ class NavierStokesRegularized:
         vx, vy, vz = self.velocity_field(x, y, z, t)
         
         # Paso para derivadas numéricas (uniforme en todas direcciones)
-        h = self.params.length_scale / 100  # Step size
+        step_size = self.params.length_scale / 100  # Numerical differentiation step
         
         # ωx = ∂vz/∂y - ∂vy/∂z
-        _, vy_plus_y, _ = self.velocity_field(x, y + h, z, t)
-        _, _, vz_plus_z = self.velocity_field(x, y, z + h, t)
-        omega_x = (vz_plus_z - vz) / h - (vy_plus_y - vy) / h
+        _, vy_plus_y, _ = self.velocity_field(x, y + step_size, z, t)
+        _, _, vz_plus_z = self.velocity_field(x, y, z + step_size, t)
+        omega_x = (vz_plus_z - vz) / step_size - (vy_plus_y - vy) / step_size
         
         # ωy = ∂vx/∂z - ∂vz/∂x
-        vx_plus_z, _, _ = self.velocity_field(x, y, z + h, t)
-        _, _, vz_plus_x = self.velocity_field(x + h, y, z, t)
-        omega_y = (vx_plus_z - vx) / h - (vz_plus_x - vz) / h
+        vx_plus_z, _, _ = self.velocity_field(x, y, z + step_size, t)
+        _, _, vz_plus_x = self.velocity_field(x + step_size, y, z, t)
+        omega_y = (vx_plus_z - vx) / step_size - (vz_plus_x - vz) / step_size
         
         # ωz = ∂vy/∂x - ∂vx/∂y
-        _, vy_plus_x, _ = self.velocity_field(x + h, y, z, t)
-        vx_plus_y, _, _ = self.velocity_field(x, y + h, z, t)
-        omega_z = (vy_plus_x - vy) / h - (vx_plus_y - vx) / h
+        _, vy_plus_x, _ = self.velocity_field(x + step_size, y, z, t)
+        vx_plus_y, _, _ = self.velocity_field(x, y + step_size, z, t)
+        omega_z = (vy_plus_x - vy) / step_size - (vx_plus_y - vx) / step_size
         
         return omega_x, omega_y, omega_z
     
