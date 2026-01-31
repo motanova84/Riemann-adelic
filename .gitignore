@@ -42,6 +42,11 @@ sabio_infinity4_report_*.json
 # Lean validation reports
 formalization/lean/validation_report.json
 
+# πCODE economy ledgers (temporary demonstration files)
+picode_ledger.json
+demo_picode_ledger.json
+*_picode_ledger.json
+
 # Virtual environments
 venv/
 env/
