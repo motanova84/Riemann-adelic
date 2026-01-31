@@ -322,12 +322,31 @@ def validate_cancer_decoherence():
 
 def generate_certificate(validations: list, output_file: str = 'data/cellular_riemann_zeros_certificate.json'):
     """Generate validation certificate."""
+    from datetime import datetime, timezone
     
     all_passed = all(v['passed'] for v in validations)
     
+    # Convert numpy booleans to Python booleans for JSON serialization
+    def convert_to_json_serializable(obj):
+        """Recursively convert numpy types to Python native types."""
+        if isinstance(obj, np.bool_):
+            return bool(obj)
+        elif isinstance(obj, np.integer):
+            return int(obj)
+        elif isinstance(obj, np.floating):
+            return float(obj)
+        elif isinstance(obj, np.ndarray):
+            return obj.tolist()
+        elif isinstance(obj, dict):
+            return {key: convert_to_json_serializable(value) for key, value in obj.items()}
+        elif isinstance(obj, list):
+            return [convert_to_json_serializable(item) for item in obj]
+        else:
+            return obj
+    
     certificate = {
         'certificate_type': 'Biological Riemann Zeros - Cellular Cytoplasmic Flow',
-        'timestamp': datetime.utcnow().isoformat() + 'Z',
+        'timestamp': datetime.now(timezone.utc).isoformat(),
         'framework': 'QCAL ∞³',
         'author': 'José Manuel Mota Burruezo Ψ ✧ ∞³',
         'institution': 'Instituto de Conciencia Cuántica (ICQ)',
@@ -339,7 +358,7 @@ def generate_certificate(validations: list, output_file: str = 'data/cellular_ri
             'failed': sum(1 for v in validations if not v['passed']),
             'overall_status': 'VALIDATED' if all_passed else 'PARTIAL'
         },
-        'validations': validations,
+        'validations': convert_to_json_serializable(validations),
         'conclusions': [
             'Coherence length ξ ≈ 1.06 μm matches cellular scale',
             'Cytoplasmic flow resonates at fₙ = n × 141.7001 Hz',
