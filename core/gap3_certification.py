@@ -191,16 +191,22 @@ def generate_seal(history: List[str]) -> str:
     """
     Genera sello criptográfico único basado en el historial.
     
-    En la implementación completa, esto usaría un hash criptográfico real.
-    Por ahora, es una representación simbólica.
+    Uses SHA-256 hash for cryptographic security. Returns first 32 characters
+    (128 bits) to maintain adequate collision resistance while being readable.
     
     Theorem Reference: seal_uniqueness en PiCode1417ECON.lean
+    
+    Args:
+        history: List of transaction history events
+    
+    Returns:
+        32-character hexadecimal hash (128 bits)
     """
     import hashlib
     
     history_str = "|".join(history)
     hash_obj = hashlib.sha256(history_str.encode())
-    return hash_obj.hexdigest()[:16]  # Primeros 16 caracteres
+    return hash_obj.hexdigest()[:32]  # First 32 characters (128 bits)
 
 # ============================================================
 # DEMOSTRACIÓN DE TRANSICIÓN
