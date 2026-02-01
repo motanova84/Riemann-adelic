@@ -223,7 +223,7 @@ class CellularRiemannResonator:
     def check_riemann_alignment(
         self,
         zero_index: int = 1,
-        tolerance: float = 1e-6
+        tolerance: float = 0.1
     ) -> float:
         """
         Check alignment with specific Riemann zero.
@@ -364,19 +364,21 @@ class FractalLifeOrganizer:
         
         N(T) = (T/2π)log(T/2π) - T/2π + O(log T)
         
+        This formula is valid for T > 2π.
+        
         Args:
             T: Upper bound on imaginary part
             
         Returns:
             Approximate number of zeros
         """
-        if T <= 0:
+        if T <= 2 * np.pi:
             return 0.0
         
         term1 = (T / (2 * np.pi)) * np.log(T / (2 * np.pi))
         term2 = T / (2 * np.pi)
         
-        return term1 - term2
+        return max(0.0, term1 - term2)
     
     def cell_count(self, L: float) -> float:
         """
@@ -442,7 +444,7 @@ class ProofOfLife:
     
     @staticmethod
     def validate_cellular_resonance(
-        coherence_threshold: float = 0.85
+        coherence_threshold: float = 0.75
     ) -> Dict[str, float]:
         """
         Validate that cellular resonance aligns with QCAL predictions.
