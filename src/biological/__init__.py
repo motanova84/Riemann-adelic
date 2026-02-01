@@ -36,6 +36,20 @@ from .biological_clock import (
     PhaseAccumulator,
 )
 
+from .profound_meaning import (
+    ResonanceState,
+    CellularRiemannResonator,
+    UniversalCoherenceField,
+    FractalLifeOrganizer,
+    ProofOfLife,
+    create_living_cell,
+    create_universal_field,
+    verify_profound_connection,
+    QCAL_FREQUENCY,
+    COHERENCE_C,
+    CRITICAL_LINE
+)
+
 __all__ = [
     'EnvironmentalSpectralField',
     'SpectralComponent',
@@ -46,6 +60,18 @@ __all__ = [
     'BiologicalClock',
     'BiologicalFilter',
     'PhaseAccumulator',
+    # Profound meaning
+    'ResonanceState',
+    'CellularRiemannResonator',
+    'UniversalCoherenceField',
+    'FractalLifeOrganizer',
+    'ProofOfLife',
+    'create_living_cell',
+    'create_universal_field',
+    'verify_profound_connection',
+    'QCAL_FREQUENCY',
+    'COHERENCE_C',
+    'CRITICAL_LINE',
 ]
 
 __version__ = '1.0.0'
