@@ -64,6 +64,18 @@ from .cancer_decoherence import (
     DecoherenceMetrics,
     CancerousCell,
     TissueDecoherenceModel,
+from .profound_meaning import (
+    ResonanceState,
+    CellularRiemannResonator,
+    UniversalCoherenceField,
+    FractalLifeOrganizer,
+    ProofOfLife,
+    create_living_cell,
+    create_universal_field,
+    verify_profound_connection,
+    QCAL_FREQUENCY,
+    COHERENCE_C,
+    CRITICAL_LINE
 )
 
 __all__ = [
@@ -97,6 +109,18 @@ __all__ = [
     'DecoherenceMetrics',
     'CancerousCell',
     'TissueDecoherenceModel',
+    # Profound meaning
+    'ResonanceState',
+    'CellularRiemannResonator',
+    'UniversalCoherenceField',
+    'FractalLifeOrganizer',
+    'ProofOfLife',
+    'create_living_cell',
+    'create_universal_field',
+    'verify_profound_connection',
+    'QCAL_FREQUENCY',
+    'COHERENCE_C',
+    'CRITICAL_LINE',
 ]
 
 __version__ = '1.1.0'
