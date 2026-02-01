@@ -208,7 +208,9 @@ class TestZetaPrimeSpectralGroup:
         """Test that ζ′(1/2) is approximately correct"""
         zeta_group = ZetaPrimeSpectralGroup()
         
-        # Known approximate value
+        # Known approximate value from numerical computation: ζ′(1/2) ≈ -3.9226
+        # Wide tolerance accounts for different numerical methods
+        # See: DLMF 25.10.1 for Riemann-Siegel formula derivatives
         assert np.abs(np.real(zeta_group.critical_derivative)) > 3.0
         assert np.abs(np.real(zeta_group.critical_derivative)) < 5.0
     
