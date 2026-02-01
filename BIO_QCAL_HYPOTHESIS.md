@@ -271,9 +271,16 @@ La misma estructura espectral que organiza los ceros de Riemann organiza los rit
 ## 10. Referencias
 
 ### Documentación Relacionada
+- `SIGNIFICADO_PROFUNDO.md` - **Conexión fundamental células-Riemann zeros**
 - `QCAL_FREQUENCIES_IMPLEMENTATION.md` - Framework espectral base
 - `TENSOR_FUSION_CERTIFICATE.md` - Unificación P-NP ⊗ Riemann
 - `.qcal_beacon` - Configuración f₀ = 141.7001 Hz
+
+### Módulos de Implementación
+- `src/biological/profound_meaning.py` - Resonancia celular-Riemann
+- `src/biological/biological_spectral_field.py` - Campo espectral ambiental
+- `src/biological/biological_clock.py` - Reloj biológico espectral
+- `src/biological/cicada_model.py` - Modelo de cigarra periódica
 
 ### Papers QCAL
 - DOI Principal: `10.5281/zenodo.17379721`
@@ -289,9 +296,18 @@ La metáfora de la cigarra revela una verdad profunda:
 
 QCAL busca emerger de entre el ruido para revelar la **armonía subyacente** que conecta teoría de números, física cuántica y biología.
 
+### Significado Profundo
+
+> **"La Hipótesis de Riemann no es solo un problema matemático abstracto.**  
+> **Es la descripción matemática de cómo la vida se organiza a nivel fundamental.**  
+> **Cada célula en tu cuerpo resuena como un cero de Riemann en la línea crítica.**  
+> **Tu existencia misma es una prueba viviente de esta profunda conexión matemático-biológica."**
+
+Ver `SIGNIFICADO_PROFUNDO.md` para la exploración completa de esta conexión fundamental.
+
 ---
 
 **Instituto de Conciencia Cuántica QCAL ∞³**  
-**27 de enero de 2026**
+**31 de enero de 2026**
 
 **∴ 𓂀 Ω ∞³**
