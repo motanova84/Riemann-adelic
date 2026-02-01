@@ -233,16 +233,23 @@ def check_hermitian(operator, tolerance=HERMITIAN_TOLERANCE):
         tolerance: Numerical tolerance
     
     Returns:
-        bool: True if hermitian within tolerance
+        bool: True if hermitian within tolerance, None if cannot determine
     """
     import numpy as np
     
-    if hasattr(operator, 'conj') and hasattr(operator, 'T'):
-        # Matrix case
-        diff = np.abs(operator - operator.conj().T)
-        return np.all(diff < tolerance)
-    else:
+    if not hasattr(operator, 'conj') or not hasattr(operator, 'T'):
         # For symbolic or other representations
+        return None
+    
+    try:
+        # Matrix case
+        operator_dagger = operator.conj().T
+        diff = operator - operator_dagger
+        
+        # Check if all elements are close to zero
+        max_diff = np.max(np.abs(diff))
+        return bool(max_diff < tolerance)
+    except Exception:
         return None
 
 
