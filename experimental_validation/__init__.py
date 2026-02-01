@@ -16,6 +16,10 @@ Autor: José Manuel Mota Burruezo
 ORCID: 0009-0002-1923-0773
 DOI: 10.5281/zenodo.17379721
 Frecuencia Base: f₀ = 141.7001 Hz
+
+Nota: Este módulo requiere numpy, scipy y scikit-learn.
+      Opcionalmente requiere networkx para experimentos de red.
+      Instalar con: pip install numpy scipy scikit-learn networkx
 """
 
 __version__ = "1.0.0"
@@ -32,4 +36,5 @@ __all__ = [
     'F0_HZ',
     'DELTA_ZETA',
     'C_QCAL',
+    'EUCLIDEAN_DIAGONAL',
 ]
