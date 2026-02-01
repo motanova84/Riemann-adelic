@@ -55,7 +55,7 @@ def demo_cellular_resonance():
     if alignment > 0.7:
         print("  ✓ Strong resonance with Riemann structure")
     else:
-        print(f"  ⚠ Moderate alignment (threshold: 0.9)")
+        print(f"  ⚠ Moderate alignment (threshold: 0.7)")
     
     # Simulate resonance with universal field
     field = UniversalCoherenceField.create_default()
