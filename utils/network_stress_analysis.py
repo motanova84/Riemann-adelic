@@ -383,7 +383,13 @@ class NetworkDiagnostics:
             topology['betti_numbers'] = betti
             
             # Winding number
-            phases = Psi_values * np.exp(1j * np.random.uniform(0, 2*np.pi, len(Psi_values)))
+            # Use deterministic phases: if Psi_values is complex, keep its phase;
+            # otherwise treat Psi_values as real amplitudes with zero phase.
+            psi_array = np.asarray(Psi_values)
+            if np.iscomplexobj(psi_array):
+                phases = psi_array
+            else:
+                phases = psi_array.astype(float)
             W = analyzer.compute_winding_number(phases)
             topology['winding_number'] = W
             
