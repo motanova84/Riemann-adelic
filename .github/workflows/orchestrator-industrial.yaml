@@ -26,6 +26,8 @@ jobs:
   system_diagnostics:
     name: 🩺 Diagnóstico del Sistema
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     outputs:
       system_health: ${{ steps.health.outputs.HEALTH }}
       pending_tasks: ${{ steps.tasks.outputs.COUNT }}
@@ -117,6 +119,8 @@ jobs:
   activate_agents:
     name: 🤖 Activación de Agentes
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     needs: [system_diagnostics]
     if: needs.system_diagnostics.outputs.system_health == 'OPTIMAL'
     
@@ -187,6 +191,8 @@ jobs:
   massive_processing:
     name: ⚡ Procesamiento Masivo
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     needs: [activate_agents]
     if: always()
     
@@ -229,6 +235,8 @@ jobs:
   validation_and_merge:
     name: ✅ Validación
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     needs: [massive_processing]
     if: always()
     
@@ -275,6 +283,8 @@ jobs:
   reporting_and_planning:
     name: 📋 Reporte y Planificación
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     needs: [validation_and_merge]
     if: always()
     
