@@ -18,13 +18,13 @@ rev = "v4.5.0"  # Using v4.5.0 to match lean-toolchain and lakefile.lean
 name = "aesop"
 src = "git"
 url = "https://github.com/leanprover-community/aesop"
-# Let Lake resolve compatible version based on mathlib dependencies
+rev = "master"  # Using master branch for Lean 4.5.0 compatibility
 
 [[dependency]]
 name = "proofwidgets"
 src = "git"
 url = "https://github.com/leanprover-community/proofwidgets4"
-# Let Lake resolve compatible version based on mathlib dependencies
+rev = "master"  # Using master branch for Lean 4.5.0 compatibility
 
 [package]
 description = "Formalización constructiva de la Hipótesis de Riemann adélica (V7.0 Coronación Final)"
