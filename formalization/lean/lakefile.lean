@@ -59,10 +59,10 @@ lean_exe «riemann-adelic-lean» where
 require mathlib from git
   "https://github.com/leanprover-community/mathlib4" @ "v4.5.0"
 
--- Let Lake resolve aesop version compatible with mathlib v4.5.0
+-- Aesop version compatible with mathlib v4.5.0  
 require aesop from git
   "https://github.com/leanprover-community/aesop" @ "master"
 
--- Let Lake resolve proofwidgets version compatible with mathlib v4.5.0
+-- Proofwidgets version compatible with mathlib v4.5.0
 require proofwidgets from git
-  "https://github.com/leanprover-community/proofwidgets4" @ "master"
+  "https://github.com/leanprover-community/proofwidgets4" @ "v0.0.25"
