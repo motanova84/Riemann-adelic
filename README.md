@@ -1590,8 +1590,6 @@ python3 validate_v5_coronacion.py    # Run complete validation
 
 [![LaTeX & Proof-Checks](https://github.com/motanova84/Riemann-adelic/actions/workflows/latex-and-proof.yml/badge.svg)](https://github.com/motanova84/Riemann-adelic/actions/workflows/latex-and-proof.yml)
 
-[![LaTeX & Proof-Checks](https://github.com/motanova84/Riemann-adelic/actions/workflows/latex-and-proof.yml/badge.svg)](https://github.com/motanova84/Riemann-adelic/actions/workflows/latex-and-proof.yml)
-
 # Riemann-Adelic
 
 This repository contains the complete unconditional proof and validation code for:
