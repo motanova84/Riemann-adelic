@@ -18,13 +18,13 @@ rev = "v4.5.0"  # Using v4.5.0 to match lean-toolchain and lakefile.lean
 name = "aesop"
 src = "git"
 url = "https://github.com/leanprover-community/aesop"
-# Let Lake resolve compatible version based on mathlib dependencies
+rev = "cebd10ba6d22457e364ba03320cfd9fc7511e520"  # Commit used by mathlib v4.5.0
 
 [[dependency]]
 name = "proofwidgets"
 src = "git"
 url = "https://github.com/leanprover-community/proofwidgets4"
-# Let Lake resolve compatible version based on mathlib dependencies
+rev = "8dd18350791c85c0fc9adbd6254c94a81d260d35"  # Commit for v0.0.25 tag used by mathlib v4.5.0
 
 [package]
 description = "Formalización constructiva de la Hipótesis de Riemann adélica (V7.0 Coronación Final)"
