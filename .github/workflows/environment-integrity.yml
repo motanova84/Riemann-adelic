@@ -100,9 +100,21 @@ jobs:
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "✅ **Status**: Verification complete" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "### Checked Files" >> $GITHUB_STEP_SUMMARY
-          echo "- \`ENV.lock\`" >> $GITHUB_STEP_SUMMARY
-          echo "- \`requirements-lock.txt\`" >> $GITHUB_STEP_SUMMARY
-          echo "- \`environment_checksums.json\`" >> $GITHUB_STEP_SUMMARY
+          
+          # Extract key info from ENV.lock
+          echo "### Environment Snapshot" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "For more information, see [ENV_LOCK_GUIDE.md](ENV_LOCK_GUIDE.md)" >> $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          grep -A 10 "SYSTEM INFORMATION" ENV.lock | grep "^# " | sed 's/^# //' >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          grep -A 5 "QCAL ∞³ CONFIGURATION" ENV.lock | grep "^# " | grep -E "Frequency|Coherence" | sed 's/^# //' >> $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          
+          echo "### Checked Files" >> $GITHUB_STEP_SUMMARY
+          echo "- \`ENV.lock\` (comprehensive environment snapshot)" >> $GITHUB_STEP_SUMMARY
+          echo "- \`requirements-lock.txt\` (Python dependencies)" >> $GITHUB_STEP_SUMMARY
+          echo "- \`environment_checksums.json\` (integrity checksums)" >> $GITHUB_STEP_SUMMARY
+          echo "- Dataset checksums (Evac_Rpsi_data.csv, critical_line_verification.csv, etc.)" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "For detailed information, see [ENV_LOCK_GUIDE.md](ENV_LOCK_GUIDE.md)" >> $GITHUB_STEP_SUMMARY

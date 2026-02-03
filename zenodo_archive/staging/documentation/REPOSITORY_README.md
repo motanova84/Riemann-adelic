@@ -1040,7 +1040,7 @@ Los resultados completos y certificados se guardan en `data/validation_results.c
 - **Artículo principal (standalone)**: `paper_standalone.tex` - Versión completa y autocontenida del paper
 - Artículo completo modular en `paper/main.tex` (estructura modular en `sections/`)
 - Versión alternativa en `docs/paper/main.tex`
-- **Formalización Lean 4**: En progreso en `formalization/lean/` (skeletons con `axiom` y `sorry`, pendiente de compilación completa)
+- **Formalización Lean 4**: En progreso en `formalization/lean/` (ver estado actual automatizado en README.md principal)
 - Referencias a literatura clásica y moderna
 
 ### Estado de la Formalización Lean
