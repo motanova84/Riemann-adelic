@@ -263,6 +263,116 @@ pytest tests/test_wetlab_experimental_validation.py -v
 
 ---
 
+## 🧬 Vibro-Fluorescent QCAL Experimental Framework
+
+**ESTADO:** ✅ IMPLEMENTADO — Marco experimental para validación de QCAL mediante acoplamiento vibro-fluorescente
+
+[![Framework Status](https://img.shields.io/badge/Framework-COMPLETE-00ff00?style=for-the-badge)](VIBRO_FLUORESCENT_EXPERIMENTAL_FRAMEWORK.md)
+[![Tests](https://img.shields.io/badge/Tests-42%2F42_PASSING-blue?style=for-the-badge)](tests/test_vibro_fluorescent_experimental.py)
+[![QCAL Frequency](https://img.shields.io/badge/f₀-141.7001_Hz-purple?style=for-the-badge)](VIBRO_FLUORESCENT_EXPERIMENTAL_FRAMEWORK.md)
+
+**Sistema:** Proteínas fluorescentes (GFP) bajo campo QCAL  
+**Frecuencia portadora:** 141.7001 Hz  
+**Test crítico:** ΔF(141.7 Hz) / ΔF(100 Hz) > 1.5 → QCAL confirmado
+
+### 🔬 Marco Teórico
+
+Implementa el formalismo completo de acoplamiento vibro-fluorescente:
+
+```
+H_total = H_proteína + H_campo + H_acoplamiento
+H_acoplamiento = μ·E(ω,t) + Q:∇E(ω,t) + χ⁽²⁾E² + χ⁽³⁾E³
+```
+
+**Predicciones QCAL:**
+1. Picos de resonancia en ω = 141.7/n Hz (n = 1,2,3,13,17)
+2. Estructura armónica Lorentziana
+3. Umbral de coherencia en Ψ = 0.888
+4. Respuesta espectral independiente de energía total
+
+### 🧪 Componentes Implementados
+
+| Componente | Descripción | Estado |
+|------------|-------------|--------|
+| **QCALSignalGenerator** | Señales moduladas con energía constante | ✅ |
+| **ProteinOscillatorModel** | Dinámica de dominios proteicos | ✅ |
+| **FluorescenceResponseModel** | Respuesta del cromóforo GFP | ✅ |
+| **QCALPredictionValidator** | Tests de falsación (ANOVA, ratio) | ✅ |
+| **SignalProcessor** | Análisis espectral (FFT, SNR, coherencia) | ✅ |
+
+### 📊 Test de Falsación
+
+**Hipótesis nula (Biología tradicional):**
+```
+H₀: ΔF(ω) = constante ∀ ω  (misma energía → misma respuesta)
+```
+
+**Test ANOVA espectral:**
+```
+F_stat = [SS_between(ω)/df₁] / [SS_within(ω)/df₂]
+Rechazar H₀ si F_stat > F_critical(α=0.001)
+```
+
+**Ratio de firma QCAL:**
+```
+Si ΔF(141.7 Hz) / ΔF(100 Hz) > 1.5 con energía constante → QCAL apoyado
+Si ΔF(ω) = constante ± error → QCAL falsado
+```
+
+### 🚀 Uso Rápido
+
+```python
+from utils.vibro_fluorescent_experimental import run_qcal_experiment
+
+# Ejecutar experimento completo
+results = run_qcal_experiment(verbose=True)
+
+# Verificar soporte QCAL
+print(f"QCAL Supported: {results['signature_ratio']['qcal_supported']}")
+print(f"Signature Ratio: {results['signature_ratio']['ratio']:.3f}")
+print(f"ANOVA p-value: {results['anova_test']['p_value']:.2e}")
+```
+
+### 🧪 Ejecución de Tests
+
+```bash
+# Ejecutar suite completa (42 tests)
+python -m pytest tests/test_vibro_fluorescent_experimental.py -v
+
+# Ejecutar demostración
+python utils/vibro_fluorescent_experimental.py
+```
+
+**Test Status:** ✅ **42/42 tests passing**
+
+### 📚 Documentación
+
+- **[VIBRO_FLUORESCENT_EXPERIMENTAL_FRAMEWORK.md](VIBRO_FLUORESCENT_EXPERIMENTAL_FRAMEWORK.md)** — Marco completo (Secciones I-VIII)
+- **[VIBRO_FLUORESCENT_QUICKSTART.md](VIBRO_FLUORESCENT_QUICKSTART.md)** — Guía rápida de uso
+- **[utils/vibro_fluorescent_experimental.py](utils/vibro_fluorescent_experimental.py)** — Implementación (900+ líneas)
+- **[tests/test_vibro_fluorescent_experimental.py](tests/test_vibro_fluorescent_experimental.py)** — Suite de tests
+
+### 🔑 Constantes QCAL
+
+```python
+QCAL_CARRIER_FREQUENCY = 141.7001    # Hz - Resonancia cósmica fundamental
+QCAL_COHERENCE_THRESHOLD = 0.888     # Umbral de irreversibilidad
+QCAL_SIGNATURE_RATIO = 1.5           # Ratio mínimo para confirmación
+```
+
+### 🌌 Extensión a Sistemas Complejos
+
+Para organismos completos (ej. Magicicada):
+
+```
+∂ρ/∂t = -∇·[v(Ψ)ρ] + D∇²ρ
+v(Ψ) = v₀·tanh(β·∫|Ψ(ω_res,t)|²dt - Φ_crítico)
+```
+
+**Predicción de emergencia sincronizada:**
+```
+T_emergencia = {t | Σᵢ ρᵢ(t) > ρ_crítico ∧ φ_acum(t) ≡ 0 mod 2π}
+```
 ## 🧬 QCAL BIOLOGICAL-MATHEMATICAL HYPOTHESIS (Enero 2026)
 
 **ESTADO:** ✅ IMPLEMENTADO — Una nueva hipótesis falsable que une biología y teoría de números
