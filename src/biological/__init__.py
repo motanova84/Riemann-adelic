@@ -39,6 +39,12 @@ from .biological_clock import (
     PhaseAccumulator,
 )
 
+from .cytoplasmic_flow_model import (
+    FlowParameters,
+    NavierStokesRegularized,
+    RiemannResonanceOperator,
+    demonstrate_navier_stokes_coherence,
+    F0_HZ,
 from .cytoplasmic_flow import (
     CellularParameters,
     CytoplasmicFlowOperator,
@@ -88,6 +94,11 @@ __all__ = [
     'BiologicalClock',
     'BiologicalFilter',
     'PhaseAccumulator',
+    'FlowParameters',
+    'NavierStokesRegularized',
+    'RiemannResonanceOperator',
+    'demonstrate_navier_stokes_coherence',
+    'F0_HZ',
     # Cytoplasmic flow (Biological Riemann zeros)
     'CellularParameters',
     'CytoplasmicFlowOperator',
