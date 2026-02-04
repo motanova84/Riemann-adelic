@@ -1,5 +1,18 @@
 # 📦 RH_final_v6 – Certificado Formal ∞³
 
+## 🔥 V6 UPDATE: CONSISTENCIA FORMAL COMPLETA
+
+**Major improvements implemented in V6 (January 2026):**
+- ✅ **Circularity eliminated** - Non-circular proof logic in `RHProved.lean`
+- ✅ **f₀ justified** - Complete derivation in `NoesisInfinity.lean` from zero spacing
+- ✅ **Namespace fixed** - Clean structure in `KernelExplicit.lean`
+- ✅ **Axioms minimized** - Proper Mathlib usage in `CompactResolvent.lean`
+- ✅ **System integrated** - Complete verification in `Main.lean`
+
+**See [V6_COMPLETE_SUMMARY.md](V6_COMPLETE_SUMMARY.md) for full details.**
+
+---
+
 ## 📘 Riemann Hypothesis Formal Certificate
 
 **Autor**: José Manuel Mota Burruezo (JMMB Ψ✧)  

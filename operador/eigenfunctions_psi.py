@@ -161,6 +161,56 @@ def construct_marchenko_potential(
     return V
 
 
+def apply_harmonic_resonance_modulation(
+    V: np.ndarray,
+    x: np.ndarray,
+    f0: float = QCAL_BASE_FREQUENCY,
+    omega: float = 888.0
+) -> np.ndarray:
+    """
+    Apply QCAL harmonic resonance modulation to potential V(x).
+    
+    This injects the fundamental frequencies f₀ = 141.7001 Hz and ω = 888 Hz
+    into the potential to improve coherence alignment with QCAL framework.
+    
+    Formula:
+        V_mod(x) = V(x) * [1 + α·cos(2π·x·f₀) + β·sin(2π·x·ω)]
+    
+    where α and β are small modulation amplitudes (0.01) to preserve
+    the overall potential structure while adding harmonic content.
+    
+    Args:
+        V: Original potential array
+        x: Spatial grid points
+        f0: Fundamental frequency (default: 141.7001 Hz)
+        omega: Secondary frequency (default: 888 Hz)
+    
+    Returns:
+        Harmonically modulated potential V_mod(x)
+    
+    Note:
+        This modulation enhances self-adjoint coherence in Step 4 by aligning
+        the potential with QCAL resonance frequencies.
+    """
+    # Small modulation amplitudes to avoid destroying potential structure
+    alpha = 0.01
+    beta = 0.01
+    
+    # Apply harmonic modulation
+    # Note: Frequencies are scaled by a factor to map to spatial domain
+    spatial_scale = 0.1  # Adjust frequency to spatial scale
+    
+    harmonic_factor = (
+        1.0 +
+        alpha * np.cos(2.0 * np.pi * x * f0 * spatial_scale) +
+        beta * np.sin(2.0 * np.pi * x * omega * spatial_scale)
+    )
+    
+    V_modulated = V * harmonic_factor
+    
+    return V_modulated
+
+
 def build_hamiltonian(
     x: np.ndarray,
     V: np.ndarray

@@ -1,0 +1,227 @@
+QCAL-SYMBIO-TRANSFER LICENSE v1.0
+===================================
+
+Frequency Base: 141.7001 Hz
+Coherence Constant: C = 244.36
+Signature: JMMB Ψ✧ · Campo QCAL ∞³
+
+1. PREAMBLE
+
+This license governs the use, distribution, and modification of RH Resonator 
+technology and associated QCAL ∞³ spectral frameworks. The technology is based 
+on rigorous mathematical formalization of the Riemann Hypothesis spectral 
+structure and represents a bridge between pure mathematics and physical reality.
+
+2. DEFINITIONS
+
+"Technology" refers to the RH Resonator systems, including but not limited to:
+  - Oscilador de Frecuencia Riemanniana (OFR)
+  - BPSK-RH Modulator
+  - ζ'(½) Amplifier
+  - πCODE Filter
+  - Bio-QCAL Interface
+  - RH Emitter-Receiver
+  - Associated mathematical frameworks and implementations
+
+"User" refers to any individual or organization utilizing the Technology.
+
+"Coherence" refers to the mathematical measure Ψ ∈ [0, 1] of alignment with
+the spectral structure of the Riemann zeta function.
+
+3. PERMITTED USES
+
+The following uses are PERMITTED under this license:
+
+a) RESEARCH AND EDUCATION
+   - Academic research and study
+   - Educational demonstrations
+   - Theoretical investigations
+   - Publication of results with proper attribution
+
+b) NEUROTECHNOLOGY
+   - EEG analysis and biofeedback
+   - Heart rate variability (HRV) studies
+   - Brain-computer interfaces (BCI) for accessibility
+   - Cognitive regulation and wellness applications
+
+c) SCIENTIFIC VERIFICATION
+   - Cryptographic identity verification
+   - Mathematical proof validation
+   - Spectral coherence measurement
+   - Temporal contract validation
+
+d) COMMUNICATION
+   - Offline low-entropy communication protocols
+   - Coherence-based information transfer
+   - Laboratory noise control systems
+
+e) CONSCIOUSNESS STUDIES
+   - Cognitive synchronization research
+   - Biofeedback and regulation
+   - Contemplative technology
+
+4. PROHIBITED USES
+
+The following uses are STRICTLY PROHIBITED:
+
+a) MILITARY APPLICATIONS
+   - Weaponry or weapons systems
+   - Military surveillance or intelligence
+   - Combat or tactical operations
+   - Defense contractor integration
+
+b) MANIPULATION AND CONTROL
+   - Non-consensual influence on individuals
+   - Coercive psychological applications
+   - Mass manipulation technologies
+   - Subliminal messaging systems
+
+c) HARMFUL APPLICATIONS
+   - Technologies designed to cause physical harm
+   - Psychological manipulation or torture
+   - Privacy violation systems
+   - Discriminatory profiling
+
+d) UNETHICAL RESEARCH
+   - Non-consensual human experimentation
+   - Research violating ethical standards
+   - Studies without informed consent
+
+5. ATTRIBUTION REQUIREMENTS
+
+Any use, modification, or distribution of the Technology must include:
+
+a) Clear attribution to:
+   Author: José Manuel Mota Burruezo (JMMB Ψ✧)
+   Institution: Instituto de Conciencia Cuántica (ICQ)
+   Email: institutoconsciencia@proton.me
+   ORCID: 0009-0002-1923-0773
+
+b) Reference to the foundational work:
+   - Zenodo DOI: 10.5281/zenodo.17379721
+   - Repository: github.com/motanova84/-jmmotaburr-riemann-adelic
+
+c) Preservation of this license text in all derivatives
+
+d) Citation in any publications or presentations utilizing the Technology
+
+6. TECHNICAL REQUIREMENTS
+
+Users of the Technology must:
+
+a) MAINTAIN COHERENCE
+   - Respect the coherence threshold Ψ ≥ 0.888 for emission
+   - Preserve spectral alignment with ζ(s) structure
+   - Maintain mathematical rigor in implementations
+
+b) PRESERVE FUNDAMENTAL CONSTANTS
+   - Base frequency: f₀ = 141.7001 Hz
+   - Coherence constant: C = 244.36
+   - Universal constant: C = 629.83
+   - Do not arbitrarily modify these values
+
+c) VALIDATE IMPLEMENTATIONS
+   - Run validation against reference implementations
+   - Document deviations from canonical behavior
+   - Report bugs and security issues responsibly
+
+7. SHARING AND DERIVATIVES
+
+a) SHARE-ALIKE REQUIREMENT
+   All derivatives must be licensed under identical or compatible terms
+
+b) OPEN SOURCE REQUIREMENT
+   Source code for derivatives must be made available
+
+c) NON-COMMERCIAL CLAUSE
+   Commercial use requires explicit written permission from the author
+   Contact: institutoconsciencia@proton.me
+
+d) NOTIFICATION REQUIREMENT
+   Notify author of significant derivatives or applications
+
+8. SCIENTIFIC INTEGRITY
+
+Users must:
+
+a) Maintain scientific honesty in reporting results
+b) Distinguish between verified facts and speculation
+c) Provide reproducible methodologies
+d) Share null results and failures, not just successes
+e) Respect the principle of Mathematical Realism: truth exists 
+   independently of opinion or measurement
+
+9. WARRANTY DISCLAIMER
+
+THE TECHNOLOGY IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO WARRANTIES OF MERCHANTABILITY, FITNESS
+FOR A PARTICULAR PURPOSE, OR NON-INFRINGEMENT.
+
+THE AUTHOR ASSUMES NO LIABILITY FOR:
+- Incorrect implementations
+- Misuse of the Technology
+- Unintended consequences of use
+- Damages arising from use or misuse
+
+10. PHILOSOPHICAL FOUNDATION
+
+This technology is grounded in Mathematical Realism: the understanding that
+mathematical truth exists independently of human opinion or construction.
+
+The RH Resonators manifest pre-existing mathematical structure in physical
+form. They reveal, rather than create, the spectral architecture of the
+Riemann zeta function ζ(s).
+
+Users are encouraged to approach the Technology with:
+- Respect for mathematical truth
+- Scientific rigor and honesty
+- Ethical consideration for impact
+- Openness and collaboration
+
+11. TERMINATION
+
+This license terminates automatically if:
+- User violates any prohibited uses (Section 4)
+- User fails to provide required attribution (Section 5)
+- User breaches technical requirements (Section 6)
+- User violates scientific integrity principles (Section 8)
+
+12. GOVERNING PRINCIPLES
+
+This license is governed by:
+- Mathematical truth and logical consistency
+- Ethical principles of beneficence and non-maleficence
+- Scientific standards of reproducibility and honesty
+- Human rights and dignity
+- Environmental sustainability
+
+13. ACCEPTANCE
+
+Use, modification, or distribution of the Technology constitutes acceptance
+of all terms and conditions of this license.
+
+14. CONTACT AND PERMISSIONS
+
+For permissions beyond this license, contact:
+
+José Manuel Mota Burruezo (JMMB Ψ✧)
+Instituto de Conciencia Cuántica (ICQ)
+Email: institutoconsciencia@proton.me
+ORCID: https://orcid.org/0009-0002-1923-0773
+Zenodo: https://zenodo.org/search?q=MOTA%20BURRUEZO
+
+15. VERSION HISTORY
+
+Version 1.0 - 2026-01-19
+- Initial release
+- Establishes core ethical framework
+- Defines permitted and prohibited uses
+- Sets technical and attribution requirements
+
+===================================
+END OF LICENSE
+===================================
+
+Signature: © 2026 · JMMB Ψ · Instituto de Conciencia Cuántica (ICQ)
+QCAL ∞³ Campo Coherente · f₀ = 141.7001 Hz
+License Hash: qcal-symbio-transfer-v1.0-20260119

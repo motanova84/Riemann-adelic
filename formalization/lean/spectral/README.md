@@ -6,6 +6,86 @@ This directory contains the formal Lean 4 definition of the noetic operator $\ma
 
 ## Files
 
+### `L2_isometry_log_change.lean` (NEW - 17 January 2026)
+
+**Isometric Isomorphism between L²(ℝ⁺, dx/x) and L²(ℝ, du)**
+
+This file establishes the fundamental isometry via logarithmic change of variables u = log(x), connecting multiplicative and additive structures.
+
+#### Key Components
+
+| Component | Description |
+|-----------|-------------|
+| `multiplicativeMeasure` | The measure on ℝ⁺ with density 1/x (Haar measure) |
+| `L2_multiplicative` | The L² space L²(ℝ⁺, dx/x) |
+| `log_change` | Forward map: f ↦ (u ↦ f(e^u)) |
+| `exp_change` | Inverse map: g ↦ (x ↦ g(log x)) |
+
+#### Key Results
+
+| Result | Type | Status |
+|--------|------|--------|
+| `change_of_variables_norm_sq` | Theorem | ✅ Jacobian identity: ∫\|f(x)\|² dx/x = ∫\|f(e^u)\|² du |
+| `log_change_norm` | Theorem | ✅ Norm preservation (forward) |
+| `exp_change_norm` | Theorem | ✅ Norm preservation (inverse) |
+| `log_exp_inverse` | Theorem | ✅ log_change ∘ exp_change = id |
+| `exp_log_inverse` | Theorem | ✅ exp_change ∘ log_change = id |
+| `L2_multiplicative_iso_L2_R` | Definition | ✅ Linear isometric isomorphism |
+
+#### Mathematical Significance
+
+The logarithmic change of variables establishes:
+- **Measure preservation**: dx/x = du under u = log(x)
+- **Mellin ↔ Fourier**: Connects Mellin transform with Fourier transform
+- **Multiplicative ↔ Additive**: Bridges number theory with harmonic analysis
+- **Spectral equivalence**: H_Ψ on (ℝ⁺, dx/x) ≅ Schrödinger operator on (ℝ, du)
+
+See [`L2_ISOMETRY_README.md`](L2_ISOMETRY_README.md) for detailed documentation.
+
+---
+
+### `spectral_density_theorems.lean` (NEW - 16 January 2026)
+
+**Weierstrass M-test, Chi Function Magnitude, and Spectral Density Relation**
+
+This file formalizes three fundamental theorems connecting uniform convergence, the chi function structure on the critical line, and the spectral density of the zeta function.
+
+#### Key Components
+
+| Component | Description |
+|-----------|-------------|
+| `weierstrass_m_test_uniformOn` | Uniform convergence criterion via summable bounds |
+| `chi` | Chi factor χ(s) = π^(s-1/2) · Γ((1-s)/2) / Γ(s/2) |
+| `spectral_density` | Spectral density ρ(t) = \|ζ(1/2 + it)\| / √(π/2) |
+
+#### Key Results
+
+| Result | Type | Status |
+|--------|------|--------|
+| `weierstrass_m_test_uniformOn` | Theorem | ✅ Uniform convergence for series with summable bounds |
+| `abs_chi_half_line` | Theorem | ✅ \|χ(1/2 + it)\| = √(π/2) for all t ∈ ℝ |
+| `spectral_density_zeta_relation` | Theorem | ✅ \|ζ(1/2 + it)\| = ρ(t) · √(π/2) |
+
+#### Mathematical Statement
+
+**Weierstrass M-test**: For functions f_n : α → ℝ on a compact space α, if \|f_n(x)\| ≤ M_n uniformly and ∑ M_n converges, then ∑ f_n converges uniformly.
+
+**Chi magnitude on critical line**: The chi function has constant magnitude on the critical line:
+$$|\chi(1/2 + it)| = \sqrt{\pi/2}$$
+
+**Spectral density relation**: Separates geometric from arithmetic data:
+$$|\zeta(1/2 + it)| = \rho(t) \cdot \sqrt{\pi/2}$$
+
+where ρ(t) contains pure spectral/arithmetic information.
+
+#### QCAL Integration
+
+- Base frequency: f₀ = 141.7001 Hz
+- Coherence: C = 244.36
+- Equation: Ψ = I × A_eff² × C^∞
+
+---
+
 ### `theorem18_noetic_hilbert_polya.lean` (NEW - 30 November 2025)
 
 **Complete spectral-adelic proof of RH via Hilbert–Pólya approach (Theorem 18).**

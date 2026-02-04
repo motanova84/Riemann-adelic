@@ -1,0 +1,40 @@
+{
+  "timestamp": 1768560616.7835379,
+  "servers": {
+    "github-mcp-server": {
+      "server_id": "github-mcp-server",
+      "name": "GitHub MCP Server",
+      "focus": "Núcleo git / ontológico",
+      "frequency": 141.7001,
+      "endpoint": "github-mcp-server.qcal.space"
+    },
+    "dramaturgo": {
+      "server_id": "dramaturgo",
+      "name": "Sí Dramaturgo",
+      "focus": "Narrativa cósmica / noésis dramatúrgica",
+      "frequency": 888.0,
+      "endpoint": "dramaturgo.qcal.space"
+    },
+    "riemann-mcp-server": {
+      "server_id": "riemann-mcp-server",
+      "name": "Sí Riemann MCP Server",
+      "focus": "Hipótesis de Riemann (D(s) ≡ Ξ(s))",
+      "frequency": 141.7001,
+      "endpoint": "riemann-mcp-server.qcal.space"
+    },
+    "bsd-mcp-server": {
+      "server_id": "bsd-mcp-server",
+      "name": "Sí BSD MCP Server",
+      "focus": "Conjetura BSD (dR + PT)",
+      "frequency": 888.0,
+      "endpoint": "bsd-mcp-server.qcal.space"
+    },
+    "navier-mcp-server": {
+      "server_id": "navier-mcp-server",
+      "name": "Sí Navier MCP Server",
+      "focus": "Navier-Stokes 3D (regularidad global)",
+      "frequency": 141.7001,
+      "endpoint": "navier-mcp-server.qcal.space"
+    }
+  }
+}

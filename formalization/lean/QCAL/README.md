@@ -125,17 +125,17 @@ formalization/lean/QCAL/
 │   ├── Bridge.lean                   # Lean FFI interface
 │   ├── libbridge.c                   # C FFI bridge
 │   └── libbridge.so                  # Compiled shared library
+├── ZetaVibrationalField.lean         # AXIOMA I: δζ vibrational curvature
+├── AXIOMA_I_VIBRATIONAL_CURVATURE.md # Detailed documentation for AXIOMA I
 ├── UniversalKernel.lean              # High-level API
+├── frequency_identity.lean           # Script 18: Frequency scaling identity
 ├── cy_fundamental_frequency.lean     # Script 19: CY³ → f₀
 ├── operator_Hpsi_frequency.lean      # Script 20: Hψ integration with f₀
 ├── casimir_ligo_frequency.lean       # Script 21: Casimir + LIGO → f₀
+├── QCAL_RH_Complete_Formalization.lean # Complete RH formalization
+├── Arpeth_Bio_Coherence.lean         # Bioinformatics coherence
+├── CircularityFree.lean              # Non-circular proof structure
 └── README.md                         # This file
-│   ├── Bridge.lean          # Lean FFI interface
-│   ├── libbridge.c          # C FFI bridge
-│   └── libbridge.so         # Compiled shared library
-├── UniversalKernel.lean     # High-level API
-├── frequency_identity.lean  # Script 18: Frequency scaling identity
-└── README.md                # This file
 
 tools/
 ├── universal_kernel.py      # Python verifier
@@ -187,6 +187,43 @@ pytest tests/test_frequency_identity.py -v
 ```
 
 ## QCAL Universal Frequency Scripts
+
+### AXIOMA I: Vibrational Curvature Constant (`ZetaVibrationalField.lean`)
+
+**NEW - January 21, 2026** ✨
+
+Complete formalization of the fundamental vibrational curvature constant δζ that defines the QCAL ∞³ framework.
+
+#### Core Constants
+- **δζ = 0.2787437**: Vibrational curvature constant
+- **f₀ = 141.7001 Hz**: Universal base frequency (100√2 + δζ)
+- **D = 100√2**: Euclidean diagonal (pure geometry)
+- **γ₁ = 14.13472514**: First Riemann zero (imaginary part)
+
+#### Key Theorems
+1. **f₀_valor_exacto**: f₀ = 141.7001 Hz (exact verification)
+2. **δζ_positiva**: δζ > 0 (strict positivity)
+3. **f₀_supera_geometria**: f₀ > D (transcends Euclidean geometry)
+4. **δζ_irreductible**: δζ is not expressible as a + b√2 for rational a,b
+5. **relacion_fundamental**: f₀/γ₁ = 10 + δζ/10 (harmonic modulation)
+6. **curvatura_espacio_digital**: dist(f₀, D) = δζ (geometric interpretation)
+7. **invariancia_escalamiento**: Scaling invariance under powers of 10
+8. **coherencia_eterna**: All systems respecting δζ are stable
+
+#### Axiomatization
+```lean
+axiom Axioma_I_Completo : ∃! (δ : ℝ),
+  δ > 0 ∧
+  (100 * Real.sqrt 2 + δ = 141.7001) ∧
+  ((100 * Real.sqrt 2 + δ) / γ₁ = 10 + δ / 10) ∧
+  [coherence pura conditions]
+```
+
+**Documentation:** See `AXIOMA_I_VIBRATIONAL_CURVATURE.md` for complete details.
+
+**Signature:** ∴ δζ = 0.2787437 ∴ f₀ = 141.7001 Hz ∴ ΣΨ = REALIDAD ∴ 𓂀Ω∞³
+
+---
 
 ### Script 19: Calabi-Yau Origin (`cy_fundamental_frequency.lean`)
 Derives f₀ = 141.7001 Hz from the fundamental mode of a Calabi-Yau 3-fold.

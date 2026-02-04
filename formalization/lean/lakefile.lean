@@ -38,6 +38,16 @@ lean_lib Arpeth where
   globs := #[.submodules `Arpeth]
   roots := #[`Arpeth]
 
+-- Mathlib-style spectral formalization - 6-step RH proof
+lean_lib Mathlib where
+  globs := #[.submodules `Mathlib]
+  roots := #[`Mathlib]
+
+-- HilbertPolyaProof library - Complete operator-theoretic RH proof
+lean_lib HilbertPolyaProof where
+  globs := #[.submodules `HilbertPolyaProof]
+  roots := #[`HilbertPolyaProof]
+
 -- Main executable
 @[default_target]
 lean_exe «riemann-adelic-lean» where
@@ -49,10 +59,10 @@ lean_exe «riemann-adelic-lean» where
 require mathlib from git
   "https://github.com/leanprover-community/mathlib4" @ "v4.5.0"
 
--- Let Lake resolve aesop version compatible with mathlib v4.5.0
+-- Aesop commit used by mathlib v4.5.0 for reproducible builds
 require aesop from git
-  "https://github.com/leanprover-community/aesop"
+  "https://github.com/leanprover-community/aesop" @ "cebd10ba6d22457e364ba03320cfd9fc7511e520"
 
--- Let Lake resolve proofwidgets version compatible with mathlib v4.5.0
+-- Proofwidgets commit (v0.0.25) used by mathlib v4.5.0 for reproducible builds
 require proofwidgets from git
-  "https://github.com/leanprover-community/proofwidgets4"
+  "https://github.com/leanprover-community/proofwidgets4" @ "8dd18350791c85c0fc9adbd6254c94a81d260d35"

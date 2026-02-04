@@ -1,0 +1,36 @@
+{
+  "title": "Quantum Phase Shift \u03b4\u03b6 Certificate",
+  "description": "\u03b4\u03b6 \u2248 0.2787437 Hz: Euclidean Diagonal to Cosmic String",
+  "timestamp": "N/A",
+  "fundamental_relationship": "f\u2080 = 100\u221a2 + \u03b4\u03b6",
+  "constants": {
+    "f0_hz": 141.7001,
+    "euclidean_diagonal_hz": 141.4213562373095,
+    "delta_zeta_hz": 0.27874376269048184,
+    "sqrt_2": 1.4142135623730951,
+    "coherence_C": 244.36
+  },
+  "validation": {
+    "euclidean_diagonal_hz": 141.4213562373095,
+    "delta_zeta_hz": 0.27874376269048184,
+    "computed_f0_hz": 141.7001,
+    "expected_f0_hz": 141.7001,
+    "relative_error": 0.0,
+    "phase_coherence": 1.0,
+    "validation_passed": true,
+    "precision_dps": 25
+  },
+  "cosmic_string": {
+    "tension_ratio": 3.8696350033967504e-06,
+    "string_tension": 0.0005483276669448198,
+    "energy_scale_hz2": 39.49801904761755,
+    "coherence_length": 3.5875242206241,
+    "delta_zeta_hz": 0.27874376269048184,
+    "f0_hz": 141.7001
+  },
+  "precision_dps": 25,
+  "author": "Jos\u00e9 Manuel Mota Burruezo \u03a8 \u2727 \u221e\u00b3",
+  "institution": "Instituto de Conciencia Cu\u00e1ntica (ICQ)",
+  "doi": "10.5281/zenodo.17379721",
+  "signature": "QCAL \u221e\u00b3 \u00b7 \u03b4\u03b6 \u00b7 Cosmic String"
+}
