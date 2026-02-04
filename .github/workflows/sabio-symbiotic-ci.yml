@@ -190,7 +190,8 @@ jobs:
 
       - name: ⚙️ Configure Lean version
         run: |
-          elan default stable
+          cd formalization/lean
+          elan default $(cat lean-toolchain)
           lean --version
 
       - name: 📦 Generate lake manifest
