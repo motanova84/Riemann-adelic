@@ -21,9 +21,8 @@ Frecuencia: f₀ = 141.7001 Hz
 """
 
 import numpy as np
-from typing import List, Dict, Tuple, Optional
+from typing import List, Dict, Any
 from scipy.signal import hilbert
-from scipy.interpolate import CubicSpline
 import warnings
 
 
@@ -83,11 +82,15 @@ def extraer_estado_psi(
         ica = FastICA(n_components=n_componentes, random_state=42, max_iter=1000)
         componentes = ica.fit_transform(señal_eeg.T).T
     except ImportError:
-        # Fallback: usar PCA si sklearn no está disponible
+        # Fallback: usar PCA (vía SVD) si sklearn no está disponible
         warnings.warn("sklearn no disponible, usando PCA simple")
         from scipy.linalg import svd
+        # señal_eeg tiene forma (n_canales, n_muestras)
+        # Descomposición SVD: señal_eeg = U @ diag(s) @ Vt
+        # Las componentes temporales (scores) son diag(s) @ Vt,
+        # de donde tomamos las primeras n_componentes filas.
         U, s, Vt = svd(señal_eeg, full_matrices=False)
-        componentes = (U[:, :n_componentes] * s[:n_componentes]).T
+        componentes = np.diag(s[:n_componentes]) @ Vt[:n_componentes, :]
     
     # 2. Transformación de Hilbert para fase compleja
     # Esto convierte señales reales en señales analíticas complejas
@@ -274,8 +277,13 @@ def extraer_generadores(trayectoria_psi: List[np.ndarray]) -> List[np.ndarray]:
             # Verificar hermiticidad
             if np.allclose(H, H.conj().T, atol=1e-3):
                 generadores.append(H)
-        except:
+        except Exception as exc:
             # Si falla, usar aproximación lineal
+            warnings.warn(
+                f"Fallo al calcular logm(U) en extraer_generadores; "
+                f"usando aproximación lineal. Detalle: {exc}",
+                RuntimeWarning,
+            )
             I = np.eye(len(U))
             H = -1j * (U - I)
             generadores.append((H + H.conj().T) / 2)  # Simetrizar
@@ -316,15 +324,17 @@ def verificar_conmutadores(generadores: List[np.ndarray]) -> float:
                 # Calcular conmutador: [Ta, Tb] = Ta·Tb - Tb·Ta
                 conmutador = Ta @ Tb - Tb @ Ta
                 
-                # Verificar si es hermitiano (propiedad de su(n))
-                if np.allclose(conmutador, conmutador.conj().T, atol=1e-2):
+                # Verificar si [Ta, Tb] es anti-hermitiano y aproximadamente traceless (propiedad de su(n))
+                es_antihermitiano = np.allclose(conmutador.conj().T, -conmutador, atol=1e-2)
+                es_traza_cero = np.allclose(np.trace(conmutador), 0.0, atol=1e-2)
+                if es_antihermitiano and es_traza_cero:
                     n_validos += 1
                 n_total += 1
     
     return n_validos / n_total if n_total > 0 else 1.0
 
 
-def test_estructura_grupo_SU(trayectoria_psi: List[np.ndarray]) -> Dict[str, any]:
+def test_estructura_grupo_SU(trayectoria_psi: List[np.ndarray]) -> Dict[str, Any]:
     """
     Verifica si las transformaciones satisfacen axiomas de SU(n).
     
@@ -481,7 +491,7 @@ def calcular_longitud_geodesica(puntos_manifold: List[np.ndarray]) -> float:
     return longitud
 
 
-def analizar_geodesicas(trayectoria_psi: List[np.ndarray]) -> Dict[str, any]:
+def analizar_geodesicas(trayectoria_psi: List[np.ndarray]) -> Dict[str, Any]:
     """
     Verifica si las transiciones siguen geodésicas en SU(n).
     
@@ -614,7 +624,7 @@ def calcular_estabilidad_grupo(
 def analisis_estadistico_SU(
     datos_grupo_control: List[List[np.ndarray]],
     datos_grupo_meditadores: List[List[np.ndarray]]
-) -> Dict[str, any]:
+) -> Dict[str, Any]:
     """
     Comparación estadística entre grupos para validar hipótesis.
     

@@ -21,10 +21,10 @@ Frecuencia: f₀ = 141.7001 Hz
 """
 
 import numpy as np
-from typing import Dict, List, Tuple, Optional
-from scipy.ndimage import gaussian_filter, laplace
+from typing import Dict, List, Tuple, Optional, Any
+from scipy.ndimage import laplace
 from scipy.signal import correlate
-from scipy.stats import pearsonr, spearmanr
+from scipy.stats import pearsonr
 from scipy.optimize import curve_fit
 import warnings
 
@@ -113,8 +113,13 @@ def construir_campo_emocional(
         'autorreporte': 0.25 # Experiencia subjetiva
     }
     
-    # Verificar suma de pesos = 1
-    assert np.abs(sum(pesos.values()) - 1.0) < 1e-6, "Pesos deben sumar 1"
+    # Verificar suma de pesos = 1 (validación robusta en runtime)
+    suma_pesos = float(sum(pesos.values()))
+    if abs(suma_pesos - 1.0) >= 1e-6:
+        raise ValueError(
+            f"Los pesos deben sumar 1 (suma actual: {suma_pesos}). "
+            "Revise la configuración de 'pesos'."
+        )
     
     # 3. Campo compuesto
     # Nota: HRV alto = stress bajo, por eso (1 - hrv_norm)
@@ -175,9 +180,23 @@ def calcular_tensor_stress_energia(
     T_μν = np.zeros((4, 4, *Phi_espaciotemporal.shape))
     
     # 1. Derivadas del campo
+    # Derivada temporal: asumimos al menos 2 puntos en el eje tiempo
     dPhi_dt = np.gradient(Phi_espaciotemporal, axis=0)
-    dPhi_dx = np.gradient(Phi_espaciotemporal, axis=1)
-    dPhi_dy = np.gradient(Phi_espaciotemporal, axis=2)
+    
+    # Derivadas espaciales: manejar dimensiones singleton para evitar ValueError
+    _, nx, ny = Phi_espaciotemporal.shape
+    
+    if nx < 2:
+        # Sin extensión espacial en x: derivada nula
+        dPhi_dx = np.zeros_like(Phi_espaciotemporal)
+    else:
+        dPhi_dx = np.gradient(Phi_espaciotemporal, axis=1)
+    
+    if ny < 2:
+        # Sin extensión espacial en y: derivada nula
+        dPhi_dy = np.zeros_like(Phi_espaciotemporal)
+    else:
+        dPhi_dy = np.gradient(Phi_espaciotemporal, axis=2)
     
     # 2. Componentes del tensor
     # T₀₀: Densidad de energía emocional
@@ -201,7 +220,7 @@ def calcular_tensor_stress_energia(
     return T_μν
 
 
-def calcular_curvatura_emocional(Phi: np.ndarray) -> Dict[str, any]:
+def calcular_curvatura_emocional(Phi: np.ndarray) -> Dict[str, Any]:
     """
     Calcula ∇²Φ (Laplaciano) como curvatura del paisaje emocional.
     
@@ -249,7 +268,7 @@ def calcular_curvatura_emocional(Phi: np.ndarray) -> Dict[str, any]:
     }
 
 
-def test_correlacion_T00_amigdala(datos: Dict[str, np.ndarray]) -> Dict[str, any]:
+def test_correlacion_T00_amigdala(datos: Dict[str, np.ndarray]) -> Dict[str, Any]:
     """
     Verifica si T₀₀ predice actividad límbica.
     
@@ -290,8 +309,16 @@ def test_correlacion_T00_amigdala(datos: Dict[str, np.ndarray]) -> Dict[str, any
     T_00 = T_00[:min_len]
     amigdala = amigdala[:min_len]
     
-    # Correlación instantánea
-    r_pearson, p_pearson = pearsonr(T_00, amigdala)
+    # Correlación instantánea (manejar varianza cero)
+    std_T00 = np.std(T_00)
+    std_amigdala = np.std(amigdala)
+    
+    if std_T00 < 1e-12 or std_amigdala < 1e-12:
+        # Si alguna señal es constante, correlación no definida
+        r_pearson = 0.0
+        p_pearson = 1.0
+    else:
+        r_pearson, p_pearson = pearsonr(T_00, amigdala)
     
     # Correlación con lag (causalidad)
     lags = range(-5, 6)  # ±5 TR (típicamente ±10 seg en fMRI)
@@ -300,14 +327,20 @@ def test_correlacion_T00_amigdala(datos: Dict[str, np.ndarray]) -> Dict[str, any
     for lag in lags:
         if lag < 0:
             if len(T_00[:lag]) > 0 and len(amigdala[-lag:]) > 0:
-                r, _ = pearsonr(T_00[:lag], amigdala[-lag:])
+                try:
+                    r, _ = pearsonr(T_00[:lag], amigdala[-lag:])
+                except ValueError:
+                    r = 0.0
             else:
-                r = 0
+                r = 0.0
         elif lag > 0:
             if len(T_00[lag:]) > 0 and len(amigdala[:-lag]) > 0:
-                r, _ = pearsonr(T_00[lag:], amigdala[:-lag])
+                try:
+                    r, _ = pearsonr(T_00[lag:], amigdala[:-lag])
+                except ValueError:
+                    r = 0.0
             else:
-                r = 0
+                r = 0.0
         else:
             r = r_pearson
         correlaciones_lag.append(r)
@@ -335,7 +368,7 @@ def test_correlacion_T00_amigdala(datos: Dict[str, np.ndarray]) -> Dict[str, any
 def test_flujo_emocional_diadas(
     datos_emisor: Dict[str, np.ndarray],
     datos_receptor: Dict[str, np.ndarray]
-) -> Dict[str, any]:
+) -> Dict[str, Any]:
     """
     Mide propagación emocional usando T₀ᵢ.
     
@@ -389,8 +422,15 @@ def test_flujo_emocional_diadas(
     lag_contagio = np.argmax(cross_corr) - len(flujo_emisor)
     tiempo_contagio = lag_contagio * 0.001  # Asumiendo muestreo 1 kHz
     
-    # 6. Magnitud del contagio
-    magnitud = np.max(cross_corr) / (np.std(flujo_emisor) * np.std(respuesta_receptor) * len(flujo_emisor))
+    # 6. Magnitud del contagio (normalizada por desviaciones estándar)
+    std_emisor = np.std(flujo_emisor)
+    std_receptor = np.std(respuesta_receptor)
+    eps = 1e-12
+    if len(flujo_emisor) == 0 or std_emisor < eps or std_receptor < eps:
+        # Si alguna señal es (casi) constante, evitar división por cero / inestabilidades
+        magnitud = 0.0
+    else:
+        magnitud = np.max(cross_corr) / (std_emisor * std_receptor * len(flujo_emisor))
     
     # 7. Información mutua (requiere discretización)
     try:
@@ -419,7 +459,7 @@ def test_flujo_emocional_diadas(
 def estudio_longitudinal_curvatura(
     datos_baseline: List[Dict[str, np.ndarray]],
     datos_followup_6meses: List[Dict[str, bool]]
-) -> Dict[str, any]:
+) -> Dict[str, Any]:
     """
     Predice desarrollo de psicopatología desde ∇²Φ basal.
     
@@ -447,8 +487,16 @@ def estudio_longitudinal_curvatura(
     """
     import scipy.stats
     
+    # Validación temprana
+    if not datos_baseline:
+        raise ValueError("datos_baseline no puede estar vacío")
+    if not datos_followup_6meses:
+        raise ValueError("datos_followup_6meses no puede estar vacío")
+    
     # 1. Extraer características de curvatura basal
     caracteristicas = []
+    features = None  # Inicializar para evitar UnboundLocalError
+    
     for sujeto in datos_baseline:
         Phi = construir_campo_emocional(sujeto)
         curv = calcular_curvatura_emocional(Phi)
@@ -512,7 +560,7 @@ def estudio_longitudinal_curvatura(
     }
 
 
-def rct_frecuencia_141_7_Hz() -> Dict[str, any]:
+def rct_frecuencia_141_7_Hz() -> Dict[str, Any]:
     """
     Protocolo completo de RCT para validar intervención con 141.7 Hz.
     

@@ -21,7 +21,7 @@ Frecuencia: f₀ = 141.7001 Hz
 """
 
 import numpy as np
-from typing import Dict, List, Tuple, Optional
+from typing import Dict, List, Tuple, Callable, Any
 import warnings
 
 
@@ -31,7 +31,7 @@ def experimento_red_social(
     k_vecinos: int = 6,
     p_rewire: float = 0.1,
     seed: int = 42
-) -> Tuple[object, str, callable]:
+) -> Tuple[object, str, Callable]:
     """
     Diseña experimento de propagación en red social.
     
@@ -249,7 +249,7 @@ def experimento_red_social(
 def analizar_efectos_red(
     historia: List[Dict],
     red: object
-) -> Dict[str, any]:
+) -> Dict[str, Any]:
     """
     Extrae métricas de propagación en red.
     
@@ -397,7 +397,7 @@ def analizar_efectos_red(
 def analizar_clustering_coherencia(
     red: object,
     historia: List[Dict]
-) -> Dict[str, any]:
+) -> Dict[str, Any]:
     """
     Analiza si nodos de alta coherencia forman clusters.
     
@@ -449,7 +449,16 @@ def analizar_clustering_coherencia(
     
     try:
         asortatividad = nx.attribute_assortativity_coefficient(red, 'Psi_final')
-    except:
+    except Exception as exc:
+        warnings.warn(
+            (
+                "Fallo al calcular la asortatividad por coherencia (atributo 'Psi_final') "
+                "en la red; se usará 0.0 por defecto. "
+                f"Detalle de la excepción: {exc!r}"
+            ),
+            RuntimeWarning,
+            stacklevel=2,
+        )
         asortatividad = 0.0
     
     return {
@@ -471,7 +480,7 @@ def simular_experimento_completo(
     n_intervenidos: int = 20,
     num_pasos: int = 100,
     verbose: bool = False
-) -> Dict[str, any]:
+) -> Dict[str, Any]:
     """
     Ejecuta simulación completa de experimento de red.
     
@@ -536,7 +545,7 @@ def simular_experimento_completo(
                 nx.average_shortest_path_length(red)
             )
         }
-    except:
+    except ImportError:
         metricas_red = {}
     
     # 6. Compilar resultados

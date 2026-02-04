@@ -16,13 +16,13 @@ Frecuencia: f₀ = 141.7001 Hz
 """
 
 import numpy as np
-from typing import Dict, List, Tuple, Optional
+from typing import Dict, List, Optional, Any
 import warnings
 
 
 def meta_analisis_QCAL(
     estudios: Optional[Dict[str, Dict]] = None
-) -> Dict[str, any]:
+) -> Dict[str, Any]:
     """
     Sintetiza evidencia de todos los experimentos.
     
@@ -151,8 +151,8 @@ def meta_analisis_QCAL(
     Q = np.sum(n_totales * (efectos - efecto_combinado)**2)
     df = len(efectos) - 1
     
-    if df > 0:
-        I_cuadrado = max(0, (Q - df) / Q) * 100
+    if df > 0 and Q > 0:
+        I_cuadrado = max(0.0, (Q - df) / Q) * 100
     else:
         I_cuadrado = 0.0
     
@@ -310,7 +310,7 @@ Conclusión: Se requiere trabajo sustancial adicional antes de validación clín
 def analisis_sensibilidad(
     estudios: Dict[str, Dict],
     excluir: Optional[List[str]] = None
-) -> Dict[str, any]:
+) -> Dict[str, Any]:
     """
     Análisis de sensibilidad excluyendo estudios específicos.
     
@@ -385,7 +385,7 @@ def analisis_sensibilidad(
     return resultados
 
 
-def forest_plot_data(estudios: Dict[str, Dict]) -> Dict[str, any]:
+def forest_plot_data(estudios: Dict[str, Dict]) -> Dict[str, Any]:
     """
     Prepara datos para forest plot (gráfico de bosque).
     
@@ -482,7 +482,7 @@ def planificar_estudio_futuro(
     efecto_meta: float,
     poder_deseado: float = 0.80,
     alpha: float = 0.05
-) -> Dict[str, any]:
+) -> Dict[str, Any]:
     """
     Planifica tamaño de muestra para estudios futuros.
     
@@ -500,6 +500,15 @@ def planificar_estudio_futuro(
     plan : Dict
         Recomendaciones para diseño de estudio
     """
+    # Validar efecto mínimo
+    if abs(efecto_meta) < 0.01:
+        warnings.warn(
+            f"Tamaño de efecto muy pequeño ({efecto_meta:.4f}). "
+            "Usando efecto mínimo clínicamente relevante de 0.2",
+            UserWarning
+        )
+        efecto_meta = 0.2
+    
     # Cálculo aproximado de tamaño de muestra
     # n ≈ 16 / d² para poder = 0.80, α = 0.05
     n_aproximado = int(np.ceil(16 / (efecto_meta**2)))
@@ -545,7 +554,7 @@ def planificar_estudio_futuro(
 def generar_reporte_completo(
     estudios: Optional[Dict[str, Dict]] = None,
     verbose: bool = True
-) -> Dict[str, any]:
+) -> Dict[str, Any]:
     """
     Genera reporte completo de meta-análisis QCAL.
     
