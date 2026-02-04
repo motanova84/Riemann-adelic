@@ -1,0 +1,61 @@
+{
+  "certificate_id": "SAT_hadamard_symmetry_20260118T151748.192283Z",
+  "certificate_type": "SAT_THEOREM_CERTIFICATE",
+  "theorem_name": "hadamard_symmetry",
+  "description": "Hadamard product symmetry for zeros",
+  "theorem_type": "zero_property",
+  "timestamp": "2026-01-18T15:17:48.192283Z",
+  "file_info": {
+    "path": "formalization/lean/RH_final_v7.lean",
+    "sha256": "aba34976b30dc958b435235d931822dd9b7367c43fa76cb8c9d085ff8ed97437",
+    "exists": true
+  },
+  "dependencies": [],
+  "verification": {
+    "compilation": {
+      "compiles": null,
+      "error_message": "[Errno 2] No such file or directory: 'lean'",
+      "check_time": null
+    },
+    "theorem_content_found": true,
+    "content_length": 157
+  },
+  "sat_formula": {
+    "variables": {
+      "theorem_exists": true,
+      "theorem_compiles": null,
+      "file_valid": true,
+      "dependencies_satisfied": true,
+      "no_sorry": true
+    },
+    "formula": "AND(theorem_exists, theorem_compiles, file_valid, dependencies_satisfied, no_sorry)",
+    "satisfied": false,
+    "solver": "direct_evaluation"
+  },
+  "proof_status": {
+    "verified": false,
+    "sorry_count": "not_computed",
+    "axioms_used": [
+      "propext",
+      "quot.sound",
+      "Classical.choice"
+    ],
+    "note": "sorry_count requires Lean AST analysis"
+  },
+  "qcal_signature": {
+    "base_frequency": "141.7001 Hz",
+    "coherence_constant": "C = 244.36",
+    "field_equation": "\u03a8 = I \u00d7 A_eff\u00b2 \u00d7 C^\u221e"
+  },
+  "cryptographic_proof": {
+    "certificate_hash": "c6f9a14fdcc88894247dd08606a834c14b1eb7d87174366b247b8ca96a76a2b9",
+    "validator_signature": "f3a362ce7a4aca0a10766c1e72a05396"
+  },
+  "metadata": {
+    "generator": "SAT Certificate Generator v1.0",
+    "author": "Jos\u00e9 Manuel Mota Burruezo (JMMB \u03a8\u2727)",
+    "institution": "Instituto de Conciencia Cu\u00e1ntica (ICQ)",
+    "doi": "10.5281/zenodo.17379721",
+    "license": "CC BY-NC-SA 4.0"
+  }
+}
