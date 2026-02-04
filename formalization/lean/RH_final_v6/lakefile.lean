@@ -5,40 +5,24 @@ package rh_final_v6 where
   moreLeanArgs := #["-Dlinter.unusedVariables=false"]
   leanOptions := #[⟨`relaxedAutoImplicit, false⟩]
 
-lean_lib RHFinal where
-  roots := #[`paley_wiener_uniqueness, `selberg_trace, `H_psi_complete, `D_limit_equals_xi, 
-             `SpectralIdentification, `Operator.Hψ, `PaleyWiener.Unicity, 
-             `Spectral.MellinIdentification, `Zeta.FunctionalEquation]
-  roots := #[`paley_wiener_uniqueness, `selberg_trace, `H_psi_complete, `D_limit_equals_xi, `spectrum_eq_zeros]
+-- V6 Complete System Integration
+lean_lib RH_final_v6 where
   roots := #[
-    `spectrum_HΨ_equals_zeta_zeros,
-    `H_psi_complete,
-    `heat_kernel_to_delta_plus_primes,
-    `spectral_convergence_from_kernel,
-    `paley_wiener_uniqueness,
-    `SelbergTraceStrong,
-    `D_limit_equals_xi,
-    `zeta_operator_D,
-    `Riemann_Hypothesis_noetic,
-    `RiemannSiegel,
-    `DeterminantFredholm,
-    `NoExtraneousEigenvalues,
-    `RHComplete
+    -- V6 New Components (Non-circular proof)
+    `RH_final_v6.NoesisInfinity,
+    `RH_final_v6.KernelExplicit,
+    `RH_final_v6.CompactResolvent,
+    `RH_final_v6.RHProved,
+    `RH_final_v6.Main,
+    -- V6 Existing Components
+    `RH_final_v6.H_psi_self_adjoint,
+    `RH_final_v6.H_psi_complete,
+    `RH_final_v6.NoExtraneousEigenvalues,
+    `RH_final_v6.RHComplete,
+    `RH_final_v6.DeterminantFredholm,
+    `RH_final_v6.RiemannSiegel,
+    `RH_final_v6.SelbergTraceStrong,
+    `RH_final_v6.D_limit_equals_xi,
+    `RH_final_v6.paley_wiener_uniqueness,
+    `RH_final_v6.selberg_trace
   ]
-  roots := #[`paley_wiener_uniqueness, `selberg_trace, `H_psi_complete, `D_limit_equals_xi, `H_psi_self_adjoint]
-  roots := #[
-    `paley_wiener_uniqueness,
-    `selberg_trace,
-    `H_psi_complete,
-    `D_limit_equals_xi,
-    `D_equals_Xi,
-    `rh_final_theorem,
-    `spectrum_HΨ_equals_zeta_zeros,
-    `heat_kernel_to_delta_plus_primes,
-    `spectral_convergence_from_kernel,
-    `SelbergTraceStrong,
-    `zeta_operator_D,
-    `Riemann_Hypothesis_noetic,
-    `NuclearityExplicit
-  ]
-  roots := #[`paley_wiener_uniqueness, `selberg_trace, `H_psi_complete, `D_limit_equals_xi, `spectral_convergence_from_kernel, `zeros_xi_structure]
