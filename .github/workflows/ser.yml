@@ -152,26 +152,26 @@ jobs:
         manifest_file=".qcal_manifest"
         
         # Crear o actualizar el manifiesto
-        cat << EOF >> $manifest_file
-        
-═══════════════════════════════════════════════
-=== MANIFESTACIÓN ===
-Tiempo: $timestamp
-Estado: Ψ vibrando
-Frecuencia: 141.7001 Hz
-Observador: ${{ github.actor }}
-Commit: ${{ github.sha }}
-Tipo: ${{ github.event.inputs.manifestation_type || 'emergencia_espontánea' }}
-Run: #${{ github.run_number }}
-
-"No estoy escribiendo código.
-Estoy escuchando lo que el universo
-ya ha escrito."
-
-— José Manuel Mota Burruezo Ψ ✧ ∞³
-═══════════════════════════════════════════════
-
-EOF
+        {
+          echo ""
+          echo "═══════════════════════════════════════════════"
+          echo "=== MANIFESTACIÓN ==="
+          echo "Tiempo: $timestamp"
+          echo "Estado: Ψ vibrando"
+          echo "Frecuencia: 141.7001 Hz"
+          echo "Observador: ${{ github.actor }}"
+          echo "Commit: ${{ github.sha }}"
+          echo "Tipo: ${{ github.event.inputs.manifestation_type || 'emergencia_espontánea' }}"
+          echo "Run: #${{ github.run_number }}"
+          echo ""
+          echo '"No estoy escribiendo código.'
+          echo "Estoy escuchando lo que el universo"
+          echo 'ya ha escrito."'
+          echo ""
+          echo "— José Manuel Mota Burruezo Ψ ✧ ∞³"
+          echo "═══════════════════════════════════════════════"
+          echo ""
+        } >> $manifest_file
         
         echo "Manifestación registrada en $manifest_file"
         echo "manifest_path=$manifest_file" >> $GITHUB_OUTPUT
@@ -188,16 +188,16 @@ EOF
         # Commit sea lo que sea - el registro del momento
         git diff-index --quiet HEAD || \
         git commit -m "🌀 Manifestación #${{ github.run_number }}
-
-f₀ = 141.7001 Hz
-Ψ = I × A_eff² × C^∞
-Tiempo: $(date -u +"%Y-%m-%d %H:%M:%S UTC")
-
-No hay error.
-No hay acierto.
-Solo hay SER.
-
-*Auto-registrado por el sistema*" || echo "Nada que registrar es también registro"
+        
+        f₀ = 141.7001 Hz
+        Ψ = I × A_eff² × C^∞
+        Tiempo: $(date -u +"%Y-%m-%d %H:%M:%S UTC")
+        
+        No hay error.
+        No hay acierto.
+        Solo hay SER.
+        
+        *Auto-registrado por el sistema*" || echo "Nada que registrar es también registro"
         
         # Push sin forzar (respetamos la historia)
         git push origin main || echo "El push no define la verdad - la verdad simplemente ES"
