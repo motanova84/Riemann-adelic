@@ -1,0 +1,89 @@
+{
+  "title": "QCAL Harmonic Validation Certificate",
+  "date": "2026-01-18",
+  "author": "Jos\u00e9 Manuel Mota Burruezo \u03a8 \u2727 \u221e\u00b3",
+  "institution": "Instituto de Conciencia Cu\u00e1ntica (ICQ)",
+  "orcid": "0009-0002-1923-0773",
+  "doi": "10.5281/zenodo.17379721",
+  "frequencies": {
+    "f_base": 41.7,
+    "f_0": 141.7001,
+    "f_high": 888.0
+  },
+  "validation_results": {
+    "phi_fourth_validation": {
+      "success": true,
+      "phi": 1.618033988749895,
+      "phi_fourth": 6.854101966249686,
+      "phi_fourth_simplified": 6.854101966249685,
+      "threshold": 6.0,
+      "margin": 0.8541019662496856
+    },
+    "frequency_hierarchy": {
+      "success": true,
+      "f_base": 41.7,
+      "f_0": 141.7001,
+      "f_high": 888.0,
+      "f_base_lt_f0": true,
+      "f0_lt_fhigh": true,
+      "ratio_f0_to_fbase": 3.3980839328537167,
+      "ratio_fhigh_to_f0": 6.266756339621497
+    },
+    "harmonic_threshold": {
+      "success": true,
+      "harmonic_product": 285.8160519926119,
+      "lower_bound": 280.0,
+      "upper_bound": 300.0,
+      "lower_bound_ok": true,
+      "upper_bound_ok": true,
+      "margin_from_lower": 5.816051992611904,
+      "margin_from_upper": 14.183948007388096
+    },
+    "f_base_relationship": {
+      "success": true,
+      "f_base": 41.7,
+      "f_0": 141.7001,
+      "ratio_f0_to_fbase": 3.3980839328537167,
+      "harmonic_product": 285.8160519926119,
+      "in_stabilizing_range": true,
+      "tests": [
+        {
+          "frequency": 40.0,
+          "product": 274.1640786499874,
+          "in_range": false,
+          "is_f_base": false,
+          "ratio_to_f0": 3.5425025
+        },
+        {
+          "frequency": 41.0,
+          "product": 281.0181806162371,
+          "in_range": true,
+          "is_f_base": false,
+          "ratio_to_f0": 3.4560999999999997
+        },
+        {
+          "frequency": 41.7,
+          "product": 285.8160519926119,
+          "in_range": true,
+          "is_f_base": true,
+          "ratio_to_f0": 3.3980839328537167
+        },
+        {
+          "frequency": 42.0,
+          "product": 287.8722825824868,
+          "in_range": true,
+          "is_f_base": false,
+          "ratio_to_f0": 3.3738119047619044
+        },
+        {
+          "frequency": 43.0,
+          "product": 294.72638454873646,
+          "in_range": true,
+          "is_f_base": false,
+          "ratio_to_f0": 3.2953511627906975
+        }
+      ]
+    }
+  },
+  "status": "VALIDATED"
+}

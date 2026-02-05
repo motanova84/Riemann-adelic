@@ -1,0 +1,38 @@
+{
+  "timestamp": "2026-01-18T13:27:40.843974",
+  "validation_type": "coherencia_final",
+  "calabi_yau": {
+    "kappa_pi": 2.5657685152091525,
+    "mu1": 1.1211702770071055,
+    "mu2": 2.8766633969331554,
+    "expected": 2.5782,
+    "is_valid": true,
+    "component": "Calabi-Yau Geometry"
+  },
+  "zeta_prime": {
+    "zeta_prime": -3.92264613,
+    "zeta_prime_abs": 3.92264613,
+    "component": "Arithmetic (Riemann Zeta)"
+  },
+  "frequency": {
+    "f0": 141.7001,
+    "f0_from_cy_hierarchy": 2.952099241293572e-05,
+    "component": "Physical Observable"
+  },
+  "coherence_chain": {
+    "coherence_product": 10.064601936661028,
+    "dimensional_factor": 14.079056567935123,
+    "coherence_ratio": 0.05761604422955935,
+    "is_coherent": false,
+    "unified_formula": "f₀ ≈ [factor dimensional] · |ζ'(1/2)| · κ_π\n   = 14.08 · 3.9226 · 2.5658\n   = 141.7001 Hz",
+    "components": {
+      "calabi_yau": 2.5657685152091525,
+      "zeta_prime": 3.92264613,
+      "frequency": 141.7001
+    }
+  },
+  "overall_status": {
+    "kappa_valid": true,
+    "coherent": false
+  }
+}
