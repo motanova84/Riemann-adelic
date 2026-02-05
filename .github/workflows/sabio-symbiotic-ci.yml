@@ -194,10 +194,19 @@ jobs:
           elan default $(cat lean-toolchain)
           lean --version
 
+      - name: 🧹 Clean stale Lake cache
+        run: |
+          cd formalization/lean
+          rm -rf .lake/
+          echo "✅ Cleaned stale Lake cache"
+
       - name: 📦 Generate lake manifest
         run: |
           cd formalization/lean
+          echo "🔍 Current directory: $(pwd)"
+          echo "📋 Generating Lake manifest..."
           lake update
+          echo "✅ Lake manifest generated"
 
       - name: 💾 Cache Lake packages
         uses: actions/cache@v4
@@ -216,6 +225,7 @@ jobs:
           cd formalization/lean
           echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
           echo "📐 Compilando formalización Lean4"
+          echo "🔍 Working directory: $(pwd)"
           echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
           lake build || echo "⚠️ Build completed with issues (expected for skeleton proofs)"
           echo ""
