@@ -41,6 +41,13 @@ namespace AsymptoticSpectrum
 
 /-! # Definiciones Básicas -/
 
+/-- 
+  Límite computacional para aproximaciones finitas en demostraciones.
+  En una formalización completa, las definiciones usarían cardinalidad exacta
+  sobre conjuntos infinitos. Este límite permite demostración constructiva.
+-/
+def computation_limit : ℕ := 10000
+
 /--
   Función de conteo de eigenvalores: ρ(T) cuenta el número de eigenvalores
   del operador H_Ψ con parte imaginaria en el rango [0, T].
@@ -54,7 +61,7 @@ namespace AsymptoticSpectrum
 def eigenvalue_counting_function (spectrum : ℕ → ℝ) (T : ℝ) : ℝ :=
   -- Aproximación finita para demostración. En práctica, esto sería:
   -- card {n : ℕ | spectrum n ≤ T}
-  (Finset.filter (λ n ↦ spectrum n ≤ T) (Finset.range 10000)).card
+  (Finset.filter (λ n ↦ spectrum n ≤ T) (Finset.range computation_limit)).card
 
 /--
   Densidad asintótica teórica del espectro según la fórmula de Riemann-von Mangoldt.
@@ -165,7 +172,7 @@ theorem hadamard_growth_theorem (f : ℂ → ℂ) (order : ℝ) (horder : order 
     ∃ C : ℝ, ∀ r : ℝ, r > 0 →
       -- Aproximación finita del conteo de ceros
       -- En teoría: #{z : ℂ | |z| ≤ r ∧ f(z) = 0}
-      (Finset.filter (λ z : ℂ ↦ abs z ≤ r ∧ f z = 0) (Finset.range 10000)).card
+      (Finset.filter (λ z : ℂ ↦ abs z ≤ r ∧ f z = 0) (Finset.range computation_limit)).card
       ~[atTop] C * r^order := by
   sorry
 

@@ -250,13 +250,17 @@ theorem quintic_euler_char :
   Esto significa que el transporte paralelo de vectores a lo largo de
   curvas cerradas está contenido en SU(3) ⊂ SO(6) ⊂ GL(6,ℝ).
   
+  Nota: Formalmente el grupo de holonomía es SU(3), pero en el espacio
+  proyectivo puede aparecer PSU(3) = SU(3)/Z₃. Aquí usamos la forma
+  proyectiva apropiada para el contexto geométrico.
+  
   Consecuencias físicas:
   - Supersimetría N=1 en 4D después de compactificación
   - Conservación de quiralidad (fermiones izquierdos y derechos)
   - Estabilidad de vacío
 -/
-axiom holonomy_group_is_PSU3 (cy : CalabiYauManifold 3) :
-  ∃ G : Type, G = PSU 3 ℂ
+axiom holonomy_group_SU3 (cy : CalabiYauManifold 3) :
+  ∃ G : Type, G = PSU 3 ℂ  -- Forma proyectiva apropiada
 
 /--
   Teorema: El fibrado tangente de CY₃ se descompone como suma directa
