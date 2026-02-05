@@ -144,12 +144,17 @@ def check_constant_consistency():
     print(f"\nTotal f₀ references:  {f0_count}")
     print(f"Total δζ references:  {delta_count}")
     
+    # Updated logic: require minimum references but don't fail
+    # This is informational rather than strictly enforced
     if f0_count >= 3 and delta_count >= 2:
         print("\n✓ PASS: Constants appear consistently across files")
         return True
     else:
-        print("\n✗ WARNING: Low constant reference count")
-        return True  # Don't fail, just warn
+        # Informational check - we still pass but note the low count
+        # This allows flexibility in documentation vs code files
+        print("\n⚠ INFO: Lower than expected constant references")
+        print("  (This may be acceptable for documentation files)")
+        return True
 
 def check_mathematical_formulas():
     """Verify key mathematical formulas appear in the files"""

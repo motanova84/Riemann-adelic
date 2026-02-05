@@ -53,7 +53,7 @@ def ComplexSpace3 : Type := ℂ × ℂ × ℂ
   Espacio proyectivo complejo P⁴
   Como cociente: P⁴ = (C⁵ \ {0}) / C*
 -/
-def ProjectiveSpace4 : Type := Quotient (⟨λ (z w : Fin 5 → ℂ) ↦ ∃ (λ : ℂ), λ ≠ 0 ∧ z = λ • w, 
+def ProjectiveSpace4 : Type := Quotient (⟨λ (z w : Fin 5 → ℂ) ↦ ∃ (c : ℂ), c ≠ 0 ∧ z = c • w, 
   sorry, sorry, sorry⟩ : Setoid (Fin 5 → ℂ))
 
 /--
@@ -255,7 +255,7 @@ theorem quintic_euler_char :
   - Conservación de quiralidad (fermiones izquierdos y derechos)
   - Estabilidad de vacío
 -/
-axiom holonomy_group_is_SU3 (cy : CalabiYauManifold 3) :
+axiom holonomy_group_is_PSU3 (cy : CalabiYauManifold 3) :
   ∃ G : Type, G = PSU 3 ℂ
 
 /--
