@@ -16,9 +16,9 @@ Both sequences are **equidistributed**, revealing their quasi-random harmonic ch
 
 ### 1. Lean4 Formalization
 
-**`formalization/lean/WeylEquidistribution.lean`** (290 lines)
+**`formalization/lean/WeylEquidistribution.lean`** (234 lines)
 
-Formal verification of:
+General Weyl equidistribution theorem:
 - Definition of uniform distribution mod 1
 - Weyl's criterion using exponential sums
 - Orthogonality of complex exponentials
@@ -26,6 +26,15 @@ Formal verification of:
 - Applications to primes and zeta zeros
 - Connection to Calabi-Yau phase bundles
 - Integration with QCAL frequency f₀
+
+**`formalization/lean/ZETA_SPECTRUM_WEYL.lean`** (46 lines) — **NEW**
+
+Focused formalization for Riemann zeta spectrum:
+- Spectral sequence `t_n` (imaginary parts of zeta zeros)
+- Equidistribution mod 1 definition
+- Weyl criterion in cosine form
+- Main conjecture: `{t_n}` is equidistributed mod 1
+- See `ZETA_SPECTRUM_WEYL_README.md` for details
 
 ### 2. Python Validation
 
