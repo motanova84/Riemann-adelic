@@ -37,6 +37,15 @@ Formalized the **Weyl Equidistribution Theorem** in Lean4 and validated numerica
    - Summary statistics (mean, std, min, max)
    - Output: 5 high-resolution PNG plots
 
+4. **`simulate_weyl_equidistribution.py`** (220 lines)
+   - Simplified educational simulation script
+   - Approximates zeros using t_n ≈ n log(n) formula
+   - Computes Weyl sums S_k(N) = Σ exp(2πi k t_n)
+   - Tabular output of magnitudes
+   - Single convergence plot showing threshold
+   - CSV export of results
+   - Ideal for teaching and quick demonstrations
+
 ### Validation Results (February 5, 2026)
 
 **Riemann Zeros** {tₙ / 2π}:

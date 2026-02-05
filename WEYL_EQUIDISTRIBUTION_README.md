@@ -60,6 +60,27 @@ Generates 5 plots in `output/weyl_demo/`:
 4. Zero exponential sum decay
 5. Spectral correlation plot
 
+### 4. Simple Simulation Script
+
+**`simulate_weyl_equidistribution.py`** (220 lines)
+
+Simplified simulation for educational purposes:
+```bash
+python3 simulate_weyl_equidistribution.py
+```
+
+Features:
+- Approximates Riemann zeros using t_n ≈ n log(n)
+- Computes Weyl sums S_k(N) = Σ exp(2πi k t_n)
+- Displays magnitudes in tabular format
+- Generates convergence visualization plot
+- Validates equidistribution criterion
+- Exports results to CSV format
+
+Output:
+- `output/weyl_equidistribution_simulation.png` - Magnitude plot
+- `output/weyl_equidistribution_results.csv` - Numerical results
+
 ## Mathematical Background
 
 ### Weyl's Criterion
@@ -181,6 +202,16 @@ The phases θₙ = 2π{tₙ / 2π} parametrize:
 **Numerical test**: Compute Σ exp(2πi k tₙ) for large N. If doesn't converge to 0, investigate anomalies.
 
 ## Usage Examples
+
+### Simple Simulation (Educational)
+
+```bash
+# Run the simplified simulation script
+python3 simulate_weyl_equidistribution.py
+
+# View generated outputs
+ls output/weyl_equidistribution_*
+```
 
 ### Basic Validation
 
