@@ -364,3 +364,7 @@ def main : IO Unit := do
 -- V5.1 verification check
 #check v5_1_milestone
 #check v5_coronacion_unconditional
+
+-- QCAL Build Verification Module (V7.0 Coronación)
+-- Consolidates all 5 main theorems for build verification
+import QCALBuildVerification
