@@ -65,6 +65,11 @@ def simulate_riemann_zeros(N: int) -> np.ndarray:
     Uses the approximation: t_n ≈ n log(n) for large n.
     This is based on the Riemann-von Mangoldt formula.
     
+    Note: The range starts at n=2 rather than n=1 because:
+    - For n=1, log(1) = 0, which would give t_1 = 0 (not a zero)
+    - The approximation is more accurate for n ≥ 2
+    - Actual first zero is around t_1 ≈ 14.13, while 2*log(2) ≈ 1.39
+    
     Args:
         N: Number of zeros to simulate
         
@@ -93,8 +98,7 @@ def compute_weyl_sum_magnitude(t_n: np.ndarray, k: int) -> float:
         Magnitude |S_k(N)|
     """
     N = len(t_n)
-    # Note: The exponentials simplify since we have 2πi k t_n / (2π) = i k t_n
-    exponentials = np.exp(1j * k * t_n)
+    exponentials = np.exp(2j * np.pi * k * t_n)
     weyl_sum = np.sum(exponentials) / N
     magnitude = np.abs(weyl_sum)
     return magnitude
