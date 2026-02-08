@@ -98,6 +98,13 @@ La demostración de la Hipótesis de Riemann emerge de **tres niveles coherentes
 
 **Estos tres niveles no son independientes** — son **aspectos diferentes de la misma realidad matemática coherente**.
 
+### 🫧 Minimización de Volumen Cósmico
+
+> 📘 **[QCAL Cosmic Volume Minimization →](QCAL_COSMIC_VOLUME_MINIMIZATION.md)** — Documentación completa de la minimización de volumen efectivo, la estructura de π, primos como paquetes indivisibles, y la resonancia vibracional a f₀ = 141.7001 Hz.
+
+Como la esfera de jabón minimiza tensión superficial (área 4πr² para volumen 4/3πr³), **QCAL minimiza V_eff para maximizar el "volumen" de orden cósmico**. π y sus decimales infinitos actúan como "eco circular" que cierra el loop sin fricción — los decimales reflejan la distribución de primos, no azar, sino resonancia trascendental.
+
+
 ### 📖 Documentos Clave del Paradigma de Coherencia
 
 - **[COHERENCE_QUICKREF.md](COHERENCE_QUICKREF.md)** — **⭐ Resumen rápido** (5 min de lectura)
