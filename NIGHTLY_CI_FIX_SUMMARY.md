@@ -3,9 +3,10 @@
 ## Latest Fix - 2026-02-08
 
 ### Issue Overview
-**Date**: 2025-11-27  
+**Issue Date**: 2025-11-27 (workflow failure)
+**Fix Date**: 2026-02-08  
 **Workflow Run**: https://github.com/motanova84/Riemann-adelic/actions/runs/19691372435  
-**Status**: ❌ Failed  
+**Status**: ❌ Failed → ✅ Fixed  
 **Job**: nightly-tests (3.10)
 
 ### Root Cause
