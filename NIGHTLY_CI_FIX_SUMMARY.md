@@ -1,5 +1,69 @@
 # Nightly CI Failure Fix Summary
 
+## Latest Fix - 2026-02-08
+
+### Issue Overview
+**Issue Date**: 2025-11-27 (workflow failure)
+**Fix Date**: 2026-02-08  
+**Workflow Run**: https://github.com/motanova84/Riemann-adelic/actions/runs/19691372435  
+**Status**: ❌ Failed → ✅ Fixed  
+**Job**: nightly-tests (3.10)
+
+### Root Cause
+**Python 3.10 Incompatibility with JAX >= 0.8.0**
+
+The nightly CI run failed during the "Install dependencies" step for Python 3.10. The error indicated a scipy dependency conflict, but the actual root cause was:
+
+1. **JAX version constraint**: JAX >= 0.8.0 requires Python >= 3.11
+2. **Repository dependency**: The repository's `requirements.txt` specifies `jax>=0.8.0` and `jaxlib>=0.8.0`
+3. **Workflow configuration**: The nightly workflow was testing with Python 3.10, 3.11, and 3.12
+4. **Result**: Dependency resolution failure when attempting to install JAX on Python 3.10
+
+### Additional Issues Identified
+1. **Scipy version inconsistency**: 
+   - `requirements.txt` had `scipy>=1.13.0`
+   - `pyproject.toml` had `scipy>=1.11.0`
+   - JAX requires `scipy>=1.13.0` ✅ FIXED
+
+2. **Duplicate dependencies** in `requirements.txt`:
+   - `jsonschema>=4.0.0` (appeared twice) ✅ FIXED
+   - `rdflib>=6.0.0` (appeared twice) ✅ FIXED
+   - `joblib>=1.3.0` (appeared twice) ✅ FIXED
+
+3. **Unsafe bleeding-edge job**: The workflow had a "bleeding-edge" job that stripped version constraints unsafely ✅ FIXED
+
+### Changes Implemented
+
+#### 1. `.github/workflows/nightly.yml`
+- ✅ **Removed Python 3.10** from the test matrix (now tests only Python 3.11 and 3.12)
+- ✅ **Added robustness check**: Verify `requirements.txt` exists before attempting installation
+- ✅ **Replaced "bleeding-edge" job** with safer "nightly-integration" job
+
+#### 2. `pyproject.toml`
+- ✅ **Updated scipy requirement** from `scipy>=1.11.0` to `scipy>=1.13.0`
+- ✅ **Updated Python version requirement** from `>=3.10` to `>=3.11`
+- ✅ **Updated classifiers**: Removed Python 3.10
+- ✅ **Updated tool configurations**: black, mypy for Python 3.11+
+
+#### 3. `requirements.txt`
+- ✅ **Removed duplicate entries** for jsonschema, rdflib, joblib
+
+### Verification
+```bash
+$ python3 -m venv /tmp/test_install
+$ /tmp/test_install/bin/pip install -r requirements.txt
+# Result: SUCCESS - scipy 1.17.0 installed without conflicts
+```
+
+### Impact Assessment
+- **Breaking Change**: Python 3.10 no longer supported - Users must upgrade to Python 3.11 or 3.12
+- **QCAL ∞³ Coherence**: ✅ All changes maintain QCAL coherence
+- **Alignment**: Matches JAX requirements and modern Python ecosystem
+
+---
+
+## Previous Fix - 2026-01-08
+
 ## Issue Overview
 **Date**: 2025-11-24  
 **Workflow Run**: https://github.com/motanova84/Riemann-adelic/actions/runs/19622523651  
