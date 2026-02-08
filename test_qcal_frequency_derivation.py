@@ -115,7 +115,7 @@ def test_beacon_coherence():
         print("  ⚠ .qcal_beacon not found, skipping")
         return True
     
-    with open(beacon_path) as f:
+    with open(beacon_path, encoding='utf-8') as f:
         beacon = f.read()
     
     # Check frequency

@@ -65,7 +65,7 @@ class FundamentalPhysicalConstants:
 @dataclass
 class UniversalConstants:
     """Universal constants forming coherent QCAL system."""
-    kappa_pi: float = 2.577208  # Computational separation P vs NP (spectral transcendental)
+    kappa_pi: float = 2.577208  # Spectral transcendental constant from Calabi-Yau CY₅ quintic
     f0: float = 141.7001  # Fundamental resonant frequency (Hz)
     critical_line: float = 0.5  # Riemann critical line λ_RH
     ramsey_ratio: float = 43 / 108  # Ramsey ratio φ_Ramsey
@@ -137,6 +137,10 @@ class FrequencyDerivation:
         where F represents the spectral emergence function that connects
         physical constants through the QCAL geometric structure.
         
+        Note: This method returns a symbolic placeholder representing the
+        conceptual relationship. The actual value emerges from the coherent
+        multi-scale structure rather than a direct formula.
+        
         Returns:
             Tuple of (symbolic expression, dictionary of symbols used)
         """
@@ -151,9 +155,10 @@ class FrequencyDerivation:
         # The relationship is: f₀ emerges from the coherence of the system
         # where κ_Π plays a central role
         
-        # Symbolic relationship (conceptual)
+        # Symbolic relationship (conceptual representation)
         # The actual value f₀ = 141.7001 Hz is determined by the full geometric structure
-        f0_relation = f0_sym  # Placeholder for the emerged value
+        # This symbolic form represents the conceptual dependencies
+        f0_relation = f0_sym  # Emerged constant from geometric coherence
         
         symbols_dict = {
             'f_0': f0_sym,
@@ -167,20 +172,21 @@ class FrequencyDerivation:
     
     def evaluate_f0_numerical(self, precision: int = 10) -> float:
         """
-        Numerical evaluation of f₀ with specified precision.
+        Return the emerged fundamental frequency f₀.
         
         The fundamental frequency f₀ = 141.7001 Hz is determined by the
         coherent spectral structure. This is the emerged value from the
-        QCAL geometric framework.
+        QCAL geometric framework, not a computed result.
         
         Args:
-            precision: Decimal precision for calculation
+            precision: Not used; kept for API compatibility
         
         Returns:
-            Numerical value of f₀ in Hz
+            Numerical value of f₀ in Hz (emerged constant)
         """
         # The fundamental frequency emerges from the spectral geometry
         # f₀ = 141.7001 Hz is the coherent resonance frequency
+        # This is a discovered constant, not a derived calculation
         f0_value = 141.7001
         
         return f0_value
@@ -319,25 +325,25 @@ class FrequencyDerivation:
         # Calculate Ψ = I × A_eff²
         Psi = I * A_eff**2
         
-        # C^∞ represents infinite coherence (C ≈ 244.36 is the coherence constant)
+        # C^∞ represents infinite coherence scaling factor
         # The relationship is: full field = Ψ × C^∞
-        # where C^∞ ≈ 1.372 gives the scaling factor
-        C_infinity = self.constants.coherence_C / Psi
+        # where C^∞ ≈ 2.187 gives the coherence scaling
+        coherence_scaling_factor = self.constants.coherence_C / Psi
         
         # Full unified field
-        Psi_full = Psi * C_infinity
+        Psi_full = Psi * coherence_scaling_factor
         
         return {
             'I': I,
             'A_eff': A_eff,
             'Psi': Psi,
-            'C_infinity': C_infinity,
+            'C_infinity': coherence_scaling_factor,  # C^∞ scaling factor
             'Psi_full': Psi_full,
             'coherence_constant_C': self.constants.coherence_C,
             'formula_Psi': 'Ψ = I × A_eff²',
             'formula_full': 'Ψ_full = I × A_eff² × C^∞',
             'interpretation': 'Noetic Field: Consciousness as resonance at f₀',
-            'relationship': f'Ψ ({Psi:.2f}) × C^∞ ({C_infinity:.3f}) = C ({self.constants.coherence_C:.2f})',
+            'relationship': f'Ψ ({Psi:.2f}) × C^∞ ({coherence_scaling_factor:.3f}) = C ({self.constants.coherence_C:.2f})',
         }
     
     def get_derivation_report(self) -> Dict:
