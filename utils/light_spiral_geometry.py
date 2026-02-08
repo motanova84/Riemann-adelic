@@ -366,13 +366,20 @@ def spectral_frequency_mapping(
         Frequency f_n associated with n-th zero
     """
     if not SPECTRUM_AVAILABLE:
-        # Use asymptotic approximation
-        gamma_n = 2 * np.pi * (n + 1) / np.log((n + 1) / (2 * np.pi * np.e))
+        # Use asymptotic approximation for gamma_n
+        # For small n, use formula: t_n ≈ 2πn / log(n/(2πe))
+        # But need to ensure positive values
+        if n == 0:
+            gamma_n = GAMMA_1  # First zero
+        else:
+            n_eff = n + 1  # 1-indexed for formula
+            gamma_n = 2 * np.pi * n_eff / np.log(max(n_eff / (2 * np.pi * np.e), 1.1))
     else:
         gamma_n = get_zeta_zero(n)
     
     # Frequency scales with zero position
-    f_n = base_freq * gamma_n / GAMMA_1
+    # Take absolute value to ensure positive frequency
+    f_n = base_freq * abs(gamma_n) / GAMMA_1
     
     return f_n
 

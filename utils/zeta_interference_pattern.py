@@ -155,11 +155,16 @@ def zero_frequency(n: int, base_freq: float = F0_HZ) -> float:
     if SPECTRUM_AVAILABLE:
         gamma_n = get_zeta_zero(n)
     else:
-        # Asymptotic approximation
-        gamma_n = 2 * np.pi * (n + 1) / np.log((n + 1) / (2 * np.pi * np.e))
+        # Asymptotic approximation - ensure positive values
+        if n == 0:
+            gamma_n = GAMMA_1  # First zero
+        else:
+            n_eff = n + 1  # 1-indexed for formula
+            gamma_n = 2 * np.pi * n_eff / np.log(max(n_eff / (2 * np.pi * np.e), 1.1))
     
     # Frequency scales with zero position
-    f_n = base_freq * gamma_n / GAMMA_1
+    # Use absolute value to ensure positive frequency
+    f_n = base_freq * abs(gamma_n) / GAMMA_1
     
     return f_n
 
