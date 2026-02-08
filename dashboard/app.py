@@ -1,4 +1,5 @@
 """Plotly Dash dashboard for QCAL-CLOUD live monitoring."""
+
 from __future__ import annotations
 
 import asyncio
@@ -8,10 +9,10 @@ from pathlib import Path
 from typing import Any, Dict, List
 
 import dash
-from dash import Dash, dcc, html
 import plotly.express as px
 import plotly.graph_objects as go
 import requests
+from dash import Dash, dcc, html
 
 API_BASE = "http://localhost:8000"
 
