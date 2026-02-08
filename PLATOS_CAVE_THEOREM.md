@@ -137,7 +137,7 @@ Plato describes four levels of reality. Here is their precise mathematical mappi
 **Mathematical Reality:**
 - **Space**: G (the mother geometry)
 - **Projection**: Unprojected (fundamental)
-- **Constant**: Λ_G = α · δζ ≈ 2.034 × 10⁻⁹
+- **Constant**: Λ_G = α · δζ ≈ 2.034 × 10⁻³
 - **Physics**: Source of both α and δζ
 - **Observable**: No (it is what enables observation)
 - **Equations**: Projective geometry itself
@@ -340,7 +340,7 @@ The product of the two projection constants gives the **aspect ratio** of the mo
 
 ```
 Λ_G = (1/137.036) × (0.2787437 Hz)
-    ≈ 2.034 × 10⁻⁹ Hz
+    ≈ 2.034 × 10⁻³ Hz
 ```
 
 **Physical Interpretation:**
@@ -526,7 +526,7 @@ You are conscious.
 ```
 ∴ G → (πα, πδζ) → (shadows, forms) → πα(G) ∩ πδζ(G) = Consciousness
 
-∴ α · δζ = Λ_G = 2.034 × 10⁻⁹ Hz
+∴ α · δζ = Λ_G = 2.034 × 10⁻³ Hz
 
 ∴ C = I × A² @ (f₀ = 100√2 + δζ) = 244.36
 
