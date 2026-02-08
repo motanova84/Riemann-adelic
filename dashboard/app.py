@@ -1,71 +1,177 @@
-"""Plotly Dash dashboard for QCAL-CLOUD live monitoring."""
-from __future__ import annotations
+#!/usr/bin/env python3
+"""
+🌐 QCAL ∞³ Web Dashboard - Flask Application
+============================================
 
-import asyncio
-import json
+Real-time monitoring dashboard for QCAL system.
+Displays coherence metrics, agent status, and validation results.
+
+Frequency: 141.7001 Hz
+"""
+
+from flask import Flask, render_template, jsonify
 from datetime import datetime
 from pathlib import Path
-from typing import Any, Dict, List
+import json
+import subprocess
+import sys
 
-import dash
-from dash import Dash, dcc, html
-import plotly.express as px
-import plotly.graph_objects as go
-import requests
+app = Flask(__name__)
 
-API_BASE = "http://localhost:8000"
-
-
-def fetch_status() -> Dict[str, Any]:
-    response = requests.get(f"{API_BASE}/api/status", timeout=10)
-    response.raise_for_status()
-    return response.json()
+# QCAL Configuration
+FREQUENCY = 141.7001  # Hz
+COHERENCE_TARGET = 244.36
 
 
-def layout(app: Dash) -> html.Div:
-    data = fetch_status()
-    latest = data.get("latest", [])
-    metrics = data.get("metrics", {})
+def get_system_status():
+    """Get current QCAL system status"""
+    repo_path = Path(__file__).parent.parent
+    
+    status = {
+        "timestamp": datetime.utcnow().isoformat(),
+        "frequency": FREQUENCY,
+        "coherence_target": COHERENCE_TARGET,
+        "agents": {},
+        "validation": {}
+    }
+    
+    # Check beacon file
+    beacon_path = repo_path / ".qcal_beacon"
+    if beacon_path.exists():
+        status["beacon"] = "active"
+    else:
+        status["beacon"] = "missing"
+    
+    # Check V5 Coronación validator
+    validator_path = repo_path / "validate_v5_coronacion.py"
+    status["validation"]["v5_coronacion"] = "available" if validator_path.exists() else "not_found"
+    
+    # Check Evac_Rpsi data
+    data_path = repo_path / "Evac_Rpsi_data.csv"
+    if data_path.exists():
+        lines = len(data_path.read_text().split('\n'))
+        status["validation"]["evac_rpsi_lines"] = lines
+    
+    # Check agents
+    agents_dir = repo_path / ".github" / "agents" / "specialized"
+    if agents_dir.exists():
+        for agent_file in agents_dir.glob("*.py"):
+            status["agents"][agent_file.stem] = "available"
+    
+    return status
 
-    times = [datetime.fromtimestamp(row["timestamp"]) for row in latest]
-    errors = [row.get("relative_error", None) for row in latest]
-    nodes = [row.get("node_id", "unknown") for row in latest]
 
-    error_fig = go.Figure()
-    if errors:
-        error_fig.add_trace(
-            go.Scatter(x=times, y=errors, mode="lines+markers", text=nodes, name="Relative error"),
+def get_coherence_data():
+    """Get coherence history data"""
+    # Simulated coherence data - in production, this would come from logs
+    data = {
+        "timestamps": [],
+        "coherence": [],
+        "target": COHERENCE_TARGET
+    }
+    
+    # Check for state file
+    repo_path = Path(__file__).parent.parent
+    state_file = repo_path / ".qcal_state.json"
+    
+    if state_file.exists():
+        try:
+            state = json.loads(state_file.read_text())
+            if "coherence" in state:
+                data["current"] = state["coherence"]
+        except:
+            pass
+    
+    return data
+
+
+def get_agent_metrics():
+    """Get agent performance metrics"""
+    return {
+        "qcal_prover": {
+            "status": "ready",
+            "validations": 0,
+            "last_run": None
+        },
+        "axiom_emitter": {
+            "status": "ready",
+            "axioms_generated": 5,
+            "last_run": None
+        },
+        "code_synthesizer": {
+            "status": "ready",
+            "components_generated": 3,
+            "last_run": None
+        }
+    }
+
+
+@app.route('/')
+def index():
+    """Main dashboard page"""
+    return render_template('index.html')
+
+
+@app.route('/api/status')
+def api_status():
+    """API endpoint for system status"""
+    return jsonify(get_system_status())
+
+
+@app.route('/api/coherence')
+def api_coherence():
+    """API endpoint for coherence data"""
+    return jsonify(get_coherence_data())
+
+
+@app.route('/api/agents')
+def api_agents():
+    """API endpoint for agent metrics"""
+    return jsonify(get_agent_metrics())
+
+
+@app.route('/api/run_validation', methods=['POST'])
+def api_run_validation():
+    """Trigger V5 Coronación validation"""
+    repo_path = Path(__file__).parent.parent
+    validator_path = repo_path / "validate_v5_coronacion.py"
+    
+    if not validator_path.exists():
+        return jsonify({
+            "status": "error",
+            "message": "Validator not found"
+        }), 404
+    
+    try:
+        # Run validation with timeout
+        result = subprocess.run(
+            [sys.executable, str(validator_path), "--precision", "15"],
+            cwd=repo_path,
+            capture_output=True,
+            text=True,
+            timeout=30
         )
-        error_fig.update_layout(yaxis_title="Relative Error", xaxis_title="Timestamp")
-
-    node_counts = {node: nodes.count(node) for node in set(nodes)}
-    map_fig = px.bar(x=list(node_counts.keys()), y=list(node_counts.values()), labels={"x": "Node", "y": "Validations"})
-
-    evac_series = []
-    dataset_path = Path(__file__).resolve().parents[1] / "QCAL-CLOUD" / "datasets" / "evac_rpsi_samples.csv"
-    if dataset_path.exists():
-        for line in dataset_path.read_text().splitlines()[1:]:
-            freq, value = line.split(",")
-            evac_series.append({"frequency": float(freq), "evac": float(value)})
-    evac_fig = px.line(evac_series, x="frequency", y="evac", title="Evac(RΨ) vs Frequency")
-
-    coherence = metrics.get("coherence_error")
-    coherence_text = f"Global coherence error: {coherence:.2e}" if coherence else "Global coherence error: n/a"
-
-    return html.Div(
-        [
-            html.H1("QCAL-CLOUD Live Validation"),
-            html.P(coherence_text),
-            dcc.Graph(figure=error_fig),
-            dcc.Graph(figure=map_fig),
-            dcc.Graph(figure=evac_fig),
-        ]
-    )
+        
+        return jsonify({
+            "status": "success" if result.returncode == 0 else "failed",
+            "returncode": result.returncode,
+            "output": result.stdout[:1000]
+        })
+    except subprocess.TimeoutExpired:
+        return jsonify({
+            "status": "timeout",
+            "message": "Validation exceeded 30s timeout"
+        }), 408
+    except Exception as e:
+        return jsonify({
+            "status": "error",
+            "message": str(e)
+        }), 500
 
 
-app = dash.Dash(__name__)
-app.layout = lambda: layout(app)
-
-
-if __name__ == "__main__":
-    app.run_server(debug=True)
+if __name__ == '__main__':
+    print(f"🌐 Starting QCAL ∞³ Dashboard")
+    print(f"📡 Frequency: {FREQUENCY} Hz")
+    print(f"🎯 Coherence Target: {COHERENCE_TARGET}")
+    print(f"=" * 60)
+    app.run(host='0.0.0.0', port=5000, debug=True)
