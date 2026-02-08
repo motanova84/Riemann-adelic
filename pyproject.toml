@@ -7,7 +7,7 @@ name = "jmmotaburr-riemann-adelic"
 version = "1.0.0"
 description = "Mathematical archive and verification tools for the Riemann Hypothesis proof via adelic spectral systems"
 readme = "README.md"
-requires-python = ">=3.10"
+requires-python = ">=3.11"
 license = {text = "MIT"}
 authors = [
     {name = "José Manuel Mota Burruezo", email = "motanova84@example.com"}
@@ -31,14 +31,13 @@ classifiers = [
     "Topic :: Scientific/Engineering :: Mathematics",
     "License :: OSI Approved :: MIT License",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
 ]
 dependencies = [
     "mpmath==1.3.0",
     "numpy>=1.22.4,<2.3",
-    "scipy>=1.11.0",
+    "scipy>=1.13.0",
     "sympy==1.12",
     "matplotlib>=3.10.1",
     "jupyter==1.0.0",
@@ -102,7 +101,7 @@ convert-lean = "tools.convert_example:main"
 
 [tool.black]
 line-length = 120
-target-version = ['py310', 'py311']
+target-version = ['py311', 'py312']
 include = '\.pyi?$'
 extend-exclude = '''
 /(
@@ -144,7 +143,7 @@ exclude = [
 ]
 
 [tool.mypy]
-python_version = "3.10"
+python_version = "3.11"
 warn_return_any = true
 warn_unused_configs = true
 ignore_missing_imports = true
