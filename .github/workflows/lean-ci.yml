@@ -7,6 +7,7 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 30  # Increased from default to handle slow network
     steps:
       - uses: actions/checkout@v4
       - name: Install elan
@@ -16,10 +17,29 @@ jobs:
           echo "$HOME/.elan/bin" >> $GITHUB_PATH
           cd formalization/lean && ~/.elan/bin/elan show
       - name: Generate lake manifest
+        timeout-minutes: 15  # Timeout for lake update (prevents indefinite hanging on network issues)
+        continue-on-error: false  # Fail fast if lake update times out
         run: |
           cd formalization/lean
-          ~/.elan/bin/lake update
+          # Retry logic for lake update (up to 3 attempts)
+          SUCCESS=0
+          for i in 1 2 3; do
+            echo "🔄 Attempt $i/3: Running lake update..."
+            if timeout 600 ~/.elan/bin/lake update; then
+              SUCCESS=1
+              break
+            else
+              echo "⚠️  Attempt $i failed. Retrying in 5 seconds..."
+              sleep 5
+            fi
+          done
+          if [ $SUCCESS -eq 0 ]; then
+            echo "❌ ERROR: lake update failed after 3 attempts"
+            exit 1
+          fi
+          echo "✅ lake update succeeded"
       - name: Build Lean project
+        timeout-minutes: 15  # Timeout for build
         continue-on-error: true
         run: |
           cd formalization/lean
