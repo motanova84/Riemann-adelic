@@ -48,12 +48,13 @@ QCAL Integration:
     - Fundamental equation: Ψ = I × A_eff² × C^∞
 """
 
+import os
+from typing import Any, Dict, Optional, Tuple
+
+import matplotlib.pyplot as plt
 import numpy as np
 from scipy import sparse
 from scipy.sparse.linalg import eigsh
-import matplotlib.pyplot as plt
-from typing import Tuple, Optional, Dict, Any
-import os
 
 # QCAL Constants
 QCAL_BASE_FREQUENCY = 141.7001  # Hz (f₀ = 100√2 + δζ)
@@ -81,36 +82,34 @@ def get_riemann_zeros(n: int = 10) -> np.ndarray:
         np.ndarray: Array of first n known zeros γₙ
     """
     # First 20 known Riemann zeros (imaginary parts)
-    known_zeros = np.array([
-        14.134725141734693,
-        21.022039638771555,
-        25.010857580145688,
-        30.424876125859513,
-        32.935061587739189,
-        37.586178158825671,
-        40.918719012147495,
-        43.327073280914999,
-        48.005150881167159,
-        49.773832477672302,
-        52.970321477714460,
-        56.446247697063394,
-        59.347044002602353,
-        60.831778524609809,
-        65.112544048081606,
-        67.079810529494173,
-        69.546401711173979,
-        72.067157674481907,
-        75.704690699083933,
-        77.144840068874805
-    ])
-    return known_zeros[:min(n, len(known_zeros))]
+    known_zeros = np.array(
+        [
+            14.134725141734693,
+            21.022039638771555,
+            25.010857580145688,
+            30.424876125859513,
+            32.935061587739189,
+            37.586178158825671,
+            40.918719012147495,
+            43.327073280914999,
+            48.005150881167159,
+            49.773832477672302,
+            52.970321477714460,
+            56.446247697063394,
+            59.347044002602353,
+            60.831778524609809,
+            65.112544048081606,
+            67.079810529494173,
+            69.546401711173979,
+            72.067157674481907,
+            75.704690699083933,
+            77.144840068874805,
+        ]
+    )
+    return known_zeros[: min(n, len(known_zeros))]
 
 
-def marchenko_potential_reconstruction(
-    x: np.ndarray,
-    zeros: np.ndarray,
-    alpha: float = 1.0
-) -> np.ndarray:
+def marchenko_potential_reconstruction(x: np.ndarray, zeros: np.ndarray, alpha: float = 1.0) -> np.ndarray:
     """
     Reconstruct the potential V(x) from Riemann zeros using Marchenko method.
 
@@ -154,11 +153,7 @@ def marchenko_potential_reconstruction(
 
 
 def build_hamiltonian_sparse(
-    N: int = 1000,
-    x_min: float = -30.0,
-    x_max: float = 30.0,
-    n_zeros: int = 10,
-    alpha: float = 1.0
+    N: int = 1000, x_min: float = -30.0, x_max: float = 30.0, n_zeros: int = 10, alpha: float = 1.0
 ) -> Tuple[sparse.csr_matrix, np.ndarray, np.ndarray]:
     """
     Build the Hamiltonian operator H = -d²/dx² + V(x) as sparse matrix.
@@ -192,21 +187,16 @@ def build_hamiltonian_sparse(
 
     # Build kinetic term: -d²/dx² with centered differences
     # Using second-order approximation: (-f[i-1] + 2f[i] - f[i+1]) / h²
-    kinetic_diag = np.full(N, 2.0 / dx ** 2)
-    kinetic_off = np.full(N - 1, -1.0 / dx ** 2)
+    kinetic_diag = np.full(N, 2.0 / dx**2)
+    kinetic_off = np.full(N - 1, -1.0 / dx**2)
 
     # Construct sparse Hamiltonian matrix in CSR format
-    H = sparse.diags([kinetic_off, kinetic_diag + V, kinetic_off],
-                     offsets=[-1, 0, 1], format='csr')
+    H = sparse.diags([kinetic_off, kinetic_diag + V, kinetic_off], offsets=[-1, 0, 1], format="csr")
 
     return H, x, V
 
 
-def compute_eigenfunctions(
-    H: sparse.csr_matrix,
-    x: np.ndarray,
-    num_states: int = 10
-) -> Tuple[np.ndarray, np.ndarray]:
+def compute_eigenfunctions(H: sparse.csr_matrix, x: np.ndarray, num_states: int = 10) -> Tuple[np.ndarray, np.ndarray]:
     """
     Compute eigenfunctions (eigenvectors) of the Hamiltonian H.
 
@@ -231,7 +221,7 @@ def compute_eigenfunctions(
 
     # Compute smallest algebraic eigenvalues and eigenvectors
     # 'SA' = Smallest Algebraic (values closest to -∞, returned unsorted)
-    eigenvalues, eigenvectors = eigsh(H.tocsr(), k=num_states, which='SA')
+    eigenvalues, eigenvectors = eigsh(H.tocsr(), k=num_states, which="SA")
 
     # Sort by eigenvalue in ascending order (most negative first)
     idx = np.argsort(eigenvalues)
@@ -286,7 +276,7 @@ def visualize_eigenfunctions(
     eigenvalues: np.ndarray,
     eigenfunctions: np.ndarray,
     num_states: int = 10,
-    save_path: Optional[str] = None
+    save_path: Optional[str] = None,
 ) -> plt.Figure:
     """
     Visualize the first num_states eigenfunctions of the reconstructed potential.
@@ -321,31 +311,25 @@ def visualize_eigenfunctions(
         label = f"$\\psi_{{{n + 1}}}(x)$ (E={E:.2f}, {nodes} nodes)"
         ax.plot(x, psi, label=label, color=colors[n], linewidth=1.5)
 
-    ax.set_title(
-        "Funciones propias del potencial reconstruido $V(x)$ (Marchenko-Riemann)",
-        fontsize=14
-    )
+    ax.set_title("Funciones propias del potencial reconstruido $V(x)$ (Marchenko-Riemann)", fontsize=14)
     ax.set_xlabel("x", fontsize=12)
     ax.set_ylabel(r"$\psi_n(x)$", fontsize=12)
     ax.grid(True, alpha=0.3)
     ax.legend(loc="upper right", fontsize=9)
-    ax.axhline(y=0, color='k', linestyle='-', linewidth=0.5, alpha=0.5)
-    ax.axvline(x=0, color='k', linestyle='--', linewidth=0.5, alpha=0.5)
+    ax.axhline(y=0, color="k", linestyle="-", linewidth=0.5, alpha=0.5)
+    ax.axvline(x=0, color="k", linestyle="--", linewidth=0.5, alpha=0.5)
 
     plt.tight_layout()
 
     if save_path:
-        plt.savefig(save_path, dpi=150, bbox_inches='tight')
+        plt.savefig(save_path, dpi=150, bbox_inches="tight")
         print(f"Figure saved to: {save_path}")
 
     return fig
 
 
 def visualize_potential(
-    x: np.ndarray,
-    V: np.ndarray,
-    eigenvalues: Optional[np.ndarray] = None,
-    save_path: Optional[str] = None
+    x: np.ndarray, V: np.ndarray, eigenvalues: Optional[np.ndarray] = None, save_path: Optional[str] = None
 ) -> plt.Figure:
     """
     Visualize the reconstructed potential V(x) with energy levels.
@@ -361,41 +345,31 @@ def visualize_potential(
     """
     fig, ax = plt.subplots(figsize=(12, 6))
 
-    ax.plot(x, V, 'b-', linewidth=2, label='V(x)')
+    ax.plot(x, V, "b-", linewidth=2, label="V(x)")
     ax.fill_between(x, V, alpha=0.3)
 
     if eigenvalues is not None:
         for n, E in enumerate(eigenvalues[:10]):
-            ax.axhline(y=E, color='red', linestyle='--',
-                       linewidth=1, alpha=0.7)
-            ax.text(x[-1] * 0.9, E + 0.5, f'$E_{{{n + 1}}}$={E:.2f}',
-                    fontsize=9, color='red')
+            ax.axhline(y=E, color="red", linestyle="--", linewidth=1, alpha=0.7)
+            ax.text(x[-1] * 0.9, E + 0.5, f"$E_{{{n + 1}}}$={E:.2f}", fontsize=9, color="red")
 
-    ax.set_xlabel('x', fontsize=12)
-    ax.set_ylabel('V(x) / E', fontsize=12)
-    ax.set_title(
-        'Potencial reconstruido V(x) desde ceros de Riemann '
-        '(Marchenko)',
-        fontsize=14
-    )
+    ax.set_xlabel("x", fontsize=12)
+    ax.set_ylabel("V(x) / E", fontsize=12)
+    ax.set_title("Potencial reconstruido V(x) desde ceros de Riemann " "(Marchenko)", fontsize=14)
     ax.grid(True, alpha=0.3)
     ax.set_xlim([x[0], x[-1]])
-    ax.legend(loc='upper right')
+    ax.legend(loc="upper right")
 
     plt.tight_layout()
 
     if save_path:
-        plt.savefig(save_path, dpi=150, bbox_inches='tight')
+        plt.savefig(save_path, dpi=150, bbox_inches="tight")
         print(f"Figure saved to: {save_path}")
 
     return fig
 
 
-def verify_orthonormality(
-    eigenfunctions: np.ndarray,
-    dx: float,
-    tol: float = 1e-10
-) -> Dict[str, Any]:
+def verify_orthonormality(eigenfunctions: np.ndarray, dx: float, tol: float = 1e-10) -> Dict[str, Any]:
     """
     Verify orthonormality of the eigenfunctions.
 
@@ -416,9 +390,7 @@ def verify_orthonormality(
     overlap = np.zeros((n_states, n_states))
     for m in range(n_states):
         for n in range(n_states):
-            overlap[m, n] = np.sum(
-                eigenfunctions[:, m] * eigenfunctions[:, n]
-            ) * dx
+            overlap[m, n] = np.sum(eigenfunctions[:, m] * eigenfunctions[:, n]) * dx
 
     # Check deviation from identity
     identity = np.eye(n_states)
@@ -426,18 +398,15 @@ def verify_orthonormality(
     max_deviation = np.max(deviation)
 
     return {
-        'overlap_matrix': overlap,
-        'max_deviation': max_deviation,
-        'is_orthonormal': max_deviation < tol,
-        'n_states': n_states
+        "overlap_matrix": overlap,
+        "max_deviation": max_deviation,
+        "is_orthonormal": max_deviation < tol,
+        "n_states": n_states,
     }
 
 
 def verify_eigenvalue_equation(
-    H: sparse.csr_matrix,
-    eigenvalues: np.ndarray,
-    eigenfunctions: np.ndarray,
-    tol: float = 1e-8
+    H: sparse.csr_matrix, eigenvalues: np.ndarray, eigenfunctions: np.ndarray, tol: float = 1e-8
 ) -> Dict[str, Any]:
     """
     Verify the eigenvalue equation H ψₙ = Eₙ ψₙ.
@@ -465,10 +434,10 @@ def verify_eigenvalue_equation(
     max_residual = max(residuals)
 
     return {
-        'residuals': residuals,
-        'max_residual': max_residual,
-        'eigenvalue_equation_satisfied': max_residual < tol,
-        'n_states': n_states
+        "residuals": residuals,
+        "max_residual": max_residual,
+        "eigenvalue_equation_satisfied": max_residual < tol,
+        "n_states": n_states,
     }
 
 
@@ -480,7 +449,7 @@ def run_eigenfunction_analysis(
     n_zeros: int = 10,
     verbose: bool = True,
     save_figures: bool = True,
-    output_dir: Optional[str] = None
+    output_dir: Optional[str] = None,
 ) -> Dict[str, Any]:
     """
     Run complete eigenfunction analysis of the reconstructed Riemann potential.
@@ -506,12 +475,12 @@ def run_eigenfunction_analysis(
         Dict with complete analysis results
     """
     results = {
-        'N': N,
-        'x_range': (x_min, x_max),
-        'num_states': num_states,
-        'n_zeros': n_zeros,
-        'qcal_base_frequency': QCAL_BASE_FREQUENCY,
-        'qcal_coherence': QCAL_COHERENCE
+        "N": N,
+        "x_range": (x_min, x_max),
+        "num_states": num_states,
+        "n_zeros": n_zeros,
+        "qcal_base_frequency": QCAL_BASE_FREQUENCY,
+        "qcal_coherence": QCAL_COHERENCE,
     }
 
     if output_dir is None:
@@ -533,12 +502,11 @@ def run_eigenfunction_analysis(
     if verbose:
         print("Paso 1: Construcción del potencial V(x) (Marchenko)...")
 
-    H, x, V = build_hamiltonian_sparse(N=N, x_min=x_min, x_max=x_max,
-                                       n_zeros=n_zeros)
+    H, x, V = build_hamiltonian_sparse(N=N, x_min=x_min, x_max=x_max, n_zeros=n_zeros)
     dx = x[1] - x[0]
-    results['dx'] = dx
-    results['x'] = x
-    results['V'] = V
+    results["dx"] = dx
+    results["x"] = x
+    results["V"] = V
 
     if verbose:
         print(f"  ✓ Potencial reconstruido desde {n_zeros} ceros de Riemann")
@@ -550,8 +518,8 @@ def run_eigenfunction_analysis(
         print(f"Paso 2: Cálculo de {num_states} funciones propias...")
 
     eigenvalues, eigenfunctions = compute_eigenfunctions(H, x, num_states)
-    results['eigenvalues'] = eigenvalues
-    results['eigenfunctions'] = eigenfunctions
+    results["eigenvalues"] = eigenvalues
+    results["eigenfunctions"] = eigenfunctions
 
     if verbose:
         print("  ✓ Autovalores y autofunciones calculados")
@@ -571,10 +539,10 @@ def run_eigenfunction_analysis(
         print("Paso 3: Verificación de ortonormalidad...")
 
     ortho_results = verify_orthonormality(eigenfunctions, dx)
-    results['orthonormality'] = ortho_results
+    results["orthonormality"] = ortho_results
 
     if verbose:
-        status = "✅" if ortho_results['is_orthonormal'] else "❌"
+        status = "✅" if ortho_results["is_orthonormal"] else "❌"
         print(f"  {status} Ortonormalidad: {ortho_results['is_orthonormal']}")
         print(f"  Desviación máxima de δₘₙ: {ortho_results['max_deviation']:.2e}")
         print()
@@ -584,12 +552,11 @@ def run_eigenfunction_analysis(
         print("Paso 4: Verificación de ecuación de autovalores H ψₙ = Eₙ ψₙ...")
 
     eig_eq_results = verify_eigenvalue_equation(H, eigenvalues, eigenfunctions)
-    results['eigenvalue_equation'] = eig_eq_results
+    results["eigenvalue_equation"] = eig_eq_results
 
     if verbose:
-        status = "✅" if eig_eq_results['eigenvalue_equation_satisfied'] else "❌"
-        print(f"  {status} Ecuación satisfecha: "
-              f"{eig_eq_results['eigenvalue_equation_satisfied']}")
+        status = "✅" if eig_eq_results["eigenvalue_equation_satisfied"] else "❌"
+        print(f"  {status} Ecuación satisfecha: " f"{eig_eq_results['eigenvalue_equation_satisfied']}")
         print(f"  Residuo máximo: {eig_eq_results['max_residual']:.2e}")
         print()
 
@@ -600,16 +567,12 @@ def run_eigenfunction_analysis(
 
         # Eigenfunctions plot
         fig_psi = visualize_eigenfunctions(
-            x, eigenvalues, eigenfunctions, num_states,
-            save_path=os.path.join(output_dir, 'eigenfunctions_psi.png')
+            x, eigenvalues, eigenfunctions, num_states, save_path=os.path.join(output_dir, "eigenfunctions_psi.png")
         )
         plt.close(fig_psi)
 
         # Potential plot with energy levels
-        fig_V = visualize_potential(
-            x, V, eigenvalues,
-            save_path=os.path.join(output_dir, 'potential_marchenko.png')
-        )
+        fig_V = visualize_potential(x, V, eigenvalues, save_path=os.path.join(output_dir, "potential_marchenko.png"))
         plt.close(fig_V)
 
         if verbose:
@@ -618,10 +581,7 @@ def run_eigenfunction_analysis(
             print()
 
     # Summary
-    results['success'] = (
-        ortho_results['is_orthonormal']
-        and eig_eq_results['eigenvalue_equation_satisfied']
-    )
+    results["success"] = ortho_results["is_orthonormal"] and eig_eq_results["eigenvalue_equation_satisfied"]
 
     if verbose:
         print("=" * 70)
@@ -655,13 +615,7 @@ def main():
 
     # Run complete analysis
     results = run_eigenfunction_analysis(
-        N=1000,
-        x_min=-30.0,
-        x_max=30.0,
-        num_states=10,
-        n_zeros=10,
-        verbose=True,
-        save_figures=True
+        N=1000, x_min=-30.0, x_max=30.0, num_states=10, n_zeros=10, verbose=True, save_figures=True
     )
 
     print()
@@ -669,7 +623,7 @@ def main():
     print("  Análisis completado")
     print("∴" * 35)
 
-    return 0 if results.get('success', False) else 1
+    return 0 if results.get("success", False) else 1
 
 
 if __name__ == "__main__":
