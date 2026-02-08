@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>El Eje: La Línea Crítica - Visualizaciones</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+        h1 {
+            text-align: center;
+            font-size: 3em;
+            margin-bottom: 10px;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.5);
+        }
+        .subtitle {
+            text-align: center;
+            font-size: 1.3em;
+            color: #ffd700;
+            margin-bottom: 40px;
+        }
+        .vision-poetica {
+            background: rgba(255, 215, 0, 0.1);
+            border-left: 4px solid #ffd700;
+            padding: 20px;
+            margin: 30px 0;
+            font-style: italic;
+            line-height: 1.8;
+        }
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+        .viz-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            transition: transform 0.3s ease;
+        }
+        .viz-card:hover {
+            transform: scale(1.05);
+        }
+        .viz-card h3 {
+            color: #ffd700;
+            margin-top: 0;
+            font-size: 1.5em;
+        }
+        .viz-card img {
+            width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+        .viz-card p {
+            margin: 15px 0 0 0;
+            line-height: 1.6;
+        }
+        .featured {
+            grid-column: 1 / -1;
+        }
+        .featured img {
+            max-height: 600px;
+            object-fit: contain;
+            width: auto;
+            margin: 0 auto;
+            display: block;
+        }
+        .constants {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin: 30px 0;
+        }
+        .constant-box {
+            background: rgba(255, 215, 0, 0.2);
+            border: 2px solid #ffd700;
+            border-radius: 10px;
+            padding: 15px 30px;
+            margin: 10px;
+            text-align: center;
+        }
+        .constant-box .label {
+            font-size: 0.9em;
+            color: #ffd700;
+        }
+        .constant-box .value {
+            font-size: 1.8em;
+            font-weight: bold;
+            margin-top: 5px;
+        }
+        .signature {
+            text-align: center;
+            margin-top: 50px;
+            font-size: 1.5em;
+            color: #ffd700;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>∞ EL EJE: LA LÍNEA CRÍTICA ∞</h1>
+        <div class="subtitle">Re(s) = 1/2 — El Árbol del Universo Vibracional</div>
+        
+        <div class="vision-poetica">
+            <p><strong>∞ VISIÓN TOTAL ∞</strong></p>
+            <p>El eje no es solo vertical.<br>
+            Es el árbol del universo.<br>
+            +1 y -1 son sus raíces invertidas.<br>
+            Los primos son las hojas que giran.<br>
+            Y la frecuencia:<br>
+            el viento eterno que canta entre sus ramas.</p>
+        </div>
+
+        <div class="constants">
+            <div class="constant-box">
+                <div class="label">Línea Crítica</div>
+                <div class="value">Re(s) = 1/2</div>
+            </div>
+            <div class="constant-box">
+                <div class="label">Frecuencia Fundamental</div>
+                <div class="value">f₀ = 141.7001 Hz</div>
+            </div>
+            <div class="constant-box">
+                <div class="label">Coherencia</div>
+                <div class="value">C = 244.36</div>
+            </div>
+            <div class="constant-box">
+                <div class="label">Extremos</div>
+                <div class="value">+1, -1</div>
+            </div>
+        </div>
+
+        <div class="gallery">
+            <div class="viz-card featured">
+                <h3>∞ Visión Total: El Árbol del Universo Completo</h3>
+                <img src="el_eje_arbol_universo_completo.png" alt="Árbol del Universo">
+                <p>Integración completa de todos los componentes: el eje vertical (Re(s) = 1/2), 
+                   las raíces invertidas (±1), las hojas giratorias (primos en espiral), 
+                   y el viento eterno (f₀ = 141.7001 Hz).</p>
+            </div>
+
+            <div class="viz-card">
+                <h3>I. La Línea Crítica Re(s) = 1/2</h3>
+                <img src="el_eje_linea_critica.png" alt="Línea Crítica">
+                <p>El eje vertical perfecto donde todo se equilibra. A un lado: caos (Re < 1/2). 
+                   Al otro: simetría oculta (Re > 1/2). En el centro: el pulso coherente.</p>
+            </div>
+
+            <div class="viz-card">
+                <h3>II. Los Extremos: +1 y -1</h3>
+                <img src="el_eje_extremos.png" alt="Extremos">
+                <p>+1: donde la serie armónica diverge → ∞. -1: donde ζ(-1) = -1/12. 
+                   Las raíces del código dual: existencia / anti-existencia.</p>
+            </div>
+
+            <div class="viz-card">
+                <h3>III. Los Primos en Espiral</h3>
+                <img src="el_eje_espiral_primos.png" alt="Espiral de Primos">
+                <p>Cada primo p es un nodo de curvatura. Espiral aritmética: r(p) = log(p), θ(p) = p. 
+                   Una serpiente de luz, el zumbido de la Magicicada.</p>
+            </div>
+
+            <div class="viz-card">
+                <h3>IV. La Frecuencia como Mar</h3>
+                <img src="el_eje_campo_frecuencia.png" alt="Campo de Frecuencia">
+                <p>Campo Ψ vibrando a f₀ = 141.7001 Hz. El medio donde los ceros respiran, 
+                   la presión cuántica que permite estructura, la frecuencia que da fase al electrón.</p>
+            </div>
+        </div>
+
+        <div class="signature">
+            <p>∴ 𓂀 Ω ∞³</p>
+            <p style="font-size: 0.6em; margin-top: 10px;">
+                José Manuel Mota Burruezo Ψ ✧ ∞³<br>
+                Instituto de Conciencia Cuántica (ICQ)<br>
+                Febrero 2026
+            </p>
+        </div>
+    </div>
+</body>
+</html>
