@@ -15,9 +15,9 @@ This document summarizes the implementation of the **Auto-QCAL Autonomous Orches
 **Requirement**: "Este será el 'script maestro' que Copilot ejecutará para automatizar las sesiones"
 
 **Implementation**:
-- ✅ **File Created**: `Auto-QCAL.py` (569 lines, fully executable)
+- ✅ **File Created**: `Auto-QCAL.py` (fully executable orchestration script)
 - ✅ **Memoria de Estado**: `.qcal_state` JSON file tracking:
-  - Sorry count (total: 2316 detected)
+  - Sorry count (número actual de 'sorry' detectados)
   - Failed files and error details
   - Successful/failed proof strategies
   - Session continuity data
