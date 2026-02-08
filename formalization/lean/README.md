@@ -165,8 +165,8 @@ lake exe cache get
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/motanova84/-jmmotaburr-riemann-adelic.git
-   cd -jmmotaburr-riemann-adelic/formalization/lean
+   git clone https://github.com/motanova84/Riemann-adelic.git
+   cd Riemann-adelic/formalization/lean
    ```
 
 2. Build the Lean project:

@@ -19,7 +19,7 @@ httpx>=0.27.0
 # QCAL ∞³ Auto-Orchestration dependencies
 pyyaml>=6.0
 colorlog>=6.7.0
-tqdm>=4.65.0
+tqdm==4.67.2  # MPL-2.0 AND MIT License - Progress bar utility
 regex>=2023.6.0
 
 # Parallel computing
@@ -84,23 +84,17 @@ sparse>=0.14.0  # Sparse multi-dimensional arrays
 # Optimization and root finding
 nlopt>=2.7.1  # Nonlinear optimization library
 
-# Cryptography for AIK Beacons
-ecdsa>=0.18.0  # ECDSA signatures for mathematical proof certification
+# ECDSA signatures for mathematical proof certification
+ecdsa>=0.18.0
 
 # Development and code quality tools
 flake8>=6.0.0
 black>=23.0.0
 isort>=5.12.0
 
-# Metadata validation and processing
-jsonschema>=4.0.0
-rdflib>=6.0.0
-
-# Parallel computation
-joblib>=1.3.0
-
 # Optional: Development and code quality tools
 # pre-commit>=3.0.0
+# debugpy==1.8.0  # MIT License - Python debugger for VS Code and other IDEs
 
 # Optional: Advanced plagiarism monitoring features
 # Uncomment for enhanced monitoring capabilities

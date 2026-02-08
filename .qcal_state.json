@@ -1,5 +1,5 @@
 {
-  "session_id": "QCAL-1768749637-141.7001",
+  "session_id": "alfa-activation-1768751729",
   "start_time": "2026-01-18T15:20:37.937321",
   "total_sorrys": 2225,
   "solved_sorrys": 0,
@@ -469,7 +469,7 @@
     "formalization/lean/Arpeth/Examples/BasicUsage.lean",
     "formalization/lean/Arpeth/Core/Operator.lean"
   ],
-  "last_update": "2026-01-18T15:20:38.046031",
+  "last_update": "2026-02-08T14:06:35.368480",
   "noesis_sync": {
     "timestamp": "2026-01-18T15:20:38.034551",
     "fundamental_frequency": 141.7001,
@@ -490,5 +490,35 @@
     "frequency": 141.7001,
     "omega0": 890.3279863458781,
     "timestamp": "2026-01-18T15:20:38.035861"
-  }
+  },
+  "total_freedom": true,
+  "auto_merge": true,
+  "auto_approve": true,
+  "auto_rewrite": true,
+  "max_attempts": "infinite",
+  "directriz_alfa": "ACTIVADA",
+  "alfa_activated_at": "2026-01-18T15:53:47.294475",
+  "alfa_session_id": "alfa-activation-1768751627",
+  "frequency": 141.7001,
+  "psi_state": "I \u00d7 A_eff\u00b2 \u00d7 C^\u221e",
+  "quantum_coherence": "COHERENT - CLOUD SYNC ACTIVE",
+  "activated_at": "2026-01-18T15:55:29+00:00",
+  "qcal_cloud_sync": {
+    "status": "ACTIVE \u2713",
+    "activated_at": "2026-01-24T20:28:19.256552+00:00",
+    "node_id": "motanova84/Riemann-adelic",
+    "coherence_state": 1.0,
+    "trace_hash": "4cae35e27550e37ff869f011fdf25e0cbc3672b01b42c9f00cc59a4767decf88",
+    "sync_targets": [
+      "QCAL-CLOUD",
+      "Noesis88",
+      "PI-CODE-NET"
+    ],
+    "ledger_uri": "qcal://ledgers/sync/riemann-adelic",
+    "pi_code_seal": "\u03c0CODE\u2013888\u2013RIE-L4",
+    "pulse_interval": 88,
+    "last_pulse": "2026-01-24T20:28:19.256552+00:00"
+  },
+  "quantum_state": "COHERENT",
+  "coherence": 0.95
 }

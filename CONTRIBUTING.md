@@ -32,6 +32,10 @@ Our goal is to maintain a high-quality mathematical archive that:
 
 ### 1. Setting Up Your Environment
 
+**Prerequisites:**
+- Python 3.11 or higher (required for JAX and other dependencies)
+- Git
+
 ```bash
 # Clone the repository
 git clone https://github.com/motanova84/-jmmotaburr-riemann-adelic.git
