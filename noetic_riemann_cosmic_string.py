@@ -47,6 +47,12 @@ PHI = (1 + np.sqrt(5)) / 2  # Golden ratio φ ≈ 1.61803
 C_SPECTRAL = 244.36  # QCAL coherence constant
 ZETA_PRIME_HALF = -3.92264613  # ζ'(1/2)
 
+# Validation and stability thresholds
+MIN_STABILITY_THRESHOLD = 0.001  # Minimum stability to consider theorem verified
+FREQUENCY_PENALTY_FACTOR = 20  # Exponential decay rate for frequency deviation
+SPECTRAL_BASE = 1.0  # Base spectral enhancement
+SPECTRAL_ENHANCEMENT_FACTOR = 0.5  # Additional spectral enhancement from coherence
+
 # Harmonic ratio (888 / 141.7001 ≈ 6.2668)
 HARMONIC_RATIO = F1_HARMONIC / F0_BASE
 
@@ -214,10 +220,10 @@ class NoeticRiemannCosmicString:
         
         # Frequency deviation penalty (stronger near f₀)
         freq_deviation = np.abs(frequency - self.f0) / self.f0
-        freq_penalty = np.exp(-20 * freq_deviation)  # Increased from 10
+        freq_penalty = np.exp(-FREQUENCY_PENALTY_FACTOR * freq_deviation)
         
         # Additional coherence from spectral constant
-        spectral_enhancement = 1.0 + 0.5 * freq_penalty
+        spectral_enhancement = SPECTRAL_BASE + SPECTRAL_ENHANCEMENT_FACTOR * freq_penalty
         
         # Combined stability measure
         stability = correlation * freq_penalty * spectral_enhancement
@@ -324,7 +330,7 @@ class NoeticRiemannCosmicString:
             'is_f0_optimal': is_f0_optimal,
             'optimal_frequency': max_stability_freq,
             'coherence_qcal': coherence,
-            'verified': stability_at_f0 > 0.001 and is_f0_optimal,  # Adjusted threshold
+            'verified': stability_at_f0 > MIN_STABILITY_THRESHOLD and is_f0_optimal,
             'harmonic_resonance_888Hz': self.f1_harmonic,
             'phi_fourth_power': float(self.phi_4),
             'harmonic_ratio': self.harmonic_ratio
@@ -360,7 +366,7 @@ class NoeticRiemannCosmicString:
                     self.f0, riemann_zeros, t_window
                 )
                 coherence = stability * self.C_spectral / (C_SPECTRAL + 1)
-            except:
+            except (ValueError, RuntimeError, ZeroDivisionError) as e:
                 # Fallback if calculation fails
                 stability = 0.5
                 coherence = 0.5
