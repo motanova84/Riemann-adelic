@@ -1,11 +1,11 @@
 {
-  "timestamp": "2026-01-12T09:11:15.203236",
+  "timestamp": "2026-02-08T18:25:59.051625",
   "mode": "fast",
   "precision": 15,
-  "elapsed_seconds": 0.4656944274902344,
+  "elapsed_seconds": 3.3908472061157227,
   "total_phases": 7,
-  "passed_phases": 2,
-  "success_rate": "28.6%",
+  "passed_phases": 4,
+  "success_rate": "57.1%",
   "qcal_constants": {
     "f0_Hz": 141.7001,
     "C_primary": 629.83,
@@ -24,23 +24,23 @@
     },
     "noesis_guardian": {
       "passed": false,
-      "output": "",
+      "output": "\n======================================================================\n  NOESIS GUARDIAN \u2014 QCAL \u221e\u00b3 Ecosystem Monitor\n  Jos\u00e9 Manuel Mota Burruezo \u03a8 \u2727 \u221e\u00b3\n======================================================================\n\n",
       "frequency": 141.7001,
       "noesis88_sync": true
     },
     "amda": {
-      "timestamp": "2026-01-12T09:11:14.870599",
+      "timestamp": "2026-02-08T18:25:55.886778",
       "coordination": "DUAL_AGENT_MODE",
       "agents": {
         "noesis": {
           "agent": "NOESIS GUARDIAN \u221e\u00b3",
           "status": "ACTIVADO",
-          "timestamp": "2026-01-12T09:11:14.870621",
+          "timestamp": "2026-02-08T18:25:55.886825",
           "frequency": 141.7001,
           "capabilities": [
             "guardian_core"
           ],
-          "heartbeat": -0.22748285225780016,
+          "heartbeat": -0.22748285225779163,
           "spectral_monitoring": "ACTIVO",
           "coherence_status": {
             "equation": "\u03a8 = I \u00d7 A_eff\u00b2 \u00d7 C^\u221e",
@@ -54,7 +54,7 @@
         "amda": {
           "agent": "AMDA (Autonomous Mathematical Discovery Agent)",
           "status": "ACTIVADO",
-          "timestamp": "2026-01-12T09:11:14.870668",
+          "timestamp": "2026-02-08T18:25:55.887281",
           "frequency": 141.7001,
           "discovery_domains": [
             "spectral_patterns",
@@ -75,16 +75,16 @@
       "noesis88_sync": true
     },
     "sabio_validator": {
-      "passed": false,
-      "output": ""
+      "passed": true,
+      "output": "\n======================================================================\n\ud83d\udd2c SABIO \u221e\u00b3 Validation Report\n======================================================================\nPrecision: 15 decimal places\nTimestamp: 1770575155.9417415\n\n\ud83d\udccb Vibrational Frequency:\n   f\u2080 computed: 141.700100 Hz\nf\u2080 target: 141.7001 Hz\n\u0394f: 0.000000e+00 Hz\nValidation: \u2705 PASS\n\n\ud83d\udccb Beacon Structure:\n   \u2705 Beacon structure valid\n\n\ud83d\udccb Coherence:\n   \u2705 Coherence C = 244.36 validated\n\n\ud83d\udccb Doi Reference:\n   \u2705 Primary DOI validated: 10.528"
     },
     "v5_coronacion": {
       "passed": false,
       "precision": 15,
-      "output": ""
+      "output": "\u26a0\ufe0f  Warning: QCAL logging system not available\n\ud83d\udd10 Verifying environment integrity...\n   \u274c Environment integrity check failed\n\u26a0\ufe0f  \n\u26a0\ufe0f  3 warning(s):\n\u26a0\ufe0f    \u2022 Python version mismatch: expected 3.11, got 3.12. Results may not be fully reproducible.\n\u26a0\ufe0f    \u2022 Required packages not installed: symengine==0.13.0, matplotlib==3.10.7, jupyter==1.0.0, jupyter-core==5.9.1, jupyter-server==2.17.0, jupyter-client==8.6.3, jupyterlab==4.4.8, ipython==9.6.0, ipykernel==7.0.1, ipywidgets==8.1.7\n\u26a0\ufe0f    \u2022 Version mismatches in installed packages: numpy: required=2.0.2, installed=2.4.2, scipy: required=1.16.3, installed=1.17.0, sympy: required=1.14, installed=1.14.0, requests: required=2.32.4, installed=2.31.0, urllib3: required=2.6.0, installed=2.0.7, idna: required=3.11, installed=3.6, certifi: required=2025.11.12, installed=2023.11.17, python-dateutil: required=2.9.0.post0, installed=2.8.2, packaging: required=25.0, installed=24.0, platformdirs: required=4.5.0, installed=4.5.1\n\u274c \n\u274c 2 error(s):\n\u274c   \u2022 Dataset"
     },
     "spectral_emergence": {
-      "passed": false,
+      "passed": true,
       "n_tests": 100
     },
     "cross_repo": {
