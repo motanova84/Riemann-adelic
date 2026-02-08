@@ -155,7 +155,7 @@ jobs:
 
       - name: 📘 Upload Auto-QCAL logs
         if: always()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4.4.3
         with:
           name: auto-qcal-logs-run-${{ github.run_number }}
           path: |
@@ -200,47 +200,6 @@ Automated by Auto-QCAL orchestration system.
             echo "✅ Changes committed and pushed"
           fi
         continue-on-error: true
-
-      - name: 📈 Progress Comment (PR only)
-        if: github.event_name == 'pull_request'
-        uses: actions/github-script@v6
-        with:
-          script: |
-            const total = ${{ steps.metrics.outputs.total_sorries || 0 }};
-            const resolved = ${{ steps.metrics.outputs.resolved_sorries || 0 }};
-            const remaining = ${{ steps.metrics.outputs.remaining_sorries || 0 }};
-            const progress = total > 0 ? ((resolved / total) * 100).toFixed(2) : 0;
-            
-            const comment = `## 🧬 Auto-QCAL Progress Report
-            
-            **Session**: #${{ steps.metrics.outputs.session_id || 1 }}
-            **Run**: #${{ github.run_number }}
-            
-            ### Progress
-            - **Total sorries**: ${total}
-            - **Resolved**: ${resolved}
-            - **Remaining**: ${remaining}
-            - **Progress**: ${progress}%
-            
-            ### QCAL Coherence
-            - **Status**: ${{ steps.metrics.outputs.coherence == 'true' ? '✅ CONFIRMED' : '⚠️ NEEDS REVIEW' }}
-            - **Frequency**: 141.7001 Hz
-            - **Coherence Constant**: C = 244.36
-            
-            ### Iterations
-            - **Count**: ${{ steps.metrics.outputs.iterations || 0 }}
-            - **Max**: ${{ github.event.inputs.max_iterations || 5 }}
-            
-            ---
-            *Automated by Auto-QCAL orchestration system*
-            `;
-            
-            github.rest.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: comment
-            });
 
       - name: ⏱️ Auto-QCAL Summary
         if: always()

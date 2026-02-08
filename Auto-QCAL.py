@@ -32,13 +32,13 @@ Usage:
 
 import argparse
 import json
-import os
+import re
 import subprocess
 import sys
 import time
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Dict, List, Optional, Tuple
+from typing import Dict, List, Tuple
 
 # QCAL Constants Configuration from .qcal_beacon
 class QCALConstants:
@@ -215,15 +215,46 @@ class NoesisBoot:
             "continuity", "measurability", "fun_prop"
         ]
     
-    def count_sorries(self) -> Tuple[int, List[str]]:
-        """Count total sorry statements in Lean files."""
+    def count_sorries(self, target_file: str = None) -> Tuple[int, List[str]]:
+        """
+        Count total sorry statements in Lean files using word-boundary regex.
+        
+        Args:
+            target_file: Optional path to specific file to count (relative or absolute)
+        
+        Returns:
+            Tuple of (total_sorries, sorry_files)
+        """
         sorry_files = []
         total_sorries = 0
         
-        for lean_file in self.lean_dir.rglob("*.lean"):
+        # Word-boundary regex pattern to avoid matching 'sorry' as substring
+        # This matches 'sorry' as a whole word, not inside comments or other identifiers
+        sorry_pattern = re.compile(r'\bsorry\b')
+        
+        # Determine which files to scan
+        if target_file:
+            # Handle target file specification
+            target_path = Path(target_file)
+            if not target_path.is_absolute():
+                target_path = self.lean_dir / target_path
+            
+            if target_path.is_file() and target_path.suffix == '.lean':
+                files_to_scan = [target_path]
+            elif target_path.is_dir():
+                files_to_scan = target_path.rglob("*.lean")
+            else:
+                print(f"⚠️ Target file not found or not a Lean file: {target_file}")
+                return 0, []
+        else:
+            files_to_scan = self.lean_dir.rglob("*.lean")
+        
+        for lean_file in files_to_scan:
             try:
                 content = lean_file.read_text()
-                sorry_count = content.count("sorry")
+                # Use regex to find word-boundary 'sorry' occurrences
+                matches = sorry_pattern.findall(content)
+                sorry_count = len(matches)
                 if sorry_count > 0:
                     total_sorries += sorry_count
                     sorry_files.append(str(lean_file.relative_to(self.lean_dir)))
@@ -344,7 +375,8 @@ class QCALValidator:
             return False
         
         content = beacon_file.read_text()
-        if f"frequency = {FUNDAMENTAL_FREQUENCY}" in content:
+        # .qcal_beacon stores frequency with units: "frequency = 141.7001 Hz"
+        if f"frequency = {FUNDAMENTAL_FREQUENCY} Hz" in content:
             print(f"✅ Frequency {FUNDAMENTAL_FREQUENCY} Hz confirmed")
             return True
         else:
@@ -445,8 +477,9 @@ Institution: Instituto de Conciencia Cuántica (ICQ)
         print("\n🔍 Initial Scan: #qcal_cleanup")
         print("=" * 70)
         
-        # Count sorries
-        total_sorries, sorry_files = self.noesis.count_sorries()
+        # Count sorries (optionally filtered by target)
+        target = self.args.target_file if hasattr(self.args, 'target_file') else None
+        total_sorries, sorry_files = self.noesis.count_sorries(target)
         self.state.update_sorry_count(total_sorries, self.state.state["resolved_sorries"])
         
         print(f"Total sorry statements found: {total_sorries}")
@@ -487,14 +520,21 @@ Institution: Instituto de Conciencia Cuántica (ICQ)
             self.state.state["qcal_coherence"] = True
             self.state.state["frequency_validated"] = True
             
-            # Step 2: Count current sorries
-            total_sorries, sorry_files = self.noesis.count_sorries()
-            resolved = self.state.state["total_sorries"] - total_sorries
-            self.state.update_sorry_count(total_sorries, resolved)
+            # Step 2: Count current sorries (optionally filtered by target)
+            target = self.args.target_file if hasattr(self.args, 'target_file') else None
+            total_sorries, sorry_files = self.noesis.count_sorries(target)
+            
+            # Compute cumulative resolved count (monotonic)
+            previous_total = self.state.state.get("total_sorries", total_sorries)
+            previous_resolved = self.state.state.get("resolved_sorries", 0)
+            delta_resolved = max(0, previous_total - total_sorries)
+            resolved_cumulative = previous_resolved + delta_resolved
+            
+            self.state.update_sorry_count(total_sorries, resolved_cumulative)
             
             print(f"\n📊 Current Status:")
             print(f"  Total sorries: {total_sorries}")
-            print(f"  Resolved this session: {resolved}")
+            print(f"  Resolved so far: {resolved_cumulative}")
             
             if total_sorries == 0:
                 print("\n🎉 All sorries resolved! QCAL ∞³ formalization complete!")
@@ -529,9 +569,14 @@ Institution: Instituto de Conciencia Cuántica (ICQ)
         
         # Resume or start new session
         if self.args.resume:
-            print(self.state.generate_continuity_summary())
-        else:
+            # When resuming from an existing state, advance to the next session
             self.state.increment_session()
+            print(self.state.generate_continuity_summary())
+            print(f"🚀 Resuming into session #{self.state.state['session_id']}")
+        else:
+            # For a fresh run (no existing .qcal_state), use the initial session_id
+            # provided by the state object (typically 1) without incrementing,
+            # so the first session is correctly reported as #1.
             print(f"🚀 Starting new session #{self.state.state['session_id']}")
         
         # Initial scan

@@ -178,8 +178,8 @@ Axioma de Emisión: f₀ = 141.7001 Hz | C = 244.36 | πCODE-888-QCAL2
 
 🔍 Initial Scan: #qcal_cleanup
 ======================================================================
-Total sorry statements found: 2285
-Files with sorries: 453
+Total sorry statements found: 2316
+Files with sorries: 356
 ======================================================================
 
 🔄 Iteration 1/3
@@ -197,8 +197,8 @@ Validation Results:
 ======================================================================
 
 📊 Current Status:
-  Total sorries: 2285
-  Resolved this session: 0
+  Total sorries: 2316
+  Resolved so far: 0
 
 🔨 Building Lean project...
 ...
