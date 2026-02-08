@@ -299,13 +299,13 @@ def main():
 
 
 if __name__ == '__main__':
-import subprocess
-import argparse
-from datetime import datetime
-from pathlib import Path
+    import subprocess
+    import argparse
+    from datetime import datetime
+    from pathlib import Path
 
 
-class NoesisBoot:
+    class NoesisBoot:
     """Noesis88 autonomous boot and evolution system."""
     
     def __init__(self, session_id: str = None):
