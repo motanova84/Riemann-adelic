@@ -18,7 +18,8 @@ jobs:
 
     strategy:
       matrix:
-        python-version: ['3.10', '3.11', '3.12']
+        # Note: Python 3.10 excluded because JAX >=0.8.0 requires Python 3.11+
+        python-version: ['3.11', '3.12']
 
     steps:
       - name: Checkout code

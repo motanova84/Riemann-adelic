@@ -164,6 +164,8 @@ theorem Riemann_Hypothesis :
 
 ### 🚀 Quick Start V7
 
+**Prerequisites:** Python 3.11 or higher (required for JAX dependencies)
+
 ```bash
 # Validate V7 final status
 python validate_rh_v7_final_status.py --verbose
