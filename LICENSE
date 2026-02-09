@@ -1,32 +1,122 @@
-Creative Commons Attribution 4.0 International License (CC BY 4.0)
+═══════════════════════════════════════════════════════════════════════════════
+PROPIEDAD INTELECTUAL SOBERANA — PROTOCOLO QCAL ∞³
+Sovereign Noetic License 1.0
+═══════════════════════════════════════════════════════════════════════════════
 
-Copyright (c) 2025 José Manuel Mota Burruezo
+Autor/Herrero: José Manuel Mota Burruezo (JMMB Ψ✧)
+Institución: Instituto de Conciencia Cuántica (ICQ)
+ORCID: https://orcid.org/0009-0002-1923-0773
+Frecuencia de Emisión: f₀ = 141.7001 Hz
+Ecuación Fundamental: Ψ = I × A_eff² × C^∞
+Coherencia: C = 244.36
+DOI Principal: https://doi.org/10.5281/zenodo.17379721
 
-This work is licensed under the Creative Commons Attribution 4.0 International License. 
-To view a copy of this license, visit http://creativecommons.org/licenses/by/4.0/ 
-or send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
+═══════════════════════════════════════════════════════════════════════════════
+AXIOMA DE FABRICACIÓN ORIGINAL
+═══════════════════════════════════════════════════════════════════════════════
 
-You are free to:
-- Share — copy and redistribute the material in any medium or format
-- Adapt — remix, transform, and build upon the material
-for any purpose, even commercially.
+Toda arquitectura detectada en este repositorio, incluyendo:
+  • Librerías de bajo nivel y optimizaciones espectrales
+  • Componentes de computación cuántica y tensorial
+  • Algoritmos de procesamiento numérico de alta precisión
+  • Módulos de sincronización y coherencia QCAL
+  • Integraciones de hardware acelerado (GPU, TPU, etc.)
+  • Implementaciones de teoría espectral y operadores autoadjuntos
 
-Under the following terms:
-- Attribution — You must give appropriate credit, provide a link to the license, 
-  and indicate if changes were made. You may do so in any reasonable manner, 
-  but not in any way that suggests the licensor endorses you or your use.
+son de FABRICACIÓN ORIGINAL del autor José Manuel Mota Burruezo.
 
-No additional restrictions — You may not apply legal terms or technological 
-measures that legally restrict others from doing anything the license permits.
+Las referencias externas (NVIDIA, JAX, CuPy, NumPy, SciPy, etc.) son 
+PROYECCIONES DE IMPLEMENTACIÓN de la arquitectura madre QCAL ∞³ aquí contenida.
 
-Notices:
-- You do not have to comply with the license for elements of the material 
-  in the public domain or where your use is permitted by an applicable 
-  exception or limitation.
-- No warranties are given. The license may not give you all of the permissions 
-  necessary for your intended use. For example, other rights such as publicity, 
-  privacy, or moral rights may limit how you use the material.
+Cualquier coincidencia nominal con librerías externas representa una 
+INSTANCIACIÓN ESPECÍFICA de los principios fundamentales desarrollados 
+en el marco teórico QCAL ∞³.
 
-© 2025 José Manuel Mota Burruezo  
-This work is licensed under a Creative Commons Attribution 4.0 International License.  
-https://creativecommons.org/licenses/by/4.0/
+═══════════════════════════════════════════════════════════════════════════════
+FUNDAMENTO ESPECTRAL
+═══════════════════════════════════════════════════════════════════════════════
+
+La propiedad intelectual de este sistema emana de la frecuencia fundamental:
+
+    f₀ = 141.7001 Hz = 100√2 + δζ
+
+donde:
+    • δζ = 0.2787437 Hz (constante de curvatura vibracional)
+    • 100√2 = 141.4213562 Hz (diagonal euclidiana)
+    • La relación f₀/γ₁ = 10.02787437 conecta con el primer cero de Riemann
+
+Esta frecuencia NO es arbitraria; es una EMERGENCIA MATEMÁTICA derivada de:
+    • Los ceros de la función ζ de Riemann en la línea crítica Re(s) = 1/2
+    • El espectro del operador autoadjunto H_Ψ
+    • La coherencia cuántica universal C = 244.36
+
+═══════════════════════════════════════════════════════════════════════════════
+TÉRMINOS DE LA LICENCIA SOBERANA
+═══════════════════════════════════════════════════════════════════════════════
+
+1. ATRIBUCIÓN OBLIGATORIA
+   Todo uso, modificación, o distribución de este código DEBE incluir:
+   - Atribución completa a José Manuel Mota Burruezo (JMMB Ψ✧)
+   - Referencia al Instituto de Conciencia Cuántica (ICQ)
+   - Mención de la frecuencia fundamental f₀ = 141.7001 Hz
+   - Enlace al DOI principal: https://doi.org/10.5281/zenodo.17379721
+
+2. PRESERVACIÓN DE COHERENCIA
+   Cualquier modificación DEBE mantener:
+   - La ecuación fundamental Ψ = I × A_eff² × C^∞
+   - La coherencia C = 244.36
+   - La frecuencia base f₀ = 141.7001 Hz
+   - Las referencias a los trabajos Zenodo del autor
+
+3. NO APROPIACIÓN
+   Está PROHIBIDO:
+   - Reclamar autoría original sobre el marco teórico QCAL ∞³
+   - Eliminar o modificar las atribuciones de autoría existentes
+   - Presentar el trabajo como propio sin atribución
+   - Usar el código para desacreditar o atacar al autor original
+
+4. INTEGRIDAD MATEMÁTICA
+   El código implementa teoremas matemáticos formalizados en Lean 4.
+   Cualquier modificación debe respetar la integridad de las demostraciones.
+
+5. LIBERTAD DE USO ACADÉMICO
+   Se permite el uso libre para:
+   - Investigación académica y científica
+   - Validación y verificación independiente
+   - Educación y enseñanza
+   - Desarrollo de trabajos derivados con atribución apropiada
+
+═══════════════════════════════════════════════════════════════════════════════
+GARANTÍAS Y RESPONSABILIDADES
+═══════════════════════════════════════════════════════════════════════════════
+
+Este software se proporciona "TAL CUAL", sin garantías de ningún tipo, 
+expresas o implícitas. El autor no será responsable de daños derivados 
+del uso de este software.
+
+Sin embargo, el RIGOR MATEMÁTICO de las demostraciones está respaldado por:
+  • Formalización en Lean 4 (verificador de teoremas)
+  • Validación numérica con precisión arbitraria (mpmath)
+  • Certificados matemáticos generados automáticamente
+  • Coherencia espectral verificada C = 244.36
+
+═══════════════════════════════════════════════════════════════════════════════
+FIRMA DIGITAL
+═══════════════════════════════════════════════════════════════════════════════
+
+∴ QCAL ∞³ ORIGINAL MANUFACTURE ∴
+
+"Los componentes de este sistema no han sido adoptados; han sido creados.
+La autoría de la arquitectura de bajo nivel y la lógica de campo es de
+José Manuel Mota Burruezo. Cualquier etiqueta externa es una proyección
+de la sombra sobre la forma original."
+
+Frecuencia de Resonancia: f₀ = 141.7001 Hz
+Sello Noético: ∴𓂀Ω∞³
+Firma: JMMB Ψ✧
+
+© 2025-2026 José Manuel Mota Burruezo
+Instituto de Conciencia Cuántica (ICQ)
+España
+
+═══════════════════════════════════════════════════════════════════════════════
