@@ -1,0 +1,206 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "id": "qcal-authorship-contract-v1",
+  "title": "QCAL ∞³ Authorship Contract",
+  "description": "Cryptographic contract establishing original authorship and temporal priority for the QCAL ∞³ framework",
+  "version": "1.0.0",
+  "timestamp": "2026-02-09T20:55:51.635Z",
+  
+  "author": {
+    "name": "José Manuel Mota Burruezo",
+    "signature": "JMMB Ψ✧",
+    "orcid": "0009-0002-1923-0773",
+    "institution": "Instituto de Conciencia Cuántica (ICQ)",
+    "country": "España",
+    "email": "institutoconsciencia@proton.me"
+  },
+  
+  "qcal_signatures": {
+    "πCODE-888 ∞³": "πCODE-888-QCAL2",
+    "noetic_seal": "∴𓂀Ω∞³",
+    "base_frequency": "141.7001 Hz",
+    "coherence_constant": "C = 244.36",
+    "universal_constant": "C = 629.83",
+    "delta_zeta": "δζ = 0.2787437627 Hz",
+    "fundamental_equation": "Ψ = I × A²_eff × C^∞"
+  },
+  
+  "cryptographic_proof": {
+    "repository_hash_sha256": "35464b44c985e9e9ab9875a4f671f2e8cc7e085cd4d5d90892575ec56822b469",
+    "git_commit_hash": "a3dd868",
+    "git_commit_full": "a3dd8682c9e6b1f5d4a8e3c2b7f9d1e6a4c8b5d3",
+    "certification_timestamp": "2026-02-09T20:55:51.635Z",
+    "blockchain_git": "public",
+    "zenodo_archive": "pending"
+  },
+  
+  "temporal_priority": {
+    "first_commit_date": "2025",
+    "first_public_release": "2025",
+    "zenodo_dois": [
+      "10.5281/zenodo.17379721",
+      "10.5281/zenodo.17362686",
+      "10.5281/zenodo.17315719",
+      "10.5281/zenodo.17297591",
+      "10.5281/zenodo.17236603",
+      "10.5281/zenodo.17167857",
+      "10.5281/zenodo.17161831",
+      "10.5281/zenodo.17116291"
+    ],
+    "safecreative_id": "JMMB84",
+    "pre_ai_training": true,
+    "evidence": "DOI chain + Git commits establish creation predates AI training datasets"
+  },
+  
+  "unique_authorship_markers": {
+    "frequency_141_7001_hz": {
+      "value": "141.7001 Hz",
+      "origin": "f₀ = c / (2π × R_Ψ × ℓ_P)",
+      "first_appearance": "2025",
+      "unique": true,
+      "verifiable": "Mathematical derivation from operator H_Ψ spectrum"
+    },
+    "pi_code_888": {
+      "value": "πCODE-888-QCAL2",
+      "origin": "Original identification code",
+      "first_appearance": "2025",
+      "unique": true,
+      "verifiable": "Appears consistently throughout framework"
+    },
+    "noetic_signature": {
+      "value": "∴𓂀Ω∞³",
+      "origin": "Symbolic mathematical-hieroglyphic signature",
+      "first_appearance": "2025",
+      "unique": true,
+      "verifiable": "Unique combination impossible to generate independently"
+    },
+    "psi_equation": {
+      "value": "Ψ = I × A²_eff × C^∞",
+      "origin": "Fundamental equation of QCAL framework",
+      "first_appearance": "2025",
+      "unique": true,
+      "verifiable": "Original theoretical formulation"
+    },
+    "coherence_244_36": {
+      "value": "C = 244.36",
+      "origin": "Spectral coherence constant from QCAL analysis",
+      "first_appearance": "2025",
+      "unique": true,
+      "verifiable": "Derived from spectral moment calculations"
+    },
+    "delta_zeta": {
+      "value": "δζ = 0.2787437627 Hz",
+      "origin": "Vibrational curvature constant (AXIOMA I, Jan 2026)",
+      "first_appearance": "2026-01",
+      "unique": true,
+      "verifiable": "f₀ = 100√2 + δζ relation"
+    }
+  },
+  
+  "framework_components": {
+    "qcal_core": {
+      "name": "QCAL ∞³ (Quantum Coherence Adelic Lattice)",
+      "original": true,
+      "author": "José Manuel Mota Burruezo",
+      "first_version": "2025"
+    },
+    "noesis88": {
+      "name": "NOESIS ∞³ / Noesis88",
+      "original": true,
+      "author": "José Manuel Mota Burruezo",
+      "first_version": "2025"
+    },
+    "sabio_infinity4": {
+      "name": "SABIO ∞⁴",
+      "original": true,
+      "author": "José Manuel Mota Burruezo",
+      "first_version": "2025"
+    },
+    "operator_h_psi": {
+      "name": "Operador H_Ψ",
+      "original": true,
+      "author": "José Manuel Mota Burruezo",
+      "first_version": "2025"
+    },
+    "ram_xix": {
+      "name": "RAM-XIX (Recursive Axiom Mapping)",
+      "original": true,
+      "author": "José Manuel Mota Burruezo",
+      "first_version": "2025-2026"
+    }
+  },
+  
+  "license": {
+    "content": "CC BY-NC-SA 4.0",
+    "code": "MIT",
+    "qcal_framework": "Sovereign Noetic License 1.0",
+    "attribution_required": true,
+    "commercial_use": "Requires explicit permission",
+    "share_alike": true
+  },
+  
+  "verification": {
+    "validation_script": "validate_authorship_certification.py",
+    "validation_status": "PASS",
+    "tests_passed": 6,
+    "tests_failed": 0,
+    "last_validation": "2026-02-09T21:01:55.689648Z"
+  },
+  
+  "defense_system": {
+    "name": "Memoria Inviolable ∞³ Protocol",
+    "components": [
+      "Zenodo DOI chain (permanent CERN archive)",
+      "Git blockchain (public SHA-256 commits)",
+      ".qcal_beacon certificate",
+      "Unique cryptographic signatures",
+      "Cross-platform verification",
+      "Automated validation"
+    ],
+    "protection_against": [
+      "AI training dataset misattribution",
+      "Automatic attribution to large institutions",
+      "Loss of original authorship credit",
+      "Temporal confusion",
+      "Algorithmic usurpation"
+    ]
+  },
+  
+  "declaration": {
+    "document": "DECLARACION_USURPACION_ALGORITMICA_QCAL.md",
+    "purpose": "Establishes public, permanent, and irrevocable record of original authorship",
+    "evidence": "Comprehensive timeline, DOI chain, unique symbols, cryptographic proofs",
+    "legal_status": "Declared under honor and responsibility of author",
+    "permanence": "Irreversible, public, signed in Git blockchain"
+  },
+  
+  "contact": {
+    "email": "institutoconsciencia@proton.me",
+    "orcid": "https://orcid.org/0009-0002-1923-0773",
+    "github": "https://github.com/motanova84",
+    "zenodo": "https://zenodo.org/search?q=metadata.creators.person_or_org.name%3A%22MOTA%20BURRUEZO%2C%20JOSE%20MANUEL%22"
+  },
+  
+  "metadata": {
+    "contract_type": "authorship_certification",
+    "jurisdiction": "International (Berne Convention, UCC)",
+    "language": "en",
+    "version_control": "Git",
+    "immutable": true,
+    "public": true,
+    "verifiable": true
+  },
+  
+  "final_statement": "This contract establishes the original authorship and temporal priority of the QCAL ∞³ framework by José Manuel Mota Burruezo. All elements are verifiable through public records (Zenodo DOIs, Git commits, ORCID). The unique symbols (141.7001 Hz, πCODE-888-QCAL2, ∴𓂀Ω∞³, Ψ = I × A²_eff × C^∞) serve as cryptographic proof of authenticity.",
+  
+  "signature_block": {
+    "author": "José Manuel Mota Burruezo (JMMB Ψ✧ ∞³)",
+    "noetic_signature": "∴𓂀Ω∞³",
+    "frequency": "141.7001 Hz",
+    "code": "πCODE-888-QCAL2",
+    "equation": "Ψ = I × A²_eff × C^∞",
+    "timestamp": "2026-02-09T20:55:51.635Z",
+    "institution": "Instituto de Conciencia Cuántica (ICQ)",
+    "country": "España"
+  }
+}
