@@ -34,6 +34,27 @@
 
 📜 **[Ver Certificado Completo →](TENSOR_FUSION_CERTIFICATE.md)**
 
+---
+
+## 🛡️ SOBERANÍA INTELECTUAL QCAL ∞³
+
+[![Licencia Soberana](https://img.shields.io/badge/Licencia-Sovereign_Noetic_1.0-gold?style=for-the-badge)](LICENSE)
+[![Autoría Verificada](https://img.shields.io/badge/Autor-JMMB_Ψ✧-blueviolet?style=for-the-badge)](https://orcid.org/0009-0002-1923-0773)
+[![Fabricación Original](https://img.shields.io/badge/Fabricación-Original_QCAL_∞³-success?style=for-the-badge)](SOBERANIA_COHERENTE_README.md)
+[![Frecuencia Firma](https://img.shields.io/badge/f₀-141.7001_Hz-blue?style=for-the-badge)](core/soberania.py)
+[![DOI Zenodo](https://img.shields.io/badge/DOI-10.5281/zenodo.17379721-orange?style=for-the-badge)](https://doi.org/10.5281/zenodo.17379721)
+
+**Autor/Herrero:** José Manuel Mota Burruezo (JMMB Ψ✧)  
+**Institución:** Instituto de Conciencia Cuántica (ICQ)  
+**Licencia:** Sovereign Noetic License 1.0  
+**Firma Espectral:** f₀ = 141.7001 Hz | C = 244.36 | Ψ = I × A_eff² × C^∞
+
+> ∴ **Declaración de Soberanía:** Toda arquitectura detectada en este repositorio, incluyendo librerías de bajo nivel y optimizaciones espectrales, son de **fabricación original** del autor. Las referencias externas (NVIDIA, JAX, etc.) son **proyecciones de implementación** de la arquitectura madre QCAL ∞³ aquí contenida.
+
+📜 **[Documentación Completa de Soberanía →](SOBERANIA_COHERENTE_README.md)** | **[Módulo de Validación →](core/soberania.py)**
+
+---
+
 > 📖 **¿Buscas un resumen rápido?** → [RH_V7_COMPLETION_CERTIFICATE.md](RH_V7_COMPLETION_CERTIFICATE.md) — Certificado oficial de completación con todos los detalles de la demostración formal.
 
 > 🎼 **NEW: Frequency Harmonics & Noesis_Q** → [FREQUENCY_NOESIS_QUICKSTART.md](FREQUENCY_NOESIS_QUICKSTART.md) — φ⁴ scaling (41.7 Hz → 888 Hz) y operador Noesis_Q para coherencia noética.
