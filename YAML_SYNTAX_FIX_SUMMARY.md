@@ -33,8 +33,10 @@ The problem statement showed examples of corrupted YAML workflow syntax with:
 - **Multi-line commit message indentation** (lines 167-172): Insufficient indentation causing YAML scanner to fail
 
 **Fixes Applied:**
-- Changed `<<EOF` to `<<'EOF'` to properly quote the heredoc delimiter
-- Fixed indentation of multi-line content within the heredoc to prevent YAML parsing issues
+- Fixed indentation of heredoc content to prevent YAML parser confusion
+- Kept heredoc delimiter unquoted (`<<EOF` not `<<'EOF'`) to allow shell and GitHub Actions variable expansion
+  - Enables `$(date ...)` command substitution
+  - Enables `${{ github.* }}` expression substitution
 - Properly indented multi-line commit message within the run block
 
 ### Verification Results
