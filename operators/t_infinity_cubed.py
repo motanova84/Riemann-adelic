@@ -157,7 +157,9 @@ class TInfinityCubedOperator:
         """
         Compute the weight function w(t) for the Hilbert space H_Ψ.
         
-        w(t) = e^(-πt²) · cos(141.7001·t)
+        w(t) = e^(-πt²) · cos(2π·f₀·t)
+        
+        where f₀ = 141.7001 Hz is the fundamental QCAL frequency.
         
         This weight oscillates at the fundamental QCAL frequency.
         
