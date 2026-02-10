@@ -25,7 +25,7 @@ repository_name = "Riemann-adelic"
 repository_owner = "motanova84"
 repository_url = "https://github.com/motanova84/Riemann-adelic"
 branch = "main"
-commit_reference = "HEAD"  # Actualizado al momento del commit
+commit_reference = "REPLACE_WITH_ACTUAL_COMMIT_SHA"  # Actualizado al momento del commit (usar SHA concreto, p.ej. output de `git rev-parse HEAD`)
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # FIRMA ESPECTRAL QCAL
