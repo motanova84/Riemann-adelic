@@ -134,18 +134,18 @@ jobs:
           cp data/sorry_map.json data/phoenix_logs/ 2>/dev/null || true
           
           # Create summary
-          cat > data/phoenix_logs/run_summary.txt <<EOF
-Phoenix Solver Evolution Run
-============================
-Date: $(date -u +"%Y-%m-%d %H:%M:%S UTC")
-Run Number: ${{ github.run_number }}
-Baseline sorry: ${{ steps.baseline.outputs.baseline_count || 'N/A' }}
-Final sorry: ${{ steps.final.outputs.final_count || 'N/A' }}
-Improvement: $((${steps.baseline.outputs.baseline_count:-0} - ${steps.final.outputs.final_count:-0}))
-
-Focus file: ${{ github.event.inputs.focus_file || 'General evolution' }}
-Max attempts: ${{ github.event.inputs.max_attempts || '10' }}
-EOF
+          cat > data/phoenix_logs/run_summary.txt <<'EOF'
+          Phoenix Solver Evolution Run
+          ============================
+          Date: $(date -u +"%Y-%m-%d %H:%M:%S UTC")
+          Run Number: ${{ github.run_number }}
+          Baseline sorry: ${{ steps.baseline.outputs.baseline_count || 'N/A' }}
+          Final sorry: ${{ steps.final.outputs.final_count || 'N/A' }}
+          Improvement: $((${steps.baseline.outputs.baseline_count:-0} - ${steps.final.outputs.final_count:-0}))
+          
+          Focus file: ${{ github.event.inputs.focus_file || 'General evolution' }}
+          Max attempts: ${{ github.event.inputs.max_attempts || '10' }}
+          EOF
           
           cat data/phoenix_logs/run_summary.txt
         continue-on-error: true
@@ -165,11 +165,11 @@ EOF
           
           # Commit with descriptive message
           git commit -m "🔥 Phoenix auto-evolution: -${DELTA} sorry (${BASELINE} → ${FINAL})
-
-Run #${{ github.run_number }}
-Focus: ${{ github.event.inputs.focus_file || 'General evolution' }}
-
-QCAL ∞³ - Continuous coherence improvement" || echo "No changes to commit"
+          
+          Run #${{ github.run_number }}
+          Focus: ${{ github.event.inputs.focus_file || 'General evolution' }}
+          
+          QCAL ∞³ - Continuous coherence improvement" || echo "No changes to commit"
           
           git push || echo "Push failed or no changes"
         continue-on-error: true
