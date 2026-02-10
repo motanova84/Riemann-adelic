@@ -96,6 +96,24 @@ from .spectral_constants import (
     validate_dual_constants
 )
 
+from .spectral_coordinates import (
+    # Constants
+    F0 as F0_COORDINATES,
+    GAMMA_1,
+    TAU_IMAGINARY_CONSTANT,
+    # Functions
+    compute_tau,
+    compute_tau_real,
+    compute_tau_imaginary,
+    compute_tau_batch,
+    compute_tau_dictionary,
+    verify_monotonicity,
+    verify_constant_imaginary,
+    get_standard_examples,
+    analyze_spectral_coordinates,
+    validate_spectral_coordinates
+)
+
 from .horizon_detector import (
     HorizonDetector,
     detect_horizons_from_operator,
@@ -164,5 +182,19 @@ __all__ = [
     'validate_horizon_riemann_correspondence',
     # Operator duality exports
     'DiracSpectralOperator',
-    'MasterOperatorO3'
+    'MasterOperatorO3',
+    # Spectral coordinates exports
+    'F0_COORDINATES',
+    'GAMMA_1',
+    'TAU_IMAGINARY_CONSTANT',
+    'compute_tau',
+    'compute_tau_real',
+    'compute_tau_imaginary',
+    'compute_tau_batch',
+    'compute_tau_dictionary',
+    'verify_monotonicity',
+    'verify_constant_imaginary',
+    'get_standard_examples',
+    'analyze_spectral_coordinates',
+    'validate_spectral_coordinates'
 ]
