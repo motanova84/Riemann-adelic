@@ -1,0 +1,93 @@
+{
+  "validation_type": "Positive Definite Kernel Theorem",
+  "timestamp": "2026-02-10T22:50:11.066353Z",
+  "qcal_frequency": 141.7001,
+  "version": "V7.0-Coronaci\u00f3n-Final",
+  "author": "Jos\u00e9 Manuel Mota Burruezo \u03a8 \u2727 \u221e\u00b3",
+  "signature": "\u2234 \u221e\u00b3",
+  "validations": {
+    "kernel_positivity": {
+      "passed": true,
+      "results": {
+        "gaussian": {
+          "symmetric": true,
+          "positive_definite": true,
+          "quadratic_form": 18.986136905395334,
+          "min_eigenvalue": 3.8751999114847515e-08,
+          "n_test_points": 30
+        },
+        "heat": {
+          "symmetric": true,
+          "positive_definite": true,
+          "quadratic_form": 17.541787803802837,
+          "min_eigenvalue": -5.2000811921530877e-17,
+          "n_test_points": 30
+        },
+        "exponential": {
+          "symmetric": true,
+          "positive_definite": true,
+          "quadratic_form": 45.23106741289028,
+          "min_eigenvalue": 0.1711755012289391,
+          "n_test_points": 30
+        }
+      }
+    },
+    "operator_selfadjoint": {
+      "passed": true,
+      "results": {
+        "matrix_symmetric": true,
+        "symmetry_error": 0.0,
+        "eigenvalues_real": true,
+        "max_imaginary_part": 0.0,
+        "eigenvectors_orthogonal": true,
+        "orthogonality_error": 1.1102230246251565e-15,
+        "n_eigenvalues": 20
+      }
+    },
+    "spectrum_nonnegative": {
+      "passed": true,
+      "results": {
+        "n20": {
+          "min_eigenvalue": 0.0002585686235054794,
+          "max_eigenvalue": 1.7339178773932797,
+          "all_nonnegative": true,
+          "n_eigenvalues": 20
+        }
+      }
+    },
+    "critical_line_implication": {
+      "passed": true,
+      "results": {
+        "step1_kernel_positive_definite": true,
+        "step1_min_eigenvalue": 1.3106983360574695e-08,
+        "step2_spectrum_real": true,
+        "step2_details": {
+          "is_real_spectrum": true,
+          "max_imaginary_part": 0.0,
+          "is_nonnegative": true,
+          "min_eigenvalue": 0.0002585686235054794,
+          "is_symmetric": true,
+          "symmetry_error": 0.0,
+          "n_eigenvalues": 20,
+          "eigenvalue_range": [
+            0.0002585686235054794,
+            1.7339178773932797
+          ]
+        },
+        "step3_functional_equation": true,
+        "conclusion_critical_line_re_1_2": true,
+        "logical_chain_complete": true
+      }
+    },
+    "qcal_coherence": {
+      "passed": true,
+      "results": {
+        "frequency_f0": 141.7001,
+        "frequency_correct": true,
+        "qcal_beacon_exists": true,
+        "signature": "\u2234 \u221e\u00b3"
+      }
+    }
+  },
+  "overall_status": "PASSED"
+}
