@@ -134,7 +134,7 @@ jobs:
           cp data/sorry_map.json data/phoenix_logs/ 2>/dev/null || true
           
           # Create summary
-          cat > data/phoenix_logs/run_summary.txt <<'EOF'
+          cat > data/phoenix_logs/run_summary.txt <<EOF
           Phoenix Solver Evolution Run
           ============================
           Date: $(date -u +"%Y-%m-%d %H:%M:%S UTC")

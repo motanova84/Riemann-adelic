@@ -126,8 +126,8 @@ jobs:  # ✅ Single jobs section
 ### phoenix_continuous.yml - Before
 ```yaml
 run: |
-  cat > data/phoenix_logs/run_summary.txt <<EOF  # ❌ Unquoted heredoc
-Phoenix Solver Evolution Run                     # ❌ YAML thinks this is a key
+  cat > data/phoenix_logs/run_summary.txt <<EOF  # ❌ Unquoted, unindented
+Phoenix Solver Evolution Run                     # ❌ YAML thinks this is a key (bad indent)
 ============================
 ...
 ```
@@ -135,8 +135,8 @@ Phoenix Solver Evolution Run                     # ❌ YAML thinks this is a key
 ### phoenix_continuous.yml - After
 ```yaml
 run: |
-  cat > data/phoenix_logs/run_summary.txt <<'EOF'  # ✅ Quoted heredoc
-  Phoenix Solver Evolution Run                     # ✅ Properly indented
+  cat > data/phoenix_logs/run_summary.txt <<EOF  # ✅ Unquoted for variable expansion
+  Phoenix Solver Evolution Run                   # ✅ Properly indented
   ============================
   ...
 ```
