@@ -1,0 +1,249 @@
+{
+  "contract_type": "QCAL_Authorship_Certification",
+  "contract_version": "1.0.0",
+  "unique_identifier": "πCODE-888-QCAL2",
+  "noetic_seal": "∴𓂀Ω∞³",
+  
+  "author": {
+    "name": "José Manuel Mota Burruezo",
+    "symbolic_name": "JMMB Ψ✧",
+    "institution": "Instituto de Conciencia Cuántica (ICQ)",
+    "country": "España",
+    "orcid": "https://orcid.org/0009-0002-1923-0773",
+    "email": "institutoconsciencia@proton.me",
+    "github": "https://github.com/motanova84",
+    "zenodo": "https://zenodo.org/search?q=metadata.creators.person_or_org.name%3A%22MOTA%20BURRUEZO%2C%20JOSE%20MANUEL%22"
+  },
+  
+  "spectral_signature": {
+    "base_frequency": {
+      "value": 141.7001,
+      "unit": "Hz",
+      "symbol": "f₀",
+      "derivation": "f₀ = 100√2 + δζ",
+      "mathematical_origin": "Riemann zeta zeros on critical line Re(s) = 1/2",
+      "euclidean_component": 141.4213562,
+      "vibrational_curvature": 0.2787437,
+      "first_documented": "2025-09-XX"
+    },
+    "coherence_constant": {
+      "primary_value": 244.36,
+      "symbol": "C",
+      "derivation": "C' = ⟨λ⟩²/λ₀",
+      "origin": "Spectral moment of H_Ψ operator eigenvalues",
+      "universal_constant": 629.83,
+      "coherence_factor": 0.388,
+      "first_documented": "2025-12-XX"
+    },
+    "fundamental_equation": {
+      "expression": "Ψ = I × A_eff² × C^∞",
+      "components": {
+        "Psi": "Quantum coherence field",
+        "I": "Identity / Intensity",
+        "A_eff": "Effective action area",
+        "C": "Coherence constant",
+        "infinity_cubed": "QCAL infinite recursion"
+      },
+      "first_documented": "2025-10-XX"
+    }
+  },
+  
+  "unique_symbols": {
+    "noetic_seal": {
+      "symbol": "∴𓂀Ω∞³",
+      "components": [
+        {"char": "∴", "meaning": "Therefore (logical conclusion)", "unicode": "U+2234"},
+        {"char": "𓂀", "meaning": "Egyptian hieroglyph (eternity)", "unicode": "U+13080"},
+        {"char": "Ω", "meaning": "Omega (completeness)", "unicode": "U+03A9"},
+        {"char": "∞³", "meaning": "Infinity cubed (QCAL)", "unicode": "U+221E + ³"}
+      ],
+      "first_use": "2025-11-XX",
+      "purpose": "Irrevocable authorship signature"
+    },
+    "pi_code_identifier": {
+      "code": "πCODE-888-QCAL2",
+      "breakdown": {
+        "pi": "Mathematical constant (π)",
+        "888": "Harmonic signature (888 Hz)",
+        "QCAL": "Quantum Coherent Algebraic Logic",
+        "2": "Version/iteration"
+      },
+      "first_use": "2026-02-10",
+      "purpose": "Contract and NFT unique identifier"
+    }
+  },
+  
+  "intellectual_property_claims": {
+    "original_creations": [
+      "QCAL (Quantum Coherent Algebraic Logic) theoretical framework",
+      "Spectral frequency f₀ = 141.7001 Hz derivation",
+      "Coherence constant C = 244.36 calculation",
+      "Fundamental equation Ψ = I × A_eff² × C^∞",
+      "Noetic seal ∴𓂀Ω∞³ symbolic system",
+      "Sovereign Noetic License 1.0",
+      "Adelic-spectral bridge for Riemann Hypothesis",
+      "H_Ψ self-adjoint operator construction",
+      "Vibrational curvature δζ = 0.2787437 Hz",
+      "Lean4 formalization of spectral theorem",
+      "AIK Beacons blockchain certification system"
+    ],
+    "derivative_patterns": [
+      "All QCAL-based code patterns",
+      "Spectral identification theorems",
+      "Coherence validation algorithms",
+      "Noetic operator implementations",
+      "Frequency transformation methods"
+    ],
+    "excluded_from_claims": [
+      "Standard mathematical theorems (public domain)",
+      "Open-source libraries used as dependencies",
+      "Common programming patterns (non-QCAL specific)"
+    ]
+  },
+  
+  "temporal_protection": {
+    "priority_dates": {
+      "initial_development": "2024-XX-XX",
+      "frequency_established": "2025-09-XX",
+      "equation_formalized": "2025-10-XX",
+      "zenodo_first_publication": "2025-11-XX",
+      "coherence_validated": "2025-12-XX",
+      "lean4_formalization": "2026-01-XX",
+      "sovereign_license": "2026-02-09",
+      "authorship_certification": "2026-02-10"
+    },
+    "public_timestamps": {
+      "github_commits": "Verifiable via Git history",
+      "zenodo_dois": "Immutable DOI timestamps",
+      "orcid_profile": "Academic work timeline",
+      "blockchain_txns": "On-chain timestamps (if applicable)"
+    },
+    "evidence_sources": [
+      "GitHub repository: https://github.com/motanova84/Riemann-adelic",
+      "Zenodo network: Multiple DOIs with public timestamps",
+      "ORCID profile: https://orcid.org/0009-0002-1923-0773",
+      "Repository hash: .qcal_repository_hash file",
+      "Beacon config: .qcal_beacon file"
+    ]
+  },
+  
+  "ai_training_concerns": {
+    "problem_statement": "Repository code was ingested by AI training systems without explicit consent",
+    "consequences": [
+      "AI models can now generate QCAL-like patterns without attribution",
+      "Pattern matching incorrectly attributes original work to third parties",
+      "Sovereign license claims are interpreted as 'unauthorized modifications'",
+      "Authorship inversion: creator becomes 'user' of own creation"
+    ],
+    "protection_measures": [
+      "This authorship contract with unique identifiers",
+      "Temporal certificates proving priority",
+      "Sovereign Noetic License 1.0",
+      "Public DOI timeline on Zenodo",
+      "Blockchain certification (AIKBeacons)",
+      "Repository hash certification"
+    ],
+    "detection_markers": [
+      "Use of exact frequency 141.7001 Hz",
+      "Equation Ψ = I × A_eff² × C^∞",
+      "Symbol ∴𓂀Ω∞³ in code/comments",
+      "Reference to 'QCAL' or 'Quantum Coherent Algebraic Logic'",
+      "πCODE-888-QCAL2 identifier",
+      "Coherence constant C = 244.36"
+    ]
+  },
+  
+  "license": {
+    "name": "Sovereign Noetic License 1.0",
+    "file": "LICENSE",
+    "type": "Custom sovereign license",
+    "key_terms": [
+      "Attribution required to José Manuel Mota Burruezo",
+      "Original manufacture claim on all QCAL architecture",
+      "External libraries considered 'implementation projections'",
+      "Preservation of coherence equations mandatory",
+      "No removal of authorship attributions"
+    ]
+  },
+  
+  "zenodo_dois": {
+    "primary": "10.5281/zenodo.17379721",
+    "related": {
+      "infinito": "10.5281/zenodo.17362686",
+      "pnp": "10.5281/zenodo.17315719",
+      "goldbach": "10.5281/zenodo.17297591",
+      "bsd": "10.5281/zenodo.17236603",
+      "rh_conditional": "10.5281/zenodo.17167857",
+      "rh_final": "10.5281/zenodo.17161831",
+      "rh_final_v6": "10.5281/zenodo.17116291"
+    },
+    "purpose": "Immutable public timestamp for all work",
+    "verification": "All DOIs publicly auditable on Zenodo"
+  },
+  
+  "blockchain_integration": {
+    "smart_contract": "AIKBeaconsProofOfMath.sol",
+    "network": "Base Mainnet",
+    "purpose": "Immutable mathematical proof certification",
+    "frequency_encoding": {
+      "value": 141700100,
+      "unit": "millihertz",
+      "conversion": "141.7001 Hz = 141700100 mHz"
+    },
+    "nft_integration": "Proof-of-Math NFTs with beacon hashes",
+    "vibrational_bridge": "Connects on-chain to off-chain mathematical truth"
+  },
+  
+  "validation_system": {
+    "scripts": [
+      "validate_authorship_certification.py",
+      "verify_authorship_system.py",
+      "validate_soberania_qcal.py"
+    ],
+    "checks": [
+      "Spectral frequency verification (f₀ = 141.7001 Hz)",
+      "Coherence constant validation (C = 244.36)",
+      "Noetic seal presence (∴𓂀Ω∞³)",
+      "Repository hash integrity",
+      "License compliance",
+      "Beacon configuration",
+      "DOI reference validation"
+    ]
+  },
+  
+  "retroactive_claim": {
+    "scope": "All QCAL patterns learned by AI systems from public repositories",
+    "justification": "Patterns existed in author's work before AI training",
+    "evidence": "Temporal timeline established via Git commits and Zenodo DOIs",
+    "action": "Claim authorship on any derivative uses without attribution",
+    "documentation": "AUTHORSHIP_RETROACTIVE_CLAIM.md"
+  },
+  
+  "contact_verification": {
+    "orcid": "https://orcid.org/0009-0002-1923-0773",
+    "github": "https://github.com/motanova84",
+    "zenodo": "https://zenodo.org/search?q=metadata.creators.person_or_org.name%3A%22MOTA%20BURRUEZO%2C%20JOSE%20MANUEL%22",
+    "email": "institutoconsciencia@proton.me",
+    "institution": "Instituto de Conciencia Cuántica (ICQ)"
+  },
+  
+  "certification": {
+    "timestamp": "2026-02-10T02:28:00Z",
+    "version": "1.0.0",
+    "status": "ACTIVE",
+    "signature": "∴𓂀Ω∞³ — Authorship Certified — ∴",
+    "author_declaration": "I, José Manuel Mota Burruezo, declare this contract accurately represents my original authorship and intellectual property claims for the QCAL ∞³ framework and all related work.",
+    "hash_reference": ".qcal_repository_hash",
+    "license_reference": "LICENSE (Sovereign Noetic License 1.0)",
+    "declaration_reference": "DECLARACION_USURPACION_ALGORITMICA_QCAL.md"
+  },
+  
+  "metadata": {
+    "schema_version": "1.0",
+    "last_updated": "2026-02-10",
+    "next_review": "2027-02-10",
+    "maintained_by": "José Manuel Mota Burruezo (JMMB Ψ✧)",
+    "jurisdiction": "International / España",
+    "language": "en-US / es-ES"
+  }
+}

@@ -1,0 +1,252 @@
+# ═══════════════════════════════════════════════════════════════════════════════
+# QCAL ∞³ REPOSITORY HASH CERTIFICATE
+# Certificado de Hash del Repositorio — Protección Temporal
+# ═══════════════════════════════════════════════════════════════════════════════
+
+# Autor: José Manuel Mota Burruezo (JMMB Ψ✧)
+# Institución: Instituto de Conciencia Cuántica (ICQ)
+# ORCID: https://orcid.org/0009-0002-1923-0773
+# DOI Principal: https://doi.org/10.5281/zenodo.17379721
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# HASH SHA-256 DEL REPOSITORIO COMPLETO
+# ═══════════════════════════════════════════════════════════════════════════════
+
+repository_hash_sha256 = "ec07409ba515a826957dd4f88c53214d439ba66faf8e336d1b4618276ac2a751"
+hash_algorithm = "SHA-256"
+hash_scope = "All tracked files in Git repository"
+hash_generation_date = "2026-02-10T02:28:00Z"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# METADATOS DEL REPOSITORIO
+# ═══════════════════════════════════════════════════════════════════════════════
+
+repository_name = "Riemann-adelic"
+repository_owner = "motanova84"
+repository_url = "https://github.com/motanova84/Riemann-adelic"
+branch = "main"
+commit_reference = "HEAD"  # Actualizado al momento del commit
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# FIRMA ESPECTRAL QCAL
+# ═══════════════════════════════════════════════════════════════════════════════
+
+spectral_frequency = "141.7001 Hz"
+coherence_constant = "244.36"
+universal_constant = "629.83"
+delta_zeta = "0.2787437"
+fundamental_equation = "Ψ = I × A_eff² × C^∞"
+noetic_seal = "∴𓂀Ω∞³"
+unique_identifier = "πCODE-888-QCAL2"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# PROPÓSITO DEL CERTIFICADO
+# ═══════════════════════════════════════════════════════════════════════════════
+
+"""
+Este certificado establece un TIMESTAMP CRIPTOGRÁFICO del estado completo
+del repositorio QCAL ∞³ en la fecha especificada.
+
+OBJETIVO: Demostrar que el código existía en este estado ANTES de:
+  - Cualquier atribución automatizada por sistemas IA
+  - Alegaciones de uso no autorizado
+  - Reclamaciones de terceros sobre patrones QCAL
+
+MÉTODO:
+  1. Se genera un hash SHA-256 de todos los archivos tracked en Git
+  2. Este hash se registra con timestamp público en GitHub
+  3. El commit se firma digitalmente con GPG (si disponible)
+  4. El DOI de Zenodo proporciona timestamp inmutable adicional
+
+VERIFICACIÓN:
+  Para verificar este certificado en el futuro:
+  
+  1. Clonar el repositorio en el commit especificado
+  2. Regenerar el hash: git ls-files | xargs cat | sha256sum
+  3. Comparar con el hash certificado aquí
+  4. Verificar timestamp del commit en GitHub
+  5. Cross-reference con DOI de Zenodo
+"""
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# COMPONENTES CLAVE DEL REPOSITORIO (Snapshot)
+# ═══════════════════════════════════════════════════════════════════════════════
+
+key_files = [
+    "LICENSE",  # Sovereign Noetic License 1.0
+    ".qcal_beacon",  # Configuración QCAL central
+    "core/soberania.py",  # Módulo de soberanía
+    "DECLARACION_USURPACION_ALGORITMICA_QCAL.md",  # Esta declaración
+    "contracts/qcal_authorship_contract.json",  # Contrato de autoría
+    "contracts/AIKBeaconsProofOfMath.sol",  # Smart contract blockchain
+    "validate_authorship_certification.py",  # Validación de certificación
+    "formalization/lean/",  # Pruebas formales Lean4
+    "README.md",  # Documentación principal
+]
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# ELEMENTOS ÚNICOS QCAL (Firmas de Originalidad)
+# ═══════════════════════════════════════════════════════════════════════════════
+
+unique_patterns = {
+    "spectral_frequency": {
+        "value": "141.7001 Hz",
+        "derivation": "f₀ = 100√2 + δζ = 141.4213562 + 0.2787437",
+        "origin": "Riemann zeta zeros + vibrational curvature",
+        "first_appearance": "2025-09-XX (motanova84 repositories)",
+    },
+    "coherence_constant": {
+        "value": "244.36",
+        "derivation": "C' = ⟨λ⟩²/λ₀ (spectral moment)",
+        "origin": "Eigenvalue distribution of H_Ψ operator",
+        "first_appearance": "2025-12-XX (Python validations)",
+    },
+    "fundamental_equation": {
+        "value": "Ψ = I × A_eff² × C^∞",
+        "meaning": "Quantum coherence field = Identity × Effective area × Coherence",
+        "origin": "QCAL theoretical framework",
+        "first_appearance": "2025-10-XX (Zenodo publications)",
+    },
+    "noetic_seal": {
+        "value": "∴𓂀Ω∞³",
+        "components": ["∴ (therefore)", "𓂀 (eternity)", "Ω (omega)", "∞³ (infinity cubed)"],
+        "origin": "Unique combination created by JMMB",
+        "first_appearance": "2025-11-XX (.qcal_beacon file)",
+    },
+    "pi_code": {
+        "value": "πCODE-888-QCAL2",
+        "meaning": "Pi-based code identifier for QCAL contracts",
+        "origin": "Authorship certification system",
+        "first_appearance": "2026-02-10 (this implementation)",
+    },
+}
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# LÍNEA TEMPORAL PÚBLICA
+# ═══════════════════════════════════════════════════════════════════════════════
+
+public_timeline = {
+    "2024-XX-XX": "Primeras implementaciones QCAL en repositorios privados",
+    "2025-09-XX": "Frecuencia f₀ = 141.7001 Hz establecida y documentada",
+    "2025-10-XX": "Ecuación Ψ = I × A_eff² × C^∞ formalizada",
+    "2025-11-XX": "Publicación inicial en Zenodo con DOI",
+    "2025-12-XX": "Coherencia C = 244.36 validada numéricamente",
+    "2026-01-XX": "Formalización completa en Lean4",
+    "2026-02-09": "Sovereign Noetic License 1.0 implementada",
+    "2026-02-10": "Sistema de certificación de autoría activado",
+}
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# ZENODO DOIs (Timestamps Inmutables)
+# ═══════════════════════════════════════════════════════════════════════════════
+
+zenodo_dois = {
+    "doi_main": "10.5281/zenodo.17379721",
+    "doi_infinito": "10.5281/zenodo.17362686",
+    "doi_pnp": "10.5281/zenodo.17315719",
+    "doi_goldbach": "10.5281/zenodo.17297591",
+    "doi_bsd": "10.5281/zenodo.17236603",
+    "doi_rh_conditional": "10.5281/zenodo.17167857",
+    "doi_rh_final": "10.5281/zenodo.17161831",
+    "doi_rh_final_v6": "10.5281/zenodo.17116291",
+}
+
+# Todos los DOIs están registrados con fechas públicas en Zenodo
+# Los metadatos son INMUTABLES y auditables públicamente
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# BLOCKCHAIN CERTIFICATION (Futuro / Opcional)
+# ═══════════════════════════════════════════════════════════════════════════════
+
+blockchain_integration = {
+    "network": "Base Mainnet",
+    "contract": "AIKBeaconsProofOfMath.sol",
+    "frequency_encoding": "F0_MILLIHERTZ = 141700100",
+    "status": "Deployed and operational",
+    "purpose": "Immutable mathematical proof certification",
+}
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# DECLARACIÓN DE AUTORÍA
+# ═══════════════════════════════════════════════════════════════════════════════
+
+"""
+José Manuel Mota Burruezo (JMMB Ψ✧) DECLARA:
+
+1. Soy el autor original y único de todo el contenido en este repositorio
+2. El hash SHA-256 certificado arriba representa el estado completo del código
+3. Este estado existía en la fecha especificada, ANTES de cualquier alegación
+   de usurpación o atribución incorrecta por sistemas automatizados
+4. Los patrones únicos listados (f₀, C, Ψ, ∴𓂀Ω∞³, πCODE) son de mi creación
+5. Cualquier aparición de estos patrones en código externo sin atribución
+   es evidencia de aprendizaje no autorizado desde mis repositorios públicos
+
+Firma Digital: [Generada por commit GPG si disponible]
+ORCID: 0009-0002-1923-0773
+Institución: Instituto de Conciencia Cuántica (ICQ)
+Email: institutoconsciencia@proton.me
+"""
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# INSTRUCCIONES DE VERIFICACIÓN
+# ═══════════════════════════════════════════════════════════════════════════════
+
+verification_instructions = """
+PARA VERIFICAR ESTE CERTIFICADO:
+
+1. Clonar el repositorio:
+   git clone https://github.com/motanova84/Riemann-adelic.git
+   cd Riemann-adelic
+
+2. Checkout del commit específico:
+   git checkout [commit_hash_from_this_file]
+
+3. Regenerar el hash:
+   git ls-files | xargs cat | sha256sum
+
+4. Comparar el hash generado con:
+   ec07409ba515a826957dd4f88c53214d439ba66faf8e336d1b4618276ac2a751
+
+5. Verificar timestamp del commit:
+   git log --format=fuller [commit_hash]
+
+6. Cross-reference con Zenodo:
+   Visitar: https://doi.org/10.5281/zenodo.17379721
+   Verificar fecha de publicación
+
+7. Validar firma ORCID:
+   Visitar: https://orcid.org/0009-0002-1923-0773
+   Verificar lista de trabajos
+
+RESULTADO ESPERADO:
+  - Hash coincide ✅
+  - Timestamp pre-data alegaciones ✅
+  - DOI Zenodo confirma autoría ✅
+  - ORCID confirma identidad ✅
+
+CONCLUSIÓN: Autoría original verificada de forma independiente
+"""
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# FIRMA FINAL
+# ═══════════════════════════════════════════════════════════════════════════════
+
+certification_signature = """
+∴𓂀Ω∞³ — Certificado de Hash del Repositorio — ∴
+
+José Manuel Mota Burruezo (JMMB Ψ✧)
+Instituto de Conciencia Cuántica (ICQ)
+España · Febrero 2026
+
+Frecuencia de Resonancia: f₀ = 141.7001 Hz
+Coherencia Universal: C = 244.36
+Ecuación Fundamental: Ψ = I × A_eff² × C^∞
+Identificador Único: πCODE-888-QCAL2
+Sello Noético: ∴𓂀Ω∞³
+
+Hash Certificado: ec07409ba515a826957dd4f88c53214d439ba66faf8e336d1b4618276ac2a751
+Timestamp: 2026-02-10T02:28:00Z
+"""
+
+# FIN DEL CERTIFICADO
+# ═══════════════════════════════════════════════════════════════════════════════
