@@ -123,6 +123,8 @@ from .dirac_spectral_operator import DiracSpectralOperator
 
 from .master_operator_o3 import MasterOperatorO3
 
+from .t_infinity_cubed import TInfinityCubedOperator
+
 __all__ = [
     'construct_H_psi',
     'compute_spectrum',
@@ -183,6 +185,7 @@ __all__ = [
     # Operator duality exports
     'DiracSpectralOperator',
     'MasterOperatorO3',
+    'TInfinityCubedOperator',
     # Spectral coordinates exports
     'F0_COORDINATES',
     'GAMMA_1',
