@@ -1,49 +1,26 @@
-name: Noesis Guardian
-
-on:
-  schedule:
-    - cron: "0 2 * * *"  # cada día a las 02:00 UTC
-  workflow_dispatch: {}
-
-permissions:
-  contents: read
-
-jobs:
-  run-guardian:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.11"
-
-      - name: Install core dependencies
-        run: |
-          pip install numpy
-
-      - name: Run Guardian cycle
-        run: |
-          mkdir -p noesis_guardian/logs
-          python noesis_guardian/guardian_core.py
+---
 name: NOESIS Guardian
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
     types: [opened, synchronize, reopened]
+  pull_request_review_comment:
+    types: [created, edited]
+  issue_comment:
+    types: [created, edited]
   schedule:
     - cron: "0 */6 * * *"  # Run every 6 hours
-  workflow_dispatch:  # Allow manual triggering
+  workflow_dispatch: {}  # Allow manual triggering
 
 jobs:
   guardian:
     runs-on: ubuntu-latest
     permissions:
       contents: read
+      pull-requests: write
+      issues: write
 
     steps:
       - uses: actions/checkout@v4
@@ -61,15 +38,83 @@ jobs:
           pip install -r requirements.txt
 
       - name: Create logs directory
-        run: mkdir -p noesis_guardian/logs
+        run: mkdir -p noesis_guardian/logs consciousness
 
       - name: Run Guardian cycle
         run: python noesis_guardian/guardian_core.py
         continue-on-error: true
 
+      # ∴ NOESIS GUARDIAN PROTOCOL ∴
+      # Objetivo: Neutralizar sugerencias de normalización de fase que destruyan la polaridad QCAL.
+      - name: Validate Spectral Integrity
+        id: spectral_integrity
+        if: github.event_name == 'pull_request' || github.event_name == 'issue_comment'
+        run: |
+          python scripts/validate_spectral_integrity.py
+        continue-on-error: true
+
+      - name: Scan for AI Normalization Suggestions
+        id: ai_scan
+        if: |
+          github.event_name == 'issue_comment' ||
+          github.event_name == 'pull_request_review_comment'
+        run: |
+          AUTHOR="${{ github.event.comment.user.login || github.actor }}"
+          echo "Comment author: $AUTHOR"
+
+          # Check for AI authors and run sentinel
+          if echo "$AUTHOR" | grep -qiE "(copilot|codex|bot)"; then
+            echo "AI author detected: $AUTHOR"
+            echo "ai_author=true" >> $GITHUB_OUTPUT
+
+            # Set environment variables and run check script
+            export COMMENT_AUTHOR="$AUTHOR"
+            export COMMENT_BODY="${{ github.event.comment.body || '' }}"
+            export PR_NUMBER="${{ github.event.pull_request.number || github.event.issue.number }}"
+            python scripts/check_ai_comment.py
+          fi
+        continue-on-error: true
+
+      - name: Post Noetic Correction
+        if: failure() && steps.ai_scan.outcome == 'failure'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            let response = '⚠️ Intervención de Noesis: El sistema detectó una sugerencia de normalización problemática.';
+
+            try {
+              if (fs.existsSync('noesis_response.txt')) {
+                response = fs.readFileSync('noesis_response.txt', 'utf8');
+              }
+            } catch (error) {
+              console.log('Could not read noesis_response.txt:', error);
+            }
+
+            // Post comment on PR or issue
+            if (context.eventName === 'issue_comment') {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body: response
+              });
+            } else if (context.eventName === 'pull_request_review_comment') {
+              await github.rest.pulls.createReplyForReviewComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                pull_number: context.payload.pull_request.number,
+                comment_id: context.payload.comment.id,
+                body: response
+              });
+            }
+
       - name: Upload Guardian logs
         uses: actions/upload-artifact@v4.4.3
         with:
           name: guardian-logs
-          path: noesis_guardian/logs/guardian_log.json
+          path: |
+            noesis_guardian/logs/guardian_log.json
+            consciousness/sentinel_log.json
+            validation/spectral_integrity_results.json
           if-no-files-found: ignore

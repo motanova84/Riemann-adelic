@@ -242,6 +242,9 @@ logs/20*/
 axioms/axioms_generated_*.json
 axioms/qcal_axioms_*.lean
 data/noesis_session_test-*.json
+# Noesis Sentinel logs
+consciousness/sentinel_log.json
+validation/spectral_integrity_results.json
 
 # RH Genetic Simulator generated plots
 demo_aug_waveform.png
