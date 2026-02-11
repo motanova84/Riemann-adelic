@@ -122,6 +122,23 @@ from .profound_meaning import (
     CRITICAL_LINE
 )
 
+from .rh_genetic_simulator import (
+    simulate_codon_waveform,
+    compute_coherence,
+    get_codon_frequencies,
+    compare_biological_rhythms,
+    plot_codon_waveform,
+    plot_spectral_comparison,
+    load_extended_riemann_zeros,
+    RIEMANN_ZEROS,
+    CODON_DATABASE,
+    DELTA_ZETA_HZ,
+    EEG_ALPHA_HZ,
+    RESPIRATION_HZ,
+    HRV_MIN_HZ,
+    HRV_MAX_HZ,
+)
+
 __all__ = [
     'EnvironmentalSpectralField',
     'SpectralComponent',
@@ -132,6 +149,21 @@ __all__ = [
     'BiologicalClock',
     'BiologicalFilter',
     'PhaseAccumulator',
+    # RH Genetic Simulator
+    'simulate_codon_waveform',
+    'compute_coherence',
+    'get_codon_frequencies',
+    'compare_biological_rhythms',
+    'plot_codon_waveform',
+    'plot_spectral_comparison',
+    'load_extended_riemann_zeros',
+    'RIEMANN_ZEROS',
+    'CODON_DATABASE',
+    'DELTA_ZETA_HZ',
+    'EEG_ALPHA_HZ',
+    'RESPIRATION_HZ',
+    'HRV_MIN_HZ',
+    'HRV_MAX_HZ',
     # Constants
     'XI_1_MICROMETERS',
     'KAPPA_PI',

@@ -22,6 +22,11 @@ Modules:
                          C_COHERENCE = 244.36 (form) to derive f₀ = 141.7001 Hz
     - dirac_spectral_operator: 𝔻_s = i d/ds Dirac spectral operator acting on
                                complex s-plane, dual to H_Ψ
+    - hermetic_trace_operator: T_∞³ = √(1 + D_s²) Hermetic Noetic operator
+                              implementing PHASE VI - Noetic Spectral Identity:
+                              ζ(s) = Tr(T_∞³^(-s))
+                              Hermetic Trace Formula (Gutzwiller-type):
+                              Tr(e^(-t·T_∞³)) ∼ Σ_p A_p(t) cos(γ_p·t + φ_p)
     - master_operator_o3: 𝒪_∞³ = 𝔻_s ⊗ 𝟙 + 𝟙 ⊗ H_Ψ master operator unifying
                          complex and real perspectives
 """
@@ -121,6 +126,20 @@ from .horizon_detector import (
 )
 from .dirac_spectral_operator import DiracSpectralOperator
 
+from .hermetic_trace_operator import (
+    # Operator construction
+    build_dirac_spectral_operator,
+    build_hermetic_noetic_operator,
+    # Trace computations
+    compute_trace_zeta_regularized,
+    compute_hermetic_trace_formula,
+    # Verification and demonstration
+    verify_spectral_identity,
+    demonstrate_hermetic_trace_identity,
+    # Constants
+    F0_QCAL
+)
+
 from .master_operator_o3 import MasterOperatorO3
 
 from .t_infinity_cubed import TInfinityCubedOperator
@@ -184,6 +203,15 @@ __all__ = [
     'validate_horizon_riemann_correspondence',
     # Operator duality exports
     'DiracSpectralOperator',
+    # Hermetic trace operator exports (PHASE VI)
+    'build_dirac_spectral_operator',
+    'build_hermetic_noetic_operator',
+    'compute_trace_zeta_regularized',
+    'compute_hermetic_trace_formula',
+    'verify_spectral_identity',
+    'demonstrate_hermetic_trace_identity',
+    'F0_QCAL',
+    # Master operator
     'MasterOperatorO3',
     'TInfinityCubedOperator',
     # Spectral coordinates exports

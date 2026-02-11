@@ -1,0 +1,69 @@
+{
+  "wavefunction_stability": {
+    "passed": false,
+    "data": {
+      "stability_at_f0": 0.006171735858247603
+    }
+  },
+  "frequency_uniqueness": {
+    "passed": true,
+    "data": {
+      "optimal_frequency": 141.70010000000002,
+      "max_stability": 0.00617173585824713,
+      "deviation_from_f0": 2.842170943040401e-14
+    }
+  },
+  "harmonic_resonance": {
+    "passed": true,
+    "data": {
+      "predicted_harmonic": 888.0,
+      "target_harmonic": 888.0,
+      "deviation": 0.0,
+      "phi_fourth": 6.854101966249686
+    }
+  },
+  "zero_correspondence": {
+    "passed": true,
+    "data": {
+      "stability_at_f0": 0.006171735858247603,
+      "stability_profile": {
+        "134.615095": 0.0017430964592315182,
+        "140.283099": 0.0020686308258254294,
+        "141.7001": 0.006171735858247603,
+        "143.117101": 0.0025099994307899534,
+        "148.785105": 0.0014275319045237976
+      },
+      "is_f0_optimal": true,
+      "optimal_frequency": 141.7001,
+      "coherence_qcal": 0.006146582060325172,
+      "verified": true,
+      "harmonic_resonance_888Hz": 888.0,
+      "phi_fourth_power": 6.854101966249686,
+      "harmonic_ratio": 6.266756339621497
+    }
+  },
+  "string_states": {
+    "passed": true,
+    "data": {
+      "amplitude_range": [
+        -0.9396926207859084,
+        1.0
+      ],
+      "coherence_range": [
+        0.055148338337300325,
+        0.9959243560482556
+      ],
+      "stability_range": [
+        0.055374023139793775,
+        1.0
+      ]
+    }
+  },
+  "summary": {
+    "total_tests": 5,
+    "passed": 4,
+    "failed": 1,
+    "success_rate": 0.8,
+    "all_passed": false
+  }
+}
