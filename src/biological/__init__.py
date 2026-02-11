@@ -81,6 +81,7 @@ from .cytoplasmic_flow_model import (
     RiemannResonanceOperator,
     demonstrate_navier_stokes_coherence,
     F0_HZ,
+)
 from .cytoplasmic_flow import (
     CellularParameters,
     CytoplasmicFlowOperator,
@@ -106,6 +107,7 @@ from .cancer_decoherence import (
     DecoherenceMetrics,
     CancerousCell,
     TissueDecoherenceModel,
+)
 from .profound_meaning import (
     ResonanceState,
     CellularRiemannResonator,
@@ -146,46 +148,4 @@ __xi_1__ = XI_1_MICROMETERS  # μm - Biological coherence wavelength
 __kappa_pi__ = KAPPA_PI  # Calabi-Yau spectral invariant
 __hermitian__ = HERMITIAN_SYSTEM_VERIFIED  # Sistema hermítico confirmado
 __qcal_signature__ = "∴ 𓂀 Ω ∞³"
-    'FlowParameters',
-    'NavierStokesRegularized',
-    'RiemannResonanceOperator',
-    'demonstrate_navier_stokes_coherence',
-    'F0_HZ',
-    # Cytoplasmic flow (Biological Riemann zeros)
-    'CellularParameters',
-    'CytoplasmicFlowOperator',
-    'BiologicalRiemannZero',
-    'simulate_cellular_population',
-    'validate_37_trillion_zeros_hypothesis',
-    'F0_CARDIAC',
-    'KAPPA_PI',
-    # Molecular validation
-    'FluorescentMarkerType',
-    'ProteinMotor',
-    'EndothelialCellParameters',
-    'FluorescentMarker',
-    'PhaseInterferometer',
-    'SpectralValidator',
-    'MolecularProtocol',
-    # Cancer decoherence
-    'CancerStage',
-    'DecoherenceMetrics',
-    'CancerousCell',
-    'TissueDecoherenceModel',
-    # Profound meaning
-    'ResonanceState',
-    'CellularRiemannResonator',
-    'UniversalCoherenceField',
-    'FractalLifeOrganizer',
-    'ProofOfLife',
-    'create_living_cell',
-    'create_universal_field',
-    'verify_profound_connection',
-    'QCAL_FREQUENCY',
-    'COHERENCE_C',
-    'CRITICAL_LINE',
-]
 
-__version__ = '1.1.0'
-__author__ = 'José Manuel Mota Burruezo'
-__frequency__ = 141.7001  # Hz - QCAL fundamental frequency
