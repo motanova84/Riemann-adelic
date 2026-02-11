@@ -195,10 +195,20 @@ def demo_6_integration_summary():
     print("2️⃣ NUMBER THEORY (Riemann Zeros):")
     field = analyze_genomic_field(sequence, use_orfs=False)
     print(f"   Each base mapped to Riemann ζ zeros")
-    print(f"   Example: A → γ₁ = 14.134725...")
-    print(f"            T → γ₁₀ = 49.773832...")
-    print(f"            C → γ₁₅ = 65.112543...")
-    print(f"            G → γ₂₀ = 77.144840...\n")
+    
+    # Show actual mappings from the analyzed field
+    if field.codons:
+        # Get examples of each base from actual data
+        base_examples = {}
+        for codon in field.codons:
+            for i, base in enumerate(codon.sequence):
+                if base not in base_examples and len(base_examples) < 4:
+                    base_examples[base] = codon.riemann_zeros[i]
+        
+        # Display examples
+        for base in sorted(base_examples.keys()):
+            print(f"   Example: {base} → γ = {base_examples[base]:.6f} Hz")
+    print()
     
     print("3️⃣ QUANTUM PHYSICS (Wave Function & Coherence):")
     print(f"   Ψ_Gen(t) = Σ A_k e^(iγ_k t)")

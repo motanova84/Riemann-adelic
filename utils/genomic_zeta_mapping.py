@@ -224,6 +224,8 @@ class GenomicField:
         status = "SOVEREIGN ✓" if self.is_sovereign else "UNSTABLE ✗"
         resonance_ratio = (self.resonant_count / self.num_codons * 100) if self.num_codons > 0 else 0
         
+        hotspot_density = len(self.mutation_hotspots)/self.num_codons*100 if self.num_codons > 0 else 0.0
+        
         summary_lines = [
             f"Genomic Field Analysis - f₀ = {F0_FREQUENCY} Hz",
             "=" * 60,
@@ -242,7 +244,7 @@ class GenomicField:
             f"",
             f"Mutation Analysis:",
             f"  Hotspots detected:  {len(self.mutation_hotspots)}",
-            f"  Hotspot density:    {len(self.mutation_hotspots)/self.num_codons*100:.2f}%" if self.num_codons > 0 else "  Hotspot density:    0.00%",
+            f"  Hotspot density:    {hotspot_density:.2f}%",
             f"",
             f"Genomic Field Ψ_Gen: {abs(self.psi_gen):.6f} ∠ {np.angle(self.psi_gen):.4f} rad",
             "=" * 60
