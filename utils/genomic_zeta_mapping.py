@@ -36,7 +36,7 @@ DOI: 10.5281/zenodo.17379721
 import numpy as np
 import json
 from pathlib import Path
-from typing import List, Dict, Tuple, Optional
+from typing import List, Dict, Tuple, Optional, Any
 from dataclasses import dataclass, field
 import re
 import mpmath as mp
@@ -562,7 +562,7 @@ def compute_torsion_tensor(codons: List[CodonResonance]) -> np.ndarray:
 # MUTATION ANALYSIS
 # =============================================================================
 
-def predict_mutation_stability(field: GenomicField) -> Dict[str, any]:
+def predict_mutation_stability(field: GenomicField) -> Dict[str, Any]:
     """
     Predict mutation stability using Quantum Gyroscopy (ΔP ≈ 0.2%).
     

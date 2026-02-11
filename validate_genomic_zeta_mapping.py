@@ -197,9 +197,9 @@ def test_real_biological_sequence():
     print("="*80)
     
     # Start of human HBB gene (β-globin)
-    hbb_sequence = """
-    ATGGTGCATCTGACTCCTGAGGAGAAGTCTGCCGTTACTGCCCTGTGGGGCAAGGTGAACGTGGATGAAGTTGGTGGTGAGGCCCTGGGCAGG
-    """.replace('\n', '').replace(' ', '').upper()
+    hbb_sequence = (
+        "ATGGTGCATCTGACTCCTGAGGAGAAGTCTGCCGTTACTGCCCTGTGGGGCAAGGTGAACGTGGATGAAGTTGGTGGTGAGGCCCTGGGCAGG"
+    ).upper()
     
     print(f"Analyzing β-globin fragment ({len(hbb_sequence)} bp)...")
     
