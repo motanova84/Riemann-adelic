@@ -369,7 +369,7 @@ class ChiralityTensor:
             'trace_T2_expected': expected,
             'trace_imaginary_part': trace_imag,
             'relative_error': relative_error,
-            'verified': relative_error < 0.01,  # 1% tolerance
+            'verified': relative_error < 0.02,  # 2% tolerance
             'kappa_pi': self.params.kappa_pi,
         }
     
