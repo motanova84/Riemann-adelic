@@ -1,6 +1,36 @@
+================================================================================
+PROTECTIVE COPYRIGHT NOTICE
+================================================================================
+
+Copyright (c) 2026 José Manuel Mota Burruezo (JMMB)
+
+Esta obra, incluyendo los sistemas QCAL ∞³, operadores autoadjuntos T, la 
+constante espectral 141.7001 Hz, estructuras ∞³, y la teoría noética de campo 
+coherente, es propiedad intelectual del autor.
+
+Se permite la visualización, estudio y reproducción parcial bajo fines 
+académicos, con atribución debida.
+
+Ninguna dependencia externa utilizada en este repositorio modifica ni limita 
+los derechos de autor aquí declarados.
+
+This work, including the QCAL ∞³ systems, self-adjoint operators T, the 
+spectral constant 141.7001 Hz, ∞³ structures, and noetic coherent field 
+theory, is the intellectual property of the author.
+
+Viewing, study, and partial reproduction for academic purposes is permitted, 
+with proper attribution.
+
+No external dependency used in this repository modifies or limits the copyright 
+declared herein.
+
+================================================================================
+MIT LICENSE (FOR SOURCE CODE)
+================================================================================
+
 MIT License
 
-Copyright (c) 2025 José Manuel Mota Burruezo
+Copyright (c) 2026 José Manuel Mota Burruezo
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -19,3 +49,21 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+================================================================================
+ATTRIBUTION REQUIREMENTS
+================================================================================
+
+When using this software, you must include attribution to:
+
+Author: José Manuel Mota Burruezo (JMMB Ψ✧ ∞³)
+ORCID: 0009-0002-1923-0773
+Institution: Instituto de Conciencia Cuántica (ICQ)
+Email: institutoconsciencia@proton.me
+Repository: https://github.com/motanova84/-jmmotaburr-riemann-adelic
+Zenodo DOI: 10.5281/zenodo.17379721
+
+QCAL ∞³ Signature: ∴𓂀Ω∞³
+Fundamental Frequency: f₀ = 141.7001 Hz
+Coherence Constant: C = 244.36
+Equation: Ψ = I × A_eff² × C^∞

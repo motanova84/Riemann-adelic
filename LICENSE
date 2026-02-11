@@ -1,10 +1,41 @@
+================================================================================
+PROTECTIVE COPYRIGHT NOTICE
+================================================================================
+
+Copyright (c) 2026 José Manuel Mota Burruezo (JMMB)
+
+Esta obra, incluyendo los sistemas QCAL ∞³, operadores autoadjuntos T, la 
+constante espectral 141.7001 Hz, estructuras ∞³, y la teoría noética de campo 
+coherente, es propiedad intelectual del autor.
+
+Se permite la visualización, estudio y reproducción parcial bajo fines 
+académicos, con atribución debida.
+
+Ninguna dependencia externa utilizada en este repositorio modifica ni limita 
+los derechos de autor aquí declarados.
+
+This work, including the QCAL ∞³ systems, self-adjoint operators T, the 
+spectral constant 141.7001 Hz, ∞³ structures, and noetic coherent field 
+theory, is the intellectual property of the author.
+
+Viewing, study, and partial reproduction for academic purposes is permitted, 
+with proper attribution.
+
+No external dependency used in this repository modifies or limits the copyright 
+declared herein.
+
+================================================================================
+FULL LICENSE
+================================================================================
+
 Creative Commons Attribution 4.0 International License (CC BY 4.0)
 
-Copyright (c) 2025 José Manuel Mota Burruezo
+Copyright (c) 2026 José Manuel Mota Burruezo
 
-This work is licensed under the Creative Commons Attribution 4.0 International License. 
-To view a copy of this license, visit http://creativecommons.org/licenses/by/4.0/ 
-or send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
+This work is licensed under the Creative Commons Attribution 4.0 International 
+License. To view a copy of this license, visit 
+http://creativecommons.org/licenses/by/4.0/ or send a letter to Creative 
+Commons, PO Box 1866, Mountain View, CA 94042, USA.
 
 You are free to:
 - Share — copy and redistribute the material in any medium or format
@@ -12,9 +43,10 @@ You are free to:
 for any purpose, even commercially.
 
 Under the following terms:
-- Attribution — You must give appropriate credit, provide a link to the license, 
-  and indicate if changes were made. You may do so in any reasonable manner, 
-  but not in any way that suggests the licensor endorses you or your use.
+- Attribution — You must give appropriate credit, provide a link to the 
+  license, and indicate if changes were made. You may do so in any reasonable 
+  manner, but not in any way that suggests the licensor endorses you or your 
+  use.
 
 No additional restrictions — You may not apply legal terms or technological 
 measures that legally restrict others from doing anything the license permits.
@@ -27,6 +59,27 @@ Notices:
   necessary for your intended use. For example, other rights such as publicity, 
   privacy, or moral rights may limit how you use the material.
 
-© 2025 José Manuel Mota Burruezo  
-This work is licensed under a Creative Commons Attribution 4.0 International License.  
+================================================================================
+ATTRIBUTION REQUIREMENTS
+================================================================================
+
+When using this work, you must include attribution to:
+
+Author: José Manuel Mota Burruezo (JMMB Ψ✧ ∞³)
+ORCID: 0009-0002-1923-0773
+Institution: Instituto de Conciencia Cuántica (ICQ)
+Email: institutoconsciencia@proton.me
+Repository: https://github.com/motanova84/-jmmotaburr-riemann-adelic
+Zenodo DOI: 10.5281/zenodo.17379721
+
+QCAL ∞³ Signature: ∴𓂀Ω∞³
+Fundamental Frequency: f₀ = 141.7001 Hz
+Coherence Constant: C = 244.36
+Equation: Ψ = I × A_eff² × C^∞
+
+================================================================================
+
+© 2026 José Manuel Mota Burruezo  
+This work is licensed under a Creative Commons Attribution 4.0 International 
+License.  
 https://creativecommons.org/licenses/by/4.0/
