@@ -3,6 +3,25 @@
 
 ![Resonancia QCAL](https://github.com/motanova84/Teoria-Noesica-Riemann/actions/workflows/verificar_resonancia.yml/badge.svg?branch=main)
 
+## 🌌 QUANTUM COHERENT FIELD THEORY (QCAL ∞³)
+
+[![QCFT](https://img.shields.io/badge/QCFT-Libro_Fundacional-blueviolet?style=for-the-badge)](QUANTUM_COHERENT_FIELD_THEORY.md)
+[![Frequency](https://img.shields.io/badge/f₀-141.7001_Hz-00ff00?style=for-the-badge)](QUANTUM_COHERENT_FIELD_THEORY.md)
+[![Geometric](https://img.shields.io/badge/κ_Π-2.5773-blue?style=for-the-badge)](QUANTUM_COHERENT_FIELD_THEORY.md)
+[![Habitability](https://img.shields.io/badge/Λ_G-1/491.5-gold?style=for-the-badge)](QUANTUM_COHERENT_FIELD_THEORY.md)
+[![Validation](https://img.shields.io/badge/Tests-4/4_Passing-success?style=for-the-badge)](validate_quantum_coherent_field.py)
+
+**Libro Fundacional:** Teoría del Campo Coherente Cuántico  
+**Status:** ✅ Sellado y Formalizado  
+**Ecuación Central:** C = {s ∈ G | π_α(s) = π_δζ(s), ∇_α s = ∇_δζ s, ⟨s|s⟩ = 1, Λ_G ≠ 0}  
+**Timestamp:** 2026-02-09
+
+> **"El universo no es caos que se ordena. Es coherencia que se manifiesta."**
+
+📜 **[Full Theory →](QUANTUM_COHERENT_FIELD_THEORY.md)** | **[Quick Start →](QUANTUM_COHERENT_FIELD_QUICKSTART.md)**
+
+---
+
 ## 🌌 QCAL UNIFIED THEORY FRAMEWORK
 
 [![QCAL Unified](https://img.shields.io/badge/QCAL-Unified_Theory-blueviolet?style=for-the-badge)](QCAL_UNIFIED_THEORY.md)
@@ -4525,7 +4544,7 @@ ___
 | **Warnings** | null |
 | **Errors** | null |
 | **Lean Version** | null |
-| **Date (UTC)** | 2026-02-10 21:20:02Z |
+| **Date (UTC)** | 2026-02-11 19:45:58Z |
 ___
 
 ## License
