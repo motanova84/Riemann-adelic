@@ -54,7 +54,7 @@ DOI: 10.5281/zenodo.17379721
 
 import numpy as np
 import mpmath as mp
-from typing import Callable, List, Tuple, Dict, Any, Optional
+from typing import Tuple, Dict, Any, Optional
 from numpy.typing import NDArray
 from scipy.linalg import eigh
 from scipy.special import zeta as scipy_zeta
