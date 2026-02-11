@@ -315,14 +315,73 @@ class CodonResonance:
 
 @dataclass
 class GenomicField:
-    """Results of genomic field analysis."""
+    """
+    Results of genomic field analysis.
+    
+    Attributes:
+        sequence: The original DNA/RNA sequence
+        length: Length of the sequence in base pairs
+        num_codons: Number of codons analyzed
+        codons: List of CodonResonance objects
+        psi_gen: Total genomic field wave function Ψ_Gen(t)
+        total_coherence: Overall coherence score [0, 1]
+        sovereignty_score: Weighted sovereignty metric
+        is_sovereign: Whether sequence achieves Ψ ≥ 0.888
+        resonant_count: Number of resonant codons
+        dissonant_count: Number of dissonant codons
+        mutation_hotspots: List of positions with high mutation probability
+        torsion_tensor: 3x3 tensor representing genomic field torsion
+    """
+    sequence: str
+    length: int
+    num_codons: int
+    codons: List[CodonResonance]
     psi_gen: complex
-    total_codons: int
-    resonant_codons: int
-    dissonant_codons: int
-    coherence_score: float
-    sovereignty_achieved: bool
-    mean_amplitude: float
+    total_coherence: float
+    sovereignty_score: float
+    is_sovereign: bool
+    resonant_count: int
+    dissonant_count: int
+    mutation_hotspots: List[int]
+    torsion_tensor: np.ndarray
+    
+    def summary(self) -> str:
+        """
+        Generate a human-readable summary of the genomic field analysis.
+        
+        Returns:
+            Formatted string summarizing the genomic field properties
+        """
+        status = "SOVEREIGN ✓" if self.is_sovereign else "UNSTABLE ✗"
+        resonance_ratio = (self.resonant_count / self.num_codons * 100) if self.num_codons > 0 else 0
+        
+        hotspot_density = len(self.mutation_hotspots)/self.num_codons*100 if self.num_codons > 0 else 0.0
+        
+        summary_lines = [
+            f"Genomic Field Analysis - f₀ = {F0_FREQUENCY} Hz",
+            "=" * 60,
+            f"Sequence length: {self.length} bp",
+            f"Codons analyzed: {self.num_codons}",
+            f"",
+            f"Resonance Classification:",
+            f"  Resonant:   {self.resonant_count:3d} ({resonance_ratio:.1f}%)",
+            f"  Dissonant:  {self.dissonant_count:3d} ({(100-resonance_ratio):.1f}%)",
+            f"",
+            f"Coherence Metrics:",
+            f"  Total coherence Ψ:  {self.total_coherence:.6f}",
+            f"  Sovereignty score:  {self.sovereignty_score:.6f}",
+            f"  Status:             {status}",
+            f"  Threshold:          Ψ ≥ {SOVEREIGNTY_THRESHOLD}",
+            f"",
+            f"Mutation Analysis:",
+            f"  Hotspots detected:  {len(self.mutation_hotspots)}",
+            f"  Hotspot density:    {hotspot_density:.2f}%",
+            f"",
+            f"Genomic Field Ψ_Gen: {abs(self.psi_gen):.6f} ∠ {np.angle(self.psi_gen):.4f} rad",
+            "=" * 60
+        ]
+        
+        return "\n".join(summary_lines)
 
 
 class GenomicZetaMapper:
