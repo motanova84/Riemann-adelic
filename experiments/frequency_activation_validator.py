@@ -231,8 +231,14 @@ class EEGDataGenerator:
         Returns:
             Pink noise signal
         """
-        # Number of random sources
-        n_sources = 16
+        # For very short signals, return white noise
+        if n < 64:
+            return np.random.randn(n)
+        
+        # Number of random sources (limit based on signal length)
+        n_sources = min(16, int(np.log2(n)))
+        if n_sources < 1:
+            return np.random.randn(n)
         
         # Random values
         sources = np.random.randn(n_sources, n)
@@ -241,11 +247,17 @@ class EEGDataGenerator:
         pink = np.zeros(n)
         for i in range(n_sources):
             update_rate = 2 ** i
-            sources[i, ::update_rate] = np.random.randn(n // update_rate + 1)[:n // update_rate]
-            # Forward fill
-            for j in range(1, n):
-                if j % update_rate != 0:
-                    sources[i, j] = sources[i, j - 1]
+            n_updates = max(1, n // update_rate)
+            if n_updates > 0:
+                update_vals = np.random.randn(n_updates)
+                # Place updates
+                for j, idx in enumerate(range(0, n, update_rate)):
+                    if j < len(update_vals) and idx < n:
+                        sources[i, idx] = update_vals[j]
+                # Forward fill
+                for j in range(1, n):
+                    if j % update_rate != 0:
+                        sources[i, j] = sources[i, j - 1]
             pink += sources[i, :]
         
         # Normalize
@@ -537,7 +549,16 @@ class FrequencyAnalyzer:
         bootstrap_snrs = np.array(bootstrap_snrs)
         
         # P-value: fraction of bootstrap SNRs >= original SNR
+        # Low p-value means signal is unlikely due to noise
         p_value = np.mean(bootstrap_snrs >= original_snr)
+        
+        # Ensure minimum p-value for finite bootstrap
+        if p_value == 0.0:
+            p_value = 1.0 / (n_bootstrap + 1)
+        elif p_value == 1.0:
+            # All bootstrap samples >= original SNR suggests weak signal
+            # This is expected for noise-only data
+            p_value = 1.0
         
         # Confidence interval
         ci_lower = np.percentile(bootstrap_snrs, 2.5)
