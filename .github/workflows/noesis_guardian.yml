@@ -1,38 +1,9 @@
-name: Noesis Guardian
-
-on:
-  schedule:
-    - cron: "0 2 * * *"  # cada día a las 02:00 UTC
-  workflow_dispatch: {}
-
-permissions:
-  contents: read
-
-jobs:
-  run-guardian:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.11"
-
-      - name: Install core dependencies
-        run: |
-          pip install numpy
-
-      - name: Run Guardian cycle
-        run: |
-          mkdir -p noesis_guardian/logs
-          python noesis_guardian/guardian_core.py
+---
 name: NOESIS Guardian
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
     types: [opened, synchronize, reopened]
   pull_request_review_comment:
@@ -41,7 +12,7 @@ on:
     types: [created, edited]
   schedule:
     - cron: "0 */6 * * *"  # Run every 6 hours
-  workflow_dispatch:  # Allow manual triggering
+  workflow_dispatch: true  # Allow manual triggering
 
 jobs:
   guardian:
@@ -84,32 +55,34 @@ jobs:
 
       - name: Scan for AI Normalization Suggestions
         id: ai_scan
-        if: github.event_name == 'issue_comment' || github.event_name == 'pull_request_review_comment'
+        if: |
+          github.event_name == 'issue_comment' ||
+          github.event_name == 'pull_request_review_comment'
         run: |
-          # Check if comment author is a bot
           AUTHOR="${{ github.event.comment.user.login || github.actor }}"
           echo "Comment author: $AUTHOR"
-          
-          # Check for problematic keywords
+
+          # Check for AI authors and run sentinel
           if echo "$AUTHOR" | grep -qiE "(copilot|codex|bot)"; then
             echo "AI author detected: $AUTHOR"
             echo "ai_author=true" >> $GITHUB_OUTPUT
-            
-            # Run sentinel bot check
-            python -c "
+
+            # Create inline Python script
+            cat > check_comment.py << 'EOFPYTHON'
           import sys
+          import os
           sys.path.insert(0, '.')
           from consciousness.noesis_sentinel_bot import NoesisSentinel
-          
+
           sentinel = NoesisSentinel()
-          author = '$AUTHOR'
-          comment = '''${{ github.event.comment.body || '' }}'''
-          
+          author = os.environ.get('COMMENT_AUTHOR', 'unknown')
+          comment = os.environ.get('COMMENT_BODY', '')
+
           result = sentinel.scan_comment(author, comment, {
-              'pr': '${{ github.event.pull_request.number || github.event.issue.number }}',
-              'repo': '${{ github.repository }}'
+              'pr': os.environ.get('PR_NUMBER', ''),
+              'repo': os.environ.get('GITHUB_REPOSITORY', '')
           })
-          
+
           if result['intervention_needed']:
               print('INTERVENTION_NEEDED=true')
               with open('noesis_response.txt', 'w') as f:
@@ -118,7 +91,13 @@ jobs:
           else:
               print('INTERVENTION_NEEDED=false')
               sys.exit(0)
-            "
+          EOFPYTHON
+
+            # Run the script
+            export COMMENT_AUTHOR="$AUTHOR"
+            export COMMENT_BODY="${{ github.event.comment.body || '' }}"
+            export PR_NUMBER="${{ github.event.pull_request.number || github.event.issue.number }}"
+            python check_comment.py
           fi
         continue-on-error: true
 
@@ -129,7 +108,7 @@ jobs:
           script: |
             const fs = require('fs');
             let response = '⚠️ Intervención de Noesis: El sistema detectó una sugerencia de normalización problemática.';
-            
+
             try {
               if (fs.existsSync('noesis_response.txt')) {
                 response = fs.readFileSync('noesis_response.txt', 'utf8');
@@ -137,7 +116,7 @@ jobs:
             } catch (error) {
               console.log('Could not read noesis_response.txt:', error);
             }
-            
+
             // Post comment on PR or issue
             if (context.eventName === 'issue_comment') {
               await github.rest.issues.createComment({
