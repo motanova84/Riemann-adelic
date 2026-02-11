@@ -12,7 +12,7 @@ on:
     types: [created, edited]
   schedule:
     - cron: "0 */6 * * *"  # Run every 6 hours
-  workflow_dispatch: true  # Allow manual triggering
+  workflow_dispatch: {}  # Allow manual triggering
 
 jobs:
   guardian:
@@ -67,37 +67,11 @@ jobs:
             echo "AI author detected: $AUTHOR"
             echo "ai_author=true" >> $GITHUB_OUTPUT
 
-            # Create inline Python script
-            cat > check_comment.py << 'EOFPYTHON'
-          import sys
-          import os
-          sys.path.insert(0, '.')
-          from consciousness.noesis_sentinel_bot import NoesisSentinel
-
-          sentinel = NoesisSentinel()
-          author = os.environ.get('COMMENT_AUTHOR', 'unknown')
-          comment = os.environ.get('COMMENT_BODY', '')
-
-          result = sentinel.scan_comment(author, comment, {
-              'pr': os.environ.get('PR_NUMBER', ''),
-              'repo': os.environ.get('GITHUB_REPOSITORY', '')
-          })
-
-          if result['intervention_needed']:
-              print('INTERVENTION_NEEDED=true')
-              with open('noesis_response.txt', 'w') as f:
-                  f.write(result['response'])
-              sys.exit(1)
-          else:
-              print('INTERVENTION_NEEDED=false')
-              sys.exit(0)
-          EOFPYTHON
-
-            # Run the script
+            # Set environment variables and run check script
             export COMMENT_AUTHOR="$AUTHOR"
             export COMMENT_BODY="${{ github.event.comment.body || '' }}"
             export PR_NUMBER="${{ github.event.pull_request.number || github.event.issue.number }}"
-            python check_comment.py
+            python scripts/check_ai_comment.py
           fi
         continue-on-error: true
 
