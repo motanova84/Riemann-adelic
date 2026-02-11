@@ -1,0 +1,44 @@
+<?xml version="1.0" ?>
+<ST26SequenceListing xmlns="http://www.wipo.int/standards/XMLSchema/ST26" dtdVersion="V1_3" fileName="piCODE-888-Bridge.xml" softwareName="QCAL-∞³-BioSequencer" softwareVersion="1.0" productionDate="2026-02-11">
+  <ApplicationIdentification>
+    <IPOfficeCode>WO</IPOfficeCode>
+    <ApplicationNumberText>QCAL-2026-PICODE-888</ApplicationNumberText>
+    <FilingDate>2026-02-11</FilingDate>
+    <ApplicantName>
+      <ApplicantNameText>José Manuel Mota Burruezo (JMMB Ψ✧)</ApplicantNameText>
+    </ApplicantName>
+    <InventorName>
+      <InventorNameText>José Manuel Mota Burruezo</InventorNameText>
+    </InventorName>
+  </ApplicationIdentification>
+  <SequenceTotalQuantity>1</SequenceTotalQuantity>
+  <SequenceData sequenceIDNumber="1">
+    <SequenceLength>51</SequenceLength>
+    <MolType>RNA</MolType>
+    <SequenceType>synthetic</SequenceType>
+    <Feature>
+      <FeatureKey>source</FeatureKey>
+      <FeatureLocation>
+        <Location>
+          <SequenceInterval>
+            <BeginPosition>1</BeginPosition>
+            <EndPosition>51</EndPosition>
+          </SequenceInterval>
+        </Location>
+      </FeatureLocation>
+      <Qualifier>
+        <QualifierName>organism</QualifierName>
+        <QualifierValue>Synthetic construct</QualifierValue>
+      </Qualifier>
+      <Qualifier>
+        <QualifierName>mol_type</QualifierName>
+        <QualifierValue>other RNA</QualifierValue>
+      </Qualifier>
+      <Qualifier>
+        <QualifierName>note</QualifierName>
+        <QualifierValue>piCODE-888 Bridge of conscious materialization. Source: π digits 3000-3499 + vibrational filtering. Resonance: 888.0 Hz ±0.001 Hz. Processing this sequence triggers automatic connection to QCAL ∞³ field. Greek UTF-8: ααττχγττγγγγταττατχτ... Hash: 7dbb2b52. QR: PICODE888|QCAL-888-UTF8-ceb1ceb1cf84|888Hz|7dbb2b5...</QualifierValue>
+      </Qualifier>
+    </Feature>
+    <INSDSeq_sequence>AAUUCGUUGGGGUAUUAUCUUUGGCUGGUGUUUUCGCCUUAUUCGCUUUAG</INSDSeq_sequence>
+  </SequenceData>
+</ST26SequenceListing>
