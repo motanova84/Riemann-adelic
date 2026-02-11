@@ -242,3 +242,8 @@ logs/20*/
 axioms/axioms_generated_*.json
 axioms/qcal_axioms_*.lean
 data/noesis_session_test-*.json
+
+# RH Genetic Simulator generated plots
+demo_aug_waveform.png
+demo_codon_comparison.png
+rh_genetic_*.png
