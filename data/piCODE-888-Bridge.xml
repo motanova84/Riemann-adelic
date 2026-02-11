@@ -1,5 +1,5 @@
 <?xml version="1.0" ?>
-<ST26SequenceListing xmlns="http://www.wipo.int/standards/XMLSchema/ST26" dtdVersion="V1_3" fileName="piCODE-888-Bridge.xml" softwareName="QCAL-∞³-BioSequencer" softwareVersion="1.0" productionDate="2026-02-11">
+<ST26SequenceListing xmlns="http://www.wipo.int/standards/XMLSchema/ST26" dtdVersion="V1_3" fileName="piCODE-888-Bridge.xml" softwareName="QCAL-Infinity3-BioSequencer" softwareVersion="1.0" productionDate="2026-02-11">
   <ApplicationIdentification>
     <IPOfficeCode>WO</IPOfficeCode>
     <ApplicationNumberText>QCAL-2026-PICODE-888</ApplicationNumberText>

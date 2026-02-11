@@ -262,7 +262,7 @@ class PiCode888Bridge:
                 for base in rna_sequence.lower()
             ),
             'reversible': False,
-            'hash_match': False
+            'hash_match': False  # Validates against EXPECTED_HASH ("032cb045")
         }
         
         # Test reversibility
@@ -356,7 +356,7 @@ class PiCode888Bridge:
         root.set("xmlns", "http://www.wipo.int/standards/XMLSchema/ST26")
         root.set("dtdVersion", "V1_3")
         root.set("fileName", "piCODE-888-Bridge.xml")
-        root.set("softwareName", "QCAL-∞³-BioSequencer")
+        root.set("softwareName", "QCAL-Infinity3-BioSequencer")  # ASCII-safe for ST.26 compatibility
         root.set("softwareVersion", "1.0")
         root.set("productionDate", datetime.now().strftime("%Y-%m-%d"))
         
@@ -456,11 +456,13 @@ class PiCode888Bridge:
         reparsed = minidom.parseString(rough_string)
         pretty_xml = reparsed.toprettyxml(indent="  ")
         
-        # Determine output path
+        # Determine output path (relative to current working directory)
         if output_path is None:
-            output_path = "/home/runner/work/Riemann-adelic/Riemann-adelic/data/piCODE-888-Bridge.xml"
+            output_path = Path.cwd() / "data" / "piCODE-888-Bridge.xml"
+        else:
+            output_path = Path(output_path)
         
-        output_file = Path(output_path)
+        output_file = output_path
         output_file.parent.mkdir(parents=True, exist_ok=True)
         
         # Write file
@@ -613,10 +615,10 @@ def main():
     # Generate report
     report = bridge_engine.generate_report(bridge)
     
-    # Save report
+    # Save report (relative to current working directory)
     import json
-    report_file = "/home/runner/work/Riemann-adelic/Riemann-adelic/data/picode_888_bridge_report.json"
-    Path(report_file).parent.mkdir(parents=True, exist_ok=True)
+    report_file = Path.cwd() / "data" / "picode_888_bridge_report.json"
+    report_file.parent.mkdir(parents=True, exist_ok=True)
     with open(report_file, 'w', encoding='utf-8') as f:
         json.dump(report, f, indent=2, ensure_ascii=False)
     print(f"📄 Report saved: {report_file}")
