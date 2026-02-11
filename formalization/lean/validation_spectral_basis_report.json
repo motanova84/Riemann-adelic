@@ -1,0 +1,349 @@
+{
+  "validation_date": "2026-01-17",
+  "version": "V7.1-Spectral-Basis-Complete",
+  "author": "Jos\u00e9 Manuel Mota Burruezo \u03a8 \u221e\u00b3",
+  "orcid": "0009-0002-1923-0773",
+  "doi": "10.5281/zenodo.17379721",
+  "tests": {
+    "orthonormality": [
+      {
+        "t1": 0.0,
+        "t2": 0.0,
+        "inner_product": 999.9990000000004,
+        "expected": 1.0,
+        "error": 998.9990000000004,
+        "passed": false
+      },
+      {
+        "t1": 0.0,
+        "t2": 1.0,
+        "inner_product": 707.1065576432411,
+        "expected": 0.0,
+        "error": 707.1065576432411,
+        "passed": false
+      },
+      {
+        "t1": 0.0,
+        "t2": 2.0,
+        "inner_product": 447.21395332144607,
+        "expected": 0.0,
+        "error": 447.21395332144607,
+        "passed": false
+      },
+      {
+        "t1": 0.0,
+        "t2": 5.0,
+        "inner_product": 196.11593915950888,
+        "expected": 0.0,
+        "error": 196.11593915950888,
+        "passed": false
+      },
+      {
+        "t1": 0.0,
+        "t2": 10.0,
+        "inner_product": 0.23919884836720806,
+        "expected": 0.0,
+        "error": 0.23919884836720806,
+        "passed": false
+      },
+      {
+        "t1": 1.0,
+        "t2": 0.0,
+        "inner_product": 707.1065576432411,
+        "expected": 0.0,
+        "error": 707.1065576432411,
+        "passed": false
+      },
+      {
+        "t1": 1.0,
+        "t2": 1.0,
+        "inner_product": 999.9990000000004,
+        "expected": 1.0,
+        "error": 998.9990000000004,
+        "passed": false
+      },
+      {
+        "t1": 1.0,
+        "t2": 2.0,
+        "inner_product": 707.1065576432411,
+        "expected": 0.0,
+        "error": 707.1065576432411,
+        "passed": false
+      },
+      {
+        "t1": 1.0,
+        "t2": 5.0,
+        "inner_product": 242.5369970172306,
+        "expected": 0.0,
+        "error": 242.5369970172306,
+        "passed": false
+      },
+      {
+        "t1": 1.0,
+        "t2": 10.0,
+        "inner_product": 94.0646997175456,
+        "expected": 0.0,
+        "error": 94.0646997175456,
+        "passed": false
+      },
+      {
+        "t1": 2.0,
+        "t2": 0.0,
+        "inner_product": 447.21395332144607,
+        "expected": 0.0,
+        "error": 447.21395332144607,
+        "passed": false
+      },
+      {
+        "t1": 2.0,
+        "t2": 1.0,
+        "inner_product": 707.1065576432411,
+        "expected": 0.0,
+        "error": 707.1065576432411,
+        "passed": false
+      },
+      {
+        "t1": 2.0,
+        "t2": 2.0,
+        "inner_product": 999.9990000000004,
+        "expected": 1.0,
+        "error": 998.9990000000004,
+        "passed": false
+      },
+      {
+        "t1": 2.0,
+        "t2": 5.0,
+        "inner_product": 316.22802596602634,
+        "expected": 0.0,
+        "error": 316.22802596602634,
+        "passed": false
+      },
+      {
+        "t1": 2.0,
+        "t2": 10.0,
+        "inner_product": 124.03483912504905,
+        "expected": 0.0,
+        "error": 124.03483912504905,
+        "passed": false
+      },
+      {
+        "t1": 5.0,
+        "t2": 0.0,
+        "inner_product": 196.11593915950888,
+        "expected": 0.0,
+        "error": 196.11593915950888,
+        "passed": false
+      },
+      {
+        "t1": 5.0,
+        "t2": 1.0,
+        "inner_product": 242.5369970172306,
+        "expected": 0.0,
+        "error": 242.5369970172306,
+        "passed": false
+      },
+      {
+        "t1": 5.0,
+        "t2": 2.0,
+        "inner_product": 316.22802596602634,
+        "expected": 0.0,
+        "error": 316.22802596602634,
+        "passed": false
+      },
+      {
+        "t1": 5.0,
+        "t2": 5.0,
+        "inner_product": 999.9990000000004,
+        "expected": 1.0,
+        "error": 998.9990000000004,
+        "passed": false
+      },
+      {
+        "t1": 5.0,
+        "t2": 10.0,
+        "inner_product": 196.11593915950883,
+        "expected": 0.0,
+        "error": 196.11593915950883,
+        "passed": false
+      },
+      {
+        "t1": 10.0,
+        "t2": 0.0,
+        "inner_product": 0.23919884836720806,
+        "expected": 0.0,
+        "error": 0.23919884836720806,
+        "passed": false
+      },
+      {
+        "t1": 10.0,
+        "t2": 1.0,
+        "inner_product": 94.0646997175456,
+        "expected": 0.0,
+        "error": 94.0646997175456,
+        "passed": false
+      },
+      {
+        "t1": 10.0,
+        "t2": 2.0,
+        "inner_product": 124.03483912504905,
+        "expected": 0.0,
+        "error": 124.03483912504905,
+        "passed": false
+      },
+      {
+        "t1": 10.0,
+        "t2": 5.0,
+        "inner_product": 196.11593915950883,
+        "expected": 0.0,
+        "error": 196.11593915950883,
+        "passed": false
+      },
+      {
+        "t1": 10.0,
+        "t2": 10.0,
+        "inner_product": 999.9990000000004,
+        "expected": 1.0,
+        "error": 998.9990000000004,
+        "passed": false
+      }
+    ],
+    "eigenfunction": [
+      {
+        "t": 1.0,
+        "x": 0.5,
+        "H_psi": 1.4142135623520904,
+        "expected": 1.5811388300841898,
+        "relative_error": 0.999999999974127,
+        "passed": false
+      },
+      {
+        "t": 1.0,
+        "x": 1.0,
+        "H_psi": 0.9999999999740365,
+        "expected": 1.118033988749895,
+        "relative_error": 0.9999999999781124,
+        "passed": false
+      },
+      {
+        "t": 1.0,
+        "x": 2.0,
+        "H_psi": 0.7071067812823942,
+        "expected": 0.7905694150420949,
+        "relative_error": 1.0000000000196392,
+        "passed": false
+      },
+      {
+        "t": 1.0,
+        "x": 5.0,
+        "H_psi": 0.4472135955182248,
+        "expected": 0.5,
+        "relative_error": 0.9999999999778781,
+        "passed": false
+      },
+      {
+        "t": 1.0,
+        "x": 10.0,
+        "H_psi": 0.31622776536666936,
+        "expected": 0.3535533905932738,
+        "relative_error": 0.9999999997817085,
+        "passed": false
+      }
+    ],
+    "spectrum_zeros": [
+      {
+        "gamma": 14.134725,
+        "rho": "0.500000 + 14.134725i",
+        "real_part": 0.5,
+        "expected_real": 0.5,
+        "on_critical_line": true,
+        "eigenvalue": "(0.5+14.134725j)"
+      },
+      {
+        "gamma": 21.02204,
+        "rho": "0.500000 + 21.022040i",
+        "real_part": 0.5,
+        "expected_real": 0.5,
+        "on_critical_line": true,
+        "eigenvalue": "(0.5+21.02204j)"
+      },
+      {
+        "gamma": 25.010858,
+        "rho": "0.500000 + 25.010858i",
+        "real_part": 0.5,
+        "expected_real": 0.5,
+        "on_critical_line": true,
+        "eigenvalue": "(0.5+25.010858j)"
+      },
+      {
+        "gamma": 30.424876,
+        "rho": "0.500000 + 30.424876i",
+        "real_part": 0.5,
+        "expected_real": 0.5,
+        "on_critical_line": true,
+        "eigenvalue": "(0.5+30.424876j)"
+      },
+      {
+        "gamma": 32.935062,
+        "rho": "0.500000 + 32.935062i",
+        "real_part": 0.5,
+        "expected_real": 0.5,
+        "on_critical_line": true,
+        "eigenvalue": "(0.5+32.935062j)"
+      },
+      {
+        "gamma": 37.586178,
+        "rho": "0.500000 + 37.586178i",
+        "real_part": 0.5,
+        "expected_real": 0.5,
+        "on_critical_line": true,
+        "eigenvalue": "(0.5+37.586178j)"
+      },
+      {
+        "gamma": 40.918719,
+        "rho": "0.500000 + 40.918719i",
+        "real_part": 0.5,
+        "expected_real": 0.5,
+        "on_critical_line": true,
+        "eigenvalue": "(0.5+40.918719j)"
+      },
+      {
+        "gamma": 43.327073,
+        "rho": "0.500000 + 43.327073i",
+        "real_part": 0.5,
+        "expected_real": 0.5,
+        "on_critical_line": true,
+        "eigenvalue": "(0.5+43.327073j)"
+      },
+      {
+        "gamma": 48.005151,
+        "rho": "0.500000 + 48.005151i",
+        "real_part": 0.5,
+        "expected_real": 0.5,
+        "on_critical_line": true,
+        "eigenvalue": "(0.5+48.005151j)"
+      },
+      {
+        "gamma": 49.773832,
+        "rho": "0.500000 + 49.773832i",
+        "real_part": 0.5,
+        "expected_real": 0.5,
+        "on_critical_line": true,
+        "eigenvalue": "(0.5+49.773832j)"
+      }
+    ],
+    "qcal_integration": {
+      "base_frequency": 141.7001,
+      "coherence": 244.36,
+      "fundamental_equation": "\u03a8 = I \u00d7 A_eff\u00b2 \u00d7 C^\u221e",
+      "spectral_correspondence": true,
+      "validation_data_file": "Evac_Rpsi_data.csv",
+      "doi": "10.5281/zenodo.17379721"
+    }
+  },
+  "summary": {
+    "total_tests": 40,
+    "passed_tests": 0,
+    "success_rate": 0.0,
+    "status": "FAILED"
+  }
+}
