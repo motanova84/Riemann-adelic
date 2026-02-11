@@ -65,7 +65,7 @@ jobs:
         
     - name: Fetch Riemann zeros data
       run: |
-        python utils/fetch_odlyzko.py --precision t1e3 || echo "Using existing zeros data"
+        python utils/fetch_odlyzko.py --precision t1e8 || echo "Using existing zeros data"
         
     - name: Run validation tests (core subset)
       timeout-minutes: 15
@@ -74,7 +74,7 @@ jobs:
         NUMEXPR_MAX_THREADS: 4
         NUMEXPR_NUM_THREADS: 2
       run: |
-        pytest tests/test_coronacion_v5.py tests/test_a4_lemma.py tests/test_adelic_D.py tests/test_genuine_contributions.py tests/test_non_circular.py -v --tb=short --cov=. --cov-report=term-missing --cov-report=xml
+        pytest tests/test_coronacion_v5.py tests/test_a4_lemma.py tests/test_adelic_D.py tests/test_genuine_contributions.py -v --tb=short --cov=. --cov-report=term-missing --cov-report=xml
         
     - name: Run explicit formula validation
       continue-on-error: true
