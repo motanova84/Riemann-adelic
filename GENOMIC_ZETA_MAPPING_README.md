@@ -98,21 +98,23 @@ print(mapper.print_assignment_table(assignments))
 
 ### Codon → Indices Mapping
 
-For a codon `C = [b₁, b₂, b₃]`, indices are computed via cumulative hash:
+For a codon `C = [b₁, b₂, b₃]`, indices are computed via position-weighted hash:
 
 ```python
 i_1 = (ord(b₁)) mod 30 + 1
-i_2 = (ord(b₁) + ord(b₂)) mod 30 + 1
-i_3 = (ord(b₁) + ord(b₂) + ord(b₃)) mod 30 + 1
+i_2 = (ord(b₁) + 2·ord(b₂)) mod 30 + 1
+i_3 = (ord(b₁) + 2·ord(b₂) + 3·ord(b₃)) mod 30 + 1
 ```
 
-This creates a deterministic, reproducible ∞³ mapping where each position `k` uses the cumulative sum of ordinals up to position `k`.
+This creates a deterministic, reproducible ∞³ mapping where later positions have weighted influence on their respective indices.
 
 ### Examples
 
 ```
-AAA → (6, 11, 16)
-AAC → (6, 11, 18)
+AAA → (6, 16, 1)    → γ = (37.59, 67.08, 14.13) Hz
+AAC → (6, 16, 7)    → γ = (37.59, 67.08, 40.92) Hz
+GAA → (12, 22, 7)   → γ = (56.45, 82.91, 40.92) Hz
+```
 GAA → (12, 17, 22)
 GGG → (12, 23, 4)
 ```

@@ -17,7 +17,7 @@ Implement a deterministic system to map RNA/DNA codon sequences to non-trivial R
 
 ### Core Module: `utils/genomic_zeta_mapping.py`
 
-**542 lines** implementing:
+**472 lines** implementing:
 
 1. **Deterministic Hash Mapping**
    - Formula: `i_k = (cumulative_sum(ord(bases)) mod 30) + 1`
@@ -59,7 +59,7 @@ Implement a deterministic system to map RNA/DNA codon sequences to non-trivial R
 
 ### Validation: `validate_genomic_zeta_mapping.py`
 
-**323 lines** with **7 validation checks**:
+**335 lines** with **7 validation checks**:
 
 1. ✅ Fundamental constants validation
 2. ✅ Deterministic mapping validation
@@ -73,7 +73,7 @@ Implement a deterministic system to map RNA/DNA codon sequences to non-trivial R
 
 ### Documentation: `GENOMIC_ZETA_MAPPING_README.md`
 
-**448 lines** including:
+**381 lines** including:
 
 - Mathematical foundation
 - Quick start guide
@@ -85,7 +85,7 @@ Implement a deterministic system to map RNA/DNA codon sequences to non-trivial R
 
 ### Demonstration: `demo_genomic_zeta_mapping.py`
 
-**259 lines** with **6 demonstrations**:
+**262 lines** with **6 demonstrations**:
 
 1. Basic codon mapping
 2. RNA sequence analysis
@@ -138,8 +138,8 @@ For codon `C = [b₁, b₂, b₃]`:
 
 ```
 i₁ = (ord(b₁)) mod 30 + 1
-i₂ = (ord(b₁) + ord(b₂)) mod 30 + 1
-i₃ = (ord(b₁) + ord(b₂) + ord(b₃)) mod 30 + 1
+i₂ = (ord(b₁) + 2·ord(b₂)) mod 30 + 1
+i₃ = (ord(b₁) + 2·ord(b₂) + 3·ord(b₃)) mod 30 + 1
 ```
 
 ### Wave Function

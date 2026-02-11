@@ -13,9 +13,11 @@ For each codon C = [b₁, b₂, b₃], we assign 3 Riemann zeros as frequencies:
 
     Ψ_codon(t) = Σ(k=1 to 3) A_k · e^(i·γ_k·t)
 
-where γ_k are non-trivial zeros assigned via deterministic hash mapping:
+where γ_k are non-trivial zeros assigned via position-weighted deterministic hash:
 
-    i_k = (Σ ord(b_k)) mod 30  (with shift +1 to avoid index 0)
+    i₁ = (ord(b₁)) mod 30 + 1
+    i₂ = (ord(b₁) + 2·ord(b₂)) mod 30 + 1
+    i₃ = (ord(b₁) + 2·ord(b₂) + 3·ord(b₃)) mod 30 + 1
 
 The total RNA wave function combines all codons:
 
