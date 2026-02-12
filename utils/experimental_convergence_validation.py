@@ -115,6 +115,8 @@ def sigma_to_p_value(sigma: float) -> float:
     """
     Convert sigma level to p-value.
     
+    Uses high precision for extreme sigma values to avoid underflow.
+    
     Parameters
     ----------
     sigma : float
@@ -125,13 +127,28 @@ def sigma_to_p_value(sigma: float) -> float:
     float
         Two-tailed p-value
     """
+    # For very high sigma (>7), use mpmath for precision
+    if sigma > 7.0:
+        try:
+            import mpmath as mp
+            mp.dps = 50  # 50 decimal places
+            # One-tailed using mpmath
+            one_tailed = float(mp.erfc(sigma / mp.sqrt(2)) / 2)
+            # Two-tailed
+            p_value = 2 * one_tailed
+            return max(p_value, 1e-300)  # Minimum representable
+        except ImportError:
+            # Fallback to scipy if mpmath not available
+            pass
+    
+    # Standard scipy calculation
     # CDF for one-tailed
     one_tailed_p = stats.norm.cdf(sigma)
     
     # Convert to two-tailed
     p_value = 2 * (1 - one_tailed_p)
     
-    return p_value
+    return max(p_value, 1e-300)  # Avoid exact zero
 
 
 def compute_precision_error(measured: float, theoretical: float) -> float:

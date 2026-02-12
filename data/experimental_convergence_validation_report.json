@@ -1,7 +1,7 @@
 {
   "title": "QCAL ∞³ Experimental Convergence Validation",
   "subtitle": "Holoinformatic and Resonant Universe Proof",
-  "timestamp": "2026-02-12T01:18:12.868713",
+  "timestamp": "2026-02-12T01:20:57.753666",
   "author": {
     "name": "José Manuel Mota Burruezo Ψ ✧ ∞³",
     "institution": "Instituto de Conciencia Cuántica (ICQ)",
@@ -38,7 +38,7 @@
       "state": "MEDIDO",
       "significance": "9.2σ",
       "precision_error_percent": 0.1269582731416587,
-      "p_value": 0.0,
+      "p_value": 3.5794976240281424e-20,
       "within_bandwidth": true,
       "description": "Biological antenna tuned to consciousness frequency"
     },
@@ -48,7 +48,7 @@
       "delta_p": 0.001987,
       "state": "CONFIRMADO",
       "significance": "8.7σ",
-      "p_value": 0.0,
+      "p_value": 3.318841739929572e-18,
       "mechanism": "QCAL ∞³ chirality tensor T induces directional bias in cryptochrome radical pair singlet→triplet transitions, enabling quantum compass in migratory birds",
       "description": "Quantum compass bias from chirality tensor"
     },
@@ -83,7 +83,7 @@
     "quantum_gyroscopy": {
       "delta_p": 0.001987,
       "delta_p_percent": "0.1987%",
-      "p_value": 0.0,
+      "p_value": 3.318841739929572e-18,
       "sigma": 8.7,
       "interpretation": "Noetic intention modulates quantum probabilities (spin ΔP). Consciousness is not biological byproduct but force modulating quantum probability"
     },

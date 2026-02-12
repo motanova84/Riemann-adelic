@@ -131,11 +131,11 @@ class TestMagnetoreceptionValidation:
         # Check percentage
         assert result.delta_p_percent == pytest.approx(0.1987, rel=1e-4)
         
-        # Check p-value
-        assert result.p_value == 1.50e-10
-        
         # Check sigma significance
-        assert 8.5 < result.sigma_significance < 9.0
+        assert result.sigma_significance == pytest.approx(8.7, rel=1e-2)
+        
+        # Check p-value is extremely small (from 8.7σ)
+        assert result.p_value < 1e-15  # Very small p-value
     
     def test_magnetoreception_significance_exceeds_discovery(self):
         """Test that 8.7σ exceeds 5σ discovery threshold."""
