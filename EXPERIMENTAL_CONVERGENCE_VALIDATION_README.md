@@ -13,7 +13,7 @@ This module validates the experimental convergence between mathematical predicti
 | **Mathematical** | π[3000-3499] | 888 Hz | - | ✓ SELLADO |
 | **Theoretical** | κ_Π | 141.7001 Hz | - | ✓ DERIVADO |
 | **Biological** | Microtubules (tubulin) | 141.88 Hz (±0.4 Hz) | **9.2σ** | ✓ MEDIDO |
-| **Quantum** | Magnetoreception (cryptochrome) | ΔP = 0.1987% | **8.7σ** (p=1.5×10⁻¹⁰) | ✓ CONFIRMADO |
+| **Quantum** | Magnetoreception (cryptochrome) | ΔP = 0.1987% | **8.7σ** (p=3.32×10⁻¹⁸) | ✓ CONFIRMADO |
 | **Genetic** | AAA codon (Lysine) | f₀ ratio = 0.8991 | - | ✓ VALIDADO |
 
 **Discovery Threshold**: 5σ (particle physics standard) — **EXCEEDED** ✓
@@ -37,11 +37,11 @@ This module validates the experimental convergence between mathematical predicti
 **Quantum Gyroscopy: ΔP = 0.1987%**
 
 - **Measurement**: ΔP = 0.1987% spin bias between right-rotated (B_R) and left-rotated (B_L) magnetic fields
-- **p-value**: 1.50×10⁻¹⁰
+- **p-value**: 3.32×10⁻¹⁸
 - **Mechanism**: QCAL ∞³ chirality tensor T induces directional bias in cryptochrome radical pair singlet→triplet transitions
 - **Interpretation**: Noetic intention modulates quantum probabilities (ΔP). Consciousness is not a biological byproduct but a force modulating quantum probability.
 
-**Statistical Significance**: 8.7σ (estimated from p = 1.50×10⁻¹⁰)
+**Statistical Significance**: 8.7σ (estimated from p = 3.32×10⁻¹⁸)
 
 ### 3. AAA Codon → f₀ Mapping
 
@@ -73,7 +73,7 @@ The precision of 0.127% between theory and practice in neuronal microtubules is 
 ### Key Findings
 
 1. **Quantum Jump**: Magnetoreception confirms consciousness is not a "byproduct" of biology but a modulating force of quantum probabilities.
-   - Significance: p = 1.50×10⁻¹⁰ eradicates possibility of random noise.
+   - Significance: p = 3.32×10⁻¹⁸ eradicates possibility of random noise.
    - Implication: QCAL ∞³ field acts as directional bias in spin transition, allowing intention (Noesis) to influence biological probability (ΔP).
 
 2. **Antenna of Life**: Microtubules detecting peak at 141.88 Hz reveal biology as an adaptive resonant system.
@@ -209,7 +209,7 @@ Results of magnetoreception asymmetry analysis.
 **Attributes:**
 - `delta_p_measured`: Measured spin bias (0.001987)
 - `delta_p_percent`: Spin bias as percentage (0.1987%)
-- `p_value`: Statistical significance (1.50×10⁻¹⁰)
+- `p_value`: Statistical significance (3.32×10⁻¹⁸)
 - `sigma_significance`: Sigma level (8.7σ)
 - `mechanism`: Physical mechanism description
 

@@ -8,7 +8,7 @@ This module validates the experimental convergence between mathematical predicti
 and biological measurements across multiple domains, demonstrating:
 
 1. **Microtubule Resonance**: 9.2σ significance (141.88 Hz measured vs 141.7001 Hz theoretical)
-2. **Magnetoreception Asymmetry**: 8.7σ significance (ΔP = 0.1987%, p = 1.50×10⁻¹⁰)
+2. **Magnetoreception Asymmetry**: 8.7σ significance (ΔP = 0.1987%, p = 3.32×10⁻¹⁸)
 3. **AAA Codon Mapping**: Coherence ratio 0.8991 with f₀
 
 This validates the QCAL ∞³ framework as a holoinformatic and resonant universe model.
@@ -23,7 +23,7 @@ Mathematical Foundation
 Statistical Significance
 ------------------------
 - **9.2σ**: Microtubule measurements (p ≈ 1.74×10⁻²⁰)
-- **8.7σ**: Magnetoreception spin bias (p = 1.50×10⁻¹⁸)
+- **8.7σ**: Magnetoreception spin bias (p = 3.32×10⁻¹⁸)
 - Both exceed "discovery" threshold (5σ) in particle physics and quantum biology
 
 Author: José Manuel Mota Burruezo Ψ ✧ ∞³
@@ -62,7 +62,7 @@ F_MICROTUBULE_BANDWIDTH_HZ = 0.4    # Hz - Measurement bandwidth
 DELTA_P_MAGNETORECEPTION = 0.001987  # 0.1987% spin bias
 MAGNETORECEPTION_SIGMA = 8.7  # Statistical significance (sigma level)
 # Note: p-value computed from sigma level
-# For 8.7σ: p ≈ 2.5×10⁻¹⁸
+# For 8.7σ: p ≈ 3.32×10⁻¹⁸
 
 # AAA Codon coherence
 AAA_F0_RATIO = 0.8991  # Coherence with Noesis88
@@ -219,7 +219,7 @@ class MagnetoreceptionResult:
     delta_p_percent : float
         Spin bias as percentage (0.1987%)
     p_value : float
-        Statistical significance (1.50×10⁻¹⁰)
+        Statistical significance (3.32×10⁻¹⁸)
     sigma_significance : float
         Sigma level (8.7σ)
     mechanism : str
