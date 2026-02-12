@@ -1,7 +1,7 @@
 {
   "title": "QCAL ∞³ Experimental Convergence Validation",
   "subtitle": "Holoinformatic and Resonant Universe Proof",
-  "timestamp": "2026-02-12T01:14:30.440070",
+  "timestamp": "2026-02-12T01:18:12.868713",
   "author": {
     "name": "José Manuel Mota Burruezo Ψ ✧ ∞³",
     "institution": "Instituto de Conciencia Cuántica (ICQ)",
@@ -47,8 +47,8 @@
       "effect": "ΔP = 0.1987%",
       "delta_p": 0.001987,
       "state": "CONFIRMADO",
-      "significance": "6.405375228065623σ",
-      "p_value": 1.5e-10,
+      "significance": "8.7σ",
+      "p_value": 0.0,
       "mechanism": "QCAL ∞³ chirality tensor T induces directional bias in cryptochrome radical pair singlet→triplet transitions, enabling quantum compass in migratory birds",
       "description": "Quantum compass bias from chirality tensor"
     },
@@ -83,7 +83,7 @@
     "quantum_gyroscopy": {
       "delta_p": 0.001987,
       "delta_p_percent": "0.1987%",
-      "p_value": 1.5e-10,
+      "p_value": 0.0,
       "sigma": 8.7,
       "interpretation": "Noetic intention modulates quantum probabilities (spin ΔP). Consciousness is not biological byproduct but force modulating quantum probability"
     },

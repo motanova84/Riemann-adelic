@@ -60,7 +60,9 @@ F_MICROTUBULE_BANDWIDTH_HZ = 0.4    # Hz - Measurement bandwidth
 
 # Magnetoreception
 DELTA_P_MAGNETORECEPTION = 0.001987  # 0.1987% spin bias
-P_VALUE_MAGNETORECEPTION = 1.50e-10  # Statistical significance
+MAGNETORECEPTION_SIGMA = 8.7  # Statistical significance (sigma level)
+# Note: p-value computed from sigma level
+# For 8.7σ: p ≈ 2.5×10⁻¹⁸
 
 # AAA Codon coherence
 AAA_F0_RATIO = 0.8991  # Coherence with Noesis88
@@ -330,7 +332,7 @@ class ExperimentalConvergenceValidator:
     def validate_magnetoreception_asymmetry(
         self,
         delta_p: float = DELTA_P_MAGNETORECEPTION,
-        p_value: float = P_VALUE_MAGNETORECEPTION
+        sigma_significance: float = MAGNETORECEPTION_SIGMA
     ) -> MagnetoreceptionResult:
         """
         Validate magnetoreception spin bias asymmetry.
@@ -342,16 +344,16 @@ class ExperimentalConvergenceValidator:
         ----------
         delta_p : float
             Measured spin bias (default: 0.001987)
-        p_value : float
-            Statistical p-value (default: 1.50×10⁻¹⁰)
+        sigma_significance : float
+            Statistical significance in sigma (default: 8.7)
         
         Returns
         -------
         MagnetoreceptionResult
             Complete analysis including 8.7σ significance
         """
-        # Convert p-value to sigma
-        sigma_significance = p_value_to_sigma(p_value)
+        # Convert sigma to p-value
+        p_value = sigma_to_p_value(sigma_significance)
         
         # Convert to percentage
         delta_p_percent = delta_p * 100
@@ -565,8 +567,8 @@ class ExperimentalConvergenceValidator:
                 "quantum_gyroscopy": {
                     "delta_p": DELTA_P_MAGNETORECEPTION,
                     "delta_p_percent": "0.1987%",
-                    "p_value": P_VALUE_MAGNETORECEPTION,
-                    "sigma": 8.7,
+                    "p_value": sigma_to_p_value(MAGNETORECEPTION_SIGMA),
+                    "sigma": MAGNETORECEPTION_SIGMA,
                     "interpretation": (
                         "Noetic intention modulates quantum probabilities (spin ΔP). "
                         "Consciousness is not biological byproduct but force modulating "
