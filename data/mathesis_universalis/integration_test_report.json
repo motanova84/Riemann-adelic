@@ -1,0 +1,16 @@
+{
+  "timestamp": "2026-02-13T21:44:01.834376",
+  "spectrum_size": 80,
+  "heat_kernel_truncation_rank": 80,
+  "determinant_regularized": true,
+  "log_determinant": 327.6187641099689,
+  "prime_memory_detected": false,
+  "detection_rate": 0.0,
+  "correlation_significance": 0.0,
+  "pt_symmetric": true,
+  "critical_line_alignment": true,
+  "max_imaginary_part": 0.0,
+  "mathesis_score": 0.6666666666666666,
+  "is_arithmetic_instrument": false,
+  "conclusion": "\u26a0 ARITHMETIC INSTRUMENT NOT YET CONFIRMED\n   Further calibration needed to demonstrate prime memory.\n   Current score: 66.67% (threshold: 70%)"
+}
