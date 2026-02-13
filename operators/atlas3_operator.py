@@ -13,7 +13,7 @@ Mathematical Framework:
        - Phase curvature manifests in logarithmic oscillations
        - Span of (Amplitude, Flux, Phase) generates rich topology
 
-    2. Operator: O_Atlas³ with non-Hermiticityand PT symmetry
+    2. Operator: O_Atlas³ with non-Hermiticity and PT symmetry
        - Hermitian part: -α(t)d²/dt² + V(t) (kinetic + quasiperiodic potential)
        - Anti-Hermitian part: iβ(t)d/dt (PT-breaking term)
        - PT symmetry preserved for β < κ_Π ≈ 2.57 (critical threshold)
