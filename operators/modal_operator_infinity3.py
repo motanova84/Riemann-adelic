@@ -544,13 +544,22 @@ class ModalOperatorInfinity3:
             n_harmonics = self.forcing_params.get('n_harmonics', 5)
             
             # Generate harmonics with κ_Π-weighted amplitudes
-            # This encoding should produce the symbiotic curvature
+            # This encoding embeds the symbiotic curvature signature into
+            # the forcing function, which should propagate through the coupling
+            # matrix and emerge in the spectral gap structure.
             amplitudes = self.forcing_params.get('amplitudes', None)
             if amplitudes is None:
                 # Use κ_Π-based weighting: A_k ∝ κ_Π / (k·log(k+1))
                 k_values = np.arange(1, n_harmonics + 1)
                 amplitudes = KAPPA_PI_THEORETICAL / (k_values * np.log(k_values + 1))
-                amplitudes = amplitudes / np.max(amplitudes)  # Normalize
+                
+                # Normalize to prevent numerical issues
+                max_amplitude = np.max(amplitudes)
+                if max_amplitude > 1e-10:
+                    amplitudes = amplitudes / max_amplitude
+                else:
+                    # Fallback to uniform amplitudes if weighting fails
+                    amplitudes = np.ones(n_harmonics)
             
             frequencies = self.forcing_params.get('frequencies',
                                                    OMEGA_0 * np.arange(1, n_harmonics+1))

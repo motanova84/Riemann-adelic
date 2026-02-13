@@ -226,6 +226,10 @@ def create_visualizations(analyzer, results):
         
     except Exception as e:
         print(f"⚠️ Could not create visualization: {e}")
+        print("   Possible causes:")
+        print("   - matplotlib not installed or display backend unavailable")
+        print("   - Try: export MPLBACKEND=Agg (for headless environments)")
+        print(f"   - Full error: {type(e).__name__}: {str(e)}")
 
 
 def main():
