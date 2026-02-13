@@ -1,0 +1,97 @@
+{
+  "timestamp": "2026-02-13T19:23:05.991831",
+  "config": {
+    "T": 1.0,
+    "n_modes": 60,
+    "n_points": 2000,
+    "forcing": {
+      "type": "resonant",
+      "modes": [
+        1,
+        2,
+        3,
+        5,
+        8
+      ],
+      "amplitudes": [
+        1.0,
+        0.7,
+        0.5,
+        0.3,
+        0.2
+      ]
+    },
+    "graph": {
+      "theta": 0.08
+    },
+    "curvature": {
+      "method": "laplacian",
+      "fit_range": [
+        5,
+        50
+      ]
+    },
+    "qcal": {
+      "f0": 141.7001,
+      "C": 244.36
+    }
+  },
+  "basis": {
+    "T": 1.0,
+    "n_modes": 60,
+    "orthonormality_verified": true,
+    "max_diagonal_error": 0.0,
+    "max_offdiag_error": 1.1102230246251565e-16
+  },
+  "operator": {
+    "forcing_modes": [
+      1,
+      2,
+      3,
+      5,
+      8
+    ],
+    "forcing_amplitudes": [
+      1.0,
+      0.7,
+      0.5,
+      0.3,
+      0.2
+    ],
+    "O_cov_norm": 7.810249675906655,
+    "O_forcing_norm": 10.744068130833872,
+    "matrix_shape": [
+      61,
+      61
+    ]
+  },
+  "graph": {
+    "theta": 0.08,
+    "n_nodes": 61,
+    "n_edges": 760,
+    "density": 0.4155737704918033,
+    "mean_degree": 24.934426229508198,
+    "max_degree": 41.0
+  },
+  "curvature": {
+    "method": "laplacian",
+    "n_points": 60,
+    "kappa_1": 1.4426950408889634,
+    "kappa_10": 0.04170323914242463,
+    "fit": {
+      "C": 0.9127762487518234,
+      "offset": 0.0009270154684354668,
+      "r_squared": 0.9991253841773954,
+      "rms_residual": 0.0006532248802184402,
+      "fit_range": [
+        5,
+        50
+      ]
+    },
+    "convergence": {
+      "mean_relative_error": 0.0,
+      "final_relative_error": 0.0,
+      "convergence_rate": NaN
+    }
+  }
+}
