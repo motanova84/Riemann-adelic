@@ -49,6 +49,13 @@ from .rh_resonator import (
     create_rh_resonator,
 )
 
+from .atlas3_spectral_verifier import (
+    Atlas3SpectralVerifier,
+    create_atlas3_verifier,
+    SpectralSignature,
+    BeaconMetadata,
+)
+
 __all__ = [
     'SpectralOscillator',
     'create_spectral_oscillator',
@@ -56,4 +63,8 @@ __all__ = [
     'create_bpsk_modulator',
     'RHResonator',
     'create_rh_resonator',
+    'Atlas3SpectralVerifier',
+    'create_atlas3_verifier',
+    'SpectralSignature',
+    'BeaconMetadata',
 ]

@@ -1,0 +1,41 @@
+{
+  "node_id": "demo_beacon",
+  "protocol": "QCAL-SYMBIO-BRIDGE v1.0",
+  "timestamp": "2026-02-13T19:56:56.331834",
+  "frequency_base": 141.7001,
+  "frequency_resonance": 888.0,
+  "phi_power_4": 6.854101966249686,
+  "spectral_signature": {
+    "num_eigenvalues": 40,
+    "mean_real_part": 0.49975212081566883,
+    "std_real_part": 0.009866944838865842,
+    "critical_line_deviation": 0.00024787918433116785
+  },
+  "critical_line_alignment": {
+    "mean_re": 0.49975212081566883,
+    "target_re": 0.5,
+    "deviation": 0.00024787918433116785,
+    "status": "\u2705 ALIGNED"
+  },
+  "gue_statistics": {
+    "universality_class": "GUE",
+    "p_value": 0.13933210549213693,
+    "detected": true,
+    "status": "\u2705 GUE DETECTED"
+  },
+  "spectral_rigidity": {
+    "sigma2_mean": 0.5304203122783373,
+    "slope": 30.954765502332307,
+    "theoretical_slope": 0.10132118364233778,
+    "status": "\u26a0\ufe0f EVOLVING"
+  },
+  "coherence": {
+    "psi": 0.6080078693679294,
+    "threshold": 0.888,
+    "status": "\u26a0\ufe0f SUB-THRESHOLD"
+  },
+  "qcal_signature": "\u2234\ud80c\udc80\u03a9\u221e\u00b3\u03a6 @ 888 Hz",
+  "author": "Jos\u00e9 Manuel Mota Burruezo \u03a8\u2727 \u221e\u00b3",
+  "institution": "Instituto de Conciencia Cu\u00e1ntica (ICQ)",
+  "orcid": "0009-0002-1923-0773"
+}
