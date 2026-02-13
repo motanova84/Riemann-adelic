@@ -140,7 +140,7 @@ class ExplicitSumAnalyzer:
         
         # Generate time grid
         self.n_points = int(t_max / dt)
-        self.t_grid = np.linspace(0, t_max, self.n_points)
+        self.t_grid = np.linspace(0, t_max, self.n_points, endpoint=False)
     
     def generate_prime_signal(
         self,
