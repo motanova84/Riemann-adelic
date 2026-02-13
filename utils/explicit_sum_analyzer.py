@@ -271,8 +271,16 @@ class ExplicitSumAnalyzer:
         peak_positions = lags[peak_indices]
         peak_amplitudes = correlation[peak_indices]
         
-        # Expected peak positions (ln p for primes)
-        expected_peaks = np.log(prime_signal.primes[prime_signal.primes > 1])
+        # Expected peak positions: all prime powers m * ln(p) within [0, t_max]
+        prime_logs = np.log(prime_signal.primes[prime_signal.primes > 1])
+        prime_power_peaks: List[float] = []
+        for ln_p in prime_logs:
+            if ln_p <= 0:
+                continue
+            max_m = int(self.t_max // ln_p)
+            for m in range(1, max_m + 1):
+                prime_power_peaks.append(m * ln_p)
+        expected_peaks = np.array(sorted(prime_power_peaks)) if prime_power_peaks else np.array([])
         
         # Count how many expected peaks are detected
         detected_count = 0
