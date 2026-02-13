@@ -184,8 +184,9 @@ class ModalCovarianceOperator:
         # Degree distribution
         degrees = np.sum(A, axis=1)
         
-        # Connected components (simplified analysis)
-        n_edges = np.sum(A) / 2  # Undirected graph
+        # Count edges (excluding diagonal for undirected graph)
+        # For undirected graph: n_edges = (sum(A) - trace(A)) / 2
+        n_edges = (np.sum(A) - np.trace(A)) / 2  # Exclude self-loops
         density = n_edges / (n_size * (n_size - 1) / 2) if n_size > 1 else 0
         
         return {
