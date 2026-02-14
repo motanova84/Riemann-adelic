@@ -165,7 +165,6 @@ class NavierStokesAdelicOperator:
             # Symmetrize: (T + T†)/2
             T_dense = T.toarray()
             T_sym = 0.5 * (T_dense + T_dense.conj().T)
-            from scipy.sparse import csr_matrix
             return csr_matrix(T_sym)
         
         return T
