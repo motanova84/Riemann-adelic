@@ -99,13 +99,14 @@ class ReducedModelOperator:
             Differentiation matrix D of shape (N, N)
         """
         D = np.zeros((self.N, self.N))
-        h = self.x[1] - self.x[0]  # approximately constant for Gauss-Legendre
         
         for i in range(self.N):
             if i > 0:
-                D[i, i-1] = -self.x[i] / (2*h)
+                h_backward = self.x[i] - self.x[i-1]
+                D[i, i-1] = -self.x[i] / (2 * h_backward)
             if i < self.N-1:
-                D[i, i+1] = self.x[i] / (2*h)
+                h_forward = self.x[i+1] - self.x[i]
+                D[i, i+1] = self.x[i] / (2 * h_forward)
         
         return D
     
