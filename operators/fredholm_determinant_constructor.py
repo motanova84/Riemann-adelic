@@ -66,6 +66,10 @@ F0_QCAL = 141.7001  # Hz - fundamental frequency
 C_PRIMARY = 629.83   # Primary spectral constant
 C_COHERENCE = 244.36 # Coherence constant
 
+# Numerical constants for Hadamard expansion
+TAYLOR_SERIES_THRESHOLD = 0.9  # Use Taylor series when |z| < this threshold
+LOG_PRODUCT_NEGLIGIBLE = -20.0  # Large negative log value for negligible product terms
+
 
 @dataclass
 class FredholmDeterminantResult:
@@ -454,16 +458,17 @@ class FredholmDeterminantConstructor:
             log_product = 0.0 + 0j
             for gamma in gamma_n:
                 z = t**2 / gamma**2
-                if abs(z) < 0.9:
-                    # ln(1 - z) ≈ -z - z²/2 - z³/3 - z⁴/4
+                if abs(z) < TAYLOR_SERIES_THRESHOLD:
+                    # ln(1 - z) ≈ -z - z²/2 - z³/3 - z⁴/4 (Taylor series)
                     log_product += -z - z**2/2 - z**3/3 - z**4/4
                 else:
                     # Use log1p for better numerical stability
                     if z.real < 10:
                         log_product += np.log1p(-z)
                     else:
-                        # For very large z, product term is negligible
-                        log_product += -20.0  # Large negative value
+                        # For very large z, product term (1-z) ≈ 0, so log(1-z) << 0
+                        # Use large negative value as negligible contribution
+                        log_product += LOG_PRODUCT_NEGLIGIBLE
             xi_hadamard[i] = np.exp(log_product)
         
         # Compute ξ(1/2 + it) / ξ(1/2) if requested
@@ -509,8 +514,8 @@ class FredholmDeterminantConstructor:
             try:
                 xi_s = complex(xi_func(s))
                 xi_ratio[i] = xi_s / xi_half
-            except:
-                # Fallback for numerical issues
+            except (ValueError, ZeroDivisionError, OverflowError, ArithmeticError) as e:
+                # Fallback for numerical issues (e.g., overflow in gamma function)
                 xi_ratio[i] = 1.0 + 0j
         
         return xi_ratio
