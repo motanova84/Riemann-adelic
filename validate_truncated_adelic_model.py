@@ -356,11 +356,11 @@ class TruncatedAdelicLaplacian:
         
         # Regresión lineal
         coeffs = np.polyfit(inv_t, log_resto, 1)
-        lambda_fit = coeffs[0]
+        lambda_fitted = coeffs[0]
         logC_fit = coeffs[1]
         C_fit = np.exp(logC_fit)
         
-        return C_fit, lambda_fit
+        return C_fit, lambda_fitted
     
     def plot_results(self, results, C, lambda_, output_file='truncated_model_verification.png'):
         """
