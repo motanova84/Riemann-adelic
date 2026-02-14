@@ -28,3 +28,9 @@
 {"timestamp": 1771065259.8337166, "server_id": "github-mcp-server", "event_type": "observer_registered", "data": {"observer_id": "navier-mcp-server_observes_github-mcp-server"}}
 {"timestamp": 1771065259.8342795, "server_id": "github-mcp-server", "event_type": "server_started", "data": {"frequency": 141.7001}}
 {"timestamp": 1771065259.8345544, "server_id": "github-mcp-server", "event_type": "coherence_updated", "data": {"coherence": 1.0, "entropy": 0.0}}
+{"timestamp": 1771065460.3476982, "server_id": "github-mcp-server", "event_type": "observer_registered", "data": {"observer_id": "dramaturgo_observes_github-mcp-server"}}
+{"timestamp": 1771065460.3482587, "server_id": "github-mcp-server", "event_type": "observer_registered", "data": {"observer_id": "riemann-mcp-server_observes_github-mcp-server"}}
+{"timestamp": 1771065460.3487952, "server_id": "github-mcp-server", "event_type": "observer_registered", "data": {"observer_id": "bsd-mcp-server_observes_github-mcp-server"}}
+{"timestamp": 1771065460.3493187, "server_id": "github-mcp-server", "event_type": "observer_registered", "data": {"observer_id": "navier-mcp-server_observes_github-mcp-server"}}
+{"timestamp": 1771065460.3497477, "server_id": "github-mcp-server", "event_type": "server_started", "data": {"frequency": 141.7001}}
+{"timestamp": 1771065460.3500707, "server_id": "github-mcp-server", "event_type": "coherence_updated", "data": {"coherence": 1.0, "entropy": 0.0}}
