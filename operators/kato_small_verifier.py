@@ -98,10 +98,10 @@ class KatoSmallTest:
             D[i, i - 1] = -self.x[i] / (2 * self.dx)
             D[i, i + 1] = self.x[i] / (2 * self.dx)
         # Boundary: one-sided differences
-        D[0, 0] = -self.x[0] / (2 * self.dx)
-        D[0, 1] = self.x[0] / (2 * self.dx)
-        D[-1, -2] = -self.x[-1] / (2 * self.dx)
-        D[-1, -1] = self.x[-1] / (2 * self.dx)
+        D[0, 0] = -self.x[0] / self.dx
+        D[0, 1] = self.x[0] / self.dx
+        D[-1, -2] = -self.x[-1] / self.dx
+        D[-1, -1] = self.x[-1] / self.dx
         
         return -1j * (D + 0.5 * np.eye(self.N))
     
