@@ -1,0 +1,26 @@
+{
+  "protocol": "QCAL-KATO-EXPONENTIAL-v1.0",
+  "timestamp": "2026-02-14T01:54:35.625140",
+  "theorem": {
+    "statement": "\u2016e^{2y}\u03c8\u2016 \u2264 \u03b5\u2016\u2202_y\u03c8\u2016 + C_\u03b5\u2016\u03c8\u2016 for all \u03b5 > 0",
+    "domain": "\u03c8 \u2208 H\u00b9(\u211d)",
+    "operator_A": "-i\u2202_y",
+    "operator_V": "e^{2y}",
+    "property": "Kato-small"
+  },
+  "validation": {
+    "all_passed": true,
+    "num_epsilon_tested": 7,
+    "epsilon_range": [
+      0.01,
+      0.5
+    ],
+    "agrees_with_theory": false
+  },
+  "results": [
+    {
+      "epsilon": 0.01,
+      "C_epsilon": 3033.7669142594123,
+      "num_tests": 1000,
+      "max_violation_ratio": 0.999999999999967,
+      "condition_met": 
