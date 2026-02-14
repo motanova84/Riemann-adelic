@@ -74,7 +74,7 @@ The `dashboard/` directory contains a Plotly Dash skeleton that consumes the
 * **Global Coherence Metric** – rolling mean error threshold (< 1e-6).
 * **Spectral Visualisations** – Evac(RΨ) distributions and zero density plots.
 
-Deploy the dashboard on Streamlit Cloud, Vercel, or any ASGI-compatible host.
+Deploy the dashboard on Streamlit Cloud or any ASGI-compatible host.
 
 ## Next Steps
 

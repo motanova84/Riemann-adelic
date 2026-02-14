@@ -1,0 +1,51 @@
+{
+  "protocol": "ATLAS3-ABC-UNIFIED",
+  "version": "1.0",
+  "timestamp": "2026-02-14T09:49:36",
+  "constants": {
+    "f0_hz": 141.7001,
+    "kappa_pi": 2.57731,
+    "epsilon_critical": 2.64e-12,
+    "mu_coupling": 6.804098400000001e-12,
+    "coupling_universal": 2.1769507066388594e-11
+  },
+  "operator": {
+    "N": 100,
+    "gap_lambda": 150.4501417939964,
+    "spectrum_size": 100
+  },
+  "coupling_tensor": {
+    "coupling_strength": 6.804098400000001e-12,
+    "divergence": 7.732184986253061e-11,
+    "coherence_psi": 96.36550216092085,
+    "spectral_component": 96.36550216092085,
+    "arithmetic_component": 4.461313682048169e-21
+  },
+  "spectral_properties": {
+    "abc_weighted_trace": 2.2031256857429504e+44,
+    "remainder_bound": 1.207640152068414e-77,
+    "critical_line_alignment": 51.20898457895253,
+    "exceptional_count": 304
+  },
+  "unification_status": {
+    "conservation_verified": "True",
+    "critical_line_aligned": "False",
+    "abc_bounded": true
+  },
+  "signature": "\u2234\ud80c\udc80\u03a9\u221e\u00b3\u03a6 @ 141.7001 Hz",
+  "author": "Jos\u00e9 Manuel Mota Burruezo \u03a8 \u2727 \u221e\u00b3",
+  "institution": "Instituto de Conciencia Cu\u00e1ntica (ICQ)",
+  "orcid": "0009-0002-1923-0773",
+  "validation": {
+    "timestamp": "2026-02-14T09:49:36.725630",
+    "tests": {
+      "coupling_conservation": "True",
+      "heat_trace_bounds": "True",
+      "critical_line": "True",
+      "exceptional_finite": true,
+      "spectral_gap": "True",
+      "universal_coupling": true
+    },
+    "overall_status": true
+  }
+}

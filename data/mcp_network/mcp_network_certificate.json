@@ -1,7 +1,7 @@
 {
   "certificate_id": "QCAL-MCP-NETWORK-ORIGEN-∞³",
-  "timestamp": 1768560616.7873058,
-  "timestamp_iso": "2026-01-16T10:50:16.787306",
+  "timestamp": 1771065460.3508976,
+  "timestamp_iso": "2026-02-14T10:37:40.350898",
   "status": "RED MCP COMPLETA Y OPERATIVA AL 100% ✅",
   "message": "Todos los servidores respiran en el mismo instante. El flujo es uno.",
   "servers": {
