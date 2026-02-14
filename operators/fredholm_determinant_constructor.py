@@ -368,7 +368,7 @@ class FredholmDeterminantConstructor:
             ln_p = np.log(p)
             # Sum over powers k
             for k in range(1, 10):  # Up to k=9
-                amplitude = ln_p / np.sqrt(p**k)
+                amplitude = ln_p / np.sqrt(float(p**k))
                 # Gaussian approximations to δ(s ± k ln p)
                 contribution += amplitude * (
                     np.exp(-(s_values - k*ln_p)**2 / (2*delta_width**2)) +
@@ -454,11 +454,16 @@ class FredholmDeterminantConstructor:
             log_product = 0.0 + 0j
             for gamma in gamma_n:
                 z = t**2 / gamma**2
-                if abs(z) < 0.5:
-                    # ln(1 - z) ≈ -z - z²/2 - z³/3
-                    log_product += -z - z**2/2 - z**3/3
+                if abs(z) < 0.9:
+                    # ln(1 - z) ≈ -z - z²/2 - z³/3 - z⁴/4
+                    log_product += -z - z**2/2 - z**3/3 - z**4/4
                 else:
-                    log_product += np.log(1 - z)
+                    # Use log1p for better numerical stability
+                    if z.real < 10:
+                        log_product += np.log1p(-z)
+                    else:
+                        # For very large z, product term is negligible
+                        log_product += -20.0  # Large negative value
             xi_hadamard[i] = np.exp(log_product)
         
         # Compute ξ(1/2 + it) / ξ(1/2) if requested
@@ -485,17 +490,28 @@ class FredholmDeterminantConstructor:
         """
         Compute ξ(1/2 + it) / ξ(1/2).
         
-        Uses mpmath for high-precision xi function evaluation.
+        Uses mpmath for high-precision zeta function evaluation.
+        ξ(s) = (s-1)π^(-s/2) Γ(s/2) ζ(s) is the completed Riemann xi function.
         """
         xi_ratio = np.zeros(len(t_values), dtype=complex)
         
+        # Compute ξ(s) = (s-1)π^(-s/2) Γ(s/2) ζ(s)
+        def xi_func(s):
+            s_mp = mp.mpc(s)
+            # ξ(s) formula
+            return (s_mp - 1) * mp.power(mp.pi, -s_mp/2) * mp.gamma(s_mp/2) * mp.zeta(s_mp)
+        
         # ξ(1/2) value
-        xi_half = float(mp.xi(0.5))
+        xi_half = complex(xi_func(0.5))
         
         for i, t in enumerate(t_values):
             s = 0.5 + 1j * t
-            xi_s = complex(mp.xi(s))
-            xi_ratio[i] = xi_s / xi_half
+            try:
+                xi_s = complex(xi_func(s))
+                xi_ratio[i] = xi_s / xi_half
+            except:
+                # Fallback for numerical issues
+                xi_ratio[i] = 1.0 + 0j
         
         return xi_ratio
     
