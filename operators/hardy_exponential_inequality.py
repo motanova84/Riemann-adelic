@@ -40,7 +40,6 @@ import numpy as np
 from typing import Callable, Dict, Tuple, Optional
 from scipy.fft import fft, ifft, fftfreq
 from scipy.integrate import simpson
-import warnings
 
 
 # QCAL ∞³ Constants
