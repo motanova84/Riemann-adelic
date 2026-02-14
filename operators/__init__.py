@@ -144,6 +144,8 @@ from .master_operator_o3 import MasterOperatorO3
 
 from .t_infinity_cubed import TInfinityCubedOperator
 
+from .reduced_model_operator import ReducedModelOperator
+
 __all__ = [
     'construct_H_psi',
     'compute_spectrum',
@@ -227,5 +229,7 @@ __all__ = [
     'verify_constant_imaginary',
     'get_standard_examples',
     'analyze_spectral_coordinates',
-    'validate_spectral_coordinates'
+    'validate_spectral_coordinates',
+    # Reduced model operator exports
+    'ReducedModelOperator'
 ]
