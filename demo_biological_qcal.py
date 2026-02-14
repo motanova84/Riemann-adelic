@@ -334,7 +334,7 @@ def demo_hrv_injection_into_riemann_filter():
     
     print("\n6. Injecting HRV into Riemann filter...")
     # Build base Hamiltonian
-    H_base = xi_op.build_hamiltonian()
+    H_base = xi_op.construct_hamiltonian()
     
     # Create perturbed operator
     perturbed_xi = PerturbedXiOperator(
