@@ -41,10 +41,8 @@ ORCID: 0009-0002-1923-0773
 """
 
 import numpy as np
-from scipy.linalg import norm
 from scipy.ndimage import gaussian_filter
 from typing import List, Dict, Tuple, Optional
-import warnings
 
 # QCAL Constants
 F0 = 141.7001  # Hz - fundamental frequency
