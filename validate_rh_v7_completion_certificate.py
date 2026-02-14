@@ -523,8 +523,8 @@ class RHV7CompletionValidator:
         certificate = {
             "certificate_id": "RH_V7_COMPLETION_CERTIFICATE",
             "version": "7.0",
-            "date": datetime.now().isoformat(),
-            "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S UTC"),
+            "date": datetime.utcnow().isoformat() + "Z",
+            "timestamp": datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S UTC"),
             "status": "VERIFIED" if verified_count == total_count else "PARTIAL",
             "completeness": f"{verified_count}/{total_count}",
             "completeness_percent": (verified_count / total_count) * 100,
