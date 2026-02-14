@@ -267,8 +267,7 @@ class TestTorsionNetworkIntegration:
         
         # Nodes should be: Riemann-adelic, noesis88, economia-qcal-nodo-semilla
         expected_nodes = ["Riemann-adelic", "noesis88", "economia-qcal-nodo-semilla"]
-        actual_nodes = [network.nodes[i] for i in range(3)]
-        assert actual_nodes == expected_nodes
+        assert list(network.nodes.values()) == expected_nodes
     
     def test_frequency_assignment_pattern(self):
         """Test frequency assignment follows QCAL pattern."""

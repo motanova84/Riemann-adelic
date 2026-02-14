@@ -125,14 +125,18 @@ class FiberConnection:
         
         Γ^α_{βγ} = (1/2) g^{αδ} (∂_β g_{δγ} + ∂_γ g_{βδ} - ∂_δ g_{βγ})
         
+        For singular or near-singular metrics, uses Moore-Penrose pseudo-inverse
+        as regularization. This maintains numerical stability at the cost of
+        slightly modified connection, but preserves essential geometric structure.
+        
         Args:
             metric: 3x3 metric tensor on QCAL base manifold
         """
-        # Invert metric
+        # Invert metric (use pseudo-inverse for numerical stability if singular)
         try:
             metric_inv = np.linalg.inv(metric)
         except np.linalg.LinAlgError:
-            logger.warning("Singular metric, using regularization")
+            logger.warning("Singular metric detected, using pseudo-inverse regularization")
             metric_inv = np.linalg.pinv(metric)
         
         # For discrete manifold, approximate derivatives via finite differences

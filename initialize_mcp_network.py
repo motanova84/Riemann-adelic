@@ -142,6 +142,9 @@ def initialize_mcp_network(
     Returns:
         Estado de inicialización
     """
+    # Coherence threshold for validation (0.99 ensures high synchronization)
+    COHERENCE_THRESHOLD = 0.99
+    
     if data_dir is None:
         data_dir = Path.cwd() / "data" / "mcp_network"
     
@@ -297,7 +300,7 @@ def initialize_mcp_network(
         
         # Check all server coherences
         coherence_check = all(
-            server.metadata.coherence >= 0.99 
+            server.metadata.coherence >= COHERENCE_THRESHOLD
             for server in servers.values()
         )
         
