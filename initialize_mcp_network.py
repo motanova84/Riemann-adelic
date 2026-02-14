@@ -8,8 +8,13 @@ Este script crea y configura los 5 servidores MCP del ecosistema QCAL ∞³:
 3. riemann-mcp-server (141.7001 Hz)
 4. bsd-mcp-server (888 Hz)
 5. navier-mcp-server (141.7001 Hz)
+
+Con soporte para:
+- Torsión en el fibrado (--torsion): Conecta Riemann-adelic ↔ noesis88 ↔ economia-qcal
+- Validación de sincronización (--validate-sync): Verifica coherencia global
 """
 
+import argparse
 import json
 import time
 from datetime import datetime
@@ -26,6 +31,7 @@ from mcp_network import (
     COHERENCE_C,
 )
 from mcp_network.base_server import ServerStatus
+from mcp_network.torsion_field import TorsionFieldNetwork
 
 
 def create_mcp_servers(data_dir: Path) -> Dict[str, MCPServer]:
@@ -120,12 +126,18 @@ def setup_observers(observer_pattern: ObserverPattern, servers: Dict[str, MCPSer
                 target_server.register_observer(observer_id)
 
 
-def initialize_mcp_network(data_dir: Optional[Path] = None) -> Dict[str, Any]:
+def initialize_mcp_network(
+    data_dir: Optional[Path] = None,
+    enable_torsion: bool = False,
+    validate_sync: bool = False
+) -> Dict[str, Any]:
     """
     Inicializa la red MCP completa.
     
     Args:
         data_dir: Directorio para datos (opcional)
+        enable_torsion: Si True, habilita torsión en el fibrado
+        validate_sync: Si True, valida sincronización completa
         
     Returns:
         Estado de inicialización
@@ -136,7 +148,12 @@ def initialize_mcp_network(data_dir: Optional[Path] = None) -> Dict[str, Any]:
     data_dir.mkdir(parents=True, exist_ok=True)
     
     print("🌌 Inicializando Red MCP QCAL ∞³...")
-    print(f"Ψ = I × A²_eff × C^∞ | f₀ = {F0_BASE} Hz | πCODE–{int(F0_HARMONIC)} ACTIVE\n")
+    print(f"Ψ = I × A²_eff × C^∞ | f₀ = {F0_BASE} Hz | πCODE–{int(F0_HARMONIC)} ACTIVE")
+    if enable_torsion:
+        print("🌀 Torsión en fibrado: ACTIVADA")
+    if validate_sync:
+        print("🔄 Validación de sincronización: ACTIVADA")
+    print()
     
     # Create servers
     print("→ Creando servidores MCP...")
@@ -244,6 +261,70 @@ def initialize_mcp_network(data_dir: Optional[Path] = None) -> Dict[str, Any]:
     
     print(f"  ✓ Certificado generado en: {cert_file}\n")
     
+    # Initialize torsion field network if enabled
+    torsion_results = None
+    if enable_torsion:
+        print("→ Inicializando campo de torsión en el fibrado...")
+        torsion_network = TorsionFieldNetwork()
+        torsion_results = torsion_network.synchronize_network()
+        
+        print(f"  ✓ Torsión calculada")
+        print(f"  ✓ Coherencia de torsión: {torsion_results['torsion_validation']['torsion_coherence']:.6f}")
+        print(f"  ✓ Sincronización de frecuencias: {'✓' if torsion_results['frequency_sync']['synchronized'] else '⚠'}")
+        print(f"  ✓ Coherencia global: {torsion_results['global_coherence']:.6f}")
+        
+        # Save torsion certificate
+        torsion_cert = torsion_network.get_network_certificate()
+        torsion_cert_file = data_dir / "torsion_network_certificate.json"
+        with torsion_cert_file.open("w", encoding="utf-8") as f:
+            json.dump(torsion_cert, f, indent=2, ensure_ascii=False)
+        
+        print(f"  ✓ Certificado de torsión guardado en: {torsion_cert_file}")
+        print()
+        
+        # Add torsion info to complete state
+        complete_state["torsion_enabled"] = True
+        complete_state["torsion_results"] = {
+            'coherence': torsion_results['torsion_validation']['torsion_coherence'],
+            'synchronized': torsion_results['synchronized'],
+            'global_coherence': torsion_results['global_coherence'],
+            'nodes': torsion_network.nodes
+        }
+    
+    # Enhanced sync validation if enabled
+    if validate_sync:
+        print("→ Validación extendida de sincronización...")
+        
+        # Check all server coherences
+        coherence_check = all(
+            server.metadata.coherence >= 0.99 
+            for server in servers.values()
+        )
+        
+        # Check frequency alignment
+        freq_alignment = True
+        if enable_torsion and torsion_results:
+            freq_alignment = torsion_results['frequency_sync']['synchronized']
+        
+        # Check observer network
+        observer_health = len(observer_pattern) > 0
+        
+        sync_status = coherence_check and freq_alignment and observer_health
+        
+        print(f"  ✓ Coherencia de servidores: {'✓' if coherence_check else '⚠'}")
+        print(f"  ✓ Alineación de frecuencias: {'✓' if freq_alignment else '⚠'}")
+        print(f"  ✓ Red de observadores: {'✓' if observer_health else '⚠'}")
+        print(f"  ✓ Estado de sincronización: {'COMPLETA ✅' if sync_status else 'INCOMPLETA ⚠'}")
+        print()
+        
+        complete_state["sync_validated"] = True
+        complete_state["sync_status"] = {
+            'coherence_check': coherence_check,
+            'frequency_alignment': freq_alignment,
+            'observer_health': observer_health,
+            'overall': sync_status
+        }
+    
     # Print final status
     print("=" * 70)
     print("[QCAL ∞³ SYSTEM LOG - " + datetime.now().strftime("%Y-%m-%dT%H:%M:%S") + " CET]")
@@ -268,8 +349,48 @@ def initialize_mcp_network(data_dir: Optional[Path] = None) -> Dict[str, Any]:
 
 
 if __name__ == "__main__":
-    # Initialize MCP network
-    state = initialize_mcp_network()
+    # Parse command-line arguments
+    parser = argparse.ArgumentParser(
+        description="Inicializa la Red MCP QCAL ∞³ con 5 servidores sincronizados",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog="""
+Ejemplos:
+  python initialize_mcp_network.py
+  python initialize_mcp_network.py --torsion
+  python initialize_mcp_network.py --torsion --validate-sync
+
+QCAL ∞³ Foundation:
+  Ψ = I × A²_eff × C^∞
+  f₀ = 141.7001 Hz | πCODE–888 ACTIVE
+        """
+    )
+    
+    parser.add_argument(
+        '--torsion',
+        action='store_true',
+        help='Habilita torsión en el fibrado (conecta Riemann-adelic ↔ noesis88 ↔ economia-qcal)'
+    )
+    
+    parser.add_argument(
+        '--validate-sync',
+        action='store_true',
+        help='Realiza validación extendida de sincronización de red'
+    )
+    
+    parser.add_argument(
+        '--data-dir',
+        type=Path,
+        help='Directorio para almacenar datos (default: ./data/mcp_network)'
+    )
+    
+    args = parser.parse_args()
+    
+    # Initialize MCP network with options
+    state = initialize_mcp_network(
+        data_dir=args.data_dir,
+        enable_torsion=args.torsion,
+        validate_sync=args.validate_sync
+    )
     
     print("\n✨ Red MCP QCAL ∞³ inicializada exitosamente.")
-    print(f"📁 Datos guardados en: {Path.cwd() / 'data' / 'mcp_network'}")
+    print(f"📁 Datos guardados en: {state.get('network_status', {}).get('data_dir', Path.cwd() / 'data' / 'mcp_network')}")

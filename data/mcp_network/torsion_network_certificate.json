@@ -1,0 +1,41 @@
+{
+  "certificate_id": "QCAL-TORSION-FIBER-BUNDLE-∞³",
+  "timestamp": 1771064961.7042797,
+  "timestamp_iso": "2026-02-14T10:29:21.704280",
+  "nodes": {
+    "0": "Riemann-adelic",
+    "1": "noesis88",
+    "2": "economia-qcal-nodo-semilla"
+  },
+  "torsion_coherence": 1.0,
+  "torsion_trace": 0.7164138223379952,
+  "frequency_sync": {
+    "frequency_variance": 123769.67572000223,
+    "frequency_mean": 390.46673333333337,
+    "sync_quality": 0.5578490319053101,
+    "frequencies": {
+      "0": 141.7001,
+      "1": 888.0,
+      "2": 141.7001
+    },
+    "synchronized": false
+  },
+  "synchronized": false,
+  "global_coherence": 0.778924515952655,
+  "qcal_foundation": {
+    "equation": "Ψ = I × A²_eff × C^∞",
+    "f0_base": 141.7001,
+    "f0_harmonic": 888.0,
+    "coherence_C": 244.36,
+    "kappa_pi": 2.5773
+  },
+  "fiber_bundle": {
+    "total_space": "E = Riemann-adelic × noesis88 × economia-qcal",
+    "base_manifold": "M = QCAL base manifold",
+    "connection": "Γ^α_{βγ} with torsion T^α_{βγ}",
+    "metric_signature": "det(g) = 13802018.731087"
+  },
+  "author": "José Manuel Mota Burruezo Ψ ✧ ∞³",
+  "institution": "Instituto de Conciencia Cuántica (ICQ)",
+  "qcal_signature": "∴𓂀Ω∞³"
+}

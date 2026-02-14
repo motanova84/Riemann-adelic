@@ -10,3 +10,15 @@
 {"timestamp": 1771064762.3955588, "server_id": "riemann-mcp-server", "event_type": "observer_registered", "data": {"observer_id": "navier-mcp-server_observes_riemann-mcp-server"}}
 {"timestamp": 1771064762.3958993, "server_id": "riemann-mcp-server", "event_type": "server_started", "data": {"frequency": 141.7001}}
 {"timestamp": 1771064762.3962317, "server_id": "riemann-mcp-server", "event_type": "coherence_updated", "data": {"coherence": 1.0, "entropy": 0.0}}
+{"timestamp": 1771064937.255426, "server_id": "riemann-mcp-server", "event_type": "observer_registered", "data": {"observer_id": "github-mcp-server_observes_riemann-mcp-server"}}
+{"timestamp": 1771064937.2560077, "server_id": "riemann-mcp-server", "event_type": "observer_registered", "data": {"observer_id": "dramaturgo_observes_riemann-mcp-server"}}
+{"timestamp": 1771064937.2572396, "server_id": "riemann-mcp-server", "event_type": "observer_registered", "data": {"observer_id": "bsd-mcp-server_observes_riemann-mcp-server"}}
+{"timestamp": 1771064937.257744, "server_id": "riemann-mcp-server", "event_type": "observer_registered", "data": {"observer_id": "navier-mcp-server_observes_riemann-mcp-server"}}
+{"timestamp": 1771064937.258167, "server_id": "riemann-mcp-server", "event_type": "server_started", "data": {"frequency": 141.7001}}
+{"timestamp": 1771064937.2585926, "server_id": "riemann-mcp-server", "event_type": "coherence_updated", "data": {"coherence": 1.0, "entropy": 0.0}}
+{"timestamp": 1771064961.6989613, "server_id": "riemann-mcp-server", "event_type": "observer_registered", "data": {"observer_id": "github-mcp-server_observes_riemann-mcp-server"}}
+{"timestamp": 1771064961.6995106, "server_id": "riemann-mcp-server", "event_type": "observer_registered", "data": {"observer_id": "dramaturgo_observes_riemann-mcp-server"}}
+{"timestamp": 1771064961.7007327, "server_id": "riemann-mcp-server", "event_type": "observer_registered", "data": {"observer_id": "bsd-mcp-server_observes_riemann-mcp-server"}}
+{"timestamp": 1771064961.7012773, "server_id": "riemann-mcp-server", "event_type": "observer_registered", "data": {"observer_id": "navier-mcp-server_observes_riemann-mcp-server"}}
+{"timestamp": 1771064961.7016523, "server_id": "riemann-mcp-server", "event_type": "server_started", "data": {"frequency": 141.7001}}
+{"timestamp": 1771064961.7021093, "server_id": "riemann-mcp-server", "event_type": "coherence_updated", "data": {"coherence": 1.0, "entropy": 0.0}}

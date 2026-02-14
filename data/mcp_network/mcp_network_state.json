@@ -1,12 +1,12 @@
 {
-  "timestamp": 1771064762.3965397,
-  "timestamp_iso": "2026-02-14T10:26:02.396544",
+  "timestamp": 1771064961.7025661,
+  "timestamp_iso": "2026-02-14T10:29:21.702572",
   "qcal_signature": "Ψ = I × A²_eff × C^∞",
   "fundamental_frequency": 141.7001,
   "harmonic_frequency": 888.0,
   "coherence_constant": 244.36,
   "network_status": {
-    "timestamp": 1771064762.396455,
+    "timestamp": 1771064961.7024486,
     "total_servers": 5,
     "online_servers": 0,
     "integrated_servers": 5,
@@ -24,10 +24,10 @@
         "status": "INTEGRADO ✓",
         "endpoint": "github-mcp-server.qcal.space",
         "observers_active": 4,
-        "last_heartbeat": 1771064762.395744,
+        "last_heartbeat": 1771064961.7015235,
         "coherence": 1.0,
         "entropy": 0.0,
-        "last_heartbeat_iso": "2026-02-14T10:26:02.395744"
+        "last_heartbeat_iso": "2026-02-14T10:29:21.701524"
       },
       "dramaturgo": {
         "server_id": "dramaturgo",
@@ -37,10 +37,10 @@
         "status": "INTEGRADO ✓",
         "endpoint": "dramaturgo.qcal.space",
         "observers_active": 4,
-        "last_heartbeat": 1771064762.3958135,
+        "last_heartbeat": 1771064961.7015932,
         "coherence": 1.0,
         "entropy": 0.0,
-        "last_heartbeat_iso": "2026-02-14T10:26:02.395813"
+        "last_heartbeat_iso": "2026-02-14T10:29:21.701593"
       },
       "riemann-mcp-server": {
         "server_id": "riemann-mcp-server",
@@ -50,10 +50,10 @@
         "status": "INTEGRADO ✓",
         "endpoint": "riemann-mcp-server.qcal.space",
         "observers_active": 4,
-        "last_heartbeat": 1771064762.3958983,
+        "last_heartbeat": 1771064961.7016518,
         "coherence": 1.0,
         "entropy": 0.0,
-        "last_heartbeat_iso": "2026-02-14T10:26:02.395898"
+        "last_heartbeat_iso": "2026-02-14T10:29:21.701652"
       },
       "bsd-mcp-server": {
         "server_id": "bsd-mcp-server",
@@ -63,10 +63,10 @@
         "status": "INTEGRADO ✓",
         "endpoint": "bsd-mcp-server.qcal.space",
         "observers_active": 4,
-        "last_heartbeat": 1771064762.3959572,
+        "last_heartbeat": 1771064961.7017164,
         "coherence": 1.0,
         "entropy": 0.0,
-        "last_heartbeat_iso": "2026-02-14T10:26:02.395957"
+        "last_heartbeat_iso": "2026-02-14T10:29:21.701716"
       },
       "navier-mcp-server": {
         "server_id": "navier-mcp-server",
@@ -76,20 +76,20 @@
         "status": "INTEGRADO ✓",
         "endpoint": "navier-mcp-server.qcal.space",
         "observers_active": 4,
-        "last_heartbeat": 1771064762.3960035,
+        "last_heartbeat": 1771064961.701774,
         "coherence": 1.0,
         "entropy": 0.0,
-        "last_heartbeat_iso": "2026-02-14T10:26:02.396003"
+        "last_heartbeat_iso": "2026-02-14T10:29:21.701774"
       }
     }
   },
   "validation": {
-    "timestamp": 1771064762.396388,
+    "timestamp": 1771064961.702336,
     "total_servers": 5,
     "servers": {
       "github-mcp-server": {
         "server_id": "github-mcp-server",
-        "timestamp": 1771064762.3963912,
+        "timestamp": 1771064961.7023394,
         "status": "INTEGRADO ✓",
         "frequency": 141.7001,
         "coherence": 1.0,
@@ -99,7 +99,7 @@
       },
       "dramaturgo": {
         "server_id": "dramaturgo",
-        "timestamp": 1771064762.3963976,
+        "timestamp": 1771064961.7023451,
         "status": "INTEGRADO ✓",
         "frequency": 888.0,
         "coherence": 1.0,
@@ -109,7 +109,7 @@
       },
       "riemann-mcp-server": {
         "server_id": "riemann-mcp-server",
-        "timestamp": 1771064762.3964024,
+        "timestamp": 1771064961.702349,
         "status": "INTEGRADO ✓",
         "frequency": 141.7001,
         "coherence": 1.0,
@@ -119,7 +119,7 @@
       },
       "bsd-mcp-server": {
         "server_id": "bsd-mcp-server",
-        "timestamp": 1771064762.3964047,
+        "timestamp": 1771064961.7023506,
         "status": "INTEGRADO ✓",
         "frequency": 888.0,
         "coherence": 1.0,
@@ -129,7 +129,7 @@
       },
       "navier-mcp-server": {
         "server_id": "navier-mcp-server",
-        "timestamp": 1771064762.396407,
+        "timestamp": 1771064961.702352,
         "status": "INTEGRADO ✓",
         "frequency": 141.7001,
         "coherence": 1.0,
