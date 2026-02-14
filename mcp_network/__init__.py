@@ -30,6 +30,7 @@ COHERENCE_C = 244.36
 from .base_server import MCPServer, ServerStatus
 from .registry import MCPRegistry
 from .observer import ObserverPattern, ObserverEvent
+from .torsion_field import TorsionFieldNetwork, TorsionTensor, FiberConnection
 
 __all__ = [
     "MCPServer",
@@ -37,6 +38,9 @@ __all__ = [
     "MCPRegistry",
     "ObserverPattern",
     "ObserverEvent",
+    "TorsionFieldNetwork",
+    "TorsionTensor",
+    "FiberConnection",
     "F0_BASE",
     "F0_HARMONIC",
     "COHERENCE_C",
