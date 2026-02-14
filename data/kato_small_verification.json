@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-02-14T01:47:51.790704",
+  "timestamp": "2026-02-14T09:52:13.738473",
   "theorem": "B es Kato-peque\u00f1o respecto a T",
   "operators": {
     "T": "-i(x d/dx + 1/2)",
@@ -15,27 +15,27 @@
   "results": [
     {
       "eps": 0.1,
-      "C_eps": 83.65872485028466,
+      "C_eps": 87.48213331513622,
       "condition_met": true
     },
     {
       "eps": 0.05,
-      "C_eps": 89.34725551307054,
+      "C_eps": 90.23941845530325,
       "condition_met": true
     },
     {
       "eps": 0.01,
-      "C_eps": 87.96990308954545,
+      "C_eps": 91.99817180849088,
       "condition_met": true
     },
     {
       "eps": 0.005,
-      "C_eps": 88.42275853542536,
+      "C_eps": 89.53130660351363,
       "condition_met": true
     },
     {
       "eps": 0.001,
-      "C_eps": 99.30115406961406,
+      "C_eps": 92.35918079302085,
       "condition_met": true
     }
   ],
