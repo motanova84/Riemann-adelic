@@ -131,7 +131,8 @@ class AdelicLaplacian:
         return np.log(p) / (p ** (k / 2.0))
     
     def archimedean_laplacian(self, 
-                             use_diffusion_kernel: bool = True) -> csr_matrix:
+                             use_diffusion_kernel: bool = True,
+                             symmetrize: bool = True) -> csr_matrix:
         """
         Construct Archimedean Laplacian Δ_R with position-dependent diffusion.
         
@@ -143,6 +144,7 @@ class AdelicLaplacian:
         
         Args:
             use_diffusion_kernel: Whether to include D_R(x) position dependence
+            symmetrize: Force symmetrization for Hermiticity
             
         Returns:
             Sparse matrix representation of Δ_R
@@ -166,14 +168,22 @@ class AdelicLaplacian:
             diag_lower_rolled = np.roll(diag_lower, -1)
             diag_upper_rolled = np.roll(diag_upper, 1)
             
-            return diags(
+            Delta_R = diags(
                 [diag_lower_rolled, diag_main, diag_upper_rolled],
                 offsets=[-1, 0, 1],
                 shape=(self.N, self.N),
                 format='csr'
             )
+            
+            if symmetrize:
+                # Force symmetrization: (A + A^T)/2
+                Delta_R_dense = Delta_R.toarray()
+                Delta_R_sym = 0.5 * (Delta_R_dense + Delta_R_dense.T)
+                return csr_matrix(Delta_R_sym)
+            
+            return Delta_R
         else:
-            # Standard Laplacian
+            # Standard Laplacian (already symmetric)
             diag_main = -2.0 * np.ones(self.N) / self.dx**2
             diag_off = np.ones(self.N) / self.dx**2
             
@@ -218,7 +228,8 @@ class AdelicLaplacian:
     
     def full_adelic_laplacian(self,
                              use_archimedean_diffusion: bool = True,
-                             padic_strength: float = 0.1) -> csr_matrix:
+                             padic_strength: float = 0.1,
+                             symmetrize: bool = True) -> csr_matrix:
         """
         Construct full adelic Laplacian Δ_A = Δ_R + Σ_p Δ_{Q_p}.
         
@@ -229,17 +240,27 @@ class AdelicLaplacian:
         Args:
             use_archimedean_diffusion: Use position-dependent D_R(x)
             padic_strength: Overall scaling for p-adic terms
+            symmetrize: Force symmetrization for Hermiticity
             
         Returns:
             Full adelic Laplacian as sparse matrix
         """
         # Start with Archimedean part
-        Delta_A = self.archimedean_laplacian(use_diffusion_kernel=use_archimedean_diffusion)
+        Delta_A = self.archimedean_laplacian(
+            use_diffusion_kernel=use_archimedean_diffusion,
+            symmetrize=symmetrize
+        )
         
         # Add p-adic contributions
         for p in self.key_primes:
             Delta_p = self.padic_laplacian(p, strength=padic_strength)
             Delta_A = Delta_A + Delta_p
+        
+        if symmetrize:
+            # Final symmetrization to handle any numerical errors
+            Delta_A_dense = Delta_A.toarray()
+            Delta_A_sym = 0.5 * (Delta_A_dense + Delta_A_dense.T)
+            return csr_matrix(Delta_A_sym)
         
         return Delta_A
     

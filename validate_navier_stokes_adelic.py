@@ -25,7 +25,7 @@ def load_module(module_name, file_path):
     return module
 
 # Load modules
-base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+base_dir = os.path.abspath(os.path.dirname(__file__))
 adelic_lap_module = load_module(
     'adelic_laplacian',
     os.path.join(base_dir, 'operators', 'adelic_laplacian.py')

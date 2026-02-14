@@ -126,7 +126,7 @@ class NavierStokesAdelicOperator:
         self.dx = L / N
         self.x = self.adelic_laplacian.x
         
-    def transport_operator(self) -> csr_matrix:
+    def transport_operator(self, hermitian_version: bool = False) -> csr_matrix:
         """
         Construct transport operator T = -x∂_x.
         
@@ -135,8 +135,13 @@ class NavierStokesAdelicOperator:
         
         In logarithmic coordinates, this is the natural scaling operator.
         
+        For Hermitian version, we symmetrize: T_H = (T + T†)/2
+        
+        Args:
+            hermitian_version: If True, symmetrize the operator
+            
         Returns:
-            Sparse matrix representation of -x∂_x
+            Sparse matrix representation of -x∂_x (or symmetrized version)
         """
         # First derivative operator ∂_x (centered differences)
         # ∂_x Ψ ≈ (Ψ_{i+1} - Ψ_{i-1}) / (2dx)
@@ -154,7 +159,16 @@ class NavierStokesAdelicOperator:
         # Multiply by -x (position-dependent scaling)
         x_diag = diags(-self.x, 0, shape=(self.N, self.N), format='csr')
         
-        return x_diag @ grad_x
+        T = x_diag @ grad_x
+        
+        if hermitian_version:
+            # Symmetrize: (T + T†)/2
+            T_dense = T.toarray()
+            T_sym = 0.5 * (T_dense + T_dense.conj().T)
+            from scipy.sparse import csr_matrix
+            return csr_matrix(T_sym)
+        
+        return T
     
     def confinement_potential(self) -> np.ndarray:
         """
@@ -220,10 +234,10 @@ class NavierStokesAdelicOperator:
         
         # Add transport term (can be imaginary or real)
         if include_transport:
-            T = self.transport_operator()
+            T = self.transport_operator(hermitian_version=hermitian_version)
             if hermitian_version:
-                # Make Hermitian by using real part only
-                H = H + T.real
+                # Already symmetrized
+                H = H + T
             else:
                 # Include -i factor for evolution operator
                 H = H - 1j * T
