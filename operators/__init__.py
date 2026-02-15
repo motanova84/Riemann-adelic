@@ -167,6 +167,16 @@ from .atlas3_kato_rellich import (
 )
 from .reduced_model_operator import ReducedModelOperator
 
+from .spectral_identity_verifier import (
+    BerryKeatingOperator,
+    ZetaZeroFetcher,
+    SpectralIdentityVerifier,
+    SpectralIdentityResult,
+    QCAL_BASE_FREQUENCY as SIV_BASE_FREQUENCY,
+    QCAL_COHERENCE as SIV_COHERENCE,
+    QCAL_SIGNATURE
+)
+
 __all__ = [
     'construct_H_psi',
     'compute_spectrum',
@@ -266,5 +276,13 @@ __all__ = [
     'RelativeBoundednessTest',
     'verify_atlas3_kato_rellich',
     # Reduced model operator exports
-    'ReducedModelOperator'
+    'ReducedModelOperator',
+    # Spectral identity verifier exports (PUENTE 1-3)
+    'BerryKeatingOperator',
+    'ZetaZeroFetcher',
+    'SpectralIdentityVerifier',
+    'SpectralIdentityResult',
+    'SIV_BASE_FREQUENCY',
+    'SIV_COHERENCE',
+    'QCAL_SIGNATURE'
 ]
