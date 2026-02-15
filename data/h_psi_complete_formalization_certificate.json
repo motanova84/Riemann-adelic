@@ -1,0 +1,70 @@
+{
+  "protocol": "QCAL-HPSI-COMPLETE-FORMALIZATION-VALIDATION",
+  "version": "1.0.0",
+  "timestamp": "2026-02-15T22:39:04.411756Z",
+  "signature": "∴𓂀Ω∞³Φ",
+  "qcal_constants": {
+    "f0_hz": 141.7001,
+    "C": 244.36,
+    "kappa_pi": 2.57731
+  },
+  "validation_results": {
+    "syntax": {
+      "braces_balanced": true,
+      "open_braces": 9,
+      "close_braces": 9,
+      "parens_balanced": true,
+      "open_parens": 115,
+      "close_parens": 115,
+      "brackets_balanced": true,
+      "open_brackets": 5,
+      "close_brackets": 5
+    },
+    "sorry_count": 21,
+    "counts": {
+      "theorems": 19,
+      "lemmas": 0,
+      "definitions": 19,
+      "structures": 3,
+      "instances": 1,
+      "total": 41
+    },
+    "qcal_metadata": {
+      "has_signature": true,
+      "has_base_frequency": true,
+      "has_c_constant": true,
+      "has_kappa_pi": true,
+      "has_author_orcid": true,
+      "has_doi": true,
+      "has_timestamp": true,
+      "has_protocol_name": true
+    },
+    "structure": {
+      "part_i_foundations": true,
+      "part_ii_spectrum": true,
+      "part_iii_weil": true,
+      "part_iv_heat": true,
+      "part_v_closure": true,
+      "has_adelic_space": true,
+      "has_c_const": true,
+      "has_h_psi_core": true,
+      "has_deficiency_index": true,
+      "has_physical_extension": true,
+      "has_spectrum": true,
+      "has_trace_formula": true,
+      "has_weil_formula": true,
+      "has_heat_kernel": true,
+      "has_complete_proof": true,
+      "has_riemann_hypothesis": true,
+      "has_apple": true
+    },
+    "overall_status": "PASSED"
+  },
+  "author": {
+    "name": "José Manuel Mota Burruezo Ψ ✧ ∞³",
+    "orcid": "0009-0002-1923-0773",
+    "institution": "Instituto de Conciencia Cuántica (ICQ)"
+  },
+  "doi": "10.5281/zenodo.17379721",
+  "license": "CC-BY-SA-4.0 & Apache-2.0"
+}
