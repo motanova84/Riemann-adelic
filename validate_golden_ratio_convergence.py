@@ -77,7 +77,8 @@ def verify_repository_root():
         sys.exit(1)
 
 
-verify_repository_root()
+if __name__ == "__main__":
+    verify_repository_root()
 
 import argparse
 import json
