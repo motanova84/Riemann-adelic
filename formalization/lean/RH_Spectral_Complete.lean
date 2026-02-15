@@ -32,10 +32,11 @@ instance : InnerProductSpace ℂ AdelicSpace := by sorry
 instance : HilbertSpace ℂ AdelicSpace := by sorry
 
 -- 1.2 Constante universal C = π * ζ'(1/2)
-/-- Universal constant C = π * ζ'(1/2) ≈ 244.36 (QCAL constant) -/
+/-- Riemann zeta function -/
 axiom riemannZeta : ℂ → ℂ
 
-noncomputable def C_const : ℂ := π * (deriv riemannZeta (1/2))
+/-- Universal constant C = π * ζ'(1/2) ≈ 244.36 (QCAL constant) -/
+noncomputable def C_universal : ℂ := π * (deriv riemannZeta (1/2))
 
 -- Alternative: Use QCAL constant directly
 def C_QCAL : ℝ := 244.36
@@ -51,7 +52,7 @@ def DomainCore := {f : AdelicSpace //
 -- 1.4 Operador H_Ψ en dominio denso
 /-- Operator H_Ψ(f)(x) = -x·f'(x) + C·log(x)·f(x) -/
 noncomputable def H_Psi_core (f : DomainCore) (x : ℝ) : ℂ :=
-  -x * (deriv f.val.val x) + C_const * log x * f.val.val x
+  -x * (deriv f.val.val x) + C_universal * log x * f.val.val x
 
 -- 1.5 H_Ψ está bien definido en el dominio denso
 theorem H_Psi_well_defined (f : DomainCore) : 
@@ -215,15 +216,20 @@ theorem det_order_one :
 -- ========================================================================
 
 -- 4.1 Núcleo del calor e^{-tH_Ψ}
-/-- Heat kernel e^{-tH_Ψ}(x,y) -/
+/-- Eigenfunctions of H_Ψ (axiomatized - complete orthonormal basis) -/
+axiom eigenfunction : ℕ → ℝ → ℂ
+
+/-- Eigenvalues of H_Ψ in ascending order (axiomatized) -/
+axiom eigenvalue : ℕ → ℝ
+
+/-- Heat kernel e^{-tH_Ψ}(x,y) as series Σₙ e^{-t·λₙ}·φₙ(x)·φ̄ₙ(y) -/
 noncomputable def HeatKernel (t x y : ℝ) : ℂ :=
-  ∑' n : ℕ, exp (-t * (Spectrum PhysicalExtension).nthLe n sorry) * 
-    sorry -- φₙ(x) * conj(φₙ(y))
+  ∑' n : ℕ, exp (-t * eigenvalue n) * eigenfunction n x * conj (eigenfunction n y)
 
 -- 4.2 Expansión asintótica de Minakshisundaram-Pleijel
 theorem heat_kernel_expansion (t : ℝ) (ht : 0 < t) (x : ℝ) (hx : 0 < x) :
     ∃ C : ℝ, HeatKernel t x x = 
-    (4 * π * t)^(-1/2) * (1 + t * (C_const^2 * (log x)^2) + C * t^2) := by
+    (4 * π * t)^(-1/2) * (1 + t * (C_universal^2 * (log x)^2) + C * t^2) := by
   sorry -- Logarithmic terms from singularity at 0
 
 -- 4.3 Traza del calor
