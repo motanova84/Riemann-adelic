@@ -55,12 +55,10 @@ Signature: ∴𓂀Ω∞³Φ
 """
 
 import numpy as np
-from scipy.linalg import norm, eigh
-from scipy.sparse import diags
-from typing import Dict, Tuple, List, Optional, Any
-import warnings
-
-warnings.filterwarnings('ignore')
+from scipy.linalg import norm
+from scipy.ndimage import gaussian_filter
+from scipy.optimize import nnls
+from typing import Dict, Any
 
 # QCAL Constants
 F0 = 141.7001  # Hz - fundamental frequency
@@ -215,12 +213,13 @@ class RelativeBoundednessTest:
             
         Returns:
             Dictionary with verification results:
-                - a_optimal: Best-fit relative bound constant
-                - b_optimal: Best-fit absolute bound constant
+                - a_optimal: Best-fit relative bound constant (≥ 0)
+                - b_optimal: Best-fit absolute bound constant (≥ 0)
                 - max_ratio: Maximum ratio ‖Bψ‖/‖Tψ‖
-                - verified: Whether a < 1
+                - verified: Whether 0 ≤ a < 1
         """
-        np.random.seed(seed)
+        # Use local RNG for thread safety and reproducibility
+        rng = np.random.default_rng(seed)
         
         # Storage for ratios
         ratios = []
@@ -230,10 +229,9 @@ class RelativeBoundednessTest:
         
         for _ in range(n_test_vectors):
             # Generate smooth random vector (Gaussian smoothing)
-            psi = np.random.randn(self.N)
+            psi = rng.standard_normal(self.N)
             
             # Smooth with Gaussian
-            from scipy.ndimage import gaussian_filter
             psi = gaussian_filter(psi, sigma=2.0)
             
             # Normalize
@@ -267,21 +265,21 @@ class RelativeBoundednessTest:
         norms_T = norms_T[valid_indices]
         norms_psi = norms_psi[valid_indices]
         
-        # Fit ‖Bψ‖ = a‖Tψ‖ + b‖ψ‖ using least squares
+        # Fit ‖Bψ‖ = a‖Tψ‖ + b‖ψ‖ using nonnegative least squares
+        # This enforces a ≥ 0, b ≥ 0 (Kato-Rellich requirement)
         # Form system: [‖Tψ‖, ‖ψ‖] · [a, b]^T = ‖Bψ‖
         A_fit = np.column_stack([norms_T, norms_psi])
         b_fit = norms_B
         
-        # Solve via least squares
-        from scipy.linalg import lstsq
-        result = lstsq(A_fit, b_fit)
-        a_optimal, b_optimal = result[0]
+        # Solve via nonnegative least squares
+        coeffs, _ = nnls(A_fit, b_fit)
+        a_optimal, b_optimal = coeffs
         
         # Maximum ratio
         max_ratio = max(ratios) if ratios else 0.0
         
-        # Verification: a < 1
-        verified = (a_optimal < 1.0)
+        # Verification: 0 ≤ a < 1 (Kato-Rellich requirement)
+        verified = (0.0 <= a_optimal < 1.0)
         
         return {
             'a_optimal': a_optimal,
@@ -325,19 +323,19 @@ class RelativeBoundednessTest:
         
         Lemmas:
             1. Δ_ℝ real Laplacian bound
-            2-6. p-adic Laplacians for p ∈ {2,3,5,7,11}
+            2-6. p-adic Laplacians for p ∈ {2,3,5,7,11} (placeholders)
             7. V_eff effective potential bound
             8. Combined bound for B = (1/κ)Δ_𝔸 + V_eff
             
         Returns:
             Dictionary with lemma verification results
         """
-        np.random.seed(42)
+        # Use local RNG for thread safety
+        rng = np.random.default_rng(42)
         lemmas = {}
         
         # Generate test vector
-        psi = np.random.randn(self.N)
-        from scipy.ndimage import gaussian_filter
+        psi = rng.standard_normal(self.N)
         psi = gaussian_filter(psi, sigma=2.0)
         psi = psi / norm(psi)
         
@@ -354,13 +352,17 @@ class RelativeBoundednessTest:
             'verified': a1 < 0.5,
         }
         
-        # Lemmas 2-6: p-adic Laplacians (approximated)
-        # In practice, these are small corrections
+        # Lemmas 2-6: p-adic Laplacians (placeholders)
+        # NOTE: A discretized p-adic Laplacian Δ_{ℚ_p} is not yet implemented.
+        # These lemmas are therefore treated as placeholders and are NOT
+        # numerically verified. Once Δ_{ℚ_p} is available, a_p should be
+        # computed from the corresponding operator, analogous to lemma 1.
         for i, p in enumerate(PRIMES_ADELIC):
-            a_p = 0.05  # Approximate bound per prime
             lemmas[f'lemma_{i+2}_p{p}_adic'] = {
-                'a': a_p,
-                'verified': a_p < 0.1,
+                'a': np.nan,
+                'verified': False,
+                'assumed': True,
+                'reason': f'p-adic Laplacian Δ_{{ℚ_{p}}} not implemented; lemma is a placeholder.',
             }
         
         # Lemma 7: Effective potential
@@ -510,7 +512,9 @@ if __name__ == '__main__':
     
     # Save certificate
     import json
+    from pathlib import Path
     output_file = 'data/atlas3_kato_rellich_certificate.json'
+    Path(output_file).parent.mkdir(parents=True, exist_ok=True)
     with open(output_file, 'w') as f:
         json.dump(cert, f, indent=2)
     print(f"\nCertificate saved to {output_file}")

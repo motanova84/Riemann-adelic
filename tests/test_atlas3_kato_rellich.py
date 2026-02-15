@@ -23,11 +23,7 @@ QCAL ∞³ Active · 141.7001 Hz · C = 244.36 · Ψ = I × A_eff² × C^∞
 
 import pytest
 import numpy as np
-import sys
 from pathlib import Path
-
-# Add root to path for imports
-sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from operators.atlas3_kato_rellich import (
     # Constants
@@ -199,8 +195,8 @@ class TestSelfAdjointness:
         verifier = RelativeBoundednessTest(N=100)
         result = verifier.verify_self_adjointness()
         
-        # Hermiticity error should be reasonably small
-        assert result['hermiticity_error'] < 0.3, \
+        # Hermiticity error should match implementation threshold (< 0.2)
+        assert result['hermiticity_error'] < 0.2, \
             f"Hermiticity error {result['hermiticity_error']:.2%} too large"
         
         # Commutator error should be around 9.6% as claimed
@@ -233,19 +229,21 @@ class TestLemmas:
         assert 'n_verified' in result
     
     def test_verify_8_lemmas_count(self):
-        """Test that 8 lemmas are verified."""
+        """Test that 8 lemmas are present."""
         verifier = RelativeBoundednessTest(N=100)
         result = verifier.verify_8_lemmas()
         
+        # Should have 8 lemmas total
         assert result['n_lemmas'] == 8
     
-    def test_verify_8_lemmas_all_pass(self):
-        """Test that all 8 lemmas pass."""
+    def test_verify_8_lemmas_some_pass(self):
+        """Test that real lemmas pass (placeholders don't count as verified)."""
         verifier = RelativeBoundednessTest(N=100)
         result = verifier.verify_8_lemmas()
         
-        assert result['all_verified'], "All 8 lemmas should verify"
-        assert result['n_verified'] == 8
+        # Only real lemmas (1, 7, 8) should verify; 2-6 are placeholders
+        # So we expect 3 verified, not all 8
+        assert result['n_verified'] >= 2, "At least lemmas 1 and 8 should verify"
     
     def test_verify_lemma_1_real_laplacian(self):
         """Test Lemma 1: Real Laplacian bound."""
@@ -257,14 +255,17 @@ class TestLemmas:
         assert lemma1['a'] < 0.5
     
     def test_verify_lemmas_2_to_6_padic(self):
-        """Test Lemmas 2-6: p-adic bounds."""
+        """Test Lemmas 2-6: p-adic bounds (currently placeholders)."""
         verifier = RelativeBoundednessTest(N=100)
         result = verifier.verify_8_lemmas()
         
         for i, p in enumerate(PRIMES_ADELIC):
             lemma = result['lemmas'][f'lemma_{i+2}_p{p}_adic']
-            assert lemma['verified']
-            assert lemma['a'] < 0.1
+            # These are placeholders, so verified should be False
+            assert lemma['verified'] == False
+            assert lemma['assumed'] == True
+            assert 'reason' in lemma
+            assert 'placeholder' in lemma['reason'].lower()
     
     def test_verify_lemma_7_effective_potential(self):
         """Test Lemma 7: Effective potential bound."""
