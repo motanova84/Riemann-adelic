@@ -130,20 +130,37 @@ from .hermetic_trace_operator import (
     # Operator construction
     build_dirac_spectral_operator,
     build_hermetic_noetic_operator,
-    # Trace computations
+    # Trace formula functions
     compute_trace_zeta_regularized,
     compute_hermetic_trace_formula,
-    # Verification and demonstration
+    # Verification
     verify_spectral_identity,
-    demonstrate_hermetic_trace_identity,
-    # Constants
-    F0_QCAL
+    demonstrate_hermetic_trace_identity
 )
 
 from .master_operator_o3 import MasterOperatorO3
-
 from .t_infinity_cubed import TInfinityCubedOperator
 
+# Flancos Rojos Closure modules
+from .adelic_viscosity_operator import (
+    VladimirLaplacian,
+    AdelicViscosityOperator,
+    demonstrate_remainder_control,
+    NU_ADELIC,
+    is_prime,
+    first_n_primes
+)
+
+from .hadamard_abc_coherence import (
+    HadamardFactorization,
+    ABCCoherenceLemma,
+    XiOperatorIdentity,
+    demonstrate_hadamard_abc_closure,
+    xi_function,
+    xi_normalized
+)
+
+# All exports
 from .atlas3_kato_rellich import (
     RelativeBoundednessTest,
     verify_atlas3_kato_rellich,
@@ -216,7 +233,6 @@ __all__ = [
     'compute_hermetic_trace_formula',
     'verify_spectral_identity',
     'demonstrate_hermetic_trace_identity',
-    'F0_QCAL',
     # Master operator
     'MasterOperatorO3',
     'TInfinityCubedOperator',
@@ -234,6 +250,18 @@ __all__ = [
     'get_standard_examples',
     'analyze_spectral_coordinates',
     'validate_spectral_coordinates',
+    # Flancos Rojos closure - Adelic Viscosity
+    'VladimirLaplacian',
+    'AdelicViscosityOperator',
+    'demonstrate_remainder_control',
+    'NU_ADELIC',
+    # Flancos Rojos closure - Hadamard-ABC
+    'HadamardFactorization',
+    'ABCCoherenceLemma',
+    'XiOperatorIdentity',
+    'demonstrate_hadamard_abc_closure',
+    'xi_function',
+    'xi_normalized',
     # ATLAS³ Kato-Rellich exports
     'RelativeBoundednessTest',
     'verify_atlas3_kato_rellich',
