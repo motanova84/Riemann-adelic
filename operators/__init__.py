@@ -167,6 +167,11 @@ from .atlas3_kato_rellich import (
 )
 from .reduced_model_operator import ReducedModelOperator
 
+from .atlas3_spectral_analyzer import (
+    Atlas3SpectralAnalyzer,
+    run_atlas3_spectral_analysis,
+)
+
 __all__ = [
     'construct_H_psi',
     'compute_spectrum',
@@ -266,5 +271,8 @@ __all__ = [
     'RelativeBoundednessTest',
     'verify_atlas3_kato_rellich',
     # Reduced model operator exports
-    'ReducedModelOperator'
+    'ReducedModelOperator',
+    # ATLAS³ Spectral Analyzer exports
+    'Atlas3SpectralAnalyzer',
+    'run_atlas3_spectral_analysis',
 ]
