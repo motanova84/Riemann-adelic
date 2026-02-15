@@ -197,7 +197,7 @@ pytest tests/test_berry_keating_self_adjointness.py -v -m "not slow"
 pytest tests/test_berry_keating_self_adjointness.py::TestKatoRellichVerifier -v
 ```
 
-All tests pass with **33/33 passing** ✓
+All tests pass with **35/35 passing** ✓
 
 ## QCAL ∞³ Coherence
 

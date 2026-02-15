@@ -128,6 +128,9 @@ C_BERRY_KEATING = -3.9226461392 * np.pi  # ≈ -12.3218
 L_DEFAULT = 10.0  # Spatial domain [0, L]
 N_DEFAULT = 150  # Number of discretization points
 
+# Numerical tolerance parameters
+RESOLVENT_TOLERANCE_FACTOR = 1.5  # 50% tolerance for resolvent bound verification
+
 
 class BerryKeatingOperator:
     """
@@ -544,7 +547,7 @@ class ResolventControlVerifier:
                 theoretical_bound = 1.0 / abs(np.imag(lam))
                 
                 # Check if bound is satisfied (with numerical tolerance)
-                verified = resolvent_norm <= theoretical_bound * 1.5  # 50% tolerance
+                verified = resolvent_norm <= theoretical_bound * RESOLVENT_TOLERANCE_FACTOR
                 bounds_verified.append(verified)
             except np.linalg.LinAlgError:
                 # Singular matrix (shouldn't happen for Im(λ) ≠ 0)

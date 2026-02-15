@@ -57,7 +57,7 @@ def main():
     )
     total_methods = len(results['methods'])
     
-    print(f"Methods verified: {methods_verified}/{total_methods}")
+    print(f"Verification methods: {methods_verified}/{total_methods}")
     print()
     
     for method_name, method_results in results['methods'].items():

@@ -43,6 +43,9 @@ from operators.berry_keating_self_adjointness import (
     verify_berry_keating_self_adjointness,
 )
 
+# Test configuration constants
+MIN_VERIFICATION_SUCCESS_RATE = 0.8  # 80% of verification methods should pass
+
 
 class TestConstants:
     """Test fundamental constants."""
@@ -400,5 +403,5 @@ class TestExtendedVerification:
         )
         total_count = len(results['methods'])
         
-        # At least 80% of methods should verify
-        assert verified_count >= total_count * 0.8
+        # Use configured minimum success rate
+        assert verified_count >= total_count * MIN_VERIFICATION_SUCCESS_RATE
