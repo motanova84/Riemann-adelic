@@ -148,6 +148,7 @@ from .atlas3_kato_rellich import (
     RelativeBoundednessTest,
     verify_atlas3_kato_rellich,
 )
+from .reduced_model_operator import ReducedModelOperator
 
 __all__ = [
     'construct_H_psi',
@@ -236,4 +237,6 @@ __all__ = [
     # ATLAS³ Kato-Rellich exports
     'RelativeBoundednessTest',
     'verify_atlas3_kato_rellich',
+    # Reduced model operator exports
+    'ReducedModelOperator'
 ]
