@@ -167,6 +167,17 @@ from .atlas3_kato_rellich import (
 )
 from .reduced_model_operator import ReducedModelOperator
 
+from .berry_keating_self_adjointness import (
+    BerryKeatingOperator,
+    KatoRellichVerifier,
+    NelsonCommutatorVerifier,
+    VonNeumannExtensionVerifier,
+    ResolventControlVerifier,
+    SpectrumExclusionVerifier,
+    SpectralCorrespondenceVerifier,
+    verify_berry_keating_self_adjointness,
+    C_BERRY_KEATING,
+    HAS_MPMATH
 # FALLO Closures - Mathematical Derivations (Feb 2026)
 from .weyl_law_harmonic_oscillator import (
     WeylLawHarmonicOscillator,
@@ -286,6 +297,17 @@ __all__ = [
     'verify_atlas3_kato_rellich',
     # Reduced model operator exports
     'ReducedModelOperator',
+    # Berry-Keating self-adjointness exports
+    'BerryKeatingOperator',
+    'KatoRellichVerifier',
+    'NelsonCommutatorVerifier',
+    'VonNeumannExtensionVerifier',
+    'ResolventControlVerifier',
+    'SpectrumExclusionVerifier',
+    'SpectralCorrespondenceVerifier',
+    'verify_berry_keating_self_adjointness',
+    'C_BERRY_KEATING',
+    'HAS_MPMATH'
     # FALLO Closures (Feb 2026)
     'WeylLawHarmonicOscillator',
     'WeylLawResult',

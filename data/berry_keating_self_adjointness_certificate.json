@@ -1,0 +1,60 @@
+{
+  "N": 150,
+  "C": -12.323356293543084,
+  "methods": {
+    "self_adjointness": {
+      "hermiticity_error": 0.0,
+      "commutator_error": 0.0,
+      "max_imaginary_eigenvalue": 0.0,
+      "all_eigenvalues_real": true,
+      "self_adjoint": true,
+      "verified": true
+    },
+    "kato_rellich": {
+      "a": 0.22617361023627416,
+      "b": 54.301407557173384,
+      "residual": 15.69425664368702,
+      "verified": true,
+      "a_less_than_one": true
+    },
+    "nelson_commutator": {
+      "c": 0.7828587583676487,
+      "bounded": true,
+      "max_commutator_norm": 83.02978207702004,
+      "verified": true
+    },
+    "von_neumann": {
+      "n_plus": 0,
+      "n_minus": 0,
+      "all_eigenvalues_real": true,
+      "unique_extension": true,
+      "verified": true
+    },
+    "resolvent_control": {
+      "n_tests": 5,
+      "n_verified": 5,
+      "all_verified": true,
+      "verified": true
+    },
+    "spectrum_exclusion": {
+      "n_eigenvalues_in_continuum": 0,
+      "continuum_excluded": true,
+      "verified": true,
+      "min_eigenvalue": -36.18389316568465,
+      "eigenvalues_near_quarter": []
+    },
+    "spectral_correspondence": {
+      "verified": true,
+      "correlation": 0.8941073465344342,
+      "mean_relative_error": 0.9956912399912885,
+      "max_relative_error": 1.1811092186363004,
+      "n_zeros_compared": 30
+    }
+  },
+  "all_verified": true,
+  "qcal_signature": "\u2234\ud80c\udc80\u03a9\u221e\u00b3\u03a6",
+  "qcal_constants": {
+    "F0": 141.7001,
+    "C_QCAL": 244.36
+  }
+}
