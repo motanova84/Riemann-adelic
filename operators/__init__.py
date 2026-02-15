@@ -178,6 +178,7 @@ from .berry_keating_self_adjointness import (
     verify_berry_keating_self_adjointness,
     C_BERRY_KEATING,
     HAS_MPMATH
+)
 # FALLO Closures - Mathematical Derivations (Feb 2026)
 from .weyl_law_harmonic_oscillator import (
     WeylLawHarmonicOscillator,
@@ -195,6 +196,12 @@ from .scattering_wave_operators import (
     WaveOperatorResult,
     SMatrixResult,
     generate_scattering_certificate
+)
+from .logarithmic_resolvent_kernel import (
+    LogarithmicResolventKernel,
+    UnitaryTransformationVerifier,
+    ResolventKernelConfig,
+    generate_qcal_certificate as generate_logarithmic_resolvent_certificate
 )
 
 __all__ = [
@@ -320,4 +327,9 @@ __all__ = [
     'WaveOperatorResult',
     'SMatrixResult',
     'generate_scattering_certificate',
+    # Logarithmic resolvent kernel
+    'LogarithmicResolventKernel',
+    'UnitaryTransformationVerifier',
+    'ResolventKernelConfig',
+    'generate_logarithmic_resolvent_certificate',
 ]
