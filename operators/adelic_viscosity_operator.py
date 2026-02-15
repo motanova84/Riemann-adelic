@@ -219,7 +219,7 @@ class AdelicViscosityOperator:
         # Build Vladimirov Laplacians for each prime
         self.laplacians = {}
         for p in self.primes:
-            self.laplacians[p] = VladimirLaplacian(p, n_levels)
+            self.laplacians[p] = VladimirovLaplacian(p, n_levels)
         
         # Compute global spectral gap
         self.global_gap = self._compute_global_gap()
