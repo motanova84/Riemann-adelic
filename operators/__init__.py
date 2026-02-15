@@ -144,6 +144,11 @@ from .master_operator_o3 import MasterOperatorO3
 
 from .t_infinity_cubed import TInfinityCubedOperator
 
+from .atlas3_kato_rellich import (
+    RelativeBoundednessTest,
+    verify_atlas3_kato_rellich,
+)
+
 __all__ = [
     'construct_H_psi',
     'compute_spectrum',
@@ -227,5 +232,8 @@ __all__ = [
     'verify_constant_imaginary',
     'get_standard_examples',
     'analyze_spectral_coordinates',
-    'validate_spectral_coordinates'
+    'validate_spectral_coordinates',
+    # ATLAS³ Kato-Rellich exports
+    'RelativeBoundednessTest',
+    'verify_atlas3_kato_rellich',
 ]
