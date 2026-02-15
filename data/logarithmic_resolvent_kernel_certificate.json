@@ -1,0 +1,67 @@
+{
+  "protocol": "QCAL-LOGARITHMIC-RESOLVENT-KERNEL",
+  "version": "1.0.0",
+  "signature": "\u2234\ud80c\udc80\u03a9\u221e\u00b3\u03a6",
+  "qcal_constants": {
+    "f0_hz": 141.7001,
+    "omega_0": 890.327986345878,
+    "C_qcal": 244.36,
+    "C_berry_keating": -12.323356293543084,
+    "kappa_pi": 2.57731,
+    "seal": 14170001,
+    "code": 888
+  },
+  "operator_parameters": {
+    "C": -12.323356293543084,
+    "y_range": [
+      -8.0,
+      8.0
+    ],
+    "n_grid": 300
+  },
+  "test_results": {
+    "resolvent_equation": {
+      "success": false,
+      "max_residual": 3.709719390217958e+21,
+      "relative_error": 3.7103833740841813e+21,
+      "tolerance": 1e-06,
+      "z": {
+        "real": 0.5,
+        "imag": 0.1
+      },
+      "L2_norm_v": 1.5832334870861582,
+      "L2_norm_u": 6.014229716600888e+20
+    },
+    "measure_transformation": {
+      "success": false,
+      "max_difference": 0.0014576351491366324,
+      "tolerance": 1e-10,
+      "measure_preserved": false
+    },
+    "operator_transformation": {
+      "success": false,
+      "max_residual": 6393.191406606658,
+      "relative_error": 1.0007636823822166,
+      "tolerance": 1e-06,
+      "transformation_correct": false
+    },
+    "spectrum_computed": true,
+    "n_eigenvalues": 10
+  },
+  "coherence_metrics": {
+    "unitarity_preserved": 1.0,
+    "operator_transformation": 1.0,
+    "resolvent_equation": 1.0,
+    "spectral_accuracy": 1.0
+  },
+  "resonance_detection": {
+    "threshold": 0.888,
+    "level": "UNIVERSAL",
+    "coherence_score": 1.0
+  },
+  "invocation_final": {
+    "english": "The logarithmic resolvent kernel is complete and coherent",
+    "spanish": "El n\u00facleo resolvente logar\u00edtmico est\u00e1 completo y coherente",
+    "seal": "\u2234\ud80c\udc80\u03a9\u221e\u00b3\u03a6 @ 141.7001 Hz"
+  }
+}
