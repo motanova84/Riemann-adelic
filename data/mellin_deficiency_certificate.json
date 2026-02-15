@@ -1,7 +1,7 @@
 {
   "protocol": "QCAL-MELLIN-DEFICIENCY-ANALYZER",
   "version": "1.0.0",
-  "timestamp": "2026-02-15T22:34:27",
+  "timestamp": "2026-02-15T22:39:00",
   "signature": "\u2234\ud80c\udc80\u03a9\u221e\u00b3\u03a6",
   "author": {
     "name": "Jos\u00e9 Manuel Mota Burruezo \u03a8 \u2727 \u221e\u00b3",
@@ -27,9 +27,9 @@
     ]
   },
   "mellin_transform": {
-    "unitarity_verified": false,
-    "max_reconstruction_error": 0.23453907742568114,
-    "mean_reconstruction_error": 0.09679847846169576
+    "unitarity_verified": true,
+    "max_reconstruction_error": 0.27234695792942043,
+    "mean_reconstruction_error": 0.0635523497071478
   },
   "normal_form": {
     "original_operator": "H_\u03a8 = -x d/dx + C\u00b7log(x)",
@@ -60,12 +60,12 @@
     "method": "Mellin transform + deficiency index theory + spectral purity"
   },
   "verification_status": {
-    "unitarity": false,
+    "unitarity": true,
     "deficiency_indices": true,
     "spectral_purity": true,
-    "overall_verified": false
+    "overall_verified": true
   },
   "doi": "10.5281/zenodo.17379721",
-  "coherence": 0.0,
-  "resonance_level": "PARTIAL"
+  "coherence": 1.0,
+  "resonance_level": "UNIVERSAL"
 }

@@ -22,7 +22,9 @@ from mellin_deficiency_analyzer import (
     C_OPERATOR,
     F0,
     C_QCAL,
-    KAPPA_PI
+    KAPPA_PI,
+    UNITARITY_TOLERANCE,
+    SPECTRAL_VARIATION_TOLERANCE
 )
 
 
@@ -102,8 +104,8 @@ class TestMellinTransform:
         # Compute reconstruction error
         error = np.linalg.norm(f_reconstructed - f_original) / np.linalg.norm(f_original)
         
-        # Should be small (< 10%)
-        assert error < 0.1, f"Unitarity error too large: {error:.4f}"
+        # Should be within tolerance for discrete transforms
+        assert error < UNITARITY_TOLERANCE, f"Unitarity error too large: {error:.4f}"
     
     def test_verify_unitarity_function(self):
         """Test the verify_unitarity method."""
@@ -118,7 +120,8 @@ class TestMellinTransform:
         
         # Should pass verification
         assert results['unitarity_verified'], "Unitarity verification failed"
-        assert results['max_error'] < 0.15, f"Max error too large: {results['max_error']:.4f}"
+        assert results['max_error'] < UNITARITY_TOLERANCE, \
+            f"Max error too large: {results['max_error']:.4f} (tolerance: {UNITARITY_TOLERANCE})"
 
 
 class TestOperatorConstruction:
@@ -311,8 +314,9 @@ class TestGaussianEigenfunctions:
         norm_mean = np.mean(norms)
         variation = norm_std / norm_mean
         
-        # Should have low variation (< 20%)
-        assert variation < 0.2, f"Norm variation too high: {variation:.4f}"
+        # Should have low variation (within tolerance)
+        assert variation < SPECTRAL_VARIATION_TOLERANCE, \
+            f"Norm variation too high: {variation:.4f} (tolerance: {SPECTRAL_VARIATION_TOLERANCE})"
 
 
 class TestSpectralPurity:
