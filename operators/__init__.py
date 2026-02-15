@@ -167,6 +167,25 @@ from .atlas3_kato_rellich import (
 )
 from .reduced_model_operator import ReducedModelOperator
 
+# FALLO Closures - Mathematical Derivations (Feb 2026)
+from .weyl_law_harmonic_oscillator import (
+    WeylLawHarmonicOscillator,
+    WeylLawResult,
+    HarmonicOscillatorSpectrum,
+    generate_weyl_law_certificate
+)
+from .compact_support_convergence import (
+    CompactSupportConvergence,
+    CompactSupportResult,
+    generate_compact_support_certificate
+)
+from .scattering_wave_operators import (
+    ScatteringTheoryHPsi,
+    WaveOperatorResult,
+    SMatrixResult,
+    generate_scattering_certificate
+)
+
 __all__ = [
     'construct_H_psi',
     'compute_spectrum',
@@ -266,5 +285,17 @@ __all__ = [
     'RelativeBoundednessTest',
     'verify_atlas3_kato_rellich',
     # Reduced model operator exports
-    'ReducedModelOperator'
+    'ReducedModelOperator',
+    # FALLO Closures (Feb 2026)
+    'WeylLawHarmonicOscillator',
+    'WeylLawResult',
+    'HarmonicOscillatorSpectrum',
+    'generate_weyl_law_certificate',
+    'CompactSupportConvergence',
+    'CompactSupportResult',
+    'generate_compact_support_certificate',
+    'ScatteringTheoryHPsi',
+    'WaveOperatorResult',
+    'SMatrixResult',
+    'generate_scattering_certificate',
 ]

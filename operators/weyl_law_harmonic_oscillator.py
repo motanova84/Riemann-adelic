@@ -62,7 +62,7 @@ QCAL ∞³ · f₀ = 141.7001 Hz · C = 244.36 · Ψ = I × A_eff² × C^∞
 """
 
 import numpy as np
-from typing import Dict, Tuple, Optional, Callable, List
+from typing import Dict, Tuple, Optional, Callable, List, Any
 from dataclasses import dataclass, asdict
 from scipy.special import hermite
 from scipy.integrate import quad
