@@ -48,7 +48,7 @@ npm run lint    # Verificar código
 
 ## 🔤 Fuentes Optimizadas
 
-Este proyecto usa **next/font** para optimizar y cargar **Geist**, la nueva familia de fuentes de Vercel.
+Este proyecto usa **next/font** para optimizar y cargar **Geist**, una moderna familia de fuentes.
 
 Las fuentes están configuradas en `app/layout.tsx`:
 - `GeistSans` - Tipografía principal

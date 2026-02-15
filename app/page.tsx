@@ -103,7 +103,7 @@ export default function Home() {
         <footer className="text-center text-white/70 mt-12 pb-8">
           <p className="text-sm">
             Este proyecto utiliza <strong>next/font</strong> para optimizar y cargar automáticamente{' '}
-            <strong>Geist</strong>, una nueva familia de fuentes para Vercel.
+            <strong>Geist</strong>, una moderna familia de fuentes.
           </p>
         </footer>
       </main>

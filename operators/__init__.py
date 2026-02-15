@@ -161,6 +161,12 @@ from .hadamard_abc_coherence import (
 )
 
 # All exports
+from .atlas3_kato_rellich import (
+    RelativeBoundednessTest,
+    verify_atlas3_kato_rellich,
+)
+from .reduced_model_operator import ReducedModelOperator
+
 __all__ = [
     'construct_H_psi',
     'compute_spectrum',
@@ -256,4 +262,9 @@ __all__ = [
     'demonstrate_hadamard_abc_closure',
     'xi_function',
     'xi_normalized',
+    # ATLAS³ Kato-Rellich exports
+    'RelativeBoundednessTest',
+    'verify_atlas3_kato_rellich',
+    # Reduced model operator exports
+    'ReducedModelOperator'
 ]
