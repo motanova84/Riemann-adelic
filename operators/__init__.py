@@ -144,6 +144,10 @@ from .master_operator_o3 import MasterOperatorO3
 
 from .t_infinity_cubed import TInfinityCubedOperator
 
+from .atlas3_kato_rellich import (
+    RelativeBoundednessTest,
+    verify_atlas3_kato_rellich,
+)
 from .reduced_model_operator import ReducedModelOperator
 
 __all__ = [
@@ -230,6 +234,9 @@ __all__ = [
     'get_standard_examples',
     'analyze_spectral_coordinates',
     'validate_spectral_coordinates',
+    # ATLAS³ Kato-Rellich exports
+    'RelativeBoundednessTest',
+    'verify_atlas3_kato_rellich',
     # Reduced model operator exports
     'ReducedModelOperator'
 ]
