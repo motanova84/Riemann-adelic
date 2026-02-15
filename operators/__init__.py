@@ -178,6 +178,23 @@ from .berry_keating_self_adjointness import (
     verify_berry_keating_self_adjointness,
     C_BERRY_KEATING,
     HAS_MPMATH
+)
+
+# Three-Space Realization - ETAPA 2 (Feb 2026)
+from .three_space_realization import (
+    OriginalSpace,
+    IntermediateSpace,
+    WeightedSpace,
+    TransformationU1,
+    TransformationU2,
+    ComposedTransformation,
+    OperatorH,
+    OperatorH0,
+    HankelOperatorPrep,
+    ThreeSpaceRealization,
+    verify_three_space_realization
+)
+
 # FALLO Closures - Mathematical Derivations (Feb 2026)
 from .weyl_law_harmonic_oscillator import (
     WeylLawHarmonicOscillator,
@@ -307,7 +324,19 @@ __all__ = [
     'SpectralCorrespondenceVerifier',
     'verify_berry_keating_self_adjointness',
     'C_BERRY_KEATING',
-    'HAS_MPMATH'
+    'HAS_MPMATH',
+    # Three-Space Realization exports (ETAPA 2)
+    'OriginalSpace',
+    'IntermediateSpace',
+    'WeightedSpace',
+    'TransformationU1',
+    'TransformationU2',
+    'ComposedTransformation',
+    'OperatorH',
+    'OperatorH0',
+    'HankelOperatorPrep',
+    'ThreeSpaceRealization',
+    'verify_three_space_realization',
     # FALLO Closures (Feb 2026)
     'WeylLawHarmonicOscillator',
     'WeylLawResult',
