@@ -123,7 +123,9 @@ class TestZetaZeroFetcher:
         fetcher = ZetaZeroFetcher(precision=30)
         zeros = fetcher.get_zeros(n_zeros=5)
         
-        # Known first 5 zeros (approximate)
+        # Known first 5 zeros (approximate values)
+        # Reference: Odlyzko's tables of Riemann zeros
+        # https://www.dtc.umn.edu/~odlyzko/zeta_tables/
         known_zeros = [14.134725, 21.022040, 25.010858, 30.424876, 32.935062]
         
         for i, known in enumerate(known_zeros):

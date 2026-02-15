@@ -53,7 +53,19 @@ QCAL_SIGNATURE = "∴𓂀Ω∞³Φ"
 
 @dataclass
 class SpectralIdentityResult:
-    """Resultado de verificación de identidad espectral."""
+    """
+    Resultado de verificación de identidad espectral.
+    
+    Attributes:
+        gamma_from_H: Valores γₙ extraídos de autovalores de H_Ψ vía γₙ = √(λₙ - 1/4)
+        gamma_zeta: Partes imaginarias de ceros de Riemann ζ(1/2 + iγₙ) = 0
+        eigenvalues: Espectro completo {λₙ} del operador H_Ψ
+        mean_rel_error: Error relativo medio |γ(H) - γ(ζ)| / γ(ζ)
+        max_rel_error: Error relativo máximo sobre todos los γₙ
+        matrix_size: Dimensión N de la matriz H_Ψ
+        verification_passed: True si error medio < 0.1% (criterio de validación)
+        qcal_coherent: True si QCAL_COHERENCE ≈ 244.36 (validación de coherencia)
+    """
     gamma_from_H: np.ndarray
     gamma_zeta: np.ndarray
     eigenvalues: np.ndarray
