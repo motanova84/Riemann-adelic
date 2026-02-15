@@ -106,7 +106,7 @@ Modify `app/page.tsx` - changes auto-reload!
 
 ## Font Optimization
 
-✅ **Requirement Fulfilled**: This project uses `next/font` to automatically optimize and load **Geist**, Vercel's new font family.
+✅ **Requirement Fulfilled**: This project uses `next/font` to automatically optimize and load **Geist**, a modern font family.
 
 Implementation in `app/layout.tsx`:
 ```typescript
@@ -152,19 +152,9 @@ The application is ready for:
 1. ✏️ Content customization in `app/page.tsx`
 2. 📄 Additional pages in `app/` directory
 3. 🔌 API routes in `app/api/`
-4. 🚀 Deployment to Vercel
-5. 🔗 Integration with Python validation scripts
+4. 🔗 Integration with Python validation scripts
 
 ## Deployment
-
-### Vercel (Recommended)
-```bash
-# Install Vercel CLI
-npm i -g vercel
-
-# Deploy
-vercel
-```
 
 ### Manual Deployment
 ```bash

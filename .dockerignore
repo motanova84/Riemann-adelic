@@ -34,9 +34,8 @@ monitoring/
 *.pdf
 validation.ipynb
 
-# Vercel and web
+# Web
 public/
-vercel.json
 
 # Other build artifacts
 zeros/

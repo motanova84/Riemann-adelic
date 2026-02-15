@@ -20,7 +20,7 @@ Abre [http://localhost:3000](http://localhost:3000) con tu navegador para ver el
 
 Puedes empezar a editar la página modificando `app/page.tsx`. La página se actualiza automáticamente a medida que editas el archivo.
 
-Este proyecto utiliza [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) para optimizar y cargar automáticamente **Geist**, una nueva familia de fuentes para Vercel.
+Este proyecto utiliza [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) para optimizar y cargar automáticamente **Geist**, una nueva familia de fuentes.
 
 ## 📁 Estructura del Proyecto
 
@@ -43,7 +43,6 @@ Este proyecto utiliza [`next/font`](https://nextjs.org/docs/basic-features/font-
 - **Lenguaje**: TypeScript
 - **Estilos**: Tailwind CSS
 - **Fuentes**: Geist (Sans y Mono) optimizadas con next/font
-- **Despliegue**: Compatible con Vercel
 
 ## 📝 Scripts Disponibles
 
@@ -73,12 +72,6 @@ Para aprender más sobre Next.js, consulta los siguientes recursos:
 - [Documentación de Next.js](https://nextjs.org/docs) - características y API de Next.js
 - [Tutorial Interactivo de Next.js](https://nextjs.org/learn) - tutorial interactivo de Next.js
 - [Repositorio de Next.js en GitHub](https://github.com/vercel/next.js/) - feedback y contribuciones bienvenidas
-
-## 🚀 Despliegue en Vercel
-
-La forma más fácil de desplegar tu aplicación Next.js es usar la [Plataforma Vercel](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) de los creadores de Next.js.
-
-Consulta la [documentación de despliegue de Next.js](https://nextjs.org/docs/deployment) para más detalles.
 
 ## 🔗 Conexión con el Proyecto Principal
 
