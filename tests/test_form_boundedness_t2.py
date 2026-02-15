@@ -143,7 +143,7 @@ class TestOperatorCalculations:
         T_psi = framework.compute_T_operator(psi, x_test)
         
         # T should return a complex number (has -i factor)
-        assert isinstance(T_psi, complex), "T operator should return complex value"
+        assert np.iscomplexobj(T_psi), "T operator should return complex value"
         
         # For this specific function, we can check it's not zero
         assert abs(T_psi) > 1e-10, "T operator should give non-zero result"
