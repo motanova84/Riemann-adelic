@@ -65,7 +65,7 @@ def verify_rh_final_lean() -> dict:
     
     # Extract the riemann_hypothesis theorem proof
     rh_proof_pattern = re.compile(
-        r'theorem riemann_hypothesis\s*:.*?(?=\n(?:theorem|axiom|def|lemma|end|#))',
+        r'theorem riemann_hypothesis\s*:.*?(?=\n(?:theorem|axiom|def|lemma|end|section|variable|#|$))',
         re.DOTALL
     )
     rh_match = rh_proof_pattern.search(content)
@@ -73,7 +73,10 @@ def verify_rh_final_lean() -> dict:
     rh_has_sorry = False
     if rh_match:
         rh_proof = rh_match.group(0)
-        if re.search(r'\bsorry\b', rh_proof) and not rh_proof.startswith('--'):
+        # Remove comments before checking for sorry
+        rh_proof_no_comments = re.sub(r'--.*$', '', rh_proof, flags=re.MULTILINE)
+        rh_proof_no_strings = re.sub(r'"[^"]*"', '', rh_proof_no_comments)
+        if re.search(r'\bsorry\b', rh_proof_no_strings):
             rh_has_sorry = True
     
     # Check 5: Count definitions

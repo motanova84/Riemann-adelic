@@ -30,9 +30,13 @@ def check_lean_syntax(file_path: Path) -> dict:
         issues.append(f"Namespace mismatch: {namespace_opens} opens, {namespace_ends} ends")
     
     # Check 2: Balanced parentheses, brackets, braces
-    paren_count = content.count('(') - content.count(')')
-    bracket_count = content.count('[') - content.count(']')
-    brace_count = content.count('{') - content.count('}')
+    # Remove comments and strings first
+    content_no_comments = re.sub(r'--.*$', '', content, flags=re.MULTILINE)
+    content_no_strings = re.sub(r'"[^"]*"', '', content_no_comments)
+    
+    paren_count = content_no_strings.count('(') - content_no_strings.count(')')
+    bracket_count = content_no_strings.count('[') - content_no_strings.count(']')
+    brace_count = content_no_strings.count('{') - content_no_strings.count('}')
     
     if paren_count != 0:
         issues.append(f"Unbalanced parentheses: {paren_count}")
@@ -51,7 +55,10 @@ def check_lean_syntax(file_path: Path) -> dict:
         # Get next 10 lines after theorem declaration
         start_pos = match.end()
         next_chars = content[start_pos:start_pos+200]
-        if 'by' not in next_chars and ':=' not in next_chars:
+        # Remove comments and strings before checking
+        next_chars_clean = re.sub(r'--.*$', '', next_chars, flags=re.MULTILINE)
+        next_chars_clean = re.sub(r'"[^"]*"', '', next_chars_clean)
+        if re.search(r'\bby\b', next_chars_clean) is None and ':=' not in next_chars_clean:
             incomplete_defs.append(f"Theorem '{theorem_name}' may be incomplete (no 'by' or ':=')")
     
     # Check 4: Import statements at top
