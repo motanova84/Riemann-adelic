@@ -30,21 +30,24 @@ def verify_rh_final_lean() -> dict:
         }
     
     content = lean_file.read_text()
-    lines = content.split('\n')
+    # Remove multi-line comments (/-  ... -/)
+    content_no_ml_comments = re.sub(r'/-.*?-/', '', content, flags=re.DOTALL)
+    lines = content_no_ml_comments.split('\n')
     
-    # Check 1: Count actual sorry statements (not in comments/strings)
     sorry_count = 0
     sorry_lines = []
     
     for i, line in enumerate(lines, 1):
-        # Skip comments
+        # Skip single-line comments
         if line.strip().startswith('--'):
             continue
-        # Remove strings from consideration
+        # Remove strings and inline comments from consideration
         line_no_strings = re.sub(r'"[^"]*"', '', line)
         line_no_strings = re.sub(r"'[^']*'", '', line_no_strings)
+        # Remove inline comments (everything after --)
+        line_no_comments = re.sub(r'--.*$', '', line_no_strings)
         # Check for actual sorry tactics
-        if re.search(r'\bsorry\b', line_no_strings):
+        if re.search(r'\bsorry\b', line_no_comments):
             sorry_count += 1
             sorry_lines.append((i, line.strip()))
     

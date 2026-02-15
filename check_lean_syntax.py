@@ -49,15 +49,26 @@ def check_lean_syntax(file_path: Path) -> dict:
     incomplete_defs = []
     
     # Check for theorems without 'by' or ':='
-    theorem_pattern = re.compile(r'^(theorem|lemma)\s+(\w+)\s*:.*?$', re.MULTILINE)
+    theorem_pattern = re.compile(r'^(theorem|lemma)\s+(\w+)\s*:', re.MULTILINE)
     for match in theorem_pattern.finditer(content):
         theorem_name = match.group(2)
-        # Get next 10 lines after theorem declaration
+        # Get content until next top-level declaration (more robust than 200 chars)
         start_pos = match.end()
-        next_chars = content[start_pos:start_pos+200]
+        # Look for next theorem, axiom, def, etc. or end of content
+        next_decl = re.search(
+            r'\n(theorem|lemma|axiom|def|structure|class|instance|namespace|end)\s',
+            content[start_pos:start_pos+2000]  # Increased limit but still bounded
+        )
+        if next_decl:
+            next_chars = content[start_pos:start_pos + next_decl.start()]
+        else:
+            next_chars = content[start_pos:start_pos+500]  # Fallback
+        
         # Remove comments and strings before checking
         next_chars_clean = re.sub(r'--.*$', '', next_chars, flags=re.MULTILINE)
+        next_chars_clean = re.sub(r'/-.*?-/', '', next_chars_clean, flags=re.DOTALL)
         next_chars_clean = re.sub(r'"[^"]*"', '', next_chars_clean)
+        
         if re.search(r'\bby\b', next_chars_clean) is None and ':=' not in next_chars_clean:
             incomplete_defs.append(f"Theorem '{theorem_name}' may be incomplete (no 'by' or ':=')")
     
