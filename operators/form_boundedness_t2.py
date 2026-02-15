@@ -150,14 +150,16 @@ class FormBoundednessT2:
         norm_psi_sq, _ = quad(integrand_x, self.x_min, self.x_max,
                              epsabs=self.precision, epsrel=self.precision)
         
-        # Compute ‖φ‖² in transformed coordinates
-        # φ(y) = e^(y/2) ψ(e^y)
+        # Compute ‖φ‖² in transformed coordinates on the corresponding y-domain
+        # φ(y) = e^(y/2) ψ(e^y), with y = log(x) so that x ∈ [x_min, x_max]
         def integrand_y(y):
             x = np.exp(y)
             phi_val = np.sqrt(x) * psi(x)
             return abs(phi_val)**2
         
-        norm_phi_sq, _ = quad(integrand_y, self.y_min, self.y_max,
+        y_min_eff = np.log(self.x_min)
+        y_max_eff = np.log(self.x_max)
+        norm_phi_sq, _ = quad(integrand_y, y_min_eff, y_max_eff,
                              epsabs=self.precision, epsrel=self.precision)
         
         error = abs(norm_psi_sq - norm_phi_sq)
