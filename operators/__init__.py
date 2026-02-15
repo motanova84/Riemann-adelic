@@ -48,6 +48,12 @@ from .riemann_operator import (
 
 from .discrete_symmetry_operator import DiscreteSymmetryOperator
 
+from .mellin_deficiency_analyzer import (
+    MellinDeficiencyAnalyzer,
+    C_OPERATOR,
+    ZETA_PRIME_HALF as MELLIN_ZETA_PRIME_HALF
+)
+
 from .operator_connection import OperatorConnection
 
 from .noetic_operator import (
@@ -181,6 +187,10 @@ __all__ = [
     'LAMBDA_0',
     'C_UNIVERSAL',
     'DiscreteSymmetryOperator',
+    # Mellin deficiency analyzer exports
+    'MellinDeficiencyAnalyzer',
+    'C_OPERATOR',
+    'MELLIN_ZETA_PRIME_HALF',
     'OperatorConnection',
     # Noetic operator exports
     'build_noetic_operator',
