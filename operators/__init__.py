@@ -165,6 +165,10 @@ from .atlas3_kato_rellich import (
     RelativeBoundednessTest,
     verify_atlas3_kato_rellich,
 )
+from .h_psi_self_adjoint_corrected import (
+    HPsiSelfAdjointCorrected,
+    verify_h_psi_corrected,
+)
 from .reduced_model_operator import ReducedModelOperator
 
 __all__ = [
@@ -265,6 +269,9 @@ __all__ = [
     # ATLAS³ Kato-Rellich exports
     'RelativeBoundednessTest',
     'verify_atlas3_kato_rellich',
+    # H_Ψ Self-Adjoint Corrected exports (FALLOS 1-3 resolution)
+    'HPsiSelfAdjointCorrected',
+    'verify_h_psi_corrected',
     # Reduced model operator exports
     'ReducedModelOperator'
 ]
