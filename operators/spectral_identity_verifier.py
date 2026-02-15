@@ -71,11 +71,11 @@ class SpectralIdentityResult:
             "eigenvalues": self.eigenvalues.tolist(),
             "mean_rel_error": float(self.mean_rel_error),
             "max_rel_error": float(self.max_rel_error),
-            "matrix_size": self.matrix_size,
-            "verification_passed": self.verification_passed,
-            "qcal_coherent": self.qcal_coherent,
-            "qcal_base_frequency": QCAL_BASE_FREQUENCY,
-            "qcal_coherence": QCAL_COHERENCE,
+            "matrix_size": int(self.matrix_size),
+            "verification_passed": bool(self.verification_passed),
+            "qcal_coherent": bool(self.qcal_coherent),
+            "qcal_base_frequency": float(QCAL_BASE_FREQUENCY),
+            "qcal_coherence": float(QCAL_COHERENCE),
             "protocol": "QCAL-SPECTRAL-IDENTITY v1.0",
             "seal": QCAL_SIGNATURE
         }
