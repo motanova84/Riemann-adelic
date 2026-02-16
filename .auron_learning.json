@@ -1,0 +1,18 @@
+{
+  "patterns": {
+    "f5571633": "spectral_theorem",
+    "5940a97f": "correspondence_bij",
+    "4873c470": "spectral_theorem",
+    "a0fd8fa4": "spectral_theorem",
+    "dcc2b9a4": "funext"
+  },
+  "success_rate": {
+    "spectral_theorem": 3,
+    "correspondence_bij": 1,
+    "funext": 1
+  },
+  "total_attempts": 5,
+  "total_success": 5,
+  "repos_used": [],
+  "last_updated": "2026-02-16T22:45:20.904315"
+}
