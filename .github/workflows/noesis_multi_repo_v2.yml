@@ -1,0 +1,222 @@
+name: 🧠 NOESIS CEREBRAL V2.0 - Multi-Repo Sorry Elimination
+
+on:
+  schedule:
+    # Ejecuta cada 2 horas
+    - cron: '0 */2 * * *'
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Modo dry-run (solo simulación)'
+        required: false
+        default: 'false'
+      max_changes:
+        description: 'Máximo número de cambios por ciclo'
+        required: false
+        default: '20'
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  noesis_multi_repo:
+    name: 🌐 NOESIS-AMDA-AURON Pipeline
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    
+    steps:
+      - name: 📥 Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: 🐍 Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      
+      - name: 📦 Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests
+      
+      - name: 🔧 Setup Lean 4
+        run: |
+          curl https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -sSf | sh -s -- -y
+          echo "$HOME/.elan/bin" >> $GITHUB_PATH
+          
+      - name: 🏗️ Build Lean Project (Baseline)
+        run: |
+          cd formalization/lean
+          lake build || echo "Baseline build may have errors"
+      
+      - name: 🌐 NOESIS: Sincronizar Repositorios
+        id: noesis
+        run: |
+          python .github/scripts/noesis_orchestrator.py \
+            .github/scripts/multi_repo_config.json
+          
+          if [ -f noesis_sync_report.json ]; then
+            echo "noesis_success=true" >> $GITHUB_OUTPUT
+          else
+            echo "noesis_success=false" >> $GITHUB_OUTPUT
+          fi
+      
+      - name: 🔍 AMDA: Analizar Sorries
+        id: amda
+        if: steps.noesis.outputs.noesis_success == 'true'
+        run: |
+          python .github/scripts/amda_analyzer.py \
+            formalization/lean \
+            amda_report.json
+          
+          if [ -f amda_report.json ]; then
+            total_sorries=$(jq -r '.summary.total_sorries' amda_report.json)
+            echo "total_sorries=$total_sorries" >> $GITHUB_OUTPUT
+            echo "amda_success=true" >> $GITHUB_OUTPUT
+          else
+            echo "amda_success=false" >> $GITHUB_OUTPUT
+          fi
+      
+      - name: 🤖 AURON: Eliminar Sorries
+        id: auron
+        if: steps.amda.outputs.amda_success == 'true'
+        run: |
+          # Configurar dry-run si se solicitó
+          if [ "${{ github.event.inputs.dry_run }}" = "true" ]; then
+            export AURON_DRY_RUN=1
+          fi
+          
+          # Configurar max changes
+          max_changes="${{ github.event.inputs.max_changes }}"
+          if [ -z "$max_changes" ]; then
+            max_changes=20
+          fi
+          
+          python .github/scripts/auron_neural_multi_v2.py \
+            amda_report.json \
+            auron_results.json
+          
+          if [ -f auron_results.json ]; then
+            success=$(jq -r '.success' auron_results.json)
+            fail=$(jq -r '.fail' auron_results.json)
+            echo "success=$success" >> $GITHUB_OUTPUT
+            echo "fail=$fail" >> $GITHUB_OUTPUT
+            echo "auron_success=true" >> $GITHUB_OUTPUT
+          else
+            echo "auron_success=false" >> $GITHUB_OUTPUT
+          fi
+      
+      - name: 📊 Generar Métricas
+        id: metrics
+        if: steps.auron.outputs.auron_success == 'true'
+        run: |
+          python .github/scripts/metrics_generator.py \
+            amda_report.json \
+            auron_results.json \
+            noesis_sync_report.json
+          
+          # Leer mensaje de commit si existe
+          if [ -f commit_msg_*.txt ]; then
+            commit_msg_file=$(ls -t commit_msg_*.txt | head -1)
+            echo "commit_msg_file=$commit_msg_file" >> $GITHUB_OUTPUT
+          fi
+      
+      - name: 💾 Commit Cambios
+        if: steps.auron.outputs.success != '0' && github.event.inputs.dry_run != 'true'
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          
+          # Añadir archivos modificados
+          git add formalization/lean/**/*.lean
+          git add .auron_learning.json || true
+          
+          # Usar mensaje de commit generado
+          commit_msg_file="${{ steps.metrics.outputs.commit_msg_file }}"
+          if [ -f "$commit_msg_file" ]; then
+            git commit -F "$commit_msg_file" || echo "No changes to commit"
+          else
+            git commit -m "🧠 NOESIS V2.0: Eliminados ${{ steps.auron.outputs.success }} sorries" || echo "No changes to commit"
+          fi
+      
+      - name: 📤 Push Cambios
+        if: steps.auron.outputs.success != '0' && github.event.inputs.dry_run != 'true'
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.ref }}
+      
+      - name: 📋 Crear PR (si hay cambios)
+        if: steps.auron.outputs.success != '0' && github.event.inputs.dry_run != 'true'
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "🧠 NOESIS V2.0: Ciclo autónomo de eliminación"
+          title: "🧠 NOESIS V2.0: ${{ steps.auron.outputs.success }} sorries eliminados"
+          body: |
+            ## 🧠 NOESIS CEREBRAL V2.0 - Eliminación Autónoma
+            
+            **Ciclo:** ${{ github.run_number }}
+            **Timestamp:** ${{ github.event.repository.updated_at }}
+            
+            ### 📊 Resultados
+            
+            - ✅ Sorries eliminados: ${{ steps.auron.outputs.success }}
+            - ❌ Intentos fallidos: ${{ steps.auron.outputs.fail }}
+            - 📚 Total sorries: ${{ steps.amda.outputs.total_sorries }}
+            
+            ### 📈 Progreso
+            
+            Ver métricas detalladas en `metrics_report.md`
+            
+            ---
+            *Generado automáticamente por NOESIS CEREBRAL V2.0*
+            **Frecuencia fundamental:** 141.7001 Hz
+          branch: noesis-v2-auto-${{ github.run_number }}
+          delete-branch: true
+      
+      - name: 📊 Upload Artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: noesis-v2-reports-${{ github.run_number }}
+          path: |
+            amda_report.json
+            auron_results.json
+            noesis_sync_report.json
+            metrics_report.md
+            metrics.json
+            auron_neural_multi.log
+            commit_msg_*.txt
+          retention-days: 30
+      
+      - name: 📝 Resumen del Workflow
+        if: always()
+        run: |
+          echo "## 🧠 NOESIS CEREBRAL V2.0 - Resumen" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          
+          if [ "${{ steps.noesis.outputs.noesis_success }}" = "true" ]; then
+            echo "✅ **NOESIS:** Repositorios sincronizados correctamente" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "❌ **NOESIS:** Error en sincronización" >> $GITHUB_STEP_SUMMARY
+          fi
+          
+          if [ "${{ steps.amda.outputs.amda_success }}" = "true" ]; then
+            echo "✅ **AMDA:** ${{ steps.amda.outputs.total_sorries }} sorries analizados" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "❌ **AMDA:** Error en análisis" >> $GITHUB_STEP_SUMMARY
+          fi
+          
+          if [ "${{ steps.auron.outputs.auron_success }}" = "true" ]; then
+            echo "✅ **AURON:** ${{ steps.auron.outputs.success }} éxitos, ${{ steps.auron.outputs.fail }} fallos" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "❌ **AURON:** Error en ejecución" >> $GITHUB_STEP_SUMMARY
+          fi
+          
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "---" >> $GITHUB_STEP_SUMMARY
+          echo "*Generado por NOESIS CEREBRAL V2.0* 🧠" >> $GITHUB_STEP_SUMMARY

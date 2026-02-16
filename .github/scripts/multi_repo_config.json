@@ -1,0 +1,46 @@
+{
+  "version": "2.0",
+  "description": "Configuración de repositorios para NOESIS CEREBRAL V2.0",
+  "repositories": [
+    {
+      "name": "141Hz",
+      "url": "https://github.com/motanova84/141Hz.git",
+      "branch": "main",
+      "description": "Frecuencia fundamental 141.7001 Hz"
+    },
+    {
+      "name": "adelic-bsd",
+      "url": "https://github.com/motanova84/adelic-bsd.git",
+      "branch": "main",
+      "description": "Birch and Swinnerton-Dyer conjecture con métodos adélicos"
+    },
+    {
+      "name": "3D-Navier-Stokes",
+      "url": "https://github.com/motanova84/3D-Navier-Stokes.git",
+      "branch": "main",
+      "description": "Solución al problema de Navier-Stokes"
+    },
+    {
+      "name": "Ramsey",
+      "url": "https://github.com/motanova84/Ramsey.git",
+      "branch": "main",
+      "description": "Teoría de Ramsey y combinatoria"
+    },
+    {
+      "name": "P-NP",
+      "url": "https://github.com/motanova84/P-NP.git",
+      "branch": "main",
+      "description": "Problema P vs NP"
+    }
+  ],
+  "extraction_settings": {
+    "max_file_size": 1048576,
+    "timeout_per_repo": 60,
+    "max_proof_length": 500,
+    "max_statement_length": 200
+  },
+  "similarity_thresholds": {
+    "cross_repo_match": 0.3,
+    "pattern_reuse": 0.5
+  }
+}
