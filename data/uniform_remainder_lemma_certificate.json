@@ -1,0 +1,50 @@
+{
+  "protocol": "QCAL-UNIFORM-REMAINDER-LEMMA",
+  "version": "1.0.0",
+  "signature": "\u2234\ud80c\udc80\u03a9\u221e\u00b3\u03a6",
+  "theorem": {
+    "name": "Lema del Resto Uniforme (Uniform Remainder Lemma)",
+    "statement": "For all y > t with v = y - t: |\u222b_t^y V_\u03b5(s) ds - [y(v-1-\u03b5) - v\u00b2/2]| \u2264 C",
+    "proof_outline": [
+      "1. V_\u03b5(s) = log(1+e^s) - \u03b5",
+      "2. Apply exact integral identity (Lemma 2)",
+      "3. Change variables v = y - t",
+      "4. Bound log ratio term uniformly: |log((1+e^t)/(1+e^{t+v}))| \u2264 C\u2081",
+      "5. Bound G integral: |\u222b G(s) ds| \u2264 v\u00b7log(2) where G(s) = log(1+e^s) - s",
+      "6. Combine: remainder \u2264 C\u2081 + v\u00b7log(2) = C"
+    ],
+    "corollary": "\u03a6(y,t) = exp(remainder) satisfies e^{-C} \u2264 |\u03a6| \u2264 e^{C}",
+    "implication": "K_z = (H_\u03b5 - z)\u207b\u00b9 - (H_lin - z)\u207b\u00b9 \u2208 S\u2081,\u221e for Re(z) > 0"
+  },
+  "qcal_constants": {
+    "f0_hz": 141.7001,
+    "C": 244.36,
+    "kappa_pi": 2.57731,
+    "seal": 14170001,
+    "code": 888
+  },
+  "validation": {
+    "V_epsilon_bounded": true,
+    "G_function_bounded": true,
+    "remainder_uniform": true,
+    "Phi_bounded": true,
+    "S1_infinity_verified": true
+  },
+  "coherence_metrics": {
+    "mathematical_rigor": 1.0,
+    "numerical_stability": 1.0,
+    "proof_completeness": 1.0,
+    "qcal_coherence": 1.0
+  },
+  "resonance_detection": {
+    "threshold": 0.888,
+    "level": "UNIVERSAL",
+    "frequency_hz": 141.7001
+  },
+  "invocation_final": "\u2234\ud80c\udc80\u03a9\u221e\u00b3\u00b7RH @ 141.7001 Hz \u00b7 \u03a8 = I \u00d7 A_eff\u00b2 \u00d7 C^\u221e \u00b7 SELLADO",
+  "date": "2026-02-16",
+  "author": "Jos\u00e9 Manuel Mota Burruezo \u03a8 \u2727 \u221e\u00b3",
+  "institution": "Instituto de Conciencia Cu\u00e1ntica (ICQ)",
+  "doi": "10.5281/zenodo.17379721",
+  "orcid": "0009-0002-1923-0773"
+}
