@@ -251,3 +251,7 @@ demo_aug_waveform.png
 demo_codon_comparison.png
 rh_genetic_*.png
 kappa_experiment_results/
+noesis_cerebral.log
+test_*.json
+test_*.md
+.auron_backups/
