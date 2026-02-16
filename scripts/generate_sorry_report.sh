@@ -98,7 +98,15 @@ echo "" >> "$OUTPUT_FILE"
 echo "⚡ SORRIES TRIVIALES DETECTADOS (ejemplos)" >> "$OUTPUT_FILE"
 echo "==========================================" >> "$OUTPUT_FILE"
 echo "Reflexividad (x = x):" >> "$OUTPUT_FILE"
-grep -r ": .* = .* := by sorry" --include="*.lean" "$LEAN_DIR/" | grep -E "([a-z]) = \1" | head -5 >> "$OUTPUT_FILE"
+grep -r ": .* = .* := by sorry" --include="*.lean" "$LEAN_DIR/" | awk -F'=' '{
+  left = $1
+  right = $2
+  sub(/.*:/, "", left)
+  sub(/:=.*/, "", right)
+  gsub(/[[:space:]]*/, "", left)
+  gsub(/[[:space:]]*/, "", right)
+  if (left == right) print
+}' | head -5 >> "$OUTPUT_FILE"
 echo "" >> "$OUTPUT_FILE"
 echo "True trivial:" >> "$OUTPUT_FILE"
 grep -r ": True := by sorry" --include="*.lean" "$LEAN_DIR/" | head -5 >> "$OUTPUT_FILE"
