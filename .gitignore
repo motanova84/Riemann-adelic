@@ -251,3 +251,18 @@ demo_aug_waveform.png
 demo_codon_comparison.png
 rh_genetic_*.png
 kappa_experiment_results/
+
+# NOESIS CEREBRAL V2.0 generated files
+amda_report_v2.json
+amda_report_v2.md
+auron_results_v2.json
+auron_neural.log
+noesis_cerebral_v2.log
+amda_deep_v2.log
+commit_msg_*.txt
+noesis_cycle_metrics.md
+*.lean.bak
+*.lean.bak.*
+VICTORIA_FINAL.md
+# Keep learning history (persistent knowledge)
+!.auron_learning.json
