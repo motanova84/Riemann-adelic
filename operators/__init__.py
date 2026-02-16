@@ -179,6 +179,7 @@ from .berry_keating_self_adjointness import (
     C_BERRY_KEATING,
     HAS_MPMATH
 )
+
 # FALLO Closures - Mathematical Derivations (Feb 2026)
 from .weyl_law_harmonic_oscillator import (
     WeylLawHarmonicOscillator,
@@ -196,6 +197,13 @@ from .scattering_wave_operators import (
     WaveOperatorResult,
     SMatrixResult,
     generate_scattering_certificate
+)
+from .weyl_coefficient_integral import (
+    WeylCoefficientIntegral,
+    WeylCoefficientResult,
+    generate_weyl_coefficient_certificate,
+    ALPHA_ORIGINAL,
+    ALPHA_CORRECTED
 )
 
 __all__ = [
