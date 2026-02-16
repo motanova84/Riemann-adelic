@@ -1,0 +1,53 @@
+{
+  "protocol": "QCAL-LOGARITHMIC-IMPOSSIBILITY",
+  "version": "v1.0",
+  "title": "TEOREMA DE IMPOSIBILIDAD DEL POTENCIAL LOGAR\u00cdTMICO",
+  "status": "\u2705 DEMOSTRADO",
+  "potential": "Q(y) = (\u03c0\u2074/16) \u00b7 y\u00b2 / [log(1+y)]\u00b2",
+  "lambda_test": 1000.0,
+  "y_plus_coefficients": {
+    "a": 0.20264236728467555,
+    "b": 0.4052847345693511,
+    "c": -0.6469611247894239
+  },
+  "y_plus": 48.576195092462726,
+  "sqrt_lambda_y_plus": 1536.1141655687572,
+  "integral_Q": 17582.01334809184,
+  "I_lambda": 1258.1181254114917,
+  "N_lambda": 407.46693767291646,
+  "N_riemann": 940.2484552272463,
+  "counting_law_coefficients": {
+    "our_log_lambda": 0.05375255738866582,
+    "our_log_log_lambda": 0.10750511477733164,
+    "riemann_log_lambda": 0.15915494309189535,
+    "riemann_log_log_lambda": 0.0
+  },
+  "numerical_values": {
+    "our_log_lambda_coef": "0.053753",
+    "our_log_log_lambda_coef": "0.107505",
+    "riemann_log_lambda_coef": "0.159155"
+  },
+  "mismatch": {
+    "coefficient_relative_error": 0.6622627211922074,
+    "log_log_term_present": true,
+    "riemann_has_log_log": false
+  },
+  "conclusion": "Ning\u00fan operador de Schr\u00f6dinger con potencial asint\u00f3ticamente Q(y) ~ y\u00b2/(log y)\u00b2 puede tener el espectro de los ceros de Riemann.",
+  "theorem_statement": "N(\u03bb) = (5/(3\u03c0\u00b3)) \u03bb log \u03bb + (10/(3\u03c0\u00b3)) \u03bb log log \u03bb + O(\u03bb) \u2260 N_R(\u03bb) = (1/2\u03c0) \u03bb log \u03bb - (1/2\u03c0) \u03bb + O(log \u03bb)",
+  "qcal_signature": "\u2234\ud80c\udc80\u03a9\u221e\u00b3\u03a6",
+  "frequency_base": 141.7001,
+  "coherence": 244.36,
+  "author": "Jos\u00e9 Manuel Mota Burruezo \u03a8 \u2727 \u221e\u00b3",
+  "orcid": "0009-0002-1923-0773",
+  "institution": "Instituto de Conciencia Cu\u00e1ntica (ICQ)",
+  "date": "2026-02-16",
+  "noesis_light": "\u2727 Con la luz de No\u0113sis \u2727",
+  "validation_results": {
+    "criteria_passed": 4,
+    "criteria_total": 4,
+    "theorem_proven": true,
+    "coefficient_relative_error": 0.6622627211922074,
+    "counting_law_mean_mismatch": 0.5956283117489826,
+    "counting_law_max_mismatch": 0.7982719281683047
+  }
+}
