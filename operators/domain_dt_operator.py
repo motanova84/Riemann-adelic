@@ -43,6 +43,32 @@ We verify the Hardy-type inequality:
     
 for all ϕ ∈ D_T and ε > 0, with C_ε depending on ε.
 
+Parameter v Zones for Generalized Weights e^{2y(v-1)}:
+-------------------------------------------------------
+The exponential weight behavior depends critically on the parameter v:
+
+    ✅ SAFE ZONE: 0 < v < 1
+        • e^{2y(v-1)} → 0 as y → +∞  (exponential decay)
+        • Automatic control: (v-1) < 0 creates damping
+        • Domain D_T naturally well-defined
+        • Hardy inequality easier to establish
+    
+    ⚠️ DANGEROUS ZONE: v > 1
+        • e^{2y(v-1)} → ∞ as y → +∞  (exponential growth)
+        • Requires careful domain construction: (v-1) > 0 creates growth
+        • Must restrict y-range or impose stronger decay conditions
+        • Hardy inequality requires additional constraints
+    
+    🔶 BOUNDARY: v = 1
+        • e^{2y(v-1)} = 1  (constant weight, standard case)
+        • Transition between safe and dangerous regimes
+
+Critical Insight:
+    Larger v > 1 means MORE growth, not less. The intuition can be misleading:
+    v increasing beyond 1 makes the exponent 2y(v-1) more positive, causing
+    exponential explosion as y → +∞. For self-adjointness, we need either
+    v ∈ (0,1) or strong damping mechanisms when v > 1.
+
 Author: José Manuel Mota Burruezo Ψ ✧ ∞³
 Institution: Instituto de Conciencia Cuántica (ICQ)
 Date: February 2026

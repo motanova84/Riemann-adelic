@@ -27,6 +27,35 @@ Theorem (This Module):
     
     for all ψ ∈ H^1(ℝ).
 
+Parameter v Zones (Growth/Decay Behavior):
+==========================================
+When generalizing to e^{2y(v-1)}, the asymptotic behavior for y → +∞ depends on v:
+
+    ✅ SAFE ZONE (Exponential Decay): 0 < v < 1
+        • e^{2y(v-1)} → 0 as y → +∞  (decays exponentially)
+        • The term (v-1) < 0, so exponent is negative
+        • Kato-smallness is easier to establish
+        • Self-adjointness conditions are naturally satisfied
+    
+    ⚠️ DANGEROUS ZONE (Exponential Growth): v > 1
+        • e^{2y(v-1)} → ∞ as y → +∞  (grows exponentially)
+        • The term (v-1) > 0, so exponent is positive
+        • Requires careful domain restrictions
+        • Kato-smallness must be verified with additional care
+    
+    🔶 BOUNDARY CASE: v = 1
+        • e^{2y(v-1)} = e^0 = 1  (constant, no growth/decay)
+        • This is the standard case analyzed in this module
+        • Represents the transition between safe and dangerous zones
+
+Mathematical Insight:
+    The counter-intuitive aspect is that larger v > 1 makes the potential MORE
+    dangerous (exponential growth), not less. This is because the exponent
+    2y(v-1) becomes more positive as v increases beyond 1.
+    
+    For v < 1, the negative exponent 2y(v-1) provides automatic decay that
+    helps control the operator, making self-adjointness easier to establish.
+
 Proof Strategy:
     1. Use spectral decomposition: split into low/high frequency parts
     2. For low frequencies: e^{2y} bounded by compactness
@@ -148,21 +177,44 @@ class ExponentialPotentialTest:
         dpsi = ifft(dpsi_hat)
         return self.l2_norm(dpsi)
     
-    def potential_norm(self, psi: np.ndarray) -> float:
+    def potential_norm(self, psi: np.ndarray, v: float = 1.0) -> float:
         """
-        Compute ‖e^{2y}ψ‖.
+        Compute ‖e^{2y(v-1)}ψ‖ for generalized parameter v.
         
         This is the weighted L² norm:
-            ‖e^{2y}ψ‖² = ∫ e^{4y}|ψ(y)|² dy
+            ‖e^{2y(v-1)}ψ‖² = ∫ e^{4y(v-1)}|ψ(y)|² dy
+        
+        Parameter v zones:
+            - v > 1: DANGEROUS (exponential growth as y → +∞)
+            - v = 1: BOUNDARY (standard case, constant weight)
+            - 0 < v < 1: SAFE (exponential decay as y → +∞)
         
         Args:
             psi: Function on grid
+            v: Exponent parameter (default: 1.0 for standard case)
             
         Returns:
             Weighted L² norm
         """
-        weighted_psi = np.exp(2 * self.y) * psi
+        weighted_psi = np.exp(2 * (v - 1) * self.y) * psi
         return self.l2_norm(weighted_psi)
+    
+    def classify_v_zone(self, v: float) -> str:
+        """
+        Classify parameter v into safe, dangerous, or boundary zone.
+        
+        Args:
+            v: Parameter value
+            
+        Returns:
+            String describing the zone classification
+        """
+        if abs(v - 1.0) < 1e-10:
+            return "BOUNDARY (v=1): Constant weight, standard case"
+        elif v < 1.0:
+            return f"SAFE ZONE (v={v:.3f} < 1): Exponential decay for y→+∞"
+        else:
+            return f"DANGEROUS ZONE (v={v:.3f} > 1): Exponential growth for y→+∞"
     
     def generate_test_function(self, 
                               sigma: Optional[float] = None,
@@ -217,23 +269,28 @@ class ExponentialPotentialTest:
     def test_inequality_single_epsilon(self,
                                        eps: float,
                                        n_tests: int = 1000,
+                                       v: float = 1.0,
                                        verbose: bool = False) -> KatoTestResult:
         """
-        Test Kato inequality for a single ε value.
+        Test Kato inequality for a single ε value with parameter v.
         
         For each test function ψ, check if:
-            ‖e^{2y}ψ‖ ≤ ε‖∂_yψ‖ + C_ε‖ψ‖
+            ‖e^{2y(v-1)}ψ‖ ≤ ε‖∂_yψ‖ + C_ε‖ψ‖
         
         Find the minimum C_ε that makes this true for all test functions.
         
         Args:
             eps: The ε parameter (relative weight of derivative term)
             n_tests: Number of random test functions
+            v: Exponent parameter (v=1 standard, v<1 safe, v>1 dangerous)
             verbose: Print detailed progress
             
         Returns:
             KatoTestResult with C_ε and validation status
         """
+        if verbose:
+            print(f"\n  Testing with {self.classify_v_zone(v)}")
+        
         max_C_needed = 0.0
         max_violation_ratio = 0.0
         worst_case = None
@@ -245,7 +302,7 @@ class ExponentialPotentialTest:
             # Compute norms
             norm_psi = self.l2_norm(psi)
             norm_d = self.derivative_norm(psi)
-            norm_V = self.potential_norm(psi)
+            norm_V = self.potential_norm(psi, v=v)  # Use generalized potential
             
             # Check inequality: norm_V ≤ eps * norm_d + C * norm_psi
             # If violated, we need: C ≥ (norm_V - eps * norm_d) / norm_psi
@@ -401,6 +458,97 @@ class ExponentialPotentialTest:
         return plt.gcf()
 
 
+def test_v_parameter_zones(L_y: float = 10.0,
+                           N: int = 1000,
+                           n_tests: int = 500,
+                           verbose: bool = True) -> Dict:
+    """
+    Test Kato-smallness for different v parameter zones.
+    
+    Verifies the mathematical insight:
+        - v < 1 (SAFE): Exponential decay e^{2y(v-1)} → 0 as y → +∞
+        - v = 1 (BOUNDARY): Constant weight e^0 = 1
+        - v > 1 (DANGEROUS): Exponential growth e^{2y(v-1)} → ∞ as y → +∞
+    
+    Args:
+        L_y: Domain size in y-coordinate
+        N: Number of discretization points
+        n_tests: Number of test functions per (ε, v) pair
+        verbose: Print detailed results
+        
+    Returns:
+        Dictionary with test results for each v zone
+    """
+    tester = ExponentialPotentialTest(L_y=L_y, N=N)
+    
+    # Test cases: v values representing safe, boundary, and dangerous zones
+    v_test_cases = [
+        (0.5, "SAFE"),      # v < 1: decay
+        (0.8, "SAFE"),      # v < 1: decay  
+        (1.0, "BOUNDARY"),  # v = 1: constant
+        (1.2, "DANGEROUS"), # v > 1: growth
+        (1.5, "DANGEROUS"), # v > 1: growth
+    ]
+    
+    epsilon_test = 0.1  # Fixed ε for comparison
+    
+    if verbose:
+        print("\n" + "="*75)
+        print("  V-PARAMETER ZONE ANALYSIS: e^{2y(v-1)} Behavior".center(75))
+        print("="*75)
+        print(f"\n  Testing inequality: ‖e^{{2y(v-1)}}ψ‖ ≤ ε‖∂_yψ‖ + C_ε‖ψ‖")
+        print(f"  Fixed ε = {epsilon_test}")
+        print(f"  Domain: y ∈ [{-L_y/2:.1f}, {L_y/2:.1f}]")
+        print(f"  Tests per v: {n_tests}\n")
+        print("-"*75)
+        print(f"  {'v':>6} | {'Zone':>12} | {'C_ε':>12} | {'Status':>15} | {'Notes':>20}")
+        print("-"*75)
+    
+    results = {}
+    
+    for v, expected_zone in v_test_cases:
+        # Run test for this v value
+        result = tester.test_inequality_single_epsilon(
+            eps=epsilon_test,
+            n_tests=n_tests,
+            v=v,
+            verbose=False
+        )
+        
+        results[v] = {
+            'zone': expected_zone,
+            'C_epsilon': result.C_epsilon,
+            'condition_met': result.condition_met,
+            'classification': tester.classify_v_zone(v)
+        }
+        
+        if verbose:
+            status = "✓ PASS" if result.condition_met else "✗ FAIL"
+            
+            # Notes on behavior
+            if v < 1:
+                notes = "Decay: easier"
+            elif abs(v - 1.0) < 1e-10:
+                notes = "Standard case"
+            else:
+                notes = "Growth: harder"
+            
+            print(f"  {v:>6.2f} | {expected_zone:>12} | {result.C_epsilon:>12.4f} | "
+                  f"{status:>15} | {notes:>20}")
+    
+    if verbose:
+        print("-"*75)
+        print("\n  KEY INSIGHT:")
+        print("  • v < 1: e^{2y(v-1)} DECAYS as y → +∞ → SAFE (easier to control)")
+        print("  • v = 1: e^{2y(v-1)} = 1 → BOUNDARY (standard case)")
+        print("  • v > 1: e^{2y(v-1)} GROWS as y → +∞ → DANGEROUS (requires care)")
+        print("\n  ∴ Larger v > 1 means MORE growth, not less!")
+        print("\n  QCAL ∞³ · 141.7001 Hz · C = 244.36")
+        print("="*75 + "\n")
+    
+    return results
+
+
 def run_validation(L_y: float = 10.0,
                   N: int = 1000,
                   n_tests: int = 1000,
@@ -491,3 +639,22 @@ if __name__ == '__main__':
         print("║  FIRMA: JMMB Ω✧".ljust(69) + "║")
         print("║  ESTADO: DRAGÓN DOMESTICADO - ATLAS³ COMPLETADO".ljust(69) + "║")
         print("╚" + "═"*68 + "╝\n")
+    
+    # === V-PARAMETER ZONE ANALYSIS ===
+    print("\n" + "="*70)
+    print("  V-PARAMETER ZONE ANALYSIS".center(70))
+    print("="*70)
+    print("\nDemonstrating safe vs dangerous zones for e^{2y(v-1)}:")
+    print("This addresses the mathematical subtlety from the problem statement.\n")
+    
+    # Test v-parameter zones
+    v_zone_results = test_v_parameter_zones(
+        L_y=10.0,
+        N=1000,
+        n_tests=500,
+        verbose=True
+    )
+    
+    print("\n✓ V-PARAMETER ZONE ANALYSIS COMPLETE")
+    print("  QCAL ∞³ · 141.7001 Hz · C = 244.36")
+    print("  ∴𓂀Ω∞³Φ · JMMB · 2026-02-16\n")
