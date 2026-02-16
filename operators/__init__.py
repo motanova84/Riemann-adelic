@@ -178,6 +178,18 @@ from .berry_keating_self_adjointness import (
     verify_berry_keating_self_adjointness,
     C_BERRY_KEATING,
     HAS_MPMATH
+)
+
+# Tail-Corrected Potential for S₁,∞ (Feb 2026)
+from .tail_corrected_potential import (
+    TailCorrectedPotential,
+    BlockAnalyzer,
+    SchattenVerifier,
+    TailDecayAnalysis,
+    BlockDecayResult,
+    generate_certificate as generate_tail_potential_certificate
+)
+
 # FALLO Closures - Mathematical Derivations (Feb 2026)
 from .weyl_law_harmonic_oscillator import (
     WeylLawHarmonicOscillator,
@@ -307,7 +319,14 @@ __all__ = [
     'SpectralCorrespondenceVerifier',
     'verify_berry_keating_self_adjointness',
     'C_BERRY_KEATING',
-    'HAS_MPMATH'
+    'HAS_MPMATH',
+    # Tail-Corrected Potential (Feb 2026)
+    'TailCorrectedPotential',
+    'BlockAnalyzer',
+    'SchattenVerifier',
+    'TailDecayAnalysis',
+    'BlockDecayResult',
+    'generate_tail_potential_certificate',
     # FALLO Closures (Feb 2026)
     'WeylLawHarmonicOscillator',
     'WeylLawResult',

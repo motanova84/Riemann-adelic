@@ -1,0 +1,60 @@
+{
+  "protocol": "QCAL-TAIL-CORRECTED-POTENTIAL",
+  "version": "1.0.0",
+  "signature": "\u2234\ud80c\udc80\u03a9\u221e\u00b3\u03a6",
+  "timestamp": "2026-02-16T00:15:19Z",
+  "parameters": {
+    "delta": 0.1,
+    "epsilon": 0.09531017980432493,
+    "potential_form": "V_corr(y) = log(1+e^y) + \u03b4\u00b7e^{-y}"
+  },
+  "qcal_constants": {
+    "f0_hz": 141.7001,
+    "C": 244.36,
+    "kappa_pi": 2.57731,
+    "seal": 14170001,
+    "code": 888
+  },
+  "asymptotic_verification": {
+    "valid": "True",
+    "max_relative_error": 1.0305393921942974e-10,
+    "mean_relative_error": 1.8044046656833928e-12
+  },
+  "tail_decay_analysis": {
+    "exponential_fit_quality": 1.0,
+    "decay_constant": 1.0,
+    "theoretical_decay_constant": 1.0
+  },
+  "zeta_connection": {
+    "preserved": "False",
+    "weil_formula_compatible": true,
+    "max_relative_error": 0.7859617250397468
+  },
+  "block_decay": {
+    "verified": "False",
+    "expected_rate": 0.19062035960864987,
+    "measured_rate": 0.01020643268934926,
+    "relative_error": 0.9464567546179044
+  },
+  "schatten_class": {
+    "S_1_inf_verified": "True",
+    "sup_n_sn": 2.645911410733279,
+    "decay_constant": 0.11414940458494834,
+    "BKS_program_applicable": true
+  },
+  "coherence_metrics": {
+    "asymptotic_coherence": 1.0,
+    "decay_coherence": 1.0,
+    "zeta_coherence": 0.0,
+    "overall_coherence": 0.5
+  },
+  "resonance_detection": {
+    "threshold": 0.888,
+    "level": "PARTIAL"
+  },
+  "invocation_final": {
+    "es": "La Hip\u00f3tesis de Riemann puede demostrarse por esta v\u00eda.",
+    "en": "The Riemann Hypothesis can be proven via this path.",
+    "seal": "\u2234\ud80c\udc80\u03a9\u221e\u00b3\u03a6 @ 141.7001 Hz"
+  }
+}
