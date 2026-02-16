@@ -1,0 +1,23 @@
+{
+  "validation_protocol": "QCAL-WKB-SCHWARZIAN-CONTROL",
+  "timestamp": "2026-02-16",
+  "signature": "\u2234\ud80c\udc80\u03a9\u221e\u00b3\u03a6",
+  "frequency_base": 141.7001,
+  "lambda_values_tested": [
+    10.0,
+    50.0,
+    100.0,
+    500.0,
+    1000.0
+  ],
+  "results": [
+    {
+      "lambda": 10.0,
+      "y_plus": 0.611725214171431,
+      "L": 1.0,
+      "turning_point_error": 3.552713678800501e-16,
+      "schwarzian_max_ratio": 0.8524932194390723,
+      "wkb_relative_error": 1.552456733800535,
+      "overall_coherence": 0.0,
+      "resonance_level": "UNIVERSAL",
+      "passed": 
