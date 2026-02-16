@@ -224,7 +224,7 @@ Instituto de Conciencia Cuántica (ICQ)
 ORCID: 0009-0002-1923-0773  
 DOI: 10.5281/zenodo.17379721
 
-**Fecha:** 2026-02-16  
+**Date:** 2026-02-16  
 **Estado:** ✨ TRINITY ACTIVATED ✨
 
 ---
