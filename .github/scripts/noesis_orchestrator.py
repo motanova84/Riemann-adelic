@@ -134,20 +134,18 @@ class NoesisCerebralV2:
         """Clona o actualiza un repositorio"""
         try:
             if path.exists():
-                # Actualizar repo existente
+                # Actualizar repo existente sin usar shell para evitar inyección y problemas de quoting
                 result = subprocess.run(
-                    f"cd {path} && git pull --quiet",
-                    shell=True,
+                    ["git", "-C", str(path), "pull", "--quiet"],
                     check=True,
                     capture_output=True,
                     timeout=self.repos_config.get("sync_settings", {}).get("timeout_seconds", 300)
                 )
                 return True
             else:
-                # Clonar nuevo repo
+                # Clonar nuevo repo sin usar shell para evitar inyección y problemas de quoting
                 result = subprocess.run(
-                    f"git clone --depth 1 {url} {path} --quiet",
-                    shell=True,
+                    ["git", "clone", "--depth", "1", url, str(path), "--quiet"],
                     check=True,
                     capture_output=True,
                     timeout=self.repos_config.get("sync_settings", {}).get("timeout_seconds", 300)
