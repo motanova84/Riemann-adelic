@@ -323,10 +323,40 @@ class AuronNeuralV2:
     
     def _apply_learned_solution(self, file_path: Path, context: str, solution: str) -> bool:
         """Apply a previously learned solution"""
-        # Similar to _try_strategy but uses learned solution
         self._log(f"Applying learned solution: {solution}")
-        # Implementation similar to above
-        return False  # Placeholder
+        
+        if not file_path.exists():
+            return False
+        
+        backup_path = self._create_backup(file_path)
+        if not backup_path:
+            return False
+        
+        try:
+            with open(file_path, 'r', encoding='utf-8') as f:
+                content = f.read()
+            
+            # Replace first occurrence of sorry with learned solution
+            if "sorry" in content.lower():
+                new_content = re.sub(r'sorry', f'by {solution}', content, count=1, flags=re.IGNORECASE)
+                
+                if not self.dry_run:
+                    with open(file_path, 'w', encoding='utf-8') as f:
+                        f.write(new_content)
+                
+                if self._validate_change(file_path):
+                    self._log(f"✓ Learned solution '{solution}' succeeded")
+                    return True
+                else:
+                    self._restore_backup(file_path, backup_path)
+                    return False
+            
+            return False
+            
+        except Exception as e:
+            self._log(f"✗ Learned solution failed: {e}")
+            self._restore_backup(file_path, backup_path)
+            return False
     
     def _learn_pattern(self, context_hash: str, solution: str):
         """Learn a successful pattern for future use"""
