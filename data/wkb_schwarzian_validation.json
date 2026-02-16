@@ -20,4 +20,52 @@
       "wkb_relative_error": 1.552456733800535,
       "overall_coherence": 0.0,
       "resonance_level": "UNIVERSAL",
-      "passed": 
+      "passed": false
+    },
+    {
+      "lambda": 50.0,
+      "y_plus": 5.25333152666241,
+      "L": 0.9540130994679388,
+      "turning_point_error": 3.836930773104541e-15,
+      "schwarzian_max_ratio": 0.8524932194391548,
+      "wkb_relative_error": 0.1802845113368501,
+      "overall_coherence": 1.0,
+      "resonance_level": "UNIVERSAL",
+      "passed": true
+    },
+    {
+      "lambda": 100.0,
+      "y_plus": 9.548406075322456,
+      "L": 1.1078488404335116,
+      "turning_point_error": 2.842170943040401e-16,
+      "schwarzian_max_ratio": 0.8524932194391586,
+      "wkb_relative_error": 0.35848006712394115,
+      "overall_coherence": 1.0,
+      "resonance_level": "UNIVERSAL",
+      "passed": true
+    },
+    {
+      "lambda": 500.0,
+      "y_plus": 31.567277558677905,
+      "L": 1.4595644855220309,
+      "turning_point_error": 1.1368683772161603e-16,
+      "schwarzian_max_ratio": 0.8524932194391774,
+      "wkb_relative_error": 0.5216162426514022,
+      "overall_coherence": 0.0,
+      "resonance_level": "UNIVERSAL",
+      "passed": false
+    },
+    {
+      "lambda": 1000.0,
+      "y_plus": 50.52158376060234,
+      "L": 1.6093202798517816,
+      "turning_point_error": 1.1368683772161603e-16,
+      "schwarzian_max_ratio": 0.8524932194391877,
+      "wkb_relative_error": 0.5495540198050667,
+      "overall_coherence": 0.0,
+      "resonance_level": "UNIVERSAL",
+      "passed": false
+    }
+  ],
+  "overall_status": "PARTIAL"
+}

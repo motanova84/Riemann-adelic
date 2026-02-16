@@ -96,15 +96,15 @@ def validate_wkb_schwarzian_control():
             lambda_passed = turning_point_ok and schwarzian_ok and wkb_ok and cert_ok
             
             results['results'].append({
-                'lambda': lambda_val,
-                'y_plus': wkb.y_plus,
-                'L': wkb.L,
-                'turning_point_error': turning_point_error,
-                'schwarzian_max_ratio': validation['max_ratio'],
-                'wkb_relative_error': wkb_int['relative_error'],
-                'overall_coherence': cert['coherence_metrics']['overall_coherence'],
-                'resonance_level': cert['resonance_detection']['level'],
-                'passed': lambda_passed
+                'lambda': float(lambda_val),
+                'y_plus': float(wkb.y_plus),
+                'L': float(wkb.L),
+                'turning_point_error': float(turning_point_error),
+                'schwarzian_max_ratio': float(validation['max_ratio']),
+                'wkb_relative_error': float(wkb_int['relative_error']),
+                'overall_coherence': float(cert['coherence_metrics']['overall_coherence']),
+                'resonance_level': str(cert['resonance_detection']['level']),
+                'passed': bool(lambda_passed)
             })
             
             if not lambda_passed:
@@ -115,9 +115,9 @@ def validate_wkb_schwarzian_control():
         except Exception as e:
             print(f"\n✗ ERROR for λ={lambda_val}: {str(e)}")
             results['results'].append({
-                'lambda': lambda_val,
+                'lambda': float(lambda_val),
                 'error': str(e),
-                'passed': False
+                'passed': bool(False)
             })
             all_passed = False
     
