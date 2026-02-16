@@ -81,7 +81,7 @@ class MetricsGenerator:
 |------|----------|
 | Éxitos | {success} |
 | Fallos | {fail} |
-| Tasa de éxito | {success/(success+fail)*100:.1f}% |
+| Tasa de éxito | {success/(success+fail)*100:.1f}% if (success+fail) > 0 else 'N/A' |
 
 ### Aprendizaje del Sistema
 

@@ -94,9 +94,10 @@ class AMDAAnalyzer:
                 content = f.read()
                 lines = content.split('\n')
             
-            # Buscar todos los 'sorry'
+            # Buscar todos los 'sorry' con word boundary
+            sorry_pattern = re.compile(r'\bsorry\b', re.IGNORECASE)
             for line_idx, line in enumerate(lines):
-                if 'sorry' in line.lower():
+                if sorry_pattern.search(line):
                     context = self.extract_context(lines, line_idx)
                     categories = self.classify_deep(line, context)
                     

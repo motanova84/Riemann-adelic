@@ -16,6 +16,9 @@ from collections import defaultdict
 class NoesisOrchestrator:
     """Orquestador central del sistema NOESIS CEREBRAL V2.0"""
     
+    # Constantes de configuración
+    MAX_CONTENT_LENGTH = 200  # Caracteres máximos para contenido extraído
+    
     def __init__(self, config_path):
         self.config = self.load_config(config_path)
         self.knowledge_dir = Path('/tmp/noesis_knowledge_v2')
@@ -73,7 +76,7 @@ class NoesisOrchestrator:
         for match in pattern.finditer(content):
             definitions.append({
                 "name": match.group(1),
-                "content": match.group(2).strip()[:200]  # Primeros 200 chars
+                "content": match.group(2).strip()[:self.MAX_CONTENT_LENGTH]
             })
         
         return definitions
@@ -87,7 +90,7 @@ class NoesisOrchestrator:
         for match in pattern.finditer(content):
             theorems.append({
                 "name": match.group(1),
-                "statement": match.group(2).strip()[:200]
+                "statement": match.group(2).strip()[:self.MAX_CONTENT_LENGTH]
             })
         
         return theorems

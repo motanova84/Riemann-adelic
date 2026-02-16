@@ -2,8 +2,8 @@ name: 🧠 NOESIS CEREBRAL V2.0 - Multi-Repo Sorry Elimination
 
 on:
   schedule:
-    # Ejecuta cada 2 horas
-    - cron: '0 */2 * * *'
+    # Ejecuta cada 6 horas (reducir carga CI/CD)
+    - cron: '0 */6 * * *'
   workflow_dispatch:
     inputs:
       dry_run:
@@ -130,8 +130,8 @@ jobs:
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           
-          # Añadir archivos modificados
-          git add formalization/lean/**/*.lean
+          # Añadir archivos modificados de forma segura
+          find formalization/lean -name "*.lean" -type f -exec git add {} +
           git add .auron_learning.json || true
           
           # Usar mensaje de commit generado

@@ -8,6 +8,7 @@ import json
 import subprocess
 import sys
 import shutil
+import os
 from pathlib import Path
 import time
 import pickle
@@ -25,7 +26,8 @@ class AuronNeuralMultiV2:
         self.success_count = 0
         self.fail_count = 0
         self.max_changes_per_cycle = 20
-        self.dry_run = False  # Cambiar a True para pruebas
+        # Read dry_run from environment variable
+        self.dry_run = os.getenv('AURON_DRY_RUN', 'false').lower() in ('true', '1', 'yes')
         
         # Cargar conocimiento de otros repositorios (PR #1716)
         self.load_knowledge()
@@ -99,10 +101,11 @@ class AuronNeuralMultiV2:
         """Valida compilación con lake build"""
         self.log("🔧 Validando compilación...")
         try:
+            lean_dir = self.repo_root / 'formalization' / 'lean'
             result = subprocess.run(
-                "cd formalization/lean && lake build",
-                shell=True, capture_output=True, text=True, timeout=timeout,
-                cwd=self.repo_root
+                ['lake', 'build'],
+                capture_output=True, text=True, timeout=timeout,
+                cwd=lean_dir
             )
             if result.returncode == 0:
                 self.log("✅ Compilación exitosa")
@@ -120,6 +123,14 @@ class AuronNeuralMultiV2:
         normalized = re.sub(r'\s+', ' ', normalized)
         return hashlib.md5(normalized.encode()).hexdigest()[:16]
     
+    def calculate_jaccard_similarity(self, set1, set2):
+        """Calcula similitud Jaccard entre dos conjuntos"""
+        if not set1 or not set2:
+            return 0.0
+        intersection = len(set1 & set2)
+        union = len(set1 | set2)
+        return intersection / union if union > 0 else 0.0
+    
     def find_cross_repo_matches(self, context, category):
         """Busca coincidencias en otros repositorios (PR #1716)"""
         if not self.knowledge:
@@ -131,7 +142,7 @@ class AuronNeuralMultiV2:
         # Buscar en patrones de prueba
         for pattern in self.knowledge.get("proof_patterns", []):
             pattern_words = set(pattern["proof"][:200].lower().split())
-            similarity = len(context_words & pattern_words) / len(context_words | pattern_words) if context_words | pattern_words else 0
+            similarity = self.calculate_jaccard_similarity(context_words, pattern_words)
             
             if similarity > 0.3:  # Umbral ajustable
                 matches.append({
@@ -144,7 +155,7 @@ class AuronNeuralMultiV2:
         # Buscar en teoremas
         for theorem in self.knowledge.get("theorems", []):
             theorem_words = set(theorem["statement"][:200].lower().split())
-            similarity = len(context_words & theorem_words) / len(context_words | theorem_words) if context_words | theorem_words else 0
+            similarity = self.calculate_jaccard_similarity(context_words, theorem_words)
             
             if similarity > 0.3:
                 matches.append({
