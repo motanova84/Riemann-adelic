@@ -208,7 +208,6 @@ from .wkb_uniform_control import (
     SpectralCountingResult,
     generate_wkb_certificate
 )
-)
 
 __all__ = [
     'construct_H_psi',
