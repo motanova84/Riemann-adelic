@@ -1,0 +1,19 @@
+{
+  "total_sorries": 2282,
+  "by_category": {},
+  "by_file": {},
+  "last_scan": "2026-02-16T19:59:57.311626",
+  "history": [
+    {
+      "timestamp": "2026-02-16T19:56:25.493322",
+      "total": 2282,
+      "event": "initialization"
+    },
+    {
+      "timestamp": "2026-02-16T19:59:57.311621",
+      "before": 2282,
+      "after": 2282,
+      "reduction": 0
+    }
+  ]
+}

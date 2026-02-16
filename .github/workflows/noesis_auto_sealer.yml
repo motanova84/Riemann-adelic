@@ -1,0 +1,138 @@
+name: 🤖 NOESIS-AMDA-AURON Auto Sealer
+
+on:
+  schedule:
+    - cron: '0 */2 * * *'  # Cada 2 horas
+  workflow_dispatch:  # Permite ejecución manual
+    inputs:
+      max_changes:
+        description: 'Número máximo de cambios a aplicar'
+        required: false
+        default: '10'
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  seal-sorries:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: 🔄 Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: 🐍 Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: 📦 Install Python dependencies
+        run: |
+          pip install --upgrade pip
+          pip install pyyaml rich typer
+          # Herramientas matemáticas básicas
+          pip install sympy mpmath numpy
+
+      - name: 🧠 NOESIS - Initialize/Update State
+        run: |
+          echo "🧠 NOESIS iniciando ciclo de sellado..."
+          python .github/scripts/noesis_orchestrator.py --mode run
+
+      - name: 🔍 AMDA - Scan and analyze
+        id: amda
+        run: |
+          echo "🔍 AMDA escaneando archivos Lean..."
+          python .github/scripts/amda_analyzer.py --output amda_report.json
+
+      - name: ⚡ AURON - Execute transformations
+        id: auron
+        run: |
+          echo "⚡ AURON aplicando transformaciones..."
+          MAX_CHANGES="${{ github.event.inputs.max_changes || '10' }}"
+          python .github/scripts/auron_executor.py \
+            --input amda_report.json \
+            --output auron_changes.json \
+            --max-changes "$MAX_CHANGES"
+
+      - name: 📊 Generate metrics
+        run: |
+          echo "📊 Generando métricas..."
+          python .github/scripts/metrics_generator.py \
+            --state .noesis_state.json \
+            --amda amda_report.json \
+            --auron auron_changes.json \
+            --output metrics.md
+
+      - name: 📋 Check for changes
+        id: check_changes
+        run: |
+          if git diff --quiet; then
+            echo "No hay cambios que commitear"
+            echo "has_changes=false" >> $GITHUB_OUTPUT
+          else
+            echo "Cambios detectados"
+            echo "has_changes=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: 🔀 Create Pull Request
+        if: steps.check_changes.outputs.has_changes == 'true'
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "🤖 Sellado automático de sorries [skip ci]"
+          title: "🤖 [AUTO] Sellado NOESIS-AMDA-AURON - ${{ github.run_number }}"
+          body-path: metrics.md
+          branch: auto-seal/noesis-${{ github.run_id }}
+          base: main
+          labels: |
+            automated
+            noesis
+            amda
+            auron
+            sorry-elimination
+          draft: false
+          delete-branch: true
+
+      - name: 📝 Summary
+        if: always()
+        run: |
+          echo "## 🤖 NOESIS-AMDA-AURON Execution Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          
+          if [ -f "metrics.md" ]; then
+            cat metrics.md >> $GITHUB_STEP_SUMMARY
+          else
+            echo "⚠️ No se generaron métricas" >> $GITHUB_STEP_SUMMARY
+          fi
+          
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "---" >> $GITHUB_STEP_SUMMARY
+          echo "🔗 Workflow run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" >> $GITHUB_STEP_SUMMARY
+
+      - name: 🎉 Check Victory Condition
+        if: always()
+        run: |
+          if [ -f "VICTORY.md" ]; then
+            echo "🎉🎉🎉 ¡VICTORIA DETECTADA!" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            cat VICTORY.md >> $GITHUB_STEP_SUMMARY
+          fi
+
+      - name: 📤 Upload artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: noesis-reports-${{ github.run_id }}
+          path: |
+            .noesis_state.json
+            amda_report.json
+            amda_stats.json
+            auron_changes.json
+            metrics.md
+            noesis_auto_seal.log
+            VICTORY.md
+          retention-days: 30
