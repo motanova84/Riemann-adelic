@@ -45,7 +45,9 @@ noesis_v2_report.json
 amda_deep_report_v2.json
 auron_neural_report_v2.json
 .noesis_state.json
+.auron_learning.json
 *.lean.bak
+commit_msg_*.txt
 
 # Lean validation reports
 formalization/lean/validation_report.json
