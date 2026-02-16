@@ -42,6 +42,14 @@ sabio_infinity4_report_*.json
 # Lean validation reports
 formalization/lean/validation_report.json
 
+# NOESIS-AMDA-AURON system generated files
+amda_report.json
+amda_stats.json
+auron_changes.json
+metrics.md
+noesis_auto_seal.log
+VICTORY.md
+
 # Virtual environments
 venv/
 env/
