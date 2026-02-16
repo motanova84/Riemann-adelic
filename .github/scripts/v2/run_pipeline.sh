@@ -105,17 +105,25 @@ if ! python3 "$SCRIPT_DIR/noesis_orchestrator.py"; then
 fi
 
 # Verificar salida NOESIS
-if [ ! -f "$REPO_ROOT/noesis_cerebral_v2_summary.json" ]; then
+if [ ! -f "$REPO_ROOT/.github/noesis_cerebral_v2_summary.json" ] && [ ! -f "$REPO_ROOT/noesis_cerebral_v2_summary.json" ]; then
     log WARNING "NOESIS no generó resumen completo"
 else
     log SUCCESS "NOESIS completado exitosamente"
     
+    # Buscar archivo en ambas ubicaciones
+    SUMMARY_FILE=""
+    if [ -f "$REPO_ROOT/noesis_cerebral_v2_summary.json" ]; then
+        SUMMARY_FILE="$REPO_ROOT/noesis_cerebral_v2_summary.json"
+    elif [ -f "$REPO_ROOT/.github/noesis_cerebral_v2_summary.json" ]; then
+        SUMMARY_FILE="$REPO_ROOT/.github/noesis_cerebral_v2_summary.json"
+    fi
+    
     # Mostrar estadísticas
-    if command -v jq &> /dev/null; then
-        REPOS=$(jq -r '.knowledge_base.repos_synced | length' "$REPO_ROOT/noesis_cerebral_v2_summary.json" 2>/dev/null || echo "?")
-        DEFS=$(jq -r '.knowledge_base.total_definitions' "$REPO_ROOT/noesis_cerebral_v2_summary.json" 2>/dev/null || echo "?")
-        THMS=$(jq -r '.knowledge_base.total_theorems' "$REPO_ROOT/noesis_cerebral_v2_summary.json" 2>/dev/null || echo "?")
-        PATS=$(jq -r '.knowledge_base.total_proof_patterns' "$REPO_ROOT/noesis_cerebral_v2_summary.json" 2>/dev/null || echo "?")
+    if [ -n "$SUMMARY_FILE" ] && command -v jq &> /dev/null; then
+        REPOS=$(jq -r '.knowledge_base.repos_synced | length' "$SUMMARY_FILE" 2>/dev/null || echo "?")
+        DEFS=$(jq -r '.knowledge_base.total_definitions' "$SUMMARY_FILE" 2>/dev/null || echo "?")
+        THMS=$(jq -r '.knowledge_base.total_theorems' "$SUMMARY_FILE" 2>/dev/null || echo "?")
+        PATS=$(jq -r '.knowledge_base.total_proof_patterns' "$SUMMARY_FILE" 2>/dev/null || echo "?")
         
         log INFO "  Repositorios sincronizados: $REPOS"
         log INFO "  Definiciones extraídas: $DEFS"
@@ -136,7 +144,15 @@ echo ""
 log INFO "Iniciando AMDA Deep V2.0 Analyzer..."
 
 # AMDA se ejecuta automáticamente desde NOESIS, verificar resultados
-if [ ! -f "$REPO_ROOT/amda_report_v2.json" ]; then
+# Buscar en ambas ubicaciones
+AMDA_REPORT=""
+if [ -f "$REPO_ROOT/amda_report_v2.json" ]; then
+    AMDA_REPORT="$REPO_ROOT/amda_report_v2.json"
+elif [ -f "$REPO_ROOT/.github/amda_report_v2.json" ]; then
+    AMDA_REPORT="$REPO_ROOT/.github/amda_report_v2.json"
+fi
+
+if [ -z "$AMDA_REPORT" ]; then
     log ERROR "AMDA no generó reporte. Pipeline incompleto."
     exit 1
 fi
@@ -145,8 +161,8 @@ log SUCCESS "AMDA completado exitosamente"
 
 # Mostrar estadísticas AMDA
 if command -v jq &> /dev/null; then
-    TOTAL_SORRIES=$(jq -r '.total_sorries' "$REPO_ROOT/amda_report_v2.json" 2>/dev/null || echo "?")
-    TOTAL_FILES=$(jq -r '.total_files' "$REPO_ROOT/amda_report_v2.json" 2>/dev/null || echo "?")
+    TOTAL_SORRIES=$(jq -r '.total_sorries' "$AMDA_REPORT" 2>/dev/null || echo "?")
+    TOTAL_FILES=$(jq -r '.total_files' "$AMDA_REPORT" 2>/dev/null || echo "?")
     
     log INFO "  Total sorries detectados: $TOTAL_SORRIES"
     log INFO "  Archivos afectados: $TOTAL_FILES"
@@ -154,7 +170,7 @@ if command -v jq &> /dev/null; then
     # Distribución de categorías
     echo ""
     log INFO "  Distribución por categoría:"
-    jq -r '.category_distribution | to_entries[] | "    \(.key): \(.value)"' "$REPO_ROOT/amda_report_v2.json" 2>/dev/null || true
+    jq -r '.category_distribution | to_entries[] | "    \(.key): \(.value)"' "$AMDA_REPORT" 2>/dev/null || true
 fi
 
 # ============================================================================

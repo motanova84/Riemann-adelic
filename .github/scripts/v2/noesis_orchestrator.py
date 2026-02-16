@@ -186,8 +186,10 @@ def main():
         return orchestrator.run()
 
 
-if __name__ == "__main__":
-    sys.exit(main())
+# Old orchestrator main - commented out, using NoesisCerebralV2 below
+# if __name__ == "__main__":
+#     sys.exit(main())
+
 import shutil
 from pathlib import Path
 from datetime import datetime
