@@ -10,6 +10,7 @@ Author: José Manuel Mota Burruezo Ψ ✧ ∞³
 
 import sys
 import json
+import numpy as np
 from pathlib import Path
 
 # Direct import to avoid operators/__init__.py dependency issues
@@ -33,7 +34,7 @@ def main():
     delta = 0.1
     
     print(f"Testing with δ = {delta}")
-    print(f"  ε = log(1+δ) = {-1 + (1 + delta):.6f}")
+    print(f"  ε = log(1+δ) = {np.log(1 + delta):.6f}")
     print()
     
     # Generate comprehensive certificate
@@ -126,12 +127,24 @@ def main():
     print(certificate['invocation_final']['seal'])
     print()
     
-    # Save certificate
+    # Save certificate with proper type handling
     cert_path = Path(__file__).parent / 'data' / 'tail_corrected_potential_certificate.json'
     cert_path.parent.mkdir(exist_ok=True)
     
+    def convert_types(obj):
+        """Convert numpy types to Python types for JSON serialization."""
+        if isinstance(obj, (np.bool_, np.bool8)):
+            return bool(obj)
+        if isinstance(obj, (np.integer, np.int64, np.int32)):
+            return int(obj)
+        if isinstance(obj, (np.floating, np.float64, np.float32)):
+            return float(obj)
+        if isinstance(obj, np.ndarray):
+            return obj.tolist()
+        return str(obj)
+    
     with open(cert_path, 'w') as f:
-        json.dump(certificate, f, indent=2, default=str)
+        json.dump(certificate, f, indent=2, default=convert_types)
     
     print(f"\nCertificate saved to: {cert_path}")
     print()
