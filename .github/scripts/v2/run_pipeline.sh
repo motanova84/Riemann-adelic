@@ -188,8 +188,18 @@ if [ "$MODE" == "dry-run" ]; then
 else
     log INFO "Iniciando AURON Neural V2.0..."
     
-    # Ejecutar AURON
-    if ! python3 "$SCRIPT_DIR/auron_neural_v2.py" "$MODE" "$REPO_ROOT/amda_report_v2.json" "$REPO_ROOT/auron_results_v2.json" "$MAX_CHANGES"; then
+    # Determinar ubicación del reporte AMDA
+    if [ -f "$REPO_ROOT/amda_report_v2.json" ]; then
+        AMDA_REPORT_PATH="$REPO_ROOT/amda_report_v2.json"
+    elif [ -f "$REPO_ROOT/.github/amda_report_v2.json" ]; then
+        AMDA_REPORT_PATH="$REPO_ROOT/.github/amda_report_v2.json"
+    else
+        log ERROR "No se encontró amda_report_v2.json"
+        exit 1
+    fi
+    
+    # Ejecutar AURON (3 argumentos: mode, input, output)
+    if ! python3 "$SCRIPT_DIR/auron_neural_v2.py" "$MODE" "$AMDA_REPORT_PATH" "$REPO_ROOT/auron_results_v2.json"; then
         log ERROR "AURON falló durante la ejecución"
         exit 1
     fi

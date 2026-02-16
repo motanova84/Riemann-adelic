@@ -106,13 +106,15 @@ class AuronNeuralV2:
         """Valida que el proyecto compile después de los cambios"""
         self.log("🔧 Validando compilación...")
         try:
+            # Usar cwd para cambiar directorio, no shell=True
+            lean_dir = self.repo_root / 'formalization' / 'lean'
             result = subprocess.run(
-                "cd formalization/lean && lake build",
-                shell=True, 
+                ['lake', 'build'],
+                shell=False, 
                 capture_output=True, 
                 text=True,
                 timeout=timeout,
-                cwd=self.repo_root
+                cwd=lean_dir
             )
             if result.returncode == 0:
                 self.log("✅ Compilación exitosa")
