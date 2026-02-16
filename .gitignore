@@ -52,6 +52,23 @@ commit_msg_*.txt
 # Lean validation reports
 formalization/lean/validation_report.json
 
+# NOESIS-AMDA-AURON system generated files
+amda_report.json
+amda_stats.json
+auron_changes.json
+metrics.md
+noesis_auto_seal.log
+VICTORY.md
+# NOESIS CEREBRAL V2.0 generated files
+amda_report_v2.json
+amda_report_v2.md
+auron_results_v2.json
+auron_neural.log
+noesis_cerebral_v2.log
+noesis_cerebral_v2_summary.json
+commit_msg_*.txt
+*.lean.bak.*
+
 # Virtual environments
 venv/
 env/
