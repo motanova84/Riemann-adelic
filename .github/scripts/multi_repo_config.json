@@ -1,0 +1,63 @@
+{
+  "public_repos": [
+    "Riemann-adelic",
+    "141Hz",
+    "adelic-bsd",
+    "3D-Navier-Stokes",
+    "Ramsey",
+    "P-NP"
+  ],
+  "private_repos": [
+    "noesis88",
+    "NOESISSOFIA",
+    "LOGOSNOESIS",
+    "economia-qcal-nodo-semilla",
+    "RelojCuantico-141Hz-QCAL",
+    "legal-Juridico",
+    "quantum-internet-qcal",
+    "empaquetamiento-esferas-qcal",
+    "Filosofia-",
+    "Interfer-metro-No-sico-de-Doble-Hendidura",
+    "SABIO",
+    "Biologia-Cuantica-Noesica-",
+    "field-qcal",
+    "proyecto-beta-gobernanza-zeta",
+    "riemann-adelic-",
+    "Instconciencia",
+    "documentacion-gravedad",
+    "Catedral-Mathesis",
+    "empaquetamiento-esferas-qcal3",
+    "institutoconsciencia",
+    "ICQ-WEB",
+    "Cosmonoesis-Atlas",
+    "nexus-prime-system",
+    "origen"
+  ],
+  "knowledge_priority": {
+    "noesis88": 10,
+    "Riemann-adelic": 9,
+    "adelic-bsd": 8,
+    "141Hz": 7,
+    "3D-Navier-Stokes": 6,
+    "Ramsey": 5,
+    "P-NP": 4
+  },
+  "knowledge_extraction": {
+    "file_patterns": [
+      "*.lean",
+      "*.py",
+      "*.md"
+    ],
+    "ignore_patterns": [
+      "*.git/*",
+      "*node_modules/*",
+      "*__pycache__/*",
+      "*.build/*"
+    ]
+  },
+  "sync_settings": {
+    "max_workers": 5,
+    "timeout_seconds": 300,
+    "retry_attempts": 3
+  }
+}

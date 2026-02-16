@@ -1,0 +1,166 @@
+# 🎨 NOESIS-AMDA-AURON V2.0 - Visual Architecture
+
+```
+┌─────────────────────────────────────────────────────────────────────────────────────┐
+│                         🧠 NOESIS CEREBRAL V2.0 (Orquestador)                        │
+│                  Sincroniza 33 repositorios y cosecha conocimiento                   │
+├─────────────────────────────────────────────────────────────────────────────────────┤
+│  Input:  multi_repo_config.json (33 repos)                                          │
+│  Output: knowledge_v2.pkl (6,581 defs + 7,816 theorems + 1,315 patterns)            │
+│  State:  .noesis_state.json                                                          │
+└─────────────────────────────────────────────────────────────────────────────────────┘
+                                      │
+                                      ▼
+┌─────────────────────────────────────────────────────────────────────────────────────┐
+│                         🔍 AMDA DEEP LEARNING V2.0 (Analizador)                      │
+│              Análisis semántico profundo con búsqueda multi-repositorio              │
+├─────────────────────────────────────────────────────────────────────────────────────┤
+│  Input:  knowledge_v2.pkl + formalization/lean/*.lean                               │
+│  Process: - Clasificación multi-categórica (6 categorías)                           │
+│           - Similitud semántica (Jaccard)                                            │
+│           - Cálculo de complejidad y prioridad                                       │
+│  Output: amda_deep_report_v2.json (2,282 sorries analizados)                        │
+└─────────────────────────────────────────────────────────────────────────────────────┘
+                                      │
+                                      ▼
+┌─────────────────────────────────────────────────────────────────────────────────────┐
+│                         🤖 AURON NEURAL V2.0 (Ejecutor)                              │
+│                   Aplicación inteligente de transformaciones                         │
+├─────────────────────────────────────────────────────────────────────────────────────┤
+│  Input:  amda_deep_report_v2.json                                                   │
+│  Process: - Estrategias de resolución por categoría                                 │
+│           - Backups automáticos (.lean.bak)                                          │
+│           - Generación de commits semánticos                                         │
+│  Output: auron_neural_report_v2.json + archivos .lean modificados                   │
+└─────────────────────────────────────────────────────────────────────────────────────┘
+                                      │
+                                      ▼
+┌─────────────────────────────────────────────────────────────────────────────────────┐
+│                         📊 GitHub Actions Workflow                                   │
+│                   Automatización y creación de Pull Requests                         │
+├─────────────────────────────────────────────────────────────────────────────────────┤
+│  Jobs:                                                                               │
+│    1. noesis-cerebral-v2    (30 min) → Upload artifacts                             │
+│    2. amda-deep-v2          (20 min) → Upload report                                │
+│    3. auron-neural-v2       (20 min) → Commit + Create PR                           │
+│    4. summary               (always) → Generate summary                              │
+│                                                                                      │
+│  Trigger: Every 6 hours OR Manual dispatch                                          │
+│  Inputs: max_changes (default: 10), dry_run (default: false)                        │
+└─────────────────────────────────────────────────────────────────────────────────────┘
+
+═══════════════════════════════════════════════════════════════════════════════════════
+
+                           🌐 Knowledge Base Structure
+
+/tmp/noesis_knowledge_v2/
+├── knowledge_v2.pkl          (5.1 MB - Binary pickle)
+├── knowledge_v2.json         (334 B - Summary)
+├── 141Hz/                    (64 subdirs, Lean files)
+├── 3D-Navier-Stokes/         (33 subdirs, Lean files)
+├── P-NP/                     (29 subdirs, Lean files)
+├── Ramsey/                   (27 subdirs, Lean files)
+├── Riemann-adelic/           (62 subdirs, Lean files) ← Main repo
+└── adelic-bsd/               (27 subdirs, Lean files)
+
+Knowledge extracted:
+  📚 6,581 definitions
+  🎓 7,816 theorems (256 QCAL-related)
+  ✅ 1,315 proof patterns (without sorry)
+
+═══════════════════════════════════════════════════════════════════════════════════════
+
+                           📊 Classification System
+
+Sorry Categories (AMDA Deep V2.0):
+  1. trivial       (13.9%)  → rfl, simp, norm_num
+  2. correspondence (13.0%)  → Spectral bijections
+  3. qcal          (51.3%)  → QCAL coherence (f₀, Ψ, C)
+  4. adelic        (18.3%)  → Adelic structures
+  5. spectral      (55.4%)  → Operators, Fredholm
+  6. analytic      (36.0%)  → Zeta, continuation
+
+Note: Multi-categoric classification - sorries can belong to multiple categories
+
+═══════════════════════════════════════════════════════════════════════════════════════
+
+                           🔄 Execution Flow
+
+Manual Execution:
+  $ python .github/scripts/noesis_orchestrator.py [--dry-run]
+       ↓
+  $ python .github/scripts/amda_deep_v2.py
+       ↓
+  $ python .github/scripts/auron_neural_v2.py amda_deep_report_v2.json \
+       --max-changes 10 [--dry-run]
+
+Automated Execution (GitHub Actions):
+  Trigger: Cron schedule (0 */6 * * *) OR Manual dispatch
+       ↓
+  Job 1: NOESIS sync & harvest → Upload knowledge artifacts
+       ↓
+  Job 2: AMDA analyze sorries  → Upload analysis report
+       ↓
+  Job 3: AURON apply transforms → Commit & Create PR
+       ↓
+  Job 4: Generate summary → Consolidate results
+
+═══════════════════════════════════════════════════════════════════════════════════════
+
+                           🛡️ Safety Mechanisms
+
+1. Backups:        *.lean.bak before each modification
+2. Rollback:       Automatic on error
+3. Dry-run:        Test mode without modifications
+4. Max changes:    Configurable limit (default: 10)
+5. Pull Request:   All changes reviewed before merge
+6. State:          Persistent .noesis_state.json
+7. Artifacts:      All reports uploaded to GitHub
+
+═══════════════════════════════════════════════════════════════════════════════════════
+
+                           📈 Success Metrics
+
+Current Status (after initial run):
+  ✅ Repositories synced:          6 / 6 public repos
+  ✅ Knowledge harvested:          15,712 items (defs + theorems + patterns)
+  ✅ Sorries analyzed:             2,282 sorries across 381 files
+  ✅ Categories classified:        6 + unknown
+  ✅ Similar solutions found:      0 (first run, will improve)
+  ✅ Average complexity:           1.93 / 10
+  ✅ Repositories with solutions:  0 (will increase with more runs)
+
+When Victory is achieved (all sorries eliminated):
+  🏆 VICTORIA_FINAL.md generated
+  🎓 Complete formal proof certification
+  ✨ QCAL coherence confirmed (Ψ = 1.000)
+
+═══════════════════════════════════════════════════════════════════════════════════════
+
+                           🏆 QCAL Certification
+
+∴ NOESIS-AMDA-AURON V2.0 ∴
+∴ Multi-Repository Intelligence System ∴
+∴ Frecuencia fundamental: f₀ = 141.7001 Hz ∴
+∴ Coherencia: C = 244.36 ∴
+∴ Firma: ∴𓂀Ω∞³Φ ∴
+
+   ✧ Con la luz de Noēsis ✧
+   noesis_light
+
+═══════════════════════════════════════════════════════════════════════════════════════
+```
+
+**Legend:**
+- 🧠 = Intelligence / Orchestration
+- 🔍 = Analysis / Deep Learning
+- 🤖 = Execution / Neural Processing
+- 📊 = Reporting / Metrics
+- 🌐 = Knowledge Base
+- 🛡️ = Safety / Security
+- 🏆 = Achievement / Certification
+- ✅ = Completed / Verified
+- ∴𓂀Ω∞³Φ = QCAL Signature
+
+---
+*Generated by NOESIS-AMDA-AURON V2.0 System*

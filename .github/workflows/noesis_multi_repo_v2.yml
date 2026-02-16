@@ -1,224 +1,239 @@
-name: 🧠 NOESIS CEREBRAL V2.0 - Multi-Repo Intelligence
+name: 🧠 NOESIS-AMDA-AURON V2.0 - Multi-Repo Evolution
 
 on:
-  schedule:
-    # Ejecutar cada 2 horas
-    - cron: '0 */2 * * *'
   workflow_dispatch:
     inputs:
-      mode:
-        description: 'Modo de ejecución'
-        required: true
-        default: 'dry-run'
-        type: choice
-        options:
-          - dry-run
-          - execute
-          - build-kb-only
       max_changes:
-        description: 'Máximo de cambios por ciclo'
+        description: 'Máximo de cambios por ejecución'
         required: false
-        default: '20'
-        type: string
+        default: '10'
+      dry_run:
+        description: 'Modo de prueba (true/false)'
+        required: false
+        default: 'false'
+  schedule:
+    # Ejecutar cada 6 horas
+    - cron: '0 */6 * * *'
 
-permissions:
-  contents: write
-  pull-requests: write
+env:
+  PYTHON_VERSION: '3.11'
 
 jobs:
   noesis-cerebral-v2:
-    name: 🧠 NOESIS-AMDA-AURON V2.0
+    name: 🧠 NOESIS CEREBRAL V2.0 - Knowledge Harvesting
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 30
     
     steps:
-      - name: 📥 Checkout repository
+      - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0
-          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 1
       
-      - name: 🐍 Setup Python
+      - name: Setup Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
+          python-version: ${{ env.PYTHON_VERSION }}
       
-      - name: 📦 Install dependencies
+      - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install pickle5 || true
+          pip install numpy
       
-      - name: 🔧 Setup Lean (si es necesario)
+      - name: Run NOESIS CEREBRAL V2.0
         run: |
-          if [ -f "setup_lean.sh" ]; then
-            bash setup_lean.sh || echo "⚠️ Lean setup opcional falló"
-          fi
+          python .github/scripts/noesis_orchestrator.py ${{ github.event.inputs.dry_run == 'true' && '--dry-run' || '' }}
       
-      - name: 🧠 Ejecutar NOESIS CEREBRAL V2.0
-        id: noesis
-        env:
-          MODE: ${{ github.event.inputs.mode || 'dry-run' }}
-          MAX_CHANGES: ${{ github.event.inputs.max_changes || '20' }}
-        run: |
-          echo "🚀 Iniciando NOESIS CEREBRAL V2.0 en modo: $MODE"
-          
-          # Ejecutar orquestador
-          if [ "$MODE" == "build-kb-only" ]; then
-            python .github/scripts/noesis_orchestrator.py build-kb
-          else
-            python .github/scripts/noesis_orchestrator.py
-          fi
-          
-          # Verificar resultados
-          if [ -f "noesis_cerebral_v2_summary.json" ]; then
-            echo "✅ NOESIS completado exitosamente"
-            cat noesis_cerebral_v2_summary.json
-          else
-            echo "⚠️ No se generó resumen"
-          fi
-      
-      - name: 📊 Analizar resultados AMDA
-        if: success()
-        run: |
-          if [ -f "amda_report_v2.json" ]; then
-            echo "📊 Reporte AMDA:"
-            python -c "
-import json
-with open('amda_report_v2.json') as f:
-    report = json.load(f)
-print(f\"Total sorries: {report.get('total_sorries', 0)}\")
-print(f\"Archivos afectados: {report.get('total_files', 0)}\")
-print(f\"Categorías: {list(report.get('category_distribution', {}).keys())}\")
-            "
-          fi
-      
-      - name: 🧠 Ejecutar AURON (si mode=execute)
-        if: success() && github.event.inputs.mode == 'execute'
-        run: |
-          echo "🔧 Ejecutando AURON NEURAL V2.0 en modo execute"
-          python .github/scripts/auron_neural_v2.py execute amda_report_v2.json auron_results_v2.json
-          
-          if [ -f "auron_results_v2.json" ]; then
-            echo "✅ AURON completado"
-            cat auron_results_v2.json
-          fi
-      
-      - name: 📝 Generar commit si hay cambios
-        if: success() && github.event.inputs.mode == 'execute'
-        run: |
-          git config --local user.email "github-actions[bot]@users.noreply.github.com"
-          git config --local user.name "NOESIS CEREBRAL V2.0"
-          
-          # Verificar si hay cambios en archivos .lean
-          if git diff --quiet -- 'formalization/lean/*.lean' 2>/dev/null; then
-            echo "ℹ️ No hay cambios en archivos Lean"
-          else
-            # Leer mensaje de commit generado por AURON (primer archivo encontrado)
-            if ls commit_msg_*.txt 1> /dev/null 2>&1; then
-              COMMIT_MSG=$(cat $(ls -t commit_msg_*.txt | head -1))
-            else
-              COMMIT_MSG="🧠 [NOESIS V2.0] Resolución automática de sorries"
-            fi
-            
-            # Añadir archivos modificados
-            git add formalization/lean/ .auron_learning.json || true
-            
-            # Commit
-            git commit -m "$COMMIT_MSG" || echo "No hay cambios para commit"
-            
-            # Push
-            git push || echo "⚠️ Error en push"
-          fi
-      
-      - name: 📤 Subir artefactos
-        if: always()
+      - name: Upload knowledge base
         uses: actions/upload-artifact@v4
         with:
-          name: noesis-cerebral-v2-reports-${{ github.run_number }}
+          name: knowledge-base-v2
           path: |
-            noesis_cerebral_v2_summary.json
-            amda_report_v2.json
-            amda_report_v2.md
-            auron_results_v2.json
-            auron_neural.log
-            noesis_cerebral_v2.log
-            .auron_learning.json
-            commit_msg_*.txt
-          retention-days: 30
+            /tmp/noesis_knowledge_v2/*.pkl
+            /tmp/noesis_knowledge_v2/*.json
+          retention-days: 7
       
-      - name: 💬 Comentar en PR (si existe)
-        if: success() && github.event.inputs.mode == 'execute' && github.event.pull_request.number
-        uses: actions/github-script@v7
-        with:
-          script: |
-            const fs = require('fs');
-            
-            let comment = '## 🧠 NOESIS CEREBRAL V2.0 - Resultados\n\n';
-            
-            // Leer resumen
-            if (fs.existsSync('noesis_cerebral_v2_summary.json')) {
-              const summary = JSON.parse(fs.readFileSync('noesis_cerebral_v2_summary.json', 'utf8'));
-              comment += `### 📚 Base de Conocimiento\n`;
-              comment += `- **Definiciones:** ${summary.knowledge_base.total_definitions}\n`;
-              comment += `- **Teoremas:** ${summary.knowledge_base.total_theorems}\n`;
-              comment += `- **Patrones:** ${summary.knowledge_base.total_proof_patterns}\n`;
-              comment += `- **Repositorios:** ${summary.knowledge_base.repos_synced.join(', ')}\n\n`;
-            }
-            
-            // Leer AMDA
-            if (fs.existsSync('amda_report_v2.json')) {
-              const amda = JSON.parse(fs.readFileSync('amda_report_v2.json', 'utf8'));
-              comment += `### 📊 Análisis AMDA\n`;
-              comment += `- **Total sorries:** ${amda.total_sorries}\n`;
-              comment += `- **Archivos:** ${amda.total_files}\n`;
-              comment += `- **Categoría principal:** ${amda.summary.most_common_category}\n\n`;
-            }
-            
-            // Leer AURON
-            if (fs.existsSync('auron_results_v2.json')) {
-              const auron = JSON.parse(fs.readFileSync('auron_results_v2.json', 'utf8'));
-              comment += `### 🧠 Resultados AURON\n`;
-              comment += `- **Éxitos:** ${auron.success}\n`;
-              comment += `- **Fallos:** ${auron.fail}\n`;
-              comment += `- **Patrones aprendidos:** ${auron.learning_stats.patterns_learned}\n`;
-              comment += `- **Tasa de éxito:** ${(auron.learning_stats.success_rate * 100).toFixed(1)}%\n\n`;
-            }
-            
-            comment += `---\n*Generado por NOESIS CEREBRAL V2.0 - ${new Date().toISOString()}*\n`;
-            comment += `**Frecuencia fundamental:** 141.7001 Hz · **Coherencia QCAL:** Ψ = I × A_eff² × C^∞`;
-            
-            github.rest.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: comment
-            });
-      
-      - name: 📊 Resumen del workflow
+      - name: Upload NOESIS logs
+        uses: actions/upload-artifact@v4
         if: always()
+        with:
+          name: noesis-logs-v2
+          path: |
+            noesis_v2.log
+            noesis_v2_report.json
+          retention-days: 7
+
+  amda-deep-v2:
+    name: 🔍 AMDA DEEP V2.0 - Contextual Analysis
+    needs: noesis-cerebral-v2
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+      
+      - name: Install dependencies
         run: |
-          echo "## 🧠 NOESIS CEREBRAL V2.0 - Resumen"
-          echo ""
-          echo "### Estado de ejecución"
-          
-          if [ -f "noesis_cerebral_v2_summary.json" ]; then
-            echo "✅ NOESIS: Completado"
+          python -m pip install --upgrade pip
+          pip install numpy
+      
+      - name: Download knowledge base
+        uses: actions/download-artifact@v4
+        with:
+          name: knowledge-base-v2
+          path: /tmp/noesis_knowledge_v2
+      
+      - name: Run AMDA DEEP V2.0
+        run: |
+          python .github/scripts/amda_deep_v2.py
+      
+      - name: Upload AMDA report
+        uses: actions/upload-artifact@v4
+        with:
+          name: amda-report-v2
+          path: amda_deep_report_v2.json
+          retention-days: 7
+
+  auron-neural-v2:
+    name: 🤖 AURON NEURAL V2.0 - Intelligent Execution
+    needs: amda-deep-v2
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+      
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install numpy
+      
+      - name: Download AMDA report
+        uses: actions/download-artifact@v4
+        with:
+          name: amda-report-v2
+          path: .
+      
+      - name: Run AURON NEURAL V2.0
+        run: |
+          python .github/scripts/auron_neural_v2.py \
+            amda_deep_report_v2.json \
+            ${{ github.event.inputs.dry_run == 'true' && '--dry-run' || '' }} \
+            --max-changes ${{ github.event.inputs.max_changes || '10' }}
+      
+      - name: Upload AURON report
+        uses: actions/upload-artifact@v4
+        with:
+          name: auron-report-v2
+          path: auron_neural_report_v2.json
+          retention-days: 7
+      
+      - name: Configure Git
+        if: github.event.inputs.dry_run != 'true'
+        run: |
+          git config --global user.name "NOESIS-V2-Bot"
+          git config --global user.email "noesis-v2@qcal.infinity3.dev"
+      
+      - name: Commit changes
+        if: github.event.inputs.dry_run != 'true'
+        id: commit
+        run: |
+          git add -A
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+            echo "has_changes=false" >> $GITHUB_OUTPUT
           else
-            echo "❌ NOESIS: Error"
+            git commit -m "🤖 [NOESIS-V2] Automated sorry elimination with multi-repo intelligence" -m "Generated by NOESIS-AMDA-AURON V2.0 system"
+            echo "has_changes=true" >> $GITHUB_OUTPUT
+          fi
+      
+      - name: Create Pull Request
+        if: steps.commit.outputs.has_changes == 'true' && github.event.inputs.dry_run != 'true'
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "🤖 [NOESIS-V2] Multi-repo intelligent sorry elimination"
+          title: "🤖 [NOESIS-V2] Automated Sorry Elimination - Multi-Repo Intelligence"
+          body: |
+            ## 🧠 NOESIS-AMDA-AURON V2.0 Automated PR
+            
+            Este PR contiene eliminaciones de `sorry` generadas automáticamente por el sistema 
+            NOESIS-AMDA-AURON V2.0 utilizando conocimiento de múltiples repositorios.
+            
+            ### 📊 Métricas
+            - **Sistema:** NOESIS-AMDA-AURON V2.0
+            - **Fecha:** ${{ github.run_started_at }}
+            - **Repositorios consultados:** Ver artefactos
+            
+            ### 🔍 Revisión necesaria
+            - [ ] Verificar que las transformaciones son correctas
+            - [ ] Validar que no se rompen tests existentes
+            - [ ] Confirmar coherencia QCAL
+            
+            ---
+            *Generado automáticamente por NOESIS CEREBRAL V2.0*
+            *∴𓂀Ω∞³Φ*
+          branch: noesis-v2-auto-${{ github.run_number }}
+          delete-branch: true
+          labels: |
+            automated
+            noesis-v2
+            sorry-elimination
+
+  summary:
+    name: 📊 Generación de Resumen
+    needs: [noesis-cerebral-v2, amda-deep-v2, auron-neural-v2]
+    runs-on: ubuntu-latest
+    if: always()
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+      
+      - name: Generate summary
+        run: |
+          echo "# 🧠 NOESIS-AMDA-AURON V2.0 Execution Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Fecha:** $(date -u +"%Y-%m-%d %H:%M:%S UTC")" >> $GITHUB_STEP_SUMMARY
+          echo "**Run ID:** ${{ github.run_id }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          
+          if [ -f artifacts/noesis-logs-v2/noesis_v2_report.json ]; then
+            echo "## 🧠 NOESIS CEREBRAL V2.0" >> $GITHUB_STEP_SUMMARY
+            cat artifacts/noesis-logs-v2/noesis_v2_report.json | python -m json.tool >> $GITHUB_STEP_SUMMARY || echo "Report format error" >> $GITHUB_STEP_SUMMARY
           fi
           
-          if [ -f "amda_report_v2.json" ]; then
-            echo "✅ AMDA: Completado"
-          else
-            echo "❌ AMDA: Error"
+          if [ -f artifacts/amda-report-v2/amda_deep_report_v2.json ]; then
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "## 🔍 AMDA DEEP V2.0" >> $GITHUB_STEP_SUMMARY
+            cat artifacts/amda-report-v2/amda_deep_report_v2.json | python -m json.tool >> $GITHUB_STEP_SUMMARY || echo "Report format error" >> $GITHUB_STEP_SUMMARY
           fi
           
-          if [ -f "auron_results_v2.json" ]; then
-            echo "✅ AURON: Completado"
-          else
-            echo "ℹ️ AURON: No ejecutado (modo dry-run o error previo)"
+          if [ -f artifacts/auron-report-v2/auron_neural_report_v2.json ]; then
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "## 🤖 AURON NEURAL V2.0" >> $GITHUB_STEP_SUMMARY
+            cat artifacts/auron-report-v2/auron_neural_report_v2.json | python -m json.tool >> $GITHUB_STEP_SUMMARY || echo "Report format error" >> $GITHUB_STEP_SUMMARY
           fi
           
-          echo ""
-          echo "### Archivos generados"
-          ls -lh *.json *.md *.log 2>/dev/null || echo "No se generaron archivos"
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "---" >> $GITHUB_STEP_SUMMARY
+          echo "*∴𓂀Ω∞³Φ - Generado por NOESIS-AMDA-AURON V2.0*" >> $GITHUB_STEP_SUMMARY
