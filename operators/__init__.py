@@ -29,6 +29,8 @@ Modules:
                               Tr(e^(-t·T_∞³)) ∼ Σ_p A_p(t) cos(γ_p·t + φ_p)
     - master_operator_o3: 𝒪_∞³ = 𝔻_s ⊗ 𝟙 + 𝟙 ⊗ H_Ψ master operator unifying
                          complex and real perspectives
+    - wkb_uniform_control: WKB approximation with Airy regularization for
+                          quantum operators with logarithmic potentials
 """
 
 from .riemann_operator import (
@@ -197,6 +199,16 @@ from .scattering_wave_operators import (
     SMatrixResult,
     generate_scattering_certificate
 )
+# WKB Uniform Control (Feb 2026)
+from .wkb_uniform_control import (
+    WKBUniformControlOperator,
+    TurningPointResult,
+    WKBIntegralResult,
+    AiryRegularizationResult,
+    SpectralCountingResult,
+    generate_wkb_certificate
+)
+)
 
 __all__ = [
     'construct_H_psi',
@@ -308,7 +320,7 @@ __all__ = [
     'SpectralCorrespondenceVerifier',
     'verify_berry_keating_self_adjointness',
     'C_BERRY_KEATING',
-    'HAS_MPMATH'
+    'HAS_MPMATH',
     # FALLO Closures (Feb 2026)
     'WeylLawHarmonicOscillator',
     'WeylLawResult',
@@ -321,4 +333,11 @@ __all__ = [
     'WaveOperatorResult',
     'SMatrixResult',
     'generate_scattering_certificate',
+    # WKB Uniform Control (Feb 2026)
+    'WKBUniformControlOperator',
+    'TurningPointResult',
+    'WKBIntegralResult',
+    'AiryRegularizationResult',
+    'SpectralCountingResult',
+    'generate_wkb_certificate',
 ]
