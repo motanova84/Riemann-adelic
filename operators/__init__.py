@@ -206,6 +206,14 @@ from .weyl_coefficient_integral import (
     ALPHA_CORRECTED
 )
 
+from .langer_olver_transformation import (
+    LangerOlverTransformation,
+    LangerOlverResult,
+    compute_weyl_m_function,
+    compute_scattering_phase,
+    generate_qcal_certificate as generate_langer_olver_certificate
+)
+
 __all__ = [
     'construct_H_psi',
     'compute_spectrum',
@@ -316,7 +324,7 @@ __all__ = [
     'SpectralCorrespondenceVerifier',
     'verify_berry_keating_self_adjointness',
     'C_BERRY_KEATING',
-    'HAS_MPMATH'
+    'HAS_MPMATH',
     # FALLO Closures (Feb 2026)
     'WeylLawHarmonicOscillator',
     'WeylLawResult',
@@ -329,4 +337,15 @@ __all__ = [
     'WaveOperatorResult',
     'SMatrixResult',
     'generate_scattering_certificate',
+    'WeylCoefficientIntegral',
+    'WeylCoefficientResult',
+    'generate_weyl_coefficient_certificate',
+    'ALPHA_ORIGINAL',
+    'ALPHA_CORRECTED',
+    # Langer-Olver Transformation (Feb 2026)
+    'LangerOlverTransformation',
+    'LangerOlverResult',
+    'compute_weyl_m_function',
+    'compute_scattering_phase',
+    'generate_langer_olver_certificate',
 ]
