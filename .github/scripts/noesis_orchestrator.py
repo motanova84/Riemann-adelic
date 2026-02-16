@@ -131,26 +131,26 @@ class NoesisCerebralV2:
         return synced_repos
     
     def clone_or_update_repo(self, repo: str, url: str, path: Path) -> bool:
-        """Clona o actualiza un repositorio"""
+        """Clona o actualiza un repositorio sin usar shell para evitar inyección"""
         try:
+            timeout = self.repos_config.get("sync_settings", {}).get("timeout_seconds", 300)
+            
             if path.exists():
-                # Actualizar repo existente
+                # Actualizar repo existente sin usar shell
                 result = subprocess.run(
-                    f"cd {path} && git pull --quiet",
-                    shell=True,
+                    ["git", "-C", str(path), "pull", "--quiet"],
                     check=True,
                     capture_output=True,
-                    timeout=self.repos_config.get("sync_settings", {}).get("timeout_seconds", 300)
+                    timeout=timeout
                 )
                 return True
             else:
-                # Clonar nuevo repo
+                # Clonar nuevo repo sin usar shell
                 result = subprocess.run(
-                    f"git clone --depth 1 {url} {path} --quiet",
-                    shell=True,
+                    ["git", "clone", "--depth", "1", url, str(path), "--quiet"],
                     check=True,
                     capture_output=True,
-                    timeout=self.repos_config.get("sync_settings", {}).get("timeout_seconds", 300)
+                    timeout=timeout
                 )
                 return True
         except subprocess.TimeoutExpired:
