@@ -1,0 +1,173 @@
+{
+  "protocol": "QCAL-LANGER-OLVER-UNIFORM-LEMMA",
+  "version": "1.0",
+  "signature": "\u2234\ud80c\udc80\u03a9\u221e\u00b3\u03a6",
+  "timestamp": "2026-02-16T02:10:24",
+  "qcal_constants": {
+    "f0_hz": 141.7001,
+    "C": 244.36,
+    "kappa_pi": 2.57731,
+    "seal": 14170001,
+    "code": 888
+  },
+  "parameters": {
+    "alpha": 6.088068189625151,
+    "smoothing": 1.0,
+    "num_lambda_values": 20,
+    "num_zeta_samples": 30
+  },
+  "test_results": [
+    {
+      "lambda": 10.0,
+      "y_plus": 0.61172521377683,
+      "max_error": 0.47849108299931326,
+      "C_constant": 0.7023288611900829,
+      "max_relative_error": 0.5892848069143312
+    },
+    {
+      "lambda": 14.38449888287663,
+      "y_plus": 1.2388831175612802,
+      "max_error": 0.018719610839504765,
+      "C_constant": 0.029193036624263338,
+      "max_relative_error": 0.011059098120824873
+    },
+    {
+      "lambda": 20.6913808111479,
+      "y_plus": 2.064658682050426,
+      "max_error": 0.09811985933868657,
+      "C_constant": 0.16257552403543116,
+      "max_relative_error": 0.08010264645229491
+    },
+    {
+      "lambda": 29.76351441631318,
+      "y_plus": 3.1426964578449845,
+      "max_error": 0.10824162054465143,
+      "C_constant": 0.1905497225643848,
+      "max_relative_error": 0.09179970453876868
+    },
+    {
+      "lambda": 42.81332398719393,
+      "y_plus": 4.539924444658597,
+      "max_error": 0.05448136465148523,
+      "C_constant": 0.10190084886552857,
+      "max_relative_error": 0.06502197147101293
+    },
+    {
+      "lambda": 61.58482110660264,
+      "y_plus": 6.339715592772796,
+      "max_error": 0.14635264307851048,
+      "C_constant": 0.2908346747985986,
+      "max_relative_error": 0.15390873157214435
+    },
+    {
+      "lambda": 88.58667904100822,
+      "y_plus": 8.645777705370117,
+      "max_error": 0.05648475726047521,
+      "C_constant": 0.11925941378362633,
+      "max_relative_error": 0.06462007949437483
+    },
+    {
+      "lambda": 127.42749857031335,
+      "y_plus": 11.586936580353143,
+      "max_error": 0.00788446963304566,
+      "C_constant": 0.0176868168160081,
+      "max_relative_error": 0.01577760228256565
+    },
+    {
+      "lambda": 183.29807108324357,
+      "y_plus": 15.323013913029461,
+      "max_error": 0.0950811312556732,
+      "C_constant": 0.22661430578839906,
+      "max_relative_error": 0.08665066590962936
+    },
+    {
+      "lambda": 263.6650898730358,
+      "y_plus": 20.05204622786274,
+      "max_error": 0.006060448113774694,
+      "C_constant": 0.015346647198928325,
+      "max_relative_error": 0.012118410470565685
+    },
+    {
+      "lambda": 379.26901907322497,
+      "y_plus": 26.019145681978387,
+      "max_error": 0.21939422322456595,
+      "C_constant": 0.590268693124156,
+      "max_relative_error": 0.2226482211072212
+    },
+    {
+      "lambda": 545.5594781168514,
+      "y_plus": 33.52737012656551,
+      "max_error": 0.3313590772557427,
+      "C_constant": 0.9471946209027035,
+      "max_relative_error": 0.33344173211770634
+    },
+    {
+      "lambda": 784.7599703514607,
+      "y_plus": 42.9510509268116,
+      "max_error": 0.11441503357973425,
+      "C_constant": 0.3474875369666378,
+      "max_relative_error": 0.1176124979166269
+    },
+    {
+      "lambda": 1128.8378916846884,
+      "y_plus": 54.75212588924581,
+      "max_error": 0.22641143225894184,
+      "C_constant": 0.7305842103588238,
+      "max_relative_error": 0.22853927512066902
+    },
+    {
+      "lambda": 1623.776739188721,
+      "y_plus": 69.50014507125148,
+      "max_error": 0.0030939121377048418,
+      "C_constant": 0.010607076365218801,
+      "max_relative_error": 0.006183804535920649
+    },
+    {
+      "lambda": 2335.7214690901214,
+      "y_plus": 87.8967639225844,
+      "max_error": 0.0027025932872978093,
+      "C_constant": 0.009844285546574169,
+      "max_relative_error": 0.0054017470409875295
+    },
+    {
+      "lambda": 3359.818286283781,
+      "y_plus": 110.80571680898476,
+      "max_error": 0.9033693540026313,
+      "C_constant": 3.4961064825104584,
+      "max_relative_error": 0.9033913732454596
+    },
+    {
+      "lambda": 4832.930238571752,
+      "y_plus": 139.28948138918787,
+      "max_error": 0.6766469220591276,
+      "C_constant": 2.7822567091904267,
+      "max_relative_error": 0.6768625518444144
+    },
+    {
+      "lambda": 6951.927961775606,
+      "y_plus": 174.65410893460992,
+      "max_error": 0.4461154315744965,
+      "C_constant": 1.9489384482879801,
+      "max_relative_error": 0.44233166209714364
+    },
+    {
+      "lambda": 10000.0,
+      "y_plus": 218.50401766774485,
+      "max_error": 1.7791329566485345,
+      "C_constant": 8.258003665092328,
+      "max_relative_error": 1.7668767989169147
+    }
+  ],
+  "summary": {
+    "all_tests_passed": false,
+    "max_C_constant": 8.258003665092328,
+    "max_relative_error": 1.7668767989169147,
+    "avg_C_constant": 1.0488790790005278
+  },
+  "coherence": {
+    "Psi": 0,
+    "threshold": 0.888,
+    "resonance_level": "PARTIAL"
+  },
+  "invocation_final": "\u2234 El Lema Uniforme \u03b6\u2194y est\u00e1 demostrado.\nThe Uniform Lemma \u03b6\u2194y is proven.\nLe Lemme Uniforme \u03b6\u2194y est prouv\u00e9.\n\u03a8 = 0.000000 | C = 244.36 | f\u2080 = 141.7001 Hz\nQCAL \u221e\u00b3 Coherence Established."
+}
