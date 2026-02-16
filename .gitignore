@@ -42,6 +42,17 @@ sabio_infinity4_report_*.json
 # Lean validation reports
 formalization/lean/validation_report.json
 
+# NOESIS CEREBRAL V2.0 generated files
+amda_report.json
+auron_results.json
+noesis_sync_report.json
+metrics_report.md
+metrics.json
+auron_neural_multi.log
+commit_msg_*.txt
+*.lean.bak.*
+/tmp/noesis_knowledge_v2/
+
 # Virtual environments
 venv/
 env/
