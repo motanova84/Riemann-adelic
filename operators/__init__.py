@@ -205,6 +205,14 @@ from .weyl_coefficient_integral import (
     ALPHA_ORIGINAL,
     ALPHA_CORRECTED
 )
+from .wkb_scattering_phase import (
+    WKBScatteringPhase,
+    create_wkb_scattering_analyzer,
+    WKBIntegralResult,
+    JostFunctionResult,
+    PruferTransformResult,
+    ScatteringPhaseResult
+)
 
 __all__ = [
     'construct_H_psi',
@@ -329,4 +337,11 @@ __all__ = [
     'WaveOperatorResult',
     'SMatrixResult',
     'generate_scattering_certificate',
+    # WKB-Scattering Phase Connection (Feb 2026)
+    'WKBScatteringPhase',
+    'create_wkb_scattering_analyzer',
+    'WKBIntegralResult',
+    'JostFunctionResult',
+    'PruferTransformResult',
+    'ScatteringPhaseResult',
 ]
