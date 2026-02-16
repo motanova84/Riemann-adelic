@@ -28,7 +28,12 @@ echo "=========================" >> "$OUTPUT_FILE"
 echo "Total de sorries: $TOTAL_SORRIES" >> "$OUTPUT_FILE"
 echo "Total de archivos Lean: $TOTAL_FILES" >> "$OUTPUT_FILE"
 echo "Archivos con sorries: $FILES_WITH_SORRIES" >> "$OUTPUT_FILE"
-echo "Promedio sorries/archivo: $(echo "scale=1; $TOTAL_SORRIES / $FILES_WITH_SORRIES" | bc)" >> "$OUTPUT_FILE"
+if [ "$FILES_WITH_SORRIES" -gt 0 ]; then
+  AVG_SORRIES_PER_FILE=$(echo "scale=1; $TOTAL_SORRIES / $FILES_WITH_SORRIES" | bc)
+else
+  AVG_SORRIES_PER_FILE="0.0"
+fi
+echo "Promedio sorries/archivo: $AVG_SORRIES_PER_FILE" >> "$OUTPUT_FILE"
 echo "" >> "$OUTPUT_FILE"
 
 # Calcular progreso (baseline: 2630)
