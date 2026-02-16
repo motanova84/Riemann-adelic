@@ -16,7 +16,7 @@
               ▼                       ▼                       ▼
 ┌─────────────────────────┐ ┌─────────────────────────┐ ┌─────────────────────────┐
 │   AMDA DEEP V2.0        │ │   KNOWLEDGE GRAPH       │ │   AURON NEURAL V2.0     │
-│   • Análisis semántico   │ │   • 33 repositorios     │ │   • Aprendizaje          │
+│   • Análisis semántico   │ │   • 6 repositorios      │ │   • Aprendizaje          │
 │   • Clasificación multi  │ │   • Definiciones        │ │   • Validación lake build│
 │   • Similitud contextual │ │   • Teoremas            │ │   • Persistencia patrones│
 │   • Detección de patrones│ │   • Patrones de prueba  │ │   • Priorización         │

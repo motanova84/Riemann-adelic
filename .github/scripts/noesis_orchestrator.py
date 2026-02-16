@@ -53,7 +53,7 @@ class NoesisCerebralV2:
                     cwd=repo_path,
                     capture_output=True,
                     text=True,
-                    timeout=60
+                    timeout=120  # Increased from 60 to match clone timeout
                 )
             else:
                 self.log(f"   📥 Clonando repositorio...")

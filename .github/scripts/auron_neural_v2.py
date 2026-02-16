@@ -40,7 +40,7 @@ class AuronNeuralV2:
             ('sorry', 'by rfl'),
             ('sorry', 'by trivial'),
             ('sorry', 'by simp only'),
-            ('sorry', 'by norm_num1'),
+            ('sorry', 'by norm_num'),  # Fixed: was norm_num1 (typo)
             ('sorry', 'by exact?'),
             ('sorry', 'by apply?'),
             ('sorry', 'library_search'),
@@ -239,9 +239,11 @@ class AuronNeuralV2:
                         self.success_count += 1
                         self.learning_history["total_success"] += 1
                         
-                        # Añadir repo a la lista si no está
-                        if solution["repo"] not in self.learning_history["repos_used"]:
-                            self.learning_history["repos_used"].append(solution["repo"])
+                        # Añadir repo a la lista si no está (mantener como lista)
+                        repos_used = self.learning_history.get("repos_used", [])
+                        if solution["repo"] not in repos_used:
+                            repos_used.append(solution["repo"])
+                            self.learning_history["repos_used"] = repos_used
                         
                         # Aprender este patrón
                         self.learning_history["patterns"][context_hash] = solution["proof"][:50]  # Guardar versión corta

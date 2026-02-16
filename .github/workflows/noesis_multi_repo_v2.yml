@@ -110,18 +110,18 @@ print(f\"Categorías: {list(report.get('category_distribution', {}).keys())}\")
           git config --local user.name "NOESIS CEREBRAL V2.0"
           
           # Verificar si hay cambios en archivos .lean
-          if git diff --quiet formalization/lean/**/*.lean 2>/dev/null; then
+          if git diff --quiet -- 'formalization/lean/*.lean' 2>/dev/null; then
             echo "ℹ️ No hay cambios en archivos Lean"
           else
-            # Leer mensaje de commit generado por AURON
-            if [ -f commit_msg_*.txt ]; then
-              COMMIT_MSG=$(cat commit_msg_*.txt)
+            # Leer mensaje de commit generado por AURON (primer archivo encontrado)
+            if ls commit_msg_*.txt 1> /dev/null 2>&1; then
+              COMMIT_MSG=$(cat $(ls -t commit_msg_*.txt | head -1))
             else
               COMMIT_MSG="🧠 [NOESIS V2.0] Resolución automática de sorries"
             fi
             
             # Añadir archivos modificados
-            git add formalization/lean/**/*.lean .auron_learning.json || true
+            git add formalization/lean/ .auron_learning.json || true
             
             # Commit
             git commit -m "$COMMIT_MSG" || echo "No hay cambios para commit"

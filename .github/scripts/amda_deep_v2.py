@@ -110,10 +110,15 @@ class AmDADeepV2:
         for pattern in self.knowledge.get("proof_patterns", []):
             pattern_words = set(pattern["proof"][:200].lower().split())
             
+            # Skip if either set is empty or union is empty
             if not query_words or not pattern_words:
                 continue
             
-            similarity = len(query_words & pattern_words) / len(query_words | pattern_words)
+            union = query_words | pattern_words
+            if not union:
+                continue
+            
+            similarity = len(query_words & pattern_words) / len(union)
             
             if similarity > min_similarity:
                 solutions.append({
