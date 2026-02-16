@@ -293,7 +293,7 @@ except Exception:
 ```yaml
 on:
   schedule:
-    - cron: '0 */2 * * *'  # Cada 2 horas
+    - cron: '0 */6 * * *'  # Cada 6 horas
   workflow_dispatch:        # Manual con parámetros
 ```
 
@@ -436,7 +436,7 @@ noesis-v2-reports-{run_number}/
 
 **Total automatizable:** ~389 sorries (17% del total)
 
-**Tiempo estimado:** 20 ciclos × 2 horas = 40 horas (~2 días)
+**Tiempo estimado:** 20 ciclos × 6 horas = 120 horas (~5 días)
 
 ### Aprendizaje
 

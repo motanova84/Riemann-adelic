@@ -154,8 +154,8 @@ fail = auron['fail']
 
 if success > 0:
     remaining = total_sorries - success
-    cycles_needed = remaining / success
-    hours = cycles_needed * 2  # 2 horas por ciclo
+    cycles_needed = remaining / success if success > 0 else 0
+    hours = cycles_needed * 6  # 6 horas por ciclo
     print(f"Sorries restantes: {remaining}")
     print(f"Ciclos estimados: {cycles_needed:.1f}")
     print(f"Tiempo estimado: {hours:.1f} horas ({hours/24:.1f} días)")

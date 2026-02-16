@@ -128,8 +128,8 @@ class MetricsGenerator:
 """
         if success > 0:
             remaining = total_sorries - success
-            cycles_needed = remaining / success if success > 0 else 0
-            hours_estimated = cycles_needed * 2  # 2 horas por ciclo
+            cycles_needed = remaining / success
+            hours_estimated = cycles_needed * 6  # 6 horas por ciclo
             
             md += f"""
 - **Sorries restantes:** {remaining}

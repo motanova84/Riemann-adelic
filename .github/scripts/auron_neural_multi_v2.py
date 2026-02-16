@@ -331,7 +331,7 @@ class AuronNeuralMultiV2:
 |---------|-------|
 | Éxitos | {self.success_count} |
 | Fallos | {self.fail_count} |
-| Tasa de éxito | {self.success_count/(self.success_count+self.fail_count)*100:.1f}% |
+| Tasa de éxito | {self.success_count/(self.success_count+self.fail_count)*100:.1f}% if (self.success_count+self.fail_count) > 0 else 'N/A' |
 | Coincidencias cross-repo | {cross_repo_success} |
 | Repositorios utilizados | {len(repos_used)} |
 | Patrones aprendidos | {patterns_learned} |
@@ -370,7 +370,7 @@ class AuronNeuralMultiV2:
 
 ## 📈 Proyección
 
-- **Tiempo estimado para completar:** {(total_sorries - len(changes)) / max(1, self.success_count) * 2:.1f} horas
+- **Tiempo estimado para completar:** {(total_sorries - len(changes)) / max(1, self.success_count) * 6:.1f} horas
 - **Confianza del sistema:** {min(100, success_rate * 1.2):.1f}%
 
 ---
@@ -443,7 +443,7 @@ class AuronNeuralMultiV2:
             "learning_stats": {
                 "patterns_learned": len(self.learning_history["patterns"]) - self.learning_history.get("previous_patterns", 0),
                 "total_patterns": len(self.learning_history["patterns"]),
-                "success_rate": self.learning_history.get("total_success", 0) / max(1, self.learning_history.get("total_attempts", 1)),
+                "success_rate": self.learning_history.get("total_success", 0) / max(1, self.learning_history.get("total_attempts", 0)),
                 "repos_used": list(set(self.learning_history.get("repos_used", [])))
             }
         }

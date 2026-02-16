@@ -41,7 +41,7 @@ El sistema se ejecuta automáticamente cada 2 horas vía GitHub Actions:
 ```yaml
 on:
   schedule:
-    - cron: '0 */2 * * *'
+    - cron: '0 */6 * * *'  # Every 6 hours
 ```
 
 ### 2. Ejecución Manual
