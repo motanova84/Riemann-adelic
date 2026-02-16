@@ -49,10 +49,12 @@ structure EllipticCurve where
 noncomputable def mordell_weil_rank (E : EllipticCurve) : ℕ := sorry
 
 /-- L-function for elliptic curve -/
-noncomputable def L_elliptic (E : EllipticCurve) (s : ℂ) : ℂ := sorry
+noncomputable def L_elliptic (E : EllipticCurve) (s : ℂ) : ℂ := -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+ sorry
 
 /-- Order of vanishing at s = 1 -/
-noncomputable def vanishing_order_at_one (E : EllipticCurve) : ℕ := sorry
+noncomputable def vanishing_order_at_one (E : EllipticCurve) : ℕ := -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+ sorry
 
 /-- BSD Conjecture statement -/
 def BSD_conjecture (E : EllipticCurve) : Prop :=
@@ -69,24 +71,29 @@ theorem birch_swinnerton_dyer_conjecture :
   -- 4. Modularity theorem (Wiles et al.)
   -- 5. QCAL coherence framework for rank computation
   -- 6. Analytic continuation and functional equation
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
   sorry
 
 /-! ## BSD Full Statement with Leading Coefficient -/
 
 /-- Regulator of elliptic curve -/
-noncomputable def regulator (E : EllipticCurve) : ℝ := sorry
+noncomputable def regulator (E : EllipticCurve) : ℝ := -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+ sorry
 
 /-- Torsion subgroup order -/
 noncomputable def torsion_order (E : EllipticCurve) : ℕ := sorry
 
 /-- Tamagawa numbers product -/
-noncomputable def tamagawa_product (E : EllipticCurve) : ℕ := sorry
+noncomputable def tamagawa_product (E : EllipticCurve) : ℕ := -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+ sorry
 
 /-- Real period -/
-noncomputable def real_period (E : EllipticCurve) : ℝ := sorry
+noncomputable def real_period (E : EllipticCurve) : ℝ := -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+ sorry
 
 /-- Shafarevich-Tate group order (conjecturally finite) -/
-noncomputable def sha_order (E : EllipticCurve) : ℕ := sorry
+noncomputable def sha_order (E : EllipticCurve) : ℕ := -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+ sorry
 
 /-- BSD formula for leading coefficient -/
 theorem BSD_leading_coefficient (E : EllipticCurve) :

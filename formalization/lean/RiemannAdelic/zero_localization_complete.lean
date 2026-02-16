@@ -98,9 +98,11 @@ theorem integrated_proof :
   use fun s => s  -- Placeholder for actual construction
   constructor
   · -- Prove order ≤ 1 (follows from extension_infinite)
+    -- TODO: Complete using QCAL.Noesis.spectral_correspondence
     sorry
   constructor
   · -- Prove symmetry (built into construction)
+    -- TODO: Complete using QCAL.Noesis.spectral_correspondence
     sorry
   constructor
   · -- Prove log asymptotics (follows from lengths_derived)
@@ -119,7 +121,8 @@ theorem integrated_proof :
       | inr h_ge => right; linarith
   · -- Prove uniqueness (from uniqueness_without_xi)
     intro D' h_entire' h_symmetry' h_asympt' h_critical
-    sorry  -- Apply uniqueness_autonomous
+    -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+    sorry
 
 -- Final theorem: The Riemann Hypothesis is proven
 theorem riemann_hypothesis_proven :
@@ -132,4 +135,5 @@ theorem riemann_hypothesis_proven :
   -- Therefore, zeros of ζ in the critical strip correspond to zeros of D
   obtain ⟨D, h_D_props⟩ := integrated_proof
   -- Apply the correspondence (would need full functional equation)
-  sorry  -- Complete proof requires establishing D ≡ Ξ relation
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry

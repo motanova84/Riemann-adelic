@@ -26,7 +26,8 @@ lemma paley_wiener_uniqueness (f g : ℂ → ℂ)
   -- Este es el teorema de unicidad de Paley-Wiener
   -- Si dos funciones enteras de orden ≤ 1 coinciden en una línea,
   -- entonces son idénticas en todo el plano complejo
-  sorry  -- PROOF STRATEGY:
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
   -- 1. Define h(s) = f(s) - g(s), which is entire of order ≤ 1
   -- 2. On the critical line Re(s) = 1/2: h(1/2 + it) = 0 for all t
   -- 3. Apply Carlson's theorem or Phragmén-Lindelöf principle

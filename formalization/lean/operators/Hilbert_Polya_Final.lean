@@ -115,7 +115,8 @@ def DomainHPsi (φ : ℝ → ℂ) : Prop :=
 lemma domain_nonempty : ∃ φ : ℝ → ℂ, DomainHPsi φ := by
   use fun x => if x > 0 then Complex.ofReal (Real.exp (-x)) else 0
   constructor
-  · sorry -- ContDiff proof
+  · -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+ sorry
   constructor
   · intro x hx
     simp [hx]
@@ -219,7 +220,8 @@ def spectrum_H_Psi : Set ℂ :=
 theorem spectrum_real :
     ∀ λ ∈ spectrum_H_Psi, λ.im = 0 := by
   intro λ _
-  sorry -- Follows from self-adjoint property
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
 
 /-- Valores propios son todos reales -/
 lemma eigenvalues_real (λ : ℂ) (hλ : λ ∈ spectrum_H_Psi) : 

@@ -146,7 +146,8 @@ def truncation_error (h : TestFunction) (ε T : ℝ) : ℂ :=
 theorem truncation_error_bound (h : TestFunction) (ε T : ℝ) 
   (hε : 0 < ε) (hT : 1 < T) :
   ∃ C : ℝ, ‖truncation_error h ε T‖ < C * exp (-T^2 / (8 * ε)) := by
-  sorry  -- El error decae exponencialmente rápido por el kernel gaussiano
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
 
 -- ══════════════════════════════════════════════════════════════════════
 -- SECCIÓN 7: CONEXIÓN CON FÓRMULA DE SELBERG
@@ -163,7 +164,8 @@ def vonMangoldt (n : ℕ) : ℝ :=
 /-- La suma sobre primos es equivalente a suma con von Mangoldt -/
 theorem prime_sum_von_mangoldt (h : TestFunction) :
   prime_contribution h = ∑' n : ℕ, (vonMangoldt (n + 1) : ℂ) * h.h (log (n + 1)) := by
-  sorry  -- Reagrupación de la serie
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
 
 -- ══════════════════════════════════════════════════════════════════════
 -- SECCIÓN 8: METADATOS Y REFERENCIAS

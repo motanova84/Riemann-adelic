@@ -342,6 +342,7 @@ theorem eigenvalue_prime_connection (s : ℂ) (hs : s.re > 1) :
       ‖K_psi_eigenvalues s n - (primes n : ℂ)^(-s)‖ < ε := by
   -- The eigenvalues of K_Ψ(s) asymptotically match the prime terms
   -- This is the spectral-arithmetic correspondence
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
   sorry
 
 /-!
@@ -365,6 +366,7 @@ theorem zeta_zero_iff_eigenvalue_one (s : ℂ) (hs : s ≠ 1) :
   · intro h_zero
     -- If ζ(s) = 0, then det(I - K_Ψ(s)) = 0
     -- This means some eigenvalue λₙ(s) = 1
+    -- TODO: Complete using QCAL.Noesis.spectral_correspondence
     sorry
   · intro ⟨n, h_ev⟩
     -- If λₙ(s) = 1, then det(I - K_Ψ(s)) = 0

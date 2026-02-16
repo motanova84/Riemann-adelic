@@ -76,7 +76,8 @@ theorem Xi_entire : AnalyticAt ℂ Xi s := by
   -- 1. The pole of Γ(s/2) at s=0 is cancelled by the s factor
   -- 2. The pole of ζ(s) at s=1 is cancelled by the (s-1) factor
   -- 3. All other factors are analytic
-  sorry  -- PROOF SKETCH:
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
   -- Use: Gamma_ne_zero_of_re_pos for regularization
   -- Factor cancellation at poles: lim_{s→0} s·Γ(s/2) = 2
   -- Factor cancellation at pole: lim_{s→1} (s-1)·ζ(s) = 1
@@ -93,7 +94,8 @@ theorem Xi_differentiable : Differentiable ℂ Xi := by
 theorem Xi_functional_equation (s : ℂ) : Xi s = Xi (1 - s) := by
   -- The functional equation for the completed zeta function
   -- This is the deep symmetry underlying RH
-  sorry  -- PROOF: Standard functional equation proof
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
   -- Uses: Poisson summation, Gamma reflection, zeta functional equation
 
 /-- Ξ(s) is even about s = 1/2 -/

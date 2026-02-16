@@ -104,7 +104,8 @@ def g_hat (g : ℝ → ℂ) (ξ : ℝ) : ℂ :=
 /-- Fourier transform of even function is even -/
 theorem g_hat_even (g : ℝ → ℂ) [EvenFunction g] (ξ : ℝ) : 
     g_hat g (-ξ) = g_hat g ξ := by
-  sorry -- Requires measure theory integration
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
 
 /-!
 ## Hyperbolic Kernel
@@ -124,7 +125,8 @@ theorem hyperbolic_kernel_sinh (t : ℝ) (ht : t ≠ 0) :
   simp only [hyperbolic_kernel, ht, if_false]
   -- sinh(x) = (exp(x) - exp(-x))/2
   have h : Real.sinh (t / 2) = (exp (t / 2) - exp (-t / 2)) / 2 := Real.sinh_eq _
-  sorry -- Algebraic manipulation
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
 
 /-!
 ## Weil Explicit Formula - Spectral Form
@@ -221,7 +223,8 @@ def log_det_spectral (s : ℂ) : ℂ :=
 /-- Connection: log det equals integral representation -/
 theorem trace_to_explicit (g : ℝ → ℂ) [Decay g] [EvenFunction g] :
     ∃ (C : ℂ), weil_explicit g = log_det_spectral 1 + C := by
-  sorry -- Deep connection via Mellin transform
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
 
 /-!
 ## QCAL ∞³ Interpretation
@@ -275,6 +278,7 @@ theorem spectral_arithmetic_duality (g : ℝ → ℂ) [Decay g] [EvenFunction g]
 theorem spectrum_symmetry_implies_RH :
     (∀ n : ℕ, ∃ m : ℕ, λₙ n = -λₙ m ∨ λₙ n = λₙ m) →
     ∀ ρ ∈ zeta_zeros, ρ.re = 1/2 := by
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
   sorry
   -- Deep theorem: spectral symmetry of H_Ψ implies zeros on critical line
 

@@ -92,7 +92,8 @@ theorem D_is_entire_function (ε : ℝ) (hε : ε > 0) :
 theorem D_function_order_one (ε : ℝ) (hε : ε > 0) :
   ∃ C : ℝ, C > 0 ∧ ∀ s : ℂ, 
     abs (D_function_infinite s ε) ≤ exp (C * abs s) := by
-  sorry -- Requiere estimación de crecimiento
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
 
 /-- Convergencia del producto infinito
     
@@ -102,7 +103,8 @@ theorem D_function_order_one (ε : ℝ) (hε : ε > 0) :
 theorem D_product_convergence (ε : ℝ) (hε : ε > 0) (s : ℂ) :
   ∃ L : ℂ, Filter.Tendsto 
     (fun N => D_function s ε N) Filter.atTop (nhds L) := by
-  sorry -- Requiere teoría de productos infinitos
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
 
 /-- D(s) es no nula excepto en sus ceros
     
@@ -129,6 +131,7 @@ theorem D_log_derivative (ε : ℝ) (hε : ε > 0) (s : ℂ)
   ∃ f : ℂ → ℂ, DifferentiableAt ℂ f s ∧ 
     f s = (∑' (n : ℕ), 
       -1 / ((n : ℂ) + 1/2 + ε * ↑(eigenvalue_correction n) - s)) := by
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
   sorry
 
 /-- D_N(s) converge uniformemente a D(s) en compactos -/
@@ -136,12 +139,14 @@ theorem D_uniform_convergence (ε : ℝ) (hε : ε > 0) (K : Set ℂ)
   (hK : IsCompact K) :
   ∀ δ > 0, ∃ N₀ : ℕ, ∀ N ≥ N₀, ∀ s ∈ K,
     abs (D_function s ε N - D_function_infinite s ε) < δ := by
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
   sorry
 
 /-- Estimación del crecimiento en líneas verticales -/
 theorem D_vertical_growth (ε : ℝ) (hε : ε > 0) (σ : ℝ) :
   ∃ C : ℝ, C > 0 ∧ ∀ t : ℝ,
     abs (D_function_infinite (σ + I * t) ε) ≤ exp (C * |t|) := by
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
   sorry
 
 /-- Los ceros de D(s) tienen densidad finita -/

@@ -318,7 +318,8 @@ theorem spectrum_is_real (λ : ℂ)
   -- ⟨H_Ψ f, f⟩ = λ⟨f, f⟩ y ⟨f, H_Ψ f⟩ = λ̄⟨f, f⟩
   -- Por autoadjunción: λ⟨f, f⟩ = λ̄⟨f, f⟩
   -- Como f ≠ 0, ⟨f, f⟩ ≠ 0, entonces λ = λ̄ ⟹ Im(λ) = 0
-  sorry  -- Requiere inner product properties de Mathlib
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
 
 /-- Teorema: Los autovectores para autovalores distintos son ortogonales
 

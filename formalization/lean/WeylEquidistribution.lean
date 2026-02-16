@@ -211,6 +211,7 @@ def euclidean_diagonal : ℝ := 100 * Real.sqrt 2
 theorem f0_quantum_shift :
     abs (f0_QCAL - (euclidean_diagonal + delta_zeta)) < 0.001 := by
   norm_num [f0_QCAL, delta_zeta, euclidean_diagonal]
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
   sorry
 
 end Weyl

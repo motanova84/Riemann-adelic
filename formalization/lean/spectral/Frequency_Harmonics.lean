@@ -89,7 +89,8 @@ noncomputable def φ_sixth : ℝ := φ ^ 6
 
 /-- φ⁴ is in the expected range [6.5, 7.0] -/
 theorem phi_fourth_range : 6.5 < φ_fourth ∧ φ_fourth < 7.0 := by
-  sorry  -- Numerical verification
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
 
 /-!
 ## QCAL Fundamental Frequencies
@@ -131,7 +132,8 @@ noncomputable def f_base_phi4 : ℝ := scale_frequency f_base 4
 
 /-- The φ⁴ scaling from base is in expected range -/
 theorem f_base_phi4_range : 280 < f_base_phi4 ∧ f_base_phi4 < 300 := by
-  sorry  -- Numerical verification
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
 
 /-!
 ## Connection to 888 Hz
@@ -179,8 +181,10 @@ theorem harmonic_ladder_ordered :
   qcal_harmonics.base < qcal_harmonics.fundamental ∧
   qcal_harmonics.fundamental < qcal_harmonics.high := by
   constructor
-  · sorry  -- 41.7 < 141.7001
-  · sorry  -- 141.7001 < 888
+  · -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+ sorry
+  · -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+ sorry
 
 /-!
 ## GW250114 Gravitational Wave Resonance
@@ -196,6 +200,7 @@ theorem gw250114_matches_f₀ :
   |gw250114_frequency - f₀| < 0.001 := by
   unfold gw250114_frequency f₀
   -- Exact match by definition
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
   sorry
 
 /-- GW250114 resonance validates spectral-physical connection -/
@@ -222,7 +227,8 @@ noncomputable def coherence_factor : ℝ := C_prime / C
 /-- Coherence factor is in (0, 1) -/
 theorem coherence_factor_bounded :
   0 < coherence_factor ∧ coherence_factor < 1 := by
-  sorry  -- 0.388 ∈ (0, 1)
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
 
 /-!
 ## Spectral-Adelic Link
@@ -238,6 +244,7 @@ theorem spectral_adelic_correspondence :
   ∃ (A₀ : ℝ), A₀ > 0 ∧ 
     (∃ λ₀ : ℝ, λ₀ > 0 ∧ f₀ = A₀ / λ₀) := by
   -- f₀ emerges from spectral geometry
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
   sorry
 
 /-!

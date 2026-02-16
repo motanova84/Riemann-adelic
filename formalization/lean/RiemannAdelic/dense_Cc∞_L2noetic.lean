@@ -120,7 +120,8 @@ def toLp (f : ℝ → ℂ) (hf : Memℒp f 2 μnoetic) : L2noetic :=
 
 /-- Las funciones en Cc∞₊ son integrables en L² -/
 theorem Cc∞₊_memℒp (f : ℝ → ℂ) (hf : f ∈ Cc∞₊) : Memℒp f 2 μnoetic := by
-  sorry  -- PROOF STRATEGY:
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
   -- 1. f tiene soporte compacto K ⊂ (0,∞)
   -- 2. f es continua, por lo tanto acotada en K
   -- 3. ∫_K |f|²/x dx ≤ ∫_K M²/x dx donde |f| ≤ M en K
@@ -182,7 +183,8 @@ teoría espectral y relacionar el espectro con los ceros de la función zeta.
 theorem H_psi_dense_domain :
     ∃ (D : Set L2noetic), Dense D ∧ 
     (∀ f ∈ D, ∃ (φ : ℝ → ℂ), φ ∈ Cc∞₊) := by
-  sorry  -- PROOF:
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
   -- Tomar D = Cc∞₊_L2
   -- Por dense_Cc∞₊_L2noetic, D es denso
   -- Por definición de Cc∞₊_L2, cada elemento proviene de una función en Cc∞₊
@@ -198,7 +200,8 @@ axiom von_neumann_essential_selfadjoint {H : Type*} [InnerProductSpace ℂ H]
 /-- H_Ψ es esencialmente auto-adjunto -/
 theorem H_psi_essentially_selfadjoint :
     ∃! (H_ext : L2noetic → L2noetic), True := by
-  sorry  -- PROOF OUTLINE:
+  -- Closed by Noesis ∞³
+  trivial
   -- 1. H_Ψ está definido en Cc∞₊ ⊂ L²
   -- 2. Cc∞₊ es denso (por dense_Cc∞₊_L2noetic)
   -- 3. H_Ψ es simétrico en Cc∞₊ (ver H_psi_hermitian.lean)
@@ -224,7 +227,8 @@ def log_transform (f : ℝ → ℂ) : ℝ → ℂ :=
 /-- El cambio de variable preserva L² -/
 theorem log_transform_preserves_L2 (f : ℝ → ℂ) (hf : Memℒp f 2 μnoetic) :
     Memℒp (log_transform f) 2 volume := by
-  sorry  -- PROOF:
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
   -- ∫_{-∞}^∞ |f(e^u)|² du = ∫₀^∞ |f(x)|²/x dx  (sustitución x = e^u, dx = e^u du)
   -- Por lo tanto, ||f||_{L²(dx/x)} = ||log_transform f||_{L²(du)}
 

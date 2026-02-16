@@ -103,6 +103,7 @@ theorem spectrum_eq_zeros :
     -- Forward direction: eigenvalue → zero
     obtain ⟨t, ht_eq, ht_zero⟩ := eigenvalue_is_zero λ.re hλ
     simp [zeta_zero_heights]
+    -- TODO: Complete using QCAL.Noesis.spectral_correspondence
     sorry
   · intro hλ
     -- Backward direction: zero → eigenvalue
@@ -141,6 +142,7 @@ Properties ensuring the spectrum is well-behaved.
 /-- The spectrum is discrete (has no accumulation points) -/
 theorem spectrum_discrete :
   ∀ λ ∈ spectrum_HΨ, ∃ ε > 0, ∀ μ ∈ spectrum_HΨ, μ ≠ λ → ‖μ - λ‖ > ε := by
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
   sorry
   -- Follows from discreteness of zeta zeros
   -- Combined with minimum separation estimates
@@ -150,6 +152,7 @@ theorem spectrum_orderable :
   ∃ f : ℕ → ℝ, StrictMono f ∧
     ∀ n, (f n : ℂ) ∈ spectrum_HΨ ∧
     ∀ λ ∈ spectrum_HΨ, ∃ n, λ = f n := by
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
   sorry
   -- Uses ordering of zeros by height
   -- Combined with bijection theorem
@@ -168,6 +171,7 @@ theorem eigenvalue_growth :
   ∀ ε > 0, ∃ N : ℕ, ∀ n ≥ N,
     ∃ λₙ ∈ spectrum_HΨ,
       |λₙ.re - (n : ℝ) * log n / (2 * π)| < ε * (n : ℝ) * log n := by
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
   sorry
   -- Follows from N(T) ~ T/(2π) log(T/(2π))
   -- Via bijection with zeros
@@ -176,6 +180,7 @@ theorem eigenvalue_growth :
 theorem eigenvalue_density (T : ℝ) (hT : T > 1) :
   ∃ C > 0, |((Finset.card (spectrum_HΨ ∩ { λ | λ.re ≤ T }).toFinite.toFinset : ℝ)
     - T / (2 * π) * log (T / (2 * π)) + T / (2 * π))| < C * log T := by
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
   sorry
 
 end NoExtraneousEigenvalues

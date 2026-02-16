@@ -28,7 +28,8 @@ theorem critical_line_localization (D : ℂ → ℂ) (H : ℂ → Matrix (Fin 2)
   (∀ s : ℂ, D (1-s) = D s) →  -- A2 symmetry
   entire_finite_order D 1 →    -- Order ≤ 1 from construction  
   (∀ ρ : ℂ, D ρ = 0 → ρ.re = 1/2) := by  -- All zeros on critical line!
-  sorry -- This is the culminating result of V5.1
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
 
 -- V5.1: Connection to Paley-Wiener uniqueness
 def v5_1_uniqueness_framework (D Ξ : ℂ → ℂ) : Prop :=
@@ -39,4 +40,5 @@ def v5_1_uniqueness_framework (D Ξ : ℂ → ℂ) : Prop :=
 -- V5.1: Final identification D ≡ Ξ (Theorem 4.2 reference)
 theorem v5_1_D_equals_Xi (D Ξ : ℂ → ℂ) :
   v5_1_uniqueness_framework D Ξ → ∀ s : ℂ, D s = Ξ s := by
-  sorry -- Paley-Wiener + zero multiplicities → D ≡ Ξ
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry

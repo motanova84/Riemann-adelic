@@ -50,6 +50,7 @@ theorem mellin_eigenfunction_correspondence
     (heigen : f ≠ 0) :
     ∃ (s : ℂ), s.re = 1/2 ∧ s.im = λ ∧
     (∃ (M : ℂ → ℂ), M s = 0 ∨ ∃ (c : ℂ), M s = c ∧ c ≠ 0) := by
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
   sorry
   -- The Mellin transform of an eigenfunction has special behavior at s = 1/2 + iλ
 
@@ -69,12 +70,14 @@ theorem D_xi_identification (s : ℂ) :
 theorem D_zero_from_zeta_zero
     {γ : ℝ} (hζ : zeta ⟨1/2, γ⟩ = 0) :
     D_function ⟨1/2, γ⟩ = 0 := by
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
   sorry
   -- If ζ(1/2 + iγ) = 0, then ξ(1/2 + iγ) = 0, hence D(1/2 + iγ) = 0
 
 theorem zeta_zero_from_D_zero
     {s : ℂ} (hD : D_function s = 0) (hs : s.re = 1/2) :
     zeta s = 0 := by
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
   sorry
   -- If D(s) = 0 and Re(s) = 1/2, then ξ(s) = 0, hence ζ(s) = 0
 

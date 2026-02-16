@@ -306,7 +306,8 @@ theorem harmonic_product_approx : 285 < f_base * φ^4 ∧ f_base * φ^4 < 286 :=
          _ < f_base * φ^4 := harmonic_threshold_lower
   · calc f_base * φ^4 < 300 := harmonic_threshold_upper
          _ < 286 := by norm_num
-  sorry -- More precise bounds needed
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
 
 end QCAL.HarmonicValidation
 

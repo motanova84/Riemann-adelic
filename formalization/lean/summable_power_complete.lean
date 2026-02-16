@@ -236,6 +236,7 @@ structure InfiniteProduct where
 theorem zeros_tend_to_infinity {P : InfiniteProduct} {p : ℕ} 
     (hp : Summable (fun n => ‖P.zeros n‖ ^ (-(p : ℝ)))) :
     Tendsto (fun n => ‖P.zeros n‖) atTop atTop := by
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
   sorry
 
 /-- Corollary: For large n, |aₙ| can be made arbitrarily large -/
@@ -281,6 +282,7 @@ def eigenvalues (n : ℕ) : ℂ := (n + 1 : ℂ)^2
     Since eigenvalues n = (n+1)², we have ‖eigenvalues n‖^(-2) = 1/(n+1)⁴ -/
 theorem eigenvalues_summable_inv_fourth :
     Summable (fun n => ‖eigenvalues n‖ ^ (-2 : ℝ)) := by
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
   sorry
 
 /-- For eigenvalues with quadratic growth, power series converge -/
@@ -299,6 +301,7 @@ theorem eigenvalues_power_summable (z : ℂ) :
 lemma summable_of_le {α : Type*} {f g : α → ℝ} 
     (hf : Summable f) (hle : ∀ a, 0 ≤ g a) (h : ∀ a, g a ≤ f a) :
     Summable g := by
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
   sorry
 
 /-- Power decay comparison: if |aₙ| ≥ c·n^k, then ∑|aₙ|^(-p) < ∞ for p > k -/
@@ -306,6 +309,7 @@ lemma summable_power_of_polynomial_growth {a : ℕ → ℂ} {c k : ℝ} {p : ℕ
     (hc : c > 0) (hk : k > 0) (hp : (p : ℝ) > k)
     (ha : ∀ n : ℕ, n ≥ 1 → ‖a n‖ ≥ c * (n : ℝ)^k) :
     Summable (fun n => ‖a n‖ ^ (-(p : ℝ))) := by
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
   sorry
 
 /-! ## QCAL Integration Constants -/

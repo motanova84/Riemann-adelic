@@ -134,6 +134,7 @@ lemma D_entire (λ : ℕ → ℂ) : Differentiable ℂ (D λ) := by
 -- Lemma: D has order ≤ 1
 lemma D_order_one (λ : ℕ → ℂ) :
     ∃ A B, B > 0 ∧ ∀ s, ‖D λ s‖ ≤ A * Real.exp (B * ‖s‖) := by
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
   sorry
   -- Proof outline:
   -- 1. Use Hadamard's theorem: order of infinite product ≤ max(1, density of zeros)
@@ -196,6 +197,7 @@ Then f = c·g for some constant c, and by normalization c = 1.
 
 -- Main theorem: Spectral identification D(s) = Ξ(s)
 theorem D_eq_Xi (s : ℂ) : D λ s = Ξ s := by
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
   sorry
   -- Complete proof:
   -- 
@@ -283,6 +285,7 @@ theorem Xi_order_equals_D_order :
     ∃ A B, B > 0 ∧ 
     (∀ s, ‖Ξ s‖ ≤ A * Real.exp (B * ‖s‖)) ∧
     (∀ s, ‖D λ s‖ ≤ A * Real.exp (B * ‖s‖)) := by
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
   sorry
   -- Follows from D = Ξ and growth estimates
 
@@ -316,6 +319,7 @@ def QCAL_coherence : ℝ := 244.36
 theorem eigenvalue_spacing_QCAL :
     ∀ ε > 0, ∃ N, ∀ n ≥ N,
     abs ((λ (n + 1)).im - (λ n).im - 2 * Real.pi / Real.log n) < ε := by
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
   sorry
   -- This follows from the Riemann-von Mangoldt formula
   -- and connects eigenvalue spacing to QCAL base frequency

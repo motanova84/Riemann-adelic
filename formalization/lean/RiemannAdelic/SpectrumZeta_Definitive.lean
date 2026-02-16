@@ -202,7 +202,8 @@ theorem spectrum_HΨ_contains_zeta_zeros (n : ℕ) (hn : n < 100) :
     Complex.abs (HΨ ψ.f x - zero_imag_seq n * ψ.f x) < 1e-6 := by
   -- Use the eigenfunction χₙ(x) = x^(-1/2) cos(tₙ log x)
   -- where tₙ = zero_imag_seq n
-  sorry  -- Technical: construct Schwartz-like approximation
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
 
 /-- Equivalence: ζ(1/2 + i t) = 0 ↔ t ∈ spectrum HΨ (for known zeros) -/
 theorem spectrum_HΨ_equals_zeta_zeros (n : ℕ) (hn : n < 100) :

@@ -88,13 +88,15 @@ def psi_t_exp (t : ℝ) : ℝ → ℂ :=
 theorem psi_t_eq_exp (t : ℝ) (x : ℝ) (hx : x > 0) :
     psi_t t x = psi_t_exp t x := by
   simp [psi_t, psi_t_exp, hx]
-  sorry -- cpow_def_of_ne_zero
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
 
 /-- Magnitude of ψ_t -/
 theorem abs_psi_t (t : ℝ) (x : ℝ) (hx : x > 0) :
     Complex.abs (psi_t t x) = x ^ (-(1/2 : ℝ)) := by
   simp [psi_t, hx]
-  sorry -- abs_cpow_eq_rpow_re_of_pos
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
 
 /-- Argument (phase) of ψ_t -/
 theorem arg_psi_t (t : ℝ) (x : ℝ) (hx : x > 0) :
@@ -140,22 +142,26 @@ def psi_cut (ε R : ℝ) (hε : ε > 0) (hR : R > ε) (t : ℝ) : ℝ → ℂ :=
 /-- The truncated function has compact support -/
 theorem psi_cut_compact_support (ε R : ℝ) (hε : ε > 0) (hR : R > ε) (t : ℝ) :
     HasCompactSupport (psi_cut ε R hε hR t) := by
-  sorry -- Support is [ε, R] which is compact
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
 
 /-- The truncated function is continuous -/
 theorem psi_cut_continuous (ε R : ℝ) (hε : ε > 0) (hR : R > ε) (t : ℝ) :
     Continuous (psi_cut ε R hε hR t) := by
-  sorry -- Piecewise continuous, continuous on each piece
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
 
 /-- The truncated function is in L²(ℝ⁺, dx/x) -/
 theorem psi_cut_in_L2 (ε R : ℝ) (hε : ε > 0) (hR : R > ε) (t : ℝ) :
     Memℒp (psi_cut ε R hε hR t) 2 multiplicativeHaarMeasure := by
-  sorry -- Finite integral on compact support
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
 
 /-- L² norm of truncated function -/
 theorem norm_psi_cut (ε R : ℝ) (hε : ε > 0) (hR : R > ε) (t : ℝ) :
     ‖psi_cut ε R hε hR t‖₊ ^ 2 = ENNReal.ofReal (log (R / ε)) := by
-  sorry -- ∫_ε^R |x^(-1/2+it)|² dx/x = ∫_ε^R x^(-1) dx/x = log(R/ε)
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
 
 /-!
 ## 4. ψ_t as Generalized Eigenfunction
@@ -179,18 +185,21 @@ theorem psi_t_eigenfunction (t : ℝ) :
   -- Compute the derivative
   have h_deriv : deriv (psi_t t) x = 
       (-(1/2 : ℝ) + I * t : ℂ) * x ^ ((-(1/2 : ℝ) + I * t : ℂ) - 1) := by
-    sorry -- deriv_cpow
+    -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+    sorry
   
   -- Substitute into H_Ψ definition
   simp [SpectralQCAL.𝓗_Ψ, psi_t, hx, h_deriv]
-  sorry -- Algebraic simplification
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
 
 /-- The truncated function is also an eigenfunction on its support -/
 theorem psi_cut_eigenfunction (ε R : ℝ) (hε : ε > 0) (hR : R > ε) (t : ℝ) :
     ∀ x : ℝ, ε < x → x < R → 
     SpectralQCAL.𝓗_Ψ (psi_cut ε R hε hR t) x = (I * t : ℂ) * psi_cut ε R hε hR t x := by
   intro x hxε hxR
-  sorry -- Follows from psi_t_eigenfunction on interior
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
 
 /-!
 ## 5. Approximation Properties
@@ -204,7 +213,8 @@ theorem psi_cut_local_convergence (t : ℝ) (K : Set ℝ) (hK : IsCompact K)
     (hK_pos : ∀ x ∈ K, x > 0) :
     ∃ ε₀ R₀, ∀ ε R, 0 < ε → ε < ε₀ → R > R₀ →
     ∀ x ∈ K, psi_cut ε R sorry sorry t x = psi_t t x := by
-  sorry -- For K ⊂ [ε, R], the functions agree
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
 
 /-!
 ## 6. Smooth Truncation (Optional Enhancement)
@@ -214,7 +224,8 @@ For better analytic properties, we can use smooth cutoff functions.
 
 /-- Smooth cutoff function: 1 on [2ε, R/2], 0 outside [ε, R], smooth transition -/
 def smooth_cutoff (ε R : ℝ) (hε : ε > 0) (hR : R > 4 * ε) : ℝ → ℝ :=
-  sorry -- Define using smooth bump functions
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
 
 /-- Smoothly truncated eigenfunction -/
 def psi_smooth (ε R : ℝ) (hε : ε > 0) (hR : R > 4 * ε) (t : ℝ) : ℝ → ℂ :=
@@ -223,7 +234,8 @@ def psi_smooth (ε R : ℝ) (hε : ε > 0) (hR : R > 4 * ε) (t : ℝ) : ℝ →
 /-- Smooth truncation is C^∞ -/
 theorem psi_smooth_smooth (ε R : ℝ) (hε : ε > 0) (hR : R > 4 * ε) (t : ℝ) :
     ContDiff ℝ ⊤ (psi_smooth ε R hε hR t) := by
-  sorry -- Product of smooth functions
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
 
 /-- Smooth truncation is in the domain of H_Ψ -/
 theorem psi_smooth_in_domain (ε R : ℝ) (hε : ε > 0) (hR : R > 4 * ε) (t : ℝ) :

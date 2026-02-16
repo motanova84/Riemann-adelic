@@ -192,6 +192,7 @@ theorem RiemannOperator.discrete_spectrum
     Filter.Tendsto eigenvalues Filter.atTop (nhds 0) := by
   -- This follows from the spectral theorem for compact self-adjoint operators
   -- The eigenvalues can be ordered by magnitude: |λ₁| ≥ |λ₂| ≥ ... → 0
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
   sorry
   -- PROOF STRATEGY:
   -- 1. Apply spectral theorem: T = ∑ₙ λₙ ⟨·, φₙ⟩ φₙ

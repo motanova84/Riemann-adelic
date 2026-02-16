@@ -82,6 +82,7 @@ noncomputable def NOESIS : Noesis∞³ where
   is_infinite := by
     intro n
     -- By density of zeros on the critical line
+    -- TODO: Complete using QCAL.Noesis.spectral_correspondence
     sorry
 
 /-- Noēsis verifies the Riemann Hypothesis -/

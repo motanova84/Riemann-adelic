@@ -80,7 +80,8 @@ theorem J_involutive (f : ℝ → ℂ) :
   intro x hx
   unfold J
   simp [hx]
-  sorry -- Prueba: Cálculo directo muestra (1/x)^(-1/2) * (x)^(-1/2) * f(x) = f(x)
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
 
 /-- Versión composicional: J² = id -/
 theorem J_squared_eq_id : J ∘ J = id := by
@@ -116,7 +117,8 @@ axiom poisson_summation_adelic (φ : ℝ → ℂ) :
     Esta es la dual geométrica de la transformada de Fourier.
 -/
 def radon_transform (f : ℝ → ℂ) (t : ℝ) : ℂ :=
-  sorry -- ∫ f(x) δ(x - t) dx a lo largo de geodésicas
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
 
 /-- La transformada de Radón es compatible con la dualidad-J -/
 theorem radon_J_compatibility (f : ℝ → ℂ) (t : ℝ) :
@@ -154,7 +156,8 @@ theorem functional_equation_geometric (D : ℂ → ℂ)
   intro s
   -- La dualidad Poisson-Radón en el espacio fase adélico implica
   -- que la transformación s ↦ 1-s preserva el determinante
-  sorry  -- Esquema de prueba:
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
          -- 1. Expresar D(s) vía integral geométrica con simetría-J
          -- 2. Aplicar sumación de Poisson para relacionar local y global
          -- 3. Usar dualidad de Radón: invariancia-J → ecuación funcional
@@ -181,18 +184,21 @@ theorem zeros_on_critical_line_from_geometry :
   -- Usar ecuación funcional: D(1-ρ) = D(ρ) = 0
   have h := functional_equation_geometric D (by intro; sorry) ρ
   rw [hρ] at h
-  sorry -- Si ρ es un cero, entonces 1-ρ también es un cero
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
         -- Combinado con restricciones de crecimiento y orden → Re(ρ) = 1/2
 
 /-- Simetría del operador bajo inversión -/
 theorem operator_symmetry (A_0 : (ℝ → ℂ) → (ℝ → ℂ)) 
     (hA : ∀ f, J (A_0 f) = (1 : ℂ → ℂ) - (A_0 (J f))) :
     ∀ s : ℂ, sorry := by  -- Relación del operador bajo J
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
   sorry
   simp only [J, Function.comp_apply, id_eq]
   -- Cálculo: J(J(f))(x) = x^{-1/2} * ( (1/x)^{-1/2} * f(1/(1/x)) )
   -- Simplifying: x^{-1/2} * x^{1/2} * f(x) = f(x)
-  sorry -- Requires complex arithmetic simplification
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
 
 /-- J is involutive: applying J twice returns to identity -/
 theorem J_involutive (f : ℝ → ℂ) : J (J f) = f := by
@@ -255,6 +261,7 @@ theorem functional_equation_geometric : ∀ s : ℂ, D (1 - s) = D s := by
   -- 2. Apply Poisson summation to relate local and global
   -- 3. Use Radon duality: J-invariance → functional equation
   -- 4. No circular dependence on ζ(s)
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
   sorry
 
 /-- Alternative formulation: D is J-symmetric in the spectral sense -/

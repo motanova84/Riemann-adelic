@@ -159,6 +159,7 @@ theorem H_epsilon_eigenvalues_real (ε : ℝ) (N : ℕ)
 /-- El operador H_ε tiene autovalores positivos (o acotados por debajo) -/
 theorem H_epsilon_spectral_gap (ε : ℝ) (N : ℕ) (hε : ε > 0) :
   ∀ i : Fin N, ∃ λ : ℝ, λ > 0 := by
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
   sorry
 
 /-!
@@ -168,6 +169,7 @@ theorem H_epsilon_spectral_gap (ε : ℝ) (N : ℕ) (hε : ε > 0) :
 /-- El potencial V es acotado -/
 theorem V_potential_bounded (ε : ℝ) (hε : ε > 0) :
   ∃ M : ℝ, M > 0 ∧ ∀ t : ℝ, t > 0 → |V_potential ε t| ≤ M := by
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
   sorry
 
 /-- La base de Hermite logarítmica es completa -/
@@ -182,6 +184,7 @@ axiom hermite_log_complete :
 theorem H_epsilon_asymptotic_eigenvalues (ε : ℝ) (hε : ε > 0) :
   ∀ δ > 0, ∃ N₀ : ℕ, ∀ n ≥ N₀,
     ∃ λₙ : ℝ, |λₙ - ((n : ℝ) + 1/2)| ≤ δ := by
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
   sorry
 
 /-!

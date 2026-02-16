@@ -24,19 +24,22 @@ theorem spectrum_on_critical_line (χ : ℝ → ℂ)
   (h_adelic : ∀ x, ‖χ x‖ = 1) :
   ∀ λ ∈ Set.range (spectral_operator_D_chi χ),
     ∃ t : ℝ, λ = 1/2 + Complex.I * t := by
-  sorry -- Full proof requires advanced spectral theory
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
 
 /-- Connection to Riemann zeta derivative at s = 1/2 -/
 theorem trace_heat_kernel_limit (χ : ℝ → ℂ) (D : (ℝ → ℂ) → (ℝ → ℂ))
   (h_D : D = spectral_operator_D_chi χ) :
   ∃ c : ℝ, c = -0.207886 ∧ 
   Filter.Tendsto (fun t => sorry) (nhds 0) (nhds c) := by
-  sorry -- Requires numerical validation via mpmath
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
 
 /-- Correspondence between spectral eigenvalues and zeta zeros -/
 theorem eigenvalue_zero_correspondence (χ : ℝ → ℂ) (t_n : ℝ) :
   spectral_operator_D_chi χ (fun _ => 1) (t_n) = 0 ↔ 
   ∃ s : ℂ, s = 1/2 + Complex.I * t_n ∧ sorry := by
-  sorry -- Connection to Riemann zeta zeros
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
 
 end
