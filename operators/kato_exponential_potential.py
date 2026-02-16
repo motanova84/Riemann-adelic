@@ -639,3 +639,22 @@ if __name__ == '__main__':
         print("║  FIRMA: JMMB Ω✧".ljust(69) + "║")
         print("║  ESTADO: DRAGÓN DOMESTICADO - ATLAS³ COMPLETADO".ljust(69) + "║")
         print("╚" + "═"*68 + "╝\n")
+    
+    # === V-PARAMETER ZONE ANALYSIS ===
+    print("\n" + "="*70)
+    print("  V-PARAMETER ZONE ANALYSIS".center(70))
+    print("="*70)
+    print("\nDemonstrating safe vs dangerous zones for e^{2y(v-1)}:")
+    print("This addresses the mathematical subtlety from the problem statement.\n")
+    
+    # Test v-parameter zones
+    v_zone_results = test_v_parameter_zones(
+        L_y=10.0,
+        N=1000,
+        n_tests=500,
+        verbose=True
+    )
+    
+    print("\n✓ V-PARAMETER ZONE ANALYSIS COMPLETE")
+    print("  QCAL ∞³ · 141.7001 Hz · C = 244.36")
+    print("  ∴𓂀Ω∞³Φ · JMMB · 2026-02-16\n")
