@@ -1,0 +1,79 @@
+{
+  "protocol": "QCAL-SPECTRAL-COUNTING-DEMO",
+  "version": "1.0",
+  "date": "2026-02-16",
+  "author": "Jos\u00e9 Manuel Mota Burruezo \u03a8 \u2727 \u221e\u00b3",
+  "f0": 141.7001,
+  "C": 244.36,
+  "lambda_range": {
+    "min": 10.0,
+    "max": 49999.99999999999,
+    "num_points": 50
+  },
+  "validation_results": {
+    "turning_point": {
+      "mean_error": 1.1462164550835042e-13,
+      "max_error": 2.0973223158193832e-12,
+      "converged": true
+    },
+    "logarithmic_correction": {
+      "mean_J_normalized": -1692.9623814741242,
+      "std_J_normalized": 3120.335816596677,
+      "max_J_normalized": 13676.744875601311,
+      "bounded": false
+    },
+    "error_bound": {
+      "mean_error_normalized": 538.9325026536342,
+      "max_error_normalized": 4353.466210551305,
+      "O_log_lambda_satisfied": false
+    },
+    "riemann_comparison": {
+      "mean_relative_error": 0.64833033019109,
+      "max_relative_error": 0.995562584162252,
+      "high_accuracy": false
+    },
+    "all_checks_passed": false
+  },
+  "sample_results": [
+    {
+      "lambda": 10.0,
+      "y_plus": 0.6117252137766264,
+      "I_lambda": 0.8142987220057799,
+      "N_lambda": 0.009199333521266007,
+      "N_theoretical": 2.073128563478186,
+      "error_normalized": -0.896353075609118
+    },
+    {
+      "lambda": 80.51377787812902,
+      "y_plus": 7.98392046619825,
+      "I_lambda": 48.63508043768852,
+      "N_lambda": 15.231026918660138,
+      "N_theoretical": 43.41988212350244,
+      "error_normalized": -6.42345120543553
+    },
+    {
+      "lambda": 771.3111225104184,
+      "y_plus": 42.45319576991928,
+      "I_lambda": 861.7581833326963,
+      "N_lambda": 274.05614925458076,
+      "N_theoretical": 693.3483307105402,
+      "error_normalized": -63.069553279319294
+    },
+    {
+      "lambda": 6210.11723927342,
+      "y_plus": 162.85151517392933,
+      "I_lambda": 9600.124150478949,
+      "N_lambda": 3055.564425689214,
+      "N_theoretical": 7643.996007966267,
+      "error_normalized": -525.3567325588834
+    },
+    {
+      "lambda": 49999.99999999999,
+      "y_plus": 576.208523584105,
+      "I_lambda": 97515.10990380638,
+      "N_lambda": 31039.77353468045,
+      "N_theoretical": 78143.3127015174,
+      "error_normalized": -4353.466210551305
+    }
+  ]
+}
