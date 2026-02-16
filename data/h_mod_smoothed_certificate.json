@@ -1,0 +1,21 @@
+{
+  "protocol": "QCAL-H-MOD-VALIDATION",
+  "version": "1.0.0",
+  "timestamp": "2026-02-16T00:00:00Z",
+  "signature": "\u2234\ud80c\udc80\u03a9\u221e\u00b3\u03a6",
+  "qcal_constants": {
+    "f0_hz": 141.7001,
+    "C": 244.36,
+    "kappa_pi": 2.57731,
+    "seal": 14170001,
+    "code": 888
+  },
+  "test_results": [
+    {
+      "test_name": "potential_asymptotics",
+      "left_region": {
+        "expected_exponent": 1.0,
+        "fitted_exponent": 0.9998278137618289,
+        "error": 0.00017218623817105705,
+        "tolerance": 0.15,
+        "pass": 
