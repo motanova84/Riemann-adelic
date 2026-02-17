@@ -1,0 +1,100 @@
+{
+  "digestions": [
+    {
+      "timestamp": "2026-02-17T09:20:26.569615",
+      "file": "formalization/lean/spectral/riemann_equivalence.lean",
+      "line": 460,
+      "solution": "trivial",
+      "nutrient_type": "carbohidrato_simple",
+      "success": true,
+      "confidence": 0.75,
+      "simulation": true
+    },
+    {
+      "timestamp": "2026-02-17T09:20:26.570104",
+      "file": "formalization/lean/scripts/count_sorrys.lean",
+      "line": 154,
+      "solution": "trivial",
+      "nutrient_type": "carbohidrato_simple",
+      "success": true,
+      "confidence": 0.75,
+      "simulation": true
+    },
+    {
+      "timestamp": "2026-02-17T09:20:26.570655",
+      "file": "formalization/lean/RiemannAdelic/test_function.lean",
+      "line": 106,
+      "solution": "trivial",
+      "nutrient_type": "carbohidrato_simple",
+      "success": true,
+      "confidence": 0.75,
+      "simulation": true
+    },
+    {
+      "timestamp": "2026-02-17T09:20:26.570910",
+      "file": "formalization/lean/RiemannAdelic/xi_spectral_correspondence.lean",
+      "line": 261,
+      "solution": "trivial",
+      "nutrient_type": "carbohidrato_simple",
+      "success": true,
+      "confidence": 0.75,
+      "simulation": true
+    },
+    {
+      "timestamp": "2026-02-17T09:20:26.571149",
+      "file": "formalization/lean/spectral/spectral_density_theorems.lean",
+      "line": 182,
+      "solution": "by simp",
+      "nutrient_type": "vitamina",
+      "success": true,
+      "confidence": 0.6,
+      "simulation": true
+    },
+    {
+      "timestamp": "2026-02-17T09:20:26.571480",
+      "file": "formalization/lean/QCAL/UnifiedTheory.lean",
+      "line": 258,
+      "solution": "by simp",
+      "nutrient_type": "vitamina",
+      "success": true,
+      "confidence": 0.6,
+      "simulation": true
+    },
+    {
+      "timestamp": "2026-02-17T09:20:26.571795",
+      "file": "formalization/lean/RiemannAdelic/poisson_radon_symmetry.lean",
+      "line": 276,
+      "solution": "by simp",
+      "nutrient_type": "vitamina",
+      "success": true,
+      "confidence": 0.6,
+      "simulation": true
+    },
+    {
+      "timestamp": "2026-02-17T09:20:26.572109",
+      "file": "formalization/lean/RiemannAdelic/radon_integral_symmetry.lean",
+      "line": 179,
+      "solution": "by simp",
+      "nutrient_type": "vitamina",
+      "success": true,
+      "confidence": 0.6,
+      "simulation": true
+    },
+    {
+      "timestamp": "2026-02-17T09:20:26.572393",
+      "file": "formalization/lean/RiemannAdelic/Zeros.lean",
+      "line": 62,
+      "solution": "by simp",
+      "nutrient_type": "vitamina",
+      "success": true,
+      "confidence": 0.6,
+      "simulation": true
+    }
+  ],
+  "nutrients": {
+    "carbohidrato_simple": 4,
+    "vitamina": 5
+  },
+  "waste": 0,
+  "last_meal": "2026-02-17T09:20:26.592535"
+}

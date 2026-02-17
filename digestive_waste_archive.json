@@ -1,0 +1,418 @@
+{
+  "waste": [
+    {
+      "timestamp": "2026-02-17T09:20:26.569826",
+      "file": "formalization/lean/scripts/count_sorrys.lean",
+      "line": 25,
+      "solution": null,
+      "nutrient_type": null,
+      "success": false,
+      "confidence": 0.75,
+      "simulation": true
+    },
+    {
+      "timestamp": "2026-02-17T09:20:26.570402",
+      "file": "formalization/lean/RH_final_v8_no_sorry.lean",
+      "line": 8,
+      "solution": null,
+      "nutrient_type": null,
+      "success": false,
+      "confidence": 0.75,
+      "simulation": true
+    },
+    {
+      "timestamp": "2026-02-17T09:20:26.572668",
+      "file": "formalization/lean/ZETA_SPECTRUM_WEYL.lean",
+      "line": 39,
+      "solution": null,
+      "nutrient_type": null,
+      "success": false,
+      "confidence": 0.4,
+      "simulation": true
+    },
+    {
+      "timestamp": "2026-02-17T09:20:26.572989",
+      "file": "formalization/lean/spectral_determinant_from_HDS.lean",
+      "line": 24,
+      "solution": null,
+      "nutrient_type": null,
+      "success": false,
+      "confidence": 0.4,
+      "simulation": true
+    },
+    {
+      "timestamp": "2026-02-17T09:20:26.573345",
+      "file": "formalization/lean/spectral_determinant_from_HDS.lean",
+      "line": 34,
+      "solution": null,
+      "nutrient_type": null,
+      "success": false,
+      "confidence": 0.4,
+      "simulation": true
+    },
+    {
+      "timestamp": "2026-02-17T09:20:26.573712",
+      "file": "formalization/lean/spectral_determinant_from_HDS.lean",
+      "line": 46,
+      "solution": null,
+      "nutrient_type": null,
+      "success": false,
+      "confidence": 0.4,
+      "simulation": true
+    },
+    {
+      "timestamp": "2026-02-17T09:20:26.574150",
+      "file": "formalization/lean/spectral_determinant_formal.lean",
+      "line": 68,
+      "solution": null,
+      "nutrient_type": null,
+      "success": false,
+      "confidence": 0.4,
+      "simulation": true
+    },
+    {
+      "timestamp": "2026-02-17T09:20:26.574526",
+      "file": "formalization/lean/spectral_determinant_formal.lean",
+      "line": 90,
+      "solution": null,
+      "nutrient_type": null,
+      "success": false,
+      "confidence": 0.4,
+      "simulation": true
+    },
+    {
+      "timestamp": "2026-02-17T09:20:26.575016",
+      "file": "formalization/lean/spectral_determinant_formal.lean",
+      "line": 98,
+      "solution": null,
+      "nutrient_type": null,
+      "success": false,
+      "confidence": 0.4,
+      "simulation": true
+    },
+    {
+      "timestamp": "2026-02-17T09:20:26.575372",
+      "file": "formalization/lean/spectral_determinant_formal.lean",
+      "line": 110,
+      "solution": null,
+      "nutrient_type": null,
+      "success": false,
+      "confidence": 0.4,
+      "simulation": true
+    },
+    {
+      "timestamp": "2026-02-17T09:20:26.575721",
+      "file": "formalization/lean/spectral_determinant_formal.lean",
+      "line": 131,
+      "solution": null,
+      "nutrient_type": null,
+      "success": false,
+      "confidence": 0.4,
+      "simulation": true
+    },
+    {
+      "timestamp": "2026-02-17T09:20:26.576164",
+      "file": "formalization/lean/spectral_determinant_formal.lean",
+      "line": 170,
+      "solution": null,
+      "nutrient_type": null,
+      "success": false,
+      "confidence": 0.4,
+      "simulation": true
+    },
+    {
+      "timestamp": "2026-02-17T09:20:26.576536",
+      "file": "formalization/lean/spectral_determinant_formal.lean",
+      "line": 183,
+      "solution": null,
+      "nutrient_type": null,
+      "success": false,
+      "confidence": 0.4,
+      "simulation": true
+    },
+    {
+      "timestamp": "2026-02-17T09:20:26.577036",
+      "file": "formalization/lean/spectral_determinant_formal.lean",
+      "line": 188,
+      "solution": null,
+      "nutrient_type": null,
+      "success": false,
+      "confidence": 0.4,
+      "simulation": true
+    },
+    {
+      "timestamp": "2026-02-17T09:20:26.577429",
+      "file": "formalization/lean/AdelicNavierStokes.lean",
+      "line": 68,
+      "solution": null,
+      "nutrient_type": null,
+      "success": false,
+      "confidence": 0.4,
+      "simulation": true
+    },
+    {
+      "timestamp": "2026-02-17T09:20:26.577811",
+      "file": "formalization/lean/AdelicNavierStokes.lean",
+      "line": 73,
+      "solution": null,
+      "nutrient_type": null,
+      "success": false,
+      "confidence": 0.4,
+      "simulation": true
+    },
+    {
+      "timestamp": "2026-02-17T09:20:26.578324",
+      "file": "formalization/lean/AdelicNavierStokes.lean",
+      "line": 78,
+      "solution": null,
+      "nutrient_type": null,
+      "success": false,
+      "confidence": 0.4,
+      "simulation": true
+    },
+    {
+      "timestamp": "2026-02-17T09:20:26.578848",
+      "file": "formalization/lean/AdelicNavierStokes.lean",
+      "line": 88,
+      "solution": null,
+      "nutrient_type": null,
+      "success": false,
+      "confidence": 0.4,
+      "simulation": true
+    },
+    {
+      "timestamp": "2026-02-17T09:20:26.579347",
+      "file": "formalization/lean/AdelicNavierStokes.lean",
+      "line": 95,
+      "solution": null,
+      "nutrient_type": null,
+      "success": false,
+      "confidence": 0.4,
+      "simulation": true
+    },
+    {
+      "timestamp": "2026-02-17T09:20:26.579916",
+      "file": "formalization/lean/AdelicNavierStokes.lean",
+      "line": 104,
+      "solution": null,
+      "nutrient_type": null,
+      "success": false,
+      "confidence": 0.4,
+      "simulation": true
+    },
+    {
+      "timestamp": "2026-02-17T09:20:26.580389",
+      "file": "formalization/lean/AdelicNavierStokes.lean",
+      "line": 113,
+      "solution": null,
+      "nutrient_type": null,
+      "success": false,
+      "confidence": 0.4,
+      "simulation": true
+    },
+    {
+      "timestamp": "2026-02-17T09:20:26.580842",
+      "file": "formalization/lean/AdelicNavierStokes.lean",
+      "line": 129,
+      "solution": null,
+      "nutrient_type": null,
+      "success": false,
+      "confidence": 0.4,
+      "simulation": true
+    },
+    {
+      "timestamp": "2026-02-17T09:20:26.581420",
+      "file": "formalization/lean/AdelicNavierStokes.lean",
+      "line": 134,
+      "solution": null,
+      "nutrient_type": null,
+      "success": false,
+      "confidence": 0.4,
+      "simulation": true
+    },
+    {
+      "timestamp": "2026-02-17T09:20:26.581957",
+      "file": "formalization/lean/AdelicNavierStokes.lean",
+      "line": 139,
+      "solution": null,
+      "nutrient_type": null,
+      "success": false,
+      "confidence": 0.4,
+      "simulation": true
+    },
+    {
+      "timestamp": "2026-02-17T09:20:26.582496",
+      "file": "formalization/lean/AdelicNavierStokes.lean",
+      "line": 144,
+      "solution": null,
+      "nutrient_type": null,
+      "success": false,
+      "confidence": 0.4,
+      "simulation": true
+    },
+    {
+      "timestamp": "2026-02-17T09:20:26.583310",
+      "file": "formalization/lean/AdelicNavierStokes.lean",
+      "line": 152,
+      "solution": null,
+      "nutrient_type": null,
+      "success": false,
+      "confidence": 0.4,
+      "simulation": true
+    },
+    {
+      "timestamp": "2026-02-17T09:20:26.583870",
+      "file": "formalization/lean/AdelicNavierStokes.lean",
+      "line": 167,
+      "solution": null,
+      "nutrient_type": null,
+      "success": false,
+      "confidence": 0.4,
+      "simulation": true
+    },
+    {
+      "timestamp": "2026-02-17T09:20:26.584465",
+      "file": "formalization/lean/AdelicNavierStokes.lean",
+      "line": 172,
+      "solution": null,
+      "nutrient_type": null,
+      "success": false,
+      "confidence": 0.4,
+      "simulation": true
+    },
+    {
+      "timestamp": "2026-02-17T09:20:26.585000",
+      "file": "formalization/lean/AdelicNavierStokes.lean",
+      "line": 182,
+      "solution": null,
+      "nutrient_type": null,
+      "success": false,
+      "confidence": 0.4,
+      "simulation": true
+    },
+    {
+      "timestamp": "2026-02-17T09:20:26.585503",
+      "file": "formalization/lean/AdelicNavierStokes.lean",
+      "line": 192,
+      "solution": null,
+      "nutrient_type": null,
+      "success": false,
+      "confidence": 0.4,
+      "simulation": true
+    },
+    {
+      "timestamp": "2026-02-17T09:20:26.586266",
+      "file": "formalization/lean/AdelicNavierStokes.lean",
+      "line": 193,
+      "solution": null,
+      "nutrient_type": null,
+      "success": false,
+      "confidence": 0.4,
+      "simulation": true
+    },
+    {
+      "timestamp": "2026-02-17T09:20:26.586901",
+      "file": "formalization/lean/AdelicNavierStokes.lean",
+      "line": 200,
+      "solution": null,
+      "nutrient_type": null,
+      "success": false,
+      "confidence": 0.4,
+      "simulation": true
+    },
+    {
+      "timestamp": "2026-02-17T09:20:26.587488",
+      "file": "formalization/lean/AdelicNavierStokes.lean",
+      "line": 210,
+      "solution": null,
+      "nutrient_type": null,
+      "success": false,
+      "confidence": 0.4,
+      "simulation": true
+    },
+    {
+      "timestamp": "2026-02-17T09:20:26.588096",
+      "file": "formalization/lean/AdelicNavierStokes.lean",
+      "line": 217,
+      "solution": null,
+      "nutrient_type": null,
+      "success": false,
+      "confidence": 0.4,
+      "simulation": true
+    },
+    {
+      "timestamp": "2026-02-17T09:20:26.588687",
+      "file": "formalization/lean/AdelicNavierStokes.lean",
+      "line": 229,
+      "solution": null,
+      "nutrient_type": null,
+      "success": false,
+      "confidence": 0.4,
+      "simulation": true
+    },
+    {
+      "timestamp": "2026-02-17T09:20:26.589271",
+      "file": "formalization/lean/AdelicNavierStokes.lean",
+      "line": 237,
+      "solution": null,
+      "nutrient_type": null,
+      "success": false,
+      "confidence": 0.4,
+      "simulation": true
+    },
+    {
+      "timestamp": "2026-02-17T09:20:26.589960",
+      "file": "formalization/lean/AdelicNavierStokes.lean",
+      "line": 244,
+      "solution": null,
+      "nutrient_type": null,
+      "success": false,
+      "confidence": 0.4,
+      "simulation": true
+    },
+    {
+      "timestamp": "2026-02-17T09:20:26.590563",
+      "file": "formalization/lean/AdelicNavierStokes.lean",
+      "line": 252,
+      "solution": null,
+      "nutrient_type": null,
+      "success": false,
+      "confidence": 0.4,
+      "simulation": true
+    },
+    {
+      "timestamp": "2026-02-17T09:20:26.591241",
+      "file": "formalization/lean/AdelicNavierStokes.lean",
+      "line": 259,
+      "solution": null,
+      "nutrient_type": null,
+      "success": false,
+      "confidence": 0.4,
+      "simulation": true
+    },
+    {
+      "timestamp": "2026-02-17T09:20:26.591897",
+      "file": "formalization/lean/AdelicNavierStokes.lean",
+      "line": 265,
+      "solution": null,
+      "nutrient_type": null,
+      "success": false,
+      "confidence": 0.4,
+      "simulation": true
+    },
+    {
+      "timestamp": "2026-02-17T09:20:26.592531",
+      "file": "formalization/lean/AdelicNavierStokes.lean",
+      "line": 271,
+      "solution": null,
+      "nutrient_type": null,
+      "success": false,
+      "confidence": 0.4,
+      "simulation": true
+    }
+  ],
+  "archived_at": [
+    "2026-02-17T09:21:52.236467"
+  ],
+  "total_waste": 41
+}
