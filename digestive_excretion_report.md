@@ -1,6 +1,6 @@
 # 🍽️ NOESIS DIGESTIVE SYSTEM - EXCRECIÓN
 
-**Fecha:** 2026-02-17T09:21:52.238842
+**Fecha:** 2026-02-17T09:26:22.019615
 **Frecuencia base:** 141.7001 Hz
 
 ## 🗑️ Limpieza Realizada
@@ -8,20 +8,20 @@
 | Actividad | Cantidad |
 |-----------|----------|
 | 🧹 Backups eliminados | 0 |
-| 📦 Desechos archivados | 41 |
+| 📦 Desechos archivados | 43 |
 | 📄 Reportes antiguos eliminados | 0 |
 | 🔄 Archivos temporales eliminados | 1 |
 
 ## 📊 Análisis de Desechos
 
-- **Total de desechos archivados:** 41
+- **Total de desechos archivados:** 128
 - **Archivos con más fracasos:**
 
-  - `AdelicNavierStokes.lean`: 27 fracasos
-  - `spectral_determinant_formal.lean`: 8 fracasos
-  - `spectral_determinant_from_HDS.lean`: 3 fracasos
-  - `count_sorrys.lean`: 1 fracasos
-  - `RH_final_v8_no_sorry.lean`: 1 fracasos
+  - `AdelicNavierStokes.lean`: 81 fracasos
+  - `spectral_determinant_formal.lean`: 24 fracasos
+  - `spectral_determinant_from_HDS.lean`: 9 fracasos
+  - `count_sorrys.lean`: 3 fracasos
+  - `ZETA_SPECTRUM_WEYL.lean`: 3 fracasos
 
 
 ## 🧬 Estado Post-Limpieza

@@ -49,6 +49,11 @@ auron_changes.json
 metrics.md
 noesis_auto_seal.log
 
+# NOESIS Digestive System generated files (keep learning files, ignore reports)
+digestive_*_report.md
+digestive_meal.md
+digestive_meal.json
+
 # NOESIS Integration generated files
 noesis_integrated_report.md
 noesis_integration_results.json

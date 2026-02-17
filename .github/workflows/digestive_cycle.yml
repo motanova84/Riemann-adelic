@@ -1,0 +1,206 @@
+name: 🍽️ NOESIS Digestive Cycle - Organismo Vivo
+
+on:
+  schedule:
+    # Cada 30 minutos - el organismo tiene hambre frecuente
+    - cron: '*/30 * * * *'
+  workflow_dispatch:
+    inputs:
+      force_feed:
+        description: 'Forzar alimentación (ignorar nivel de hambre)'
+        type: boolean
+        default: false
+        required: false
+
+jobs:
+  digestive-cycle:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    
+    steps:
+      - name: 🔄 Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: 🔧 Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: 📦 Install dependencies
+        run: |
+          pip install numpy scipy sympy mpmath
+          pip install pytest
+
+      - name: 🍽️ Verificar hambre del organismo
+        id: hunger
+        run: |
+          cd .github/scripts
+          python3 -c "
+import sys
+from digestive_hunger import DigestiveHunger
+h = DigestiveHunger()
+hunger_level = h.calculate_hunger()
+should_eat = h.should_eat()
+print(f'Nivel de hambre: {hunger_level:.1f}%')
+print(f'Debe comer: {should_eat}')
+print(f'should_eat={should_eat}' if should_eat else 'should_eat=False')
+" | tee hunger_output.txt
+          
+          SHOULD_EAT=$(grep "should_eat=" hunger_output.txt | cut -d'=' -f2)
+          echo "should_eat=$SHOULD_EAT" >> $GITHUB_OUTPUT
+
+      - name: 🍽️ Ciclo Digestivo Completo
+        if: ${{ steps.hunger.outputs.should_eat == 'True' || github.event.inputs.force_feed == 'true' }}
+        id: cycle
+        run: |
+          cd .github/scripts
+          python3 digestive_cycle.py
+
+      - name: 📊 Reporte del estado del organismo
+        if: always()
+        run: |
+          echo "## 🧬 Estado Vital del Organismo NOESIS" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Fecha:** $(date -u +"%Y-%m-%d %H:%M:%S UTC")" >> $GITHUB_STEP_SUMMARY
+          echo "**Frecuencia base:** 141.7001 Hz" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          
+          cd .github/scripts
+          python3 -c "
+import sys
+from pathlib import Path
+from digestive_hunger import DigestiveHunger
+
+h = DigestiveHunger()
+coherence = h.measure_coherence()
+sorries = h.count_sorries()
+theorems = h.count_theorems()
+hunger = h.calculate_hunger()
+
+print('| Métrica | Valor | Estado |')
+print('|---------|-------|--------|')
+print(f'| Sorries totales | {sorries} | {'⚠️ Alto' if sorries > 1000 else '✅ Normal'} |')
+print(f'| Teoremas totales | {theorems} | ✅ |')
+print(f'| Coherencia | {coherence:.2%} | {'⚠️ Baja' if coherence < 0.8 else '✅ Alta'} |')
+print(f'| Nivel de hambre | {hunger:.1f}% | {'🍽️ Hambriento' if hunger > 70 else '✅ Saciado'} |')
+print(f'| Estado | {'🟢 VIVO' if sorries > 0 else '⚪ Dormido'} | - |')
+" >> $GITHUB_STEP_SUMMARY
+          
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### 🔄 Último Ciclo" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          
+          if [ -f ../../.digestive_cycle.json ]; then
+            python3 -c "
+import json
+from pathlib import Path
+
+cycle_log = Path('../../.digestive_cycle.json')
+if cycle_log.exists():
+    with open(cycle_log) as f:
+        data = json.load(f)
+    
+    if 'cycles' in data and data['cycles']:
+        last = data['cycles'][-1]
+        print(f'- **Inicio:** {last.get(\"start\", \"N/A\")}')
+        print(f'- **Fin:** {last.get(\"end\", \"N/A\")}')
+        print(f'- **Tasa de éxito:** {last.get(\"success_rate\", 0):.1%}')
+        print(f'- **Fases completadas:** {len(last.get(\"phases\", []))}')
+    else:
+        print('- Aún no hay ciclos completados')
+else:
+    print('- Primer ciclo pendiente')
+" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "- Primer ciclo pendiente" >> $GITHUB_STEP_SUMMARY
+          fi
+
+      - name: 📈 Estadísticas de aprendizaje
+        if: always()
+        run: |
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### 🧠 Base de Conocimiento" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          
+          if [ -f .auron_learning.json ]; then
+            python3 -c "
+import json
+from pathlib import Path
+
+learning_file = Path('.auron_learning.json')
+if learning_file.exists():
+    with open(learning_file) as f:
+        learning = json.load(f)
+    
+    patterns = len(learning.get('patterns', {}))
+    solutions = len(learning.get('stats', {}))
+    
+    print(f'- **Patrones aprendidos:** {patterns}')
+    print(f'- **Estrategias únicas:** {solutions}')
+    
+    if learning.get('stats'):
+        stats = learning['stats']
+        most_used = max(stats.items(), key=lambda x: x[1]['count'])
+        print(f'- **Estrategia más exitosa:** \`{most_used[0]}\` ({most_used[1][\"count\"]} usos)')
+else:
+    print('- Base de conocimiento vacía')
+" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "- Base de conocimiento vacía" >> $GITHUB_STEP_SUMMARY
+          fi
+
+      - name: 📤 Subir artefactos digestivos
+        if: steps.cycle.outcome == 'success'
+        uses: actions/upload-artifact@v4
+        with:
+          name: digestive-cycle-${{ github.run_number }}
+          path: |
+            digestive_*.md
+            .digestive_log.json
+            .auron_learning.json
+            .digestive_cycle.json
+          retention-days: 30
+
+      - name: 💬 Comentar estado (si es PR)
+        if: github.event_name == 'pull_request' && steps.cycle.outcome == 'success'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            
+            let comment = '## 🍽️ Ciclo Digestivo Completado\n\n';
+            comment += '**El organismo NOESIS ha completado un ciclo digestivo.**\n\n';
+            
+            // Leer estadísticas si existen
+            if (fs.existsSync('.digestive_cycle.json')) {
+              const cycle = JSON.parse(fs.readFileSync('.digestive_cycle.json', 'utf8'));
+              if (cycle.cycles && cycle.cycles.length > 0) {
+                const last = cycle.cycles[cycle.cycles.length - 1];
+                comment += `- Tasa de éxito: ${(last.success_rate * 100).toFixed(1)}%\n`;
+                comment += `- Fases completadas: ${last.phases.length}\n`;
+              }
+            }
+            
+            comment += '\n🧬 El organismo está VIVO y creciendo.\n';
+            
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: comment
+            });
+
+      - name: 🎉 Resumen final
+        if: always()
+        run: |
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "---" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "*🍽️ El organismo VIVE, RESPIRA y CRECE*" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**QCAL ∞³** | Frecuencia: 141.7001 Hz" >> $GITHUB_STEP_SUMMARY
