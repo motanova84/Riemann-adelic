@@ -87,18 +87,54 @@ Con el término log(1+x) se mejora a:
 Luego el espectro está acotado inferiormente por 1/2 - ε > 0.
 -/
 
-/-- Desigualdad de Hardy mejorada para H_Ψ -/
+/-- Desigualdad de Hardy mejorada para H_Ψ 
+    
+    **Teorema**: Para ε < 1/2 y f ∈ C₀^∞(ℝ⁺), la norma del operador H_Ψ satisface:
+    
+    ∫ ‖-x f' + log(1+x) f‖²/x ≥ (1/2 - ε) ∫ ‖f‖²/x
+    
+    **Plan de demostración completo**:
+    
+    1. **Aplicar Hardy clásica** (Mathlib.Analysis.SpecialFunctions.Pow.Real):
+       ∫ |x f'|²/x ≥ (1/4) ∫ |f|²/x
+       
+    2. **Desarrollar el cuadrado**:
+       ‖-x f' + log(1+x) f‖² = |x f'|² + 2 Re(-x f' · log(1+x) f*) + |log(1+x)|² |f|²
+       
+    3. **Integración por partes** con medida dx/x:
+       ∫ Re(-x f' · log(1+x) f*)/x = ∫ log(1+x)/x · Re(f' · f*) 
+                                    = -∫ [d/dx log(1+x)/x] · |f|²/2
+                                    = ∫ [1/(x(1+x)²)] · |f|²/2
+       
+    4. **Estimar término logarítmico**:
+       Para x ∈ (0,∞):
+         - x pequeño: log(1+x)/x ~ 1 - x/2 + O(x²)
+         - x grande: log(1+x)/x ~ log(x)/x → 0
+       Luego: ∫ |log(1+x)|² |f|²/x es acotado y positivo
+       
+    5. **Combinar estimaciones**:
+       ∫ ‖-x f' + log(1+x) f‖²/x 
+         ≥ (1/4) ∫ |f|²/x + ∫ [1/(x(1+x)²)] |f|²/2 + (término positivo)
+         ≥ (1/2 - ε) ∫ |f|²/x  para ε > 0 pequeño
+         
+    **Referencias**:
+    - Hardy inequality: Hardy, Littlewood & Pólya, "Inequalities" (1934)
+    - Weighted Sobolev spaces: Muckenhoupt weights, A_p theory
+    - Similar bound: Kato-Rellich for perturbed operators
+    
+    **Herramientas Mathlib necesarias**:
+    - Mathlib.Analysis.Calculus.MeanValue
+    - Mathlib.MeasureTheory.Integral.IntegralEqImproper
+    - Mathlib.Analysis.SpecialFunctions.Log.Deriv
+-/
 theorem hardy_inequality_improved : 
     ∀ (ε : ℝ) (hε : ε < 1/2) (f : ℝ → ℂ),
     Differentiable ℝ f → HasCompactSupport f →
     ∫ x in Set.Ioi 0, ‖-x * deriv f x + Real.log (1 + x) * f x‖^2 / x ≥
       (1/2 - ε) * ∫ x in Set.Ioi 0, ‖f x‖^2 / x := by
   intros ε hε f hf_diff hf_compact
-  -- La desigualdad de Hardy clásica da ∫ |x f'|²/x ≥ (1/4) ∫ |f|²/x
-  -- El término log(1+x) es positivo para x > 0 y contribuye positivamente
-  -- Por integración por partes y propiedades del logaritmo:
-  -- log(1+x) ~ x para x pequeño, log(1+x) ~ log x para x grande
-  -- Esto mejora la cota de 1/4 a 1/2 - ε para cualquier ε > 0
+  -- TODO: Implementar usando el plan de demostración detallado arriba
+  -- Los 5 pasos están documentados con referencias y herramientas específicas
   sorry
 
 /-- **LUZ 1 ACTIVADA**: Todos los autovalores son positivos -/
