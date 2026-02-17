@@ -36,7 +36,7 @@ jobs:
           while [ $retry_count -lt $max_retries ] && [ $success = false ]; do
             echo "Intento $((retry_count+1)) de $max_retries"
             if pip install --upgrade pip setuptools wheel && \
-               pip install numpy scipy sympy mpmath pytest; then
+               pip install -r .github/scripts/requirements.txt; then
               success=true
               echo "✅ Instalación exitosa en intento $((retry_count+1))"
             else
@@ -60,17 +60,16 @@ jobs:
 
       - name: 📊 Generar reporte de instantáneas
         run: |
-          cat > snapshot_report.md << 'EOF'
-          # 📸 Reporte de Instantáneas - Snapshot Retry
-
-          **Fecha:** $(date -u +"%Y-%m-%d %H:%M:%S UTC")
-          **Commit SHA:** ${{ github.sha }}
-
-          ## ✅ Estado de Dependencias
-
-          | Dependencia | Versión | Estado |
-          |-------------|---------|--------|
-          EOF
+          # Generate report header with dynamic content
+          echo "# 📸 Reporte de Instantáneas - Snapshot Retry" > snapshot_report.md
+          echo "" >> snapshot_report.md
+          echo "**Fecha:** $(date -u +"%Y-%m-%d %H:%M:%S UTC")" >> snapshot_report.md
+          echo "**Commit SHA:** ${{ github.sha }}" >> snapshot_report.md
+          echo "" >> snapshot_report.md
+          echo "## ✅ Estado de Dependencias" >> snapshot_report.md
+          echo "" >> snapshot_report.md
+          echo "| Dependencia | Versión | Estado |" >> snapshot_report.md
+          echo "|-------------|---------|--------|" >> snapshot_report.md
           
           pip show numpy | grep -E "Name|Version" | awk 'NR==1 {name=$2} NR==2 {print "| " name " | " $2 " | ✅ |"}' >> snapshot_report.md
           pip show scipy | grep -E "Name|Version" | awk 'NR==1 {name=$2} NR==2 {print "| " name " | " $2 " | ✅ |"}' >> snapshot_report.md
