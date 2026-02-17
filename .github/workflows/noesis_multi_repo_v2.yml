@@ -238,7 +238,7 @@ jobs:
             echo "body_file=noesis_complete.md" >> $GITHUB_OUTPUT
           else
             echo "⚠️  Report file not found, creating fallback body"
-            cat > pr_body_fallback.md << 'EOF'
+            cat > pr_body_fallback.md << EOF
           ## 🧠 NOESIS CEREBRAL V2.0 - Automated Integration
           
           **Cycle:** ${{ github.run_number }}
