@@ -234,7 +234,7 @@ theorem eigenfunctions_schwartz :
     γ ∈ spectrum ℝ H → H ψ = γ • ψ →
     ∀ (n : ℕ), ∃ (C : ℝ), ∀ (x : ℝ), |ψ x| ≤ C / (1 + x^2)^n := by
   -- TODO: Complete using QCAL.Noesis.spectral_correspondence
-  rfl
+  sorry
 
 /-- Multiplicidad simple (no degeneración) -/
 theorem eigenvalues_simple :
