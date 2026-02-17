@@ -161,7 +161,7 @@ jobs:
           
           # Verificar V5 Coronación (quick mode si es posible)
           if [ -f "validate_v5_coronacion.py" ]; then
-            python validate_v5_coronacion.py || echo "⚠️  Validación V5 con warnings"
+            python validate_v5_coronacion.py || echo "⚠️  Validación V5 falló o produjo warnings"
             echo "status=success" >> $GITHUB_OUTPUT
           else
             echo "⚠️  validate_v5_coronacion.py no encontrado"
