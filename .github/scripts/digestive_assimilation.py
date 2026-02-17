@@ -23,7 +23,7 @@ class DigestiveAssimilation:
         return {'digestions': [], 'nutrients': {}}
     
     def extract_patterns(self, digestions):
-        """Extrae patrones de las digestiones exitosas"""
+        """Extrae patrones de las digestiones exitosas (mejorado para más variedad)"""
         patterns = {}
         for d in digestions:
             if d.get('success') and d.get('solution'):
@@ -31,13 +31,13 @@ class DigestiveAssimilation:
                 file_path = d['file']
                 file_name = Path(file_path).name
                 
-                # Crear un hash del contexto
-                context_hash = hashlib.md5(
-                    f"{file_name}:{d.get('nutrient_type', 'unknown')}".encode()
+                # Crear múltiples patrones por éxito (generalización y especialización)
+                # 1. Patrón específico (archivo + nutriente)
+                context_hash_specific = hashlib.md5(
+                    f"{file_name}:{d.get('nutrient_type', 'unknown')}:{d.get('line', 0)}".encode()
                 ).hexdigest()[:16]
                 
-                # Guardar el patrón
-                patterns[context_hash] = {
+                patterns[context_hash_specific] = {
                     'solution': d['solution'],
                     'nutrient_type': d['nutrient_type'],
                     'timestamp': d['timestamp'],
@@ -46,7 +46,45 @@ class DigestiveAssimilation:
                     'context': {
                         'file_type': 'spectral' if 'spectral' in file_path else 'general',
                         'line': d.get('line', 0)
-                    }
+                    },
+                    'pattern_type': 'specific'
+                }
+                
+                # 2. Patrón generalizado (solo tipo de nutriente)
+                context_hash_general = hashlib.md5(
+                    f"general:{d.get('nutrient_type', 'unknown')}:{d.get('solution', '')}".encode()
+                ).hexdigest()[:16]
+                
+                patterns[context_hash_general] = {
+                    'solution': d['solution'],
+                    'nutrient_type': d['nutrient_type'],
+                    'timestamp': d['timestamp'],
+                    'file': 'general',
+                    'confidence': d.get('confidence', 0.5) * 0.8,  # Lower confidence for general
+                    'context': {
+                        'file_type': 'general',
+                        'line': 0
+                    },
+                    'pattern_type': 'general'
+                }
+                
+                # 3. Patrón por tipo de archivo
+                file_type = 'spectral' if 'spectral' in file_path else 'general'
+                context_hash_file_type = hashlib.md5(
+                    f"{file_type}:{d.get('solution', '')}".encode()
+                ).hexdigest()[:16]
+                
+                patterns[context_hash_file_type] = {
+                    'solution': d['solution'],
+                    'nutrient_type': d['nutrient_type'],
+                    'timestamp': d['timestamp'],
+                    'file': file_type,
+                    'confidence': d.get('confidence', 0.5) * 0.9,
+                    'context': {
+                        'file_type': file_type,
+                        'line': 0
+                    },
+                    'pattern_type': 'file_type'
                 }
         return patterns
     
