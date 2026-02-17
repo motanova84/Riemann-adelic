@@ -16,7 +16,7 @@ import re
 
 class AuronNeuralV2:
     def __init__(self):
-        self.repo_root = Path(__file__).parent.parent.parent
+        self.repo_root = Path(__file__).parent.parent.parent.parent
         self.lean_dir = self.repo_root / 'formalization' / 'lean'
         self.knowledge_base = Path('/tmp/noesis_knowledge_v2')
         self.transformations = []
