@@ -140,9 +140,6 @@ def main():
     
     print(f"✅ Métricas generadas en {output_path}")
     return 0
-from datetime import datetime
-from pathlib import Path
-import argparse
 
 
 def load_json_safe(path):
