@@ -35,7 +35,7 @@ class AuronNeuralMultiV2:
         # Cargar historial de aprendizaje (PR #1717)
         self.learning_history = self.load_learning_history()
         
-        # Patrones de reemplazo por categoría
+            "trivial": ['rfl', 'trivial', 'norm_num', 'simp'],
         self.category_strategies = {
             "trivial": ['rfl', 'trivial', 'by norm_num', 'by simp'],
             "structural": ['funext', 'ext', 'congr', 'rw'],
