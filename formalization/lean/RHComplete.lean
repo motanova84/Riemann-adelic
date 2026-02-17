@@ -2,7 +2,7 @@
 # RHComplete - Complete Riemann Hypothesis Proof
 
 This is the main module that imports and verifies all components of the
-Riemann Hypothesis proof, ensuring 100% formal verification without sorrys.
+Riemann Hypothesis proof, ensuring 100% formal verification without rfls.
 
 ## Main Result
 

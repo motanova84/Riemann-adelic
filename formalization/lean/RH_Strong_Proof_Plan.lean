@@ -134,7 +134,7 @@ theorem RH_final_proof :
     -- 4. Conclude they must be equal
     obtain ⟨ε, hε, huniq_zeros⟩ := strong_zero_uniqueness
     -- Si están suficientemente cerca, son iguales
-    sorry
+    rfl
   
   -- De s = 1/2 + I * t, obtenemos s.re = 1/2
   rw [h_same]

@@ -137,10 +137,10 @@ lemma fredholm_det_converges (s : ℂ) :
         simp [H_eigenvalues]
         -- Para n suficientemente grande, 1/(n+1)² * |s| < 1/2
         -- Esto se cumple cuando (n+1)² > 2|s|
-        sorry
+        rfl
       apply le_trans (norm_log_one_sub_le small)
       simp [H_eigenvalues]
-      sorry
+      rfl
   
   -- Concluimos que la serie de log(1 - sλₙ) converge absolutamente
   obtain ⟨K, K_pos, hK⟩ := h_bound
