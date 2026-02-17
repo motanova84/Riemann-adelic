@@ -174,10 +174,9 @@ class AuronNeuralV2:
         trivial_patterns = [
             ('sorry', 'rfl'),
             ('sorry', 'trivial'),
-            ('sorry', 'by simp'),
-            ('sorry', 'by norm_num'),
             ('sorry', 'by rfl'),
             ('sorry', 'by trivial'),
+            ('sorry', 'by simp'),
             ('sorry', 'by simp only'),
             ('sorry', 'by norm_num'),
         ]
@@ -237,7 +236,6 @@ class AuronNeuralV2:
                 return True
         
         # PRIORIDAD 2: Intentar patrón aprendido previamente
-        # PRIORIDAD 2: Intentar patrón aprendido previamente
         if context_hash in self.learning_history["patterns"]:
             learned_pattern = self.learning_history["patterns"][context_hash]
             self.log(f"🎯 Patrón aprendido encontrado: {learned_pattern}")
@@ -284,7 +282,6 @@ class AuronNeuralV2:
                 if backup.exists():
                     shutil.move(backup, filepath)
         
-        # PRIORIDAD 3: Buscar soluciones en otros repositorios
         # PRIORIDAD 3: Buscar soluciones en otros repositorios
         similar_solutions = self.find_similar_solutions_from_knowledge(context)
         for solution in similar_solutions:
