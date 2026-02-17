@@ -94,6 +94,7 @@ jobs:
           if [ -z "$max_changes" ]; then
             max_changes=20
           fi
+          export AURON_MAX_CHANGES="$max_changes"
           
           python .github/scripts/auron_neural_multi_v2.py \
             amda_report.json \
