@@ -141,15 +141,20 @@ jobs:
         continue-on-error: true
         run: |
           echo "🧬 Integrando SABIO ∞³..."
-          python .github/scripts/noesis_integrator.py --mode sabio
-          
-          # Verificar frecuencia base
-          if [ -f "Evac_Rpsi_data.csv" ]; then
-            echo "✅ Frecuencia base: 141.7001 Hz validada"
-            echo "status=success" >> $GITHUB_OUTPUT
+          if [ -f ".github/scripts/noesis_integrator.py" ]; then
+            python .github/scripts/noesis_integrator.py --mode sabio
+            
+            # Verificar frecuencia base
+            if [ -f "Evac_Rpsi_data.csv" ]; then
+              echo "✅ Frecuencia base: 141.7001 Hz validada"
+              echo "status=success" >> $GITHUB_OUTPUT
+            else
+              echo "⚠️  Evac_Rpsi_data.csv no encontrado"
+              echo "status=partial" >> $GITHUB_OUTPUT
+            fi
           else
-            echo "⚠️  Evac_Rpsi_data.csv no encontrado"
-            echo "status=partial" >> $GITHUB_OUTPUT
+            echo "⚠️  .github/scripts/noesis_integrator.py no encontrado"
+            echo "status=missing" >> $GITHUB_OUTPUT
           fi
       
       - name: 🔍 RH Validation Integration
@@ -157,15 +162,20 @@ jobs:
         continue-on-error: true
         run: |
           echo "🔬 Integrando validaciones RH..."
-          python .github/scripts/noesis_integrator.py --mode validation
-          
-          # Verificar V5 Coronación (quick mode si es posible)
-          if [ -f "validate_v5_coronacion.py" ]; then
-            python validate_v5_coronacion.py || echo "⚠️  Validación V5 falló o produjo warnings"
-            echo "status=success" >> $GITHUB_OUTPUT
+          if [ -f ".github/scripts/noesis_integrator.py" ]; then
+            python .github/scripts/noesis_integrator.py --mode validation
+            
+            # Verificar V5 Coronación
+            if [ -f "validate_v5_coronacion.py" ]; then
+              python validate_v5_coronacion.py || echo "⚠️  Validación V5 falló o produjo warnings"
+              echo "status=success" >> $GITHUB_OUTPUT
+            else
+              echo "⚠️  validate_v5_coronacion.py no encontrado"
+              echo "status=partial" >> $GITHUB_OUTPUT
+            fi
           else
-            echo "⚠️  validate_v5_coronacion.py no encontrado"
-            echo "status=partial" >> $GITHUB_OUTPUT
+            echo "⚠️  .github/scripts/noesis_integrator.py no encontrado"
+            echo "status=missing" >> $GITHUB_OUTPUT
           fi
       
       - name: 🤖 Auto-Evolution Integration
@@ -186,7 +196,11 @@ jobs:
         continue-on-error: true
         run: |
           echo "📊 Generando reporte unificado..."
-          python .github/scripts/noesis_integrator.py --mode report --output noesis_complete.md
+          if [ -f ".github/scripts/noesis_integrator.py" ]; then
+            python .github/scripts/noesis_integrator.py --mode report --output noesis_complete.md
+          else
+            echo "⚠️  .github/scripts/noesis_integrator.py no encontrado para reporte"
+          fi
           
           # Extract statuses
           SABIO_STATUS="${{ steps.sabio.outcome }}"
