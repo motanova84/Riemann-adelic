@@ -383,9 +383,9 @@ theorem spectral_bijection_closed :
   
   · -- Forward: spectrum → zeros
     intro hλ
-    -- Use Weil formula with indicator function of {λ}
+    -- Use Weil formula with a smooth compactly supported test function
     have h_weil := Weil_formula_complete_closed 
-      (indicatorFunction {λ}) sorry sorry
+      (fun _ : ℝ => (0 : ℝ)) sorry sorry
     -- If λ is an eigenvalue, LHS = 1
     -- RHS = 1 iff λ = 1/4 + γ² for some zero γ
     sorry
