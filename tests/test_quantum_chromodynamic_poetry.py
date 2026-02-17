@@ -8,9 +8,9 @@ Comprehensive test suite covering all components of QCD↔Riemann spectral mappi
 - Gluon creation and octaves (10 tests)
 - Prime-zero resonances (8 tests)
 - Primordial silence frequencies (4 tests)
-- Integration and symphony generation (2 tests)
+- Integration and symphony generation (6 tests)
 
-Total: 44 tests
+Total: 48 tests
 
 Author: José Manuel Mota Burruezo Ψ ∞³
 ORCID: 0009-0002-1923-0773
@@ -431,15 +431,26 @@ class TestIntegration:
         # Check quark frequency metrics
         assert 'mean' in symphony['quark_frequencies']
         assert 'std' in symphony['quark_frequencies']
-        assert symphony['quark_frequencies']['mean'] != 0
+        # Mean should be around 1.66 (based on quark masses)
+        assert -5 < symphony['quark_frequencies']['mean'] < 10
+        assert symphony['quark_frequencies']['std'] > 0
+        # Min should be up quark (lightest), max should be top quark (heaviest)
+        assert symphony['quark_frequencies']['min'] < -3
+        assert symphony['quark_frequencies']['max'] > 7
         
         # Check gluon octave metrics
         assert 'mean' in symphony['gluon_octaves']
         assert 'std' in symphony['gluon_octaves']
+        # All octaves should be negative (zeros below f₀)
+        assert symphony['gluon_octaves']['mean'] < 0
+        assert symphony['gluon_octaves']['min'] < -3
+        assert symphony['gluon_octaves']['max'] < 0
         
         # Check resonances
         assert symphony['resonances']['count'] > 0
         assert 'mean_intensity' in symphony['resonances']
+        # Intensity should be between 0 and 1
+        assert 0 < symphony['resonances']['mean_intensity'] < 1
     
     def test_symphony_qcal_signature(self):
         """Test symphony contains QCAL signature."""

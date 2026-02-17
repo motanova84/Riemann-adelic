@@ -286,7 +286,7 @@ assert abs(f_17 - 141.70001 / 2.71828) < 0.01
 
 ## Testing
 
-The system includes 44 comprehensive tests covering:
+The system includes 48 comprehensive tests covering:
 
 - **Constants (10 tests):** Fundamental frequency, Riemann zeros, quark masses
 - **Quarks (10 tests):** Creation, frequencies, storage
