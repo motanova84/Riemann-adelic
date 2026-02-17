@@ -71,11 +71,10 @@ jobs:
           echo "| Dependencia | Versión | Estado |" >> snapshot_report.md
           echo "|-------------|---------|--------|" >> snapshot_report.md
           
-          pip show numpy | grep -E "Name|Version" | awk 'NR==1 {name=$2} NR==2 {print "| " name " | " $2 " | ✅ |"}' >> snapshot_report.md
-          pip show scipy | grep -E "Name|Version" | awk 'NR==1 {name=$2} NR==2 {print "| " name " | " $2 " | ✅ |"}' >> snapshot_report.md
-          pip show sympy | grep -E "Name|Version" | awk 'NR==1 {name=$2} NR==2 {print "| " name " | " $2 " | ✅ |"}' >> snapshot_report.md
-          pip show mpmath | grep -E "Name|Version" | awk 'NR==1 {name=$2} NR==2 {print "| " name " | " $2 " | ✅ |"}' >> snapshot_report.md
-          pip show pytest | grep -E "Name|Version" | awk 'NR==1 {name=$2} NR==2 {print "| " name " | " $2 " | ✅ |"}' >> snapshot_report.md
+          # Generate dependency table
+          for package in numpy scipy sympy mpmath pytest; do
+            pip show "$package" | grep -E "Name|Version" | awk 'NR==1 {name=$2} NR==2 {print "| " name " | " $2 " | ✅ |"}' >> snapshot_report.md
+          done
           
           cat >> snapshot_report.md << 'EOF'
 
