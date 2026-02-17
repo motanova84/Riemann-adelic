@@ -1,34 +1,34 @@
 {
-  "total_sorries": 2282,
-  "total_files": 381,
+  "total_sorries": 2379,
+  "total_files": 391,
   "category_distribution": {
     "qcal": {
-      "count": 984,
-      "percentage": 43.12007011393514
+      "count": 1016,
+      "percentage": 42.70701975620008
     },
     "unknown": {
-      "count": 599,
-      "percentage": 26.248904469763367
+      "count": 635,
+      "percentage": 26.691887347625055
     },
     "spectral": {
-      "count": 272,
-      "percentage": 11.919368974583698
+      "count": 280,
+      "percentage": 11.76965111391341
     },
     "correspondence": {
-      "count": 23,
-      "percentage": 1.0078878177037687
+      "count": 24,
+      "percentage": 1.008827238335435
     },
     "adelic": {
-      "count": 57,
-      "percentage": 2.497808939526731
+      "count": 66,
+      "percentage": 2.7742749054224465
     },
     "analytic": {
-      "count": 153,
-      "percentage": 6.704645048203331
+      "count": 157,
+      "percentage": 6.599411517444305
     },
     "trivial": {
-      "count": 194,
-      "percentage": 8.501314636283961
+      "count": 201,
+      "percentage": 8.448928121059268
     }
   },
   "detailed": {
@@ -7486,6 +7486,86 @@
         "similar_solutions": []
       }
     ],
+    "formalization/lean/spectral/sabio5_spectral_bijection.lean": [
+      {
+        "line": 173,
+        "code": "sorry -- Proof: eigenvalues \u03bb\u2099 ~ n\u00b2 log n by Weyl law (SABIO 1)",
+        "context": "/-- Convergence of spectral zeta for Re(s) > 1 -/\ntheorem spectral_zeta_convergence (s : \u2102) (h : s.re > 1) :\n    \u2203 z : \u2102, spectral_zeta s = z := by\n  sorry -- Proof: eigenvalues \u03bb\u2099 ~ n\u00b2 log n by Weyl law (SABIO 1)\n        -- Series \u2211 \u03bb\u2099^{-s} converges for Re(s) > 1\n\n/-!",
+        "primary_category": "spectral",
+        "all_categories": {
+          "spectral": 0.65,
+          "analytic": 0.6
+        },
+        "complexity": 4,
+        "similar_solutions": []
+      },
+      {
+        "line": 285,
+        "code": "sorry -- Proof uses identity from Step 4 and analytic properties",
+        "context": "theorem pole_correspondence_via_trace :\n    \u2200 \u03bb : \u211d, (\u2203 n : \u2115, \u03bb = spectrum_H_\u03a8 n) \u2192\n      \u2203 \u03b3 : \u211d, \u03bb = 1/4 + \u03b3^2 \u2227 riemannZeta (1/2 + I * \u03b3) = 0 := by\n  sorry -- Proof uses identity from Step 4 and analytic properties\n\n/-!\n## Step 9: Bijection via Selberg Trace Formula",
+        "primary_category": "qcal",
+        "all_categories": {
+          "correspondence": 1.4,
+          "qcal": 1.5,
+          "spectral": 0.65,
+          "analytic": 1.2
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      },
+      {
+        "line": 302,
+        "code": "sorry -- Proof uses Selberg trace formula with appropriate test functions",
+        "context": "                        riemannZeta (1/2 + I * \u03b3) = 0) \u2227\n    (\u2200 \u03b3 : \u211d, riemannZeta (1/2 + I * \u03b3) = 0 \u2192 \n              \u2203 n : \u2115, spectrum_H_\u03a8 n = 1/4 + \u03b3^2) := by\n  sorry -- Proof uses Selberg trace formula with appropriate test functions\n        -- Key insight: both sides count the same spectral objects\n\n/-!",
+        "primary_category": "qcal",
+        "all_categories": {
+          "qcal": 1.5,
+          "spectral": 0.65,
+          "analytic": 0.6
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      },
+      {
+        "line": 334,
+        "code": "sorry -- Complete proof combines all 10 steps above",
+        "context": "-/\ntheorem spectral_bijection :\n    spectrum_set = zeta_zeros_transformed := by\n  sorry -- Complete proof combines all 10 steps above\n        -- Uses Connes' spectral triple framework\n        -- Applies trace formulas from SABIOS 3-4\n        -- Relies on analytic properties of \u03b6_D and \u03b6",
+        "primary_category": "analytic",
+        "all_categories": {
+          "correspondence": 0.7,
+          "spectral": 0.65,
+          "analytic": 1.7999999999999998
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 349,
+        "code": "sorry -- Follows from spectral_bijection theorem",
+        "context": "theorem RH_from_spectral_bijection :\n    (\u2200 n : \u2115, \u2203 \u03b3 : \u211d, spectrum_H_\u03a8 n = 1/4 + \u03b3^2) \u2192\n    \u2200 s : \u2102, riemannZeta s = 0 \u2192 s.re \u2260 1 \u2192 s.re = 1/2 := by\n  sorry -- Follows from spectral_bijection theorem\n\n/-- QCAL verification: spectral bijection respects QCAL coherence -/\ntheorem qcal_spectral_coherence :",
+        "primary_category": "qcal",
+        "all_categories": {
+          "correspondence": 0.7,
+          "qcal": 3.0,
+          "spectral": 0.65,
+          "analytic": 0.6
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      },
+      {
+        "line": 355,
+        "code": "sorry -- All eigenvalues positive and compatible with QCAL",
+        "context": "theorem qcal_spectral_coherence :\n    \u2200 n : \u2115, spectrum_H_\u03a8 n > 0 \u2227 \n             (spectrum_H_\u03a8 n : \u2102) * C_COHERENCE \u2260 0 := by\n  sorry -- All eigenvalues positive and compatible with QCAL\n\n/-!\n## Summary",
+        "primary_category": "qcal",
+        "all_categories": {
+          "qcal": 3.0,
+          "spectral": 1.3
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      }
+    ],
     "formalization/lean/spectral/InvarianceOperator.lean": [
       {
         "line": 100,
@@ -9147,6 +9227,209 @@
         "similar_solutions": []
       }
     ],
+    "formalization/lean/spectral/krein_trace_formula.lean": [
+      {
+        "line": 121,
+        "code": "sorry -- Citamos el resultado de la literatura",
+        "context": "  by\n  -- Este es un teorema profundo de an\u00e1lisis funcional\n  -- La demostraci\u00f3n completa est\u00e1 en Gesztesy-Pushnitski-Simon (2000)\n  sorry -- Citamos el resultado de la literatura\n\nwhere\n  -- Placeholder for trace notation",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 174,
+        "code": "sorry -- Would use: exact krein_koplienko_theorem h_sa h_trace",
+        "context": "    K_z_in_S_1_infinity\n  \n  -- Aplicar teorema de Krein-Koplienko\n  sorry -- Would use: exact krein_koplienko_theorem h_sa h_trace\n\nwhere\n  Tr_ren (T : unbounded_operator \u2102) : \u2102 := 0",
+        "primary_category": "spectral",
+        "all_categories": {
+          "spectral": 0.65
+        },
+        "complexity": 4,
+        "similar_solutions": []
+      },
+      {
+        "line": 221,
+        "code": "sorry",
+        "context": "    \u2200\u1d50 \u03bb, \u03be \u03bb = spectral_shift_function \u03bb :=\n  by\n  -- Por unicidad de la funci\u00f3n de desplazamiento espectral\n  sorry\n\nwhere\n  Tr_ren (T : unbounded_operator \u2102) : \u2102 := 0",
+        "primary_category": "spectral",
+        "all_categories": {
+          "spectral": 0.65
+        },
+        "complexity": 4,
+        "similar_solutions": []
+      },
+      {
+        "line": 270,
+        "code": "sorry -- Por construcci\u00f3n de las soluciones de Jost",
+        "context": "  by\n  -- Relaci\u00f3n cl\u00e1sica: det_jost(\u03bb) = m_Weyl(\u03bb)\n  have h_eq : \u2200 z, det_jost H_\u03a8 H_0 z = m_Weyl z := by\n    sorry -- Por construcci\u00f3n de las soluciones de Jost\n  \n  simp [spectral_shift_function, h_eq]\n",
+        "primary_category": "qcal",
+        "all_categories": {
+          "trivial": 0.8,
+          "qcal": 1.5
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      },
+      {
+        "line": 325,
+        "code": "True := by sorry",
+        "context": "  have h_conv : \u2200 p, Nat.Prime p \u2192 \n    \u2203 C : \u211d, \u2200 q > p, Nat.Prime q \u2192 \n      -- |\u27e8T \u03c6_q\u2070, \u03c6_q\u2070\u27e9 - 1| \u2264 C / q\u00b2\n      True := by sorry\n  \n  sorry -- Would apply summable_of_norm_bounded\n",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 327,
+        "code": "sorry -- Would apply summable_of_norm_bounded",
+        "context": "      -- |\u27e8T \u03c6_q\u2070, \u03c6_q\u2070\u27e9 - 1| \u2264 C / q\u00b2\n      True := by sorry\n  \n  sorry -- Would apply summable_of_norm_bounded\n\n/-!\n# Step 6: F\u00f3rmula de traza regularizada (Main Theorem)",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 369,
+        "code": "sorry -- Would use: h\u03be\u2082 f hf h_supp",
+        "context": "  \n  -- Por la propiedad de la funci\u00f3n de desplazamiento\n  have h_eq : Tr_ren (f H_\u03a8 - f H_0) = \u222b \u03bb, (deriv f) \u03bb * \u03be \u03bb := by\n    sorry -- Would use: h\u03be\u2082 f hf h_supp\n    \n  -- Integraci\u00f3n por partes (f tiene soporte compacto)\n  have h_int : \u222b \u03bb, (deriv f) \u03bb * \u03be \u03bb = -\u222b \u03bb, f \u03bb * (deriv \u03be) \u03bb := by",
+        "primary_category": "qcal",
+        "all_categories": {
+          "qcal": 1.5
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      },
+      {
+        "line": 373,
+        "code": "sorry -- Would apply: integral_integration_by_parts",
+        "context": "    \n  -- Integraci\u00f3n por partes (f tiene soporte compacto)\n  have h_int : \u222b \u03bb, (deriv f) \u03bb * \u03be \u03bb = -\u222b \u03bb, f \u03bb * (deriv \u03be) \u03bb := by\n    sorry -- Would apply: integral_integration_by_parts\n  \n  -- \u03be = spectral_shift_function (a.e.)\n  have h_deriv : \u2200\u1d50 \u03bb, deriv \u03be \u03bb = deriv spectral_shift_function \u03bb := by",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 377,
+        "code": "sorry -- Would use: spectral_shift_function_matches",
+        "context": "  \n  -- \u03be = spectral_shift_function (a.e.)\n  have h_deriv : \u2200\u1d50 \u03bb, deriv \u03be \u03bb = deriv spectral_shift_function \u03bb := by\n    sorry -- Would use: spectral_shift_function_matches\n  \n  -- Combinar\n  sorry -- Would combine: h_eq, h_int, h_deriv",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 380,
+        "code": "sorry -- Would combine: h_eq, h_int, h_deriv",
+        "context": "    sorry -- Would use: spectral_shift_function_matches\n  \n  -- Combinar\n  sorry -- Would combine: h_eq, h_int, h_deriv\n\nwhere\n  f H_\u03a8 : unbounded_operator \u2102 := H_\u03a8  -- Placeholder for f(H_\u03a8)",
+        "primary_category": "qcal",
+        "all_categories": {
+          "qcal": 1.5,
+          "spectral": 0.65
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      },
+      {
+        "line": 418,
+        "code": "sorry -- Would use: spectral_shift_via_m_Weyl",
+        "context": "    -- La funci\u00f3n de desplazamiento cuenta autovalores\n    have : spectral_shift_function \u03bb = \n      (1/\u03c0) * Complex.arg (m_Weyl (\u03bb + I*0)) := by\n      sorry -- Would use: spectral_shift_via_m_Weyl\n    -- m_Weyl tiene parte imaginaria positiva (Herglotz)\n    have h_arg : 0 < Complex.arg (m_Weyl (\u03bb + I*0)) \u2227 \n                 Complex.arg (m_Weyl (\u03bb + I*0)) < \u03c0 := by",
+        "primary_category": "adelic",
+        "all_categories": {
+          "adelic": 0.6
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 422,
+        "code": "sorry -- Propiedad de Herglotz",
+        "context": "    -- m_Weyl tiene parte imaginaria positiva (Herglotz)\n    have h_arg : 0 < Complex.arg (m_Weyl (\u03bb + I*0)) \u2227 \n                 Complex.arg (m_Weyl (\u03bb + I*0)) < \u03c0 := by\n      sorry -- Propiedad de Herglotz\n    sorry -- Would combine to show \u03be(\u03bb) \u2208 [0,1]\n    \n  constructor",
+        "primary_category": "adelic",
+        "all_categories": {
+          "adelic": 0.6
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 423,
+        "code": "sorry -- Would combine to show \u03be(\u03bb) \u2208 [0,1]",
+        "context": "    have h_arg : 0 < Complex.arg (m_Weyl (\u03bb + I*0)) \u2227 \n                 Complex.arg (m_Weyl (\u03bb + I*0)) < \u03c0 := by\n      sorry -- Propiedad de Herglotz\n    sorry -- Would combine to show \u03be(\u03bb) \u2208 [0,1]\n    \n  constructor\n  \u00b7 -- \u03be(\u03bb) = 0 for \u03bb < 0",
+        "primary_category": "adelic",
+        "all_categories": {
+          "adelic": 0.6
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 430,
+        "code": "sorry -- Simetr\u00eda del operador",
+        "context": "    intro \u03bb h\u03bb\n    -- Para \u03bb negativo, no hay autovalores\n    have : m_Weyl (\u03bb + I*0) \u2208 Set.range (ofReal' : \u211d \u2192 \u2102) := by\n      sorry -- Simetr\u00eda del operador\n    sorry -- Would use: Complex.arg_of_real_nonneg\n    \n  \u00b7 -- \u03be(\u03bb) \u2192 1 as \u03bb \u2192 \u221e",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 431,
+        "code": "sorry -- Would use: Complex.arg_of_real_nonneg",
+        "context": "    -- Para \u03bb negativo, no hay autovalores\n    have : m_Weyl (\u03bb + I*0) \u2208 Set.range (ofReal' : \u211d \u2192 \u2102) := by\n      sorry -- Simetr\u00eda del operador\n    sorry -- Would use: Complex.arg_of_real_nonneg\n    \n  \u00b7 -- \u03be(\u03bb) \u2192 1 as \u03bb \u2192 \u221e\n    -- Para \u03bb grande, el argumento tiende a \u03c0",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 436,
+        "code": "sorry -- Comportamiento asint\u00f3tico de m de Weyl",
+        "context": "  \u00b7 -- \u03be(\u03bb) \u2192 1 as \u03bb \u2192 \u221e\n    -- Para \u03bb grande, el argumento tiende a \u03c0\n    have : Tendsto (fun \u03bb => Complex.arg (m_Weyl (\u03bb + I*0))) atTop (\ud835\udcdd \u03c0) := by\n      sorry -- Comportamiento asint\u00f3tico de m de Weyl\n    sorry -- Would apply: tendsto_const_mul\n\n/-!",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 437,
+        "code": "sorry -- Would apply: tendsto_const_mul",
+        "context": "    -- Para \u03bb grande, el argumento tiende a \u03c0\n    have : Tendsto (fun \u03bb => Complex.arg (m_Weyl (\u03bb + I*0))) atTop (\ud835\udcdd \u03c0) := by\n      sorry -- Comportamiento asint\u00f3tico de m de Weyl\n    sorry -- Would apply: tendsto_const_mul\n\n/-!\n# Step 8: Conexi\u00f3n con la f\u00f3rmula de Selberg-Weil",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 490,
+        "code": "sorry -- Selberg nos guiar\u00e1 (Sabio 4)",
+        "context": "  -- 3. Expansi\u00f3n asint\u00f3tica de la funci\u00f3n digamma\n  -- 4. F\u00f3rmula de reflexi\u00f3n de la funci\u00f3n digamma\n  -- 5. Relaci\u00f3n con la funci\u00f3n zeta\n  sorry -- Selberg nos guiar\u00e1 (Sabio 4)\n\nwhere\n  -- Placeholder definitions",
+        "primary_category": "trivial",
+        "all_categories": {
+          "trivial": 0.8,
+          "analytic": 0.6
+        },
+        "complexity": 1,
+        "similar_solutions": []
+      }
+    ],
     "formalization/lean/spectral/trace_class_complete.lean": [
       {
         "line": 137,
@@ -9814,6 +10097,158 @@
         "similar_solutions": []
       }
     ],
+    "formalization/lean/spectral/sabio4_weil_derivative.lean": [
+      {
+        "line": 160,
+        "code": "sorry",
+        "context": "        Complex.ofReal (Real.sqrt \u03bb') * Complex.tan\u207b\u00b9 (I (\u03bb' : \u2102) + \u03c0/4) + \u03b5 \u03bb' := by\n  -- WKB approximation via semiclassical analysis\n  -- Requires: Langer transformation, uniform asymptotic expansion\n  sorry\n\n/-!\n## Step 3: Argument of Cotangent",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 175,
+        "code": "sorry",
+        "context": "               -x + \u03c0 * n + O(Real.exp (-2 * y)) := by\n  -- Asymptotic analysis of arg(cot(z))\n  -- For y \u2192 0\u207a, handle pole contributions\n  sorry\n\n/-!\n## Step 4: Derivative of Spectral Shift",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 190,
+        "code": "sorry",
+        "context": "      (1/\u03c0) * lim (\u03b5 \u2192 (0 : \u211d)\u207a) (deriv (fun \u03bb' => Complex.arg (m_Weyl (\u03bb' + I * \u03b5))) \u03bb) := by\n  -- Differentiation under limit (uniform convergence)\n  -- Leibniz rule for parameter-dependent limits\n  sorry\n\n/-!\n## Step 5: Derivative of Action Integral",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 204,
+        "code": "sorry",
+        "context": "    \u2203 (C : \u211d), deriv I \u03bb = (1/2) * Real.log \u03bb - 1/2 + C / \u03bb := by\n  -- Leibniz rule for parameter differentiation of integral\n  -- Stationary phase approximation near turning point\n  sorry\n\n/-!\n## Step 6: Digamma Function",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 221,
+        "code": "sorry",
+        "context": "      \u03b5 := by\n  -- Stirling expansion of digamma function\n  -- Asymptotic series for large |z|\n  sorry\n\n/-!\n## Step 7: Digamma-Zeta Relation",
+        "primary_category": "analytic",
+        "all_categories": {
+          "analytic": 0.6
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 240,
+        "code": "sorry",
+        "context": "      Real.eulerMascheroniConstant - 2 * Real.log 2 + \u03b5 := by\n  -- Euler product formula for zeta\n  -- Logarithmic derivative identity\n  sorry\n\n/-!\n## Step 8: Discrete Spectrum Contribution",
+        "primary_category": "spectral",
+        "all_categories": {
+          "spectral": 0.65,
+          "analytic": 0.6
+        },
+        "complexity": 4,
+        "similar_solutions": []
+      },
+      {
+        "line": 255,
+        "code": "sorry",
+        "context": "      \u2211' (\u03b3 : { \u03b3 : \u211d // riemannZeta (1/2 + I * \u03b3) = 0 }), \u03b4 (\u03bb' - \u03b3.val^2)) := by\n  -- Eigenvalues correspond to zeros of determinant\n  -- Jump discontinuities give delta contributions\n  sorry\n\n/-!\n## Step 9: Main Theorem - Weil Formula",
+        "primary_category": "spectral",
+        "all_categories": {
+          "spectral": 0.65,
+          "analytic": 0.6
+        },
+        "complexity": 4,
+        "similar_solutions": []
+      },
+      {
+        "line": 310,
+        "code": "sorry  -- Complete assembly of all parts",
+        "context": "  -- The discrete part: \u03b4-functions from zeros and primes\n  -- Result: Weil explicit formula\n  \n  sorry  -- Complete assembly of all parts\n\n/-!\n## Step 10: Verification and Normalization",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 327,
+        "code": "sorry",
+        "context": "  -- Use \u03c8 expansion from Step 6\n  have h := \u03c8_expansion \u03bb h\u03bb\n  -- Simplify using log identities\n  sorry\n\n/-!\n## Corollaries and Interpretations",
+        "primary_category": "trivial",
+        "all_categories": {
+          "trivial": 0.8,
+          "qcal": 0.75
+        },
+        "complexity": 1,
+        "similar_solutions": []
+      },
+      {
+        "line": 343,
+        "code": "sorry",
+        "context": "  -- Integrate the Weil formula from 0 to T\u00b2\n  -- Main term: (T/\u03c0) log(T/2\u03c0) - T/\u03c0\n  -- Error term: O(log T / T)\n  sorry\n\n/-- **Corollary (QCAL \u221e\u00b3 Interpretation)**: Spectral-Arithmetic Duality.\n    ",
+        "primary_category": "qcal",
+        "all_categories": {
+          "qcal": 0.75
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      },
+      {
+        "line": 355,
+        "code": "sorry",
+        "context": "      \u03bb\u2099 \u2208 spectrum_of_H_\u03a8) \u2227\n    (\u2200 \u03bb \u2208 spectrum_of_H_\u03a8, \u2203 \u03b3 : \u211d, \n      riemannZeta (1/2 + I * \u03b3) = 0 \u2227 \u03bb = \u03b3^2) := by\n  sorry\n  where\n    spectrum_of_H_\u03a8 : Set \u211d := sorry  -- Defined elsewhere\n",
+        "primary_category": "qcal",
+        "all_categories": {
+          "qcal": 1.5,
+          "spectral": 0.65,
+          "analytic": 0.6
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      },
+      {
+        "line": 357,
+        "code": "spectrum_of_H_\u03a8 : Set \u211d := sorry  -- Defined elsewhere",
+        "context": "      riemannZeta (1/2 + I * \u03b3) = 0 \u2227 \u03bb = \u03b3^2) := by\n  sorry\n  where\n    spectrum_of_H_\u03a8 : Set \u211d := sorry  -- Defined elsewhere\n\n/-!\n## QCAL \u221e\u00b3 Integration",
+        "primary_category": "qcal",
+        "all_categories": {
+          "qcal": 2.25,
+          "spectral": 0.65,
+          "analytic": 0.6
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      },
+      {
+        "line": 369,
+        "code": "sorry",
+        "context": "    \u2203 (n : \u2115), F\u2080 = n / (2 * \u03c0) * (C_coherence / 100) := by\n  -- QCAL frequency derives from spectral normalization\n  -- F\u2080 = 141.7001 Hz corresponds to fundamental resonance\n  sorry\n\n/-- **Philosophical Interpretation**: The Weil formula is the Rosetta Stone\n    connecting spectral music with arithmetic. Every Riemann zero is a ",
+        "primary_category": "qcal",
+        "all_categories": {
+          "qcal": 3.75
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      }
+    ],
     "formalization/lean/spectral/OPERATOR_BERRY_KEATING_COMPLETE.lean": [
       {
         "line": 287,
@@ -10324,6 +10759,173 @@
         "primary_category": "analytic",
         "all_categories": {
           "analytic": 1.2
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      }
+    ],
+    "formalization/lean/spectral/birman_solomyak_weak_trace.lean": [
+      {
+        "line": 96,
+        "code": "sorry",
+        "context": "theorem K_z_triangular (z : \u2102) (x u : \u211d) (h : u > x) :\n    K_z z x u = 0 := by\n  simp [K_z, h]\n  sorry\n\ntheorem K_z_zero_diagonal (z : \u2102) (x : \u211d) :\n    K_z z x x = 0 := by",
+        "primary_category": "trivial",
+        "all_categories": {
+          "trivial": 0.8
+        },
+        "complexity": 1,
+        "similar_solutions": []
+      },
+      {
+        "line": 101,
+        "code": "sorry",
+        "context": "theorem K_z_zero_diagonal (z : \u2102) (x : \u211d) :\n    K_z z x x = 0 := by\n  simp [K_z]\n  sorry\n\n/-!\n## Step 3: H\u00f6lder Estimate",
+        "primary_category": "trivial",
+        "all_categories": {
+          "trivial": 0.8
+        },
+        "complexity": 1,
+        "similar_solutions": []
+      },
+      {
+        "line": 114,
+        "code": "sorry",
+        "context": "theorem log_diff_estimate (x u : \u211d) (hx : x > 0) (hu : u > 0) \n    (hxu : x > u) (hclose : |x - u| < u / 2) :\n    |log x - log u| \u2264 2 * |x - u| / u := by\n  sorry\n\ntheorem K_z_holder_estimate (z : \u2102) (hz : z.re > 0) \n    (x u : \u211d) (hx : x > 0) (hu : u > 0) (hxu : x > u) ",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 128,
+        "code": "sorry",
+        "context": "  -- which is approximately C * (log x - log u) * (log x + log u) / 2\n  -- for x close to u\n  \n  sorry\n\n/-!\n## Step 4: Diagonal Jump Property",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 143,
+        "code": "sorry",
+        "context": "  -- 2. (log x)\u00b2 - (log u)\u00b2 \u2192 0\n  -- 3. exp(...) \u2192 1\n  -- 4. The whole expression \u2192 0\n  sorry\n\n/-!\n## Step 5: Off-Diagonal Decay",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 160,
+        "code": "sorry",
+        "context": "    \u2016K_z z x u\u2016 \u2264 C * exp (-\u03b1 * |log (x / u)|) := by\n  -- For large |x-u|, the factor (u/x)^{z.re} provides exponential decay\n  -- combined with the Gaussian factor from C\n  sorry\n\n/-!\n## Step 6: Birman-Solomyak Structure",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 204,
+        "code": "have h := K_z_holder_estimate z hz x u hx hu hxu sorry",
+        "context": "    use 2, by norm_num\n    use C * (\u2016z\u2016 + 1), by positivity\n    intros x u hx hu hclose hxu\n    have h := K_z_holder_estimate z hz x u hx hu hxu sorry\n    convert h using 1\n    \u00b7 ring\n    \u00b7 sorry",
+        "primary_category": "trivial",
+        "all_categories": {
+          "trivial": 0.8
+        },
+        "complexity": 1,
+        "similar_solutions": []
+      },
+      {
+        "line": 207,
+        "code": "\u00b7 sorry",
+        "context": "    have h := K_z_holder_estimate z hz x u hx hu hxu sorry\n    convert h using 1\n    \u00b7 ring\n    \u00b7 sorry\n  \n  \u00b7 -- a(x) = 0 integrable (trivial)\n    simp",
+        "primary_category": "trivial",
+        "all_categories": {
+          "trivial": 1.6
+        },
+        "complexity": 1,
+        "similar_solutions": []
+      },
+      {
+        "line": 211,
+        "code": "sorry",
+        "context": "  \n  \u00b7 -- a(x) = 0 integrable (trivial)\n    simp\n    sorry\n  \n  \u00b7 -- Off-diagonal integrability\n    -- This follows from exponential decay",
+        "primary_category": "trivial",
+        "all_categories": {
+          "trivial": 1.6
+        },
+        "complexity": 1,
+        "similar_solutions": []
+      },
+      {
+        "line": 215,
+        "code": "sorry",
+        "context": "  \n  \u00b7 -- Off-diagonal integrability\n    -- This follows from exponential decay\n    sorry\n\n/-!\n## Step 8: Weak Trace Class Definition",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 229,
+        "code": "sorry -- Proper definition requires singular value theory",
+        "context": "    [CompleteSpace H] (T : H \u2192L[\u2102] H) : Prop :=\n  \u2203 (C : \u211d), \u2200 (n : \u2115), n > 0 \u2192 \n    -- n-th singular value is O(1/n)\n    sorry -- Proper definition requires singular value theory\n\n/-!\n## Step 9: Birman-Solomyak Theorem (1982)",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 244,
+        "code": "(T : H \u2192L[\u2102] H) (hT : sorry) : -- T is the integral operator with kernel K",
+        "context": "axiom birman_solomyak_1982_theorem_4_1 \n    {H : Type*} [NormedAddCommGroup H] [InnerProductSpace \u2102 H] [CompleteSpace H]\n    (K : \u211d \u2192 \u211d \u2192 \u2102) (hK : BirmanSolomyak1982 K)\n    (T : H \u2192L[\u2102] H) (hT : sorry) : -- T is the integral operator with kernel K\n    WeakTraceClass T\n\n/-!",
+        "primary_category": "spectral",
+        "all_categories": {
+          "spectral": 0.65
+        },
+        "complexity": 4,
+        "similar_solutions": []
+      },
+      {
+        "line": 270,
+        "code": "have h_kernel : sorry := sorry",
+        "context": "  have h_BS := birman_solomyak_hypotheses_verified z hz\n  \n  -- Step 2: The resolvent difference has kernel K_z\n  have h_kernel : sorry := sorry\n  \n  -- Step 3: Apply Birman-Solomyak theorem\n  exact birman_solomyak_1982_theorem_4_1 (K_z z) h_BS _ h_kernel",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 290,
+        "code": "sorry := by",
+        "context": "    {H : Type*} [NormedAddCommGroup H] [InnerProductSpace \u2102 H] [CompleteSpace H]\n    (f : \u211d \u2192 \u211d) (hf : ContDiff \u211d \u22a4 f) (h_supp : HasCompactSupport f)\n    (z : \u2102) (hz : z.re > 0) :\n    sorry := by\n  -- This is enabled by K_z_in_S_1_infinity\n  have h_weak_trace := K_z_in_S_1_infinity z hz\n  sorry",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 293,
+        "code": "sorry",
+        "context": "    sorry := by\n  -- This is enabled by K_z_in_S_1_infinity\n  have h_weak_trace := K_z_in_S_1_infinity z hz\n  sorry\n\n/-!\n## Summary and Status",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
         },
         "complexity": 5,
         "similar_solutions": []
@@ -16790,6 +17392,251 @@
         "similar_solutions": []
       }
     ],
+    "formalization/lean/adelic/adelic_decomposition.lean": [
+      {
+        "line": 85,
+        "code": "def \u03c6_\u221e\u2070 : H_\u221e_space := sorry",
+        "context": "\n/-- Vector de estabilizaci\u00f3n arquimediano: funci\u00f3n gaussiana normalizada\n    \u03c6_\u221e\u2070(x) = \u03c0^(-1/4) exp(-x\u00b2/2) -/\ndef \u03c6_\u221e\u2070 : H_\u221e_space := sorry\n\n/-- Vector de estabilizaci\u00f3n p-\u00e1dico: funci\u00f3n indicadora de \u2124_p\n    \u03c6_p\u2070 = \ud835\udfd9_{\u2124_p}",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 90,
+        "code": "def \u03c6_p\u2070 (p : Prime) : H_p_space p := sorry",
+        "context": "/-- Vector de estabilizaci\u00f3n p-\u00e1dico: funci\u00f3n indicadora de \u2124_p\n    \u03c6_p\u2070 = \ud835\udfd9_{\u2124_p}\n    Nota: Requiere construcci\u00f3n formal de \u2124_p -/\ndef \u03c6_p\u2070 (p : Prime) : H_p_space p := sorry\n\nnamespace AdelicDecomposition\n",
+        "primary_category": "adelic",
+        "all_categories": {
+          "adelic": 0.6
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 167,
+        "code": "sorry -- Suma infinita de tensor_operator v sobre todos los lugares v",
+        "context": "/-- Operador global H_\u03a8 como suma de operadores locales\n    H_\u03a8 = H_\u221e \u2297 I \u2297 I ... + I \u2297 H_2 \u2297 I ... + I \u2297 I \u2297 H_3 \u2297 ... -/\ndef H_\u03a8 : AdelicSpace \u2192\u2097[\u2102] AdelicSpace := \n  sorry -- Suma infinita de tensor_operator v sobre todos los lugares v\n\n/-- El operador global es autoadjunto -/\naxiom H_\u03a8_self_adjoint : \u2200 (\u03c6 \u03c8 : AdelicSpace),",
+        "primary_category": "adelic",
+        "all_categories": {
+          "qcal": 1.5,
+          "adelic": 2.4,
+          "spectral": 1.3
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 217,
+        "code": "sorry -- Suma infinita de resolventes locales tensorializados",
+        "context": "    Annals of Mathematics, 70(3), 572-615. -/\naxiom nelson_theorem : \u2200 (z : \u2102) (hz : z \u2209 spectrum H_\u03a8),\n  resolvent H_\u03a8 z hz = \n  sorry -- Suma infinita de resolventes locales tensorializados\n\n-- ============================================================\n-- PARTE 7: CLASE TRAZA Y TRAZA REGULARIZADA",
+        "primary_category": "qcal",
+        "all_categories": {
+          "qcal": 1.5,
+          "adelic": 0.6,
+          "spectral": 0.65
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      },
+      {
+        "line": 225,
+        "code": "summable_singular_values : sorry",
+        "context": "\n/-- Un operador es de clase traza si la suma de sus valores singulares converge -/\nclass TraceClass (A : AdelicSpace \u2192\u2097[\u2102] AdelicSpace) : Prop where\n  summable_singular_values : sorry\n\n/-- Traza de un operador de clase traza -/\naxiom trace {A : AdelicSpace \u2192\u2097[\u2102] AdelicSpace} [TraceClass A] : \u2102",
+        "primary_category": "adelic",
+        "all_categories": {
+          "adelic": 0.6
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 269,
+        "code": "sorry",
+        "context": "    Esto resuelve el problema de Tr[I] = \u221e -/\ntheorem trace_reg_identity : \n  Tr_reg[LinearMap.id (R := \u2102) (M := AdelicSpace)] = 0 := by\n  sorry\n\n-- ============================================================\n-- PARTE 8: PROPIEDADES DE LA TRAZA EN PRODUCTO TENSORIAL",
+        "primary_category": "adelic",
+        "all_categories": {
+          "adelic": 0.6
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 284,
+        "code": "sorry -- Tr[A \u2297 B] = Tr[A] \u00b7 Tr[B]",
+        "context": "  \u2200 {A : H_\u221e_space \u2192\u2097[\u2102] H_\u221e_space} \n    {B : H_p_space \u27e82, Nat.prime_two\u27e9 \u2192\u2097[\u2102] H_p_space \u27e82, Nat.prime_two\u27e9}\n    [TraceClass A] [TraceClass B],\n  sorry -- Tr[A \u2297 B] = Tr[A] \u00b7 Tr[B]\n\n/-- Traza de suma es la suma de las trazas\n    Para operadores que act\u00faan en diferentes factores del producto tensorial -/",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 290,
+        "code": "sorry -- La traza de la suma es la suma de las trazas",
+        "context": "    Para operadores que act\u00faan en diferentes factores del producto tensorial -/\naxiom trace_sum_disjoint_factors :\n  \u2200 (v w : Place) (hv : v \u2260 w),\n  sorry -- La traza de la suma es la suma de las trazas\n\n/-- Traza regularizada en producto tensorial\n    F\u00f3rmula: Tr_reg[\u2297_v A_v] = \u220f_v (Tr_reg[A_v] + 1) - 1 -/",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 298,
+        "code": "sorry -- F\u00f3rmula del producto",
+        "context": "  \u2200 {places : Finset Place} \n    {A : \u2200 v \u2208 places, H_place v \u2192\u2097[\u2102] H_place v}\n    [\u2200 v (hv : v \u2208 places), TraceClass (A v hv)],\n  sorry -- F\u00f3rmula del producto\n\n-- ============================================================\n-- PARTE 9: TEOREMA PRINCIPAL - DESCOMPOSICI\u00d3N AD\u00c9LICA",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 340,
+        "code": "Tr_reg[resolvent_\u221e z sorry] +",
+        "context": "-/\ntheorem adelic_decomposition (z : \u2102) (hz : z \u2209 spectrum H_\u03a8) :\n    Tr_reg[resolvent H_\u03a8 z hz] = \n    Tr_reg[resolvent_\u221e z sorry] + \n    \u2211' (p : Prime), Tr_reg[resolvent_p p z sorry] := by\n  \n  -- Paso 1: Descomposici\u00f3n del resolvente por teorema de Nelson",
+        "primary_category": "qcal",
+        "all_categories": {
+          "qcal": 1.5,
+          "adelic": 0.6,
+          "spectral": 0.65
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      },
+      {
+        "line": 341,
+        "code": "\u2211' (p : Prime), Tr_reg[resolvent_p p z sorry] := by",
+        "context": "theorem adelic_decomposition (z : \u2102) (hz : z \u2209 spectrum H_\u03a8) :\n    Tr_reg[resolvent H_\u03a8 z hz] = \n    Tr_reg[resolvent_\u221e z sorry] + \n    \u2211' (p : Prime), Tr_reg[resolvent_p p z sorry] := by\n  \n  -- Paso 1: Descomposici\u00f3n del resolvente por teorema de Nelson\n  have h_resolvent_decomp : resolvent H_\u03a8 z hz = sorry := by",
+        "primary_category": "qcal",
+        "all_categories": {
+          "qcal": 1.5,
+          "adelic": 0.6,
+          "spectral": 0.65
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      },
+      {
+        "line": 344,
+        "code": "have h_resolvent_decomp : resolvent H_\u03a8 z hz = sorry := by",
+        "context": "    \u2211' (p : Prime), Tr_reg[resolvent_p p z sorry] := by\n  \n  -- Paso 1: Descomposici\u00f3n del resolvente por teorema de Nelson\n  have h_resolvent_decomp : resolvent H_\u03a8 z hz = sorry := by\n    apply nelson_theorem\n  \n  -- Paso 2: Aplicar traza regularizada",
+        "primary_category": "qcal",
+        "all_categories": {
+          "qcal": 1.5
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      },
+      {
+        "line": 349,
+        "code": "= Tr_reg[sorry] := by rw [h_resolvent_decomp]",
+        "context": "  \n  -- Paso 2: Aplicar traza regularizada\n  calc Tr_reg[resolvent H_\u03a8 z hz]\n      = Tr_reg[sorry] := by rw [h_resolvent_decomp]\n    _ = sorry := by sorry -- Aplicar propiedades de traza en producto tensorial\n    _ = Tr_reg[resolvent_\u221e z sorry] + \u2211' (p : Prime), Tr_reg[resolvent_p p z sorry] \n      := by sorry",
+        "primary_category": "qcal",
+        "all_categories": {
+          "qcal": 1.5
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      },
+      {
+        "line": 350,
+        "code": "_ = sorry := by sorry -- Aplicar propiedades de traza en producto tensorial",
+        "context": "  -- Paso 2: Aplicar traza regularizada\n  calc Tr_reg[resolvent H_\u03a8 z hz]\n      = Tr_reg[sorry] := by rw [h_resolvent_decomp]\n    _ = sorry := by sorry -- Aplicar propiedades de traza en producto tensorial\n    _ = Tr_reg[resolvent_\u221e z sorry] + \u2211' (p : Prime), Tr_reg[resolvent_p p z sorry] \n      := by sorry\n",
+        "primary_category": "qcal",
+        "all_categories": {
+          "qcal": 1.5
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      },
+      {
+        "line": 351,
+        "code": "_ = Tr_reg[resolvent_\u221e z sorry] + \u2211' (p : Prime), Tr_reg[resolvent_p p z sorry]",
+        "context": "  calc Tr_reg[resolvent H_\u03a8 z hz]\n      = Tr_reg[sorry] := by rw [h_resolvent_decomp]\n    _ = sorry := by sorry -- Aplicar propiedades de traza en producto tensorial\n    _ = Tr_reg[resolvent_\u221e z sorry] + \u2211' (p : Prime), Tr_reg[resolvent_p p z sorry] \n      := by sorry\n\n-- ============================================================",
+        "primary_category": "qcal",
+        "all_categories": {
+          "qcal": 1.5
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      },
+      {
+        "line": 352,
+        "code": ":= by sorry",
+        "context": "      = Tr_reg[sorry] := by rw [h_resolvent_decomp]\n    _ = sorry := by sorry -- Aplicar propiedades de traza en producto tensorial\n    _ = Tr_reg[resolvent_\u221e z sorry] + \u2211' (p : Prime), Tr_reg[resolvent_p p z sorry] \n      := by sorry\n\n-- ============================================================\n-- PARTE 10: CONSECUENCIAS Y COROLARIOS",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 365,
+        "code": "(\u2203 c_\u221e, Tr_reg[resolvent_\u221e z sorry] = c_\u221e) \u2227",
+        "context": "\n/-- Cada componente local contribuye de manera finita -/\ntheorem local_contributions_finite (z : \u2102) :\n    (\u2203 c_\u221e, Tr_reg[resolvent_\u221e z sorry] = c_\u221e) \u2227\n    (\u2200 p, \u2203 c_p, Tr_reg[resolvent_p p z sorry] = c_p) := by\n  sorry\n",
+        "primary_category": "adelic",
+        "all_categories": {
+          "adelic": 0.6
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 366,
+        "code": "(\u2200 p, \u2203 c_p, Tr_reg[resolvent_p p z sorry] = c_p) := by",
+        "context": "/-- Cada componente local contribuye de manera finita -/\ntheorem local_contributions_finite (z : \u2102) :\n    (\u2203 c_\u221e, Tr_reg[resolvent_\u221e z sorry] = c_\u221e) \u2227\n    (\u2200 p, \u2203 c_p, Tr_reg[resolvent_p p z sorry] = c_p) := by\n  sorry\n\n/-- La serie p-\u00e1dica converge absolutamente -/",
+        "primary_category": "adelic",
+        "all_categories": {
+          "adelic": 0.6
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 367,
+        "code": "sorry",
+        "context": "theorem local_contributions_finite (z : \u2102) :\n    (\u2203 c_\u221e, Tr_reg[resolvent_\u221e z sorry] = c_\u221e) \u2227\n    (\u2200 p, \u2203 c_p, Tr_reg[resolvent_p p z sorry] = c_p) := by\n  sorry\n\n/-- La serie p-\u00e1dica converge absolutamente -/\ntheorem padic_series_converges (z : \u2102) (hz : z \u2209 spectrum H_\u03a8) :",
+        "primary_category": "qcal",
+        "all_categories": {
+          "qcal": 1.5,
+          "adelic": 0.6,
+          "spectral": 0.65
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      },
+      {
+        "line": 371,
+        "code": "Summable (fun p : Prime => Complex.abs (Tr_reg[resolvent_p p z sorry])) := by",
+        "context": "\n/-- La serie p-\u00e1dica converge absolutamente -/\ntheorem padic_series_converges (z : \u2102) (hz : z \u2209 spectrum H_\u03a8) :\n    Summable (fun p : Prime => Complex.abs (Tr_reg[resolvent_p p z sorry])) := by\n  sorry\n\n/-- Mensaje de verificaci\u00f3n QCAL \u221e\u00b3 -/",
+        "primary_category": "qcal",
+        "all_categories": {
+          "qcal": 2.25,
+          "spectral": 0.65
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      },
+      {
+        "line": 372,
+        "code": "sorry",
+        "context": "/-- La serie p-\u00e1dica converge absolutamente -/\ntheorem padic_series_converges (z : \u2102) (hz : z \u2209 spectrum H_\u03a8) :\n    Summable (fun p : Prime => Complex.abs (Tr_reg[resolvent_p p z sorry])) := by\n  sorry\n\n/-- Mensaje de verificaci\u00f3n QCAL \u221e\u00b3 -/\ndef mensaje_gap2 : String :=",
+        "primary_category": "qcal",
+        "all_categories": {
+          "qcal": 2.25,
+          "spectral": 0.65
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      }
+    ],
     "formalization/lean/HilbertPolyaProof/KernelExplicit.lean": [
       {
         "line": 36,
@@ -17029,6 +17876,287 @@
           "spectral": 2.6
         },
         "complexity": 4,
+        "similar_solutions": []
+      }
+    ],
+    "formalization/lean/sabio/selberg_weil.lean": [
+      {
+        "line": 55,
+        "code": "def vonMangoldt : ArithmeticFunction \u211d := sorry",
+        "context": "    \n    This is the fundamental weight function in analytic number theory.\n-/\ndef vonMangoldt : ArithmeticFunction \u211d := sorry\n\n/-!\n# Prime Sum with Logarithmic Weight",
+        "primary_category": "analytic",
+        "all_categories": {
+          "analytic": 0.6
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 92,
+        "code": "smooth : sorry  -- Infinitely differentiable",
+        "context": "-/\nstructure SchwartzsFunction where\n  \u03c6 : \u211d \u2192 \u2102\n  smooth : sorry  -- Infinitely differentiable\n  rapid_decay : sorry  -- \u03c6(x) and all derivatives decay faster than any polynomial\n\n/-- Fourier transform of test function -/",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 93,
+        "code": "rapid_decay : sorry  -- \u03c6(x) and all derivatives decay faster than any polynomial",
+        "context": "structure SchwartzsFunction where\n  \u03c6 : \u211d \u2192 \u2102\n  smooth : sorry  -- Infinitely differentiable\n  rapid_decay : sorry  -- \u03c6(x) and all derivatives decay faster than any polynomial\n\n/-- Fourier transform of test function -/\ndef fourier_transform (\u03c6 : SchwartzsFunction) (t : \u211d) : \u2102 :=",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 196,
+        "code": "sorry",
+        "context": "  -- 2. Poles of \u03b6'/\u03b6 are exactly at the zeros of \u03b6\n  -- 3. Prime pole at s = 1 contributes the log|t| term\n  -- 4. Functional equation gives symmetry\n  sorry\n\n/-!\n# Spectral-Arithmetic Bijection",
+        "primary_category": "correspondence",
+        "all_categories": {
+          "correspondence": 0.7,
+          "analytic": 0.6
+        },
+        "complexity": 4,
+        "similar_solutions": []
+      },
+      {
+        "line": 238,
+        "code": "sorry",
+        "context": "  intro eigenvalues h_lower h_selberg\n  -- Proof: The Fourier uniqueness theorem guarantees that the\n  -- spectral data and arithmetic data determine each other\n  sorry\n\n/-!\n# QCAL Integration",
+        "primary_category": "qcal",
+        "all_categories": {
+          "qcal": 0.75,
+          "spectral": 0.65
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      },
+      {
+        "line": 266,
+        "code": "sorry",
+        "context": "        \u222b t, (fourier_transform \u03c6 t) *\n          ((log (abs t) - 1 : \u2102) + prime_weighted_sum t) := by\n  -- Follows from selberg_weil_formula by dividing by C\n  sorry\n\nend SpectralQCAL.SelbergWeil\n",
+        "primary_category": "qcal",
+        "all_categories": {
+          "qcal": 0.75
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      },
+      {
+        "line": 303,
+        "code": "**Status**: \u26a0\ufe0f 4 sorrys (distribution theory, Fourier analysis, uniqueness)",
+        "context": "\n---\n\n**Status**: \u26a0\ufe0f 4 sorrys (distribution theory, Fourier analysis, uniqueness)\n**Main Results**: Complete explicit formula connecting spectra and primes\n\nAuthor: Jos\u00e9 Manuel Mota Burruezo \u03a8 \u221e\u00b3",
+        "primary_category": "qcal",
+        "all_categories": {
+          "qcal": 0.75
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      }
+    ],
+    "formalization/lean/sabio/connes_geometry.lean": [
+      {
+        "line": 206,
+        "code": "sorry  -- Full proof requires functional calculus",
+        "context": "  -- 5. Therefore (\u03c3\u2099 - 1/2)\u00b2 = 0\n  -- 6. Hence \u03c3\u2099 = 1/2\n  \n  sorry  -- Full proof requires functional calculus\n\n/-!\n# Spectral Geometry",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 237,
+        "code": "sorry",
+        "context": "  -- 1. Euler product for \u03b6(s)\n  -- 2. Selberg-Weil formula relating primes to eigenvalues\n  -- 3. Product formula for entire functions (Hadamard)\n  sorry\n\n/-!\n# QCAL Integration",
+        "primary_category": "qcal",
+        "all_categories": {
+          "qcal": 0.75,
+          "spectral": 0.65,
+          "analytic": 0.6
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      },
+      {
+        "line": 276,
+        "code": "sorry",
+        "context": "  -- \u03bb = (\u03c3 - 1/2)\u00b2 + \u03b3\u00b2\n  -- Under RH: \u03c3 = 1/2, so \u03bb = 1/4 + \u03b3\u00b2\n  -- Hence \u03b3 = \u221a(\u03bb - 1/4)\n  sorry\n\nend SpectralQCAL.ConnesGeometry\n",
+        "primary_category": "qcal",
+        "all_categories": {
+          "qcal": 0.75
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      },
+      {
+        "line": 312,
+        "code": "**Status**: \u26a0\ufe0f 3 sorrys (functional calculus, product formula, coherence)",
+        "context": "\n---\n\n**Status**: \u26a0\ufe0f 3 sorrys (functional calculus, product formula, coherence)\n**Main Results**: Complete geometric formulation of RH\n\nAuthor: Jos\u00e9 Manuel Mota Burruezo \u03a8 \u221e\u00b3",
+        "primary_category": "qcal",
+        "all_categories": {
+          "qcal": 1.5
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      }
+    ],
+    "formalization/lean/sabio/krein_formula.lean": [
+      {
+        "line": 192,
+        "code": "sorry",
+        "context": "  -- 1. Asymptotics of \u039e'/\u039e from the product formula\n  -- 2. Spectral asymptotics from Weyl law\n  -- 3. Matching via Abel summation\n  sorry\n\n/-!\n# Application: Resolvent Trace",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 214,
+        "code": "sorry",
+        "context": "      \u222b \u03bb : \u211d, spectral_shift_function \u03bb / (\u03bb - z)^2 := by\n  -- Apply krein_trace_formula with f(\u03bb) = (\u03bb - z)\u207b\u00b9\n  -- Then f'(\u03bb) = -(\u03bb - z)\u207b\u00b2\n  sorry\n\n/-!\n# QCAL Integration",
+        "primary_category": "qcal",
+        "all_categories": {
+          "correspondence": 0.7,
+          "qcal": 0.75
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      },
+      {
+        "line": 255,
+        "code": "sorry",
+        "context": "      \u222b \u03bb, (deriv \u03c6.f \u03bb) * qcal_spectral_shift \u03bb := by\n  unfold qcal_spectral_shift\n  -- Follows from krein_trace_formula by linearity\n  sorry\n\nend SpectralQCAL.KreinFormula\n",
+        "primary_category": "qcal",
+        "all_categories": {
+          "correspondence": 0.7,
+          "qcal": 0.75
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      },
+      {
+        "line": 289,
+        "code": "**Status**: \u26a0\ufe0f 3 sorrys (functional analysis, spectral asymptotics, normalization)",
+        "context": "\n---\n\n**Status**: \u26a0\ufe0f 3 sorrys (functional analysis, spectral asymptotics, normalization)\n**Main Results**: Complete Krein trace formula with spectral shift\n\nAuthor: Jos\u00e9 Manuel Mota Burruezo \u03a8 \u221e\u00b3",
+        "primary_category": "qcal",
+        "all_categories": {
+          "qcal": 0.75
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      }
+    ],
+    "formalization/lean/sabio/riemann_axiom.lean": [
+      {
+        "line": 111,
+        "code": "sorry  -- Technical: matching s with indexed zeros",
+        "context": "  \n  -- Find which zero index n corresponds to our zero s\n  -- (In full formalization, would need to prove s \u2208 {riemann_zeros n})\n  sorry  -- Technical: matching s with indexed zeros\n  \n  -- Then h_connes n gives (riemann_zeros n).re = 1/2\n  -- Since s = riemann_zeros n, we have s.re = 1/2",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 140,
+        "code": "sorry",
+        "context": "        s.re = 1/2) := by\n  intro q \u03c7 s h_zero h_strip\n  -- Proof: Similar spectral method with modified operator\n  sorry\n\nwhere\n  /-- Dirichlet L-function -/",
+        "primary_category": "spectral",
+        "all_categories": {
+          "spectral": 0.65
+        },
+        "complexity": 4,
+        "similar_solutions": []
+      },
+      {
+        "line": 166,
+        "code": "sorry",
+        "context": "      |prime_counting x - log_integral x| \u2264 (Real.sqrt x * log x) / (8 * Real.pi)) := by\n  intro h_rh x h_x\n  -- Proof uses explicit formula with RH error bounds\n  sorry\n\nwhere\n  /-- Prime counting function \u03c0(x) -/",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 188,
+        "code": "sorry",
+        "context": "      Complex.abs (RiemannZeta (1/2 + I * t)) \u2264 C * (abs t)^\u03b5) := by\n  intro h_rh \u03b5 h_\u03b5\n  -- Proof uses Phragm\u00e9n-Lindel\u00f6f principle with RH\n  sorry\n\n/-- **Mertens Conjecture Bound**\n    ",
+        "primary_category": "analytic",
+        "all_categories": {
+          "analytic": 0.6
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 205,
+        "code": "sorry",
+        "context": "        Real.sqrt x * Real.exp (C * Real.sqrt (log x) * log (log x))) := by\n  intro h_rh\n  -- Proof uses explicit formula for M(x) with RH\n  sorry\n\nwhere\n  /-- Mertens function M(x) = \u2211_{n\u2264x} \u03bc(n) -/",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 256,
+        "code": "sorry  -- Fill in details",
+        "context": "    intro h_rh\n    -- Construct eigenvalues from zeros\n    use fun n => eigenvalue_from_zero (riemann_zeros n)\n    sorry  -- Fill in details\n  \n  \u00b7 -- Spectral interpretation \u27f9 RH\n    intro \u27e8eigenvalues, h_lower, h_corr, h_sqrt\u27e9",
+        "primary_category": "spectral",
+        "all_categories": {
+          "spectral": 0.65
+        },
+        "complexity": 4,
+        "similar_solutions": []
+      },
+      {
+        "line": 262,
+        "code": "sorry  -- Apply connes_implies_rh",
+        "context": "    intro \u27e8eigenvalues, h_lower, h_corr, h_sqrt\u27e9\n    -- Apply Connes' theorem\n    intro s h_zero h_strip\n    sorry  -- Apply connes_implies_rh\n\nend SpectralQCAL.RiemannHypothesis\n",
+        "primary_category": "qcal",
+        "all_categories": {
+          "qcal": 0.75,
+          "spectral": 0.65
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      },
+      {
+        "line": 303,
+        "code": "**Status**: \u26a0\ufe0f 5 sorrys (technical matching, GRH, consequences)",
+        "context": "\n---\n\n**Status**: \u26a0\ufe0f 5 sorrys (technical matching, GRH, consequences)\n**Main Result**: \u2705 RIEMANN HYPOTHESIS (as accepted axiom/meta-goal)\n\n\ud83c\udfc6 **Achievement Unlocked**: Sabio 6 Complete - La Meta Final",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      }
+    ],
+    "formalization/lean/sabio/bs_trace.lean": [
+      {
+        "line": 89,
+        "code": "sorry  -- Formal definition requires functional analysis framework",
+        "context": "    This measures the \"trace class difference\" induced by the potential.\n-/\ndef K_z (z : \u2102) : H_\u03a8 \u2192 H_\u03a8 :=\n  sorry  -- Formal definition requires functional analysis framework\n\n/-!\n# Birman-Solomyak Theorem",
+        "primary_category": "qcal",
+        "all_categories": {
+          "qcal": 1.5
+        },
+        "complexity": 3,
         "similar_solutions": []
       }
     ],
@@ -27876,6 +29004,6 @@
   },
   "summary": {
     "most_common_category": "qcal",
-    "avg_complexity": 3.668273444347064
+    "avg_complexity": 3.680117696511139
   }
 }
