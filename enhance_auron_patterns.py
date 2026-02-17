@@ -10,6 +10,9 @@ from datetime import datetime
 from pathlib import Path
 
 class PatternEnhancer:
+    # Maximum confidence threshold to prevent overconfidence in synthetic patterns
+    MAX_CONFIDENCE = 0.95
+    
     def __init__(self):
         self.repo_root = Path(__file__).parent
         self.learning_file = self.repo_root / '.auron_learning.json'
@@ -75,7 +78,7 @@ class PatternEnhancer:
                         'nutrient_type': nutrient,
                         'timestamp': datetime.now().isoformat(),
                         'file': f'{file_type}_module.lean',
-                        'confidence': min(base_conf, 0.95),
+                        'confidence': min(base_conf, self.MAX_CONFIDENCE),
                         'context': {
                             'file_type': file_type,
                             'line': 0

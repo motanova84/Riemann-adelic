@@ -87,7 +87,8 @@ class DigestiveDigestion:
                 best_strategy = new
         
         # Simular éxito/fracaso con umbral reducido para mayor tasa de éxito
-        success = best_score > 0.45 and random.random() < (best_score * 1.1)
+        # Cap probability at 1.0 to maintain valid probability semantics
+        success = best_score > 0.45 and random.random() < min(best_score * 1.1, 1.0)
         
         return success, best_strategy, best_score
     
