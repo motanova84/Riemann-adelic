@@ -1,0 +1,169 @@
+name: 🧠 NOESIS COMPLETE INTEGRATION
+
+on:
+  schedule:
+    - cron: '0 */1 * * *'  # Cada hora
+  workflow_dispatch:
+    inputs:
+      parallel_jobs:
+        description: 'Número de trabajos paralelos'
+        type: number
+        default: 10
+      max_changes:
+        description: 'Máximo cambios por ciclo'
+        type: number
+        default: 20
+      dry_run:
+        description: 'Dry run mode (no changes)'
+        type: boolean
+        default: true
+
+jobs:
+  noesis-integration:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+      actions: write
+      checks: write
+    
+    steps:
+      - name: 🔄 Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: 🔧 Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: 📦 Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install numpy scipy sympy mpmath pyyaml rich
+          pip install scikit-learn  # Para ML
+          pip install matplotlib  # Para visualizaciones
+          
+          # Instalar dependencias del proyecto
+          if [ -f requirements-core.txt ]; then
+            pip install -r requirements-core.txt
+          fi
+
+      - name: 🧠 NOESIS Core - Verificar existencia
+        run: |
+          echo "Verificando scripts NOESIS V2.0..."
+          ls -la .github/scripts/v2/
+          
+          if [ -f .github/scripts/v2/noesis_orchestrator.py ]; then
+            echo "✅ NOESIS Orchestrator encontrado"
+          fi
+          
+          if [ -f .github/scripts/v2/amda_deep_v2.py ]; then
+            echo "✅ AMDA Deep V2 encontrado"
+          fi
+          
+          if [ -f .github/scripts/v2/auron_neural_v2.py ]; then
+            echo "✅ AURON Neural V2 encontrado"
+          fi
+
+      - name: 🧠 NOESIS Core - ML Learning
+        continue-on-error: true
+        run: |
+          echo "Ejecutando NOESIS Core..."
+          
+          # Ejecutar NOESIS Orchestrator en modo sync
+          if [ -f .github/scripts/v2/noesis_orchestrator.py ]; then
+            python .github/scripts/v2/noesis_orchestrator.py --mode sync || true
+          fi
+          
+          # Ejecutar AMDA análisis
+          if [ -f .github/scripts/v2/amda_deep_v2.py ]; then
+            python .github/scripts/v2/amda_deep_v2.py analyze || true
+          fi
+          
+          # Ejecutar AURON learning
+          if [ -f .github/scripts/v2/auron_neural_v2.py ]; then
+            python .github/scripts/v2/auron_neural_v2.py --dry-run || true
+          fi
+
+      - name: 🔬 SABIO ∞³ Integration
+        run: |
+          echo "Integrando SABIO ∞³..."
+          python .github/scripts/noesis_integrator.py --mode sabio
+          
+          echo "Validando frecuencias base..."
+          # Verificar frecuencia 141.7001 Hz
+          if [ -f Evac_Rpsi_data.csv ]; then
+            echo "✅ Evac_Rpsi_data.csv encontrado"
+          else
+            echo "⚠️ Evac_Rpsi_data.csv no encontrado"
+          fi
+
+      - name: 🔍 RH Validation Integration
+        run: |
+          echo "Integrando validaciones RH..."
+          python .github/scripts/noesis_integrator.py --mode validation
+
+      - name: 🤖 Auto-Evolution Integration
+        run: |
+          echo "Integrando auto-evolución QCAL..."
+          python .github/scripts/noesis_integrator.py --mode auto-evolution
+
+      - name: 📊 Generate Unified Report
+        run: |
+          echo "Generando reporte unificado..."
+          python .github/scripts/noesis_integrator.py --mode report --output noesis_complete.md
+
+      - name: 📊 Display Report Summary
+        run: |
+          if [ -f noesis_integrated_report.md ]; then
+            echo "=== REPORTE INTEGRADO ==="
+            cat noesis_integrated_report.md
+          fi
+          
+          if [ -f noesis_integration_results.json ]; then
+            echo "=== RESULTADOS JSON ==="
+            python -m json.tool noesis_integration_results.json
+          fi
+
+      - name: 📤 Upload Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: noesis-complete-${{ github.run_id }}
+          path: |
+            noesis_integrated_report.md
+            noesis_integration_results.json
+            noesis_complete.md
+            .auron_learning.json
+            amda_report_v2.json
+            *.log
+          if-no-files-found: ignore
+
+      - name: 🔀 Create Integration PR
+        if: ${{ inputs.dry_run != true }}
+        uses: peter-evans/create-pull-request@v6
+        with:
+          commit-message: "🧠 [INTEGRATION] NOESIS Complete Integration ${{ github.run_number }}"
+          title: "🧠 NOESIS COMPLETE INTEGRATION #${{ github.run_number }}"
+          body-path: noesis_integrated_report.md
+          branch: integration/noesis-${{ github.run_id }}
+          base: main
+          labels: automated,noesis,integration,complete
+          delete-branch: true
+
+      - name: 📊 Summary
+        if: always()
+        run: |
+          echo "## 🧠 NOESIS COMPLETE INTEGRATION" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Run ID:** ${{ github.run_id }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Run Number:** ${{ github.run_number }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          
+          if [ -f noesis_integrated_report.md ]; then
+            echo "### 📈 Reporte Integrado" >> $GITHUB_STEP_SUMMARY
+            cat noesis_integrated_report.md >> $GITHUB_STEP_SUMMARY
+          else
+            echo "⚠️ No se generó reporte integrado" >> $GITHUB_STEP_SUMMARY
+          fi

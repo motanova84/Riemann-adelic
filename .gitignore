@@ -48,6 +48,12 @@ amda_stats.json
 auron_changes.json
 metrics.md
 noesis_auto_seal.log
+
+# NOESIS Integration generated files
+noesis_integrated_report.md
+noesis_integration_results.json
+noesis_complete.md
+noesis_sync_state.json
 VICTORY.md
 # NOESIS CEREBRAL V2.0 generated files
 amda_report_v2.json
