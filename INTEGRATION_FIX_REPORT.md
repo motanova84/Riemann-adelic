@@ -27,7 +27,7 @@
 ## 📈 Próximos Pasos
 
 1. **Revisar dependencias**: `pip install -r requirements.txt`
-2. **Ejecutar pruebas manuales**: `python validate_v5_coronacion.py --quick` (si existe flag --quick)
+2. **Ejecutar pruebas manuales**: `python validate_v5_coronacion.py`
 3. **Verificar SABIO**: `python sabio_validator.py`
 4. **Monitorear próxima ejecución** en 2 horas
 
