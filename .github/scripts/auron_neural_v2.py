@@ -47,6 +47,16 @@ class AuronNeuralV2:
             ('sorry', 'solve_by_elim'),
         ]
     
+    @staticmethod
+    def replace_sorry_safe(line, replacement):
+        """
+        Safely replace 'sorry' as a keyword, not as part of an identifier.
+        Uses word boundary regex to ensure 'sorry' is a complete token.
+        """
+        # Match 'sorry' as a complete word (not part of identifiers like 'sorry_proof')
+        pattern = r'\bsorry\b'
+        return re.sub(pattern, replacement, line, count=1)
+    
     def log(self, message, level="INFO"):
         """Logging con timestamp"""
         timestamp = datetime.now().isoformat()
@@ -185,7 +195,7 @@ class AuronNeuralV2:
                 
                 # Reemplazar la ocurrencia específica
                 lines = content.split('\n')
-                lines[line-1] = lines[line-1].replace('sorry', learned_pattern, 1)
+                lines[line-1] = self.replace_sorry_safe(lines[line-1], learned_pattern)
                 new_content = '\n'.join(lines)
                 
                 with open(filepath, 'w') as f:
@@ -229,7 +239,7 @@ class AuronNeuralV2:
                         content = f.read()
                     
                     lines = content.split('\n')
-                    lines[line-1] = lines[line-1].replace('sorry', solution["proof"], 1)
+                    lines[line-1] = self.replace_sorry_safe(lines[line-1], solution["proof"])
                     new_content = '\n'.join(lines)
                     
                     with open(filepath, 'w') as f:
@@ -277,7 +287,7 @@ class AuronNeuralV2:
                     content = f.read()
                 
                 lines = content.split('\n')
-                lines[line-1] = lines[line-1].replace('sorry', new, 1)
+                lines[line-1] = self.replace_sorry_safe(lines[line-1], new)
                 new_content = '\n'.join(lines)
                 
                 with open(filepath, 'w') as f:

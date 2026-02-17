@@ -195,6 +195,9 @@ import pickle
 import re
 
 class NoesisCerebralV2:
+    # Git operation timeout in seconds
+    GIT_TIMEOUT = 120
+    
     def __init__(self):
         self.repo_root = Path(__file__).parent.parent.parent
         self.knowledge_base = Path('/tmp/noesis_knowledge_v2')
@@ -235,7 +238,7 @@ class NoesisCerebralV2:
                     cwd=repo_path,
                     capture_output=True,
                     text=True,
-                    timeout=120  # Increased from 60 to match clone timeout
+                    timeout=self.GIT_TIMEOUT
                 )
             else:
                 self.log(f"   📥 Clonando repositorio...")
@@ -243,7 +246,7 @@ class NoesisCerebralV2:
                     ["git", "clone", f"https://github.com/{repo_url}.git", str(repo_path)],
                     capture_output=True,
                     text=True,
-                    timeout=120
+                    timeout=self.GIT_TIMEOUT
                 )
             
             if result.returncode == 0:

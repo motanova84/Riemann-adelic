@@ -110,7 +110,7 @@ print(f\"Categorías: {list(report.get('category_distribution', {}).keys())}\")
           git config --local user.name "NOESIS CEREBRAL V2.0"
           
           # Verificar si hay cambios en archivos .lean
-          if git diff --quiet -- 'formalization/lean/*.lean' 2>/dev/null; then
+          if git diff --quiet -- 'formalization/lean/' 2>/dev/null; then
             echo "ℹ️ No hay cambios en archivos Lean"
           else
             # Leer mensaje de commit generado por AURON (primer archivo encontrado)

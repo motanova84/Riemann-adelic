@@ -61,12 +61,14 @@
 - Generación de reportes detallados
 
 **Categorías de clasificación:**
-1. **trivial** (13.9%): `rfl`, `simp`, `norm_num`, etc.
-2. **correspondence** (13.0%): bijecciones espectrales
-3. **qcal** (51.3%): QCAL coherence, f₀, Ψ, C
-4. **adelic** (18.3%): estructuras adélicas
-5. **spectral** (55.4%): operadores, Fredholm
-6. **analytic** (36.0%): zeta, continuación analítica
+1. **trivial** (~8-14%): `rfl`, `simp`, `norm_num`, etc.
+2. **correspondence** (~1-13%): bijecciones espectrales
+3. **qcal** (~35-51%): QCAL coherence, f₀, Ψ, C
+4. **adelic** (~3-18%): estructuras adélicas
+5. **spectral** (~12-55%): operadores, Fredholm
+6. **analytic** (~7-36%): zeta, continuación analítica
+
+*Note: Percentages vary based on repository state and multi-repo sync configuration.*
 
 ### 3. AURON NEURAL V2.0 (Ejecutor con Aprendizaje)
 **Archivo:** `.github/scripts/auron_neural_v2.py`
