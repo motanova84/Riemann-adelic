@@ -151,7 +151,7 @@ The proof uses:
 -/
 theorem weyl_law_precise_closed (H : H_Ψ) 
     [IsSelfAdjoint H_Ψ_operator] [DiscreteSpectrum H_Ψ] :
-    let N := λ E => {λ : spectrum H | λ ≤ E}.encard
+    let N := λ E => (({λ : spectrum H | λ ≤ E}.encard).toNat : ℝ)
     -- Note: Proper asymptotic notation requires Mathlib.Asymptotics.Asymptotics
     -- The O(√E) term should be formalized using IsBigO or similar
     ∃ C > 0, ∀ E > 0, |N E - (Real.sqrt E / π) * Real.log (Real.sqrt E)| ≤ C * Real.sqrt E := by
