@@ -57,6 +57,16 @@ jobs:
         id: noesis
         run: |
           echo "🌐 Sincronizando conocimiento multi-repositorio..."
+          
+          if [ ! -f ".github/scripts/noesis_orchestrator.py" ]; then
+            echo "❌ Error: .github/scripts/noesis_orchestrator.py not found. Ensure this file exists in the repository."
+            exit 1
+          fi
+          
+          if [ ! -f ".github/scripts/multi_repo_config.json" ]; then
+            echo "❌ Error: .github/scripts/multi_repo_config.json not found. Ensure this file exists in the repository."
+            exit 1
+          fi
           python .github/scripts/noesis_orchestrator.py \
             .github/scripts/multi_repo_config.json
           
