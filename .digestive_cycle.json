@@ -74,9 +74,159 @@
       ],
       "end": "2026-02-17T09:26:22.020158",
       "success_rate": 0.14
+    },
+    {
+      "start": "2026-02-17T13:42:47.119699",
+      "phases": [
+        {
+          "phase": "hunger",
+          "status": "started",
+          "timestamp": "2026-02-17T13:42:47.119704",
+          "details": null
+        },
+        {
+          "phase": "hunger",
+          "status": "completed",
+          "timestamp": "2026-02-17T13:42:47.155368",
+          "details": {
+            "hunger_level": 100
+          }
+        },
+        {
+          "phase": "ingestion",
+          "status": "started",
+          "timestamp": "2026-02-17T13:42:47.186939",
+          "details": null
+        },
+        {
+          "phase": "ingestion",
+          "status": "completed",
+          "timestamp": "2026-02-17T13:42:47.201860",
+          "details": {
+            "meal_size": 50
+          }
+        },
+        {
+          "phase": "digestion",
+          "status": "started",
+          "timestamp": "2026-02-17T13:42:47.202172",
+          "details": null
+        },
+        {
+          "phase": "digestion",
+          "status": "completed",
+          "timestamp": "2026-02-17T13:42:47.238040",
+          "details": {
+            "total": 50,
+            "successes": 11,
+            "success_rate": 0.22
+          }
+        },
+        {
+          "phase": "assimilation",
+          "status": "started",
+          "timestamp": "2026-02-17T13:42:47.238395",
+          "details": null
+        },
+        {
+          "phase": "assimilation",
+          "status": "completed",
+          "timestamp": "2026-02-17T13:42:47.240794",
+          "details": null
+        },
+        {
+          "phase": "excretion",
+          "status": "started",
+          "timestamp": "2026-02-17T13:42:47.241249",
+          "details": null
+        },
+        {
+          "phase": "excretion",
+          "status": "completed",
+          "timestamp": "2026-02-17T13:42:47.262546",
+          "details": null
+        }
+      ],
+      "end": "2026-02-17T13:42:47.262870",
+      "success_rate": 0.22
+    },
+    {
+      "start": "2026-02-17T13:42:53.445538",
+      "phases": [
+        {
+          "phase": "hunger",
+          "status": "started",
+          "timestamp": "2026-02-17T13:42:53.445546",
+          "details": null
+        },
+        {
+          "phase": "hunger",
+          "status": "completed",
+          "timestamp": "2026-02-17T13:42:53.479384",
+          "details": {
+            "hunger_level": 100
+          }
+        },
+        {
+          "phase": "ingestion",
+          "status": "started",
+          "timestamp": "2026-02-17T13:42:53.510188",
+          "details": null
+        },
+        {
+          "phase": "ingestion",
+          "status": "completed",
+          "timestamp": "2026-02-17T13:42:53.525444",
+          "details": {
+            "meal_size": 50
+          }
+        },
+        {
+          "phase": "digestion",
+          "status": "started",
+          "timestamp": "2026-02-17T13:42:53.525825",
+          "details": null
+        },
+        {
+          "phase": "digestion",
+          "status": "completed",
+          "timestamp": "2026-02-17T13:42:53.570243",
+          "details": {
+            "total": 50,
+            "successes": 9,
+            "success_rate": 0.18
+          }
+        },
+        {
+          "phase": "assimilation",
+          "status": "started",
+          "timestamp": "2026-02-17T13:42:53.570629",
+          "details": null
+        },
+        {
+          "phase": "assimilation",
+          "status": "completed",
+          "timestamp": "2026-02-17T13:42:53.572561",
+          "details": null
+        },
+        {
+          "phase": "excretion",
+          "status": "started",
+          "timestamp": "2026-02-17T13:42:53.572935",
+          "details": null
+        },
+        {
+          "phase": "excretion",
+          "status": "completed",
+          "timestamp": "2026-02-17T13:42:53.594715",
+          "details": null
+        }
+      ],
+      "end": "2026-02-17T13:42:53.595193",
+      "success_rate": 0.18
     }
   ],
-  "total_cycles": 1,
+  "total_cycles": 3,
   "created": "2026-02-17T09:26:21.883588",
-  "last_meal": "2026-02-17T09:26:22.020165"
+  "last_meal": "2026-02-17T13:42:53.595197"
 }
