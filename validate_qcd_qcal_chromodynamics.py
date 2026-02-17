@@ -10,7 +10,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
 
-from qcd_qcal_chromodynamics import QCDQCALChromodynamics
+from qcd_qcal_chromodynamics import QCDQCALChromodynamics, GOLDILOCKS_LOWER_BOUND, GOLDILOCKS_UPPER_BOUND
 
 
 def test_initialization():
@@ -57,7 +57,8 @@ def test_prime_17_goldilocks_zone():
     analysis = qcd.prime_17_optimality()
     
     R_17 = analysis['resonances'][17]
-    assert 5 < R_17 < 15, "Prime 17 should be in Goldilocks zone (5 < R < 15)"
+    assert GOLDILOCKS_LOWER_BOUND < R_17 < GOLDILOCKS_UPPER_BOUND, \
+        f"Prime 17 should be in Goldilocks zone ({GOLDILOCKS_LOWER_BOUND} < R < {GOLDILOCKS_UPPER_BOUND})"
     print("✅")
 
 

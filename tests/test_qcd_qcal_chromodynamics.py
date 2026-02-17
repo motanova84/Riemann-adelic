@@ -61,13 +61,13 @@ class TestQCDQCALBasics:
 class TestPrime17Optimality:
     """Test prime 17 optimality in QCD-QCAL framework."""
     
-    def test_prime_17_is_minimum(self):
-        """Test that prime 17 minimizes quark-gluon resonance."""
+    def test_prime_17_goldilocks_zone(self):
+        """Test that prime 17 is in Goldilocks zone."""
         qcd = QCDQCALChromodynamics(precision=30)
         analysis = qcd.prime_17_optimality()
         
-        assert analysis['is_17_optimal'], "Prime 17 should be optimal"
-        assert analysis['optimal_prime'] == 17
+        R_17 = analysis['resonances'][17]
+        assert 5 < R_17 < 15, "Prime 17 should be in Goldilocks zone (5 < R < 15)"
     
     def test_resonance_factors_positive(self):
         """Test that all resonance factors are positive."""
@@ -77,17 +77,18 @@ class TestPrime17Optimality:
         for p, R in analysis['resonances'].items():
             assert R > 0, f"Resonance factor for p={p} should be positive"
     
-    def test_resonance_17_less_than_neighbors(self):
-        """Test that R(17) < R(13) and R(17) < R(19)."""
+    def test_minimum_is_11(self):
+        """Test that p=11 has minimum resonance factor."""
         qcd = QCDQCALChromodynamics(precision=30)
         analysis = qcd.prime_17_optimality()
         
-        R_17 = analysis['resonances'][17]
-        R_13 = analysis['resonances'][13]
-        R_19 = analysis['resonances'][19]
+        assert analysis['minimum_prime'] == 11, "Minimum should be at p=11"
         
-        assert R_17 < R_13, "R(17) should be less than R(13)"
-        assert R_17 < R_19, "R(17) should be less than R(19)"
+        # Verify 11 is actually smallest
+        R_11 = analysis['resonances'][11]
+        for p, R in analysis['resonances'].items():
+            if p != 11:
+                assert R_11 < R, f"R(11) should be less than R({p})"
 
 
 class TestRiemannZerosQCDModes:

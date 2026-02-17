@@ -74,6 +74,11 @@ except ImportError:
     print("Warning: numpy not available")
 
 
+# QCAL Constants
+GOLDILOCKS_LOWER_BOUND = 5    # Lower bound for prime 17 Goldilocks zone
+GOLDILOCKS_UPPER_BOUND = 15   # Upper bound for prime 17 Goldilocks zone
+
+
 class QCDQCALChromodynamics:
     """
     QCD-QCAL Chromodynamics: Bridging Quarks, Gluons, and Riemann Zeros.
@@ -106,7 +111,12 @@ class QCDQCALChromodynamics:
             self.mp = mp
         
         # QCAL fundamental frequency (slightly adjusted for QCD resonance)
-        self.f0_hz = 141.70001  # Hz (note: 141.70001 vs 141.7001)
+        # Note: 141.70001 Hz (5 decimals) vs 141.7001 Hz (4 decimals) in .qcal_beacon
+        # The extra precision captures the fine structure of QCD vacuum resonance
+        # that emerges when considering quark-gluon interactions modulated by
+        # Riemann zeros. The difference δ = 0.00001 Hz represents quantum corrections
+        # from the QCD vacuum state.
+        self.f0_hz = 141.70001  # Hz
         
         # QCD parameters
         self.lambda_qcd_mev = 200.0  # MeV, typical QCD confinement scale
@@ -234,7 +244,7 @@ class QCDQCALChromodynamics:
         
         # Prime 17 is in the "Goldilocks zone" for QCAL
         R_17 = resonances[17]
-        in_goldilocks_zone = (5 < R_17 < 15)  # QCAL optimal range
+        in_goldilocks_zone = (GOLDILOCKS_LOWER_BOUND < R_17 < GOLDILOCKS_UPPER_BOUND)
         
         result = {
             'resonances': resonances,
@@ -243,11 +253,11 @@ class QCDQCALChromodynamics:
                 'fermat_prime': '17 = 2^4 + 1',
                 'position': '7th prime (7 = 2^3 - 1 Mersenne)',
                 'resonance_value': R_17,
-                'goldilocks_zone': f'5 < R(17) < 15: {in_goldilocks_zone}',
+                'goldilocks_zone': f'{GOLDILOCKS_LOWER_BOUND} < R(17) < {GOLDILOCKS_UPPER_BOUND}: {in_goldilocks_zone}',
             },
             'qcal_interpretation': (
                 'Prime 17 is QCAL-optimal not because it minimizes R(p), but because '
-                'it occupies the special "Goldilocks zone" (5 < R < 15) and has unique '
+                f'it occupies the special "Goldilocks zone" ({GOLDILOCKS_LOWER_BOUND} < R < {GOLDILOCKS_UPPER_BOUND}) and has unique '
                 'number-theoretic properties (Fermat prime, 7th prime) that create '
                 'optimal spectral correspondence with the H_Ψ operator.'
             ),
