@@ -318,13 +318,13 @@ This connects the spectral shift function to the zeta function
 through the functional equation.
 -/
 theorem digamma_arquimedean_exact (λ : ℝ) (hλ : λ > 0) :
-    (1 / (2 * π)) * (Real.log π - (Real.digamma (1/4 + I * Real.sqrt λ / 2)).re) =
+    (1 / (2 * π)) * (Real.log π - (Complex.digamma (1/4 + I * Real.sqrt λ / 2)).re) =
     ∑' (n : ℕ), (1 / (n + 1/4 + I * Real.sqrt λ / 2) + 
                  1 / (n + 1/4 - I * Real.sqrt λ / 2)) - 
-      Real.log (Real.sqrt λ / 2) - γ - 2 * Real.log 2 := by
+      Real.log (Real.sqrt λ / 2) - Real.eulerMascheroniConstant - 2 * Real.log 2 := by
   -- Digamma reflection formula
-  have h_digamma_def : Real.digamma (1/4 + I * Real.sqrt λ / 2) = 
-      -γ - 1/(1/4 + I * Real.sqrt λ / 2) + 
+  have h_digamma_def : Complex.digamma (1/4 + I * Real.sqrt λ / 2) = 
+      -Real.eulerMascheroniConstant - 1/(1/4 + I * Real.sqrt λ / 2) + 
       ∑' (n : ℕ), (1/(n+1) - 1/(n + 1 + 1/4 + I * Real.sqrt λ / 2)) := by
     sorry -- Standard digamma series
   
