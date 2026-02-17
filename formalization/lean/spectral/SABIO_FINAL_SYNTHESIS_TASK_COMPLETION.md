@@ -21,7 +21,7 @@ Successfully implemented the **SABIO Final Synthesis** module, which represents 
 - 12 axiom declarations
 - 7 constant definitions
 - Complete proof architecture
-- 20 technical sorries (documented)
+- 27 technical sorries (documented)
 
 ### 2. Documentation Suite
 
