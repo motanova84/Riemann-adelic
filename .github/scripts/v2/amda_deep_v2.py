@@ -69,28 +69,50 @@ class AmDADeepV2:
             self.log("⚠️ Base de conocimiento no encontrada", "WARNING")
             return {"proof_patterns": [], "theorems": [], "definitions": []}
     
-    def classify_deep(self, code, context):
-        """Clasificación multi-categórica con puntajes"""
+    def classify_deep(self, code, context, debug=False):
+        """Clasificación multi-categórica con puntajes y logging detallado"""
         scores = {}
         
         # Texto combinado para análisis
         text = (code + " " + context).lower()
         
+        if debug:
+            print(f"🔍 Analizando contexto: {text[:100]}...")
+        
         for category, info in self.PATTERNS.items():
             score = 0
+            matches = []
             for keyword in info["keywords"]:
                 if keyword.lower() in text:
                     score += info["weight"]
+                    matches.append(keyword)
             
             if score > 0:
                 scores[category] = score
+                if debug:
+                    print(f"  ✅ {category}: {len(matches)} matches ({', '.join(matches[:3])})")
+            elif debug:
+                print(f"  ❌ {category}: 0 matches")
+        
+        # Verificar si es trivial (debería detectarse)
+        if debug and "trivial" in scores and scores["trivial"] > 0:
+            print(f"  ⚠️ ¡TRIVIAL DETECTADO! Debería procesarse con rfl/simp")
         
         # Si no hay categorías, marcar como desconocido
         if not scores:
             scores["unknown"] = 1.0
+            if debug:
+                print(f"  ⚠️ Clasificado como UNKNOWN - no se encontraron patrones")
         
         # Categoría principal (mayor puntaje)
         primary = max(scores.items(), key=lambda x: x[1])[0] if scores else "unknown"
+        
+        # Validación: si hay evidencia de trivial pero se clasificó como unknown, corregir
+        if primary == "unknown" and any(kw in text for kw in ["rfl", "trivial", "simp", "norm_num"]):
+            if debug:
+                print(f"  🔧 CORRECCIÓN: Detectado patrón trivial en 'unknown', reclasificando...")
+            primary = "trivial"
+            scores["trivial"] = 0.8
         
         return {
             "primary_category": primary,
@@ -140,7 +162,7 @@ class AmDADeepV2:
         context_lines = lines[start:end]
         return "\n".join(context_lines)
     
-    def analyze_file(self, filepath):
+    def analyze_file(self, filepath, debug=False):
         """Analiza un archivo Lean en busca de sorries"""
         try:
             with open(filepath, 'r', encoding='utf-8') as f:
@@ -157,8 +179,8 @@ class AmDADeepV2:
                 # Extraer contexto
                 context = self.extract_context(lines, i)
                 
-                # Clasificar
-                classification = self.classify_deep(line, context)
+                # Clasificar (con debug si está activado)
+                classification = self.classify_deep(line, context, debug=debug)
                 
                 # Buscar soluciones similares
                 similar = self.find_similar_from_knowledge(line, context)
