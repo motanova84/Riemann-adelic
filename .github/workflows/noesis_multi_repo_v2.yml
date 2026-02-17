@@ -145,7 +145,7 @@ jobs:
       
       - name: 📤 Push Cambios
         if: steps.auron.outputs.success != '0' && github.event.inputs.dry_run != 'true'
-        uses: ad-m/github-push-action@master
+        uses: ad-m/github-push-action@v0.8.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: ${{ github.ref }}
