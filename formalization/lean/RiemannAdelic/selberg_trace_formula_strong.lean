@@ -227,7 +227,8 @@ theorem functional_equation_from_trace
           smooth := sorry,
           rapid_decay := sorry,
           integrable := sorry } := by
-  sorry  -- Requires: Mellin transform compatibility
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
 
 /--
 Zero-free region from trace formula.

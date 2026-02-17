@@ -255,6 +255,7 @@ lemma HΨ_preserves_domain (f : D_HΨ) :
            (∀ x > 0, HΨ.op f.val x = HΨ.op f.val x) ∧
            (∃ C : ℝ, ∀ x > 0, |HΨ.op f.val x| ≤ C),
     (⟨HΨ.op f.val, hf⟩ : D_HΨ) = ⟨HΨ.op f.val, hf⟩ := by
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
   sorry
 
 /--

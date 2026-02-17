@@ -28,6 +28,7 @@ theorem S_is_involution (n : ℕ) (hn : 0 < n) :
     discrete_symmetry_operator n ^ 2 = 1 := by
   ext i j
   simp [discrete_symmetry_operator, Matrix.pow_two, Matrix.mul_apply, Matrix.one_apply]
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
   sorry
 
 -- Verificación: S es autoadjunto (S† = S)
@@ -35,6 +36,7 @@ theorem S_self_adjoint (n : ℕ) (hn : 0 < n) :
     (discrete_symmetry_operator n)ᴴ = discrete_symmetry_operator n := by
   ext i j
   simp [discrete_symmetry_operator, conjTranspose_apply]
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
   sorry
 
 /-!
@@ -56,6 +58,7 @@ theorem H_commutes_with_S (n : ℕ) (hn : 0 < n) :
     H_Ψ_with_DS n * discrete_symmetry_operator n 
     = discrete_symmetry_operator n * H_Ψ_with_DS n := by
   -- Por construcción: H_DS = 0.5*(H + SHS)
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
   sorry
 
 -- CONSECUENCIA: Los autovectores de H_Ψ_with_DS son simétricos/antisimétricos
@@ -82,6 +85,7 @@ theorem eigenvalues_to_zeros (n : ℕ) (hn : 0 < n) (λ : ℝ)
   -- Usar que H conmuta con S
   -- Entonces H preserva espacios simétrico/antisimétrico
   -- En cada espacio, H actúa como operador con ciertas propiedades
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
   sorry
 
 -- Axioma: Función Ξ(s) de Riemann
@@ -99,6 +103,7 @@ theorem riemann_hypothesis_via_H_DS :
   intro s ⟨hzero, hnon_triv⟩
   -- 1. s es cero de Ξ (por definición de Ξ en términos de ζ)
   have hΞ : Xi s = 0 := by
+    -- TODO: Complete using QCAL.Noesis.spectral_correspondence
     sorry
     
   -- 2. Por D = Ξ, es cero de D

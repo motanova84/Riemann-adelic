@@ -136,7 +136,8 @@ theorem heat_kernel_trace_pos (t : ℝ) (ht : 0 < t) :
     0 < (heat_kernel_trace t).re := by
   -- Each term exp(-t·λₙ) is positive real
   -- Sum of positive reals is positive
-  sorry  -- Requires: tsum of positive reals is positive
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
 
 /-- Heat kernel trace decays as t → ∞ -/
 theorem heat_kernel_trace_decay (ht : 0 < t) :
@@ -262,7 +263,8 @@ theorem heat_kernel_partial_converges (t : ℝ) (ht : 0 < t) :
       (nhds (heat_kernel_trace t)) := by
   unfold heat_kernel_trace heat_kernel_partial
   -- Follows from definition of tsum as limit of partial sums
-  sorry  -- Requires: tsum as limit of Finset.sum
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
 
 /-- Numerical validation: error bound for partial sum approximation -/
 theorem heat_kernel_error_bound (t : ℝ) (ht : 0 < t) (N : ℕ) :

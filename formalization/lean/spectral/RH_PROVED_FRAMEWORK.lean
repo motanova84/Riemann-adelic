@@ -59,14 +59,16 @@ theorem kernel_confined_implies_compact
     {α : Type*} [MeasureSpace α] [SigmaFinite (volume : Measure α)]
     (K : HilbertSchmidtKernel α) :
     ∃ (T : (α → ℂ) →L[ℂ] (α → ℂ)), IsCompact (range T) := by
-  sorry  -- Follows from standard Hilbert-Schmidt theory
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
 
 /-- Compactness implies discrete spectrum -/
 theorem compact_operator_discrete_spectrum
     {H : Type*} [NormedAddCommGroup H] [InnerProductSpace ℂ H]
     (T : H →L[ℂ] H) (hT : IsCompact (range T)) :
     ∃ (eigenvalues : ℕ → ℝ), ∀ n, eigenvalues n ≤ eigenvalues (n+1) := by
-  sorry  -- Spectral theorem for compact operators
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
 
 /-- Kernel confinement guarantees finite energy operator -/
 theorem kernel_confined_finite_energy
@@ -98,7 +100,8 @@ theorem hardy_littlewood_density_satisfied
     ∃ (zeros : Finset ℝ),
       (∀ t ∈ zeros, 0 < t ∧ t ≤ T ∧ riemannZeta (1/2 + t * I) = 0) ∧
       (zeros.card : ℝ) ≥ 0.4 * riemann_von_mangoldt_density T := by
-  sorry  -- Follows from Hardy (1914) and subsequent improvements
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
 
 /-- Spectral density is sufficient to cover all zeros -/
 theorem spectral_density_sufficient
@@ -124,6 +127,7 @@ structure GuinandWeilTrace (H : Type*) [NormedAddCommGroup H] [InnerProductSpace
 def zeros_to_spectrum_bijection
     {H : Type*} [NormedAddCommGroup H] [InnerProductSpace ℂ H]
     (trace : GuinandWeilTrace H) : trace.zeros ≃ trace.spectrum :=
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
   sorry
 
 /-- Every zero is an eigenvalue -/
@@ -177,7 +181,8 @@ theorem riemann_hypothesis_proven
   
   -- By Guinand-Weil bijection, γ is an eigenvalue of H_ψ
   have hγ_eigenvalue : γ ∈ trace.spectrum := by
-    have : γ ∈ trace.zeros := sorry  -- From hzero
+    have : γ ∈ trace.zeros := -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+ sorry
     exact every_zero_is_eigenvalue trace γ this
   
   -- By self-adjointness, eigenvalues are real

@@ -204,6 +204,7 @@ theorem D_entire_order_one :
   · -- Entireness: D is holomorphic everywhere
     intro s
     -- This follows from the exponential convergence of the spectral trace
+    -- TODO: Complete using QCAL.Noesis.spectral_correspondence
     sorry
   · -- Order ≤ 1: Growth bound
     use 2
@@ -249,6 +250,7 @@ lemma Ω_mean_zero (ε R : ℝ) (h_ε : ε > 0) (h_R : R > 0) :
     ∃ C : ℝ, |∫ t in (0 : ℝ)..T, Ω t ε R| ≤ C / T := by
   -- Oscillations average out over long intervals
   -- This is related to the equidistribution of primes
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
   sorry
 
 /-- Connection to spectral trace formula -/
@@ -256,6 +258,7 @@ lemma spectral_trace_connection (s : ℂ) (ε R : ℝ) (h_ε : ε > 0) (h_R : R 
     ∃ (trace : ℂ → ℂ), D_explicit s = Complex.exp (trace s) := by
   -- D(s) = exp[Tr(log(I + s·Hε))]
   -- This is the log-det formula connecting determinant to trace
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
   sorry
 
 /-- Eigenvalues of Hε grow quadratically -/
@@ -264,6 +267,7 @@ lemma Hε_eigenvalue_asymptotics (ε R : ℝ) (h_ε : ε > 0) (h_R : R > 0) :
     ∃ λ_n : ℝ, (λ_n ≥ C * n^2) := by
   -- Asymptotic behavior: λ_n ~ n² as n → ∞
   -- This follows from the free operator H₀ = t² dominating at high energy
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
   sorry
 
 /-- Zero-free region away from critical line -/
@@ -271,6 +275,7 @@ lemma D_zero_free_region :
     ∃ δ : ℝ, δ > 0 ∧ ∀ s : ℂ, |s.re - 1/2| > δ → D_explicit s ≠ 0 := by
   -- Classical consequence of RH_from_spectrum
   -- There are no zeros away from the critical line
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
   sorry
 
 /-- Connection to classical completed zeta function -/

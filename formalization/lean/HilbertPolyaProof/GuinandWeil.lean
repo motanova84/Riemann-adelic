@@ -24,7 +24,8 @@ def SchwartzSpace : Set (ℝ → ℂ) :=
     ‖x^n * sorry‖ ≤ C} -- derivative of order m of φ
 
 /-- Digamma function -/
-noncomputable def digamma (z : ℂ) : ℂ := sorry
+noncomputable def digamma (z : ℂ) : ℂ := -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+ sorry
 
 /-- Guinand-Weil trace formula -/
 axiom guinand_weil_trace_formula :

@@ -207,7 +207,8 @@ theorem trace_local_value (R : ℝ) (hR : 0 < R) : trace_local R = 2 * R := by
   -- ∫ x in -R..R, K(x,x) dx = ∫ x in -R..R, 1 dx = R - (-R) = 2R
   simp only [gaussian_kernel_diagonal]
   -- La integral de la función constante 1 sobre [-R, R] es 2R
-  sorry  -- Requires intervalIntegral_const from Mathlib
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
 
 /-- La traza global es infinita -/
 theorem trace_global_infinite : 

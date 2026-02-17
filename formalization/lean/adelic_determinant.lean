@@ -8,7 +8,8 @@ import Mathlib.NumberTheory.ZetaFunction
 import Mathlib.Analysis.Fourier.PoissonSummation
 
 -- Schwartz-Bruhat space on adeles
-def SchwartBruhatSpace : Type := sorry
+def SchwartBruhatSpace : Type := -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+ sorry
 
 -- Adelic canonical determinant class
 class AdelicCanonicalDeterminant (D : ℂ → ℂ) where
@@ -18,14 +19,17 @@ class AdelicCanonicalDeterminant (D : ℂ → ℂ) where
   normalization : D (1/2) = 1
 
 -- Factorizable test function in Schwartz-Bruhat space
-def factorizable (Φ : SchwartBruhatSpace) : Prop := sorry
+def factorizable (Φ : SchwartBruhatSpace) : Prop := -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+ sorry
 
 -- L2 integrability condition
 def integrable_flow (Φ : SchwartBruhatSpace) : Prop := 
-  factorizable Φ → sorry -- ∃ C : ℝ, ∀ u : ℝ, ∫ x, abs (Φ (u * x))^2 ≤ C
+  factorizable Φ → -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+ sorry
 
 -- Flow energy finiteness
-def finite_energy_flow (Φ : SchwartBruhatSpace) : Prop := sorry
+def finite_energy_flow (Φ : SchwartBruhatSpace) : Prop := -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+ sorry
 
 -- Spectral regularity condition
 def spectral_regular (D : ℂ → ℂ) : Prop := 
@@ -37,6 +41,7 @@ def spectral_regular (D : ℂ → ℂ) : Prop :=
 -- A1: Finite scale flow lemma
 lemma A1_finite_scale_flow (Φ : SchwartBruhatSpace) : 
   integrable_flow Φ := by
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
   sorry
 
 -- A2: Functional symmetry lemma
@@ -47,38 +52,47 @@ lemma A2_symmetry (D : ℂ → ℂ) [AdelicCanonicalDeterminant D] :
 -- A4: Spectral regularity lemma
 lemma A4_spectral_regularity (D : ℂ → ℂ) [AdelicCanonicalDeterminant D] : 
   spectral_regular D := by
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
   sorry
 
 -- Uniqueness theorem: D(s) ≡ Ξ(s)
 theorem paley_wiener_hamburger_uniqueness (D₁ D₂ : ℂ → ℂ) 
   [AdelicCanonicalDeterminant D₁] [AdelicCanonicalDeterminant D₂] :
   D₁ = D₂ := by
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
   sorry
 
 -- Connection to Riemann xi function
-def riemann_xi : ℂ → ℂ := sorry
+def riemann_xi : ℂ → ℂ := -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+ sorry
 
 -- Main theorem: The adelic determinant is the Riemann xi function
 theorem adelic_determinant_is_xi (D : ℂ → ℂ) [AdelicCanonicalDeterminant D] :
   D = riemann_xi := by
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
   sorry
 
 -- Adelic factorization lemma
 lemma adelic_factorization (Φ : SchwartBruhatSpace) (v : ℕ) :
   factorizable Φ → ∃ Φ_v : ℝ → ℂ, sorry := by
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
   sorry
 
 -- Trace class convergence
-def trace_class_convergence (T : (ℂ → ℂ) →L[ℂ] (ℂ → ℂ)) : Prop := sorry
+def trace_class_convergence (T : (ℂ → ℂ) →L[ℂ] (ℂ → ℂ)) : Prop := -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+ sorry
 
 -- Birman-Solomyak theorem application
 lemma birman_solomyak_trace_class (s : ℂ) (T_s : (ℂ → ℂ) →L[ℂ] (ℂ → ℂ)) :
   s.re > 1/2 → trace_class_convergence T_s := by
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
   sorry
 
 -- Lidskii series convergence
-def lidskii_series (D : ℂ → ℂ) (s : ℂ) : ℂ := sorry
+def lidskii_series (D : ℂ → ℂ) (s : ℂ) : ℂ := -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+ sorry
 
 lemma lidskii_convergence (D : ℂ → ℂ) [AdelicCanonicalDeterminant D] (s : ℂ) :
   ∃ L : ℂ, Complex.log (D s) = L := by
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
   sorry

@@ -198,6 +198,7 @@ def H_psi_power (s : ℂ) : H →L[ℂ] H := by
 def operator_trace (T : H →L[ℂ] H) : ℂ := by
   -- For trace class operators, the trace is well-defined
   -- This requires an orthonormal basis and summability
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
   sorry
 
 /-- H_Ψ^(-s) is trace class for Re(s) > 1 -/
@@ -239,6 +240,7 @@ theorem spectral_sum_converges (s : ℂ) (hs : s.re > 1) :
     Summable (fun n : ℕ => (eigenvalue_sequence H_psi n : ℂ)^(-s)) := by
   -- Follows from eigenvalue_sum_converges
   have h_abs := eigenvalue_sum_converges H_psi s hs
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
   sorry
 
 /-- **Main Theorem: Trace Equals Zeta**
@@ -258,6 +260,7 @@ theorem trace_equals_zeta_everywhere (s : ℂ) (hs : s.re > 1) :
   -- 2. Mellin transform of heat kernel
   -- 3. Poisson summation formula
   -- 4. Functional equation of zeta
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
   sorry
 
 /-- Alternative form: Trace via eigenvalues and zeros -/
@@ -269,7 +272,8 @@ theorem trace_via_eigenvalues (s : ℂ) (hs : s.re > 1) :
 theorem spectral_sum_relates_to_zeta (s : ℂ) (hs : s.re > 1) :
     ∃ c : ℂ, c ≠ 0 ∧ spectral_sum H_psi s = c * riemannZeta s := by
   refine ⟨π^(-s/2) * Gamma (s/2), ?_, ?_⟩
-  · sorry  -- c ≠ 0 for Re(s) > 1
+  · -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+ sorry
   · exact trace_equals_zeta_everywhere H_psi s hs
 
 /-- The spectral sum extends meromorphically to ℂ -/
@@ -301,6 +305,7 @@ variable (H_psi : H →L[ℂ] H)
 -/
 def spectral_determinant (s : ℂ) : ℂ := by
   -- Hadamard product: needs Weierstrass factors for convergence
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
   sorry
 
 /-- The spectral determinant is entire (holomorphic everywhere) -/
@@ -340,6 +345,7 @@ theorem spectral_determinant_equals_Xi (s : ℂ) :
     spectral_determinant H_psi s = 
       c * (s * (s - 1) * π^(-s/2) * Gamma(s/2) * riemannZeta s) := by
   -- This is the ultimate goal of the Hilbert-Pólya approach
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
   sorry
 
 /-- Order of the spectral determinant is 1 (Hadamard order) -/

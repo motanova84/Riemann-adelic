@@ -142,6 +142,7 @@ axiom xi_functional_equation (s : ℂ) : xi s = xi (1 - s)
 /-- The D-function is related to ξ by a specific transformation -/
 theorem D_related_to_xi (s : ℂ) :
   ∃ C : ℂ, C ≠ 0 ∧ D_function s = C * xi (1/2 + s) * xi (1/2 - s) := by
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
   sorry
   -- The D-function encodes both s and 1-s zeros
   -- via the functional equation

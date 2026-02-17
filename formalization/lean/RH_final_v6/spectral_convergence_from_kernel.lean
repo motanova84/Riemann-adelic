@@ -57,7 +57,8 @@ They are used to probe the spectral properties of the operator H_Ψ.
 
 theorem test_function_integrable (f : TestFunction) :
     Integrable f.h := by
-  sorry -- Follows from rapid decay property
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
 
 theorem test_function_continuous (f : TestFunction) :
     Continuous f.h := by
@@ -105,6 +106,7 @@ The spectral limit is well-defined: the integral and the infinite sums converge 
 -/
 theorem spectral_limit_convergent (h : TestFunction) :
     Integrable h.h ∧ Summable (fun p : Nat.Primes => ∑' k : ℕ, ‖(Real.log p / p^k) * h.h (k * Real.log p)‖) := by
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
   sorry
 
 -- Teorema de convergencia del lado espectral
@@ -157,7 +159,8 @@ theorem spectral_convergence_uniform
     (kernel_conv : Tendsto (fun ε => ∫ t, h.h t * ((1 / Real.sqrt (4 * π * ε)) * Real.exp (-(t^2)/(4 * ε)))) (nhdsWithin 0 (Ioo 0 ε₀)) (𝓝 (spectral_limit h))) :
     ∀ δ > 0, ∃ N₀, ∀ N ≥ N₀, ∀ ε, 0 < ε → ε < ε₀ → 
       ‖spectral_side h ε N - spectral_limit h‖ < δ := by
-  sorry -- Uniform convergence in both N and ε
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
 
 /-!
 ## Uniform Convergence
@@ -194,9 +197,11 @@ theorem qcal_frequency_preserved
   intro n hn
   have h1 : (n : ℝ) ≥ 0 := Nat.cast_nonneg n
   have h2 : ε * Real.sin (π * n) ≥ -ε := by
-    sorry -- Follows from |sin| ≤ 1
+    -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+    sorry
   have h3 : n + 1/2 > 0 := by linarith
-  sorry -- Combine bounds
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
 
 /-!
 ## Integration with Heat Kernel
@@ -278,6 +283,7 @@ structure MellinSpace where
 /-- Mellin transform is injective on MellinSpace -/
 theorem mellin_injective :
     Function.Injective (fun f : MellinSpace => mellin_transform f.f) := by
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
   sorry
   -- Proof outline:
   -- 1. Suppose M[f₁] = M[f₂] for all s in strip
@@ -289,6 +295,7 @@ theorem mellin_injective :
 theorem mellin_surjective (c : ℝ) (hc : c ∈ Set.Ioo 0 1) :
     ∀ F : ℂ → ℂ, (∀ s : ℂ, s.re = c → AnalyticAt ℂ F s) →
     (∃ f : MellinSpace, ∀ s : ℂ, s.re = c → mellin_transform f.f s = F s) := by
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
   sorry
   -- Proof uses inverse Mellin transform construction
 
@@ -296,6 +303,7 @@ theorem mellin_surjective (c : ℝ) (hc : c ∈ Set.Ioo 0 1) :
 theorem mellin_transform_invertible (c : ℝ) (hc : c ∈ Set.Ioo 0 1) :
     ∀ f : MellinSpace, ∀ x > 0,
     inverse_mellin (mellin_transform f.f) c x = f.f x := by
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
   sorry
   -- Proof:
   -- 1. Apply Fourier inversion to logarithmic variable
@@ -315,6 +323,7 @@ theorem kernel_to_spectrum (K : ℝ → ℝ → ℂ)
     (h_kernel : ∀ t x, K t x = ∑' λ, exp (-t * λ) * heat_kernel t x) :
     ∃! μ : SpectralMeasure, ∀ t > 0, ∀ f : ℝ → ℂ,
       ∫ x, K t x * f x = ∫ λ, exp (-t * λ) * ∫ x, heat_kernel t x * f x ∂μ.μ := by
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
   sorry
   -- Proof:
   -- 1. Spectral theorem gives decomposition
@@ -332,6 +341,7 @@ theorem spectral_series_converges (zeros : ℕ → ℝ)
     (h_growth : ∀ n, zeros n ≥ n^(1/2)) :
     ∀ t > 0, ∃ L, Tendsto (fun N => spectral_partial_sum zeros N t) atTop (𝓝 L) := by
   intro t ht
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
   sorry
   -- Proof:
   -- 1. Growth condition implies summability
@@ -344,6 +354,7 @@ theorem heat_to_spectral_sum (K : ℝ → ℝ → ℂ) (zeros : ℕ → ℝ)
     (h_trace : ∀ t > 0, ∫ x, K t x = ∑' n, exp (-t * zeros n)) :
     ∀ ε > 0, ∃ N, ∀ M ≥ N, ∀ t ∈ Set.Ioo 0 1,
       ‖∫ x, K t x - spectral_partial_sum zeros M t‖ < ε := by
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
   sorry
   -- Proof:
   -- 1. Use Mellin transform on both sides

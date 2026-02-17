@@ -96,6 +96,7 @@ def heat_trace_primes (t : ℝ) : ℝ :=
 /-- Connection between heat kernel and prime distribution -/
 theorem heat_kernel_prime_connection (t : ℝ) (ht : t > 0) :
     ∃ C ε, ∀ T, T > 0 → |heat_trace_primes t - T / t| < C * exp (-ε * T) := by
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
   sorry
   -- Proof uses:
   -- 1. Prime number theorem: ψ(x) ~ x
@@ -112,6 +113,7 @@ def mellin_heat_kernel (s : ℂ) (t : ℝ) : ℂ :=
 /-- Mellin transform relates heat kernel to zeta function -/
 theorem mellin_heat_kernel_zeta (s : ℂ) (hs : s.re > 1) (t : ℝ) (ht : t > 0) :
     mellin_heat_kernel s t = (4 * π * t)^(-s/2) * Gamma (s/2) := by
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
   sorry
   -- Proof:
   -- 1. Compute Mellin transform of Gaussian
@@ -144,6 +146,7 @@ def heat_kernel_qcal (x : ℝ) : ℝ :=
 /-- Verification that heat kernel respects QCAL coherence -/
 theorem heat_kernel_qcal_coherence :
     ∫ x in Set.Ioo (-10) 10, heat_kernel_qcal x ≥ qcal_coherence / 1000 := by
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
   sorry
   -- Numerical verification that most mass is concentrated in [-10, 10]
   -- and satisfies QCAL ∞³ framework requirements

@@ -112,7 +112,8 @@ The heat kernel is normalized: ∫ K_t(x) dx = 1 for all t > 0.
 -/
 theorem heatKernel_normalized (t : ℝ) (ht : 0 < t) :
     ∫ x, heatKernel t ht x = 1 := by
-  sorry  -- Requires: Gaussian integral = √π
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
 
 /--
 The heat kernel satisfies the heat equation: ∂_t K_t = Δ K_t.

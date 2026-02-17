@@ -166,6 +166,7 @@ theorem symbol_blowup_iff_GreenKernel_blowup (γ : ℝ) :
     use ⟨0, 0⟩
     -- TODO: Requires proof that Fourier transform of unbounded symbol
     -- produces unbounded kernel. Uses Plancherel/Parseval duality.
+    -- TODO: Complete using QCAL.Noesis.spectral_correspondence
     sorry
   · intro h_kernel
     intro R hR

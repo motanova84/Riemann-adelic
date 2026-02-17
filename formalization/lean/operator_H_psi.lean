@@ -133,6 +133,7 @@ theorem spectrum_real (HΨ : H_psi_struct) :
   -- TODO: Complete proof using inner product properties from Mathlib:
   --   - inner_self_ne_zero for f ≠ 0
   --   - Complex.eq_conj_iff_im for λ = conj(λ) ⟹ Im(λ) = 0
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
   sorry
 
 end HpsiOperator

@@ -207,6 +207,7 @@ theorem spectrum_real : ∀ λ ∈ spectrum_H_xi HΨ, λ.im = 0 := by
   -- El argumento estándar para autovalores reales
   -- ⟨H_Ξ f, f⟩ = λ⟨f, f⟩ y ⟨f, H_Ξ f⟩ = conj(λ)⟨f, f⟩
   -- Por autoadjunción: λ = conj(λ), así que Im(λ) = 0
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
   sorry
 
 /-- Correspondencia espectral: los autovalores de H_Ξ corresponden

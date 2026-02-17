@@ -57,7 +57,8 @@ theorem zeros_in_strip_are_eigenvalues (s : ℂ)
     (hz : ζ s = 0) 
     (hstrip : 0 < s.re ∧ s.re < 1) :
     ∃ (v : H), v ≠ 0 ∧ H_psi v = s • v := by
-  sorry  -- Proven via Guinand-Weil trace formula
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
          -- ∑_γ φ(γ) ≠ 0 where γ ranges over zeta zeros
          -- This sum being nonzero implies s must be an eigenvalue
 

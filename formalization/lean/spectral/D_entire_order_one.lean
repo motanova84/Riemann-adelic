@@ -89,7 +89,8 @@ lemma weierstrass_product_convergence
       (fun N s => ∏ i in Finset.range N, (1 - s / λ i))
       (fun s => D s)
       atTop K := by
-  sorry  -- Requires detailed convergence analysis
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
 
 /-- Main Theorem: D(s) is entire.
     

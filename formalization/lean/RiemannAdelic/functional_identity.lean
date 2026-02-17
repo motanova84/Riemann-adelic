@@ -80,6 +80,7 @@ lemma D_product_converges_locally_uniformly :
   -- For compact K, |s| ≤ M for some M
   -- For large n, λ(n) is very small
   -- So |1 - s·λ(n)| ≈ 1 for large n
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
   sorry
 
 /-!
@@ -191,6 +192,7 @@ theorem D_Xi_same_functional_structure :
   intros hD hXi
   -- The functional equations imply D and Xi differ by at most
   -- a factor that also satisfies the functional equation
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
   sorry
 
 end RiemannAdelic.FunctionalIdentity

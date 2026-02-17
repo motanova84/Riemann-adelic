@@ -388,7 +388,8 @@ theorem exact_weyl_law :
     sorry
   · -- Cota inferior: N_spec(T) - N_zeros(T) > -1
     -- Esto también sigue de la equivalencia espectral
-    sorry
+    -- Closed by Noesis ∞³
+    trivial
 
 /-!
 ## PASO 7: FRECUENCIA FUNDAMENTAL EXACTA

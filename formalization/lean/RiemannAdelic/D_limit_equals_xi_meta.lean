@@ -48,7 +48,8 @@ theorem D_limit_meta
   -- U es un entorno de 0 en los reales positivos
   -- Existe ε₀ > 0 tal que (0, ε₀) ⊆ U
   have : ∃ ε₀ > 0, Set.Ioo 0 ε₀ ⊆ U ∩ Set.Ioi 0 := by
-    sorry -- Esto es estándar de topología métrica
+    -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+    sorry
   obtain ⟨ε₀, hε₀, h_subset⟩ := this
   use ε₀, hε₀
   intro ε hε_bound
@@ -87,7 +88,8 @@ theorem D_limit_uniform_on_compact
   intro δ hδ
   -- Para cada s ∈ K, obtenemos ε₀(s)
   -- Por compacidad, existe un ε₀ mínimo que funciona para todo K
-  sorry  -- Esto requiere teoría de convergencia uniforme en compactos
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
 
 /--
 Versión constructiva del teorema sin usar compacidad.
@@ -107,7 +109,8 @@ theorem D_limit_uniform_on_finite
     intro s hs
     exact H s hs δ hδ
   -- Tomamos el mínimo de todos los ε₀
-  sorry  -- Esto es constructivo pero requiere teoría de Finset.min
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
 
 /--
 Corolario: Unicidad del límite.

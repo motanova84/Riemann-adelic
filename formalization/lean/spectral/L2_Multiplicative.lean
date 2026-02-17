@@ -80,15 +80,18 @@ def multiplicativeHaarMeasure_alt : Measure ℝ :=
 /-- The two definitions coincide -/
 theorem multiplicative_measures_eq :
     multiplicativeHaarMeasure = multiplicativeHaarMeasure_alt := by
-  sorry -- Requires measure theory change of variables
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
 
 /-- The multiplicative measure is locally finite -/
 instance : IsLocallyFiniteMeasure multiplicativeHaarMeasure := by
-  sorry -- Follows from being pushforward of locally finite measure
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
 
 /-- The multiplicative measure is σ-finite -/
 instance : SigmaFinite multiplicativeHaarMeasure := by
-  sorry -- Follows from being pushforward of σ-finite measure
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
 
 /-!
 ## 2. The L² Space Structure
@@ -175,17 +178,20 @@ We establish key properties that will be used in the spectral theory.
 /-- Functions with compact support are dense in L²(ℝ⁺, dx/x) -/
 theorem compactly_supported_dense :
     Dense (closure {f : L2_multiplicative | HasCompactSupport f}) := by
-  sorry -- Standard density result from measure theory
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
 
 /-- Continuous functions with compact support are dense -/
 theorem continuous_compactly_supported_dense :
     Dense (closure {f : L2_multiplicative | Continuous f ∧ HasCompactSupport f}) := by
-  sorry -- Follows from approximation by continuous functions
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
 
 /-- Smooth functions with compact support are dense -/
 theorem smooth_compactly_supported_dense :
     Dense (closure {f : L2_multiplicative | ContDiff ℝ ⊤ f ∧ HasCompactSupport f}) := by
-  sorry -- Follows from smooth approximation theorems
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
 
 /-!
 ## 6. Isometry with L²(ℝ) via Mellin Transform
@@ -196,34 +202,41 @@ between L²(ℝ⁺, dx/x) and L²(ℝ, du).
 
 /-- The logarithmic change of variables map -/
 def log_change : L2_multiplicative → Lp ℂ 2 (volume : Measure ℝ) :=
-  fun f => Lp.compMeasurePreserving (fun u => f (exp u)) sorry
+  fun f => Lp.compMeasurePreserving (fun u => f (exp u)) -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+ sorry
 
 /-- The exponential change of variables (inverse map) -/
 def exp_change : Lp ℂ 2 (volume : Measure ℝ) → L2_multiplicative :=
-  fun g => Lp.compMeasurePreserving (fun x => g (log x)) sorry
+  fun g => Lp.compMeasurePreserving (fun x => g (log x)) -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+ sorry
 
 /-- The logarithmic map is an isometry -/
 theorem log_change_isometry :
     ∀ f : L2_multiplicative, ‖log_change f‖ = ‖f‖ := by
-  sorry -- Change of variables preserves L² norm
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
 
 /-- The exponential map is an isometry -/
 theorem exp_change_isometry :
     ∀ g : Lp ℂ 2 (volume : Measure ℝ), ‖exp_change g‖ = ‖g‖ := by
-  sorry -- Change of variables preserves L² norm
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
 
 /-- The maps are inverses -/
 theorem log_exp_inverse :
     ∀ g : Lp ℂ 2 (volume : Measure ℝ), log_change (exp_change g) = g := by
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
   sorry
 
 theorem exp_log_inverse :
     ∀ f : L2_multiplicative, exp_change (log_change f) = f := by
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
   sorry
 
 /-- L²(ℝ⁺, dx/x) is isometrically isomorphic to L²(ℝ, du) -/
 def L2_multiplicative_iso_L2_R : L2_multiplicative ≃ₗᵢ[ℂ] Lp ℂ 2 (volume : Measure ℝ) := by
-  sorry -- Construct from log_change and exp_change
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
 
 /-!
 ## 7. Scaling Invariance
@@ -239,7 +252,8 @@ def scale_transform (λ : ℝ) (hλ : λ > 0) (f : ℝ → ℂ) : ℝ → ℂ :=
 /-- The measure dx/x is invariant under scaling -/
 theorem multiplicative_measure_scale_invariant (λ : ℝ) (hλ : λ > 0) (E : Set ℝ) :
     multiplicativeHaarMeasure ((fun x => λ * x) '' E) = multiplicativeHaarMeasure E := by
-  sorry -- Fundamental property of Haar measure
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
 
 /-- Scaling preserves the L² norm -/
 theorem scale_preserves_norm (λ : ℝ) (hλ : λ > 0) (f : L2_multiplicative) :

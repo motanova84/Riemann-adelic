@@ -98,12 +98,14 @@ def inner (f g : ℝ → ℝ) : ℝ :=
 theorem hermite_orthogonal (n m : ℕ) (hnm : n ≠ m) :
     inner (hermite_fun n) (hermite_fun m) = 0 := by
   -- Ortogonalidad clásica de polinomios de Hermite con peso Gaussiano
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
   sorry
 
 /-- Las funciones de Hermite están normalizadas -/
 theorem hermite_normalized (n : ℕ) :
     inner (hermite_fun n) (hermite_fun n) = 1 := by
   -- ||hₙ||²_G = 1 por construcción
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
   sorry
 
 /-- Base ortonormal de Hermite -/

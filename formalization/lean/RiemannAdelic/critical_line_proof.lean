@@ -60,7 +60,8 @@ def eigenvalues (S : SpectralOperator) : Set ℂ :=
 /-- For self-adjoint compact operators, spectrum = closure of eigenvalues -/
 lemma spectrum_eq_eigenvalues_closure (S : SpectralOperator) :
   spectrum S = closure (eigenvalues S) := by
-  sorry  -- Spectral theorem for compact self-adjoint operators
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
 
 /-- Self-adjoint operators have real spectrum -/
 theorem selfadjoint_spectrum_real (S : SpectralOperator) :
@@ -142,7 +143,8 @@ lemma D_zero_iff_spec (S : SpectralOperator) (s : ℂ) :
     -- The perturbation B(1/2 + I·λ) has the property that
     -- the operator I + B(1/2 + I·λ) becomes singular
     -- (non-invertible), causing det(I + B(s)) = 0
-    sorry  -- Full proof requires spectral interpretation of Fredholm determinant
+    -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+    sorry
 
 /-- Zeros of D correspond to eigenvalues -/
 theorem D_zeros_are_eigenvalues (S : SpectralOperator) (s : ℂ) :
@@ -156,6 +158,7 @@ theorem D_zeros_are_eigenvalues (S : SpectralOperator) (s : ℂ) :
     rw [h_closure] at h_spec
     -- λ is in closure of eigenvalues, and for discrete spectrum,
     -- closure = eigenvalues themselves
+    -- TODO: Complete using QCAL.Noesis.spectral_correspondence
     sorry
   · exact h_eq
 
@@ -228,6 +231,7 @@ theorem D_entire_order_one_spectral (S : SpectralOperator) :
     unfold D_function fredholmDeterminant
     -- The Fredholm determinant of a trace class operator
     -- has exponential growth characteristic of entire functions of order 1
+    -- TODO: Complete using QCAL.Noesis.spectral_correspondence
     sorry
 
 /-- Connection to the main D_explicit construction -/
@@ -238,7 +242,8 @@ theorem D_spectral_consistent_with_explicit (S : SpectralOperator) :
   -- the explicit adelic construction in D_explicit.lean
   use fun s => exp (s / 4)
   intro s
-  sorry  -- Requires showing both constructions give same function up to scaling
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
 
 /-!
 ## Summary and Verification
@@ -535,9 +540,11 @@ def spectral_operator_zeta : SpectralOperator where
   selfadjoint := by
     intro x y
     -- Multiplication operator is self-adjoint on real line
+    -- TODO: Complete using QCAL.Noesis.spectral_correspondence
     sorry
   compact := by
     -- Approximate by finite-rank operators
+    -- TODO: Complete using QCAL.Noesis.spectral_correspondence
     sorry
 
 /-- Main Critical Line Theorem integrated with framework -/
@@ -632,6 +639,7 @@ theorem critical_line_via_localization :
   intro ρ h_zero
   -- Apply spectral operator theory
   -- Create spectral operator for D
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
   sorry
 
 end

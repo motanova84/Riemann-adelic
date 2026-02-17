@@ -29,7 +29,8 @@ def spectrum (T : (ℝ → ℂ) → (ℝ → ℂ)) : Set ℂ :=
 /-- The resolvent of H_ψ is compact outside the spectrum -/
 axiom resolvent_H_psi_compact :
   ∀ λ : ℂ, λ ∉ spectrum (integralOperator (fun x y => H_psi_kernel x y sorry sorry)) →
-    CompactOperator sorry -- (resolvent at λ)
+    CompactOperator -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+ sorry
 
 /-- The spectrum is purely discrete -/
 axiom spectrum_purely_discrete :

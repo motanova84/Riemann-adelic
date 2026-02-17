@@ -69,6 +69,7 @@ theorem H_Ψ_essentially_selfadjoint :
   · intro ext' hext'
     funext f
     -- Uniqueness follows from von Neumann's theorem
+    -- TODO: Complete using QCAL.Noesis.spectral_correspondence
     sorry
 
 /-!

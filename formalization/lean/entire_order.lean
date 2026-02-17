@@ -22,7 +22,8 @@ def entire_finite_order (f : ℂ → ℂ) (order : ℝ) : Prop :=
   (∃ C : ℝ, C > 0 ∧ ∀ s : ℂ, abs (f s) ≤ C * Real.exp ((abs s) ^ order))
 
 -- Trace class operator
-def trace_class (T : (ℂ → ℂ) →L[ℂ] (ℂ → ℂ)) : Prop := sorry
+def trace_class (T : (ℂ → ℂ) →L[ℂ] (ℂ → ℂ)) : Prop := -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+ sorry
 
 -- Birman-Solomyak family of operators
 def birman_solomyak_family (T : ℂ → (ℂ → ℂ) →L[ℂ] (ℂ → ℂ)) : Prop :=
@@ -34,7 +35,8 @@ def trace_continuous (T : ℂ → (ℂ → ℂ) →L[ℂ] (ℂ → ℂ)) : Prop 
 
 -- Lidskii series for determinant
 def lidskii_series_convergent (T : ℂ → (ℂ → ℂ) →L[ℂ] (ℂ → ℂ)) (D : ℂ → ℂ) : Prop :=
-  ∀ s : ℂ, Complex.log (D s) = ∑' n : ℕ, ((-1) ^ (n - 1) / n) * sorry -- tr(T(s)^n)
+  ∀ s : ℂ, Complex.log (D s) = ∑' n : ℕ, ((-1) ^ (n - 1) / n) * -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+ sorry
 
 -- Spectral regularity in vertical bands
 def spectral_regular_vertical_bands (D : ℂ → ℂ) : Prop :=
@@ -49,6 +51,7 @@ theorem A4_spectral_regularity_birman_solomyak
   trace_continuous T → 
   lidskii_series_convergent T D →
   spectral_regular_vertical_bands D := by
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
   sorry
 
 -- Simon's trace ideal theory application
@@ -56,6 +59,7 @@ theorem simon_trace_ideals (T : ℂ → (ℂ → ℂ) →L[ℂ] (ℂ → ℂ)) :
   (∀ s : ℂ, s.re > 1/2 → trace_class (T s)) →
   ∀ σ₀ : ℝ, σ₀ > 1/2 → ∀ δ : ℝ, δ > 0 → 
     ∃ M : ℝ, ∀ s : ℂ, abs (s.re - σ₀) ≤ δ → sorry := by -- uniform bound
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
   sorry
 
 -- Uniform convergence in vertical strips
@@ -71,6 +75,7 @@ theorem A4_main_spectral_regularity (D : ℂ → ℂ) :
   (∃ T : ℂ → (ℂ → ℂ) →L[ℂ] (ℂ → ℂ), 
     birman_solomyak_family T ∧ lidskii_series_convergent T D) →
   spectral_regular_vertical_bands D ∧ uniform_convergence_vertical D := by
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
   sorry
 /-- 
 Hadamard factorization and growth control of the function D.

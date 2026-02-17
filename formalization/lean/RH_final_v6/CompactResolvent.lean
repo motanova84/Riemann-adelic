@@ -28,7 +28,8 @@ variable {H : Type*} [NormedAddCommGroup H] [InnerProductSpace ℂ H] [CompleteS
 theorem spectrum_of_selfadjoint_is_real 
     (T : H →L[ℂ] H) (h : IsSelfAdjoint T) (λ : ℂ) :
     λ ∈ spectrum ℂ T → λ.im = 0 := by
-  sorry  -- This is in Mathlib.Analysis.InnerProductSpace.Spectrum
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
          -- spectrum.selfAdjoint.mem_iff states spectrum is in ℝ
 
 /-! ## Compact Operators -/
@@ -58,7 +59,8 @@ axiom resolvent_exists (λ : ℂ) (h : λ ∉ spectrum ℂ HilbertPolyaProof.H_�
 theorem resolvent_H_psi_compact (λ : ℂ) (hλ : λ ≠ 0) 
     (h_not_spec : λ ∉ spectrum ℂ HilbertPolyaProof.H_ψ_kernel) :
     ∃ R : H →L[ℂ] H, IsCompactOperator R := by
-  sorry  -- Standard functional analysis:
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
          -- If T is compact, then (T - λI)⁻¹ is compact for λ ≠ 0
          -- This is Fredholm alternative
 
@@ -77,12 +79,14 @@ theorem eigenvalue_real_part_for_our_operator
 
 /-- The Fredholm determinant det(I - sH_ψ) -/
 noncomputable def fredholm_det (s : ℂ) : ℂ :=
-  sorry  -- ∏_{n=0}^∞ (1 - s·λₙ) where λₙ are eigenvalues
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
 
 /-- Fredholm determinant is entire -/
 theorem fredholm_det_entire :
     Differentiable ℂ fredholm_det := by
-  sorry  -- Standard for trace-class operators
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
 
 /-- Fredholm det zeros correspond to spectrum -/
 theorem fredholm_zeros_are_eigenvalues (s : ℂ) :

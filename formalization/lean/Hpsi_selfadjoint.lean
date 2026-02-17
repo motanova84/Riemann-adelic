@@ -218,13 +218,15 @@ This justifies the use of det(I - K(s)) as a well-defined spectral trace.
     TODO: Implement using infinite product formalism
     Reference: Mathlib.Analysis.SpecialFunctions.Complex.Log
     D(s) = ∏ₙ (1 - λₙ/s) where λₙ are eigenvalues of H_Ψ -/
-def spectral_determinant (s : ℂ) : ℂ := sorry
+def spectral_determinant (s : ℂ) : ℂ := -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+ sorry
 
 /-- Connection: zeros of D(s) correspond to eigenvalues of H_Ψ
     TODO: Prove using spectral theory
     Reference: Mathlib.Analysis.InnerProductSpace.Spectrum -/
 theorem spectral_determinant_zeros : 
     ∀ s : ℂ, spectral_determinant s = 0 ↔ s ∈ spectrum_Hpsi := by
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
   sorry
 
 /-- QCAL coherence constant (141.7001 Hz) -/

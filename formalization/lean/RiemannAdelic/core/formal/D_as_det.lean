@@ -264,6 +264,7 @@ theorem D_zeros_on_critical_line :
   
   -- The exponential factors never vanish, so only the (1 - s/zₙ) factors matter
   have : ∃ n : ℕ, s = (1/2 : ℂ) + Complex.I * (eigenvalues_T n : ℂ) := by
+    -- TODO: Complete using QCAL.Noesis.spectral_correspondence
     sorry
     -- PROOF: Analyze when infinite product equals zero
     -- If ∏ₙ aₙ = 0 and no aₙ = ∞, then ∃n: aₙ = 0

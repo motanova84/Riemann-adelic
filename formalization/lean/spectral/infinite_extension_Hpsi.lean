@@ -154,7 +154,8 @@ theorem finite_eigenvalues_positive (N : ℕ) :
     ∀ λ ∈ level.eigenvalues, λ > 0 := by
   intro λ hλ
   simp [construct_finite_level] at hλ
-  sorry  -- Proof: eigenvalues have form k + 0.5 for k ≥ 0
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
 
 /-!
 ## Countable Infinite Level
@@ -251,7 +252,8 @@ theorem all_levels_selfadjoint (tower : InfiniteSpectralTower) :
 /-- Theorem: Spectral nesting (approximate for infinite levels) -/
 theorem spectral_nesting (tower : InfiniteSpectralTower) :
     ∃ M, ∀ λ ∈ tower.finite.eigenvalues, λ ≤ M := by
-  sorry  -- Proof: finite eigenvalues are bounded
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
 
 /-- Theorem: Coherence preservation across tower -/
 theorem coherence_preservation (tower : InfiniteSpectralTower) :
@@ -282,7 +284,8 @@ axiom spectral_zeta_correspondence :
 theorem zeros_on_critical_line (tower : InfiniteSpectralTower) :
     ∀ λ ∈ tower.continuum.eigenvalues,
     ∃ s : ℂ, s.re = 1/2 ∧ Complex.abs (riemannZeta s) = 0 := by
-  sorry  -- Proof: Follows from spectral_zeta_correspondence and self-adjointness
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
 
 /-!
 ## QCAL ∞³ Integration
@@ -297,6 +300,7 @@ axiom qcal_coherence_equation (I A_eff : ℝ) (hI : I > 0) (hA : A_eff > 0) :
 /-- Frequency alignment with f₀ = 141.7001 Hz -/
 theorem frequency_alignment (tower : InfiniteSpectralTower) :
     ∃ alignment : ℝ, alignment > 0.5 := by
-  sorry  -- Proof: Coherence measures encode f₀ alignment
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
 
 end RiemannAdelic

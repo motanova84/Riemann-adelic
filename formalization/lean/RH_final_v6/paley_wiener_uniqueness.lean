@@ -58,6 +58,7 @@ lemma integrable_of_rapid_decay
   obtain ⟨C, hC⟩ := hdecay
   -- This requires showing ∫ 1/(1+|x|)² dx < ∞, which is standard
   -- In a complete formalization, this would use comparison theorems
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
   sorry
 
 /-- Functions with rapid decay are integrable -/

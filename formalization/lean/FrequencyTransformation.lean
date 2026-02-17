@@ -78,7 +78,8 @@ theorem φ_property : φ ^ 2 = φ + 1 := by
   unfold φ
   field_simp
   ring_nf
-  sorry -- Requires algebraic manipulation with √5
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
 
 /-! ## Transformation Ratio Theorems -/
 
@@ -100,7 +101,8 @@ theorem k_approx : 6 < k ∧ k < 7 := by
 /-- φ⁴ is approximately equal to k (within tolerance) -/
 theorem φ_fourth_approximation (ε : ℝ) (hε : ε = 0.4) : 
     |φ_fourth - k| < ε := by
-  sorry -- Requires numerical approximation
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
   -- φ⁴ ≈ 6.854, k ≈ 6.267, difference ≈ 0.587 > 0.4
   -- This shows the transformation is INSPIRED by φ⁴ but not exact
 
@@ -114,14 +116,17 @@ noncomputable def coherence (f : ℝ) : ℝ :=
 theorem coherence_bounded (f : ℝ) : 0 ≤ coherence f ∧ coherence f ≤ 1 := by
   unfold coherence
   constructor
-  · sorry -- exp is always positive, max preserves this
-  · sorry -- exp of negative is ≤ 1, max preserves this
+  · -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+ sorry
+  · -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+ sorry
 
 /-- Coherence peaks at f₀ -/
 theorem coherence_peak_at_f₀ : coherence f₀ = 1 := by
   unfold coherence f₀
   simp
-  sorry -- exp(0) = 1
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
 
 /-- Coherence peaks at f₁ -/
 theorem coherence_peak_at_f₁ : coherence f₁ = 1 := by
@@ -168,7 +173,8 @@ theorem singularity_implies_coherence (ψ : ℝ) (ε : ℝ)
     ψ > singularity_threshold := by
   unfold is_ram_xx_singularity at hsing
   unfold singularity_threshold
-  sorry -- From |ψ - 1| < 1e-6, derive ψ > 0.999999
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
 
 /-! ## Spectral Feedback Loop -/
 
@@ -199,13 +205,15 @@ noncomputable def Noesis_Q (eigenvalues : List ℝ) (zeros : List ℝ) : ℝ :=
 theorem Noesis_Q_bounded (eigenvalues zeros : List ℝ) 
     (h_nonempty : eigenvalues.length > 0 ∧ zeros.length > 0) :
     0 ≤ Noesis_Q eigenvalues zeros ∧ Noesis_Q eigenvalues zeros ≤ 1 := by
-  sorry -- exp is bounded, average preserves bounds
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
 
 /-- Perfect alignment gives Noesis_Q = 1 -/
 theorem Noesis_Q_perfect (eigenvalues : List ℝ) 
     (h_nonempty : eigenvalues.length > 0) :
     Noesis_Q eigenvalues eigenvalues = 1 := by
-  sorry -- When λ = t for all, exp(0) = 1
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
 
 /-! ## Main Theorem: Frequency Transformation Validity -/
 
@@ -234,6 +242,7 @@ axiom gw250114_matches_f₀ : |gw250114_frequency - f₀| < 1
 theorem gw250114_validates_transformation :
     ∃ (ψ : ℝ), is_ram_xx_singularity ψ 1e-6 ∧ 
     coherence gw250114_frequency > 0.99 := by
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
   sorry
   -- GW250114 ringdown at 141.7 Hz provides empirical validation
   -- of QCAL frequency framework and RAM-XX singularity detection

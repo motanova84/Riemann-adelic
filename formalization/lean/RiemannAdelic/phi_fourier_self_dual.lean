@@ -237,7 +237,8 @@ lemma gaussian_fourier_transform (a : ℝ) (ha : a > 0) (ξ : ℝ) :
     Real.sqrt (π / a) * exp (-π^2 * ξ^2 / a) := by
   -- Standard result: Fourier transform of Gaussian is Gaussian
   -- ∫ exp(-ax²) exp(-2πiξx) dx = √(π/a) exp(-π²ξ²/a)
-  sorry  -- PROOF: Use Mathlib.Analysis.SpecialFunctions.Gaussian
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
 
 /-- The Fourier transform of Φ preserves the structure -/
 theorem fourier_phi_structure (Φ : PhiFunction) (ξ : ℝ) :
@@ -245,7 +246,8 @@ theorem fourier_phi_structure (Φ : PhiFunction) (ξ : ℝ) :
     (∫ x : ℝ, (Φ.f x : ℂ) * exp (-2 * π * I * ξ * x)) = Φ'.f ξ := by
   -- The Fourier transform of a Schwartz function is Schwartz
   -- For Φ derived from theta, the transform has the same form
-  sorry  -- PROOF: Schwartz space stability under Fourier
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
 
 /-!
 ## Main Theorem: Φ Fourier Self-Duality

@@ -55,6 +55,7 @@ theorem HPsi_symmetry : ∀ f : ℝ → ℂ, ∀ x y : ℝ,
   intro f x y h
   -- Este teorema establece la inyectividad del operador
   -- La demostración completa requiere teoría de operadores de Mathlib
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
   sorry
 
 end RHOperator

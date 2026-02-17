@@ -199,9 +199,11 @@ theorem balance_derivative_zero_criterion :
   simp only [k]
   constructor
   · intro _
-    sorry -- Standard calculus manipulation
+    -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+    sorry
   · intro _
-    sorry -- Standard calculus manipulation
+    -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+    sorry
 
 /-- The critical point of the continuous balance function -/
 theorem balance_critical_point :

@@ -105,6 +105,7 @@ theorem RH_final_proof :
     · -- Demostrar RiemannZeta (1/2 + I * s.im) = 0
       -- TODO: Apply strong zero uniqueness theorem here
       -- This requires using the bijection and analyticity
+      -- TODO: Complete using QCAL.Noesis.spectral_correspondence
       sorry
   
   -- Obtener el único t que corresponde a z
@@ -117,6 +118,7 @@ theorem RH_final_proof :
     -- De I * (s.im - 1/2) = I * (t - 1/2), obtenemos s.im = t
     -- TODO: Complete algebraic manipulation
     -- Strategy: Apply complex number equality and cancel I
+    -- TODO: Complete using QCAL.Noesis.spectral_correspondence
     sorry
   
   -- Ahora tenemos dos ceros: s y (1/2 + I * t)

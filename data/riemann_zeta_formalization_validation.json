@@ -1,0 +1,182 @@
+{
+  "validation_timestamp": "2026-02-16T10:56:23.400161",
+  "files_validated": [
+    {
+      "filename": "RiemannZeta.lean",
+      "exists": true,
+      "size_bytes": 12927,
+      "line_count": 354,
+      "theorems": [
+        "for",
+        "is",
+        "zeta_series",
+        "zeta_functional_equation",
+        "on",
+        "of",
+        "zeta_euler_product"
+      ],
+      "axioms": [
+        "encapsulates",
+        "represents",
+        "encapsulates",
+        "zeta_pole_at_one",
+        "zeta_trivial_zeros",
+        "zeta_nontrivial_zeros_in_strip",
+        "riemann_hypothesis"
+      ],
+      "definitions": [
+        "riemannZeta"
+      ],
+      "sorry_count": 4,
+      "has_documentation": true,
+      "has_qcal_info": true,
+      "theorem_count": 7,
+      "axiom_count": 7,
+      "definition_count": 1,
+      "doc_comment_count": 8,
+      "imports": [
+        "Mathlib.Analysis.Complex.Basic",
+        "Mathlib.Analysis.SpecialFunctions.Gamma.Basic",
+        "Mathlib.Analysis.SpecialFunctions.Pow.Complex",
+        "Mathlib.NumberTheory.ZetaFunction",
+        "Mathlib.Data.Complex.Exponential",
+        "Mathlib.Topology.Basic",
+        "Mathlib.Analysis.Analytic.Basic",
+        "Mathlib.NumberTheory.ArithmeticFunction"
+      ]
+    },
+    {
+      "filename": "H_Psi_Properties.lean",
+      "exists": true,
+      "size_bytes": 15071,
+      "line_count": 448,
+      "theorems": [
+        "uses",
+        "H_\u03c8_dense_domain",
+        "H_\u03c8_symmetric",
+        "provides",
+        "applies",
+        "H_\u03c8_essentially_self_adjoint",
+        "for"
+      ],
+      "axioms": [
+        "H_\u03c8_spectrum_discrete",
+        "H_\u03c8_spectrum_equals_zeros"
+      ],
+      "definitions": [
+        "potential",
+        "H_\u03c8"
+      ],
+      "sorry_count": 8,
+      "has_documentation": true,
+      "has_qcal_info": true,
+      "theorem_count": 7,
+      "axiom_count": 2,
+      "definition_count": 2,
+      "doc_comment_count": 13,
+      "imports": [
+        "Mathlib.Analysis.InnerProductSpace.Basic",
+        "Mathlib.Analysis.InnerProductSpace.L2Space",
+        "Mathlib.Analysis.Calculus.Deriv.Basic",
+        "Mathlib.MeasureTheory.Function.L2Space",
+        "Mathlib.MeasureTheory.Measure.Lebesgue.Basic",
+        "Mathlib.Topology.Algebra.Module.Basic",
+        "Mathlib.Analysis.NormedSpace.OperatorNorm.Basic",
+        "Mathlib.Analysis.NormedSpace.Star.Basic",
+        "RiemannAdelic.Operator.H_psi_core"
+      ]
+    },
+    {
+      "filename": "TraceFormula.lean",
+      "exists": true,
+      "size_bytes": 15247,
+      "line_count": 488,
+      "theorems": [
+        "for",
+        "trace_formula"
+      ],
+      "axioms": [
+        "eigenvalue",
+        "eigenvalue_monotone",
+        "eigenvalue_unbounded",
+        "eigenvalue_zeta_correspondence",
+        "weyl_law",
+        "selberg_trace_formula",
+        "weil_explicit_formula",
+        "guinand_summation_formula",
+        "spectral_measure",
+        "regularized_trace"
+      ],
+      "definitions": [
+        "SmoothCompactSupport",
+        "Prime"
+      ],
+      "sorry_count": 2,
+      "has_documentation": true,
+      "has_qcal_info": true,
+      "theorem_count": 2,
+      "axiom_count": 10,
+      "definition_count": 2,
+      "doc_comment_count": 13,
+      "imports": [
+        "Mathlib.Analysis.Complex.Basic",
+        "Mathlib.Analysis.Calculus.Deriv.Basic",
+        "Mathlib.MeasureTheory.Integral.IntervalIntegral",
+        "Mathlib.NumberTheory.ArithmeticFunction",
+        "Mathlib.Data.Real.Pi.Bounds",
+        "Mathlib.Topology.Basic",
+        "RiemannAdelic.RiemannZeta",
+        "RiemannAdelic.H_Psi_Properties"
+      ]
+    }
+  ],
+  "theorems_found": [
+    "for",
+    "is",
+    "zeta_series",
+    "zeta_functional_equation",
+    "on",
+    "of",
+    "zeta_euler_product",
+    "uses",
+    "H_\u03c8_dense_domain",
+    "H_\u03c8_symmetric",
+    "provides",
+    "applies",
+    "H_\u03c8_essentially_self_adjoint",
+    "for",
+    "for",
+    "trace_formula"
+  ],
+  "axioms_found": [
+    "encapsulates",
+    "represents",
+    "encapsulates",
+    "zeta_pole_at_one",
+    "zeta_trivial_zeros",
+    "zeta_nontrivial_zeros_in_strip",
+    "riemann_hypothesis",
+    "H_\u03c8_spectrum_discrete",
+    "H_\u03c8_spectrum_equals_zeros",
+    "eigenvalue",
+    "eigenvalue_monotone",
+    "eigenvalue_unbounded",
+    "eigenvalue_zeta_correspondence",
+    "weyl_law",
+    "selberg_trace_formula",
+    "weil_explicit_formula",
+    "guinand_summation_formula",
+    "spectral_measure",
+    "regularized_trace"
+  ],
+  "sorry_count": 14,
+  "integration_status": {
+    "riemann_zeta_complete": true,
+    "h_psi_properties_complete": true,
+    "trace_formula_complete": true,
+    "mutual_imports": true
+  },
+  "qcal_coherence": 1.0,
+  "errors": [],
+  "warnings": []
+}

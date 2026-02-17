@@ -115,6 +115,7 @@ theorem spectrum_infinite : Set.Infinite infiniteSpectrum := by
   rw [Set.infinite_coe_iff]
   -- The spectrum is infinite because zeta_zero n → ∞
   -- and eigenvalue is injective (since zeta_zero is strictly monotone)
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
   sorry
 
 /-- All eigenvalues are purely imaginary -/
@@ -201,6 +202,7 @@ theorem berry_keating_spectrum_complete :
     ∃ f : infiniteSpectrum → Spectrum H, Function.Injective f := by
   -- The deep connection between eigenvectors and power functions x^{-s}
   -- where ζ(s) = 0 establishes the correspondence
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
   sorry
 
 /-- Spectrum contains all eigenvalues from zeta zeros -/

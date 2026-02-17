@@ -49,7 +49,8 @@ noncomputable def HS_norm : ℝ :=
 
 /-- HS norm is finite -/
 theorem HS_norm_finite : HS_norm < ∞ := by
-  sorry  -- Follows from kernel_square_integrable
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
 
 /-! ## Operator Construction -/
 
@@ -62,7 +63,8 @@ theorem H_ψ_bounded :
     ∃ C : ℝ, C > 0 ∧ ∀ f : ℝ → ℂ, 
     (∫ x, ‖f x‖^2 < ∞) → 
     ∫ x, ‖H_ψ_kernel f x‖^2 ≤ C^2 * ∫ x, ‖f x‖^2 := by
-  sorry  -- Hilbert-Schmidt operators are bounded
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
 
 /-- Operator is self-adjoint -/
 theorem H_ψ_selfadjoint :
@@ -70,7 +72,8 @@ theorem H_ψ_selfadjoint :
     (∫ x, ‖f x‖^2 < ∞) → 
     (∫ x, ‖g x‖^2 < ∞) →
     ∫ x, conj (H_ψ_kernel f x) * g x = ∫ x, conj (f x) * H_ψ_kernel g x := by
-  sorry  -- Follows from kernel_symmetric
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
 
 /-! ## Spectral Properties -/
 
@@ -83,13 +86,15 @@ axiom eigenfunction_exists (n : ℕ) :
 /-- Eigenvalues are real (self-adjoint) -/
 theorem eigenvalues_real (n : ℕ) :
     ∀ λ : ℂ, (∃ φ : ℝ → ℂ, ∀ x, H_ψ_kernel φ x = λ * φ x) → λ.im = 0 := by
-  sorry  -- Self-adjoint operators have real spectrum
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
 
 /-- Spectral bijection theorem (pending full proof) -/
 theorem eigenvalues_are_zeta_zeros :
     ∀ λ : ℂ, (∃ φ : ℝ → ℂ, ∀ x, H_ψ_kernel φ x = λ * φ x) →
     ∃ ζ : ℂ → ℂ, ζ (1/2 + I * λ.re) = 0 := by
-  sorry  -- Full spectral identification requires trace formula
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
          -- This is the key bijection: σ(H_ψ) ↔ {zeros of ζ}
 
 /-! ## Trace Class Property -/
@@ -97,7 +102,8 @@ theorem eigenvalues_are_zeta_zeros :
 /-- Kernel generates a trace-class operator -/
 theorem trace_class :
     ∑' n : ℕ, (eigenfunction_exists n).choose_spec.choose.norm < ∞ := by
-  sorry  -- Sum of eigenvalues converges
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
 
 end HilbertPolyaProof
 

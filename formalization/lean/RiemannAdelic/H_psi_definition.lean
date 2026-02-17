@@ -114,6 +114,7 @@ lemma potential_term_symmetric (f g : ℝ → ℂ) (x : ℝ) :
     conj (π * Zeta.special (1 / 2) * log x * g x) * f x := by
   -- π y Zeta.special (1/2) son reales, log x es real
   -- Por lo tanto el término es simétrico
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
   sorry
 
 -- Teorema: El operador H_Ψ es simétrico sobre Schwartz_Rpos
@@ -182,6 +183,7 @@ theorem Hψ_symmetric_on_Schwartz :
         ∫ x in Set.Ioi 0, conj (π * Zeta.special (1/2) * log x * g x) * f x := by
           rw [kinetic_symmetric, potential_symmetric]
     _ = ∫ x in Set.Ioi 0, conj (Hψ g x) * f x := by
+          -- TODO: Complete using QCAL.Noesis.spectral_correspondence
           sorry
 
 /-!
@@ -199,6 +201,7 @@ theorem Hψ_is_hermitian :
     conj (∫ x in Set.Ioi 0, Hψ g x * conj (f x)) := by
   intro f g hf hg
   -- Sigue de la simetría
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
   sorry
 
 -- Corolario: Los autovalores de H_Ψ son reales
