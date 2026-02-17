@@ -178,7 +178,7 @@ class AuronNeuralMultiV2:
         category = sorry_info.get("primary_category", "unknown")
         context_hash = self.get_context_hash(context)
         
-        # 1. Verificar patrón aprendido
+                lines[line-1] = learned
         if context_hash in self.learning_history["patterns"]:
             learned = self.learning_history["patterns"][context_hash]
             self.log(f"🎯 Patrón aprendido: {learned}")
