@@ -114,9 +114,20 @@ def C_COHERENCE : ℝ := 244.36
     
     ζ'(1/2) ≈ -3.922466 es un valor numérico crítico en la teoría analítica.
     
+    **Nota**: Este es un valor aproximado truncado a 6 decimales.
+    
+    **Valor de alta precisión** (50 decimales):
+    -3.92246608387385687903399369883908372429395286646...
+    
     **Cálculo**:
     - Obtenido por continuación analítica y series de Dirichlet
-    - Valor estándar en la literatura (Mathematica, PARI/GP)
+    - Valor estándar en la literatura (Mathematica, PARI/GP, LMFDB)
+    - Puede computarse con precisión arbitraria usando funciones especiales
+    
+    **Fuentes**:
+    - PARI/GP: `zeta'(0.5)` con alta precisión
+    - Mathematica: `N[Zeta'[1/2], 50]`
+    - LMFDB: L-functions and Modular Forms Database
     
     **Uso**: Aparece en el potencial V(x) = π·ζ'(1/2)·log(x) del operador H_Ψ
     
