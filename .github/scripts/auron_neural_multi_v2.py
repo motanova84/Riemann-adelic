@@ -438,7 +438,7 @@ class AuronNeuralMultiV2:
         results = {
             "transformations": self.transformations,
             "success": self.success_count,
-            "fail": self.fail_count,
+        output_path = Path(sys.argv[2]) if len(sys.argv) >= 3 else Path('auron_multi_results.json')
             "changes_made": changes_made,
             "learning_stats": {
                 "patterns_learned": len(self.learning_history["patterns"]) - self.learning_history.get("previous_patterns", 0),
