@@ -16,7 +16,7 @@ import re
 
 class AuronNeuralV2:
     def __init__(self):
-        self.repo_root = Path(__file__).parent.parent.parent
+        self.repo_root = Path(__file__).parent.parent.parent.parent
         self.lean_dir = self.repo_root / 'formalization' / 'lean'
         self.knowledge_base = Path('/tmp/noesis_knowledge_v2')
         self.transformations = []
@@ -169,11 +169,78 @@ class AuronNeuralV2:
         solutions.sort(key=lambda x: x["similarity"], reverse=True)
         return solutions[:3]
     
+    def apply_trivial_with_priority(self, filepath, line, context):
+        """Aplica soluciones triviales con máxima prioridad"""
+        # Ordered from most specific to least specific to avoid short-circuiting
+        # Note: Both 'by X' and standalone 'X' versions are included because:
+        # - 'by X' is required in term mode (Lean 4 standard)
+        # - Standalone 'X' may work in proof mode or specific contexts
+        # Compilation validation will catch failures for each attempt
+        trivial_patterns = [
+            ('sorry', 'by simp only'),
+            ('sorry', 'by norm_num'),
+            ('sorry', 'by trivial'),
+            ('sorry', 'by simp'),
+            ('sorry', 'by rfl'),
+            ('sorry', 'trivial'),
+            ('sorry', 'rfl'),
+        ]
+        
+        for old, new in trivial_patterns:
+            backup = self.backup_file(filepath)
+            try:
+                with open(filepath, 'r') as f:
+                    content = f.read()
+                
+                lines = content.split('\n')
+                lines[line-1] = lines[line-1].replace('sorry', new, 1)
+                
+                with open(filepath, 'w') as f:
+                    f.write('\n'.join(lines))
+                
+                if self.validate_compilation():
+                    # Aprender este patrón
+                    context_hash = self.get_context_hash(context)
+                    self.learning_history["patterns"][context_hash] = new
+                    self.learning_history["success_rate"][new] = self.learning_history["success_rate"].get(new, 0) + 1
+                    
+                    self.log(f"✅ TRIVIAL RESUELTO: {new}")
+                    return True, new
+                else:
+                    shutil.move(backup, filepath)
+            except Exception as e:
+                self.log(f"⚠️ Error aplicando patrón trivial: {e}", "ERROR")
+                if backup.exists():
+                    shutil.move(backup, filepath)
+        
+        return False, None
+    
     def apply_transformation_with_learning(self, filepath, line, code, context, sorry_info):
         """Aplica transformaciones con aprendizaje y validación"""
         context_hash = self.get_context_hash(context)
+        category = sorry_info.get("primary_category", "unknown")
         
-        # 1. Intentar patrón aprendido previamente
+        # PRIORIDAD 1: Triviales - Procesar primero si es categoría trivial
+        if category == "trivial" or any(kw in context.lower() for kw in ["rfl", "trivial", "simp", "norm_num"]):
+            self.log(f"🎯 Intentando resolución TRIVIAL prioritaria")
+            success, pattern = self.apply_trivial_with_priority(filepath, line, context)
+            if success:
+                self.success_count += 1
+                self.learning_history["total_success"] += 1
+                
+                self.transformations.append({
+                    "file": str(filepath),
+                    "line": line,
+                    "pattern": pattern,
+                    "status": "success",
+                    "learned": True,
+                    "priority": "trivial",
+                    "context_hash": context_hash
+                })
+                
+                return True
+        
+        # PRIORIDAD 2: Intentar patrón aprendido previamente
         if context_hash in self.learning_history["patterns"]:
             learned_pattern = self.learning_history["patterns"][context_hash]
             self.log(f"🎯 Patrón aprendido encontrado: {learned_pattern}")
@@ -220,7 +287,7 @@ class AuronNeuralV2:
                 if backup.exists():
                     shutil.move(backup, filepath)
         
-        # 2. Buscar soluciones en otros repositorios
+        # PRIORIDAD 3: Buscar soluciones en otros repositorios
         similar_solutions = self.find_similar_solutions_from_knowledge(context)
         for solution in similar_solutions:
             if solution["type"] == "proof_pattern":
@@ -270,7 +337,7 @@ class AuronNeuralV2:
                     if backup.exists():
                         shutil.move(backup, filepath)
         
-        # 3. Probar patrones por orden de prioridad
+        # PRIORIDAD 4: Probar patrones por orden de prioridad
         for old, new in self.replacement_patterns:
             backup = self.backup_file(filepath)
             
@@ -312,7 +379,7 @@ class AuronNeuralV2:
                 if backup.exists():
                     shutil.move(backup, filepath)
         
-        # 4. Si todo falla, registrar fallo
+        # PRIORIDAD 5: Si todo falla, registrar fallo
         self.fail_count += 1
         self.learning_history["total_attempts"] += 1
         
