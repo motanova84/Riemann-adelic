@@ -1,0 +1,88 @@
+{
+  "title": "Reloj Compton - Complete Analysis",
+  "description": "Derivation of f₀ from Compton frequencies and fundamental constants",
+  "qcal_framework": "QCAL ∞³",
+  "author": "José Manuel Mota Burruezo Ψ ✧ ∞³",
+  "institution": "Instituto de Conciencia Cuántica (ICQ)",
+  "orcid": "0009-0002-1923-0773",
+  "doi": "10.5281/zenodo.17379721",
+  "frequency_fundamental_Hz": 141.54594210226705,
+  "frequency_theoretical_Hz": 141.7001,
+  "error_percent": 0.10879166474331602,
+  "validation_status": "PASSED",
+  "compton_frequencies": {
+    "electron": {
+      "particle": "e⁻",
+      "mass_kg": 9.1093837015e-31,
+      "frequency_Hz": 1.235589963807414e+20,
+      "wavelength_m": 2.426310238683092e-12,
+      "energy_eV": 510998.9499961642
+    },
+    "proton": {
+      "particle": "p",
+      "mass_kg": 1.67262192369e-27,
+      "frequency_Hz": 2.2687318153206176e+23,
+      "wavelength_m": 1.3214098553893347e-15,
+      "energy_eV": 938272088.1604904
+    },
+    "neutron": {
+      "particle": "n",
+      "mass_kg": 1.67492749804e-27,
+      "frequency_Hz": 2.2718590790532924e+23,
+      "wavelength_m": 1.3195909058097332e-15,
+      "energy_eV": 939565420.5203888
+    },
+    "planck": {
+      "particle": "m_P",
+      "mass_kg": 2.1764343427178984e-08,
+      "frequency_Hz": 2.952099196683532e+42,
+      "wavelength_m": 1.015522982211421e-34,
+      "energy_eV": 1.2208901285838954e+28
+    },
+    "mass_ratios": {
+      "m_p/m_e": 1836.1526734400013,
+      "m_n/m_e": 1838.6836617324589,
+      "m_P/m_e": 2.389222382145913e+22,
+      "m_P/m_p": 1.3012111774288052e+19
+    }
+  },
+  "cosmic_scale_factor": {
+    "K": 244012331.51815477,
+    "mass_ratio_m_P_over_m_e": 2.389222382145913e+22,
+    "mass_ratio_cbrt": 28801748.79324949,
+    "phi": 1.618033988749895,
+    "phi_cubed": 4.23606797749979,
+    "factor_2_interpretation": "Wave-particle duality",
+    "cbrt_interpretation": "Geometric bridging of quantum-gravity scales",
+    "phi3_interpretation": "Three-dimensional golden ratio geometry"
+  },
+  "master_equation": {
+    "f0_calculated_Hz": 141.54594210226705,
+    "f0_theoretical_Hz": 141.7001,
+    "error_absolute_Hz": 0.15415789773294353,
+    "error_percent": 0.10879166474331602,
+    "master_equation_components": {
+      "c_over_2pi_m_per_s": 47713451.59236942,
+      "sqrt_mass_ratio": 154571096332.591,
+      "alpha": 0.0072973525693,
+      "phi": 1.618033988749895,
+      "length_ratio_l_P_over_lambda_C": 6.661370003948655e-24,
+      "K_cosmic_scale_factor": 244012331.51815477
+    },
+    "scale_factor_derivation": {
+      "K": 244012331.51815477,
+      "mass_ratio_m_P_over_m_e": 2.389222382145913e+22,
+      "mass_ratio_cbrt": 28801748.79324949,
+      "phi": 1.618033988749895,
+      "phi_cubed": 4.23606797749979,
+      "factor_2_interpretation": "Wave-particle duality",
+      "cbrt_interpretation": "Geometric bridging of quantum-gravity scales",
+      "phi3_interpretation": "Three-dimensional golden ratio geometry"
+    },
+    "validation_status": "PASSED",
+    "precision_dps": 50,
+    "timestamp": "2026-02-17T14:29:00.313299Z"
+  },
+  "timestamp": "2026-02-17T14:29:00.313319Z",
+  "precision_dps": 50
+}
