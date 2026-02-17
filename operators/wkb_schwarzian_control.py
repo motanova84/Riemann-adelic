@@ -85,7 +85,7 @@ QCAL Integration:
 
 import numpy as np
 from typing import Tuple, Dict, Any, Optional, Callable
-from scipy.integrate import quad
+from scipy.integrate import quad, trapezoid
 from scipy.optimize import fsolve
 import warnings
 
@@ -539,8 +539,7 @@ class WKBSchwartzianControl:
         y_vals = np.linspace(y_range[0], y_range[1], n_points)
         integrand_vals = np.array([integrand(y) for y in y_vals])
         
-        # Trapezoid rule (use scipy for compatibility)
-        from scipy.integrate import trapezoid
+        # Trapezoid rule
         integral = trapezoid(integrand_vals, y_vals)
         
         # Theoretical prediction
