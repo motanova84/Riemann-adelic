@@ -212,45 +212,45 @@ where δ = |x-u|/min{x,u} is the relative distance.
 This estimate is crucial for proving that the resolvent difference
 is in the weak trace class (Schatten-1,∞).
 -/
-theorem K_z_holder_exact (z : ℂ) (hz : z.re > 0) :
+theorem K_z_holder_exact (κ : ℂ) (C' : ℝ) (z : ℂ) (hz : z.re > 0) :
     ∃ (C : ℝ) (hC : C > 0), ∀ x u > 0, |x - u| < min x u / 2 → x > u →
-      let t := 2 * Real.sqrt |C_const| * |log (x/u)|
+      let t := 2 * Real.sqrt |C_const| * |Real.log (x / u)|
       let δ := |x - u| / min x u
-      ‖K_z z x u‖ ≤ C * δ^(1/2) / (min x u) := by
+      ‖K_z z x u‖ ≤ C * Real.sqrt δ / (min x u) := by
+  classical
   -- Constant from Whittaker expansion
-  use |C_const|^(1/2) * Real.sqrt (2 * Real.sqrt |C_const|)
-  constructor
+  let C : ℝ := |C_const|^(1/2) * Real.sqrt (2 * Real.sqrt |C_const|)
+  refine ⟨C, ?hC_pos, ?hC_bound⟩
   · -- C > 0
     sorry -- Follows from positivity of constants
-  
-  intros x u hx hu h_close h_order t δ
-  
-  -- Whittaker Hölder estimate
-  have h_whittaker : ‖WhittakerM κ (1/2) t - WhittakerM κ (1/2) 0‖ 
-      ≤ C' * ‖t‖^(1/2) := by
-    sorry -- Hölder continuity of Whittaker functions
-  
-  -- Relate t to δ via logarithm estimate
-  have h_log_bound : |log (x/u)| ≤ 2 * δ := by
-    -- log(1+v) ≤ 2v for v ∈ [0, 1/2]
-    sorry
-  
-  have h_t_bound : ‖t‖ ≤ 2 * Real.sqrt |C_const| * δ := by
-    simp [t]
-    exact h_log_bound
-  
-  -- Combine estimates  
-  calc ‖K_z z x u‖ 
-      = ‖-(1/u) * (u/x)^z * (WhittakerM κ (1/2) t - 1)‖ := by
-        sorry -- Definition of K_z
-      _ ≤ (1/u) * ‖(u/x)^z‖ * ‖WhittakerM κ (1/2) t - 1‖ := by
-        sorry -- Triangle inequality
-      _ ≤ (1/u) * 1 * (C' * (2 * Real.sqrt |C_const| * δ)^(1/2)) := by
-        sorry -- Apply bounds
-      _ = C * δ^(1/2) / u := by
-        sorry -- Algebra and C definition
-      _ ≤ C * δ^(1/2) / (min x u) := by
-        sorry -- min x u ≤ u when x > u
+  · intro x u hx hu h_close h_order
+    
+    -- Whittaker Hölder estimate
+    have h_whittaker : ‖WhittakerM κ (1/2) t - WhittakerM κ (1/2) 0‖
+        ≤ C' * Real.sqrt ‖t‖ := by
+      sorry -- Hölder continuity of Whittaker functions
+    
+    -- Relate t to δ via logarithm estimate
+    have h_log_bound : |Real.log (x / u)| ≤ 2 * δ := by
+      -- log(1+v) ≤ 2v for v ∈ [0, 1/2]
+      sorry
+    
+    have h_t_bound : ‖t‖ ≤ 2 * Real.sqrt |C_const| * δ := by
+      simp [t]
+      exact h_log_bound
+    
+    -- Combine estimates  
+    calc ‖K_z z x u‖ 
+        = ‖-(1 / u) * (u / x)^z * (WhittakerM κ (1/2) t - 1)‖ := by
+          sorry -- Definition of K_z
+        _ ≤ (1 / u) * ‖(u / x)^z‖ * ‖WhittakerM κ (1/2) t - 1‖ := by
+          sorry -- Triangle inequality
+        _ ≤ (1 / u) * 1 * (C' * Real.sqrt (2 * Real.sqrt |C_const| * δ)) := by
+          sorry -- Apply bounds using h_whittaker and h_t_bound
+        _ = C * Real.sqrt δ / u := by
+          sorry -- Algebra and definition of C
+        _ ≤ C * Real.sqrt δ / (min x u) := by
+          sorry -- min x u ≤ u when x > u
 
 /-!
 ## ═══════════════════════════════════════════════════════════════════
