@@ -48,6 +48,11 @@ lean_lib HilbertPolyaProof where
   globs := #[.submodules `HilbertPolyaProof]
   roots := #[`HilbertPolyaProof]
 
+-- Sabio library - 6-step proof architecture (Weyl → BS → Krein → Selberg → Connes → Riemann)
+lean_lib sabio where
+  globs := #[.submodules `sabio]
+  roots := #[`sabio]
+
 -- Main executable
 @[default_target]
 lean_exe «riemann-adelic-lean» where
