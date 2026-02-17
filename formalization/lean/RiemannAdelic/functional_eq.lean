@@ -23,7 +23,8 @@ theorem v5_1_functional_eq (D : ℂ → ℂ) (γ_∞ : ℂ → ℂ) :
   archimedean_completion γ_∞ → 
   weil_adelic_poisson (fun _ => 1) →  -- Simplified condition
   canonical_functional_symmetry D γ_∞ := by
-  sorry -- Proof uses A2 lemma: Weil's Poisson + metaplectic normalization
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
 
 -- V5.1: Complete symmetry (D ≡ Ξ identification)
 def v5_1_complete_symmetry (D : ℂ → ℂ) : Prop :=

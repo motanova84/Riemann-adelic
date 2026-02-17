@@ -85,6 +85,7 @@ def l2_convergent_flow (Φ : ℝ → ℂ) : Prop :=
 -- Main positivity theorem
 theorem main_positivity_theorem (Φ : ℝ → ℂ) :
   factorizable_schwartz_bruhat Φ → l2_convergent_flow Φ := by
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
   sorry
 
 -- Energy finiteness condition
@@ -94,6 +95,7 @@ def finite_energy (Φ : ℝ → ℂ) : Prop :=
 -- A1 finite scale flow: detailed version
 theorem A1_finite_scale_flow_detailed (Φ : ℝ → ℂ) :
   factorizable_schwartz_bruhat Φ → finite_energy Φ := by
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
   sorry
 
 -- Tate's theorem on factorization
@@ -102,10 +104,12 @@ theorem tate_factorization (Φ : ℝ → ℂ) :
   ∃ (Φ_∞ : ℝ → ℂ) (Φ_p : ℕ → ℝ → ℂ), 
     gaussian_decay Φ_∞ ∧ 
     (∀ p : ℕ, Nat.Prime p → compact_support_p_adic (Φ_p p) p) := by
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
   sorry
 
 -- Weil index and local factors
-def weil_local_factor (p : ℕ) (s : ℂ) : ℂ := sorry
+def weil_local_factor (p : ℕ) (s : ℂ) : ℂ := -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+ sorry
 
 -- Product convergence for adelic determinant
 def adelic_product_convergence (D : ℂ → ℂ) : Prop :=
@@ -143,7 +147,8 @@ noncomputable def kernel_RH : PositiveKernel where
     apply le_of_lt
     -- The sum is strictly positive for non-zero f
     -- Here we use that Gaussian kernels are strictly positive definite
-    sorry  -- Requires full Bochner theorem from functional analysis
+    -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+    sorry
 
 /-- Trace class operator -/
 structure TraceClassOperator where
@@ -247,7 +252,8 @@ theorem main_positivity_theorem :
       -- Here we use a crude bound: any continuous function can be mollified
       -- In practice, the Weil-Guinand formula only applies to test functions
       -- with rapid decay (Schwartz class)
-      sorry  -- Requires Schwartz function theory from functional analysis
+      -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+      sorry
     exact guinand_explicit_formula f h_decay
   · -- Trace class positivity
     use spectral_operator_RH.eigenvals
@@ -264,7 +270,8 @@ theorem positive_kernel_implies_critical_line :
     ∀ (D : ℂ → ℂ),
     (∀ s : ℂ, D s = ∫ x, ∫ y, K.K x y * Complex.exp (I * s * (x - y))) →
     (∀ z : ℂ, D z = 0 → z.re = 1/2 ∨ z.re = 0 ∨ z.re = 1) := by
-  sorry  -- PROOF OUTLINE:
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
   -- 1. Given: K positive definite and symmetric K(x,y) = K(-x,-y)
   -- 2. Define D(s) = ∫∫ K(x,y)·exp(is(x-y)) dx dy
   -- 3. D is Fourier transform of K, inherits positivity structure

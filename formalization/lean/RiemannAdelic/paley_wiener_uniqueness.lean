@@ -27,6 +27,7 @@ lemma add_exp_le_max_exp_mul {A1 A2 B1 B2 : ℝ} {z : ℂ}
     (hB1 : B1 ≤ max B1 B2) (hB2 : B2 ≤ max B1 B2) :
     A1 * Real.exp (B1 * ‖z‖) + A2 * Real.exp (B2 * ‖z‖) ≤ 
     (A1 + A2) * Real.exp ((max B1 B2) * ‖z‖) := by
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
   sorry
 
 -- Teorema de Paley–Wiener fuerte (versión axiomática que se demostraría con Mathlib completo)

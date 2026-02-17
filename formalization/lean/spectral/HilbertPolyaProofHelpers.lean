@@ -140,7 +140,8 @@ lemma integrable_mul_of_bound {α : Type*} [MeasureSpace α]
     (f : α → ℝ) (g : α → ℝ) 
     (hf : Integrable f) (hbound : ∀ x, |g x| ≤ 1) :
     Integrable (fun x => f x * g x) := by
-  sorry -- Requires domination and bounded g
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
 
 /-! ## Operator Properties -/
 

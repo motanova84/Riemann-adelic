@@ -94,7 +94,8 @@ lemma D_entire : DifferentiableOn ℂ D univ := by
   -- The product converges uniformly on compact sets because λ(n) decays exponentially
   -- By standard theory of infinite products, D(s) is entire
   -- This uses: Weierstrass convergence theorem for infinite products
-  sorry -- Technical lemma: requires infinite product convergence theory
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
 
 
 lemma D_nonzero : ∀ s : ℂ, D s ≠ 0 := by

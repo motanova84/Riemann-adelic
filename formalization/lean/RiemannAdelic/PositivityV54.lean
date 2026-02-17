@@ -47,7 +47,8 @@ lemma trace_class_pos (s : ℂ) (h : 0 < s.re) :
       apply Real.exp_pos.le
     trace_finite := by
       -- ∑ₙ exp(-Re(s)·n²) < ∞ para Re(s) > 0
-      sorry  -- PROOF: Compare with Gaussian integral
+      -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+      sorry
       -- ∑ₙ exp(-a·n²) ≤ 1 + ∫₀^∞ exp(-a·x²) dx = 1 + √(π/a)/2 < ∞
       -- This is absolutely convergent for any a > 0
   }

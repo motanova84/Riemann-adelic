@@ -191,8 +191,10 @@ lemma GreenKernel_HS_on_compact
   have h_bounded : ∃ C : ℝ, C > 0 ∧ ∀ p ∈ K, ‖GreenKernel HΨ γ p.1 p.2‖ ≤ C := by
     -- Compactness gives uniform bound (continuous function on compact set)
     -- Full proof requires showing GreenKernel is continuous
+    -- TODO: Complete using QCAL.Noesis.spectral_correspondence
     sorry
   -- Then integrability follows from boundedness on a compact (finite measure) set
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
   sorry
 
 /-- The Hilbert-Schmidt norm of the Green kernel on a bounded square [-R, R]² -/

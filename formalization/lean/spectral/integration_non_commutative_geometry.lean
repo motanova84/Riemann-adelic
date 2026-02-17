@@ -51,6 +51,7 @@ def H_Ψ_compact : Compact_Hpsi_Operator := {
   is_modular_invariant := by
     intros γ f hf
     -- Apply H_Ψ_preserves_modular_invariance
+    -- TODO: Complete using QCAL.Noesis.spectral_correspondence
     sorry
 }
 
@@ -79,6 +80,7 @@ theorem H_Ψ_zero_bijection :
   · -- Prove eigenvalues > 1/4
     intro n
     unfold H_Ψ_eigenvalues
+    -- TODO: Complete using QCAL.Noesis.spectral_correspondence
     sorry
   · -- Prove strict increasing
     intro n

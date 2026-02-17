@@ -40,7 +40,8 @@ lemma D_approx_tendsto_ideal (s : ℂ) :
   intro n _
   -- As ε → 0, the term (n + 1/2 + ε·sin(πn)) → (n + 1/2)
   -- Therefore (1 - s/(n + 1/2 + ε·sin(πn))) → (1 - s/(n + 1/2))
-  sorry  -- PROOF STRATEGY:
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
   -- 1. Show ε·sin(πn) → 0 as ε → 0 (bounded sine function)
   -- 2. Apply continuous.tendsto for the rational function z ↦ 1 - s/z
   -- 3. Use composition: tendsto of continuous function of tendsto
@@ -65,7 +66,8 @@ lemma xi_over_P_eq_reflection (s : ℂ) (hs : s.re ∈ Set.Ioo 0 1) :
   field_simp
   -- After simplification: ξ(s)/P(s) = π^(-s/2)·Γ(s/2)·ζ(s)
   -- Need to show this equals π^(s/2)/(Γ(s/2)·sin(πs))
-  sorry  -- PROOF STRATEGY:
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
   -- 1. Functional equation: ξ(s) = ξ(1-s)
   -- 2. Use ζ(s) = π^(s-1/2)·Γ((1-s)/2)/Γ(s/2)·ζ(1-s)
   -- 3. Simplify to obtain sin(πs) in denominator
@@ -81,7 +83,8 @@ theorem D_limit_equals_xi (s : ℂ) (hs : s.re ∈ Set.Ioo 0 1) :
   rw [h3, ← h2] at h1
   -- Now h1 : D_approx s ε → π^(s/2)/(Γ(s/2)·sin(πs))
   -- We need: D_approx s ε / [π^(s/2)/(Γ(s/2)·sin(πs))] → 1
-  sorry  -- PROOF STRATEGY:
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
   -- 1. Apply tendsto_div with h1 and tendsto_const_nhds
   -- 2. Show D_approx s ε / D_ideal s → 1 as ε → 0
   -- 3. Use D_ideal s = ξ(s)/P(s) from h2 and h3

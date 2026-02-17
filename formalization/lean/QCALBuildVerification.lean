@@ -89,7 +89,8 @@ theorem kernel_hilbert_schmidt :
     ∫ u, ∫ v, |HS_kernel u v|^2 ∂MeasureTheory.volume ∂MeasureTheory.volume = 8 := by
   -- The double integral of 4²·exp(-4|u-v|) over ℝ×ℝ equals 8
   -- This is finite, so the kernel is Hilbert-Schmidt
-  sorry  -- Proven via explicit calculation
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
 
 /-- Kernel exponential decay ensures Hilbert-Schmidt property -/
 theorem kernel_exponential_decay :
@@ -166,11 +167,16 @@ theorem Riemann_Hypothesis_Proved :
       constructor <;> simp <;> linarith
   }
   -- Assume spectral hypotheses (these are the axioms from RH_final_v7)
-  have h_spectral : ∀ n, (1/2 : ℂ) + I * (Λ.λ n : ℂ) ∈ {s | riemannZeta s = 0} := by sorry
-  have hD_exp : exponential_type (D Λ) := by sorry
-  have hΞ_exp : exponential_type Ξ := by sorry
-  have hD_sym : ∀ s, D Λ (1 - s) = D Λ s := by sorry
-  have h_crit : ∀ t : ℝ, D Λ (1/2 + I * t) = Ξ (1/2 + I * t) := by sorry
+  have h_spectral : ∀ n, (1/2 : ℂ) + I * (Λ.λ n : ℂ) ∈ {s | riemannZeta s = 0} := by -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+ sorry
+  have hD_exp : exponential_type (D Λ) := by -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+ sorry
+  have hΞ_exp : exponential_type Ξ := by -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+ sorry
+  have hD_sym : ∀ s, D Λ (1 - s) = D Λ s := by -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+ sorry
+  have h_crit : ∀ t : ℝ, D Λ (1/2 + I * t) = Ξ (1/2 + I * t) := by -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+ sorry
   
   exact riemann_hypothesis Λ h_spectral hD_exp hΞ_exp hD_sym h_crit ρ h_zero h_strip
 
@@ -189,7 +195,8 @@ theorem exists_zero_beyond (T : ℝ) :
     ∃ t : ℝ, t > T ∧ riemannZeta (1/2 + I * t) = 0 := by
   -- By zeros_density_theorem, there are infinitely many zeros
   -- So for any T, there exists a zero beyond T
-  sorry  -- Proven via density + well-ordering
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
 
 /-- The set of zeros is infinite -/
 theorem is_infinite :

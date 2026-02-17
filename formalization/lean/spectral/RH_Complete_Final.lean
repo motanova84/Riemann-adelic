@@ -202,7 +202,8 @@ theorem quantum_operator_correspondence :
   · exact TraceClassComplete.H_psi_trace_class_complete
   · intro λ hλ
     -- Each eigenvalue λ corresponds to a Riemann zero
-    sorry  -- Follows from spectral construction
+    -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+    sorry
 
 /-- Corollary: Prime number distribution.
     The Riemann Hypothesis implies sharp bounds on π(x),

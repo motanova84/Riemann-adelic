@@ -98,6 +98,7 @@ Key properties:
 def spectrum_H_psi : Set ℂ := by
   -- The spectrum consists of eigenvalues λ where (H_Ψ - λI) is not invertible
   -- This is axiomatized pending full spectral theory formalization
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
   sorry
 
 /-- Axiom: The spectrum is non-empty -/
@@ -156,6 +157,7 @@ theorem spectral_trace_weierstrass_bound :
     (∀ n, λ n ∈ spectrum_H_psi) ∧
     (∀ N : ℕ, Complex.abs (∑ n in Finset.range N, λ n ^ s) ≤ 
               C * (N : ℝ) ^ (1 - s.re + ε)) := by
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
   sorry
 
 /-!

@@ -196,6 +196,7 @@ theorem riemann_hypothesis_via_spectral_trace :
 /-- Versión alternativa: los polos de Tr están todos en Re(s) = 1/2 -/
 theorem spectral_poles_only_on_critical_line :
     ∀ s : ℂ, spectral_trace s = 0 → s.re = 1/2 := by
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
   sorry
 
 -- ===========================================================================
@@ -204,7 +205,8 @@ theorem spectral_poles_only_on_critical_line :
 
 /-- Aproximación numérica de la traza usando N términos -/
 def trace_approx (s : ℂ) (N : ℕ) : ℂ :=
-  (1 / (2 * π)) * sorry  -- ∫_{-N}^N (1/2 + it)^{-s} dt
+  (1 / (2 * π)) * -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+ sorry
 
 /-- La aproximación converge a la traza -/
 axiom trace_approx_converges (s : ℂ) (hs : s.re > 1) :

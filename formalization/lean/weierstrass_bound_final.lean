@@ -120,6 +120,7 @@ lemma E_continuous (p : ℕ) : Continuous (E p) := by
 -/
 theorem E_factor_bound_mathlib {p : ℕ} (hp : p ≥ 1) {z : ℂ} (hz : abs z ≤ 1/2) :
     abs (E p z - 1) ≤ 2 * (abs z)^(p + 1) := by
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
   sorry
 
 /-- Specific bound for E_1(z) when |z| ≤ 1/2 -/

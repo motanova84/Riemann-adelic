@@ -42,6 +42,29 @@ sabio_infinity4_report_*.json
 # Lean validation reports
 formalization/lean/validation_report.json
 
+# NOESIS-AMDA-AURON system generated files
+amda_report.json
+amda_stats.json
+auron_changes.json
+metrics.md
+noesis_auto_seal.log
+
+# NOESIS Integration generated files
+noesis_integrated_report.md
+noesis_integration_results.json
+noesis_complete.md
+noesis_sync_state.json
+VICTORY.md
+# NOESIS CEREBRAL V2.0 generated files
+amda_report_v2.json
+amda_report_v2.md
+auron_results_v2.json
+auron_neural.log
+noesis_cerebral_v2.log
+noesis_cerebral_v2_summary.json
+commit_msg_*.txt
+*.lean.bak.*
+
 # Virtual environments
 venv/
 env/
@@ -251,3 +274,22 @@ demo_aug_waveform.png
 demo_codon_comparison.png
 rh_genetic_*.png
 kappa_experiment_results/
+noesis_cerebral.log
+test_*.json
+test_*.md
+.auron_backups/
+
+# NOESIS CEREBRAL V2.0 generated files
+amda_report_v2.json
+amda_report_v2.md
+auron_results_v2.json
+auron_neural.log
+noesis_cerebral_v2.log
+amda_deep_v2.log
+commit_msg_*.txt
+noesis_cycle_metrics.md
+*.lean.bak
+*.lean.bak.*
+VICTORIA_FINAL.md
+# Keep learning history (persistent knowledge)
+!.auron_learning.json

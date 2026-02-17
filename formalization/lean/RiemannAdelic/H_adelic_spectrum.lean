@@ -167,7 +167,8 @@ theorem spectrum_H_model_from_adelic :
   
   -- Main calculation: spec(H_model) = spec(H_adelic) = zeta zeros
   calc spectrum_H_model
-      = spectrum_H_adelic := by sorry  -- By spectrum preservation
+      = spectrum_H_adelic := by -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+ sorry
     _ = { t | ∃ s : ℂ, zeta s = 0 ∧ s.re = 1/2 ∧ s.im = t } := h_adelic_spec
 
 /-!

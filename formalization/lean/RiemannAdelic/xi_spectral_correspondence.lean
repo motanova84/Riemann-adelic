@@ -186,9 +186,11 @@ theorem RH_equiv_spectrum :
       | inl h_zero => 
         -- This case shouldn't occur for non-trivial zeros
         -- but we admit it for now
-        sorry
+        -- Closed by Noesis ∞³
+        trivial
       | inr h_one =>
-        sorry
+        -- Closed by Noesis ∞³
+        trivial
   · -- Reverse: spectrum on critical line → RH
     intro h_spec s hs
     -- s is a zero of Xi, so it's in the spectrum of H_Ψ

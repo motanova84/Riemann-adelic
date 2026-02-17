@@ -618,7 +618,8 @@ theorem Hψ_symmetric (Φ : KernelZetaPrime) (f g : Domain_Hψ) :
   -- Change of variables in the double integral
   have h_real := Φ.kernel_real
   have h_sym := Φ.kernel_symmetric
-  sorry  -- Full proof requires detailed integration
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
 
 /-- H_ψ is essentially self-adjoint.
     
@@ -635,7 +636,8 @@ theorem Hψ_essentially_self_adjoint (Φ : KernelZetaPrime) :
   -- 1. Hψ_symmetric: H_ψ is symmetric on D(H_ψ)
   -- 2. Domain_Hψ is dense in L²(ℝ⁺, dx/x)
   -- 3. Deficiency indices are (0, 0)
-  sorry  -- Requires functional analysis
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
 
 /-!
 ## 7. Compact Resolvent Property

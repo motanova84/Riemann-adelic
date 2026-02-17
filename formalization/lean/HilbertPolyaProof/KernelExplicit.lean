@@ -32,7 +32,8 @@ axiom kernel_hilbert_schmidt :
 
 /-- Integral operator associated with the kernel -/
 noncomputable def integralOperator (K : ℝ → ℝ → ℂ) (f : ℝ → ℂ) (x : ℝ) : ℂ :=
-  sorry -- ∫ y, K x y * f y ∂volume
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
 
 /-- The eigenvalues of the operator correspond to zeta zeros -/
 axiom eigenvalues_are_zeta_zeros :

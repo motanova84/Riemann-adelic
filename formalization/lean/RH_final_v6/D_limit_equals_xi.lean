@@ -46,7 +46,8 @@ theorem D_convergence_rate :
     ∀ (s : ℂ), 0 < s.re → s.re < 1 →
     ∃ (C : ℝ), ∀ (ε : ℝ), 0 < ε → ε < 1 →
     ‖D_function s ε / (xi_function s / P_polynomial s) - 1‖ ≤ C * ε := by
-  sorry -- Exponential convergence from spectral gap
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
 
 /-!
 ## Connection to Spectral Operator
@@ -63,7 +64,8 @@ theorem D_zeros_are_eigenvalues :
     ∀ (n : ℕ), n < 1000 →
     ∃ (s : ℂ), D_function s ε = 0 ∧ 
     abs (s - (n + 1/2 + ε * sin (π * n))) < ε^2 := by
-  sorry -- Follows from implicit function theorem
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
 
 /-!
 ## Uniform Convergence on Critical Strip
@@ -80,7 +82,8 @@ theorem uniform_convergence_on_compact :
     ∀ (ε : ℝ), 0 < ε → ε < ε₀ →
     ∀ (s : ℂ), s ∈ K →
     ‖D_function s ε / (xi_function s / P_polynomial s) - 1‖ < δ := by
-  sorry -- Uniform convergence via Arzelà-Ascoli
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
 
 end DFunctionConvergence
 

@@ -1,0 +1,185 @@
+name: NOESIS Multi-Repo V2.0
+
+on:
+  schedule:
+    - cron: '0 */2 * * *'  # Every 2 hours
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: 'Operation mode'
+        required: true
+        default: 'full'
+        type: choice
+        options:
+          - sync
+          - harvest
+          - analyze
+          - full
+      force_sync:
+        description: 'Force re-sync all repositories'
+        required: false
+        default: false
+        type: boolean
+      max_changes:
+        description: 'Maximum changes per cycle'
+        required: false
+        default: '20'
+        type: string
+      dry_run:
+        description: 'Dry run mode (no actual changes)'
+        required: false
+        default: true
+        type: boolean
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+
+jobs:
+  cerebral-seal:
+    name: NOESIS CEREBRAL V2.0
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+      
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests numpy scipy
+      
+      - name: Setup SSH for private repos
+        if: ${{ secrets.NOESIS_SSH_KEY != '' }}
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.NOESIS_SSH_KEY }}
+      
+      - name: NOESIS - Synchronize repositories
+        id: sync
+        run: |
+          python .github/scripts/noesis_orchestrator.py \
+            --mode sync \
+            ${{ inputs.force_sync == true && '--force' || '' }}
+          
+          if [ -f .noesis_state.json ]; then
+            REPOS_SYNCED=$(jq -r '.repos_synced | length' .noesis_state.json || echo "0")
+            echo "repos_synced=$REPOS_SYNCED" >> $GITHUB_OUTPUT
+          fi
+      
+      - name: 🔍 Diagnostics - Pre-Analysis
+        id: diagnostics_pre
+        run: |
+          echo "🔍 Running NOESIS diagnostics before processing..."
+          python .github/scripts/diagnose_noesis.py || true
+      
+      - name: AMDA - Analyze sorries
+        id: amda
+        run: |
+          python .github/scripts/v2/amda_deep_v2.py amda_report_v2.json amda_report_v2.md
+          
+          if [ -f amda_report_v2.json ]; then
+            TOTAL_SORRIES=$(jq -r '.total_sorries' amda_report_v2.json || echo "0")
+            echo "total_sorries=$TOTAL_SORRIES" >> $GITHUB_OUTPUT
+          fi
+      
+      - name: ⚡ AURON - Execute transformations with diagnostics
+        id: auron
+        run: |
+          echo "⚡ AURON NEURAL V2.0 - Executing with enhanced logging..."
+          
+          MODE="dry-run"
+          if [ "${{ inputs.dry_run }}" = "false" ]; then
+            MODE="execute"
+          fi
+          
+          python .github/scripts/v2/auron_neural_v2.py \
+            $MODE \
+            amda_report_v2.json \
+            auron_neural_results.json
+          
+          if [ -f auron_neural_results.json ]; then
+            SUCCESS=$(jq -r '.success' auron_neural_results.json || echo "0")
+            FAIL=$(jq -r '.fail' auron_neural_results.json || echo "0")
+            TOTAL=$((SUCCESS + FAIL))
+            if [ $TOTAL -gt 0 ]; then
+              SUCCESS_RATE=$(awk "BEGIN {printf \"%.1f\", ($SUCCESS/$TOTAL)*100}")
+            else
+              SUCCESS_RATE="0"
+            fi
+            echo "successful=$SUCCESS" >> $GITHUB_OUTPUT
+            echo "success_rate=$SUCCESS_RATE" >> $GITHUB_OUTPUT
+          fi
+      
+      - name: 🔍 Diagnostics - Post-Analysis
+        if: always()
+        id: diagnostics_post
+        run: |
+          echo "🔍 Running NOESIS diagnostics after processing..."
+          python .github/scripts/diagnose_noesis.py || true
+      
+      - name: Upload artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: noesis-v2-reports-${{ github.run_number }}
+          path: |
+            amda_report_v2.json
+            amda_report_v2.md
+            auron_neural_results.json
+            noesis_cerebral_v2.log
+            amda_deep_v2.log
+            auron_neural.log
+            .noesis_state.json
+            .auron_learning.json
+            commit_msg_*.txt
+          retention-days: 30
+      
+      - name: Create Pull Request
+        if: steps.auron.outputs.successful > 0 && inputs.dry_run == false
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: |
+            [NOESIS-NEURAL] ${{ steps.auron.outputs.successful }} sorries eliminated
+            Success rate: ${{ steps.auron.outputs.success_rate }}%
+          branch: noesis-v2-cycle-${{ github.run_number }}
+          delete-branch: true
+          title: '[NOESIS V2] Cycle ${{ github.run_number }}: ${{ steps.auron.outputs.successful }} sorries eliminated'
+          body: |
+            ## NOESIS CEREBRAL V2.0 - Automated Sorry Elimination
+            
+            **Cycle:** ${{ github.run_number }}
+            
+            ### Statistics
+            - **Sorries eliminated:** ${{ steps.auron.outputs.successful }}
+            - **Success rate:** ${{ steps.auron.outputs.success_rate }}%
+            
+            **Automated by NOESIS CEREBRAL V2.0**
+          labels: |
+            automated
+            noesis-v2
+            sorry-elimination
+      
+      - name: Summary
+        if: always()
+        run: |
+          echo "## NOESIS CEREBRAL V2.0 - Cycle Complete" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Cycle:** ${{ github.run_number }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Results" >> $GITHUB_STEP_SUMMARY
+          echo "- Sorries analyzed: ${{ steps.amda.outputs.total_sorries }}" >> $GITHUB_STEP_SUMMARY
+          echo "- Changes made: ${{ steps.auron.outputs.successful }}" >> $GITHUB_STEP_SUMMARY
+          echo "- Success rate: ${{ steps.auron.outputs.success_rate }}%" >> $GITHUB_STEP_SUMMARY

@@ -36,7 +36,8 @@ theorem gaussian_integral :
 theorem gaussian_integral_scaled (a : ℝ) (ha : 0 < a) :
     ∫ x : ℝ, Real.exp (-a * x^2) = Real.sqrt (π / a) := by
   -- Use substitution u = √a · x
-  sorry -- Requires:
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
   -- 1. Change of variables
   -- 2. gaussian_integral
   -- 3. Basic algebra
@@ -91,7 +92,8 @@ theorem gaussian_cos_squared :
     intro u
     exact sq_le_one_of_abs_le_one (abs_cos_le_one u)
   -- Therefore exp(-2u²)cos²(u) ≤ exp(-2u²)
-  sorry -- Requires:
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
   -- 1. Bound cos² ≤ 1
   -- 2. Monotonicity of integral
   -- 3. gaussian_integral_scaled

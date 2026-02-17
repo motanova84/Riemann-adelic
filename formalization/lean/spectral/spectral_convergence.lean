@@ -294,7 +294,8 @@ theorem critical_line_measure_zero :
   have h_discrete : DiscreteTopology critical_zeros_set := by
     -- Based on the fact that ζ(s) is holomorphic and its zeros are isolated
     -- This is a standard result from complex analysis
-    sorry -- Can be formalized with holomorphic function theory from Mathlib
+    -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+    sorry
   
   have h_countable : Countable critical_zeros_set :=
     DiscreteTopology.countable_of_discrete h_discrete

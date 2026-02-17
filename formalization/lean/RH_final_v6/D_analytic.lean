@@ -291,7 +291,8 @@ lemma Xi_holomorphic_at_zero : DifferentiableAt ℂ Xi 0 := by
   
   -- La demostración rigurosa usa la fórmula del residuo
   -- y la continuidad de los demás factores
-  sorry -- Requiere teoría de residuos y Gamma
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
 
 /--
 Extensión holomorfa de Ξ(s) a s = 1.
@@ -313,7 +314,8 @@ lemma Xi_holomorphic_at_one : DifferentiableAt ℂ Xi 1 := by
   -- Entonces Ξ(1) = (1/2)·1·0·(∞)·... → finito por cancelación
   
   -- La demostración rigurosa usa la fórmula del residuo
-  sorry -- Requiere teoría de residuos y zeta
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
 
 /--
 **Teorema principal (Script 15)**: Ξ(s) es entera.

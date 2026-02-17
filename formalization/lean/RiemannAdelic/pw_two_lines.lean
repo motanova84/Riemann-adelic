@@ -8,21 +8,25 @@ namespace PaleyWienerUniqueness
 
 /-- Función entera de orden ≤ 1 -/
 def Entire (f : ℂ → ℂ) : Prop :=
-  ∃ (order : ℝ), order ≤ 1 ∧ sorry  -- Entire function of order ≤ 1
+  ∃ (order : ℝ), order ≤ 1 ∧ -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+ sorry
 
 /-- Función de test de Paley-Wiener -/
 structure PaleyWienerTest where
   φ : ℝ → ℂ
   compact_support : ∃ R > 0, ∀ x, |x| > R → φ x = 0
-  smooth : sorry  -- ContDiff ℝ ⊤ φ
+  smooth : -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+ sorry
 
 /-- Medida espectral asociada a una función -/
 noncomputable def spectral_measure (D : ℂ → ℂ) : sorry :=
-  sorry  -- μ_D defined via zeros and multiplicities
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
 
 /-- Pairing de Weil entre medida y función test -/
 noncomputable def weil_pairing (μ : sorry) (φ : PaleyWienerTest) : ℂ :=
-  sorry  -- ⟨μ, φ⟩
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
 
 /-- Teorema de Levin: Unicidad por pairings de Paley-Wiener -/
 theorem levin_uniqueness_theorem (D F : ℂ → ℂ) 
@@ -31,7 +35,8 @@ theorem levin_uniqueness_theorem (D F : ℂ → ℂ)
     (hPair : ∀ φ : PaleyWienerTest, 
       weil_pairing (spectral_measure D) φ = weil_pairing (spectral_measure F) φ) :
     D = F := by
-  sorry  -- Proof via Hadamard product representation and uniqueness
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
 
 /-- Teorema: Determinancia por dos líneas (Paley-Wiener) -/
 theorem two_line_determinancy (D F : ℂ → ℂ) 

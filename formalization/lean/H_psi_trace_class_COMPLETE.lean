@@ -168,7 +168,8 @@ theorem summable_inv_pow (p : ℝ) (hp : p > 1) :
         · exact le_refl _
   · -- Convergence follows from standard p-series test
     -- This requires analysis from Mathlib
-    sorry  -- This would require importing Real.summable_nat_rpow or similar
+    -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+    sorry
 
 /-- Sumabilidad de los coeficientes espectrales de H_Ψ -/
 theorem hPsi_coeffs_summable :
