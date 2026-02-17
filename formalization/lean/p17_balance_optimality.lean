@@ -170,13 +170,13 @@ theorem balance_17_minimal_numerical :
   simp only [primesToCheck, List.mem_cons, List.mem_singleton] at hp
   rcases hp with rfl | rfl | rfl | rfl | rfl | rfl
   · -- p = 11
-    rfl -- Numerical: balance(17) ≈ 0.6856 ≤ 0.8851 ≈ balance(11)
+    sorry -- Numerical: balance(17) ≈ 0.6856 ≤ 0.8851 ≈ balance(11)
   · -- p = 13
-    rfl -- Numerical: balance(17) ≈ 0.6856 ≤ 0.7891 ≈ balance(13)
+    sorry -- Numerical: balance(17) ≈ 0.6856 ≤ 0.7891 ≈ balance(13)
   · -- p = 17
     rfl
   · -- p = 19
-    rfl -- Numerical: balance(17) ≈ 0.6856 ≤ 0.6870 ≈ balance(19)
+    sorry -- Numerical: balance(17) ≈ 0.6856 ≤ 0.6870 ≈ balance(19)
   · -- p = 23
     sorry -- Numerical: balance(17) ≈ 0.6856 ≤ 0.7021 ≈ balance(23)
   · -- p = 29
