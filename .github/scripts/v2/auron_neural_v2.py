@@ -172,6 +172,10 @@ class AuronNeuralV2:
     def apply_trivial_with_priority(self, filepath, line, context):
         """Aplica soluciones triviales con máxima prioridad"""
         # Ordered from most specific to least specific to avoid short-circuiting
+        # Note: Both 'by X' and standalone 'X' versions are included because:
+        # - 'by X' is required in term mode (Lean 4 standard)
+        # - Standalone 'X' may work in proof mode or specific contexts
+        # Compilation validation will catch failures for each attempt
         trivial_patterns = [
             ('sorry', 'by simp only'),
             ('sorry', 'by norm_num'),

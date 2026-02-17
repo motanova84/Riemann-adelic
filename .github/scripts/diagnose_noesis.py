@@ -22,7 +22,7 @@ def check_sorries():
         return 0
 
 def check_trivial_candidates():
-    """Busca candidatos triviales no resueltos"""
+    """Busca candidatos triviales no resueltos (estimación aproximada)"""
     try:
         # Primero buscar todos los sorries
         result1 = subprocess.run(
@@ -32,6 +32,8 @@ def check_trivial_candidates():
         )
         
         # Luego filtrar los que tienen patrones triviales en el contexto
+        # Nota: Esta es una estimación - puede incluir falsos positivos si el
+        # patrón está en un comentario o contexto diferente en la misma línea
         trivial_patterns = ['rfl', 'trivial', 'simp', 'norm_num']
         candidates = 0
         
