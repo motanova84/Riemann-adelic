@@ -25,7 +25,8 @@ class AuronNeuralMultiV2:
         self.transformations = []
         self.success_count = 0
         self.fail_count = 0
-        self.max_changes_per_cycle = 20
+        # Leer max_changes de variable de entorno o usar default
+        self.max_changes_per_cycle = int(os.getenv('AURON_MAX_CHANGES', '20'))
         # Read dry_run from environment variable
         self.dry_run = os.getenv('AURON_DRY_RUN', 'false').lower() in ('true', '1', 'yes')
         
@@ -35,9 +36,9 @@ class AuronNeuralMultiV2:
         # Cargar historial de aprendizaje (PR #1717)
         self.learning_history = self.load_learning_history()
         
-            "trivial": ['rfl', 'trivial', 'norm_num', 'simp'],
+        # Patrones de reemplazo por categoría (sin prefijo 'by')
         self.category_strategies = {
-            "trivial": ['rfl', 'trivial', 'by norm_num', 'by simp'],
+            "trivial": ['rfl', 'trivial', 'norm_num', 'simp'],
             "structural": ['funext', 'ext', 'congr', 'rw'],
             "library_search": ['library_search', 'exact?', 'apply?', 'solve_by_elim'],
             "qcal": ['QCAL.Noesis.spectral_reflexivity', 'QCAL.Noetic.coherence_tensor'],
@@ -178,10 +179,13 @@ class AuronNeuralMultiV2:
         category = sorry_info.get("primary_category", "unknown")
         context_hash = self.get_context_hash(context)
         
-                lines[line-1] = learned
+        # 1. Verificar patrón aprendido
         if context_hash in self.learning_history["patterns"]:
             learned = self.learning_history["patterns"][context_hash]
             self.log(f"🎯 Patrón aprendido: {learned}")
+            
+            # Incrementar intentos
+            self.learning_history["total_attempts"] += 1
             
             backup = self.backup_file(filepath)
             try:
@@ -216,6 +220,9 @@ class AuronNeuralMultiV2:
         # 2. Buscar coincidencias en otros repositorios
         matches = self.find_cross_repo_matches(context, category)
         for match in matches[:2]:  # Probar top 2
+            # Incrementar intentos
+            self.learning_history["total_attempts"] += 1
+            
             backup = self.backup_file(filepath)
             try:
                 with open(filepath, 'r') as f:
@@ -224,11 +231,11 @@ class AuronNeuralMultiV2:
                 lines = content.split('\n')
                 # Intentar aplicar el patrón encontrado
                 if match["type"] == "proof_pattern":
-                    new_code = lines[line-1].replace('sorry', match["content"], 1)
+                    replacement = match["content"]
                 else:
-                    new_code = lines[line-1].replace('sorry', f"exact {match['name']}", 1)
+                    replacement = f"exact {match['name']}"
                 
-                lines[line-1] = new_code
+                lines[line-1] = lines[line-1].replace('sorry', replacement, 1)
                 
                 with open(filepath, 'w') as f:
                     f.write('\n'.join(lines))
@@ -238,8 +245,8 @@ class AuronNeuralMultiV2:
                     self.learning_history["total_success"] += 1
                     self.learning_history["repos_used"].append(match["repo"])
                     
-                    # Aprender este patrón
-                    self.learning_history["patterns"][context_hash] = new_code
+                    # Aprender este patrón (solo el reemplazo, no la línea completa)
+                    self.learning_history["patterns"][context_hash] = replacement
                     
                     self.transformations.append({
                         "file": str(filepath),
@@ -258,13 +265,24 @@ class AuronNeuralMultiV2:
         # 3. Probar estrategias de categoría
         strategies = self.category_strategies.get(category, [])
         for strategy in strategies:
+            # Incrementar intentos
+            self.learning_history["total_attempts"] += 1
+            
             backup = self.backup_file(filepath)
             try:
                 with open(filepath, 'r') as f:
                     content = f.read()
                 
                 lines = content.split('\n')
-                lines[line-1] = lines[line-1].replace('sorry', f"by {strategy}", 1)
+                # Determinar si necesita prefijo 'by' basado en el tipo de estrategia
+                if strategy in ['exact?', 'apply?', 'library_search', 'solve_by_elim']:
+                    # Estas tácticas no necesitan 'by'
+                    replacement = strategy
+                else:
+                    # Otras estrategias usan 'by'
+                    replacement = f"by {strategy}"
+                
+                lines[line-1] = lines[line-1].replace('sorry', replacement, 1)
                 
                 with open(filepath, 'w') as f:
                     f.write('\n'.join(lines))
@@ -273,7 +291,7 @@ class AuronNeuralMultiV2:
                     self.success_count += 1
                     self.learning_history["total_success"] += 1
                     self.learning_history["success_rate"][strategy] = self.learning_history["success_rate"].get(strategy, 0) + 1
-                    self.learning_history["patterns"][context_hash] = f"by {strategy}"
+                    self.learning_history["patterns"][context_hash] = replacement
                     
                     self.transformations.append({
                         "file": str(filepath),
@@ -438,7 +456,7 @@ class AuronNeuralMultiV2:
         results = {
             "transformations": self.transformations,
             "success": self.success_count,
-        output_path = Path(sys.argv[2]) if len(sys.argv) >= 3 else Path('auron_multi_results.json')
+            "fail": self.fail_count,
             "changes_made": changes_made,
             "learning_stats": {
                 "patterns_learned": len(self.learning_history["patterns"]) - self.learning_history.get("previous_patterns", 0),
@@ -449,6 +467,7 @@ class AuronNeuralMultiV2:
         }
         
         # Guardar resultados
+        output_path = Path(sys.argv[2]) if len(sys.argv) >= 3 else Path('auron_multi_results.json')
         output_path = Path(sys.argv[3]) if len(sys.argv) > 3 else Path('auron_multi_results.json')
         with open(output_path, 'w') as f:
             json.dump(results, f, indent=2)

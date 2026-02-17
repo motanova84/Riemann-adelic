@@ -54,7 +54,7 @@ class MetricsGenerator:
 | Sorries totales | {total_sorries} |
 | Sorries eliminados | {success} |
 | Sorries restantes | {total_sorries - success} |
-| Tasa de éxito | {success/(success+fail)*100:.1f}% | 
+| Tasa de éxito | {success/(success+fail)*100:.1f}% if (success+fail) > 0 else 'N/A' | 
 | Repositorios sincronizados | {len(kb.get('repos_synced', []))} |
 | Conocimiento total | {kb.get('total_items', 0)} items |
 
@@ -131,11 +131,14 @@ class MetricsGenerator:
             cycles_needed = remaining / success
             hours_estimated = cycles_needed * 6  # 6 horas por ciclo
             
+            from datetime import datetime, timedelta
+            completion_date = datetime.now() + timedelta(hours=hours_estimated)
+            
             md += f"""
 - **Sorries restantes:** {remaining}
 - **Ciclos estimados:** {cycles_needed:.1f}
 - **Tiempo estimado:** {hours_estimated:.1f} horas
-- **Fecha estimada de completitud:** {datetime.now().timestamp() + hours_estimated * 3600}
+- **Fecha estimada de completitud:** {completion_date.strftime('%Y-%m-%d %H:%M:%S')}
 """
         
         md += """
