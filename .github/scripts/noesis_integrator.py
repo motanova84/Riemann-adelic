@@ -77,46 +77,62 @@ class NoesisIntegrator:
         return patterns
     
     def integrate_sabio(self):
-        """Integra con SABIO ∞³"""
+        """Integra con SABIO ∞³ usando JSON"""
         self.log("🧬 INTEGRANDO SABIO ∞³...")
         
-        # Extraer patrones de frecuencia de SABIO
-        sabio_patterns = self.extract_sabio_patterns()
+        # Ejecutar verify_sabio.py para obtener estado SABIO
+        verify_script = self.repo_root / '.github/scripts/verify_sabio.py'
+        if not verify_script.exists():
+            self.results["sabio"] = {
+                "status": "error",
+                "error": "verify_sabio.py not found"
+            }
+            self.log("❌ verify_sabio.py not found", "ERROR")
+            return
         
-        # Alimentar a AMDA para clasificación
-        amda_input = {
-            "patterns": sabio_patterns,
-            "frequency": self.base_frequency,
-            "coherence": True
-        }
-        
-        # Ejecutar AMDA con patrones SABIO
-        amda_script = self.repo_root / '.github/scripts/v2/amda_deep_v2.py'
-        if amda_script.exists():
+        try:
+            result = subprocess.run(
+                [sys.executable, str(verify_script)],
+                cwd=self.repo_root,
+                capture_output=True,
+                text=True,
+                timeout=120
+            )
+            
+            # Intentar parsear JSON output
             try:
-                result = subprocess.run(
-                    [sys.executable, str(amda_script), "analyze"],
-                    cwd=self.repo_root,
-                    capture_output=True,
-                    text=True,
-                    timeout=300
-                )
+                sabio_data = json.loads(result.stdout)
+                self.results["sabio"] = sabio_data
                 
-                if result.returncode == 0:
-                    self.results["sabio"]["status"] = "success"
-                    self.results["sabio"]["patterns"] = sabio_patterns
-                    self.log("✅ SABIO integration successful")
+                # Log según estado
+                overall_status = sabio_data.get("overall", {}).get("status", "unknown")
+                if overall_status == "success":
+                    self.log(f"✅ SABIO ∞³ completamente operativo")
+                elif overall_status == "partial":
+                    self.log(f"⚠️ SABIO ∞³ parcialmente operativo", "WARNING")
                 else:
-                    self.results["sabio"]["status"] = "partial"
-                    self.results["sabio"]["error"] = result.stderr
-                    self.log(f"⚠️ SABIO integration partial: {result.stderr}", "WARNING")
-            except Exception as e:
-                self.results["sabio"]["status"] = "error"
-                self.results["sabio"]["error"] = str(e)
-                self.log(f"❌ SABIO integration error: {e}", "ERROR")
-        else:
-            self.results["sabio"]["status"] = "skipped"
-            self.log("⚠️ AMDA script not found, skipping SABIO integration", "WARNING")
+                    self.log(f"❌ SABIO ∞³ requiere atención", "WARNING")
+                    
+            except json.JSONDecodeError as je:
+                self.results["sabio"] = {
+                    "status": "error",
+                    "error": f"Invalid JSON output: {str(je)}",
+                    "raw_output": result.stdout[:500] if result.stdout else ""
+                }
+                self.log(f"❌ SABIO output no es JSON válido: {je}", "ERROR")
+                
+        except subprocess.TimeoutExpired:
+            self.results["sabio"] = {
+                "status": "timeout",
+                "message": "SABIO verification timed out after 120s"
+            }
+            self.log("❌ SABIO verification timeout", "ERROR")
+        except Exception as e:
+            self.results["sabio"] = {
+                "status": "exception",
+                "error": str(e)
+            }
+            self.log(f"❌ SABIO integration exception: {e}", "ERROR")
     
     def run_validation(self, workflow_name):
         """Ejecuta una validación específica"""
@@ -251,16 +267,47 @@ class NoesisIntegrator:
 
 """
         
-        # SABIO results
-        sabio_status = self.results["sabio"].get("status", "unknown")
-        status_icon = "✅" if sabio_status == "success" else "⚠️" if sabio_status == "partial" else "❌"
+        # SABIO results with new JSON structure
+        sabio_overall = self.results["sabio"].get("overall", {})
+        sabio_status = sabio_overall.get("status", "unknown")
+        
+        if sabio_status == "success":
+            status_icon = "✅"
+        elif sabio_status == "partial":
+            status_icon = "⚠️"
+        elif sabio_status == "unknown":
+            status_icon = "❓"
+        else:
+            status_icon = "❌"
+            
         report += f"{status_icon} **Estado:** {sabio_status}\n"
         
-        if "patterns" in self.results["sabio"]:
-            patterns = self.results["sabio"]["patterns"]
-            report += f"- **Frecuencia:** {patterns.get('frequency', 'N/A')} Hz\n"
-            report += f"- **Coherencia:** {patterns.get('coherence', False)}\n"
-            report += f"- **Fuentes SABIO:** {len(patterns.get('sources', []))}\n"
+        # Detalles de cada componente SABIO
+        if "frequency" in self.results["sabio"]:
+            freq_data = self.results["sabio"]["frequency"]
+            freq_status = freq_data.get("status", "unknown")
+            freq_msg = freq_data.get("message", "N/A")
+            report += f"- **Frecuencia:** {freq_msg} ({freq_status})\n"
+        
+        if "compiler" in self.results["sabio"]:
+            comp_data = self.results["sabio"]["compiler"]
+            comp_status = comp_data.get("status", "unknown")
+            comp_msg = comp_data.get("message", "N/A")
+            report += f"- **Compilador:** {comp_msg} ({comp_status})\n"
+        
+        if "lean" in self.results["sabio"]:
+            lean_data = self.results["sabio"]["lean"]
+            lean_status = lean_data.get("status", "unknown")
+            lean_msg = lean_data.get("message", "N/A")
+            report += f"- **Lean:** {lean_msg} ({lean_status})\n"
+        
+        if "python" in self.results["sabio"]:
+            py_data = self.results["sabio"]["python"]
+            py_status = py_data.get("status", "unknown")
+            py_msg = py_data.get("message", "N/A")
+            report += f"- **Python:** {py_msg} ({py_status})\n"
+        
+        report += f"- **Coherencia:** {sabio_overall.get('coherence', '♾³ ✓')}\n"
         
         report += "\n## 🔬 Validación RH - Resultados\n\n"
         
@@ -284,6 +331,12 @@ class NoesisIntegrator:
         report += f"- **Total flujos integrados:** {total_workflows}\n"
         report += f"- **Coherencia QCAL:** ♾³ ✓\n"
         report += f"- **Frecuencia base validada:** {self.base_frequency} Hz\n"
+        
+        # Add SABIO status summary
+        if sabio_status in ["success", "partial"]:
+            report += f"- **SABIO ∞³:** {status_icon} {sabio_status.upper()}\n"
+        else:
+            report += f"- **SABIO ∞³:** {status_icon} Requiere atención\n"
         
         return report
     

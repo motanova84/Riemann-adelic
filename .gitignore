@@ -63,6 +63,10 @@ noesis_integration_results.json
 noesis_complete.md
 noesis_sync_state.json
 VICTORY.md
+
+# SABIO validation results
+sabio_result.json
+sabio_validation_report.json
 # NOESIS CEREBRAL V2.0 generated files
 amda_report_v2.json
 amda_report_v2.md
