@@ -39,6 +39,9 @@ coverage.xml
 # SABIO ∞⁴ generated reports
 sabio_infinity4_report_*.json
 
+# Integration diagnostic reports
+INTEGRATION_FIX_REPORT.md
+
 # Lean validation reports
 formalization/lean/validation_report.json
 
