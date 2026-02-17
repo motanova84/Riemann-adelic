@@ -37,8 +37,9 @@ def check_trivial_candidates():
         
         for line in result1.stdout.split('\n'):
             if 'sorry' in line:
+                line_lower = line.lower()
                 for pattern in trivial_patterns:
-                    if pattern in line.lower():
+                    if pattern in line_lower:
                         candidates += 1
                         break
         

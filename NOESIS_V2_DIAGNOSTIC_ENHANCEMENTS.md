@@ -7,7 +7,7 @@ The NOESIS V2.0 system was experiencing **0% progress** despite running successf
 - After 3 cycles: 2,282 (0% reduction)
 - Real success rate: 3.9%
 - 42.8% classified as "Unknown"
-- 172 trivial sorries not being resolved
+- Trivial sorries not being resolved (194 identified, 8.5%)
 
 ## 🛠️ Solutions Implemented
 

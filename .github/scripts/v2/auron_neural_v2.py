@@ -171,14 +171,15 @@ class AuronNeuralV2:
     
     def apply_trivial_with_priority(self, filepath, line, context):
         """Aplica soluciones triviales con máxima prioridad"""
+        # Ordered from most specific to least specific to avoid short-circuiting
         trivial_patterns = [
-            ('sorry', 'rfl'),
-            ('sorry', 'trivial'),
-            ('sorry', 'by rfl'),
-            ('sorry', 'by trivial'),
-            ('sorry', 'by simp'),
             ('sorry', 'by simp only'),
             ('sorry', 'by norm_num'),
+            ('sorry', 'by trivial'),
+            ('sorry', 'by simp'),
+            ('sorry', 'by rfl'),
+            ('sorry', 'trivial'),
+            ('sorry', 'rfl'),
         ]
         
         for old, new in trivial_patterns:
