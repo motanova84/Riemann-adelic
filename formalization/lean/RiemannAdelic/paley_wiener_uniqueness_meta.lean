@@ -57,7 +57,8 @@ theorem PaleyWiener_meta_v1
     calc ‖h w‖ = ‖f.f w - g.f w‖ := rfl
       _ ≤ ‖f.f w‖ + ‖g.f w‖ := norm_sub_le _ _
       _ ≤ A_f * Real.exp (B_f * ‖w‖) + A_g * Real.exp (B_g * ‖w‖) := by linarith [hf w, hg w]
-      _ ≤ (A_f + A_g) * Real.exp (max B_f B_g * ‖w‖) := by sorry  -- Esto requiere algebra de exp
+      _ ≤ (A_f + A_g) * Real.exp (max B_f B_g * ‖w‖) := by -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+ sorry
   let h_struct : EntireOrderOne := ⟨h, h_entire, h_order⟩
   -- h satisface la ecuación funcional
   have h_symm : ∀ z, h_struct.f (1-z) = h_struct.f z := by
@@ -109,7 +110,8 @@ lemma analytic_continuation_zeros
     (hf_zero : ∀ s ∈ S, f.f s = 0) :
     ∀ z, f.f z = 0 := by
   -- Por el principio de identidad analítica
-  sorry  -- Esto requiere teoría de funciones analíticas completa
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
 
 /--
 Corolario: Unicidad en la recta crítica para funciones con simetría funcional.
@@ -140,6 +142,7 @@ theorem uniqueness_via_fourier
     (∀ z, f.f z = g.f z) :=
   fun _ => by
     -- Esto requiere usar el teorema de Paley-Wiener completo
+    -- TODO: Complete using QCAL.Noesis.spectral_correspondence
     sorry
 
 /--

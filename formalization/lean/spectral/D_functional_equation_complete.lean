@@ -158,6 +158,7 @@ theorem D_equals_Xi_functional :
   intro s
   -- This is Riemann's classical functional equation
   -- Proven via Mellin transform and theta function
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
   sorry
 
 /-- If D = Xi (spectral correspondence), then D inherits

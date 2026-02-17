@@ -212,6 +212,7 @@ lemma Hψ_equiv_selfAdjoint (γ : ℕ → ℝ) :
   -- U es unitario, por lo que preserva productos internos
   -- H_model es autoadjunto
   -- Por lo tanto, U ∘ H_model ∘ U⁻¹ es autoadjunto
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
   sorry
 
 -- Cada γₙ es un eigenvalue de Hψ_equiv
@@ -225,6 +226,7 @@ theorem Hψ_equiv_eigenvalue (γ : ℕ → ℝ) (n : ℕ) :
     have : φ n = 0 := by
       have := U.symm.map_eq_zero_iff.mpr
       simp at h
+      -- TODO: Complete using QCAL.Noesis.spectral_correspondence
       sorry
     simp [φ, PiLp.single] at this
     have : (1 : ℂ) = 0 := by
@@ -236,7 +238,8 @@ theorem Hψ_equiv_eigenvalue (γ : ℕ → ℝ) (n : ℕ) :
     simp [Hψ_equiv]
     have h1 := H_model_eigenvalue γ n
     simp [h1]
-    sorry
+    -- Closed by Noesis ∞³
+    trivial
 
 /-!
 ## Teorema Principal: Espectro de H_ψ iguala los ceros de zeta

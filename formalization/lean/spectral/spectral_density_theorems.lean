@@ -170,7 +170,8 @@ theorem abs_chi_half_line (t : ℝ) :
   
   -- |π^(it)| = 1
   have h_pi_abs : abs ((π : ℂ) ^ (t * I)) = 1 := by
-    sorry -- exp(it log π) has modulus 1
+    -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+    sorry
   
   -- Usar propiedades de la función Gamma
   -- |Γ(1/2 + it)|² = π / cosh(πt) (fórmula estándar)

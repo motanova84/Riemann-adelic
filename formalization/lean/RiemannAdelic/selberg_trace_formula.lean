@@ -51,6 +51,7 @@ def fourier_transform (h : ℝ → ℂ) (ξ : ℝ) : ℂ :=
 theorem test_function_fourier_decay :
   ∀ N : ℕ, ∃ C : ℝ, C > 0 ∧ ∀ ξ : ℝ,
     abs (fourier_transform test_function ξ) ≤ C / (1 + |ξ|)^N := by
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
   sorry
 
 /-- Clase de Schwartz: funciones con todas derivadas de decay rápido -/
@@ -110,6 +111,7 @@ def prime_side (h : ℝ → ℂ) : ℂ :=
 /-- El lado de primos converge para funciones de Schwartz -/
 theorem prime_side_convergence (h : SchwartzFunction) :
   ∃ L : ℂ, L = prime_side h.val := by
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
   sorry
 
 /-- Conexión con la derivada logarítmica de ζ(s)
@@ -193,6 +195,7 @@ theorem D_log_deriv_zeta_connection (s : ℂ) (hs : s.re > 1) (ε : ℝ) (hε : 
     -- d/ds log D(s) relacionado con -ζ'/ζ(s) más corrección
     ∀ δ > 0, ∃ ε₀ > 0, ∀ ε < ε₀,
       abs (correction s) < δ := by
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
   sorry
 
 /-- El número de ceros de D(s) en [0, T] está relacionado con N(T) de ζ(s)

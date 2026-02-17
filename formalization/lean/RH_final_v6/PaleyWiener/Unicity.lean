@@ -40,6 +40,7 @@ theorem unicity_on_critical_line
     (hvanish : VanishesOnCriticalLine f)
     (hgrowth : ∃ (M : ℝ), ∀ (z : ℂ), ‖f z‖ ≤ M * (1 + abs z.im)^2) :
     ∀ (z : ℂ), f z = 0 := by
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
   sorry
   -- Full proof uses Phragmén-Lindelöf theorem and complex analysis
 
@@ -58,6 +59,7 @@ theorem spectral_function_unique
     (hf_growth : ∃ (M : ℝ), ∀ (z : ℂ), ‖f z‖ ≤ M * (1 + abs z.im)^2)
     (hg_growth : ∃ (M : ℝ), ∀ (z : ℂ), ‖g z‖ ≤ M * (1 + abs z.im)^2) :
     ∃ (c : ℂ), ∀ (z : ℂ), f z = c * g z := by
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
   sorry
   -- Follows from unicity_on_critical_line applied to f - cg
 

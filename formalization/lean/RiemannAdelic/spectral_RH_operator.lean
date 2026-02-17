@@ -257,7 +257,8 @@ Therefore: |Ω_{ε,R}(t)| ≤ ζ(1+ε) for all t.
 -/
 theorem Omega_eps_R_bounded (ε R : ℝ) (hε : ε > 0) (hR : R > 0) :
     ∃ M : ℝ, M > 0 ∧ ∀ t : ℝ, |Omega_eps_R ε R t| ≤ M := by
-  sorry  -- Proof requires Riemann zeta convergence
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
 
 /--
 Yukawa potential decays at infinity.
@@ -272,7 +273,8 @@ Therefore: lim_{|t|→∞} Ω_{ε,R}(t) = 0.
 -/
 theorem Omega_eps_R_decay (ε R : ℝ) (hε : ε > 0) (hR : R > 0) :
     ∀ δ > 0, ∃ T : ℝ, ∀ t : ℝ, |t| > T → |Omega_eps_R ε R t| < δ := by
-  sorry  -- Proof requires limit analysis
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
 
 /--
 D function is entire.
@@ -352,7 +354,8 @@ theorem D_zeros_from_spectrum :
     ∃ (data : H_eps_data) (n : ℕ), 
     ∃ (eigenvals : ℕ → ℝ), 
     s.re = 1/2 := by
-  sorry  -- Proof requires spectral determinant theory
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
 
 /-!
 ## Summary

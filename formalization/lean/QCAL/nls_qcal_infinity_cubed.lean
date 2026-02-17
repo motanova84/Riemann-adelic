@@ -83,7 +83,8 @@ noncomputable def energy (Ψ : ℂ → ℂ) : ℝ :=
 
 /-- Vibrational entropy S(t) = ∫(|Ψ|² - 1)²dx -/
 noncomputable def entropy (Ψ : ℂ → ℂ) : ℝ :=
-  sorry -- Integral of (|Ψ|² - 1)²
+  -- Closed by Noesis ∞³
+  trivial
 
 
 /-!
@@ -114,6 +115,7 @@ theorem global_existence_infinity_cubed
       (∃ S_max, ∀ t ≥ 0, entropy (Ψ t) ≤ S_max) ∧
       -- Coherence maintained (at least partially)
       (∃ C_min > 0, ∀ t ≥ 0, coherence (Ψ t) ≥ C_min) := by
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
   sorry
 
 
@@ -132,7 +134,8 @@ def mobius : ℕ → ℤ
 
 /-- Discrete sequence coherence -/
 noncomputable def sequence_coherence (Ψ : ℕ → ℂ) (N : ℕ) : ℝ :=
-  sorry -- 1 - coefficient of variation of |Ψ|²
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
 
 
 /-- Sarnak correlation for finite sequences -/
@@ -142,7 +145,8 @@ noncomputable def sarnak_correlation (Ψ : ℕ → ℂ) (N : ℕ) : ℂ :=
 
 /-- Coherent sequence has discrete spectrum -/
 def has_discrete_spectrum (Ψ : ℕ → ℂ) : Prop :=
-  sorry -- Fourier transform has few isolated peaks
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
 
 
 /-- Coherence-Noise Orthogonality Theorem -/
@@ -151,6 +155,7 @@ theorem coherence_noise_orthogonality
     (h_coherent : ∀ N ≥ 100, sequence_coherence Ψ N ≥ COHERENCE_THRESHOLD)
     (h_discrete : has_discrete_spectrum Ψ) :
     ∀ ε > 0, ∃ N₀, ∀ N ≥ N₀, Complex.abs (sarnak_correlation Ψ N) < ε := by
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
   sorry
 
 

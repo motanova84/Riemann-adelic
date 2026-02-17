@@ -30,7 +30,8 @@ theorem D_functional_from_HDS (n : ℕ) (hn : 0 < n) (s : ℂ) :
   apply spectral_determinant_symmetry
   · exact H_commutes_with_S n hn  -- [H,S]=0
   · exact S_is_involution n hn    -- S²=I
-  · sorry
+  · -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+ sorry
 
 -- D(s) es función entera
 axiom D_entire : ∀ s : ℂ, ∃ε > 0, ∀ z, ‖z - s‖ < ε → D z ≠ 0 ∨ D z = 0
@@ -41,4 +42,5 @@ axiom D_order_le_one : ∃ C A : ℝ, ∀ s : ℂ, ‖D s‖ ≤ C * Real.exp (A
 -- Propiedad de crecimiento de D
 theorem D_growth_controlled (C A : ℝ) (hC : 0 < C) (hA : 0 < A) :
     ∀ s : ℂ, abs (D s) ≤ C * Real.exp (A * abs s) := by
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
   sorry

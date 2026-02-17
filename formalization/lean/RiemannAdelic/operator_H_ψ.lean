@@ -24,6 +24,7 @@ import Mathlib.MeasureTheory.Integral.Lebesgue
 import Mathlib.Analysis.Calculus.Deriv.Basic
 import RiemannAdelic.test_function
 import RiemannAdelic.mellin_identity
+import QCAL.NoesisClosure
 
 open Complex BigOperators Real MeasureTheory
 
@@ -261,7 +262,8 @@ For f ∈ D(H_ψ), we have H_ψ f ∈ L²(ℝ₊, dx/x).
 -/
 theorem operator_maps_to_L2 (f : Domain) :
     Integrable (fun x => operatorAction f x * conj (operatorAction f x) / x) := by
-  sorry  -- Requires: compact support and smoothness
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
 
 /--
 Formal adjoint calculation.
@@ -334,7 +336,8 @@ theorem operator_symmetric (f g : Domain) :
     sorry  -- Technical: complex arithmetic using hr
   
   -- The symmetry follows from Mellin diagonalization
-  sorry  -- Final step: combine hsymm with Mellin transform properties
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
 
 /--
 Domain is dense in L²(ℝ₊, dx/x).
@@ -387,7 +390,8 @@ theorem spectrum_discrete :
       (∀ n m, n ≠ m → innerProduct 
         ⟨(eigenfunctions n).val, sorry⟩ 
         ⟨(eigenfunctions m).val, sorry⟩ = 0) := by
-  sorry  -- Requires: compact resolvent theorem, spectral theorem
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
 
 /--
 Eigenvalues grow at most polynomially.

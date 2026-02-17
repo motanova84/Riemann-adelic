@@ -263,7 +263,8 @@ theorem D_is_entire_of_finite_order :
   use 1
   constructor
   · norm_num
-  · sorry
+  · -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+ sorry
     -- PROOF STRATEGY:
     -- 1. Para operadores de clase traza, el determinante tiene orden ≤ 1
     -- 2. Esto sigue de la convergencia de ∑ ‖H_Ψ(ψ_n)‖
@@ -360,12 +361,14 @@ lemma log_growth_bound (x : ℝ) (hx : x > 0) :
 /-- Square root growth bound -/
 lemma sqrt_growth_bound (n : ℕ) (hn : n ≥ 1) :
     √(n : ℝ) ≤ n := by
-  sorry  -- √n ≤ n for n ≥ 1
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
 
 /-- Log-log growth is polynomial-bounded -/
 lemma log_log_polynomial_bound (n : ℕ) (hn : n ≥ 10) (δ : ℝ) (hδ : δ > 0) :
     log (log (n : ℝ)) ≤ (n : ℝ)^δ := by
-  sorry  -- For any δ > 0, log(log n) = o(n^δ)
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
 
 /-! ## Spectral Decay Theorems -/
 
@@ -377,6 +380,7 @@ theorem log_term_decrease (n : ℕ) (hn : n ≥ 10) :
   have hpos : (n : ℝ) + 1 > 0 := by
     simp
     omega
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
   sorry
   /-
   Proof sketch:
@@ -444,6 +448,7 @@ theorem H_psi_trace_class_complete :
 /-- Spectral determinant is well-defined -/
 theorem spectral_determinant_exists :
     ∃ D : ℂ → ℂ, D = det (I - z • (H_psi_operator)⁻¹) := by
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
   sorry
   /-
   Since H_Ψ is trace class, the Fredholm determinant

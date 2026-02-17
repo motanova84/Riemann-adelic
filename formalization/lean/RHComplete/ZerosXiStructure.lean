@@ -116,8 +116,10 @@ theorem xi_zeros_symmetric : ∀ n, xi (1/2 + I * Λ n) = 0 ↔ xi (1/2 - I * Λ
   constructor
   · intro hz
     -- The zeros come in conjugate pairs
+    -- TODO: Complete using QCAL.Noesis.spectral_correspondence
     sorry
   · intro hz
+    -- TODO: Complete using QCAL.Noesis.spectral_correspondence
     sorry
 
 /-- The set of zeros equals the spectrum -/
@@ -158,6 +160,7 @@ theorem spectral_determinant_equals_xi :
   intro s
   -- From xi_hadamard and the relationship between zeros and eigenvalues
   -- Division by Λ n is well-defined since eigenvalues_nonzero
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
   sorry
 
 /-! ## Functional Equation Preservation -/
@@ -170,6 +173,7 @@ theorem hadamard_functional_equation :
   -- 1. xi_hadamard gives product representation
   -- 2. Zeros come in symmetric pairs about Re(s) = 1/2
   -- 3. The product over (s - ρ)(s - ρ̄) is symmetric under s ↔ 1-s
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
   sorry
 
 /-! ## Growth Estimates -/

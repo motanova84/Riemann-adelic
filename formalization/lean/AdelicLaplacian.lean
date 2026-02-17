@@ -66,13 +66,15 @@ end AdelicSpace
 -- ===========================================================================
 
 /-- El Laplaciano arquimediano (parte real): -d²/dx² -/
-def ArchimedeanLaplacian : AdelicSpace →L[ℝ] AdelicSpace := sorry
+def ArchimedeanLaplacian : AdelicSpace →L[ℝ] AdelicSpace := -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+ sorry
 -- Implementación: operador de segunda derivada
 -- Dominio: funciones en H²(ℝ) ⊂ L²(ℝ)
 
 theorem archimedean_laplacian_symmetric :
     ∀ (ψ φ : AdelicSpace),
     ⟪ArchimedeanLaplacian ψ, φ⟫_ℝ = ⟪ψ, ArchimedeanLaplacian φ⟫_ℝ := by
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
   sorry
 
 theorem archimedean_laplacian_positive :
@@ -108,17 +110,20 @@ def pAdicNeighbors (p : ℕ) [Fact (Nat.Prime p)] (tree : BruhatTitsTree p)
 /-- Laplaciano p-ádico: operador de diferencia en el árbol de Bruhat-Tits
     (Δ_ℚ_p ψ)(x) = Σ_{y∼x} [ψ(y) - ψ(x)]
 -/
-def pAdicLaplacian (p : ℕ) [Fact (Nat.Prime p)] : AdelicSpace →L[ℝ] AdelicSpace := sorry
+def pAdicLaplacian (p : ℕ) [Fact (Nat.Prime p)] : AdelicSpace →L[ℝ] AdelicSpace := -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+ sorry
 -- Implementación: suma sobre vecinos en el árbol
 
 theorem padic_laplacian_symmetric (p : ℕ) [Fact (Nat.Prime p)] :
     ∀ (ψ φ : AdelicSpace),
     ⟪pAdicLaplacian p ψ, φ⟫_ℝ = ⟪ψ, pAdicLaplacian p φ⟫_ℝ := by
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
   sorry
 
 theorem padic_laplacian_positive (p : ℕ) [Fact (Nat.Prime p)] :
     ∀ (ψ : AdelicSpace),
     0 ≤ ⟪ψ, pAdicLaplacian p ψ⟫_ℝ := by
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
   sorry
 
 -- ===========================================================================
@@ -126,7 +131,8 @@ theorem padic_laplacian_positive (p : ℕ) [Fact (Nat.Prime p)] :
 -- ===========================================================================
 
 /-- El Laplaciano adélico completo como suma de componentes locales -/
-def AdelicLaplacian : AdelicSpace →L[ℝ] AdelicSpace := sorry
+def AdelicLaplacian : AdelicSpace →L[ℝ] AdelicSpace := -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+ sorry
 -- Implementación:
 -- AdelicLaplacian ψ = ArchimedeanLaplacian ψ + ∑' p, pAdicLaplacian p ψ
 
@@ -134,6 +140,7 @@ def AdelicLaplacian : AdelicSpace →L[ℝ] AdelicSpace := sorry
 theorem prime_sum_converges :
     ∀ (ψ : AdelicSpace),
     Summable (fun (p : {p : ℕ // Nat.Prime p}) => ‖pAdicLaplacian p.val ψ‖) := by
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
   sorry
 
 /-- Simetría del Laplaciano adélico -/
@@ -143,6 +150,7 @@ theorem adelic_laplacian_is_symmetric :
   intro ψ φ
   -- La simetría se sigue de la simetría de cada componente
   -- y de la convergencia absoluta de la suma sobre primos
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
   sorry
 
 /-- Positividad del Laplaciano adélico -/
@@ -157,6 +165,7 @@ theorem adelic_laplacian_is_positive :
 theorem spectral_gap_exists :
     ∃ (λ₀ : ℝ), 0 < λ₀ ∧
     ∀ (λ : ℝ), λ ∈ spectrum ℝ AdelicLaplacian → λ = 0 ∨ λ₀ ≤ λ := by
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
   sorry
 
 -- ===========================================================================
@@ -169,17 +178,20 @@ def archimedeanHeatKernel (t : ℝ) (ht : 0 < t) (x y : ℝ) : ℝ :=
 
 /-- Núcleo de calor p-ádico en el árbol de Bruhat-Tits -/
 def pAdicHeatKernel (p : ℕ) [Fact (Nat.Prime p)] (t : ℝ) (ht : 0 < t)
-    (tree : BruhatTitsTree p) (x y : tree.vertices) : ℝ := sorry
+    (tree : BruhatTitsTree p) (x y : tree.vertices) : ℝ := -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+ sorry
 -- Implementación: propagación en el árbol con peso exponencial
 
 /-- Núcleo de calor adélico total (producto de factores locales) -/
-def AdelicHeatKernel (t : ℝ) (ht : 0 < t) : AdelicSpace → AdelicSpace := sorry
+def AdelicHeatKernel (t : ℝ) (ht : 0 < t) : AdelicSpace → AdelicSpace := -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+ sorry
 -- K_t(x,y) = K_t^ℝ(x_ℝ, y_ℝ) · ∏_p K_t^{ℚ_p}(x_p, y_p)
 
 /-- El núcleo de calor satisface la ecuación ∂_t K = Δ_𝔸 K -/
 theorem heat_equation :
     ∀ (t : ℝ) (ht : 0 < t),
     deriv (fun s => AdelicHeatKernel s ht) t = AdelicLaplacian (AdelicHeatKernel t ht) := by
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
   sorry
 
 /-- La ecuación de Chapman-Kolmogorov (semigrupo) -/
@@ -187,6 +199,7 @@ theorem chapman_kolmogorov :
     ∀ (s t : ℝ) (hs : 0 < s) (ht : 0 < t),
     AdelicHeatKernel (s + t) (by linarith) =
     AdelicHeatKernel s hs ∘ AdelicHeatKernel t ht := by
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
   sorry
 
 -- ===========================================================================
@@ -194,7 +207,8 @@ theorem chapman_kolmogorov :
 -- ===========================================================================
 
 /-- Traza del operador e^{-tΔ_𝔸} -/
-def HeatKernelTrace (t : ℝ) (ht : 0 < t) : ℝ := sorry
+def HeatKernelTrace (t : ℝ) (ht : 0 < t) : ℝ := -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+ sorry
 -- Tr(e^{-tΔ_𝔸}) = ∫_{𝔸_ℚ¹/ℚ^*} K_t(x,x) dx
 
 /-- Expansión asintótica de Weyl para t → 0⁺ -/
@@ -202,6 +216,7 @@ theorem heat_kernel_trace_asymptotics (t : ℝ) (ht : 0 < t) :
     ∃ (a₀ a₁ a₂ : ℝ),
     HeatKernelTrace t ht =
       a₀ * (4 * π * t)⁻¹ + a₁ * (16 * π * t)⁻¹ + a₂ + o(1) := by
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
   sorry
 -- a₀ = volumen del cociente
 -- a₁ = curvatura escalar integrada
@@ -232,6 +247,7 @@ def κ : ℝ := 4 * π / (f₀ * Φ)
 def C_QCAL : ℝ := 244.36
 
 theorem kappa_value : abs (κ - 2.577310) < 0.000001 := by
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
   sorry
 
 -- ===========================================================================
@@ -239,7 +255,8 @@ theorem kappa_value : abs (κ - 2.577310) < 0.000001 := by
 -- ===========================================================================
 
 /-- Operador de difusión con viscosidad: (1/κ)Δ_𝔸 -/
-def DiffusionOperator : AdelicSpace →L[ℝ] AdelicSpace := sorry
+def DiffusionOperator : AdelicSpace →L[ℝ] AdelicSpace := -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+ sorry
 -- DiffusionOperator = (1/κ) • AdelicLaplacian
 
 /-- Propiedades espectrales del operador de difusión -/

@@ -144,7 +144,8 @@ theorem zeros_on_critical_line [CompleteSpace H] (K_δ : H →L[ℂ] H)
   have h_1_minus_zero : D (1 - ρ) = 0 := by rw [h_symmetric]; exact hDzero
   -- By symmetry of real spectrum: Re(ρ) = Re(1-ρ) = 1 - Re(ρ)
   -- Therefore 2·Re(ρ) = 1, so Re(ρ) = 1/2
-  sorry  -- Requires: spectral theorem for self-adjoint operators
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
 
 /-- Criterio de positividad de de Branges aplicado al operador adélico -/
 theorem de_branges_positivity_criterion [CompleteSpace H] (K_δ : H →L[ℂ] H)

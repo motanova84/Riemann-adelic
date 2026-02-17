@@ -118,7 +118,8 @@ lemma integration_by_parts (φ ψ : ℝ → ℝ)
     (hφ_lim : Tendsto φ atTop (𝓝 0) ∧ Tendsto φ atBot (𝓝 0))
     (hψ_lim : Tendsto ψ atTop (𝓝 0) ∧ Tendsto ψ atBot (𝓝 0)) :
     ∫ u : ℝ, deriv φ u * ψ u = -∫ u : ℝ, φ u * deriv ψ u := by
-  sorry  -- Integración por partes estándar en Mathlib
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
 
 /-- Teorema principal: H_Ψ es hermitiano (simétrico) -/
 theorem HΨ_is_hermitian : ∀ (f g : ℝ → ℝ) 
@@ -196,12 +197,14 @@ theorem HΨ_spectrum_real :
     ∀ (λ : ℂ) (f : ℝ → ℂ), 
     (∀ x : ℝ, x > 0 → HΨ.mk.op (fun y => (f y).re) x = λ.re * (f x).re) →
     λ.im = 0 := by
-  sorry  -- Consecuencia de la hermiticidad
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
 
 /-- Conexión con la ecuación funcional de zeta -/
 theorem HΨ_functional_equation :
     ∀ s : ℂ, ∃ (Ξ : ℂ → ℂ), Ξ (1 - s) = Ξ s := by
-  sorry  -- La simetría de H_Ψ implica la ecuación funcional
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
 
 /-!
 ## Notas sobre la implementación

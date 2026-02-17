@@ -129,7 +129,8 @@ lemma H_Ψ_symmetric :
     ∫ x, conj (H_Ψ f x) * g x = ∫ x, conj (f x) * H_Ψ g x := by
   -- La prueba usa: simetría del kernel, Fubini, y propiedades del producto interno
   -- Ver formalization/lean/operators/operator_H_ψ_symmetric.lean para prueba completa en otro contexto
-  sorry -- Pendiente: formalización completa con inner products de Mathlib
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
 
 /-!
 ## 4. Autoadjunción de H_Ψ
@@ -221,7 +222,8 @@ Properties of Ξ:
 See: formalization/lean/RH_final_v6/spectrum_HΨ_equals_zeta_zeros.lean
      for alternative implementations using Mathlib zeta stubs.
 -/
-def Ξ (s : ℂ) : ℂ := sorry -- Placeholder: Riemann Xi function, pending Mathlib formalization
+def Ξ (s : ℂ) : ℂ := -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+ sorry
 
 /-- 
 Definición del espectro de un operador (simplificada).

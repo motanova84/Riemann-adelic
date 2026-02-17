@@ -282,6 +282,7 @@ theorem D_is_entire :
   · norm_num
   · -- Follows from uniform convergence of the Hadamard product
     -- on compact subsets of ℂ
+    -- TODO: Complete using QCAL.Noesis.spectral_correspondence
     sorry
     -- PROOF: Use D_hadamard_converges and Weierstrass theorem
 
@@ -291,6 +292,7 @@ theorem D_order_one :
     ∀ s : ℂ, Complex.abs (D_hadamard s) ≤ M * Real.exp (Complex.abs s) := by
   -- The order bound follows from the growth of eigenvalues
   -- and the structure of the Hadamard product
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
   sorry
   -- PROOF STRATEGY:
   -- 1. Each factor satisfies: |(s-λ_n)·exp[(s-λ_n)^(-1)]| ≤ C·exp(|s|/|λ_n|)

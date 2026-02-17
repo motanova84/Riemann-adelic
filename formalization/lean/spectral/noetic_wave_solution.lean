@@ -222,6 +222,7 @@ lemma energy_conservation_homogeneous
              energy (Ψ t₂) (dΨ_dt t₂) (gradΨ t₂) := by
   -- La conservación sigue de multiplicar la ecuación por ∂Ψ/∂t e integrar
   -- d/dt E[Ψ] = ∫ (∂²Ψ/∂t² + ω₀²Ψ + ∇²Ψ)·∂Ψ/∂t = 0
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
   sorry
 
 /-!
@@ -293,6 +294,7 @@ lemma resonance_linear_growth (ω : ℝ) (h_res : isResonant ω) :
   -- En resonancia ω = ω₀, la solución particular es:
   -- Ψ_p = (F₀/(2ω₀))·t·sin(ω₀t)
   -- que crece linealmente con t
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
   sorry
 
 /-!

@@ -35,6 +35,7 @@ def equidistributed_mod1 (a : ℕ → ℝ) : Prop :=
 theorem Weyl_equidistribution_criterion {a : ℕ → ℝ} :
     equidistributed_mod1 a ↔
       ∀ (h : ℤ), h ≠ 0 → Tendsto (λ N ↦ (1 / N : ℝ) * ∑ n in Finset.range N, Real.cos (2 * π * h * a n)) atTop (𝓝 0) :=
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
   sorry
 
 

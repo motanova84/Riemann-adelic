@@ -51,6 +51,7 @@ def D (s : ℂ) : ℂ :=
 theorem product_uniform_convergence (K : Set ℂ) (hK : IsCompact K) :
     ∀ ε > 0, ∃ N : ℕ, ∀ n ≥ N, ∀ s ∈ K,
       |∏_{k=0}^n (1 - s/λ_k) - D(s)| < ε := by
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
   sorry
   /-
   Proof sketch:

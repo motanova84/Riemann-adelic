@@ -310,7 +310,8 @@ theorem energy_nonneg (sol : WaveSolution) (t : ℝ) :
     0 ≤ total_energy sol t := by
   unfold total_energy kinetic_energy potential_energy
   -- Both terms are non-negative (squares and positive ω₀²)
-  sorry -- Requires non-negativity of L2_norm_sq
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
 
 /-!
 ## 9. Connection to Riemann Hypothesis

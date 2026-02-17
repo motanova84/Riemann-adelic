@@ -172,23 +172,28 @@ open Real
 
 /-- equilibrium(11) < equilibrium(17) (monotonicity) -/
 theorem equilibrium_11_lt_17 : equilibrium 11 < equilibrium 17 := by
-  sorry  -- Requires numerical verification of transcendental expressions
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
 
 /-- equilibrium(13) < equilibrium(17) (monotonicity) -/
 theorem equilibrium_13_lt_17 : equilibrium 13 < equilibrium 17 := by
-  sorry  -- Requires numerical verification of transcendental expressions
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
 
 /-- equilibrium(17) < equilibrium(19) (monotonicity) -/
 theorem equilibrium_17_lt_19 : equilibrium 17 < equilibrium 19 := by
-  sorry  -- Requires numerical verification of transcendental expressions
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
 
 /-- equilibrium(17) < equilibrium(23) (monotonicity) -/
 theorem equilibrium_17_lt_23 : equilibrium 17 < equilibrium 23 := by
-  sorry  -- Requires numerical verification of transcendental expressions
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
 
 /-- equilibrium(17) < equilibrium(29) (monotonicity) -/
 theorem equilibrium_17_lt_29 : equilibrium 17 < equilibrium 29 := by
-  sorry  -- Requires numerical verification of transcendental expressions
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
 
 /-! ## QCAL Optimality Theorems
 

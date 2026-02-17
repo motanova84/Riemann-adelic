@@ -54,26 +54,31 @@ Esta identidad es la clave para demostrar que:
 /-- Función xi de Riemann completada
     ξ(s) = (s(s-1)/2) · π^{-s/2} · Γ(s/2) · ζ(s)
 -/
-def RiemannXi (s : ℂ) : ℂ := sorry
+def RiemannXi (s : ℂ) : ℂ := -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+ sorry
 -- Implementación estándar via RiemannZeta
 
 /-- ξ es una función entera de orden 1 -/
 theorem xi_entire : Analytic ℂ RiemannXi := by
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
   sorry
 
 theorem xi_order_one :
     ∃ (A B : ℝ), 0 < A ∧ 0 < B ∧
     ∀ (z : ℂ), |RiemannXi z| ≤ A * exp (B * |z|) := by
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
   sorry
 
 /-- Ecuación funcional de ξ -/
 theorem xi_functional_equation :
     ∀ (s : ℂ), RiemannXi s = RiemannXi (1 - s) := by
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
   sorry
 
 /-- Simetría PT: ξ(s̄) = ξ(s)̄ -/
 theorem xi_pt_symmetry :
     ∀ (s : ℂ), RiemannXi (conj s) = conj (RiemannXi s) := by
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
   sorry
 
 -- ===========================================================================
@@ -81,7 +86,8 @@ theorem xi_pt_symmetry :
 -- ===========================================================================
 
 /-- Determinante de Fredholm de (I - λH) -/
-def FredholmDeterminant (λ : ℂ) : ℂ := sorry
+def FredholmDeterminant (λ : ℂ) : ℂ := -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+ sorry
 -- det(I - λH) = ∏_{n} (1 - λ·γ_n)
 
 /-- Determinante de Fredholm regularizado (normalizado en λ=0) -/
@@ -90,6 +96,7 @@ def FredholmDeterminantReg (t : ℝ) : ℂ :=
 
 theorem fredholm_det_at_zero :
     FredholmDeterminant 0 = 1 := by
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
   sorry
 
 /-- Representación como producto infinito -/
@@ -97,6 +104,7 @@ theorem fredholm_product_representation :
     ∀ (t : ℝ),
     ∃ (γ : ℕ → ℝ), StrictMono γ ∧
     FredholmDeterminantReg t = ∏' n, (1 - (I * t)^2 / γ n^2) := by
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
   sorry
 -- Los γ_n son los autovalores de H (por simetría PT)
 
@@ -135,7 +143,8 @@ theorem xi_log_derivative (t : ℝ) :
 -- Fórmula conocida de teoría analítica de números
 
 /-- Términos Gamma provenientes de la ecuación funcional -/
-def GammaTerms (t : ℝ) : ℂ := sorry
+def GammaTerms (t : ℝ) : ℂ := -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+ sorry
 
 -- ===========================================================================
 -- 5. CANCELACIÓN DE TÉRMINOS
@@ -189,7 +198,8 @@ theorem fredholm_equals_xi :
   intro t
   
   -- Estrategia: ambas funciones son enteras de orden 1
-  have h_fredholm_entire : Analytic ℂ (fun z => FredholmDeterminantReg (im z)) := sorry
+  have h_fredholm_entire : Analytic ℂ (fun z => FredholmDeterminantReg (im z)) := -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+ sorry
   have h_xi_entire : Analytic ℂ RiemannXi := xi_entire
   
   -- Tienen la misma derivada logarítmica
@@ -203,7 +213,8 @@ theorem fredholm_equals_xi :
   have h_xi_at_zero : RiemannXi (1/2) / RiemannXi (1/2) = 1 := by norm_num
   
   -- Funciones con misma derivada y mismo valor en un punto son iguales
-  exact sorry
+  exact -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+ sorry
 
 -- ===========================================================================
 -- 7. CONSECUENCIAS PARA LA HIPÓTESIS DE RIEMANN
@@ -222,10 +233,12 @@ theorem zeros_are_eigenvalues :
       rw [h_zero]
       simp
     -- Por tanto, it es autovalor de H, es decir, t está en el espectro
+    -- TODO: Complete using QCAL.Noesis.spectral_correspondence
     sorry
   · intro h_eigen
     -- Si t ∈ Spec(H), entonces det(I - itH) = 0
-    have : FredholmDeterminantReg t = 0 := sorry
+    have : FredholmDeterminantReg t = 0 := -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+ sorry
     -- Por tanto, ξ(1/2 + it) = 0
     rw [← fredholm_equals_xi] at this
     sorry
@@ -256,12 +269,14 @@ theorem product_comparison :
     ∏' (γ : spectrum ℝ H), (1 - (I * t)^2 / γ^2) =
     (∏' (ρ : zeros_of_xi), (1 - (1/2 + I * t) / ρ)) /
     (∏' (ρ : zeros_of_xi), (1 - (1/2) / ρ)) := by
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
   sorry
 
 /-- La simetría PT del operador implica la simetría funcional de ξ -/
 theorem pt_symmetry_implies_functional_equation :
     (∀ (λ : ℂ), λ ∈ spectrum ℂ H → conj λ ∈ spectrum ℂ H) →
     (∀ (s : ℂ), RiemannXi s = RiemannXi (1 - s)) := by
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
   sorry
 
 end

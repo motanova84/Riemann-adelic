@@ -130,7 +130,8 @@ El cambio de variables preserva suavidad
 -/
 lemma change_of_var_smooth (f : ℝ → ℂ) (hf : ContDiff ℝ ⊤ f) :
     ContDiff ℝ ⊤ (change_of_var f) := by
-  sorry  -- Sigue de la composición de funciones suaves
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
 
 /-!
 ## Integración por Partes en ℝ
@@ -151,7 +152,8 @@ lemma integration_by_parts (φ ψ : ℝ → ℂ)
     (suppφ : ∃ (a b : ℝ), a < b ∧ ∀ u, u ∉ Ioo a b → φ u = 0)
     (suppψ : ∃ (a b : ℝ), a < b ∧ ∀ u, u ∉ Ioo a b → ψ u = 0) :
     ∫ u : ℝ, deriv φ u * ψ u = - ∫ u : ℝ, φ u * deriv ψ u := by
-  sorry  -- Fórmula clásica de integración por partes
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
         -- Los términos de frontera [φ·ψ]_{-∞}^∞ = 0 por soporte compacto
 
 /-!
@@ -269,7 +271,8 @@ theorem HΨ_is_symmetric :
   have lhs : ∫ x in Ioi 0, conj ((-x * deriv f.toFun x + V_resonant x * f.toFun x)) * g.toFun x / x =
              ∫ x in Ioi 0, conj (-x * deriv f.toFun x) * g.toFun x / x + 
              ∫ x in Ioi 0, conj (V_resonant x * f.toFun x) * g.toFun x / x := by
-    sorry  -- Linealidad de la integral
+    -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+    sorry
   
   -- Expandir el lado derecho: ⟨f, HΨ g⟩
   have rhs : ∫ x in Ioi 0, conj (f.toFun x) * (-x * deriv g.toFun x + V_resonant x * g.toFun x) / x =

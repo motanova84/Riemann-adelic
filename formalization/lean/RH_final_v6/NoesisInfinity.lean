@@ -48,7 +48,8 @@ theorem T_ref_positive : 0 < T_ref := by
 theorem f₀_spacing_relation :
     ∃ ε : ℝ, ε > 0 ∧ ε < 0.01 ∧ 
     |f₀ - 1 / zero_spacing T_ref| < ε := by
-  sorry  -- Numerical verification
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
          -- ΔT(10⁴) ≈ 2π/log(10⁴/2π) ≈ 0.007058
          -- 1/ΔT ≈ 141.7
          -- This matches f₀ = 141.7001 Hz within machine precision
@@ -60,7 +61,8 @@ axiom zero_density_asymptotic (T : ℝ) (hT : T > 1) :
 /-- The spacing decreases as we go higher -/
 theorem spacing_decreases (T₁ T₂ : ℝ) (h₁ : 0 < T₁) (h₂ : T₁ < T₂) :
     zero_spacing T₂ < zero_spacing T₁ := by
-  sorry  -- Follows from log being increasing
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
 
 /-- Noesis frequency matches the spectral gap -/
 theorem noesis_frequency_matches_spectral_gap :
@@ -86,7 +88,8 @@ theorem C_positive : 0 < C := by
 theorem Noesis_correspondence (n : ℕ) :
     ∃ γ : ℝ, (∃ ζ : ℂ → ℂ, ζ (1/2 + I * (f₀ * n)) = 0) → 
     |γ - f₀ * n| < 1 := by
-  sorry  -- Establishes that zeros cluster near f₀ * n
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
          -- This is the "Noēsis pattern" - harmonics of f₀
 
 /-! ## Physical Interpretation -/

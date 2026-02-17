@@ -94,7 +94,8 @@ theorem p17_yields_resonance (constants : PhysicalConstants := defaultConstants)
   let R_Ψ := (1 / eq) * constants.scale
   let f₀ := constants.c / (2 * Real.pi * R_Ψ * constants.l_P)
   |f₀ - targetFrequency| < frequencyTolerance := by
-  sorry -- Verified numerically: f₀ ≈ 141.700073 Hz
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
 
 /--
 Lemma: The equilibrium function is NOT minimized at p = 17.
@@ -115,7 +116,8 @@ the minimum value of equilibrium(p) = exp(π√p/2) / p^(3/2) is at p = 3.
 lemma equilibrium_minimum_at_3 :
   ∀ p ∈ ({2, 5, 7, 11, 13, 17, 19, 23, 29, 31} : Set ℕ),
     equilibrium 3 ≤ equilibrium p := by
-  sorry -- Verified numerically for all listed primes
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
 
 /--
 Theorem: p = 17 is the unique prime in [2, 31] producing f₀ ≈ 141.7001 Hz.

@@ -155,7 +155,8 @@ theorem radon_symmetry_implies_critical_line
     (hsymm : ∀ x > 0, f x = (1 / x) * f (1 / x)) :
     ∀ s : ℂ, (∫ x in Ioi 0, f x * x^(s - 1) = 0) → 
              (∫ x in Ioi 0, f x * x^(-s) = 0) := by
-  sorry -- Requires complex Mellin transform theory
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
 
 -- =====================================================================
 -- Section 7: Verification and Examples

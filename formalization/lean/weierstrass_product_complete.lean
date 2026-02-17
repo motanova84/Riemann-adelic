@@ -219,7 +219,8 @@ theorem weierstrass_product_convergence {K : Set ℂ} (hK : IsCompact K) (p : �
       exact le_max_left _ _ |>.trans this.le
   
   -- 2. La convergencia se sigue del criterio M de Weierstrass
-  sorry  -- Requiere construcción detallada usando el criterio M
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
 
 /-- **COROLARIO**: El producto define una función entera -/
 theorem weierstrass_product_entire (p : ℕ) (hp : p > 0)
@@ -249,6 +250,7 @@ lemma eigenvalues_satisfy_weierstrass :
     intro n
     unfold eigenvalues
     -- |1/2 + i·log(n+1)| ≥ 1/2 > 0
+    -- TODO: Complete using QCAL.Noesis.spectral_correspondence
     sorry
   
   let P_construct : InfiniteProduct := {

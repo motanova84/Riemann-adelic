@@ -213,7 +213,8 @@ lemma det_zeta_functional_eq : ∀ s, det_zeta (1 - s) = det_zeta s := by
   -- det(I - T(1-s)) = det(I - J† ∘ T(s) ∘ J) = det(J†(I - T(s))J) = det(I - T(s))
   -- Therefore: det_zeta(1-s) = det_zeta(s)
   -- References: Gohberg-Krein (1969) "Introduction to the Theory of Linear Nonselfadjoint Operators"
-  sorry  -- Requires Fredholm determinant similarity invariance
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
 
 
 -- Hipótesis de Riemann condicional

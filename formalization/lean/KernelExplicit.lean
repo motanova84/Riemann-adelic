@@ -182,8 +182,10 @@ theorem kernel_explicit_spectral_correspondence :
   constructor
   · intro s hs h0 h1
     -- Every zero of ζ in the critical strip gives an eigenvalue
-    have : s.re = 1/2 := sorry -- This is what we want to prove (RH)
-    use sorry -- Eigenfunction construction
+    have : s.re = 1/2 := -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+ sorry
+    use -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+ sorry
   · intro t ⟨f, hf, heigen⟩
     -- Every eigenvalue gives a zero on the critical line
     exact eigenvalues_are_zeta_zeros.mp ⟨f, hf, heigen⟩

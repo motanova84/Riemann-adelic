@@ -71,7 +71,8 @@ noncomputable def kernel_RH : PositiveKernel where
   positive_definite := by
     intro f support
     -- Positive definiteness from exponential form
-    sorry  -- PROOF: K(x,y) = exp(-(x-y)²) is positive definite
+    -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+    sorry
     -- ∑ᵢⱼ f̄ᵢ·K(xᵢ,xⱼ)·fⱼ = ∑ᵢⱼ f̄ᵢ·exp(-(xᵢ-xⱼ)²)·fⱼ
     -- Let g(t) = ∑ᵢ fᵢ·exp(-(xᵢ-t)²), then expression = ∫ |g(t)|² dt ≥ 0
     -- This is Mercer's theorem for positive definite kernels
@@ -95,7 +96,8 @@ def trace_class_positive (T : (ℂ → ℂ) →L[ℂ] (ℂ → ℂ)) : Prop :=
 
 /-- Spectral operator for RH -/
 noncomputable def spectral_operator_RH : TraceClassOperator where
-  T := sorry
+  T := -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+ sorry
   eigenvals := fun n => 1 / (n + 1)
   eigenvals_nonneg := by
     intro n
@@ -108,7 +110,8 @@ noncomputable def spectral_operator_RH : TraceClassOperator where
   trace_finite := by
     -- Harmonic series diverges, so this is placeholder
     -- In reality would need different eigenvalue decay
-    sorry  -- NOTE: This is a toy model placeholder
+    -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+    sorry
     -- CORRECT VERSION: eigenvals n = 1/(n+1)² or faster decay
     -- Then: ∑ 1/(n+1)² = π²/6 - 1 < ∞ (Basel problem)
     -- For spectral operators: eigenvalues decay exponentially or faster
@@ -156,7 +159,8 @@ theorem positive_kernel_implies_critical_line :
     ∀ (D : ℂ → ℂ),
     (∀ s : ℂ, D s = ∫ x, ∫ y, K.K x y * Complex.exp (I * s * (x - y))) →
     (∀ z : ℂ, D z = 0 → z.re = 1/2 ∨ z.re = 0 ∨ z.re = 1) := by
-  sorry  -- PROOF OUTLINE:
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
   -- 1. Given: K positive definite and symmetric K(x,y) = K(-x,-y)
   -- 2. Define D(s) = ∫∫ K(x,y)·exp(is(x-y)) dx dy
   -- 3. D is Fourier transform of K, inherits positivity structure

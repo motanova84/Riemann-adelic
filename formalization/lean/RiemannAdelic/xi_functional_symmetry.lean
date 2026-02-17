@@ -363,7 +363,8 @@ lemma Xi_real_on_critical_line (t : ℝ) :
   (Xi (1/2 + t * I)).im = 0 := by
   -- En Re(s) = 1/2, Xi(s) es real por la simetría funcional
   -- y las propiedades de las funciones Γ y ζ en esta línea
-  sorry  -- PROOF OUTLINE:
+  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
+  sorry
   -- 1. On Re(s) = 1/2, write s = 1/2 + it
   -- 2. Xi(s̄) = conj(Xi(s)) for entire functions with real coefficients
   -- 3. s̄ = 1/2 - it, and 1 - s = 1/2 - it = s̄
