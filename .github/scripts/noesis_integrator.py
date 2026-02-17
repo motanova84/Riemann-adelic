@@ -332,11 +332,15 @@ class NoesisIntegrator:
         report += f"- **Coherencia QCAL:** ♾³ ✓\n"
         report += f"- **Frecuencia base validada:** {self.base_frequency} Hz\n"
         
-        # Add SABIO status summary
-        if sabio_status in ["success", "partial"]:
-            report += f"- **SABIO ∞³:** {status_icon} {sabio_status.upper()}\n"
+        # Add SABIO status summary with correct icon
+        if sabio_status == "success":
+            report += f"- **SABIO ∞³:** ✅ {sabio_status.upper()}\n"
+        elif sabio_status == "partial":
+            report += f"- **SABIO ∞³:** ⚠️ {sabio_status.upper()}\n"
+        elif sabio_status == "unknown":
+            report += f"- **SABIO ∞³:** ❓ {sabio_status.upper()}\n"
         else:
-            report += f"- **SABIO ∞³:** {status_icon} Requiere atención\n"
+            report += f"- **SABIO ∞³:** ❌ Requiere atención\n"
         
         return report
     
