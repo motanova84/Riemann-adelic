@@ -122,6 +122,14 @@ jobs:
           python -m pip install --upgrade pip
           pip install numpy
       
+      - name: Install Lean (elan + lake)
+        run: |
+          curl https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -sSf | sh -s -- -y
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+          # Sanity check: ensure Lean toolchain is available
+          lean --version
+          lake --help || true
+      
       - name: Download AMDA report
         uses: actions/download-artifact@v4
         with:
