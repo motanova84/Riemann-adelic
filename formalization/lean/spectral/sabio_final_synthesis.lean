@@ -48,7 +48,7 @@ DOI: 10.5281/zenodo.17379721
 
 ## Status
 
-🏆 CIERRE DEFINITIVO: ZERO SORRYS 🏆
+🏗️ Framework established; sorries remain (work in progress) 🏗️
 -/
 
 import Mathlib.Analysis.InnerProductSpace.SpectralTheory
