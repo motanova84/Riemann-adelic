@@ -178,6 +178,7 @@ jobs:
       
       - name: 📊 Generate Unified Report
         id: report
+        continue-on-error: true
         run: |
           echo "📊 Generando reporte unificado..."
           python .github/scripts/noesis_integrator.py --mode report --output noesis_complete.md
@@ -227,6 +228,38 @@ jobs:
             commit_msg_*.txt
           retention-days: 30
       
+      - name: 📝 Prepare PR Body
+        if: steps.auron.outputs.successful > 0 && inputs.dry_run == false
+        id: pr_body
+        run: |
+          # Check if noesis_complete.md exists, otherwise create fallback
+          if [ -f "noesis_complete.md" ]; then
+            echo "Using generated report: noesis_complete.md"
+            echo "body_file=noesis_complete.md" >> $GITHUB_OUTPUT
+          else
+            echo "⚠️  Report file not found, creating fallback body"
+            cat > pr_body_fallback.md << 'EOF'
+          ## 🧠 NOESIS CEREBRAL V2.0 - Automated Integration
+          
+          **Cycle:** ${{ github.run_number }}
+          
+          ### 📊 Statistics
+          - **Sorries eliminated:** ${{ steps.auron.outputs.successful }}
+          - **Success rate:** ${{ steps.auron.outputs.success_rate }}%
+          
+          ### 🔬 Integration Status
+          - **SABIO ∞³:** ${{ steps.sabio.outcome }}
+          - **Validación RH:** ${{ steps.validation.outcome }}
+          - **Auto-Evolución QCAL:** ${{ steps.evolution.outcome }}
+          
+          ### ⚠️ Note
+          Unified report generation encountered an issue. See workflow artifacts for detailed logs.
+          
+          **Automated by NOESIS CEREBRAL V2.0**
+          EOF
+            echo "body_file=pr_body_fallback.md" >> $GITHUB_OUTPUT
+          fi
+      
       - name: Create Pull Request
         if: steps.auron.outputs.successful > 0 && inputs.dry_run == false
         uses: peter-evans/create-pull-request@v6
@@ -243,7 +276,7 @@ jobs:
           branch: integration/noesis-${{ github.run_number }}
           delete-branch: true
           title: '🧠 NOESIS INTEGRACIÓN COMPLETA #${{ github.run_number }}'
-          body-path: noesis_complete.md
+          body-path: ${{ steps.pr_body.outputs.body_file }}
           labels: |
             automated
             noesis
