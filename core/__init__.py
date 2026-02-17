@@ -56,6 +56,23 @@ from .atlas3_spectral_verifier import (
     BeaconMetadata,
 )
 
+from .quantum_chromodynamic_poetry import (
+    QuantumChromodynamicPoetry,
+    create_qcd_poetry,
+    QuarkFlavor,
+    QuarkColor,
+    GluonType,
+    Quark,
+    Gluon,
+    PrimeZeroResonance,
+    get_riemann_zero,
+    compute_quark_frequency,
+    F0_HZ,
+    RIEMANN_ZEROS,
+    OMEGA_17,
+    QUARK_MASSES,
+)
+
 __all__ = [
     'SpectralOscillator',
     'create_spectral_oscillator',
@@ -67,4 +84,18 @@ __all__ = [
     'create_atlas3_verifier',
     'SpectralSignature',
     'BeaconMetadata',
+    'QuantumChromodynamicPoetry',
+    'create_qcd_poetry',
+    'QuarkFlavor',
+    'QuarkColor',
+    'GluonType',
+    'Quark',
+    'Gluon',
+    'PrimeZeroResonance',
+    'get_riemann_zero',
+    'compute_quark_frequency',
+    'F0_HZ',
+    'RIEMANN_ZEROS',
+    'OMEGA_17',
+    'QUARK_MASSES',
 ]
