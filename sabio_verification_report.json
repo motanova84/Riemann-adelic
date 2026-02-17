@@ -1,0 +1,6 @@
+{
+  "frequency": true,
+  "sabio_files": true,
+  "lean_formalization": false,
+  "python_modules": false
+}

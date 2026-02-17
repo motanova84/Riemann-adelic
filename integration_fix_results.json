@@ -1,0 +1,21 @@
+{
+  "timestamp": "2026-02-17T08:43:32.759106",
+  "fixes": [
+    "Instalar dependencias: pip install numpy scipy"
+  ],
+  "status": {
+    "utils/exact_f0_derivation.py": "OK",
+    "sabio_validator.py": "OK",
+    "Evac_Rpsi_data.csv": "OK",
+    "python_deps": "MISSING",
+    "validate_v5_coronacion.py": "OK",
+    "validate_critical_line.py": "OK",
+    "validate_explicit_formula.py": "OK",
+    "tests/test_rh_proved_framework.py": "OK",
+    ".github/workflows/noesis_multi_repo_v2.yml": "OK",
+    ".github/workflows/auto_evolution.yml": "OK",
+    ".github/workflows/validate-on-push.yml": "OK",
+    "frequency_data": "OK"
+  },
+  "base_frequency": "141.7001 Hz"
+}
