@@ -11,7 +11,7 @@ en componentes arquimedianas y p-ádicas.
 
 ```lean
 theorem adelic_decomposition : 
-  Tr[(H_Ψ - z)⁻¹] = Tr_∞[(H_∞ - z)⁻¹] + ∑' (p : primes), Tr_p[(H_p - z)⁻¹]
+  Tr_reg[(H_Ψ - z)⁻¹] = Tr_reg[(H_∞ - z)⁻¹] + ∑' (p : primes), Tr_reg[(H_p - z)⁻¹]
 ```
 
 ## Arquitectura de la Demostración

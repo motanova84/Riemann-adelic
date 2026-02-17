@@ -13,14 +13,14 @@ theorem adelic_decomposition :
 
 | Concepto | Definición | Ubicación |
 |----------|------------|-----------|
-| `H_∞_space` | Espacio L²(ℝ) | Línea 60 |
-| `H_p_space` | Espacio L²(ℚ_p) | Línea 66 |
-| `H_∞` | Operador arquimediano | Línea 119 |
-| `H_p` | Operador p-ádico | Línea 130 |
-| `AdelicSpace` | Producto tensorial restringido | Línea 223 |
-| `H_Ψ` | Operador global | Línea 254 |
-| `trace_reg` | Traza regularizada | Línea 442 |
-| `adelic_decomposition` | Teorema principal | Línea 578 |
+| `H_∞_space` | Espacio L²(ℝ) | Línea 71 |
+| `H_p_space` | Espacio L²(ℚ_p) | Línea 81 |
+| `H_∞` | Operador arquimediano | Línea 101 |
+| `H_p` | Operador p-ádico | Línea 113 |
+| `AdelicSpace` | Producto tensorial restringido | Línea 140 |
+| `H_Ψ` | Operador global | Línea 166 |
+| `trace_reg` | Traza regularizada | Línea 259 |
+| `adelic_decomposition` | Teorema principal | Línea 338 |
 
 ## 📐 Estructura de la Prueba
 

@@ -4,10 +4,10 @@
 
 Este documento describe cómo el **Gap 2: Descomposición Adélica** se integra con el marco completo de la demostración de la Hipótesis de Riemann en QCAL ∞³.
 
-## 📊 Ubicación en la Cadena de Prueba
+## 📊 Ubicación en la Cadena de Prueba (Steps)
 
 ```
-RH Proof Chain (5 Pasos)
+RH Proof Chain (5 Steps)
 │
 ├─ [1] AXIOMAS → LEMAS
 │   └─ Fundamentos matemáticos (axiomas_to_lemmas.lean)
