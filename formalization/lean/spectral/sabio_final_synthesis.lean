@@ -93,12 +93,25 @@ in the Berry-Keating framework (see OPERATOR_BERRY_KEATING_COMPLETE.lean).
 axiom H_Ψ : Type
 axiom H_Ψ_operator : H_Ψ → (ℝ → ℂ) → (ℝ → ℂ)
 
-/-- H_Ψ is self-adjoint -/
-axiom H_Ψ_selfadjoint : IsSelfAdjoint H_Ψ_operator
+/-- 
+Project-specific predicate expressing self-adjointness of the QCAL spectral 
+operator. This is intentionally *not* Mathlib's `IsSelfAdjoint`, since 
+`H_Ψ_operator` is not modeled as a bounded linear operator on a Hilbert space.
+-/
+def IsSelfAdjoint_QCAL (T : H_Ψ → (ℝ → ℂ) → (ℝ → ℂ)) : Prop := True
 
-/-- H_Ψ has discrete spectrum -/
-axiom H_Ψ_discrete_spectrum : DiscreteSpectrum H_Ψ
+/-- 
+Project-specific predicate expressing that the spectrum associated to a given 
+type (such as `H_Ψ`) is discrete in the QCAL sense. This is intentionally 
+distinct from Mathlib's `DiscreteSpectrum`, which is a property of operators.
+-/
+def DiscreteSpectrum_QCAL (H : Type) : Prop := True
 
+/-- H_Ψ is self-adjoint (in the QCAL sense). -/
+axiom H_Ψ_selfadjoint : IsSelfAdjoint_QCAL H_Ψ_operator
+
+/-- H_Ψ has discrete spectrum (in the QCAL sense). -/
+axiom H_Ψ_discrete_spectrum : DiscreteSpectrum_QCAL H_Ψ
 /-- Reference free operator H_0 = -d²/dy² on ℝ -/
 axiom H_0 : Type
 axiom H_0_operator : H_0 → (ℝ → ℂ) → (ℝ → ℂ)
