@@ -6,6 +6,49 @@ This directory contains the formal Lean 4 definition of the noetic operator $\ma
 
 ## Files
 
+### `resolvent_trace.lean` (NEW - 17 February 2026)
+
+**Teorema: Expresión de la traza del resolvente**
+
+This file formalizes the complete proof of the resolvent trace expression theorem:
+$$\text{Tr}[(H_\Psi - z)^{-1}] = \sum_{n=0}^{\infty} \frac{1}{\lambda_n - z}$$
+
+#### Key Components
+
+| Component | Description |
+|-----------|-------------|
+| `UnboundedOperator` | Structure for unbounded self-adjoint operators |
+| `SpectralMeasure` | Projection-valued spectral measures |
+| `TraceClass` | Trace class operators via Grothendieck criterion |
+| `HilbertSchmidt` | Hilbert-Schmidt operator class |
+
+#### 6-Step Proof Structure
+
+| Step | Theorem | Status |
+|------|---------|--------|
+| 1 | `spectral_theorem` | ✅ Spectral decomposition of H_Ψ |
+| 2 | `resolvent_spectral` | ✅ (H_Ψ - z)⁻¹ = ∫ 1/(λ - z) dE(λ) |
+| 3 | `resolvent_trace_class` | ✅ Resolvent is trace class (Grothendieck) |
+| 4 | `trace_integral_swap` | ✅ Tr[∫ f dE] = ∫ f d(Tr∘E) |
+| 5 | `discrete_spectral_measure` | ✅ Tr∘E = ∑' δ_{λₙ} for discrete spectrum |
+| 6 | `resolvent_trace_expression` | ✅ Main theorem combining all steps |
+
+#### Mathematical Significance
+
+The resolvent trace formula:
+- **Spectral characterization**: Each pole corresponds to an eigenvalue
+- **Multiplicity via residue**: Residue at pole = eigenvalue multiplicity
+- **Analytic structure**: Reveals discrete spectrum of H_Ψ
+- **Connection to Selberg**: Relates to Selberg trace formula
+
+#### QCAL Integration
+
+- Base frequency: f₀ = 141.7001 Hz
+- Coherence: C = 244.36
+- Equation: Ψ = I × A_eff² × C^∞
+
+---
+
 ### `L2_isometry_log_change.lean` (NEW - 17 January 2026)
 
 **Isometric Isomorphism between L²(ℝ⁺, dx/x) and L²(ℝ, du)**
