@@ -121,9 +121,12 @@ axiom WhittakerM : ℂ → ℂ → ℂ → ℂ
 /-- Riemann zeta function (from Mathlib) -/
 -- Already defined in Mathlib.NumberTheory.ZetaFunction
 
-/-- Mellin transform -/
+/-- Mellin transform: ∫₀^∞ f(x) x^{s-1} dx
+    Standard definition from complex analysis.
+    See: Titchmarsh, "The Theory of the Riemann Zeta-Function", Chapter 1
+    Should match Mathlib's Fourier transform conventions when available. -/
 def MellinTransform (f : ℝ → ℝ) (s : ℂ) : ℂ :=
-  sorry -- Standard Mellin transform definition
+  sorry -- ∫₀^∞ f(x) x^{s-1} dx with appropriate convergence conditions
 
 /-!
 ## ═══════════════════════════════════════════════════════════════════
@@ -149,7 +152,9 @@ The proof uses:
 theorem weyl_law_precise_closed (H : H_Ψ) 
     [IsSelfAdjoint H_Ψ_operator] [DiscreteSpectrum H_Ψ] :
     let N := λ E => {λ : spectrum H | λ ≤ E}.encard
-    N ~[atTop] λ E => (Real.sqrt E / π) * Real.log (Real.sqrt E) + O (Real.sqrt E) := by
+    -- Note: Proper asymptotic notation requires Mathlib.Asymptotics.Asymptotics
+    -- The O(√E) term should be formalized using IsBigO or similar
+    ∃ C > 0, ∀ E > 0, |N E - (Real.sqrt E / π) * Real.log (Real.sqrt E)| ≤ C * Real.sqrt E := by
   -- Phase space volume calculation
   have h_phase_volume : ∀ E > 0, 
       ∃ V : ℝ, V = E * Real.log E / (2 * π) := by
@@ -181,11 +186,15 @@ M_{κ,μ}(t) = t^{1/2+μ}/(Γ(1/2+μ-κ)) · (1 + O(t))
            + t^{1/2-μ}/(Γ(1/2-μ-κ)) · (1 + O(t))
 
 This is crucial for understanding the behavior of the resolvent kernel.
+
+Reference: NIST DLMF 13.7, Olver's "Asymptotics and Special Functions"
 -/
 theorem Whittaker_expansion_precise (κ μ t : ℂ) (ht : ‖t‖ < 1/2) :
+    -- Proper formulation: there exist error functions ε₁(t), ε₂(t) with ε_i(t) → 0 as t → 0
+    ∃ ε₁ ε₂ : ℂ → ℂ, (∀ z, ‖z‖ < 1/2 → ‖ε₁ z‖ ≤ ‖z‖) ∧ (∀ z, ‖z‖ < 1/2 → ‖ε₂ z‖ ≤ ‖z‖) ∧
     WhittakerM κ μ t = 
-      t^(1/2 + μ) * (1 + O(t)) / Gamma(1/2 + μ - κ) +
-      t^(1/2 - μ) * (1 + O(t)) / Gamma(1/2 - μ - κ) := by
+      t^(1/2 + μ) * (1 + ε₁ t) / Gamma(1/2 + μ - κ) +
+      t^(1/2 - μ) * (1 + ε₂ t) / Gamma(1/2 - μ - κ) := by
   -- Frobenius series expansion around t = 0
   -- M_{κ,μ}(t) = e^{-t/2} t^{1/2+μ} M(1/2+μ-κ, 1+2μ, t)
   -- where M is the confluent hypergeometric function
@@ -453,8 +462,9 @@ This represents the MATHEMATICAL CLOSURE of the proof architecture.
 The sorries are technical details, not conceptual gaps.
 -/
 
-/-- Count of sorries in this module for tracking -/
-def sorry_count_in_module : ℕ := 20
+/-- Count of sorries in this module for tracking 
+    Updated: 2026-02-17 after implementation review -/
+def sorry_count_in_module : ℕ := 27
 
 /-!
 ## ═══════════════════════════════════════════════════════════════════
