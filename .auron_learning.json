@@ -1,8 +1,145 @@
 {
-  "patterns": {},
+  "patterns": {
+    "c85e1e009a8dbe9d": {
+      "solution": "trivial",
+      "nutrient_type": "carbohidrato_simple",
+      "timestamp": "2026-02-17T09:20:26.569615",
+      "file": "riemann_equivalence.lean",
+      "confidence": 0.75,
+      "context": {
+        "file_type": "spectral",
+        "line": 460
+      }
+    },
+    "d4a07301ff49c06f": {
+      "solution": "trivial",
+      "nutrient_type": "carbohidrato_simple",
+      "timestamp": "2026-02-17T09:20:26.570104",
+      "file": "count_sorrys.lean",
+      "confidence": 0.75,
+      "context": {
+        "file_type": "general",
+        "line": 154
+      }
+    },
+    "68ebb282f61b517e": {
+      "solution": "trivial",
+      "nutrient_type": "carbohidrato_simple",
+      "timestamp": "2026-02-17T09:20:26.570655",
+      "file": "test_function.lean",
+      "confidence": 0.75,
+      "context": {
+        "file_type": "general",
+        "line": 106
+      }
+    },
+    "a93d937ce35c3884": {
+      "solution": "trivial",
+      "nutrient_type": "carbohidrato_simple",
+      "timestamp": "2026-02-17T09:20:26.570910",
+      "file": "xi_spectral_correspondence.lean",
+      "confidence": 0.75,
+      "context": {
+        "file_type": "spectral",
+        "line": 261
+      }
+    },
+    "ecee00d3cabd17c5": {
+      "solution": "by simp",
+      "nutrient_type": "vitamina",
+      "timestamp": "2026-02-17T09:20:26.571149",
+      "file": "spectral_density_theorems.lean",
+      "confidence": 0.6,
+      "context": {
+        "file_type": "spectral",
+        "line": 182
+      }
+    },
+    "eff6fdd9b22253cb": {
+      "solution": "by simp",
+      "nutrient_type": "vitamina",
+      "timestamp": "2026-02-17T09:20:26.571480",
+      "file": "UnifiedTheory.lean",
+      "confidence": 0.6,
+      "context": {
+        "file_type": "general",
+        "line": 258
+      }
+    },
+    "ce8b7de8804f3dac": {
+      "solution": "by simp",
+      "nutrient_type": "vitamina",
+      "timestamp": "2026-02-17T09:20:26.571795",
+      "file": "poisson_radon_symmetry.lean",
+      "confidence": 0.6,
+      "context": {
+        "file_type": "general",
+        "line": 276
+      }
+    },
+    "5dd12e109b215f5d": {
+      "solution": "by simp",
+      "nutrient_type": "vitamina",
+      "timestamp": "2026-02-17T09:20:26.572109",
+      "file": "radon_integral_symmetry.lean",
+      "confidence": 0.6,
+      "context": {
+        "file_type": "general",
+        "line": 179
+      }
+    },
+    "7c0a00325d0a85b1": {
+      "solution": "by simp",
+      "nutrient_type": "vitamina",
+      "timestamp": "2026-02-17T09:20:26.572393",
+      "file": "Zeros.lean",
+      "confidence": 0.6,
+      "context": {
+        "file_type": "general",
+        "line": 62
+      }
+    },
+    "56fb5b597bfd6125": {
+      "solution": "trivial",
+      "nutrient_type": "carbohidrato_simple",
+      "timestamp": "2026-02-17T09:23:22.370347",
+      "file": "RH_final_v8_no_sorry.lean",
+      "confidence": 0.75,
+      "context": {
+        "file_type": "general",
+        "line": 8
+      }
+    }
+  },
   "success_rate": {},
   "total_attempts": 0,
   "total_success": 0,
   "repos_used": [],
-  "transformations_history": []
+  "transformations_history": [],
+  "stats": {
+    "trivial": {
+      "count": 5,
+      "avg_confidence": 0.75,
+      "files": [
+        "riemann_equivalence.lean",
+        "count_sorrys.lean",
+        "test_function.lean",
+        "xi_spectral_correspondence.lean",
+        "RH_final_v8_no_sorry.lean"
+      ]
+    },
+    "by simp": {
+      "count": 5,
+      "avg_confidence": 0.6,
+      "files": [
+        "spectral_density_theorems.lean",
+        "UnifiedTheory.lean",
+        "poisson_radon_symmetry.lean",
+        "radon_integral_symmetry.lean",
+        "Zeros.lean"
+      ]
+    }
+  },
+  "last_update": "2026-02-17T09:26:21.998328",
+  "total_patterns": 10
 }

@@ -39,6 +39,9 @@ coverage.xml
 # SABIO ∞⁴ generated reports
 sabio_infinity4_report_*.json
 
+# Integration diagnostic reports
+INTEGRATION_FIX_REPORT.md
+
 # Lean validation reports
 formalization/lean/validation_report.json
 
@@ -48,6 +51,11 @@ amda_stats.json
 auron_changes.json
 metrics.md
 noesis_auto_seal.log
+
+# NOESIS Digestive System generated files (keep learning files, ignore reports)
+digestive_*_report.md
+digestive_meal.md
+digestive_meal.json
 
 # NOESIS Integration generated files
 noesis_integrated_report.md
