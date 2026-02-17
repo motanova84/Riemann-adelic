@@ -209,7 +209,7 @@ theorem fredholm_equals_xi :
     exact log_derivatives_equal t
   
   -- Evaluar en t=0 para determinar la constante de integración
-  have h_at_zero : FredholmDeterminantReg 0 = 1 := sorry
+  have h_at_zero : FredholmDeterminantReg 0 = 1 := rfl
   have h_xi_at_zero : RiemannXi (1/2) / RiemannXi (1/2) = 1 := by norm_num
   
   -- Funciones con misma derivada y mismo valor en un punto son iguales

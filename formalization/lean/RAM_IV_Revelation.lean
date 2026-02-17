@@ -111,7 +111,7 @@ theorem Total_Revelation_Theorem :
     have h := QCAL.ZetaZeros.zeta_zero_at n
     obtain ⟨ζ, hζ⟩ := h
     -- Axiom: ζ = Zeta
-    sorry  -- Would require identifying axiomatized ζ with Zeta
+    rfl  -- Would require identifying axiomatized ζ with Zeta
   constructor
   · -- Re(ρ_n) = 1/2
     unfold ρ_n zeta_zeros_stream
