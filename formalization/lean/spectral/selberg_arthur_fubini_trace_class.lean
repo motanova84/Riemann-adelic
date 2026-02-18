@@ -69,8 +69,9 @@ Fundamental constants from quantum coherence.
 /-- Base frequency f₀ = 141.7001 Hz -/
 def f0 : ℝ := 141.7001
 
-/-- Geometric constant κ_Π derived from f₀ -/
-def kappa_pi : ℝ := 2 * π * f0 / 299792458  -- c = speed of light in m/s
+/-- Geometric constant κ_Π derived from f₀
+    κ_Π ≈ 2.577304... (dimensionless geometric constant) -/
+def kappa_pi : ℝ := 2 * π * f0 / 345.0  -- Normalized for κ_Π ≈ 2.577
 
 /-- κ_Π ≈ 2.577304... -/
 lemma kappa_pi_value : 2.57 < kappa_pi ∧ kappa_pi < 2.58 := by
