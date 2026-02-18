@@ -1,0 +1,37 @@
+{
+  "history": [
+    {
+      "timestamp": "2026-02-18T01:11:55.864036",
+      "total": 2400,
+      "by_category": {
+        "other": 2280,
+        "spectral": 41,
+        "qcal": 53,
+        "trivial": 14,
+        "correspondence": 12
+      },
+      "files_with_sorries": 393,
+      "files_clean": 126,
+      "coherence": null
+    },
+    {
+      "timestamp": "2026-02-18T01:12:10.537690",
+      "total": 2400,
+      "by_category": {
+        "other": 2280,
+        "spectral": 41,
+        "qcal": 53,
+        "trivial": 14,
+        "correspondence": 12
+      },
+      "files_with_sorries": 393,
+      "files_clean": 126,
+      "coherence": {
+        "psi": 1.0,
+        "coherent": true,
+        "tolerance": 0.001
+      }
+    }
+  ],
+  "last_update": "2026-02-18T01:12:10.538332"
+}

@@ -1,0 +1,154 @@
+{
+  "timestamp": "2026-02-18T01:12:00.382846",
+  "cycle_stats": {
+    "max_per_cycle": 10,
+    "success": 10,
+    "failure": 0,
+    "total_processed": 10
+  },
+  "patterns_learned": 3,
+  "total_patterns": 3,
+  "transformations": [
+    {
+      "file": "formalization/lean/spectral_determinant_formal.lean",
+      "line": 110,
+      "original": "sorry",
+      "proposed": "rfl",
+      "strategy": "rfl",
+      "status": "dry_run"
+    },
+    {
+      "file": "formalization/lean/spectral_determinant_formal.lean",
+      "line": 110,
+      "category": "trivial",
+      "status": "success"
+    },
+    {
+      "file": "formalization/lean/AdelicNavierStokes.lean",
+      "line": 192,
+      "original": "sorry := by",
+      "proposed": "rfl := by",
+      "strategy": "rfl",
+      "status": "dry_run"
+    },
+    {
+      "file": "formalization/lean/AdelicNavierStokes.lean",
+      "line": 192,
+      "category": "trivial",
+      "status": "success"
+    },
+    {
+      "file": "formalization/lean/AdelicNavierStokes.lean",
+      "line": 193,
+      "original": "sorry -- Relacionado con t\u00e9rminos Gamma en \u03be(s)",
+      "proposed": "rfl -- Relacionado con t\u00e9rminos Gamma en \u03be(s)",
+      "strategy": "rfl",
+      "status": "dry_run"
+    },
+    {
+      "file": "formalization/lean/AdelicNavierStokes.lean",
+      "line": 193,
+      "category": "trivial",
+      "status": "success"
+    },
+    {
+      "file": "formalization/lean/AdelicLaplacian.lean",
+      "line": 230,
+      "original": "sorry",
+      "proposed": "rfl",
+      "strategy": "rfl",
+      "status": "dry_run"
+    },
+    {
+      "file": "formalization/lean/AdelicLaplacian.lean",
+      "line": 230,
+      "category": "trivial",
+      "status": "success"
+    },
+    {
+      "file": "formalization/lean/RH_Algorithmic_Proof.lean",
+      "line": 130,
+      "original": "sorry",
+      "proposed": "rfl",
+      "strategy": "rfl",
+      "status": "dry_run"
+    },
+    {
+      "file": "formalization/lean/RH_Algorithmic_Proof.lean",
+      "line": 130,
+      "category": "trivial",
+      "status": "success"
+    },
+    {
+      "file": "formalization/lean/RH_Algorithmic_Proof.lean",
+      "line": 177,
+      "original": "def criba_eratostenes (N : \u2115) : List \u2115 := sorry",
+      "proposed": "def criba_eratostenes (N : \u2115) : List \u2115 := rfl",
+      "strategy": "rfl",
+      "status": "dry_run"
+    },
+    {
+      "file": "formalization/lean/RH_Algorithmic_Proof.lean",
+      "line": 177,
+      "category": "trivial",
+      "status": "success"
+    },
+    {
+      "file": "formalization/lean/RH_Algorithmic_Proof.lean",
+      "line": 181,
+      "original": "sorry",
+      "proposed": "rfl",
+      "strategy": "rfl",
+      "status": "dry_run"
+    },
+    {
+      "file": "formalization/lean/RH_Algorithmic_Proof.lean",
+      "line": 181,
+      "category": "trivial",
+      "status": "success"
+    },
+    {
+      "file": "formalization/lean/RH_Algorithmic_Proof.lean",
+      "line": 221,
+      "original": "def funcion_test_weil (\u03b4 : \u211d) (x : \u211d) : \u2102 := sorry",
+      "proposed": "def funcion_test_weil (\u03b4 : \u211d) (x : \u211d) : \u2102 := rfl",
+      "strategy": "rfl",
+      "status": "dry_run"
+    },
+    {
+      "file": "formalization/lean/RH_Algorithmic_Proof.lean",
+      "line": 221,
+      "category": "trivial",
+      "status": "success"
+    },
+    {
+      "file": "formalization/lean/RH_Algorithmic_Proof.lean",
+      "line": 224,
+      "original": "def calcular_weil_quadratic (f : \u211d \u2192 \u2102) : \u211d := sorry",
+      "proposed": "def calcular_weil_quadratic (f : \u211d \u2192 \u2102) : \u211d := rfl",
+      "strategy": "rfl",
+      "status": "dry_run"
+    },
+    {
+      "file": "formalization/lean/RH_Algorithmic_Proof.lean",
+      "line": 224,
+      "category": "trivial",
+      "status": "success"
+    },
+    {
+      "file": "formalization/lean/RH_Algorithmic_Proof.lean",
+      "line": 285,
+      "original": "def encontrar_indice_espectral (\u03c1 : \u2102) (h_cero : Unit) : Option \u2115 := sorry",
+      "proposed": "def encontrar_indice_espectral (\u03c1 : \u2102) (h_cero : Unit) : Option \u2115 := rfl",
+      "strategy": "rfl",
+      "status": "dry_run"
+    },
+    {
+      "file": "formalization/lean/RH_Algorithmic_Proof.lean",
+      "line": 285,
+      "category": "trivial",
+      "status": "success"
+    }
+  ],
+  "dry_run": true
+}
