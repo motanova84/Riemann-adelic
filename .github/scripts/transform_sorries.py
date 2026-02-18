@@ -306,6 +306,7 @@ class SorryTransformer:
             
             # Intentar patrones aprendidos primero
             success = self.try_learned_patterns(filepath, line_idx, lines, context, category)
+            used_strategy = None
             
             # Si no funcionó, probar estrategias estándar
             if not success:
@@ -313,6 +314,7 @@ class SorryTransformer:
                     for strategy in strategy_group:
                         success = self.apply_transformation(filepath, line_idx, lines, strategy)
                         if success and self.validate_transformation(filepath):
+                            used_strategy = strategy
                             break
                     if success:
                         break
@@ -326,9 +328,9 @@ class SorryTransformer:
                     'status': 'success'
                 })
                 
-                # Aprender patrón cada 3 éxitos
-                if self.success_count % 3 == 0:
-                    self.learn_pattern_from_success(context, strategy, category)
+                # Aprender patrón cada 3 éxitos (si tenemos la estrategia)
+                if self.success_count % 3 == 0 and used_strategy:
+                    self.learn_pattern_from_success(context, used_strategy, category)
                     self.log(f"🧠 Patrón aprendido #{len(self.patterns_learned)}")
             else:
                 self.failure_count += 1

@@ -1,12 +1,12 @@
 {
-  "timestamp": "2026-02-18T01:12:00.382846",
+  "timestamp": "2026-02-18T01:14:30.076106",
   "cycle_stats": {
-    "max_per_cycle": 10,
-    "success": 10,
+    "max_per_cycle": 5,
+    "success": 5,
     "failure": 0,
-    "total_processed": 10
+    "total_processed": 5
   },
-  "patterns_learned": 3,
+  "patterns_learned": 0,
   "total_patterns": 3,
   "transformations": [
     {
@@ -76,76 +76,6 @@
     {
       "file": "formalization/lean/RH_Algorithmic_Proof.lean",
       "line": 130,
-      "category": "trivial",
-      "status": "success"
-    },
-    {
-      "file": "formalization/lean/RH_Algorithmic_Proof.lean",
-      "line": 177,
-      "original": "def criba_eratostenes (N : \u2115) : List \u2115 := sorry",
-      "proposed": "def criba_eratostenes (N : \u2115) : List \u2115 := rfl",
-      "strategy": "rfl",
-      "status": "dry_run"
-    },
-    {
-      "file": "formalization/lean/RH_Algorithmic_Proof.lean",
-      "line": 177,
-      "category": "trivial",
-      "status": "success"
-    },
-    {
-      "file": "formalization/lean/RH_Algorithmic_Proof.lean",
-      "line": 181,
-      "original": "sorry",
-      "proposed": "rfl",
-      "strategy": "rfl",
-      "status": "dry_run"
-    },
-    {
-      "file": "formalization/lean/RH_Algorithmic_Proof.lean",
-      "line": 181,
-      "category": "trivial",
-      "status": "success"
-    },
-    {
-      "file": "formalization/lean/RH_Algorithmic_Proof.lean",
-      "line": 221,
-      "original": "def funcion_test_weil (\u03b4 : \u211d) (x : \u211d) : \u2102 := sorry",
-      "proposed": "def funcion_test_weil (\u03b4 : \u211d) (x : \u211d) : \u2102 := rfl",
-      "strategy": "rfl",
-      "status": "dry_run"
-    },
-    {
-      "file": "formalization/lean/RH_Algorithmic_Proof.lean",
-      "line": 221,
-      "category": "trivial",
-      "status": "success"
-    },
-    {
-      "file": "formalization/lean/RH_Algorithmic_Proof.lean",
-      "line": 224,
-      "original": "def calcular_weil_quadratic (f : \u211d \u2192 \u2102) : \u211d := sorry",
-      "proposed": "def calcular_weil_quadratic (f : \u211d \u2192 \u2102) : \u211d := rfl",
-      "strategy": "rfl",
-      "status": "dry_run"
-    },
-    {
-      "file": "formalization/lean/RH_Algorithmic_Proof.lean",
-      "line": 224,
-      "category": "trivial",
-      "status": "success"
-    },
-    {
-      "file": "formalization/lean/RH_Algorithmic_Proof.lean",
-      "line": 285,
-      "original": "def encontrar_indice_espectral (\u03c1 : \u2102) (h_cero : Unit) : Option \u2115 := sorry",
-      "proposed": "def encontrar_indice_espectral (\u03c1 : \u2102) (h_cero : Unit) : Option \u2115 := rfl",
-      "strategy": "rfl",
-      "status": "dry_run"
-    },
-    {
-      "file": "formalization/lean/RH_Algorithmic_Proof.lean",
-      "line": 285,
       "category": "trivial",
       "status": "success"
     }
