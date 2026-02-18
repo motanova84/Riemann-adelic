@@ -47,14 +47,14 @@ namespace QCALInfinity3.SpectralCompleteness
   This is the unique self-adjoint operator H_Ψ,t : dom(H) ⊆ L² → L²
   associated to the closed, semibounded form 𝒬_H,t.
 -/
-axiom Friedrichs_Extension (t : ℝ) (ht : 0 < t) : Type*
+axiom FriedrichsExtension (t : ℝ) (ht : 0 < t) : Type*
 
 /-- The Friedrichs extension is a self-adjoint operator on L² -/
 axiom friedrichs_is_self_adjoint (t : ℝ) (ht : 0 < t) :
     sorry -- Self-adjoint property
 
 /-- The spectrum of a self-adjoint operator -/
-axiom Spectrum : ∀ {t : ℝ} (ht : 0 < t), Friedrichs_Extension t ht → Set ℝ
+axiom Spectrum : ∀ {t : ℝ} (ht : 0 < t), FriedrichsExtension t ht → Set ℝ
 
 /-! ## II. COMPACT RESOLVENT FROM H^{1/2} COERCIVITY -/
 
