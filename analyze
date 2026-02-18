@@ -1,34 +1,34 @@
 {
-  "total_sorries": 2456,
-  "total_files": 396,
+  "total_sorries": 2503,
+  "total_files": 401,
   "category_distribution": {
     "qcal": {
-      "count": 1038,
-      "percentage": 42.26384364820847
+      "count": 1060,
+      "percentage": 42.34918098282062
     },
     "unknown": {
-      "count": 656,
-      "percentage": 26.710097719869708
+      "count": 658,
+      "percentage": 26.28845385537355
     },
     "spectral": {
-      "count": 298,
-      "percentage": 12.133550488599349
+      "count": 309,
+      "percentage": 12.345185777067519
     },
     "correspondence": {
-      "count": 27,
-      "percentage": 1.0993485342019544
+      "count": 29,
+      "percentage": 1.1586096683979226
     },
     "adelic": {
-      "count": 70,
-      "percentage": 2.8501628664495113
+      "count": 71,
+      "percentage": 2.836596084698362
     },
     "analytic": {
-      "count": 160,
-      "percentage": 6.514657980456026
+      "count": 168,
+      "percentage": 6.711945665201757
     },
     "trivial": {
-      "count": 207,
-      "percentage": 8.428338762214983
+      "count": 208,
+      "percentage": 8.310027966440272
     }
   },
   "detailed": {
@@ -7844,6 +7844,42 @@
         "similar_solutions": []
       }
     ],
+    "formalization/lean/spectral/trace_formula_completa.lean": [
+      {
+        "line": 94,
+        "code": "def eigenvalue {\u03b1 : Type*} (H : UnboundedOperator \u03b1) (n : \u2115) : \u211d := sorry",
+        "context": "    \u2203 (hv : v \u2208 H.domain), H.toFun v hv = (\u03bb : \u2102) \u2022 v})\n\n/-- Eigenvalue of an unbounded operator -/\ndef eigenvalue {\u03b1 : Type*} (H : UnboundedOperator \u03b1) (n : \u2115) : \u211d := sorry\n\n/-- Regularized trace of an operator -/\ndef TrRegularized {\u03b1 : Type*} [InnerProductSpace \u2102 \u03b1] (H : UnboundedOperator \u03b1) : \u2102 := sorry",
+        "primary_category": "spectral",
+        "all_categories": {
+          "spectral": 1.3
+        },
+        "complexity": 4,
+        "similar_solutions": []
+      },
+      {
+        "line": 97,
+        "code": "def TrRegularized {\u03b1 : Type*} [InnerProductSpace \u2102 \u03b1] (H : UnboundedOperator \u03b1) : \u2102 := sorry",
+        "context": "def eigenvalue {\u03b1 : Type*} (H : UnboundedOperator \u03b1) (n : \u2115) : \u211d := sorry\n\n/-- Regularized trace of an operator -/\ndef TrRegularized {\u03b1 : Type*} [InnerProductSpace \u2102 \u03b1] (H : UnboundedOperator \u03b1) : \u2102 := sorry\n\n/-! ## Function Properties -/\n",
+        "primary_category": "spectral",
+        "all_categories": {
+          "spectral": 1.3
+        },
+        "complexity": 4,
+        "similar_solutions": []
+      },
+      {
+        "line": 193,
+        "code": "sorry  -- This sorry represents GAP 3: the full derivation of the trace formula",
+        "context": "  -- STEP 6: Combine all the pieces\n  -- The trace equals the sum over eigenvalues (by h_trace)\n  -- The eigenvalue sum equals the RHS (by h_zeta, which encodes GAP 3)\n  sorry  -- This sorry represents GAP 3: the full derivation of the trace formula\n         -- Requires: Selberg trace formula, Poisson summation, Mellin inversion\n\nend TraceFormulaCompleta",
+        "primary_category": "spectral",
+        "all_categories": {
+          "spectral": 0.65,
+          "analytic": 0.6
+        },
+        "complexity": 4,
+        "similar_solutions": []
+      }
+    ],
     "formalization/lean/spectral/sabio5_spectral_bijection.lean": [
       {
         "line": 173,
@@ -11046,6 +11082,112 @@
         "similar_solutions": []
       }
     ],
+    "formalization/lean/spectral/weil_formula_at_zero.lean": [
+      {
+        "line": 60,
+        "code": "def eigenvalue {\u03b1 : Type*} (H : UnboundedOperator \u03b1) (n : \u2115) : \u211d := sorry",
+        "context": "    \u2203 (hv : v \u2208 H.domain), H.toFun v hv = (\u03bb : \u2102) \u2022 v})\n\n/-- Eigenvalue of an unbounded operator -/\ndef eigenvalue {\u03b1 : Type*} (H : UnboundedOperator \u03b1) (n : \u2115) : \u211d := sorry\n\n/-- Regularized trace of an operator -/\ndef TrRegularized {\u03b1 : Type*} [InnerProductSpace \u2102 \u03b1] (H : UnboundedOperator \u03b1) : \u2102 := sorry",
+        "primary_category": "spectral",
+        "all_categories": {
+          "spectral": 1.3
+        },
+        "complexity": 4,
+        "similar_solutions": []
+      },
+      {
+        "line": 63,
+        "code": "def TrRegularized {\u03b1 : Type*} [InnerProductSpace \u2102 \u03b1] (H : UnboundedOperator \u03b1) : \u2102 := sorry",
+        "context": "def eigenvalue {\u03b1 : Type*} (H : UnboundedOperator \u03b1) (n : \u2115) : \u211d := sorry\n\n/-- Regularized trace of an operator -/\ndef TrRegularized {\u03b1 : Type*} [InnerProductSpace \u2102 \u03b1] (H : UnboundedOperator \u03b1) : \u2102 := sorry\n\n/-- A function has compact support -/\ndef HasCompactSupport (f : \u211d \u2192 \u211d) : Prop :=",
+        "primary_category": "spectral",
+        "all_categories": {
+          "spectral": 1.3
+        },
+        "complexity": 4,
+        "similar_solutions": []
+      },
+      {
+        "line": 149,
+        "code": "sorry  -- Requires: summable series manipulation and zero enumeration",
+        "context": "      f (\u03b3^2) + \u2211' (\u03b3' : \u211d) (h : riemannZeta (1/2 + I * \u03b3') = 0) (_ : \u03b3' \u2260 \u03b3), f (\u03b3'^2) := by\n  -- By definition, the sum over all zeros equals\n  -- the term for \u03b3 plus the sum over all other zeros\n  sorry  -- Requires: summable series manipulation and zero enumeration\n\n/-- Contribution of an isolated zero in the trace formula\n    ",
+        "primary_category": "analytic",
+        "all_categories": {
+          "analytic": 0.6
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 189,
+        "code": "\u2264 (1/2) * supNorm f := by sorry  -- Decay by spacing between zeros",
+        "context": "  -- For \u03b3' \u2260 \u03b3, if f is localized near \u03b3\u00b2, then f(\u03b3'\u00b2) is small\n  have h_other_zeros : \n    |\u2211' (\u03b3' : \u211d) (h : riemannZeta (1/2 + I * \u03b3') = 0) (_ : \u03b3' \u2260 \u03b3), f (\u03b3'^2)| \n    \u2264 (1/2) * supNorm f := by sorry  -- Decay by spacing between zeros\n  \n  -- STEP 5: Estimate the prime contributions\n  -- The compact support ensures only finitely many primes contribute",
+        "primary_category": "adelic",
+        "all_categories": {
+          "adelic": 0.6,
+          "analytic": 0.6
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 196,
+        "code": "\u2264 (1/4) * supNorm f := by sorry  -- Compact support and rapid decay",
+        "context": "  have h_primes : \n    |\u2211' (p : \u2115) [Fact (Nat.Prime p)] (k : \u2115), \n      (Real.log p / Real.sqrt (p^k)) * (f (k * Real.log p) + f (-k * Real.log p))|\n    \u2264 (1/4) * supNorm f := by sorry  -- Compact support and rapid decay\n  \n  -- STEP 6: Estimate the continuous contribution\n  have h_continuous :",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 202,
+        "code": "\u2264 (1/4) * supNorm f := by sorry  -- Integral estimate using compact support",
+        "context": "  have h_continuous :\n    |(1 / (2 * \u03c0)) * \u222b (\u03bb : \u211d) in Set.Ioi 0, f \u03bb * \n      (Real.log \u03c0 - (Real.digamma (1/4 + I * Real.sqrt \u03bb / 2)).re)|\n    \u2264 (1/4) * supNorm f := by sorry  -- Integral estimate using compact support\n  \n  -- STEP 7: Combine estimates\n  use 2  -- C = 2 is sufficient",
+        "primary_category": "qcal",
+        "all_categories": {
+          "qcal": 0.75
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      },
+      {
+        "line": 210,
+        "code": "sorry  -- Elementary arithmetic with the above estimates",
+        "context": "  \u00b7 norm_num\n  \u00b7 -- All non-\u03b3 contributions are \u2264 (1/2 + 1/4 + 1/4) * \u2016f\u2016 = \u2016f\u2016\n    -- Adding a safety factor gives 2 * \u2016f\u2016\n    sorry  -- Elementary arithmetic with the above estimates\n\n/-! ## Auxiliary Results -/\n",
+        "primary_category": "trivial",
+        "all_categories": {
+          "trivial": 0.8
+        },
+        "complexity": 1,
+        "similar_solutions": []
+      },
+      {
+        "line": 233,
+        "code": "sorry  -- Spectral localization using bump functions",
+        "context": "    (h_normalized : f \u03bb = 1) :\n    \u2203 (mult : \u2115) (C : \u211d),  -- mult = multiplicity of eigenvalue at \u03bb\n      |TrRegularized H_\u03a8 - mult| \u2264 C * \u03b4 := by\n  sorry  -- Spectral localization using bump functions\n        -- Key tool in proving eigenvalue \u2194 zero correspondence\n\n/-- Weil formula approximation for small neighborhoods",
+        "primary_category": "qcal",
+        "all_categories": {
+          "correspondence": 0.7,
+          "qcal": 1.5,
+          "adelic": 0.6,
+          "spectral": 0.65
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      },
+      {
+        "line": 250,
+        "code": "sorry  -- Uses zero spacing and smooth cutoff",
+        "context": "    (h_support : \u2200 x, |x - \u03b3^2| > \u03b4 \u2192 f x = 0) :\n    \u2203 (C : \u211d),\n      |\u2211' (\u03b3' : \u211d) (_ : riemannZeta (1/2 + I * \u03b3') = 0), f (\u03b3'^2) - f (\u03b3^2)| \u2264 C * \u03b4 := by\n  sorry  -- Uses zero spacing and smooth cutoff\n        -- Essential for the bidirectional spectral correspondence\n\nend WeilFormulaAtZero",
+        "primary_category": "correspondence",
+        "all_categories": {
+          "correspondence": 0.7,
+          "analytic": 0.6
+        },
+        "complexity": 4,
+        "similar_solutions": []
+      }
+    ],
     "formalization/lean/spectral/SpectralTheoryTraceFormula.lean": [
       {
         "line": 99,
@@ -11576,6 +11718,249 @@
         "primary_category": "unknown",
         "all_categories": {
           "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      }
+    ],
+    "formalization/lean/spectral/implicacion_espectral_completa.lean": [
+      {
+        "line": 59,
+        "code": "def eigenvalue {\u03b1 : Type*} (H : UnboundedOperator \u03b1) (n : \u2115) : \u211d := sorry",
+        "context": "    \u2203 (hv : v \u2208 H.domain), H.toFun v hv = (\u03bb : \u2102) \u2022 v})\n\n/-- Eigenvalue of an unbounded operator -/\ndef eigenvalue {\u03b1 : Type*} (H : UnboundedOperator \u03b1) (n : \u2115) : \u211d := sorry\n\n/-- Regularized trace of an operator -/\ndef TrRegularized {\u03b1 : Type*} [InnerProductSpace \u2102 \u03b1] (H : UnboundedOperator \u03b1) : \u2102 := sorry",
+        "primary_category": "spectral",
+        "all_categories": {
+          "spectral": 1.3
+        },
+        "complexity": 4,
+        "similar_solutions": []
+      },
+      {
+        "line": 62,
+        "code": "def TrRegularized {\u03b1 : Type*} [InnerProductSpace \u2102 \u03b1] (H : UnboundedOperator \u03b1) : \u2102 := sorry",
+        "context": "def eigenvalue {\u03b1 : Type*} (H : UnboundedOperator \u03b1) (n : \u2115) : \u211d := sorry\n\n/-- Regularized trace of an operator -/\ndef TrRegularized {\u03b1 : Type*} [InnerProductSpace \u2102 \u03b1] (H : UnboundedOperator \u03b1) : \u2102 := sorry\n\n/-- A function has compact support -/\ndef HasCompactSupport (f : \u211d \u2192 \u211d) : Prop :=",
+        "primary_category": "spectral",
+        "all_categories": {
+          "spectral": 1.3
+        },
+        "complexity": 4,
+        "similar_solutions": []
+      },
+      {
+        "line": 140,
+        "code": "(H_\u03a8 : UnboundedOperator H) (\u03bb : \u211d) : \u2115 := sorry",
+        "context": "\n/-- Multiplicity of an eigenvalue -/\ndef multiplicity {H : Type _} [NormedAddCommGroup H] [InnerProductSpace \u2102 H]\n    (H_\u03a8 : UnboundedOperator H) (\u03bb : \u211d) : \u2115 := sorry\n\n/-- Bump function centered at a point -/\ndef bumpFunction (center : \u211d) (\u03b4 : \u211d) : \u211d \u2192 \u211d := sorry",
+        "primary_category": "qcal",
+        "all_categories": {
+          "qcal": 1.5,
+          "spectral": 1.3
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      },
+      {
+        "line": 143,
+        "code": "def bumpFunction (center : \u211d) (\u03b4 : \u211d) : \u211d \u2192 \u211d := sorry",
+        "context": "    (H_\u03a8 : UnboundedOperator H) (\u03bb : \u211d) : \u2115 := sorry\n\n/-- Bump function centered at a point -/\ndef bumpFunction (center : \u211d) (\u03b4 : \u211d) : \u211d \u2192 \u211d := sorry\n\n/-- Properties of bump functions -/\naxiom bump_smooth (center \u03b4 : \u211d) : ContDiff \u211d \u22a4 (bumpFunction center \u03b4)",
+        "primary_category": "qcal",
+        "all_categories": {
+          "qcal": 1.5,
+          "spectral": 0.65
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      },
+      {
+        "line": 164,
+        "code": "sorry  -- From discrete spectrum characterization",
+        "context": "    \u2203 \u03b3 : \u211d, \u03bb = 1/4 + \u03b3^2 \u2227 riemannZeta (1/2 + I * \u03b3) = 0 := by\n  -- \u03bb is an eigenvalue (discrete spectrum)\n  obtain \u27e8n, h\u03bb_eq\u27e9 : \u2203 n, \u03bb = eigenvalue H_\u03a8 n := by\n    sorry  -- From discrete spectrum characterization\n  \n  -- Construct a bump function centered at \u03bb with small support \u03b4\n  let \u03b4 := (1 : \u211d) / 100  -- Small parameter",
+        "primary_category": "qcal",
+        "all_categories": {
+          "qcal": 1.5,
+          "spectral": 1.3,
+          "analytic": 0.6
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      },
+      {
+        "line": 177,
+        "code": "sorry  -- FINE ASYMPTOTIC ANALYSIS",
+        "context": "  -- Left side: trace \u2248 multiplicity(\u03bb) by localization\n  have h_left : \u2203 (C : \u211d), \n    |TrRegularized H_\u03a8 - multiplicity H_\u03a8 \u03bb| \u2264 C * \u03b4 := by\n    sorry  -- FINE ASYMPTOTIC ANALYSIS\n           -- Uses spectral localization properties\n  \n  -- Right side: dominated by some \u03b3\u00b2 \u2248 \u03bb",
+        "primary_category": "qcal",
+        "all_categories": {
+          "qcal": 1.5,
+          "adelic": 0.6
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      },
+      {
+        "line": 184,
+        "code": "sorry  -- TRACE FORMULA ANALYSIS",
+        "context": "  -- If no zero \u03b3 had \u03b3\u00b2 \u2248 \u03bb, the trace would be small\n  -- But the trace \u2248 multiplicity(\u03bb) \u2265 1, contradiction\n  have h_exists : \u2203 \u03b3, |\u03b3^2 - \u03bb| < 2*\u03b4 \u2227 riemannZeta (1/2 + I * \u03b3) = 0 := by\n    sorry  -- TRACE FORMULA ANALYSIS\n           -- Key step: matching left and right sides\n  \n  obtain \u27e8\u03b3, h_close, h\u03b6\u27e9 := h_exists",
+        "primary_category": "analytic",
+        "all_categories": {
+          "analytic": 1.2
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 191,
+        "code": "sorry  -- CONTINUITY ARGUMENT",
+        "context": "  \n  -- Refining \u03b4 \u2192 0 gives exact equality\n  have h_eq : \u03bb = 1/4 + \u03b3^2 := by\n    sorry  -- CONTINUITY ARGUMENT\n           -- Taking limit as \u03b4 \u2192 0\n  \n  exact \u27e8\u03b3, h_eq, h\u03b6\u27e9",
+        "primary_category": "analytic",
+        "all_categories": {
+          "analytic": 0.6
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 269,
+        "code": "sorry  -- From \u03bb = 1/4 + \u03b3\u2081\u00b2 = 1/4 + \u03b3\u2082\u00b2 we get \u03b3\u2081\u00b2 = \u03b3\u2082\u00b2",
+        "context": "    (h\u2081 : \u03bb = 1/4 + \u03b3\u2081^2 \u2227 riemannZeta (1/2 + I * \u03b3\u2081) = 0)\n    (h\u2082 : \u03bb = 1/4 + \u03b3\u2082^2 \u2227 riemannZeta (1/2 + I * \u03b3\u2082) = 0) :\n    \u03b3\u2081 = \u03b3\u2082 \u2228 \u03b3\u2081 = -\u03b3\u2082 := by\n  sorry  -- From \u03bb = 1/4 + \u03b3\u2081\u00b2 = 1/4 + \u03b3\u2082\u00b2 we get \u03b3\u2081\u00b2 = \u03b3\u2082\u00b2\n\n/-- The spectrum is infinite -/\ntheorem spectrum_infinite",
+        "primary_category": "spectral",
+        "all_categories": {
+          "spectral": 0.65,
+          "analytic": 0.6
+        },
+        "complexity": 4,
+        "similar_solutions": []
+      },
+      {
+        "line": 279,
+        "code": "sorry  -- Uses: infinitude of zeta zeros + spectral_bijection_completa",
+        "context": "    (h_disc : DiscreteSpectrum H_\u03a8) :\n    Set.Infinite (spectrum H_\u03a8) := by\n  -- \u03b6 has infinitely many zeros, therefore H_\u03a8 has infinitely many eigenvalues\n  sorry  -- Uses: infinitude of zeta zeros + spectral_bijection_completa\n\n/-- Eigenvalues accumulate at infinity -/\ntheorem spectrum_accumulates_at_infinity",
+        "primary_category": "qcal",
+        "all_categories": {
+          "correspondence": 0.7,
+          "qcal": 1.5,
+          "spectral": 1.3,
+          "analytic": 1.2
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      },
+      {
+        "line": 289,
+        "code": "sorry  -- Uses: growth of zeta zero counting + spectral_bijection_completa",
+        "context": "    (h_disc : DiscreteSpectrum H_\u03a8) :\n    \u2200 M : \u211d, \u2203 \u03bb \u2208 spectrum H_\u03a8, \u03bb > M := by\n  -- Zeta zeros have unbounded imaginary parts\n  sorry  -- Uses: growth of zeta zero counting + spectral_bijection_completa\n\nend ImplicacionEspectralCompleta\n",
+        "primary_category": "qcal",
+        "all_categories": {
+          "correspondence": 0.7,
+          "qcal": 1.5,
+          "spectral": 0.65,
+          "analytic": 0.6
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      }
+    ],
+    "formalization/lean/spectral/ausencia_espectro_espurio.lean": [
+      {
+        "line": 60,
+        "code": "def eigenvalue {\u03b1 : Type*} (H : UnboundedOperator \u03b1) (n : \u2115) : \u211d := sorry",
+        "context": "    \u2203 (hv : v \u2208 H.domain), H.toFun v hv = (\u03bb : \u2102) \u2022 v})\n\n/-- Eigenvalue of an unbounded operator -/\ndef eigenvalue {\u03b1 : Type*} (H : UnboundedOperator \u03b1) (n : \u2115) : \u211d := sorry\n\n/-- Regularized trace of an operator -/\ndef TrRegularized {\u03b1 : Type*} [InnerProductSpace \u2102 \u03b1] (H : UnboundedOperator \u03b1) : \u2102 := sorry",
+        "primary_category": "spectral",
+        "all_categories": {
+          "spectral": 1.3
+        },
+        "complexity": 4,
+        "similar_solutions": []
+      },
+      {
+        "line": 63,
+        "code": "def TrRegularized {\u03b1 : Type*} [InnerProductSpace \u2102 \u03b1] (H : UnboundedOperator \u03b1) : \u2102 := sorry",
+        "context": "def eigenvalue {\u03b1 : Type*} (H : UnboundedOperator \u03b1) (n : \u2115) : \u211d := sorry\n\n/-- Regularized trace of an operator -/\ndef TrRegularized {\u03b1 : Type*} [InnerProductSpace \u2102 \u03b1] (H : UnboundedOperator \u03b1) : \u2102 := sorry\n\n/-- A function has compact support -/\ndef HasCompactSupport (f : \u211d \u2192 \u211d) : Prop :=",
+        "primary_category": "spectral",
+        "all_categories": {
+          "spectral": 1.3
+        },
+        "complexity": 4,
+        "similar_solutions": []
+      },
+      {
+        "line": 70,
+        "code": "def bumpFunction (center : \u211d) (\u03b4 : \u211d) : \u211d \u2192 \u211d := sorry",
+        "context": "  \u2203 K : Set \u211d, IsCompact K \u2227 (\u2200 x \u2209 K, f x = 0)\n\n/-- Bump function centered at a point -/\ndef bumpFunction (center : \u211d) (\u03b4 : \u211d) : \u211d \u2192 \u211d := sorry\n\n/-- Properties of bump functions -/\naxiom bump_smooth (center \u03b4 : \u211d) : ContDiff \u211d \u22a4 (bumpFunction center \u03b4)",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 86,
+        "code": "(H_\u03a8 : UnboundedOperator H) (\u03bb : \u211d) : \u2115 := sorry",
+        "context": "\n/-- Multiplicity of an eigenvalue -/\ndef multiplicity {H : Type _} [NormedAddCommGroup H] [InnerProductSpace \u2102 H]\n    (H_\u03a8 : UnboundedOperator H) (\u03bb : \u211d) : \u2115 := sorry\n\n/-- Complete trace formula (re-stated as axiom) -/\naxiom trace_formula_completa ",
+        "primary_category": "qcal",
+        "all_categories": {
+          "correspondence": 0.7,
+          "qcal": 1.5,
+          "spectral": 1.3
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      },
+      {
+        "line": 187,
+        "code": "sorry  -- Spectral localization",
+        "context": "    (h_support : \u2200 x, |x - \u03bb| > \u03b4 \u2192 f x = 0)\n    (h_normalized : f \u03bb = 1) :\n    |TrRegularized H_\u03a8 - multiplicity H_\u03a8 \u03bb * f \u03bb| < \u03b4 := by\n  sorry  -- Spectral localization\n         -- Key analytical tool for this theorem\n\n/-- Existence of zero near eigenvalue (from trace formula)",
+        "primary_category": "qcal",
+        "all_categories": {
+          "qcal": 1.5,
+          "adelic": 0.6,
+          "spectral": 0.65,
+          "analytic": 0.6
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      },
+      {
+        "line": 246,
+        "code": "sorry  -- From discrete spectrum characterization",
+        "context": "  \n  -- \u03bb is an eigenvalue (by discrete spectrum)\n  obtain \u27e8n, h\u03bb_eq\u27e9 : \u2203 n, \u03bb = eigenvalue H_\u03a8 n := by\n    sorry  -- From discrete spectrum characterization\n  \n  -- Construct a sequence of bump functions with shrinking support\n  -- For each \u03b4 > 0, we'll get a zero \u03b3_\u03b4 with |\u03b3_\u03b4\u00b2 - \u03bb| < \u03b4",
+        "primary_category": "qcal",
+        "all_categories": {
+          "qcal": 1.5,
+          "spectral": 1.3
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      },
+      {
+        "line": 274,
+        "code": "sorry  -- \u03bb is an eigenvalue, so it appears at least once",
+        "context": "    \n    -- The trace is positive (multiplicity \u2265 1)\n    have h_positive : multiplicity H_\u03a8 \u03bb \u2265 1 := by\n      sorry  -- \u03bb is an eigenvalue, so it appears at least once\n    \n    -- Therefore the RHS must have positive contribution from zeros\n    -- This forces existence of \u03b3 with \u03b3\u00b2 \u2248 \u03bb",
+        "primary_category": "qcal",
+        "all_categories": {
+          "qcal": 1.5,
+          "spectral": 0.65
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      },
+      {
+        "line": 288,
+        "code": "sorry  -- CONVERGENCE AND DISCRETENESS OF ZEROS",
+        "context": "  -- Use continuity to get exact equality\n  have h_limit : \u2203 \u03b3 : \u211d, (\u2200 \u03b5 > 0, \u2203 \u03b4 > 0, |\u03b3^2 - \u03bb| < \u03b4) \u2227 \n                           riemannZeta (1/2 + I * \u03b3) = 0 := by\n    sorry  -- CONVERGENCE AND DISCRETENESS OF ZEROS\n           -- Key analytical step: taking the limit\n  \n  obtain \u27e8\u03b3, h_conv, h\u03b6\u27e9 := h_limit",
+        "primary_category": "analytic",
+        "all_categories": {
+          "analytic": 1.7999999999999998
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 295,
+        "code": "sorry  -- CONTINUITY ARGUMENT",
+        "context": "  \n  -- From convergence and continuity, we get exact equality\n  have h_eq : \u03bb = 1/4 + \u03b3^2 := by\n    sorry  -- CONTINUITY ARGUMENT\n           -- The sequence converges to an exact value\n  \n  exact \u27e8\u03b3, h_eq, h\u03b6\u27e9",
+        "primary_category": "analytic",
+        "all_categories": {
+          "analytic": 0.6
         },
         "complexity": 5,
         "similar_solutions": []
@@ -13048,6 +13433,183 @@
         "all_categories": {
           "qcal": 0.75,
           "spectral": 0.65,
+          "analytic": 0.6
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      }
+    ],
+    "formalization/lean/spectral/D_equals_xi.lean": [
+      {
+        "line": 110,
+        "code": "sorry  -- det[(H_\u03a8 - s(1-s))\u207b\u00b9 \u2218 (H_\u03a8 - s\u2080(1-s\u2080))]",
+        "context": "/-- The Fredholm determinant of H_\u03a8 -/\ndef D {H : Type _} [NormedAddCommGroup H] [InnerProductSpace \u2102 H] [CompleteSpace H]\n    (H_\u03a8 : UnboundedOperator H) (s : \u2102) : \u2102 :=\n  sorry  -- det[(H_\u03a8 - s(1-s))\u207b\u00b9 \u2218 (H_\u03a8 - s\u2080(1-s\u2080))]\n         -- Requires: Fredholm theory for unbounded operators\n\n/-- The Riemann xi function -/",
+        "primary_category": "qcal",
+        "all_categories": {
+          "qcal": 1.5,
+          "spectral": 1.3
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      },
+      {
+        "line": 122,
+        "code": "def EntireFunctionOrder (f : \u2102 \u2192 \u2102) : \u211d := sorry",
+        "context": "  \u2200 z : \u2102, AnalyticAt \u2102 f z\n\n/-- Order of an entire function -/\ndef EntireFunctionOrder (f : \u2102 \u2192 \u2102) : \u211d := sorry\n\n/-! ## Properties of D(s) -/\n",
+        "primary_category": "analytic",
+        "all_categories": {
+          "analytic": 0.6
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 133,
+        "code": "sorry  -- Fredholm determinants of trace-class operators are entire",
+        "context": "    (h_sa : IsSelfAdjoint H_\u03a8)\n    (h_disc : DiscreteSpectrum H_\u03a8) :\n    EntireFunction (D H_\u03a8) := by\n  sorry  -- Fredholm determinants of trace-class operators are entire\n         -- This is a standard result in functional analysis\n\n/-- D(s) satisfies the functional equation D(s) = D(1-s) -/",
+        "primary_category": "spectral",
+        "all_categories": {
+          "qcal": 1.5,
+          "spectral": 1.9500000000000002
+        },
+        "complexity": 4,
+        "similar_solutions": []
+      },
+      {
+        "line": 144,
+        "code": "sorry  -- Follows from spectral symmetry of H_\u03a8",
+        "context": "    (s : \u2102) : \n    D H_\u03a8 s = D H_\u03a8 (1 - s) := by\n  -- Use symmetry of H_\u03a8 under the transformation s \u21a6 1-s\n  sorry  -- Follows from spectral symmetry of H_\u03a8\n         -- Related to the functional equation of \u03b6(s)\n\n/-- D(s) has order at most 1 -/",
+        "primary_category": "qcal",
+        "all_categories": {
+          "qcal": 1.5,
+          "analytic": 0.6
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      },
+      {
+        "line": 154,
+        "code": "sorry  -- Order is bounded by eigenvalue growth",
+        "context": "    (h_sa : IsSelfAdjoint H_\u03a8)\n    (h_disc : DiscreteSpectrum H_\u03a8) :\n    EntireFunctionOrder (D H_\u03a8) \u2264 1 := by\n  sorry  -- Order is bounded by eigenvalue growth\n         -- Follows from trace-class properties\n\n/-- Normalization: D(0) = 1 -/",
+        "primary_category": "qcal",
+        "all_categories": {
+          "qcal": 1.5,
+          "spectral": 1.3
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      },
+      {
+        "line": 163,
+        "code": "sorry  -- By definition of the regularized determinant",
+        "context": "    (H_\u03a8 : UnboundedOperator H)\n    (h_sa : IsSelfAdjoint H_\u03a8) :\n    D H_\u03a8 0 = 1 := by\n  sorry  -- By definition of the regularized determinant\n\n/-! ## Properties of \u03be(s) -/\n",
+        "primary_category": "qcal",
+        "all_categories": {
+          "qcal": 1.5,
+          "spectral": 0.65
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      },
+      {
+        "line": 169,
+        "code": "sorry  -- Standard result from analytic number theory",
+        "context": "\n/-- \u03be(s) is an entire function -/\ntheorem xi_entire : EntireFunction xi := by\n  sorry  -- Standard result from analytic number theory\n         -- \u03be(s) has no poles (the poles of \u03b6 and \u0393 cancel)\n\n/-- \u03be(s) satisfies the functional equation \u03be(s) = \u03be(1-s) -/",
+        "primary_category": "analytic",
+        "all_categories": {
+          "analytic": 1.2
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 174,
+        "code": "sorry  -- Classical result, follows from \u03b6 functional equation",
+        "context": "\n/-- \u03be(s) satisfies the functional equation \u03be(s) = \u03be(1-s) -/\ntheorem xi_functional_equation (s : \u2102) : xi s = xi (1 - s) := by\n  sorry  -- Classical result, follows from \u03b6 functional equation\n\n/-- \u03be(s) has order exactly 1 -/\ntheorem xi_order_equals_one : EntireFunctionOrder xi = 1 := by",
+        "primary_category": "analytic",
+        "all_categories": {
+          "analytic": 0.6
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 178,
+        "code": "sorry  -- Known from growth estimates of \u03b6(s) on vertical lines",
+        "context": "\n/-- \u03be(s) has order exactly 1 -/\ntheorem xi_order_equals_one : EntireFunctionOrder xi = 1 := by\n  sorry  -- Known from growth estimates of \u03b6(s) on vertical lines\n\n/-! ## Zero Correspondence -/\n",
+        "primary_category": "correspondence",
+        "all_categories": {
+          "correspondence": 0.7,
+          "analytic": 0.6
+        },
+        "complexity": 4,
+        "similar_solutions": []
+      },
+      {
+        "line": 192,
+        "code": "sorry  -- DEPENDS ON GAP 3 (trace formula derivation)",
+        "context": "    (hD : D H_\u03a8 s = 0) :\n    riemannZeta s = 0 := by\n  -- Use the trace formula to connect D's zeros to \u03b6's zeros\n  sorry  -- DEPENDS ON GAP 3 (trace formula derivation)\n         -- Uses: trace_formula_completa and weil_formula_at_zero\n\n/-- A zero of \u03b6 corresponds to a zero of D -/",
+        "primary_category": "qcal",
+        "all_categories": {
+          "correspondence": 0.7,
+          "qcal": 1.5,
+          "analytic": 1.2
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      },
+      {
+        "line": 205,
+        "code": "sorry  -- DEPENDS ON GAP 2 (zero_implies_spectral)",
+        "context": "    (h\u03b6 : riemannZeta s = 0) :\n    D H_\u03a8 s = 0 := by\n  -- Use zero_implies_spectral (from GAP 2) and spectral \u2194 D zeros\n  sorry  -- DEPENDS ON GAP 2 (zero_implies_spectral)\n         -- Uses: weil_formula_at_zero\n\n/-- D and \u03be have the same zeros -/",
+        "primary_category": "qcal",
+        "all_categories": {
+          "qcal": 1.5,
+          "analytic": 1.2
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      },
+      {
+        "line": 263,
+        "code": "sorry  -- APPLICATION OF HADAMARD FACTORIZATION",
+        "context": "  -- differ by e^(as+b)\n  have h_hadamard : \u2203 (a b : \u2102), \n    \u2200 s, D H_\u03a8 s = exp (a * s + b) * xi (1/2 + I * s) / xi (1/2) := by\n    sorry  -- APPLICATION OF HADAMARD FACTORIZATION\n           -- This is a standard theorem in complex analysis\n  \n  obtain \u27e8a, b, h_eq\u27e9 := h_hadamard",
+        "primary_category": "qcal",
+        "all_categories": {
+          "qcal": 1.5
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      },
+      {
+        "line": 273,
+        "code": "sorry  -- ALGEBRA: functional equations force a = 0",
+        "context": "    -- Use D(s) = D(1-s) and \u03be(s) = \u03be(1-s)\n    have h_D_sym := D_functional_equation H_\u03a8 h_sa s\n    have h_xi_sym := xi_functional_equation (1/2 + I * s)\n    sorry  -- ALGEBRA: functional equations force a = 0\n  \n  -- STEP 6: Determine b = 0 from normalization\n  have h_b_zero : b = 0 := by",
+        "primary_category": "qcal",
+        "all_categories": {
+          "qcal": 1.5
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      },
+      {
+        "line": 280,
+        "code": "sorry  -- ALGEBRA: normalization forces b = 0",
+        "context": "    -- Use D(0) = 1\n    have h_D_zero := D_at_zero H_\u03a8 h_sa\n    -- Setting s = 0 in h_eq and using D(0) = 1\n    sorry  -- ALGEBRA: normalization forces b = 0\n  \n  -- STEP 7: Combine results\n  rw [h_a_zero, h_b_zero] at h_eq",
+        "primary_category": "qcal",
+        "all_categories": {
+          "qcal": 1.5
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      },
+      {
+        "line": 298,
+        "code": "sorry  -- Follows from D_equals_xi and properties of \u03be",
+        "context": "    (s : \u2102) \n    (hD : D H_\u03a8 s = 0) :\n    \u2203 \u03b3 : \u211d, s = 1/2 + I * \u03b3 \u2227 riemannZeta (1/2 + I * \u03b3) = 0 := by\n  sorry  -- Follows from D_equals_xi and properties of \u03be\n\nend DEqualsXi\n",
+        "primary_category": "qcal",
+        "all_categories": {
+          "qcal": 1.5,
           "analytic": 0.6
         },
         "complexity": 3,
@@ -29893,6 +30455,6 @@
   },
   "summary": {
     "most_common_category": "qcal",
-    "avg_complexity": 3.685260586319218
+    "avg_complexity": 3.6855773072313225
   }
 }
