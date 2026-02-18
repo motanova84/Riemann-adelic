@@ -162,11 +162,11 @@ The validation generates:
 
 ## 🛡️ Clay Institute Compliance
 
-This implementation satisfies all Clay Institute requirements for the Millennium Prize:
+This implementation aims to satisfy all Clay Institute requirements for the Millennium Prize:
 
 1. ✅ **Non-circular**: No assumption of RH in the proof
 2. ✅ **Algebraic precision**: Explicit bounds, no asymptotic approximations
-3. ✅ **Machine-verifiable**: Lean 4 formalization with rigorous proofs
+3. 🕒 **Formalization in progress**: Lean 4 formalization skeleton (currently includes `axiom`/`sorry` placeholders and is not yet fully machine-verifiable)
 4. ✅ **Comprehensive testing**: All numerical validations passed
 5. ✅ **Complete documentation**: Full mathematical exposition and code
 
