@@ -13,7 +13,7 @@ QCAL ∞³ · Coherence C = 244.36 · Frequency 141.7001 Hz
 This file formalizes the **Montgomery Large Sieve inequality** and its application
 to proving power-law growth of the regularized spectral weight:
 
-    W_reg(γ, t) ≥ c · |γ|^δ    with δ = 0.086
+    W_reg(γ, t) >= c · |γ|^δ    with δ = 0.086
 
 Combined with Vinogradov-Korobov exponential sums, this establishes:
 1. H^δ coercivity with δ > 0
@@ -24,8 +24,8 @@ Combined with Vinogradov-Korobov exponential sums, this establishes:
 
 ## Key Results
 
-- `montgomery_large_sieve`: ∑_{χ mod q} |∑_{p≤X} χ(p) log p|² ≤ C·(X + q²)·X·log²X
-- `large_sieve_power_law`: W_reg(γ, t) ≥ c·|γ|^δ with δ = 0.086
+- `montgomery_large_sieve`: ∑_{χ mod q} |∑_{p<=X} χ(p) log p|² <= C·(X + q²)·X·log²X
+- `large_sieve_power_law`: W_reg(γ, t) >= c·|γ|^δ with δ = 0.086
 - `compact_embedding_H_delta`: H^δ(C_𝔸¹) ↪ L²(C_𝔸¹) is compact
 - `discrete_spectrum_via_sieve`: Spectrum(H_Ψ) is discrete
 
@@ -79,16 +79,16 @@ noncomputable def spectral_weight_regularized (γ : ℝ) (t : ℝ) : ℝ :=
 
 /-- Montgomery-Vaughan Large Sieve inequality for Dirichlet characters.
     
-    For any sequence {a_p} indexed by primes p ≤ X:
+    For any sequence {a_p} indexed by primes p <= X:
     
-        ∑_{χ mod q} |∑_{p≤X} χ(p) a_p|² ≤ C · (X + q²) · ∑_{p≤X} |a_p|²
+        ∑_{χ mod q} |∑_{p<=X} χ(p) a_p|² <= C · (X + q²) · ∑_{p<=X} |a_p|²
     
     This inequality controls phase correlations and prevents catastrophic cancellations. -/
 theorem montgomery_large_sieve
     (X q : ℕ) (a : ℕ → ℂ) (hX : X > 0) (hq : q > 0) :
     ∑ χ in DirichletCharacter.sum_over_modulus q,
       Complex.abs (∑ p in Finset.filter Nat.Prime (Finset.range X), χ p * a p) ^ 2
-    ≤ montgomery_constant * (X + q^2 : ℝ) * ∑ p in Finset.filter Nat.Prime (Finset.range X),
+    <= montgomery_constant * (X + q^2 : ℝ) * ∑ p in Finset.filter Nat.Prime (Finset.range X),
       Complex.abs (a p) ^ 2 := by
   sorry  -- Formalization of Montgomery-Vaughan proof
 
@@ -98,18 +98,18 @@ theorem montgomery_large_sieve
     
     This is the KEY result from numerical validation:
     
-        W_reg(γ, t) ≥ c · |γ|^{0.086}    for |γ| ≥ 1
+        W_reg(γ, t) >= c · |γ|^{0.086}    for |γ| >= 1
     
     Combined with Montgomery Large Sieve and Vinogradov-Korobov bounds,
     this ensures no continuous spectrum. -/
 theorem large_sieve_power_law
-    (γ : ℝ) (t : ℝ) (ht : t = heat_param) (hγ : |γ| ≥ 1) :
-    spectral_weight_regularized γ t ≥ 0.5 * |γ| ^ delta := by
+    (γ : ℝ) (t : ℝ) (ht : t = heat_param) (hγ : |γ| >= 1) :
+    spectral_weight_regularized γ t >= 0.5 * |γ| ^ delta := by
   sorry  -- Numerical validation confirms this with c ≈ 0.5
 
 /-- Spectral weight is positive for all non-zero γ -/
 theorem spectral_weight_positive
-    (γ : ℝ) (t : ℝ) (ht : t > 0) (hγ : γ ≠ 0) :
+    (γ : ℝ) (t : ℝ) (ht : t > 0) (hγ : γ != 0) :
     spectral_weight_regularized γ t > 0 := by
   sorry  -- Follows from prime phase contributions
 
@@ -141,16 +141,16 @@ noncomputable def l2_norm_sq (f : ℝ → ℂ) : ℝ :=
     
     For the large sieve quadratic form:
     
-        Q_LS(f, f) + C‖f‖²_L² ≥ c‖f‖²_H^δ
+        Q_LS(f, f) + C‖f‖²_L² >= c‖f‖²_H^δ
     
     with δ = 0.086, c ≈ 0.5, C can be chosen arbitrarily.
     
     This is the MASTER inequality ensuring compact resolvent. -/
 theorem large_sieve_coercivity
     (f : ℝ → ℂ) (t : ℝ) (ht : t = heat_param)
-    (C : ℝ) (hC : C ≥ 0) :
+    (C : ℝ) (hC : C >= 0) :
     large_sieve_quadratic_form f t + C * l2_norm_sq f
-    ≥ 0.5 * sobolev_norm_sq f delta := by
+    >= 0.5 * sobolev_norm_sq f delta := by
   sorry  -- Follows from large_sieve_power_law and Fourier characterization
 
 /-! ## Compact Embedding via Rellich-Kondrachov -/
@@ -161,13 +161,13 @@ theorem large_sieve_coercivity
     H^s with s > 0 embeds compactly into L². -/
 theorem rellich_kondrachov_compact_embedding (s : ℝ) (hs : s > 0) :
     ∃ (K : ℝ → ℂ) → (ℝ → ℂ), CompactOperator K ∧
-      ∀ f, ‖K f‖_L² ≤ ‖f‖_{H^s} := by
+      ∀ f, ‖K f‖_L² <= ‖f‖_{H^s} := by
   sorry  -- Standard result from functional analysis
 
 /-- Coercivity + Compact embedding ⟹ Discrete spectrum -/
 theorem compact_embedding_H_delta :
     ∃ (K : ℝ → ℂ) → (ℝ → ℂ), CompactOperator K ∧
-      ∀ f, ‖K f‖_L² ≤ ‖f‖_{H^delta} := by
+      ∀ f, ‖K f‖_L² <= ‖f‖_{H^delta} := by
   exact rellich_kondrachov_compact_embedding delta (by norm_num : delta > 0)
 
 /-! ## Discrete Spectrum of H_Ψ -/
@@ -182,7 +182,7 @@ structure HeckeOperatorLS where
     The operator H_Ψ has discrete spectrum.
     
     Proof outline:
-    1. Large sieve power law: W_reg(γ, t) ≥ c|γ|^{0.086}
+    1. Large sieve power law: W_reg(γ, t) >= c|γ|^{0.086}
     2. H^{0.086} coercivity via large_sieve_coercivity
     3. Compact embedding H^{0.086} ↪ L² via Rellich-Kondrachov
     4. Compact resolvent ⟹ discrete spectrum
@@ -200,13 +200,13 @@ theorem discrete_spectrum_via_sieve (H : HeckeOperatorLS) :
     
     All three necks for the Riemann Hypothesis spectral proof are now closed:
     
-    1. **Closability**: W_reg ≥ 0 (Muckenhoupt weight) ✅
+    1. **Closability**: W_reg >= 0 (Muckenhoupt weight) ✅
     2. **Self-Adjoint**: Friedrichs extension ✅
     3. **Discreteness**: Large Sieve δ = 0.086 power law ✅
     
     Result: Spectrum(H_Ψ) = {Riemann zeros on Re(s) = 1/2} -/
 theorem neck_3_closure :
-    (∀ γ t, spectral_weight_regularized γ t ≥ 0) ∧  -- Neck #1
+    (∀ γ t, spectral_weight_regularized γ t >= 0) ∧  -- Neck #1
     SelfAdjoint HeckeOperatorLS ∧                     -- Neck #2
     DiscreteSpectrum HeckeOperatorLS := by            -- Neck #3
   sorry  -- Certificate of completion
@@ -232,7 +232,7 @@ end LargeSieveCoercivity
 This file establishes the final piece (Neck #3) of the Riemann Hypothesis proof:
 
 **Input**: Montgomery Large Sieve + Vinogradov-Korobov bounds
-**Process**: Prove W_reg(γ,t) ≥ c|γ|^{0.086}
+**Process**: Prove W_reg(γ,t) >= c|γ|^{0.086}
 **Output**: H^{0.086} coercivity → Compact resolvent → Discrete spectrum
 
 **Status**: δ = 0.086 synchronized between Lean formalization and numerical validation ✅

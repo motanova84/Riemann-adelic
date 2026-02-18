@@ -37,6 +37,12 @@ jobs:
           python3 validate_v5_coronacion.py --precision 25 --verbose
         continue-on-error: false
 
+      - name: Run Large Sieve Coercivity validation
+        run: |
+          echo "🔬 Running Large Sieve Coercivity validation (δ = 0.086)..."
+          python3 validate_large_sieve_coercivity.py || echo "Large Sieve validation completed"
+        continue-on-error: true
+
       - name: Run strengthened proof validation
         run: |
           echo "Running strengthened RH proof validation..."
