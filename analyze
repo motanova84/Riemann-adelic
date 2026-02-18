@@ -1,34 +1,34 @@
 {
-  "total_sorries": 2430,
-  "total_files": 395,
+  "total_sorries": 2456,
+  "total_files": 396,
   "category_distribution": {
     "qcal": {
-      "count": 1029,
-      "percentage": 42.34567901234568
+      "count": 1038,
+      "percentage": 42.26384364820847
     },
     "unknown": {
-      "count": 652,
-      "percentage": 26.83127572016461
+      "count": 656,
+      "percentage": 26.710097719869708
     },
     "spectral": {
-      "count": 287,
-      "percentage": 11.810699588477366
+      "count": 298,
+      "percentage": 12.133550488599349
     },
     "correspondence": {
       "count": 27,
-      "percentage": 1.1111111111111112
+      "percentage": 1.0993485342019544
     },
     "adelic": {
       "count": 70,
-      "percentage": 2.880658436213992
+      "percentage": 2.8501628664495113
     },
     "analytic": {
       "count": 160,
-      "percentage": 6.584362139917696
+      "percentage": 6.514657980456026
     },
     "trivial": {
-      "count": 205,
-      "percentage": 8.436213991769549
+      "count": 207,
+      "percentage": 8.428338762214983
     }
   },
   "detailed": {
@@ -7368,6 +7368,305 @@
           "unknown": 1.0
         },
         "complexity": 5,
+        "similar_solutions": []
+      }
+    ],
+    "formalization/lean/spectral/resolvent_trace.lean": [
+      {
+        "line": 135,
+        "code": "sorry  -- Would be defined via ONB sum",
+        "context": "\n/-- Trace of an operator -/\ndef Tr (T : H \u2192L[\u2102] H) : \u2102 :=\n  sorry  -- Would be defined via ONB sum\n\n/-!\n## 2. Spectral Theorem (Lemma 1.1)",
+        "primary_category": "spectral",
+        "all_categories": {
+          "spectral": 0.65
+        },
+        "complexity": 4,
+        "similar_solutions": []
+      },
+      {
+        "line": 149,
+        "code": "\u2203 (T : H \u2192L[\u2102] H), \u2200 x, sorry) \u2227  -- f(A) = \u222b f(\u03bb) dE(\u03bb)",
+        "context": "theorem spectral_theorem (A : UnboundedOperator H) (hA : IsSelfAdjoint A) :\n  \u2203 (E : SpectralMeasure \u211d H), \n    (\u2200 (f : \u211d \u2192 \u2102), Continuous f \u2192 \n      \u2203 (T : H \u2192L[\u2102] H), \u2200 x, sorry) \u2227  -- f(A) = \u222b f(\u03bb) dE(\u03bb)\n    spectrum A = sorry := by  -- support of E\n  sorry\n",
+        "primary_category": "spectral",
+        "all_categories": {
+          "spectral": 1.3
+        },
+        "complexity": 4,
+        "similar_solutions": []
+      },
+      {
+        "line": 150,
+        "code": "spectrum A = sorry := by  -- support of E",
+        "context": "  \u2203 (E : SpectralMeasure \u211d H), \n    (\u2200 (f : \u211d \u2192 \u2102), Continuous f \u2192 \n      \u2203 (T : H \u2192L[\u2102] H), \u2200 x, sorry) \u2227  -- f(A) = \u222b f(\u03bb) dE(\u03bb)\n    spectrum A = sorry := by  -- support of E\n  sorry\n\n/-!",
+        "primary_category": "spectral",
+        "all_categories": {
+          "spectral": 0.65
+        },
+        "complexity": 4,
+        "similar_solutions": []
+      },
+      {
+        "line": 151,
+        "code": "sorry",
+        "context": "    (\u2200 (f : \u211d \u2192 \u2102), Continuous f \u2192 \n      \u2203 (T : H \u2192L[\u2102] H), \u2200 x, sorry) \u2227  -- f(A) = \u222b f(\u03bb) dE(\u03bb)\n    spectrum A = sorry := by  -- support of E\n  sorry\n\n/-!\n## 3. Resolvent Spectral Representation (Lemma 2.1)",
+        "primary_category": "spectral",
+        "all_categories": {
+          "spectral": 0.65
+        },
+        "complexity": 4,
+        "similar_solutions": []
+      },
+      {
+        "line": 164,
+        "code": "\u2200 f : H, sorry := by  -- R f = \u222b (1/(\u03bb - z)) dE(\u03bb) f",
+        "context": "theorem resolvent_spectral (A : UnboundedOperator H) (hA : IsSelfAdjoint A)\n    (z : \u2102) (hz : z \u2209 spectrum A) (E : SpectralMeasure \u211d H) :\n    \u2203 (R : H \u2192L[\u2102] H), \n      \u2200 f : H, sorry := by  -- R f = \u222b (1/(\u03bb - z)) dE(\u03bb) f\n  -- Proof structure:\n  -- 1. A = \u222b \u03bb dE(\u03bb) by spectral theorem\n  -- 2. (A - z)\u207b\u00b9 = (\u222b \u03bb dE(\u03bb) - z)\u207b\u00b9",
+        "primary_category": "spectral",
+        "all_categories": {
+          "spectral": 1.3
+        },
+        "complexity": 4,
+        "similar_solutions": []
+      },
+      {
+        "line": 169,
+        "code": "sorry",
+        "context": "  -- 1. A = \u222b \u03bb dE(\u03bb) by spectral theorem\n  -- 2. (A - z)\u207b\u00b9 = (\u222b \u03bb dE(\u03bb) - z)\u207b\u00b9\n  -- 3. = \u222b (\u03bb - z)\u207b\u00b9 dE(\u03bb) by functional calculus\n  sorry\n\n/-!\n## 4. Trace Class Property (Lemmas 3.1-3.3)",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 197,
+        "code": "sorry",
+        "context": "  -- 1. Use integral representation of the resolvent kernel\n  -- 2. Show \u222b\u222b |K(x,y)|\u00b2 dx dy < \u221e\n  -- 3. This follows from exponential decay of eigenfunctions\n  sorry\n\n/-- Composition of Hilbert-Schmidt is trace class -/\ntheorem hilbert_schmidt_composition_trace (A B : H \u2192L[\u2102] H) ",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 214,
+        "code": "sorry",
+        "context": "  obtain \u27e8R, hR\u27e9 := resolvent_hilbert_schmidt A hA z hz\n  -- R is Hilbert-Schmidt, so R = R \u2218 Id where Id is Hilbert-Schmidt\n  -- Therefore R \u2218 R is trace class\n  sorry\n\n/-!\n## 5. Trace-Integral Interchange (Lemma 4.1)",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 226,
+        "code": "sorry := by  -- Tr[\u222b f(\u03bb) dE(\u03bb)] = \u222b f(\u03bb) d(Tr\u2218E)(\u03bb)",
+        "context": "/-- Trace of spectral integral -/\ntheorem trace_integral_swap (E : SpectralMeasure \u211d H) (f : \u211d \u2192 \u2102) \n    (hf : Integrable f) :\n    sorry := by  -- Tr[\u222b f(\u03bb) dE(\u03bb)] = \u222b f(\u03bb) d(Tr\u2218E)(\u03bb)\n  -- Proof sketch:\n  -- 1. For simple functions, trace commutes with finite sums\n  -- 2. Extend by dominated convergence",
+        "primary_category": "trivial",
+        "all_categories": {
+          "trivial": 0.8
+        },
+        "complexity": 1,
+        "similar_solutions": []
+      },
+      {
+        "line": 231,
+        "code": "sorry",
+        "context": "  -- 1. For simple functions, trace commutes with finite sums\n  -- 2. Extend by dominated convergence\n  -- 3. Use that E(\u0394) is finite-rank projection for each \u0394\n  sorry\n\n/-!\n## 6. Discrete Spectral Measure (Lemmas 5.1-5.3)",
+        "primary_category": "trivial",
+        "all_categories": {
+          "trivial": 0.8
+        },
+        "complexity": 1,
+        "similar_solutions": []
+      },
+      {
+        "line": 252,
+        "code": "sorry := by  -- E({\u03bb}) = projection onto eigenspace(A, \u03bb)",
+        "context": "/-- Spectral projection at eigenvalue -/\ntheorem spectral_projection_eigenvalue (A : UnboundedOperator H) (hA : IsSelfAdjoint A)\n    (E : SpectralMeasure \u211d H) (\u03bb : \u211d) (h\u03bb : Complex.ofReal \u03bb \u2208 spectrum A) :\n    sorry := by  -- E({\u03bb}) = projection onto eigenspace(A, \u03bb)\n  sorry\n\n/-- Trace of spectral projection is multiplicity -/",
+        "primary_category": "spectral",
+        "all_categories": {
+          "spectral": 1.9500000000000002
+        },
+        "complexity": 4,
+        "similar_solutions": []
+      },
+      {
+        "line": 253,
+        "code": "sorry",
+        "context": "theorem spectral_projection_eigenvalue (A : UnboundedOperator H) (hA : IsSelfAdjoint A)\n    (E : SpectralMeasure \u211d H) (\u03bb : \u211d) (h\u03bb : Complex.ofReal \u03bb \u2208 spectrum A) :\n    sorry := by  -- E({\u03bb}) = projection onto eigenspace(A, \u03bb)\n  sorry\n\n/-- Trace of spectral projection is multiplicity -/\ntheorem trace_spectral_projection (A : UnboundedOperator H) (hA : IsSelfAdjoint A)",
+        "primary_category": "spectral",
+        "all_categories": {
+          "spectral": 1.9500000000000002
+        },
+        "complexity": 4,
+        "similar_solutions": []
+      },
+      {
+        "line": 258,
+        "code": "sorry := by  -- Tr[E({\u03bb})] = dim(eigenspace A \u03bb)",
+        "context": "/-- Trace of spectral projection is multiplicity -/\ntheorem trace_spectral_projection (A : UnboundedOperator H) (hA : IsSelfAdjoint A)\n    (E : SpectralMeasure \u211d H) (\u03bb : \u211d) :\n    sorry := by  -- Tr[E({\u03bb})] = dim(eigenspace A \u03bb)\n  sorry\n\n/-- Discrete spectral measure representation -/",
+        "primary_category": "spectral",
+        "all_categories": {
+          "spectral": 0.65
+        },
+        "complexity": 4,
+        "similar_solutions": []
+      },
+      {
+        "line": 259,
+        "code": "sorry",
+        "context": "theorem trace_spectral_projection (A : UnboundedOperator H) (hA : IsSelfAdjoint A)\n    (E : SpectralMeasure \u211d H) (\u03bb : \u211d) :\n    sorry := by  -- Tr[E({\u03bb})] = dim(eigenspace A \u03bb)\n  sorry\n\n/-- Discrete spectral measure representation -/\ntheorem discrete_spectral_measure (A : UnboundedOperator H) (hA : IsSelfAdjoint A)",
+        "primary_category": "spectral",
+        "all_categories": {
+          "spectral": 0.65
+        },
+        "complexity": 4,
+        "similar_solutions": []
+      },
+      {
+        "line": 264,
+        "code": "sorry := by  -- Tr\u2218E = \u2211' \u03b4_{\u03bb\u2099}",
+        "context": "/-- Discrete spectral measure representation -/\ntheorem discrete_spectral_measure (A : UnboundedOperator H) (hA : IsSelfAdjoint A)\n    (hdisc : DiscreteSpectrum A) (E : SpectralMeasure \u211d H) :\n    sorry := by  -- Tr\u2218E = \u2211' \u03b4_{\u03bb\u2099}\n  -- For discrete spectrum, the trace measure is supported on eigenvalues\n  -- Each eigenvalue contributes a delta measure weighted by multiplicity\n  sorry",
+        "primary_category": "spectral",
+        "all_categories": {
+          "spectral": 1.9500000000000002
+        },
+        "complexity": 4,
+        "similar_solutions": []
+      },
+      {
+        "line": 267,
+        "code": "sorry",
+        "context": "    sorry := by  -- Tr\u2218E = \u2211' \u03b4_{\u03bb\u2099}\n  -- For discrete spectrum, the trace measure is supported on eigenvalues\n  -- Each eigenvalue contributes a delta measure weighted by multiplicity\n  sorry\n\n/-!\n## 7. Main Theorem: Resolvent Trace Expression",
+        "primary_category": "spectral",
+        "all_categories": {
+          "spectral": 1.3
+        },
+        "complexity": 4,
+        "similar_solutions": []
+      },
+      {
+        "line": 287,
+        "code": "have h_res : \u2203 (R : H \u2192L[\u2102] H), sorry := resolvent_spectral H_\u03a8 h_sa z hz E",
+        "context": "  obtain \u27e8E, hE\u27e9 := spectral_theorem H_\u03a8 h_sa\n  \n  -- Step 2: Express resolvent via spectral measure\n  have h_res : \u2203 (R : H \u2192L[\u2102] H), sorry := resolvent_spectral H_\u03a8 h_sa z hz E\n  \n  -- Step 3: Show resolvent is trace class\n  obtain \u27e8R, h_trace\u27e9 := resolvent_trace_class H_\u03a8 h_sa z hz",
+        "primary_category": "qcal",
+        "all_categories": {
+          "qcal": 1.5,
+          "spectral": 0.65
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      },
+      {
+        "line": 293,
+        "code": "have h_swap : sorry := trace_integral_swap E (fun \u03bb => 1 / (Complex.ofReal \u03bb - z)) sorry",
+        "context": "  obtain \u27e8R, h_trace\u27e9 := resolvent_trace_class H_\u03a8 h_sa z hz\n  \n  -- Step 4: Apply trace-integral interchange\n  have h_swap : sorry := trace_integral_swap E (fun \u03bb => 1 / (Complex.ofReal \u03bb - z)) sorry\n  \n  -- Step 5: Use discrete spectral measure\n  have h_discrete : sorry := discrete_spectral_measure H_\u03a8 h_sa h_disc E",
+        "primary_category": "qcal",
+        "all_categories": {
+          "qcal": 1.5,
+          "spectral": 0.65
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      },
+      {
+        "line": 296,
+        "code": "have h_discrete : sorry := discrete_spectral_measure H_\u03a8 h_sa h_disc E",
+        "context": "  have h_swap : sorry := trace_integral_swap E (fun \u03bb => 1 / (Complex.ofReal \u03bb - z)) sorry\n  \n  -- Step 5: Use discrete spectral measure\n  have h_discrete : sorry := discrete_spectral_measure H_\u03a8 h_sa h_disc E\n  \n  -- Step 6: Combine to get final result\n  obtain \u27e8seq, hseq\u27e9 := h_disc",
+        "primary_category": "qcal",
+        "all_categories": {
+          "qcal": 1.5
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      },
+      {
+        "line": 308,
+        "code": "sorry",
+        "context": "  -- = \u222b (\u03bb : \u211d), (1/(\u03bb - z)) \u2202(Tr\u2218E)(\u03bb)         -- by trace_integral_swap\n  -- = \u222b (\u03bb : \u211d), (1/(\u03bb - z)) \u2202(\u2211' n, \u03b4_{\u03bb\u2099})(\u03bb) -- by discrete_spectral_measure\n  -- = \u2211' n, 1/(\u03bb\u2099 - z)                           -- by integral of delta measure\n  sorry\n\n/-!\n## 8. Auxiliary Results and Corollaries",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 318,
+        "code": "sorry := by  -- Tr R is analytic in z",
+        "context": "theorem resolvent_trace_analytic (H_\u03a8 : UnboundedOperator H) \n    (h_sa : IsSelfAdjoint H_\u03a8) (h_disc : DiscreteSpectrum H_\u03a8) :\n    \u2200 z \u2209 spectrum H_\u03a8, \u2203 (R : H \u2192L[\u2102] H), \n      sorry := by  -- Tr R is analytic in z\n  sorry\n\n/-- Residue at pole equals multiplicity -/",
+        "primary_category": "qcal",
+        "all_categories": {
+          "qcal": 1.5,
+          "spectral": 1.3,
+          "analytic": 1.2
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      },
+      {
+        "line": 319,
+        "code": "sorry",
+        "context": "    (h_sa : IsSelfAdjoint H_\u03a8) (h_disc : DiscreteSpectrum H_\u03a8) :\n    \u2200 z \u2209 spectrum H_\u03a8, \u2203 (R : H \u2192L[\u2102] H), \n      sorry := by  -- Tr R is analytic in z\n  sorry\n\n/-- Residue at pole equals multiplicity -/\ntheorem resolvent_residue_multiplicity (H_\u03a8 : UnboundedOperator H) ",
+        "primary_category": "qcal",
+        "all_categories": {
+          "qcal": 1.5,
+          "spectral": 1.3,
+          "analytic": 1.2
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      },
+      {
+        "line": 325,
+        "code": "sorry := by  -- Res(Tr R, \u03bb) = multiplicity(\u03bb)",
+        "context": "theorem resolvent_residue_multiplicity (H_\u03a8 : UnboundedOperator H) \n    (h_sa : IsSelfAdjoint H_\u03a8) (h_disc : DiscreteSpectrum H_\u03a8)\n    (\u03bb : \u211d) (h\u03bb : Complex.ofReal \u03bb \u2208 spectrum H_\u03a8) :\n    sorry := by  -- Res(Tr R, \u03bb) = multiplicity(\u03bb)\n  sorry\n\n/-- Connection to Selberg trace formula -/",
+        "primary_category": "qcal",
+        "all_categories": {
+          "qcal": 1.5,
+          "spectral": 1.3,
+          "analytic": 0.6
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      },
+      {
+        "line": 326,
+        "code": "sorry",
+        "context": "    (h_sa : IsSelfAdjoint H_\u03a8) (h_disc : DiscreteSpectrum H_\u03a8)\n    (\u03bb : \u211d) (h\u03bb : Complex.ofReal \u03bb \u2208 spectrum H_\u03a8) :\n    sorry := by  -- Res(Tr R, \u03bb) = multiplicity(\u03bb)\n  sorry\n\n/-- Connection to Selberg trace formula -/\ntheorem connection_to_selberg (H_\u03a8 : UnboundedOperator H) ",
+        "primary_category": "qcal",
+        "all_categories": {
+          "qcal": 1.5,
+          "spectral": 1.3
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      },
+      {
+        "line": 331,
+        "code": "sorry := by  -- Relates to Selberg trace formula",
+        "context": "/-- Connection to Selberg trace formula -/\ntheorem connection_to_selberg (H_\u03a8 : UnboundedOperator H) \n    (h_sa : IsSelfAdjoint H_\u03a8) (h_disc : DiscreteSpectrum H_\u03a8) :\n    sorry := by  -- Relates to Selberg trace formula\n  sorry\n\n/-!",
+        "primary_category": "qcal",
+        "all_categories": {
+          "qcal": 1.5,
+          "spectral": 1.3
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      },
+      {
+        "line": 332,
+        "code": "sorry",
+        "context": "theorem connection_to_selberg (H_\u03a8 : UnboundedOperator H) \n    (h_sa : IsSelfAdjoint H_\u03a8) (h_disc : DiscreteSpectrum H_\u03a8) :\n    sorry := by  -- Relates to Selberg trace formula\n  sorry\n\n/-!\n## 9. QCAL Integration",
+        "primary_category": "qcal",
+        "all_categories": {
+          "qcal": 2.25,
+          "spectral": 1.3
+        },
+        "complexity": 3,
         "similar_solutions": []
       }
     ],
@@ -29594,6 +29893,6 @@
   },
   "summary": {
     "most_common_category": "qcal",
-    "avg_complexity": 3.68641975308642
+    "avg_complexity": 3.685260586319218
   }
 }
