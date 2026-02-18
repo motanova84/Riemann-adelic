@@ -70,6 +70,7 @@ theorem is_compact_resolvent (t : ℝ) (ht : 0 < t) :
     let H := Friedrichs_Extension t ht
     ∀ λ : ℝ, λ > 0 → sorry -- (H + λI)^(-1) is compact
   := by
+  intro H
   intro λ hλ
   -- Apply H^{1/2} coercivity
   have h_coercive := hecke_sobolev_h12_coercivity t ht
