@@ -1,0 +1,31 @@
+{
+  "pilar": 2,
+  "name": "Kato-Rellich with Multiplicative Hardy Inequality (El Blindaje)",
+  "tests": {
+    "hardy_inequality": {
+      "passed": true,
+      "results": [
+        {
+          "name": "Gaussian",
+          "satisfied": true,
+          "margin": 0.9992117521765359
+        },
+        {
+          "name": "Exponential",
+          "satisfied": true,
+          "margin": 0.5408556362008801
+        },
+        {
+          "name": "Compact support",
+          "satisfied": true,
+          "margin": 0.9999220851643276
+        },
+        {
+          "name": "Polynomial",
+          "satisfied": true,
+          "margin": 0.9996405376355173
+        }
+      ]
+    },
+    "kato_constant": {
+      "passed": 
