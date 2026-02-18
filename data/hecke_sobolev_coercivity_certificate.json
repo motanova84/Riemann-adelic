@@ -1,6 +1,6 @@
 {
   "theorem": "Hecke-Sobolev H^{1/2} Coercivity",
-  "date": "2026-02-18T18:50:52.196803",
+  "date": "2026-02-18T18:53:38.811880",
   "parameters": {
     "t": 0.1,
     "n_primes": 20,
@@ -26,5 +26,5 @@
   "author": "Jos\u00e9 Manuel Mota Burruezo \u03a8 \u221e\u00b3",
   "orcid": "0009-0002-1923-0773",
   "doi": "10.5281/zenodo.17379721",
-  "hash": "0xQCAL_H12_COERCIVITY_38ab484136b35bc8"
+  "hash": "0xQCAL_H12_COERCIVITY_582f13f669d054fe"
 }
