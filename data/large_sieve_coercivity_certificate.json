@@ -1,0 +1,71 @@
+{
+  "title": "QCAL Large Sieve Coercivity Certificate",
+  "theorem": "W_reg(\u03b3, t) \u2265 c\u00b7|\u03b3|^\u03b4 with \u03b4 = 0.086",
+  "timestamp": "2026-02-18T19:26:10.886348",
+  "qcal_coherence": 244.36,
+  "qcal_frequency": 141.7001,
+  "parameters": {
+    "delta": 0.086,
+    "heat_param": 0.05,
+    "montgomery_constant": 3.0,
+    "primes": [
+      2,
+      3,
+      5,
+      7,
+      11,
+      13,
+      17,
+      19,
+      23,
+      29,
+      31,
+      37,
+      41,
+      43,
+      47
+    ]
+  },
+  "test_results": [
+    {
+      "test": "montgomery_large_sieve",
+      "passed": true,
+      "mean_square": 4.55540595341509,
+      "montgomery_bound": 1339.1897853902376,
+      "ratio": 0.003401613425603939,
+      "margin_percent": 99.65983865743961
+    },
+    {
+      "test": "power_law_growth",
+      "passed": true,
+      "delta": 0.086,
+      "min_ratio": 26.290195007703232,
+      "mean_ratio": 35.86996533426214,
+      "coercivity_constant_lower_bound": 26.290195007703232
+    },
+    {
+      "test": "h_delta_coercivity",
+      "passed": true,
+      "quadratic_form": 1.3775651880951716,
+      "L2_norm_squared": 0.05641895835477564,
+      "H_delta_norm_squared": 0.06676492382014196,
+      "coercivity_constant": 20.633067624044546,
+      "delta": 0.086
+    },
+    {
+      "test": "no_continuous_spectrum",
+      "passed": true,
+      "delta": 0.086,
+      "min_ratio_large_gamma": 26.510657163954242,
+      "growth_sustained": true,
+      "discrete_spectrum_confirmed": true
+    }
+  ],
+  "validation_status": "ALL_PASSED",
+  "neck_3_status": "SEALED \u2705",
+  "author": "Jos\u00e9 Manuel Mota Burruezo \u03a8 \u2727 \u221e\u00b3",
+  "orcid": "0009-0002-1923-0773",
+  "doi": "10.5281/zenodo.17379721",
+  "institution": "Instituto de Conciencia Cu\u00e1ntica (ICQ)",
+  "hash": "0xQCAL_LARGE_SIEVE_e7f7e9dfc681799c"
+}
