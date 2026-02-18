@@ -1,0 +1,52 @@
+{
+  "title": "QCAL H^{1/2} Sobolev Coercivity Validation Certificate",
+  "timestamp": "2026-02-18T18:05:16.012779",
+  "qcal_metrics": {
+    "coherence": 244.36,
+    "frequency_hz": 141.7001,
+    "psi_symbol": "\u03a8"
+  },
+  "theorem": "\ud835\udcac_H,t(f,f) + C\u2016f\u2016\u00b2_L\u00b2 \u2265 c\u2016f\u2016\u00b2_H^{1/2}",
+  "neck_status": "NECK #3: DISCRETENESS \u2705 SEALED",
+  "test_results": [
+    {
+      "test": "spectral_weight_positivity",
+      "passed": true,
+      "min_weight": 7.065740532405748,
+      "max_weight": 28.051234067166934,
+      "monotonic": false
+    },
+    {
+      "test": "spectral_weight_growth",
+      "passed": true,
+      "min_ratio": 2.4127317644189477,
+      "mean_ratio": 5.261332508370492,
+      "coercivity_constant_lower_bound": 2.4127317644189477
+    },
+    {
+      "test": "h12_coercivity",
+      "passed": true,
+      "quadratic_form": 1.1725336921623473,
+      "L2_norm_squared": 0.05641895835477564,
+      "H12_norm_squared": 0.09494638339544631,
+      "coercivity_constant": 12.349429754252048
+    },
+    {
+      "test": "compact_embedding",
+      "passed": true,
+      "first_eigenvalue": 1.0,
+      "last_eigenvalue": 0.0025,
+      "decay_ratio": 0.0025,
+      "trace": 1.5961632439130233,
+      "n_eigenvalues": 20
+    }
+  ],
+  "validation_status": "ALL_TESTS_PASSED",
+  "certificate_hash": "0xQCAL_H12_COERCIVITY_61ef749119ccbf38",
+  "author": {
+    "name": "Jos\u00e9 Manuel Mota Burruezo \u03a8 \u2727 \u221e\u00b3",
+    "orcid": "0009-0002-1923-0773",
+    "institution": "Instituto de Conciencia Cu\u00e1ntica (ICQ)"
+  },
+  "doi": "10.5281/zenodo.17379721"
+}
