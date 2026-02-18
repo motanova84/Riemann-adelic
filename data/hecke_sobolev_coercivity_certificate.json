@@ -1,0 +1,30 @@
+{
+  "theorem": "Hecke-Sobolev H^{1/2} Coercivity",
+  "date": "2026-02-18T18:50:52.196803",
+  "parameters": {
+    "t": 0.1,
+    "n_primes": 20,
+    "n_max": 5,
+    "C": 1.0
+  },
+  "results": {
+    "Q_Hf": 81.85117559921345,
+    "L2_norm_sq": 3.5449077018110744,
+    "H12_norm_sq": 4.411975765916733,
+    "c_max": 15.0,
+    "w_min": 12.102859644806863,
+    "w_max": 35.56237642908196,
+    "growth_ratio_min": 3.1323270198244075,
+    "eigenvalue_decay_ratio": 0.006737946999085467
+  },
+  "validation": {
+    "test1_positivity": true,
+    "test2_growth": true,
+    "test3_coercivity": true,
+    "test4_compact_embedding": true
+  },
+  "author": "Jos\u00e9 Manuel Mota Burruezo \u03a8 \u221e\u00b3",
+  "orcid": "0009-0002-1923-0773",
+  "doi": "10.5281/zenodo.17379721",
+  "hash": "0xQCAL_H12_COERCIVITY_38ab484136b35bc8"
+}
