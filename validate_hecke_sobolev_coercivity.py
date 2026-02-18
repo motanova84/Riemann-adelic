@@ -33,10 +33,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy import integrate, special
 from scipy.integrate import trapezoid
-from decimal import Decimal, getcontext
-
-# Set high precision for validation
-getcontext().prec = 50
 
 # QCAL Constants
 QCAL_COHERENCE = 244.36
