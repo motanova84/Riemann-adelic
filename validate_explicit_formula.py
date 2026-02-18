@@ -15,8 +15,10 @@ lim_u = 3.0      # Reduced from 5.0
 def prime_sum(f, P, K):
     """Calculate sum over prime powers"""
     total = mp.mpf('0')
-    # Generate primes up to P using mpmath's prime function
-    for i in range(1, min(P, 1000) + 1):  # Limit for performance
+    # For performance reasons, we limit to at most 1000 primes.
+    # This means if P > the 1000th prime (~7919), only the first 1000 primes are used.
+    # This is a trade-off for speed in demo runs and may affect accuracy for large P.
+    for i in range(1, min(P, 1000) + 1):
         try:
             p = mp.prime(i)
             if p > P:
@@ -24,7 +26,7 @@ def prime_sum(f, P, K):
             lp = mp.log(p)
             for k in range(1, K + 1):
                 total += lp * f(k * lp)
-        except:
+        except Exception:
             break
     return total
 
@@ -167,6 +169,8 @@ def run_automated_test(N_zeros=2000, error_threshold=1e-5):
     # Overall test result
     all_passed = all(result['Test_Passed'] for result in results)
     print(f"\n🎯 Overall test result: {'✅ PASSED' if all_passed else '❌ FAILED'}")
+    
+    return results, all_passed
     
 if __name__ == "__main__":
     # Run the original test with truncated_gaussian

@@ -38,10 +38,13 @@ jobs:
       id: validation
       run: |
         echo "🚀 Starting Riemann Hypothesis numerical validation..."
-        python validate_explicit_formula.py > validation_output.txt 2>&1 || echo "validation_failed=true" >> $GITHUB_OUTPUT
+        set +e  # Don't exit on error
+        python validate_explicit_formula.py > validation_output.txt 2>&1
+        EXIT_CODE=$?
+        set -e  # Re-enable exit on error
         
         # Check if validation passed
-        if grep -q "Overall test result: ✅ PASSED" validation_output.txt; then
+        if [ $EXIT_CODE -eq 0 ] && grep -q "Overall test result: ✅ PASSED" validation_output.txt; then
           echo "validation_status=✅ RH validation passed (error < $ERROR_THRESHOLD)" >> $GITHUB_OUTPUT
           echo "badge_color=brightgreen" >> $GITHUB_OUTPUT
           echo "validation_passed=true" >> $GITHUB_OUTPUT

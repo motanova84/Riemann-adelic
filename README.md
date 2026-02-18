@@ -93,3 +93,33 @@ def detect_numerical_regression(baseline_commit, current_results):
 def visualize_term_contributions(prime_terms, arch_terms, zero_terms):
     """Visualizar contribución individual de cada término"""
 ```
+
+## 🔧 CI/CD Configuration
+
+This repository includes automated validation workflows via GitHub Actions. The workflow generates dynamic status badges to indicate validation results.
+
+### Setting up Badge Generation
+
+To enable the validation status badge, you need to configure the `GIST_ID` secret:
+
+1. **Create a public gist** on GitHub
+   - Go to https://gist.github.com/
+   - Create a new public gist (content doesn't matter, it will be overwritten)
+   - Note the gist ID from the URL (e.g., `https://gist.github.com/username/abc123def456` → `abc123def456`)
+
+2. **Add the secret to your repository**
+   - Go to your repository Settings → Secrets and variables → Actions
+   - Click "New repository secret"
+   - Name: `GIST_ID`
+   - Value: Your gist ID from step 1
+   - Click "Add secret"
+
+3. **Badge usage**
+   - The workflow will automatically update the gist with validation status
+   - The badge will show "✅ RH validation passed" or "❌ RH validation failed"
+   - You can display the badge in your README using:
+     ```markdown
+     ![RH Validation](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/username/GIST_ID/raw/riemann-validation.json)
+     ```
+
+**Note:** Badge generation is optional. The validation workflow will continue to run and report results even if the `GIST_ID` secret is not configured.
