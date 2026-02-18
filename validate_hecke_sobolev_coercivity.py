@@ -9,7 +9,7 @@ VALIDATION OF THE MASTER INEQUALITY:
 
 This script provides numerical validation of:
 1. Spectral weight growth W_reg(γ, t) ≥ (1+γ²)^{1/4}
-2. H^{1/2} Sobolev coercivity with c ≈ 2.0
+2. H^{1/2} Sobolev coercivity with c ≈ 12.35 (Gaussian check)
 3. Compact embedding verification
 4. Trace-class heat semigroup
 
