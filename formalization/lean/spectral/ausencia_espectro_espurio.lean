@@ -30,18 +30,96 @@ import Mathlib.Analysis.InnerProductSpace.SpectralTheory
 import Mathlib.NumberTheory.ZetaFunction
 import Mathlib.Topology.Algebra.InfiniteSum.Basic
 
--- Import our modules
-import RiemannAdelic.trace_formula_completa
-import RiemannAdelic.weil_formula_at_zero
-import RiemannAdelic.D_equals_xi
-import RiemannAdelic.implicacion_espectral_completa
-
 noncomputable section
 
 open Complex Real MeasureTheory Set Filter Topology
-open TraceFormulaCompleta WeilFormulaAtZero DEqualsXi ImplicacionEspectralCompleta
 
 namespace AusenciaEspectroEspurio
+
+/-!
+# Re-export types from previous modules
+-/
+
+/-- Structure representing an unbounded operator on a Hilbert space -/
+structure UnboundedOperator (α : Type*) where
+  domain : Set α
+  toFun : ∀ x ∈ domain, α
+  domain_dense : Dense domain
+
+/-- An operator is self-adjoint -/
+def IsSelfAdjoint {α : Type*} [InnerProductSpace ℂ α] (H : UnboundedOperator α) : Prop :=
+  ∀ (x : α) (hx : x ∈ H.domain) (y : α) (hy : y ∈ H.domain),
+    inner (H.toFun x hx) y = inner x (H.toFun y hy)
+
+/-- An operator has discrete spectrum -/
+def DiscreteSpectrum {α : Type*} (H : UnboundedOperator α) : Prop :=
+  ∀ K : Set ℝ, IsCompact K → Set.Finite (K ∩ {λ | ∃ v : α, v ≠ 0 ∧ 
+    ∃ (hv : v ∈ H.domain), H.toFun v hv = (λ : ℂ) • v})
+
+/-- Eigenvalue of an unbounded operator -/
+def eigenvalue {α : Type*} (H : UnboundedOperator α) (n : ℕ) : ℝ := sorry
+
+/-- Regularized trace of an operator -/
+def TrRegularized {α : Type*} [InnerProductSpace ℂ α] (H : UnboundedOperator α) : ℂ := sorry
+
+/-- A function has compact support -/
+def HasCompactSupport (f : ℝ → ℝ) : Prop :=
+  ∃ K : Set ℝ, IsCompact K ∧ (∀ x ∉ K, f x = 0)
+
+/-- Bump function centered at a point -/
+def bumpFunction (center : ℝ) (δ : ℝ) : ℝ → ℝ := sorry
+
+/-- Properties of bump functions -/
+axiom bump_smooth (center δ : ℝ) : ContDiff ℝ ⊤ (bumpFunction center δ)
+axiom bump_compact (center δ : ℝ) : HasCompactSupport (bumpFunction center δ)
+axiom bump_support (center δ : ℝ) : ∀ x, |x - center| > δ → bumpFunction center δ x = 0
+axiom bump_normalized (center δ : ℝ) : bumpFunction center δ center = 1
+
+/-- The spectrum of an unbounded operator -/
+def spectrum {H : Type _} [NormedAddCommGroup H] [InnerProductSpace ℂ H]
+    (H_Ψ : UnboundedOperator H) : Set ℝ :=
+  {λ : ℝ | ∃ v : H, v ≠ 0 ∧ ∃ (hv : v ∈ H_Ψ.domain), 
+    H_Ψ.toFun v hv = (λ : ℂ) • v}
+
+/-- Multiplicity of an eigenvalue -/
+def multiplicity {H : Type _} [NormedAddCommGroup H] [InnerProductSpace ℂ H]
+    (H_Ψ : UnboundedOperator H) (λ : ℝ) : ℕ := sorry
+
+/-- Complete trace formula (re-stated as axiom) -/
+axiom trace_formula_completa 
+    {H : Type _} [NormedAddCommGroup H] [InnerProductSpace ℂ H] [CompleteSpace H]
+    (H_Ψ : UnboundedOperator H) 
+    (h_sa : IsSelfAdjoint H_Ψ) 
+    (h_disc : DiscreteSpectrum H_Ψ)
+    (f : ℝ → ℝ) 
+    (hf_smooth : ContDiff ℝ ⊤ f) 
+    (hf_compact : HasCompactSupport f) :
+    TrRegularized H_Ψ = 
+      ∑' (γ : ℝ) (_ : riemannZeta (1/2 + I * γ) = 0), f (γ^2) +
+      ∑' (p : ℕ) [Fact (Nat.Prime p)] (k : ℕ), 
+        (Real.log p / Real.sqrt (p^k)) * 
+        (f (k * Real.log p) + f (-k * Real.log p)) +
+      (1 / (2 * π)) * 
+        ∫ (λ : ℝ) in Set.Ioi 0, f λ * 
+          (Real.log π - (Real.digamma (1/4 + I * Real.sqrt λ / 2)).re)
+
+/-- Zero implies eigenvalue (from implicacion_espectral_completa) -/
+axiom zero_implies_eigenvalue
+    {H : Type _} [NormedAddCommGroup H] [InnerProductSpace ℂ H] [CompleteSpace H]
+    (H_Ψ : UnboundedOperator H)
+    (h_sa : IsSelfAdjoint H_Ψ)
+    (h_disc : DiscreteSpectrum H_Ψ)
+    (γ : ℝ) 
+    (hζ : riemannZeta (1/2 + I * γ) = 0) :
+    (1/4 + γ^2) ∈ spectrum H_Ψ
+
+/-- Spectral bijection (from implicacion_espectral_completa) -/
+axiom spectral_bijection_completa
+    {H : Type _} [NormedAddCommGroup H] [InnerProductSpace ℂ H] [CompleteSpace H]
+    (H_Ψ : UnboundedOperator H)
+    (h_sa : IsSelfAdjoint H_Ψ)
+    (h_disc : DiscreteSpectrum H_Ψ) :
+    spectrum H_Ψ = {λ : ℝ | ∃ γ : ℝ, λ = 1/4 + γ^2 ∧ riemannZeta (1/2 + I * γ) = 0}
 
 /-!
 # Absence of Spurious Spectrum

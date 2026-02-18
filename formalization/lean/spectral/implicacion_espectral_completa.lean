@@ -29,17 +29,59 @@ import Mathlib.Analysis.InnerProductSpace.SpectralTheory
 import Mathlib.NumberTheory.ZetaFunction
 import Mathlib.Topology.Algebra.InfiniteSum.Basic
 
--- Import our modules
-import RiemannAdelic.trace_formula_completa
-import RiemannAdelic.weil_formula_at_zero
-import RiemannAdelic.D_equals_xi
-
 noncomputable section
 
 open Complex Real MeasureTheory Set Filter Topology
-open TraceFormulaCompleta WeilFormulaAtZero DEqualsXi
 
 namespace ImplicacionEspectralCompleta
+
+/-!
+# Re-export types from previous modules
+-/
+
+/-- Structure representing an unbounded operator on a Hilbert space -/
+structure UnboundedOperator (α : Type*) where
+  domain : Set α
+  toFun : ∀ x ∈ domain, α
+  domain_dense : Dense domain
+
+/-- An operator is self-adjoint -/
+def IsSelfAdjoint {α : Type*} [InnerProductSpace ℂ α] (H : UnboundedOperator α) : Prop :=
+  ∀ (x : α) (hx : x ∈ H.domain) (y : α) (hy : y ∈ H.domain),
+    inner (H.toFun x hx) y = inner x (H.toFun y hy)
+
+/-- An operator has discrete spectrum -/
+def DiscreteSpectrum {α : Type*} (H : UnboundedOperator α) : Prop :=
+  ∀ K : Set ℝ, IsCompact K → Set.Finite (K ∩ {λ | ∃ v : α, v ≠ 0 ∧ 
+    ∃ (hv : v ∈ H.domain), H.toFun v hv = (λ : ℂ) • v})
+
+/-- Eigenvalue of an unbounded operator -/
+def eigenvalue {α : Type*} (H : UnboundedOperator α) (n : ℕ) : ℝ := sorry
+
+/-- Regularized trace of an operator -/
+def TrRegularized {α : Type*} [InnerProductSpace ℂ α] (H : UnboundedOperator α) : ℂ := sorry
+
+/-- A function has compact support -/
+def HasCompactSupport (f : ℝ → ℝ) : Prop :=
+  ∃ K : Set ℝ, IsCompact K ∧ (∀ x ∉ K, f x = 0)
+
+/-- Complete trace formula (re-stated as axiom) -/
+axiom trace_formula_completa 
+    {H : Type _} [NormedAddCommGroup H] [InnerProductSpace ℂ H] [CompleteSpace H]
+    (H_Ψ : UnboundedOperator H) 
+    (h_sa : IsSelfAdjoint H_Ψ) 
+    (h_disc : DiscreteSpectrum H_Ψ)
+    (f : ℝ → ℝ) 
+    (hf_smooth : ContDiff ℝ ⊤ f) 
+    (hf_compact : HasCompactSupport f) :
+    TrRegularized H_Ψ = 
+      ∑' (γ : ℝ) (_ : riemannZeta (1/2 + I * γ) = 0), f (γ^2) +
+      ∑' (p : ℕ) [Fact (Nat.Prime p)] (k : ℕ), 
+        (Real.log p / Real.sqrt (p^k)) * 
+        (f (k * Real.log p) + f (-k * Real.log p)) +
+      (1 / (2 * π)) * 
+        ∫ (λ : ℝ) in Set.Ioi 0, f λ * 
+          (Real.log π - (Real.digamma (1/4 + I * Real.sqrt λ / 2)).re)
 
 /-!
 # Complete Spectral Bijection

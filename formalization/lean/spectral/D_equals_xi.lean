@@ -30,16 +30,31 @@ import Mathlib.Analysis.Analytic.Basic
 import Mathlib.NumberTheory.ZetaFunction
 import Mathlib.Analysis.Complex.Hadamard
 
--- Import our modules
-import RiemannAdelic.trace_formula_completa
-import RiemannAdelic.weil_formula_at_zero
-
 noncomputable section
 
 open Complex Real MeasureTheory Set Filter Topology
-open TraceFormulaCompleta WeilFormulaAtZero
 
 namespace DEqualsXi
+
+/-!
+# Re-export types from previous modules
+-/
+
+/-- Structure representing an unbounded operator on a Hilbert space -/
+structure UnboundedOperator (α : Type*) where
+  domain : Set α
+  toFun : ∀ x ∈ domain, α
+  domain_dense : Dense domain
+
+/-- An operator is self-adjoint -/
+def IsSelfAdjoint {α : Type*} [InnerProductSpace ℂ α] (H : UnboundedOperator α) : Prop :=
+  ∀ (x : α) (hx : x ∈ H.domain) (y : α) (hy : y ∈ H.domain),
+    inner (H.toFun x hx) y = inner x (H.toFun y hy)
+
+/-- An operator has discrete spectrum -/
+def DiscreteSpectrum {α : Type*} (H : UnboundedOperator α) : Prop :=
+  ∀ K : Set ℝ, IsCompact K → Set.Finite (K ∩ {λ | ∃ v : α, v ≠ 0 ∧ 
+    ∃ (hv : v ∈ H.domain), H.toFun v hv = (λ : ℂ) • v})
 
 /-!
 # Fredholm Determinant equals Xi Function
