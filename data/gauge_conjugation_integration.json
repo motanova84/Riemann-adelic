@@ -1,0 +1,56 @@
+{
+  "test1_self_adjoint": {
+    "inner1": "(3.0018290148664657-7.112539897498498e-17j)",
+    "inner2": "(3.001829011080945+0j)",
+    "error": 3.785520785726249e-09,
+    "rel_error": 1.2610714224069616e-09,
+    "passed": true
+  },
+  "test2_real_spectrum": {
+    "eigenvalues": [
+      -23.49355886256235,
+      -23.35451123871364,
+      -23.217900410413815,
+      -23.0836193231839,
+      -22.95156688352427,
+      -22.82164761121443,
+      -22.69377130880787,
+      -22.56785274817819,
+      -22.443811373827092,
+      -22.32157102254921
+    ],
+    "max_imag": 0.0,
+    "passed": true
+  },
+  "test3_spectral_correspondence": {
+    "riemann_zeros": [
+      14.134725,
+      21.02204,
+      25.010858,
+      30.424876,
+      32.935062
+    ],
+    "base_frequency": 141.7001,
+    "coherence": 244.36,
+    "correspondence_established": true,
+    "passed": true
+  },
+  "test4_qcal_coherence": {
+    "I": 1.0,
+    "A_eff_squared": 1.0,
+    "C": 244.36,
+    "Psi_coherence": 1.0,
+    "target": 1.0,
+    "passed": true
+  },
+  "metadata": {
+    "timestamp": "2026-02-18T16:13:53.646066",
+    "author": "Jos\u00e9 Manuel Mota Burruezo",
+    "orcid": "0009-0002-1923-0773",
+    "doi": "10.5281/zenodo.17379721",
+    "qcal_frequency": 141.7001,
+    "qcal_coherence": 244.36,
+    "psi_infinity_cubed": 1.0,
+    "all_passed": true
+  }
+}
