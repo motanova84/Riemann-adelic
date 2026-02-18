@@ -1,0 +1,148 @@
+{
+  "timestamp": "2026-02-18T16:42:16.784747",
+  "precision_dps": 25,
+  "qcal_constants": {
+    "f0": 141.7001,
+    "C": 244.36,
+    "epsilon_qcal": 1e-10,
+    "epsilon_coherence": 1e-10
+  },
+  "validations": {
+    "level1_phase": {
+      "symmetry": {
+        "test": "V_symmetry",
+        "description": "V(-u) = V(u) for all u",
+        "max_error": 0.0,
+        "threshold": 1e-10,
+        "passed": true
+      },
+      "local_integrability": {
+        "test": "V_locally_integrable",
+        "description": "V \u2208 L^1_loc(\u211d): \u222b_a^b |V(u)| du < \u221e for compact [a,b]",
+        "intervals": [
+          [
+            -10,
+            10
+          ],
+          [
+            -50,
+            50
+          ],
+          [
+            -100,
+            100
+          ]
+        ],
+        "integrals": [
+          103.28968652603845,
+          2503.2898678836987,
+          10003.2898671337
+        ],
+        "all_finite": true,
+        "passed": true
+      },
+      "continuity": {
+        "test": "Phi_continuous",
+        "description": "\u03a6(u) = \u222b_0^u V(s)ds is continuous",
+        "delta": 0.01,
+        "max_difference_per_delta": 10.005090344328238,
+        "continuous": true,
+        "passed": true
+      }
+    },
+    "level2_unitary": {
+      "unitarity": {
+        "test": "U_unitarity",
+        "description": "\u2016U \u03c8\u2016 = \u2016\u03c8\u2016 (norm preservation)",
+        "norm_psi": 0.8408964152537145,
+        "norm_U_psi": 0.8408964152537145,
+        "ratio": 1.0,
+        "error": 0.0,
+        "unitary": true,
+        "passed": true
+      },
+      "pure_phase": {
+        "test": "U_phase_magnitude",
+        "description": "|e^{-i\u03a6(u)}| = 1 for all u",
+        "max_deviation": 0.0,
+        "threshold": 1e-10,
+        "pure_phase": true,
+        "passed": true
+      }
+    },
+    "level3_esa": {
+      "H0_symmetric": {
+        "test": "H0_symmetric",
+        "description": "\u27e8H\u2080 \u03c8, \u03c6\u27e9 = \u27e8\u03c8, H\u2080 \u03c6\u27e9",
+        "inner_H0psi_phi": {
+          "real": 0.0,
+          "imag": 0.3398037433945379
+        },
+        "inner_psi_H0phi": {
+          "real": 0.0,
+          "imag": 0.33980374339453784
+        },
+        "difference": 5.551115123125783e-17,
+        "symmetric": true,
+        "passed": true
+      },
+      "conjugation": {
+        "test": "conjugated_operator",
+        "description": "H_\u03a8 = U H\u2080 U^{-1} is well-defined",
+        "norm_H_psi": 6.960541859141882,
+        "finite": true,
+        "reasonable": true,
+        "passed": true
+      }
+    },
+    "level4_spectrum": {
+      "eigenvalue_reality": {
+        "test": "eigenvalue_reality",
+        "description": "Self-adjoint operator has real eigenvalues",
+        "matrix_size": 50,
+        "hermitian_error": 0.0,
+        "num_eigenvalues": 50,
+        "max_imag_part": 0.0,
+        "real_spectrum": true,
+        "passed": true
+      },
+      "geometric_necessity": {
+        "test": "geometric_necessity",
+        "description": "Unitary conjugation preserves eigenvalues",
+        "matrix_size": 20,
+        "max_eigenvalue_difference": 6.217248937900877e-15,
+        "preserved": true,
+        "passed": true
+      }
+    },
+    "level5_nuclear": {
+      "gaussian_L2": {
+        "test": "gaussian_kernel_L2",
+        "description": "\u222b\u222b |K\u2080(t,u,v)|\u00b2 du dv < \u221e",
+        "t": 1.0,
+        "numerical_integral": 2.5066282746310002,
+        "analytical_result": 2.5066282746310002,
+        "error": 0.0,
+        "trace_class_indicator": true,
+        "passed": true
+      },
+      "eigenvalue_sum": {
+        "test": "eigenvalue_sum_convergence",
+        "description": "\u03a3_n exp(-t \u03bb_n) converges",
+        "t": 1.0,
+        "N_terms": 1000,
+        "partial_sum": 0.38631860241332605,
+        "converges": true,
+        "converges_well": true,
+        "passed": true
+      }
+    }
+  },
+  "summary": {
+    "total_tests": 11,
+    "passed_tests": 11.0,
+    "failed_tests": 0.0,
+    "success_rate": 1.0,
+    "all_passed": true
+  }
+}
