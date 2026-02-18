@@ -1,7 +1,7 @@
 {
   "title": "QCAL Large Sieve Coercivity Certificate",
   "theorem": "W_reg(\u03b3, t) \u2265 c\u00b7|\u03b3|^\u03b4 with \u03b4 = 0.086",
-  "timestamp": "2026-02-18T19:26:10.886348",
+  "timestamp": "2026-02-18T19:31:07.030966",
   "qcal_coherence": 244.36,
   "qcal_frequency": 141.7001,
   "parameters": {
@@ -67,5 +67,5 @@
   "orcid": "0009-0002-1923-0773",
   "doi": "10.5281/zenodo.17379721",
   "institution": "Instituto de Conciencia Cu\u00e1ntica (ICQ)",
-  "hash": "0xQCAL_LARGE_SIEVE_e7f7e9dfc681799c"
+  "hash": "0xQCAL_LARGE_SIEVE_60207a057209814a"
 }
