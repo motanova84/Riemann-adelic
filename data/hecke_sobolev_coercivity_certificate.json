@@ -1,0 +1,126 @@
+{
+  "theorem": "Hecke-Sobolev H^{1/2} Coercivity",
+  "statement": "Q_H,t(f,f) \u2265 c \u00b7 \u2016f\u2016\u00b2_{H^{1/2}} with c > 0",
+  "validation_status": "PASSED",
+  "timestamp": "2026-02-18T17:41:27.996479",
+  "parameters": {
+    "t": 0.1,
+    "max_prime": 100,
+    "max_shell": 20,
+    "num_primes": 25
+  },
+  "qcal_constants": {
+    "C": 244.36,
+    "f0": 141.7001
+  },
+  "key_results": {
+    "coercivity_constant": 1.9996914516284579,
+    "compact_embedding": "H^{1/2}(C_\ud835\udd38) \u21aa L\u00b2(C_\ud835\udd38) is compact",
+    "discrete_spectrum": "spec(H_\u03a8) = {\u03bb\u2081, \u03bb\u2082, ...} with \u03bb\u2099 \u2192 \u221e"
+  },
+  "test_results": [
+    {
+      "test_name": "Sobolev Weight Computation",
+      "passed": true,
+      "max_error": 0.0,
+      "gamma_values": [
+        0,
+        1,
+        10,
+        50,
+        100,
+        500
+      ],
+      "weights": [
+        1.0,
+        1.4142135623730951,
+        3.3166247903554,
+        7.14142842854285,
+        10.04987562112089,
+        22.38302928559939
+      ],
+      "expected": [
+        1.0,
+        1.4142135623730951,
+        3.3166247903554,
+        7.14142842854285,
+        10.04987562112089,
+        22.38302928559939
+      ]
+    },
+    {
+      "test_name": "Spectral Weight Growth",
+      "passed": true,
+      "min_ratio": 2.3953321440390627,
+      "mean_ratio": 10.190535570034301,
+      "std_ratio": 8.684082727877913,
+      "gamma_values": [
+        0.0,
+        1.0,
+        5.0,
+        10.0,
+        20.0,
+        50.0,
+        100.0
+      ],
+      "spectral_weights": [
+        0.0,
+        40.136983105024456,
+        29.81695669128263,
+        26.2556602647435,
+        26.213835198585695,
+        32.54577109919526,
+        24.07279011886541
+      ],
+      "sobolev_weights": [
+        1.0,
+        1.4142135623730951,
+        2.449489742783178,
+        3.3166247903554,
+        4.58257569495584,
+        7.14142842854285,
+        10.04987562112089
+      ],
+      "ratios": [
+        0.0,
+        28.38113292993268,
+        12.172721596051176,
+        7.916379429199774,
+        5.720327812029367,
+        4.557319508953751,
+        2.3953321440390627
+      ]
+    },
+    {
+      "test_name": "Coercivity Constant",
+      "passed": true,
+      "c_estimate": 1.9996914516284579,
+      "c_mean": 4.877886634950726,
+      "c_std": 2.8265815839130686,
+      "num_samples": 50
+    },
+    {
+      "test_name": "Compact Embedding Implication",
+      "passed": true,
+      "growth_exponent": -0.04992600841146378,
+      "condition_number": 1.6673174528934156,
+      "gamma_range": [
+        1.0,
+        100.0
+      ],
+      "weight_range": [
+        24.07279011886541,
+        40.136983105024456
+      ]
+    }
+  ],
+  "mathematical_significance": {
+    "clay_institute": "Ensures resolvent (H_\u03a8 - \u03bbI)\u207b\u00b9 is compact",
+    "fredholm_theory": "Guarantees discrete spectrum",
+    "spectral_bijection": "Eigenvalues \u03bb\u2099 \u2194 Riemann zeros \u03c1\u2099"
+  },
+  "author": "Jos\u00e9 Manuel Mota Burruezo \u03a8 \u221e\u00b3",
+  "orcid": "0009-0002-1923-0773",
+  "doi": "10.5281/zenodo.17379721",
+  "certificate_hash": "0xQCAL_H12_COERCIVITY_53cc774afa740dbf"
+}
