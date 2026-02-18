@@ -53,6 +53,12 @@ lean_lib sabio where
   globs := #[.submodules `sabio]
   roots := #[`sabio]
 
+-- ThreePillars library - Three-pillar architecture for RH proof
+-- PILAR 1: Domain shield, PILAR 2: Spectral rigor, PILAR 3: Absolute identity
+lean_lib ThreePillars where
+  globs := #[.submodules `ThreePillars]
+  roots := #[`ThreePillars]
+
 -- Main executable
 @[default_target]
 lean_exe «riemann-adelic-lean» where
