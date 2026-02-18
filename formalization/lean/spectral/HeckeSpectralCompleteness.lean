@@ -175,8 +175,9 @@ def Riemann_Zeros : Set ℝ :=
 -/
 lemma injectivity_from_trace_equality 
     (spec : Set ℝ) (zeros : Set ℝ) :
-    (∀ t : ℝ, t > 0 → 
-      (∑' λ in spec, Real.exp (-t * λ)) = (∑' γ in zeros, Real.exp (-t * γ))) →
+    (∀ t : ℝ, t > 0 →
+      (∑' λ : {x // x ∈ spec}, Real.exp (-t * (λ : ℝ))) =
+        (∑' γ : {x // x ∈ zeros}, Real.exp (-t * (γ : ℝ)))) →
     spec = zeros := by
   intro h
   -- Analyticity argument: exp(-t·x) functions separate points
