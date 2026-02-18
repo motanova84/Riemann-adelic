@@ -1,0 +1,181 @@
+{
+  "timestamp": "2026-02-18T17:37:00.405037",
+  "version": "1.0.0",
+  "qcal_integration": {
+    "frequency": 141.7001,
+    "coherence": 244.36,
+    "equation": "\u03a8 = I \u00d7 A_eff\u00b2 \u00d7 C^\u221e"
+  },
+  "parameters": {
+    "T": 50.0,
+    "t": 0.5,
+    "X": 50.0,
+    "n_primes": 50
+  },
+  "tests": {
+    "test_1_dirichlet_kernel": true,
+    "test_2_montgomery_vaughan": true,
+    "test_3_diagonal_orthogonality": true,
+    "test_4_mean_value_bound": "True"
+  },
+  "results": {
+    "test_1": {
+      "success": true,
+      "data": [
+        {
+          "alpha": 0.1,
+          "analytical": -19.17848549326277,
+          "numerical": -19.178485493262762,
+          "rel_error": 3.704894925147804e-16
+        },
+        {
+          "alpha": 0.5,
+          "analytical": -0.5294070003910921,
+          "numerical": -0.5294070003910866,
+          "rel_error": 1.0485534039075744e-14
+        },
+        {
+          "alpha": 1.0,
+          "analytical": -0.5247497074078575,
+          "numerical": -0.5247497074078258,
+          "rel_error": 6.050956876399017e-14
+        },
+        {
+          "alpha": 2.0,
+          "analytical": -0.5063656411097588,
+          "numerical": -0.506365641109754,
+          "rel_error": 9.427888897488168e-15
+        },
+        {
+          "alpha": 5.0,
+          "analytical": -0.38821120781672214,
+          "numerical": -0.38821120781672236,
+          "rel_error": 5.719685584911306e-16
+        }
+      ]
+    },
+    "test_2": {
+      "success": true,
+      "data": [
+        {
+          "p": 2,
+          "q": 3,
+          "integral_abs": 4.879338483533025,
+          "bound": 246.63034623764312,
+          "ratio": 0.019784015057220453
+        },
+        {
+          "p": 3,
+          "q": 5,
+          "integral_abs": 1.5554030637689333,
+          "bound": 195.76151889712176,
+          "ratio": 0.007945397402572984
+        },
+        {
+          "p": 5,
+          "q": 7,
+          "integral_abs": 5.338901603423908,
+          "bound": 297.2013411988462,
+          "ratio": 0.01796392163604622
+        },
+        {
+          "p": 7,
+          "q": 11,
+          "integral_abs": 2.5280271991474126,
+          "bound": 221.24621972480583,
+          "ratio": 0.011426306864324578
+        },
+        {
+          "p": 11,
+          "q": 13,
+          "integral_abs": 10.513891546800794,
+          "bound": 598.6085296964249,
+          "ratio": 0.017563885285986073
+        }
+      ]
+    },
+    "test_3": {
+      "success": true,
+      "data": [
+        {
+          "p": 2,
+          "integral": 100.0,
+          "expected": 100.0,
+          "rel_error": 0.0
+        },
+        {
+          "p": 3,
+          "integral": 100.0,
+          "expected": 100.0,
+          "rel_error": 0.0
+        },
+        {
+          "p": 5,
+          "integral": 100.0,
+          "expected": 100.0,
+          "rel_error": 0.0
+        },
+        {
+          "p": 7,
+          "integral": 100.0,
+          "expected": 100.0,
+          "rel_error": 0.0
+        },
+        {
+          "p": 11,
+          "integral": 100.0,
+          "expected": 100.0,
+          "rel_error": 0.0
+        },
+        {
+          "p": 13,
+          "integral": 100.0,
+          "expected": 100.0,
+          "rel_error": 0.0
+        },
+        {
+          "p": 17,
+          "integral": 100.0,
+          "expected": 100.0,
+          "rel_error": 0.0
+        },
+        {
+          "p": 19,
+          "integral": 100.0,
+          "expected": 100.0,
+          "rel_error": 0.0
+        },
+        {
+          "p": 23,
+          "integral": 100.0,
+          "expected": 100.0,
+          "rel_error": 0.0
+        },
+        {
+          "p": 29,
+          "integral": 100.0,
+          "expected": 100.0,
+          "rel_error": 0.0
+        }
+      ]
+    },
+    "test_4": {
+      "success": "True",
+      "data": {
+        "integral": 985.4579221548023,
+        "error": 1.7194966189744204e-06,
+        "theoretical_lower": 10.837654016636902,
+        "ratio": 90.92908120539963,
+        "T": 50.0,
+        "X": 50.0,
+        "t": 0.5
+      }
+    }
+  },
+  "all_tests_passed": "True",
+  "certificate_hash": "0xQCAL_MEAN_HECKE_COERCIVITY_c644e1e3c91e6a12",
+  "author": "Jos\u00e9 Manuel Mota Burruezo \u03a8 \u221e\u00b3",
+  "institution": "Instituto de Conciencia Cu\u00e1ntica (ICQ)",
+  "orcid": "0009-0002-1923-0773",
+  "doi": "10.5281/zenodo.17379721"
+}
