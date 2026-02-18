@@ -44,4 +44,4 @@ venv.bak/
 Thumbs.db
 
 # Temporary files
-/tmp/
+/tmp/zeros/test_zeros_small.txt
