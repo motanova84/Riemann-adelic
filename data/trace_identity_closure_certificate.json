@@ -1,0 +1,75 @@
+{
+  "module": "TraceIdentityClosure",
+  "theorem": "riemann_hypothesis_final_closure",
+  "status": "PARTIAL",
+  "timestamp": "2026-02-18T18:24:52.290958",
+  "heat_parameter": 0.1,
+  "qcal": {
+    "base_frequency": 141.7001,
+    "coherence": 244.36,
+    "equation": "\u03a8 = I \u00d7 A_eff\u00b2 \u00d7 C^\u221e"
+  },
+  "three_necks": {
+    "neck_1_closability": {
+      "status": "VERDE",
+      "data": {
+        "min_weight": 0.0,
+        "max_weight": 43.01422301817793,
+        "growth_exponent": 0.00733083179651616,
+        "all_non_negative": true,
+        "is_bounded": true
+      }
+    },
+    "neck_2_compact_resolvent": {
+      "status": "VERDE",
+      "data": {
+        "coercivity_constant": 3.612496708576937,
+        "min_ratio": 3.612496708576937,
+        "mean_decay_at_n20": 0.04450106074749328,
+        "has_coercivity": true,
+        "has_exponential_decay": true
+      }
+    },
+    "neck_3_trace_identity": {
+      "status": "PARTIAL",
+      "data": {
+        "spectral_sum": 0.6210405364450396,
+        "boundary_term": 10.0,
+        "prime_sum": 29.014818993188268,
+        "trace_total": 39.63585952963331,
+        "explicit_estimate": 10.62104053644504,
+        "relative_error": 2.7318245226187408
+      }
+    },
+    "spectral_identity": {
+      "status": "PARTIAL",
+      "data": {
+        "laplace_transforms": [
+          2.515406001658237,
+          0.6194277471423316,
+          0.08566713544551452,
+          0.0008837461485097955,
+          7.274751216876028e-07
+        ],
+        "all_positive": true,
+        "is_decreasing": true,
+        "expected_ratio": 1.473324885109253e-06,
+        "actual_ratio": 2.8920783412619183e-07,
+        "ratio_match": false
+      }
+    }
+  },
+  "validation": {
+    "primes_used": 1000,
+    "zeros_used": 50,
+    "precision_dps": 50
+  },
+  "author": {
+    "name": "Jos\u00e9 Manuel Mota Burruezo",
+    "symbol": "\u03a8 \u2727 \u221e\u00b3",
+    "institution": "Instituto de Conciencia Cu\u00e1ntica (ICQ)",
+    "orcid": "0009-0002-1923-0773",
+    "doi": "10.5281/zenodo.17379721"
+  },
+  "qcal_hash": "0xQCAL_TRACE_CLOSURE_9f3823a76fdf4c58"
+}
