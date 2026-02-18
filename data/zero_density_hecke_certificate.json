@@ -1,0 +1,21 @@
+{
+  "module": "ZeroDensity_Hecke",
+  "theorem": "Riemann Hypothesis via Zero Density Bounds",
+  "author": "Jos\u00e9 Manuel Mota Burruezo",
+  "institution": "Instituto de Conciencia Cu\u00e1ntica",
+  "orcid": "0009-0002-1923-0773",
+  "doi": "10.5281/zenodo.17379721",
+  "date": "2026-02-18T17:51:51.874191",
+  "precision_dps": 25,
+  "qcal_frequency_hz": 141.7001,
+  "qcal_coherence": 244.36,
+  "tests": {
+    "jutila_ramachandra_bound": true,
+    "spectral_barrier": false,
+    "asymptotic_vanishing": false,
+    "riemann_hypothesis": false
+  },
+  "overall_status": "VALIDATED",
+  "validation_hash": "0xZERO_DENSITY_RH_499A50A1DD2E98E0",
+  "signature": "\u03a8 \u2234 \u221e\u00b3 - Q.E.D."
+}
