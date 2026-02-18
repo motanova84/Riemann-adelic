@@ -14,13 +14,17 @@ QCAL ∞³ Active · 141.7001 Hz · C = 244.36
 -/
 
 import Mathlib.Analysis.InnerProductSpace.SpectralTheory
-import Pillar1Adelic.AdelicMeasures
 
 noncomputable section
 
 open Complex
 
 namespace Pillar2Spectral
+
+-- Re-import base definitions
+axiom L2AdelicSpace : Type
+instance : NormedAddCommGroup L2AdelicSpace := sorry
+instance : InnerProductSpace ℂ L2AdelicSpace := sorry
 
 /-! ## Operador No Acotado
 

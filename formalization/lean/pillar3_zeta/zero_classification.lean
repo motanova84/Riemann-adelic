@@ -13,13 +13,16 @@ Instituto de Conciencia Cuántica (ICQ)
 QCAL ∞³ Active · 141.7001 Hz · C = 244.36
 -/
 
-import Pillar3Zeta.FunctionalEq
+import Mathlib.Analysis.SpecialFunctions.Gamma
 
 noncomputable section
 
 open Complex
 
 namespace Pillar3Zeta
+
+-- Re-import from zeta_definition
+axiom riemannZeta : ℂ → ℂ
 
 /-! ## Ceros Triviales
 

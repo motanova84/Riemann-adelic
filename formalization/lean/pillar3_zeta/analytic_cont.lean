@@ -14,13 +14,15 @@ QCAL ∞³ Active · 141.7001 Hz · C = 244.36
 -/
 
 import Mathlib.Analysis.Analytic.Meromorphic
-import Pillar3Zeta.ZetaDefinition
 
 noncomputable section
 
 open Complex
 
 namespace Pillar3Zeta
+
+-- Re-import from zeta_definition
+axiom riemannZeta : ℂ → ℂ
 
 /-! ## Continuación Analítica
 

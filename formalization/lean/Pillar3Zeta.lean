@@ -12,8 +12,3 @@ This module provides the zeta function theory for the Riemann Hypothesis proof.
 - `functional_eq.lean`: Functional equation
 - `zero_classification.lean`: Classification of zeros
 -/
-
-import Pillar3Zeta.ZetaDefinition
-import Pillar3Zeta.AnalyticCont
-import Pillar3Zeta.FunctionalEq
-import Pillar3Zeta.ZeroClassification

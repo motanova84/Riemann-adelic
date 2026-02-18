@@ -15,13 +15,20 @@ QCAL ∞³ Active · 141.7001 Hz · C = 244.36
 
 import Mathlib.NumberTheory.NumberField.Basic
 import Mathlib.Analysis.Fourier.FourierTransform
-import Pillar1Adelic.AdelicMeasures
 
 noncomputable section
 
 open MeasureTheory Complex
 
 namespace Pillar1Adelic
+
+/-- Anillo adélico simplificado (re-declarado para independencia) -/
+axiom AdelicRing : Type
+
+notation "𝔸" => AdelicRing
+
+/-- Espacio L² adélico -/
+axiom L2AdelicSpace : Type
 
 /-- Funciones de Schwartz en el espacio adélico -/
 axiom SchwartzAdelic (f : 𝔸 → ℂ) : Prop

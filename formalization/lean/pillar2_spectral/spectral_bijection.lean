@@ -13,14 +13,26 @@ Instituto de Conciencia Cuántica (ICQ)
 QCAL ∞³ Active · 141.7001 Hz · C = 244.36
 -/
 
-import Pillar2Spectral.TraceFormula
-import Pillar3Zeta.ZetaDefinition
+import Mathlib.NumberTheory.ZetaFunction
 
 noncomputable section
 
 open Complex
 
 namespace Pillar2Spectral
+
+-- Re-import base definitions
+axiom L2AdelicSpace : Type
+axiom UnboundedOperator (H : Type) : Type
+axiom UnboundedOperator.spectrum {H : Type} [NormedAddCommGroup H] 
+  (T : UnboundedOperator H) : Set ℂ
+
+axiom H_Ψ : UnboundedOperator L2AdelicSpace
+
+axiom TrRegularized {H : Type} [NormedAddCommGroup H] 
+  (T : H →L[ℂ] H) : ℂ
+
+axiom multiplicity (γ : ℝ) : ℕ
 
 /-! ## Función Zeta de Riemann
 

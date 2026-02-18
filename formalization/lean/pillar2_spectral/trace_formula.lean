@@ -14,13 +14,19 @@ QCAL ∞³ Active · 141.7001 Hz · C = 244.36
 -/
 
 import Mathlib.Analysis.ContDiff.Defs
-import Pillar2Spectral.HPsiOperator
 
 noncomputable section
 
 open Real Complex
 
 namespace Pillar2Spectral
+
+-- Re-import base definitions
+axiom L2AdelicSpace : Type
+axiom UnboundedOperator (H : Type) : Type
+axiom IsSelfAdjoint {H : Type} [InnerProductSpace ℂ H] (T : UnboundedOperator H) : Prop
+
+axiom H_Ψ : UnboundedOperator L2AdelicSpace
 
 /-! ## Traza Regularizada
 

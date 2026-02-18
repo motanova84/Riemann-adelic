@@ -14,13 +14,15 @@ QCAL ∞³ Active · 141.7001 Hz · C = 244.36
 -/
 
 import Mathlib.Analysis.SpecialFunctions.Gamma
-import Pillar3Zeta.AnalyticCont
 
 noncomputable section
 
 open Real Complex
 
 namespace Pillar3Zeta
+
+-- Re-import from zeta_definition
+axiom riemannZeta : ℂ → ℂ
 
 /-! ## Ecuación Funcional
 

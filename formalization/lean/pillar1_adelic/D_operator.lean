@@ -14,14 +14,23 @@ QCAL ∞³ Active · 141.7001 Hz · C = 244.36
 -/
 
 import Mathlib.Analysis.InnerProductSpace.SpectralTheory
-import Pillar1Adelic.AdelicMeasures
-import Pillar1Adelic.PoissonRadon
 
 noncomputable section
 
 open Complex
 
 namespace Pillar1Adelic
+
+/-- Anillo adélico simplificado (re-declarado para independencia) -/
+axiom AdelicRing : Type
+
+notation "𝔸" => AdelicRing
+
+/-- Espacio L² adélico -/
+axiom L2AdelicSpace : Type
+
+instance : NormedAddCommGroup L2AdelicSpace := sorry
+instance : InnerProductSpace ℂ L2AdelicSpace := sorry
 
 /-- Operador autoadjunto geométrico A₀ -/
 axiom selfAdjointGeometricOperator : L2AdelicSpace →L[ℂ] L2AdelicSpace

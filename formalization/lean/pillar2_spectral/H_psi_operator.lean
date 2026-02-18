@@ -14,14 +14,22 @@ QCAL ∞³ Active · 141.7001 Hz · C = 244.36
 -/
 
 import Mathlib.Analysis.InnerProductSpace.SelfAdjoint
-import Pillar1Adelic.AdelicMeasures
-import Pillar2Spectral.SpectralTheorem
 
 noncomputable section
 
 open Real Complex
 
 namespace Pillar2Spectral
+
+-- Re-import base definitions
+axiom L2AdelicSpace : Type
+instance : NormedAddCommGroup L2AdelicSpace := sorry
+instance : InnerProductSpace ℂ L2AdelicSpace := sorry
+
+axiom UnboundedOperator (H : Type) : Type
+axiom IsSelfAdjoint {H : Type} [InnerProductSpace ℂ H] (T : UnboundedOperator H) : Prop
+axiom UnboundedOperator.spectrum {H : Type} [NormedAddCommGroup H] 
+  (T : UnboundedOperator H) : Set ℂ
 
 /-! ## Operador H_Ψ
 

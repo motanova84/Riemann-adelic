@@ -16,13 +16,19 @@ QCAL ∞³ Active · 141.7001 Hz · C = 244.36
 import Mathlib.MeasureTheory.Measure.MeasureSpace
 import Mathlib.MeasureTheory.Measure.FiniteMeasure
 import Mathlib.Data.Finset.Basic
-import Pillar1Adelic.AdelicMeasures
 
 noncomputable section
 
 open MeasureTheory
 
 namespace Pillar1Adelic
+
+/-- Anillo adélico simplificado (re-declarado para independencia) -/
+axiom AdelicRing : Type
+
+notation "𝔸" => AdelicRing
+
+axiom adelicHaarMeasure : Measure 𝔸
 
 /-- Lugares (places) para el sistema adélico -/
 axiom Place : Type

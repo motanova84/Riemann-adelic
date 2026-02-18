@@ -12,8 +12,3 @@ This module provides the spectral analysis framework for the Riemann Hypothesis 
 - `trace_formula.lean`: Regularized trace formula
 - `spectral_bijection.lean`: Bijection between spectrum and zeros
 -/
-
-import Pillar2Spectral.SpectralTheorem
-import Pillar2Spectral.HPsiOperator
-import Pillar2Spectral.TraceFormula
-import Pillar2Spectral.SpectralBijection

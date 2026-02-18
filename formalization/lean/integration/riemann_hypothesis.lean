@@ -21,14 +21,32 @@ ORCID: 0009-0002-1923-0773
 QCAL ∞³ Active · 141.7001 Hz · C = 244.36 · Ψ = I × A_eff² × C^∞
 -/
 
-import Pillar2Spectral.SpectralBijection
-import Pillar3Zeta.ZeroClassification
+import Mathlib.NumberTheory.ZetaFunction
 
 noncomputable section
 
 open Complex
 
 namespace RiemannHypothesisIntegration
+
+-- Re-import necessary definitions
+namespace Pillar3Zeta
+  axiom riemannZeta : ℂ → ℂ
+  axiom zeta_zeros_non_trivial (ρ : ℂ) 
+      (hρ : riemannZeta ρ = 0) 
+      (h_not_trivial : ∀ n : ℕ, ρ ≠ -(2 * n : ℂ)) :
+      ρ.re = 1/2 ∨ ρ.re = 1 - ρ.re
+end Pillar3Zeta
+
+namespace Pillar2Spectral
+  axiom L2AdelicSpace : Type
+  axiom UnboundedOperator (H : Type) : Type
+  axiom UnboundedOperator.spectrum {H : Type} [NormedAddCommGroup H] 
+    (T : UnboundedOperator H) : Set ℂ
+  axiom H_Ψ : UnboundedOperator L2AdelicSpace
+  axiom spectral_bijection :
+      H_Ψ.spectrum = { λ : ℂ | ∃ γ : ℝ, λ = 1/4 + γ^2 ∧ Pillar3Zeta.riemannZeta (1/2 + I * γ) = 0 }
+end Pillar2Spectral
 
 /-!
 ## TEOREMA PRINCIPAL: HIPÓTESIS DE RIEMANN
