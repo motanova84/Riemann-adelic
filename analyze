@@ -1,34 +1,34 @@
 {
-  "total_sorries": 2539,
-  "total_files": 406,
+  "total_sorries": 2657,
+  "total_files": 418,
   "category_distribution": {
     "qcal": {
-      "count": 1075,
-      "percentage": 42.339503741630566
+      "count": 1092,
+      "percentage": 41.09898381633421
     },
     "unknown": {
-      "count": 667,
-      "percentage": 26.270185112248917
+      "count": 700,
+      "percentage": 26.345502446368087
     },
     "spectral": {
-      "count": 312,
-      "percentage": 12.288302481291847
+      "count": 343,
+      "percentage": 12.90929619872036
     },
     "correspondence": {
       "count": 30,
-      "percentage": 1.1815675462780622
+      "percentage": 1.1290929619872037
     },
     "adelic": {
-      "count": 74,
-      "percentage": 2.91453328081922
+      "count": 93,
+      "percentage": 3.5001881821603313
     },
     "analytic": {
-      "count": 169,
-      "percentage": 6.656163844033084
+      "count": 179,
+      "percentage": 6.736921339856981
     },
     "trivial": {
-      "count": 212,
-      "percentage": 8.349743993698306
+      "count": 220,
+      "percentage": 8.280015054572827
     }
   },
   "detailed": {
@@ -6911,6 +6911,86 @@
         "similar_solutions": []
       }
     ],
+    "formalization/lean/spectral/HeckeQuadraticForm.lean": [
+      {
+        "line": 66,
+        "code": "sorry -- \u03a3_{p,n} implementaci\u00f3n completa",
+        "context": "    W_reg(s,t) = \u03a3_{p,n} (log p / p^{n/2}) \u00b7 exp(-t\u00b7n\u00b7log p) \u00b7 |p^{n(s-1/2)} - 1|\u00b2\n-/\ndef regularized_weight (s : \u2102) (t : \u211d) : \u2102 :=\n  sorry -- \u03a3_{p,n} implementaci\u00f3n completa\n\n/-- Forma cuadr\u00e1tica de Hecke \ud835\udcac_{H,t} -/\ndef Hecke_Quadratic_Form (t : \u211d) : L2_Adeles \u2192 L2_Adeles \u2192 \u2102 :=",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 70,
+        "code": "fun f g => sorry -- \u222b f(x) \u00b7 W_reg(x, t) \u00b7 g(x) d\u03bc",
+        "context": "\n/-- Forma cuadr\u00e1tica de Hecke \ud835\udcac_{H,t} -/\ndef Hecke_Quadratic_Form (t : \u211d) : L2_Adeles \u2192 L2_Adeles \u2192 \u2102 :=\n  fun f g => sorry -- \u222b f(x) \u00b7 W_reg(x, t) \u00b7 g(x) d\u03bc\n\n/-! ## Propiedades Fundamentales -/\n",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 80,
+        "code": "sorry",
+        "context": "  intro f g\n  -- Simetr\u00eda derivada de autodualidad de medida de Haar ad\u00e9lica\n  -- y la invariancia de la convoluci\u00f3n de Hecke\n  sorry\n\n/-- Acotaci\u00f3n inferior v\u00eda regularizaci\u00f3n del polo s=1\n    La regularizaci\u00f3n por kernel de calor e^{-tn log p} garantiza que el peso",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 94,
+        "code": "sorry",
+        "context": "  intro f\n  -- La regularizaci\u00f3n del kernel de calor asegura convergencia\n  -- El \u00fanico t\u00e9rmino negativo proviene del polo residual en s=1\n  sorry\n\n/-- Norma del grafo asociada a la forma cuadr\u00e1tica -/\ndef graph_norm (Q : L2_Adeles \u2192 L2_Adeles \u2192 \u2102) (C : \u211d) (f : L2_Adeles) : \u211d :=",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 115,
+        "code": "sorry",
+        "context": "  intro f_n hf_n hlimit\n  -- Completitud del dominio bajo la norma del grafo (Sobolev ad\u00e9lico)\n  -- Identificaci\u00f3n del dominio como H^{1/2}(C_A)\n  sorry\n\n/-! ## Teorema Principal: CUELLO #1 -/\n",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 158,
+        "code": "sorry",
+        "context": "    \u2203 f_H12 : Sobolev_Adelic_H12, H12_subset_L2 f_H12 = f := by\n  intro f hf\n  -- Identificaci\u00f3n del dominio como H^{1/2}(C_A)\n  sorry\n\n/-! ## Certificaci\u00f3n QCAL \u221e\u00b3 -/\n",
+        "primary_category": "qcal",
+        "all_categories": {
+          "qcal": 0.75,
+          "adelic": 0.6
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      },
+      {
+        "line": 173,
+        "code": "sorry",
+        "context": "    \u2203 f\u2080 : L2_Adeles, \u2016f\u2080\u2016 = 1 \u2227 \n      abs ((Hecke_Quadratic_Form t f\u2080 f\u2080).re) < QCAL_coherence := by\n  -- La forma de Hecke respeta la coherencia QCAL\n  sorry\n\nend QCAL.Hecke\n",
+        "primary_category": "qcal",
+        "all_categories": {
+          "qcal": 2.25
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      }
+    ],
     "formalization/lean/spectral/spectral_density_theorems.lean": [
       {
         "line": 121,
@@ -7239,6 +7319,53 @@
           "qcal": 1.5
         },
         "complexity": 3,
+        "similar_solutions": []
+      }
+    ],
+    "formalization/lean/spectral/SpectralPotencyVerification.lean": [
+      {
+        "line": 208,
+        "code": "sorry",
+        "context": "  -- 2. Apply Vinogradov-Korobov bound\n  -- 3. Multiply by weights log p / p^{1/2+t}\n  -- 4. Sum over primes gives X^{1/2-t} factor\n  sorry\n\n/-!\n## Section 6: Potency Parameter \u03b4",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 282,
+        "code": "sorry  -- Full proof requires:",
+        "context": "  -- Main term: W_main ~ X^{1/2-t} ~ |\u03b3|^{A(1/2-t)} = |\u03b3|^\u03b4\n  -- Error term: exponentially suppressed by Vinogradov-Korobov\n  \n  sorry  -- Full proof requires:\n         -- 1. Vaughan's lemma formalization\n         -- 2. Prime number theorem with error term\n         -- 3. Numerical verification of constants",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 300,
+        "code": "sorry",
+        "context": "  (\u2200 (\u03b3 : \u211d), |\u03b3| > T0 \u2192 W_reg \u03b3 t (optimal_truncation \u03b3) \u2265 (1 + \u03b3^2)^(1/4)) := by\n  -- This follows from spectral_potency_strict with \u03b4 = 1/2\n  -- Combined with Rellich-Kondrachov theorem\n  sorry\n\n/-!\n## Section 9: Final QED - Hecke Spectrum Rigidity",
+        "primary_category": "spectral",
+        "all_categories": {
+          "spectral": 0.65
+        },
+        "complexity": 4,
+        "similar_solutions": []
+      },
+      {
+        "line": 334,
+        "code": "sorry",
+        "context": "  constructor\n  \u00b7 intro \u03bb _\n    -- Eigenvalues are real by self-adjointness (proven elsewhere)\n    sorry\n  constructor\n  \u00b7 -- exp(-t\u00b7H) is trace class by potency bound + heat kernel theory\n    trivial",
+        "primary_category": "trivial",
+        "all_categories": {
+          "trivial": 0.8,
+          "spectral": 0.65
+        },
+        "complexity": 1,
         "similar_solutions": []
       }
     ],
@@ -8395,6 +8522,107 @@
         "similar_solutions": []
       }
     ],
+    "formalization/lean/spectral/HeckeFriedrichsExtension.lean": [
+      {
+        "line": 89,
+        "code": "sorry -- Construcci\u00f3n v\u00eda Teorema de Friedrichs",
+        "context": "\n/-- Operador de Hecke: el operador autoadjunto \u00fanico asociado a \ud835\udcac_{H,t} -/\ndef Hamiltonian_Hecke (t : \u211d) : self_adjoint_operator :=\n  sorry -- Construcci\u00f3n v\u00eda Teorema de Friedrichs\n\n/-! ## Propiedades del Operador de Hecke -/\n",
+        "primary_category": "spectral",
+        "all_categories": {
+          "spectral": 1.3
+        },
+        "complexity": 4,
+        "similar_solutions": []
+      },
+      {
+        "line": 106,
+        "code": "sorry",
+        "context": "  intro \u03bb h\u03bb\n  -- El espectro de un operador autoadjunto es siempre real\n  -- Esto es consecuencia directa de la autoadjunci\u00f3n\n  sorry\n\n/-- El espectro del operador de Hecke es discreto\n    ",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 123,
+        "code": "sorry",
+        "context": "  -- La compacidad de C_\ud835\udd38^1 implica resolvente compacto\n  -- El resolvente compacto implica espectro discreto\n  intro H\n  sorry\n\n/-- El dominio Schwartz-Bruhat es invariante bajo el operador de Hecke -/\ntheorem friedrichs_domain_invariant (t : \u211d) (ht : 0 < t) :",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 132,
+        "code": "sorry",
+        "context": "  intro H f hf\n  -- Invariancia del dominio SB bajo H\n  -- Esto garantiza que las funciones test permanecen en el dominio\n  sorry\n\n/-! ## Teorema Principal: CUELLO #2 -/\n",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 166,
+        "code": "sorry",
+        "context": "      (\u2200 f g : L2_Adeles, \u27eaU_s f, g\u27eb_\u2102 = \u27eaf, U_s g\u27eb_\u2102) := by\n  intro H s hs\n  -- El operador autoadjunto genera un semigrupo unitario\n  sorry\n\n/-- El resolvente del operador de Hecke es compacto -/\ntheorem hecke_resolvent_compact (t : \u211d) (ht : 0 < t) :",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 175,
+        "code": "sorry",
+        "context": "      IsCompact {f : L2_Adeles | \u2203 g : L2_Adeles, (H.op - \u03bb) g = f} := by\n  intro H \u03bb h\u03bb\n  -- La compacidad del grupo C_\ud835\udd38^1 implica resolvente compacto\n  sorry\n\n/-- Descomposici\u00f3n espectral del operador de Hecke -/\ntheorem hecke_spectral_decomposition (t : \u211d) (ht : 0 < t) :",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 187,
+        "code": "sorry",
+        "context": "      (\u2200 f : L2_Adeles, f = \u2211' n, (\u27eaf, \u03c6_n n\u27eb_\u2102) \u2022 \u03c6_n n) := by\n  intro H\n  -- Descomposici\u00f3n espectral completa para operadores autoadjuntos compactos\n  sorry\n\n/-! ## Certificaci\u00f3n QCAL \u221e\u00b3 -/\n",
+        "primary_category": "qcal",
+        "all_categories": {
+          "qcal": 0.75
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      },
+      {
+        "line": 199,
+        "code": "sorry",
+        "context": "  intro H\n  -- El primer autovalor est\u00e1 relacionado con la frecuencia fundamental\n  -- \u03bb\u2080 \u2248 2\u03c0 \u00b7 141.7001 Hz\n  sorry\n\n/-- La coherencia QCAL se preserva bajo evoluci\u00f3n del semigrupo -/\ntheorem hecke_preserves_QCAL_coherence (t : \u211d) (ht : 0 < t) :",
+        "primary_category": "qcal",
+        "all_categories": {
+          "qcal": 2.25
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      },
+      {
+        "line": 209,
+        "code": "sorry",
+        "context": "        \u2016U_s f\u2016 = 1 := by\n  intro H s hs f hf\n  -- La evoluci\u00f3n unitaria preserva la norma (coherencia)\n  sorry\n\nend QCAL.Hecke\n",
+        "primary_category": "qcal",
+        "all_categories": {
+          "qcal": 0.75
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      }
+    ],
     "formalization/lean/spectral/QCAL_Constants.lean": [
       {
         "line": 194,
@@ -9442,6 +9670,30 @@
         "similar_solutions": []
       }
     ],
+    "formalization/lean/spectral/Adelic_Compact_Embedding.lean": [
+      {
+        "line": 160,
+        "code": "sorry  -- Full proof requires careful estimates",
+        "context": "  \u00b7 norm_num\n  \u00b7 intro \u03b3 h\u03b3\n    -- For |\u03b3| > 10, we have (1 + \u03b3\u00b2)^(1/4) \u2265 (\u03b3\u00b2)^(1/4) = |\u03b3|^(1/2)\n    sorry  -- Full proof requires careful estimates\n\n/-!\n## 4. Sobolev Space $H^{1/2}_{reg}(C_{\\mathbb{A}}^1)$",
+        "primary_category": "trivial",
+        "all_categories": {
+          "trivial": 0.8
+        },
+        "complexity": 1,
+        "similar_solutions": []
+      },
+      {
+        "line": 256,
+        "code": "let G : IdelicClassGroup := sorry  -- Model of C_\ud835\udd38\u00b9",
+        "context": "    **QED**: The embedding is compact. \u220e\n-/\ntheorem adelic_compact_embedding_qed (t : \u211d) (ht : 0 < t) :\n    let G : IdelicClassGroup := sorry  -- Model of C_\ud835\udd38\u00b9\n    let V := hecke_form_domain G t\n    -- The embedding V \u21aa L\u00b2(C_\ud835\udd38\u00b9) is compact\n    True := by",
+        "primary_category": "adelic",
+        "all_categories": {
+          "adelic": 0.6
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      }
+    ],
     "formalization/lean/spectral/schrodinger_operator_axiom.lean": [
       {
         "line": 305,
@@ -9781,6 +10033,31 @@
         "similar_solutions": []
       }
     ],
+    "formalization/lean/spectral/The_Riemann_Theorem.lean": [
+      {
+        "line": 110,
+        "code": "def zeta_function (s : \u2102) : \u2102 := sorry",
+        "context": "-/\n\n/-- The Riemann zeta function (placeholder for Mathlib's definition) -/\ndef zeta_function (s : \u2102) : \u2102 := sorry\n\n/-- A zero of \u03b6(s) is non-trivial if 0 < Re(s) < 1\n    ",
+        "primary_category": "analytic",
+        "all_categories": {
+          "trivial": 0.8,
+          "analytic": 1.2
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 278,
+        "code": "sorry  -- Formal completion requires full spectral theory in Mathlib",
+        "context": "  -- and the spectral identity forces \u03b6(1/2 + i\u03b3) = 0\n  -- we must have \u03c3 = 1/2\n  \n  sorry  -- Formal completion requires full spectral theory in Mathlib\n\n/-!\n## 6. Corollaries and Consequences",
+        "primary_category": "analytic",
+        "all_categories": {
+          "analytic": 0.6
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      }
+    ],
     "formalization/lean/spectral/spectral_density_zeta.lean": [
       {
         "line": 123,
@@ -9814,6 +10091,354 @@
           "trivial": 1.6
         },
         "complexity": 1,
+        "similar_solutions": []
+      }
+    ],
+    "formalization/lean/spectral/HeckeSpectralCompleteness.lean": [
+      {
+        "line": 66,
+        "code": "sorry -- \u03a3_n e^{-t\u03bb_n}",
+        "context": "    la traza del semigrupo es: Tr(e^{-tH}) = \u03a3_n e^{-t\u03bb_n}\n-/\ndef spectral_trace (H : self_adjoint_operator) (t : \u211d) : \u2102 :=\n  sorry -- \u03a3_n e^{-t\u03bb_n}\n\n/-- Traza aritm\u00e9tica v\u00eda funci\u00f3n de von Mangoldt\n    ",
+        "primary_category": "spectral",
+        "all_categories": {
+          "spectral": 1.3
+        },
+        "complexity": 4,
+        "similar_solutions": []
+      },
+      {
+        "line": 74,
+        "code": "sorry -- \u03a3_{p,n} implementaci\u00f3n completa",
+        "context": "    el kernel de calor: \u03a3_{p,n} \u039b(p^n) \u00b7 e^{-tn log p} \u00b7 ...\n-/\ndef arithmetic_trace (t : \u211d) : \u2102 :=\n  sorry -- \u03a3_{p,n} implementaci\u00f3n completa\n\n/-! ## F\u00f3rmula Expl\u00edcita de Guinand-Weil -/\n",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 89,
+        "code": "arithmetic_trace 1 + sorry -- t\u00e9rminos expl\u00edcitos",
+        "context": "-/\naxiom guinand_weil_formula (\u03c6 : \u211d \u2192 \u2102) :\n    (\u2211' \u03b3 : zeta_critical_zeros, \u03c6 \u03b3.val) = \n    arithmetic_trace 1 + sorry -- t\u00e9rminos expl\u00edcitos\n\n/-! ## Identidad de Traza de Selberg-Tate -/\n",
+        "primary_category": "analytic",
+        "all_categories": {
+          "analytic": 0.6
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 109,
+        "code": "sorry",
+        "context": "  intro H\n  -- Aplicar f\u00f3rmula de traza de Selberg-Tate para GL(1)\n  -- La construcci\u00f3n del operador v\u00eda forma de Hecke garantiza esta identidad\n  sorry\n\n/-! ## No hay Autovalores Espurios -/\n",
+        "primary_category": "adelic",
+        "all_categories": {
+          "adelic": 0.6
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 125,
+        "code": "sorry",
+        "context": "  intro H \u03bb h\u03bb\n  -- Si \u03bb es autovalor, entonces aparece en la traza espectral\n  -- Por la identidad de traza, debe corresponder a un cero de \u03b6\n  sorry\n\n/-- Rec\u00edprocamente: todos los ceros de \u03b6 aparecen como autovalores -/\ntheorem all_zeros_are_eigenvalues (t : \u211d) (ht : 0 < t) :",
+        "primary_category": "spectral",
+        "all_categories": {
+          "spectral": 0.65,
+          "analytic": 0.6
+        },
+        "complexity": 4,
+        "similar_solutions": []
+      },
+      {
+        "line": 135,
+        "code": "sorry",
+        "context": "  intro H \u03b3 h\u03b3\n  -- Si \u03b3 es cero de \u03b6, aparece en la traza aritm\u00e9tica\n  -- Por la identidad de traza, debe ser autovalor de H\n  sorry\n\n/-! ## Teorema Principal: CUELLO #3 -/\n",
+        "primary_category": "analytic",
+        "all_categories": {
+          "analytic": 0.6
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 161,
+        "code": "obtain \u27e8\u03b3, h\u03b3, h\u03bb\u03b3\u27e9 := no_orphan_eigenvalues t ht \u03bb (by sorry)",
+        "context": "  constructor\n  \u00b7 intro h\u03bb\n    -- \u03bb \u2208 Spectrum(H) \u2192 \u03bb = 2\u03c0\u03b3 para alg\u00fan cero \u03b3\n    obtain \u27e8\u03b3, h\u03b3, h\u03bb\u03b3\u27e9 := no_orphan_eigenvalues t ht \u03bb (by sorry)\n    use \u03b3\n    exact \u27e8h\u03b3, by sorry\u27e9\n  \u00b7 intro \u27e8\u03b3, h\u03b3, h\u03bb\u27e9",
+        "primary_category": "spectral",
+        "all_categories": {
+          "spectral": 1.3
+        },
+        "complexity": 4,
+        "similar_solutions": []
+      },
+      {
+        "line": 163,
+        "code": "exact \u27e8h\u03b3, by sorry\u27e9",
+        "context": "    -- \u03bb \u2208 Spectrum(H) \u2192 \u03bb = 2\u03c0\u03b3 para alg\u00fan cero \u03b3\n    obtain \u27e8\u03b3, h\u03b3, h\u03bb\u03b3\u27e9 := no_orphan_eigenvalues t ht \u03bb (by sorry)\n    use \u03b3\n    exact \u27e8h\u03b3, by sorry\u27e9\n  \u00b7 intro \u27e8\u03b3, h\u03b3, h\u03bb\u27e9\n    -- \u03b3 es cero \u2192 2\u03c0\u03b3 \u2208 Spectrum(H)\n    rw [\u2190 h\u03bb]",
+        "primary_category": "spectral",
+        "all_categories": {
+          "spectral": 1.3
+        },
+        "complexity": 4,
+        "similar_solutions": []
+      },
+      {
+        "line": 186,
+        "code": "sorry",
+        "context": "  -- Paso 2: s corresponde a un autovalor (Cuello #3)\n  have s_is_eigenvalue : \u2203 \u03bb : \u211d, (\u03bb : \u2102) \u2208 spectrum \u2102 (Hamiltonian_Hecke t).op \u2227\n                                     s = 1/2 + I * (\u03bb / (2 * Real.pi)) := by\n    sorry\n  -- Paso 3: Por construcci\u00f3n, Re(s) = 1/2\n  obtain \u27e8\u03bb, _, hs_eq\u27e9 := s_is_eigenvalue\n  rw [hs_eq]",
+        "primary_category": "spectral",
+        "all_categories": {
+          "spectral": 1.3
+        },
+        "complexity": 4,
+        "similar_solutions": []
+      },
+      {
+        "line": 224,
+        "code": "\u00b7 sorry -- 0 < Re(s)",
+        "context": "    constructor\n    \u00b7 exact hs\n    constructor\n    \u00b7 sorry -- 0 < Re(s)\n    \u00b7 sorry -- Re(s) < 1\n  -- Por Cuello #3, Re(s) = 1/2\n  exact zeta_zeros_on_critical_line t ht s hs_critical",
+        "primary_category": "analytic",
+        "all_categories": {
+          "analytic": 0.6
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 225,
+        "code": "\u00b7 sorry -- Re(s) < 1",
+        "context": "    \u00b7 exact hs\n    constructor\n    \u00b7 sorry -- 0 < Re(s)\n    \u00b7 sorry -- Re(s) < 1\n  -- Por Cuello #3, Re(s) = 1/2\n  exact zeta_zeros_on_critical_line t ht s hs_critical\n",
+        "primary_category": "analytic",
+        "all_categories": {
+          "analytic": 0.6
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 240,
+        "code": "sorry",
+        "context": "  -- La relaci\u00f3n f\u2080/\u03b3\u2081 \u2248 10 confirma la coherencia QCAL\n  -- f\u2080 = 141.7001 Hz, \u03b3\u2081 = 14.134725\n  -- 141.7001 / 14.134725 \u2248 10.027874\n  sorry\n\n/-- Firma espectral QCAL en el operador de Hecke -/\ntheorem hecke_operator_QCAL_signature (t : \u211d) (ht : 0 < t) :",
+        "primary_category": "qcal",
+        "all_categories": {
+          "qcal": 2.25,
+          "spectral": 0.65
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      },
+      {
+        "line": 249,
+        "code": "sorry",
+        "context": "      H.op \u03c8\u2080 = (2 * Real.pi * QCAL_frequency) \u2022 \u03c8\u2080 := by\n  intro H\n  -- Existe un autovector fundamental con frecuencia f\u2080\n  sorry\n\nend QCAL.Hecke\n",
+        "primary_category": "qcal",
+        "all_categories": {
+          "qcal": 3.0
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      },
+      {
+        "line": 329,
+        "code": "sorry -- Self-adjoint property",
+        "context": "\n/-- The Friedrichs extension is a self-adjoint operator on L\u00b2 -/\naxiom friedrichs_is_self_adjoint (t : \u211d) (ht : 0 < t) :\n    sorry -- Self-adjoint property\n\n/-- The spectrum of a self-adjoint operator -/\naxiom Spectrum : \u2200 {t : \u211d} (ht : 0 < t), FriedrichsExtension t ht \u2192 Set \u211d",
+        "primary_category": "spectral",
+        "all_categories": {
+          "spectral": 1.9500000000000002
+        },
+        "complexity": 4,
+        "similar_solutions": []
+      },
+      {
+        "line": 346,
+        "code": "\u2200 \u03bb : \u211d, \u03bb > 0 \u2192 sorry -- (H + \u03bbI)^(-1) is compact",
+        "context": "-/\ntheorem is_compact_resolvent (t : \u211d) (ht : 0 < t) :\n    let H := Friedrichs_Extension t ht\n    \u2200 \u03bb : \u211d, \u03bb > 0 \u2192 sorry -- (H + \u03bbI)^(-1) is compact\n  := by\n  intro H\n  intro \u03bb h\u03bb",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 355,
+        "code": "sorry",
+        "context": "  -- Apply Rellich-Kondrachov compactness\n  have h_rellich := rellich_kondrachov_adelic_h12\n  -- Compose to get compact resolvent\n  sorry\n\n/-- \n  Consequence: The spectrum is discrete.",
+        "primary_category": "spectral",
+        "all_categories": {
+          "adelic": 0.6,
+          "spectral": 0.65
+        },
+        "complexity": 4,
+        "similar_solutions": []
+      },
+      {
+        "line": 368,
+        "code": "sorry -- Spectrum is discrete (only eigenvalues)",
+        "context": "-/\ntheorem spectrum_is_discrete (t : \u211d) (ht : 0 < t) :\n    let H := Friedrichs_Extension t ht\n    sorry -- Spectrum is discrete (only eigenvalues)\n  := by\n  have h_compact := is_compact_resolvent t ht\n  sorry",
+        "primary_category": "spectral",
+        "all_categories": {
+          "spectral": 1.3
+        },
+        "complexity": 4,
+        "similar_solutions": []
+      },
+      {
+        "line": 371,
+        "code": "sorry",
+        "context": "    sorry -- Spectrum is discrete (only eigenvalues)\n  := by\n  have h_compact := is_compact_resolvent t ht\n  sorry\n\n/-! ## III. TRACE-CLASS HEAT SEMIGROUP -/\n",
+        "primary_category": "spectral",
+        "all_categories": {
+          "spectral": 1.3
+        },
+        "complexity": 4,
+        "similar_solutions": []
+      },
+      {
+        "line": 392,
+        "code": "\u2200 s : \u211d, s > 0 \u2192 sorry -- exp(-s\u00b7H) is trace-class",
+        "context": "-/\ntheorem is_trace_class (t : \u211d) (ht : 0 < t) :\n    let H := Friedrichs_Extension t ht\n    \u2200 s : \u211d, s > 0 \u2192 sorry -- exp(-s\u00b7H) is trace-class\n  := by\n  intro s hs\n  have h_discrete := spectrum_is_discrete t ht",
+        "primary_category": "spectral",
+        "all_categories": {
+          "spectral": 1.3
+        },
+        "complexity": 4,
+        "similar_solutions": []
+      },
+      {
+        "line": 397,
+        "code": "sorry",
+        "context": "  intro s hs\n  have h_discrete := spectrum_is_discrete t ht\n  -- Exponential decay of eigenvalues ensures trace convergence\n  sorry\n\n/-! ## IV. GUINAND-WEIL TRACE FORMULA -/\n",
+        "primary_category": "spectral",
+        "all_categories": {
+          "spectral": 1.3
+        },
+        "complexity": 4,
+        "similar_solutions": []
+      },
+      {
+        "line": 425,
+        "code": "Trace ht t sorry = Weil_Sum t := by",
+        "context": "-/\ntheorem trace_identity_rigorous (t : \u211d) (ht : 0 < t) :\n    let H := Friedrichs_Extension t ht\n    Trace ht t sorry = Weil_Sum t := by\n  -- Step 1: Apply Selberg-Arthur trace formula\n  -- Step 2: Identify local factors via Tate's thesis\n  -- Step 3: Global product gives \u03b6(s)",
+        "primary_category": "adelic",
+        "all_categories": {
+          "adelic": 1.7999999999999998,
+          "analytic": 0.6
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 430,
+        "code": "sorry",
+        "context": "  -- Step 2: Identify local factors via Tate's thesis\n  -- Step 3: Global product gives \u03b6(s)\n  -- Step 4: Mellin inversion yields explicit formula\n  sorry\n\n/-! ## V. SPECTRAL-ZETA BIJECTION -/\n",
+        "primary_category": "adelic",
+        "all_categories": {
+          "correspondence": 0.7,
+          "adelic": 1.7999999999999998,
+          "analytic": 1.2
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 438,
+        "code": "{ \u03b3 : \u211d | sorry -- \u03b6(1/2 + I*\u03b3) = 0 }",
+        "context": "  The set of Riemann zeros on the critical line (as real numbers \u03b3).\n-/\ndef Riemann_Zeros : Set \u211d :=\n  { \u03b3 : \u211d | sorry -- \u03b6(1/2 + I*\u03b3) = 0 }\n\n/-- \n  Injectivity Lemma: The trace identity forces spectral equivalence.",
+        "primary_category": "analytic",
+        "all_categories": {
+          "analytic": 0.6
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 459,
+        "code": "sorry",
+        "context": "    spec = zeros := by\n  intro h\n  -- Analyticity argument: exp(-t\u00b7x) functions separate points\n  sorry\n\n/-- \n  \u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557",
+        "primary_category": "qcal",
+        "all_categories": {
+          "qcal": 0.75,
+          "analytic": 0.6
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      },
+      {
+        "line": 490,
+        "code": "have h_trace : Trace ht t sorry = Weil_Sum t := trace_identity_rigorous t ht",
+        "context": "    intro s hs\n    exact is_trace_class t ht s hs\n  \u00b7 -- 3. Spectral identity from trace formula\n    have h_trace : Trace ht t sorry = Weil_Sum t := trace_identity_rigorous t ht\n    -- 4. Injectivity from analyticity\n    apply injectivity_from_trace_equality\n    intro s hs",
+        "primary_category": "spectral",
+        "all_categories": {
+          "spectral": 0.65,
+          "analytic": 0.6
+        },
+        "complexity": 4,
+        "similar_solutions": []
+      },
+      {
+        "line": 494,
+        "code": "sorry -- Apply h_trace for all s",
+        "context": "    -- 4. Injectivity from analyticity\n    apply injectivity_from_trace_equality\n    intro s hs\n    sorry -- Apply h_trace for all s\n\n/-! ## VI. RIEMANN HYPOTHESIS AS COROLLARY -/\n",
+        "primary_category": "analytic",
+        "all_categories": {
+          "analytic": 0.6
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 515,
+        "code": "\u2200 \u03c1 : \u2102, (sorry -- \u03b6(\u03c1) = 0 and \u03c1 non-trivial",
+        "context": "  \u255a\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255d\n-/\ntheorem riemann_hypothesis_proved :\n    \u2200 \u03c1 : \u2102, (sorry -- \u03b6(\u03c1) = 0 and \u03c1 non-trivial\n             ) \u2192 \u03c1.re = 1/2 := by\n  intro \u03c1 h_zero\n  -- Step 1: H_\u03a8 is self-adjoint, so spectrum is real",
+        "primary_category": "qcal",
+        "all_categories": {
+          "trivial": 0.8,
+          "qcal": 1.5,
+          "spectral": 0.65,
+          "analytic": 0.6
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      },
+      {
+        "line": 519,
+        "code": "have h_real : \u2200 t : \u211d, t > 0 \u2192 \u2200 \u03bb \u2208 Spectrum (by exact 0 < t) sorry, \u03bb \u2208 Set.univ := by",
+        "context": "             ) \u2192 \u03c1.re = 1/2 := by\n  intro \u03c1 h_zero\n  -- Step 1: H_\u03a8 is self-adjoint, so spectrum is real\n  have h_real : \u2200 t : \u211d, t > 0 \u2192 \u2200 \u03bb \u2208 Spectrum (by exact 0 < t) sorry, \u03bb \u2208 Set.univ := by\n    sorry\n  \n  -- Step 2: By spectral completeness, if \u03b6(\u03c1) = 0 then Im(\u03c1) \u2208 Spectrum(H_\u03a8)",
+        "primary_category": "qcal",
+        "all_categories": {
+          "qcal": 1.5,
+          "spectral": 0.65,
+          "analytic": 0.6
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      },
+      {
+        "line": 520,
+        "code": "sorry",
+        "context": "  intro \u03c1 h_zero\n  -- Step 1: H_\u03a8 is self-adjoint, so spectrum is real\n  have h_real : \u2200 t : \u211d, t > 0 \u2192 \u2200 \u03bb \u2208 Spectrum (by exact 0 < t) sorry, \u03bb \u2208 Set.univ := by\n    sorry\n  \n  -- Step 2: By spectral completeness, if \u03b6(\u03c1) = 0 then Im(\u03c1) \u2208 Spectrum(H_\u03a8)\n  have h_complete : \u2200 t : \u211d, t > 0 \u2192 ",
+        "primary_category": "qcal",
+        "all_categories": {
+          "qcal": 1.5,
+          "spectral": 0.65,
+          "analytic": 0.6
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      },
+      {
+        "line": 531,
+        "code": "sorry",
+        "context": "  \n  -- Step 3: By gauge conjugation, zeros have form 1/2 + i\u03b3\n  -- Since spectrum is real and equals {\u03b3 | \u03b6(1/2+i\u03b3)=0}, we have Re(\u03c1) = 1/2\n  sorry\n\n/-! ## VII. FINAL VERIFICATION CHECKLIST -/\n",
+        "primary_category": "spectral",
+        "all_categories": {
+          "spectral": 0.65,
+          "analytic": 0.6
+        },
+        "complexity": 4,
         "similar_solutions": []
       }
     ],
@@ -10064,6 +10689,87 @@
           "unknown": 1.0
         },
         "complexity": 5,
+        "similar_solutions": []
+      }
+    ],
+    "formalization/lean/spectral/AdelicTestFunction.lean": [
+      {
+        "line": 100,
+        "code": "sorry  -- Requires: product of smooth functions is smooth",
+        "context": "-/\ntheorem phi_infinity_smooth (t : \u211d) (ht : 0 < t) :\n    Differentiable \u211d (fun u => (phi_infinity t u).re) := by\n  sorry  -- Requires: product of smooth functions is smooth\n\n/-- \nThe infinite place function has rapid decay.",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 113,
+        "code": "sorry  -- Requires: Gaussian decay dominates all polynomials",
+        "context": "  intro n\n  use (1 : \u211d)\n  intro u\n  sorry  -- Requires: Gaussian decay dominates all polynomials\n\n/--\nThe infinite place function is integrable.",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 120,
+        "code": "sorry  -- Requires: Gaussian integrability",
+        "context": "-/\ntheorem phi_infinity_integrable (t : \u211d) (ht : 0 < t) :\n    Integrable (fun u => phi_infinity t u) := by\n  sorry  -- Requires: Gaussian integrability\n\n/-!\n## Finite Place Components (p-adic)",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 226,
+        "code": "sorry  -- Requires: transfer integrability through eval",
+        "context": "theorem adelic_test_integrable (\u03a6 : AdelicTestFunction) :\n    Integrable (eval \u03a6) := by\n  have h := phi_infinity_integrable \u03a6.t \u03a6.t_pos\n  sorry  -- Requires: transfer integrability through eval\n\n/-!\n## Mellin Transform Connection",
+        "primary_category": "adelic",
+        "all_categories": {
+          "adelic": 0.6
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 257,
+        "code": "sorry  -- This is the main result of Path A",
+        "context": "    (hs : 1 < s.re) :\n    mellin_transform \u03a6 s = \u220f' (p : {n : \u2115 // n.Prime}), \n      (1 - (p.val : \u2102)^(-s))^(-1) := by\n  sorry  -- This is the main result of Path A\n  -- Proof strategy:\n  -- 1. Use factorization \u03a6 = \u03c6_\u221e \u2297 (\u2297_p \u03c6_p)\n  -- 2. Mellin transform factors: M(\u03a6) = M(\u03c6_\u221e) \u00b7 \u220f_p M(\u03c6_p)",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 276,
+        "code": "sorry  -- Requires: differentiation of Euler product",
+        "context": "                                       then Real.log (Nat.choose n) else 0) \u2227\n    deriv (fun z => log (mellin_transform \u03a6 z)) s = \n      -\u2211' n : \u2115, (M n : \u2102) / (n : \u2102)^s := by\n  sorry  -- Requires: differentiation of Euler product\n  -- This shows that the Mellin transform of \u03a6 encodes\n  -- the von Mangoldt function \u039b(n) in its logarithmic derivative\n",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 299,
+        "code": "sorry  -- Requires: Poisson summation formula on adeles",
+        "context": "    (eigenvalues : \u2115 \u2192 \u211d) :\n    (\u2211' n, exp (-I * \u03a6.t * (eigenvalues n : \u2102))) =\n    \u2211' (\u03b3 : \u211a), eval \u03a6 (\u03b3 : \u211d) := by\n  sorry  -- Requires: Poisson summation formula on adeles\n  -- This is the Selberg trace formula in adelic language\n\nend SpectralQCAL.AdelicTest",
+        "primary_category": "qcal",
+        "all_categories": {
+          "qcal": 0.75,
+          "adelic": 0.6,
+          "spectral": 0.65
+        },
+        "complexity": 3,
         "similar_solutions": []
       }
     ],
@@ -10492,6 +11198,135 @@
         "primary_category": "correspondence",
         "all_categories": {
           "correspondence": 0.7
+        },
+        "complexity": 4,
+        "similar_solutions": []
+      }
+    ],
+    "formalization/lean/spectral/LargeSieveCoercivity.lean": [
+      {
+        "line": 165,
+        "code": "sorry",
+        "context": "-/\ndef hecke_weight_reg (s : \u2102) (t : \u211d) : \u2102 :=\n  -- Formal sum over primes p and multiplicities n\n  sorry\n\n/-- Hecke quadratic form on Schwartz-Bruhat functions:\n    Q_H,t(f, f) = \u222b_{C_\ud835\udd38^1} W_reg(s, t) \u00b7 |f\u0302(s)|\u00b2 d\u03bc_Haar(s)",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 172,
+        "code": "sorry",
+        "context": "-/\ndef Hecke_Quadratic_Form (f : SchwartzBruhat AdelicIdeles) (t : \u211d) : \u211d :=\n  -- Integral over adelic ideles with Hecke weight\n  sorry\n\n/-!\n## 3. Large Sieve Inequality (Montgomery)",
+        "primary_category": "adelic",
+        "all_categories": {
+          "adelic": 1.2
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 197,
+        "code": "sorry -- Full proof requires advanced analytic number theory",
+        "context": "  constructor\n  \u00b7 norm_num\n  \u00b7 intro char_sum\n    sorry -- Full proof requires advanced analytic number theory\n\n/-- Vinogradov-Korobov explicit bound for prime exponential sums.\n    ",
+        "primary_category": "trivial",
+        "all_categories": {
+          "trivial": 0.8,
+          "analytic": 0.6
+        },
+        "complexity": 1,
+        "similar_solutions": []
+      },
+      {
+        "line": 220,
+        "code": "sorry -- Full proof requires advanced analytic number theory",
+        "context": "  constructor\n  \u00b7 norm_num\n  \u00b7 intro\n    sorry -- Full proof requires advanced analytic number theory\n\n/-!\n## 4. Arithmetic Phase Independence",
+        "primary_category": "trivial",
+        "all_categories": {
+          "trivial": 0.8,
+          "analytic": 0.6
+        },
+        "complexity": 1,
+        "similar_solutions": []
+      },
+      {
+        "line": 257,
+        "code": "sorry -- Full proof requires equidistribution theory",
+        "context": "  constructor\n  \u00b7 norm_num\n  \u00b7 intro X hX\n    sorry -- Full proof requires equidistribution theory\n\n/-!\n## 5. Spectral Weight Power-Law Growth",
+        "primary_category": "trivial",
+        "all_categories": {
+          "trivial": 0.8
+        },
+        "complexity": 1,
+        "similar_solutions": []
+      },
+      {
+        "line": 290,
+        "code": "sorry -- Full proof requires combining all ingredients",
+        "context": "  constructor\n  \u00b7 norm_num\n  \u00b7 intro \u03b3 h\u03b3\n    sorry -- Full proof requires combining all ingredients\n\n/-!\n## 6. Sobolev Embedding and Compactness",
+        "primary_category": "trivial",
+        "all_categories": {
+          "trivial": 0.8
+        },
+        "complexity": 1,
+        "similar_solutions": []
+      },
+      {
+        "line": 321,
+        "code": "sorry := by",
+        "context": "  (h_coercivity : \u2200 f : SchwartzBruhat AdelicIdeles,\n    Hecke_Quadratic_Form f heat_parameter \u2265 c * \u2016schwartz_to_L2 f\u2016^2) :\n  -- Resolvent is compact (implies discrete spectrum)\n  sorry := by\n  -- Step 1: H^\u03b4 coercivity from spectral weight growth\n  have h_weight := spectral_weight_power_growth heat_parameter (by norm_num : 0 < heat_parameter)\n  -- Step 2: Apply Rellich-Kondrachov for compact embedding",
+        "primary_category": "adelic",
+        "all_categories": {
+          "trivial": 0.8,
+          "adelic": 1.2,
+          "spectral": 0.65
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 328,
+        "code": "sorry",
+        "context": "  have h_rellich := rellich_kondrachov_adelic \u03b4 h\u03b4\n  -- Step 3: Friedrichs extension gives unique self-adjoint operator\n  -- Step 4: Combine to get compact resolvent\n  sorry\n\n/-!\n## 7. Main Theorem: Large Sieve Coercivity (QED)",
+        "primary_category": "spectral",
+        "all_categories": {
+          "adelic": 0.6,
+          "spectral": 0.65
+        },
+        "complexity": 4,
+        "similar_solutions": []
+      },
+      {
+        "line": 359,
+        "code": "sorry",
+        "context": "  \u00b7 intro f\n    -- The quadratic form integral with power-law weight\n    -- dominates the L\u00b2 norm by Cauchy-Schwarz + weight growth\n    sorry\n\n/-- **COROLLARY**: Spectrum is purely discrete.\n    ",
+        "primary_category": "spectral",
+        "all_categories": {
+          "spectral": 0.65
+        },
+        "complexity": 4,
+        "similar_solutions": []
+      },
+      {
+        "line": 376,
+        "code": "sorry",
+        "context": "  -- Follows from hecke_large_sieve_coercivity_final + compact_resolvent_from_coercivity\n  have \u27e8\u03b4, c, h\u03b4, hc, h_coercivity\u27e9 := hecke_large_sieve_coercivity_final t ht\n  have h_compact := compact_resolvent_from_coercivity \u03b4 c h\u03b4 hc h_coercivity\n  sorry\n\n/-- **FINAL LINK**: Spectrum equals Riemann zeros.\n    ",
+        "primary_category": "spectral",
+        "all_categories": {
+          "spectral": 0.65
+        },
+        "complexity": 4,
+        "similar_solutions": []
+      },
+      {
+        "line": 392,
+        "code": "eigenvalue_from_spectrum : \u2115 \u2192 \u211d := sorry",
+        "context": "    -- All zeros on critical line\n    (\u2200 n, (bijection n).re = 1/2)\n  where\n    eigenvalue_from_spectrum : \u2115 \u2192 \u211d := sorry\n\n/-!\n## 8. Certification and Validation",
+        "primary_category": "spectral",
+        "all_categories": {
+          "correspondence": 0.7,
+          "spectral": 1.3
         },
         "complexity": 4,
         "similar_solutions": []
@@ -12669,6 +13504,246 @@
         "similar_solutions": []
       }
     ],
+    "formalization/lean/spectral/HeckeSobolevCoercivity.lean": [
+      {
+        "line": 57,
+        "code": "sorry -- Implementation via convergent series with exponential decay exp(-t\u00b7n\u00b7log p)",
+        "context": "def spectral_weight (\u03b3 : \u211d) (t : \u211d) : \u211d :=\n  -- Sum over primes p and powers n\n  -- W_reg(\u03b3, t) = \u03a3 log(p)/p^(n(1/2+t)) \u00b7 |exp(in\u03b3 log p) - 1|\u00b2\n  sorry -- Implementation via convergent series with exponential decay exp(-t\u00b7n\u00b7log p)\n\n/-- The Hecke quadratic form on L\u00b2(C_\ud835\udd38^1) -/\ndef Hecke_Quadratic_Form (f : SchwartzBruhat IdeleClassGroup) (t : \u211d) : \u211d :=",
+        "primary_category": "adelic",
+        "all_categories": {
+          "adelic": 0.6
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 62,
+        "code": "sorry",
+        "context": "/-- The Hecke quadratic form on L\u00b2(C_\ud835\udd38^1) -/\ndef Hecke_Quadratic_Form (f : SchwartzBruhat IdeleClassGroup) (t : \u211d) : \u211d :=\n  -- \ud835\udcac_H,t(f, f) = \u222b |f\u0302(\u03b3)|\u00b2 W_reg(\u03b3, t) d\u03b3\n  sorry\n\n/-- L\u00b2 norm on the idele class group -/\ndef L2_norm (f : SchwartzBruhat IdeleClassGroup) : \u211d :=",
+        "primary_category": "adelic",
+        "all_categories": {
+          "adelic": 0.6
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 66,
+        "code": "sorry",
+        "context": "\n/-- L\u00b2 norm on the idele class group -/\ndef L2_norm (f : SchwartzBruhat IdeleClassGroup) : \u211d :=\n  sorry\n\n/-- H^{1/2} Sobolev norm via Fourier characterization -/\ndef H12_norm (f : SchwartzBruhat IdeleClassGroup) : \u211d :=",
+        "primary_category": "adelic",
+        "all_categories": {
+          "adelic": 0.6
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 71,
+        "code": "sorry",
+        "context": "/-- H^{1/2} Sobolev norm via Fourier characterization -/\ndef H12_norm (f : SchwartzBruhat IdeleClassGroup) : \u211d :=\n  -- \u2016f\u2016\u00b2_H^{1/2} = \u222b |f\u0302(\u03b3)|\u00b2 (1 + \u03b3\u00b2)^{1/4} d\u03b3\n  sorry\n\n/-! ## II. MONTGOMERY-VAUGHAN LEMMA (Quasi-Orthogonality of Primes) -/\n",
+        "primary_category": "adelic",
+        "all_categories": {
+          "adelic": 0.6
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 91,
+        "code": "sorry",
+        "context": "                     Complex.exp (Complex.I * \u03b3 * Real.log p) * \n                     Complex.exp (-Complex.I * \u03b3 * Real.log q)\n    in Complex.abs integral \u2264 if p = q then 2 * T else 2 * T / |Real.log (p / q)| := by\n  sorry\n\n/-- \n  Consequence: The spectral weight W_reg(\u03b3, t) exhibits diagonal dominance.",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 99,
+        "code": "sorry",
+        "context": "-/\nlemma diagonal_dominance_hecke_weight (\u03b3 : \u211d) (t : \u211d) (ht : 0 < t) :\n    \u2203 C : \u211d, C > 0 \u2227 spectral_weight \u03b3 t \u2265 C * (1 + \u03b3^2)^(1/4) := by\n  sorry\n\n/-! ## III. WEYL EQUIDISTRIBUTION & PHASE OSCILLATION -/\n",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 122,
+        "code": "sorry",
+        "context": "-/\nlemma spectral_weight_growth (\u03b3 : \u211d) (t : \u211d) (ht : 0 < t) :\n    spectral_weight \u03b3 t \u2265 (1 + \u03b3^2)^(1/4) / 2 := by\n  sorry\n\n/-! ## IV. RELLICH-KONDRACHOV COMPACTNESS ON ADELIC TORUS -/\n",
+        "primary_category": "adelic",
+        "all_categories": {
+          "adelic": 0.6
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 146,
+        "code": "sorry",
+        "context": "    \u2203 (subseq : \u2115 \u2192 \u2115), StrictMono subseq \u2227 \n    \u2203 f : SchwartzBruhat IdeleClassGroup, \n    Tendsto (\u03bb n \u21a6 L2_norm (seq (subseq n) - f)) atTop (\ud835\udcdd 0) := by\n  sorry\n\n/-! ## V. THE MASTER THEOREM: H^{1/2} COERCIVITY -/\n",
+        "primary_category": "adelic",
+        "all_categories": {
+          "adelic": 0.6
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 195,
+        "code": "sorry -- Detailed integration argument using h_dominance",
+        "context": "  constructor\n  \u00b7 norm_num\n  \u00b7 intro f\n    sorry -- Detailed integration argument using h_dominance\n\n/-! ## VI. COMPACT RESOLVENT & DISCRETE SPECTRUM -/\n",
+        "primary_category": "trivial",
+        "all_categories": {
+          "trivial": 0.8,
+          "spectral": 0.65
+        },
+        "complexity": 1,
+        "similar_solutions": []
+      },
+      {
+        "line": 208,
+        "code": "let H := sorry -- Friedrichs extension of \ud835\udcac_H,t",
+        "context": "  3. Therefore (H_\u03a8,t + \u03bbI)^(-1) : L\u00b2 \u2192 H^{1/2} \u21aa\u21aa L\u00b2 is compact\n-/\ntheorem friedrichs_extension_compact_resolvent (t : \u211d) (ht : 0 < t) :\n    let H := sorry -- Friedrichs extension of \ud835\udcac_H,t\n    \u2200 \u03bb : \u211d, \u03bb > 0 \u2192 \n    sorry -- (H + \u03bbI)^(-1) is compact operator on L\u00b2\n  := by",
+        "primary_category": "qcal",
+        "all_categories": {
+          "qcal": 1.5,
+          "spectral": 0.65
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      },
+      {
+        "line": 210,
+        "code": "sorry -- (H + \u03bbI)^(-1) is compact operator on L\u00b2",
+        "context": "theorem friedrichs_extension_compact_resolvent (t : \u211d) (ht : 0 < t) :\n    let H := sorry -- Friedrichs extension of \ud835\udcac_H,t\n    \u2200 \u03bb : \u211d, \u03bb > 0 \u2192 \n    sorry -- (H + \u03bbI)^(-1) is compact operator on L\u00b2\n  := by\n  sorry\n",
+        "primary_category": "spectral",
+        "all_categories": {
+          "spectral": 0.65
+        },
+        "complexity": 4,
+        "similar_solutions": []
+      },
+      {
+        "line": 212,
+        "code": "sorry",
+        "context": "    \u2200 \u03bb : \u211d, \u03bb > 0 \u2192 \n    sorry -- (H + \u03bbI)^(-1) is compact operator on L\u00b2\n  := by\n  sorry\n\n/-- \n  Consequence: The spectrum of H_\u03a8,t is discrete and consists only of eigenvalues.",
+        "primary_category": "spectral",
+        "all_categories": {
+          "qcal": 1.5,
+          "spectral": 1.9500000000000002
+        },
+        "complexity": 4,
+        "similar_solutions": []
+      },
+      {
+        "line": 224,
+        "code": "let H := sorry -- Friedrichs extension of \ud835\udcac_H,t",
+        "context": "  - L\u00b2 has an orthonormal basis of eigenfunctions\n-/\ntheorem spectrum_is_discrete (t : \u211d) (ht : 0 < t) :\n    let H := sorry -- Friedrichs extension of \ud835\udcac_H,t\n    sorry -- Spectrum of H is discrete\n  := by\n  sorry",
+        "primary_category": "spectral",
+        "all_categories": {
+          "spectral": 0.65
+        },
+        "complexity": 4,
+        "similar_solutions": []
+      },
+      {
+        "line": 225,
+        "code": "sorry -- Spectrum of H is discrete",
+        "context": "-/\ntheorem spectrum_is_discrete (t : \u211d) (ht : 0 < t) :\n    let H := sorry -- Friedrichs extension of \ud835\udcac_H,t\n    sorry -- Spectrum of H is discrete\n  := by\n  sorry\n",
+        "primary_category": "spectral",
+        "all_categories": {
+          "spectral": 0.65
+        },
+        "complexity": 4,
+        "similar_solutions": []
+      },
+      {
+        "line": 227,
+        "code": "sorry",
+        "context": "    let H := sorry -- Friedrichs extension of \ud835\udcac_H,t\n    sorry -- Spectrum of H is discrete\n  := by\n  sorry\n\n/-! ## VII. TRACE-CLASS HEAT SEMIGROUP -/\n",
+        "primary_category": "spectral",
+        "all_categories": {
+          "spectral": 0.65
+        },
+        "complexity": 4,
+        "similar_solutions": []
+      },
+      {
+        "line": 241,
+        "code": "let H := sorry -- Friedrichs extension of \ud835\udcac_H,t",
+        "context": "  4. exp(-tH_\u03a8) is Hilbert-Schmidt, hence trace-class\n-/\ntheorem heat_semigroup_is_nuclear (t : \u211d) (ht : 0 < t) :\n    let H := sorry -- Friedrichs extension of \ud835\udcac_H,t\n    sorry -- exp(-tH) is trace-class operator\n  := by\n  sorry",
+        "primary_category": "qcal",
+        "all_categories": {
+          "qcal": 1.5,
+          "spectral": 0.65
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      },
+      {
+        "line": 242,
+        "code": "sorry -- exp(-tH) is trace-class operator",
+        "context": "-/\ntheorem heat_semigroup_is_nuclear (t : \u211d) (ht : 0 < t) :\n    let H := sorry -- Friedrichs extension of \ud835\udcac_H,t\n    sorry -- exp(-tH) is trace-class operator\n  := by\n  sorry\n",
+        "primary_category": "spectral",
+        "all_categories": {
+          "spectral": 0.65
+        },
+        "complexity": 4,
+        "similar_solutions": []
+      },
+      {
+        "line": 244,
+        "code": "sorry",
+        "context": "    let H := sorry -- Friedrichs extension of \ud835\udcac_H,t\n    sorry -- exp(-tH) is trace-class operator\n  := by\n  sorry\n\n/-! ## VIII. SPECTRAL-ZETA IDENTITY -/\n",
+        "primary_category": "spectral",
+        "all_categories": {
+          "spectral": 0.65,
+          "analytic": 0.6
+        },
+        "complexity": 4,
+        "similar_solutions": []
+      },
+      {
+        "line": 264,
+        "code": "let H := sorry -- Friedrichs extension of \ud835\udcac_H,t",
+        "context": "  This completes the proof of the Riemann Hypothesis.\n-/\ntheorem spectral_zeta_equivalence (t : \u211d) (ht : 0 < t) :\n    let H := sorry -- Friedrichs extension of \ud835\udcac_H,t\n    sorry -- Spectrum(H) = Riemann zeros on critical line\n  := by\n  sorry",
+        "primary_category": "spectral",
+        "all_categories": {
+          "spectral": 0.65,
+          "analytic": 0.6
+        },
+        "complexity": 4,
+        "similar_solutions": []
+      },
+      {
+        "line": 265,
+        "code": "sorry -- Spectrum(H) = Riemann zeros on critical line",
+        "context": "-/\ntheorem spectral_zeta_equivalence (t : \u211d) (ht : 0 < t) :\n    let H := sorry -- Friedrichs extension of \ud835\udcac_H,t\n    sorry -- Spectrum(H) = Riemann zeros on critical line\n  := by\n  sorry\n",
+        "primary_category": "spectral",
+        "all_categories": {
+          "spectral": 0.65,
+          "analytic": 0.6
+        },
+        "complexity": 4,
+        "similar_solutions": []
+      },
+      {
+        "line": 267,
+        "code": "sorry",
+        "context": "    let H := sorry -- Friedrichs extension of \ud835\udcac_H,t\n    sorry -- Spectrum(H) = Riemann zeros on critical line\n  := by\n  sorry\n\n/-! ## IX. FINAL AUDIT: ALL THREE NECKS CLOSED \u2705 -/\n",
+        "primary_category": "spectral",
+        "all_categories": {
+          "spectral": 0.65
+        },
+        "complexity": 4,
+        "similar_solutions": []
+      }
+    ],
     "formalization/lean/spectral/integration_non_commutative_geometry.lean": [
       {
         "line": 49,
@@ -12771,6 +13846,32 @@
           "qcal": 0.75
         },
         "complexity": 3,
+        "similar_solutions": []
+      }
+    ],
+    "formalization/lean/spectral/Spectral_Zeta_Equivalence.lean": [
+      {
+        "line": 189,
+        "code": "sorry  -- Full proof requires explicit formula machinery",
+        "context": "    spectral_trace t H_eigenvalues = zeta_trace t zeta_zeros := by\n  -- Apply Guinand-Weil explicit formula\n  -- Combined with adelic compact embedding\n  sorry  -- Full proof requires explicit formula machinery\n\n/-!\n## 4. The Dirichlet Injectivity Lemma",
+        "primary_category": "spectral",
+        "all_categories": {
+          "adelic": 0.6,
+          "spectral": 0.65,
+          "analytic": 0.6
+        },
+        "complexity": 4,
+        "similar_solutions": []
+      },
+      {
+        "line": 220,
+        "code": "sorry  -- Full proof requires Laplace transform theory",
+        "context": "    Set.range seq1 = Set.range seq2 := by\n  -- Uniqueness of Laplace transform\n  -- This is a deep result in analysis\n  sorry  -- Full proof requires Laplace transform theory\n\n/-!\n## 5. Self-Adjointness Implies Real Spectrum",
+        "primary_category": "spectral",
+        "all_categories": {
+          "spectral": 0.65
+        },
+        "complexity": 4,
         "similar_solutions": []
       }
     ],
@@ -12929,6 +14030,166 @@
           "spectral": 0.65
         },
         "complexity": 3,
+        "similar_solutions": []
+      }
+    ],
+    "formalization/lean/spectral/TateLogEmergence.lean": [
+      {
+        "line": 81,
+        "code": "sorry  -- Requires: p-adic number theory formalization",
+        "context": "For x \u2208 \u211a_p with x = p^k u where u \u2208 \u2124_p\u00d7, we have |x|_p = p^{-k}.\n-/\ndef padic_abs (p : \u2115) [Fact (Nat.Prime p)] (x : \u211d) : \u211d :=\n  sorry  -- Requires: p-adic number theory formalization\n\n/--\np-adic absolute value is multiplicative.",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 90,
+        "code": "sorry  -- Requires: properties of p-adic absolute value",
+        "context": "-/\ntheorem padic_abs_mul (p : \u2115) [hp : Fact (Nat.Prime p)] (x y : \u211d) :\n    padic_abs p (x * y) = padic_abs p x * padic_abs p y := by\n  sorry  -- Requires: properties of p-adic absolute value\n\n/-!\n## Haar Measure on \u211a_p\u00d7",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 108,
+        "code": "sorry  -- Requires: p-adic Haar measure construction",
+        "context": "This is the measure used in the Tate integral.\n-/\ndef haar_measure_Qp_times (p : \u2115) [Fact (Nat.Prime p)] : MeasureTheory.Measure \u211d :=\n  sorry  -- Requires: p-adic Haar measure construction\n\n/--\nHaar measure is multiplicatively invariant.",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 119,
+        "code": "sorry  -- Requires: Haar measure invariance properties",
+        "context": "    (a : \u211d) (E : Set \u211d) (ha : a \u2260 0) :\n    MeasureTheory.volume (Set.image (fun x => a * x) E) = \n    MeasureTheory.volume E := by\n  sorry  -- Requires: Haar measure invariance properties\n\n/-!\n## Decomposition of \u211a_p\u00d7",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 139,
+        "code": "sorry  -- Requires: p-adic valuation theory",
+        "context": "theorem Qp_times_decomposition (p : \u2115) [hp : Fact (Nat.Prime p)] :\n    \u2200 x : \u211d, x \u2260 0 \u2192 \n      \u2203! k : \u2124, \u2203 u : \u211d, padic_abs p u = 1 \u2227 x = (p : \u211d)^k * u := by\n  sorry  -- Requires: p-adic valuation theory\n  -- This is the fundamental decomposition of \u211a_p\u00d7\n\n/-!",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 160,
+        "code": "sorry  -- \u222b_{\u211a_p\u00d7} \u03c6(x) |x|_p^{s-1} d\u03bc_p\u00d7(x)",
+        "context": "-/\ndef tate_local_integral (p : \u2115) [hp : Fact (Nat.Prime p)] \n    (\u03c6 : \u211d \u2192 \u2102) (s : \u2102) : \u2102 :=\n  sorry  -- \u222b_{\u211a_p\u00d7} \u03c6(x) |x|_p^{s-1} d\u03bc_p\u00d7(x)\n  -- Requires: p-adic integration theory\n\n/--",
+        "primary_category": "adelic",
+        "all_categories": {
+          "adelic": 0.6
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 181,
+        "code": "sorry  -- This is the KEY LEMMA of Path A",
+        "context": "    (s : \u2102) (hs : 1 < s.re) :\n    tate_local_integral p (SpectralQCAL.AdelicTest.phi_p_indicator p) s = \n    (1 - (p : \u2102)^(-s))^(-1) := by\n  sorry  -- This is the KEY LEMMA of Path A\n  -- Step 1: Decompose integral over shells\n  -- have decomp := Qp_times_decomposition p\n  -- Step 2: Compute contribution from each shell",
+        "primary_category": "adelic",
+        "all_categories": {
+          "qcal": 0.75,
+          "adelic": 1.2
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 204,
+        "code": "sorry  -- Requires: differentiation of logarithm",
+        "context": "theorem log_derivative_euler_factor (p : \u2115) [hp : Fact (Nat.Prime p)] :\n    deriv (fun s => log ((1 - (p : \u2102)^(-s))^(-1))) (1/2) = \n    (Real.log p : \u2102) / (1 - (p : \u2102)^(-1/2)) := by\n  sorry  -- Requires: differentiation of logarithm\n  -- d/ds log(1 - p^{-s})^{-1} = p^{-s} log p / (1 - p^{-s})\n\n/--",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 220,
+        "code": "sorry  -- Combines tate_local_integral_eq_euler_factor and log_derivative",
+        "context": "    let \u03c6 := SpectralQCAL.AdelicTest.phi_p_indicator p\n    deriv (fun s => log (tate_local_integral p \u03c6 s)) (1/2) = \n    (Real.log p : \u2102) * (1 + (p : \u2102)^(-1/2)) / (1 - (p : \u2102)^(-1/2)) := by\n  sorry  -- Combines tate_local_integral_eq_euler_factor and log_derivative\n  -- This is the \"emergence theorem\": log p appears naturally\n  -- as the derivative of the geometric structure\n",
+        "primary_category": "adelic",
+        "all_categories": {
+          "qcal": 0.75,
+          "adelic": 1.2
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 241,
+        "code": "sorry  -- Requires: computation of Haar measure on \u2124_p\u00d7",
+        "context": "theorem haar_volume_is_log_p (p : \u2115) [hp : Fact (Nat.Prime p)] :\n    MeasureTheory.volume {x : \u211d | padic_abs p x = 1} = \n    Real.log p := by\n  sorry  -- Requires: computation of Haar measure on \u2124_p\u00d7\n  -- This is the normalization that makes everything work\n\n/-!",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 275,
+        "code": "sorry  -- This is the Euler product for \u03b6(s)",
+        "context": "    \u220f' (p : {n : \u2115 // n.Prime}), \n      (1 - (p.val : \u2102)^(-s))^(-1) = \n    \u2211' n : \u2115, if n > 0 then (n : \u2102)^(-s) else 0 := by\n  sorry  -- This is the Euler product for \u03b6(s)\n\n/--\n**Main Result**: Logarithmic derivative yields von Mangoldt.",
+        "primary_category": "analytic",
+        "all_categories": {
+          "analytic": 0.6
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 289,
+        "code": "sorry  -- Requires:",
+        "context": "    deriv (fun z => log (\u220f' (p : {n : \u2115 // n.Prime}), \n                        (1 - (p.val : \u2102)^(-z))^(-1))) s = \n    \u2211' n : \u2115, if n > 0 then (von_mangoldt n : \u2102) / (n : \u2102)^s else 0 := by\n  sorry  -- Requires:\n  -- 1. Differentiation of infinite product\n  -- 2. Term-by-term differentiation\n  -- 3. Identification with von Mangoldt sum",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 312,
+        "code": "Path A Status: \u2705 COMPLETE (pending sorry resolution)",
+        "context": "- Geometric data: Heat kernel trace Tr(exp(-tH_\u03a8))\n- Arithmetic data: Prime power sum \u2211 \u039b(n) exp(-t log n)\n\nPath A Status: \u2705 COMPLETE (pending sorry resolution)\n-/\ntheorem arithmetic_filter_complete \n    (\u03a6 : SpectralQCAL.AdelicTest.AdelicTestFunction) ",
+        "primary_category": "qcal",
+        "all_categories": {
+          "qcal": 2.25,
+          "adelic": 0.6
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      },
+      {
+        "line": 319,
+        "code": "sorry  -- Combines:",
+        "context": "    (s : \u2102) (hs : 1 < s.re) :\n    deriv (fun z => log (SpectralQCAL.AdelicTest.mellin_transform \u03a6 z)) s =\n    \u2211' n : \u2115, if n > 0 then (von_mangoldt n : \u2102) / (n : \u2102)^s else 0 := by\n  sorry  -- Combines:\n  -- 1. \u03a6 factorization: \u03a6 = \u03c6_\u221e \u2297 (\u2297_p \u03c6_p)\n  -- 2. Mellin factorization: M(\u03a6) = M(\u03c6_\u221e) \u00b7 \u220f_p M(\u03c6_p)\n  -- 3. Tate local lemma: M(\u03c6_p) = (1 - p^{-s})^{-1}",
+        "primary_category": "adelic",
+        "all_categories": {
+          "qcal": 0.75,
+          "adelic": 1.2
+        },
+        "complexity": 5,
         "similar_solutions": []
       }
     ],
@@ -14074,6 +15335,111 @@
           "trivial": 0.8,
           "qcal": 0.75,
           "spectral": 0.65
+        },
+        "complexity": 1,
+        "similar_solutions": []
+      }
+    ],
+    "formalization/lean/spectral/MellinAdelicPushforward.lean": [
+      {
+        "line": 100,
+        "code": "sorry  -- Requires: Fubini theorem for product measures",
+        "context": "    (h\u2082 : Integrable fun x => \u03c6\u2082 x * (x : \u2102)^(s.re - 1)) :\n    mellin_transform (fun x => \u03c6\u2081 x * \u03c6\u2082 x) s = \n    mellin_transform \u03c6\u2081 s * mellin_transform \u03c6\u2082 s := by\n  sorry  -- Requires: Fubini theorem for product measures\n\n/-!\n## Infinite Place Contribution",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 126,
+        "code": "sorry  -- Requires: Gaussian integrals with power weights",
+        "context": "theorem mellin_phi_infinity_converges (t : \u211d) (ht : 0 < t) (s : \u2102) \n    (hs : 0 < s.re) :\n    \u2203 M : \u211d, |mellin_phi_infinity t ht s| \u2264 M := by\n  sorry  -- Requires: Gaussian integrals with power weights\n\n/-!\n## Finite Place Contribution (Tate Local Integral)",
+        "primary_category": "adelic",
+        "all_categories": {
+          "adelic": 0.6
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 170,
+        "code": "sorry  -- This is the KEY IDENTITY of Path A",
+        "context": "    SpectralQCAL.AdelicTest.mellin_transform \u03a6 s = \n    \u220f' (p : {n : \u2115 // n.Prime}), \n      (1 - (p.val : \u2102)^(-s))^(-1) := by\n  sorry  -- This is the KEY IDENTITY of Path A\n  -- Step 1: Factor \u03a6 = \u03c6_\u221e \u2297 (\u2297_p \u03c6_p)\n  -- Step 2: Apply mellin_transform_product repeatedly\n  -- Step 3: Use mellin_phi_p_is_euler_factor for each p",
+        "primary_category": "qcal",
+        "all_categories": {
+          "qcal": 0.75,
+          "adelic": 0.6
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      },
+      {
+        "line": 194,
+        "code": "sorry  -- Requires:",
+        "context": "    log (\u220f' (p : {n : \u2115 // n.Prime}), (1 - (p.val : \u2102)^(-s))^(-1)) =\n    \u2211' (p : {n : \u2115 // n.Prime}), \u2211' n : \u2115, \n      if n > 0 then (1 / (n : \u2102)) * (p.val : \u2102)^(-(n : \u2102) * s) else 0 := by\n  sorry  -- Requires:\n  -- log(\u220f a\u2099) = \u2211 log a\u2099\n  -- log(1 - x)^{-1} = \u2211_{n\u22651} x^n / n\n",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 221,
+        "code": "sorry  -- This is the PUSHFORWARD THEOREM",
+        "context": "    -\u2211' n : \u2115, if n > 0 \n              then (TateLocal.von_mangoldt n : \u2102) / (n : \u2102)^s \n              else 0 := by\n  sorry  -- This is the PUSHFORWARD THEOREM\n  -- Step 1: Use mellin_transform_of_test_function_eq_zeta\n  -- Step 2: Take logarithm: log M[\u03a6] = log \u03b6\n  -- Step 3: Differentiate: d/ds log \u03b6(s) = \u03b6'(s)/\u03b6(s)",
+        "primary_category": "analytic",
+        "all_categories": {
+          "adelic": 0.6,
+          "analytic": 1.2
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 248,
+        "code": "sorry  -- Requires: detailed analysis of infinite place contribution",
+        "context": "    \u2203 \u03b5 : \u211d, \u03b5 < 0.01 \u2227 \n      |SpectralQCAL.AdelicTest.eval \u03a6 ((p^n : \u2115) : \u211d) - \n       ((Real.log p : \u2102) / ((p : \u2102)^((n : \u211d) / 2)))| < \u03b5 := by\n  sorry  -- Requires: detailed analysis of infinite place contribution\n\n/--\nEvaluation at composite numbers gives zero.",
+        "primary_category": "qcal",
+        "all_categories": {
+          "qcal": 0.75,
+          "adelic": 0.6
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      },
+      {
+        "line": 264,
+        "code": "sorry  -- Requires:",
+        "context": "    (hcomp : \u2203 p\u2081 p\u2082 : \u2115, Nat.Prime p\u2081 \u2227 Nat.Prime p\u2082 \u2227 p\u2081 \u2260 p\u2082 \u2227 \n                           p\u2081 \u2223 n \u2227 p\u2082 \u2223 n) :\n    SpectralQCAL.AdelicTest.eval \u03a6 (n : \u211d) = 0 := by\n  sorry  -- Requires:\n  -- At places p\u2081 and p\u2082, the local factors \u03c6_p\u2081 and \u03c6_p\u2082\n  -- cannot simultaneously be nonzero for composite n\n",
+        "primary_category": "adelic",
+        "all_categories": {
+          "qcal": 0.75,
+          "adelic": 1.2
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 293,
+        "code": "sorry  -- Combines:",
+        "context": "        (Real.log p.val : \u2102) / ((p.val : \u2102)^((k : \u211d) / 2)) *\n        exp (-I * \u03a6.t * log ((p.val^k : \u2115) : \u211d))\n      else 0 := by\n  sorry  -- Combines:\n  -- 1. Poisson summation on adeles\n  -- 2. Mellin transform pushforward\n  -- 3. Fourier transform at critical line",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 319,
+        "code": "Status: Path A framework complete (pending sorry resolution)",
+        "context": "\u2705 Pushforward to von Mangoldt established\n\u2705 Arithmetic filter verified\n\nStatus: Path A framework complete (pending sorry resolution)\n\nNext: Path B (Guinand-Weil) becomes trivial via Fourier duality.\n-/",
+        "primary_category": "trivial",
+        "all_categories": {
+          "trivial": 0.8
         },
         "complexity": 1,
         "similar_solutions": []
@@ -30880,6 +32246,6 @@
   },
   "summary": {
     "most_common_category": "qcal",
-    "avg_complexity": 3.6845214651437574
+    "avg_complexity": 3.706435829883327
   }
 }
