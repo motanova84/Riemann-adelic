@@ -5,7 +5,7 @@
 ================================================================================
 🏆 V5 CORONACIÓN: COMPLETE RIEMANN HYPOTHESIS PROOF VALIDATION
 ================================================================================
-Timestamp: 2026-02-18T21:28:52.776673
+Timestamp: 2026-02-20T22:41:13.359102
 Precision: 25 decimal places
 Max zeros: 1000
 Max primes: 1000
@@ -46,7 +46,7 @@ Left side (zeros+arch+pole): 2.0553348523494
 Right side (primes): 1.04162667626061
 Absolute error: 1.01370817608878
 Relative error: 0.973197210854799
-   ✅ Integration: Explicit Formula Integration: PASSED (1.515s)
+   ✅ Integration: Explicit Formula Integration: PASSED (1.729s)
 
 ================================================================================
 📊 VALIDATION SUMMARY:
@@ -252,104 +252,16 @@ Ceros de Riemann a verificar: 10
 ================================================================================
 🔍 SAT Certificate Validator
 ================================================================================
-Timestamp: 2026-02-18T21:28:56.068068Z
+Timestamp: 2026-02-20T22:41:17.425882Z
 Certificates directory: certificates/sat
 
 Found 60 certificate(s)
 
-🔍 Validating certificate: riemann_hypothesis
-   ✅ certificate_hash: Hash verified successfully
-   ❌ file_hash: File has been modified (hash mismatch)
-   ✅ sat_formula: SAT formula correctly evaluated: False
-   ✅ dependencies: Dependencies structure valid: 3 items (deep validation not implemented)
-   ✅ qcal_signature: QCAL signature verified
-   ❌ INVALID
-
-🔍 Validating certificate: functional_equation
-   ✅ certificate_hash: Hash verified successfully
-   ❌ file_hash: File has been modified (hash mismatch)
-   ✅ sat_formula: SAT formula correctly evaluated: False
-   ✅ dependencies: Dependencies structure valid: 0 items (deep validation not implemented)
-   ✅ qcal_signature: QCAL signature verified
-   ❌ INVALID
-
-🔍 Validating certificate: gamma_exclusion
-   ✅ certificate_hash: Hash verified successfully
-   ✅ file_hash: File hash verified successfully
-   ✅ sat_formula: SAT formula correctly evaluated: False
-   ✅ dependencies: Dependencies structure valid: 0 items (deep validation not implemented)
-   ✅ qcal_signature: QCAL signature verified
-   ✅ VALID
-
 🔍 Validating certificate: fredholm_convergence
    ✅ certificate_hash: Hash verified successfully
    ✅ file_hash: File hash verified successfully
    ✅ sat_formula: SAT formula correctly evaluated: False
    ✅ dependencies: Dependencies structure valid: 1 items (deep validation not implemented)
-   ✅ qcal_signature: QCAL signature verified
-   ✅ VALID
-
-🔍 Validating certificate: functional_equation
-   ✅ certificate_hash: Hash verified successfully
-   ✅ file_hash: File hash verified successfully
-   ✅ sat_formula: SAT formula correctly evaluated: False
-   ✅ dependencies: Dependencies structure valid: 0 items (deep validation not implemented)
-   ✅ qcal_signature: QCAL signature verified
-   ✅ VALID
-
-🔍 Validating certificate: paley_wiener_uniqueness
-   ✅ certificate_hash: Hash verified successfully
-   ❌ file_hash: File has been modified (hash mismatch)
-   ✅ sat_formula: SAT formula correctly evaluated: False
-   ✅ dependencies: Dependencies structure valid: 0 items (deep validation not implemented)
-   ✅ qcal_signature: QCAL signature verified
-   ❌ INVALID
-
-🔍 Validating certificate: operator_self_adjoint
-   ✅ certificate_hash: Hash verified successfully
-   ✅ file_hash: File hash verified successfully
-   ✅ sat_formula: SAT formula correctly evaluated: False
-   ✅ dependencies: Dependencies structure valid: 0 items (deep validation not implemented)
-   ✅ qcal_signature: QCAL signature verified
-   ✅ VALID
-
-🔍 Validating certificate: gamma_exclusion
-   ✅ certificate_hash: Hash verified successfully
-   ❌ file_hash: File has been modified (hash mismatch)
-   ✅ sat_formula: SAT formula correctly evaluated: False
-   ✅ dependencies: Dependencies structure valid: 0 items (deep validation not implemented)
-   ✅ qcal_signature: QCAL signature verified
-   ❌ INVALID
-
-🔍 Validating certificate: D_entire
-   ✅ certificate_hash: Hash verified successfully
-   ✅ file_hash: File hash verified successfully
-   ✅ sat_formula: SAT formula correctly evaluated: False
-   ✅ dependencies: Dependencies structure valid: 1 items (deep validation not implemented)
-   ✅ qcal_signature: QCAL signature verified
-   ✅ VALID
-
-🔍 Validating certificate: H_Ψ_self_adjoint
-   ✅ certificate_hash: Hash verified successfully
-   ✅ file_hash: File hash verified successfully
-   ✅ sat_formula: SAT formula correctly evaluated: False
-   ✅ dependencies: Dependencies structure valid: 1 items (deep validation not implemented)
-   ✅ qcal_signature: QCAL signature verified
-   ✅ VALID
-
-🔍 Validating certificate: fredholm_convergence
-   ✅ certificate_hash: Hash verified successfully
-   ✅ file_hash: File hash verified successfully
-   ✅ sat_formula: SAT formula correctly evaluated: False
-   ✅ dependencies: Dependencies structure valid: 1 items (deep validation not implemented)
-   ✅ qcal_signature: QCAL signature verified
-   ✅ VALID
-
-🔍 Validating certificate: hadamard_symmetry
-   ✅ certificate_hash: Hash verified successfully
-   ✅ file_hash: File hash verified successfully
-   ✅ sat_formula: SAT formula correctly evaluated: False
-   ✅ dependencies: Dependencies structure valid: 0 items (deep validation not implemented)
    ✅ qcal_signature: QCAL signature verified
    ✅ VALID
 
@@ -360,46 +272,6 @@ Found 60 certificate(s)
    ✅ dependencies: Dependencies structure valid: 1 items (deep validation not implemented)
    ✅ qcal_signature: QCAL signature verified
    ❌ INVALID
-
-🔍 Validating certificate: gamma_exclusion
-   ✅ certificate_hash: Hash verified successfully
-   ✅ file_hash: File hash verified successfully
-   ✅ sat_formula: SAT formula correctly evaluated: False
-   ✅ dependencies: Dependencies structure valid: 0 items (deep validation not implemented)
-   ✅ qcal_signature: QCAL signature verified
-   ✅ VALID
-
-🔍 Validating certificate: hadamard_symmetry
-   ✅ certificate_hash: Hash verified successfully
-   ✅ file_hash: File hash verified successfully
-   ✅ sat_formula: SAT formula correctly evaluated: False
-   ✅ dependencies: Dependencies structure valid: 0 items (deep validation not implemented)
-   ✅ qcal_signature: QCAL signature verified
-   ✅ VALID
-
-🔍 Validating certificate: operator_self_adjoint
-   ✅ certificate_hash: Hash verified successfully
-   ✅ file_hash: File hash verified successfully
-   ✅ sat_formula: SAT formula correctly evaluated: False
-   ✅ dependencies: Dependencies structure valid: 0 items (deep validation not implemented)
-   ✅ qcal_signature: QCAL signature verified
-   ✅ VALID
-
-🔍 Validating certificate: gamma_exclusion
-   ✅ certificate_hash: Hash verified successfully
-   ❌ file_hash: File has been modified (hash mismatch)
-   ✅ sat_formula: SAT formula correctly evaluated: False
-   ✅ dependencies: Dependencies structure valid: 0 items (deep validation not implemented)
-   ✅ qcal_signature: QCAL signature verified
-   ❌ INVALID
-
-🔍 Validating certificate: fredholm_convergence
-   ✅ certificate_hash: Hash verified successfully
-   ✅ file_hash: File hash verified successfully
-   ✅ sat_formula: SAT formula correctly evaluated: False
-   ✅ dependencies: Dependencies structure valid: 1 items (deep validation not implemented)
-   ✅ qcal_signature: QCAL signature verified
-   ✅ VALID
 
 🔍 Validating certificate: spectrum_HΨ_eq_zeta_zeros
    ✅ certificate_hash: Hash verified successfully
@@ -409,7 +281,47 @@ Found 60 certificate(s)
    ✅ qcal_signature: QCAL signature verified
    ❌ INVALID
 
-🔍 Validating certificate: hadamard_symmetry
+🔍 Validating certificate: operator_self_adjoint
+   ✅ certificate_hash: Hash verified successfully
+   ✅ file_hash: File hash verified successfully
+   ✅ sat_formula: SAT formula correctly evaluated: False
+   ✅ dependencies: Dependencies structure valid: 0 items (deep validation not implemented)
+   ✅ qcal_signature: QCAL signature verified
+   ✅ VALID
+
+🔍 Validating certificate: functional_equation
+   ✅ certificate_hash: Hash verified successfully
+   ✅ file_hash: File hash verified successfully
+   ✅ sat_formula: SAT formula correctly evaluated: False
+   ✅ dependencies: Dependencies structure valid: 0 items (deep validation not implemented)
+   ✅ qcal_signature: QCAL signature verified
+   ✅ VALID
+
+🔍 Validating certificate: gamma_exclusion
+   ✅ certificate_hash: Hash verified successfully
+   ✅ file_hash: File hash verified successfully
+   ✅ sat_formula: SAT formula correctly evaluated: False
+   ✅ dependencies: Dependencies structure valid: 0 items (deep validation not implemented)
+   ✅ qcal_signature: QCAL signature verified
+   ✅ VALID
+
+🔍 Validating certificate: operator_self_adjoint
+   ✅ certificate_hash: Hash verified successfully
+   ✅ file_hash: File hash verified successfully
+   ✅ sat_formula: SAT formula correctly evaluated: False
+   ✅ dependencies: Dependencies structure valid: 0 items (deep validation not implemented)
+   ✅ qcal_signature: QCAL signature verified
+   ✅ VALID
+
+🔍 Validating certificate: gamma_exclusion
+   ✅ certificate_hash: Hash verified successfully
+   ✅ file_hash: File hash verified successfully
+   ✅ sat_formula: SAT formula correctly evaluated: False
+   ✅ dependencies: Dependencies structure valid: 0 items (deep validation not implemented)
+   ✅ qcal_signature: QCAL signature verified
+   ✅ VALID
+
+🔍 Validating certificate: functional_equation
    ✅ certificate_hash: Hash verified successfully
    ❌ file_hash: File has been modified (hash mismatch)
    ✅ sat_formula: SAT formula correctly evaluated: False
@@ -422,6 +334,14 @@ Found 60 certificate(s)
    ❌ file_hash: File has been modified (hash mismatch)
    ✅ sat_formula: SAT formula correctly evaluated: False
    ✅ dependencies: Dependencies structure valid: 0 items (deep validation not implemented)
+   ✅ qcal_signature: QCAL signature verified
+   ❌ INVALID
+
+🔍 Validating certificate: spectrum_HΨ_eq_zeta_zeros
+   ✅ certificate_hash: Hash verified successfully
+   ❌ file_hash: File has been modified (hash mismatch)
+   ✅ sat_formula: SAT formula correctly evaluated: False
+   ✅ dependencies: Dependencies structure valid: 1 items (deep validation not implemented)
    ✅ qcal_signature: QCAL signature verified
    ❌ INVALID
 
@@ -441,11 +361,59 @@ Found 60 certificate(s)
    ✅ qcal_signature: QCAL signature verified
    ✅ VALID
 
+🔍 Validating certificate: H_Ψ_self_adjoint
+   ✅ certificate_hash: Hash verified successfully
+   ❌ file_hash: File has been modified (hash mismatch)
+   ✅ sat_formula: SAT formula correctly evaluated: False
+   ✅ dependencies: Dependencies structure valid: 1 items (deep validation not implemented)
+   ✅ qcal_signature: QCAL signature verified
+   ❌ INVALID
+
+🔍 Validating certificate: operator_self_adjoint
+   ✅ certificate_hash: Hash verified successfully
+   ❌ file_hash: File has been modified (hash mismatch)
+   ✅ sat_formula: SAT formula correctly evaluated: False
+   ✅ dependencies: Dependencies structure valid: 0 items (deep validation not implemented)
+   ✅ qcal_signature: QCAL signature verified
+   ❌ INVALID
+
+🔍 Validating certificate: operator_self_adjoint
+   ✅ certificate_hash: Hash verified successfully
+   ✅ file_hash: File hash verified successfully
+   ✅ sat_formula: SAT formula correctly evaluated: False
+   ✅ dependencies: Dependencies structure valid: 0 items (deep validation not implemented)
+   ✅ qcal_signature: QCAL signature verified
+   ✅ VALID
+
+🔍 Validating certificate: riemann_hypothesis
+   ✅ certificate_hash: Hash verified successfully
+   ❌ file_hash: File has been modified (hash mismatch)
+   ✅ sat_formula: SAT formula correctly evaluated: False
+   ✅ dependencies: Dependencies structure valid: 3 items (deep validation not implemented)
+   ✅ qcal_signature: QCAL signature verified
+   ❌ INVALID
+
 🔍 Validating certificate: functional_equation
    ✅ certificate_hash: Hash verified successfully
    ✅ file_hash: File hash verified successfully
    ✅ sat_formula: SAT formula correctly evaluated: False
    ✅ dependencies: Dependencies structure valid: 0 items (deep validation not implemented)
+   ✅ qcal_signature: QCAL signature verified
+   ✅ VALID
+
+🔍 Validating certificate: H_Ψ_self_adjoint
+   ✅ certificate_hash: Hash verified successfully
+   ✅ file_hash: File hash verified successfully
+   ✅ sat_formula: SAT formula correctly evaluated: False
+   ✅ dependencies: Dependencies structure valid: 1 items (deep validation not implemented)
+   ✅ qcal_signature: QCAL signature verified
+   ✅ VALID
+
+🔍 Validating certificate: D_entire
+   ✅ certificate_hash: Hash verified successfully
+   ✅ file_hash: File hash verified successfully
+   ✅ sat_formula: SAT formula correctly evaluated: False
+   ✅ dependencies: Dependencies structure valid: 1 items (deep validation not implemented)
    ✅ qcal_signature: QCAL signature verified
    ✅ VALID
 
@@ -465,13 +433,61 @@ Found 60 certificate(s)
    ✅ qcal_signature: QCAL signature verified
    ❌ INVALID
 
-🔍 Validating certificate: fredholm_convergence
+🔍 Validating certificate: functional_equation
+   ✅ certificate_hash: Hash verified successfully
+   ✅ file_hash: File hash verified successfully
+   ✅ sat_formula: SAT formula correctly evaluated: False
+   ✅ dependencies: Dependencies structure valid: 0 items (deep validation not implemented)
+   ✅ qcal_signature: QCAL signature verified
+   ✅ VALID
+
+🔍 Validating certificate: spectrum_HΨ_eq_zeta_zeros
    ✅ certificate_hash: Hash verified successfully
    ❌ file_hash: File has been modified (hash mismatch)
    ✅ sat_formula: SAT formula correctly evaluated: False
    ✅ dependencies: Dependencies structure valid: 1 items (deep validation not implemented)
    ✅ qcal_signature: QCAL signature verified
    ❌ INVALID
+
+🔍 Validating certificate: riemann_hypothesis
+   ✅ certificate_hash: Hash verified successfully
+   ❌ file_hash: File has been modified (hash mismatch)
+   ✅ sat_formula: SAT formula correctly evaluated: False
+   ✅ dependencies: Dependencies structure valid: 3 items (deep validation not implemented)
+   ✅ qcal_signature: QCAL signature verified
+   ❌ INVALID
+
+🔍 Validating certificate: gamma_exclusion
+   ✅ certificate_hash: Hash verified successfully
+   ❌ file_hash: File has been modified (hash mismatch)
+   ✅ sat_formula: SAT formula correctly evaluated: False
+   ✅ dependencies: Dependencies structure valid: 0 items (deep validation not implemented)
+   ✅ qcal_signature: QCAL signature verified
+   ❌ INVALID
+
+🔍 Validating certificate: operator_self_adjoint
+   ✅ certificate_hash: Hash verified successfully
+   ✅ file_hash: File hash verified successfully
+   ✅ sat_formula: SAT formula correctly evaluated: False
+   ✅ dependencies: Dependencies structure valid: 0 items (deep validation not implemented)
+   ✅ qcal_signature: QCAL signature verified
+   ✅ VALID
+
+🔍 Validating certificate: hadamard_symmetry
+   ✅ certificate_hash: Hash verified successfully
+   ✅ file_hash: File hash verified successfully
+   ✅ sat_formula: SAT formula correctly evaluated: False
+   ✅ dependencies: Dependencies structure valid: 0 items (deep validation not implemented)
+   ✅ qcal_signature: QCAL signature verified
+   ✅ VALID
+
+🔍 Validating certificate: hadamard_symmetry
+   ✅ certificate_hash: Hash verified successfully
+   ✅ file_hash: File hash verified successfully
+   ✅ sat_formula: SAT formula correctly evaluated: False
+   ✅ dependencies: Dependencies structure valid: 0 items (deep validation not implemented)
+   ✅ qcal_signature: QCAL signature verified
+   ✅ VALID
 
 🔍 Validating certificate: D_entire
    ✅ certificate_hash: Hash verified successfully
@@ -480,6 +496,22 @@ Found 60 certificate(s)
    ✅ dependencies: Dependencies structure valid: 1 items (deep validation not implemented)
    ✅ qcal_signature: QCAL signature verified
    ✅ VALID
+
+🔍 Validating certificate: hadamard_symmetry
+   ✅ certificate_hash: Hash verified successfully
+   ✅ file_hash: File hash verified successfully
+   ✅ sat_formula: SAT formula correctly evaluated: False
+   ✅ dependencies: Dependencies structure valid: 0 items (deep validation not implemented)
+   ✅ qcal_signature: QCAL signature verified
+   ✅ VALID
+
+🔍 Validating certificate: operator_self_adjoint
+   ✅ certificate_hash: Hash verified successfully
+   ❌ file_hash: File has been modified (hash mismatch)
+   ✅ sat_formula: SAT formula correctly evaluated: False
+   ✅ dependencies: Dependencies structure valid: 0 items (deep validation not implemented)
+   ✅ qcal_signature: QCAL signature verified
+   ❌ INVALID
 
 🔍 Validating certificate: riemann_hypothesis
    ✅ certificate_hash: Hash verified successfully
@@ -499,145 +531,9 @@ Found 60 certificate(s)
 
 🔍 Validating certificate: hadamard_symmetry
    ✅ certificate_hash: Hash verified successfully
-   ✅ file_hash: File hash verified successfully
-   ✅ sat_formula: SAT formula correctly evaluated: False
-   ✅ dependencies: Dependencies structure valid: 0 items (deep validation not implemented)
-   ✅ qcal_signature: QCAL signature verified
-   ✅ VALID
-
-🔍 Validating certificate: riemann_hypothesis
-   ✅ certificate_hash: Hash verified successfully
-   ❌ file_hash: File has been modified (hash mismatch)
-   ✅ sat_formula: SAT formula correctly evaluated: False
-   ✅ dependencies: Dependencies structure valid: 3 items (deep validation not implemented)
-   ✅ qcal_signature: QCAL signature verified
-   ❌ INVALID
-
-🔍 Validating certificate: spectrum_HΨ_eq_zeta_zeros
-   ✅ certificate_hash: Hash verified successfully
-   ❌ file_hash: File has been modified (hash mismatch)
-   ✅ sat_formula: SAT formula correctly evaluated: False
-   ✅ dependencies: Dependencies structure valid: 1 items (deep validation not implemented)
-   ✅ qcal_signature: QCAL signature verified
-   ❌ INVALID
-
-🔍 Validating certificate: H_Ψ_self_adjoint
-   ✅ certificate_hash: Hash verified successfully
-   ✅ file_hash: File hash verified successfully
-   ✅ sat_formula: SAT formula correctly evaluated: False
-   ✅ dependencies: Dependencies structure valid: 1 items (deep validation not implemented)
-   ✅ qcal_signature: QCAL signature verified
-   ✅ VALID
-
-🔍 Validating certificate: operator_self_adjoint
-   ✅ certificate_hash: Hash verified successfully
-   ✅ file_hash: File hash verified successfully
-   ✅ sat_formula: SAT formula correctly evaluated: False
-   ✅ dependencies: Dependencies structure valid: 0 items (deep validation not implemented)
-   ✅ qcal_signature: QCAL signature verified
-   ✅ VALID
-
-🔍 Validating certificate: riemann_hypothesis
-   ✅ certificate_hash: Hash verified successfully
-   ❌ file_hash: File has been modified (hash mismatch)
-   ✅ sat_formula: SAT formula correctly evaluated: False
-   ✅ dependencies: Dependencies structure valid: 3 items (deep validation not implemented)
-   ✅ qcal_signature: QCAL signature verified
-   ❌ INVALID
-
-🔍 Validating certificate: paley_wiener_uniqueness
-   ✅ certificate_hash: Hash verified successfully
    ❌ file_hash: File has been modified (hash mismatch)
    ✅ sat_formula: SAT formula correctly evaluated: False
    ✅ dependencies: Dependencies structure valid: 0 items (deep validation not implemented)
-   ✅ qcal_signature: QCAL signature verified
-   ❌ INVALID
-
-🔍 Validating certificate: functional_equation
-   ✅ certificate_hash: Hash verified successfully
-   ❌ file_hash: File has been modified (hash mismatch)
-   ✅ sat_formula: SAT formula correctly evaluated: False
-   ✅ dependencies: Dependencies structure valid: 0 items (deep validation not implemented)
-   ✅ qcal_signature: QCAL signature verified
-   ❌ INVALID
-
-🔍 Validating certificate: operator_self_adjoint
-   ✅ certificate_hash: Hash verified successfully
-   ❌ file_hash: File has been modified (hash mismatch)
-   ✅ sat_formula: SAT formula correctly evaluated: False
-   ✅ dependencies: Dependencies structure valid: 0 items (deep validation not implemented)
-   ✅ qcal_signature: QCAL signature verified
-   ❌ INVALID
-
-🔍 Validating certificate: riemann_hypothesis
-   ✅ certificate_hash: Hash verified successfully
-   ❌ file_hash: File has been modified (hash mismatch)
-   ✅ sat_formula: SAT formula correctly evaluated: False
-   ✅ dependencies: Dependencies structure valid: 3 items (deep validation not implemented)
-   ✅ qcal_signature: QCAL signature verified
-   ❌ INVALID
-
-🔍 Validating certificate: spectrum_HΨ_eq_zeta_zeros
-   ✅ certificate_hash: Hash verified successfully
-   ❌ file_hash: File has been modified (hash mismatch)
-   ✅ sat_formula: SAT formula correctly evaluated: False
-   ✅ dependencies: Dependencies structure valid: 1 items (deep validation not implemented)
-   ✅ qcal_signature: QCAL signature verified
-   ❌ INVALID
-
-🔍 Validating certificate: H_Ψ_self_adjoint
-   ✅ certificate_hash: Hash verified successfully
-   ✅ file_hash: File hash verified successfully
-   ✅ sat_formula: SAT formula correctly evaluated: False
-   ✅ dependencies: Dependencies structure valid: 1 items (deep validation not implemented)
-   ✅ qcal_signature: QCAL signature verified
-   ✅ VALID
-
-🔍 Validating certificate: operator_self_adjoint
-   ✅ certificate_hash: Hash verified successfully
-   ✅ file_hash: File hash verified successfully
-   ✅ sat_formula: SAT formula correctly evaluated: False
-   ✅ dependencies: Dependencies structure valid: 0 items (deep validation not implemented)
-   ✅ qcal_signature: QCAL signature verified
-   ✅ VALID
-
-🔍 Validating certificate: paley_wiener_uniqueness
-   ✅ certificate_hash: Hash verified successfully
-   ❌ file_hash: File has been modified (hash mismatch)
-   ✅ sat_formula: SAT formula correctly evaluated: False
-   ✅ dependencies: Dependencies structure valid: 0 items (deep validation not implemented)
-   ✅ qcal_signature: QCAL signature verified
-   ❌ INVALID
-
-🔍 Validating certificate: operator_self_adjoint
-   ✅ certificate_hash: Hash verified successfully
-   ❌ file_hash: File has been modified (hash mismatch)
-   ✅ sat_formula: SAT formula correctly evaluated: False
-   ✅ dependencies: Dependencies structure valid: 0 items (deep validation not implemented)
-   ✅ qcal_signature: QCAL signature verified
-   ❌ INVALID
-
-🔍 Validating certificate: H_Ψ_self_adjoint
-   ✅ certificate_hash: Hash verified successfully
-   ✅ file_hash: File hash verified successfully
-   ✅ sat_formula: SAT formula correctly evaluated: False
-   ✅ dependencies: Dependencies structure valid: 1 items (deep validation not implemented)
-   ✅ qcal_signature: QCAL signature verified
-   ✅ VALID
-
-🔍 Validating certificate: functional_equation
-   ✅ certificate_hash: Hash verified successfully
-   ✅ file_hash: File hash verified successfully
-   ✅ sat_formula: SAT formula correctly evaluated: False
-   ✅ dependencies: Dependencies structure valid: 0 items (deep validation not implemented)
-   ✅ qcal_signature: QCAL signature verified
-   ✅ VALID
-
-🔍 Validating certificate: spectrum_HΨ_eq_zeta_zeros
-   ✅ certificate_hash: Hash verified successfully
-   ❌ file_hash: File has been modified (hash mismatch)
-   ✅ sat_formula: SAT formula correctly evaluated: False
-   ✅ dependencies: Dependencies structure valid: 1 items (deep validation not implemented)
    ✅ qcal_signature: QCAL signature verified
    ❌ INVALID
 
@@ -651,9 +547,49 @@ Found 60 certificate(s)
 
 🔍 Validating certificate: H_Ψ_self_adjoint
    ✅ certificate_hash: Hash verified successfully
-   ❌ file_hash: File has been modified (hash mismatch)
+   ✅ file_hash: File hash verified successfully
    ✅ sat_formula: SAT formula correctly evaluated: False
    ✅ dependencies: Dependencies structure valid: 1 items (deep validation not implemented)
+   ✅ qcal_signature: QCAL signature verified
+   ✅ VALID
+
+🔍 Validating certificate: fredholm_convergence
+   ✅ certificate_hash: Hash verified successfully
+   ✅ file_hash: File hash verified successfully
+   ✅ sat_formula: SAT formula correctly evaluated: False
+   ✅ dependencies: Dependencies structure valid: 1 items (deep validation not implemented)
+   ✅ qcal_signature: QCAL signature verified
+   ✅ VALID
+
+🔍 Validating certificate: paley_wiener_uniqueness
+   ✅ certificate_hash: Hash verified successfully
+   ❌ file_hash: File has been modified (hash mismatch)
+   ✅ sat_formula: SAT formula correctly evaluated: False
+   ✅ dependencies: Dependencies structure valid: 0 items (deep validation not implemented)
+   ✅ qcal_signature: QCAL signature verified
+   ❌ INVALID
+
+🔍 Validating certificate: D_entire
+   ✅ certificate_hash: Hash verified successfully
+   ✅ file_hash: File hash verified successfully
+   ✅ sat_formula: SAT formula correctly evaluated: False
+   ✅ dependencies: Dependencies structure valid: 1 items (deep validation not implemented)
+   ✅ qcal_signature: QCAL signature verified
+   ✅ VALID
+
+🔍 Validating certificate: fredholm_convergence
+   ✅ certificate_hash: Hash verified successfully
+   ✅ file_hash: File hash verified successfully
+   ✅ sat_formula: SAT formula correctly evaluated: False
+   ✅ dependencies: Dependencies structure valid: 1 items (deep validation not implemented)
+   ✅ qcal_signature: QCAL signature verified
+   ✅ VALID
+
+🔍 Validating certificate: riemann_hypothesis
+   ✅ certificate_hash: Hash verified successfully
+   ❌ file_hash: File has been modified (hash mismatch)
+   ✅ sat_formula: SAT formula correctly evaluated: False
+   ✅ dependencies: Dependencies structure valid: 3 items (deep validation not implemented)
    ✅ qcal_signature: QCAL signature verified
    ❌ INVALID
 
@@ -665,6 +601,38 @@ Found 60 certificate(s)
    ✅ qcal_signature: QCAL signature verified
    ❌ INVALID
 
+🔍 Validating certificate: riemann_hypothesis
+   ✅ certificate_hash: Hash verified successfully
+   ❌ file_hash: File has been modified (hash mismatch)
+   ✅ sat_formula: SAT formula correctly evaluated: False
+   ✅ dependencies: Dependencies structure valid: 3 items (deep validation not implemented)
+   ✅ qcal_signature: QCAL signature verified
+   ❌ INVALID
+
+🔍 Validating certificate: H_Ψ_self_adjoint
+   ✅ certificate_hash: Hash verified successfully
+   ❌ file_hash: File has been modified (hash mismatch)
+   ✅ sat_formula: SAT formula correctly evaluated: False
+   ✅ dependencies: Dependencies structure valid: 1 items (deep validation not implemented)
+   ✅ qcal_signature: QCAL signature verified
+   ❌ INVALID
+
+🔍 Validating certificate: functional_equation
+   ✅ certificate_hash: Hash verified successfully
+   ❌ file_hash: File has been modified (hash mismatch)
+   ✅ sat_formula: SAT formula correctly evaluated: False
+   ✅ dependencies: Dependencies structure valid: 0 items (deep validation not implemented)
+   ✅ qcal_signature: QCAL signature verified
+   ❌ INVALID
+
+🔍 Validating certificate: riemann_hypothesis
+   ✅ certificate_hash: Hash verified successfully
+   ❌ file_hash: File has been modified (hash mismatch)
+   ✅ sat_formula: SAT formula correctly evaluated: False
+   ✅ dependencies: Dependencies structure valid: 3 items (deep validation not implemented)
+   ✅ qcal_signature: QCAL signature verified
+   ❌ INVALID
+
 🔍 Validating certificate: gamma_exclusion
    ✅ certificate_hash: Hash verified successfully
    ✅ file_hash: File hash verified successfully
@@ -673,7 +641,47 @@ Found 60 certificate(s)
    ✅ qcal_signature: QCAL signature verified
    ✅ VALID
 
+🔍 Validating certificate: functional_equation
+   ✅ certificate_hash: Hash verified successfully
+   ✅ file_hash: File hash verified successfully
+   ✅ sat_formula: SAT formula correctly evaluated: False
+   ✅ dependencies: Dependencies structure valid: 0 items (deep validation not implemented)
+   ✅ qcal_signature: QCAL signature verified
+   ✅ VALID
+
 🔍 Validating certificate: H_Ψ_self_adjoint
+   ✅ certificate_hash: Hash verified successfully
+   ✅ file_hash: File hash verified successfully
+   ✅ sat_formula: SAT formula correctly evaluated: False
+   ✅ dependencies: Dependencies structure valid: 1 items (deep validation not implemented)
+   ✅ qcal_signature: QCAL signature verified
+   ✅ VALID
+
+🔍 Validating certificate: gamma_exclusion
+   ✅ certificate_hash: Hash verified successfully
+   ✅ file_hash: File hash verified successfully
+   ✅ sat_formula: SAT formula correctly evaluated: False
+   ✅ dependencies: Dependencies structure valid: 0 items (deep validation not implemented)
+   ✅ qcal_signature: QCAL signature verified
+   ✅ VALID
+
+🔍 Validating certificate: paley_wiener_uniqueness
+   ✅ certificate_hash: Hash verified successfully
+   ❌ file_hash: File has been modified (hash mismatch)
+   ✅ sat_formula: SAT formula correctly evaluated: False
+   ✅ dependencies: Dependencies structure valid: 0 items (deep validation not implemented)
+   ✅ qcal_signature: QCAL signature verified
+   ❌ INVALID
+
+🔍 Validating certificate: H_Ψ_self_adjoint
+   ✅ certificate_hash: Hash verified successfully
+   ✅ file_hash: File hash verified successfully
+   ✅ sat_formula: SAT formula correctly evaluated: False
+   ✅ dependencies: Dependencies structure valid: 1 items (deep validation not implemented)
+   ✅ qcal_signature: QCAL signature verified
+   ✅ VALID
+
+🔍 Validating certificate: fredholm_convergence
    ✅ certificate_hash: Hash verified successfully
    ❌ file_hash: File has been modified (hash mismatch)
    ✅ sat_formula: SAT formula correctly evaluated: False
@@ -689,37 +697,13 @@ Found 60 certificate(s)
    ✅ qcal_signature: QCAL signature verified
    ❌ INVALID
 
-🔍 Validating certificate: D_entire
+🔍 Validating certificate: paley_wiener_uniqueness
    ✅ certificate_hash: Hash verified successfully
    ❌ file_hash: File has been modified (hash mismatch)
    ✅ sat_formula: SAT formula correctly evaluated: False
-   ✅ dependencies: Dependencies structure valid: 1 items (deep validation not implemented)
+   ✅ dependencies: Dependencies structure valid: 0 items (deep validation not implemented)
    ✅ qcal_signature: QCAL signature verified
    ❌ INVALID
-
-🔍 Validating certificate: functional_equation
-   ✅ certificate_hash: Hash verified successfully
-   ✅ file_hash: File hash verified successfully
-   ✅ sat_formula: SAT formula correctly evaluated: False
-   ✅ dependencies: Dependencies structure valid: 0 items (deep validation not implemented)
-   ✅ qcal_signature: QCAL signature verified
-   ✅ VALID
-
-🔍 Validating certificate: gamma_exclusion
-   ✅ certificate_hash: Hash verified successfully
-   ✅ file_hash: File hash verified successfully
-   ✅ sat_formula: SAT formula correctly evaluated: False
-   ✅ dependencies: Dependencies structure valid: 0 items (deep validation not implemented)
-   ✅ qcal_signature: QCAL signature verified
-   ✅ VALID
-
-🔍 Validating certificate: D_entire
-   ✅ certificate_hash: Hash verified successfully
-   ✅ file_hash: File hash verified successfully
-   ✅ sat_formula: SAT formula correctly evaluated: False
-   ✅ dependencies: Dependencies structure valid: 1 items (deep validation not implemented)
-   ✅ qcal_signature: QCAL signature verified
-   ✅ VALID
 
 🔍 Validating certificate: spectrum_HΨ_eq_zeta_zeros
    ✅ certificate_hash: Hash verified successfully
@@ -729,11 +713,27 @@ Found 60 certificate(s)
    ✅ qcal_signature: QCAL signature verified
    ❌ INVALID
 
-🔍 Validating certificate: riemann_hypothesis
+🔍 Validating certificate: D_entire
    ✅ certificate_hash: Hash verified successfully
    ❌ file_hash: File has been modified (hash mismatch)
    ✅ sat_formula: SAT formula correctly evaluated: False
-   ✅ dependencies: Dependencies structure valid: 3 items (deep validation not implemented)
+   ✅ dependencies: Dependencies structure valid: 1 items (deep validation not implemented)
+   ✅ qcal_signature: QCAL signature verified
+   ❌ INVALID
+
+🔍 Validating certificate: spectrum_HΨ_eq_zeta_zeros
+   ✅ certificate_hash: Hash verified successfully
+   ❌ file_hash: File has been modified (hash mismatch)
+   ✅ sat_formula: SAT formula correctly evaluated: False
+   ✅ dependencies: Dependencies structure valid: 1 items (deep validation not implemented)
+   ✅ qcal_signature: QCAL signature verified
+   ❌ INVALID
+
+🔍 Validating certificate: gamma_exclusion
+   ✅ certificate_hash: Hash verified successfully
+   ❌ file_hash: File has been modified (hash mismatch)
+   ✅ sat_formula: SAT formula correctly evaluated: False
+   ✅ dependencies: Dependencies structure valid: 0 items (deep validation not implemented)
    ✅ qcal_signature: QCAL signature verified
    ❌ INVALID
 
@@ -755,7 +755,7 @@ Report saved to: certificates/sat/validation_report.json
       Hilbert-Pólya identity (γ_n → λ_n): ✓
       Fundamental frequency (f₀ = 141.7001 Hz): ✓
       QCAL coherence (C = 244.36): ✓
-      Hash: a168b29ddc78...
+      Hash: 27adb5807ce5...
 
 🏆 RH_PROVED FRAMEWORK VALIDATION...
    Three Pillars: Kernel Confinement, Hardy-Littlewood, Guinand-Weil
@@ -768,7 +768,7 @@ Report saved to: certificates/sat/validation_report.json
       Frecuencia: f₀ = 141.7001 Hz
 📊 Validation results saved to: data/validation_results.csv
 
-📝 Validation log saved to: /home/runner/work/Riemann-adelic/Riemann-adelic/logs/validation/validate_v5_coronacion_20260218_212852.log
-📊 Summary saved to: /home/runner/work/Riemann-adelic/Riemann-adelic/logs/validation/validate_v5_coronacion_20260218_212852.json
+📝 Validation log saved to: /home/runner/work/Riemann-adelic/Riemann-adelic/logs/validation/validate_v5_coronacion_20260220_224113.log
+📊 Summary saved to: /home/runner/work/Riemann-adelic/Riemann-adelic/logs/validation/validate_v5_coronacion_20260220_224113.json
 
-⏱️  Total execution time: 22.45 seconds
+⏱️  Total execution time: 24.48 seconds
