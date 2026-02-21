@@ -5,7 +5,7 @@ Validation of Hecke-Sobolev H^{1/2} Coercivity Theorem
 This script numerically validates the coercivity inequality:
 𝒬_H,t(f, f) + C‖f‖²_L² ≥ c‖f‖²_H^{1/2}
 
-with explicit constant c ≈ 12.35, ensuring compact resolvent
+with explicit constant c ≈ 15.00, ensuring compact resolvent
 and discrete spectrum for the Riemann Hamiltonian H_Ψ.
 
 Author: José Manuel Mota Burruezo Ψ ∞³
