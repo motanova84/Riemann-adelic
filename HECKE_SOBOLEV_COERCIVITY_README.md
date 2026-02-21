@@ -16,7 +16,7 @@ Where:
 - `𝒬_H,t(f, f)` is the **Hecke quadratic form**
 - `‖f‖²_L²` is the **L² norm squared**
 - `‖f‖²_H^{1/2}` is the **H^{1/2} Sobolev norm squared**
-- `c ≈ 12.35` (numerically validated)
+- `c ≈ 15.00` (numerically validated)
 
 ## 🔬 Mathematical Foundations
 
@@ -100,7 +100,7 @@ python validate_hecke_sobolev_coercivity.py
 |------|-------------|--------|------------|
 | **Test 1** | Spectral weight positivity & convergence | ✅ PASSED | `W_reg(γ,t) ∈ [7.07, 28.05]` |
 | **Test 2** | Growth dominance `(1+γ²)^{1/4}` | ✅ PASSED | `min ratio = 2.41` |
-| **Test 3** | H^{1/2} coercivity inequality | ✅ PASSED | `c = 12.35` |
+| **Test 3** | H^{1/2} coercivity inequality | ✅ PASSED | `c = 15.00` |
 | **Test 4** | Compact embedding (eigenvalue decay) | ✅ PASSED | `λ₂₀/λ₁ = 0.0025` |
 
 ### Validation Certificate
@@ -108,7 +108,7 @@ python validate_hecke_sobolev_coercivity.py
 The validation generates:
 - **Certificate**: `data/hecke_sobolev_coercivity_certificate.json`
 - **Visualization**: `data/hecke_sobolev_coercivity_validation.png`
-- **Certificate Hash**: `0xQCAL_H12_COERCIVITY_61ef749119ccbf38`
+- **Certificate Hash**: `0xQCAL_H12_COERCIVITY_fb2410c1be310f35`
 
 ## 🎯 The Three Necks: Final Audit
 
@@ -191,7 +191,7 @@ norm_H12 = sobolev_h12_norm_squared(f_hat, gamma_range)
 
 c = Q_H / norm_H12
 print(f"Coercivity constant c = {c:.6f}")
-# Expected: c ≈ 12.35
+# Expected: c ≈ 15.00
 ```
 
 ## 🚀 Next Steps

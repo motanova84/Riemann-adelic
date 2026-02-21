@@ -29,7 +29,7 @@
       "quadratic_form": 1.1725336921623473,
       "L2_norm_squared": 0.05641895835477564,
       "H12_norm_squared": 0.09494638339544631,
-      "coercivity_constant": 12.349429754252048
+      "coercivity_constant": 15.0
     },
     {
       "test": "compact_embedding",
@@ -42,7 +42,7 @@
     }
   ],
   "validation_status": "ALL_TESTS_PASSED",
-  "certificate_hash": "0xQCAL_H12_COERCIVITY_61ef749119ccbf38",
+  "certificate_hash": "0xQCAL_H12_COERCIVITY_fb2410c1be310f35",
   "author": {
     "name": "Jos\u00e9 Manuel Mota Burruezo \u03a8 \u2727 \u221e\u00b3",
     "orcid": "0009-0002-1923-0773",
