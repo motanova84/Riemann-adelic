@@ -271,6 +271,7 @@ def test_3_h12_coercivity(t: float = 0.1, C_shift: float = 0.0) -> Dict:
     rhs_coeff = lhs / norm_H12_sq if norm_H12_sq > 0 else 0
     
     coercivity_passed = rhs_coeff > 10.0  # Verified: c ≈ 15.00 > 10.0
+    coercivity_passed = rhs_coeff > 10.0  # Expect c ≈ 15.00; threshold is ~2/3 of target to allow numerical slack
     
     print(f"  ✓ Hecke quadratic form 𝒬_H,t(f,f): {Q_H:.6f}")
     print(f"  ✓ L² norm squared ‖f‖²_L²: {norm_L2_sq:.6f}")
@@ -279,6 +280,7 @@ def test_3_h12_coercivity(t: float = 0.1, C_shift: float = 0.0) -> Dict:
     print(f"  ✓ Target coercivity: {TARGET_COERCIVITY}")
     print(f"  ✓ Coercivity check: {'PASSED' if coercivity_passed else 'FAILED'}")
     print(f"    (Required c > 10.0, found: {rhs_coeff:.6f})")
+    print(f"    (Expected c ≥ 10.0, found: {rhs_coeff:.6f})")
     print()
     
     return {
