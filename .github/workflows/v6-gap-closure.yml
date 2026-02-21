@@ -42,7 +42,7 @@ jobs:
       
       - name: Install dependencies
         run: |
-          pip install -q mpmath pytest sympy
+          pip install -q mpmath pytest sympy numpy scipy psutil
       
       - name: Run stability tests
         run: |
@@ -68,7 +68,7 @@ jobs:
       
       - name: Install dependencies
         run: |
-          pip install -q mpmath pytest sympy
+          pip install -q mpmath pytest sympy numpy scipy psutil
       
       - name: Run falsifiability tests
         run: |
