@@ -9,7 +9,7 @@ VALIDATION OF THE MASTER INEQUALITY:
 
 This script provides numerical validation of:
 1. Spectral weight growth W_reg(γ, t) ≥ (1+γ²)^{1/4}
-2. H^{1/2} Sobolev coercivity with c ≈ 12.35 (Gaussian check)
+2. H^{1/2} Sobolev coercivity with c ≈ 15.00 (Gaussian check)
 3. Compact embedding verification
 4. Trace-class heat semigroup
 
@@ -267,14 +267,14 @@ def test_3_h12_coercivity(t: float = 0.1, C_shift: float = 0.0) -> Dict:
     lhs = Q_H + C_shift * norm_L2_sq
     rhs_coeff = lhs / norm_H12_sq if norm_H12_sq > 0 else 0
     
-    coercivity_passed = rhs_coeff > 0.5  # Expect c ≈ 2.0, allow some slack
+    coercivity_passed = rhs_coeff > 10.0  # Expect c ≈ 15.00; threshold is ~2/3 of target to allow numerical slack
     
     print(f"  ✓ Hecke quadratic form 𝒬_H,t(f,f): {Q_H:.6f}")
     print(f"  ✓ L² norm squared ‖f‖²_L²: {norm_L2_sq:.6f}")
     print(f"  ✓ H^{{1/2}} norm squared ‖f‖²_H^{{1/2}}: {norm_H12_sq:.6f}")
     print(f"  ✓ Coercivity constant c = LHS/RHS: {rhs_coeff:.6f}")
     print(f"  ✓ Coercivity check: {'PASSED' if coercivity_passed else 'FAILED'}")
-    print(f"    (Expected c ≥ 0.5, found: {rhs_coeff:.6f})")
+    print(f"    (Expected c ≥ 10.0, found: {rhs_coeff:.6f})")
     print()
     
     return {
