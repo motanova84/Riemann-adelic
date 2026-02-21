@@ -3,16 +3,16 @@
   "total_files": 419,
   "category_distribution": {
     "qcal": {
-      "count": 1093,
-      "percentage": 40.73797987327618
+      "count": 1094,
+      "percentage": 40.77525158404771
     },
     "trivial": {
       "count": 224,
       "percentage": 8.348863212821469
     },
     "unknown": {
-      "count": 704,
-      "percentage": 26.239284383153187
+      "count": 703,
+      "percentage": 26.202012672381663
     },
     "spectral": {
       "count": 354,
@@ -10006,18 +10006,18 @@
         "similar_solutions": []
       },
       {
-        "line": 99,
+        "line": 100,
         "code": "sorry",
-        "context": "-/\nlemma diagonal_dominance_hecke_weight (\u03b3 : \u211d) (t : \u211d) (ht : 0 < t) :\n    \u2203 C : \u211d, C > 0 \u2227 spectral_weight \u03b3 t \u2265 C * (1 + \u03b3^2)^(1/4) := by\n  sorry\n\n/-! ## III. WEYL EQUIDISTRIBUTION & PHASE OSCILLATION -/\n",
-        "primary_category": "unknown",
+        "context": "lemma diagonal_dominance_hecke_weight (\u03b3 : \u211d) (t : \u211d) (ht : 0 < t) :\n    \u2203 C : \u211d, C > 0 \u2227 spectral_weight \u03b3 t \u2265 C * (1 + \u03b3^2)^(1/4) := by\n  -- The real coercivity constant is c = 15.00, established by numerical validation\n  sorry\n\n/-! ## III. WEYL EQUIDISTRIBUTION & PHASE OSCILLATION -/\n",
+        "primary_category": "qcal",
         "all_categories": {
-          "unknown": 1.0
+          "qcal": 0.75
         },
-        "complexity": 5,
+        "complexity": 3,
         "similar_solutions": []
       },
       {
-        "line": 122,
+        "line": 123,
         "code": "sorry",
         "context": "-/\nlemma spectral_weight_growth (\u03b3 : \u211d) (t : \u211d) (ht : 0 < t) :\n    spectral_weight \u03b3 t \u2265 (1 + \u03b3^2)^(1/4) / 2 := by\n  sorry\n\n/-! ## IV. RELLICH-KONDRACHOV COMPACTNESS ON ADELIC TORUS -/\n",
         "primary_category": "adelic",
@@ -10028,7 +10028,7 @@
         "similar_solutions": []
       },
       {
-        "line": 146,
+        "line": 147,
         "code": "sorry",
         "context": "    \u2203 (subseq : \u2115 \u2192 \u2115), StrictMono subseq \u2227 \n    \u2203 f : SchwartzBruhat IdeleClassGroup, \n    Tendsto (\u03bb n \u21a6 L2_norm (seq (subseq n) - f)) atTop (\ud835\udcdd 0) := by\n  sorry\n\n/-! ## V. THE MASTER THEOREM: H^{1/2} COERCIVITY -/\n",
         "primary_category": "adelic",
@@ -10039,19 +10039,20 @@
         "similar_solutions": []
       },
       {
-        "line": 195,
-        "code": "sorry -- Detailed integration argument using h_dominance",
-        "context": "  constructor\n  \u00b7 norm_num\n  \u00b7 intro f\n    sorry -- Detailed integration argument using h_dominance\n\n/-! ## VI. COMPACT RESOLVENT & DISCRETE SPECTRUM -/\n",
+        "line": 199,
+        "code": "sorry -- Detailed integration argument using h_dominance; c = 15.00 confirmed numerically",
+        "context": "  constructor\n  \u00b7 norm_num\n  \u00b7 intro f\n    sorry -- Detailed integration argument using h_dominance; c = 15.00 confirmed numerically\n\n/-! ## VI. COMPACT RESOLVENT & DISCRETE SPECTRUM -/\n",
         "primary_category": "trivial",
         "all_categories": {
           "trivial": 0.8,
+          "qcal": 0.75,
           "spectral": 0.65
         },
         "complexity": 1,
         "similar_solutions": []
       },
       {
-        "line": 208,
+        "line": 212,
         "code": "let H := sorry -- Friedrichs extension of \ud835\udcac_H,t",
         "context": "  3. Therefore (H_\u03a8,t + \u03bbI)^(-1) : L\u00b2 \u2192 H^{1/2} \u21aa\u21aa L\u00b2 is compact\n-/\ntheorem friedrichs_extension_compact_resolvent (t : \u211d) (ht : 0 < t) :\n    let H := sorry -- Friedrichs extension of \ud835\udcac_H,t\n    \u2200 \u03bb : \u211d, \u03bb > 0 \u2192 \n    sorry -- (H + \u03bbI)^(-1) is compact operator on L\u00b2\n  := by",
         "primary_category": "qcal",
@@ -10063,7 +10064,7 @@
         "similar_solutions": []
       },
       {
-        "line": 210,
+        "line": 214,
         "code": "sorry -- (H + \u03bbI)^(-1) is compact operator on L\u00b2",
         "context": "theorem friedrichs_extension_compact_resolvent (t : \u211d) (ht : 0 < t) :\n    let H := sorry -- Friedrichs extension of \ud835\udcac_H,t\n    \u2200 \u03bb : \u211d, \u03bb > 0 \u2192 \n    sorry -- (H + \u03bbI)^(-1) is compact operator on L\u00b2\n  := by\n  sorry\n",
         "primary_category": "spectral",
@@ -10074,7 +10075,7 @@
         "similar_solutions": []
       },
       {
-        "line": 212,
+        "line": 216,
         "code": "sorry",
         "context": "    \u2200 \u03bb : \u211d, \u03bb > 0 \u2192 \n    sorry -- (H + \u03bbI)^(-1) is compact operator on L\u00b2\n  := by\n  sorry\n\n/-- \n  Consequence: The spectrum of H_\u03a8,t is discrete and consists only of eigenvalues.",
         "primary_category": "spectral",
@@ -10086,7 +10087,7 @@
         "similar_solutions": []
       },
       {
-        "line": 224,
+        "line": 228,
         "code": "let H := sorry -- Friedrichs extension of \ud835\udcac_H,t",
         "context": "  - L\u00b2 has an orthonormal basis of eigenfunctions\n-/\ntheorem spectrum_is_discrete (t : \u211d) (ht : 0 < t) :\n    let H := sorry -- Friedrichs extension of \ud835\udcac_H,t\n    sorry -- Spectrum of H is discrete\n  := by\n  sorry",
         "primary_category": "spectral",
@@ -10097,7 +10098,7 @@
         "similar_solutions": []
       },
       {
-        "line": 225,
+        "line": 229,
         "code": "sorry -- Spectrum of H is discrete",
         "context": "-/\ntheorem spectrum_is_discrete (t : \u211d) (ht : 0 < t) :\n    let H := sorry -- Friedrichs extension of \ud835\udcac_H,t\n    sorry -- Spectrum of H is discrete\n  := by\n  sorry\n",
         "primary_category": "spectral",
@@ -10108,7 +10109,7 @@
         "similar_solutions": []
       },
       {
-        "line": 227,
+        "line": 231,
         "code": "sorry",
         "context": "    let H := sorry -- Friedrichs extension of \ud835\udcac_H,t\n    sorry -- Spectrum of H is discrete\n  := by\n  sorry\n\n/-! ## VII. TRACE-CLASS HEAT SEMIGROUP -/\n",
         "primary_category": "spectral",
@@ -10119,7 +10120,7 @@
         "similar_solutions": []
       },
       {
-        "line": 241,
+        "line": 245,
         "code": "let H := sorry -- Friedrichs extension of \ud835\udcac_H,t",
         "context": "  4. exp(-tH_\u03a8) is Hilbert-Schmidt, hence trace-class\n-/\ntheorem heat_semigroup_is_nuclear (t : \u211d) (ht : 0 < t) :\n    let H := sorry -- Friedrichs extension of \ud835\udcac_H,t\n    sorry -- exp(-tH) is trace-class operator\n  := by\n  sorry",
         "primary_category": "qcal",
@@ -10131,7 +10132,7 @@
         "similar_solutions": []
       },
       {
-        "line": 242,
+        "line": 246,
         "code": "sorry -- exp(-tH) is trace-class operator",
         "context": "-/\ntheorem heat_semigroup_is_nuclear (t : \u211d) (ht : 0 < t) :\n    let H := sorry -- Friedrichs extension of \ud835\udcac_H,t\n    sorry -- exp(-tH) is trace-class operator\n  := by\n  sorry\n",
         "primary_category": "spectral",
@@ -10142,7 +10143,7 @@
         "similar_solutions": []
       },
       {
-        "line": 244,
+        "line": 248,
         "code": "sorry",
         "context": "    let H := sorry -- Friedrichs extension of \ud835\udcac_H,t\n    sorry -- exp(-tH) is trace-class operator\n  := by\n  sorry\n\n/-! ## VIII. SPECTRAL-ZETA IDENTITY -/\n",
         "primary_category": "spectral",
@@ -10154,7 +10155,7 @@
         "similar_solutions": []
       },
       {
-        "line": 264,
+        "line": 268,
         "code": "let H := sorry -- Friedrichs extension of \ud835\udcac_H,t",
         "context": "  This completes the proof of the Riemann Hypothesis.\n-/\ntheorem spectral_zeta_equivalence (t : \u211d) (ht : 0 < t) :\n    let H := sorry -- Friedrichs extension of \ud835\udcac_H,t\n    sorry -- Spectrum(H) = Riemann zeros on critical line\n  := by\n  sorry",
         "primary_category": "spectral",
@@ -10166,7 +10167,7 @@
         "similar_solutions": []
       },
       {
-        "line": 265,
+        "line": 269,
         "code": "sorry -- Spectrum(H) = Riemann zeros on critical line",
         "context": "-/\ntheorem spectral_zeta_equivalence (t : \u211d) (ht : 0 < t) :\n    let H := sorry -- Friedrichs extension of \ud835\udcac_H,t\n    sorry -- Spectrum(H) = Riemann zeros on critical line\n  := by\n  sorry\n",
         "primary_category": "spectral",
@@ -10178,7 +10179,7 @@
         "similar_solutions": []
       },
       {
-        "line": 267,
+        "line": 271,
         "code": "sorry",
         "context": "    let H := sorry -- Friedrichs extension of \ud835\udcac_H,t\n    sorry -- Spectrum(H) = Riemann zeros on critical line\n  := by\n  sorry\n\n/-! ## IX. FINAL AUDIT: ALL THREE NECKS CLOSED \u2705 -/\n",
         "primary_category": "spectral",
@@ -32540,6 +32541,6 @@
   },
   "summary": {
     "most_common_category": "qcal",
-    "avg_complexity": 3.707417070443533
+    "avg_complexity": 3.7066716362281027
   }
 }
