@@ -1,34 +1,34 @@
 {
-  "total_sorries": 2657,
-  "total_files": 418,
+  "total_sorries": 2683,
+  "total_files": 419,
   "category_distribution": {
     "qcal": {
-      "count": 1092,
-      "percentage": 41.09898381633421
+      "count": 1093,
+      "percentage": 40.73797987327618
     },
     "trivial": {
-      "count": 220,
-      "percentage": 8.280015054572827
+      "count": 224,
+      "percentage": 8.348863212821469
     },
     "unknown": {
-      "count": 700,
-      "percentage": 26.345502446368087
+      "count": 704,
+      "percentage": 26.239284383153187
     },
     "spectral": {
-      "count": 343,
-      "percentage": 12.90929619872036
+      "count": 354,
+      "percentage": 13.194185613119641
     },
     "adelic": {
-      "count": 93,
-      "percentage": 3.5001881821603313
+      "count": 97,
+      "percentage": 3.6153559448378685
     },
     "correspondence": {
-      "count": 30,
-      "percentage": 1.1290929619872037
+      "count": 32,
+      "percentage": 1.1926947446887812
     },
     "analytic": {
       "count": 179,
-      "percentage": 6.736921339856981
+      "percentage": 6.67163622810287
     }
   },
   "detailed": {
@@ -11659,6 +11659,300 @@
           "qcal": 0.75
         },
         "complexity": 3,
+        "similar_solutions": []
+      }
+    ],
+    "formalization/lean/spectral/TraceIdentityClosure.lean": [
+      {
+        "line": 96,
+        "code": "sorry  -- Full definition requires prime sum infrastructure",
+        "context": "def HeckeWeight (\u03b3 : \u211d) (t : \u211d) : \u211d :=\n  -- W_reg(\u03b3,t) = \u2211_{p,n} (log p / p^{n(1/2+t)}) \u00b7 |p^{in\u03b3} - 1|\u00b2\n  -- With exponential decay: exp(-t\u00b7n\u00b7log p)\n  sorry  -- Full definition requires prime sum infrastructure\n\n/-- The Hecke quadratic form on the adelic torus -/\nstructure HeckeForm (t : \u211d) where",
+        "primary_category": "adelic",
+        "all_categories": {
+          "adelic": 0.6
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 110,
+        "code": "(\u2203 c, Tendsto (fun n => Q.form (seq n) sorry) atTop (\ud835\udcdd c)) \u2192",
+        "context": "  -- If f_n \u2192 0 in L\u00b2 and Q(f_n) \u2192 c, then c = 0\n  \u2200 (seq : \u2115 \u2192 \u2102), (\u2200 n, seq n \u2208 Q.domain) \u2192\n    (Tendsto seq atTop (\ud835\udcdd 0)) \u2192\n    (\u2203 c, Tendsto (fun n => Q.form (seq n) sorry) atTop (\ud835\udcdd c)) \u2192\n    (c = 0)\n\n/-- Friedrichs extension of a closable form -/",
+        "primary_category": "qcal",
+        "all_categories": {
+          "qcal": 0.75
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      },
+      {
+        "line": 132,
+        "code": "sorry",
+        "context": "    \u2200 \u03b3 : \u211d, HeckeWeight \u03b3 t \u2265 0 := by\n  intro \u03b3\n  -- W_reg is sum of non-negative terms: (log p)\u00b2 \u00b7 |phase|\u00b2 \u00b7 exp(-decay)\n  sorry\n\n/-- Closability of the Hecke form via Muckenhoupt weight -/\ntheorem closability_of_adelic_weight (t : \u211d) (ht : 0 < t) :",
+        "primary_category": "adelic",
+        "all_categories": {
+          "adelic": 0.6
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 136,
+        "code": "IsClosable (HeckeForm.mk sorry sorry sorry : HeckeForm t) := by",
+        "context": "\n/-- Closability of the Hecke form via Muckenhoupt weight -/\ntheorem closability_of_adelic_weight (t : \u211d) (ht : 0 < t) :\n    IsClosable (HeckeForm.mk sorry sorry sorry : HeckeForm t) := by\n  unfold IsClosable\n  intro seq h_in_domain h_tends_zero h_exists_limit\n  -- If f_n \u2192 0 in L\u00b2 but Q(f_n) \u2192 c \u2260 0, then energy concentrates",
+        "primary_category": "adelic",
+        "all_categories": {
+          "adelic": 0.6
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 142,
+        "code": "sorry",
+        "context": "  -- If f_n \u2192 0 in L\u00b2 but Q(f_n) \u2192 c \u2260 0, then energy concentrates\n  -- But W_reg being Muckenhoupt prevents this concentration\n  -- Therefore c must be 0\n  sorry\n\n/-!\n## Section 3: Neck #2 - Compact Resolvent (Compacidad)",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 160,
+        "code": "def IsCompactResolvent (H : FriedrichsExtension (sorry : HeckeForm t)) : Prop :=",
+        "context": "  trivial\n\n/-- Compactness of the resolvent -/\ndef IsCompactResolvent (H : FriedrichsExtension (sorry : HeckeForm t)) : Prop :=\n  -- (H - z)\u207b\u00b9 is compact for z \u2209 spectrum\n  \u2200 z : \u2102, z.re < 0 \u2192 True\n",
+        "primary_category": "trivial",
+        "all_categories": {
+          "trivial": 0.8,
+          "spectral": 0.65
+        },
+        "complexity": 1,
+        "similar_solutions": []
+      },
+      {
+        "line": 176,
+        "code": "(H : FriedrichsExtension (sorry : HeckeForm t))",
+        "context": "\n/-- Compact resolvent implies discrete spectrum -/\ntheorem compact_resolvent_discrete_spectrum \n    (H : FriedrichsExtension (sorry : HeckeForm t)) \n    (h_compact : IsCompactResolvent H) :\n    \u2200 K : Set \u211d, IsCompact K \u2192 Set.Finite (Spectrum H.operator \u2229 K) := by\n  intro K hK",
+        "primary_category": "spectral",
+        "all_categories": {
+          "spectral": 1.3
+        },
+        "complexity": 4,
+        "similar_solutions": []
+      },
+      {
+        "line": 182,
+        "code": "sorry",
+        "context": "  intro K hK\n  -- Compact resolvent \u21d2 eigenvalues can only accumulate at \u221e\n  -- Any compact set K contains finitely many eigenvalues\n  sorry\n\n/-!\n## Section 4: Trace Formula and Heat Kernel",
+        "primary_category": "spectral",
+        "all_categories": {
+          "spectral": 0.65
+        },
+        "complexity": 4,
+        "similar_solutions": []
+      },
+      {
+        "line": 189,
+        "code": "def HeatKernel (t : \u211d) (H : FriedrichsExtension (sorry : HeckeForm t)) :",
+        "context": "-/\n\n/-- The heat kernel operator exp(-tH) -/\ndef HeatKernel (t : \u211d) (H : FriedrichsExtension (sorry : HeckeForm t)) :\n    \u2102 \u2192L[\u2102] \u2102 :=\n  sorry  -- exp(-t \u00b7 H) via functional calculus\n",
+        "primary_category": "spectral",
+        "all_categories": {
+          "spectral": 0.65
+        },
+        "complexity": 4,
+        "similar_solutions": []
+      },
+      {
+        "line": 191,
+        "code": "sorry  -- exp(-t \u00b7 H) via functional calculus",
+        "context": "/-- The heat kernel operator exp(-tH) -/\ndef HeatKernel (t : \u211d) (H : FriedrichsExtension (sorry : HeckeForm t)) :\n    \u2102 \u2192L[\u2102] \u2102 :=\n  sorry  -- exp(-t \u00b7 H) via functional calculus\n\n/-- Heat kernel is trace class -/\ntheorem is_trace_class_heat_kernel (t : \u211d) (ht : 0 < t)",
+        "primary_category": "spectral",
+        "all_categories": {
+          "spectral": 1.3
+        },
+        "complexity": 4,
+        "similar_solutions": []
+      },
+      {
+        "line": 195,
+        "code": "(H : FriedrichsExtension (sorry : HeckeForm t)) :",
+        "context": "\n/-- Heat kernel is trace class -/\ntheorem is_trace_class_heat_kernel (t : \u211d) (ht : 0 < t)\n    (H : FriedrichsExtension (sorry : HeckeForm t)) :\n    True := by  -- IsTraceClass (HeatKernel t H)\n  -- Exponential decay exp(-t\u03bb_n) is summable\n  -- \u2211 exp(-t\u03bb_n) < \u221e for t > 0 and \u03bb_n \u2192 \u221e",
+        "primary_category": "spectral",
+        "all_categories": {
+          "spectral": 0.65
+        },
+        "complexity": 4,
+        "similar_solutions": []
+      },
+      {
+        "line": 202,
+        "code": "def TraceSpectralSum (t : \u211d) (H : FriedrichsExtension (sorry : HeckeForm t)) : \u211d :=",
+        "context": "  trivial\n\n/-- The trace as sum over spectrum -/\ndef TraceSpectralSum (t : \u211d) (H : FriedrichsExtension (sorry : HeckeForm t)) : \u211d :=\n  -- Tr(exp(-tH)) = \u2211_{\u03b3 \u2208 Spectrum(H)} exp(-t\u03b3)\n  sorry\n",
+        "primary_category": "trivial",
+        "all_categories": {
+          "trivial": 0.8,
+          "spectral": 0.65
+        },
+        "complexity": 1,
+        "similar_solutions": []
+      },
+      {
+        "line": 204,
+        "code": "sorry",
+        "context": "/-- The trace as sum over spectrum -/\ndef TraceSpectralSum (t : \u211d) (H : FriedrichsExtension (sorry : HeckeForm t)) : \u211d :=\n  -- Tr(exp(-tH)) = \u2211_{\u03b3 \u2208 Spectrum(H)} exp(-t\u03b3)\n  sorry\n\n/-- Weil explicit formula contribution -/\ndef WeilExplicitFormula (t : \u211d) : \u211d :=",
+        "primary_category": "spectral",
+        "all_categories": {
+          "spectral": 0.65
+        },
+        "complexity": 4,
+        "similar_solutions": []
+      },
+      {
+        "line": 210,
+        "code": "sorry",
+        "context": "def WeilExplicitFormula (t : \u211d) : \u211d :=\n  -- Sum over Riemann zeros: \u2211_{\u03c1: \u03b6(\u03c1)=0} exp(-t\u00b7Im(\u03c1))\n  -- Plus boundary terms from pole at s=1 and trivial zeros\n  sorry\n\n/-- Boundary terms in the trace formula -/\ndef BoundaryTerms (t : \u211d) : \u211d :=",
+        "primary_category": "trivial",
+        "all_categories": {
+          "trivial": 0.8,
+          "analytic": 0.6
+        },
+        "complexity": 1,
+        "similar_solutions": []
+      },
+      {
+        "line": 218,
+        "code": "sorry",
+        "context": "  -- 1. Pole at s=1 (central term)\n  -- 2. Trivial zeros at s = -2, -4, -6, ...\n  -- 3. Digamma function integral\n  sorry\n\n/-!\n## Section 5: Neck #3 - Spectral Identity (Identidad de Soportes)",
+        "primary_category": "trivial",
+        "all_categories": {
+          "trivial": 0.8
+        },
+        "complexity": 1,
+        "similar_solutions": []
+      },
+      {
+        "line": 241,
+        "code": "sorry",
+        "context": "  -- 1. The sets of frequencies must be equal: A = B\n  -- 2. The multiplicities must match: mult_A = mult_B\n  -- This is the uniqueness of Laplace transform for measures\n  sorry\n\n/-- Spectrum identity from trace equality -/\ntheorem spectrum_identity_from_trace_equality (t : \u211d) (ht : 0 < t)",
+        "primary_category": "spectral",
+        "all_categories": {
+          "spectral": 0.65
+        },
+        "complexity": 4,
+        "similar_solutions": []
+      },
+      {
+        "line": 245,
+        "code": "(H : FriedrichsExtension (sorry : HeckeForm t))",
+        "context": "\n/-- Spectrum identity from trace equality -/\ntheorem spectrum_identity_from_trace_equality (t : \u211d) (ht : 0 < t)\n    (H : FriedrichsExtension (sorry : HeckeForm t))\n    (h_trace : TraceSpectralSum t H = WeilExplicitFormula t) :\n    Spectrum H.operator = RiemannZeros := by\n  -- Apply Dirichlet injectivity to the trace equality",
+        "primary_category": "spectral",
+        "all_categories": {
+          "spectral": 1.3
+        },
+        "complexity": 4,
+        "similar_solutions": []
+      },
+      {
+        "line": 254,
+        "code": "sorry",
+        "context": "  -- Both are series of exponentials with integer multiplicities\n  -- Equality for all t > 0 \u27f9 sets are equal\n  have h_inj := dirichlet_injectivity_exponentials\n  sorry\n\n/-!\n## Section 6: Main Theorems - The Rigorous Trace Formula",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 271,
+        "code": "let Q := (HeckeForm.mk sorry sorry sorry : HeckeForm t)",
+        "context": "3. von Mangoldt identification (arithmetic-spectral bridge)\n-/\ntheorem hecke_trace_formula_rigorous (t : \u211d) (ht : 0 < t) :\n  let Q := (HeckeForm.mk sorry sorry sorry : HeckeForm t)\n  let H := (FriedrichsExtension.mk sorry sorry sorry : FriedrichsExtension Q)\n  -- 1. The heat kernel is trace class\n  (is_trace_class_heat_kernel t ht H = True) \u2227 ",
+        "primary_category": "correspondence",
+        "all_categories": {
+          "correspondence": 0.7,
+          "spectral": 0.65
+        },
+        "complexity": 4,
+        "similar_solutions": []
+      },
+      {
+        "line": 272,
+        "code": "let H := (FriedrichsExtension.mk sorry sorry sorry : FriedrichsExtension Q)",
+        "context": "-/\ntheorem hecke_trace_formula_rigorous (t : \u211d) (ht : 0 < t) :\n  let Q := (HeckeForm.mk sorry sorry sorry : HeckeForm t)\n  let H := (FriedrichsExtension.mk sorry sorry sorry : FriedrichsExtension Q)\n  -- 1. The heat kernel is trace class\n  (is_trace_class_heat_kernel t ht H = True) \u2227 \n  -- 2. The trace equals the explicit formula",
+        "primary_category": "correspondence",
+        "all_categories": {
+          "correspondence": 0.7,
+          "spectral": 0.65
+        },
+        "complexity": 4,
+        "similar_solutions": []
+      },
+      {
+        "line": 288,
+        "code": "have h_comp := rellich_adelic_compactness t ht sorry sorry",
+        "context": "  \u00b7 -- Step 1: Compact embedding via W_reg coercivity\n    have h_close := closability_of_adelic_weight t ht\n    -- Step 2: Compact resolvent via Rellich-Kondrachov\n    have h_comp := rellich_adelic_compactness t ht sorry sorry\n    -- Step 3: Apply Tate-Poisson summation on ideles\n    -- The kernel K_t(x,y) of exp(-tH) decomposes via Fourier on C_\ud835\udd38\n    -- Step 4: Identify von Mangoldt sum with Hecke operator trace",
+        "primary_category": "adelic",
+        "all_categories": {
+          "adelic": 1.2,
+          "spectral": 0.65
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 293,
+        "code": "sorry",
+        "context": "    -- The kernel K_t(x,y) of exp(-tH) decomposes via Fourier on C_\ud835\udd38\n    -- Step 4: Identify von Mangoldt sum with Hecke operator trace\n    -- This is where arithmetic meets spectral theory\n    sorry\n\n/-!\n## Section 7: The Final Closure - Riemann Hypothesis",
+        "primary_category": "spectral",
+        "all_categories": {
+          "spectral": 0.65
+        },
+        "complexity": 4,
+        "similar_solutions": []
+      },
+      {
+        "line": 312,
+        "code": "let Q := (HeckeForm.mk sorry sorry sorry : HeckeForm t)",
+        "context": "The proof is unconditional and does not assume RH.\n-/\ntheorem riemann_hypothesis_final_closure (t : \u211d) (ht : 0 < t) :\n  let Q := (HeckeForm.mk sorry sorry sorry : HeckeForm t)\n  let H := (FriedrichsExtension.mk sorry sorry sorry : FriedrichsExtension Q)\n  -- The spectrum equals the Riemann zeros\n  (Spectrum H.operator = RiemannZeros) \u2227 ",
+        "primary_category": "spectral",
+        "all_categories": {
+          "spectral": 1.3
+        },
+        "complexity": 4,
+        "similar_solutions": []
+      },
+      {
+        "line": 313,
+        "code": "let H := (FriedrichsExtension.mk sorry sorry sorry : FriedrichsExtension Q)",
+        "context": "-/\ntheorem riemann_hypothesis_final_closure (t : \u211d) (ht : 0 < t) :\n  let Q := (HeckeForm.mk sorry sorry sorry : HeckeForm t)\n  let H := (FriedrichsExtension.mk sorry sorry sorry : FriedrichsExtension Q)\n  -- The spectrum equals the Riemann zeros\n  (Spectrum H.operator = RiemannZeros) \u2227 \n  -- The spectrum is real (all zeros on critical line \u03c3 = 1/2)",
+        "primary_category": "spectral",
+        "all_categories": {
+          "spectral": 1.3
+        },
+        "complexity": 4,
+        "similar_solutions": []
+      },
+      {
+        "line": 340,
+        "code": "let Q := (HeckeForm.mk sorry sorry sorry : HeckeForm t)",
+        "context": "\n/-- Summary of the three necks closure -/\ntheorem three_necks_all_verde (t : \u211d) (ht : 0 < t) :\n    let Q := (HeckeForm.mk sorry sorry sorry : HeckeForm t)\n    let H := (FriedrichsExtension.mk sorry sorry sorry : FriedrichsExtension Q)\n    -- Neck #1: VERDE (Closability)\n    (IsClosable Q) \u2227",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 341,
+        "code": "let H := (FriedrichsExtension.mk sorry sorry sorry : FriedrichsExtension Q)",
+        "context": "/-- Summary of the three necks closure -/\ntheorem three_necks_all_verde (t : \u211d) (ht : 0 < t) :\n    let Q := (HeckeForm.mk sorry sorry sorry : HeckeForm t)\n    let H := (FriedrichsExtension.mk sorry sorry sorry : FriedrichsExtension Q)\n    -- Neck #1: VERDE (Closability)\n    (IsClosable Q) \u2227\n    -- Neck #2: VERDE (Compact Resolvent)  ",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
         "similar_solutions": []
       }
     ],
@@ -32246,6 +32540,6 @@
   },
   "summary": {
     "most_common_category": "qcal",
-    "avg_complexity": 3.706435829883327
+    "avg_complexity": 3.707417070443533
   }
 }
