@@ -97,7 +97,7 @@ python validate_hecke_sobolev_coercivity.py
 # ✓ Decaimiento de autovalores: λ₂₀/λ₁ = 0.0067 (incrustación compacta)
 # ==================================================
 # ESTADO: 🟢 TODAS LAS VALIDACIONES SUPERADAS
-# HASH: 0xQCAL_H12_COERCIVITY_61ef749119ccbf38
+# HASH: 0xQCAL_H12_COERCIVITY_458a80ae2184f704
 # ==================================================
 ```
 
