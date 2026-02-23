@@ -242,7 +242,7 @@ theorem zeros_on_critical_line :
   ✓ Constante de coercitividad: c ≈ 15.00 > c_min = 10.0
   ✓ Decaimiento de autovalores: λ₂₀/λ₁ = 0.0067 < 0.01
   
-  HASH: 0xQCAL_H12_COERCIVITY_38ab484136b35bc8
+  HASH: 0xQCAL_H12_COERCIVITY_458a80ae2184f704
   
   STATUS: 🟢 ALL FOUR NECKS CLOSED
   
