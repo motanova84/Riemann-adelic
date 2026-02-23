@@ -1,34 +1,34 @@
 {
-  "total_sorries": 2683,
-  "total_files": 419,
+  "total_sorries": 2704,
+  "total_files": 421,
   "category_distribution": {
     "qcal": {
-      "count": 1093,
-      "percentage": 40.73797987327618
+      "count": 1095,
+      "percentage": 40.49556213017752
     },
     "trivial": {
-      "count": 224,
-      "percentage": 8.348863212821469
+      "count": 227,
+      "percentage": 8.394970414201183
     },
     "unknown": {
-      "count": 704,
-      "percentage": 26.239284383153187
+      "count": 714,
+      "percentage": 26.40532544378698
     },
     "spectral": {
-      "count": 354,
-      "percentage": 13.194185613119641
+      "count": 358,
+      "percentage": 13.239644970414203
     },
     "adelic": {
-      "count": 97,
-      "percentage": 3.6153559448378685
+      "count": 99,
+      "percentage": 3.6612426035502956
     },
     "correspondence": {
       "count": 32,
-      "percentage": 1.1926947446887812
+      "percentage": 1.183431952662722
     },
     "analytic": {
       "count": 179,
-      "percentage": 6.67163622810287
+      "percentage": 6.619822485207101
     }
   },
   "detailed": {
@@ -10006,18 +10006,18 @@
         "similar_solutions": []
       },
       {
-        "line": 99,
+        "line": 100,
         "code": "sorry",
-        "context": "-/\nlemma diagonal_dominance_hecke_weight (\u03b3 : \u211d) (t : \u211d) (ht : 0 < t) :\n    \u2203 C : \u211d, C > 0 \u2227 spectral_weight \u03b3 t \u2265 C * (1 + \u03b3^2)^(1/4) := by\n  sorry\n\n/-! ## III. WEYL EQUIDISTRIBUTION & PHASE OSCILLATION -/\n",
-        "primary_category": "unknown",
+        "context": "lemma diagonal_dominance_hecke_weight (\u03b3 : \u211d) (t : \u211d) (ht : 0 < t) :\n    \u2203 C : \u211d, C > 0 \u2227 spectral_weight \u03b3 t \u2265 C * (1 + \u03b3^2)^(1/4) := by\n  -- The real coercivity constant is c = 15.00, established by numerical validation\n  sorry\n\n/-! ## III. WEYL EQUIDISTRIBUTION & PHASE OSCILLATION -/\n",
+        "primary_category": "qcal",
         "all_categories": {
-          "unknown": 1.0
+          "qcal": 0.75
         },
-        "complexity": 5,
+        "complexity": 3,
         "similar_solutions": []
       },
       {
-        "line": 122,
+        "line": 123,
         "code": "sorry",
         "context": "-/\nlemma spectral_weight_growth (\u03b3 : \u211d) (t : \u211d) (ht : 0 < t) :\n    spectral_weight \u03b3 t \u2265 (1 + \u03b3^2)^(1/4) / 2 := by\n  sorry\n\n/-! ## IV. RELLICH-KONDRACHOV COMPACTNESS ON ADELIC TORUS -/\n",
         "primary_category": "adelic",
@@ -10028,7 +10028,7 @@
         "similar_solutions": []
       },
       {
-        "line": 146,
+        "line": 147,
         "code": "sorry",
         "context": "    \u2203 (subseq : \u2115 \u2192 \u2115), StrictMono subseq \u2227 \n    \u2203 f : SchwartzBruhat IdeleClassGroup, \n    Tendsto (\u03bb n \u21a6 L2_norm (seq (subseq n) - f)) atTop (\ud835\udcdd 0) := by\n  sorry\n\n/-! ## V. THE MASTER THEOREM: H^{1/2} COERCIVITY -/\n",
         "primary_category": "adelic",
@@ -10039,19 +10039,20 @@
         "similar_solutions": []
       },
       {
-        "line": 195,
-        "code": "sorry -- Detailed integration argument using h_dominance",
-        "context": "  constructor\n  \u00b7 norm_num\n  \u00b7 intro f\n    sorry -- Detailed integration argument using h_dominance\n\n/-! ## VI. COMPACT RESOLVENT & DISCRETE SPECTRUM -/\n",
+        "line": 199,
+        "code": "sorry -- Detailed integration argument using h_dominance; c = 15.00 confirmed numerically",
+        "context": "  constructor\n  \u00b7 norm_num\n  \u00b7 intro f\n    sorry -- Detailed integration argument using h_dominance; c = 15.00 confirmed numerically\n\n/-! ## VI. COMPACT RESOLVENT & DISCRETE SPECTRUM -/\n",
         "primary_category": "trivial",
         "all_categories": {
           "trivial": 0.8,
+          "qcal": 0.75,
           "spectral": 0.65
         },
         "complexity": 1,
         "similar_solutions": []
       },
       {
-        "line": 208,
+        "line": 212,
         "code": "let H := sorry -- Friedrichs extension of \ud835\udcac_H,t",
         "context": "  3. Therefore (H_\u03a8,t + \u03bbI)^(-1) : L\u00b2 \u2192 H^{1/2} \u21aa\u21aa L\u00b2 is compact\n-/\ntheorem friedrichs_extension_compact_resolvent (t : \u211d) (ht : 0 < t) :\n    let H := sorry -- Friedrichs extension of \ud835\udcac_H,t\n    \u2200 \u03bb : \u211d, \u03bb > 0 \u2192 \n    sorry -- (H + \u03bbI)^(-1) is compact operator on L\u00b2\n  := by",
         "primary_category": "qcal",
@@ -10063,7 +10064,7 @@
         "similar_solutions": []
       },
       {
-        "line": 210,
+        "line": 214,
         "code": "sorry -- (H + \u03bbI)^(-1) is compact operator on L\u00b2",
         "context": "theorem friedrichs_extension_compact_resolvent (t : \u211d) (ht : 0 < t) :\n    let H := sorry -- Friedrichs extension of \ud835\udcac_H,t\n    \u2200 \u03bb : \u211d, \u03bb > 0 \u2192 \n    sorry -- (H + \u03bbI)^(-1) is compact operator on L\u00b2\n  := by\n  sorry\n",
         "primary_category": "spectral",
@@ -10074,7 +10075,7 @@
         "similar_solutions": []
       },
       {
-        "line": 212,
+        "line": 216,
         "code": "sorry",
         "context": "    \u2200 \u03bb : \u211d, \u03bb > 0 \u2192 \n    sorry -- (H + \u03bbI)^(-1) is compact operator on L\u00b2\n  := by\n  sorry\n\n/-- \n  Consequence: The spectrum of H_\u03a8,t is discrete and consists only of eigenvalues.",
         "primary_category": "spectral",
@@ -10086,7 +10087,7 @@
         "similar_solutions": []
       },
       {
-        "line": 224,
+        "line": 228,
         "code": "let H := sorry -- Friedrichs extension of \ud835\udcac_H,t",
         "context": "  - L\u00b2 has an orthonormal basis of eigenfunctions\n-/\ntheorem spectrum_is_discrete (t : \u211d) (ht : 0 < t) :\n    let H := sorry -- Friedrichs extension of \ud835\udcac_H,t\n    sorry -- Spectrum of H is discrete\n  := by\n  sorry",
         "primary_category": "spectral",
@@ -10097,7 +10098,7 @@
         "similar_solutions": []
       },
       {
-        "line": 225,
+        "line": 229,
         "code": "sorry -- Spectrum of H is discrete",
         "context": "-/\ntheorem spectrum_is_discrete (t : \u211d) (ht : 0 < t) :\n    let H := sorry -- Friedrichs extension of \ud835\udcac_H,t\n    sorry -- Spectrum of H is discrete\n  := by\n  sorry\n",
         "primary_category": "spectral",
@@ -10108,7 +10109,7 @@
         "similar_solutions": []
       },
       {
-        "line": 227,
+        "line": 231,
         "code": "sorry",
         "context": "    let H := sorry -- Friedrichs extension of \ud835\udcac_H,t\n    sorry -- Spectrum of H is discrete\n  := by\n  sorry\n\n/-! ## VII. TRACE-CLASS HEAT SEMIGROUP -/\n",
         "primary_category": "spectral",
@@ -10119,7 +10120,7 @@
         "similar_solutions": []
       },
       {
-        "line": 241,
+        "line": 245,
         "code": "let H := sorry -- Friedrichs extension of \ud835\udcac_H,t",
         "context": "  4. exp(-tH_\u03a8) is Hilbert-Schmidt, hence trace-class\n-/\ntheorem heat_semigroup_is_nuclear (t : \u211d) (ht : 0 < t) :\n    let H := sorry -- Friedrichs extension of \ud835\udcac_H,t\n    sorry -- exp(-tH) is trace-class operator\n  := by\n  sorry",
         "primary_category": "qcal",
@@ -10131,7 +10132,7 @@
         "similar_solutions": []
       },
       {
-        "line": 242,
+        "line": 246,
         "code": "sorry -- exp(-tH) is trace-class operator",
         "context": "-/\ntheorem heat_semigroup_is_nuclear (t : \u211d) (ht : 0 < t) :\n    let H := sorry -- Friedrichs extension of \ud835\udcac_H,t\n    sorry -- exp(-tH) is trace-class operator\n  := by\n  sorry\n",
         "primary_category": "spectral",
@@ -10142,7 +10143,7 @@
         "similar_solutions": []
       },
       {
-        "line": 244,
+        "line": 248,
         "code": "sorry",
         "context": "    let H := sorry -- Friedrichs extension of \ud835\udcac_H,t\n    sorry -- exp(-tH) is trace-class operator\n  := by\n  sorry\n\n/-! ## VIII. SPECTRAL-ZETA IDENTITY -/\n",
         "primary_category": "spectral",
@@ -10154,7 +10155,7 @@
         "similar_solutions": []
       },
       {
-        "line": 264,
+        "line": 268,
         "code": "let H := sorry -- Friedrichs extension of \ud835\udcac_H,t",
         "context": "  This completes the proof of the Riemann Hypothesis.\n-/\ntheorem spectral_zeta_equivalence (t : \u211d) (ht : 0 < t) :\n    let H := sorry -- Friedrichs extension of \ud835\udcac_H,t\n    sorry -- Spectrum(H) = Riemann zeros on critical line\n  := by\n  sorry",
         "primary_category": "spectral",
@@ -10166,7 +10167,7 @@
         "similar_solutions": []
       },
       {
-        "line": 265,
+        "line": 269,
         "code": "sorry -- Spectrum(H) = Riemann zeros on critical line",
         "context": "-/\ntheorem spectral_zeta_equivalence (t : \u211d) (ht : 0 < t) :\n    let H := sorry -- Friedrichs extension of \ud835\udcac_H,t\n    sorry -- Spectrum(H) = Riemann zeros on critical line\n  := by\n  sorry\n",
         "primary_category": "spectral",
@@ -10178,7 +10179,7 @@
         "similar_solutions": []
       },
       {
-        "line": 267,
+        "line": 271,
         "code": "sorry",
         "context": "    let H := sorry -- Friedrichs extension of \ud835\udcac_H,t\n    sorry -- Spectrum(H) = Riemann zeros on critical line\n  := by\n  sorry\n\n/-! ## IX. FINAL AUDIT: ALL THREE NECKS CLOSED \u2705 -/\n",
         "primary_category": "spectral",
@@ -13807,6 +13808,241 @@
           "spectral": 0.65
         },
         "complexity": 3,
+        "similar_solutions": []
+      }
+    ],
+    "formalization/lean/spectral/MeanSpectralDensity.lean": [
+      {
+        "line": 90,
+        "code": "sorry",
+        "context": "  unfold prime_character\n  simp [hp]\n  -- Use |exp(iz)| = 1 for real z\n  sorry\n\n/-!\n## Section 2: Orthogonality Integrals",
+        "primary_category": "trivial",
+        "all_categories": {
+          "trivial": 0.8
+        },
+        "complexity": 1,
+        "similar_solutions": []
+      },
+      {
+        "line": 110,
+        "code": "sorry",
+        "context": "  -- p^{i\u03b3} \u00b7 p^{-i\u03b3} = p^0 = 1\n  unfold prime_character\n  simp [hp]\n  sorry\n\n/-- Off-diagonal quasi-orthogonality: different primes\n    ",
+        "primary_category": "trivial",
+        "all_categories": {
+          "trivial": 0.8
+        },
+        "complexity": 1,
+        "similar_solutions": []
+      },
+      {
+        "line": 131,
+        "code": "sorry",
+        "context": "  -- = 2 sin(T log(p/q)) / log(p/q)\n  -- So |integral| \u2264 2 / |log(p/q)| if T log(p/q) is bounded\n  -- More generally: |integral| \u2264 2T / |log(p/q)| using |sin x| \u2264 |x|\n  sorry\n\n/-!\n## Section 3: Montgomery-Vaughan Adelic Inequality",
+        "primary_category": "adelic",
+        "all_categories": {
+          "adelic": 0.6
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 159,
+        "code": "sorry",
+        "context": "      \u2264 2 * T / |log ((p : \u211d) / (q : \u211d))| := by\n  -- Apply off-diagonal quasi-orthogonality with C = 2\n  obtain \u27e8C, hC_pos, hC_bound\u27e9 := offdiagonal_quasi_orthogonality p q T hp hq hpq hT\n  sorry\n\n/-- Montgomery-Vaughan for Product Form\n    ",
+        "primary_category": "qcal",
+        "all_categories": {
+          "qcal": 0.75
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      },
+      {
+        "line": 175,
+        "code": "sorry",
+        "context": "      \u2264 C * T / log ((p * q : \u2115) : \u211d) := by\n  -- Use |log(p/q)| \u2265 |log p - log q| and arithmetic-geometric mean inequality\n  -- to relate to log(pq)\n  sorry\n\n/-!\n## Section 4: Spectral Mass Concentration",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 203,
+        "code": "sorry",
+        "context": "        (\u2211' p : {p : \u2115 // p.Prime}, weights p) * 2 * T := by\n  -- Fubini to interchange sum and integral\n  -- Use |p^{i\u03b3}|\u00b2 = 1 for each term\n  sorry\n\n/-- Spectral Localization Principle\n    ",
+        "primary_category": "adelic",
+        "all_categories": {
+          "adelic": 0.6
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 227,
+        "code": "sorry",
+        "context": "  -- Diagonal: \u2211_p w_p\u00b2 \u00b7 2T (exact)\n  -- Off-diagonal: bounded by Montgomery-Vaughan\n  -- Result: RHS \u2265 (1 - \u03b5)(\u2211 w_p)\u00b2 \u00b7 2T for small \u03b5 > 0\n  sorry\n\n/-!\n## Section 5: Mean Value Spectral Bound",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 258,
+        "code": "sorry",
+        "context": "  -- Step 1: Use spectral_mass_lower_bound with weights = log p / p^{1/2+t} \u00b7 e^{-t log p}\n  -- Step 2: Evaluate \u2211_p (log p / p^{1/2+t}) \u00b7 e^{-t log p} \u2265 c' log T (Mertens' theorem variant)\n  -- Step 3: Combine to get result\n  sorry\n\n/-!\n## Section 6: Enclosure Theorem",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 292,
+        "code": "sorry",
+        "context": "  -- 1. Compactness: coercive form + closed \u27f9 compact resolvent\n  -- 2. Discreteness: compact resolvent \u27f9 discrete spectrum (Riesz-Schauder)\n  -- 3. Divergence: trace-class heat kernel \u27f9 \u03bb_n \u2265 c log n\n  sorry\n\nend MeanSpectralDensity\n",
+        "primary_category": "spectral",
+        "all_categories": {
+          "spectral": 0.65
+        },
+        "complexity": 4,
+        "similar_solutions": []
+      }
+    ],
+    "formalization/lean/spectral/MeanHeckeCoercivity.lean": [
+      {
+        "line": 125,
+        "code": "sorry",
+        "context": "    \u222b \u03b3 in (-T)..T, cos (\u03b3 * \u03b1) = 2 * sin (T * \u03b1) / \u03b1 := by\n  -- The antiderivative of cos(\u03b3\u03b1) is sin(\u03b3\u03b1)/\u03b1\n  -- Evaluate at endpoints: [sin(T\u03b1) - sin(-T\u03b1)] / \u03b1 = 2sin(T\u03b1)/\u03b1\n  sorry\n\n/-- Bound on Dirichlet kernel: |2 sin(T\u03b1) / \u03b1| \u2264 2T\n    ",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 135,
+        "code": "sorry",
+        "context": "theorem dirichlet_kernel_bound (T \u03b1 : \u211d) (h\u03b1 : \u03b1 \u2260 0) (hT : T > 0) :\n    |2 * sin (T * \u03b1) / \u03b1| \u2264 2 * T := by\n  -- Use |sin x| \u2264 |x| for all x\n  sorry\n\n/-!\n## Section 3: Montgomery-Vaughan Character Orthogonality",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 158,
+        "code": "sorry",
+        "context": "      \u2264 C * T / log ((p * q : \u2115) : \u211d) := by\n  -- The integral simplifies to \u222b (p/q)^{i\u03b3} d\u03b3\n  -- Using Dirichlet kernel with \u03b1 = log(p/q), we get bound 2T / |log(p/q)|\n  sorry\n\n/-- Self-orthogonality: diagonal contribution\n    ",
+        "primary_category": "trivial",
+        "all_categories": {
+          "trivial": 0.8
+        },
+        "complexity": 1,
+        "similar_solutions": []
+      },
+      {
+        "line": 170,
+        "code": "sorry",
+        "context": "    (hp : p.Prime) (hT : T > 0) :\n    \u222b \u03b3 in (-T)..T, |((p : \u2102) ^ (I * \u03b3))|^2 = 2 * T := by\n  -- |p^{i\u03b3}|\u00b2 = p^0 = 1, so integral is just 2T\n  sorry\n\n/-!\n## Section 4: Chebyshev-type Bounds for Prime Sums",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 204,
+        "code": "sorry",
+        "context": "  -- Use partial summation and the Prime Number Theorem\n  -- \u03b8(X) \u223c X implies \u03b8_t(X) \u2265 c\u00b7X^{1-t} for small t\n  -- For general t, use Mertens' theorem: \u2211_{p\u2264X} log p / p \u223c log X\n  sorry\n\n/-!\n## Section 5: Main Coercivity Theorem",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 240,
+        "code": "else 0 := by sorry",
+        "context": "      \u2211' p : \u2115, if p.Prime then \n        \u222b \u03b3 in (-T)..T, (log (p : \u211d) / ((p : \u211d) ^ ((1 : \u211d)/2 + t))) * \n          (1 - cos (\u03b3 * log (p : \u211d))) * exp(-t * log (p : \u211d))\n      else 0 := by sorry\n  \n  -- Step 2: Evaluate Dirichlet kernel integral for each prime\n  have step2 : \u2200 p : \u2115, p.Prime \u2192 ",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 245,
+        "code": "2 * T - 2 * sin (T * log (p : \u211d)) / log (p : \u211d) := by sorry",
+        "context": "  -- Step 2: Evaluate Dirichlet kernel integral for each prime\n  have step2 : \u2200 p : \u2115, p.Prime \u2192 \n      \u222b \u03b3 in (-T)..T, (1 - cos (\u03b3 * log (p : \u211d))) = \n        2 * T - 2 * sin (T * log (p : \u211d)) / log (p : \u211d) := by sorry\n  \n  -- Step 3: Diagonal terms dominate (using character orthogonality)\n  have step3 : \u2211' p : {p : \u2115 // p.Prime}, ",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 250,
+        "code": "T * theta_weighted X ((1 : \u211d)/2 + t) := by sorry",
+        "context": "  -- Step 3: Diagonal terms dominate (using character orthogonality)\n  have step3 : \u2211' p : {p : \u2115 // p.Prime}, \n      (log (p : \u211d) / ((p : \u211d) ^ ((1 : \u211d)/2 + t))) * 2 * T * exp(-t * log (p : \u211d)) \u2265 \n        T * theta_weighted X ((1 : \u211d)/2 + t) := by sorry\n  \n  -- Step 4: Apply Chebyshev lower bound\n  obtain \u27e8c, hc_pos, hc_bound\u27e9 := theta_weighted_lower_bound X ((1 : \u211d)/2 + t) hX ",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 260,
+        "code": "\u00b7 sorry  -- Final combination of estimates",
+        "context": "  use c\n  constructor\n  \u00b7 exact hc_pos\n  \u00b7 sorry  -- Final combination of estimates\n\n/-!\n## Section 6: Consequence for Nuclearity",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 282,
+        "code": "sorry",
+        "context": "      \u2203 \u03bb_n : \u211d, \u03bb_n \u2265 c * log (n : \u211d) := by\n  -- The eigenvalue counting function N(T) \u2264 C \u00b7 T / log T\n  -- implies \u03bb_n \u2265 c \u00b7 log n by inverting the counting function\n  sorry\n\n/-- Corollary: Heat Kernel is Trace-Class\n    ",
+        "primary_category": "spectral",
+        "all_categories": {
+          "spectral": 0.65
+        },
+        "complexity": 4,
+        "similar_solutions": []
+      },
+      {
+        "line": 295,
+        "code": "\u2211' n : \u2115, if h : n > 0 then exp (-t * (Classical.choose sorry : \u211d)) else 0 := by",
+        "context": "-/\ntheorem heat_kernel_trace_class (t : \u211d) (ht : t > 0) :\n    \u2203 trace_value : \u211d, trace_value = \n      \u2211' n : \u2115, if h : n > 0 then exp (-t * (Classical.choose sorry : \u211d)) else 0 := by\n  -- Logarithmic eigenvalue growth ensures convergence of heat kernel trace\n  sorry\n",
+        "primary_category": "spectral",
+        "all_categories": {
+          "spectral": 1.3
+        },
+        "complexity": 4,
+        "similar_solutions": []
+      },
+      {
+        "line": 297,
+        "code": "sorry",
+        "context": "    \u2203 trace_value : \u211d, trace_value = \n      \u2211' n : \u2115, if h : n > 0 then exp (-t * (Classical.choose sorry : \u211d)) else 0 := by\n  -- Logarithmic eigenvalue growth ensures convergence of heat kernel trace\n  sorry\n\n/-!\n## Section 7: FINAL DIAGNOSTIC - TABLERO EN VERDE \ud83d\udfe2\ud83d\udfe2\ud83d\udfe2",
+        "primary_category": "spectral",
+        "all_categories": {
+          "spectral": 0.65
+        },
+        "complexity": 4,
         "similar_solutions": []
       }
     ],
@@ -32540,6 +32776,6 @@
   },
   "summary": {
     "most_common_category": "qcal",
-    "avg_complexity": 3.707417070443533
+    "avg_complexity": 3.710059171597633
   }
 }
