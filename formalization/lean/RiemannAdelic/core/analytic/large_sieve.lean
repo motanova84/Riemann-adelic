@@ -60,14 +60,15 @@ theorem largeSieve_discrete
     (N Q : ℕ)
     (hQ : Q ≥ 1) :  -- Aseguramos que Q es positivo
     ∑ q in Finset.Icc 1 Q,
-      ∑ a₀ in Finset.Icc 1 q,
+      ∑ a₀ in Finset.range q,
         if Nat.coprime a₀ q then
           Complex.abs (expSum a N (ratPhase a₀ q)) ^ 2
         else 0
       ≤ (N + Q^2) *
         (∑ n in Finset.range N, Complex.abs (a n) ^ 2) := by
   -- La prueba clásica usa dualidad de Selberg.
-  -- Nota: El rango a₀ in 1..q asegura que la fase es no nula y positiva.
+  -- Nota: El rango a₀ in [0, q-1] es el sistema reducido de residuos estándar.
+  -- La coprimality con q se verifica explícitamente en la condición if.
   -- 
   -- Esquema de prueba:
   -- 1. Introducir el dual: φ(α) = Σ_{a₀/q: coprime} δ(α - a₀/q)

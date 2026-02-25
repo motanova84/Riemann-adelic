@@ -190,6 +190,9 @@ theorem exponential_sum_minor_arc_bound
       Complex.exp (2 * Real.pi * Complex.I * α * n)) ≤
     C * N * (Real.log N) ^ (-A) := by
   -- Elegimos U, V ≈ N^(1/3)
+  -- NOTA: Esta es la elección óptima estándar en el método del círculo
+  -- para balancear los términos Type I, II, y III. Para aplicaciones
+  -- específicas, otros valores pueden ser preferibles.
   let U := ⌊(N : ℝ) ^ (1/3 : ℝ)⌋.toNat
   let V := U
   

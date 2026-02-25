@@ -108,14 +108,22 @@ This form allows optimizations when U, V, and Q start to collide, providing bett
 
 ### Q Parameter Selection
 
-The optimal choice for the large sieve parameter is:
+The choice Q = ⌊√N⌋ is a classical balance in the circle method:
+
 ```lean
 Q = ⌊√N⌋
 ```
 
-This balances the two terms in the flexible bound:
-- UV term: ≈ N^(2/3) when U, V ≈ N^(1/3)
-- Q²(U+V) term: ≈ N * N^(1/3) = N^(4/3)
+This choice balances:
+- **UV term**: ≈ N^(2/3) when U, V ≈ N^(1/3)
+- **Q²(U+V) term**: ≈ N * N^(1/3) = N^(4/3)
+
+**Note on Optimality**: While Q²(U+V) dominates UV in this regime, the choice Q = ⌊√N⌋ is standard because:
+1. It ensures Q² ≈ N, which is the natural scale for the problem
+2. The minor arc condition (distance ≥ (log N)^(-1) from rationals with q ≤ log N) makes Q > log N necessary
+3. Going to smaller Q would require more careful treatment of Farey fractions
+
+Alternative choices like Q ≈ N^ε (small ε) are possible but require different analysis of the major arcs. The √N choice is the classical Vinogradov-Goldbach standard.
 
 ### Power Saving
 

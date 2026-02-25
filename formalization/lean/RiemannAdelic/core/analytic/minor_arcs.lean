@@ -98,15 +98,16 @@ axiom sum_mobius_divisor_bound (U : ℕ) (hU : U > 1) :
 
 /-- **Cota para los coeficientes de log (necesaria para Type II).**
     
-    La suma ∑_{n ≤ V} |∑_{ℓ|n} log ℓ|² está acotada por C₂ * V * (log V)².
+    La suma ∑_{n ≤ V} |∑_{ℓ|n} log ℓ|² está acotada por C₂ * V * (log V)⁵.
     
-    NOTA: En implementaciones más refinadas, el exponente puede ser mayor
-    (hasta (log V)⁵), pero usamos una cota conservadora aquí. -/
+    NOTA: El exponente 5 (en lugar de 2) refleja el hecho de que
+    la función log tiene más estructura que Möbius. Esta es la cota
+    que se implementa en divisor_bounds.lean. -/
 axiom sum_log_divisor_bound (V : ℕ) (hV : V > 1) :
     ∃ C₂ > 0,
     ∑ n in Icc 1 V, 
       Complex.abs (∑ l in (Nat.divisors n), (Real.log l : ℂ)) ^ 2 
-      ≤ C₂ * V * (Real.log V) ^ 2
+      ≤ C₂ * V * (Real.log V) ^ 5
 
 /-! ## Cota Bilineal Flexible para Large Sieve -/
 

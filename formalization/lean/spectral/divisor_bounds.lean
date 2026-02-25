@@ -14,7 +14,7 @@ import Mathlib.Analysis.SpecialFunctions.Log.Basic
   ## Contenido Principal
   
   1. **Cotas para la función de Möbius**: ∑_{n ≤ X} |∑_{d|n} μ(d)|² ≪ X(log X)²
-  2. **Cotas para divisores logarítmicos**: ∑_{n ≤ X} |∑_{d|n} log d|² ≪ X(log X)²
+  2. **Cotas para divisores logarítmicos**: ∑_{n ≤ X} |∑_{d|n} log d|² ≪ X(log X)⁵
   3. **Función tau**: ∑_{n ≤ X} τ(n)² ≪ X(log X)³
   
   Estas son las cotas de "combustible" que hacen que la maquinaria de Vaughan gire.
