@@ -199,7 +199,7 @@ def main():
     # Check 3: Mathematical content
     print("Checking mathematical content...")
     print("-" * 70)
-    math_pass, math_checks = check_file_structure(content)
+    math_pass, math_checks = validate_mathematical_content(content)
     for check in math_checks:
         print(check)
     print()

@@ -1,10 +1,10 @@
 {
   "file": "spectral/DivisorBounds.lean",
-  "validation_timestamp": "2026-02-25T22:19:52.539957",
+  "validation_timestamp": "2026-02-25T22:22:39.351922",
   "file_hash": "0xQCAL_DIVISOR_663142e09c9bfc46",
   "qcal_framework": "V7.1",
-  "checks_passed": 38,
-  "checks_total": 38,
+  "checks_passed": 26,
+  "checks_total": 26,
   "status": "READY_FOR_INTEGRATION",
   "mathematical_structure": {
     "tau_bounds": "O(X (log X)^3)",
