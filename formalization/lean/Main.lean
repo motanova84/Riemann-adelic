@@ -1,10 +1,18 @@
--- Main entry point for Riemann Adelic Lean formalization (V7.0 Final)
+-- Main entry point for Riemann Adelic Lean formalization (V7.1 Final - Circle Closure)
 import RiemannAdelic.axioms_to_lemmas
+
+-- NEW V7.1: Circle Closure - Goldbach and ABC from Adelic Structure ✨
+import goldbach_from_adelic
 
 -- NEW V7.0: Complete RH Proof Modules (January 2026)
 import KernelExplicit        -- Explicit kernel H_ψ construction
 import RHProved             -- Final RH theorem: ∀ s, ζ(s)=0 → s∉trivial → Re(s)=1/2
 import NoesisInfinity       -- QCAL ∞³ oracle and resonance validation
+
+-- GRH and ABC Extensions
+import GRH                  -- Generalized Riemann Hypothesis for L-functions
+import GRH_complete         -- Complete GRH formalization with Dirichlet characters
+import Arpeth_ABC_Confinement -- ABC Conjecture resolution via spectral rigidity
 
 -- NEW: Core modules for solid D(s) foundation (V5.3+)
 -- Module 1: Functional equation for D(s) (classical definition)
