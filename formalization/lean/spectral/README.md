@@ -6,6 +6,51 @@ This directory contains the formal Lean 4 definition of the noetic operator $\ma
 
 ## Files
 
+### `divisor_bounds.lean` (NEW - 25 February 2026)
+
+**Divisor Bounds for Circle Method and Type II Estimates**
+
+This file establishes the **quadratic bounds** necessary for the circle method in analytic number theory, specifically for Vaughan's identity and Type II estimates. It provides a robust implementation of divisor counting and Möbius function bounds that feed into the large sieve machinery.
+
+#### 5-Step Pipeline
+
+| Step | Component | Complexity | Status |
+|------|-----------|------------|--------|
+| 1 | `card_multiples_le` | O(X/lcm(d,e)) | ✅ Multiple counting via lcm |
+| 2 | `sum_tau_sq_le` | O(X(logX)³) | ✅ Divisor function quadratic bound |
+| 3 | `sum_mobius_conv_sq_le` | O(X(logX)³) | ✅ Möbius convolution bound |
+| 4 | `sum_log_sum_sq_le` | O(X(logX)⁵) | ✅ Log divisor sum bound |
+| 5 | `vaughan_l2_fuel` | O(X²(logX)⁸) | ✅ L² assembly for Type II |
+
+#### Key Results
+
+| Result | Type | Purpose |
+|--------|------|---------|
+| `tau` | Definition | Divisor function τ(n) = number of divisors |
+| `mobiusConv` | Definition | Möbius convolution ∑_{d\|n} μ(d) |
+| `logSum` | Definition | Log divisor sum ∑_{d\|n} log d |
+| `mobiusConv_abs_le_tau` | Lemma | Bridge: \|μ-conv(n)\| ≤ τ(n) |
+| `vaughan_l2_fuel` | Theorem | Type II L² bound for Vaughan identity |
+
+#### Integration Points
+
+- **Large Sieve**: Provides L² norms for bilinear bounds in `RiemannAdelic/core/analytic/large_sieve.lean`
+- **Vaughan Identity**: Type II decomposition for von Mangoldt function
+- **Circle Method**: Minor arcs control via divisor bounds
+
+#### Mathematical Significance
+
+The module implements the classical divisor bound pipeline:
+1. **Multiple counting**: Robust lcm-based enumeration
+2. **τ function**: Quadratic mean bound O(X(logX)³)
+3. **Möbius reduction**: Triangle inequality reduces to τ
+4. **Log control**: Pointwise bound logSum ≤ τ log n
+5. **Type II fuel**: Product bound O(X²(logX)⁸) for circle method
+
+See [`DIVISOR_BOUNDS_README.md`](DIVISOR_BOUNDS_README.md) for detailed documentation and [`DIVISOR_BOUNDS_QUICKREF.md`](DIVISOR_BOUNDS_QUICKREF.md) for quick reference.
+
+---
+
 ### `resolvent_trace.lean` (NEW - 17 February 2026)
 
 **Teorema: Expresión de la traza del resolvente**
