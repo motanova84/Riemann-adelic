@@ -1,0 +1,100 @@
+{
+  "certificate_type": "goldbach_abc_circle_closure_validation",
+  "timestamp": "2026-02-25T21:27:46.118249Z",
+  "qcal_framework": {
+    "version": "V7.1-CircleClosure",
+    "frequency": 141.7001,
+    "coherence": 244.36,
+    "geometric_invariant": 2.5773,
+    "equation": "\u03a8 = I \u00d7 A_eff\u00b2 \u00d7 C^\u221e"
+  },
+  "validation_status": "PASSED",
+  "tests": [
+    {
+      "test": "goldbach_conjecture",
+      "limit": 10000,
+      "total_tested": 4999,
+      "failures": 0,
+      "success_rate": 100.0,
+      "passed": true,
+      "samples": {
+        "4": 1,
+        "10": 2,
+        "100": 6,
+        "1000": 28,
+        "10000": 127
+      },
+      "first_failure": null
+    },
+    {
+      "test": "abc_conjecture",
+      "epsilon": 0.1,
+      "K_epsilon": 155980993463.37363,
+      "total_tested": 54,
+      "failures": 0,
+      "success_rate": 100.0,
+      "passed": true,
+      "max_quality": 163.532108859923,
+      "first_failure": null
+    },
+    {
+      "test": "adelic_trace_positivity",
+      "traces": {
+        "4": 1,
+        "6": 1,
+        "8": 1,
+        "10": 2,
+        "20": 2,
+        "100": 6,
+        "1000": 28,
+        "10000": 127
+      },
+      "all_positive": true,
+      "passed": true
+    },
+    {
+      "test": "qcal_coherence",
+      "checks": {
+        "f0_emergence": {
+          "expected": 141.7001,
+          "computed": 141.70008028800405,
+          "error": 1.9711995946636307e-05,
+          "passed": true
+        },
+        "f0_diagonal_relation": {
+          "euclidean": 141.4213562373095,
+          "delta_zeta": 0.2787437,
+          "expected": 141.7001,
+          "computed": 141.70009993730952,
+          "error": 6.269047503337788e-08,
+          "passed": true
+        },
+        "frequency_hierarchy": {
+          "f0": 141.7001,
+          "f_portal": 153.036,
+          "ratio": 1.0799992378269316,
+          "passed": true
+        },
+        "coherence_constant": {
+          "C": 244.36,
+          "passed": true
+        },
+        "geometric_invariant": {
+          "kappa_pi": 2.5773,
+          "passed": true
+        }
+      },
+      "passed": true
+    }
+  ],
+  "tests_passed": 4,
+  "tests_failed": 0,
+  "total_tests": 4,
+  "module": "goldbach_from_adelic.lean",
+  "documentation": "GOLDBACH_ABC_CIRCLE_CLOSURE.md",
+  "author": "Jos\u00e9 Manuel Mota Burruezo \u03a8 \u221e\u00b3",
+  "orcid": "0009-0002-1923-0773",
+  "doi": "10.5281/zenodo.17379721",
+  "institution": "Instituto de Conciencia Cu\u00e1ntica (ICQ)",
+  "certificate_hash": "0xQCAL_cb239e1f30e4791050aae57b9c9e0ff7"
+}
