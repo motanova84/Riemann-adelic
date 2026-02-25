@@ -40,6 +40,8 @@ import RiemannAdelic.core.analytic.von_mangoldt
   y luego reagrupamos por residuos r = n % q.
 -/
 
+noncomputable section
+
 open scoped BigOperators
 open Complex Finset
 
@@ -119,28 +121,24 @@ lemma HLsum_decompose_mod_q
           ∑ n in (Finset.range N).filter (fun n => n % q = r),
             (vonMangoldt (q * (n / q) + r) : ℂ) *
               Complex.exp (2 * Real.pi * Complex.I * α * q * (n / q)) := by
-    -- Primero, factorizamos e(α r) fuera de la suma interna
+    -- Factorizamos e(α r) fuera de la suma interna
+    -- y usamos que n % q = r para cada n en el filtro
     rw [Finset.sum_fiberwise_of_maps_to _ (fun n => n % q)]
     · intro n hn
       simp only [Finset.mem_range] at hn
       exact Nat.mod_lt n hq
     · intro r hr
-      simp only [Finset.mul_sum]
       congr 1
       ext n
       simp only [Finset.mem_filter, Finset.mem_range]
-      constructor
-      · intro ⟨hn1, hn2⟩
-        simp [hn2]
-      · intro h
-        simp only [and_true]
+      by_cases h : n ∈ Finset.range N ∧ n % q = r
+      · simp [h]
         constructor
-        · cases h with
-          | inl h => exact h.1
-          | inr h => sorry  -- Este caso no debería ocurrir
-        · cases h with
-          | inl h => exact h.2
-          | inr h => sorry
+        · intro _
+          exact ⟨h.1, h.2⟩
+        · intro _
+          rfl
+      · simp [h]
 
   rw [h_group]
 
@@ -202,3 +200,5 @@ lemma HLsum_decompose_mod_q_conditional
   exact HLsum_decompose_mod_q N q hq α
 
 end AnalyticNumberTheory
+
+end -- noncomputable section
