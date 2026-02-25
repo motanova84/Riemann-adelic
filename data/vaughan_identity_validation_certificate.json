@@ -1,0 +1,76 @@
+{
+  "timestamp": "2026-02-25T22:20:39.763237",
+  "framework": "Vaughan Identity for Circle Method",
+  "qcal_version": "\u221e\u00b3",
+  "lean_version": "v4.5.0",
+  "f\u2080_value": 141.7001,
+  "validation_results": {
+    "file_existence": {
+      "von_mangoldt": true,
+      "vaughan_identity": true,
+      "bilinear_bounds": true
+    },
+    "von_mangoldt": {
+      "status": "valid",
+      "checks": {
+        "vonMangoldt_def": true,
+        "vonMangoldt_ne_zero_iff": true,
+        "vonMangoldt_prime": true,
+        "sum_vonMangoldt_divisors": true,
+        "chebyshev_psi": true,
+        "vonMangoldt_nonneg": true,
+        "vonMangoldt_le_log": true,
+        "sorry_count": 3
+      }
+    },
+    "vaughan_identity": {
+      "status": "valid",
+      "checks": {
+        "m\u00f6biusMu_def": true,
+        "typeI_term": true,
+        "typeII_term": true,
+        "typeIII_term": true,
+        "VaughanDecomposition": true,
+        "vaughan_identity": true,
+        "vaughan_exponential_sum": true,
+        "coeff_a": true,
+        "coeff_b": true,
+        "sorry_count": 7
+      }
+    },
+    "bilinear_bounds": {
+      "status": "incomplete",
+      "checks": {
+        "MinorArcs": true,
+        "spectral_kernel": true,
+        "f\u2080_QCAL": true,
+        "spectral_kernel_bounded": true,
+        "spectral_kernel_decay": true,
+        "bilinear_pre_cauchy_schwarz": true,
+        "typeII_bilinear_bound": true,
+        "typeII_bilinear_bound_with_f\u2080": true,
+        "philosophical_role_of_f\u2080": true,
+        "f\u2080_value_correct": true,
+        "sorry_count": 6,
+        "has_f\u2080_philosophy": false
+      }
+    },
+    "mathematical_coherence": {
+      "status": "coherent",
+      "checks": {
+        "von_mangoldt_prime_power_def": true,
+        "vaughan_three_types": true,
+        "f\u2080_kernel_present": true,
+        "f\u2080_value_present": true,
+        "vaughan_imports_von_mangoldt": true,
+        "bilinear_imports_vaughan": true
+      }
+    }
+  },
+  "summary": {
+    "total_checks": 36,
+    "passed_checks": 0,
+    "total_sorry_statements": 16,
+    "validation_status": "FAIL"
+  }
+}
