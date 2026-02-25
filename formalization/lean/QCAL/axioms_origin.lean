@@ -183,6 +183,9 @@ theorem unique_harmonic_point (κ V : ℝ) (hκ : κ > 0) :
     -- For a parabola (ax - b)² with a ≠ 0, the unique minimum is at x = b/a
     -- Here a = κ·2π and b = V
     sorry  -- Uniqueness of parabola minimum (standard calculus result)
+           -- TODO: Formal proof using derivatives and second derivative test
+           -- This is a standard result: For F(x) = (ax-b)² with a≠0,
+           -- the unique minimum is at x = b/a.
 
 /-!
 ## Structural Definition of f₀ as Inevitable Solution
@@ -250,6 +253,8 @@ theorem f₀_emergence_from_geometry :
   have h := Classical.choose_spec (unique_harmonic_point κ_π V_critical κ_π_pos).exists
   -- The unique minimum of (f·κ·2π - V)² is at f = V/(κ·2π)
   sorry  -- Technical: extract the value from the uniqueness proof
+         -- TODO: This requires showing that Classical.choose returns V/(κ·2π)
+         -- The proof follows from the construction of unique_harmonic_point
 
 /--
 **Lemma: Numerical Evaluation**
@@ -269,6 +274,9 @@ lemma f₀_numerical_evaluation :
   -- 2294.642 / (2.5773 × 6.28318) ≈ 141.7001
   unfold V_critical κ_π f₀_derived
   sorry  -- Numerical verification (can be done with norm_num tactics)
+         -- TODO: Use Lean's norm_num to verify:
+         -- 2294.642 / (2.5773 × 6.28318...) ≈ 141.7001
+         -- This is a computational check, not a deep mathematical result
 
 /--
 **Corollary**: f₀ is unique (NO other frequency satisfies the constraints)
