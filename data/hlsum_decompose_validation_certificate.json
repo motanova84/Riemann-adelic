@@ -1,5 +1,5 @@
 {
-  "validation_timestamp": "2026-02-25T22:39:24.283868",
+  "validation_timestamp": "2026-02-25T22:40:58.071470",
   "module": "hlsum_decompose.lean",
   "theorem": "HLsum_decompose_mod_q",
   "test_results": [
