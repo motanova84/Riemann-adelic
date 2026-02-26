@@ -1,0 +1,22 @@
+{
+  "validation_type": "minor_arcs_vaughan_identity",
+  "timestamp": "2026-02-26T11:22:07.096668",
+  "framework": "QCAL \u221e\u00b3",
+  "constants": {
+    "f0_Hz": 141.7001,
+    "C_coherence": 244.36
+  },
+  "tests": {
+    "von_mangoldt": "PASSED",
+    "minor_arc_condition": "PASSED",
+    "HLsum_bound": "PASSED",
+    "power_saving": "PASSED",
+    "qcal_threshold": "PASSED"
+  },
+  "theorem": "HLsum_minor_arc_bound",
+  "statement": "For \u03b1 in minor arcs: |S(\u03b1)| \u2264 C N / (log N)^A",
+  "author": "Jos\u00e9 Manuel Mota Burruezo \u03a8 \u221e\u00b3",
+  "institution": "Instituto de Conciencia Cu\u00e1ntica (ICQ)",
+  "orcid": "0009-0002-1923-0773",
+  "certificate_hash": "0xQCAL_MINOR_ARCS_586eb580fd5632cf"
+}
