@@ -1,0 +1,44 @@
+{
+  "validation_type": "vaughan_identity_minor_arcs",
+  "timestamp": "2026-02-25T22:34:09.306347",
+  "qcal_constants": {
+    "f0": 141.7001,
+    "C": 244.36,
+    "kappa_pi": 2.5773
+  },
+  "tests": {
+    "vaughan_decomposition": {
+      "passed": true,
+      "max_error": 0.0,
+      "N": 100,
+      "U": 4,
+      "V": 4
+    },
+    "minor_arc_bound": {
+      "passed": true,
+      "N": 50,
+      "Q": 15.303923994999064,
+      "delta": 0.6762433378062414,
+      "test_results": []
+    },
+    "large_sieve": {
+      "passed": true,
+      "M": 0,
+      "N": 30,
+      "Q": 10,
+      "lhs": 368.1395843118154,
+      "rhs": 6517.460462701615,
+      "ratio": 0.05648512736189493
+    },
+    "spectral_kernel": {
+      "passed": true,
+      "f0": 141.7001,
+      "sigma": 10.0,
+      "kernel_on_resonance": 0.9950124791926823,
+      "kernel_off_resonance": 1.9287498479639178e-22,
+      "decay_factor": 5.15884670188343e+21
+    }
+  },
+  "overall_status": true,
+  "certificate_hash": "0xQCAL_VAUGHAN_49952b6b7d38bea0"
+}
