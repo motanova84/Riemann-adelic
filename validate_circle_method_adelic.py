@@ -111,12 +111,12 @@ class CircleMethodValidator:
             
             # For even n > 2, the singular series should be positive
             # Asymptotic value is around 0.66 for large even n
-            assert sigma_partial > 0.4, f"Singular series too small for n={n}"
+            assert sigma_partial > 0.6, f"Singular series too small for n={n}"
             
             results.append({
                 'n': n,
                 'sigma_partial': float(sigma_partial),
-                'bound_satisfied': sigma_partial > 0.5
+                'bound_satisfied': sigma_partial > 0.6
             })
         
         self.results['test_2'] = {
