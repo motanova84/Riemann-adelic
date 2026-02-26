@@ -98,7 +98,15 @@ lemma bilinear_cauchy_schwarz
   
   rw [h_sum]
   -- Cauchy-Schwarz: |∑ a_m c_m|² ≤ (∑|a_m|²)(∑|c_m|²)
-  sorry
+  -- Aplicar sq_abs y desigualdad de Cauchy-Schwarz
+  rw [sq_abs]
+  have h_cs : Complex.normSq (∑ m in Icc 1 U, a m * c m) ≤
+      (∑ m in Icc 1 U, Complex.normSq (a m)) * (∑ m in Icc 1 U, Complex.normSq (c m)) := by
+    -- Usar forma cuadrática de Cauchy-Schwarz
+    apply Complex.inner_mul_le_norm_mul_norm
+  -- normSq x = |x|² para complejos
+  simp only [Complex.normSq_eq_abs] at h_cs ⊢
+  exact h_cs
 
 /-!
 ## Paso 2: Expansión del Cuadrado
@@ -126,7 +134,18 @@ lemma expand_inner_sq_full (U V : ℕ) (α : ℝ) (b : ℕ → ℂ) (m : ℕ) (h
         (b n1 * starRingEnd ℂ (b n2)) * expAdd (α * m * (n1 - n2)) := by
   rw [normSq_eq_conj_mul_self]
   -- Expandir (∑ b_n e(αmn)) · conj(∑ b_n' e(αmn'))
-  sorry
+  rw [map_sum, mul_sum, sum_mul]
+  congr 1
+  ext n1
+  congr 1
+  ext n2
+  -- Usar propiedades de la conjugación y exponenciales
+  rw [map_mul, starRingEnd_apply, ← mul_assoc, mul_comm (b n1), mul_assoc]
+  congr 1
+  -- expAdd es e^{2πi·}, así que conj(e^{2πiαmn2}) = e^{-2πiαmn2}
+  simp only [expAdd]
+  rw [RingHom.map_mul, starRingEnd_apply]
+  simp [Complex.conj_exp, mul_comm]
 
 /-!
 ## Paso 3: Large Sieve Application
@@ -144,11 +163,27 @@ lemma large_sieve_exponential_sum
     (hα : MinorArcs N f₀ α) :
     Complex.abs (∑ m in Icc 1 U, expAdd (α * m * d)) ≤
     C_ls * Real.sqrt (U + N) := by
-  -- Caso d = 0: suma = U (trivial)
+  -- Caso d = 0: suma = U (trivial) 
   by_cases hd : d = 0
-  · sorry
-  -- Caso d ≠ 0: aplicar large sieve con Q = ⌊√N⌋
-  · sorry
+  · -- expAdd(0) = 1, así que ∑_{m=1}^U 1 = U
+    subst hd
+    simp only [Int.cast_zero, mul_zero]
+    have h_exp_zero : ∀ m, expAdd (α * ↑m * 0) = 1 := by
+      intro m; simp [expAdd]
+    simp only [h_exp_zero, sum_const, card_Icc, Nat.cast_sub, Nat.cast_one]
+    by_cases hU : 1 ≤ U
+    · simp [Nat.sub_add_cancel hU]
+      -- U ≤ C_ls √(U+N) por elección de C_ls
+      have : (U : ℝ) ≤ Real.sqrt ((U : ℝ) + N) * Real.sqrt ((U : ℝ) + N) := by
+        rw [← sq]; rw [Real.sq_sqrt]; linarith; positivity
+      linarith [mul_pos C_ls_pos (Real.sqrt_pos.mpr (by positivity : 0 < (U : ℝ) + N))]
+    · simp at hU; omega
+  -- Caso d ≠ 0: aplicar large sieve
+  · -- Para d ≠ 0, la suma exponencial exhibe cancelación
+    -- Large sieve bound: |∑ e(αmd)| ≤ min(U, C/||αd||)
+    -- En minor arcs: ||αd|| ≥ 1/(log N), así que bound ≤ C log N
+    -- Combinado con trivial bound U, obtenemos ≤ C√(U+N)
+    sorry -- Requiere: largeSieve_discrete aplicado correctamente
 
 /-!
 ## Paso 4: Teorema Principal
@@ -206,8 +241,58 @@ theorem typeII_bilinear_minor
     fun m hm => expand_inner_sq U V α b m hm
   
   -- Paso 3-11: Pipeline completo
-  -- (El resto de la prueba sigue el esquema detallado en el problema)
-  sorry
+  -- Pipeline: Cauchy-Schwarz → expansión cuadrado → large sieve → simplificar
+  
+  -- De h_cs tenemos: |∑_m ∑_n a_m b_n e(αmn)|² ≤ (∑|a_m|²) · ∑_m |∑_n b_n e(αmn)|²
+  -- Aplicar raíz cuadrada a ambos lados
+  have h_sqrt_cs : Complex.abs (∑ m in Icc 1 U, ∑ n in Icc 1 V, a m * b n * expAdd (α * m * n)) ≤
+      Real.sqrt (∑ m in Icc 1 U, Complex.abs (a m) ^ 2) *
+      Real.sqrt (∑ m in Icc 1 U, Complex.abs (∑ n in Icc 1 V, b n * expAdd (α * m * n)) ^ 2) := by
+    have h := Real.sqrt_le_sqrt h_cs
+    rw [Real.sqrt_mul] at h
+    · exact h
+    · positivity
+    
+  -- Ahora necesitamos acotar ∑_m |∑_n b_n e(αmn)|²
+  -- Usando expand_inner_sq_full y large_sieve_exponential_sum
+  have h_inner_bound : ∑ m in Icc 1 U, Complex.abs (∑ n in Icc 1 V, b n * expAdd (α * m * n)) ^ 2 ≤
+      (∑ n in Icc 1 V, Complex.abs (b n) ^ 2) * (C_ls ^ 2 * ((U : ℝ) + N)) := by
+    -- Cada término |∑_n b_n e(αmn)|² se expande y acota
+    sorry -- Requiere: aplicar expand_inner_sq_full, luego large_sieve, luego bound de ∑|b|
+  
+  -- Combinar los bounds
+  calc Complex.abs (∑ m in Icc 1 U, ∑ n in Icc 1 V, a m * b n * expAdd (α * m * n))
+      ≤ Real.sqrt (∑ m in Icc 1 U, Complex.abs (a m) ^ 2) *
+        Real.sqrt (∑ m in Icc 1 U, Complex.abs (∑ n in Icc 1 V, b n * expAdd (α * m * n)) ^ 2) 
+          := h_sqrt_cs
+      _ ≤ Real.sqrt (∑ m in Icc 1 U, Complex.abs (a m) ^ 2) *
+          Real.sqrt ((∑ n in Icc 1 V, Complex.abs (b n) ^ 2) * (C_ls ^ 2 * ((U : ℝ) + N)))
+          := by
+            apply mul_le_mul_of_nonneg_left _ (Real.sqrt_nonneg _)
+            exact Real.sqrt_le_sqrt h_inner_bound
+      _ = Real.sqrt (∑ m in Icc 1 U, Complex.abs (a m) ^ 2) *
+          (Real.sqrt (∑ n in Icc 1 V, Complex.abs (b n) ^ 2) * (C_ls * Real.sqrt ((U : ℝ) + N)))
+          := by
+            rw [Real.sqrt_mul, Real.sqrt_mul, Real.sqrt_sq]
+            ring
+            · exact le_of_lt C_ls_pos
+            · positivity
+            · positivity
+      _ = C_ls * Real.sqrt ((∑ m in Icc 1 U, Complex.abs (a m) ^ 2) * 
+                            (∑ n in Icc 1 V, Complex.abs (b n) ^ 2)) *
+          Real.sqrt ((U : ℝ) + N)
+          := by
+            rw [Real.sqrt_mul]
+            ring
+            positivity
+      _ ≤ C_typeII * Real.sqrt ((∑ m in Icc 1 U, Complex.abs (a m) ^ 2) * 
+                                 (∑ n in Icc 1 V, Complex.abs (b n) ^ 2)) *
+          Real.sqrt ((U : ℝ) + N)
+          := by
+            apply mul_le_mul_of_nonneg_right _ (Real.sqrt_nonneg _)
+            apply mul_le_mul_of_nonneg_right _ (Real.sqrt_nonneg _)
+            -- C_ls ≤ C_typeII por definición
+            sorry -- Axiom: C_ls ≤ C_typeII
 
 /-!
 ## Corolarios y Aplicaciones
