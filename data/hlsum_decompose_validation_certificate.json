@@ -1,0 +1,142 @@
+{
+  "validation_type": "HLsum_decompose_mod_q",
+  "timestamp": "2026-02-26T10:55:04.088565Z",
+  "validator": "validate_hlsum_decompose.py",
+  "framework": "QCAL \u221e\u00b3",
+  "all_tests_passed": true,
+  "test_count": 6,
+  "passed_count": 6,
+  "test_results": [
+    {
+      "test_name": "Test 1: Small N, rational \u03b1",
+      "parameters": {
+        "N": 100,
+        "q": 10,
+        "alpha": 0.5
+      },
+      "direct_sum": {
+        "real": -85.72754506263803,
+        "imag": 3.963524899169124e-13
+      },
+      "decomposed_sum": {
+        "real": -85.72754506263804,
+        "imag": 3.9635248991691234e-13
+      },
+      "absolute_error": 1.4210854715202004e-14,
+      "relative_error": 1.657676620136326e-16,
+      "passed": true,
+      "tolerance": 1e-10
+    },
+    {
+      "test_name": "Test 2: Medium N, prime q, irrational \u03b1",
+      "parameters": {
+        "N": 500,
+        "q": 7,
+        "alpha": 0.4487989505128276
+      },
+      "direct_sum": {
+        "real": -3.558181585170761,
+        "imag": -11.046349590041455
+      },
+      "decomposed_sum": {
+        "real": -3.5581815851707637,
+        "imag": -11.046349590041457
+      },
+      "absolute_error": 3.2023728339893768e-15,
+      "relative_error": 2.759410519920618e-16,
+      "passed": true,
+      "tolerance": 1e-10
+    },
+    {
+      "test_name": "Test 3: Large N, composite q",
+      "parameters": {
+        "N": 1000,
+        "q": 12,
+        "alpha": 0.123456
+      },
+      "direct_sum": {
+        "real": -76.14473932978909,
+        "imag": 25.22085149700753
+      },
+      "decomposed_sum": {
+        "real": -76.14473932978912,
+        "imag": 25.22085149700751
+      },
+      "absolute_error": 3.552713678800501e-14,
+      "relative_error": 4.429103988915345e-16,
+      "passed": true,
+      "tolerance": 1e-10
+    },
+    {
+      "test_name": "Test 4: Edge case q=1",
+      "parameters": {
+        "N": 200,
+        "q": 1,
+        "alpha": 0.25
+      },
+      "direct_sum": {
+        "real": 3.46573590280031,
+        "imag": 1.4480253793187767
+      },
+      "decomposed_sum": {
+        "real": 3.46573590280031,
+        "imag": 1.4480253793187767
+      },
+      "absolute_error": 0.0,
+      "relative_error": 0.0,
+      "passed": true,
+      "tolerance": 1e-10
+    },
+    {
+      "test_name": "Test 5: Large q relative to N",
+      "parameters": {
+        "N": 150,
+        "q": 50,
+        "alpha": 0.707
+      },
+      "direct_sum": {
+        "real": -7.769007597313513,
+        "imag": -5.53191726617084
+      },
+      "decomposed_sum": {
+        "real": -7.769007597313511,
+        "imag": -5.531917266170838
+      },
+      "absolute_error": 2.5121479338940403e-15,
+      "relative_error": 2.634031526964451e-16,
+      "passed": true,
+      "tolerance": 1e-10
+    },
+    {
+      "test_name": "Test 6: Golden ratio \u03b1",
+      "parameters": {
+        "N": 300,
+        "q": 17,
+        "alpha": 0.6180339887498948
+      },
+      "direct_sum": {
+        "real": 33.52841083382219,
+        "imag": -12.39102138738929
+      },
+      "decomposed_sum": {
+        "real": 33.528410833822164,
+        "imag": -12.391021387389282
+      },
+      "absolute_error": 2.9777166713245526e-14,
+      "relative_error": 8.3304857943375e-16,
+      "passed": true,
+      "tolerance": 1e-10
+    }
+  ],
+  "mathematical_property": "HLsum decomposition by residue classes mod q",
+  "implementation_files": [
+    "formalization/lean/RiemannAdelic/core/analytic/von_mangoldt.lean",
+    "formalization/lean/RiemannAdelic/core/analytic/hlsum_decompose.lean"
+  ],
+  "qcal_coherence": {
+    "base_frequency": 141.7001,
+    "framework": "QCAL \u221e\u00b3",
+    "validation_status": "coherent"
+  },
+  "certificate_hash": "0xQCAL_HLSUM_b3096d0d76a34363"
+}
