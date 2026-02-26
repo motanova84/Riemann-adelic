@@ -1,34 +1,34 @@
 {
-  "total_sorries": 2786,
-  "total_files": 428,
+  "total_sorries": 2852,
+  "total_files": 439,
   "category_distribution": {
     "qcal": {
-      "count": 1123,
-      "percentage": 40.30868628858579
+      "count": 1139,
+      "percentage": 39.93688639551192
     },
     "unknown": {
-      "count": 741,
-      "percentage": 26.597272074659013
+      "count": 773,
+      "percentage": 27.103786816269288
     },
     "spectral": {
       "count": 369,
-      "percentage": 13.244795405599424
+      "percentage": 12.9382889200561
     },
     "correspondence": {
       "count": 33,
-      "percentage": 1.1844938980617372
+      "percentage": 1.1570827489481066
     },
     "adelic": {
-      "count": 105,
-      "percentage": 3.7688442211055273
+      "count": 109,
+      "percentage": 3.8218793828892004
     },
     "analytic": {
-      "count": 181,
-      "percentage": 6.496769562096196
+      "count": 186,
+      "percentage": 6.521739130434782
     },
     "trivial": {
-      "count": 234,
-      "percentage": 8.399138549892319
+      "count": 243,
+      "percentage": 8.520336605890604
     }
   },
   "detailed": {
@@ -2017,9 +2017,31 @@
     ],
     "formalization/lean/bridge_propositions.lean": [
       {
-        "line": 91,
+        "line": 80,
+        "code": "\u03c0 := fun x => sorry  -- Prime counting function",
+        "context": "  \u2203 C : \u211d, C > 0 \u2227\n  abs (\u03c0 x - Li x) \u2264 C * (sqrt x) * (log x)\n  where\n    \u03c0 := fun x => sorry  -- Prime counting function\n    Li := fun x => sorry  -- Logarithmic integral\n\n/-- ",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 81,
+        "code": "Li := fun x => sorry  -- Logarithmic integral",
+        "context": "  abs (\u03c0 x - Li x) \u2264 C * (sqrt x) * (log x)\n  where\n    \u03c0 := fun x => sorry  -- Prime counting function\n    Li := fun x => sorry  -- Logarithmic integral\n\n/-- \n  **HYPOTHESIS: ABC Structural Connection**",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 127,
         "code": "sorry  -- Technical: requires explicit formula + spectral bounds",
-        "context": "  -- 2. Eigenvalue gaps are bounded by spectral theory\n  -- 3. Prime gaps are controlled by zero distribution (explicit formula)\n  -- 4. The density D(s) provides the precise bounds\n  sorry  -- Technical: requires explicit formula + spectral bounds\n\n/-!\n## Part II: Goldbach Conjecture via Additive Structure",
+        "context": "  -- 2. Eigenvalue gaps are bounded by spectral theory\n  -- 3. Prime gaps are controlled by zero distribution (explicit formula)\n  -- 4. The density D(s) provides the precise bounds\n  sorry  -- Technical: requires explicit formula + spectral bounds\n\n/-!\n## \ud83d\udd34 AJUSTE #4: Concreci\u00f3n de la Hip\u00f3tesis Espectral",
         "primary_category": "spectral",
         "all_categories": {
           "spectral": 0.65
@@ -2028,7 +2050,18 @@
         "similar_solutions": []
       },
       {
-        "line": 105,
+        "line": 184,
+        "code": "sorry  -- Technical: full circle method with spectral control",
+        "context": "  -- Minor arcs: Use exponential sum bounds from Step 2\n  \n  -- Step 4: Show r_2(n) > 0\n  sorry  -- Technical: full circle method with spectral control\n\n/-!\n## Part II: Goldbach Conjecture via Additive Structure",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 198,
         "code": "sorry  -- Count pairs (p,q) with p + q = n, both prime",
         "context": "\n/-- Number of Goldbach representations of n -/\ndef goldbach_representations (n : \u2115) : \u2115 :=\n  sorry  -- Count pairs (p,q) with p + q = n, both prime\n\n/-- Circle method integral for Goldbach -/\naxiom goldbach_circle_integral :",
         "primary_category": "unknown",
@@ -2039,9 +2072,9 @@
         "similar_solutions": []
       },
       {
-        "line": 110,
+        "line": 203,
         "code": "goldbach_representations n = sorry  -- Circle method formula",
-        "context": "/-- Circle method integral for Goldbach -/\naxiom goldbach_circle_integral :\n  \u2200 n : \u2115, n \u2265 4 \u2192 Even n \u2192\n  goldbach_representations n = sorry  -- Circle method formula\n\n/--\n**Theorem: Goldbach Conjecture (Structural Proof)**",
+        "context": "/-- Circle method integral for Goldbach -/\naxiom goldbach_circle_integral :\n  \u2200 n : \u2115, n \u2265 4 \u2192 Even n \u2192\n  goldbach_representations n = sorry  -- Circle method formula\n\n/--\n**Theorem: Bridge to Goldbach (CONDITIONAL)**",
         "primary_category": "unknown",
         "all_categories": {
           "unknown": 1.0
@@ -2050,18 +2083,29 @@
         "similar_solutions": []
       },
       {
-        "line": 139,
-        "code": "sorry  -- Technical: full circle method argument",
-        "context": "  -- This shows minor arcs give negligible contribution\n  \n  -- Step 4: Combine to show r_2(n) \u2265 C \u00b7 n / (log n)\u00b2 > 0\n  sorry  -- Technical: full circle method argument\n\n/--\n**Lemma: Goldbach Density Lower Bound**",
-        "primary_category": "adelic",
+        "line": 228,
+        "code": "sorry  -- Technical: D(s) \u2208 PW(B) \u2192 spectral control",
+        "context": "  -- Assume D(s) satisfies spectral control with some constant C\n  have h_D_spectral : \u2203 D : \u2102 \u2192 \u2102, \u2203 C : \u211d, Hyp_Spectral_Control D C := by\n    -- D(s) from PW class satisfies spectral control\n    sorry  -- Technical: D(s) \u2208 PW(B) \u2192 spectral control\n  \n  obtain \u27e8D, C, h_control\u27e9 := h_D_spectral\n  ",
+        "primary_category": "unknown",
         "all_categories": {
-          "adelic": 0.6
+          "unknown": 1.0
         },
         "complexity": 5,
         "similar_solutions": []
       },
       {
-        "line": 154,
+        "line": 254,
+        "code": "sorry  -- Technical: full circle method with hypothesis",
+        "context": "  -- Exponential sums are controlled by spectral hypothesis\n  \n  -- Step 4: Combine to show r_2(n) > 0\n  sorry  -- Technical: full circle method with hypothesis\n\n/--\n**Lemma: Goldbach Density Lower Bound**",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 269,
         "code": "sorry  -- Technical: asymptotic analysis with RH",
         "context": "  -- 1. Hardy-Littlewood asymptotic formula\n  -- 2. L-function bounds from D(s)\n  -- 3. Sieve methods with RH\n  sorry  -- Technical: asymptotic analysis with RH\n\n/-!\n## Part III: ABC Conjecture Bounds",
         "primary_category": "unknown",
@@ -2072,7 +2116,7 @@
         "similar_solutions": []
       },
       {
-        "line": 174,
+        "line": 289,
         "code": "def radical (n : \u2115) : \u2115 := sorry",
         "context": "-/\n\n/-- Radical: product of distinct prime divisors -/\ndef radical (n : \u2115) : \u2115 := sorry\n\n/-- ABC quality -/\ndef abc_quality (a b c : \u2115) : \u211d :=",
         "primary_category": "unknown",
@@ -2083,18 +2127,7 @@
         "similar_solutions": []
       },
       {
-        "line": 204,
-        "code": "sorry  -- Technical: requires deep connection between RH and ABC",
-        "context": "  -- 2. L-function estimates from RH/D(s)\n  -- 3. Height bounds from algebraic geometry\n  -- 4. Effective computation of K_\u03b5\n  sorry  -- Technical: requires deep connection between RH and ABC\n\n/--\n**Lemma: Quality Bound**",
-        "primary_category": "unknown",
-        "all_categories": {
-          "unknown": 1.0
-        },
-        "complexity": 5,
-        "similar_solutions": []
-      },
-      {
-        "line": 218,
+        "line": 328,
         "code": "sorry  -- Technical: translate bound to quality",
         "context": "    abc_quality a b c < 1 + \u03b5 := by\n  intro \u03b5 h\u03b5_pos\n  -- Follows from abc_conjecture_bound_from_spectral\n  sorry  -- Technical: translate bound to quality\n\n/-!\n## Part IV: Structural Framework Summary",
         "primary_category": "unknown",
@@ -2105,7 +2138,18 @@
         "similar_solutions": []
       },
       {
-        "line": 318,
+        "line": 385,
+        "code": "sorry  -- Apply circle method with h_control",
+        "context": "  \u00b7 intro \u27e8D, h_control\u27e9\n    intro n hn heven\n    -- The spectral control hypothesis provides the bounds needed\n    sorry  -- Apply circle method with h_control\n  -- Part 2: ABC is conditional on structural hypothesis\n  \u00b7 intro B \u27e8D, h_abc\u27e9 \u03b5 h\u03b5\n    -- The structural hypothesis directly gives bounds",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 434,
         "code": "sorry  -- Technical: requires modularity and spectral bounds",
         "context": "  -- The L-function L(E,s) satisfies bounds similar to \u03b6(s)\n  -- The spectral theory provides control on growth and zeros\n  -- This gives an upper bound on the order of vanishing\n  sorry  -- Technical: requires modularity and spectral bounds\n\n/-!\n## Conclusion",
         "primary_category": "analytic",
@@ -7481,6 +7525,96 @@
         "primary_category": "unknown",
         "all_categories": {
           "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      }
+    ],
+    "formalization/lean/spectral/DivisorBounds.lean": [
+      {
+        "line": 106,
+        "code": "sorry",
+        "context": "  -- La cantidad de tales n \u2264 X es \u2264 X / lcm(d,e)\n  -- Entonces la suma est\u00e1 acotada por X * \u2211_{d,e \u2264 X} 1/(lcm d e)\n  -- La suma doble de 1/lcm(d,e) es O((log X)^3)\n  sorry\n\n/-!\n### 2. Convoluci\u00f3n de M\u00f6bius",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 134,
+        "code": "sorry",
+        "context": "  -- Pero |\u03bc(d)\u03bc(e)| \u2264 1, as\u00ed que es \u2264 X * \u2211_{d,e \u2264 X} 1/lcm(d,e)\n  -- La suma doble de 1/lcm(d,e) es O((log X)^2) (mejor que antes por la restricci\u00f3n de \u03bc)\n  -- Esto requiere un an\u00e1lisis m\u00e1s fino usando que \u03bc(d) \u2260 0 solo para d libre de cuadrados\n  sorry\n\n/-!\n### 3. Suma de logaritmos de divisores",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 158,
+        "code": "sorry",
+        "context": "  -- Pero |log d| \u2264 log X para d \u2264 X\n  -- Entonces la suma est\u00e1 acotada por X * (log X)^2 * \u2211_{d,e \u2264 X} 1/lcm(d,e)\n  -- La misma suma doble de antes (sin la restricci\u00f3n de \u03bc)\n  sorry\n\n/-!\n### 4. Versiones listas para Type II",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 182,
+        "code": "sorry",
+        "context": "  -- Multiplicamos y simplificamos\n  -- El exponente 6 = 2 + 4 es suficiente para que, al dividir por (log N)^A\n  -- en los Arcos Menores, la cota sea efectiva\n  sorry\n\n/-!\n## Additional Helper Lemmas",
+        "primary_category": "trivial",
+        "all_categories": {
+          "trivial": 0.8
+        },
+        "complexity": 1,
+        "similar_solutions": []
+      },
+      {
+        "line": 194,
+        "code": "sorry",
+        "context": "  For any divisors d, e of n, n must be a multiple of lcm(d,e).\n-/\nlemma divisors_lcm (n d e : \u2115) (hd : d \u2223 n) (he : e \u2223 n) : lcm d e \u2223 n := by\n  sorry\n\n/--\n  Count of multiples of m up to X.",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 201,
+        "code": "sorry",
+        "context": "-/\nlemma count_multiples (X m : \u2115) (hm : m \u2265 1) :\n    (Icc 1 X).card (fun n => m \u2223 n) \u2264 X / m := by\n  sorry\n\n/--\n  Upper bound for the M\u00f6bius function.",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 208,
+        "code": "sorry",
+        "context": "-/\nlemma mobius_abs_le_one (d : \u2115) :\n    Complex.abs (Nat.ArithmeticFunction.moebius d : \u2102) \u2264 1 := by\n  sorry\n\n/--\n  Log bound for integers up to X.",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 215,
+        "code": "sorry",
+        "context": "-/\nlemma log_bound (d X : \u2115) (hd : d \u2264 X) (hX : X \u2265 1) :\n    Real.log d \u2264 Real.log X := by\n  sorry\n\nend AnalyticNumberTheory\n",
+        "primary_category": "analytic",
+        "all_categories": {
+          "analytic": 0.6
         },
         "complexity": 5,
         "similar_solutions": []
@@ -17662,7 +17796,7 @@
     ],
     "formalization/lean/QCAL/axioms_origin.lean": [
       {
-        "line": 194,
+        "line": 218,
         "code": "sorry",
         "context": "    |f_calc - f\u2080_target| < 0.01 := by\n  -- This requires numerical computation\n  -- V_critical / (\u03ba_\u03a0 * 2\u03c0) = 2294.642 / (2.5773 * 6.283185) \u2248 141.7001\n  sorry\n\n-- ===========================================================================\n-- 3. RESONANCIA: HARMONIC STABILITY PREDICATE",
         "primary_category": "qcal",
@@ -17673,7 +17807,7 @@
         "similar_solutions": []
       },
       {
-        "line": 279,
+        "line": 303,
         "code": "sorry -- Requires numerical computation in Lean",
         "context": "    constructor\n    \u00b7 -- Show f > 140\n      -- V_critical / (\u03ba_\u03a0 * 2\u03c0) \u2248 2297.9 / 16.193 \u2248 141.9 > 140\n      sorry -- Requires numerical computation in Lean\n      \n    constructor\n    \u00b7 -- Show f < 143",
         "primary_category": "unknown",
@@ -17684,7 +17818,7 @@
         "similar_solutions": []
       },
       {
-        "line": 284,
+        "line": 308,
         "code": "sorry -- Requires numerical computation in Lean",
         "context": "    constructor\n    \u00b7 -- Show f < 143\n      -- V_critical / (\u03ba_\u03a0 * 2\u03c0) \u2248 141.9 < 143\n      sorry -- Requires numerical computation in Lean\n      \n    constructor\n    \u00b7 -- Show \u03ba_\u03a0 > 2.5",
         "primary_category": "unknown",
@@ -17695,7 +17829,7 @@
         "similar_solutions": []
       },
       {
-        "line": 308,
+        "line": 332,
         "code": "sorry -- Requires high-precision numerical verification",
         "context": "    -- 3. 7-node geometry fine structure\n    -- \n    -- With proper high-precision computation, the formula converges exactly\n    sorry -- Requires high-precision numerical verification\n\nwhere\n  \u03b5_tolerance_pos : 0 < \u03b5_tolerance := by unfold \u03b5_tolerance; norm_num",
         "primary_category": "trivial",
@@ -17706,7 +17840,7 @@
         "similar_solutions": []
       },
       {
-        "line": 332,
+        "line": 356,
         "code": "sorry",
         "context": "  obtain \u27e8h\u2081_pos, h\u03ba\u2081_pos, h\u2081_bound, _\u27e9 := h\u2081\n  obtain \u27e8h\u2082_pos, h\u03ba\u2082_pos, h\u2082_bound, _\u27e9 := h\u2082\n  -- Triangle inequality gives us the result\n  sorry\n\n-- ===========================================================================\n-- 6. CONNECTION TO CALABI-YAU GEOMETRY",
         "primary_category": "adelic",
@@ -17717,7 +17851,7 @@
         "similar_solutions": []
       },
       {
-        "line": 351,
+        "line": 375,
         "code": "sorry",
         "context": "    |f\u2080_computed * k_scale - f\u2080_target| < \u03b5_tolerance := by\n  -- The scaling factor k_scale accounts for different geometric conventions\n  -- between the \u03ba_\u03a0 formulation and the direct CY\u00b3 mode calculation\n  sorry\n\n-- ===========================================================================\n-- 7. PHYSICAL INTERPRETATION",
         "primary_category": "qcal",
@@ -17728,7 +17862,7 @@
         "similar_solutions": []
       },
       {
-        "line": 376,
+        "line": 400,
         "code": "\u00b7 sorry  -- Numerical computation",
         "context": "  constructor\n  \u00b7 exact f\u2080_computed_pos\n  constructor\n  \u00b7 sorry  -- Numerical computation\n  \u00b7 sorry  -- Numerical computation\n\n-- ===========================================================================",
         "primary_category": "qcal",
@@ -17739,7 +17873,7 @@
         "similar_solutions": []
       },
       {
-        "line": 377,
+        "line": 401,
         "code": "\u00b7 sorry  -- Numerical computation",
         "context": "  \u00b7 exact f\u2080_computed_pos\n  constructor\n  \u00b7 sorry  -- Numerical computation\n  \u00b7 sorry  -- Numerical computation\n\n-- ===========================================================================\n-- 8. GAP #4 CLOSURE CERTIFICATE",
         "primary_category": "qcal",
@@ -17750,7 +17884,7 @@
         "similar_solutions": []
       },
       {
-        "line": 411,
+        "line": 435,
         "code": "sorry",
         "context": "    -- Apply f0_emergence_from_geometry\n    obtain \u27e8f_witness, h_res, _\u27e9 := f0_emergence_from_geometry\n    -- Need to show f\u2080_computed satisfies Resonancia\n    sorry\n  \u00b7 -- Already proven in f0_emergence_from_geometry\n    obtain \u27e8f_witness, _, h_target\u27e9 := f0_emergence_from_geometry\n    sorry",
         "primary_category": "qcal",
@@ -17761,7 +17895,7 @@
         "similar_solutions": []
       },
       {
-        "line": 414,
+        "line": 438,
         "code": "sorry",
         "context": "    sorry\n  \u00b7 -- Already proven in f0_emergence_from_geometry\n    obtain \u27e8f_witness, _, h_target\u27e9 := f0_emergence_from_geometry\n    sorry\n\nend QCAL.AxiomsOrigin\nimport Mathlib.Geometry.Manifold.Basic",
         "primary_category": "qcal",
@@ -17772,34 +17906,150 @@
         "similar_solutions": []
       },
       {
-        "line": 473,
-        "code": "def nodal_curvature (n : \u2115) : \u211d := sorry",
-        "context": "-/\n\n/-- Nodal curvature function for harmonic node n -/\ndef nodal_curvature (n : \u2115) : \u211d := sorry\n\n/-- **Axiom II**: \u03ba_\u03c0 derives from Node 7 curvature -/\naxiom axiom_II_coupling_from_node_7 :",
-        "primary_category": "unknown",
+        "line": 518,
+        "code": "have : 0 < (1 + sqrt 5) / 2 := by sorry",
+        "context": "    \u00b7 unfold \u03ba_\u03c0; norm_num\n    constructor  \n    \u00b7 unfold V_sacred \u03c6_cubed V_universe \u03c6_golden\n      have : 0 < (1 + sqrt 5) / 2 := by sorry\n      have : 0 < 1.0e80 := by norm_num\n      sorry  -- V_sacred > 0 by construction\n    \u00b7 unfold \u03c6_golden",
+        "primary_category": "trivial",
         "all_categories": {
-          "unknown": 1.0
+          "trivial": 0.8
         },
-        "complexity": 5,
+        "complexity": 1,
+        "similar_solutions": [
+          {
+            "repo": "P-NP",
+            "proof_snippet": "have h5 : (1 + Real.sqrt 5) / 2 < 1.72 := by",
+            "similarity": 0.3448275862068966,
+            "type": "proof_pattern"
+          }
+        ]
+      },
+      {
+        "line": 520,
+        "code": "sorry  -- V_sacred > 0 by construction",
+        "context": "    \u00b7 unfold V_sacred \u03c6_cubed V_universe \u03c6_golden\n      have : 0 < (1 + sqrt 5) / 2 := by sorry\n      have : 0 < 1.0e80 := by norm_num\n      sorry  -- V_sacred > 0 by construction\n    \u00b7 unfold \u03c6_golden\n      have : 1 < (1 + sqrt 5) / 2 := by sorry\n      exact this",
+        "primary_category": "trivial",
+        "all_categories": {
+          "trivial": 0.8
+        },
+        "complexity": 1,
+        "similar_solutions": [
+          {
+            "repo": "P-NP",
+            "proof_snippet": "have h5 : (1 + Real.sqrt 5) / 2 < 1.72 := by",
+            "similarity": 0.3333333333333333,
+            "type": "proof_pattern"
+          }
+        ]
+      },
+      {
+        "line": 522,
+        "code": "have : 1 < (1 + sqrt 5) / 2 := by sorry",
+        "context": "      have : 0 < 1.0e80 := by norm_num\n      sorry  -- V_sacred > 0 by construction\n    \u00b7 unfold \u03c6_golden\n      have : 1 < (1 + sqrt 5) / 2 := by sorry\n      exact this\n}\n",
+        "primary_category": "trivial",
+        "all_categories": {
+          "trivial": 0.8
+        },
+        "complexity": 1,
+        "similar_solutions": [
+          {
+            "repo": "P-NP",
+            "proof_snippet": "have h5 : (1 + Real.sqrt 5) / 2 < 1.72 := by",
+            "similarity": 0.3448275862068966,
+            "type": "proof_pattern"
+          },
+          {
+            "repo": "P-NP",
+            "proof_snippet": "have : 2 > 1 := by norm_num",
+            "similarity": 0.3076923076923077,
+            "type": "proof_pattern"
+          }
+        ]
+      },
+      {
+        "line": 580,
+        "code": "sorry  -- Uniqueness of parabola minimum (standard calculus result)",
+        "context": "    unfold IsMin CoherenceEnergy at hf' \u22a2\n    -- For a parabola (ax - b)\u00b2 with a \u2260 0, the unique minimum is at x = b/a\n    -- Here a = \u03ba\u00b72\u03c0 and b = V\n    sorry  -- Uniqueness of parabola minimum (standard calculus result)\n           -- TODO: Formal proof using derivatives and second derivative test\n           -- This is a standard result: For F(x) = (ax-b)\u00b2 with a\u22600,\n           -- the unique minimum is at x = b/a.",
+        "primary_category": "qcal",
+        "all_categories": {
+          "qcal": 0.75
+        },
+        "complexity": 3,
         "similar_solutions": []
       },
       {
-        "line": 543,
-        "code": "sorry  -- Numerical verification: geometric calculation yields 141.7001 Hz",
-        "context": "  \u00b7 -- The numerical calculation\n    -- In practice, this would require numerical evaluation\n    -- We assert it axiomatically based on the calculation\n    sorry  -- Numerical verification: geometric calculation yields 141.7001 Hz\n\n/--\n**Corollary**: f\u2080 is unique",
+        "line": 632,
+        "code": "sorry  -- Numerical: \u221a(2.5773 \u00d7 V_sacred) / \u03c6\u00b2 = 141.7001",
+        "context": "  -- With our specific constants, f_critical = 141.7001 Hz\n  unfold f\u2080 V_eff\n  -- Algebraic derivation from the formula\n  sorry  -- Numerical: \u221a(2.5773 \u00d7 V_sacred) / \u03c6\u00b2 = 141.7001\n\n/-- \n  f\u2080_structural: The Estado Base (Ground State) Frequency",
         "primary_category": "qcal",
         "all_categories": {
+          "qcal": 2.25
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      },
+      {
+        "line": 665,
+        "code": "sorry  -- Follows from resonance_minimization uniqueness + positivity",
+        "context": "/-- f\u2080 is positive -/\nlemma f\u2080_derived_pos : 0 < f\u2080_derived := by\n  unfold f\u2080_derived f\u2080\n  sorry  -- Follows from resonance_minimization uniqueness + positivity\n\n/-- Golden ratio is positive -/\nlemma \u03c6_golden_pos : 0 < \u03c6_golden := by",
+        "primary_category": "qcal",
+        "all_categories": {
+          "qcal": 0.75
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      },
+      {
+        "line": 694,
+        "code": "sorry  -- Technical: extract the value from the uniqueness proof",
+        "context": "  -- By construction, f\u2080_structural is the unique minimizer\n  have h := Classical.choose_spec (unique_harmonic_point \u03ba_\u03c0 V_critical \u03ba_\u03c0_pos).exists\n  -- The unique minimum of (f\u00b7\u03ba\u00b72\u03c0 - V)\u00b2 is at f = V/(\u03ba\u00b72\u03c0)\n  sorry  -- Technical: extract the value from the uniqueness proof\n         -- TODO: This requires showing that Classical.choose returns V/(\u03ba\u00b72\u03c0)\n         -- The proof follows from the construction of unique_harmonic_point\n",
+        "primary_category": "qcal",
+        "all_categories": {
+          "qcal": 0.75
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      },
+      {
+        "line": 715,
+        "code": "sorry  -- Numerical verification (can be done with norm_num tactics)",
+        "context": "  -- 2\u03c0 \u2248 6.28318...\n  -- 2294.642 / (2.5773 \u00d7 6.28318) \u2248 141.7001\n  unfold V_critical \u03ba_\u03c0 f\u2080_derived\n  sorry  -- Numerical verification (can be done with norm_num tactics)\n         -- TODO: Use Lean's norm_num to verify:\n         -- 2294.642 / (2.5773 \u00d7 6.28318...) \u2248 141.7001\n         -- This is a computational check, not a deep mathematical result",
+        "primary_category": "qcal",
+        "all_categories": {
+          "trivial": 0.8,
           "qcal": 1.5
         },
         "complexity": 3,
         "similar_solutions": []
       },
       {
-        "line": 566,
-        "code": "sorry  -- Technical: show f\u2080_unique = 141.7001",
-        "context": "  \n  -- f\u2080_unique = f\u2080_derived by construction\n  convert this using 1\n  sorry  -- Technical: show f\u2080_unique = 141.7001\n\n/-!\n## Connection to Calabi-Yau Geometry",
+        "line": 838,
+        "code": "sorry  -- Technical: symbolic minimization yields the formula",
+        "context": "  -- The symbolic derivation: f\u2080 minimizes V_eff\n  -- which is equivalent to solving \u2202V_eff/\u2202f = 0\n  -- This gives f\u2080 = \u221a(\u03ba_\u03c0 \u00b7 V_sacred) / \u03c6\u00b2\n  sorry  -- Technical: symbolic minimization yields the formula\n\n/- \n  **Corolario Num\u00e9rico (Informativo)**: ",
         "primary_category": "qcal",
         "all_categories": {
-          "qcal": 1.5
+          "qcal": 0.75
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      },
+      {
+        "line": 868,
+        "code": "sorry  -- Both derive from same geometric structure",
+        "context": "theorem f\u2080_axioms_match_geometry :\n    f\u2080_derived = QCAL.Script19.f\u2080 := by\n  unfold f\u2080_derived\n  sorry  -- Both derive from same geometric structure\n\n/-!\n## Master Equation: \u03a8 = I \u00d7 A_eff\u00b2 \u00d7 C^\u221e from Variational Principle",
+        "primary_category": "qcal",
+        "all_categories": {
+          "qcal": 2.25
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      },
+      {
+        "line": 896,
+        "code": "sorry  -- Numerical verification: (\u03c6^4) \u00d7 2.5773 \u00d7 (141.7001/100) \u2248 244.36",
+        "context": "theorem C_from_variational_principle :\n    C_coherence = \u03c6_golden^4 * \u03ba_\u03c0 * (f\u2080_derived / 100) := by\n  unfold C_coherence \u03c6_golden \u03ba_\u03c0 f\u2080_derived\n  sorry  -- Numerical verification: (\u03c6^4) \u00d7 2.5773 \u00d7 (141.7001/100) \u2248 244.36\n\n/-- The master equation relating all QCAL constants -/\ntheorem master_equation_QCAL :",
+        "primary_category": "qcal",
+        "all_categories": {
+          "qcal": 3.0
         },
         "complexity": 3,
         "similar_solutions": []
@@ -18418,9 +18668,20 @@
         "similar_solutions": []
       },
       {
-        "line": 474,
-        "code": "sorry  -- Technical: Paley-Wiener theorem standard result",
-        "context": "    L2_real := by\n      -- L\u00b2 property follows from compact support via Fourier theory\n      -- This is a standard result in harmonic analysis\n      sorry  -- Technical: Paley-Wiener theorem standard result\n  }\n  \n  use pw",
+        "line": 402,
+        "code": "sorry  -- Integral: \u222b \u03c6(x) \u00b7 |x|^s d*x over adelic group",
+        "context": "\n/-- Mellin transform of a test function on the adelic group -/\ndef MellinTransformAdelic (\u03c6 : AdelicTestFunction) (s : \u2102) : \u2102 :=\n  sorry  -- Integral: \u222b \u03c6(x) \u00b7 |x|^s d*x over adelic group\n\n/-- \n  **DEFINITION (Not Axiom)**: D(s) is the Mellin transform of \u03c6",
+        "primary_category": "adelic",
+        "all_categories": {
+          "adelic": 0.6
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 484,
+        "code": "sorry  -- Technical: compactness implies boundedness",
+        "context": "  have \u27e8R, hR_pos, hR_bound\u27e9 : \u2203 R : \u211d, R > 0 \u2227 \n    \u2200 s : \u2102, s \u2208 support \u03c6.\u03c6 \u2192 abs s \u2264 R := by\n    -- Compact sets in \u2102 are bounded\n    sorry  -- Technical: compactness implies boundedness\n  \n  -- The exponential type is bounded by the support radius\n  use R, hR_pos",
         "primary_category": "unknown",
         "all_categories": {
           "unknown": 1.0
@@ -18429,9 +18690,31 @@
         "similar_solutions": []
       },
       {
-        "line": 495,
+        "line": 497,
+        "code": "sorry  -- Technical: standard Paley-Wiener bound",
+        "context": "  \u00b7 intro s\n    -- The bound follows from the Fourier-Mellin relationship\n    -- and the compact support\n    sorry  -- Technical: standard Paley-Wiener bound\n\n/-!\n## Main Lemma: PW Class Membership of D(s)",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 533,
+        "code": "sorry  -- Standard result: compact support \u21d2 L\u00b2 on \u211d",
+        "context": "    exp_type := h_exp_type\n    L2_real := by\n      -- L\u00b2 property follows from compact support via Paley-Wiener theory\n      sorry  -- Standard result: compact support \u21d2 L\u00b2 on \u211d\n  }\n  \n  use pw",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 560,
         "code": "sorry  -- Follows from paley_wiener_uniqueness module",
-        "context": "  intro s\n  -- This follows from the Paley-Wiener uniqueness theorem\n  -- Applied to the difference f - g which vanishes on Re(s) = 1/2\n  sorry  -- Follows from paley_wiener_uniqueness module\n\n/--\n**Corollary**: D(s) is uniquely determined by its values on the critical line",
+        "context": "  intro s\n  -- This follows from the Paley-Wiener uniqueness theorem\n  -- Applied to the difference f - g which vanishes on Re(s) = 1/2\n  sorry  -- Follows from paley_wiener_uniqueness module\n\n/-!\n## \ud83d\udd34 AJUSTE #2: Unicidad por Identidad Anal\u00edtica",
         "primary_category": "unknown",
         "all_categories": {
           "unknown": 1.0
@@ -18440,34 +18723,46 @@
         "similar_solutions": []
       },
       {
-        "line": 514,
-        "code": "L2_real := by sorry  -- Technical L\u00b2 property",
-        "context": "    f := D\u2081\n    entire := by trivial\n    exp_type := h_D\u2081\n    L2_real := by sorry  -- Technical L\u00b2 property\n  }\n  \n  let pw\u2082 : PaleyWienerClass B := {",
-        "primary_category": "trivial",
+        "line": 624,
+        "code": "sorry  -- Technical: vertical line has accumulation points",
+        "context": "    use \u27e81/2, 0\u27e9\n    intro \u03b5 h\u03b5\n    -- Construct infinitely many points within distance \u03b5\n    sorry  -- Technical: vertical line has accumulation points\n  \n  have h_eq : \u2200 s \u2208 U, D\u2081 s = D\u2082 s := by\n    intro s hs",
+        "primary_category": "unknown",
         "all_categories": {
-          "trivial": 0.8
+          "unknown": 1.0
         },
-        "complexity": 1,
+        "complexity": 5,
         "similar_solutions": []
       },
       {
-        "line": 521,
-        "code": "L2_real := by sorry  -- Technical L\u00b2 property",
-        "context": "    f := D\u2082\n    entire := by trivial\n    exp_type := h_D\u2082\n    L2_real := by sorry  -- Technical L\u00b2 property\n  }\n  \n  -- Apply uniqueness",
-        "primary_category": "trivial",
+        "line": 629,
+        "code": "sorry  -- Technical: extract t from s and apply h_agree",
+        "context": "  have h_eq : \u2200 s \u2208 U, D\u2081 s = D\u2082 s := by\n    intro s hs\n    obtain \u27e8t, ht\u27e9 := hs  -- s.re = 1/2, so s = \u27e81/2, t\u27e9 for some t\n    sorry  -- Technical: extract t from s and apply h_agree\n  \n  -- Apply the general uniqueness theorem\n  exact D_uniqueness_no_tuning D\u2081 D\u2082 B hB_pos h_D\u2081 h_D\u2082 U hU h_eq s",
+        "primary_category": "unknown",
         "all_categories": {
-          "trivial": 0.8
+          "unknown": 1.0
         },
-        "complexity": 1,
+        "complexity": 5,
         "similar_solutions": []
       },
       {
-        "line": 542,
+        "line": 642,
+        "code": "sorry  -- Follows from unique_continuation_of_pw in paley_wiener_uniqueness module",
+        "context": "  -- This is the power of Paley-Wiener uniqueness:\n  -- Agreement on ANY region with accumulation \u2192 agreement everywhere\n  -- Based on: identity theorem + exponential type bounds\n  sorry  -- Follows from unique_continuation_of_pw in paley_wiener_uniqueness module\n\n/-!\n## Connection to Spectral Theory",
+        "primary_category": "analytic",
+        "all_categories": {
+          "analytic": 0.6
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 659,
         "code": "where eigenvalues_H_\u03a8 : \u2115 \u2192 \u211d := sorry",
-        "context": "/-- The zeros of D(s) correspond to eigenvalues of H_\u03a8 -/\naxiom D_zeros_are_eigenvalues :\n  \u2200 s : \u2102, D_function s = 0 \u2192 \u2203 n : \u2115, s.im = eigenvalues_H_\u03a8 n\n  where eigenvalues_H_\u03a8 : \u2115 \u2192 \u211d := sorry\n\n/-!\n## Summary and Physical Interpretation",
+        "context": "/-- The zeros of D(s) correspond to eigenvalues of H_\u03a8 -/\naxiom D_zeros_are_eigenvalues (\u03c6 : AdelicTestFunction) :\n  \u2200 s : \u2102, D_function \u03c6 s = 0 \u2192 \u2203 n : \u2115, s.im = eigenvalues_H_\u03a8 n\n  where eigenvalues_H_\u03a8 : \u2115 \u2192 \u211d := sorry\n\n/-!\n## Summary and Physical Interpretation",
         "primary_category": "qcal",
         "all_categories": {
           "qcal": 1.5,
+          "adelic": 0.6,
           "spectral": 0.65
         },
         "complexity": 3,
@@ -25108,6 +25403,87 @@
         "similar_solutions": []
       }
     ],
+    "formalization/lean/RiemannAdelic/vaughan_identity.lean": [
+      {
+        "line": 143,
+        "code": "sorry",
+        "context": "  -- Tipo I:   \u03bc\u2081 \u2605 log\u2081  (ambos peque\u00f1os)\n  -- Tipo II:  \u03bc\u2082 \u2605 log\u2082  (ambos grandes) + t\u00e9rminos mixtos\n  -- Tipo III: t\u00e9rminos de frontera\n  sorry\n\n/--\nLema auxiliar: Identidad fundamental de von Mangoldt.",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 157,
+        "code": "sorry",
+        "context": "      \u2211 d in Nat.divisors n, (m\u00f6biusMu d : \u211d) * Real.log (n / d) := by\n  -- Esto se sigue de la identidad \u2211_{d|n} \u039b(d) = log n\n  -- y la inversi\u00f3n de M\u00f6bius\n  sorry\n\n/--\nCorolario: Para sumas exponenciales, podemos descomponer la suma de \u039b.",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 181,
+        "code": "sorry",
+        "context": "  -- Usar la desigualdad del tri\u00e1ngulo para valores absolutos\n  have h := fun n => vaughan_identity n (by omega : n > 0) U V hU hV\n  -- Reorganizar usando linealidad de la suma\n  sorry\n\n/--\nLema: Cota trivial para sumas de Tipo I.",
+        "primary_category": "trivial",
+        "all_categories": {
+          "trivial": 0.8
+        },
+        "complexity": 1,
+        "similar_solutions": []
+      },
+      {
+        "line": 192,
+        "code": "sorry",
+        "context": "lemma typeI_bound (N : \u2115) (U V : \u211d) (hU : U \u2265 1) (hV : V \u2265 1) :\n    \u2203 C : \u211d, \u2200 n \u2264 N, |typeI_term n U V| \u2264 C * U * V * Real.log V := by\n  -- Estimaci\u00f3n est\u00e1ndar para sumas de divisores\n  sorry\n\n/--\nLema: Cota trivial para sumas de Tipo III.",
+        "primary_category": "trivial",
+        "all_categories": {
+          "trivial": 0.8
+        },
+        "complexity": 1,
+        "similar_solutions": []
+      },
+      {
+        "line": 202,
+        "code": "sorry",
+        "context": "lemma typeIII_bound (N : \u2115) (U V : \u211d) (hU : U \u2265 1) (hV : V \u2265 1) :\n    \u2203 C : \u211d, \u2200 n \u2264 N, |typeIII_term n U V| \u2264 C * Real.log (max U V) := by\n  -- Trivial porque solo hay O(max(U,V)) t\u00e9rminos no nulos\n  sorry\n\n/--\nObservaci\u00f3n: Elecci\u00f3n \u00f3ptima de par\u00e1metros.",
+        "primary_category": "trivial",
+        "all_categories": {
+          "trivial": 0.8
+        },
+        "complexity": 1,
+        "similar_solutions": []
+      },
+      {
+        "line": 222,
+        "code": "\u00b7 sorry -- N^{1/3} \u2265 1 para N \u2265 1",
+        "context": "  constructor\n  \u00b7 rfl\n  constructor\n  \u00b7 sorry -- N^{1/3} \u2265 1 para N \u2265 1\n  \u00b7 sorry\n\nend RiemannAdelic.Vaughan",
+        "primary_category": "trivial",
+        "all_categories": {
+          "trivial": 0.8,
+          "adelic": 0.6
+        },
+        "complexity": 1,
+        "similar_solutions": []
+      },
+      {
+        "line": 223,
+        "code": "\u00b7 sorry",
+        "context": "  \u00b7 rfl\n  constructor\n  \u00b7 sorry -- N^{1/3} \u2265 1 para N \u2265 1\n  \u00b7 sorry\n\nend RiemannAdelic.Vaughan\n",
+        "primary_category": "trivial",
+        "all_categories": {
+          "trivial": 0.8,
+          "adelic": 0.6
+        },
+        "complexity": 1,
+        "similar_solutions": []
+      }
+    ],
     "formalization/lean/RiemannAdelic/H\u03a8_space_complete.lean": [
       {
         "line": 3,
@@ -29938,6 +30314,41 @@
         "similar_solutions": []
       }
     ],
+    "formalization/lean/RiemannAdelic/von_mangoldt.lean": [
+      {
+        "line": 139,
+        "code": "sorry",
+        "context": "  -- 1. Factorizaci\u00f3n \u00fanica: n = \u220f p_i^{k_i}\n  -- 2. Para cada primo p_i: \u2211_{j=1}^{k_i} \u039b(p_i^j) = k_i \u00b7 log p_i\n  -- 3. log n = \u2211 k_i \u00b7 log p_i (por factorizaci\u00f3n)\n  sorry\n\n/-- \nPropiedad: Para potencias de primos, suma hasta k.",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 154,
+        "code": "sorry",
+        "context": "  -- \u039b(1) = 0\n  -- \u039b(p^j) = log p para j = 1, ..., k\n  -- Suma = k \u00b7 log p\n  sorry\n\n/-- \nLa funci\u00f3n de Chebyshev \u03c8(x) = \u2211_{n\u2264x} \u039b(n).",
+        "primary_category": "qcal",
+        "all_categories": {
+          "qcal": 0.75
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      },
+      {
+        "line": 178,
+        "code": "sorry",
+        "context": "    \u2203 C : \u211d, |(\u2211 n in Finset.range N, vonMangoldt n) - N| \u2264 C * N / Real.log N := by\n  -- Esta es una consecuencia del Teorema de los N\u00fameros Primos\n  -- La prueba requiere an\u00e1lisis complejo y la f\u00f3rmula expl\u00edcita\n  sorry\n\n/-- \nPropiedad: \u039b(n) es no negativa para todo n.",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      }
+    ],
     "formalization/lean/RiemannAdelic/dense_Cc\u221e_L2noetic.lean": [
       {
         "line": 53,
@@ -32529,6 +32940,74 @@
         "similar_solutions": []
       }
     ],
+    "formalization/lean/RiemannAdelic/bilinear_bounds.lean": [
+      {
+        "line": 131,
+        "code": "sorry",
+        "context": "  -- Aplicar Cauchy-Schwarz est\u00e1ndar\n  -- |\u2211_m X_m|\u00b2 \u2264 (\u2211_m |X_m|\u00b2) \u00b7 |n\u00famero de t\u00e9rminos|\n  -- donde X_m = a_m \u00b7 (\u2211_n b_n e^{2\u03c0i\u03b1mn})\n  sorry\n\n/--\nLema: Cota para la suma de coeficientes a.",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 148,
+        "code": "sorry",
+        "context": "      |RiemannAdelic.Vaughan.coeff_a m|\u00b2 \u2264 C * U * (Real.log U) ^ 2 := by\n  -- Estimaci\u00f3n est\u00e1ndar para sumas de convoluciones de M\u00f6bius\n  -- Usa que |\u03bc(k)| \u2264 1 y propiedades de divisores\n  sorry\n\n/--\nLema: Cota para la suma de coeficientes b.",
+        "primary_category": "adelic",
+        "all_categories": {
+          "adelic": 0.6
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 164,
+        "code": "sorry",
+        "context": "    \u2211 n in Finset.range V, \n      |RiemannAdelic.Vaughan.coeff_b n| \u2264 C * V * Real.log V := by\n  -- b_n = log n, as\u00ed que \u2211 b_n \u2248 \u2211 log n \u2248 n log n\n  sorry\n\n/--\nEL CORAZ\u00d3N: Cota para sumas bilineales de Tipo II.",
+        "primary_category": "adelic",
+        "all_categories": {
+          "adelic": 0.6
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 200,
+        "code": "sorry",
+        "context": "  -- 2. Estimaci\u00f3n de la distribuci\u00f3n de las fases (\u03b1 * m * n)\n  -- 3. El kernel espectral f\u2080 asegura que estamos en la banda correcta\n  \n  sorry\n\n/--\nVersi\u00f3n con f\u2080 expl\u00edcito: Cota mejorada usando el kernel espectral.",
+        "primary_category": "qcal",
+        "all_categories": {
+          "qcal": 0.75
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      },
+      {
+        "line": 232,
+        "code": "sorry",
+        "context": "  -- IMPORTANTE: El control sobre \u03b1 en arcos menores viene de la Gran Criba,\n  -- NO de f\u2080. El papel de f\u2080 es puramente selectivo: define qu\u00e9 rango\n  -- de \u03b1 estamos analizando.\n  sorry\n\n/--\nCorolario: Estimaci\u00f3n para la suma completa sobre arcos menores.",
+        "primary_category": "qcal",
+        "all_categories": {
+          "qcal": 0.75
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      },
+      {
+        "line": 250,
+        "code": "sorry",
+        "context": "    C * N * (Real.log N) ^ (-A) := by\n  -- Aplicar typeII_bilinear_bound con U = V = N^{1/3}\n  -- Sumar sobre todos los \u03b1 en arcos menores\n  sorry\n\n/--\nObservaci\u00f3n filos\u00f3fica sobre f\u2080.",
+        "primary_category": "qcal",
+        "all_categories": {
+          "qcal": 0.75
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      }
+    ],
     "formalization/lean/RiemannAdelic/BerryKeatingOperator.lean": [
       {
         "line": 145,
@@ -33327,6 +33806,133 @@
         "similar_solutions": []
       }
     ],
+    "formalization/lean/RiemannAdelic/core/analytic/minor_arcs.lean": [
+      {
+        "line": 174,
+        "code": "sorry  -- Follows from Gaussian decay: exp(-(x-f\u2080)\u00b2/2) when |x-f\u2080| > 10",
+        "context": "    (h\u03b1_large : |\u03b1.re - f\u2080| > 10) :\n    spectral_kernel \u03b1 < Real.exp (-50) := by\n  unfold spectral_kernel\n  sorry  -- Follows from Gaussian decay: exp(-(x-f\u2080)\u00b2/2) when |x-f\u2080| > 10\n\n/-!\n## Main Theorem: Exponential Sum Bound on Minor Arcs",
+        "primary_category": "qcal",
+        "all_categories": {
+          "qcal": 0.75
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      },
+      {
+        "line": 211,
+        "code": "sorry  -- Full proof requires:",
+        "context": "  -- 4. Bound TypeIII via sieve methods (small remainder)\n  -- 5. Combine via triangle inequality\n  \n  sorry  -- Full proof requires:\n  -- - Large Sieve inequality (Montgomery)\n  -- - Vinogradov-Korobov bounds\n  -- - Diophantine approximation (\u03b1 far from rationals)",
+        "primary_category": "adelic",
+        "all_categories": {
+          "adelic": 0.6
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 243,
+        "code": "sorry  -- Follows from exponential_sum_minor_arc_bound by cubing and integrating",
+        "context": "        (\u2211 n in Finset.range N, VaughanIdentity.vonMangoldt n * Complex.exp (2 * \u03c0 * I * \u03b1 * n))^3 \n          * Complex.exp (-2 * \u03c0 * I * \u03b1 * N)| \n        \u2264 C * N / (Real.log N)^A) := by\n  sorry  -- Follows from exponential_sum_minor_arc_bound by cubing and integrating\n\n/-!\n## Final Result: The \"10/10\" Analytic Achievement",
+        "primary_category": "analytic",
+        "all_categories": {
+          "analytic": 0.6
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      }
+    ],
+    "formalization/lean/RiemannAdelic/core/analytic/vaughan_identity.lean": [
+      {
+        "line": 160,
+        "code": "sorry  -- Requires:",
+        "context": "    \u2203 C : \u211d, C > 0 \u2227 \n    |\u2211 n in Finset.range N, TypeI n params * Complex.exp (2 * \u03c0 * I * \u03b1 * n)| \n      \u2264 C * N * Real.log N := by\n  sorry  -- Requires:\n  -- 1. Divisor bound: \u03c4(n) \u226a n^\u03b5\n  -- 2. Partial summation\n  -- 3. M\u00f6bius cancellation",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 183,
+        "code": "sorry  -- Requires:",
+        "context": "    (hA : A > 0) :\n    |\u2211 n in Finset.range N, TypeII n params * Complex.exp (2 * \u03c0 * I * \u03b1 * n)| \n      \u2264 N * (Real.log N)^(-A) := by\n  sorry  -- Requires:\n  -- 1. Large Sieve inequality\n  -- 2. Cauchy-Schwarz on bilinear forms\n  -- 3. Spectral cancellation from f\u2080 kernel",
+        "primary_category": "qcal",
+        "all_categories": {
+          "qcal": 0.75
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      },
+      {
+        "line": 201,
+        "code": "sorry  -- Requires:",
+        "context": "    \u2203 C : \u211d, C > 0 \u2227 \n    |\u2211 n in Finset.range N, TypeIII n params * Complex.exp (2 * \u03c0 * I * \u03b1 * n)| \n      \u2264 C * N * (Real.log N)^(-1) := by\n  sorry  -- Requires:\n  -- 1. Buchstab-Rosser sieve\n  -- 2. Optimal parameter choice U, V ~ N^{1/3}\n",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 221,
+        "code": "sorry  -- Combine Type I, II, III bounds via triangle inequality",
+        "context": "    |\u2211 n in Finset.range N, vonMangoldt n * Complex.exp (2 * \u03c0 * I * \u03b1 * n)| \n      \u2264 N * (Real.log N)^(-A + 1) := by\n  have h_decomp := fun n => vaughan_decomposition_vonMangoldt n params\n  sorry  -- Combine Type I, II, III bounds via triangle inequality\n\nend VaughanIdentity\n",
+        "primary_category": "adelic",
+        "all_categories": {
+          "adelic": 0.6
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      }
+    ],
+    "formalization/lean/RiemannAdelic/core/analytic/vaughan_integration_examples.lean": [
+      {
+        "line": 33,
+        "code": "sorry",
+        "context": "    \u2203 (params : VaughanParameters),\n      vonMangoldt n = TypeI n params + TypeII n params + TypeIII n params := by\n  -- Choose optimal parameters U = V = N^(1/3)\n  sorry\n\n/-!\n## Example 2: Minor Arc Exponential Sum Bound",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 47,
+        "code": "sorry",
+        "context": "      Complex.abs (\u2211 n in Finset.range N, \n                    vonMangoldt n * Complex.exp (2 * \u03c0 * I * \u03b1 * n)) \n        \u2264 N * (Real.log N)^(-A) := by\n  sorry\n\n/-!\n## Example 3: Goldbach Circle Method Application",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 60,
+        "code": "sorry",
+        "context": "        |\u222b \u03b1 in MinorArcs params,\n          (\u2211 n in Finset.range N, vonMangoldt n * Complex.exp (2 * \u03c0 * I * \u03b1 * n))^3|\n          \u2264 N / (Real.log N)^A := by\n  sorry\n\n/-!\n## Example 4: QCAL Spectral Kernel Integration",
+        "primary_category": "qcal",
+        "all_categories": {
+          "qcal": 0.75
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      },
+      {
+        "line": 70,
+        "code": "sorry",
+        "context": "    -- When \u03b1 is far from f\u2080, spectral kernel decays exponentially\n    |\u03b1.re - LargeSieve.f\u2080| > 10 * \u03c3 \u2192\n    LargeSieve.spectral_kernel \u03b1 \u03c3 < Real.exp (-50) := by\n  sorry\n\nend VaughanCircleIntegration\n",
+        "primary_category": "qcal",
+        "all_categories": {
+          "qcal": 0.75
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      }
+    ],
     "formalization/lean/RiemannAdelic/core/analytic/functional_equation.lean": [
       {
         "line": 98,
@@ -33388,6 +33994,179 @@
         "line": 207,
         "code": "sorry",
         "context": "    -- 1. Mellin transform of theta function\n    -- 2. Poisson summation formula\n    -- 3. Connection between theta and zeta via functional equation\n    sorry\n    -- PROOF STRATEGY:\n    -- 1. Define: I(s) = \u222b\u2080^\u221e (\u03b8(x) - 1) \u00b7 x^(s/2-1) dx\n    -- 2. Split integral: I(s) = \u222b\u2080^1 + \u222b\u2081^\u221e",
+        "primary_category": "analytic",
+        "all_categories": {
+          "analytic": 0.6
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      }
+    ],
+    "formalization/lean/RiemannAdelic/core/analytic/von_mangoldt.lean": [
+      {
+        "line": 59,
+        "code": "sorry  -- Standard result from Mathlib",
+        "context": "    vonMangoldt (p ^ k) = Real.log p := by\n  unfold vonMangoldt\n  simp [Nat.ArithmeticFunction.vonMangoldt, hp, hk]\n  sorry  -- Standard result from Mathlib\n\n/--\nThe von Mangoldt function is non-negative.",
+        "primary_category": "trivial",
+        "all_categories": {
+          "trivial": 0.8
+        },
+        "complexity": 1,
+        "similar_solutions": []
+      }
+    ],
+    "formalization/lean/RiemannAdelic/core/analytic/large_sieve.lean": [
+      {
+        "line": 107,
+        "code": "sorry  -- Requires:",
+        "context": "      \u2211 \u03c7 : DirichletCharacter q,\n        Complex.abs (\u2211 n in Finset.Ico (M + 1) (M + N + 1), a n * \u03c7.\u03c7 n)^2\n    \u2264 (N + Q^2) * \u2211 n in Finset.Ico (M + 1) (M + N + 1), Complex.abs (a n)^2 := by\n  sorry  -- Requires:\n  -- 1. Orthogonality of characters\n  -- 2. Poisson summation formula\n  -- 3. Duality principle (time-frequency)",
+        "primary_category": "qcal",
+        "all_categories": {
+          "qcal": 0.75
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      },
+      {
+        "line": 136,
+        "code": "sorry  -- Requires:",
+        "context": "    \u2264 C * ((U * V : \u211d) + (Q : \u211d)^2 * ((U : \u211d) + (V : \u211d))) \n      * (\u2211 m in Finset.range U, Complex.abs (a m)^2)\n      * (\u2211 n in Finset.range V, Complex.abs (b n)^2) := by\n  sorry  -- Requires:\n  -- 1. Cauchy-Schwarz inequality\n  -- 2. montgomery_large_sieve_classical\n  -- 3. Bilinear duality",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 189,
+        "code": "sorry  -- Requires:",
+        "context": "                  (\u2211 n in Finset.range N, \n                    if d \u2223 n then Complex.exp (2 * \u03c0 * I * \u03b1 * n) else 0))\n      \u2264 C * Real.sqrt (U * V * (Real.log (U * V))^6) * (Real.log N)^(-(1/2)) := by\n  sorry  -- Requires:\n  -- 1. large_sieve_bilinear\n  -- 2. Divisor sum expansion: \u2211_{d|n} = \u2211_m \u2211_k (if n=mk...)\n  -- 3. Diophantine approximation: \u03b1 far from a/q",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 225,
+        "code": "sorry  -- Gaussian decay: exp(-(x-f\u2080)\u00b2/(2\u03c3\u00b2)) when |x-f\u2080| > 10\u03c3",
+        "context": "                |\u03b1 - (a : \u2102) / (q : \u2102)| \u2265 1 / (q : \u2102)^2) :\n    spectral_kernel \u03b1 \u03c3 < Real.exp (-50) := by\n  unfold spectral_kernel\n  sorry  -- Gaussian decay: exp(-(x-f\u2080)\u00b2/(2\u03c3\u00b2)) when |x-f\u2080| > 10\u03c3\n\nend LargeSieve\n# Large Sieve Inequality (Criba Grande)",
+        "primary_category": "qcal",
+        "all_categories": {
+          "qcal": 0.75
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      },
+      {
+        "line": 314,
+        "code": "-- Por ahora, mantenemos el `sorry` ya que es un teorema profundo de an\u00e1lisis.",
+        "context": "      \u2264 (N + Q^2) *\n        (\u2211 n in Finset.range N, Complex.abs (a n) ^ 2) := by\n  -- La prueba cl\u00e1sica usa dualidad de Selberg o el lema de Bombieri.\n  -- Por ahora, mantenemos el `sorry` ya que es un teorema profundo de an\u00e1lisis.\n  -- La implementaci\u00f3n completa requerir\u00eda:\n  -- 1. Transformaci\u00f3n de la suma doble en una norma de operador\n  -- 2. Acotaci\u00f3n de los valores propios de una matriz de Hilbert",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 319,
+        "code": "sorry",
+        "context": "  -- 1. Transformaci\u00f3n de la suma doble en una norma de operador\n  -- 2. Acotaci\u00f3n de los valores propios de una matriz de Hilbert\n  -- 3. Uso de la f\u00f3rmula de suma de Poisson o desigualdad de Hilbert\n  sorry\n\n/-- \n  Corolario: Cota puntual para una suma exponencial individual.",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 338,
+        "code": "sorry",
+        "context": "  -- Obtenemos esto del teorema anterior tomando un solo t\u00e9rmino.\n  -- Necesitamos encontrar q \u2264 Q y a\u2080 coprimo a q tales que \u03b8 \u2248 a\u2080/q.\n  -- Esto es posible por aproximaci\u00f3n diof\u00e1ntica (Dirichlet).\n  sorry\n\n/-- \n  Versi\u00f3n simplificada para sumas bilineales.",
+        "primary_category": "trivial",
+        "all_categories": {
+          "trivial": 0.8
+        },
+        "complexity": 1,
+        "similar_solutions": []
+      },
+      {
+        "line": 366,
+        "code": "sorry",
+        "context": "  -- Aplicamos Cauchy-Schwarz y luego large sieve a cada variable.\n  -- Este es el paso que convierte el problema bilineal en uno lineal manejable.\n  -- La constante C captura factores de optimalidad en la aplicaci\u00f3n del m\u00e9todo.\n  sorry\n\nend AnalyticNumberTheory\n",
+        "primary_category": "analytic",
+        "all_categories": {
+          "analytic": 0.6
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      }
+    ],
+    "formalization/lean/RiemannAdelic/core/analytic/hlsum_decompose.lean": [
+      {
+        "line": 158,
+        "code": "-- Este sorry es pura plomer\u00eda combinatoria, no an\u00e1lisis",
+        "context": "        else 0 := by\n    -- La funci\u00f3n n \u21a6 (n / q) es una biyecci\u00f3n entre los n con residuo r\n    -- y los m tales que q*m + r < N, con un peque\u00f1o exceso por el +1\n    -- Este sorry es pura plomer\u00eda combinatoria, no an\u00e1lisis\n    sorry\n\n  -- Aplicamos h_reindex a cada r",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 159,
+        "code": "sorry",
+        "context": "    -- La funci\u00f3n n \u21a6 (n / q) es una biyecci\u00f3n entre los n con residuo r\n    -- y los m tales que q*m + r < N, con un peque\u00f1o exceso por el +1\n    -- Este sorry es pura plomer\u00eda combinatoria, no an\u00e1lisis\n    sorry\n\n  -- Aplicamos h_reindex a cada r\n  have h_step :",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      }
+    ],
+    "formalization/lean/RiemannAdelic/core/analytic/typeII_estimates.lean": [
+      {
+        "line": 115,
+        "code": "sorry",
+        "context": "  have h_sum_a : \u2211 m in Finset.Icc 1 \u230aU\u230b,\n      Complex.abs (\u2211 k in (Finset.range (m + 1)).filter (\u00b7 \u2223 m), m\u00f6biusMu k) ^ 2\n      \u2264 C * U * (Real.log U) ^ 2 := by\n    sorry\n  \n  -- Para la suma de von Mangoldt (aproximada por log):\n  --   \u2211_{n \u2264 V} |\u2211_{l|n} log l|\u00b2 \u2264 C\u2082 \u00b7 V \u00b7 (log V)\u00b2",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 122,
+        "code": "sorry",
+        "context": "  have h_sum_b : \u2211 n in Finset.Icc 1 \u230aV\u230b,\n      Complex.abs (\u2211 l in (Finset.range (n + 1)).filter (\u00b7 \u2223 n), Real.log l) ^ 2\n      \u2264 C * V * (Real.log V) ^ 2 := by\n    sorry\n  \n  -- Paso 3: La large sieve nos da la cota con Q = \u230a\u221aN\u230b\n  have h_ls := bilinear_expSum_bound",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 143,
+        "code": "sorry",
+        "context": "  -- El factor extra (log N)^{-A-2} viene de la ganancia en minor arcs\n  -- debido a la cancelaci\u00f3n en sumas exponenciales.\n  \n  sorry\n\n/--\n  Corolario: Bound para suma con Funci\u00f3n de von Mangoldt.",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 167,
+        "code": "sorry",
+        "context": "    C * N ^ (1/2 : \u211d) * (Real.log N) ^ (-A) := by\n  -- Aplicar identidad de Vaughan para descomponer \u039b(n)\n  -- en sumas manejables, luego aplicar typeII_bilinear_bound\n  sorry\n\nend AnalyticNumberTheory\n",
         "primary_category": "analytic",
         "all_categories": {
           "analytic": 0.6
@@ -33709,6 +34488,6 @@
   },
   "summary": {
     "most_common_category": "qcal",
-    "avg_complexity": 3.71356783919598
+    "avg_complexity": 3.719495091164095
   }
 }
