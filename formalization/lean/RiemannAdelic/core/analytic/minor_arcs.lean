@@ -61,8 +61,9 @@ import Mathlib.Data.Real.Basic
 import Mathlib.NumberTheory.ArithmeticFunction
 import Mathlib.Algebra.BigOperators.Basic
 
--- Import vaughan_identity module (sibling file)
-import «RiemannAdelic».formalization.lean.RiemannAdelic.core.analytic.vaughan_identity
+-- Import sibling analytic modules
+import RiemannAdelic.core.analytic.large_sieve
+import RiemannAdelic.core.analytic.vaughan_identity
 
 namespace CircleMethod
 

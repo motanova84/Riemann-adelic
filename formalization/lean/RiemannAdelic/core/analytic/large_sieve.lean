@@ -244,8 +244,8 @@ arcos menores del método del círculo.
 **Critical Fixes Applied:**
 1. **Fix #1 - División racional exacta**: Uso explícito de `(a₀ : ℝ) / q` para 
    evitar bugs espectrales silenciosos en la coerción real/racional.
-2. **Fix #2 - Rango correcto**: Uso de `Finset.Icc 1 Q` en lugar de 
-   `Finset.range (Q + 1)` para excluir q = 0 correctamente.
+2. **Fix #2 - Rango correcto**: Uso de `Finset.Icc 1 Q` para excluir q = 0 correctamente
+   (el rango comienza en 1, no en 0).
 3. **Fix #3 - Forma óptima del bound**: Bound flexible 
    `C * (U * V + Q^2 * (U + V)) * ‖a‖₂^2 * ‖b‖₂^2` 
    para mayor maniobrabilidad en optimización.
@@ -296,7 +296,7 @@ noncomputable def expSum (a : ℕ → ℂ) (N : ℕ) (θ : ℝ) : ℂ :=
   controlada por la energía total de los coeficientes.
   
   **Fix #1**: Uso de `ratPhase a₀ q` en lugar de `a₀ / q` para coerción explícita.
-  **Fix #2**: Suma sobre `Finset.Icc 1 Q` (excluye q = 0) en lugar de `Finset.range (Q + 1)`.
+  **Fix #2**: Suma sobre `Finset.Icc 1 Q` (excluye q = 0, rango correcto).
   
   Referencia: Montgomery-Vaughan, "Multiplicative Number Theory I", Theorem 7.7.
 -/
@@ -343,7 +343,7 @@ lemma expSum_bound_of_largeSieve
   
   **Fix #3**: Bound flexible en forma 
   `C * (U * V + Q^2 * (U + V)) * ‖a‖₂^2 * ‖b‖₂^2`
-  en lugar de la forma multiplicativa rígida `(U + Q^2) * (V + Q^2) * ...`.
+  en lugar de la forma multiplicativa rígida de Montgomery clásica.
   
   La forma flexible permite mayor maniobrabilidad en la optimización de Q
   y es más cercana a la versión clásica de Montgomery-Vaughan.
