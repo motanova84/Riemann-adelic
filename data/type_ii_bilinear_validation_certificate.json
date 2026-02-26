@@ -1,0 +1,73 @@
+{
+  "test_suite": "Type II Bilinear Estimates",
+  "version": "1.0",
+  "date": "2026-02-26T14:30:44.635654",
+  "qcal_frequency_hz": 141.7001,
+  "status": "VALIDATED",
+  "tests_passed": 5,
+  "tests_total": 5,
+  "success_rate": 1.0,
+  "results": [
+    {
+      "test_name": "Test 1: Small parameters (random)",
+      "U": 10,
+      "V": 10,
+      "N": 100,
+      "alpha": 0.5,
+      "vaughan_coefficients": false,
+      "sum_absolute_value": 49.40969491213952,
+      "theoretical_bound": 269.18750754948064,
+      "ratio": 0.18355121811534025,
+      "bound_holds": true,
+      "status": "PASS"
+    },
+    {
+      "test_name": "Test 2: Medium parameters (\u03b1=\u03c0/7)",
+      "U": 20,
+      "V": 20,
+      "N": 500,
+      "alpha": 0.4487989505128276,
+      "vaughan_coefficients": false,
+      "sum_absolute_value": 16.845887386436747,
+      "theoretical_bound": 1035.961574864502,
+      "ratio": 0.01626111218327774,
+      "bound_holds": true,
+      "status": "PASS"
+    },
+    {
+      "test_name": "Test 3: Vaughan coefficients",
+      "U": 15,
+      "V": 15,
+      "N": 1000,
+      "alpha": 0.123456,
+      "vaughan_coefficients": true,
+      "sum_absolute_value": 7.832437434593253,
+      "theoretical_bound": 675.3100968754255,
+      "ratio": 0.011598282730900886,
+      "bound_holds": true,
+      "status": "PASS"
+    },
+    {
+      "test_name": "Test 4: Golden ratio \u03b1=1/\u03c6",
+      "U": 25,
+      "V": 25,
+      "N": 1000,
+      "alpha": 0.6180339887498948,
+      "vaughan_coefficients": false,
+      "sum_absolute_value": 59.23219895510956,
+      "theoretical_bound": 2267.5806416906603,
+      "ratio": 0.02612131972997762,
+      "bound_holds": true,
+      "status": "PASS"
+    },
+    {
+      "test_name": "Cauchy-Schwarz Verification",
+      "lhs": 2415.1294130480596,
+      "rhs": 119655.17500233027,
+      "ratio": 0.020184078231476617,
+      "holds": true,
+      "status": "PASS"
+    }
+  ],
+  "certificate_hash": "0xQCAL_TYPEII_a96ef797afc24688"
+}

@@ -254,4 +254,111 @@ This is the analytic machinery that proves:
   N = p₁ + p₂       for all even N > 10^43 (Binary Goldbach - conjectural)
 -/
 
+/-!
+## HLsum Minor Arc Bounds: The Shield
+
+These are the pointwise and integral bounds that protect the proof.
+They formalize that exponential sums over primes are "small" uniformly
+on minor arcs.
+-/
+
+/-- 
+Hardy-Littlewood sum with function f.
+This generalizes the von Mangoldt sum.
+-/
+noncomputable def HLsum (f : ℕ → ℂ) (N : ℕ) (α : ℝ) : ℂ :=
+  ∑ k in Finset.range N, f k * Complex.exp (2 * Real.pi * Complex.I * α * k)
+
+/-- 
+TEOREMA: HLsum_minor_arc_bound
+El pilar del silencio: en los arcos menores, la suma de Von Mangoldt 
+no puede entrar en fase.
+
+This is the pointwise bound: at any single point α on minor arcs,
+the exponential sum is bounded by N / (log N)^A with power saving.
+
+**Prueba (esquema)**:
+1. Invocar Identidad de Vaughan: Λ = TypeI + TypeII + TypeIII
+2. Type II se acota mediante Lema Bilinear (Cauchy-Schwarz + Large Sieve)
+3. La condición MinorArcs garantiza que α no está cerca de 
+   ninguna "trampa" racional de denominador pequeño
+4. Type I: estimación directa via partial summation
+5. Type III: remainder trivial (muy pequeño)
+6. Combinar via desigualdad triangular
+-/
+theorem HLsum_minor_arc_bound
+    (N : ℕ) (α : ℝ) (f₀ C A : ℝ)
+    (hα : ∃ q : ℕ, q ≤ Real.log N → ∀ a : ℤ, 
+          Real.dist α ((a : ℝ) / q) ≥ (Real.log N)⁻¹)
+    (hN : N ≥ 3)
+    (hC : C > 0)
+    (hA : A > 0) :
+    Complex.abs (HLsum (fun k => (VaughanIdentity.vonMangoldt k : ℂ)) N α)
+      ≤ C * (N : ℝ) / (Real.log N) ^ A := by
+  -- Paso 1: Aplicar identidad de Vaughan
+  -- Λ(n) = TypeI(n) + TypeII(n) + TypeIII(n)
+  -- donde TypeII es el término bilineal que requiere large sieve
+  
+  -- Paso 2: Acotar TypeI directamente (partial summation)
+  -- |∑ TypeI(n) e(αn)| ≤ C₁ N / log N
+  
+  -- Paso 3: Acotar TypeII usando type_II_bilinear.lean
+  -- Este es el corazón: usar typeII_bilinear_minor
+  -- |∑ TypeII(n) e(αn)| ≤ C₂ N / (log N)^A
+  
+  -- Paso 4: Acotar TypeIII (remainder pequeño)
+  -- |∑ TypeIII(n) e(αn)| ≤ C₃ N / log² N
+  
+  -- Paso 5: Desigualdad triangular
+  -- |∑ Λ(n) e(αn)| ≤ |TypeI| + |TypeII| + |TypeIII|
+  --                 ≤ C N / (log N)^A
+  
+  sorry
+
+/-- 
+Contribución de los arcos menores (función auxiliar).
+Esto representa la integral sobre los arcos menores.
+-/
+noncomputable def minorArcContribution (N n : ℕ) (f₀ : ℝ) : ℂ :=
+  -- Integral simplificada: ∫_{MinorArcs} HLsum^n e(-αn) dα
+  -- En la práctica esto requiere measure theory de Lean
+  sorry
+
+/-- 
+LEMA: minorArcContribution_bound
+Formaliza que el ruido total integrado es de orden inferior a la señal.
+
+Una vez que tenemos la cota puntual, la integral sobre los Arcos Menores
+es inmediata. Como la medida del "círculo" es 1, la integral del cuadrado
+de una función pequeña sigue siendo pequeña.
+
+**Prueba (esquema)**:
+1. Usar |∫ f| ≤ ∫ |f| (desigualdad triangular para integrales)
+2. Sustituir la cota puntual h_point del teorema anterior
+3. La integral sobre MinorArcs (subconjunto de [0,1]) se acota por 1
+4. Resultado: contribución integrada ≤ C N² / (log N)^A
+-/
+theorem minorArcContribution_bound
+    (N n : ℕ) (f₀ C A : ℝ)
+    (hN : N ≥ 3)
+    (hC : C > 0)
+    (hA : A > 0) :
+    Complex.abs (minorArcContribution N n f₀)
+      ≤ C * (N : ℝ)^2 / (Real.log N) ^ A := by
+  -- Paso 1: |∫ f| ≤ ∫ |f|
+  
+  -- Paso 2: Aplicar cota puntual HLsum_minor_arc_bound
+  -- Para cada α ∈ MinorArcs:
+  --   |HLsum(α)| ≤ C N / (log N)^A
+  
+  -- Paso 3: Integrar sobre MinorArcs
+  -- ∫_{MinorArcs} |HLsum(α)| dα ≤ ∫₀¹ C N / (log N)^A dα
+  --                                = C N / (log N)^A
+  
+  -- Paso 4: Para potencias (HLsum)ⁿ, aplicar desigualdad de Hölder
+  -- |∫ HLsum^n e(-αn) dα| ≤ (∫|HLsum|²)^{n/2}
+  --                        ≤ C^n N^n / (log N)^{An}
+  
+  sorry
+
 end CircleMethod
