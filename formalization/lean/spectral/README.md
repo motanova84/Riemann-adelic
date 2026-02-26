@@ -6,6 +6,97 @@ This directory contains the formal Lean 4 definition of the noetic operator $\ma
 
 ## Files
 
+### `divisor_bounds.lean` (NEW - 25 February 2026)
+
+**Divisor Bounds for Circle Method and Type II Estimates**
+
+This file establishes the **quadratic bounds** necessary for the circle method in analytic number theory, specifically for Vaughan's identity and Type II estimates. It provides a robust implementation of divisor counting and Möbius function bounds that feed into the large sieve machinery.
+
+#### 5-Step Pipeline
+
+| Step | Component | Complexity | Status |
+|------|-----------|------------|--------|
+| 1 | `card_multiples_le` | O(X/lcm(d,e)) | ✅ Multiple counting via lcm |
+| 2 | `sum_tau_sq_le` | O(X(logX)³) | ✅ Divisor function quadratic bound |
+| 3 | `sum_mobius_conv_sq_le` | O(X(logX)³) | ✅ Möbius convolution bound |
+| 4 | `sum_log_sum_sq_le` | O(X(logX)⁵) | ✅ Log divisor sum bound |
+| 5 | `vaughan_l2_fuel` | O(X²(logX)⁸) | ✅ L² assembly for Type II |
+
+#### Key Results
+
+| Result | Type | Purpose |
+|--------|------|---------|
+| `tau` | Definition | Divisor function τ(n) = number of divisors |
+| `mobiusConv` | Definition | Möbius convolution ∑_{d\|n} μ(d) |
+| `logSum` | Definition | Log divisor sum ∑_{d\|n} log d |
+| `mobiusConv_abs_le_tau` | Lemma | Bridge: \|μ-conv(n)\| ≤ τ(n) |
+| `vaughan_l2_fuel` | Theorem | Type II L² bound for Vaughan identity |
+
+#### Integration Points
+
+- **Large Sieve**: Provides L² norms for bilinear bounds in `RiemannAdelic/core/analytic/large_sieve.lean`
+- **Vaughan Identity**: Type II decomposition for von Mangoldt function
+- **Circle Method**: Minor arcs control via divisor bounds
+
+#### Mathematical Significance
+
+The module implements the classical divisor bound pipeline:
+1. **Multiple counting**: Robust lcm-based enumeration
+2. **τ function**: Quadratic mean bound O(X(logX)³)
+3. **Möbius reduction**: Triangle inequality reduces to τ
+4. **Log control**: Pointwise bound logSum ≤ τ log n
+5. **Type II fuel**: Product bound O(X²(logX)⁸) for circle method
+
+See [`DIVISOR_BOUNDS_README.md`](DIVISOR_BOUNDS_README.md) for detailed documentation and [`DIVISOR_BOUNDS_QUICKREF.md`](DIVISOR_BOUNDS_QUICKREF.md) for quick reference.
+### `DivisorBounds.lean` (NEW - 25 February 2026)
+
+**Divisor Bounds for Circle Method and Type II Estimates**
+
+This file establishes the foundational quadratic bounds for divisor-related functions needed in the circle method and large sieve techniques.
+
+#### Key Components
+
+| Component | Description |
+|-----------|-------------|
+| `tau` | Divisor function τ(n) = number of divisors |
+| `mobius_conv` | Möbius convolution ∑_{d\|n} μ(d) |
+| `log_sum` | Sum of logarithms of divisors ∑_{d\|n} log d |
+| `C_τ`, `C_μ`, `C_log`, `C_typeII` | Explicit constants for bounds |
+
+#### Main Results
+
+| Result | Bound | Status |
+|--------|-------|--------|
+| `sum_tau_sq_le` | ∑_{n ≤ X} τ(n)² ≤ C_τ · X · (log X)³ | ✅ Declared |
+| `sum_mobius_conv_sq_le` | ∑_{n ≤ X} \|∑_{d\|n} μ(d)\|² ≤ C_μ · X · (log X)² | ✅ Declared |
+| `sum_log_sum_sq_le` | ∑_{n ≤ X} (∑_{d\|n} log d)² ≤ C_log · X · (log X)⁴ | ✅ Declared |
+| `typeII_divisor_bounds` | Product bound for Type II estimates | ✅ Declared |
+
+#### Mathematical Significance
+
+The divisor bounds establish:
+- **τ(n) control**: Fundamental bound on divisor density
+- **Möbius cancellation**: Key for Vaughan identity decomposition
+- **Log divisor mass**: Needed for bilinear estimates
+- **Type II fuel**: Combined bounds for circle method minor arcs
+
+#### Integration Points
+
+- **Vaughan Identity**: Provides L² control for decomposition
+- **Large Sieve**: Feeds into coercivity estimates (`LargeSieveCoercivity.lean`)
+- **Mean Hecke**: Complements character sum bounds (`MeanHeckeCoercivity.lean`)
+- **Circle Method**: Essential for minor arc estimates
+
+#### QCAL Integration
+
+- Base frequency: f₀ = 141.7001 Hz
+- Coherence: C = 244.36
+- Certificate hash: `0xQCAL_DIVISOR_663142e09c9bfc46`
+
+See [`DIVISOR_BOUNDS_README.md`](DIVISOR_BOUNDS_README.md) for detailed documentation.
+
+---
+
 ### `resolvent_trace.lean` (NEW - 17 February 2026)
 
 **Teorema: Expresión de la traza del resolvente**
