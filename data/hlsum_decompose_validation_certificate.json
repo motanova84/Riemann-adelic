@@ -1,0 +1,134 @@
+{
+  "validation_timestamp": "2026-02-25T22:40:58.071470",
+  "module": "hlsum_decompose.lean",
+  "theorem": "HLsum_decompose_mod_q",
+  "test_results": [
+    {
+      "N": 50,
+      "q": 3,
+      "alpha": 0.123,
+      "direct_value": {
+        "real": 1.4151074623043733,
+        "imag": -1.8766979725358726,
+        "abs": 2.3504306860636794
+      },
+      "decomposed_value": {
+        "real": 1.4151074623043818,
+        "imag": -1.8766979725358834,
+        "abs": 2.350430686063693
+      },
+      "absolute_error": 1.3768556071205303e-14,
+      "relative_error": 5.857886451552342e-15,
+      "tolerance": 1e-10,
+      "success": true
+    },
+    {
+      "N": 100,
+      "q": 5,
+      "alpha": 0.5,
+      "direct_value": {
+        "real": -85.72754506263803,
+        "imag": 3.963524899169124e-13,
+        "abs": 85.72754506263803
+      },
+      "decomposed_value": {
+        "real": -85.72754506263803,
+        "imag": 5.833874614545561e-13,
+        "abs": 85.72754506263803
+      },
+      "absolute_error": 1.8703497153764375e-13,
+      "relative_error": 2.181737169785791e-15,
+      "tolerance": 1e-10,
+      "success": true
+    },
+    {
+      "N": 100,
+      "q": 7,
+      "alpha": 0.141,
+      "direct_value": {
+        "real": -16.718960682098285,
+        "imag": 3.199419629020774,
+        "abs": 17.02233627479236
+      },
+      "decomposed_value": {
+        "real": -16.718960682098324,
+        "imag": 3.1994196290208734,
+        "abs": 17.022336274792416
+      },
+      "absolute_error": 1.0687705978178971e-13,
+      "relative_error": 6.2786363784893216e-15,
+      "tolerance": 1e-10,
+      "success": true
+    },
+    {
+      "N": 200,
+      "q": 10,
+      "alpha": 0.333,
+      "direct_value": {
+        "real": -93.21159096338833,
+        "imag": 21.043034321496055,
+        "abs": 95.55736488299412
+      },
+      "decomposed_value": {
+        "real": -93.21159096338874,
+        "imag": 21.04303432149716,
+        "abs": 95.55736488299476
+      },
+      "absolute_error": 1.179249442345667e-12,
+      "relative_error": 1.2340748866292065e-14,
+      "tolerance": 1e-10,
+      "success": true
+    },
+    {
+      "N": 100,
+      "q": 13,
+      "alpha": 1.0,
+      "direct_value": {
+        "real": 94.0453112293574,
+        "imag": -8.354875478247666e-13,
+        "abs": 94.0453112293574
+      },
+      "decomposed_value": {
+        "real": 94.04531122935741,
+        "imag": 1.2720452417687381e-12,
+        "abs": 94.04531122935741
+      },
+      "absolute_error": 2.1075807001402146e-12,
+      "relative_error": 2.2410268758643943e-14,
+      "tolerance": 1e-10,
+      "success": true
+    },
+    {
+      "N": 150,
+      "q": 6,
+      "alpha": 0.0,
+      "direct_value": {
+        "real": 146.66499121018813,
+        "imag": 0.0,
+        "abs": 146.66499121018813
+      },
+      "decomposed_value": {
+        "real": 146.66499121018813,
+        "imag": 0.0,
+        "abs": 146.66499121018813
+      },
+      "absolute_error": 0.0,
+      "relative_error": 0.0,
+      "tolerance": 1e-10,
+      "success": true
+    }
+  ],
+  "summary": {
+    "total_tests": 6,
+    "passed": 6,
+    "failed": 0,
+    "success_rate": 1.0,
+    "all_passed": true
+  },
+  "mathematical_statement": "\u2211_{n < N} \u039b(n)e^{2\u03c0i\u03b1n} = \u2211_{r < q} e^{2\u03c0i\u03b1r} \u00b7 \u2211_{m < N/q+1} \u039b(qm+r)e^{2\u03c0i\u03b1qm}",
+  "author": {
+    "name": "Jos\u00e9 Manuel Mota Burruezo",
+    "orcid": "0009-0002-1923-0773",
+    "institution": "Instituto de Conciencia Cu\u00e1ntica (ICQ)"
+  }
+}
