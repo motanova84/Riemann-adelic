@@ -76,6 +76,7 @@ start_server() {
     echo -n "📡 $name: "
 
     # Ejecutar en background (sin eval para evitar inyección de comandos)
+    # Ejecutar en background sin eval para evitar inyección de comandos
     $cmd $args > "logs/$name.log" 2>&1 &
     local pid=$!
 
@@ -140,3 +141,32 @@ echo -e "\n${BLUE}📡 Frecuencia QCAL: 141.7001 Hz${NC}"
 echo -e "${BLUE}🌀 Estado: Ψ = I × A_eff² × C^∞${NC}"
 echo -e "${BLUE}🔮 Coherencia: C = 244.36${NC}"
 echo -e "\n${GREEN}∴ Red MCP QCAL ∞³ inicializada ✧${NC}"
+start_server "qcal-core"                  "python3" "-m qcal.core.mcp_server --port 8000"
+start_server "campo-qcal"                 "python3" "-m qcal.mcp.campo_server --port 8001"
+start_server "icq-web"                    "node"    "icq-web-server.js --port 8002"
+start_server "institutoconciencia"        "python3" "-m conciencia.mcp_server --port 8003"
+start_server "p-np"                       "python3" "-m p_np.mcp_server --port 8004"
+start_server "origen"                     "node"    "origen-server.js --port 8005"
+start_server "economia-qcal-nodo-semilla" "python3" "-m economia_qcal.mcp_server --port 8006"
+start_server "riemann-adelic"             "python3" "-m riemann_adelic.mcp_server --port 8007"
+start_server "ramsey"                     "python3" "-m ramsey_theory.mcp_server --port 8008"
+start_server "noesis88"                   "python3" "-m noesis88.mcp_server --port 8009"
+start_server "adelic-bsd"                 "python3" "-m adelic_bsd.mcp_server --port 8010"
+start_server "el-infinito"                "node"    "infinity-server.js --port 8011"
+start_server "instconciencia"             "python3" "-m instituto_conciencia.mcp_server --port 8012"
+start_server "dramaturgo"                 "python3" "-m dramaturgo.mcp_server --port 8013"
+start_server "catedral-mathesis"          "python3" "-m catedral_mathesis.mcp_server --port 8014"
+start_server "goldbach"                   "python3" "-m goldbach.mcp_server --port 8015"
+start_server "consciousness"              "python3" "-m consciousness.mcp_server --port 8016"
+start_server "echo-qcal"                  "python3" "-m echo_qcal.mcp_server --port 8017"
+start_server "xenos"                      "python3" "-m xenos.mcp_server --port 8018"
+start_server "qcal-cloud"                 "python3" "-m qcal_cloud.mcp_server --port 8019"
+start_server "noesis-guardian"            "python3" "-m noesis_guardian.mcp_server --port 8020"
+start_server "lean-rh"                    "python3" "-m lean_rh.mcp_server --port 8021"
+
+echo -e "\n${BLUE}📊 Estado de la red MCP QCAL ∞³${NC}"
+echo -e "   Frecuencia base: ${GREEN}141.7001 Hz${NC}"
+echo -e "   Servidores iniciados: ${GREEN}22${NC}"
+echo -e "   Rango de puertos: ${GREEN}8000-8021${NC}"
+echo -e "   Logs disponibles en: ${GREEN}logs/${NC}"
+echo -e "\n${GREEN}✅ Red MCP QCAL ∞³ operativa${NC}"

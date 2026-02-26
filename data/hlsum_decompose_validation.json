@@ -1,0 +1,67 @@
+{
+  "framework": "QCAL \u221e\u00b3",
+  "f0_hz": 141.7001,
+  "coherence": 244.36,
+  "all_passed": true,
+  "tests": [
+    {
+      "test_number": 1,
+      "description": "Small N, q=2, \u03b1=0",
+      "N": 10,
+      "q": 2,
+      "alpha": 0.0,
+      "passed": true,
+      "error": 0.0
+    },
+    {
+      "test_number": 2,
+      "description": "Small N, q=3, \u03b1=0.5",
+      "N": 10,
+      "q": 3,
+      "alpha": 0.5,
+      "passed": true,
+      "error": 4.440892098500626e-16
+    },
+    {
+      "test_number": 3,
+      "description": "Medium N, q=5, \u03b1=0.1",
+      "N": 20,
+      "q": 5,
+      "alpha": 0.1,
+      "passed": true,
+      "error": 8.881784197001252e-16
+    },
+    {
+      "test_number": 4,
+      "description": "Larger N, q=7, \u03b1=0.25",
+      "N": 50,
+      "q": 7,
+      "alpha": 0.25,
+      "passed": true,
+      "error": 5.906428228566056e-14
+    },
+    {
+      "test_number": 5,
+      "description": "N=100, q=11, \u03b1=f\u2080/1000 (QCAL)",
+      "N": 100,
+      "q": 11,
+      "alpha": 0.1417001,
+      "passed": true,
+      "error": 4.308352016705507e-14
+    },
+    {
+      "test_number": 6,
+      "description": "N=100, q=13, \u03b1=1/\u221a2 (irrational)",
+      "N": 100,
+      "q": 13,
+      "alpha": 0.7071067811865475,
+      "passed": true,
+      "error": 6.570823245819924e-13
+    }
+  ],
+  "summary": {
+    "total": 6,
+    "passed": 6,
+    "failed": 0
+  }
+}

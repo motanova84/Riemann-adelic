@@ -2,6 +2,151 @@
   "qcal_version": "∞³",
   "frequency_base": 141.7001,
   "frequency_harmonic": 888.0,
+  "mcpServers": {
+    "campo-qcal": {
+      "command": "python",
+      "args": ["-m", "qcal.mcp.campo_server"],
+      "env": {
+        "QCAL_F0": "141.7001",
+        "QCAL_PORT": "8001",
+        "QCAL_HOST": "localhost"
+      }
+    },
+    "icq-web": {
+      "command": "node",
+      "args": ["icq-web-server.js"],
+      "env": {
+        "PORT": "8002",
+        "ICQ_CONFIG": "./icq-config.json"
+      }
+    },
+    "institutoconciencia": {
+      "command": "python",
+      "args": ["-m", "conciencia.mcp_server"],
+      "env": {
+        "PORT": "8003",
+        "DB_PATH": "./data/conciencia.db"
+      }
+    },
+    "p-np": {
+      "command": "python",
+      "args": ["-m", "p_np.mcp_server"],
+      "env": {
+        "PORT": "8004",
+        "COMPLEXITY_CLASS": "P"
+      }
+    },
+    "origen": {
+      "command": "node",
+      "args": ["origen-server.js"],
+      "env": {
+        "PORT": "8005",
+        "ORIGIN_DB": "./data/origen.json"
+      }
+    },
+    "economia-qcal-nodo-semilla": {
+      "command": "python",
+      "args": ["-m", "economia_qcal.mcp_server"],
+      "env": {
+        "PORT": "8006",
+        "QCAL_CONFIG": "./config/qcal_economy.yaml"
+      }
+    },
+    "riemann-adelic": {
+      "command": "python",
+      "args": ["-m", "riemann_adelic.mcp_server"],
+      "env": {
+        "PORT": "8007",
+        "ZETA_FUNCTION": "adelic"
+      }
+    },
+    "ramsey": {
+      "command": "python",
+      "args": ["-m", "ramsey_theory.mcp_server"],
+      "env": {
+        "PORT": "8008",
+        "N": "5",
+        "K": "3"
+      }
+    },
+    "noesis88": {
+      "command": "python",
+      "args": ["-m", "noesis88.mcp_server"],
+      "env": {
+        "PORT": "8009",
+        "NOESIS_MODE": "quantum"
+      }
+    },
+    "adelic-bsd": {
+      "command": "python",
+      "args": ["-m", "adelic_bsd.mcp_server"],
+      "env": {
+        "PORT": "8010",
+        "BSD_CONJECTURE": "true"
+      }
+    },
+    "el-infinito": {
+      "command": "node",
+      "args": ["infinity-server.js"],
+      "env": {
+        "PORT": "8011",
+        "INFINITY_MODE": "countable"
+      }
+    },
+    "instconciencia": {
+      "command": "python",
+      "args": ["-m", "instituto_conciencia.mcp_server"],
+      "env": {
+        "PORT": "8012",
+        "CONSCIOUSNESS_LEVEL": "quantum"
+      }
+    },
+    "dramaturgo": {
+      "command": "python",
+      "args": ["-m", "dramaturgo.mcp_server"],
+      "env": {
+        "PORT": "8013",
+        "SCRIPT_PATH": "./scripts"
+      }
+    },
+    "catedral-mathesis": {
+      "command": "python",
+      "args": ["-m", "catedral_mathesis.mcp_server"],
+      "env": {
+        "PORT": "8014",
+        "MATHEMATICAL_DEPTH": "infinite"
+      }
+    },
+    "github-mcp-server": {
+      "command": "python",
+      "args": ["-m", "github_mcp_server"],
+      "env": {
+        "PORT": "8015",
+        "GITHUB_TOKEN": "${GITHUB_TOKEN}",
+        "GITHUB_REPO": "motanova84/Riemann-adelic"
+      }
+    },
+    "sistema-nexus-prime": {
+      "command": "python",
+      "args": ["-m", "nexus_prime.mcp_server"],
+      "env": {
+        "PORT": "8016",
+        "NEXUS_MODE": "prime"
+      }
+    },
+    "gw250114-141hz-analysis": {
+      "command": "python",
+      "args": ["-m", "analysis_141hz.mcp_server"],
+      "env": {
+        "PORT": "8017",
+        "DATA_FILE": "./data/gw250114.csv",
+        "F0": "141.7001"
+      }
+    }
+  }
+  "version": "1.0.0",
+  "framework": "QCAL ∞³",
+  "frequency": 141.7001,
   "coherence_constant": 244.36,
   "servers": [
     {
@@ -179,6 +324,157 @@
       "port": 8021,
       "frequency": 141.7001,
       "description": "GitHub MCP - Núcleo git y gestión ontológica del código"
+      "type": "python",
+      "module": "qcal.core.mcp_server",
+      "port": 8000,
+      "description": "Núcleo QCAL - Quantum Coherence Adelic Lattice core server"
+    },
+    {
+      "name": "campo-qcal",
+      "type": "python",
+      "module": "qcal.mcp.campo_server",
+      "port": 8001,
+      "description": "Campo QCAL - Adelic field computations"
+    },
+    {
+      "name": "icq-web",
+      "type": "node",
+      "script": "icq-web-server.js",
+      "port": 8002,
+      "description": "ICQ Web - Instituto de Conciencia Cuántica web interface"
+    },
+    {
+      "name": "institutoconciencia",
+      "type": "python",
+      "module": "conciencia.mcp_server",
+      "port": 8003,
+      "description": "Instituto de Conciencia - Quantum consciousness module"
+    },
+    {
+      "name": "p-np",
+      "type": "python",
+      "module": "p_np.mcp_server",
+      "port": 8004,
+      "description": "P-NP - Complexity theory adelic server"
+    },
+    {
+      "name": "origen",
+      "type": "node",
+      "script": "origen-server.js",
+      "port": 8005,
+      "description": "Origen - Origin field server"
+    },
+    {
+      "name": "economia-qcal-nodo-semilla",
+      "type": "python",
+      "module": "economia_qcal.mcp_server",
+      "port": 8006,
+      "description": "Economía QCAL Nodo Semilla - Economic adelic lattice"
+    },
+    {
+      "name": "riemann-adelic",
+      "type": "python",
+      "module": "riemann_adelic.mcp_server",
+      "port": 8007,
+      "description": "Riemann Adelic - Core Riemann Hypothesis adelic server"
+    },
+    {
+      "name": "ramsey",
+      "type": "python",
+      "module": "ramsey_theory.mcp_server",
+      "port": 8008,
+      "description": "Ramsey - Ramsey theory combinatorial server"
+    },
+    {
+      "name": "noesis88",
+      "type": "python",
+      "module": "noesis88.mcp_server",
+      "port": 8009,
+      "description": "Noesis88 - Noetic intelligence vector server"
+    },
+    {
+      "name": "adelic-bsd",
+      "type": "python",
+      "module": "adelic_bsd.mcp_server",
+      "port": 8010,
+      "description": "Adelic BSD - Birch and Swinnerton-Dyer adelic server"
+    },
+    {
+      "name": "el-infinito",
+      "type": "node",
+      "script": "infinity-server.js",
+      "port": 8011,
+      "description": "El Infinito - Infinity field server"
+    },
+    {
+      "name": "instconciencia",
+      "type": "python",
+      "module": "instituto_conciencia.mcp_server",
+      "port": 8012,
+      "description": "InstConciencia - Instituto de Conciencia secondary server"
+    },
+    {
+      "name": "dramaturgo",
+      "type": "python",
+      "module": "dramaturgo.mcp_server",
+      "port": 8013,
+      "description": "Dramaturgo - Narrative and symbolic server"
+    },
+    {
+      "name": "catedral-mathesis",
+      "type": "python",
+      "module": "catedral_mathesis.mcp_server",
+      "port": 8014,
+      "description": "Catedral Mathesis - Mathematical cathedral server"
+    },
+    {
+      "name": "goldbach",
+      "type": "python",
+      "module": "goldbach.mcp_server",
+      "port": 8015,
+      "description": "Goldbach - Goldbach conjecture circle method server"
+    },
+    {
+      "name": "consciousness",
+      "type": "python",
+      "module": "consciousness.mcp_server",
+      "port": 8016,
+      "description": "Consciousness - Quantum consciousness spectral server"
+    },
+    {
+      "name": "echo-qcal",
+      "type": "python",
+      "module": "echo_qcal.mcp_server",
+      "port": 8017,
+      "description": "Echo QCAL - QCAL echo and resonance server"
+    },
+    {
+      "name": "xenos",
+      "type": "python",
+      "module": "xenos.mcp_server",
+      "port": 8018,
+      "description": "Xenos - Cytoplasmic Riemann resonance server"
+    },
+    {
+      "name": "qcal-cloud",
+      "type": "python",
+      "module": "qcal_cloud.mcp_server",
+      "port": 8019,
+      "description": "QCAL-CLOUD - Cloud synchronization and coordination server"
+    },
+    {
+      "name": "noesis-guardian",
+      "type": "python",
+      "module": "noesis_guardian.mcp_server",
+      "port": 8020,
+      "description": "Noesis Guardian - QCAL integrity and monitoring server"
+    },
+    {
+      "name": "lean-rh",
+      "type": "python",
+      "module": "lean_rh.mcp_server",
+      "port": 8021,
+      "description": "Lean RH - Lean 4 formalization interface server"
     }
   ]
 }

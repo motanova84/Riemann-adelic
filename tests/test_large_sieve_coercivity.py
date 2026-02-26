@@ -282,7 +282,12 @@ class TestLargeSieveCoercivity:
 
 class TestLargeSieveMathematicalProperties:
     """Test mathematical properties of Large Sieve technique."""
-    
+
+    @pytest.fixture
+    def certificate_path(self):
+        """Path to validation certificate."""
+        return Path(__file__).parent.parent / 'data' / 'large_sieve_coercivity_certificate.json'
+
     def test_power_law_exponent_range(self, certificate_path):
         """Test that power-law exponent δ is in expected range."""
         if not Path(certificate_path).exists():

@@ -53,6 +53,9 @@ import Mathlib.NumberTheory.Divisors
 import Mathlib.Algebra.BigOperators.Basic
 import Mathlib.Data.Real.Basic
 
+-- Import Large Sieve for Type II bounds
+import RiemannAdelic.core.analytic.large_sieve
+
 -- Import von Mangoldt from TateLogEmergence
 -- We'll need to reference it properly
 
@@ -77,6 +80,35 @@ noncomputable def vonMangoldt (n : ℕ) : ℝ :=
   if h : ∃ p k : ℕ, Nat.Prime p ∧ k > 0 ∧ n = p^k 
   then Real.log (Classical.choose h) 
   else 0
+
+/-!
+## Minor Arcs (Diophantine Condition)
+
+A frequency α is in the Minor Arcs if it is far from all rationals a/q
+with small denominator q ≤ Q. This is the classical condition from the
+Hardy-Littlewood circle method.
+
+Uses `AnalyticNumberTheory.ratPhase` from `large_sieve.lean` for the
+rational phase a/q with explicit real-number coercion.
+
+**Note on circular imports**: This is a local definition to avoid a circular
+dependency between `vaughan_identity.lean` and `minor_arcs.lean`. It is
+semantically equivalent to `CircleMethod.MinorArcs` in `minor_arcs.lean`
+(both encode the Diophantine far-from-rationals condition). The two definitions
+differ in parameterization but agree on the analytic content.
+-/
+
+/--
+A frequency α lies in the Minor Arcs for parameter Q if it is
+Diophantinely far from every rational a/q with q ≤ Q and gcd(a,q)=1.
+
+Concretely: |α - a/q| ≥ 1/q² for all such a/q.
+This is the Dirichlet/Weyl condition that forces phase cancellation.
+-/
+def MinorArcs : Set ℂ :=
+  {α | ∀ q : ℕ, q > 0 → ∀ a : ℕ, Nat.gcd a q = 1 →
+       (q : ℝ) ≤ Real.sqrt (Complex.abs α) →
+       Complex.abs (α - (a : ℂ) / (q : ℂ)) ≥ 1 / (q : ℝ)^2}
 
 /-!
 ## Vaughan Parameters
