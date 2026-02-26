@@ -1,0 +1,162 @@
+{
+  "version": "1.0.0",
+  "framework": "QCAL ∞³",
+  "frequency": 141.7001,
+  "coherence_constant": 244.36,
+  "servers": [
+    {
+      "name": "qcal-core",
+      "type": "python",
+      "module": "qcal.core.mcp_server",
+      "port": 8000,
+      "description": "Núcleo QCAL - Quantum Coherence Adelic Lattice core server"
+    },
+    {
+      "name": "campo-qcal",
+      "type": "python",
+      "module": "qcal.mcp.campo_server",
+      "port": 8001,
+      "description": "Campo QCAL - Adelic field computations"
+    },
+    {
+      "name": "icq-web",
+      "type": "node",
+      "script": "icq-web-server.js",
+      "port": 8002,
+      "description": "ICQ Web - Instituto de Conciencia Cuántica web interface"
+    },
+    {
+      "name": "institutoconciencia",
+      "type": "python",
+      "module": "conciencia.mcp_server",
+      "port": 8003,
+      "description": "Instituto de Conciencia - Quantum consciousness module"
+    },
+    {
+      "name": "p-np",
+      "type": "python",
+      "module": "p_np.mcp_server",
+      "port": 8004,
+      "description": "P-NP - Complexity theory adelic server"
+    },
+    {
+      "name": "origen",
+      "type": "node",
+      "script": "origen-server.js",
+      "port": 8005,
+      "description": "Origen - Origin field server"
+    },
+    {
+      "name": "economia-qcal-nodo-semilla",
+      "type": "python",
+      "module": "economia_qcal.mcp_server",
+      "port": 8006,
+      "description": "Economía QCAL Nodo Semilla - Economic adelic lattice"
+    },
+    {
+      "name": "riemann-adelic",
+      "type": "python",
+      "module": "riemann_adelic.mcp_server",
+      "port": 8007,
+      "description": "Riemann Adelic - Core Riemann Hypothesis adelic server"
+    },
+    {
+      "name": "ramsey",
+      "type": "python",
+      "module": "ramsey_theory.mcp_server",
+      "port": 8008,
+      "description": "Ramsey - Ramsey theory combinatorial server"
+    },
+    {
+      "name": "noesis88",
+      "type": "python",
+      "module": "noesis88.mcp_server",
+      "port": 8009,
+      "description": "Noesis88 - Noetic intelligence vector server"
+    },
+    {
+      "name": "adelic-bsd",
+      "type": "python",
+      "module": "adelic_bsd.mcp_server",
+      "port": 8010,
+      "description": "Adelic BSD - Birch and Swinnerton-Dyer adelic server"
+    },
+    {
+      "name": "el-infinito",
+      "type": "node",
+      "script": "infinity-server.js",
+      "port": 8011,
+      "description": "El Infinito - Infinity field server"
+    },
+    {
+      "name": "instconciencia",
+      "type": "python",
+      "module": "instituto_conciencia.mcp_server",
+      "port": 8012,
+      "description": "InstConciencia - Instituto de Conciencia secondary server"
+    },
+    {
+      "name": "dramaturgo",
+      "type": "python",
+      "module": "dramaturgo.mcp_server",
+      "port": 8013,
+      "description": "Dramaturgo - Narrative and symbolic server"
+    },
+    {
+      "name": "catedral-mathesis",
+      "type": "python",
+      "module": "catedral_mathesis.mcp_server",
+      "port": 8014,
+      "description": "Catedral Mathesis - Mathematical cathedral server"
+    },
+    {
+      "name": "goldbach",
+      "type": "python",
+      "module": "goldbach.mcp_server",
+      "port": 8015,
+      "description": "Goldbach - Goldbach conjecture circle method server"
+    },
+    {
+      "name": "consciousness",
+      "type": "python",
+      "module": "consciousness.mcp_server",
+      "port": 8016,
+      "description": "Consciousness - Quantum consciousness spectral server"
+    },
+    {
+      "name": "echo-qcal",
+      "type": "python",
+      "module": "echo_qcal.mcp_server",
+      "port": 8017,
+      "description": "Echo QCAL - QCAL echo and resonance server"
+    },
+    {
+      "name": "xenos",
+      "type": "python",
+      "module": "xenos.mcp_server",
+      "port": 8018,
+      "description": "Xenos - Cytoplasmic Riemann resonance server"
+    },
+    {
+      "name": "qcal-cloud",
+      "type": "python",
+      "module": "qcal_cloud.mcp_server",
+      "port": 8019,
+      "description": "QCAL-CLOUD - Cloud synchronization and coordination server"
+    },
+    {
+      "name": "noesis-guardian",
+      "type": "python",
+      "module": "noesis_guardian.mcp_server",
+      "port": 8020,
+      "description": "Noesis Guardian - QCAL integrity and monitoring server"
+    },
+    {
+      "name": "lean-rh",
+      "type": "python",
+      "module": "lean_rh.mcp_server",
+      "port": 8021,
+      "description": "Lean RH - Lean 4 formalization interface server"
+    }
+  ]
+}
