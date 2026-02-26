@@ -1,0 +1,68 @@
+{
+  "timestamp": "2026-02-26T11:00:51.197397",
+  "framework": "QCAL \u221e\u00b3",
+  "f0": 141.7001,
+  "module": "type_ii_bilinear_minor_arcs",
+  "total_tests": 6,
+  "passed_tests": 6,
+  "all_passed": true,
+  "tests": [
+    {
+      "test": "mobius_convolution_bound",
+      "passed": true,
+      "max_n": 100,
+      "violations": 0
+    },
+    {
+      "test": "exponential_sum_diagonal",
+      "passed": true,
+      "U": 50,
+      "result": 50
+    },
+    {
+      "test": "large_sieve_bound",
+      "passed": true,
+      "N": 100,
+      "U": 30,
+      "alpha": 0.17,
+      "abs_sum": 0.6070566850035757,
+      "bound": 22.80350850198276,
+      "is_minor_arc": false
+    },
+    {
+      "test": "von_mangoldt_properties",
+      "passed": true,
+      "lambda_1_zero": true,
+      "lambda_prime_correct": true,
+      "lambda_nonneg": true
+    },
+    {
+      "test": "type_ii_bilinear_estimate",
+      "passed": true,
+      "N": 100,
+      "U": 5,
+      "V": 5,
+      "abs_sum": 10.06240889456631,
+      "bound": 406.6260127555531,
+      "ratio": 0.024746102263298677
+    },
+    {
+      "test": "hl_sum_estimate",
+      "passed": true,
+      "N": 50,
+      "alpha": 0.31,
+      "abs_hl_sum": 5.476710750866666,
+      "bound": 1278.1110931766573,
+      "ratio": 0.0042850036902932105
+    }
+  ],
+  "certificate_hash": "0xQCAL_TYPE_II_53ef9c6fdc49f703",
+  "validation_status": "PASSED",
+  "components": [
+    "large_sieve.lean",
+    "divisor_bounds.lean",
+    "von_mangoldt.lean",
+    "type_II_bilinear.lean",
+    "minor_arcs.lean"
+  ]
+}
