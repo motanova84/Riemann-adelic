@@ -1,0 +1,20 @@
+{
+  "validation_type": "singular_series_goldbach",
+  "timestamp": "2026-02-26T12:06:55.785102+00:00",
+  "framework": "QCAL \u221e\u00b3",
+  "f0_hz": 141.7001,
+  "coherence": 244.36,
+  "tests": {
+    "test1_singular_local_pos": true,
+    "test2_singular_local_two": true,
+    "test3_convergence": true,
+    "test4_positivity": true,
+    "test5_lower_bound": true,
+    "test6_major_arc_ready": true
+  },
+  "certificate_hash": "0xQCAL_SINGULAR_a95cbe4b1fa9dceb",
+  "zenodo_doi": "10.5281/zenodo.17379721",
+  "orcid": "0009-0002-1923-0773",
+  "author": "Jos\u00e9 Manuel Mota Burruezo \u03a8 \u221e\u00b3",
+  "institution": "Instituto de Conciencia Cu\u00e1ntica (ICQ)"
+}
