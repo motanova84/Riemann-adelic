@@ -1,0 +1,29 @@
+{
+  "validation_type": "VaughanIdentity",
+  "framework": "QCAL \u221e\u00b3",
+  "constants": {
+    "f0_hz": 141.7001,
+    "coherence_C": 244.36
+  },
+  "timestamp": "2026-02-26T11:40:33.916373",
+  "tests_performed": [
+    "von_mangoldt",
+    "vaughan_parameters",
+    "type_I_bound",
+    "vaughan_decomposition",
+    "minor_arc_detection"
+  ],
+  "author": "Jos\u00e9 Manuel Mota Burruezo \u03a8 \u221e\u00b3",
+  "orcid": "0009-0002-1923-0773",
+  "doi": "10.5281/zenodo.17379721",
+  "version": "V7.1-VaughanIdentity",
+  "hash": "0xQCAL_VAUGHAN_ID_ef79d7b3267cba3e",
+  "test_results": {
+    "test1_von_mangoldt": true,
+    "test2_vaughan_params": true,
+    "test3_type_I": true,
+    "test4_decomposition": true,
+    "test5_minor_arcs": true
+  },
+  "all_passed": true
+}
