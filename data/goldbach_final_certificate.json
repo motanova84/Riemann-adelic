@@ -1,0 +1,23 @@
+{
+  "validation_type": "goldbach_final_circle_method",
+  "timestamp": "2026-02-26T11:02:36.315293",
+  "qcal_framework": {
+    "f0": 141.7001,
+    "C": 244.36,
+    "kappa_pi": 2.5773
+  },
+  "test_results": {
+    "test_1_von_mangoldt": true,
+    "test_2_hlsum_zero": true,
+    "test_3_singular_series": true,
+    "test_4_goldbach_small": true,
+    "test_5_circle_scaling": true,
+    "test_6_qcal_coherence": true
+  },
+  "tests_passed": 6,
+  "tests_total": 6,
+  "doi": "10.5281/zenodo.17379721",
+  "author": "Jos\u00e9 Manuel Mota Burruezo \u03a8 \u221e\u00b3",
+  "orcid": "0009-0002-1923-0773",
+  "certificate_hash": "0xQCAL_GOLDBACH_2c5dd1f0d030719d"
+}
