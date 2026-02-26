@@ -1,34 +1,34 @@
 {
-  "total_sorries": 2704,
-  "total_files": 421,
+  "total_sorries": 2786,
+  "total_files": 428,
   "category_distribution": {
     "qcal": {
-      "count": 1095,
-      "percentage": 40.49556213017752
+      "count": 1123,
+      "percentage": 40.30868628858579
     },
     "unknown": {
-      "count": 714,
-      "percentage": 26.40532544378698
+      "count": 741,
+      "percentage": 26.597272074659013
     },
     "spectral": {
-      "count": 358,
-      "percentage": 13.239644970414203
+      "count": 369,
+      "percentage": 13.244795405599424
     },
     "correspondence": {
-      "count": 32,
-      "percentage": 1.183431952662722
+      "count": 33,
+      "percentage": 1.1844938980617372
     },
     "adelic": {
-      "count": 99,
-      "percentage": 3.6612426035502956
+      "count": 105,
+      "percentage": 3.7688442211055273
     },
     "analytic": {
-      "count": 179,
-      "percentage": 6.619822485207101
+      "count": 181,
+      "percentage": 6.496769562096196
     },
     "trivial": {
-      "count": 227,
-      "percentage": 8.394970414201183
+      "count": 234,
+      "percentage": 8.399138549892319
     }
   },
   "detailed": {
@@ -1383,7 +1383,7 @@
     ],
     "formalization/lean/Main.lean": [
       {
-        "line": 70,
+        "line": 78,
         "code": "-- Paley-Wiener Uniqueness Theorem (100% formal, zero sorry)",
         "context": "import RiemannAdelic.lengths_derived\nimport RiemannAdelic.paley_wiener_uniqueness\n\n-- Paley-Wiener Uniqueness Theorem (100% formal, zero sorry)\nimport paley.paley_wiener_uniqueness\n-- Identity Principle for Exponential Type Functions\nimport paley.identity_principle_exp_type",
         "primary_category": "adelic",
@@ -1394,7 +1394,7 @@
         "similar_solutions": []
       },
       {
-        "line": 299,
+        "line": 307,
         "code": "IO.println \"  \u2022 Paley-Wiener Uniqueness (100% formal - ZERO sorry)\"",
         "context": "  IO.println \"  \u2022 Spectral RH operator H_\u03b5 (with prime harmonic potential)\"\n  IO.println \"  \u2022 Paley-Wiener theory\"\n  IO.println \"  \u2022 Paley-Wiener uniqueness theorem\"\n  IO.println \"  \u2022 Paley-Wiener Uniqueness (100% formal - ZERO sorry)\"\n  IO.println \"  \u2022 Identity Principle for Exponential Type Functions\"\n  IO.println \"  \u2022 Spectral RH operator (H_\u03b5 with prime harmonic potential)\"\n  IO.println \"  \u2022 Critical line proof via spectral operators\"",
         "primary_category": "spectral",
@@ -1405,7 +1405,7 @@
         "similar_solutions": []
       },
       {
-        "line": 319,
+        "line": 327,
         "code": "IO.println \"  \u2022 Heat Kernel Convergence to \u03b4\u2080 + Arithmetic Distribution (formalization in progress; contains sorry/axiom)\"",
         "context": "  IO.println \"  \u2022 Kernel positivity (purge_axioms branch)\"\n  IO.println \"  \u2022 Gamma trivial exclusion (purge_axioms branch)\"\n  IO.println \"  \u2022 Selberg Trace Formula (strong form with exact convergence)\"\n  IO.println \"  \u2022 Heat Kernel Convergence to \u03b4\u2080 + Arithmetic Distribution (formalization in progress; contains sorry/axiom)\"\n  IO.println \"  \u2022 NEW: Weil Explicit Formula (spectral derivation from H_\u03a8)\"\n  IO.println \"    - Connects zeta zeros with prime distribution via spectrum\"\n  IO.println \"    - \u2211g(\u03bb\u2099) + g(-\u03bb\u2099) - \u222bg(t)K(t)dt = \u2211g(Im \u03c1)\"",
         "primary_category": "qcal",
@@ -1419,7 +1419,7 @@
         "similar_solutions": []
       },
       {
-        "line": 332,
+        "line": 340,
         "code": "IO.println \"    - Complete theorem: no sorry (zero pending proofs)\"",
         "context": "  IO.println \"  \u2022 NEW: Script 13/\u221e\u00b3 - Eigenfunctions Dense in L\u00b2(\u211d) (26 November 2025)\"\n  IO.println \"    - spectral/eigenfunctions_dense_L2R: Orthonormal basis of eigenfunctions\"\n  IO.println \"    - eigenfunctions_dense_L2R: \u2203 (e : \u2115 \u2192 H), orthonormal \u2102 e \u2227 span(e) = \u22a4\"\n  IO.println \"    - Complete theorem: no sorry (zero pending proofs)\"\n  IO.println \"    - Key for spectral development and heat kernel expansions\"\n  IO.println \"  \u2022 NEW: Script 42/\u221e\u00b3 - Compact Self-Adjoint Spectrum (27 November 2025)\"\n  IO.println \"    - spectral/compact_selfadjoint_spectrum: Discrete spectrum theorem\"",
         "primary_category": "spectral",
@@ -1430,7 +1430,7 @@
         "similar_solutions": []
       },
       {
-        "line": 438,
+        "line": 446,
         "code": "/-- The complete system theorem: combines all components without sorrys -/",
         "context": "/-- Noesis decides -/\naxiom noesis_proven : NoesisInfinity.Noesis_decides\n\n/-- The complete system theorem: combines all components without sorrys -/\ntheorem Hilbert_Polya_System_Complete : \n  HS \u2227 CompactResolvent.is_hilbert_schmidt \u2227 Bijection \u2227 \n  (\u2200 s : \u2102, Complex.riemannZeta s = 0 \u2192 (0 < s.re \u2227 s.re < 1) \u2192 s.re = 1/2) \u2227 ",
         "primary_category": "correspondence",
@@ -2010,6 +2010,107 @@
         "primary_category": "adelic",
         "all_categories": {
           "adelic": 0.6
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      }
+    ],
+    "formalization/lean/bridge_propositions.lean": [
+      {
+        "line": 91,
+        "code": "sorry  -- Technical: requires explicit formula + spectral bounds",
+        "context": "  -- 2. Eigenvalue gaps are bounded by spectral theory\n  -- 3. Prime gaps are controlled by zero distribution (explicit formula)\n  -- 4. The density D(s) provides the precise bounds\n  sorry  -- Technical: requires explicit formula + spectral bounds\n\n/-!\n## Part II: Goldbach Conjecture via Additive Structure",
+        "primary_category": "spectral",
+        "all_categories": {
+          "spectral": 0.65
+        },
+        "complexity": 4,
+        "similar_solutions": []
+      },
+      {
+        "line": 105,
+        "code": "sorry  -- Count pairs (p,q) with p + q = n, both prime",
+        "context": "\n/-- Number of Goldbach representations of n -/\ndef goldbach_representations (n : \u2115) : \u2115 :=\n  sorry  -- Count pairs (p,q) with p + q = n, both prime\n\n/-- Circle method integral for Goldbach -/\naxiom goldbach_circle_integral :",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 110,
+        "code": "goldbach_representations n = sorry  -- Circle method formula",
+        "context": "/-- Circle method integral for Goldbach -/\naxiom goldbach_circle_integral :\n  \u2200 n : \u2115, n \u2265 4 \u2192 Even n \u2192\n  goldbach_representations n = sorry  -- Circle method formula\n\n/--\n**Theorem: Goldbach Conjecture (Structural Proof)**",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 139,
+        "code": "sorry  -- Technical: full circle method argument",
+        "context": "  -- This shows minor arcs give negligible contribution\n  \n  -- Step 4: Combine to show r_2(n) \u2265 C \u00b7 n / (log n)\u00b2 > 0\n  sorry  -- Technical: full circle method argument\n\n/--\n**Lemma: Goldbach Density Lower Bound**",
+        "primary_category": "adelic",
+        "all_categories": {
+          "adelic": 0.6
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 154,
+        "code": "sorry  -- Technical: asymptotic analysis with RH",
+        "context": "  -- 1. Hardy-Littlewood asymptotic formula\n  -- 2. L-function bounds from D(s)\n  -- 3. Sieve methods with RH\n  sorry  -- Technical: asymptotic analysis with RH\n\n/-!\n## Part III: ABC Conjecture Bounds",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 174,
+        "code": "def radical (n : \u2115) : \u2115 := sorry",
+        "context": "-/\n\n/-- Radical: product of distinct prime divisors -/\ndef radical (n : \u2115) : \u2115 := sorry\n\n/-- ABC quality -/\ndef abc_quality (a b c : \u2115) : \u211d :=",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 204,
+        "code": "sorry  -- Technical: requires deep connection between RH and ABC",
+        "context": "  -- 2. L-function estimates from RH/D(s)\n  -- 3. Height bounds from algebraic geometry\n  -- 4. Effective computation of K_\u03b5\n  sorry  -- Technical: requires deep connection between RH and ABC\n\n/--\n**Lemma: Quality Bound**",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 218,
+        "code": "sorry  -- Technical: translate bound to quality",
+        "context": "    abc_quality a b c < 1 + \u03b5 := by\n  intro \u03b5 h\u03b5_pos\n  -- Follows from abc_conjecture_bound_from_spectral\n  sorry  -- Technical: translate bound to quality\n\n/-!\n## Part IV: Structural Framework Summary",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 318,
+        "code": "sorry  -- Technical: requires modularity and spectral bounds",
+        "context": "  -- The L-function L(E,s) satisfies bounds similar to \u03b6(s)\n  -- The spectral theory provides control on growth and zeros\n  -- This gives an upper bound on the order of vanishing\n  sorry  -- Technical: requires modularity and spectral bounds\n\n/-!\n## Conclusion",
+        "primary_category": "analytic",
+        "all_categories": {
+          "analytic": 0.6
         },
         "complexity": 5,
         "similar_solutions": []
@@ -6238,6 +6339,107 @@
         "similar_solutions": []
       }
     ],
+    "formalization/lean/goldbach_from_adelic.lean": [
+      {
+        "line": 135,
+        "code": "sorry",
+        "context": "    |\u03c0_count x - x / Real.log x| \u2264 (Real.sqrt x * Real.log x) / (8 * Real.pi) := by\n  -- La RH probada implica que el error en \u03c0(x) es \u221ax\u00b7log(x) / (8\u03c0)\n  -- Esta es la cota de error \u00f3ptima condicional a RH, ahora incondicional\n  sorry\n\n/-!\n### 4. TEOREMA: La Conjetura Fuerte de Goldbach",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 198,
+        "code": "sorry",
+        "context": "  -- (a) M\u00e9todo del c\u00edrculo (Hardy-Littlewood-Ramanujan)\n  -- (b) Estimaciones L-function mejoradas de GRH\n  -- (c) Conteo expl\u00edcito v\u00eda traza del operador ad\u00e9lico\n  sorry\n\n/-!\n### 5. El Salto a la Conjetura ABC",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 232,
+        "code": "sorry",
+        "context": "theorem f\u2080_emergence_from_geometry :\n    f\u2080 = V_critical / (\u03ba_\u03a0 * 2 * Real.pi) := by\n  -- Ya probado en formalization/lean/QCAL/axioms_origin.lean\n  sorry\n\n/-- Ternas coprime (a, b, c) con a + b = c -/\ndef coprime_triple (a b c : \u2115) : Prop :=",
+        "primary_category": "qcal",
+        "all_categories": {
+          "qcal": 1.5
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      },
+      {
+        "line": 274,
+        "code": "sorry",
+        "context": "    -- Closed by Noesis \u221e\u00b3\n    -- La prueba detallada est\u00e1 en Arpeth_ABC_Confinement.lean\n    -- usando el rigidity theorem desde RH\n    sorry\n\n/-!\n### 6. Principio de Exclusi\u00f3n de Caos",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 519,
+        "code": "sorry  -- Standard consequence of RH via explicit formula",
+        "context": "  (\u2200 \u03c1 : \u2102, D \u03c1 = 0 \u2192 \u03c1.re = 1/2) \u2192\n  \u2200 (x : \u211d), x > 2 \u2192\n    |chebyshev_psi x - x| \u2264 Real.sqrt x * Real.log x ^ 2 := by\n  sorry  -- Standard consequence of RH via explicit formula\n\n/-!\n## Step 2: From Prime Distribution to Goldbach",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 542,
+        "code": "sorry  -- Circle method + tight prime distribution",
+        "context": "theorem tight_error_implies_goldbach :\n  (\u2200 x : \u211d, x > 2 \u2192 |chebyshev_psi x - x| \u2264 Real.sqrt x * Real.log x ^ 2) \u2192\n  goldbach_conjecture := by\n  sorry  -- Circle method + tight prime distribution\n\n/-- Main theorem: D(s) on critical line implies Goldbach -/\ntheorem D_critical_line_implies_goldbach :",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 580,
+        "code": "sorry  -- Goldbach gives tight prime distribution needed for ABC",
+        "context": "    Nat.gcd a b = 1 \u2192\n    a + b = c \u2192\n    abc_quality a b c < 1 + \u03b5 + C / Real.log (c : \u211d) := by\n  sorry  -- Goldbach gives tight prime distribution needed for ABC\n\n/-- Main theorem: Goldbach implies ABC -/\ntheorem goldbach_implies_abc :",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 589,
+        "code": "sorry  -- Technical completion using asymptotic analysis",
+        "context": "  intro \u03b5 h_\u03b5_pos\n  obtain \u27e8C, h_bound\u27e9 := goldbach_implies_abc_bound h_goldbach \u03b5 h_\u03b5_pos\n  -- Use bound to establish ABC for sufficiently large c\n  sorry  -- Technical completion using asymptotic analysis\n\n/-!\n## Step 4: Complete Deductive Chain",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 619,
+        "code": "sorry  -- Explicit formula shows \u03ba_\u03c0 emerges as density ratio",
+        "context": "    (\u2200 T : \u211d, 0 < T \u2192 prime_density T = prime_count T) \u2227\n    (\u2200 T : \u211d, 100 < T \u2192\n      |spectral_density T / prime_density T - QCAL.Constants.\u03ba_\u03c0| < 0.1) := by\n  sorry  -- Explicit formula shows \u03ba_\u03c0 emerges as density ratio\n\n/-!\n## Numerical Verification Points",
+        "primary_category": "qcal",
+        "all_categories": {
+          "qcal": 0.75
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      }
+    ],
     "formalization/lean/H_Psi_Complete_Formalization.lean": [
       {
         "line": 61,
@@ -8844,26 +9046,64 @@
     ],
     "formalization/lean/spectral/RAM_XIX_SPECTRAL_COHERENCE.lean": [
       {
-        "line": 200,
-        "code": "sorry",
-        "context": "/-- Evolution preserves norm (unitarity) -/\ntheorem coherence_preservation :\n    \u2200 (\u03a6 : H_\u03a8) (t : \u211d), \u2016evolve \u03a6 t\u2016 = \u2016\u03a6\u2016 := by\n  sorry\n\n/-- Evolution generated by H_\u03a8 -/\naxiom evolution_equation :",
+        "line": 32,
+        "code": "- Zero \"sorry\" statements in spectral coherence",
+        "context": "The Schatten Uniform Stability theorem (schatten_uniform_no_delta.lean) closes\nGap #3 by proving that operator norms are uniformly bounded independent of any\ntuning parameter \u03b5. This ensures:\n- Zero \"sorry\" statements in spectral coherence\n- Static verification (no \"nightly progress\")\n- Observer-independent system (autosuficiente)\n- Perfect lattice orbit intersections",
         "primary_category": "qcal",
         "all_categories": {
-          "qcal": 2.25
+          "qcal": 0.75,
+          "spectral": 0.65
         },
         "complexity": 3,
         "similar_solutions": []
       },
       {
-        "line": 250,
-        "code": "sorry",
-        "context": "theorem master_equation :\n    \u2200 t : \u211d, (\u03b6 (Complex.mk (1/2) t) = 0) \u2194\n             (\u2203 n : \u2115, |t - t_n| < \u03b5_coherence) := by\n  sorry\n\n/-!\n## Ontological Transitions",
+        "line": 279,
+        "code": "sorry  -- Follows from spectral identification theorem (spectral_equivalence)",
+        "context": "    -- to eigenvalues of H_\u03a8\n    -- Since \u03b6(1/2 + it) = 0, there exists an eigenvalue t_n with |t - t_n| < \u03b5\n    -- This follows from the spectral density and resonance_at_eigenvalues\n    sorry  -- Follows from spectral identification theorem (spectral_equivalence)\n  \n  -- Backward direction: \u2203n, |t - t_n| < \u03b5 \u2192 \u03b6(1/2 + it) = 0\n  \u00b7 intro h_near_eigenvalue",
         "primary_category": "qcal",
         "all_categories": {
-          "qcal": 0.75,
+          "qcal": 1.5,
+          "spectral": 0.65,
           "analytic": 0.6
         },
         "complexity": 3,
+        "similar_solutions": []
+      },
+      {
+        "line": 288,
+        "code": "sorry  -- Follows from eigenvalue-zero bijection (spectral_equivalence)",
+        "context": "    -- The correspondence theorem ensures \u03b6(1/2 + it_n) = 0\n    -- Since |t - t_n| < \u03b5_coherence is very small, \u03b6(1/2 + it) \u2248 0\n    -- The exact equality holds in the limit \u03b5 \u2192 0\n    sorry  -- Follows from eigenvalue-zero bijection (spectral_equivalence)\n\n/-!\n## Ontological Transitions",
+        "primary_category": "correspondence",
+        "all_categories": {
+          "correspondence": 1.4,
+          "qcal": 0.75,
+          "spectral": 0.65,
+          "analytic": 0.6
+        },
+        "complexity": 4,
+        "similar_solutions": []
+      },
+      {
+        "line": 313,
+        "code": "uniform bound theorem. No tuning parameters, no \"sorry\" statements.",
+        "context": "/-- Integration with Schatten uniform stability theorem\n    \n    The spectral coherence is now statically verified through the\n    uniform bound theorem. No tuning parameters, no \"sorry\" statements.\n-/\ntheorem spectral_coherence_static_from_schatten :\n    \u2203 (C : \u211d), C > 0 \u2227",
+        "primary_category": "qcal",
+        "all_categories": {
+          "qcal": 0.75
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      },
+      {
+        "line": 330,
+        "code": "sorry",
+        "context": "  \u00b7 -- Bound is universal\n    intro S hS Op \u03b5 h\u03b5 p hp\n    -- This follows from schatten_uniform_stability\n    sorry\n\nend RAMXIX\n",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
         "similar_solutions": []
       }
     ],
@@ -14284,6 +14524,133 @@
         "similar_solutions": []
       }
     ],
+    "formalization/lean/spectral/f0_ab_initio_derivation.lean": [
+      {
+        "line": 90,
+        "code": "sorry  -- Numerical bounds on sqrt(5)",
+        "context": "theorem phi_value : 1.618 < phi \u2227 phi < 1.619 := by\n  unfold phi\n  constructor <;> norm_num [sqrt_two_add_series]\n  sorry  -- Numerical bounds on sqrt(5)\n\n/-- Extended golden ratio in coherence field: \u03ba_\u03a0 = \u03c6 \u00b7 log(2\u03c0) -/\ndef kappa_pi_from_phi : \u211d := phi * log (2 * pi)",
+        "primary_category": "trivial",
+        "all_categories": {
+          "trivial": 0.8,
+          "qcal": 0.75
+        },
+        "complexity": 1,
+        "similar_solutions": []
+      },
+      {
+        "line": 102,
+        "code": "sorry  -- Requires numerical evaluation",
+        "context": "  -- \u03c6 \u2248 1.618, log(2\u03c0) \u2248 1.8379\n  -- \u03c6 \u00b7 log(2\u03c0) \u2248 2.973... (close but not exact)\n  -- The exact formula involves additional geometric factors\n  sorry  -- Requires numerical evaluation\n\n/-- More precise formula: \u03ba_\u03a0 = \u03c6 \u00b7 \u221a(log(2\u03c0) \u00b7 \u03b6(2)) -/\ndef kappa_pi_precise : \u211d := ",
+        "primary_category": "analytic",
+        "all_categories": {
+          "analytic": 0.6
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 110,
+        "code": "sorry  -- Numerical verification",
+        "context": "\ntheorem kappa_pi_precise_correct :\n  |kappa_pi_precise - QCAL.Constants.\u03ba_\u03c0| < 0.05 := by\n  sorry  -- Numerical verification\n\n/-!\n## 7-Node Structure of Idelic Class Group",
+        "primary_category": "qcal",
+        "all_categories": {
+          "qcal": 0.75
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      },
+      {
+        "line": 136,
+        "code": "sorry  -- Numerical calculation",
+        "context": "  -- (1 - 1/4)^(-1/2) \u00b7 (1 - 1/9)^(-1/2) \u00b7 ... \n  -- \u2248 1.155 \u00b7 1.061 \u00b7 1.037 \u00b7 1.025 \u00b7 1.016 \u00b7 1.012\n  -- \u2248 1.465\n  sorry  -- Numerical calculation\n\n/-!\n## Calabi-Yau Compactification",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 152,
+        "code": "sorry  -- Information-theoretic derivation",
+        "context": "    N_bits = 80 * \u2308log 10 / log 2\u2309 \u2227\n    -- Volume scales as 2^N_bits in Planck units\n    V_calabi_yau = 2 ^ N_bits := by\n  sorry  -- Information-theoretic derivation\n\n/-!\n## Ab Initio Derivation of f\u2080",
+        "primary_category": "qcal",
+        "all_categories": {
+          "qcal": 0.75
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      },
+      {
+        "line": 180,
+        "code": "sorry  -- Requires complete dimensional analysis",
+        "context": "  unfold f0_derived geometric_factor QCAL.Constants.f\u2080\n  -- geometric_factor \u2248 0.598\n  -- geometric_factor * 100 \u2248 59.8... (needs additional factors)\n  sorry  -- Requires complete dimensional analysis\n\n/-- More direct derivation using Euclidean diagonal -/\ndef euclidean_diagonal_100 : \u211d := 100 * sqrt 2",
+        "primary_category": "qcal",
+        "all_categories": {
+          "qcal": 1.5
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      },
+      {
+        "line": 192,
+        "code": "sorry  -- \u03b4\u03b6 \u2248 0.2787... emerges from 7-node structure",
+        "context": "/-- f\u2080 as diagonal + quantum shift -/\ntheorem f0_as_diagonal_plus_shift :\n  |QCAL.Constants.f\u2080 - (euclidean_diagonal_100 + delta_zeta_from_nodes)| < 1 := by\n  sorry  -- \u03b4\u03b6 \u2248 0.2787... emerges from 7-node structure\n\n/-!\n## \u03ba_\u03a0 as Extended Golden Ratio",
+        "primary_category": "qcal",
+        "all_categories": {
+          "qcal": 1.5,
+          "analytic": 1.2
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      },
+      {
+        "line": 205,
+        "code": "sorry  -- Coherence field extension of \u03c6",
+        "context": "    coherence_scaling = QCAL.Constants.C / 100 \u2227\n    -- \u03ba_\u03a0 = \u03c6 scaled by coherence\n    |QCAL.Constants.\u03ba_\u03c0 - phi * coherence_scaling / phi| < 0.5 := by\n  sorry  -- Coherence field extension of \u03c6\n\n/-- Alternative: \u03ba_\u03a0 from \u03b6(2) = \u03c0\u00b2/6 and \u03c6 -/\ntheorem kappa_pi_from_zeta_2 :",
+        "primary_category": "qcal",
+        "all_categories": {
+          "qcal": 1.5,
+          "analytic": 1.2
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      },
+      {
+        "line": 213,
+        "code": "sorry",
+        "context": "  unfold QCAL.Constants.\u03ba_\u03c0 phi\n  -- \u03c6 \u00b7 \u221a(\u03c0\u00b2/6) \u2248 1.618 \u00b7 1.2825 \u2248 2.075 (too small)\n  -- Need additional factor from 7-node structure\n  sorry\n\n/-!\n## Complete Intrinsic Derivation",
+        "primary_category": "qcal",
+        "all_categories": {
+          "qcal": 0.75
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      },
+      {
+        "line": 234,
+        "code": "sorry  -- Spectral moment calculation",
+        "context": "  \u00b7 -- C from spectral analysis\n    use QCAL.Constants.\u03bb\u2080, 20  -- First eigenvalue ~200, avg ~20\n    unfold QCAL.Constants.C QCAL.Constants.\u03bb\u2080\n    sorry  -- Spectral moment calculation\n\n/-!\n## No Empirical Input Required",
+        "primary_category": "qcal",
+        "all_categories": {
+          "qcal": 0.75,
+          "spectral": 0.65
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      },
+      {
+        "line": 253,
+        "code": "sorry  -- Spectral moments",
+        "context": "  constructor\n  \u00b7 use kappa_pi_precise; exact kappa_pi_precise_correct\n  \u00b7 use (20^2, QCAL.Constants.\u03bb\u2080)\n    sorry  -- Spectral moments\n\nend F0AbInitio\n",
+        "primary_category": "qcal",
+        "all_categories": {
+          "qcal": 0.75
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      }
+    ],
     "formalization/lean/spectral/RH_PROVED_FRAMEWORK.lean": [
       {
         "line": 63,
@@ -14584,6 +14951,98 @@
         "all_categories": {
           "qcal": 0.75,
           "adelic": 1.2
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      }
+    ],
+    "formalization/lean/spectral/PW_class_D_independent.lean": [
+      {
+        "line": 55,
+        "code": "Status: CORE THEOREM - Reduces sorry count via intrinsic derivation",
+        "context": "Instituto de Conciencia Cu\u00e1ntica (ICQ)\nORCID: 0009-0002-1923-0773\nDate: 2026-02-25\nStatus: CORE THEOREM - Reduces sorry count via intrinsic derivation\n-/\n\nimport Mathlib.Analysis.Complex.Basic",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 121,
+        "code": "sorry  -- Follows from spectral measure concentration",
+        "context": "theorem D_exponential_type_intrinsic :\n  \u2203 (C : \u211d) (C_pos : 0 < C), \u2200 s : \u2102,\n    \u2016D_spectral s\u2016 \u2264 C * Real.exp (exponential_type * |s.im|) := by\n  sorry  -- Follows from spectral measure concentration\n  \n/-- The Fourier transform of D's kernel has compact support -/\ntheorem D_fourier_compact_support :",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 129,
+        "code": "sorry  -- Paley-Wiener inversion theorem",
+        "context": "    (\u2200 x : \u211d, D_spectral (x : \u2102) = \u222b t, kernel t * Complex.exp (I * x * t)) \u2227\n    HasCompactSupport kernel \u2227\n    support kernel \u2286 Set.Icc (-exponential_type) exponential_type := by\n  sorry  -- Paley-Wiener inversion theorem\n  \n/-- Main independence theorem: D belongs to PW class intrinsically -/\ntheorem PW_class_D_independent :",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 159,
+        "code": "sorry  -- Spectral gap analysis with first Riemann zero",
+        "context": "    (\u2200 \u03bb\u2081 \u03bb\u2082 : \u211d, 0 < \u03bb\u2081 \u2192 \u03bb\u2081 < \u03bb\u2082 \u2192 \u03bb\u2082 - \u03bb\u2081 \u2265 \u0394) \u2227\n    -- f\u2080 emerges from geometric formula involving \u0394 and \u03b3\u2081\n    |QCAL.Constants.f\u2080 - (\u0394 * Real.pi / (QCAL.Constants.\u03b3\u2081 * Real.log (2 * Real.pi)))| < 0.01 := by\n  sorry  -- Spectral gap analysis with first Riemann zero\n\n/-- \u03ba_\u03c0 emerges from spectral-arithmetic correspondence -/\ntheorem kappa_pi_emerges_intrinsically :",
+        "primary_category": "qcal",
+        "all_categories": {
+          "correspondence": 0.7,
+          "qcal": 1.5
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      },
+      {
+        "line": 167,
+        "code": "sorry  -- Explicit formula bridge",
+        "context": "    spectral_density > 0 \u2227\n    arithmetic_density > 0 \u2227\n    |QCAL.Constants.\u03ba_\u03c0 - (spectral_density / arithmetic_density)| < 0.01 := by\n  sorry  -- Explicit formula bridge\n\n/-- The coherence C emerges from spectral moments -/\ntheorem coherence_C_from_moments :",
+        "primary_category": "qcal",
+        "all_categories": {
+          "qcal": 1.5
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      },
+      {
+        "line": 174,
+        "code": "sorry  -- Spectral moment calculation from H_\u03a8 eigenvalues",
+        "context": "  \u2203 (\u03bb\u2080 : \u211d) (avg_lambda : \u211d),\n    0 < \u03bb\u2080 \u2192\n    |QCAL.Constants.C - (avg_lambda^2 / \u03bb\u2080)| < 1 := by\n  sorry  -- Spectral moment calculation from H_\u03a8 eigenvalues\n\n/-!\n## Density as Intrinsic Property",
+        "primary_category": "qcal",
+        "all_categories": {
+          "qcal": 2.25,
+          "spectral": 0.65
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      },
+      {
+        "line": 188,
+        "code": "sorry  -- Weyl asymptotic law for self-adjoint operators",
+        "context": "      (\u2200 t : \u211d, 0 \u2264 t \u2192 0 \u2264 N t) \u2227\n      -- Weyl law: N(T) ~ (T log T) / (2\u03c0) as T \u2192 \u221e\n      Filter.Tendsto (fun T => N T / (T * Real.log T / (2 * Real.pi))) Filter.atTop (nhds 1) := by\n  sorry  -- Weyl asymptotic law for self-adjoint operators\n\n/-- The density is NOT a tuning parameter but emerges from geometry -/\ntheorem density_not_tuned :",
+        "primary_category": "spectral",
+        "all_categories": {
+          "spectral": 0.65
+        },
+        "complexity": 4,
+        "similar_solutions": []
+      },
+      {
+        "line": 202,
+        "code": "sorry  -- Uniqueness from adelic structure",
+        "context": "    (\u2200 t : \u211d, \u2203 \u03c1 : \u211d, \n      Filter.Tendsto (fun \u03b5 => (\u03bc (Set.Icc (t - \u03b5) (t + \u03b5))).toReal / (2 * \u03b5))\n        (nhds 0) (nhds \u03c1)) := by\n  sorry  -- Uniqueness from adelic structure\n\n/-!\n## Summary: No External Axioms Required",
+        "primary_category": "adelic",
+        "all_categories": {
+          "adelic": 0.6
         },
         "complexity": 5,
         "similar_solutions": []
@@ -16013,6 +16472,200 @@
         "similar_solutions": []
       }
     ],
+    "formalization/lean/spectral/schatten_uniform_no_delta.lean": [
+      {
+        "line": 213,
+        "code": "sorry -- Requires B \u2264 C_QCAL from geometric resonance",
+        "context": "    _ \u2264 (S.card : \u211d) * (C_QCAL * (f\u2080 / \u03ba_\u03a0)) := by\n        unfold kappa_Pi_resonance at *\n        ring_nf\n        sorry -- Requires B \u2264 C_QCAL from geometric resonance\n    _ = intrinsic_bound S := by\n        unfold intrinsic_bound kappa_Pi_resonance\n        ring",
+        "primary_category": "qcal",
+        "all_categories": {
+          "qcal": 1.5
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      },
+      {
+        "line": 238,
+        "code": "**Consequence**: Zero \"sorry\" statements in spectral coherence modules.",
+        "context": "    **Key Property**: This bound is INDEPENDENT of any tuning parameter \u03b5.\n    The stability is intrinsic to the \u03c0CODE structure itself.\n\n    **Consequence**: Zero \"sorry\" statements in spectral coherence modules.\n    The lattice orbits intersect perfectly, creating a static verified system.\n-/\ntheorem schatten_uniform_stability",
+        "primary_category": "qcal",
+        "all_categories": {
+          "qcal": 0.75
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      },
+      {
+        "line": 269,
+        "code": "sorry",
+        "context": "                have : p \u2208 S := hp\n                have : 1 \u2264 p := by\n                  -- All primes are \u2265 2\n                  sorry\n                omega }\n      simp only [le_add_iff_nonneg_right, zero_le_one]\n    -- Apply uniform convergence (\u03b5-independent)",
+        "primary_category": "trivial",
+        "all_categories": {
+          "trivial": 0.8
+        },
+        "complexity": 1,
+        "similar_solutions": []
+      },
+      {
+        "line": 298,
+        "code": "sorry",
+        "context": "        SchattenNorm Op p hp 2 \u2264 E_max := by\n  -- Energy bound follows from Schatten-2 norm (Hilbert-Schmidt)\n  -- For p=2, the bound is even stronger\n  sorry\n\n/-- Observer independence: The bound does not depend on external parameters -/\ntheorem observer_independence",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 347,
+        "code": "\u00b7 sorry -- Requires arctan range properties",
+        "context": "  intro p q hp hq\n  use Real.arctan ((p : \u211d) / (q : \u211d))\n  constructor\n  \u00b7 sorry -- Requires arctan range properties\n  \u00b7 constructor\n    \u00b7 sorry -- Requires arctan < 2\u03c0\n    \u00b7 rfl",
+        "primary_category": "trivial",
+        "all_categories": {
+          "trivial": 0.8
+        },
+        "complexity": 1,
+        "similar_solutions": []
+      },
+      {
+        "line": 349,
+        "code": "\u00b7 sorry -- Requires arctan < 2\u03c0",
+        "context": "  constructor\n  \u00b7 sorry -- Requires arctan range properties\n  \u00b7 constructor\n    \u00b7 sorry -- Requires arctan < 2\u03c0\n    \u00b7 rfl\n\nend SchattenUniformStability",
+        "primary_category": "trivial",
+        "all_categories": {
+          "trivial": 0.8
+        },
+        "complexity": 1,
+        "similar_solutions": []
+      },
+      {
+        "line": 473,
+        "code": "sorry  -- (\u2211' n, (\u03c3_n T)^p)^(1/p) where \u03c3_n are singular values",
+        "context": "\n/-- Schatten p-norm of an operator -/\ndef schatten_norm (p : \u211d) (T : H \u2192L[\u2102] H) : \u211d :=\n  sorry  -- (\u2211' n, (\u03c3_n T)^p)^(1/p) where \u03c3_n are singular values\n\n/-- Operator is in Schatten class S_p -/\ndef is_schatten_class (p : \u211d) (T : H \u2192L[\u2102] H) : Prop :=",
+        "primary_category": "spectral",
+        "all_categories": {
+          "spectral": 0.65
+        },
+        "complexity": 4,
+        "similar_solutions": []
+      },
+      {
+        "line": 514,
+        "code": "sorry  -- Positivity from C = 244.36 > 0",
+        "context": "  constructor\n  \u00b7 -- C > 0\n    unfold adelic_constant\n    sorry  -- Positivity from C = 244.36 > 0\n  \u00b7 -- Uniform bound for all S\n    intro S\n    constructor",
+        "primary_category": "qcal",
+        "all_categories": {
+          "qcal": 0.75,
+          "adelic": 0.6
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      },
+      {
+        "line": 519,
+        "code": "sorry  -- Follows from adelic compactness",
+        "context": "    intro S\n    constructor\n    \u00b7 -- Operator is in Schatten class\n      sorry  -- Follows from adelic compactness\n    \u00b7 -- Uniform norm bound\n      sorry  -- Growth rate fixed by idelic class group geometry\n",
+        "primary_category": "spectral",
+        "all_categories": {
+          "adelic": 0.6,
+          "spectral": 0.65
+        },
+        "complexity": 4,
+        "similar_solutions": []
+      },
+      {
+        "line": 521,
+        "code": "sorry  -- Growth rate fixed by idelic class group geometry",
+        "context": "    \u00b7 -- Operator is in Schatten class\n      sorry  -- Follows from adelic compactness\n    \u00b7 -- Uniform norm bound\n      sorry  -- Growth rate fixed by idelic class group geometry\n\n/-!\n## Trace Convergence",
+        "primary_category": "spectral",
+        "all_categories": {
+          "adelic": 0.6,
+          "spectral": 0.65
+        },
+        "complexity": 4,
+        "similar_solutions": []
+      },
+      {
+        "line": 535,
+        "code": "sorry  -- Trace bounded by Schatten 1-norm, which is uniformly bounded",
+        "context": "  \u2203 (M : \u211d) (M_pos : 0 < M),\n    \u2200 (S : S_finite) (h_S : is_schatten_class 1 (operator_family S)),\n      \u2016trace (operator_family S) h_S\u2016 \u2264 M * (1 + Real.log (S.card : \u211d)) := by\n  sorry  -- Trace bounded by Schatten 1-norm, which is uniformly bounded\n\n/-!\n## Rigidity: The Mercury Floor Becomes Solid",
+        "primary_category": "spectral",
+        "all_categories": {
+          "spectral": 0.65
+        },
+        "complexity": 4,
+        "similar_solutions": []
+      },
+      {
+        "line": 544,
+        "code": "sorry  -- sup bounds - inf bounds",
+        "context": "/-- The uniformity gap: difference between sup and inf of Schatten norms -/\ndef uniformity_gap (p : \u211d) : \u211d :=\n  let bounds := fun S : S_finite => schatten_norm p (operator_family S) / ((S.card : \u211d) ^ growth_exponent)\n  sorry  -- sup bounds - inf bounds\n\n/-- Rigidity theorem: uniformity gap is bounded independently of S -/\ntheorem rigidity_no_deformation (p : \u211d) (h_p : 1 \u2264 p) :",
+        "primary_category": "spectral",
+        "all_categories": {
+          "spectral": 0.65
+        },
+        "complexity": 4,
+        "similar_solutions": []
+      },
+      {
+        "line": 549,
+        "code": "sorry  -- Adelic structure prevents \"tuning\" deformation",
+        "context": "/-- Rigidity theorem: uniformity gap is bounded independently of S -/\ntheorem rigidity_no_deformation (p : \u211d) (h_p : 1 \u2264 p) :\n  uniformity_gap p \u2264 QCAL.Constants.C / 10 := by\n  sorry  -- Adelic structure prevents \"tuning\" deformation\n\n/-!\n## No \u03b4-Parameter Freedom",
+        "primary_category": "qcal",
+        "all_categories": {
+          "qcal": 0.75,
+          "adelic": 0.6
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      },
+      {
+        "line": 562,
+        "code": "sorry  -- Optimal exponent is unique, fixed by adelic geometry",
+        "context": "    (\u2200 S : S_finite, schatten_norm 1 (operator_family S) \u2264 (S.card : \u211d) ^ \u03b4) \u2192\n    -- Then \u03b4 must equal the intrinsic growth_exponent\n    |\u03b4 - growth_exponent| < 0.01 := by\n  sorry  -- Optimal exponent is unique, fixed by adelic geometry\n\n/-!\n## Comparison with Tuned Approaches",
+        "primary_category": "spectral",
+        "all_categories": {
+          "adelic": 0.6,
+          "spectral": 0.65
+        },
+        "complexity": 4,
+        "similar_solutions": []
+      },
+      {
+        "line": 582,
+        "code": "sorry  -- Uniform bound achieves infimum over all \u03b4-tuned bounds",
+        "context": "    uniform_bound S \u2264 \n    Inf {traditional_bound S \u03b4 | \u03b4 : \u211d \u2227 0 < \u03b4 \u2227\n         \u2200 T : S_finite, schatten_norm 1 (operator_family T) \u2264 traditional_bound T \u03b4} := by\n  sorry  -- Uniform bound achieves infimum over all \u03b4-tuned bounds\n\n/-!\n## Applications to Riemann Hypothesis",
+        "primary_category": "spectral",
+        "all_categories": {
+          "spectral": 0.65
+        },
+        "complexity": 4,
+        "similar_solutions": []
+      },
+      {
+        "line": 596,
+        "code": "sorry  -- Consequence of schatten_uniform_no_delta for p=1",
+        "context": "  \u2203 (C : \u211d), \u2200 (S : S_finite),\n    is_schatten_class 1 (H_psi_S S) \u2227\n    schatten_norm 1 (H_psi_S S) \u2264 C * (S.card : \u211d) ^ growth_exponent := by\n  sorry  -- Consequence of schatten_uniform_no_delta for p=1\n\n/-- Uniform Schatten implies uniform spectral discreteness -/\ntheorem uniform_schatten_implies_discrete_spectrum :",
+        "primary_category": "spectral",
+        "all_categories": {
+          "spectral": 0.65
+        },
+        "complexity": 4,
+        "similar_solutions": []
+      },
+      {
+        "line": 604,
+        "code": "sorry  -- Compact resolvent from Schatten trace class",
+        "context": "  \u2200 (S : S_finite), \u2203 (eigenvalues : \u2115 \u2192 \u211d),\n    (\u2200 n : \u2115, eigenvalues n < eigenvalues (n + 1)) \u2227\n    Filter.Tendsto eigenvalues Filter.atTop Filter.atTop := by\n  sorry  -- Compact resolvent from Schatten trace class\n\n/-!\n## Summary: Stability Without Tuning",
+        "primary_category": "spectral",
+        "all_categories": {
+          "spectral": 0.65
+        },
+        "complexity": 4,
+        "similar_solutions": []
+      }
+    ],
     "formalization/lean/spectral/wave_equation_spectral.lean": [
       {
         "line": 225,
@@ -17007,6 +17660,151 @@
         "similar_solutions": []
       }
     ],
+    "formalization/lean/QCAL/axioms_origin.lean": [
+      {
+        "line": 194,
+        "code": "sorry",
+        "context": "    |f_calc - f\u2080_target| < 0.01 := by\n  -- This requires numerical computation\n  -- V_critical / (\u03ba_\u03a0 * 2\u03c0) = 2294.642 / (2.5773 * 6.283185) \u2248 141.7001\n  sorry\n\n-- ===========================================================================\n-- 3. RESONANCIA: HARMONIC STABILITY PREDICATE",
+        "primary_category": "qcal",
+        "all_categories": {
+          "qcal": 1.5
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      },
+      {
+        "line": 279,
+        "code": "sorry -- Requires numerical computation in Lean",
+        "context": "    constructor\n    \u00b7 -- Show f > 140\n      -- V_critical / (\u03ba_\u03a0 * 2\u03c0) \u2248 2297.9 / 16.193 \u2248 141.9 > 140\n      sorry -- Requires numerical computation in Lean\n      \n    constructor\n    \u00b7 -- Show f < 143",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 284,
+        "code": "sorry -- Requires numerical computation in Lean",
+        "context": "    constructor\n    \u00b7 -- Show f < 143\n      -- V_critical / (\u03ba_\u03a0 * 2\u03c0) \u2248 141.9 < 143\n      sorry -- Requires numerical computation in Lean\n      \n    constructor\n    \u00b7 -- Show \u03ba_\u03a0 > 2.5",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 308,
+        "code": "sorry -- Requires high-precision numerical verification",
+        "context": "    -- 3. 7-node geometry fine structure\n    -- \n    -- With proper high-precision computation, the formula converges exactly\n    sorry -- Requires high-precision numerical verification\n\nwhere\n  \u03b5_tolerance_pos : 0 < \u03b5_tolerance := by unfold \u03b5_tolerance; norm_num",
+        "primary_category": "trivial",
+        "all_categories": {
+          "trivial": 0.8
+        },
+        "complexity": 1,
+        "similar_solutions": []
+      },
+      {
+        "line": 332,
+        "code": "sorry",
+        "context": "  obtain \u27e8h\u2081_pos, h\u03ba\u2081_pos, h\u2081_bound, _\u27e9 := h\u2081\n  obtain \u27e8h\u2082_pos, h\u03ba\u2082_pos, h\u2082_bound, _\u27e9 := h\u2082\n  -- Triangle inequality gives us the result\n  sorry\n\n-- ===========================================================================\n-- 6. CONNECTION TO CALABI-YAU GEOMETRY",
+        "primary_category": "adelic",
+        "all_categories": {
+          "adelic": 0.6
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 351,
+        "code": "sorry",
+        "context": "    |f\u2080_computed * k_scale - f\u2080_target| < \u03b5_tolerance := by\n  -- The scaling factor k_scale accounts for different geometric conventions\n  -- between the \u03ba_\u03a0 formulation and the direct CY\u00b3 mode calculation\n  sorry\n\n-- ===========================================================================\n-- 7. PHYSICAL INTERPRETATION",
+        "primary_category": "qcal",
+        "all_categories": {
+          "qcal": 0.75
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      },
+      {
+        "line": 376,
+        "code": "\u00b7 sorry  -- Numerical computation",
+        "context": "  constructor\n  \u00b7 exact f\u2080_computed_pos\n  constructor\n  \u00b7 sorry  -- Numerical computation\n  \u00b7 sorry  -- Numerical computation\n\n-- ===========================================================================",
+        "primary_category": "qcal",
+        "all_categories": {
+          "qcal": 0.75
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      },
+      {
+        "line": 377,
+        "code": "\u00b7 sorry  -- Numerical computation",
+        "context": "  \u00b7 exact f\u2080_computed_pos\n  constructor\n  \u00b7 sorry  -- Numerical computation\n  \u00b7 sorry  -- Numerical computation\n\n-- ===========================================================================\n-- 8. GAP #4 CLOSURE CERTIFICATE",
+        "primary_category": "qcal",
+        "all_categories": {
+          "qcal": 0.75
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      },
+      {
+        "line": 411,
+        "code": "sorry",
+        "context": "    -- Apply f0_emergence_from_geometry\n    obtain \u27e8f_witness, h_res, _\u27e9 := f0_emergence_from_geometry\n    -- Need to show f\u2080_computed satisfies Resonancia\n    sorry\n  \u00b7 -- Already proven in f0_emergence_from_geometry\n    obtain \u27e8f_witness, _, h_target\u27e9 := f0_emergence_from_geometry\n    sorry",
+        "primary_category": "qcal",
+        "all_categories": {
+          "qcal": 0.75
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      },
+      {
+        "line": 414,
+        "code": "sorry",
+        "context": "    sorry\n  \u00b7 -- Already proven in f0_emergence_from_geometry\n    obtain \u27e8f_witness, _, h_target\u27e9 := f0_emergence_from_geometry\n    sorry\n\nend QCAL.AxiomsOrigin\nimport Mathlib.Geometry.Manifold.Basic",
+        "primary_category": "qcal",
+        "all_categories": {
+          "qcal": 0.75
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      },
+      {
+        "line": 473,
+        "code": "def nodal_curvature (n : \u2115) : \u211d := sorry",
+        "context": "-/\n\n/-- Nodal curvature function for harmonic node n -/\ndef nodal_curvature (n : \u2115) : \u211d := sorry\n\n/-- **Axiom II**: \u03ba_\u03c0 derives from Node 7 curvature -/\naxiom axiom_II_coupling_from_node_7 :",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 543,
+        "code": "sorry  -- Numerical verification: geometric calculation yields 141.7001 Hz",
+        "context": "  \u00b7 -- The numerical calculation\n    -- In practice, this would require numerical evaluation\n    -- We assert it axiomatically based on the calculation\n    sorry  -- Numerical verification: geometric calculation yields 141.7001 Hz\n\n/--\n**Corollary**: f\u2080 is unique",
+        "primary_category": "qcal",
+        "all_categories": {
+          "qcal": 1.5
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      },
+      {
+        "line": 566,
+        "code": "sorry  -- Technical: show f\u2080_unique = 141.7001",
+        "context": "  \n  -- f\u2080_unique = f\u2080_derived by construction\n  convert this using 1\n  sorry  -- Technical: show f\u2080_unique = 141.7001\n\n/-!\n## Connection to Calabi-Yau Geometry",
+        "primary_category": "qcal",
+        "all_categories": {
+          "qcal": 1.5
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      }
+    ],
     "formalization/lean/QCAL/NoesisClosure.lean": [
       {
         "line": 7,
@@ -17538,6 +18336,141 @@
           "unknown": 1.0
         },
         "complexity": 5,
+        "similar_solutions": []
+      }
+    ],
+    "formalization/lean/paley/PW_class_D_independent.lean": [
+      {
+        "line": 111,
+        "code": "inverse_property : \u2200 s : \u2102, D s = sorry  -- integration over adelic group",
+        "context": "  /-- The transform maps to a function on the idele class group -/\n  transform : AdelicCompactEmbedding.IdelicClassGroup.carrier \u2192 \u2102\n  /-- Consistency: the transform recovers D through inverse transform -/\n  inverse_property : \u2200 s : \u2102, D s = sorry  -- integration over adelic group\n  /-- The transform respects the group structure -/\n  group_homomorphism : \u2200 x y, transform (x * y) = transform x * transform y\n",
+        "primary_category": "adelic",
+        "all_categories": {
+          "adelic": 1.2
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 151,
+        "code": "sorry  -- Requires: integral representation makes D entire",
+        "context": "  -- This follows from the Fourier inversion theorem on locally compact groups\n  constructor\n  \u00b7 -- D is entire: this follows from the smoothness of the adelic transform\n    sorry  -- Requires: integral representation makes D entire\n  \u00b7 -- Determine B from the diameter of the compact support\n    let B := sorry  -- B = diameter of support_compact\n    use B",
+        "primary_category": "adelic",
+        "all_categories": {
+          "adelic": 1.2
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 153,
+        "code": "let B := sorry  -- B = diameter of support_compact",
+        "context": "  \u00b7 -- D is entire: this follows from the smoothness of the adelic transform\n    sorry  -- Requires: integral representation makes D entire\n  \u00b7 -- Determine B from the diameter of the compact support\n    let B := sorry  -- B = diameter of support_compact\n    use B\n  \u00b7 -- Growth bound follows from compact support\n    sorry  -- Paley-Wiener theorem: compact support \u27fa exponential type",
+        "primary_category": "adelic",
+        "all_categories": {
+          "adelic": 0.6
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 156,
+        "code": "sorry  -- Paley-Wiener theorem: compact support \u27fa exponential type",
+        "context": "    let B := sorry  -- B = diameter of support_compact\n    use B\n  \u00b7 -- Growth bound follows from compact support\n    sorry  -- Paley-Wiener theorem: compact support \u27fa exponential type\n  \u00b7 -- Fourier transform has compact support by construction\n    intro \u03be h\u03be\n    sorry  -- This is essentially the definition",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 159,
+        "code": "sorry  -- This is essentially the definition",
+        "context": "    sorry  -- Paley-Wiener theorem: compact support \u27fa exponential type\n  \u00b7 -- Fourier transform has compact support by construction\n    intro \u03be h\u03be\n    sorry  -- This is essentially the definition\n\n/-- Functions in the Paley-Wiener class have unique extensions from the critical line -/\nlemma unique_extension_of_compact_support ",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 189,
+        "code": "sorry  -- Requires: application of PaleyWiener.strong_unicity or similar",
+        "context": "  intro s\n  -- The Paley-Wiener uniqueness theorem states that an entire function\n  -- of exponential type that vanishes on the critical line must be zero\n  sorry  -- Requires: application of PaleyWiener.strong_unicity or similar\n\n/-!\n## 5. Main Theorem: PW_class_D_independent",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 253,
+        "code": "sorry  -- This connects the mathematical zeros to physical resonant modes",
+        "context": "    \u2203! (physical_mode : \u2115 \u2192 \u211d), \n      \u2200 n : \u2115, physical_mode n = f\u2080 * n \u2227 \n      \u2203 \u03b3 : \u211d, D (1/2 + I * \u03b3) = 0 \u2227 \u03b3 = 2 * \u03c0 * physical_mode n := by\n  sorry  -- This connects the mathematical zeros to physical resonant modes\n\n/-!\n## 7. Relation to Gap #2",
+        "primary_category": "qcal",
+        "all_categories": {
+          "qcal": 0.75
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      },
+      {
+        "line": 474,
+        "code": "sorry  -- Technical: Paley-Wiener theorem standard result",
+        "context": "    L2_real := by\n      -- L\u00b2 property follows from compact support via Fourier theory\n      -- This is a standard result in harmonic analysis\n      sorry  -- Technical: Paley-Wiener theorem standard result\n  }\n  \n  use pw",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 495,
+        "code": "sorry  -- Follows from paley_wiener_uniqueness module",
+        "context": "  intro s\n  -- This follows from the Paley-Wiener uniqueness theorem\n  -- Applied to the difference f - g which vanishes on Re(s) = 1/2\n  sorry  -- Follows from paley_wiener_uniqueness module\n\n/--\n**Corollary**: D(s) is uniquely determined by its values on the critical line",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 514,
+        "code": "L2_real := by sorry  -- Technical L\u00b2 property",
+        "context": "    f := D\u2081\n    entire := by trivial\n    exp_type := h_D\u2081\n    L2_real := by sorry  -- Technical L\u00b2 property\n  }\n  \n  let pw\u2082 : PaleyWienerClass B := {",
+        "primary_category": "trivial",
+        "all_categories": {
+          "trivial": 0.8
+        },
+        "complexity": 1,
+        "similar_solutions": []
+      },
+      {
+        "line": 521,
+        "code": "L2_real := by sorry  -- Technical L\u00b2 property",
+        "context": "    f := D\u2082\n    entire := by trivial\n    exp_type := h_D\u2082\n    L2_real := by sorry  -- Technical L\u00b2 property\n  }\n  \n  -- Apply uniqueness",
+        "primary_category": "trivial",
+        "all_categories": {
+          "trivial": 0.8
+        },
+        "complexity": 1,
+        "similar_solutions": []
+      },
+      {
+        "line": 542,
+        "code": "where eigenvalues_H_\u03a8 : \u2115 \u2192 \u211d := sorry",
+        "context": "/-- The zeros of D(s) correspond to eigenvalues of H_\u03a8 -/\naxiom D_zeros_are_eigenvalues :\n  \u2200 s : \u2102, D_function s = 0 \u2192 \u2203 n : \u2115, s.im = eigenvalues_H_\u03a8 n\n  where eigenvalues_H_\u03a8 : \u2115 \u2192 \u211d := sorry\n\n/-!\n## Summary and Physical Interpretation",
+        "primary_category": "qcal",
+        "all_categories": {
+          "qcal": 1.5,
+          "spectral": 0.65
+        },
+        "complexity": 3,
         "similar_solutions": []
       }
     ],
@@ -32776,6 +33709,6 @@
   },
   "summary": {
     "most_common_category": "qcal",
-    "avg_complexity": 3.710059171597633
+    "avg_complexity": 3.71356783919598
   }
 }
