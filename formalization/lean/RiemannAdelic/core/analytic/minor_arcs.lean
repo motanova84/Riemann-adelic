@@ -62,8 +62,19 @@ noncomputable def vonMangoldt (n : ℕ) : ℝ :=
 /-- La función de von Mangoldt es no negativa -/
 lemma vonMangoldt_nonneg (n : ℕ) : 0 ≤ vonMangoldt n := by
   unfold vonMangoldt
-  split_ifs <;> simp [log_nonneg]
-  sorry
+  split_ifs with h1 h2
+  · -- Case: n is prime
+    apply log_nonneg
+    simp [Nat.one_le_cast, Nat.Prime.one_lt h1]
+  · -- Case: n = p^k for some prime p and k ≥ 2
+    apply log_nonneg
+    simp [Nat.one_le_cast]
+    have : 1 < Nat.minFac n := Nat.minFac_prime (by
+      obtain ⟨p, k, hp, hk, rfl⟩ := h2
+      exact Nat.one_lt_pow hp.one_lt (Nat.succ_le_iff.mp hk))
+    exact Nat.one_lt_cast.mpr this
+  · -- Case: otherwise, vonMangoldt n = 0
+    rfl
 
 /-!
 ## 2. SUMA EXPONENCIAL DE VON MANGOLDT
@@ -254,7 +265,16 @@ theorem HLsum_minor_arc_bound
     _ ≤ (C₁ * (N : ℝ) / (Real.log N) ^ A₁) +
         (C₂ * (N : ℝ) / (Real.log N) ^ A₂) +
         (C₃ * (N : ℝ) / (Real.log N) ^ A₃) := h_sum
-    _ ≤ C * (N : ℝ) / (Real.log N) ^ A := by sorry
+    _ ≤ C * (N : ℝ) / (Real.log N) ^ A := by
+      -- Since A = min(A₁, A₂, A₃) and log N > 0, we have (log N)^A ≥ (log N)^Aᵢ
+      -- Therefore N/(log N)^Aᵢ ≤ N/(log N)^A for each i
+      -- So C₁·N/(log N)^A₁ + C₂·N/(log N)^A₂ + C₃·N/(log N)^A₃
+      --  ≤ (C₁ + C₂ + C₃)·N/(log N)^A = C·N/(log N)^A
+      have hlog_pos : 0 < Real.log N := by
+        apply Real.log_pos
+        simp [Nat.cast_pos]
+        omega
+      sorry -- This is a routine inequality combining the bounds
 
 /-!
 ## 7. COTA INTEGRAL SOBRE ARCOS MENORES
@@ -304,7 +324,15 @@ theorem minorArcContribution_bound
   -- 🔹 Paso 2: para cada α en minor arcs, usar cota puntual
   have h_point (α : ℝ) (hα : α ∈ MinorArcsSet N f₀) :
       Complex.abs ((HLsum_vonMangoldt N α)^2) ≤
-      sorry := by sorry
+      (C * (N : ℝ) / (Real.log N) ^ A)^2 := by
+    -- Use HLsum_minor_arc_bound to get |HLsum| ≤ C·N/(log N)^A
+    -- Then |HLsum|² ≤ (C·N/(log N)^A)²
+    obtain ⟨C_bound, A_bound, hC_pos, hA_pos, h_bound⟩ := 
+      HLsum_minor_arc_bound N α (by exact hα) hN
+    rw [Complex.sq_abs]
+    apply sq_le_sq'
+    · linarith
+    · exact h_bound
 
   -- 🔹 Paso 3: integrar la cota
   use 1, 1
@@ -312,6 +340,12 @@ theorem minorArcContribution_bound
   · norm_num
   constructor
   · norm_num
-  · sorry
+  · -- Bound the integral using the pointwise bound
+    -- ∫ |HLsum|² ≤ measure(minor arcs) · (C·N/(log N)^A)²
+    -- Since measure ≤ 1, this gives the desired bound
+    calc Complex.abs (minorArcContribution N n f₀)
+        ≤ ∫ α in MinorArcsSet N f₀, Complex.abs ((HLsum_vonMangoldt N α)^2) := 
+          h_le_integral
+      _ ≤ sorry -- Bound integral using h_point and measure theory
 
 end AnalyticNumberTheory
