@@ -1,0 +1,184 @@
+{
+  "qcal_version": "∞³",
+  "frequency_base": 141.7001,
+  "frequency_harmonic": 888.0,
+  "coherence_constant": 244.36,
+  "servers": [
+    {
+      "name": "qcal-core",
+      "runtime": "python3",
+      "module": "qcal.core.mcp_server",
+      "port": 8000,
+      "frequency": 141.7001,
+      "description": "Núcleo QCAL - Servidor principal de coherencia"
+    },
+    {
+      "name": "campo-qcal",
+      "runtime": "python3",
+      "module": "qcal.mcp.campo_server",
+      "port": 8001,
+      "frequency": 141.7001,
+      "description": "Campo QCAL - Gestión del campo noético"
+    },
+    {
+      "name": "icq-web",
+      "runtime": "node",
+      "script": "icq-web-server.js",
+      "port": 8002,
+      "frequency": 888.0,
+      "description": "ICQ Web - Interfaz web del Instituto de Conciencia Cuántica"
+    },
+    {
+      "name": "institutoconciencia",
+      "runtime": "python3",
+      "module": "conciencia.mcp_server",
+      "port": 8003,
+      "frequency": 888.0,
+      "description": "Instituto de Conciencia - Operadores noéticos"
+    },
+    {
+      "name": "p-np",
+      "runtime": "python3",
+      "module": "p_np.mcp_server",
+      "port": 8004,
+      "frequency": 141.7001,
+      "description": "P vs NP - Servidor de complejidad computacional"
+    },
+    {
+      "name": "origen",
+      "runtime": "node",
+      "script": "origen-server.js",
+      "port": 8005,
+      "frequency": 141.7001,
+      "description": "Origen - Servidor ontológico de origen"
+    },
+    {
+      "name": "economia-qcal-nodo-semilla",
+      "runtime": "python3",
+      "module": "economia_qcal.mcp_server",
+      "port": 8006,
+      "frequency": 141.7001,
+      "description": "Economía QCAL - Nodo semilla de coherencia económica"
+    },
+    {
+      "name": "riemann-adelic",
+      "runtime": "python3",
+      "module": "riemann_adelic.mcp_server",
+      "port": 8007,
+      "frequency": 141.7001,
+      "description": "Riemann Adélico - Hipótesis de Riemann D(s) ≡ Ξ(s)"
+    },
+    {
+      "name": "ramsey",
+      "runtime": "python3",
+      "module": "ramsey_theory.mcp_server",
+      "port": 8008,
+      "frequency": 888.0,
+      "description": "Ramsey - Teoría de Ramsey y combinatoria extremal"
+    },
+    {
+      "name": "noesis88",
+      "runtime": "python3",
+      "module": "noesis88.mcp_server",
+      "port": 8009,
+      "frequency": 888.0,
+      "description": "Noesis88 - Operadores noéticos y conciencia cuántica"
+    },
+    {
+      "name": "adelic-bsd",
+      "runtime": "python3",
+      "module": "adelic_bsd.mcp_server",
+      "port": 8010,
+      "frequency": 141.7001,
+      "description": "Adelic BSD - Conjetura de Birch y Swinnerton-Dyer"
+    },
+    {
+      "name": "el-infinito",
+      "runtime": "node",
+      "script": "infinity-server.js",
+      "port": 8011,
+      "frequency": 888.0,
+      "description": "El Infinito - Servidor de infinitud y cardinalidad"
+    },
+    {
+      "name": "instconciencia",
+      "runtime": "python3",
+      "module": "instituto_conciencia.mcp_server",
+      "port": 8012,
+      "frequency": 888.0,
+      "description": "Instituto Conciencia - Investigación en conciencia cuántica"
+    },
+    {
+      "name": "dramaturgo",
+      "runtime": "python3",
+      "module": "dramaturgo.mcp_server",
+      "port": 8013,
+      "frequency": 888.0,
+      "description": "Dramaturgo - Narrativa cósmica y noésis dramatúrgica"
+    },
+    {
+      "name": "catedral-mathesis",
+      "runtime": "python3",
+      "module": "catedral_mathesis.mcp_server",
+      "port": 8014,
+      "frequency": 141.7001,
+      "description": "Catedral Mathesis - Arquitectura matemática fundamental"
+    },
+    {
+      "name": "goldbach",
+      "runtime": "python3",
+      "module": "goldbach.mcp_server",
+      "port": 8015,
+      "frequency": 141.7001,
+      "description": "Goldbach - Conjetura de Goldbach y sumas de primos"
+    },
+    {
+      "name": "navier-stokes",
+      "runtime": "python3",
+      "module": "navier_stokes.mcp_server",
+      "port": 8016,
+      "frequency": 141.7001,
+      "description": "Navier-Stokes - Regularidad global 3D"
+    },
+    {
+      "name": "yang-mills",
+      "runtime": "python3",
+      "module": "yang_mills.mcp_server",
+      "port": 8017,
+      "frequency": 141.7001,
+      "description": "Yang-Mills - Existencia y brecha de masa"
+    },
+    {
+      "name": "hodge",
+      "runtime": "python3",
+      "module": "hodge.mcp_server",
+      "port": 8018,
+      "frequency": 888.0,
+      "description": "Hodge - Conjetura de Hodge y cohomología"
+    },
+    {
+      "name": "poincare",
+      "runtime": "python3",
+      "module": "poincare.mcp_server",
+      "port": 8019,
+      "frequency": 141.7001,
+      "description": "Poincaré - Conjetura de Poincaré generalizada"
+    },
+    {
+      "name": "qcal-cloud",
+      "runtime": "python3",
+      "module": "qcal_cloud.mcp_server",
+      "port": 8020,
+      "frequency": 141.7001,
+      "description": "QCAL-CLOUD - Sincronización y almacenamiento en nube"
+    },
+    {
+      "name": "github-mcp-server",
+      "runtime": "node",
+      "script": "github-mcp-server.js",
+      "port": 8021,
+      "frequency": 141.7001,
+      "description": "GitHub MCP - Núcleo git y gestión ontológica del código"
+    }
+  ]
+}
