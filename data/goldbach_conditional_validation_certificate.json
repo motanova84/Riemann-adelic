@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-02-26T11:09:09.049993",
+  "timestamp": "2026-02-28T23:57:22.636564",
   "framework": "QCAL \u221e\u00b3",
   "f0_hz": 141.7001,
   "coherence": 244.36,
@@ -100,5 +100,5 @@
       "all_dominant": true
     }
   },
-  "certificate_hash": "0xQCAL_GOLDBACH_a9171b85d6f59802"
+  "certificate_hash": "0xQCAL_GOLDBACH_00e4e067a3e2f4d9"
 }
