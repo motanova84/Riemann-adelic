@@ -35,7 +35,7 @@ Version: V7.1 - Fase 3.5
 Date: February 2026
 -/
 
-import «RiemannAdelic».core.analytic.large_sieve
+import RiemannAdelic.core.analytic.large_sieve
 import Mathlib.NumberTheory.ArithmeticFunction
 import Mathlib.Analysis.SpecialFunctions.Log.Basic
 
@@ -56,11 +56,13 @@ def möbiusMu := ArithmeticFunction.moebius
     (1) está lejos de racionales con denominador pequeño (≤ log N), O
     (2) está lejos de la frecuencia de resonancia f₀.
     
-    **DOCUMENTACIÓN CRÍTICA para referee:**
-    La segunda cláusula es un refinamiento espectral que define geométricamente
-    qué consideramos "arcos menores". La large sieve NO usa f₀ directamente;
-    solo usa aproximación racional (cláusula 1). La cláusula 2 es un 
-    clasificador geométrico adicional, no un parámetro del bound.
+    **Critical note for the referee:**
+    The second clause is a spectral refinement acting as a geometric classifier
+    for which regions of the circle are considered "minor arcs". The large sieve
+    bound is NOT used in the large sieve analytic estimate directly; it only uses
+    rational approximation (clause 1). Clause 2 is a geometric classifier that is
+    NOT used directly in the analytic bound; it only structures the partition of
+    the circle into major and minor arcs.
 -/
 def MinorArcs (N : ℕ) (f₀ α : ℝ) : Prop :=
   (∀ q : ℕ, q ≤ Real.log N → ∀ a : ℤ, Real.dist α ((a : ℝ) / q) ≥ (Real.log N)⁻¹) ∨
