@@ -1,6 +1,6 @@
 {
   "validation_type": "minor_arcs_vaughan_identity",
-  "timestamp": "2026-02-26T17:26:27.725567",
+  "timestamp": "2026-02-28T23:58:40.955701",
   "framework": "QCAL \u221e\u00b3",
   "constants": {
     "f0_Hz": 141.7001,
@@ -18,5 +18,5 @@
   "author": "Jos\u00e9 Manuel Mota Burruezo \u03a8 \u221e\u00b3",
   "institution": "Instituto de Conciencia Cu\u00e1ntica (ICQ)",
   "orcid": "0009-0002-1923-0773",
-  "certificate_hash": "0xQCAL_MINOR_ARCS_49360ebf65afa17c"
+  "certificate_hash": "0xQCAL_MINOR_ARCS_e93aba480063ba07"
 }

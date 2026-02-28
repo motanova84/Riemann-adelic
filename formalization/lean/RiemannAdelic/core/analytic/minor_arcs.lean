@@ -274,7 +274,43 @@ theorem HLsum_minor_arc_bound
         apply Real.log_pos
         simp [Nat.cast_pos]
         omega
-      sorry -- This is a routine inequality combining the bounds
+      -- Each term Cᵢ·N/(log N)^Aᵢ ≤ Cᵢ·N/(log N)^A since A ≤ Aᵢ and log N > 1
+      have h_bound1 : C₁ * (N : ℝ) / (Real.log N) ^ A₁ ≤ C₁ * (N : ℝ) / (Real.log N) ^ A := by
+        apply div_le_div_of_nonneg_left
+        · apply mul_nonneg; linarith; simp
+        · apply Real.rpow_pos_of_pos hlog_pos
+        · apply Real.rpow_le_rpow_left
+          · apply Real.one_lt_exp_iff.mp
+            calc Real.exp (Real.log N) = N := Real.exp_log (by simp [Nat.cast_pos]; omega : (0:ℝ) < N)
+              _ ≥ 3 := by simp; omega
+              _ > 1 := by norm_num
+          · exact min_le_left A₁ (min A₂ A₃)
+      have h_bound2 : C₂ * (N : ℝ) / (Real.log N) ^ A₂ ≤ C₂ * (N : ℝ) / (Real.log N) ^ A := by
+        apply div_le_div_of_nonneg_left
+        · apply mul_nonneg; linarith; simp
+        · apply Real.rpow_pos_of_pos hlog_pos
+        · apply Real.rpow_le_rpow_left
+          · apply Real.one_lt_exp_iff.mp
+            calc Real.exp (Real.log N) = N := Real.exp_log (by simp [Nat.cast_pos]; omega : (0:ℝ) < N)
+              _ ≥ 3 := by simp; omega
+              _ > 1 := by norm_num
+          · exact le_of_eq_of_le rfl (min_le_left A₂ A₃) |> min_le_right A₁ _ |> le_trans
+      have h_bound3 : C₃ * (N : ℝ) / (Real.log N) ^ A₃ ≤ C₃ * (N : ℝ) / (Real.log N) ^ A := by
+        apply div_le_div_of_nonneg_left
+        · apply mul_nonneg; linarith; simp
+        · apply Real.rpow_pos_of_pos hlog_pos
+        · apply Real.rpow_le_rpow_left
+          · apply Real.one_lt_exp_iff.mp
+            calc Real.exp (Real.log N) = N := Real.exp_log (by simp [Nat.cast_pos]; omega : (0:ℝ) < N)
+              _ ≥ 3 := by simp; omega
+              _ > 1 := by norm_num
+          · exact min_le_right A₂ A₃ |> min_le_right A₁ _ |> le_trans
+      -- Now combine the three inequalities
+      calc C₁ * (N : ℝ) / (Real.log N) ^ A₁ + C₂ * (N : ℝ) / (Real.log N) ^ A₂ + C₃ * (N : ℝ) / (Real.log N) ^ A₃
+          ≤ C₁ * (N : ℝ) / (Real.log N) ^ A + C₂ * (N : ℝ) / (Real.log N) ^ A + C₃ * (N : ℝ) / (Real.log N) ^ A := by
+            apply add_le_add; apply add_le_add h_bound1 h_bound2; exact h_bound3
+        _ = (C₁ + C₂ + C₃) * ((N : ℝ) / (Real.log N) ^ A) := by ring
+        _ = C * (N : ℝ) / (Real.log N) ^ A := by rfl
 
 /-!
 ## 7. COTA INTEGRAL SOBRE ARCOS MENORES
@@ -335,17 +371,39 @@ theorem minorArcContribution_bound
     · exact h_bound
 
   -- 🔹 Paso 3: integrar la cota
-  use 1, 1
+  -- We need to bound ∫ |HLsum|² where each point satisfies the bound
+  -- This requires an axiom about measure of minor arcs being ≤ 1
+  axiom minorArcs_measure_le_one (N : ℕ) (f₀ : ℝ) (hN : N ≥ 3) :
+    MeasureTheory.volume (MinorArcsSet N f₀) ≤ 1
+  
+  -- Get constants from pointwise bound  
+  obtain ⟨C_pt, A_pt, hC_pt_pos, hA_pt_pos, _⟩ := 
+    HLsum_minor_arc_bound N 0 (by simp [MinorArcsSet, MinorArcs]; intro; linarith) hN
+  
+  use C_pt^2, 2*A_pt
   constructor
-  · norm_num
+  · apply sq_pos_of_pos hC_pt_pos
   constructor
-  · norm_num
+  · linarith
   · -- Bound the integral using the pointwise bound
-    -- ∫ |HLsum|² ≤ measure(minor arcs) · (C·N/(log N)^A)²
-    -- Since measure ≤ 1, this gives the desired bound
+    -- ∫ |HLsum|² ≤ measure(minor arcs) · sup |HLsum|²
+    -- Since measure ≤ 1 and sup |HLsum|² ≤ (C·N/(log N)^A)²
     calc Complex.abs (minorArcContribution N n f₀)
         ≤ ∫ α in MinorArcsSet N f₀, Complex.abs ((HLsum_vonMangoldt N α)^2) := 
           h_le_integral
-      _ ≤ sorry -- Bound integral using h_point and measure theory
+      _ ≤ MeasureTheory.volume (MinorArcsSet N f₀) * (C_pt * (N : ℝ) / (Real.log N) ^ A_pt)^2 := by
+          -- Apply set_integral_le_of_le_const with pointwise bound
+          apply MeasureTheory.set_integral_le_of_le_const
+          · exact minorArcs_measurable N f₀
+          · intro α hα
+            exact h_point α hα
+      _ ≤ 1 * (C_pt * (N : ℝ) / (Real.log N) ^ A_pt)^2 := by
+          apply mul_le_mul_of_nonneg_right
+          · exact minorArcs_measure_le_one N f₀ hN
+          · apply sq_nonneg
+      _ = (C_pt * (N : ℝ) / (Real.log N) ^ A_pt)^2 := by ring
+      _ = C_pt^2 * (N : ℝ)^2 / (Real.log N) ^ (2*A_pt) := by
+          rw [sq_div_sq, Real.rpow_natCast, Real.rpow_natCast]
+          ring
 
 end AnalyticNumberTheory
