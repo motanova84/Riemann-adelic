@@ -5,7 +5,7 @@ import Mathlib.Analysis.SpecialFunctions.Log.Basic
 
 /-! # Divisor Bounds for Type II Estimates
 
-  Este archivo implementa cotas de orden medio para funciones divisorias,
+  Este archivo implementa cotas de orden medio para funciones divisoras,
   que son esenciales para acotar las normas L² en sumas bilineales de Type II.
   
   Sin divisor bounds, el Everest se vuelve inescalable porque no podemos
