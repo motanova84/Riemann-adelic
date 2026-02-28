@@ -343,7 +343,7 @@ Without these bounds, we cannot conclude that Type II ≪ N(log N)^(-A).
 
 1. **Möbius**: The identity ∑_{k|n} μ(k) = [n=1] means the sum is 1 if n=1, 0 otherwise. The truncated version has error controlled by τ(n).
 
-2. **Log divisors**: The identity ∑_{d|n} log d = log n (from the fundamental theorem of arithmetic: n = ∏ p^k gives log n = ∑ k·log p = ∑_{d|n} log d when counted with multiplicity) gives exact sum, so the L² norm is ∑(log n)². Note: This is related to but distinct from the von Mangoldt identity ∑_{d|n} Λ(d) = log n.
+2. **Log divisors**: For each n, the sum ∑_{d|n} log d is the sum of logarithms of all divisors of n (each divisor counted once). It is typically of size ≍ τ(n) · log n, and our theorem `sum_log_divisor_sq_bound` gives an L² bound for these divisor-log sums directly. This should not be confused with the von Mangoldt identity ∑_{d|n} Λ(d) = log n, where Λ is the von Mangoldt function and the sum equals log n.
 
 3. **Tau function**: The classic bound ∑_{n≤X} τ(n)² ≪ X(log X)³ from hyperbola method.
 
