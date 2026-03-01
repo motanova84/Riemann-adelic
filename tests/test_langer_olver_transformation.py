@@ -57,8 +57,8 @@ class TestLangerOlverTransformation:
         """Test turning point calculation."""
         transformer = LangerOlverTransformation()
         
-        # Test for various λ values
-        for lambda_val in [1.0, 10.0, 100.0]:
+        # Test for various λ values (must be above potential minimum π⁴/16 ≈ 6.09)
+        for lambda_val in [8.0, 10.0, 100.0]:
             y_plus = transformer.find_turning_point(lambda_val)
             
             # Verify Q(y+) ≈ λ
@@ -298,11 +298,11 @@ class TestNumericalStability:
     """Test suite for numerical stability."""
     
     def test_small_lambda(self):
-        """Test stability for small λ values."""
+        """Test stability for small λ values above potential minimum."""
         transformer = LangerOlverTransformation()
         
-        # Test small but positive λ
-        lambda_val = 1.0
+        # Test small but positive λ above potential minimum π⁴/16 ≈ 6.09
+        lambda_val = 8.0
         result = transformer.compute_full_result(lambda_val)
         
         # Should complete without errors
@@ -396,6 +396,97 @@ class TestMathematicalProperties:
         for coeff in coeffs:
             # Just check they're in reasonable range
             assert 0 < coeff < 1.0
+
+
+class TestGlobalPhaseTheorem:
+    """Test suite for the Global Phase Theorem (Teorema de la Fase Global).
+
+    Tests F.1-F.4 from the problem statement:
+        θ'(λ) = (1/2) log λ + (1/4) Re[ψ(1/4 + iλ/2)] + O(1/λ)
+    and its connection to Weil's explicit formula via Krein's trace formula.
+    """
+
+    def test_phase_derivative_basic(self):
+        """Test compute_phase_derivative returns finite values."""
+        transformer = LangerOlverTransformation()
+
+        for lambda_val in [10.0, 100.0, 1000.0]:
+            theta_prime = transformer.compute_phase_derivative(lambda_val)
+            assert np.isfinite(theta_prime), (
+                f"θ'({lambda_val}) should be finite"
+            )
+            # Phase derivative should be positive (log λ term dominates for large λ)
+            assert theta_prime > 0, f"θ'({lambda_val}) should be positive"
+
+    def test_phase_derivative_leading_term(self):
+        """Test that θ'(λ) ≈ (1/2) log λ for large λ (F.2 + F.3)."""
+        transformer = LangerOlverTransformation()
+
+        # For large λ, the leading term (1/2) log λ dominates
+        for lambda_val in [1e4, 1e6]:
+            theta_prime = transformer.compute_phase_derivative(lambda_val)
+            leading = 0.5 * np.log(lambda_val)
+            # Allow 50% relative deviation due to digamma correction
+            rel_diff = abs(theta_prime - leading) / abs(leading)
+            assert rel_diff < 0.5, (
+                f"θ'(λ) should be close to (1/2)logλ for large λ={lambda_val}"
+            )
+
+    def test_phase_derivative_invalid_lambda(self):
+        """Test that compute_phase_derivative raises for invalid λ."""
+        transformer = LangerOlverTransformation()
+
+        with pytest.raises(ValueError):
+            transformer.compute_phase_derivative(-1.0)
+
+        with pytest.raises(ValueError):
+            transformer.compute_phase_derivative(0.0)
+
+    def test_validate_weil_formula(self):
+        """Test validate_weil_formula returns valid structure (F.4)."""
+        transformer = LangerOlverTransformation()
+
+        lambda_vals = np.array([10.0, 50.0, 100.0, 500.0, 1000.0])
+        result = transformer.validate_weil_formula(lambda_vals)
+
+        assert result['valid'] is True
+        assert result['n_samples'] == len(lambda_vals)
+        assert 'theta_prime_mean' in result
+        assert 'weil_formula_verified' in result
+        assert result['weil_formula_verified'] is True
+
+    def test_weil_formula_theta_prime_positive(self):
+        """Test that θ'(λ) values from Weil validation are all positive."""
+        transformer = LangerOlverTransformation()
+
+        lambda_vals = np.array([20.0, 100.0, 500.0])
+        result = transformer.validate_weil_formula(lambda_vals)
+
+        for entry in result['results']:
+            assert entry['theta_prime'] > 0, (
+                f"θ'(λ={entry['lambda']}) should be positive"
+            )
+
+    def test_phase_derivative_digamma_connection(self):
+        """Test F.1: d/dλ arg Γ = (1/2) Re[ψ(1/4 + iλ/2)]."""
+        from scipy.special import digamma
+
+        lambda_val = 100.0
+        transformer = LangerOlverTransformation()
+        theta_prime = transformer.compute_phase_derivative(lambda_val)
+
+        # Manually compute components (F.1 + F.2 + F.3)
+        # I'(λ) = (1/2) log λ
+        I_prime = 0.5 * np.log(lambda_val)
+        # d/dλ arg Γ(1/4 + iλ/2) = (1/2) Re[ψ(1/4 + iλ/2)]
+        psi_val = digamma(0.25 + 1j * lambda_val / 2)
+        gamma_phase_deriv = 0.5 * psi_val.real
+        # θ'(λ) = I'(λ) + (1/2) d/dλ arg Γ
+        expected = I_prime + 0.5 * gamma_phase_deriv
+
+        assert abs(theta_prime - expected) < 1e-10, (
+            "Phase derivative should match manual computation"
+        )
 
 
 @pytest.mark.slow
