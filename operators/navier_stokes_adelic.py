@@ -317,18 +317,18 @@ class NavierStokesAdelic:
         
         Args:
             n_eigenvalues: Number of eigenvalues to compute (default: all)
-from scipy.sparse import csr_matrix, diags
+        """
 from scipy.linalg import eigh
 from typing import Tuple, Optional, Dict, Callable
 import warnings
 
 try:
-    from .adelic_laplacian import AdelicLaplacian, F0, C_QCAL, KAPPA_PI, PHI
+    from .adelic_laplacian import AdelicLaplacianNS, F0, C_QCAL, KAPPA_PI, PHI
 except ImportError:
     import sys
     import os
     sys.path.insert(0, os.path.dirname(__file__))
-    from adelic_laplacian import AdelicLaplacian, F0, C_QCAL, KAPPA_PI, PHI
+    from adelic_laplacian import AdelicLaplacianNS, F0, C_QCAL, KAPPA_PI, PHI
 
 
 class NavierStokesAdelicOperator:
@@ -376,7 +376,7 @@ class NavierStokesAdelicOperator:
         self.padic_strength = padic_strength
         
         # Initialize adelic Laplacian
-        self.adelic_laplacian = AdelicLaplacian(
+        self.adelic_laplacian = AdelicLaplacianNS(
             N=N, L=L, kappa=kappa, key_primes=key_primes
         )
         
@@ -760,28 +760,6 @@ class FredholmDeterminant:
         derivative = (log_det_plus - log_det_minus) / (2 * dt)
         
         return derivative
-        H = self.full_operator(hermitian_version=hermitian_version)
-        
-        # Convert to dense for eigh (for large systems, use sparse solvers)
-        H_dense = H.toarray()
-        
-        # For Hermitian operators, use eigh (more efficient)
-        if hermitian_version:
-            # Make sure it's symmetric
-            H_dense = 0.5 * (H_dense + H_dense.conj().T)
-            eigenvalues, eigenvectors = eigh(H_dense)
-        else:
-            # For non-Hermitian, use eig
-            from scipy.linalg import eig
-            eigenvalues, eigenvectors = eig(H_dense)
-        
-        # Sort by real part
-        idx = np.argsort(eigenvalues.real)
-        eigenvalues = eigenvalues[idx]
-        eigenvectors = eigenvectors[:, idx]
-        
-        # Return requested number
-        return eigenvalues[:n_eigenvalues], eigenvectors[:, :n_eigenvalues]
     
     def analyze_reynolds_regime(self) -> Dict[str, any]:
         """
