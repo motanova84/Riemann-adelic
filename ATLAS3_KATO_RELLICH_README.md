@@ -212,6 +212,31 @@ Expected output:
 - ✓ Self-adjointness confirmed
 - ✓ Certificate generated
 
+## Related: H_Ψ Self-Adjoint Corrected Implementation
+
+For a **rigorous treatment** of the H_Ψ operator addressing fundamental mathematical issues (FALLOS 1-3), see:
+
+- **Module**: `operators/h_psi_self_adjoint_corrected.py`
+- **Documentation**: `H_PSI_SELF_ADJOINT_CORRECTED_README.md`
+- **Validation**: `validate_h_psi_self_adjoint_corrected.py`
+
+This corrected implementation addresses:
+1. **FALLO 1**: Self-adjointness with proper domain and boundary conditions
+2. **FALLO 2**: Unitary transformation between different Hilbert spaces H₁ → H₂
+3. **FALLO 3**: Discrete spectrum via Hilbert-Schmidt resolvent compactness
+
+All three FALLOS have been **CORRECTED** and **VERIFIED** ✓
+
+Quick verification:
+```bash
+python validate_h_psi_self_adjoint_corrected.py
+```
+
+The corrected H_Ψ implementation strengthens the theoretical foundations of the ATLAS³ framework by ensuring:
+- Proper self-adjoint extensions
+- Correct unitary structure between function spaces  
+- Rigorous discrete spectrum proof
+
 ## QCAL Parameters
 
 - **Fundamental frequency**: f₀ = 141.7001 Hz
