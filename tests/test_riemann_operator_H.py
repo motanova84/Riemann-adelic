@@ -10,7 +10,7 @@ Verifica:
   - EigenvalueComparison: tabla de comparación, estadísticas.
   - run_operator_analysis: estructura del reporte, calidad numérica.
 
-Aprobadas las 40 pruebas con la implementación de inversión de Abel correcta.
+55 pruebas en total.
 
 Autor: José Manuel Mota Burruezo (JMMB Ψ)
 DOI: 10.5281/zenodo.17379721
@@ -27,7 +27,6 @@ from riemann_operator_H import (
     run_operator_analysis,
     ZETA_ZEROS_TABULATED,
     _TWO_PI,
-    _EPS,
 )
 
 

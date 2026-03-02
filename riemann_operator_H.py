@@ -160,6 +160,12 @@ class WuSprungOperator:
 
     # Constante de Abel: C = 1 − 2·ln(2) ≈ −0.386  (de la inversión WKB)
     _ABEL_C: float = 1.0 - 2.0 * math.log(2.0)
+    # Número máximo de duplicaciones en la búsqueda de cota superior para brentq
+    _MAX_BRACKET_DOUBLINGS: int = 50
+    # Cota inicial mínima para V_hi en la búsqueda (unidades de energía)
+    _V_HI_FLOOR: float = 200.0
+    # Factor de proporcionalidad para V_hi respecto a x
+    _V_HI_SCALE: float = 10.0
 
     def __init__(self, N: int = 500, x_max: float = 13.0) -> None:
         self.N = int(N)
@@ -254,9 +260,8 @@ class WuSprungOperator:
         if x <= 0.0:
             return self.V_min()
         V_lo = self.V_min()
-        V_hi = max(200.0, x * 10.0)
-        max_doublings = 50
-        for _ in range(max_doublings):
+        V_hi = max(self._V_HI_FLOOR, x * self._V_HI_SCALE)
+        for _ in range(self._MAX_BRACKET_DOUBLINGS):
             if self._x_of_V(V_hi) >= x:
                 break
             V_hi *= 2.0
