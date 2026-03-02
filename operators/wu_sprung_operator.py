@@ -225,6 +225,7 @@ def load_riemann_zeros(n: int = 20) -> np.ndarray:
     try:
         prev = known_zeros[-1]
         max_gap = 20.0  # Maximum expected gap between consecutive zeros
+        known_zeros_set = set(known_zeros)
         with open(zeros_file, 'r') as f:
             for line in f:
                 line = line.strip()
@@ -235,7 +236,7 @@ def load_riemann_zeros(n: int = 20) -> np.ndarray:
                         if 0 < gap < max_gap:
                             zeros.append(val)
                             prev = val
-                        elif val in known_zeros:
+                        elif val in known_zeros_set:
                             continue  # Skip already known
                     except ValueError:
                         pass

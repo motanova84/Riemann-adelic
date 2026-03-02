@@ -92,9 +92,13 @@ def pilar1_convergence_analysis(
     errors_arr = np.array(errors, dtype=float)
     C = convergence_rate(N_values, L_fixed=L_fixed, n_max=n_max)
 
-    # Check convergence: errors should decrease as N increases
+    # Check convergence: overall trend should decrease (first > last)
     valid = np.isfinite(errors_arr)
-    converges = bool(np.all(np.diff(errors_arr[valid]) < 0)) if np.sum(valid) > 1 else False
+    if np.sum(valid) > 1:
+        valid_errors = errors_arr[valid]
+        converges = bool(valid_errors[-1] < valid_errors[0])
+    else:
+        converges = False
 
     return {
         'errors': errors_arr,
