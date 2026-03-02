@@ -27,6 +27,7 @@
 - `rh_final_theorem.lean`: **Teorema principal de la Hipótesis de Riemann (Versión Noética)**
 - `paley_wiener_uniqueness.lean`: Teorema de unicidad espectral fuerte (Paley–Wiener)
 - `selberg_trace.lean`: Fórmula de traza de Selberg (versión débil)
+- `spectral_convergence_from_kernel.lean`: Convergencia del lado espectral desde el núcleo de calor
 - `H_psi_complete.lean`: Operador H_Ψ con espectro discreto
 - `H_psi_self_adjoint.lean`: Demostración completa de que H_Ψ es autoadjunto (self-adjoint)
 - `D_limit_equals_xi.lean`: Convergencia de D(s, ε) a ξ(s)/P(s)
