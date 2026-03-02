@@ -14,6 +14,7 @@ Institution: Instituto de Conciencia Cuántica (ICQ)
 DOI: 10.5281/zenodo.17379721
 """
 
+import math
 import numpy as np
 from typing import Dict, Tuple, Optional
 from scipy import stats
@@ -55,33 +56,70 @@ class GUEValidator:
     
     def unfold_spectrum(self, eigenvalues: np.ndarray) -> np.ndarray:
         """
-        Unfold spectrum to have unit mean spacing.
-        
+        Unfold spectrum to have unit mean spacing (polynomial fit method).
+
         This removes the density of states ρ(E) to focus on
-        fluctuations in level spacings.
-        
+        fluctuations in level spacings using a polynomial approximation
+        of the integrated density of states.
+
+        For Riemann-zero eigenvalues prefer ``unfold_spectrum_riemann``,
+        which uses the exact smooth counting function
+        N_smooth(E) = E/(2π)·log(E/(2π)) − E/(2π) + 7/8 and produces
+        correctly normalised unit-mean spacings without relying on a fit.
+
         Args:
             eigenvalues: Raw eigenvalue spectrum
-            
+
         Returns:
             Unfolded eigenvalues with mean spacing = 1
         """
         # Sort eigenvalues
         eigs_sorted = np.sort(eigenvalues)
-        
+
         # Smooth integrated density of states
         n_eigs = len(eigs_sorted)
         cumulative = np.arange(n_eigs) / n_eigs
-        
+
         # Fit polynomial to get smooth N(E)
         poly_degree = min(5, n_eigs // 10)
         poly_coeffs = np.polyfit(eigs_sorted, cumulative, poly_degree)
         smooth_cumulative = np.polyval(poly_coeffs, eigs_sorted)
-        
+
         # Unfolded spectrum: ξ_n = N(E_n)
         unfolded = smooth_cumulative * n_eigs
-        
+
         return unfolded
+
+    def unfold_spectrum_riemann(self, eigenvalues: np.ndarray) -> np.ndarray:
+        """
+        Unfold Riemann-zero eigenvalues using the exact smooth counting function.
+
+        Maps E_n → ξ_n = N_smooth(E_n) where
+
+            N_smooth(E) = E/(2π) · log(E/(2π)) − E/(2π) + 7/8
+
+        The resulting spacings s_n = ξ_{n+1} − ξ_n have mean ≈ 1 when the
+        eigenvalues accurately track the imaginary parts of Riemann zeros.
+        This avoids the normalisation error introduced by the density factor
+        log(E)/(2π) when naively multiplying raw spacings by a local density.
+
+        Args:
+            eigenvalues: Raw positive eigenvalue spectrum (will be sorted).
+
+        Returns:
+            Unfolded eigenvalues ξ_n = N_smooth(E_n), sorted ascending.
+        """
+        eigs_sorted = np.sort(eigenvalues)
+        xi = np.array([self._n_smooth(float(e)) for e in eigs_sorted])
+        return xi
+
+    @staticmethod
+    def _n_smooth(E: float) -> float:
+        """Smooth counting function N_smooth(E) for Riemann zeros."""
+        if E <= 1e-12:
+            return 0.0
+        val = (E / (2.0 * math.pi)) * math.log(E / (2.0 * math.pi)) - E / (2.0 * math.pi) + 7.0 / 8.0
+        return max(0.0, val)
     
     def compute_nearest_neighbor_spacings(
         self,
