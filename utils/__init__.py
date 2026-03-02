@@ -16,6 +16,7 @@ by José Manuel Mota Burruezo.
 """
 
 from .adelic_determinant import AdelicCanonicalDeterminant
+from .truncated_hadamard import TruncatedHadamardProduct
 from .arithmetic_fractal_validation import (
     ArithmeticFractalValidator,
     ArithmeticFractalResult,
