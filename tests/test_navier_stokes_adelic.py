@@ -20,7 +20,7 @@ import os
 # Add parent directory to path
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from operators.adelic_laplacian import AdelicLaplacian, KAPPA_PI, F0
+from operators.adelic_laplacian import AdelicLaplacianNS as AdelicLaplacian, KAPPA_PI, F0
 from operators.navier_stokes_adelic import NavierStokesAdelicOperator
 
 

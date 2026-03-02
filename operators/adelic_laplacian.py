@@ -494,7 +494,10 @@ class SeeleyDeWittTensor:
         trace = trapezoid(kernel_diag, x)
         
         return trace
-    Adelic Laplacian operator Δ_A = Δ_R + Σ_p Δ_{Q_p}.
+
+
+class AdelicLaplacianNS:
+    """Adelic Laplacian operator Delta_A = Delta_R + Sum_p Delta_{Q_p}.
     
     Combines Archimedean (real) and p-adic Laplacians with position-dependent
     diffusion coefficients derived from the logarithmic potential.
@@ -776,7 +779,7 @@ def demonstrate_adelic_laplacian():
     print("=" * 70)
     
     # Create adelic Laplacian at critical κ_Π
-    adelic_lap = AdelicLaplacian(N=500, L=10.0, kappa=KAPPA_PI)
+    adelic_lap = AdelicLaplacianNS(N=500, L=10.0, kappa=KAPPA_PI)
     
     print(f"\n1. Configuration:")
     print(f"   N = {adelic_lap.N} points")
