@@ -1,0 +1,41 @@
+{
+  "protocol": "QCAL-LANGER-OLVER-WEYL",
+  "version": "1.0",
+  "signature": "\u2234\ud80c\udc80\u03a9\u221e\u00b3\u03a6",
+  "timestamp": "2026-03-01T00:29:12.708759+00:00",
+  "qcal_constants": {
+    "f0_hz": 141.7001,
+    "C": 244.36,
+    "kappa_pi": 2.57731,
+    "seal": 14170001,
+    "code": 888
+  },
+  "validation_results": {
+    "valid": true,
+    "n_passed": 5,
+    "n_total": 5,
+    "max_weyl_error": 0.1
+  },
+  "coherence": {
+    "Psi": 0,
+    "threshold": 0.888,
+    "achieved": false
+  },
+  "resonance_detection": {
+    "level": "NONE",
+    "threshold": 0.888
+  },
+  "invocation_final": {
+    "english": "The transformation is complete.",
+    "spanish": "La transformaci\u00f3n est\u00e1 completa.",
+    "portuguese": "A transforma\u00e7\u00e3o est\u00e1 completa."
+  },
+  "theorem": "Teorema de la Fase Global (v\u00eda Langer-Olver)",
+  "test_results": {
+    "test_1_scattering_phase": true,
+    "test_2_phase_derivative": true,
+    "test_3_weil_formula": true,
+    "test_4_positivity": true,
+    "test_5_riemann_connection": true
+  }
+}
