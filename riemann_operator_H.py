@@ -69,7 +69,8 @@ def N_smooth(E: float) -> float:
     """
     if E <= 1e-12:
         return 0.0
-    val = (E / (2.0 * math.pi)) * math.log(E / (2.0 * math.pi)) - E / (2.0 * math.pi) + 7.0 / 8.0
+    e_over_2pi = E / (2.0 * math.pi)
+    val = e_over_2pi * math.log(e_over_2pi) - e_over_2pi + 7.0 / 8.0
     return max(0.0, val)
 
 
@@ -201,9 +202,14 @@ class WuSprungOperator:
 
 def _gue_cdf(s: np.ndarray) -> np.ndarray:
     """
-    GUE (GOE Wigner surmise) cumulative distribution function.
+    Wigner surmise CDF for nearest-neighbor level spacings (Rayleigh/GOE form).
 
-    P(s) = (π/2) s exp(−πs²/4)  →  CDF = 1 − exp(−πs²/4)
+    P(s) = (π/2) s exp(−πs²/4)  →  CDF(s) = 1 − exp(−πs²/4)
+
+    This is the standard Wigner surmise for GOE (β = 1) and is also used as
+    the reference distribution when testing Riemann-zero spacing statistics
+    (consistent with the problem-statement convention).  For the full GUE
+    (β = 2) Wigner surmise see P_GUE(s) = (32/π²) s² exp(−4s²/π).
 
     Args:
         s: Array of spacing values.
@@ -211,7 +217,7 @@ def _gue_cdf(s: np.ndarray) -> np.ndarray:
     Returns:
         CDF values at each s.
     """
-    return 1.0 - np.exp(-math.pi * s ** 2 / 4.0)
+    return 1.0 - np.exp(-np.pi * s ** 2 / 4.0)
 
 
 def ks_distance_gue(spacings: np.ndarray) -> float:

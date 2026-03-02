@@ -118,7 +118,8 @@ class GUEValidator:
         """Smooth counting function N_smooth(E) for Riemann zeros."""
         if E <= 1e-12:
             return 0.0
-        val = (E / (2.0 * math.pi)) * math.log(E / (2.0 * math.pi)) - E / (2.0 * math.pi) + 7.0 / 8.0
+        e_over_2pi = E / (2.0 * math.pi)
+        val = e_over_2pi * math.log(e_over_2pi) - e_over_2pi + 7.0 / 8.0
         return max(0.0, val)
     
     def compute_nearest_neighbor_spacings(
