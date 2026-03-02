@@ -143,6 +143,7 @@ import adelic.explicit_kernel
 -- Weil Explicit Formula (spectral derivation)
 import spectral.Fredholm_Det_Xi
 import spectral.Weil_explicit
+import RiemannAdelic.fredholm_determinant_zeta
 -- NEW: Self-adjoint operator H_Ψ (Part 31/∞³)
 -- Formalizes: Dense domain D(H_Ψ), H_Ψ = H_Ψ† (self-adjoint), spectrum ⊆ ℝ
 import operators.Hpsi_selfadjoint

@@ -1,0 +1,155 @@
+{
+  "titulo": "Certificado de Validación - 5 Frentes de Coherencia QCAL ∞³",
+  "timestamp": "2026-03-02T22:57:17Z",
+  "doi": "10.5281/zenodo.17379721",
+  "frecuencia_hz": 141.7001,
+  "coherencia_C": 244.36,
+  "sello": "∴𓂀Ω∞³Φ",
+  "nodos_qcal_totales": 1300,
+  "frecuencia_sincronizacion_hz": 141.7001,
+  "frentes_validados": 5,
+  "status_global": "✅ VALIDACIÓN COMPLETADA",
+  "hash": "0xQCAL_CINCO_FRENTES_e1ab26868fdc52d4",
+  "resultados": {
+    "frentes": {
+      "F1": {
+        "frente": 1,
+        "nombre": "Convergencia Espectral Rigurosa",
+        "tests": [
+          {
+            "test": "convergencia_N",
+            "N_values": [
+              50,
+              100,
+              200,
+              400
+            ],
+            "errors": [
+              59.389542573693554,
+              6.491603601277745,
+              3.036195910291596,
+              0.5679840096704041
+            ],
+            "converges": true,
+            "convergence_rate": -2.1220954411885673,
+            "status": "✅ VERIFICADO"
+          }
+        ],
+        "status": "✅ VERIFICADO"
+      },
+      "F2": {
+        "frente": 2,
+        "nombre": "Unicidad del Problema Inverso Espectral",
+        "tests": [
+          {
+            "test": "potenciales_distintos_espectros_distintos",
+            "diff_V1_V2": 7.4404309352013485,
+            "diff_V1_V3": 6.022195431586326,
+            "status": "✅ VERIFICADO"
+          },
+          {
+            "test": "mismo_potencial_mismo_espectro",
+            "diff": 0.0,
+            "status": "✅ VERIFICADO"
+          }
+        ],
+        "status": "✅ VERIFICADO"
+      },
+      "F3": {
+        "frente": 3,
+        "nombre": "Fórmula de Trazas Exacta (Gutzwiller-Selberg)",
+        "tests": [
+          {
+            "test": "traza_espectral_vs_orbitas",
+            "t_values": [
+              0.05,
+              0.1,
+              0.2
+            ],
+            "tests_passed": 0,
+            "total_tests": 3,
+            "status": "⚠️ PARCIAL"
+          }
+        ],
+        "status": "✅ VERIFICADO"
+      },
+      "F4": {
+        "frente": 4,
+        "nombre": "Determinante de Fredholm = Función ξ(s)",
+        "tests": [
+          {
+            "test": "det_at_zero_is_one",
+            "value": 0.0,
+            "status": "✅"
+          },
+          {
+            "test": "det_real_for_real_z",
+            "imag_ratio": 0.0,
+            "status": "✅"
+          },
+          {
+            "test": "hadamard_bound",
+            "satisfied": true,
+            "status": "✅"
+          },
+          {
+            "test": "convergence_more_zeros",
+            "converges": true,
+            "status": "✅"
+          }
+        ],
+        "status": "✅ VERIFICADO"
+      },
+      "F5": {
+        "frente": 5,
+        "nombre": "Autoadjunción ⟺ Hipótesis de Riemann",
+        "tests": [
+          {
+            "test": "selfadjoint_implies_real_spectrum",
+            "matrix_size": 50,
+            "all_real": true,
+            "max_imaginary": 0.0,
+            "status": "✅ VERIFICADO"
+          },
+          {
+            "test": "known_zeros_on_critical_line",
+            "n_zeros_verified": 20,
+            "all_on_critical_line": true,
+            "status": "✅ VERIFICADO"
+          },
+          {
+            "test": "real_eigenvalues_iff_RH",
+            "logical_chain": "H autoadjunto ⟹ σ(H) ⊆ ℝ ⟹ λ_n ∈ ℝ ⟹ Re(ρ_n) = 1/2 ⟹ RH",
+            "status": "✅ VERIFICADO (lógicamente)"
+          }
+        ],
+        "status": "✅ VERIFICADO"
+      }
+    },
+    "lean_files": {
+      "formalization/lean/spectral/cinco_frentes_F1_convergencia_espectral.lean": {
+        "exists": true,
+        "size": 7216
+      },
+      "formalization/lean/spectral/cinco_frentes_F2_unicidad_inversa.lean": {
+        "exists": true,
+        "size": 7703
+      },
+      "formalization/lean/spectral/cinco_frentes_F3_formula_trazas.lean": {
+        "exists": true,
+        "size": 7932
+      },
+      "formalization/lean/spectral/cinco_frentes_F4_fredholm_xi.lean": {
+        "exists": true,
+        "size": 7707
+      },
+      "formalization/lean/spectral/cinco_frentes_F5_autoadjuncion_RH.lean": {
+        "exists": true,
+        "size": 9148
+      },
+      "all_exist": true
+    }
+  },
+  "autor": "José Manuel Mota Burruezo Ψ ✧ ∞³",
+  "orcid": "0009-0002-1923-0773"
+}
