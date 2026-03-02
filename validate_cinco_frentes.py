@@ -67,7 +67,7 @@ def validate_F1_spectral_convergence() -> Dict:
         "tests": []
     }
 
-    # Modelo simplificado: V(x) ≈ (2π/log(2)) * x  (aproximación lineal del potencial de Abel)
+    # Modelo simplificado: V(x) ≈ x² (potencial armónico para verificación de convergencia)
     def compute_eigenvalues(N: int, L: float) -> np.ndarray:
         """Compute eigenvalues of -d²/dx² + V(x) on [0,L] with N grid points."""
         h = L / (N + 1)
@@ -205,10 +205,10 @@ def validate_F3_trace_formula() -> Dict:
         "tests": []
     }
 
-    # Compute spectral trace using known Riemann zeros γ_n
-    # λ_n = γ_n², so Tr(e^{-tH}) = ∑_n e^{-t·γ_n²} (modelo cuadrático)
+    # Compute spectral trace using known Riemann zeros γ_n as eigenvalues λ_n = γ_n
+    # Tr(e^{-tH}) = ∑_n e^{-t·λ_n} = ∑_n e^{-t·γ_n}
     def spectral_trace(t: float, zeros: List[float]) -> float:
-        """Compute Tr(e^{-tH}) = ∑_n e^{-t·γ_n²} using eigenvalues λ_n = γ_n."""
+        """Compute Tr(e^{-tH}) = ∑_n e^{-t·λ_n} using eigenvalues λ_n = γ_n."""
         return sum(np.exp(-t * gamma) for gamma in zeros)
 
     # Compute smooth part: (1/2π) ∫ e^{-tE} N_smooth'(E) dE
