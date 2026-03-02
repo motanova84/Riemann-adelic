@@ -205,6 +205,11 @@ from .weyl_coefficient_integral import (
     ALPHA_ORIGINAL,
     ALPHA_CORRECTED
 )
+from .wkb_langer_uniform_control import (
+    WKBLangerUniformControl,
+    create_parabolic_potential,
+    create_exponential_decay_potential
+)
 
 from .langer_olver_transformation import (
     LangerOlverTransformation,
@@ -337,6 +342,11 @@ __all__ = [
     'WaveOperatorResult',
     'SMatrixResult',
     'generate_scattering_certificate',
+    
+    # WKB Langer Uniform Control (Feb 2026)
+    'WKBLangerUniformControl',
+    'create_parabolic_potential',
+    'create_exponential_decay_potential',
     'WeylCoefficientIntegral',
     'WeylCoefficientResult',
     'generate_weyl_coefficient_certificate',
