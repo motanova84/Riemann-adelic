@@ -1,0 +1,20 @@
+{
+  "module": "DirichletPhaseControl",
+  "theorem": "Montgomery-Vaughan Large Sieve Inequality",
+  "author": "Jos\u00e9 Manuel Mota Burruezo",
+  "institution": "Instituto de Conciencia Cu\u00e1ntica",
+  "orcid": "0009-0002-1923-0773",
+  "doi": "10.5281/zenodo.17379721",
+  "date": "2026-02-18T17:51:39.335941",
+  "precision_dps": 25,
+  "qcal_frequency_hz": 141.7001,
+  "qcal_coherence": 244.36,
+  "tests": {
+    "mean_square_bound": true,
+    "phase_cancellation": true,
+    "diagonal_sum_bound": true
+  },
+  "overall_status": "PASSED",
+  "validation_hash": "0xDIRICHLET_PHASE_5F479C3089FD30D7",
+  "signature": "\u03a8 \u2234 \u221e\u00b3"
+}
