@@ -304,8 +304,15 @@ def validate_v5_coronacion(precision=30, verbose=False, save_certificate=False, 
     integration_instance.max_zeros = max_zeros
     integration_instance.max_primes = max_primes
     
-    # Define the 5 steps of V5 Coronación
+    # Define the 6 steps of V5 Coronación
+    # Step 0 (NEW): Arithmetical Coercivity - prevents accidental cancellation
     validation_steps = [
+        {
+            'name': 'Step 0: Arithmetical Coercivity',
+            'description': 'Uniform lower bounds on Hecke sum prevent accidental cancellation',
+            'method': 'test_step0_arithmetical_coercivity',
+            'theory': 'Baker (1966) + Vinogradov-Korobov (1953-58) + Diophantine theory'
+        },
         {
             'name': 'Step 1: Axioms → Lemmas',
             'description': 'Verify A1, A2, A4 are proven consequences, not axioms',
