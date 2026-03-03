@@ -130,7 +130,11 @@ class CompactacionAdelica:
             return np.array([])
         
         # Sieve of Eratosthenes with sufficient upper bound
-        limit = max(20, int(n * (np.log(n) + np.log(np.log(n) + 1))))
+        # Handle edge cases for small n to avoid log(log(n)) issues
+        if n <= 2:
+            limit = 20
+        else:
+            limit = max(20, int(n * (np.log(n) + np.log(np.log(n)))))
         sieve = np.ones(limit, dtype=bool)
         sieve[0] = sieve[1] = False
         
@@ -297,8 +301,8 @@ class CompactacionAdelica:
         Returns:
             Dictionary with trace components
         """
-        if t <= 0:
-            raise ValueError("Time parameter t must be positive")
+        if not np.isfinite(t) or t <= 0:
+            raise ValueError("Time parameter t must be positive and finite")
         
         # Weyl term (leading asymptotic)
         weyl_term = (1.0 / (2 * np.pi)) * np.log(1.0 / t) / t

@@ -405,7 +405,22 @@ def validate_full_framework() -> Dict[str, Any]:
     
     for check_name, check_data in framework_results['checks'].items():
         # Get the first boolean value (the actual pass/fail)
-        passed = list(check_data.values())[0]
+        # Check for known keys first, fall back to first value
+        if 'quantized' in check_data:
+            passed = check_data['quantized']
+        elif 'is_exact' in check_data:
+            passed = check_data['is_exact']
+        elif 'well_defined' in check_data:
+            passed = check_data['well_defined']
+        elif 'computable' in check_data:
+            passed = check_data['computable']
+        elif 'all_terms_finite' in check_data:
+            passed = check_data['all_terms_finite']
+        elif check_data:
+            passed = list(check_data.values())[0]
+        else:
+            passed = False
+        
         status = "✓" if passed else "✗"
         print(f"    {status} {check_name.replace('_', ' ').title()}")
     

@@ -315,8 +315,8 @@ class TestBerryPhaseTopology:
     def test_berry_phase_value(self):
         """Test Berry phase equals 7/8 · 2π."""
         phi = compute_berry_phase_topological()
-        assert np.isclose(phi, 5.497787143782138, rtol=1e-12)
-        assert np.isclose(phi, (7.0/8.0) * 2 * np.pi, atol=1e-15)
+        expected = (7.0/8.0) * 2 * np.pi
+        assert np.isclose(phi, expected, atol=1e-15)
     
     def test_berry_phase_alternate_form(self):
         """Test Berry phase equals 7π/4."""
