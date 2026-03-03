@@ -1,34 +1,34 @@
 {
-  "total_sorries": 2913,
+  "total_sorries": 2933,
   "total_files": 448,
   "category_distribution": {
     "qcal": {
-      "count": 1146,
-      "percentage": 39.340885684860964
+      "count": 1147,
+      "percentage": 39.10671667234913
     },
     "unknown": {
-      "count": 807,
-      "percentage": 27.703398558187438
+      "count": 821,
+      "percentage": 27.99181725196045
     },
     "spectral": {
       "count": 369,
-      "percentage": 12.667353244078269
+      "percentage": 12.580975110808046
     },
     "correspondence": {
       "count": 33,
-      "percentage": 1.132852729145211
+      "percentage": 1.1251278554381179
     },
     "adelic": {
       "count": 117,
-      "percentage": 4.016477857878476
+      "percentage": 3.9890896692806
     },
     "analytic": {
-      "count": 187,
-      "percentage": 6.4194987984895295
+      "count": 189,
+      "percentage": 6.443914081145586
     },
     "trivial": {
-      "count": 254,
-      "percentage": 8.71953312736011
+      "count": 257,
+      "percentage": 8.76235935901807
     }
   },
   "detailed": {
@@ -10453,7 +10453,95 @@
     ],
     "formalization/lean/spectral/divisor_bounds.lean": [
       {
-        "line": 51,
+        "line": 74,
+        "code": "sorry",
+        "context": "    (Finset.filter (fun n => d \u2223 n) (Finset.range \u230aX\u230b.succ)).card \u2264 \u230aX / d\u230b.succ := by\n  -- El n\u00famero de m\u00faltiplos de d en [1, X] es \u230aX/d\u230b.\n  -- Este lema es una versi\u00f3n finset-compatible de este hecho.\n  sorry\n\n/-- Cota para la suma de \u03c4(n)\u00b2 hasta X.\n    ",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 91,
+        "code": "sorry",
+        "context": "  -- 2. \u2211_{n \u2264 X} \u03c4(n)\u00b2 = \u2211_{d\u2081d\u2082 \u2264 X} 1 = \u2211_{d\u2081 \u2264 X} \u230aX/d\u2081\u230b\n  -- 3. \u2248 X \u2211_{d \u2264 X} 1/d ~ X log X\n  -- 4. Con factor adicional (log X)\u00b2 por la varianza\n  sorry\n\n/-! ## Cotas Principales para Type II -/\n",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 110,
+        "code": "\u2264 tau m := by sorry",
+        "context": "  -- El error de truncaci\u00f3n est\u00e1 controlado por \u03c4(m).\n  have h_tau_control : \u2200 m \u2208 Finset.Icc 1 U,\n    Complex.abs (\u2211 k in (Nat.divisors m).filter (\u00b7 \u2264 U), (m\u00f6biusMu k : \u2102)) \n      \u2264 tau m := by sorry\n  -- Entonces aplicamos la cota sum_tau_sq_bound\n  sorry\n",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 112,
+        "code": "sorry",
+        "context": "    Complex.abs (\u2211 k in (Nat.divisors m).filter (\u00b7 \u2264 U), (m\u00f6biusMu k : \u2102)) \n      \u2264 tau m := by sorry\n  -- Entonces aplicamos la cota sum_tau_sq_bound\n  sorry\n\n/-- Cota para la suma de logs de divisores.\n    ",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 126,
+        "code": "sorry",
+        "context": "  -- La suma \u2211_{\u2113|n} log \u2113 = log n por la identidad log n = \u2211_{d|n} \u039b(d).\n  -- El cuadrado da (log n)\u00b2 que se comporta como (log V)\u2074 en promedio.\n  -- Con factor adicional log V por la distribuci\u00f3n de primos.\n  sorry\n\n/-! ## Teorema Principal: Combustible para Vaughan -/\n",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 183,
+        "code": "exact mul_le_mul_of_nonneg_right ha (by sorry)",
+        "context": "  have hb := sum_log_divisor_sq_bound V hV\n  calc sum_a * sum_b \n      \u2264 (C_divisor * U * (Real.log U) ^ 2) * sum_b := by\n          exact mul_le_mul_of_nonneg_right ha (by sorry)\n    _ \u2264 (C_divisor * U * (Real.log U) ^ 2) * \n        (C_divisor * V * (Real.log V) ^ 5) := by\n          exact mul_le_mul_of_nonneg_left hb (by sorry)",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 186,
+        "code": "exact mul_le_mul_of_nonneg_left hb (by sorry)",
+        "context": "          exact mul_le_mul_of_nonneg_right ha (by sorry)\n    _ \u2264 (C_divisor * U * (Real.log U) ^ 2) * \n        (C_divisor * V * (Real.log V) ^ 5) := by\n          exact mul_le_mul_of_nonneg_left hb (by sorry)\n\n/-- Cota simplificada cuando U \u2248 V \u2248 N^(1/3).\n    ",
+        "primary_category": "trivial",
+        "all_categories": {
+          "trivial": 0.8
+        },
+        "complexity": 1,
+        "similar_solutions": []
+      },
+      {
+        "line": 208,
+        "code": "sorry",
+        "context": "  -- sum_a \u226a N^(1/3) * (log N)^2\n  -- sum_b \u226a N^(1/3) * (log N)^5\n  -- Producto: N^(2/3) * (log N)^7\n  sorry\n\nimport Mathlib.Data.Nat.Interval\nimport Mathlib.Data.Nat.Lcm",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 260,
         "code": "-- Este sorry es aceptable: es un lema cl\u00e1sico de teor\u00eda elemental de n\u00fameros",
         "context": "  have h_card_le := Finset.card_le_card hsubset\n\n  -- cota est\u00e1ndar de m\u00faltiplos\n  -- Este sorry es aceptable: es un lema cl\u00e1sico de teor\u00eda elemental de n\u00fameros\n  have h_mult_bound :\n      ((Icc 1 X).filter (fun n => Nat.lcm d e \u2223 n)).card\n        \u2264 X / Nat.lcm d e := by",
         "primary_category": "unknown",
@@ -10464,7 +10552,7 @@
         "similar_solutions": []
       },
       {
-        "line": 57,
+        "line": 266,
         "code": "sorry",
         "context": "        \u2264 X / Nat.lcm d e := by\n    -- Idea: Los m\u00faltiplos de L \u2264 X son L, 2L, 3L, ..., floor(X/L)*L\n    -- La cantidad es floor(X/L)\n    sorry\n\n  exact le_trans h_card_le h_mult_bound\n",
         "primary_category": "unknown",
@@ -10475,7 +10563,7 @@
         "similar_solutions": []
       },
       {
-        "line": 74,
+        "line": 283,
         "code": "sorry",
         "context": "lemma sum_tau_sq_le (X : \u2115) (hX : X \u2265 1) :\n    \u2203 C_\u03c4 > 0, \u2211 n in Icc 1 X, (tau n) ^ 2 \u2264 C_\u03c4 * X * (Real.log X) ^ 3 := by\n  -- Prueba cl\u00e1sica usando doble conteo y estimaci\u00f3n arm\u00f3nica\n  sorry\n\n/-! ### 3. Convoluci\u00f3n de M\u00f6bius -/\n",
         "primary_category": "unknown",
@@ -10486,7 +10574,7 @@
         "similar_solutions": []
       },
       {
-        "line": 105,
+        "line": 314,
         "code": "sorry",
         "context": "      -- Propiedad cl\u00e1sica: \u03bc(d) \u2208 {-1, 0, 1}\n      -- Por ahora, lo dejamos como un lema b\u00e1sico que se puede demostrar\n      -- a partir de la definici\u00f3n de \u03bc.\n      sorry\n    simpa using this\n\n  -- Suma de bound \u2264 \u03c4(n)",
         "primary_category": "trivial",
@@ -10497,7 +10585,7 @@
         "similar_solutions": []
       },
       {
-        "line": 187,
+        "line": 396,
         "code": "sorry",
         "context": "  \n  -- Sumamos y acotamos (log n)\u00b2 \u2264 (log X)\u00b2\n  -- El exponente final es 3 (de \u03c4\u00b2) + 2 (de (log X)\u00b2) = 5\n  sorry\n\n/-! ### 5. Ensamblaje L\u00b2 para Type II -/\n",
         "primary_category": "unknown",
@@ -33988,7 +34076,63 @@
     ],
     "formalization/lean/RiemannAdelic/core/analytic/minor_arcs.lean": [
       {
-        "line": 207,
+        "line": 230,
+        "code": "exact mul_le_mul hU_bound hV_bound (by simp) (by sorry)",
+        "context": "    calc (\u230aU\u230b * \u230aV\u230b : \u211d)\n        = (\u230aU\u230b : \u211d) * (\u230aV\u230b : \u211d) := by simp\n      _ \u2264 N ^ (1/3 : \u211d) * N ^ (1/3 : \u211d) := by\n          exact mul_le_mul hU_bound hV_bound (by simp) (by sorry)\n      _ = N ^ ((1/3 : \u211d) + (1/3 : \u211d)) := by\n          rw [\u2190 Real.rpow_add (by linarith : (0 : \u211d) < N)]\n      _ = N ^ (2/3 : \u211d) := by norm_num",
+        "primary_category": "trivial",
+        "all_categories": {
+          "trivial": 1.6
+        },
+        "complexity": 1,
+        "similar_solutions": []
+      },
+      {
+        "line": 267,
+        "code": "sorry",
+        "context": "  use 1 -- A = 1 (puede mejorarse)\n  constructor\n  \u00b7 -- C > 0\n    sorry\n  constructor  \n  \u00b7 -- A > 0\n    linarith",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 272,
+        "code": "sorry",
+        "context": "  \u00b7 -- A > 0\n    linarith\n  \u00b7 -- cota principal\n    sorry\n\n/-- **Variante usando solo MinorArcsClassical.**\n    ",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 296,
+        "code": "sorry",
+        "context": "  -- La demostraci\u00f3n es id\u00e9ntica a typeII_bilinear_bound,\n  -- pero usando MinorArcsClassical en lugar de MinorArcs.\n  -- Esto demuestra que f\u2080 no es necesario para las cotas.\n  sorry\nimport Mathlib.Algebra.BigOperators.Basic\nimport .vaughan_identity\nimport .type_II_bilinear",
+        "primary_category": "qcal",
+        "all_categories": {
+          "qcal": 0.75,
+          "spectral": 0.65
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      },
+      {
+        "line": 519,
+        "code": "sorry",
+        "context": "  -- \ud83d\udd39 Paso 5: integrar la cota (la medida de MinorArcsSet \u2264 1)\n  have h_measure : (volume : Measure \u211d) (MinorArcsSet N) \u2264 1 := by\n    -- MinorArcs est\u00e1 contenido en [0,1]\n    sorry\n\n  have h_integral_le :=\n    MeasureTheory.setIntegral_le_of_norm_le_const",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 736,
         "code": "sorry  -- Follows from Gaussian decay: exp(-(x-f\u2080)\u00b2/2) when |x-f\u2080| > 10",
         "context": "    (h\u03b1_large : |\u03b1.re - f\u2080| > 10) :\n    spectral_kernel \u03b1 < Real.exp (-50) := by\n  unfold spectral_kernel\n  sorry  -- Follows from Gaussian decay: exp(-(x-f\u2080)\u00b2/2) when |x-f\u2080| > 10\n\n/-!\n## Main Theorem: Exponential Sum Bound on Minor Arcs",
         "primary_category": "qcal",
@@ -33999,7 +34143,7 @@
         "similar_solutions": []
       },
       {
-        "line": 244,
+        "line": 773,
         "code": "sorry  -- Full proof requires:",
         "context": "  -- 4. Bound TypeIII via sieve methods (small remainder)\n  -- 5. Combine via triangle inequality\n  \n  sorry  -- Full proof requires:\n  -- - Large Sieve inequality (Montgomery)\n  -- - Vinogradov-Korobov bounds\n  -- - Diophantine approximation (\u03b1 far from rationals)",
         "primary_category": "adelic",
@@ -34010,7 +34154,7 @@
         "similar_solutions": []
       },
       {
-        "line": 276,
+        "line": 805,
         "code": "sorry  -- Follows from exponential_sum_minor_arc_bound by cubing and integrating",
         "context": "        (\u2211 n in Finset.range N, VaughanIdentity.vonMangoldt n * Complex.exp (2 * \u03c0 * I * \u03b1 * n))^3 \n          * Complex.exp (-2 * \u03c0 * I * \u03b1 * N)| \n        \u2264 C * N / (Real.log N)^A) := by\n  sorry  -- Follows from exponential_sum_minor_arc_bound by cubing and integrating\n\n/-!\n## Final Result: The \"10/10\" Analytic Achievement",
         "primary_category": "analytic",
@@ -34192,7 +34336,51 @@
     ],
     "formalization/lean/RiemannAdelic/core/analytic/vaughan_identity.lean": [
       {
-        "line": 192,
+        "line": 199,
+        "code": "have hU : (U : \u211d) \u2264 N ^ (1/3 : \u211d) := by sorry",
+        "context": "  let U := \u230a(N : \u211d) ^ (1/3 : \u211d)\u230b.toNat\n  let V := U\n  \n  have hU : (U : \u211d) \u2264 N ^ (1/3 : \u211d) := by sorry\n  have hV : (V : \u211d) \u2264 N ^ (1/3 : \u211d) := by sorry\n  \n  -- Aplicamos la descomposici\u00f3n de Vaughan",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 200,
+        "code": "have hV : (V : \u211d) \u2264 N ^ (1/3 : \u211d) := by sorry",
+        "context": "  let V := U\n  \n  have hU : (U : \u211d) \u2264 N ^ (1/3 : \u211d) := by sorry\n  have hV : (V : \u211d) \u2264 N ^ (1/3 : \u211d) := by sorry\n  \n  -- Aplicamos la descomposici\u00f3n de Vaughan\n  obtain \u27e8typeI, typeII, typeIII, h_decomp\u27e9 := ",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 217,
+        "code": "\u00b7 sorry -- min es positivo",
+        "context": "  constructor\n  \u00b7 linarith\n  constructor\n  \u00b7 sorry -- min es positivo\n  \u00b7 sorry -- desigualdad triangular + cotas individuales\n\nend AnalyticNumberTheory",
+        "primary_category": "analytic",
+        "all_categories": {
+          "analytic": 0.6
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 218,
+        "code": "\u00b7 sorry -- desigualdad triangular + cotas individuales",
+        "context": "  \u00b7 linarith\n  constructor\n  \u00b7 sorry -- min es positivo\n  \u00b7 sorry -- desigualdad triangular + cotas individuales\n\nend AnalyticNumberTheory\n/-!",
+        "primary_category": "analytic",
+        "all_categories": {
+          "analytic": 0.6
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 412,
         "code": "sorry  -- Requires:",
         "context": "    \u2203 C : \u211d, C > 0 \u2227 \n    |\u2211 n in Finset.range N, TypeI n params * Complex.exp (2 * \u03c0 * I * \u03b1 * n)| \n      \u2264 C * N * Real.log N := by\n  sorry  -- Requires:\n  -- 1. Divisor bound: \u03c4(n) \u226a n^\u03b5\n  -- 2. Partial summation\n  -- 3. M\u00f6bius cancellation",
         "primary_category": "unknown",
@@ -34203,7 +34391,7 @@
         "similar_solutions": []
       },
       {
-        "line": 215,
+        "line": 435,
         "code": "sorry  -- Requires:",
         "context": "    (hA : A > 0) :\n    |\u2211 n in Finset.range N, TypeII n params * Complex.exp (2 * \u03c0 * I * \u03b1 * n)| \n      \u2264 N * (Real.log N)^(-A) := by\n  sorry  -- Requires:\n  -- 1. Large Sieve inequality\n  -- 2. Cauchy-Schwarz on bilinear forms\n  -- 3. Spectral cancellation from f\u2080 kernel",
         "primary_category": "qcal",
@@ -34214,7 +34402,7 @@
         "similar_solutions": []
       },
       {
-        "line": 233,
+        "line": 453,
         "code": "sorry  -- Requires:",
         "context": "    \u2203 C : \u211d, C > 0 \u2227 \n    |\u2211 n in Finset.range N, TypeIII n params * Complex.exp (2 * \u03c0 * I * \u03b1 * n)| \n      \u2264 C * N * (Real.log N)^(-1) := by\n  sorry  -- Requires:\n  -- 1. Buchstab-Rosser sieve\n  -- 2. Optimal parameter choice U, V ~ N^{1/3}\n",
         "primary_category": "unknown",
@@ -34225,7 +34413,7 @@
         "similar_solutions": []
       },
       {
-        "line": 253,
+        "line": 473,
         "code": "sorry  -- Combine Type I, II, III bounds via triangle inequality",
         "context": "    |\u2211 n in Finset.range N, vonMangoldt n * Complex.exp (2 * \u03c0 * I * \u03b1 * n)| \n      \u2264 N * (Real.log N)^(-A + 1) := by\n  have h_decomp := fun n => vaughan_decomposition_vonMangoldt n params\n  sorry  -- Combine Type I, II, III bounds via triangle inequality\n\nend VaughanIdentity\n",
         "primary_category": "adelic",
@@ -34701,7 +34889,7 @@
     ],
     "formalization/lean/RiemannAdelic/core/analytic/large_sieve.lean": [
       {
-        "line": 107,
+        "line": 130,
         "code": "sorry  -- Requires:",
         "context": "      \u2211 \u03c7 : DirichletCharacter q,\n        Complex.abs (\u2211 n in Finset.Ico (M + 1) (M + N + 1), a n * \u03c7.\u03c7 n)^2\n    \u2264 (N + Q^2) * \u2211 n in Finset.Ico (M + 1) (M + N + 1), Complex.abs (a n)^2 := by\n  sorry  -- Requires:\n  -- 1. Orthogonality of characters\n  -- 2. Poisson summation formula\n  -- 3. Duality principle (time-frequency)",
         "primary_category": "qcal",
@@ -34712,7 +34900,7 @@
         "similar_solutions": []
       },
       {
-        "line": 136,
+        "line": 159,
         "code": "sorry  -- Requires:",
         "context": "    \u2264 C * ((U * V : \u211d) + (Q : \u211d)^2 * ((U : \u211d) + (V : \u211d))) \n      * (\u2211 m in Finset.range U, Complex.abs (a m)^2)\n      * (\u2211 n in Finset.range V, Complex.abs (b n)^2) := by\n  sorry  -- Requires:\n  -- 1. Cauchy-Schwarz inequality\n  -- 2. montgomery_large_sieve_classical\n  -- 3. Bilinear duality",
         "primary_category": "unknown",
@@ -34723,7 +34911,7 @@
         "similar_solutions": []
       },
       {
-        "line": 189,
+        "line": 212,
         "code": "sorry  -- Requires:",
         "context": "                  (\u2211 n in Finset.range N, \n                    if d \u2223 n then Complex.exp (2 * \u03c0 * I * \u03b1 * n) else 0))\n      \u2264 C * Real.sqrt (U * V * (Real.log (U * V))^6) * (Real.log N)^(-(1/2)) := by\n  sorry  -- Requires:\n  -- 1. large_sieve_bilinear\n  -- 2. Divisor sum expansion: \u2211_{d|n} = \u2211_m \u2211_k (if n=mk...)\n  -- 3. Diophantine approximation: \u03b1 far from a/q",
         "primary_category": "unknown",
@@ -34734,7 +34922,7 @@
         "similar_solutions": []
       },
       {
-        "line": 225,
+        "line": 248,
         "code": "sorry  -- Gaussian decay: exp(-(x-f\u2080)\u00b2/(2\u03c3\u00b2)) when |x-f\u2080| > 10\u03c3",
         "context": "                |\u03b1 - (a : \u2102) / (q : \u2102)| \u2265 1 / (q : \u2102)^2) :\n    spectral_kernel \u03b1 \u03c3 < Real.exp (-50) := by\n  unfold spectral_kernel\n  sorry  -- Gaussian decay: exp(-(x-f\u2080)\u00b2/(2\u03c3\u00b2)) when |x-f\u2080| > 10\u03c3\n\nend LargeSieve\n# Large Sieve Inequality (Criba Grande)",
         "primary_category": "qcal",
@@ -34745,9 +34933,9 @@
         "similar_solutions": []
       },
       {
-        "line": 314,
-        "code": "-- Por ahora, mantenemos el `sorry` ya que es un teorema profundo de an\u00e1lisis.",
-        "context": "      \u2264 (N + Q^2) *\n        (\u2211 n in Finset.range N, Complex.abs (a n) ^ 2) := by\n  -- La prueba cl\u00e1sica usa dualidad de Selberg o el lema de Bombieri.\n  -- Por ahora, mantenemos el `sorry` ya que es un teorema profundo de an\u00e1lisis.\n  -- La implementaci\u00f3n completa requerir\u00eda:\n  -- 1. Transformaci\u00f3n de la suma doble en una norma de operador\n  -- 2. Acotaci\u00f3n de los valores propios de una matriz de Hilbert",
+        "line": 362,
+        "code": "sorry",
+        "context": "  -- 2. Aplicar Parseval: \u222b|\u015c(\u03b1)|\u00b2 \u03c6(\u03b1) d\u03b1 = \u03a3_{a\u2080,q} |S(a\u2080/q)|\u00b2\n  -- 3. Mayorar \u03c6\u0302(n) usando cotas de sumas de Ramanujan\n  -- 4. Concluir con Cauchy-Schwarz\n  sorry\n\n/-- \n  Versi\u00f3n refinada de la Large Sieve con rango a\u2080 \u2208 [0, q-1].",
         "primary_category": "unknown",
         "all_categories": {
           "unknown": 1.0
@@ -34756,7 +34944,18 @@
         "similar_solutions": []
       },
       {
-        "line": 319,
+        "line": 384,
+        "code": "-- Por ahora, mantenemos el `sorry` ya que es un teorema profundo de an\u00e1lisis.",
+        "context": "  -- Esta versi\u00f3n es matem\u00e1ticamente id\u00e9ntica a largeSieve_discrete\n  -- pero usa un rango ligeramente diferente.\n  -- La prueba cl\u00e1sica usa dualidad de Selberg o el lema de Bombieri.\n  -- Por ahora, mantenemos el `sorry` ya que es un teorema profundo de an\u00e1lisis.\n  -- La implementaci\u00f3n completa requerir\u00eda:\n  -- 1. Transformaci\u00f3n de la suma doble en una norma de operador\n  -- 2. Acotaci\u00f3n de los valores propios de una matriz de Hilbert",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 389,
         "code": "sorry",
         "context": "  -- 1. Transformaci\u00f3n de la suma doble en una norma de operador\n  -- 2. Acotaci\u00f3n de los valores propios de una matriz de Hilbert\n  -- 3. Uso de la f\u00f3rmula de suma de Poisson o desigualdad de Hilbert\n  sorry\n\n/-- \n  Corolario: Cota puntual para una suma exponencial individual.",
         "primary_category": "unknown",
@@ -34767,7 +34966,29 @@
         "similar_solutions": []
       },
       {
-        "line": 338,
+        "line": 417,
+        "code": "sorry",
+        "context": "  -- aproximaci\u00f3n con |\u03b8 - a\u2080/q| \u2264 1/(qQ).\n  -- Luego usamos continuidad de expAdd para relacionar \n  -- expSum a N \u03b8 con expSum a N (a\u2080/q).\n  sorry\n\n/-- \n  Versi\u00f3n flexible para sumas bilineales.",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 446,
+        "code": "sorry",
+        "context": "  --\n  -- La flexibilidad en la cota (U*V + Q\u00b2*(U+V)) es crucial para\n  -- navegar cuando los t\u00e9rminos U, V y Q empiezan a chocar entre s\u00ed.\n  sorry\n\n/-- \n  Versi\u00f3n est\u00e1ndar (menos flexible pero m\u00e1s simple).",
+        "primary_category": "trivial",
+        "all_categories": {
+          "trivial": 0.8
+        },
+        "complexity": 1,
+        "similar_solutions": []
+      },
+      {
+        "line": 464,
         "code": "sorry",
         "context": "  -- Obtenemos esto del teorema anterior tomando un solo t\u00e9rmino.\n  -- Necesitamos encontrar q \u2264 Q y a\u2080 coprimo a q tales que \u03b8 \u2248 a\u2080/q.\n  -- Esto es posible por aproximaci\u00f3n diof\u00e1ntica (Dirichlet).\n  sorry\n\n/-- \n  Versi\u00f3n simplificada para sumas bilineales.",
         "primary_category": "trivial",
@@ -34778,7 +34999,7 @@
         "similar_solutions": []
       },
       {
-        "line": 366,
+        "line": 501,
         "code": "sorry",
         "context": "  -- Aplicamos Cauchy-Schwarz y luego large sieve a cada variable.\n  -- Este es el paso que convierte el problema bilineal en uno lineal manejable.\n  -- La constante C captura factores de optimalidad en la aplicaci\u00f3n del m\u00e9todo.\n  sorry\n\nend AnalyticNumberTheory\n",
         "primary_category": "analytic",
@@ -35206,6 +35427,6 @@
   },
   "summary": {
     "most_common_category": "qcal",
-    "avg_complexity": 3.7263989014761414
+    "avg_complexity": 3.7303102625298328
   }
 }
