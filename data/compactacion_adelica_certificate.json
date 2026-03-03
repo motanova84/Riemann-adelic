@@ -1,0 +1,47 @@
+{
+  "framework": "QCAL \u221e\u00b3 \u2014 Compactaci\u00f3n Ad\u00e9lica",
+  "timestamp": "2026-03-03",
+  "author": "Jos\u00e9 Manuel Mota Burruezo \u03a8 \u2727 \u221e\u00b3",
+  "orcid": "0009-0002-1923-0773",
+  "doi": "10.5281/zenodo.17379721",
+  "signature": "\u2234\ud80c\udc80\u03a9\u221e\u00b3\u03a6",
+  "mathematical_structure": {
+    "idele_quotient": "A = R+/\u0393_aritm",
+    "logarithmic_torus": "T_log = R/(Z\u00b7log \u039b)",
+    "torus_length": 100.0,
+    "scale_operator": "D = -i d/dt",
+    "lattice": "k log p, p prime, k \u2208 Z"
+  },
+  "berry_phase": {
+    "value": 5.497787143782138,
+    "exact_fraction": "7/8",
+    "in_units_of_2pi": 0.875,
+    "topological_invariant": true,
+    "origin": "Holonomy around logarithmic torus",
+    "not_fitting_parameter": true
+  },
+  "trace_formula": {
+    "exact_form": "Tr(e^{-tH}) = (1/2\u03c0)log(1/t)/t + 7/8 + \u03a3_primes + O(t)",
+    "berry_contribution": 0.875,
+    "berry_exact": true,
+    "sample_evaluation": {
+      "trace_total": 6.497244065403713,
+      "weyl_term": 3.664677994397139,
+      "berry_term": 0.875,
+      "prime_sum": 1.8575660710065742,
+      "error_term": 0.1,
+      "time_t": 0.1,
+      "berry_exact": true
+    }
+  },
+  "spectral_identity": {
+    "determinant_form": "det(I - \u03bb^-1\u00b7T) = 0",
+    "zero_correspondence": "\u03b6(1/2 + i\u03bb) = 0",
+    "identity_exact": true
+  },
+  "validation": {
+    "framework": "Compactaci\u00f3n Ad\u00e9lica",
+    "status": "validated",
+    "checks": {
+      "torus_eigenvalues": {
+        "quantized": 
