@@ -64,6 +64,7 @@ from typing import List, Optional, Tuple, Dict
 from dataclasses import dataclass
 from scipy.integrate import quad
 from scipy.special import fresnel
+from datetime import datetime
 import warnings
 
 # QCAL Constants
@@ -405,7 +406,7 @@ def generate_certificate(
         "qcal_frequency": F0_QCAL,
         "qcal_coherence": C_COHERENCE,
         "qcal_seal": QCAL_SEAL,
-        "timestamp": np.datetime64('now').astype(str),
+        "timestamp": datetime.utcnow().isoformat() + "Z",
         
         # Main results
         "supremum_bound": {

@@ -6,7 +6,7 @@
   "qcal_frequency": 141.7001,
   "qcal_coherence": 244.36,
   "qcal_seal": 14170001,
-  "timestamp": "2026-03-03T21:49:55",
+  "timestamp": "2026-03-03T21:52:48.391724Z",
   "supremum_bound": {
     "value": 15.723558011280502,
     "is_finite": true,
