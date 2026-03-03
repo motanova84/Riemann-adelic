@@ -81,7 +81,7 @@ Signature: ∴𓂀Ω∞³Φ
 """
 
 import numpy as np
-from typing import Tuple, List, Dict, Optional, Callable
+from typing import Tuple, List, Dict, Optional, Callable, Any
 from numpy.typing import NDArray
 from scipy.linalg import eigh, expm
 from scipy.integrate import trapezoid, quad
@@ -518,7 +518,7 @@ def validate_adelic_compactification(
     n_mesh: int = 500,
     n_eigenvalues: int = 30,
     verbose: bool = True
-) -> Dict[str, any]:
+) -> Dict[str, Any]:
     """
     Validate the adelic compactification implementation.
     
