@@ -243,8 +243,15 @@ def demo_visualization():
     ax.legend()
     
     plt.tight_layout()
-    plt.savefig('noesis_solenoid_demo.png', dpi=150, bbox_inches='tight')
-    print(f"\n✅ Saved: noesis_solenoid_demo.png")
+    
+    # Create output directory if needed
+    import os
+    output_dir = 'outputs'
+    os.makedirs(output_dir, exist_ok=True)
+    output_file = os.path.join(output_dir, 'noesis_solenoid_demo.png')
+    
+    plt.savefig(output_file, dpi=150, bbox_inches='tight')
+    print(f"\n✅ Saved: {output_file}")
     
     return fig
 
