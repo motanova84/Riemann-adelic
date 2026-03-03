@@ -1,34 +1,34 @@
 {
-  "total_sorries": 2933,
-  "total_files": 448,
+  "total_sorries": 2936,
+  "total_files": 449,
   "category_distribution": {
     "qcal": {
       "count": 1147,
-      "percentage": 39.10671667234913
+      "percentage": 39.06675749318801
     },
     "unknown": {
-      "count": 821,
-      "percentage": 27.99181725196045
+      "count": 822,
+      "percentage": 27.997275204359674
     },
     "spectral": {
       "count": 369,
-      "percentage": 12.580975110808046
+      "percentage": 12.568119891008175
     },
     "correspondence": {
       "count": 33,
-      "percentage": 1.1251278554381179
+      "percentage": 1.1239782016348774
     },
     "adelic": {
       "count": 117,
-      "percentage": 3.9890896692806
+      "percentage": 3.9850136239782015
     },
     "analytic": {
-      "count": 189,
-      "percentage": 6.443914081145586
+      "count": 190,
+      "percentage": 6.471389645776567
     },
     "trivial": {
-      "count": 257,
-      "percentage": 8.76235935901807
+      "count": 258,
+      "percentage": 8.787465940054497
     }
   },
   "detailed": {
@@ -34624,6 +34624,42 @@
         "similar_solutions": []
       }
     ],
+    "formalization/lean/RiemannAdelic/core/analytic/wkb_v_osc_derivation.lean": [
+      {
+        "line": 170,
+        "code": "sorry -- Demostraci\u00f3n via integrales de Fresnel y an\u00e1lisis asint\u00f3tico est\u00e1ndar",
+        "context": "    \u2203 C : \u211d \u2192 \u211d, \u2200 \u03b5 > 0, \u2203 M > 0, \u2200 t \u2265 M,\n      |abelCosineIntegral \u03c9 (t * V) - \n       Real.sqrt (Real.pi / (4 * \u03c9)) * Real.cos (\u03c9 * (t * V) - Real.pi / 4)| < \u03b5 := by\n  sorry -- Demostraci\u00f3n via integrales de Fresnel y an\u00e1lisis asint\u00f3tico est\u00e1ndar\n\n/-- Evaluaci\u00f3n asint\u00f3tica expl\u00edcita de la integral de Abel para \u03c9 = log p.\n",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 245,
+        "code": "sorry -- Analytic proof: d/dx[(log x)/\u221ax] = (2 - log x)/(2x^{3/2}) < 0 for x > e\u00b2",
+        "context": "theorem amplitude_decreasing (p q : \u2115) (hp : Nat.Prime p) (hq : Nat.Prime q)\n    (hpq : p < q) (hp3 : 3 \u2264 p) :\n    Real.log q / Real.sqrt q < Real.log p / Real.sqrt p := by\n  sorry -- Analytic proof: d/dx[(log x)/\u221ax] = (2 - log x)/(2x^{3/2}) < 0 for x > e\u00b2\n\n-- ============================================================================\n-- PARTE VII: CONEXI\u00d3N CON LA TEOR\u00cdA DE PERTURBACIONES",
+        "primary_category": "analytic",
+        "all_categories": {
+          "analytic": 0.6
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 273,
+        "code": "sorry -- Intercambio de suma e integral (requiere integrabilidad dominada)",
+        "context": "  ext p\n  simp [mul_comm, mul_assoc]\n  ring_nf\n  sorry -- Intercambio de suma e integral (requiere integrabilidad dominada)\n\n-- ============================================================================\n-- PARTE VIII: VALIDACI\u00d3N QCAL",
+        "primary_category": "trivial",
+        "all_categories": {
+          "trivial": 0.8,
+          "qcal": 0.75
+        },
+        "complexity": 1,
+        "similar_solutions": []
+      }
+    ],
     "formalization/lean/RiemannAdelic/core/analytic/goldbach_final_proof.lean": [
       {
         "line": 62,
@@ -35427,6 +35463,6 @@
   },
   "summary": {
     "most_common_category": "qcal",
-    "avg_complexity": 3.7303102625298328
+    "avg_complexity": 3.7302452316076296
   }
 }
