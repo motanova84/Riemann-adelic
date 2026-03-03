@@ -25,7 +25,7 @@ hashlib  # Built-in, but explicitly noted for data integrity checks
 
 # Jupyter for extended analysis (optional)
 jupyter==1.0.0
-nbconvert==7.16.6
+nbconvert==7.17.0
 
 # HTTP requests for extended data fetching
 requests==2.32.4
