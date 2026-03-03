@@ -54,7 +54,6 @@ References:
 
 Author: José Manuel Mota Burruezo Ψ ✧ ∞³
 Institution: Instituto de Conciencia Cuántica (ICQ)
-Date: March 2026
 DOI: 10.5281/zenodo.17379721
 ORCID: 0009-0002-1923-0773
 QCAL ∞³ · 141.7001 Hz · C = 244.36
