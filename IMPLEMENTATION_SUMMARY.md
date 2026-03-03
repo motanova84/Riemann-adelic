@@ -1,5 +1,64 @@
 # QCAL Build Verification - Implementation Summary
 
+## 🟢 REGULARIZACIÓN KAIROS — Exponential Cutoff & Kato-Rellich Self-Adjointness (March 2026)
+
+**Status**: ✅ IMPLEMENTED
+
+### Module Overview
+
+Implemented the **KAIROS regularization module** (`operators/regularizacion_kairos.py`),
+providing a rigorous treatment of the oscillatory potential
+
+    V_osc(x) = Σ_p (log p)/√p · cos(x·log p + φ_p)
+
+which is divergent as a pointwise function but can be given a distributional
+meaning via the exponential cutoff:
+
+    V_osc^σ(x) = Σ_p (log p)/√p · exp(-σ(log p)²) · cos(x·log p + φ_p),  σ > 0
+
+### Implementation Components
+
+**Python Module**: `operators/regularizacion_kairos.py`
+- `PotencialRegularizado` class: full Wu-Sprung + regularized oscillatory potential
+- `regularizar_potencial_soberano()`: main regularization function with spectral output
+- `estudio_limite_sigma()`: study of the σ → 0⁺ distributional limit
+- Kato-Rellich self-adjointness verification (`estimacion_autoadjunta`)
+- Finite-difference matrix construction and eigenvalue computation
+
+**Test Suite**: `tests/test_regularizacion_kairos.py` (60 tests, all passing)
+- Constants, initialization, phase strategies
+- Exponential cutoff decay and monotonicity
+- Absolute convergence bound verification
+- L²_loc norm estimates
+- Kato-Rellich condition check (a = 0 < 1)
+- Matrix symmetry, real eigenvalues, heat-trace monotonicity
+- Integration tests for both public functions
+
+### Mathematical Framework
+
+```
+Exponential cutoff σ > 0
+    ↓  [absolute convergence]
+V_osc^σ ∈ L^∞(ℝ) ∩ L²_loc(ℝ)
+    ↓  [Kato-Rellich, a = 0 < 1]
+H_σ = -Δ + V̄(x) + V_osc^σ(x)  essentially self-adjoint
+    ↓  [σ → 0⁺ in S'(ℝ)]
+V_osc distributional = -Re[ζ'(1/2+ix)/ζ(1/2+ix)] + smooth
+    ↓  [spectral determinant conjecture]
+det(H - E) = ξ(1/2 + iE)
+```
+
+### Connection with ξ(s)
+
+The oscillatory potential is (essentially) the real part of the
+logarithmic derivative of ζ on the critical line:
+
+    V_osc(x) ≈ -Re[ζ'(1/2 + ix) / ζ(1/2 + ix)]
+
+This provides the bridge from the spectral determinant of H to ξ(s).
+
+---
+
 ## 🟢 PW_CLASS_D_INDEPENDENT - Eliminación de Gap #2 mediante Paley-Wiener (February 25, 2026)
 
 **Status**: ✅ IMPLEMENTED - Lean 4.16 compatible architecture
