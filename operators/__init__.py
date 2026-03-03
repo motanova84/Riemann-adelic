@@ -214,6 +214,19 @@ from .langer_olver_transformation import (
     generate_qcal_certificate as generate_langer_olver_certificate
 )
 
+# Spectral Rigidity & GUE validation (March 2026)
+from .spectral_rigidity_gue import (
+    validar_rigidez_espectral,
+    V_osc,
+    compute_level_spacings,
+    measure_gue_distance,
+    poisson_distribution,
+    wigner_dyson_distribution,
+    generate_primes,
+    generate_mock_eigenvalues,
+    F0_RIGIDITY,
+)
+
 __all__ = [
     'construct_H_psi',
     'compute_spectrum',
@@ -348,4 +361,14 @@ __all__ = [
     'compute_weyl_m_function',
     'compute_scattering_phase',
     'generate_langer_olver_certificate',
+    # Spectral Rigidity & GUE (March 2026)
+    'validar_rigidez_espectral',
+    'V_osc',
+    'compute_level_spacings',
+    'measure_gue_distance',
+    'poisson_distribution',
+    'wigner_dyson_distribution',
+    'generate_primes',
+    'generate_mock_eigenvalues',
+    'F0_RIGIDITY',
 ]
