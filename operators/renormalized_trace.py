@@ -59,7 +59,7 @@ Signature: ∴𓂀Ω∞³Φ @ 141.7001 Hz
 """
 
 import numpy as np
-from typing import Dict, Tuple, Optional, List, Callable
+from typing import Dict, Tuple, Optional, List, Callable, Any
 from numpy.typing import NDArray
 from scipy.special import zeta as scipy_zeta, gamma as scipy_gamma
 from scipy.integrate import quad, simpson
@@ -572,7 +572,7 @@ class RenormalizedTrace:
         self,
         t_values: NDArray[np.float64],
         tolerance: float = 1e-6
-    ) -> Dict[str, any]:
+    ) -> Dict[str, Any]:
         """
         Verify the exact trace identity at multiple time values.
         
@@ -639,7 +639,7 @@ class RenormalizedTrace:
 def demonstrate_renormalized_trace(
     t_values: Optional[NDArray[np.float64]] = None,
     verbose: bool = True
-) -> Dict[str, any]:
+) -> Dict[str, Any]:
     """
     Demonstrate the renormalized trace computation.
     

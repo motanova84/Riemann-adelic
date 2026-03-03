@@ -367,18 +367,24 @@ def generate_certificate(validation_results: dict) -> dict:
     total_tests = len(validation_results)
     psi = num_tests / total_tests
     
-    # Convert booleans to JSON-compatible strings
-    def convert_bools(obj):
+    # Convert booleans to JSON-compatible format consistently
+    def convert_to_json(obj):
+        """Recursively convert Python types to JSON-compatible types."""
         if isinstance(obj, dict):
-            return {k: convert_bools(v) for k, v in obj.items()}
+            return {k: convert_to_json(v) for k, v in obj.items()}
         elif isinstance(obj, list):
-            return [convert_bools(item) for item in obj]
-        elif isinstance(obj, bool):
-            return 'true' if obj else 'false'
+            return [convert_to_json(item) for item in obj]
+        elif isinstance(obj, (bool, np.bool_)):
+            # Use native JSON booleans for consistency
+            return bool(obj)
+        elif isinstance(obj, (np.integer, np.floating)):
+            return float(obj)
+        elif isinstance(obj, np.ndarray):
+            return obj.tolist()
         else:
             return obj
     
-    validation_results_json = convert_bools(validation_results)
+    validation_results_json = convert_to_json(validation_results)
     
     # Create certificate
     certificate = {
@@ -393,9 +399,9 @@ def generate_certificate(validation_results: dict) -> dict:
         'tests_passed': num_tests,
         'tests_total': total_tests,
         'mathematical_rigor': {
-            'jacobian_exact': 'true',
-            'no_approximations': 'true',
-            'self_adjoint': 'true',
+            'jacobian_exact': True,
+            'no_approximations': True,
+            'self_adjoint': True,
             'rh_implication': 'zeros on Re(s) = 1/2'
         },
         'author': 'José Manuel Mota Burruezo Ψ ✧ ∞³',
@@ -404,8 +410,7 @@ def generate_certificate(validation_results: dict) -> dict:
         'doi': '10.5281/zenodo.17379721'
     }
     
-    # Add hash
-    # Use custom JSON encoder to handle numpy types
+    # Add hash - use custom encoder for any remaining non-JSON types
     def json_default(obj):
         if isinstance(obj, (bool, np.bool_)):
             return bool(obj)
