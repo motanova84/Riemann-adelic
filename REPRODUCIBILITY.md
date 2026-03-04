@@ -43,7 +43,7 @@ See [ENV_LOCK_GUIDE.md](ENV_LOCK_GUIDE.md) for detailed documentation.
 ### Dataset Hash Verification
 The zero dataset must match this SHA-256 hash (automatically verified by ENV.lock):
 ```
-412ab7ba54a5041ff12324650e8936995795c6abb7cfdb97d7a765a2c4ce7869  Evac_Rpsi_data.csv
+412ab7ba54a5041ff12324650e8936995795c6abb7cfdb97d7a765a2c4ce7869 Evac_Rpsi_data.csv
 ```
 
 Verify manually:
@@ -137,9 +137,9 @@ All lock files have SHA256 checksums stored in `environment_checksums.json`:
 
 ```json
 {
-  "ENV.lock": "05b062ec...",
-  "requirements-lock.txt": "3ed739a3...",
-  "requirements.txt": "fb2a8513..."
+ "ENV.lock": "05b062ec...",
+ "requirements-lock.txt": "3ed739a3...",
+ "requirements.txt": "fb2a8513..."
 }
 ```
 
@@ -160,32 +160,32 @@ To update dependencies while maintaining reproducibility:
 
 1. Update `requirements.txt` with new version constraints
 2. Create a clean virtual environment:
-   ```bash
-   python3.11 -m venv venv_clean
-   source venv_clean/bin/activate
-   ```
+ ```bash
+ python3.11 -m venv venv_clean
+ source venv_clean/bin/activate
+ ```
 3. Install and freeze dependencies:
-   ```bash
-   pip install --upgrade pip==24.3.1
-   pip install -r requirements.txt
-   pip freeze > requirements-lock.txt.new
-   ```
+ ```bash
+ pip install --upgrade pip==24.3.1
+ pip install -r requirements.txt
+ pip freeze > requirements-lock.txt.new
+ ```
 4. Clean the lock file:
-   ```bash
-   python clean_requirements_lock.py
-   mv requirements-lock.txt.clean requirements-lock.txt
-   ```
+ ```bash
+ python clean_requirements_lock.py
+ mv requirements-lock.txt.clean requirements-lock.txt
+ ```
 5. Regenerate ENV.lock and checksums:
-   ```bash
-   python generate_env_lock.py
-   python verify_environment_integrity.py --generate-checksums
-   ```
+ ```bash
+ python generate_env_lock.py
+ python verify_environment_integrity.py --generate-checksums
+ ```
 6. Test the changes locally and in CI before merging
 7. Commit all updated files:
-   ```bash
-   git add requirements.txt requirements-lock.txt ENV.lock environment_checksums.json
-   git commit -m "Update dependencies: <description>"
-   ```
+ ```bash
+ git add requirements.txt requirements-lock.txt ENV.lock environment_checksums.json
+ git commit -m "Update dependencies: <description>"
+ ```
 
 ## Python Version Standardization
 
@@ -193,9 +193,9 @@ All workflows use **Python 3.11** for consistency:
 
 ```yaml
 - name: Set up Python
-  uses: actions/setup-python@v5
-  with:
-    python-version: '3.11'
+ uses: actions/setup-python@v5
+ with:
+ python-version: '3.11'
 ```
 
 ### Why Python 3.11?
@@ -223,12 +223,12 @@ To speed up builds while maintaining reproducibility, this repository uses depen
 
 1. **Built-in pip cache via `setup-python`** (predominant pattern):
 
-   ```yaml
-   - name: Set up Python
-     uses: actions/setup-python@v5
-     with:
-       python-version: '3.11'
-       cache: 'pip'
+ ```yaml
+ - name: Set up Python
+ uses: actions/setup-python@v5
+ with:
+ python-version: '3.11'
+ cache: 'pip'
 The cache key includes:
 - Operating system
 - Python version
@@ -252,11 +252,11 @@ CI workflows use consistent parameters for reproducibility:
 
 ```yaml
 env:
-  PRIME_COUNT: 100
-  ZERO_COUNT: 100
-  PRIME_POWERS: 3
-  INTEGRATION_T: 10
-  PRECISION_DPS: 15
+ PRIME_COUNT: 100
+ ZERO_COUNT: 100
+ PRIME_POWERS: 3
+ INTEGRATION_T: 10
+ PRECISION_DPS: 15
 ```
 
 These are documented in each workflow file and can be overridden for manual runs.
@@ -359,22 +359,22 @@ The Lean 4 project uses Lake (Lean's build system) with dependencies specified i
 To manually verify the formal proofs without Docker/Nix:
 
 1. Install Lean 4 (version 4.5.0):
-   ```bash
-   curl https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -sSf | sh
-   elan install leanprover/lean4:v4.5.0
-   ```
+ ```bash
+ curl https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -sSf | sh
+ elan install leanprover/lean4:v4.5.0
+ ```
 
 2. Build the project:
-   ```bash
-   cd formalization/lean
-   lake build
-   ```
+ ```bash
+ cd formalization/lean
+ lake build
+ ```
 
 3. Check specific files:
-   ```bash
-   lake exe cache get  # Download mathlib cache
-   lean --check RiemannAdelic/axioms_to_lemmas.lean
-   ```
+ ```bash
+ lake exe cache get # Download mathlib cache
+ lean --check RiemannAdelic/axioms_to_lemmas.lean
+ ```
 
 ## Verification
 
@@ -429,7 +429,7 @@ Expected tolerance levels are documented in test assertions.
 ## Version History
 
 - **2025-10-18**: Initial implementation
-  - Created requirements-lock.txt
-  - Standardized Python 3.11 across all workflows
-  - Pinned pip to version 24.3.1
-  - Updated all workflow caching strategies
+ - Created requirements-lock.txt
+ - Standardized Python 3.11 across all workflows
+ - Pinned pip to version 24.3.1
+ - Updated all workflow caching strategies

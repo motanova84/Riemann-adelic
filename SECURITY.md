@@ -8,10 +8,10 @@ This repository contains original mathematical research on the Riemann Hypothesi
 
 This repository implements security measures to ensure the integrity and reproducibility of computational results:
 
-- ✅ **ENV.lock**: Complete environment snapshot with all dependencies
-- ✅ **Checksums**: SHA256 hashes for all lock files
-- ✅ **Verification**: Automated integrity checking scripts
-- ✅ **Reproducibility**: Deterministic builds across environments
+- **ENV.lock**: Complete environment snapshot with all dependencies
+- **Checksums**: SHA256 hashes for all lock files
+- **Verification**: Automated integrity checking scripts
+- **Reproducibility**: Deterministic builds across environments
 
 ### Verifying Environment Integrity
 
@@ -32,11 +32,11 @@ See [ENV_LOCK_GUIDE.md](ENV_LOCK_GUIDE.md) for detailed documentation.
 
 We employ an **automated plagiarism detection and monitoring system** that:
 
-- ✅ Generates cryptographic fingerprints of all research artifacts
-- ✅ Monitors GitHub, Crossref, and other platforms for unauthorized use
-- ✅ Detects exact copies and paraphrased content
-- ✅ Collects evidence of potential infringement
-- ✅ Runs continuously via automated workflows
+- Generates cryptographic fingerprints of all research artifacts
+- Monitors GitHub, Crossref, and other platforms for unauthorized use
+- Detects exact copies and paraphrased content
+- Collects evidence of potential infringement
+- Runs continuously via automated workflows
 
 ### What is Monitored
 
@@ -69,7 +69,7 @@ If you find a vulnerability in our monitoring system:
 
 ### Copyright Notice
 
-Copyright © 2025 José Manuel Mota Burruezo. All rights reserved.
+Copyright 2025 José Manuel Mota Burruezo. All rights reserved.
 
 - **Mathematical content**: Licensed under CC BY-NC-SA 4.0
 - **Code**: Licensed under MIT License
@@ -85,7 +85,7 @@ Copyright © 2025 José Manuel Mota Burruezo. All rights reserved.
 
 ### What Constitutes Violation
 
-❌ **Prohibited actions**:
+ **Prohibited actions**:
 - Copying content without attribution
 - Plagiarizing mathematical proofs or methods
 - Republishing papers under different authorship
@@ -93,7 +93,7 @@ Copyright © 2025 José Manuel Mota Burruezo. All rights reserved.
 - Claiming authorship or co-authorship falsely
 - Paraphrasing without citation
 
-✅ **Permitted actions**:
+ **Permitted actions**:
 - Citing the work with proper attribution
 - Using code under MIT license terms
 - Building upon the research with citation
@@ -125,10 +125,10 @@ For uses beyond the license terms:
 
 1. Email: institutoconsciencia@proton.me
 2. Include:
-   - Your name and affiliation
-   - Intended use (publication, presentation, etc.)
-   - Which parts you want to use
-   - Timeline
+ - Your name and affiliation
+ - Intended use (publication, presentation, etc.)
+ - Which parts you want to use
+ - Timeline
 3. Allow 1-2 weeks for response
 
 ### Usually Granted Permissions
