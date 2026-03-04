@@ -2,7 +2,7 @@
 
 Thank you for your interest in contributing to the Riemann-Adelic project! This document provides guidelines for contributing to ensure clean integrations and verifiable additions to our mathematical archive.
 
-## 🎯 Objective
+## Objective
 
 Our goal is to maintain a high-quality mathematical archive that:
 - Integrates formal proofs from various proof assistants (Lean, Coq, Isabelle, etc.)
@@ -10,7 +10,7 @@ Our goal is to maintain a high-quality mathematical archive that:
 - Ensures reproducibility and verification of all mathematical content
 - Maintains coherence across the entire archive
 
-## 📋 General Guidelines
+## General Guidelines
 
 ### Before Contributing
 
@@ -28,7 +28,7 @@ Our goal is to maintain a high-quality mathematical archive that:
 - **Tests**: Aim for comprehensive test coverage
 - **Commit messages**: Use clear, descriptive commit messages
 
-## 🔧 Development Workflow
+## Development Workflow
 
 ### 1. Setting Up Your Environment
 
@@ -43,7 +43,7 @@ cd -jmmotaburr-riemann-adelic
 
 # Create and activate virtual environment (recommended)
 python3 -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
+source venv/bin/activate # On Windows: venv\Scripts\activate
 
 # Install dependencies
 pip install -r requirements.txt
@@ -136,7 +136,7 @@ git push origin feature/your-feature-name
 # - Screenshots (if UI changes)
 ```
 
-## 📝 Pull Request Guidelines
+## Pull Request Guidelines
 
 ### PR Description Template
 
@@ -180,36 +180,36 @@ Closes #[issue number]
 4. **Approval**: At least one maintainer approval required
 5. **Merge**: Squash and merge after all checks pass
 
-## 🔬 Adding Mathematical Content
+## Adding Mathematical Content
 
 ### For Formal Proofs
 
 1. **Choose proof assistant**: Lean 4 is preferred, but others are supported
 2. **Place in correct directory**:
-   - Lean: `formalization/lean/`
-   - Coq: `formalization/coq/`
-   - Isabelle: `formalization/isabelle/`
+ - Lean: `formalization/lean/`
+ - Coq: `formalization/coq/`
+ - Isabelle: `formalization/isabelle/`
 
 3. **Create metadata file**: 
-   ```bash
-   cp schema/metadata_example.jsonld schema/your_theorem.jsonld
-   # Edit with your theorem's details
-   ```
+ ```bash
+ cp schema/metadata_example.jsonld schema/your_theorem.jsonld
+ # Edit with your theorem's details
+ ```
 
 4. **Add conversion test**:
-   ```bash
-   python tools/convert_example.py formalization/lean/YourTheorem.lean \
-       -o output/your_theorem.dk \
-       -m schema/your_theorem.jsonld
-   ```
+ ```bash
+ python tools/convert_example.py formalization/lean/YourTheorem.lean \
+ -o output/your_theorem.dk \
+ -m schema/your_theorem.jsonld
+ ```
 
 5. **Add verification test**:
-   ```python
-   # In tests/test_your_theorem.py
-   def test_your_theorem_verification():
-       # Test that theorem verifies correctly
-       assert verify_theorem("your_theorem")
-   ```
+ ```python
+ # In tests/test_your_theorem.py
+ def test_your_theorem_verification():
+ # Test that theorem verifies correctly
+ assert verify_theorem("your_theorem")
+ ```
 
 ### For Computational Validation
 
@@ -218,7 +218,7 @@ Closes #[issue number]
 3. **Document precision**: Specify numerical precision requirements
 4. **Add benchmark**: If performance-critical, add benchmark
 
-## 🛠️ Tools and Scripts
+## Tools and Scripts
 
 ### Metadata Validation
 ```bash
@@ -250,14 +250,14 @@ pytest --cov=. --cov-report=html
 pytest -m "not slow"
 ```
 
-## 📚 Documentation
+## Documentation
 
 - **Code comments**: Use docstrings for all public functions/classes
 - **Mathematical notation**: Use LaTeX in docstrings and markdown
 - **Examples**: Provide usage examples in docstrings
 - **README updates**: Update README.md for user-facing changes
 
-## 🐛 Reporting Bugs
+## Reporting Bugs
 
 Use GitHub Issues with the bug template:
 
@@ -286,7 +286,7 @@ What actually happened.
 Any other context about the problem.
 ```
 
-## 💡 Feature Requests
+## Feature Requests
 
 Use GitHub Issues with the feature template:
 
@@ -304,21 +304,21 @@ Alternative solutions or features you've considered.
 Any other context, screenshots, or examples.
 ```
 
-## 🔐 Security
+## Security
 
 - **Never commit secrets**: No API keys, passwords, or tokens
 - **Validate inputs**: All user inputs must be validated
 - **Review dependencies**: Check dependencies for vulnerabilities
 - **Report security issues**: Email security concerns privately to maintainers
 
-## 📞 Getting Help
+## Getting Help
 
 - **Documentation**: Check docs/ directory
 - **Issues**: Search existing issues for similar problems
 - **Discussions**: Use GitHub Discussions for questions
 - **Discord**: Join our community Discord (link in README)
 
-## 🙏 Recognition
+## Recognition
 
 Contributors are recognized in:
 - CONTRIBUTORS.md file
@@ -326,7 +326,7 @@ Contributors are recognized in:
 - Project documentation
 - Academic citations (for significant mathematical contributions)
 
-## 📜 License
+## License
 
 By contributing, you agree that your contributions will be licensed under:
 - **Code**: MIT License (LICENSE file)
@@ -334,4 +334,4 @@ By contributing, you agree that your contributions will be licensed under:
 
 ---
 
-Thank you for contributing to advancing mathematics and formal verification! 🎓✨
+Thank you for contributing to advancing mathematics and formal verification! 
