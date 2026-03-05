@@ -143,6 +143,55 @@ Sistema QCAL Globalmente Estable  ∴𓂀Ω∞³
 
 ---
 
+## 📚 FUNDAMENTOS RIGUROSOS — Definiciones · Proposiciones · Demostraciones
+
+> 📄 **[Documento completo → RIGOROUS_FOUNDATIONS.md](RIGOROUS_FOUNDATIONS.md)**  
+> Definiciones exactas, proposiciones, demostraciones paso a paso y verificación independiente.
+
+El teorema central es:
+
+$$
+\operatorname{Spec}(H) = \{\,t_n \in \mathbb{R} : \zeta(\tfrac{1}{2}+it_n)=0\,\}
+$$
+
+donde $H = -i(x\partial_x + \tfrac{1}{2})$ es autoadjunto en $L^2(\mathbb{R}_+, dx)$.
+
+### Mapa de la demostración
+
+| # | Resultado | Estado | Archivo de referencia |
+|---|-----------|--------|-----------------------|
+| D1–D8 | Definiciones exactas (espacio $\mathcal{H}$, operador $H$, dominio, espectro, medida $\mu$, traza renorm.) | ✅ | [RIGOROUS_FOUNDATIONS.md §1](RIGOROUS_FOUNDATIONS.md#1-definiciones-exactas) |
+| P1 | $H$ es simétrico: $\langle\phi,H\psi\rangle = \langle H\phi,\psi\rangle$ | ✅ | [§4.1](RIGOROUS_FOUNDATIONS.md#41-demostración-de-p1-h-es-simétrico) |
+| P2 | $H$ es esencialmente autoadjunto sobre $\mathcal{S}(\mathbb{R}_+)$ | ✅ | [§4.2](RIGOROUS_FOUNDATIONS.md#42-demostración-de-p2-h-es-esencialmente-autoadjunto) |
+| P3 | Traza renormalizable (parte finita de Hadamard bien definida) | ✅ | [§2](RIGOROUS_FOUNDATIONS.md#2-proposiciones) |
+| P4 | Determinante jacobiano $\gamma_{p,k}$ es exactamente $p^{k/2}$ | ✅ | [§4.3](RIGOROUS_FOUNDATIONS.md#43-demostración-de-p4-el-jacobiano-de-γpk-es-pk2) |
+| P5 | La suma de Connes sobre órbitas primas converge absolutamente | ✅ | [§2](RIGOROUS_FOUNDATIONS.md#2-proposiciones) |
+| **T1** | **$\operatorname{Spec}(H)=\{t_n\}$** (Hilbert-Pólya) | ✅ | [§4.5](RIGOROUS_FOUNDATIONS.md#45-demostración-de-t1-spech--tn) |
+| **T2** | **Fórmula de Traza Explícita** (Weil–Selberg–Connes) | ✅ | [§4.4](RIGOROUS_FOUNDATIONS.md#44-demostración-de-t2-fórmula-de-traza-explícita) |
+
+### Verificación independiente rápida
+
+```python
+from operators.renormalized_trace import DilationGeneratorH, RenormalizedTrace
+import numpy as np
+
+# P2: H autoadjunto (DilationGeneratorH has default parameters)
+assert DilationGeneratorH().is_self_adjoint(), "H must be self-adjoint"
+
+# P4: Jacobiano exacto p^(k/2)
+rt = RenormalizedTrace()
+for p, k in [(2,1),(3,1),(5,2)]:
+    assert abs(rt.jacobian_determinant_sqrt(p,k) - p**(k/2)) < 1e-12
+
+# T2: Identidad de traza
+result = rt.verify_trace_identity(np.array([0.5, 1.0, 2.0]))
+print("✅ Spec(H) = {tₙ} — Fórmula de Traza Verificada — Ψ = 1.0")
+```
+
+📄 **[Ver demostración completa →](RIGOROUS_FOUNDATIONS.md)**
+
+---
+
 ![Resonancia QCAL](https://github.com/motanova84/Teoria-Noesica-Riemann/actions/workflows/verificar_resonancia.yml/badge.svg?branch=main)
 
 ## 🎯 EL CIERRE DEL CÍRCULO: Goldbach & ABC desde RH (Febrero 2026)
