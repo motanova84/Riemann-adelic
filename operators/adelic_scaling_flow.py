@@ -528,8 +528,9 @@ class DilationHamiltonian:
         log_x_shifted = np.log(x_shifted)
 
         # Interpolate ψ at the shifted points
-        psi_shifted = np.interp(log_x_shifted, log_x_grid, psi.real) + \
-                      1j * np.interp(log_x_shifted, log_x_grid, psi.imag)
+        psi_real = np.interp(log_x_shifted, log_x_grid, psi.real)
+        psi_imag = np.interp(log_x_shifted, log_x_grid, psi.imag)
+        psi_shifted = psi_real + 1j * psi_imag
 
         return np.exp(t / 2) * psi_shifted
 
@@ -664,8 +665,12 @@ def xi_function(s: complex) -> complex:
     try:
         if _MPMATH_AVAILABLE:
             ms = mpmath.mpc(s.real, s.imag)
-            val = 0.5 * ms * (ms - 1) * mpmath.pi**(-ms / 2) \
-                  * mpmath.gamma(ms / 2) * mpmath.zeta(ms)
+            val = (
+                0.5 * ms * (ms - 1)
+                * mpmath.pi ** (-ms / 2)
+                * mpmath.gamma(ms / 2)
+                * mpmath.zeta(ms)
+            )
             return complex(val)
         else:
             # Fallback: valid only for Re(s) > 1
