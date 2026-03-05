@@ -214,6 +214,22 @@ from .langer_olver_transformation import (
     generate_qcal_certificate as generate_langer_olver_certificate
 )
 
+from .wkb_v_osc_derivation import (
+    WKBQuantization,
+    DensityOfStates,
+    AbelTransform,
+    VOscPotential,
+    WuSprungHamiltonianCorrected,
+    WKBResult,
+    AbelTransformResult,
+    VOscResult,
+    compute_smooth_density,
+    compute_oscillatory_density,
+    abel_integral_asymptotic,
+    abel_integral_exact,
+    generate_qcal_certificate as generate_wkb_vosc_certificate,
+)
+
 __all__ = [
     'construct_H_psi',
     'compute_spectrum',
@@ -348,4 +364,18 @@ __all__ = [
     'compute_weyl_m_function',
     'compute_scattering_phase',
     'generate_langer_olver_certificate',
+    # WKB Quantization and V_osc Derivation (Mar 2026)
+    'WKBQuantization',
+    'DensityOfStates',
+    'AbelTransform',
+    'VOscPotential',
+    'WuSprungHamiltonianCorrected',
+    'WKBResult',
+    'AbelTransformResult',
+    'VOscResult',
+    'compute_smooth_density',
+    'compute_oscillatory_density',
+    'abel_integral_asymptotic',
+    'abel_integral_exact',
+    'generate_wkb_vosc_certificate',
 ]
