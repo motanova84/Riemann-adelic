@@ -216,7 +216,7 @@ jobs:
           python generate_final_report.py
 
       - name: 📤 Subir resultados
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: hypothesis-validation-results
           path: |

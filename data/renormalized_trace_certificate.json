@@ -1,0 +1,65 @@
+{
+  "module": "Renormalized Trace Tr_ren(e^(-tH))",
+  "timestamp": "2026-03-03T22:59:53.315013",
+  "version": "1.0.0",
+  "qcal_frequency": 141.7001,
+  "qcal_coherence": 244.36,
+  "validation_results": {
+    "trace_identity": {
+      "passed": true,
+      "max_error": 0.0,
+      "avg_error": 0.0,
+      "num_tests": 20
+    },
+    "jacobian_precision": {
+      "passed": true,
+      "max_rel_error": 0.0,
+      "avg_rel_error": 0.0,
+      "num_tests": 14
+    },
+    "self_adjointness": {
+      "passed": true,
+      "is_self_adjoint": true,
+      "theoretical_basis": "Stone theorem",
+      "rh_implication": "zeros on Re(s) = 1/2"
+    },
+    "weyl_asymptotics": {
+      "passed": true,
+      "max_rel_error": 0.0,
+      "avg_rel_error": 0.0,
+      "num_tests": 4
+    },
+    "prime_convergence": {
+      "passed": true,
+      "num_orbits": 676,
+      "total_sum": 1.442486415650349,
+      "convergence_rate": "exponential"
+    },
+    "finite_part": {
+      "passed": true,
+      "all_finite": true,
+      "method": "Hadamard finite part",
+      "note": "Extracts non-divergent component"
+    },
+    "orbit_formulas": {
+      "passed": true,
+      "num_tests": 4,
+      "all_formulas_correct": true
+    }
+  },
+  "overall_status": "PASSED",
+  "coherence_psi": 1.0,
+  "tests_passed": 7,
+  "tests_total": 7,
+  "mathematical_rigor": {
+    "jacobian_exact": true,
+    "no_approximations": true,
+    "self_adjoint": true,
+    "rh_implication": "zeros on Re(s) = 1/2"
+  },
+  "author": "Jos\u00e9 Manuel Mota Burruezo \u03a8 \u2727 \u221e\u00b3",
+  "orcid": "0009-0002-1923-0773",
+  "institution": "Instituto de Conciencia Cu\u00e1ntica (ICQ)",
+  "doi": "10.5281/zenodo.17379721",
+  "certificate_hash": "0xQCAL_RENORM_TRACE_9574cb6022d8dff2"
+}
