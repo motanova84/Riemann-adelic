@@ -1,0 +1,74 @@
+{
+  "p": 2,
+  "K": 4,
+  "n": 1,
+  "N_symb": 200,
+  "L": 20.0,
+  "phi": 1.618033988749895,
+  "f0": 141.7001,
+  "methods": {
+    "s_unitarity": {
+      "max_block_error": 7.057256186329245e-16,
+      "max_imag_error": 5.549057922223889e-16,
+      "expected_entry": 0.16362712429686843,
+      "period": 8,
+      "verified": true
+    },
+    "s_golden_ratio": {
+      "max_sv_error": 6.661338147750939e-16,
+      "expected_sv": 0.5720614028176843,
+      "n_nonzero_sv": 8,
+      "max_zero_sv": 1.838535031269484e-15,
+      "n_singular_values": 16,
+      "verified": true
+    },
+    "s_orthogonality": {
+      "max_ortho_error": 2.195308539237423e-15,
+      "verified": true
+    },
+    "h_self_adjoint": {
+      "hermiticity_error": 0.0,
+      "all_eigenvalues_real": true,
+      "verified": true
+    },
+    "h_frequency_shift": {
+      "lambda_min": 142.2001,
+      "f0": 141.7001,
+      "max_diagonal_shift_error": 2.842170943040401e-14,
+      "verified": true
+    },
+    "h_spectrum_real": {
+      "max_imag_eigenvalue": 0.0,
+      "n_eigenvalues": 200,
+      "verified": true
+    },
+    "h_bk_structure": {
+      "max_diagonal_error": 2.842170943040401e-14,
+      "verified": true
+    },
+    "h_commutation": {
+      "off_diag_magnitude": 0.5000000000000001,
+      "expected_magnitude": 0.5,
+      "max_off_diag_error": 1.0658141036401503e-14,
+      "verified": true
+    },
+    "spectral_coherence": {
+      "sv_mean": 0.404508497187474,
+      "ev_mean": 166.7001,
+      "sv_variance": 0.16362712429686818,
+      "ev_variance": 208.98530625,
+      "coherence_ratio": 0.0007829599469597551,
+      "psi": 1.0,
+      "verified": true
+    }
+  },
+  "all_verified": true,
+  "n_verified": 9,
+  "n_total": 9,
+  "qcal_signature": "\u2234\ud80c\udc80\u03a9\u221e\u00b3\u03a6",
+  "qcal_constants": {
+    "F0": 141.7001,
+    "C_QCAL": 244.36,
+    "PHI": 1.618033988749895
+  }
+}
