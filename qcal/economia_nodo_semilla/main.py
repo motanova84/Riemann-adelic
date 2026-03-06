@@ -42,6 +42,10 @@ BLOCK_888888 = {
     "timestamp": "2024-09-10T00:00:00Z"
 }
 
+# Calibration factor derived from QCAL framework analysis of Block 888888
+# This represents the empirical coherence calibration for blockchain-derived scores
+CALIBRATION_FACTOR_BLOCK_888888 = 626675633
+
 
 def calculate_cs_full(btc_satoshis: int) -> float:
     """
@@ -67,7 +71,7 @@ def calculate_cs_full(btc_satoshis: int) -> float:
     Examples
     --------
     >>> calculate_cs_full(100_000_000)  # 1 BTC
-    626675633.0
+    10577.910219083762
     """
     # Intensidad normalizada BTC (I component)
     I = btc_satoshis / 100_000_000
@@ -90,9 +94,9 @@ def calculate_cs_blockchain(btc_satoshis: int) -> float:
     """
     Calculate blockchain-derived coherence score.
     
-    This is a placeholder calibrated to Bitcoin block 888888.
-    The factor 626675633 represents the empirical coherence calibration
-    derived from the QCAL framework analysis of block 888888.
+    This is calibrated to Bitcoin block 888888.
+    Uses CALIBRATION_FACTOR_BLOCK_888888 which represents the empirical
+    coherence calibration derived from the QCAL framework analysis.
     
     Parameters
     ----------
@@ -109,7 +113,7 @@ def calculate_cs_blockchain(btc_satoshis: int) -> float:
     >>> calculate_cs_blockchain(100_000_000)  # 1 BTC
     626675633.0
     """
-    return 626675633 * (btc_satoshis / 100_000_000)
+    return CALIBRATION_FACTOR_BLOCK_888888 * (btc_satoshis / 100_000_000)
 
 
 def generate_metadata(amount_btc: float) -> Dict[str, Any]:

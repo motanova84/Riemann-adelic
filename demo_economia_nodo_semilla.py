@@ -24,7 +24,8 @@ from main import (
     FREQ_MANIFEST,
     FREQ_SIGNATURE,
     KAPPA_PI,
-    COHERENCE_C
+    COHERENCE_C,
+    CALIBRATION_FACTOR_BLOCK_888888
 )
 
 

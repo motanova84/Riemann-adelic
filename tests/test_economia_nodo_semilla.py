@@ -25,8 +25,13 @@ from main import (
     FREQ_SIGNATURE,
     KAPPA_PI,
     COHERENCE_C,
-    BLOCK_888888
+    BLOCK_888888,
+    CALIBRATION_FACTOR_BLOCK_888888
 )
+
+# Expected values for 1 BTC based on QCAL framework
+EXPECTED_CS_BLOCKCHAIN_1BTC = CALIBRATION_FACTOR_BLOCK_888888
+EXPECTED_COHERENCE_1BTC = EXPECTED_CS_BLOCKCHAIN_1BTC / 1000
 
 
 class TestQCALConstants:
@@ -98,16 +103,16 @@ class TestCoherenceCalculations:
         satoshis = 100_000_000
         cs_bc = calculate_cs_blockchain(satoshis)
         
-        # Verify exact value for 1 BTC
-        assert cs_bc == 626675633.0
+        # Verify exact value for 1 BTC using calibration constant
+        assert cs_bc == EXPECTED_CS_BLOCKCHAIN_1BTC
     
     def test_cs_blockchain_half_btc(self):
         """Test blockchain coherence score for 0.5 BTC."""
         satoshis = 50_000_000
         cs_bc = calculate_cs_blockchain(satoshis)
         
-        # Should be exactly half
-        assert cs_bc == 313337816.5
+        # Should be exactly half of 1 BTC calibration
+        assert cs_bc == EXPECTED_CS_BLOCKCHAIN_1BTC / 2
     
     def test_cs_blockchain_linearity(self):
         """Test blockchain score linearity."""
@@ -259,8 +264,9 @@ class TestCoherenceScore:
             # Should be positive
             assert coherence > 0
             
-            # Should scale with BTC amount
-            assert coherence == pytest.approx(btc_amount * 626675.633, rel=1e-6)
+            # Should scale with BTC amount based on calibration constant
+            expected = btc_amount * EXPECTED_COHERENCE_1BTC
+            assert coherence == pytest.approx(expected, rel=1e-6)
 
 
 class TestJSONSerialization:
