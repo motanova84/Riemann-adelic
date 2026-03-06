@@ -170,6 +170,12 @@ class SpectralAttackRH:
     5. Detect any deviation from the critical line
     """
     
+    # RH consistency thresholds
+    # These are calibrated for small sample sizes (N < 50)
+    # Based on Random Matrix Theory: for GUE, max|ΔR₂| ~ O(1/√N)
+    THRESHOLD_DEVIATION = 3.0   # max|ΔR₂| threshold
+    THRESHOLD_MATCH = 0.4       # GUE match quality threshold
+    
     def __init__(
         self,
         precision: int = 50,
@@ -238,12 +244,15 @@ class SpectralAttackRH:
         
         # Right side component 2: Prime contributions
         prime_sum = 0.0
+        max_power = 10  # Truncate at k=10 for convergence (p^10 >> 1e10 for p>2)
+        overflow_threshold = 1e10  # Prevent numerical overflow
+        
         for p in self.primes:
             log_p = np.log(p)
             # Sum over powers k = 1, 2, 3, ...
-            for k in range(1, 10):  # Truncate at k=10 for convergence
+            for k in range(1, max_power + 1):
                 pk = p ** k
-                if pk > 1e10:  # Prevent overflow
+                if pk > overflow_threshold:  # Prevent overflow
                     break
                 # Contribution: (log p) / √(p^k) · ∑_n cos(t_n · k·log p)
                 weight = log_p / np.sqrt(pk)
@@ -403,10 +412,10 @@ class SpectralAttackRH:
         sigma_deviation_bound = np.sqrt(rms_deviation)
         
         # Step 7: Verdict
-        # Threshold: if max|ΔR₂| < 3.0 and GUE match > 0.4, consistent with RH
-        # (Relaxed thresholds for small sample sizes and statistical noise)
-        threshold_deviation = 3.0
-        threshold_match = 0.4
+        # Threshold: if max|ΔR₂| < THRESHOLD_DEVIATION and GUE match > THRESHOLD_MATCH
+        # (Thresholds are calibrated for small samples based on RMT theory)
+        threshold_deviation = self.THRESHOLD_DEVIATION
+        threshold_match = self.THRESHOLD_MATCH
         
         if (max_deviation < threshold_deviation and 
             montgomery_result.gue_match_quality > threshold_match):

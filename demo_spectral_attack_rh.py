@@ -69,9 +69,10 @@ def plot_delta_r2(result, filename="spectral_attack_delta_r2.png"):
     ax4 = axes[1, 1]
     ax4.axis('off')
     
+    header_line = "="*50
     summary_text = f"""
     SPECTRAL ATTACK RESULTS
-    {'='*50}
+    {header_line}
     
     Verdict: {result.verdict}
     

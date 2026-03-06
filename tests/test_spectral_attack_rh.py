@@ -247,7 +247,9 @@ class TestSpectralAttackRH:
         # Should be consistent with RH (or verdict is implementation-dependent
         # for small samples due to statistical noise)
         # The key is that max deviation should be bounded
-        assert result.sigma_deviation_bound < 5.0  # Reasonable bound
+        # Threshold: 5.0 is less strict than validation script's 10.0
+        # because this is a unit test with even fewer zeros
+        assert result.sigma_deviation_bound < 5.0  # Reasonable bound for unit test
         print("✅ test_known_zeros_rh_consistent PASSED")
     
     def test_critical_line_evidence_high_for_known_zeros(self):
