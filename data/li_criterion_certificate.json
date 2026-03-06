@@ -1,0 +1,196 @@
+{
+  "title": "Li Criterion Validation Certificate",
+  "subtitle": "\u03bb_n = \u03a3_\u03c1 [1 \u2212 (\u03c1/(\u03c1\u22121))^n] > 0 for all n \u2265 1",
+  "timestamp": "2026-03-06T00:56:46.902350Z",
+  "overall_status": "PASSED",
+  "psi": 1.0,
+  "tests_passed": 6,
+  "tests_total": 6,
+  "validation_results": {
+    "positivity": {
+      "passed": true,
+      "n_max": 15,
+      "all_positive": true,
+      "psi": 1.0,
+      "min_lambda": 0.019566207495830268,
+      "min_n": 1,
+      "lambdas": [
+        0.019566207495830268,
+        0.07822775400913867,
+        0.1758735552948865,
+        0.31231894920987624,
+        0.48730641080434833,
+        0.7005065488492913,
+        0.951519379225274,
+        1.2398758693297411,
+        1.565039746419119,
+        1.9264095615957564,
+        2.3233209999835056,
+        2.7550494265152587,
+        3.220812655686403,
+        3.7197739326150927,
+        4.251045111798342
+      ]
+    },
+    "monotone_growth": {
+      "passed": true,
+      "n_max": 10,
+      "violations": [],
+      "lambdas": [
+        0.019566207495830268,
+        0.07822775400913867,
+        0.1758735552948865,
+        0.31231894920987624,
+        0.48730641080434833,
+        0.7005065488492913,
+        0.951519379225274,
+        1.2398758693297411,
+        1.565039746419119,
+        1.9264095615957564
+      ],
+      "asymptotic_ratios": [
+        0.05645614104647758,
+        0.07120597031003285,
+        0.08457730201581455,
+        0.09702733693452259,
+        0.10878835450258174,
+        0.11999638475760187,
+        0.13073831330648075,
+        0.14107295655149765,
+        0.1510418057397973,
+        0.16067503726696244
+      ]
+    },
+    "keiper_agreement": {
+      "passed": true,
+      "n_values": [
+        1,
+        2,
+        3
+      ],
+      "comparisons": [
+        {
+          "n": 1,
+          "zeros_partial": 0.019566207495830268,
+          "keiper_full": 0.023095708966121033,
+          "frac_truncated": 0.15282065926047872,
+          "both_positive": true,
+          "ordering_correct": true
+        },
+        {
+          "n": 2,
+          "zeros_partial": 0.07822775400913867,
+          "keiper_full": 0.09234573522804668,
+          "frac_truncated": 0.1528817891161278,
+          "both_positive": true,
+          "ordering_correct": true
+        },
+        {
+          "n": 3,
+          "zeros_partial": 0.1758735552948865,
+          "keiper_full": 0.2076389205543248,
+          "frac_truncated": 0.15298367557794884,
+          "both_positive": true,
+          "ordering_correct": true
+        }
+      ],
+      "all_positive": true
+    },
+    "self_adjointness": {
+      "passed": true,
+      "test_points": [
+        1.5,
+        2.0,
+        2.5,
+        3.0,
+        4.0,
+        5.0,
+        10.0
+      ],
+      "imag_parts": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "max_imag": 0.0
+    },
+    "prime_trace": {
+      "passed": true,
+      "t_values": [
+        0.01,
+        0.05,
+        0.1,
+        0.2,
+        0.5,
+        1.0,
+        2.0,
+        5.0
+      ],
+      "traces": [
+        28.79735850567571,
+        24.28202514089269,
+        19.763431482079,
+        13.380830653644027,
+        4.8289266495565695,
+        1.3575072577484524,
+        0.2877138457825012,
+        0.018560360430885024
+      ],
+      "all_positive": true,
+      "is_decreasing": true
+    },
+    "curvature": {
+      "passed": true,
+      "lambdas": [
+        0.019566207495830268,
+        0.07822775400913867,
+        0.1758735552948865,
+        0.31231894920987624,
+        0.48730641080434833,
+        0.7005065488492913,
+        0.951519379225274,
+        1.2398758693297411,
+        1.565039746419119,
+        1.9264095615957564
+      ],
+      "is_monotone": true,
+      "all_positive": true,
+      "min_lambda": 0.019566207495830268,
+      "max_lambda": 1.9264095615957564,
+      "growth_ratios": [
+        0.05645614104647758,
+        0.07120597031003285,
+        0.08457730201581455,
+        0.09702733693452259,
+        0.10878835450258174,
+        0.11999638475760187,
+        0.13073831330648075,
+        0.14107295655149765,
+        0.1510418057397973,
+        0.16067503726696244
+      ]
+    }
+  },
+  "mathematical_content": {
+    "criterion": "Li positivity criterion for Riemann Hypothesis",
+    "formula": "\u03bb_n = \u03a3_\u03c1 [1 \u2212 (\u03c1/(\u03c1\u22121))^n] > 0",
+    "equivalence": "RH \u27fa \u03bb_n > 0 for all n \u2265 1",
+    "geometric_meaning": "Curvature toward the critical line \u03c3 = 1/2",
+    "hamiltonian": "H = \u03be'(s)/\u03be(s) (log-derivative of Riemann \u03be)",
+    "trace_formula": "Tr(e^(\u2212tH)) = \u03a3_{p,k} (log p / p^(k/2)) e^(\u2212kt log p)",
+    "self_adjoint_condition": "H is self-adjoint \u27fa all \u03bb_n > 0 \u27fa RH"
+  },
+  "qcal_integration": {
+    "f0_hz": 141.7001,
+    "coherence_constant": 244.36,
+    "orcid": "0009-0002-1923-0773",
+    "doi": "10.5281/zenodo.17379721"
+  },
+  "author": "Jos\u00e9 Manuel Mota Burruezo \u03a8 \u2727 \u221e\u00b3",
+  "institution": "Instituto de Conciencia Cu\u00e1ntica (ICQ)",
+  "certificate_hash": "0xQCAL_LI_CRITERION_de986c8f188bbb86"
+}
