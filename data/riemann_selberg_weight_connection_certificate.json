@@ -1,0 +1,149 @@
+{
+  "title": "Riemann-Selberg Weight Connection Certificate",
+  "timestamp": "2026-03-06T00:30:40",
+  "qcal_signature": "0xQCAL_RIEMANN_SELBERG_CONNECTION_bb173e68",
+  "f0_frequency": 141.7001,
+  "coherence_constant": 244.36,
+  "validation": {
+    "validation_passed": true,
+    "success_rate": 1.0,
+    "total_comparisons": 125,
+    "valid_correspondences": 125,
+    "max_discrepancy": 1.302763929737577e-15,
+    "mean_discrepancy": 2.256989163681688e-16,
+    "tolerance": 0.05,
+    "p_max": 100,
+    "k_max": 5
+  },
+  "test_cases": [
+    {
+      "p": 2,
+      "k": 1,
+      "riemann_weight": 0.49012907173427356,
+      "selberg_asymptotic": 0.4901290717342736,
+      "correspondence_quality": 1.132582301940121e-16
+    },
+    {
+      "p": 2,
+      "k": 2,
+      "riemann_weight": 0.34657359027997264,
+      "selberg_asymptotic": 0.34657359027997264,
+      "correspondence_quality": 0.0
+    },
+    {
+      "p": 2,
+      "k": 3,
+      "riemann_weight": 0.24506453586713678,
+      "selberg_asymptotic": 0.2450645358671368,
+      "correspondence_quality": 1.132582301940121e-16
+    },
+    {
+      "p": 3,
+      "k": 1,
+      "riemann_weight": 0.634284100597564,
+      "selberg_asymptotic": 0.634284100597564,
+      "correspondence_quality": 0.0
+    },
+    {
+      "p": 3,
+      "k": 2,
+      "riemann_weight": 0.3662040962227033,
+      "selberg_asymptotic": 0.3662040962227032,
+      "correspondence_quality": 1.5158528209771659e-16
+    },
+    {
+      "p": 3,
+      "k": 3,
+      "riemann_weight": 0.21142803353252135,
+      "selberg_asymptotic": 0.21142803353252135,
+      "correspondence_quality": 0.0
+    },
+    {
+      "p": 5,
+      "k": 1,
+      "riemann_weight": 0.7197625155536004,
+      "selberg_asymptotic": 0.7197625155536005,
+      "correspondence_quality": 1.542485195649896e-16
+    },
+    {
+      "p": 5,
+      "k": 2,
+      "riemann_weight": 0.32188758248682003,
+      "selberg_asymptotic": 0.3218875824868201,
+      "correspondence_quality": 1.724550875880115e-16
+    },
+    {
+      "p": 5,
+      "k": 3,
+      "riemann_weight": 0.14395250311072008,
+      "selberg_asymptotic": 0.14395250311072014,
+      "correspondence_quality": 3.8562129891247395e-16
+    },
+    {
+      "p": 7,
+      "k": 1,
+      "riemann_weight": 0.7354849040109982,
+      "selberg_asymptotic": 0.7354849040109983,
+      "correspondence_quality": 1.5095116413273855e-16
+    },
+    {
+      "p": 7,
+      "k": 2,
+      "riemann_weight": 0.277987164150759,
+      "selberg_asymptotic": 0.2779871641507591,
+      "correspondence_quality": 1.996896202054596e-16
+    },
+    {
+      "p": 7,
+      "k": 3,
+      "riemann_weight": 0.10506927200157117,
+      "selberg_asymptotic": 0.1050692720015712,
+      "correspondence_quality": 3.9624680584843875e-16
+    },
+    {
+      "p": 11,
+      "k": 1,
+      "riemann_weight": 0.7229926278581,
+      "selberg_asymptotic": 0.7229926278581,
+      "correspondence_quality": 0.0
+    },
+    {
+      "p": 11,
+      "k": 2,
+      "riemann_weight": 0.21799047934530644,
+      "selberg_asymptotic": 0.2179904793453064,
+      "correspondence_quality": 1.2732471481776446e-16
+    },
+    {
+      "p": 11,
+      "k": 3,
+      "riemann_weight": 0.06572660253255455,
+      "selberg_asymptotic": 0.06572660253255454,
+      "correspondence_quality": 2.1114415279476454e-16
+    },
+    {
+      "p": 13,
+      "k": 1,
+      "riemann_weight": 0.711388955945845,
+      "selberg_asymptotic": 0.711388955945845,
+      "correspondence_quality": 0.0
+    },
+    {
+      "p": 13,
+      "k": 2,
+      "riemann_weight": 0.1973037967278105,
+      "selberg_asymptotic": 0.19730379672781054,
+      "correspondence_quality": 1.4067431076310703e-16
+    },
+    {
+      "p": 13,
+      "k": 3,
+      "riemann_weight": 0.05472222738044961,
+      "selberg_asymptotic": 0.054722227380449594,
+      "correspondence_quality": 2.53604220298469e-16
+    }
+  ],
+  "asymptotic_convergence_threshold": 4.63265306122449,
+  "mathematical_statement": "For large \u2113, the Selberg weight \u2113/(2sinh(k\u2113/2)) converges asymptotically to \u2113\u00b7e^(-k\u2113/2), which is formally analogous to the Riemann weight (log p)\u00b7p^(-k/2) under the correspondence \u2113 \u2194 log p.",
+  "psi_coherence": 1.0
+}
