@@ -199,7 +199,7 @@ class TestMetadataGeneration:
         assert metadata["btc_value_btc"] == 0.5
         assert metadata["btc_value_satoshis"] == 50_000_000
         assert metadata["cs_value_full"] > 0
-        assert metadata["cs_value_blockchain"] == 313337816.5
+        assert metadata["cs_value_blockchain"] == EXPECTED_CS_BLOCKCHAIN_1BTC / 2
     
     def test_metadata_multiple_btc(self):
         """Test metadata for 2.5 BTC."""
