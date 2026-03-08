@@ -26,6 +26,14 @@ from .control_primitiva_vosc import (
     PSI_THRESHOLD
 )
 
+from .sistema_dinamico_z import (
+    CompactificacionNoConmutativa,
+    FiltroRacionalesAdelico,
+    IdentidadDeterminanteHadamard,
+    SistemaDinamicoZ,
+    SistemaDinamicoZCompleto
+)
+
 __all__ = [
     'PrimitivaPotencialOscilatorio',
     'EstimacionCuadraticaMedia',
@@ -36,5 +44,10 @@ __all__ = [
     'F0_HZ',
     'C_COHERENCE',
     'DELTA_ZETA',
-    'PSI_THRESHOLD'
+    'PSI_THRESHOLD',
+    'CompactificacionNoConmutativa',
+    'FiltroRacionalesAdelico',
+    'IdentidadDeterminanteHadamard',
+    'SistemaDinamicoZ',
+    'SistemaDinamicoZCompleto'
 ]
