@@ -44,6 +44,27 @@ F0_QCAL = 141.7001  # Hz - Fundamental quantum frequency
 C_COHERENCE = 244.36  # Coherence constant
 RESONANCE_THRESHOLD = 0.5  # Threshold for beneficial mutation
 
+# Resonance model parameters (phenomenological, subject to refinement)
+# These values are calibrated based on the expected behavior from the problem statement
+# where certain base patterns (e.g., T-rich sequences) show higher resonance
+BASE_RESONANCE_SCORES = {
+    'A': 0.6,   # Adenine - moderate resonance
+    'T': 1.0,   # Thymine - highest resonance (reference base)
+    'G': 0.9,   # Guanine - high resonance
+    'C': 0.8    # Cytosine - moderate-high resonance
+}
+
+# Position decay factor for weighted resonance calculation
+# Early positions in sequence contribute more to overall resonance
+# Value 0.3 provides moderate decay over ~5-10 bases
+POSITION_DECAY_FACTOR = 0.3
+
+# Length factor parameters for sequence length bonus
+# Base factor (0.5) + increment per base (0.1) up to saturation
+LENGTH_FACTOR_BASE = 0.5        # Minimum length contribution
+LENGTH_FACTOR_INCREMENT = 0.1   # Bonus per base
+LENGTH_FACTOR_SATURATION = 1.0  # Maximum length contribution
+
 # First 30 Riemann zeros (imaginary parts)
 RIEMANN_ZEROS = [
     14.134725141735, 21.022039638772, 25.010857580146, 30.424876125860,
@@ -151,21 +172,18 @@ def calculate_resonance(sequence: str) -> float:
     n = len(sequence)
     
     # Score based on specific base patterns that resonate with f₀
-    # This is a phenomenological model calibrated to known resonant patterns
-    
-    # Base scores (T and G have higher resonance potential)
-    base_scores = {'A': 0.6, 'T': 1.0, 'G': 0.9, 'C': 0.8}
+    # Uses phenomenological scores calibrated from expected patterns
     
     # Calculate position-weighted score
     total_score = 0.0
     weight_sum = 0.0
     
     for i, base in enumerate(sequence):
-        if base not in base_scores:
+        if base not in BASE_RESONANCE_SCORES:
             continue
         
         # Position weight (early positions more important)
-        position_weight = 1.0 / (1.0 + 0.3 * i)
+        position_weight = 1.0 / (1.0 + POSITION_DECAY_FACTOR * i)
         
         # Base score modulated by Riemann zero
         zero_idx = i % len(RIEMANN_ZEROS)
@@ -176,7 +194,7 @@ def calculate_resonance(sequence: str) -> float:
         harmonic_mod = 0.5 * (1.0 + np.cos(2 * np.pi * harmonic_ratio))
         
         # Combined score
-        score = base_scores[base] * harmonic_mod * position_weight
+        score = BASE_RESONANCE_SCORES[base] * harmonic_mod * position_weight
         total_score += score
         weight_sum += position_weight
     
@@ -186,8 +204,9 @@ def calculate_resonance(sequence: str) -> float:
     else:
         base_resonance = 0.0
     
-    # Apply length factor (moderate preference for longer sequences up to ~6 bases)
-    length_factor = min(1.0, 0.5 + 0.1 * n)
+    # Apply length factor (moderate preference for longer sequences)
+    length_factor = min(LENGTH_FACTOR_SATURATION, 
+                       LENGTH_FACTOR_BASE + LENGTH_FACTOR_INCREMENT * n)
     
     # Final resonance
     resonance = base_resonance * length_factor
