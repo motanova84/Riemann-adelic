@@ -1,0 +1,94 @@
+{
+  "module": "operators/impacto_rh.py",
+  "title": "Impacto RH \u2014 Sieve \u2192 \u03c8(x) \u2192 Selberg \u2192 GUE \u2192 S-Finite",
+  "timestamp": "2026-03-08T13:18:49.411547+00:00",
+  "qcal_frequency_hz": 141.7001,
+  "coherence_constant": 244.36,
+  "doi": "10.5281/zenodo.17379721",
+  "N_sieve": 2000,
+  "n_primes": 303,
+  "n_zeros": 20,
+  "pipeline": {
+    "stage1_sieve": {
+      "n_primes": 303
+    },
+    "stage2_chebyshev": {
+      "X": 2000.0,
+      "rms_delta_psi": 7.278277
+    },
+    "stage3_selberg": {
+      "zero_side": 0.018541,
+      "prime_side": 12.502856,
+      "balance": -12.484314,
+      "quality": 0.368971
+    },
+    "stage4_gue": {
+      "delta3_measured": 0.028142,
+      "delta3_gue": 0.210888,
+      "ratio": 0.133444,
+      "is_consistent": false,
+      "mean_spacing_ratio": 0.619678
+    },
+    "stage5_s_finite": {
+      "R_S": 53.096285707140574,
+      "psi_coherence": 0.973814,
+      "verdict": "S_FINITE_CONDITIONAL"
+    }
+  },
+  "global_psi": 0.614262,
+  "checks": [
+    {
+      "check": "selberg_quality",
+      "value": 0.36897054,
+      "threshold": 0.3,
+      "mode": "min",
+      "passed": true
+    },
+    {
+      "check": "global_psi",
+      "value": 0.61426154,
+      "threshold": 0.4,
+      "mode": "min",
+      "passed": true
+    },
+    {
+      "check": "psi_coherence",
+      "value": 0.97381408,
+      "threshold": 0.5,
+      "mode": "min",
+      "passed": true
+    },
+    {
+      "check": "gue_ratio",
+      "value": 0.13344387,
+      "threshold": 10.0,
+      "mode": "max",
+      "passed": true
+    },
+    {
+      "check": "selberg_zeros",
+      "value": 20.0,
+      "threshold": 1.0,
+      "mode": "min",
+      "passed": true
+    },
+    {
+      "check": "chebyshev_rms",
+      "value": 7.27827653,
+      "threshold": 0.0,
+      "mode": "min",
+      "passed": true
+    },
+    {
+      "check": "R_S_finite",
+      "value": 1.0,
+      "threshold": 1.0,
+      "mode": "min",
+      "passed": true
+    }
+  ],
+  "n_checks_passed": 7,
+  "n_checks_total": 7,
+  "all_checks_passed": true,
+  "sha256_fingerprint": "5290e7cc8efcf897427e8a331c198a050db9f7434dd097ebe5188e90cfb89508"
+}
