@@ -44,4 +44,41 @@
     "status": "validated",
     "checks": {
       "torus_eigenvalues": {
-        "quantized": 
+        "quantized": true,
+        "spacing_error": 2.7755575615628914e-17,
+        "expected_spacing": 0.06283185307179587,
+        "n_modes": 21
+      },
+      "berry_phase": {
+        "is_exact": true,
+        "value": 5.497787143782138,
+        "factor": 0.875,
+        "topological_invariant": true
+      },
+      "transfer_matrix": {
+        "well_defined": true,
+        "dimension": 20,
+        "max_element": 0.7354849040109982,
+        "condition_number": 3.659648337518397
+      },
+      "determinant_calculation": {
+        "computable": true,
+        "test_lambda": 14.134725,
+        "det_value": 0.412924966994519,
+        "small_near_zero": true
+      },
+      "trace_formula": {
+        "all_terms_finite": true,
+        "berry_contribution": 0.875,
+        "berry_exact": true
+      }
+    },
+    "coherence_qcal": 244.36,
+    "frequency_f0": 141.7001
+  },
+  "qcal_parameters": {
+    "frequency_f0": 141.7001,
+    "coherence_C": 244.36,
+    "field_equation": "\u03a8 = I \u00d7 A_eff\u00b2 \u00d7 C^\u221e"
+  }
+}
