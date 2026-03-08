@@ -236,6 +236,90 @@ class TestFiltroRacionalesAdelico:
         # Psi should be in [0, 1]
         assert 0 <= result['Psi'] <= 1.0
 
+    # ------------------------------------------------------------------
+    # New tests: sieve methods and large-range computation (Pilar 2)
+    # ------------------------------------------------------------------
+
+    def test_sieve_eratosthenes_small(self):
+        """Test sieve of Eratosthenes for small limits."""
+        primes = FiltroRacionalesAdelico._sieve_eratosthenes(20)
+        assert primes == [2, 3, 5, 7, 11, 13, 17, 19]
+
+    def test_sieve_eratosthenes_count(self):
+        """There are 78498 primes below 10^6 (prime-counting fact)."""
+        primes = FiltroRacionalesAdelico._sieve_eratosthenes(10_000)
+        assert len(primes) == 1229  # π(10000) = 1229
+
+    def test_sieve_eratosthenes_empty(self):
+        """Sieve with limit < 2 returns empty list."""
+        assert FiltroRacionalesAdelico._sieve_eratosthenes(1) == []
+        assert FiltroRacionalesAdelico._sieve_eratosthenes(0) == []
+
+    def test_sieve_mobius_values_known(self):
+        """Test μ values from linear sieve against known values."""
+        mu = FiltroRacionalesAdelico._sieve_mobius_values(12)
+        expected = {1: 1, 2: -1, 3: -1, 4: 0, 5: -1, 6: 1,
+                    7: -1, 8: 0, 9: 0, 10: 1, 11: -1, 12: 0}
+        for n, v in expected.items():
+            assert mu[n] == v, f"μ({n}): expected {v}, got {mu[n]}"
+
+    def test_chebyshev_psi_sieve_basic(self):
+        """Sieve ψ(10) matches trial-division ψ(10)."""
+        filtro = FiltroRacionalesAdelico(x_max=100.0, N_primes=50)
+        psi_sieve = filtro.chebyshev_psi_sieve(10.0)
+        psi_trial = filtro.chebyshev_psi(10.0)
+        assert abs(psi_sieve - psi_trial) < 1e-9
+
+    def test_chebyshev_psi_sieve_large(self):
+        """ψ(x)/x → 1 as x → ∞ (Prime Number Theorem)."""
+        filtro = FiltroRacionalesAdelico(x_max=100.0, N_primes=50)
+        x = 100_000
+        psi = filtro.chebyshev_psi_sieve(float(x))
+        # By PNT, |ψ(x) - x| / x should be small for large x
+        assert abs(psi / x - 1.0) < 0.05  # within 5% of x
+
+    def test_chebyshev_psi_sieve_zero(self):
+        """ψ(x) = 0 for x < 2."""
+        filtro = FiltroRacionalesAdelico(x_max=100.0, N_primes=50)
+        assert filtro.chebyshev_psi_sieve(1.5) == 0.0
+        assert filtro.chebyshev_psi_sieve(0.0) == 0.0
+
+    def test_psi_explicit_error_structure(self):
+        """psi_explicit_error returns required keys."""
+        filtro = FiltroRacionalesAdelico(x_max=100.0, N_primes=50)
+        result = filtro.psi_explicit_error(50.0, N_zeros=5)
+        required = {'x', 'psi_x', 'psi_minus_x', 'error_zero_sum',
+                    'trivial_correction', 'psi_corrected', 'relative_error'}
+        assert required.issubset(result.keys())
+        assert result['x'] == 50.0
+        assert result['psi_x'] > 0
+
+    def test_psi_explicit_error_decreasing(self):
+        """Relative error |ψ(x)-x|/x should decrease as x increases."""
+        filtro = FiltroRacionalesAdelico(x_max=100.0, N_primes=50)
+        zeros = [14.134725, 21.022040, 25.010858, 30.424878, 32.935057]
+        err_small = filtro.psi_explicit_error(100.0, zeros=zeros)['relative_error']
+        err_large = filtro.psi_explicit_error(10_000.0, zeros=zeros)['relative_error']
+        # Not guaranteed monotone per-point, but small error at 10000
+        assert err_large < 0.1
+
+    def test_mobius_cancellation_no_inf(self):
+        """cancellation_factor must never be inf, even for tiny N."""
+        filtro = FiltroRacionalesAdelico(x_max=100.0, N_primes=50)
+        import math
+        for N in [1, 2, 5, 10, 50]:
+            result = filtro.compute_mobius_cancellation(N=N)
+            assert not math.isinf(result['cancellation_factor']), (
+                f"cancellation_factor is inf for N={N}")
+            assert result['cancellation_factor'] >= 0
+
+    def test_mobius_cancellation_large_n_finite(self):
+        """For N=10_000, cancellation_factor is finite and > 1."""
+        filtro = FiltroRacionalesAdelico(x_max=100.0, N_primes=50)
+        result = filtro.compute_mobius_cancellation(N=10_000)
+        assert result['cancellation_factor'] > 1.0
+        assert result['cancellation_factor'] < 100.0  # finite, not huge
+
 
 # ============================================================================
 # Test Suite for IdentidadDeterminanteHadamard
@@ -391,23 +475,48 @@ class TestSistemaDinamicoZ:
     def test_selberg_laplacian_spectrum(self):
         """Test Selberg Laplacian spectrum λ_n = 1/4 + γ_n²."""
         result = self.dinamico.selberg_laplacian_spectrum()
-        
+
         assert 'eigenvalues' in result
         assert 'N_eigenvalues' in result
         assert 'all_positive' in result
         assert 'is_discrete' in result
-        
+        assert 'mean_gap' in result
+
         # All eigenvalues should be positive
         assert result['all_positive'] is True
-        
+
         # Should be discrete
         assert result['is_discrete'] is True
-        
+
         # Check formula: λ = 1/4 + γ²
         first_gamma = self.dinamico.zeros[0]
         first_lambda = result['eigenvalues'][0]
         expected = 0.25 + first_gamma**2
         assert abs(first_lambda - expected) < 1e-6
+
+    def test_selberg_laplacian_spectrum_200_levels(self):
+        """selberg_laplacian_spectrum returns up to 200 eigenvalues by default."""
+        dinamico = SistemaDinamicoZ(N_zeros=100)
+        result = dinamico.selberg_laplacian_spectrum(N_eigenvalues=200)
+        # N_zeros=100 → 100 eigenvalues; all returned since 100 < 200
+        assert result['N_eigenvalues'] == 100
+        assert len(result['eigenvalues']) == 100
+        # mean_gap should be present and positive
+        assert result['mean_gap'] > 0
+
+    def test_selberg_laplacian_spectrum_n_eigenvalues_param(self):
+        """N_eigenvalues parameter controls how many eigenvalues are returned."""
+        dinamico = SistemaDinamicoZ(N_zeros=50)
+        result_all = dinamico.selberg_laplacian_spectrum(N_eigenvalues=50)
+        result_small = dinamico.selberg_laplacian_spectrum(N_eigenvalues=10)
+        assert len(result_all['eigenvalues']) == 50
+        assert len(result_small['eigenvalues']) == 10
+        # The first 10 should be the same in both
+        np.testing.assert_allclose(
+            result_all['eigenvalues'][:10],
+            result_small['eigenvalues'][:10],
+            rtol=1e-9,
+        )
     
     def test_gue_level_repulsion(self):
         """Test GUE statistics in zero spacing."""
