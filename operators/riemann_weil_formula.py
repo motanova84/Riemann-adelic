@@ -32,6 +32,8 @@ This implementation provides:
 5. Full oscillatory counting correction N_osc_full(E)
 6. Oscillatory density d_osc(E)
 7. Complete verification framework
+8. N_smooth(E) — Backlund smooth counting function N_smooth = E/(2π)·ln(E/(2πe)) + 7/8
+9. gue_level_spacing_stats — Level spacing moments ⟨s⟩, ⟨s²⟩ and KS-test vs GUE
 
 The formula demonstrates the deep arithmetic-spectral duality at the heart of
 the Riemann Hypothesis.
@@ -50,6 +52,13 @@ from typing import Callable, Dict, List, Tuple, Optional
 from numpy.typing import NDArray
 from dataclasses import dataclass
 import warnings
+
+try:
+    from scipy import stats as _scipy_stats
+    HAS_SCIPY_STATS = True
+    # scipy.stats provides the KS p-value; without it only the KS statistic is available.
+except ImportError:
+    HAS_SCIPY_STATS = False
 
 try:
     import mpmath as mp
@@ -365,6 +374,175 @@ def _sieve_primes(n: int) -> List[int]:
                 sieve[j] = False
     
     return [i for i in range(2, n + 1) if sieve[i]]
+
+
+def N_smooth(E: float) -> float:
+    """
+    Smooth (Backlund) zero counting function.
+
+    The smooth part of the Riemann zero counting function, which counts
+    the expected number of non-trivial zeros with imaginary part in (0, E]:
+
+        N_smooth(E) = (E / 2π) · ln(E / (2π·e)) + 7/8
+
+    This follows from the argument-principle formula:
+        N(T) = (T/2π)·ln(T/2π) - T/2π + O(ln T)
+    combined with the Backlund correction term 7/8.
+
+    The total counting function decomposes as:
+        N_total(E) = N_smooth(E) + N_osc(E)
+
+    where N_osc captures the oscillatory corrections from prime powers.
+
+    Args:
+        E: Height parameter (imaginary part of zero; must be > 0).
+
+    Returns:
+        Smooth counting function N_smooth(E).
+    """
+    if E <= 0:
+        return 0.0
+    return (E / (2.0 * math.pi)) * math.log(E / (2.0 * math.pi * math.e)) + 7.0 / 8.0
+
+
+def rho_smooth(E: float) -> float:
+    """
+    Smooth (Weyl) density of zeros: ρ_smooth(E) = dN_smooth/dE.
+
+    This is identical to the Weyl density μ(r) (see :func:`weyl_density`),
+    but provided under the conventional name used in spectral analysis:
+
+        ρ_smooth(E) = (1/2π) · ln(E / 2π)
+
+    Args:
+        E: Height parameter (must be > 0).
+
+    Returns:
+        Smooth density ρ_smooth(E) = (1/2π)·ln(E/2π).
+    """
+    return weyl_density(E)
+
+
+@dataclass
+class GUESpacingStats:
+    """
+    Level spacing statistics and GUE comparison for a set of zeros.
+
+    Attributes:
+        mean_spacing: Mean nearest-neighbor spacing ⟨s⟩.
+        mean_sq_spacing: Mean squared spacing ⟨s²⟩.
+        variance_spacing: Variance of spacings Var(s) = ⟨s²⟩ - ⟨s⟩².
+        gue_mean: Theoretical GUE mean ⟨s⟩_GUE = 1 (normalized).
+        gue_mean_sq: Theoretical GUE ⟨s²⟩_GUE = 3π/8 ≈ 1.178.
+        ks_statistic: Kolmogorov-Smirnov statistic vs Wigner surmise CDF.
+        ks_pvalue: KS-test p-value (high = close to GUE).
+        n_zeros: Number of zeros used.
+        E_min: Lower energy bound.
+        E_max: Upper energy bound.
+        normalised_spacings: Array of normalised nearest-neighbour spacings (unit mean).
+    """
+    mean_spacing: float
+    mean_sq_spacing: float
+    variance_spacing: float
+    gue_mean: float
+    gue_mean_sq: float
+    ks_statistic: float
+    ks_pvalue: float
+    n_zeros: int
+    E_min: float
+    E_max: float
+    normalised_spacings: np.ndarray = None
+
+
+def gue_level_spacing_stats(
+    zeros: List[float],
+    E_min: float = 15.0,
+    E_max: float = 45.0,
+) -> GUESpacingStats:
+    """
+    Compute level spacing moments and KS-test vs theoretical GUE.
+
+    Selects Riemann zeros in [E_min, E_max], unfolds them using the
+    smooth Weyl density, computes nearest-neighbour spacings, and
+    compares the distribution with the GUE Wigner surmise:
+
+        P_GUE(s) = (32/π²) · s² · exp(-4s²/π)
+
+    The theoretical GUE moments are:
+        ⟨s⟩_GUE   = 1          (by construction of unfolding)
+        ⟨s²⟩_GUE  = 3π/8 ≈ 1.178
+
+    The KS-test uses the Wigner surmise CDF F_GUE(s) = 1 - exp(-4s²/π).
+
+    Args:
+        zeros: List of imaginary parts of Riemann zeta zeros.
+        E_min: Lower energy cutoff (default: 15.0).
+        E_max: Upper energy cutoff (default: 45.0).
+
+    Returns:
+        GUESpacingStats dataclass with moments and KS-test results.
+
+    Raises:
+        ValueError: If fewer than 3 zeros lie in [E_min, E_max].
+    """
+    # Select zeros in range
+    selected = sorted(z for z in zeros if E_min <= z <= E_max)
+    n = len(selected)
+    if n < 3:
+        raise ValueError(
+            f"Need at least 3 zeros in [{E_min}, {E_max}]; found {n}."
+        )
+
+    # Unfold: map zeros to uniform density via N_smooth
+    unfolded = [N_smooth(z) for z in selected]
+
+    # Nearest-neighbour spacings
+    spacings = np.diff(unfolded)
+
+    # Normalise to unit mean
+    mean_s = float(np.mean(spacings))
+    if mean_s > 0:
+        spacings = spacings / mean_s
+    else:
+        raise ValueError("Mean spacing is zero; cannot normalise.")
+
+    mean_spacing = float(np.mean(spacings))
+    mean_sq = float(np.mean(spacings ** 2))
+    var_s = float(np.var(spacings))
+
+    # Theoretical GUE values
+    gue_mean = 1.0
+    gue_mean_sq = 3.0 * math.pi / 8.0  # ≈ 1.178
+
+    # KS-test vs Wigner surmise CDF  F_GUE(s) = 1 - exp(-4s²/π)
+    def wigner_cdf(s: np.ndarray) -> np.ndarray:
+        return 1.0 - np.exp(-4.0 * s ** 2 / math.pi)
+
+    if HAS_SCIPY_STATS:
+        ks_stat, ks_pval = _scipy_stats.kstest(spacings, wigner_cdf)
+        ks_stat = float(ks_stat)
+        ks_pval = float(ks_pval)
+    else:
+        # Manual KS statistic without scipy
+        s_sorted = np.sort(spacings)
+        ecdf = np.arange(1, len(s_sorted) + 1) / len(s_sorted)
+        theoretical = wigner_cdf(s_sorted)
+        ks_stat = float(np.max(np.abs(ecdf - theoretical)))
+        ks_pval = float("nan")
+
+    return GUESpacingStats(
+        mean_spacing=mean_spacing,
+        mean_sq_spacing=mean_sq,
+        variance_spacing=var_s,
+        gue_mean=gue_mean,
+        gue_mean_sq=gue_mean_sq,
+        ks_statistic=ks_stat,
+        ks_pvalue=ks_pval,
+        n_zeros=n,
+        E_min=E_min,
+        E_max=E_max,
+        normalised_spacings=spacings,
+    )
 
 
 @dataclass

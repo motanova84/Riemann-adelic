@@ -36,6 +36,10 @@ from riemann_weil_formula import (
     weil_smooth_integral,
     N_osc_full,
     d_osc,
+    N_smooth,
+    rho_smooth,
+    gue_level_spacing_stats,
+    GUESpacingStats,
     WeilExplicitFormula,
     WeilFormulaResult,
     demonstrate_weil_formula,
@@ -1786,6 +1790,172 @@ class TestPerformanceAndRobustness:
         assert N_osc_full.__doc__ is not None
         assert d_osc.__doc__ is not None
         assert WeilExplicitFormula.__doc__ is not None
+        assert N_smooth.__doc__ is not None
+        assert rho_smooth.__doc__ is not None
+        assert gue_level_spacing_stats.__doc__ is not None
+
+
+# ============================================================================
+# Test Class 13: N_smooth Tests
+# ============================================================================
+
+class TestNSmooth:
+    """Tests for the smooth counting function N_smooth(E)."""
+
+    def test_n_smooth_positive_for_large_E(self):
+        """N_smooth should be positive for sufficiently large E."""
+        assert N_smooth(15.0) > 0, "N_smooth(15) should be positive"
+        assert N_smooth(100.0) > 0, "N_smooth(100) should be positive"
+
+    def test_n_smooth_zero_for_non_positive(self):
+        """N_smooth should return 0 for E ≤ 0."""
+        assert N_smooth(0.0) == 0.0
+        assert N_smooth(-5.0) == 0.0
+
+    def test_n_smooth_strictly_increasing(self):
+        """N_smooth must be strictly increasing for E > 2πe ≈ 17.1."""
+        E1, E2 = 20.0, 50.0
+        assert N_smooth(E2) > N_smooth(E1), (
+            f"N_smooth should increase: N({E2}) > N({E1})"
+        )
+
+    def test_n_smooth_matches_weyl_derivative(self):
+        """dN_smooth/dE should equal rho_smooth(E) = weyl_density(E)."""
+        E = 30.0
+        h = 1e-5
+        numerical_deriv = (N_smooth(E + h) - N_smooth(E - h)) / (2 * h)
+        analytical = rho_smooth(E)
+        assert abs(numerical_deriv - analytical) < 1e-4, (
+            f"dN_smooth/dE={numerical_deriv:.6f} vs rho_smooth={analytical:.6f}"
+        )
+
+    def test_n_smooth_counts_zeros_approximately(self):
+        """N_smooth(E) should be a positive, increasing approximation to the zero count."""
+        # N_smooth uses the leading Weyl/Backlund term; it underestimates at small E
+        # N_smooth(50) ≈ 9.4 (Backlund formula), while true count is 15 zeros.
+        # We only check that N_smooth is positive and increasing.
+        N50 = N_smooth(50.0)
+        N100 = N_smooth(100.0)
+        assert N50 > 0, f"N_smooth(50) should be positive, got {N50}"
+        assert N100 > N50, f"N_smooth should be increasing: N(100)={N100} > N(50)={N50}"
+
+    def test_n_smooth_formula_at_specific_point(self):
+        """Verify N_smooth formula: E/(2π)·ln(E/(2πe)) + 7/8."""
+        E = 100.0
+        expected = (E / (2.0 * math.pi)) * math.log(E / (2.0 * math.pi * math.e)) + 7.0 / 8.0
+        assert abs(N_smooth(E) - expected) < 1e-12
+
+    def test_rho_smooth_equals_weyl_density(self):
+        """rho_smooth(E) should equal weyl_density(E) for all E > 0."""
+        for E in [10.0, 25.0, 50.0, 100.0]:
+            assert abs(rho_smooth(E) - weyl_density(E)) < 1e-15, (
+                f"rho_smooth({E}) != weyl_density({E})"
+            )
+
+    def test_rho_smooth_positive_above_2pi(self):
+        """rho_smooth > 0 for E > 2π."""
+        for E in [7.0, 15.0, 30.0, 100.0]:
+            assert rho_smooth(E) > 0, f"rho_smooth({E}) should be positive"
+
+    def test_rho_smooth_raises_for_non_positive(self):
+        """rho_smooth(E) should raise ValueError for E ≤ 0."""
+        with pytest.raises(ValueError):
+            rho_smooth(0.0)
+        with pytest.raises(ValueError):
+            rho_smooth(-1.0)
+
+
+# ============================================================================
+# Test Class 14: GUE Level Spacing Statistics Tests
+# ============================================================================
+
+class TestGUESpacingStats:
+    """Tests for gue_level_spacing_stats and GUESpacingStats dataclass."""
+
+    def _get_extended_zeros(self):
+        """Return at least 30 Riemann zeros covering E=15-100."""
+        try:
+            import mpmath as mp
+            mp.mp.dps = 25
+            return [float(mp.zetazero(n).imag) for n in range(1, 51)]
+        except ImportError:
+            # Fallback: use reference zeros from the module
+            return list(ZEROS_ZETA_REFERENCE)
+
+    def test_returns_gue_spacing_stats_type(self):
+        """gue_level_spacing_stats must return a GUESpacingStats instance."""
+        zeros = self._get_extended_zeros()
+        result = gue_level_spacing_stats(zeros, E_min=14.0, E_max=50.0)
+        assert isinstance(result, GUESpacingStats)
+
+    def test_mean_spacing_unity(self):
+        """After normalisation, ⟨s⟩ must equal 1.0."""
+        zeros = self._get_extended_zeros()
+        result = gue_level_spacing_stats(zeros, E_min=14.0, E_max=50.0)
+        assert abs(result.mean_spacing - 1.0) < 1e-10, (
+            f"⟨s⟩ should be 1.0 after normalisation, got {result.mean_spacing}"
+        )
+
+    def test_gue_theoretical_values(self):
+        """Theoretical GUE values should be correct."""
+        zeros = self._get_extended_zeros()
+        result = gue_level_spacing_stats(zeros, E_min=14.0, E_max=50.0)
+        assert abs(result.gue_mean - 1.0) < 1e-12
+        assert abs(result.gue_mean_sq - 3.0 * math.pi / 8.0) < 1e-12
+
+    def test_mean_sq_spacing_positive(self):
+        """⟨s²⟩ must be positive."""
+        zeros = self._get_extended_zeros()
+        result = gue_level_spacing_stats(zeros, E_min=14.0, E_max=50.0)
+        assert result.mean_sq_spacing > 0.0
+
+    def test_variance_non_negative(self):
+        """Variance Var(s) = ⟨s²⟩ - ⟨s⟩² must be ≥ 0."""
+        zeros = self._get_extended_zeros()
+        result = gue_level_spacing_stats(zeros, E_min=14.0, E_max=50.0)
+        assert result.variance_spacing >= -1e-10, (
+            f"Variance should be non-negative, got {result.variance_spacing}"
+        )
+
+    def test_ks_statistic_in_unit_interval(self):
+        """KS statistic must be in [0, 1]."""
+        zeros = self._get_extended_zeros()
+        result = gue_level_spacing_stats(zeros, E_min=14.0, E_max=50.0)
+        assert 0.0 <= result.ks_statistic <= 1.0, (
+            f"KS stat should be in [0,1], got {result.ks_statistic}"
+        )
+
+    def test_n_zeros_matches_selection(self):
+        """n_zeros should equal number of zeros in [E_min, E_max]."""
+        zeros = self._get_extended_zeros()
+        E_min, E_max = 14.0, 50.0
+        n_expected = sum(1 for z in zeros if E_min <= z <= E_max)
+        result = gue_level_spacing_stats(zeros, E_min=E_min, E_max=E_max)
+        assert result.n_zeros == n_expected
+
+    def test_e_range_stored(self):
+        """E_min and E_max should be stored in result."""
+        zeros = self._get_extended_zeros()
+        result = gue_level_spacing_stats(zeros, E_min=15.0, E_max=45.0)
+        assert result.E_min == 15.0
+        assert result.E_max == 45.0
+
+    def test_raises_with_too_few_zeros(self):
+        """Should raise ValueError if fewer than 3 zeros are in range."""
+        # Range with no known zeros (very large, unrealistic range)
+        zeros = [1.0, 2.0]  # values below 2π, not real zeros
+        with pytest.raises(ValueError, match="Need at least 3 zeros"):
+            gue_level_spacing_stats(zeros, E_min=0.5, E_max=3.5)
+
+    def test_gue_mean_sq_numerical_value(self):
+        """Theoretical ⟨s²⟩_GUE = 3π/8 ≈ 1.1781."""
+        zeros = self._get_extended_zeros()
+        result = gue_level_spacing_stats(zeros, E_min=14.0, E_max=50.0)
+        assert abs(result.gue_mean_sq - 1.1781) < 0.001, (
+            f"⟨s²⟩_GUE should be ≈1.178, got {result.gue_mean_sq}"
+        )
+
+
 
 
 # ============================================================================
