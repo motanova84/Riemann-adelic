@@ -1,6 +1,6 @@
 {
   "framework": "QCAL \u221e\u00b3 \u2014 Compactaci\u00f3n Ad\u00e9lica",
-  "validation_date": "2026-03-03T22:54:25.708112",
+  "validation_date": "2026-03-08T00:19:24.902210",
   "author": "Jos\u00e9 Manuel Mota Burruezo \u03a8 \u2727 \u221e\u00b3",
   "orcid": "0009-0002-1923-0773",
   "doi": "10.5281/zenodo.17379721",
@@ -9,9 +9,9 @@
     "frequency_f0": 141.7001,
     "coherence_C": 244.36
   },
-  "validation_status": "PASSED",
+  "validation_status": "FAILED",
   "tests_run": 6,
-  "tests_passed": 6,
+  "tests_passed": 5,
   "test_results": [
     {
       "test": "torus_construction",
@@ -24,12 +24,12 @@
     },
     {
       "test": "berry_phase",
-      "passed": true,
+      "passed": false,
       "details": {
         "theoretical_exact": true,
         "fraction_exact": true,
         "topological_not_asymptotic": true,
-        "numerical_validation": true
+        "numerical_validation": false
       }
     },
     {
@@ -83,12 +83,12 @@
             "well_defined": true,
             "dimension": 20,
             "max_element": 0.7354849040109982,
-            "condition_number": 3.6596483375183975
+            "condition_number": 3.659648337518397
           },
           "determinant_calculation": {
             "computable": true,
             "test_lambda": 14.134725,
-            "det_value": 0.41292496699451897,
+            "det_value": 0.412924966994519,
             "small_near_zero": true
           },
           "trace_formula": {
