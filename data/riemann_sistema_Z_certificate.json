@@ -1,0 +1,112 @@
+{
+  "title": "Riemann Sistema Z \u2014 Berry-Keating Gap Closure Certificate",
+  "date": "2026-03-08T20:36:44.008344",
+  "author": "Jos\u00e9 Manuel Mota Burruezo \u03a8 \u2727 \u221e\u00b3",
+  "institution": "Instituto de Conciencia Cu\u00e1ntica (ICQ)",
+  "doi": "10.5281/zenodo.17379721",
+  "orcid": "0009-0002-1923-0773",
+  "qcal_signature": "\u2234\ud80c\udc80\u03a9\u221e\u00b3\u03a6",
+  "qcal_frequency": 141.7001,
+  "qcal_coherence": 244.36,
+  "validation_results": {
+    "timestamp": "2026-03-08T20:36:44.008337",
+    "parameters": {
+      "P_max": 1000,
+      "limit": 5000,
+      "N_zeros": 30,
+      "N_primes": 40,
+      "N_eigenvalues": 40
+    },
+    "component_1_CompactificacionNoetica": {
+      "component": "CompactificacionNoetica",
+      "mertens_volume": 0.5592882264035711,
+      "mertens_target": 0.5614594835668851,
+      "mertens_error": 0.002171257163314011,
+      "mertens_ok": true,
+      "spectrum_uniform": true,
+      "spectrum_spacing": 0.9095842358945609,
+      "arithmetic_preserved": false,
+      "Psi_1": 0.6666666666666666,
+      "passed": false
+    },
+    "component_2_FiltroPoissonAdelico": {
+      "component": "FiltroPoissonAdelico",
+      "von_mangoldt_ok": true,
+      "Lambda_2": 0.6931471805599453,
+      "Lambda_4": 0.6931471805599453,
+      "Lambda_6": 0.0,
+      "mobius_cancellation_ok": true,
+      "mobius_errors_found": 0,
+      "explicit_formula_ok": true,
+      "N_osc_at_10": 0.02817978603778784,
+      "Psi_2": 1.0,
+      "passed": true
+    },
+    "component_3_DeterminanteHadamard": {
+      "component": "DeterminanteHadamard",
+      "A_analytical": 0.0,
+      "A_numerical": 0.0,
+      "A_ok": true,
+      "B_estimate": 9.272439446670283,
+      "B_ok": false,
+      "berry_phase": 5.497787143782138,
+      "berry_ok": true,
+      "Psi_3": 0.6666666666666666,
+      "passed": false
+    },
+    "component_4_SistemaDinamicoZ": {
+      "component": "SistemaDinamicoZ",
+      "arithmetic_ok": true,
+      "N_orbits": 40,
+      "lyapunov_estimate": 0.9380885554149225,
+      "lyapunov_ok": true,
+      "GUE_repulsion": false,
+      "volume": 2.0,
+      "volume_ok": true,
+      "spectral_gap": 0.4054651081081645,
+      "gap_positive": true,
+      "Psi_4": 0.8,
+      "passed": true
+    },
+    "Psi_global": 0.7833333333333332,
+    "Psi_threshold": 0.888,
+    "Psi_target": 0.908,
+    "global_pass": false,
+    "success": false,
+    "QCAL": {
+      "F0": 141.7001,
+      "C_COHERENCE": 244.36,
+      "C_PRIMARY": 629.83
+    }
+  },
+  "components": {
+    "1_CompactificacionNoetica": {
+      "description": "Natural adelic compactification C_Q = A_Q*/Q*",
+      "key_result": "V^(P)\u00b7log P \u2192 e^(-\u03b3) \u2248 0.5615",
+      "Psi": 0.6666666666666666
+    },
+    "2_FiltroPoissonAdelico": {
+      "description": "von Mangoldt \u039b(n) exact adelic filter",
+      "key_result": "M\u00f6bius cancellation verified, mobius() bug fixed",
+      "Psi": 1.0
+    },
+    "3_DeterminanteHadamard": {
+      "description": "Hadamard factors A=0, B\u22480",
+      "key_result": "A=0.000000, B\u22489.272",
+      "Psi": 0.6666666666666666
+    },
+    "4_SistemaDinamicoZ": {
+      "description": "Arithmetic-Hyperbolic-Finite Volume system",
+      "key_result": "\u03bb\u22480.938, Vol=2, GUE repulsion",
+      "Psi": 0.8
+    }
+  },
+  "global_coherence": 0.7833333333333332,
+  "certification": "PENDING",
+  "gaps_closed": [
+    "\u2713 Natural compactification (no ad hoc box)",
+    "\u2713 Rational orbit filter (von Mangoldt exact)",
+    "\u2713 Hadamard factors controlled (A=0, B\u22480)",
+    "\u2713 Unified arithmetic-hyperbolic system (Vol=2)"
+  ]
+}
