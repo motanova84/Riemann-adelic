@@ -338,10 +338,10 @@ def demo_5_amplitude_decay(zeros: NDArray, E_max: float = 200.0,
     if len(filtered_zeros) < 2:
         raise ValueError(f"Insufficient zeros in range: {len(filtered_zeros)} (need >=2)")
 
-    # Actual cumulative zero count N(E) — step function
-    N_actual = np.array([float(np.searchsorted(filtered_zeros, e)) for e in E])
+    # Actual cumulative zero count N(E) — step function (vectorized)
+    N_actual = np.searchsorted(filtered_zeros, E).astype(float)
 
-    # Smooth approximation N_smooth(E)
+    # Smooth approximation N_smooth(E) (vectorized)
     N_smooth_vals = np.array([N_smooth(e) for e in E])
 
     # Oscillatory deviation N_osc(E) = N_actual - N_smooth  (oscillates around 0)

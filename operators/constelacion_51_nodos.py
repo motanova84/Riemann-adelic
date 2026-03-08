@@ -173,15 +173,18 @@ def _node_coherence(value: float, sigma_fraction: float = 0.02) -> float:
     where σ = sigma_fraction × max(|v|, 1).
 
     For infinite values (category 1 node ∞), returns 1.0 (perfect coherence).
+    NaN values are treated as zero-coherence (0.0) to avoid propagation.
 
     Args:
         value: Node value.
         sigma_fraction: Relative noise level (default 2%).
 
     Returns:
-        Coherence score in (0, 1].
+        Coherence score in [0, 1].
     """
-    if not math.isfinite(value):
+    if math.isnan(value):
+        return 0.0  # NaN nodes have no coherence
+    if math.isinf(value):
         return 1.0  # ∞ node has perfect coherence by construction
     abs_v = abs(value)
     sigma = sigma_fraction * max(abs_v, 1.0)
@@ -292,9 +295,10 @@ def compute_constellation_psi(nodes: List[ConstellationNode]) -> Tuple[float, fl
     if n == 0:
         return 1.0, 1.0, 1.0
 
+    coh_arr = np.array(finite_coherences)
     # Harmonic mean (safe — all coherences are > 0)
-    harmonic_mean = n / sum(1.0 / c for c in finite_coherences)
-    mean_coh = sum(finite_coherences) / n
+    harmonic_mean = float(n / np.sum(1.0 / coh_arr))
+    mean_coh = float(np.mean(coh_arr))
 
     # Trinity Ψ = cube root of harmonic mean
     psi = harmonic_mean ** (1.0 / 3.0)
