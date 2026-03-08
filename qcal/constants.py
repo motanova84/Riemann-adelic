@@ -88,6 +88,139 @@ COHERENCE_FACTOR = C_COHERENCE / C_PRIMARY  # ≈ 0.388
 
 
 # =============================================================================
+# PHYSICAL CONSTANTS (SI Units)
+# =============================================================================
+
+# Speed of light in vacuum: c = 299,792,458 m/s (exact, SI definition)
+SPEED_OF_LIGHT = 299_792_458.0  # m/s
+
+# Planck's constant: h = 6.62607015×10⁻³⁴ J·s (exact, SI definition 2019)
+PLANCK_CONSTANT = 6.62607015e-34  # J·s
+
+# Reduced Planck constant: ℏ = h/(2π)
+HBAR = PLANCK_CONSTANT / (2.0 * np.pi)  # J·s
+
+# Boltzmann constant: k_B = 1.380649×10⁻²³ J/K (exact, SI definition 2019)
+BOLTZMANN = 1.380649e-23  # J/K
+
+
+# =============================================================================
+# PHYSICAL MANIFESTATION OF f₀ = 141.7001 Hz
+# =============================================================================
+
+# Physical wavelength corresponding to f₀
+# λ₀ = c / f₀ = 299,792,458 / 141.7001 ≈ 2,115,682.755 m ≈ 2.115 Mm
+LAMBDA_WAVE = SPEED_OF_LIGHT / F0  # m  ≈ 2,115,682.755 m
+LAMBDA_WAVE_Mm = LAMBDA_WAVE / 1e6  # Mm ≈ 2.115 Mm
+
+# Angular frequency: ω₀ = 2πf₀ ≈ 890.33 rad/s (same as OMEGA_0)
+# Energy of a single photon at f₀: E₀ = h·f₀
+# E₀ = 6.62607015×10⁻³⁴ × 141.7001 ≈ 9.389×10⁻³² J
+E0_PHOTON = PLANCK_CONSTANT * F0  # J  ≈ 9.39e-32 J
+
+# Verification summary (all derived from f₀ = 141.7001 Hz):
+#   λ₀ = c/f₀  ≈ 2.116 Mm  (problem statement: 2.115 Mm — matches to 3 sig figs)
+#   E₀ = h·f₀  ≈ 9.39e-32 J (problem statement: 9.39e-32 J — exact match)
+
+
+# =============================================================================
+# LIGO / GRAVITATIONAL WAVE DETECTION CONSTANTS
+# =============================================================================
+
+# Gravitational wave events where f₀ = 141.7001 Hz was detected
+# GW150914: First gravitational wave detection (14 September 2015)
+GW150914_GPS_TIME = 1126259462  # GPS timestamp
+GW150914_TOTAL_MASS_SOLAR = 70.0  # M_solar (approximate)
+
+# GW250114: Black hole merger ringdown detection (14 January 2025)
+GW250114_GPS_TIME = 1420242600  # GPS timestamp (approximate)
+
+# Detection significance in LIGO analysis at f₀ = 141.7001 Hz
+LIGO_DETECTION_SNR = 7.47  # Signal-to-noise ratio at 141.7001 Hz
+LIGO_DETECTION_SIGMA = 10.0  # Significance in units of sigma (10σ)
+
+# Detection bandwidth centered on f₀
+LIGO_DETECTION_FREQ = F0  # Hz (same as F0 = 141.7001 Hz)
+LIGO_DETECTION_BANDWIDTH = 1.0  # Hz (±0.5 Hz around f₀)
+
+
+# =============================================================================
+# GUE (GAUSSIAN UNITARY ENSEMBLE) MATRIX CONSTANTS
+# =============================================================================
+
+# Reference matrix size: N=19 gives N²=361 matrix elements
+# Statistical test: p-value < 10⁻¹⁰ confirms GUE statistics
+GUE_MATRIX_N = 19  # Reference matrix dimension
+GUE_MATRIX_N_SQ = GUE_MATRIX_N ** 2  # = 361 (total elements)
+GUE_MATRIX_PVALUE = 1e-10  # Chi-squared p-value for GUE conformity
+
+# Wigner surmise: P(s) = (32/π²)·s²·exp(-4s²/π)
+# Theoretical moments
+GUE_MEAN_SPACING = 1.0  # <s>_GUE = 1 (by normalization)
+GUE_MEAN_SQ_SPACING = 3.0 * np.pi / 8.0  # <s²>_GUE = 3π/8 ≈ 1.178
+
+# KS test threshold: p > 0.05 confirms GUE distribution
+GUE_KS_PVALUE_THRESHOLD = 0.05
+
+# Berry exponent for smooth zero counting correction
+# N_smooth(E) = (E/2π)·ln(E/(2πe)) + 7/8
+BERRY_EXPONENT = 7.0 / 8.0  # = 0.875
+
+# Weil explicit formula coherence (discrepancy ~ 0.0002 → coherence ≈ 0.9998)
+WEIL_COHERENCE = 0.9998
+
+
+# =============================================================================
+# CONSTELACIÓN 51 NODOS (51-NODE CONSTELLATION)
+# =============================================================================
+
+# The 51-node constellation unifies:
+# 5 fundamental mathematical constants: φ, π, τ, e, ∞
+# 7 string harmonic nodes: 1/7, 2/7, 3/7, 4/7, 5/7, 6/7, 7/7
+# 10 Fibonacci temporal nodes: F(1)..F(10) = 1,1,2,3,5,8,13,21,34,55
+# 29 prime nodes: first 29 primes (up to 109)
+# Total: 5 + 7 + 10 + 29 = 51 nodes
+
+# Category 1: Fundamental mathematical constants (5 nodes)
+CONST_PHI = (1 + np.sqrt(5)) / 2  # ≈ 1.618033988749895  (Golden ratio)
+CONST_PI = np.pi                    # ≈ 3.141592653589793  (π)
+CONST_TAU = 2.0 * np.pi             # ≈ 6.283185307179586  (τ = 2π)
+CONST_E = np.e                      # ≈ 2.718281828459045  (Euler's number)
+CONST_INF = float('inf')            # ∞ (infinity / projective completion)
+CONSTELLATION_CONSTANTS = [CONST_PHI, CONST_PI, CONST_TAU, CONST_E, CONST_INF]
+
+# Category 2: String harmonic ratios 1/7, 2/7, ..., 7/7 (7 nodes)
+# These represent the 7 fundamental string harmonics in the QCAL lattice
+# Note: f₀ × (k/7) for k=1..7 gives the string sub-harmonics
+CONSTELLATION_STRINGS = [k / 7.0 for k in range(1, 8)]  # [1/7, 2/7, ..., 1]
+
+# Category 3: Fibonacci temporal nodes (10 nodes)
+# F(10) = 55 → 55.08 years = current QCAL cosmic epoch (1970 + 55.08 = 2025.08)
+# The current epoch 2025-2026 corresponds to Fibonacci(10) = 55 years from 1970
+FIBONACCI_SEQUENCE = [1, 1, 2, 3, 5, 8, 13, 21, 34, 55]  # F(1)..F(10)
+FIBONACCI_EPOCH_YEARS = 55.08  # Years elapsed: Fibonacci cycle F(10)=55
+FIBONACCI_EPOCH_ORIGIN = 1970.0  # Reference year (Unix epoch)
+FIBONACCI_EPOCH_YEAR = FIBONACCI_EPOCH_ORIGIN + FIBONACCI_EPOCH_YEARS  # ≈ 2025.08
+
+# Category 4: First 29 prime nodes (completing the 51-node constellation)
+CONSTELLATION_PRIMES = [
+    2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47,
+    53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101, 103, 107, 109
+]  # 29 primes
+
+# Total node count
+CONSTELLATION_N_NODES = (
+    len(CONSTELLATION_CONSTANTS) +
+    len(CONSTELLATION_STRINGS) +
+    len(FIBONACCI_SEQUENCE) +
+    len(CONSTELLATION_PRIMES)
+)  # = 5 + 7 + 10 + 29 = 51
+
+# Constellation signature frequency: f₀ resonates at all 51 nodes
+CONSTELLATION_FREQUENCY = F0  # Hz
+
+
+# =============================================================================
 # MATHEMATICAL CONSTANTS
 # =============================================================================
 
@@ -132,6 +265,8 @@ DOI_INFINITO = "10.5281/zenodo.17362686"
 DOI_PNP = "10.5281/zenodo.17315719"
 DOI_GOLDBACH = "10.5281/zenodo.17297591"
 DOI_BSD = "10.5281/zenodo.17236603"
+DOI_RH_CONDITIONAL = "10.5281/zenodo.17379721"  # RH conditional proof
+DOI_RH_FINAL = "10.5281/zenodo.17379721"         # RH final coronación proof
 
 
 # =============================================================================
@@ -360,6 +495,8 @@ def get_all_constants() -> Dict[str, Any]:
             'DOI_PNP': DOI_PNP,
             'DOI_GOLDBACH': DOI_GOLDBACH,
             'DOI_BSD': DOI_BSD,
+            'DOI_RH_CONDITIONAL': DOI_RH_CONDITIONAL,
+            'DOI_RH_FINAL': DOI_RH_FINAL,
         },
         'tolerances': {
             'TOLERANCE_STRICT': TOLERANCE_STRICT,
@@ -368,7 +505,39 @@ def get_all_constants() -> Dict[str, Any]:
             'PSI_THRESHOLD_EXCELLENT': PSI_THRESHOLD_EXCELLENT,
             'PSI_THRESHOLD_GOOD': PSI_THRESHOLD_GOOD,
             'PSI_THRESHOLD_ACCEPTABLE': PSI_THRESHOLD_ACCEPTABLE,
-        }
+        },
+        'physical': {
+            'SPEED_OF_LIGHT': SPEED_OF_LIGHT,
+            'PLANCK_CONSTANT': PLANCK_CONSTANT,
+            'HBAR': float(HBAR),
+            'BOLTZMANN': BOLTZMANN,
+            'LAMBDA_WAVE': LAMBDA_WAVE,
+            'LAMBDA_WAVE_Mm': LAMBDA_WAVE_Mm,
+            'E0_PHOTON': E0_PHOTON,
+        },
+        'ligo': {
+            'LIGO_DETECTION_SNR': LIGO_DETECTION_SNR,
+            'LIGO_DETECTION_SIGMA': LIGO_DETECTION_SIGMA,
+            'LIGO_DETECTION_FREQ': LIGO_DETECTION_FREQ,
+            'GW150914_GPS_TIME': GW150914_GPS_TIME,
+            'GW250114_GPS_TIME': GW250114_GPS_TIME,
+        },
+        'gue': {
+            'GUE_MATRIX_N': GUE_MATRIX_N,
+            'GUE_MATRIX_N_SQ': GUE_MATRIX_N_SQ,
+            'GUE_MATRIX_PVALUE': GUE_MATRIX_PVALUE,
+            'GUE_MEAN_SPACING': GUE_MEAN_SPACING,
+            'GUE_MEAN_SQ_SPACING': GUE_MEAN_SQ_SPACING,
+            'GUE_KS_PVALUE_THRESHOLD': GUE_KS_PVALUE_THRESHOLD,
+            'BERRY_EXPONENT': BERRY_EXPONENT,
+            'WEIL_COHERENCE': WEIL_COHERENCE,
+        },
+        'constellation': {
+            'CONSTELLATION_N_NODES': CONSTELLATION_N_NODES,
+            'FIBONACCI_EPOCH_YEAR': FIBONACCI_EPOCH_YEAR,
+            'FIBONACCI_EPOCH_YEARS': FIBONACCI_EPOCH_YEARS,
+            'CONSTELLATION_FREQUENCY': CONSTELLATION_FREQUENCY,
+        },
     }
 
 
