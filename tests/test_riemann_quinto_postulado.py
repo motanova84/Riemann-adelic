@@ -50,6 +50,14 @@ from riemann_quinto_postulado import (
     PSI_GLOBAL_TARGET,
     QUINTO_SHA256_PREFIX,
 )
+from riemann_quinto_postulado import (
+    SymbioticHamiltonianResult,
+    RiemannZetaSpectrumResult,
+    QuintoPostuladoReport,
+    verificar_geometria,
+    activar_quinto_postulado,
+    THRESHOLD_PSI,
+)
 
 
 # ============================================================
@@ -979,17 +987,6 @@ class TestIntegration:
         assert abs(result.psi_global - PSI_GLOBAL_TARGET) < 0.15, \
             f"Ψ_global = {result.psi_global}, expected near {PSI_GLOBAL_TARGET}"
         print("✅ test_psi_global_near_target PASSED")
-    ScaleIdentityResult,
-    SymbioticHamiltonianResult,
-    RiemannZetaSpectrumResult,
-    QuintoPostuladoReport,
-    verificar_geometria,
-    activar_quinto_postulado,
-    F0_QCAL,
-    C_COHERENCE,
-    PHI,
-    THRESHOLD_PSI
-)
 
 
 # =============================================================================

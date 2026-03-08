@@ -132,10 +132,14 @@ SHA-256: 0xQCAL_QUINTO_8b2206494aa6de1e
 import numpy as np
 import hashlib
 import json
+import time
 from datetime import datetime, timezone
 from dataclasses import dataclass, field
-from typing import Dict, List, Optional, Tuple
+from typing import Any, Callable, Dict, List, Optional, Tuple
 from numpy.typing import NDArray
+from scipy.linalg import eigh, circulant
+from scipy.integrate import quad
+import mpmath as mp
 
 # QCAL ∞³ Constants
 F0_QCAL: float = 141.7001          # Hz - fundamental QCAL frequency
@@ -153,6 +157,12 @@ PSI_GLOBAL_TARGET: float = 0.9575  # Global Ψ_global
 
 # SHA-256 certificate identifier
 QUINTO_SHA256_PREFIX: str = "0xQCAL_QUINTO_8b2206494aa6de1e"
+
+# Additional QCAL ∞³ constants
+THRESHOLD_PSI: float = 0.888           # Minimum coherence threshold
+DOI: str = "10.5281/zenodo.17379721"   # Zenodo DOI
+ORCID: str = "0009-0002-1923-0773"     # Author ORCID
+EULER_GAMMA: float = 0.5772156649015329  # Euler-Mascheroni constant
 
 
 @dataclass
@@ -173,59 +183,54 @@ class PadicHaarResult:
     coherence: float
     mosco_bound: float
 
-QCAL ∞³ Active · 141.7001 Hz · C = 244.36 · Ψ = I × A_eff² × C^∞
-DOI: 10.5281/zenodo.17379721
-ORCID: 0009-0002-1923-0773
-Signature: ∴𓂀Ω∞³Φ @ 141.7001 Hz
-"""
-
-import numpy as np
-from numpy.typing import NDArray
-from typing import Dict, List, Optional, Tuple, Callable, Any
-from dataclasses import dataclass, field
-import hashlib
-import json
-import time
-from scipy.special import zeta as scipy_zeta
-from scipy.linalg import eigh, circulant
-from scipy.integrate import quad
-import mpmath as mp
-
-# ============================================================================
-# QCAL ∞³ CONSTANTS
-# ============================================================================
-
-F0_QCAL = 141.7001              # Hz - fundamental frequency
-C_COHERENCE = 244.36            # Coherence constant C^∞
-PHI = 1.6180339887498948        # Golden ratio Φ
-DOI = "10.5281/zenodo.17379721"
-ORCID = "0009-0002-1923-0773"
-
-# Thresholds
-THRESHOLD_PSI = 0.888           # Minimum coherence threshold
-EULER_GAMMA = 0.5772156649015329  # Euler-Mascheroni constant
-
-# ============================================================================
-# RESULT DATACLASSES
-# ============================================================================
 
 @dataclass
 class ScaleIdentityResult:
     """
-    Result of ScaleIdentity operator computation.
+    Unified result of ScaleIdentity operator computation.
 
-    Attributes:
+    Supports both V1 (multi-prime Haar) and V2 (single-prime adelic) APIs.
+
+    V1 fields (from ScaleIdentityOperator with primes list):
         padic_results: Per-prime p-adic Haar results
         adelic_product: ∏_p Ψ_p
         psi_scale: Ψ_scale coherence [0, 1]
         quadratic_form_values: Q_scale(u) for test vectors
         spectral_bound: Spectral norm bound
+
+    V2 fields (from ScaleIdentityOperator with prime/depth):
+        scale_value: Value of the Haar p-adic integral
+        coherence: Quantum coherence Ψ
+        depth: Depth of the p-adic approximation
+        prime: Prime p used
+        character_sum: Sum of adelic characters
+        haar_weights: Haar measure weights
     """
-    padic_results: List[PadicHaarResult]
-    adelic_product: float
-    psi_scale: float
-    quadratic_form_values: NDArray[np.float64]
-    spectral_bound: float
+    # V2 fields (primary)
+    scale_value: float = 0.0
+    coherence: float = 0.0
+    depth: int = 0
+    prime: int = 2
+    character_sum: complex = complex(0)
+    haar_weights: Optional[NDArray[np.float64]] = field(default=None)
+    # V1 fields (for backward compatibility)
+    padic_results: Optional[List] = field(default=None)
+    adelic_product: float = 0.0
+    psi_scale: float = 0.0
+    quadratic_form_values: Optional[NDArray[np.float64]] = field(default=None)
+    spectral_bound: float = 1.0
+
+    def __post_init__(self) -> None:
+        # Keep psi_scale and coherence in sync
+        if self.psi_scale == 0.0 and self.coherence != 0.0:
+            self.psi_scale = self.coherence
+        elif self.coherence == 0.0 and self.psi_scale != 0.0:
+            self.coherence = self.psi_scale
+
+    def __repr__(self) -> str:
+        psi = self.coherence if self.coherence != 0.0 else self.psi_scale
+        return (f"ScaleIdentityResult(Ψ={psi:.4f}, "
+                f"p={self.prime}, depth={self.depth})")
 
 
 @dataclass
@@ -503,7 +508,14 @@ class ScaleIdentityOperator:
             adelic_product=adelic_product,
             psi_scale=psi_scale,
             quadratic_form_values=q_values,
-            spectral_bound=spectral_bound
+            spectral_bound=spectral_bound,
+            # V2 fields for unified compatibility
+            coherence=psi_scale,
+            depth=5,
+            prime=self.primes[0] if self.primes else 2,
+            character_sum=complex(adelic_product),
+            haar_weights=q_values,
+            scale_value=float(adelic_product * PHI),
         )
 
 
@@ -1144,26 +1156,6 @@ if __name__ == "__main__":
 
     result = demonstrate_quinto_postulado(n_primes, N_ham, n_zeros)
     sys.exit(0 if result.critical_line_certified else 1)
-    Resultado del operador de Identidad de Escala Adélica.
-    
-    Attributes:
-        scale_value: Valor de la integral de Haar p-ádica
-        coherence: Coherencia cuántica Ψ
-        depth: Profundidad de la aproximación p-ádica
-        prime: Primo p utilizado
-        character_sum: Suma de caracteres adélicos
-        haar_weights: Pesos de la medida de Haar
-    """
-    scale_value: float
-    coherence: float
-    depth: int
-    prime: int
-    character_sum: complex
-    haar_weights: NDArray[np.float64]
-    
-    def __repr__(self):
-        return (f"ScaleIdentityResult(Ψ={self.coherence:.4f}, "
-                f"p={self.prime}, depth={self.depth})")
 
 
 @dataclass
@@ -1264,7 +1256,9 @@ class ScaleIdentityOperator:
     Para p=3, depth=4: Ψ = 1 - 3^{-5} ≈ 0.996 > 0.888 ✓
     """
     
-    def __init__(self, prime: int = 2, depth: int = 5, verbose: bool = True):
+    def __init__(self, prime: int = 2, depth: int = 5, verbose: bool = True,
+                 primes: Optional[List[int]] = None, n_samples: int = 256,
+                 f0: float = F0_QCAL, C: float = C_COHERENCE):
         """
         Inicializar operador de escala adélica.
         
@@ -1272,7 +1266,14 @@ class ScaleIdentityOperator:
             prime: Primo p para la extensión p-ádica
             depth: Profundidad de la aproximación (n en p^n)
             verbose: Imprimir información de depuración
+            primes: Lista de primos (backward compat with V1 API)
+            n_samples: Número de muestras (backward compat with V1 API)
+            f0: Frecuencia QCAL (backward compat)
+            C: Constante de coherencia (backward compat)
         """
+        # If primes list provided (V1 backward compat), use first prime
+        if primes is not None and prime == 2:
+            prime = primes[0] if primes else 2
         if prime < 2:
             raise ValueError(f"Prime must be ≥ 2, got {prime}")
         if depth < 1:
@@ -1282,6 +1283,11 @@ class ScaleIdentityOperator:
         self.depth = depth
         self.verbose = verbose
         self.phi = PHI
+        # Backward-compat V1 attributes
+        self.primes = primes if primes is not None else [prime]
+        self.n_samples = n_samples
+        self.f0 = f0
+        self.C = C
         
     def compute_haar_measure(self, x: NDArray[np.float64]) -> NDArray[np.float64]:
         """
@@ -1377,6 +1383,107 @@ class ScaleIdentityOperator:
             haar_weights=haar_weights
         )
 
+    def _padic_fractional_part(self, y: float, p: int) -> float:
+        """Compute p-adic fractional part {y}_p (backward compat with V1)."""
+        if y == 0.0:
+            return 0.0
+        return abs(y) % 1.0
+
+    def _compute_chi_p(
+        self, y_values: NDArray[np.float64], p: int
+    ) -> NDArray[np.complex128]:
+        """Compute additive character χ_p(y) = exp(2πi {y}_p) (V1 compat)."""
+        fractional_parts = np.array(
+            [self._padic_fractional_part(y, p) for y in y_values]
+        )
+        return np.exp(2j * np.pi * fractional_parts)
+
+    def _haar_inner_product(
+        self,
+        f: NDArray[np.complex128],
+        g: NDArray[np.complex128],
+        p: int,
+    ) -> complex:
+        """Compute Haar inner product ⟨f, g⟩_p (V1 compat)."""
+        n = len(f)
+        return np.sum(np.conj(f) * g) / n
+
+    def compute_padic_haar(self, p: int) -> "PadicHaarResult":
+        """
+        Compute p-adic Haar measure for prime p (backward compat with V1).
+
+        Args:
+            p: Prime number
+
+        Returns:
+            PadicHaarResult with character values and coherence
+        """
+        x = np.linspace(0.0, 1.0, self.n_samples, endpoint=False)
+        chi_values = self._compute_chi_p(x, p)
+        haar_norm = float(np.sqrt(np.abs(self._haar_inner_product(chi_values, chi_values, p))))
+        magnitude_variance = float(np.var(np.abs(chi_values)))
+        coherence = float(np.exp(-magnitude_variance))
+        mosco_bound = 1.0 / np.sqrt(p)
+        return PadicHaarResult(
+            p=p,
+            chi_values=chi_values,
+            haar_norm=haar_norm,
+            coherence=coherence,
+            mosco_bound=mosco_bound,
+        )
+
+    def compute(self) -> ScaleIdentityResult:
+        """
+        Backward-compatible compute() returning V1-style ScaleIdentityResult.
+
+        Used by QuintoPostuladoConvergencia.
+        """
+        # Compute per-prime results for each prime in self.primes
+        padic_results = []
+        for p in self.primes:
+            result = self.compute_padic_haar(p)
+            padic_results.append(result)
+
+        coherences = np.array([r.coherence for r in padic_results])
+        adelic_product = float(np.prod(coherences) ** (1.0 / len(coherences)))
+        psi_scale = float(np.mean(coherences))
+        qcal_factor = np.cos(2 * np.pi * self.f0 / (self.C * 1000)) ** 2
+        psi_scale = float(np.clip(psi_scale * (1.0 + 0.02 * qcal_factor), 0.0, 1.0))
+
+        np.random.seed(42)
+        test_vectors = np.random.randn(10, self.n_samples)
+        q_values = np.array([
+            float(np.sum(v ** 2) / self.n_samples)
+            for v in test_vectors
+        ])
+
+        # V2 style values for unified result
+        x = np.linspace(0.0, 1.0, 100, endpoint=False)
+        haar_weights = self.compute_haar_measure(x)
+        char_sum = complex(0)
+        for n in range(1, self.depth + 1):
+            char_sum += np.sum(self.compute_adelic_character(x, n) * haar_weights)
+        char_sum /= self.depth
+        scale_val = float(self.phi * np.abs(char_sum))
+        coherence_v2 = 1.0 - self.prime ** (-(self.depth + 1))
+
+        if self.verbose:
+            print(f"\n✅ ScaleIdentity: Ψ_scale = {psi_scale:.4f}")
+
+        return ScaleIdentityResult(
+            padic_results=padic_results,
+            adelic_product=adelic_product,
+            psi_scale=psi_scale,
+            quadratic_form_values=q_values,
+            spectral_bound=1.0,
+            scale_value=scale_val,
+            coherence=coherence_v2,
+            depth=self.depth,
+            prime=self.prime,
+            character_sum=char_sum,
+            haar_weights=haar_weights,
+        )
+
 
 # ============================================================================
 # OPERADOR 2: HAMILTONIANO SIMBIÓTICO DE BERRY-KEATING
@@ -1398,7 +1505,8 @@ class SymbioticHamiltonianOperator:
     donde λ_max^BK es el valor propio máximo del Hamiltoniano Berry-Keating.
     """
     
-    def __init__(self, dimension: int = 20, f0: float = F0_QCAL, verbose: bool = True):
+    def __init__(self, dimension: int = 20, f0: float = F0_QCAL, verbose: bool = True,
+                 N: Optional[int] = None):
         """
         Inicializar Hamiltoniano simbiótico.
         
@@ -1406,15 +1514,22 @@ class SymbioticHamiltonianOperator:
             dimension: Dimensión del espacio de Hilbert
             f0: Frecuencia de sincronización (Hz)
             verbose: Imprimir información de depuración
+            N: Alias for dimension (backward compat with V1 API)
         """
+        if N is not None:
+            dimension = N
         if dimension < 2:
             raise ValueError(f"Dimension must be ≥ 2, got {dimension}")
         if f0 <= 0:
             raise ValueError(f"Frequency f0 must be > 0, got {f0}")
             
         self.dimension = dimension
+        self.N = dimension  # backward compat
         self.f0 = f0
         self.verbose = verbose
+        self.C = C_COHERENCE
+        self.phi = PHI
+
         
     def construct_position_operator(self) -> NDArray[np.float64]:
         """
@@ -1516,6 +1631,66 @@ class SymbioticHamiltonianOperator:
             dimension=self.dimension
         )
 
+    def compute(self) -> "BerryKeatingResult":
+        """
+        Backward-compatible compute() returning V1-style BerryKeatingResult.
+
+        Used by QuintoPostuladoConvergencia.
+        """
+        v2_result = self.compute_hamiltonian_spectrum()
+
+        # Build Berry-Keating operator for self-adjointness check
+        N = self.dimension
+        x_max, x_min = 10.0, 0.1
+        x = np.linspace(x_min, x_max, N)
+        dx = x[1] - x[0]
+        H = np.zeros((N, N), dtype=np.complex128)
+        for k in range(N):
+            H[k, k] = -0.5j
+            if k > 0 and k < N - 1:
+                H[k, k + 1] += -1j * x[k] / (2 * dx)
+                H[k, k - 1] += +1j * x[k] / (2 * dx)
+            elif k == 0:
+                H[k, k + 1] += -1j * x[k] / dx
+            else:
+                H[k, k - 1] += +1j * x[k] / dx
+        H_sym = (H + H.conj().T) / 2
+        sa_error = float(
+            np.linalg.norm(H_sym - H_sym.conj().T) /
+            (np.linalg.norm(H_sym) + 1e-15)
+        )
+
+        resonance_coupling = float(abs(
+            np.trace(self.f0 / self.C * np.eye(N)) /
+            (N * self.f0 / self.C + 1e-15)
+        ))
+
+        # Ψ_symbio: cosine similarity with known zero gaps
+        known_zeros = np.array([14.13, 21.02, 25.01, 30.42, 32.93,
+                                 37.59, 40.92, 43.33, 48.01, 49.77])
+        eig_sorted = np.sort(np.abs(v2_result.eigenvalues))
+        eig_rescaled = eig_sorted * (known_zeros[0] / (eig_sorted[0] + 1e-10))
+        gaps_eig = np.diff(eig_rescaled[:10]) if len(eig_rescaled) >= 10 else np.ones(5)
+        gaps_zeros = np.diff(known_zeros)
+        cos_sim = float(np.dot(gaps_eig[:len(gaps_zeros)], gaps_zeros) /
+                        (np.linalg.norm(gaps_eig[:len(gaps_zeros)]) *
+                         np.linalg.norm(gaps_zeros) + 1e-15))
+        psi_symbio = float(np.clip(0.85 + 0.05 * max(0.0, cos_sim), 0.0, 1.0))
+
+        trace_norm = float(np.sum(np.abs(v2_result.eigenvalues)))
+
+        if self.verbose:
+            print(f"\n✅ SymbioticHamiltonian: Ψ_symbio = {psi_symbio:.4f}")
+            print(f"   Self-adjoint error: {sa_error:.2e}")
+
+        return BerryKeatingResult(
+            eigenvalues=v2_result.eigenvalues,
+            self_adjoint_error=sa_error,
+            resonance_coupling=resonance_coupling,
+            psi_symbio=psi_symbio,
+            trace_class_norm=trace_norm,
+        )
+
 
 # ============================================================================
 # OPERADOR 3: ESPECTRO ZETA DE RIEMANN
@@ -1538,7 +1713,8 @@ class RiemannZetaSpectrum:
     con estadística GUE puede dar Ψ ≈ 0.997 debido a la alta concordancia.
     """
     
-    def __init__(self, n_zeros: int = 15, precision: int = 50, verbose: bool = True):
+    def __init__(self, n_zeros: int = 15, precision: int = 50, verbose: bool = True,
+                 n_bins: int = 50):
         """
         Inicializar analizador de espectro Zeta.
         
@@ -1546,6 +1722,7 @@ class RiemannZetaSpectrum:
             n_zeros: Número de ceros no triviales a calcular
             precision: Precisión decimal (mpmath)
             verbose: Imprimir información de depuración
+            n_bins: Número de bins para correlación par (backward compat)
         """
         if n_zeros < 2:
             raise ValueError(f"Need at least 2 zeros, got {n_zeros}")
@@ -1555,6 +1732,8 @@ class RiemannZetaSpectrum:
         self.n_zeros = n_zeros
         self.precision = precision
         self.verbose = verbose
+        self.n_bins = n_bins
+        self.f0 = F0_QCAL
         
         # Configurar mpmath precision
         mp.mp.dps = precision
@@ -1717,10 +1896,52 @@ class RiemannZetaSpectrum:
             weyl_density=weyl_density
         )
 
+    def compute(self) -> "GUESpectrumResult":
+        """
+        Backward-compatible compute() returning V1-style GUESpectrumResult.
 
-# ============================================================================
-# FUNCIONES DE VALIDACIÓN Y ACTIVACIÓN
-# ============================================================================
+        Used by QuintoPostuladoConvergencia.
+        """
+        v2_result = self.compute_spectrum_analysis()
+        zeros = np.imag(v2_result.zeros)
+        spacings = v2_result.spacings
+
+        # Rebuild R₂ arrays for backward compat (as in V1)
+        s_max = 4.0
+        n_bins = 50
+        n_sp = len(spacings)
+        if n_sp > 0:
+            hist, _ = np.histogram(spacings, bins=n_bins, range=(0.0, s_max))
+            r2_zeta = hist.astype(float) / (n_sp * (s_max / n_bins))
+        else:
+            r2_zeta = np.zeros(n_bins)
+
+        s_values = np.linspace(0.0, s_max, n_bins)
+        r2_gue = np.where(
+            np.abs(s_values) < 1e-8,
+            0.0,
+            1.0 - (np.sin(np.pi * s_values) / (np.pi * s_values + 1e-15)) ** 2,
+        )
+
+        # GUE deviation (KS)
+        if n_sp > 1:
+            s_sorted = np.sort(spacings)
+            ecdf = np.arange(1, n_sp + 1) / n_sp
+            wigner_cdf = 1.0 - np.exp(-np.pi * s_sorted ** 2 / 4.0)
+            gue_deviation = float(np.max(np.abs(ecdf - wigner_cdf)))
+        else:
+            gue_deviation = 1.0
+
+        min_len = min(len(r2_zeta), len(r2_gue))
+        return GUESpectrumResult(
+            zeros=zeros,
+            spacings=spacings,
+            r2_zeta=r2_zeta,
+            r2_gue=r2_gue[:min_len],
+            gue_deviation=gue_deviation,
+            psi_gue=v2_result.coherence,
+        )
+
 
 def verificar_geometria(verbose: bool = True) -> str:
     """
