@@ -29,6 +29,7 @@ DOI: 10.5281/zenodo.17379721
 """
 
 import numpy as np
+from datetime import datetime
 from typing import Dict, Any, Optional
 import warnings
 
@@ -170,7 +171,7 @@ def validate_constants_coherence(verbose: bool = False) -> Dict[str, Any]:
         Dictionary containing validation results and coherence metrics
     """
     results = {
-        'timestamp': np.datetime64('now'),
+        'timestamp': datetime.utcnow().isoformat(),
         'all_checks_passed': True,
         'checks': {},
         'constants': {},

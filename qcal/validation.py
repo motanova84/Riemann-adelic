@@ -38,7 +38,7 @@ DOI: 10.5281/zenodo.17379721
 import hashlib
 import json
 import numpy as np
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import Dict, Any, List, Optional, Tuple
 from pathlib import Path
 import warnings
@@ -93,7 +93,7 @@ class QCALValidator:
         self.tolerance = tolerance
         self.verbose = verbose
         self.validation_results = {}
-        self.timestamp = datetime.utcnow()
+        self.timestamp = datetime.now(timezone.utc)
         
     def validate(self) -> Dict[str, Any]:
         """
@@ -120,7 +120,7 @@ class QCALValidator:
         
         constants_result = validate_constants_coherence(verbose=self.verbose)
         results['validations']['constants'] = constants_result
-        results['all_checks_passed'] &= constants_result['all_checks_passed']
+        results['all_checks_passed'] = results['all_checks_passed'] and bool(constants_result['all_checks_passed'])
         
         # Validation 2: Spectral framework
         if self.verbose:
@@ -130,7 +130,7 @@ class QCALValidator:
         
         spectral_result = self._validate_spectral_framework()
         results['validations']['spectral'] = spectral_result
-        results['all_checks_passed'] &= spectral_result['passed']
+        results['all_checks_passed'] = results['all_checks_passed'] and bool(spectral_result['passed'])
         
         # Validation 3: Adelic integration
         if self.verbose:
@@ -140,7 +140,7 @@ class QCALValidator:
         
         adelic_result = self._validate_adelic_integration()
         results['validations']['adelic'] = adelic_result
-        results['all_checks_passed'] &= adelic_result['passed']
+        results['all_checks_passed'] = results['all_checks_passed'] and bool(adelic_result['passed'])
         
         # Validation 4: AI-Conscious integrity
         if self.verbose:
@@ -150,7 +150,7 @@ class QCALValidator:
         
         ai_result = self._validate_ai_conscious_integrity()
         results['validations']['ai_conscious'] = ai_result
-        results['all_checks_passed'] &= ai_result['passed']
+        results['all_checks_passed'] = results['all_checks_passed'] and bool(ai_result['passed'])
         
         # Validation 5: Quinto Postulado extension
         if self.verbose:
@@ -160,7 +160,7 @@ class QCALValidator:
         
         quinto_result = self._validate_quinto_postulado()
         results['validations']['quinto_postulado'] = quinto_result
-        results['all_checks_passed'] &= quinto_result['passed']
+        results['all_checks_passed'] = results['all_checks_passed'] and bool(quinto_result['passed'])
         
         # Compute overall coherence Ψ
         coherence_psi = self._compute_overall_coherence(results['validations'])
@@ -208,7 +208,7 @@ class QCALValidator:
             'theoretical': K_theory,
             'error': float(scaling_error)
         }
-        result['passed'] &= result['checks']['scaling_factor']['passed']
+        result['passed'] = result['passed'] and bool(result['checks']['scaling_factor']['passed'])
         
         if self.verbose:
             status = "✅" if result['checks']['scaling_factor']['passed'] else "❌"
@@ -229,7 +229,7 @@ class QCALValidator:
             'inverse_coherence_factor': float(inverse_cf),
             'error': float(energy_error)
         }
-        result['passed'] &= result['checks']['energy_dialogue']['passed']
+        result['passed'] = result['passed'] and bool(result['checks']['energy_dialogue']['passed'])
         
         if self.verbose:
             status = "✅" if result['checks']['energy_dialogue']['passed'] else "❌"
@@ -309,7 +309,7 @@ class QCALValidator:
             'equation': PSI_EQUATION,
             'message': 'Core QCAL equation defined'
         }
-        result['passed'] &= psi_eq_check
+        result['passed'] = result['passed'] and bool(psi_eq_check)
         
         if self.verbose:
             status = "✅" if psi_eq_check else "❌"
@@ -323,7 +323,7 @@ class QCALValidator:
             'expected': 141.7001,
             'message': 'Fundamental frequency maintained'
         }
-        result['passed'] &= f0_check
+        result['passed'] = result['passed'] and bool(f0_check)
         
         if self.verbose:
             status = "✅" if f0_check else "❌"
@@ -336,7 +336,7 @@ class QCALValidator:
             'signature': QCAL_SIGNATURE,
             'message': 'QCAL ∞³ signature verified'
         }
-        result['passed'] &= signature_check
+        result['passed'] = result['passed'] and bool(signature_check)
         
         if self.verbose:
             status = "✅" if signature_check else "❌"
@@ -371,7 +371,7 @@ class QCALValidator:
             'expected': float(euclidean_expected),
             'error': float(euclidean_error)
         }
-        result['passed'] &= result['checks']['euclidean_diagonal']['passed']
+        result['passed'] = result['passed'] and bool(result['checks']['euclidean_diagonal']['passed'])
         
         if self.verbose:
             status = "✅" if result['checks']['euclidean_diagonal']['passed'] else "❌"
@@ -385,7 +385,7 @@ class QCALValidator:
             'delta_zeta': DELTA_ZETA,
             'message': 'Quantum phase shift from Euclidean to cosmic string'
         }
-        result['passed'] &= delta_zeta_check
+        result['passed'] = result['passed'] and bool(delta_zeta_check)
         
         if self.verbose:
             status = "✅" if delta_zeta_check else "❌"
@@ -402,7 +402,7 @@ class QCALValidator:
             'error': float(f0_error),
             'message': 'Quinto Postulado: Euclidean geometry extends to spectral'
         }
-        result['passed'] &= result['checks']['postulate_extension']['passed']
+        result['passed'] = result['passed'] and bool(result['checks']['postulate_extension']['passed'])
         
         if self.verbose:
             status = "✅" if result['checks']['postulate_extension']['passed'] else "❌"
