@@ -483,46 +483,87 @@ class FiltroRacionalesAdelico:
         Measures the destructive interference effect:
         The sum Σ_{n≤N} μ(n)/n should approach 0 (Möbius cancellation).
         
-        For the von Mangoldt function, the sum over composites with Möbius
-        weights should be much smaller than the sum over primes.
+        We decompose the partial sum into prime and composite contributions:
+        
+            S(N) = Σ_{n≤N} μ(n)/n = S_primes(N) + S_composites(N),
+        
+        and verify that |S_composites(N)| is much smaller than |S_primes(N)|.
         
         Args:
             N: Number of terms to sum
             
         Returns:
-            Dictionary with cancellation statistics
+            Dictionary with cancellation statistics.
+            
+        Notes:
+            This implementation uses a local Möbius function computed from
+            the precomputed prime list ``self.primes`` to avoid external
+            dependencies and to keep the calculation self-contained.
         """
-        # Sum von Mangoldt over all n ≤ N
-        total_sum = sum(self.von_mangoldt(n) for n in range(1, N+1))
-        
-        # Sum only over prime powers (the "signal")
-        prime_power_sum = 0.0
-        for p in self.primes:
-            if p > N:
-                break
-            k = 1
-            pk = p
-            while pk <= N:
-                prime_power_sum += np.log(p)
-                k += 1
-                pk = p ** k
-        
-        # The difference is the "noise" from composites with Möbius weights
-        composite_contribution = abs(total_sum - prime_power_sum)
-        
+
+        def mobius_local(n: int) -> int:
+            """
+            Local computation of the Möbius function μ(n) using self.primes.
+            
+            μ(n) = 0    if n has a squared prime factor,
+                 = (-1)^k if n is a product of k distinct primes,
+                 = 1      if n = 1.
+            """
+            if n == 1:
+                return 1
+            remaining = n
+            prime_factors = 0
+            for p in self.primes:
+                if p * p > remaining:
+                    break
+                if remaining % p == 0:
+                    prime_factors += 1
+                    remaining //= p
+                    # If p divides again, n is not squarefree ⇒ μ(n) = 0
+                    if remaining % p == 0:
+                        return 0
+                while remaining % p == 0:
+                    # Consume any remaining power of p (already handled square case above)
+                    remaining //= p
+            if remaining > 1:
+                # remaining is a prime factor > sqrt(n)
+                prime_factors += 1
+            return -1 if (prime_factors % 2 == 1) else 1
+
+        # Global Möbius sum S(N) = Σ_{n≤N} μ(n)/n
+        mobius_sum = 0.0
+        # Decompose into primes vs composites
+        prime_sum = 0.0
+        composite_sum = 0.0
+
+        prime_set = set(self.primes)
+
+        for n in range(1, N + 1):
+            mu_n = mobius_local(n)
+            term = mu_n / n
+            mobius_sum += term
+            if n in prime_set:
+                # Prime contribution (μ(p) = -1 for primes p)
+                prime_sum += term
+            elif n > 1:
+                # Composite contribution (includes μ(n) = 0 for non-squarefree n)
+                composite_sum += term
+
+        composite_contribution = abs(composite_sum)
+
         # Cancellation ratio: how much the Möbius function suppresses composites
-        if abs(prime_power_sum) > 1e-10:
-            ratio = composite_contribution / prime_power_sum
+        if abs(prime_sum) > 1e-12:
+            ratio = composite_contribution / abs(prime_sum)
         else:
             ratio = 0.0
-        
+
         # Expected: composites should contribute ~1/3.76 of the primes
         # Due to Möbius destructive interference
         theoretical_ratio = 1.0 / 3.76
-        
+
         return {
-            'total_sum': float(total_sum),
-            'prime_power_sum': float(prime_power_sum),
+            'total_sum': float(mobius_sum),
+            'prime_power_sum': float(prime_sum),
             'composite_contribution': float(composite_contribution),
             'cancellation_ratio': float(ratio),
             'theoretical_ratio': float(theoretical_ratio),
