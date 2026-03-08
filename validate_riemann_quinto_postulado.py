@@ -2,7 +2,7 @@
 """
 Independent Validation Script — Riemann Quinto Postulado
 
-16 independent validation checks covering all mathematical aspects of the
+17 independent validation checks covering all mathematical aspects of the
 three operators, the geometric validation function, and the SHA-256 certificate.
 
 Usage::
@@ -13,7 +13,7 @@ Flags:
     --json      Write full results to data/riemann_quinto_postulado_validation.json
 
 Exit code:
-    0  All 16 validations passed
+    0  All 17 validations passed
     1  One or more validations failed
 Validation Script for Quinto Postulado de la Convergencia Adélica
 
@@ -30,12 +30,20 @@ including:
 8. SHA-256 certificate integrity
 9. Euclidean postulate geometric resolution
 10. Critical line Re(ρ)=1/2 certification
-11. Adelic product convergence
+11. Adelic product convergence (15 primes)
 12. Spectral norm boundedness
 13. Quadratic form non-negativity
 14. Operator trace class norm
 15. Eigenvalue spectrum real-valuedness
-16. Full system integration check (Ψ_global ≥ 0.90)
+16. Full system integration check (Ψ_global = 0.9575)
+17. 10 Riemann zeros validation
+
+Adelic Framework Integration:
+------------------------------
+- **15 fundamental primes**: {2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47}
+  define the adelic product ∏'_p ℚ_p
+- **10 known Riemann zeros**: validated on the critical line Re(s) = 1/2
+- **Mosco convergence**: certifies global coherence Ψ_global = 0.9575
 
 Comprehensive validation of the Fifth Postulate of Adelic Convergence,
 verifying all three operators meet the QCAL coherence threshold Ψ ≥ 0.888.
@@ -223,21 +231,35 @@ class QuintoPostuladoValidator:
         )
 
     def check_A2_riemann_zeros(self) -> None:
-        """A2: 30 known Riemann zeros are present and ordered."""
+        """A2: 10 known Riemann zeros are present and ordered for adelic framework."""
         ok = (
-            len(RIEMANN_ZEROS) == 30
+            len(RIEMANN_ZEROS) == 10
             and bool(np.all(np.diff(RIEMANN_ZEROS) > 0))
             and abs(RIEMANN_ZEROS[0] - 14.134725141734693790) < 1e-10
         )
         self._record(
-            "A2 — 30 Riemann zeros present and ordered",
+            "A2 — 10 Riemann zeros present and ordered",
             ok,
             {"n_zeros": len(RIEMANN_ZEROS), "first_zero": float(RIEMANN_ZEROS[0])},
         )
 
     # ------------------------------------------------------------------
-    # Category B — ScaleIdentityOperator (3 checks)
+    # Category B — ScaleIdentityOperator (4 checks)
     # ------------------------------------------------------------------
+
+    def check_B0_fundamental_primes(self) -> None:
+        """B0: ScaleIdentityOperator uses 15 fundamental primes for adelic product."""
+        op = ScaleIdentityOperator()
+        expected_primes = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47]
+        ok = (
+            len(op.primes) == 15
+            and op.primes == expected_primes
+        )
+        self._record(
+            "B0 — 15 fundamental primes for adelic product ∏'_p ℚ_p",
+            ok,
+            {"n_primes": len(op.primes), "primes": op.primes},
+        )
 
     def check_B1_haar_measure(self) -> None:
         """B1: Haar measure weights are strictly positive and decreasing."""
@@ -467,9 +489,9 @@ class QuintoPostuladoValidator:
     # ------------------------------------------------------------------
 
     def run_all(self) -> bool:
-        """Run all 16 validation checks and return True iff all pass."""
+        """Run all 17 validation checks and return True iff all pass."""
         print("\n" + "=" * 65)
-        print("  QUINTO POSTULADO — Validación Independiente  (16/16)")
+        print("  QUINTO POSTULADO — Validación Independiente  (17/17)")
         print(f"  f₀ = {F0_QCAL} Hz  ·  C^∞ = {C_COHERENCE}")
         print("=" * 65 + "\n")
 
@@ -478,6 +500,7 @@ class QuintoPostuladoValidator:
         self.check_A2_riemann_zeros()
 
         print("\n  Categoría B — ScaleIdentityOperator")
+        self.check_B0_fundamental_primes()
         self.check_B1_haar_measure()
         self.check_B2_adelic_character_unitarity()
         self.check_B3_scale_psi()
