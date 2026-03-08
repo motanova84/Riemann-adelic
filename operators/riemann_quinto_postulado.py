@@ -238,16 +238,9 @@ RIEMANN_ZEROS: NDArray[np.float64] = np.array([
 # ---------------------------------------------------------------------------
 # Data containers
 # ---------------------------------------------------------------------------
-QCAL ∞³ Active · 141.7001 Hz · f₀ = 141.7001 Hz · Ψ = I × A_eff² × C^∞
-DOI: 10.5281/zenodo.17379721
-SHA-256: 0xQCAL_QUINTO_8b2206494aa6de1e
-"""
-
-import numpy as np
-import hashlib
-import json
-import time
-from datetime import datetime, timezone
+# QCAL ∞³ Active · 141.7001 Hz · f₀ = 141.7001 Hz · Ψ = I × A_eff² × C^∞
+# DOI: 10.5281/zenodo.17379721
+# SHA-256: 0xQCAL_QUINTO_8b2206494aa6de1e
 from dataclasses import dataclass, field
 from typing import Any, Callable, Dict, List, Optional, Tuple
 from numpy.typing import NDArray
@@ -297,11 +290,11 @@ class PadicHaarResult:
     coherence: float
     mosco_bound: float
 
-QCAL ∞³ Active · 141.7001 Hz · C = 244.36 · Ψ = I × A_eff² × C^∞
-DOI: 10.5281/zenodo.17379721
-ORCID: 0009-0002-1923-0773
-Signature: ∴𓂀Ω∞³Φ @ 141.7001 Hz
-"""
+
+# QCAL ∞³ Active · 141.7001 Hz · C = 244.36 · Ψ = I × A_eff² × C^∞
+# DOI: 10.5281/zenodo.17379721
+# ORCID: 0009-0002-1923-0773
+# Signature: ∴𓂀Ω∞³Φ @ 141.7001 Hz
 
 import numpy as np
 from numpy.typing import NDArray
@@ -422,6 +415,11 @@ class ZetaSpectrumResult:
     poisson_ks_pvalue: float
     mean_spacing: float
     psi: float
+
+
+@dataclass
+class ScaleIdentityResult:
+    """
     Result of ScaleIdentity operator computation.
 
     Supports both V1 (multi-prime Haar) and V2 (single-prime adelic) APIs.
@@ -1412,6 +1410,11 @@ def _print_banner(result: QuintoPostuladoResult) -> None:
 
 if __name__ == "__main__":
     demonstrate_quinto_postulado(verbose=True)
+
+
+@dataclass
+class QuintoPostuladoConvergencia:
+    """
     Complete result of Quinto Postulado de la Convergencia Adélica.
 
     Attributes:
@@ -2727,7 +2730,7 @@ class SymbioticHamiltonianOperator:
     """
     
     def __init__(self, dimension: int = 20, f0: float = F0_QCAL, verbose: bool = True,
-                 N: Optional[int] = None):
+                 N: Optional[int] = None,
                  sigma: float = 1.0, n_primes_potential: int = 10):
         """
         Inicializar Hamiltoniano simbiótico.
@@ -2917,6 +2920,8 @@ class SymbioticHamiltonianOperator:
             resonance_coupling=resonance_coupling,
             psi_symbio=psi_symbio,
             trace_class_norm=trace_norm,
+        )
+
     def construct_symbiotic_potential(self) -> NDArray[np.float64]:
         """
         Construir el potencial simbiótico V(x).
