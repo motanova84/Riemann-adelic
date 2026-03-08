@@ -738,6 +738,14 @@ class TestEdgeCases:
     PSI_GLOBAL_TARGET,
     QUINTO_SHA256_PREFIX,
 )
+from riemann_quinto_postulado import (
+    SymbioticHamiltonianResult,
+    RiemannZetaSpectrumResult,
+    QuintoPostuladoReport,
+    verificar_geometria,
+    activar_quinto_postulado,
+    THRESHOLD_PSI,
+)
 
 
 # ============================================================
