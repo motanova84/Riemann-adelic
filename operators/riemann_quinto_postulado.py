@@ -232,9 +232,7 @@ RIEMANN_ZEROS: NDArray[np.float64] = np.array([
 # ---------------------------------------------------------------------------
 # Data containers
 # ---------------------------------------------------------------------------
-# QCAL ∞³ Active · 141.7001 Hz · f₀ = 141.7001 Hz · Ψ = I × A_eff² × C^∞
-# DOI: 10.5281/zenodo.17379721
-# SHA-256: 0xQCAL_QUINTO_8b2206494aa6de1e
+
 from dataclasses import dataclass, field
 from typing import Any, Callable, Dict, List, Optional, Tuple
 from numpy.typing import NDArray
@@ -284,11 +282,6 @@ class PadicHaarResult:
     coherence: float
     mosco_bound: float
 
-
-# QCAL ∞³ Active · 141.7001 Hz · C = 244.36 · Ψ = I × A_eff² × C^∞
-# DOI: 10.5281/zenodo.17379721
-# ORCID: 0009-0002-1923-0773
-# Signature: ∴𓂀Ω∞³Φ @ 141.7001 Hz
 
 import numpy as np
 from numpy.typing import NDArray
@@ -1405,6 +1398,10 @@ def _print_banner(result: QuintoPostuladoResult) -> None:
 if __name__ == "__main__":
     demonstrate_quinto_postulado(verbose=True)
 
+
+# ---------------------------------------------------------------------------
+# Additional operators (V2 API - single-prime adelic)
+# ---------------------------------------------------------------------------
 
 @dataclass
 class QuintoPostuladoConvergencia:
