@@ -113,28 +113,7 @@ def build_H_real(n_basis=10, t=0.01):
     for i in range(n_basis-1):
         H[i, i+1] = perturbation_scale * np.exp(-t * i)
         H[i+1, i] = H[i, i+1]  # Simetría
-    use_gpu = cp is not None
-    H = cp.zeros((n_basis, n_basis), dtype=cp.float64) if use_gpu else np.zeros((n_basis, n_basis))
 
-    # Diagonal: autovalores teóricos (vectorizado con JAX si está disponible)
-    gamma_array = np.array(known_zeros[:n_basis])
-    if jnp is not None and gamma_array.size:
-        eigenvals = np.array(jnp.square(gamma_array) + 0.25)
-    else:
-        eigenvals = gamma_array**2 + 0.25
-
-    for idx, eigenval in enumerate(eigenvals):
-        H[idx, idx] = eigenval
-    
-    # Agregar pequeñas perturbaciones fuera de diagonal para hacer realista
-    for i in range(n_basis - 1):
-        value = 0.01 * np.exp(-t * i)
-        H[i, i + 1] = value
-        H[i + 1, i] = value  # Simetría
-
-    if use_gpu:
-        H = cp.asnumpy(H)
-    
     print(f"  Matriz {n_basis}x{n_basis} construida")
     
     return H

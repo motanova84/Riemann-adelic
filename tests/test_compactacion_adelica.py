@@ -419,6 +419,344 @@ class TestTraceFormulaExact:
         assert berry_contributions[0] == 7.0/8.0
 
 
+# ---------------------------------------------------------------------------
+# New tests: Spectral Matching, Haar Measure, Zeta, Sparse matrices
+# ---------------------------------------------------------------------------
+
+class TestSpectralMatching:
+    """Tests for spectral_eigenvalues and _weyl_counting_inv."""
+
+    def test_weyl_counting_inv_basic(self):
+        """N_smooth(_weyl_counting_inv(k)) == k for integer k."""
+        two_pi = 2.0 * np.pi
+        for k in [1, 2, 3, 5, 10, 20]:
+            E = CompactacionAdelica._weyl_counting_inv(k)
+            ratio = E / two_pi
+            N_val = ratio * np.log(ratio) - ratio + 7.0 / 8.0
+            assert abs(N_val - k) < 1e-6, (
+                f"N_smooth({E:.4f}) = {N_val:.6f}, expected {k}"
+            )
+
+    def test_weyl_counting_inv_zero(self):
+        """_weyl_counting_inv(0) returns 0."""
+        assert CompactacionAdelica._weyl_counting_inv(0.0) == 0.0
+
+    def test_weyl_counting_inv_negative(self):
+        """_weyl_counting_inv for non-positive k returns 0."""
+        assert CompactacionAdelica._weyl_counting_inv(-5.0) == 0.0
+        assert CompactacionAdelica._weyl_counting_inv(-0.001) == 0.0
+
+    def test_weyl_counting_inv_large_k(self):
+        """_weyl_counting_inv works for large k (numerical stability)."""
+        two_pi = 2.0 * np.pi
+        for k in [100, 500, 1000]:
+            E = CompactacionAdelica._weyl_counting_inv(k)
+            assert np.isfinite(E), f"Non-finite result for k={k}"
+            assert E > 0.0, f"Non-positive result for k={k}"
+            ratio = E / two_pi
+            N_val = ratio * np.log(ratio) - ratio + 7.0 / 8.0
+            # Allow slightly larger tolerance for large k
+            assert abs(N_val - k) < 1e-4, (
+                f"k={k}: N_smooth({E:.2f}) = {N_val:.4f}"
+            )
+
+    def test_weyl_counting_inv_monotone(self):
+        """_weyl_counting_inv is strictly increasing."""
+        k_vals = [1, 2, 5, 10, 20, 50]
+        E_vals = [CompactacionAdelica._weyl_counting_inv(k) for k in k_vals]
+        for i in range(len(E_vals) - 1):
+            assert E_vals[i] < E_vals[i + 1], (
+                f"Not monotone: E({k_vals[i]})={E_vals[i]:.4f} >= E({k_vals[i+1]})={E_vals[i+1]:.4f}"
+            )
+
+    @pytest.mark.parametrize("N", [10, 20, 50, 100, 200])
+    def test_spectral_eigenvalues_sqrt_scale_size(self, N: int):
+        """spectral_eigenvalues returns N values for dense matrices."""
+        comp = CompactacionAdelica()
+        evals = comp.spectral_eigenvalues(N=N, scale="sqrt", psi=1.0)
+        assert len(evals) == N
+
+    @pytest.mark.parametrize("N,scale", [
+        (20, "sqrt"),
+        (50, "sqrt"),
+        (20, "log"),
+        (50, "log"),
+    ])
+    def test_spectral_eigenvalues_psi1_real(self, N: int, scale: str):
+        """For psi=1, eigenvalues are real (imaginary parts ~ 0)."""
+        comp = CompactacionAdelica()
+        evals = comp.spectral_eigenvalues(N=N, scale=scale, psi=1.0)
+        max_imag = float(np.max(np.abs(evals.imag)))
+        assert max_imag < 1e-8, (
+            f"N={N}, scale={scale}: max |Im(λ)| = {max_imag:.2e}"
+        )
+
+    @pytest.mark.parametrize("psi", [0.3, 0.5, 0.7, 0.9])
+    def test_spectral_eigenvalues_psi_lt1_complex(self, psi: float):
+        """For psi < 1, eigenvalues must have non-zero imaginary parts."""
+        comp = CompactacionAdelica()
+        evals = comp.spectral_eigenvalues(N=30, scale="sqrt", psi=psi)
+        # At least some eigenvalues should be complex
+        n_complex = int(np.sum(np.abs(evals.imag) > 1e-10))
+        assert n_complex > 0, (
+            f"psi={psi}: expected complex eigenvalues but all are real"
+        )
+
+    def test_spectral_eigenvalues_sqrt_range(self):
+        """Scaled eigenvalues (sqrt) overlap with Riemann zeros range [14, 77]."""
+        comp = CompactacionAdelica()
+        N = 100
+        evals = comp.spectral_eigenvalues(N=N, scale="sqrt", psi=1.0)
+        real_positive = evals.real[evals.real > 0]
+        assert np.any(real_positive < 30.0), "No eigenvalue below 30"
+        assert np.any(real_positive > 14.0), "No eigenvalue above 14"
+
+    def test_spectral_eigenvalues_log_range(self):
+        """Scaled eigenvalues (log) are positive and in a reasonable range."""
+        comp = CompactacionAdelica()
+        evals = comp.spectral_eigenvalues(N=50, scale="log", psi=1.0)
+        assert np.all(evals.real >= 0.0), "Some eigenvalues negative"
+
+    def test_spectral_eigenvalues_raw_in_0_to_10(self):
+        """Raw (unscaled) eigenvalues are in the 0–10 range for moderate N."""
+        comp = CompactacionAdelica()
+        N = 50
+        evals = comp.spectral_eigenvalues(N=N, scale="sqrt", psi=1.0)
+        alpha = np.sqrt(float(N))
+        raw = evals.real / alpha
+        # The first raw eigenvalue must be positive
+        assert float(raw[0]) > 0.0, "First raw eigenvalue not positive"
+        # The first 10 raw eigenvalues should all be in [0, 10]
+        for i in range(min(10, len(raw))):
+            assert 0.0 <= float(raw[i]) <= 10.0, (
+                f"raw_{i+1} = {raw[i]:.4f} outside [0, 10]"
+            )
+
+    def test_spectral_eigenvalues_sorted(self):
+        """Eigenvalues are returned sorted by real part."""
+        comp = CompactacionAdelica()
+        evals = comp.spectral_eigenvalues(N=30, scale="sqrt", psi=1.0)
+        for i in range(len(evals) - 1):
+            assert evals[i].real <= evals[i + 1].real + 1e-10, (
+                f"Eigenvalues not sorted at index {i}"
+            )
+
+    def test_spectral_eigenvalues_invalid_N(self):
+        """N < 2 raises ValueError."""
+        comp = CompactacionAdelica()
+        with pytest.raises(ValueError, match="N must be at least 2"):
+            comp.spectral_eigenvalues(N=1)
+
+    def test_spectral_eigenvalues_invalid_scale(self):
+        """Unknown scale raises ValueError."""
+        comp = CompactacionAdelica()
+        with pytest.raises(ValueError, match="scale must be"):
+            comp.spectral_eigenvalues(N=10, scale="bad")
+
+    def test_spectral_eigenvalues_invalid_psi(self):
+        """psi <= 0 raises ValueError."""
+        comp = CompactacionAdelica()
+        with pytest.raises(ValueError, match="psi must be positive"):
+            comp.spectral_eigenvalues(N=10, psi=0.0)
+
+    def test_spectral_eigenvalues_psi1_sorted_ascending(self):
+        """Real eigenvalues (psi=1) are strictly ordered."""
+        comp = CompactacionAdelica()
+        evals = comp.spectral_eigenvalues(N=20, scale="sqrt", psi=1.0)
+        real_vals = evals.real
+        diffs = np.diff(real_vals)
+        assert np.all(diffs >= -1e-10), "Eigenvalues not sorted ascending"
+
+    @pytest.mark.parametrize("N,psi", [
+        (10, 1.0),
+        (20, 0.5),
+        (50, 0.8),
+        (100, 1.0),
+    ])
+    def test_spectral_eigenvalues_finite(self, N: int, psi: float):
+        """All eigenvalues must be finite numbers."""
+        comp = CompactacionAdelica()
+        evals = comp.spectral_eigenvalues(N=N, scale="sqrt", psi=psi)
+        assert np.all(np.isfinite(evals.real)), "Non-finite real parts"
+        assert np.all(np.isfinite(evals.imag)), "Non-finite imaginary parts"
+
+
+class TestHaarMeasure:
+    """Tests for Haar measure inner product and log potential."""
+
+    def test_log_potential_positive_input(self):
+        """log_potential(x) = log(1 + 1/x) for positive x."""
+        x = np.array([1.0, 2.0, 5.0, 10.0])
+        expected = np.log1p(1.0 / x)
+        result = CompactacionAdelica.log_potential(x)
+        assert np.allclose(result, expected, rtol=1e-12)
+
+    def test_log_potential_decreasing(self):
+        """log(1 + 1/x) is strictly decreasing for x > 0."""
+        x = np.linspace(0.5, 10.0, 100)
+        V = CompactacionAdelica.log_potential(x)
+        assert np.all(np.diff(V) < 0), "log_potential is not decreasing"
+
+    def test_log_potential_at_one(self):
+        """log_potential(1) = log(2)."""
+        assert abs(CompactacionAdelica.log_potential(1.0) - np.log(2.0)) < 1e-12
+
+    def test_log_potential_scalar(self):
+        """log_potential accepts scalars."""
+        v = CompactacionAdelica.log_potential(2.0)
+        assert abs(v - np.log(1.5)) < 1e-12
+
+    def test_log_potential_invalid_zero(self):
+        """log_potential(0) raises ValueError."""
+        with pytest.raises(ValueError, match="log_potential requires x > 0"):
+            CompactacionAdelica.log_potential(0.0)
+
+    def test_log_potential_invalid_negative(self):
+        """log_potential(-1) raises ValueError."""
+        with pytest.raises(ValueError, match="log_potential requires x > 0"):
+            CompactacionAdelica.log_potential(-1.0)
+
+    def test_haar_inner_product_positive(self):
+        """<f, f> > 0 for non-zero f."""
+        f = lambda x: np.exp(-x / 10.0)
+        ip = CompactacionAdelica.haar_measure_inner_product(f, f, a=1.0, b=10.0)
+        assert ip.real > 0.0
+
+    def test_haar_inner_product_linearity(self):
+        """Inner product is linear in second argument."""
+        f = lambda x: np.exp(-x / 5.0)
+        g1 = lambda x: np.sin(x / 10.0)
+        g2 = lambda x: np.cos(x / 10.0)
+        c1, c2 = 2.0, 3.0
+        g12 = lambda x: c1 * g1(x) + c2 * g2(x)
+
+        ip1 = CompactacionAdelica.haar_measure_inner_product(f, g1, 1.0, 10.0)
+        ip2 = CompactacionAdelica.haar_measure_inner_product(f, g2, 1.0, 10.0)
+        ip12 = CompactacionAdelica.haar_measure_inner_product(f, g12, 1.0, 10.0)
+
+        assert abs(ip12 - (c1 * ip1 + c2 * ip2)) < 1e-6
+
+    def test_haar_inner_product_symmetry(self):
+        """<f, g> = conj(<g, f>)."""
+        f = lambda x: np.exp(-x / 5.0)
+        g = lambda x: 1.0 / (1.0 + x)
+        ip_fg = CompactacionAdelica.haar_measure_inner_product(f, g, 1.0, 10.0)
+        ip_gf = CompactacionAdelica.haar_measure_inner_product(g, f, 1.0, 10.0)
+        assert abs(ip_fg - np.conj(ip_gf)) < 1e-6
+
+    def test_haar_norm_non_negative(self):
+        """Haar norm is non-negative."""
+        f = lambda x: np.exp(-x)
+        norm = CompactacionAdelica.haar_measure_norm(f, a=1.0, b=5.0)
+        assert norm >= 0.0
+
+    def test_haar_inner_product_invalid_bounds(self):
+        """Invalid bounds raise ValueError."""
+        f = lambda x: x
+        with pytest.raises(ValueError, match="Lower bound a must be positive"):
+            CompactacionAdelica.haar_measure_inner_product(f, f, a=0.0, b=10.0)
+        with pytest.raises(ValueError, match="Upper bound b must be greater"):
+            CompactacionAdelica.haar_measure_inner_product(f, f, a=5.0, b=2.0)
+
+    def test_haar_inner_product_multiplicative_invariance(self):
+        """Haar measure is invariant under dilation x → cx."""
+        c = 3.0
+        f = lambda x: np.exp(-x / 10.0)
+        g = lambda x: np.exp(-x / 10.0)
+
+        # ∫_a^b f̄(x)g(x) dx/x  =  ∫_{ca}^{cb} f̄(cx)g(cx) d(cx)/(cx)
+        # For functions satisfying f(cx) = f(x): integrals differ by [log(cb)-log(ca)]
+        a, b = 1.0, 5.0
+        ip1 = CompactacionAdelica.haar_measure_inner_product(f, g, a, b)
+        # Scale interval and function
+        fc = lambda x: f(x / c)
+        gc = lambda x: g(x / c)
+        ip2 = CompactacionAdelica.haar_measure_inner_product(fc, gc, a * c, b * c)
+        # Both integrals should be equal (substitution u = x/c)
+        assert abs(ip1 - ip2) < 1e-4, (
+            f"Haar measure invariance: {ip1:.6f} vs {ip2:.6f}"
+        )
+
+
+class TestZetaCriticalLine:
+    """Tests for zeta_critical_line evaluation."""
+
+    def test_zeta_at_first_zero_small(self):
+        """Near γ_1 ≈ 14.13, |ζ(1/2 + iγ_1)| should be small (close to 0)."""
+        z = CompactacionAdelica.zeta_critical_line(14.134725)
+        assert abs(z) < 0.01, f"|ζ(1/2+14.13i)| = {abs(z):.4e}"
+
+    def test_zeta_at_second_zero_small(self):
+        """Near γ_2 ≈ 21.02, |ζ(1/2 + iγ_2)| should be small."""
+        z = CompactacionAdelica.zeta_critical_line(21.022040)
+        assert abs(z) < 0.01, f"|ζ(1/2+21.02i)| = {abs(z):.4e}"
+
+    def test_zeta_returns_complex(self):
+        """zeta_critical_line returns a complex number."""
+        z = CompactacionAdelica.zeta_critical_line(10.0)
+        assert isinstance(z, complex)
+
+    def test_zeta_real_part_finite(self):
+        """Real and imaginary parts are finite."""
+        for t in [5.0, 10.0, 20.0, 50.0]:
+            z = CompactacionAdelica.zeta_critical_line(t)
+            assert np.isfinite(z.real), f"Re[ζ] not finite at t={t}"
+            assert np.isfinite(z.imag), f"Im[ζ] not finite at t={t}"
+
+    @pytest.mark.parametrize("t", [14.134725, 21.022040, 25.010858])
+    def test_zeta_near_zeros_small_magnitude(self, t: float):
+        """|ζ(1/2+it)| is very small near known Riemann zeros."""
+        z = CompactacionAdelica.zeta_critical_line(t)
+        assert abs(z) < 0.01, (
+            f"|ζ(1/2+{t:.6f}i)| = {abs(z):.4e}, expected < 0.01"
+        )
+
+    def test_zeta_approx_fallback_returns_complex(self):
+        """_zeta_approx static method returns a complex number."""
+        z = CompactacionAdelica._zeta_approx(14.0, n_primes=50)
+        assert isinstance(z, complex)
+        assert np.isfinite(z.real)
+        assert np.isfinite(z.imag)
+
+
+class TestSparseTransferMatrix:
+    """Tests for sparse matrix support in transfer_matrix."""
+
+    def test_dense_matrix_for_small_N(self):
+        """For n_dim <= 512, transfer_matrix returns a dense ndarray."""
+        import numpy as np
+        comp = CompactacionAdelica(N_primes=30)
+        T = comp.transfer_matrix(n_dim=30)
+        assert isinstance(T, np.ndarray), "Expected dense ndarray for n_dim=30"
+
+    def test_sparse_matrix_for_large_N(self):
+        """For n_dim > 512, transfer_matrix returns a sparse matrix."""
+        import scipy.sparse
+        # Need enough primes
+        comp = CompactacionAdelica(N_primes=600)
+        T = comp.transfer_matrix(n_dim=600)
+        assert scipy.sparse.issparse(T), "Expected sparse matrix for n_dim=600"
+
+    def test_sparse_diagonal_values(self):
+        """Sparse matrix diagonal = log(p)/sqrt(p)."""
+        import scipy.sparse
+        comp = CompactacionAdelica(N_primes=600)
+        T = comp.transfer_matrix(n_dim=600)
+        T_arr = T.toarray() if scipy.sparse.issparse(T) else T
+        for i in range(10):
+            p = comp.primes[i]
+            expected = np.log(p) / np.sqrt(p)
+            assert abs(T_arr[i, i] - expected) < 1e-10, (
+                f"T[{i},{i}] = {T_arr[i,i]:.6f}, expected {expected:.6f}"
+            )
+
+    def test_sparse_matrix_finite(self):
+        """Sparse matrix has no NaN or Inf values."""
+        import scipy.sparse
+        comp = CompactacionAdelica(N_primes=600)
+        T = comp.transfer_matrix(n_dim=600)
+        data = T.data if scipy.sparse.issparse(T) else T
+        assert np.all(np.isfinite(data)), "Sparse matrix has non-finite values"
 class TestIdeleSpace:
     """Tests for IdeleSpace class."""
     

@@ -1,5 +1,14 @@
 # QCAL Build Verification - Implementation Summary
 
+## 🟢 OPERADOR_H_SOLENOIDE - Hilbert-Pólya sobre malla logarítmica (March 2026)
+
+**Status**: ✅ IMPLEMENTED
+
+- **Python Module**: `physics/operador_h_solenoide.py`
+- **Test Suite**: `tests/test_operador_h_solenoide.py`
+- **Core classes**: `OperadorXP`, `OperadorAlineacion`, `EspacioSchwartzBruhat`, `OperadorH`, `ConexionEspectral`, `SistemaOperadorHSolenoide`
+- **Public demo**: `demostrar_operador_h_solenoide(psi=1.0)` returns `Ψ_global = 0.975`, real finite-dimensional spectrum, and spectral residuals `|ζ(1/2+iγ_n)| < 1.5` for the first 10 zeros.
+
 ## 🟢 REGULARIZACIÓN KAIROS — Exponential Cutoff & Kato-Rellich Self-Adjointness (March 2026)
 
 **Status**: ✅ IMPLEMENTED
