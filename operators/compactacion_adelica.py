@@ -590,7 +590,7 @@ class BerryPhase:
             connection_form += weight * np.sin(n * theta)
         
         # Integrate
-        holonomy = np.trapz(connection_form, theta)
+        holonomy = np.trapezoid(connection_form, theta)
         return holonomy % (2 * np.pi)
     
     def verify_topological_invariance(self, L_values: List[float]) -> bool:
@@ -864,9 +864,24 @@ class CompactacionAdelica:
         berry_results = self.berry_phase_calculation()
         trace_results = self.trace_formula_exact(t=0.1)
         
+        # Convert numpy types to Python natives for JSON serialization
+        def convert_to_native(obj):
+            """Convert numpy types to Python natives."""
+            if isinstance(obj, np.integer):
+                return int(obj)
+            elif isinstance(obj, np.floating):
+                return float(obj)
+            elif isinstance(obj, np.ndarray):
+                return obj.tolist()
+            elif isinstance(obj, dict):
+                return {k: convert_to_native(v) for k, v in obj.items()}
+            elif isinstance(obj, (list, tuple)):
+                return [convert_to_native(item) for item in obj]
+            return obj
+        
         certificate = {
             'framework': 'QCAL ∞³ — Compactación Adélica',
-            'timestamp': '2026-03-03',
+            'timestamp': '2026-03-08',
             'author': 'José Manuel Mota Burruezo Ψ ✧ ∞³',
             'orcid': '0009-0002-1923-0773',
             'doi': '10.5281/zenodo.17379721',
@@ -875,15 +890,15 @@ class CompactacionAdelica:
             'mathematical_structure': {
                 'idele_quotient': 'A = R+/Γ_aritm',
                 'logarithmic_torus': 'T_log = R/(Z·log Λ)',
-                'torus_length': self.L,
+                'torus_length': float(self.L),
                 'scale_operator': 'D = -i d/dt',
                 'lattice': 'k log p, p prime, k ∈ Z'
             },
             
             'berry_phase': {
-                'value': berry_results['berry_phase_theoretical'],
+                'value': float(berry_results['berry_phase_theoretical']),
                 'exact_fraction': '7/8',
-                'in_units_of_2pi': BERRY_PHASE_FACTOR,
+                'in_units_of_2pi': float(BERRY_PHASE_FACTOR),
                 'topological_invariant': True,
                 'origin': 'Holonomy around logarithmic torus',
                 'not_fitting_parameter': True
@@ -891,9 +906,9 @@ class CompactacionAdelica:
             
             'trace_formula': {
                 'exact_form': 'Tr(e^{-tH}) = (1/2π)log(1/t)/t + 7/8 + Σ_primes + O(t)',
-                'berry_contribution': trace_results['berry_term'],
+                'berry_contribution': float(trace_results['berry_term']),
                 'berry_exact': True,
-                'sample_evaluation': trace_results
+                'sample_evaluation': convert_to_native(trace_results)
             },
             
             'spectral_identity': {
@@ -902,11 +917,11 @@ class CompactacionAdelica:
                 'identity_exact': True
             },
             
-            'validation': validation_results,
+            'validation': convert_to_native(validation_results),
             
             'qcal_parameters': {
-                'frequency_f0': F0,
-                'coherence_C': C_QCAL,
+                'frequency_f0': float(F0),
+                'coherence_C': float(C_QCAL),
                 'field_equation': 'Ψ = I × A_eff² × C^∞'
             }
         }
