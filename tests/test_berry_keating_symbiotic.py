@@ -42,7 +42,6 @@ Signature: ∴𓂀Ω∞³Φ
 
 import pytest
 import numpy as np
-from pathlib import Path
 
 from operators.berry_keating_symbiotic import (
     # Constants
@@ -51,7 +50,6 @@ from operators.berry_keating_symbiotic import (
     PHI,
     P_DEFAULT,
     K_DEFAULT,
-    N_DEFAULT,
     N_SYMB,
     # Classes
     PAdicBerryKeatingOperator,
@@ -139,6 +137,31 @@ class TestPAdicBerryKeatingOperator:
         """p=1 must raise ValueError."""
         with pytest.raises(ValueError):
             PAdicBerryKeatingOperator(p=1, K=2)
+
+    def test_invalid_K_negative_raises(self):
+        """Negative K must raise ValueError."""
+        with pytest.raises(ValueError):
+            PAdicBerryKeatingOperator(p=2, K=-1)
+
+    def test_invalid_K_bool_raises(self):
+        """Boolean K must raise ValueError."""
+        with pytest.raises(ValueError):
+            PAdicBerryKeatingOperator(p=2, K=True)
+
+    def test_invalid_n_float_raises(self):
+        """Float n must raise ValueError."""
+        with pytest.raises(ValueError):
+            PAdicBerryKeatingOperator(p=2, K=3, n=1.5)  # type: ignore
+
+    def test_n_clamped_below_zero(self):
+        """n < 0 is clamped to 0; operator still builds."""
+        op = PAdicBerryKeatingOperator(p=2, K=3, n=-5)
+        assert op.n == 0
+
+    def test_n_clamped_above_K(self):
+        """n > K is clamped to K; operator still builds."""
+        op = PAdicBerryKeatingOperator(p=2, K=3, n=10)
+        assert op.n == 3
 
     # ── unitarity ────────────────────────────────────────────────────────────
 
@@ -291,6 +314,26 @@ class TestSymbioticHamiltonian:
         assert h.L == 5.0
         assert h.f0 == 100.0
 
+    def test_invalid_N_small_raises(self):
+        """N < 4 must raise ValueError."""
+        with pytest.raises(ValueError):
+            SymbioticHamiltonian(N=3)
+
+    def test_invalid_N_zero_raises(self):
+        """N=0 must raise ValueError."""
+        with pytest.raises(ValueError):
+            SymbioticHamiltonian(N=0)
+
+    def test_invalid_L_zero_raises(self):
+        """L=0 must raise ValueError."""
+        with pytest.raises(ValueError):
+            SymbioticHamiltonian(N=50, L=0.0)
+
+    def test_invalid_L_negative_raises(self):
+        """Negative L must raise ValueError."""
+        with pytest.raises(ValueError):
+            SymbioticHamiltonian(N=50, L=-5.0)
+
     def test_grid_shape(self):
         """t and x grids must have length N."""
         h = SymbioticHamiltonian(N=100)
@@ -429,8 +472,8 @@ class TestIntegration:
 
     def test_combined_system_spectral_coherence(self):
         """BerryKeatingSymbioticSystem spectral coherence must be verified."""
-        sys = BerryKeatingSymbioticSystem(p=2, K=3, n=1, N_symb=30, L=5.0)
-        result = sys.spectral_coherence()
+        symbio_system = BerryKeatingSymbioticSystem(p=2, K=3, n=1, N_symb=30, L=5.0)
+        result = symbio_system.spectral_coherence()
         assert result["verified"]
 
     def test_s_operator_and_h_symbio_compatible_dimensions(self):

@@ -8,17 +8,17 @@
   "f0": 141.7001,
   "methods": {
     "s_unitarity": {
-      "max_block_error": 7.057256186329245e-16,
-      "max_imag_error": 5.549057922223889e-16,
+      "max_block_error": 3.33151789161156e-16,
+      "max_imag_error": 5.810053034341784e-16,
       "expected_entry": 0.16362712429686843,
       "period": 8,
       "verified": true
     },
     "s_golden_ratio": {
-      "max_sv_error": 6.661338147750939e-16,
+      "max_sv_error": 3.3306690738754696e-16,
       "expected_sv": 0.5720614028176843,
       "n_nonzero_sv": 8,
-      "max_zero_sv": 1.838535031269484e-15,
+      "max_zero_sv": 1.964070326301075e-15,
       "n_singular_values": 16,
       "verified": true
     },
@@ -55,10 +55,10 @@
     "spectral_coherence": {
       "sv_mean": 0.404508497187474,
       "ev_mean": 166.7001,
-      "sv_variance": 0.16362712429686818,
+      "sv_variance": 0.1636271242968682,
       "ev_variance": 208.98530625,
-      "coherence_ratio": 0.0007829599469597551,
-      "psi": 1.0,
+      "coherence_ratio": 0.0007829599469597552,
+      "psi": 0.5,
       "verified": true
     }
   },

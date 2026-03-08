@@ -87,7 +87,7 @@ def main() -> int:
         print("Both symbiotic operators are verified:")
         print()
         print("  Ŝ  — Φ-scaled p-adic Fourier transform")
-        print("       All singular values = Φ / p^K")
+        print("       Non-zero singular values = Φ/√(p^{K-n}), remaining ≈ 0 (for n > 0)")
         print("       P-adic characters form orthonormal system")
         print()
         print("  Ĥ_symbio — Self-adjoint Berry-Keating + f₀ shift")

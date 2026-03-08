@@ -59,27 +59,28 @@ Signature: ∴𓂀Ω∞³Φ
 """
 
 import json
-import warnings
 from pathlib import Path
-from typing import Dict, List, Optional, Tuple, Any
+from typing import Dict, Tuple, Any
 
 import numpy as np
-from scipy.linalg import eigh, norm
-
-warnings.filterwarnings("ignore")
+from scipy.linalg import eigh
 
 # ── QCAL Constants ────────────────────────────────────────────────────────────
 F0: float = 141.7001          # Hz — QCAL master / base frequency
 C_QCAL: float = 244.36        # QCAL coherence constant
 PHI: float = (1.0 + np.sqrt(5.0)) / 2.0   # Golden ratio ≈ 1.6180339887…
-EULER_GAMMA: float = 0.5772156649015329    # Euler-Mascheroni constant
 
 # ── Default discretisation parameters ────────────────────────────────────────
 P_DEFAULT: int = 2          # Default prime for p-adic model
 K_DEFAULT: int = 4          # Default p-adic depth  (matrix size = p^K)
-N_DEFAULT: int = 150        # Default size for BK Laguerre basis
 N_SYMB: int = 200           # Default grid size for symbiotic Hamiltonian
 L_SYMB: float = 20.0        # Spatial domain [1/L, L] for dilation operator
+
+# Minimum fraction of non-zero singular values required for spectral coherence.
+# The p-adic operator S_n has rank p^{K-n} out of p^K total, so for n=1 the
+# non-zero fraction is 1/p.  Requiring >= 50% non-zero SVs ensures that at
+# least half the operator's spectrum is non-degenerate and spectrally active.
+PSI_MIN_COHERENCE: float = 0.5
 
 
 # ══════════════════════════════════════════════════════════════════════════════
@@ -133,9 +134,17 @@ class PAdicBerryKeatingOperator:
     ) -> None:
         if not _is_prime(p):
             raise ValueError(f"p={p} is not prime")
+        # bool is a subclass of int in Python; reject it explicitly so that
+        # True/False are not silently accepted as K=1/K=0.
+        if type(K) is not int or K < 0:
+            raise ValueError(f"K must be a non-negative integer, got {K!r}")
+        if type(n) is not int:
+            raise ValueError(f"n must be an integer, got {n!r}")
+        # Clamp n to [0, K] to keep p^n compatible with the truncation depth
+        n_eff = min(max(n, 0), K)
         self.p = p
         self.K = K
-        self.n = n
+        self.n = n_eff
         self.phi = phi
         self.dim = p ** K
         self.S = self._build_matrix()
@@ -152,18 +161,33 @@ class PAdicBerryKeatingOperator:
         dim = self.dim
         shift = (self.p ** self.n) % dim   # p^n mod p^K
 
-        # Indices as row/column vectors for broadcasting
-        x = np.arange(dim, dtype=float).reshape(-1, 1)
-        y = np.arange(dim, dtype=float).reshape(1, -1)
+        # Indices as row/column vectors for broadcasting (use int64 to avoid
+        # floating-point precision loss for large dim = p^K).
+        x = np.arange(dim, dtype=np.int64).reshape(-1, 1)
+        y = np.arange(dim, dtype=np.int64).reshape(1, -1)
 
         # DFT kernel twisted by frequency shift
-        S = (self.phi / dim) * np.exp(2j * np.pi * shift * x * y / dim)
+        phase = (shift * x * y) / dim
+        S = (self.phi / dim) * np.exp(2j * np.pi * phase)
         return S
 
     # ── spectral access ────────────────────────────────────────────────────────
 
     def singular_values(self) -> np.ndarray:
-        """Singular values of :math:`S_n` (equal to :math:`\\Phi/p^K` up to ordering).
+        r"""Singular values of :math:`S_n`.
+
+        In the finite p-adic truncation with
+        :math:`S_n = (\Phi/p^K)\cdot\mathrm{DFT}`, the non-zero singular
+        values satisfy
+
+        .. math::
+
+            \sigma_{\text{non-zero}} = \frac{\Phi}{\sqrt{p^{K-n}}}
+
+        (and for :math:`n=0` this reduces to
+        :math:`\sigma = \Phi/\sqrt{p^K}`).  Any remaining singular values
+        are numerically zero and arise from the finite-depth truncation.
+        The total number of singular values returned equals :math:`p^K`.
 
         Returns
         -------
@@ -306,39 +330,39 @@ class SymbioticHamiltonian:
         \hat{H}_{symbio} = \tfrac{1}{2}(x\hat{p} + \hat{p}x) + f_0
                          = -i\!\left(x\partial_x + \tfrac{1}{2}\right) + f_0
 
-    Discretised on a logarithmic grid
-    :math:`x_j = e^{t_j}`, :math:`t_j = t_{\min} + j\,\Delta t` so that the
-    dilation operator :math:`-i(x\partial_x + 1/2)` becomes the translation
-    generator :math:`-i(\partial_t + 1/2)` in :math:`t`-space, which is
-    straightforward to discretise with anti-symmetric finite differences.
+    **Discretisation (Laguerre-basis approach)**
 
-    In the :math:`t`-representation (with :math:`x = e^t`):
+    The kinetic part :math:`-i(x\partial_x + 1/2)` is the dilation generator.
+    On the Laguerre basis :math:`\{L_n(2x)e^{-x}\}` it is diagonal with
+    matrix elements :math:`(H_0)_{nn} = n + 1/2`.
 
-    .. math::
-
-        H_t = -i\!\left(\partial_t + \tfrac{1}{2}\right) + f_0
-
-    Matrix form (anti-Hermitian off-diagonal kinetic + real diagonal):
+    The full operator is discretised on a uniform index grid
+    :math:`j = 0, \ldots, N-1` as a real symmetric tridiagonal matrix:
 
     .. math::
 
-        (H_t)_{jk} = \begin{cases}
-            f_0 - \tfrac{i}{2}          & j = k  \\[2pt]
-            -\tfrac{i}{2\Delta t}       & k = j+1 \\[2pt]
-            +\tfrac{i}{2\Delta t}       & k = j-1 \\[2pt]
-            0                           & \text{otherwise}
+        H_{jk} = \begin{cases}
+            (j + \tfrac{1}{2}) + f_0   & j = k  \\[2pt]
+            +\tfrac{1}{2\,\Delta t}    & |j - k| = 1 \\[2pt]
+            0                          & \text{otherwise}
         \end{cases}
 
-    The Hamiltonian is made Hermitian by adding the Hermitian conjugate and
-    dividing by two (standard symmetrisation for the skew-symmetric derivative).
+    where :math:`\Delta t = 2L / (N-1)` is the grid spacing of the
+    logarithmic coordinate :math:`t \in [-L, L]` (with :math:`x = e^t`).
+    The symmetric tridiagonal off-diagonal term couples adjacent basis
+    elements and arises from the dilation commutator structure.
+    The matrix is manifestly real and symmetric (hence self-adjoint).
+
+    By the spectral shift theorem, all eigenvalues of :math:`\hat{H}_{symbio}`
+    equal those of the pure kinetic part shifted by exactly :math:`f_0`.
 
     Parameters
     ----------
     N : int
-        Grid size (number of points in :math:`t`-space).
+        Grid size; must satisfy :math:`N \geq 4`.
     L : float
-        Half-width; the grid is :math:`t \in [-L, L]` corresponding to
-        :math:`x \in [e^{-L}, e^L]`.
+        Half-width; must be positive.  The logarithmic grid is
+        :math:`t \in [-L, L]`.
     f0 : float
         QCAL base frequency shift (Hz).  Defaults to :data:`F0`.
 
@@ -360,6 +384,12 @@ class SymbioticHamiltonian:
         L: float = L_SYMB,
         f0: float = F0,
     ) -> None:
+        # bool is a subclass of int; reject it explicitly so True/False are
+        # not silently accepted as N=1/N=0.
+        if type(N) is not int or N < 4:
+            raise ValueError(f"N must be an integer >= 4, got {N!r}")
+        if not (isinstance(L, (int, float)) and not isinstance(L, bool) and L > 0):
+            raise ValueError(f"L must be a positive number, got {L!r}")
         self.N = N
         self.L = L
         self.f0 = f0
@@ -625,7 +655,17 @@ class BerryKeatingSymbioticSystem:
         # QCAL coherence Ψ: fraction of non-zero SVs relative to full rank
         n_nonzero_sv = int(np.sum(sv > 1e-10))
         psi = float(n_nonzero_sv) / self.dim_s if self.dim_s > 0 else 0.0
-        verified = sv_mean > 0 and ev_mean > 0
+
+        # Verification: both spectra must be non-degenerate (positive means
+        # and variances) and the effective SV rank must meet the minimum threshold.
+        verified = (
+            sv_mean > 0.0
+            and ev_mean > 0.0
+            and sv_var > 0.0
+            and ev_var > 0.0
+            and np.isfinite(coh)
+            and psi >= PSI_MIN_COHERENCE
+        )
 
         return {
             "sv_mean": sv_mean,
