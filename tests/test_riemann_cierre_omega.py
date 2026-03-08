@@ -212,9 +212,10 @@ class TestGeometriaPrimos:
         # Check all are prime
         for p in result.primes_used:
             if p < 2:
-                assert False, f"{p} is not prime"
+                pytest.fail(f"{p} is not prime")
             for d in range(2, int(np.sqrt(p)) + 1):
-                assert p % d != 0, f"{p} is not prime (divisible by {d})"
+                if p % d == 0:
+                    pytest.fail(f"{p} is not prime (divisible by {d})")
         print("✅ Test 20: Valid primes list PASSED")
 
 

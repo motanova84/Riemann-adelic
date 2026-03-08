@@ -491,8 +491,16 @@ class EspectroCeros:
         
         # Distribución GUE: P(s) = (32/π²)s² exp(-4s²/π)
         # CDF: F(s) = 1 - exp(-4s²/π) · (1 + 4s²/π)
-        def gue_cdf(s):
-            """CDF de GUE para espaciados normalizados."""
+        def gue_cdf(s: NDArray[np.float64]) -> NDArray[np.float64]:
+            """
+            CDF de GUE para espaciados normalizados.
+            
+            Args:
+                s: Espaciado(s) normalizado(s)
+                
+            Returns:
+                CDF value(s)
+            """
             # Handle both scalar and array inputs
             s = np.asarray(s)
             result = np.zeros_like(s, dtype=float)
