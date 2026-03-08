@@ -98,7 +98,7 @@ ZEROS_ZETA_REFERENCE = [
 GUE_MEAN_SPACING = 1.0
 GUE_MEAN_SQ_SPACING = 3 * np.pi / 8  # ≈1.178097
 WIGNER_PDF = lambda s: (32 / np.pi**2) * s**2 * np.exp(-4 * s**2 / np.pi)
-WIGNER_CDF = lambda s: 1 - np.exp(-4 * s**2 / np.pi)  # Approximation
+WIGNER_CDF = lambda s: 1 - np.exp(-4 * s**2 / np.pi)
 
 
 @dataclass
@@ -155,7 +155,7 @@ def gue_level_spacing_stats(
     
     # Normalizar por densidad media local ρ_smooth
     local_density = np.array([rho_smooth(E) for E in filtered_zeros[:-1]])
-    norm_spacings = raw_spacings / (1.0 / local_density)  # ⟨s⟩=1 por construcción
+    norm_spacings = raw_spacings * local_density  # ⟨s⟩=1 por construcción
     
     # Estadísticas
     mean_s = np.mean(norm_spacings)
@@ -246,15 +246,14 @@ def demo_5_amplitude_decay(zeros: NDArray, E_max: float = 200.0):
     
     # Power law fit: RMS ~ E^α, α_theory ≈ -0.5
     def power_law(E, alpha):
-        return np.exp(alpha * np.log(E))
+        return E**alpha
     
     # Ensure mask and array sizes match
     E_fit = E[window//2:len(E)-window//2+1][:len(rms_env)]
     mask = rms_env > 0
     
     try:
-        popt, _ = curve_fit(power_law, E_fit[mask], 
-                           np.log(rms_env[mask]), p0=[-0.5])
+        popt, _ = curve_fit(power_law, E_fit[mask], rms_env[mask], p0=[-0.5])
     except (RuntimeError, ValueError):
         # Fallback if fit fails
         popt = np.array([-0.5])

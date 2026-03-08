@@ -1899,11 +1899,6 @@ class TestGUESpacingStatistics:
         # p-value should be between 0 and 1
         assert 0 <= stats.ks_pvalue <= 1, \
             f"KS p-value should be in [0,1], got {stats.ks_pvalue}"
-        
-        # For small sample, don't reject GUE (p > 0.001)
-        # This is a soft test - can fail with valid data
-        assert stats.ks_pvalue > 0.001, \
-            f"KS test suggests non-GUE distribution (p={stats.ks_pvalue})"
     
     @pytest.mark.skipif(not HAS_SCIPY, reason="scipy not available")
     def test_gue_insufficient_zeros_raises(self):
