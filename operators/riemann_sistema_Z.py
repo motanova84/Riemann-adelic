@@ -813,8 +813,8 @@ class DeterminanteHadamard:
         """
         Estimate B ≈ 0 via regression.
         
-        Regress: log|D(it)| vs log|D_ref(it)|
-        Slope should be ≈ 1, intercept gives B estimate.
+        Regress: log|D(it)| vs t to extract scaling behavior.
+        The intercept approximates B contribution.
         
         Args:
             t_values: Array of t values for regression (optional)
@@ -835,17 +835,24 @@ class DeterminanteHadamard:
             else:
                 log_D_values.append(np.log(_MIN_LOG_ARG))
         
-        # Reference: use theoretical scaling
-        # log|D(it)| ≈ B + corrections
         log_D_values = np.array(log_D_values)
         
         # Simple estimation: mean value gives B estimate
         B_estimate = np.mean(log_D_values)
         B_std = np.std(log_D_values)
         
-        # Regression against Berry phase contribution
-        berry_contrib = np.full_like(t_values, self.berry_phase / len(self.zeros))
-        slope, intercept, r_value, p_value, std_err = linregress(berry_contrib, log_D_values)
+        # Regression against t (or log(t)) to extract scaling
+        # log|D(it)| ≈ B + α·log(t) + ...
+        log_t = np.log(t_values)
+        
+        # Use try-except to handle edge cases
+        try:
+            slope, intercept, r_value, p_value, std_err = linregress(log_t, log_D_values)
+        except (ValueError, ZeroDivisionError):
+            # If regression fails, use simple statistics
+            slope = 0.0
+            intercept = B_estimate
+            r_value = 0.0
         
         B_is_small = abs(B_estimate) < 0.2  # Within reasonable bound
         
@@ -1307,8 +1314,29 @@ class RiemannSistemaZCompleto:
         if output_path:
             output_path = Path(output_path)
             output_path.parent.mkdir(parents=True, exist_ok=True)
+            
+            # Convert numpy types to native Python types for JSON
+            def convert_numpy_types(obj):
+                """Recursively convert numpy types to Python native types."""
+                if isinstance(obj, dict):
+                    return {k: convert_numpy_types(v) for k, v in obj.items()}
+                elif isinstance(obj, list):
+                    return [convert_numpy_types(item) for item in obj]
+                elif isinstance(obj, np.bool_):
+                    return bool(obj)
+                elif isinstance(obj, np.integer):
+                    return int(obj)
+                elif isinstance(obj, np.floating):
+                    return float(obj)
+                elif isinstance(obj, np.ndarray):
+                    return obj.tolist()
+                else:
+                    return obj
+            
+            certificate_clean = convert_numpy_types(certificate)
+            
             with open(output_path, 'w') as f:
-                json.dump(certificate, f, indent=2)
+                json.dump(certificate_clean, f, indent=2)
         
         return certificate
 
