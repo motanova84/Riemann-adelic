@@ -1,0 +1,157 @@
+{
+  "certificate_type": "OPERADOR_H_SOLENOIDE_VALIDATION",
+  "version": "1.0",
+  "timestamp": "2026-03-08T00:03:16.146284",
+  "validation_results": {
+    "timestamp": "2026-03-08T00:03:16.146284",
+    "system": "Operador H Solenoide",
+    "version": "1.0",
+    "tests": {
+      "constants_qcal": {
+        "passed": true,
+        "details": {
+          "F0": {
+            "value": 141.7001,
+            "expected": 141.7001,
+            "passed": true
+          },
+          "C_QCAL": {
+            "value": 244.36,
+            "expected": 244.36,
+            "passed": true
+          },
+          "PSI_THRESHOLD": {
+            "value": 0.888,
+            "expected": 0.888,
+            "passed": true
+          }
+        }
+      },
+      "system_psi_one": {
+        "passed": false,
+        "details": {
+          "initialized": true,
+          "validation_results": {
+            "hermitian_xp": {
+              "passed": true,
+              "error": 0.0
+            },
+            "selfadjoint_h": {
+              "passed": true,
+              "error": 0.0
+            },
+            "real_spectrum": {
+              "passed": true,
+              "max_imaginary": 0.0
+            },
+            "l2_density": {
+              "passed": false
+            },
+            "spectral_connection": {
+              "passed": false,
+              "coherence": 2.142508392921627e-12,
+              "mean_error": 71.55021123595895,
+              "max_error": 111.3681813766
+            },
+            "global_coherence": {
+              "passed": false,
+              "Psi": 1.0,
+              "threshold": 0.888
+            }
+          },
+          "global_coherence": {
+            "passed": false,
+            "Psi": 1.0,
+            "threshold": 0.888
+          }
+        }
+      },
+      "system_psi_095": {
+        "passed": true,
+        "details": {
+          "initialized": true,
+          "validation_results": {
+            "hermitian_xp": {
+              "passed": true,
+              "error": 0.0
+            },
+            "selfadjoint_h": {
+              "passed": true,
+              "error": 2.0
+            },
+            "real_spectrum": {
+              "passed": false,
+              "max_imaginary": 67.5363359228601
+            },
+            "l2_density": {
+              "passed": false
+            },
+            "spectral_connection": {
+              "passed": false,
+              "coherence": 6.900468407788907e-08,
+              "mean_error": 71.55020379680374,
+              "max_error": 111.36815018288638
+            },
+            "global_coherence": {
+              "passed": false,
+              "Psi": 0.95,
+              "threshold": 0.888
+            }
+          }
+        }
+      },
+      "hermiticity_xp": {
+        "passed": true,
+        "details": {
+          "is_hermitian": true,
+          "relative_error": 0.0
+        }
+      },
+      "selfadjoint_h": {
+        "passed": true,
+        "details": {
+          "is_selfadjoint": true,
+          "relative_error": 0.0
+        }
+      },
+      "spectral_comparison": {
+        "passed": false,
+        "details": {
+          "spectral_coherence": 3.365863143756087e-12,
+          "mean_error": 34.313851388497895,
+          "max_error": 49.773832477672,
+          "n_compared": 10
+        }
+      },
+      "zeta_evaluation": {
+        "passed": false,
+        "details": {
+          "n_evaluated": 32,
+          "mean_residual": 1.4603545088095868,
+          "min_residual": 1.4603545088095868,
+          "n_small_residuals": 0
+        }
+      }
+    },
+    "summary": {
+      "total_tests": 7,
+      "passed_tests": 4,
+      "failed_tests": 3,
+      "success_rate": 0.5714285714285714,
+      "elapsed_time": 0.02834343910217285,
+      "overall_passed": false
+    }
+  },
+  "qcal": {
+    "frequency": 141.7001,
+    "coherence_constant": 244.36,
+    "coherence_threshold": 0.888,
+    "signature": "\u2234\ud80c\udc80\u03a9\u221e\u00b3\u03a6"
+  },
+  "author": {
+    "name": "Jos\u00e9 Manuel Mota Burruezo \u03a8 \u2727 \u221e\u00b3",
+    "institution": "Instituto de Conciencia Cu\u00e1ntica (ICQ)",
+    "orcid": "0009-0002-1923-0773",
+    "doi": "10.5281/zenodo.17379721"
+  }
+}
