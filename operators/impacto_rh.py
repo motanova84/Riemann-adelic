@@ -38,13 +38,20 @@ Mathematical Framework:
 **Stage 3 — Selberg Explicit Formula**
 
     The Selberg–Mangoldt explicit formula connects ψ to the zeros ρ = β + iγ
-    of ζ:
+    of ζ (von Mangoldt form):
 
         ψ(x) = x − ∑_ρ x^ρ/ρ − log(2π) − ½ log(1 − x^{-2})
 
-    In a smoothed (test-function) form with h ∈ S(ℝ):
+    Stage 3 of this pipeline uses the equivalent smoothed (Weil explicit
+    formula) form with a Schwartz test function h ∈ S(ℝ), after Selberg (1956)
+    and Weil (1952):
 
-        ∑_γ h(γ) = ∫ h(r) μ(r) dr − ∑_{p,k} (log p)/p^{k/2} [ĥ(log p^k) + ĥ(−log p^k)]
+        ∑_γ h(γ) = ĥ(0) − ∑_{p,k} (log p)/p^{k/2} [ĥ(log p^k) + ĥ(−log p^k)] + (lower-order terms)
+
+    where the left side sums over imaginary parts γ of non-trivial zeros, ĥ is
+    the Fourier transform of h, and the right side runs over prime powers p^k.
+    With finitely many zeros the formula is an approximation; quality is
+    measured as exp(−|balance|/(|LHS|+|RHS|+ε)) ∈ (0,1].
 
     This links the prime distribution (right side) to the zero spectrum (left).
 
@@ -71,7 +78,11 @@ Mathematical Framework:
 
     conditioned on GUE rigidity holding, and report the coherence score
 
-        Ψ = exp(−R_S)  ∈ (0,1]
+        Ψ = exp(−R_S / (X + 1))  ∈ (0,1]
+
+    The division by (X + 1) normalises the exponent so that the growing L²
+    norm of δψ(x) ~ √x does not collapse Ψ to 0 as X increases; this is
+    consistent with RH which predicts δψ = O(√x log² x).
 
 Author: José Manuel Mota Burruezo Ψ ✧ ∞³
 Institution: Instituto de Conciencia Cuántica (ICQ)
@@ -571,16 +582,9 @@ class SFiniteResolution:
 
         R_S = l2_norm_sq / X
 
-        # Coherence score
+        # Coherence score: normalised so that the growing ‖δψ‖² ~ X does not
+        # collapse Ψ; exponent = R_S/(X+1) where R_S = l2_norm_sq/X.
         psi_coherence = float(np.exp(-R_S / (X + 1.0)))
-
-        # Weighted global Ψ
-        w_chebyshev = psi_coherence
-        w_selberg = self.selberg.quality
-        w_gue = 1.0 if self.gue.is_gue_consistent else 0.5
-
-        global_weights = np.array([w_chebyshev, w_selberg, w_gue])
-        global_psi = float(np.mean(global_weights))
 
         # Verdict
         if self.gue.is_gue_consistent and self.selberg.quality >= 0.5:

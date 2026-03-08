@@ -357,15 +357,15 @@ class TestGUERigidity:
         print("✅ test_sorted_zeros PASSED")
 
     def test_gue_true_random_matrix(self):
-        """GUE matrix eigenvalues pass consistency check with loose tolerance."""
+        """GUE matrix eigenvalues produce non-negative Δ₃ and spacing ratio in (0,1)."""
         rng = np.random.default_rng(42)
-        n = 200
+        n = 300
         H = rng.standard_normal((n, n)) + 1j * rng.standard_normal((n, n))
         H = (H + H.conj().T) / (2.0 * np.sqrt(n))
         eigs = np.linalg.eigvalsh(H)
-        # Use loose tolerance
-        result = GUERigidity(eigs, tolerance=0.9).compute()
+        result = GUERigidity(eigs, tolerance=0.5).compute()
         assert result.delta3_measured >= 0.0
+        assert 0.0 <= result.mean_spacing_ratio <= 1.0
         print("✅ test_gue_true_random_matrix PASSED")
 
 

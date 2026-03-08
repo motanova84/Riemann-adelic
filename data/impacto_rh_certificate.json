@@ -1,7 +1,7 @@
 {
   "module": "operators/impacto_rh.py",
   "title": "Impacto RH \u2014 Sieve \u2192 \u03c8(x) \u2192 Selberg \u2192 GUE \u2192 S-Finite",
-  "timestamp": "2026-03-08T13:18:49.411547+00:00",
+  "timestamp": "2026-03-08T13:21:34.135976+00:00",
   "qcal_frequency_hz": 141.7001,
   "coherence_constant": 244.36,
   "doi": "10.5281/zenodo.17379721",
