@@ -20,7 +20,7 @@ import sys
 import math
 import numpy as np
 import matplotlib
-matplotlib.use('Agg')  # Non-interactive backend
+matplotlib.use('Agg')  # Non-interactive backend (must be before pyplot import)
 import matplotlib.pyplot as plt
 from pathlib import Path
 
