@@ -651,9 +651,10 @@ class IdentidadDeterminanteHadamard:
             mpmath_precision: Decimal precision for mpmath
             N_zeros: Number of zeta zeros to use
         """
-        mpmath.mp.dps = mpmath_precision
+        self.mpmath_precision = mpmath_precision
         self.N_zeros = N_zeros
-        self.zeros = self._compute_zeros(N_zeros)
+        with mpmath.workdps(mpmath_precision):
+            self.zeros = self._compute_zeros(N_zeros)
         
     def _compute_zeros(self, N: int) -> List[complex]:
         """
