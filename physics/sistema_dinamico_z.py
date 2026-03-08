@@ -712,11 +712,8 @@ class IdentidadDeterminanteHadamard:
         except ValueError as e:
             # Handle pole at s=0 or s=1
             if 'pole' in str(e):
-                # Use limit value
-                if abs(s.real) < 0.6:
-                    return complex(0.5, 0.0)
-                else:
-                    return complex(0.5, 0.0)
+                # Use limit value ξ(0) = ξ(1) = 1/2
+                return complex(0.5, 0.0)
             raise
     
     def verify_functional_equation(self, s_values: Optional[List[complex]] = None) -> Dict[str, Any]:

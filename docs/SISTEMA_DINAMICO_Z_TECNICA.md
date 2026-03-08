@@ -31,7 +31,7 @@ La **hipótesis de Riemann** establece que todos los ceros no triviales de la fu
 
 ### Motivación
 
-Enfoques espectralesprevios han dejado brechas técnicas:
+Enfoques espectrales previos han dejado brechas técnicas:
 1. **Espectro continuo**: La semirrecta $\mathbb{R}_+$ no es compacta
 2. **Resonancias compuestas**: Números compuestos contaminan el espectro
 3. **Ambigüedad del determinante**: Factores residuales indeterminados
