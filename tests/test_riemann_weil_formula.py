@@ -42,7 +42,20 @@ from riemann_weil_formula import (
     ZEROS_ZETA_REFERENCE,
     F0_QCAL,
     C_COHERENCE,
-    _sieve_primes
+    _sieve_primes,
+    # New functions
+    N_smooth,
+    rho_smooth,
+    GUESpacingStats,
+    gue_level_spacing_stats,
+    demo_4_oscillatory_counting,
+    demo_5_amplitude_decay,
+    GUE_MEAN_SPACING,
+    GUE_MEAN_SQ_SPACING,
+    WIGNER_PDF,
+    WIGNER_CDF,
+    HAS_SCIPY,
+    HAS_MATPLOTLIB
 )
 
 
@@ -1789,6 +1802,232 @@ class TestPerformanceAndRobustness:
 
 
 # ============================================================================
+# Test Class 13: N_smooth and rho_smooth Tests (7 tests)
+# ============================================================================
+
+class TestSmoothCountingFunctions:
+    """Tests for N_smooth(E) and rho_smooth(E) functions."""
+    
+    def test_N_smooth_positive(self):
+        """N_smooth should be positive for E > 2π."""
+        E = 30.0
+        N = N_smooth(E)
+        assert N > 0, f"N_smooth should be positive, got {N}"
+    
+    def test_N_smooth_value_at_30(self):
+        """N_smooth(30) should be approximately 3.56."""
+        E = 30.0
+        N = N_smooth(E)
+        assert abs(N - 3.56) < 0.1, f"N_smooth(30) ≈ 3.56, got {N}"
+    
+    def test_N_smooth_zero_for_negative(self):
+        """N_smooth should return 0 for E ≤ 0."""
+        assert N_smooth(-5.0) == 0.0
+        assert N_smooth(0.0) == 0.0
+    
+    def test_rho_smooth_positive_for_large_E(self):
+        """rho_smooth should be positive for E > 2π."""
+        E = 30.0
+        rho = rho_smooth(E)
+        assert rho > 0, f"rho_smooth should be positive, got {rho}"
+    
+    def test_rho_smooth_is_derivative_of_N_smooth(self):
+        """rho_smooth should be approximately dN_smooth/dE."""
+        E = 30.0
+        dE = 0.01
+        
+        N1 = N_smooth(E)
+        N2 = N_smooth(E + dE)
+        numerical_derivative = (N2 - N1) / dE
+        
+        rho = rho_smooth(E)
+        
+        # Should match within 1%
+        assert abs(rho - numerical_derivative) / rho < 0.01, \
+            f"rho_smooth should match derivative of N_smooth"
+    
+    def test_rho_smooth_matches_weyl_density(self):
+        """rho_smooth should match weyl_density for the main term."""
+        E = 30.0
+        rho = rho_smooth(E)
+        mu = weyl_density(E)
+        
+        # They should be approximately equal (same leading term)
+        assert abs(rho - mu) < 0.01, \
+            f"rho_smooth and weyl_density should be similar, got {rho} vs {mu}"
+    
+    def test_rho_smooth_zero_for_negative(self):
+        """rho_smooth should return 0 for E ≤ 0."""
+        assert rho_smooth(-5.0) == 0.0
+        assert rho_smooth(0.0) == 0.0
+
+
+# ============================================================================
+# Test Class 14: GUE Spacing Statistics Tests (8 tests)
+# ============================================================================
+
+class TestGUESpacingStatistics:
+    """Tests for GUE level spacing statistics."""
+    
+    @pytest.mark.skipif(not HAS_SCIPY, reason="scipy not available")
+    def test_gue_stats_basic(self):
+        """Basic GUE spacing statistics computation."""
+        zeros = np.array([14.13, 21.02, 25.01, 30.42, 32.94, 37.59, 40.92])
+        stats = gue_level_spacing_stats(zeros, 14, 41)
+        
+        assert isinstance(stats, GUESpacingStats)
+        assert stats.n_zeros_used >= 3
+        assert stats.mean_spacing > 0
+        assert stats.variance >= 0
+    
+    @pytest.mark.skipif(not HAS_SCIPY, reason="scipy not available")
+    def test_gue_mean_spacing_near_one(self):
+        """Normalized spacing should have mean near 1."""
+        zeros = np.array(ZEROS_ZETA_REFERENCE[:10])
+        stats = gue_level_spacing_stats(zeros, 14, 50)
+        
+        # Mean should be close to 1 (within 30%)
+        assert abs(stats.mean_spacing - 1.0) < 0.3, \
+            f"Mean spacing should be near 1, got {stats.mean_spacing}"
+    
+    @pytest.mark.skipif(not HAS_SCIPY, reason="scipy not available")
+    def test_gue_ks_test_reasonable(self):
+        """KS test should give reasonable p-value."""
+        zeros = np.array(ZEROS_ZETA_REFERENCE[:10])
+        stats = gue_level_spacing_stats(zeros, 14, 50)
+        
+        # p-value should be between 0 and 1
+        assert 0 <= stats.ks_pvalue <= 1, \
+            f"KS p-value should be in [0,1], got {stats.ks_pvalue}"
+        
+        # For small sample, don't reject GUE (p > 0.001)
+        # This is a soft test - can fail with valid data
+        assert stats.ks_pvalue > 0.001, \
+            f"KS test suggests non-GUE distribution (p={stats.ks_pvalue})"
+    
+    @pytest.mark.skipif(not HAS_SCIPY, reason="scipy not available")
+    def test_gue_insufficient_zeros_raises(self):
+        """Should raise ValueError with too few zeros."""
+        zeros = np.array([14.13, 21.02])
+        
+        with pytest.raises(ValueError, match="Insufficient zeros"):
+            gue_level_spacing_stats(zeros, 14, 22)
+    
+    @pytest.mark.skipif(not HAS_SCIPY, reason="scipy not available")
+    def test_gue_normalised_spacings_positive(self):
+        """All normalized spacings should be positive."""
+        zeros = np.array(ZEROS_ZETA_REFERENCE[:10])
+        stats = gue_level_spacing_stats(zeros, 14, 50)
+        
+        assert np.all(stats.normalised_spacings > 0), \
+            "All normalized spacings should be positive"
+    
+    @pytest.mark.skipif(not HAS_SCIPY, reason="scipy not available")
+    def test_gue_stats_different_ranges(self):
+        """GUE stats should work for different energy ranges."""
+        zeros = np.array(ZEROS_ZETA_REFERENCE[:10] + [56.45, 59.35, 60.83])
+        
+        # Low range
+        stats_low = gue_level_spacing_stats(zeros, 14, 35)
+        assert stats_low.n_zeros_used >= 3
+        
+        # High range
+        stats_high = gue_level_spacing_stats(zeros, 35, 65)
+        assert stats_high.n_zeros_used >= 3
+    
+    def test_gue_constants_defined(self):
+        """GUE theoretical constants should be defined."""
+        assert GUE_MEAN_SPACING == 1.0
+        assert abs(GUE_MEAN_SQ_SPACING - 3 * np.pi / 8) < 1e-10
+        
+        # Test WIGNER_PDF and WIGNER_CDF
+        s = 1.0
+        pdf_val = WIGNER_PDF(s)
+        cdf_val = WIGNER_CDF(s)
+        
+        assert pdf_val > 0, "Wigner PDF should be positive"
+        assert 0 < cdf_val < 1, "Wigner CDF should be in (0,1)"
+    
+    @pytest.mark.skipif(not HAS_SCIPY, reason="scipy not available")
+    def test_gue_variance_reasonable(self):
+        """Variance of normalized spacings should be reasonable."""
+        zeros = np.array(ZEROS_ZETA_REFERENCE[:10])
+        stats = gue_level_spacing_stats(zeros, 14, 50)
+        
+        # Variance should be positive and not too large
+        assert stats.variance > 0, "Variance should be positive"
+        assert stats.variance < 5.0, f"Variance suspiciously large: {stats.variance}"
+
+
+# ============================================================================
+# Test Class 15: Demo Functions Tests (4 tests)
+# ============================================================================
+
+class TestDemoFunctions:
+    """Tests for demonstration/visualization functions."""
+    
+    @pytest.mark.skipif(not HAS_MATPLOTLIB, reason="matplotlib not available")
+    def test_demo_4_runs_without_error(self):
+        """demo_4_oscillatory_counting should run without error."""
+        zeros = np.array(ZEROS_ZETA_REFERENCE[:10])
+        
+        try:
+            # Don't show plot in test
+            import matplotlib
+            matplotlib.use('Agg')
+            demo_4_oscillatory_counting(zeros, E_max=50.0)
+        except Exception as e:
+            pytest.fail(f"demo_4 raised exception: {e}")
+    
+    @pytest.mark.skipif(not HAS_MATPLOTLIB or not HAS_SCIPY, 
+                        reason="matplotlib and scipy required")
+    def test_demo_5_runs_without_error(self):
+        """demo_5_amplitude_decay should run without error."""
+        zeros = np.array(ZEROS_ZETA_REFERENCE[:10])
+        
+        try:
+            # Don't show plot in test
+            import matplotlib
+            matplotlib.use('Agg')
+            alpha = demo_5_amplitude_decay(zeros, E_max=50.0)
+            
+            # Alpha should be negative (decay)
+            assert alpha < 0, f"Decay exponent should be negative, got {alpha}"
+        except Exception as e:
+            pytest.fail(f"demo_5 raised exception: {e}")
+    
+    @pytest.mark.skipif(not HAS_MATPLOTLIB, reason="matplotlib not available")
+    def test_demo_4_creates_figure(self):
+        """demo_4 should create matplotlib figure."""
+        import matplotlib
+        matplotlib.use('Agg')
+        
+        zeros = np.array(ZEROS_ZETA_REFERENCE[:10])
+        demo_4_oscillatory_counting(zeros, E_max=50.0)
+        
+        # Check that figure was created
+        import matplotlib.pyplot as plt
+        assert len(plt.get_fignums()) > 0, "demo_4 should create a figure"
+        plt.close('all')
+    
+    @pytest.mark.skipif(not HAS_MATPLOTLIB or not HAS_SCIPY,
+                        reason="matplotlib and scipy required")
+    def test_demo_5_returns_exponent(self):
+        """demo_5 should return decay exponent."""
+        import matplotlib
+        matplotlib.use('Agg')
+        
+        zeros = np.array(ZEROS_ZETA_REFERENCE[:10])
+        alpha = demo_5_amplitude_decay(zeros, E_max=50.0)
+        
+        # Should return a number
+        assert isinstance(alpha, (int, float)), "Should return numeric exponent"
+        
+        # With small sample, fit may be poor - just check it's negative
+        assert alpha < 0, f"Alpha should be negative (decay), got {alpha}"
+
+
+# ============================================================================
 # Run tests if executed directly
 # ============================================================================
 
@@ -1798,7 +2037,7 @@ if __name__ == "__main__":
     print("\n" + "=" * 80)
     print("GUINAND-WEIL FORMULA TEST SUITE")
     print("=" * 80)
-    print(f"Total tests: 97 tests across 12 test classes")
+    print(f"Total tests: 116 tests across 15 test classes")
     print(f"Frequency: f₀ = {F0_QCAL} Hz")
     print(f"Coherence: C = {C_COHERENCE}")
     print("=" * 80)
