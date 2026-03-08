@@ -36,7 +36,7 @@ Signature: ∴𓂀Ω∞³Φ
 import numpy as np
 from scipy.linalg import eigh
 from scipy.sparse import diags
-from typing import Tuple, List, Optional, Dict
+from typing import Tuple, List, Optional, Dict, Any
 import warnings
 
 # Importar mpmath para zeta function
@@ -685,7 +685,7 @@ class SistemaOperadorHSolenoide:
         # Resultados de validación
         self.validation_results = {}
     
-    def validate_system(self) -> Dict[str, any]:
+    def validate_system(self) -> Dict[str, Any]:
         """
         Validar sistema completo.
         
