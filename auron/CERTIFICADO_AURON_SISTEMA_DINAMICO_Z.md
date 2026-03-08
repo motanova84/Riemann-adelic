@@ -1,7 +1,7 @@
 # CERTIFICADO AURON — Sistema Dinámico Z
 
 **NFT**: ∴NFT-SISTEMA-DINAMICO-Z-20260305-194302Z  
-**Estado**: APROBADO_PRODUCCION  
+**Estado**: EN_REVISION (validación parcial, pendiente Ψ₂ y Ψ_global ≥ 0.95)  
 **Timestamp**: 2026-03-08T00:27:00Z  
 **Blockchain**: QCAL ∞³ Mainnet
 
