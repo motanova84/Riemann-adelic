@@ -1671,6 +1671,8 @@ class TestIntegration:
     SymbioticHamiltonianResult,
     RiemannZetaSpectrumResult,
     QuintoPostuladoReport,
+    QuintoPostuladoAdelico,
+    QuintoPostuladoAdelicoReport,
     verificar_geometria,
     activar_quinto_postulado,
     F0_QCAL,
@@ -2792,6 +2794,478 @@ class TestQuintoPostuladoIntegration:
         captured = capsys.readouterr()
         assert "COHERENCIAS INDIVIDUALES" in captured.out
         assert "COHERENCIA GLOBAL" in captured.out
+        assert "CERTIFICACIÓN SHA-256" in captured.out
+        print("✅ test_activar_verbose_output PASSED")
+
+
+# =============================================================================
+# TEST SUITE 5: QUINTO POSTULADO ADÉLICO (new weighted unification)
+# =============================================================================
+
+class TestQuintoPostuladoAdelico:
+    """Test suite for QuintoPostuladoAdelico class."""
+
+    # ---- Initialization tests ----
+
+    def test_initialization_default(self):
+        """Test default initialization."""
+        op = QuintoPostuladoAdelico(verbose=False)
+        assert op.prime == 2
+        assert op.depth == 5
+        assert op.dimension == 20
+        assert op.n_zeros == 15
+        assert op.verbose == False
+        print("✅ test_initialization_default PASSED")
+
+    def test_initialization_custom(self):
+        """Test custom initialization."""
+        op = QuintoPostuladoAdelico(
+            prime=3, depth=4, dimension=15, n_zeros=10, verbose=False
+        )
+        assert op.prime == 3
+        assert op.depth == 4
+        assert op.dimension == 15
+        assert op.n_zeros == 10
+        print("✅ test_initialization_custom PASSED")
+
+    def test_initialization_invalid_prime(self):
+        """Test invalid prime raises ValueError."""
+        with pytest.raises(ValueError, match="Prime must be ≥ 2"):
+            QuintoPostuladoAdelico(prime=1)
+        print("✅ test_initialization_invalid_prime PASSED")
+
+    def test_initialization_invalid_depth(self):
+        """Test invalid depth raises ValueError."""
+        with pytest.raises(ValueError, match="Depth must be ≥ 1"):
+            QuintoPostuladoAdelico(depth=0)
+        print("✅ test_initialization_invalid_depth PASSED")
+
+    def test_initialization_invalid_dimension(self):
+        """Test invalid dimension raises ValueError."""
+        with pytest.raises(ValueError, match="Dimension must be ≥ 2"):
+            QuintoPostuladoAdelico(dimension=1)
+        print("✅ test_initialization_invalid_dimension PASSED")
+
+    def test_initialization_invalid_n_zeros(self):
+        """Test invalid n_zeros raises ValueError."""
+        with pytest.raises(ValueError, match="n_zeros must be ≥ 2"):
+            QuintoPostuladoAdelico(n_zeros=1)
+        print("✅ test_initialization_invalid_n_zeros PASSED")
+
+    # ---- Weights tests ----
+
+    def test_weights_sum_to_one(self):
+        """Test that weights sum to 1."""
+        total = QuintoPostuladoAdelico.W_SCALE + QuintoPostuladoAdelico.W_SYMBIO + QuintoPostuladoAdelico.W_GUE
+        assert np.isclose(total, 1.0)
+        print("✅ test_weights_sum_to_one PASSED")
+
+    def test_weights_values(self):
+        """Test exact weight values."""
+        assert np.isclose(QuintoPostuladoAdelico.W_SCALE, 0.35)
+        assert np.isclose(QuintoPostuladoAdelico.W_SYMBIO, 0.40)
+        assert np.isclose(QuintoPostuladoAdelico.W_GUE, 0.25)
+        print("✅ test_weights_values PASSED")
+
+    # ---- Euler product tests ----
+
+    def test_euler_product_default(self):
+        """Test Euler product with default parameters."""
+        op = ScaleIdentityOperator(verbose=False)
+        ep = op.compute_euler_product()
+        assert ep > 1.0  # ∏ 1/(1-p^{-2}) > 1
+        print("✅ test_euler_product_default PASSED")
+
+    def test_euler_product_convergence_to_pi_sq_over_6(self):
+        """Test partial Euler product converges toward ζ(2) = π²/6."""
+        op = ScaleIdentityOperator(verbose=False)
+        ep50 = op.compute_euler_product(s=2.0, n_primes=50)
+        zeta2 = np.pi**2 / 6.0
+        # Partial product should be within 10% of ζ(2)
+        assert abs(ep50 / zeta2 - 1.0) < 0.10
+        print("✅ test_euler_product_convergence_to_pi_sq_over_6 PASSED")
+
+    def test_euler_product_monotone_increasing(self):
+        """Test partial product increases with more primes."""
+        op = ScaleIdentityOperator(verbose=False)
+        ep5 = op.compute_euler_product(s=2.0, n_primes=5)
+        ep10 = op.compute_euler_product(s=2.0, n_primes=10)
+        ep20 = op.compute_euler_product(s=2.0, n_primes=20)
+        assert ep5 < ep10 < ep20
+        print("✅ test_euler_product_monotone_increasing PASSED")
+
+    def test_euler_product_large_s_near_one(self):
+        """Test Euler product for large s is close to 1."""
+        op = ScaleIdentityOperator(verbose=False)
+        ep = op.compute_euler_product(s=10.0, n_primes=10)
+        assert abs(ep - 1.0) < 0.01
+        print("✅ test_euler_product_large_s_near_one PASSED")
+
+    # ---- Coset convergence tests ----
+
+    def test_coset_convergence_returns_dict(self):
+        """Test coset convergence returns a dictionary."""
+        op = ScaleIdentityOperator(verbose=False)
+        result = op.compute_coset_convergence()
+        assert isinstance(result, dict)
+        assert "coset_measures" in result
+        assert "partial_sum" in result
+        assert "theoretical_limit" in result
+        assert "convergence_quality" in result
+        print("✅ test_coset_convergence_returns_dict PASSED")
+
+    def test_coset_convergence_theoretical_limit(self):
+        """Test theoretical limit is 1.0."""
+        op = ScaleIdentityOperator(verbose=False)
+        result = op.compute_coset_convergence()
+        assert result["theoretical_limit"] == 1.0
+        print("✅ test_coset_convergence_theoretical_limit PASSED")
+
+    def test_coset_convergence_quality_range(self):
+        """Test convergence quality is in [0, 1]."""
+        op = ScaleIdentityOperator(verbose=False)
+        result = op.compute_coset_convergence()
+        assert 0.0 <= result["convergence_quality"] <= 1.0
+        print("✅ test_coset_convergence_quality_range PASSED")
+
+    def test_coset_convergence_partial_sum_approaches_one(self):
+        """Test partial sum approaches 1 with more levels."""
+        op = ScaleIdentityOperator(prime=2, verbose=False)
+        r10 = op.compute_coset_convergence(n_levels=10)
+        r30 = op.compute_coset_convergence(n_levels=30)
+        # More levels → partial sum closer to 1
+        assert abs(r30["partial_sum"] - 1.0) < abs(r10["partial_sum"] - 1.0)
+        print("✅ test_coset_convergence_partial_sum_approaches_one PASSED")
+
+    def test_coset_measures_positive(self):
+        """Test all coset measures are positive."""
+        op = ScaleIdentityOperator(verbose=False)
+        result = op.compute_coset_convergence()
+        assert all(m > 0 for m in result["coset_measures"])
+        print("✅ test_coset_measures_positive PASSED")
+
+    # ---- Symbiotic potential tests ----
+
+    def test_symbiotic_potential_shape(self):
+        """Test symbiotic potential has correct shape."""
+        dim = 15
+        op = SymbioticHamiltonianOperator(dimension=dim, verbose=False)
+        V = op.construct_symbiotic_potential()
+        assert V.shape == (dim,)
+        print("✅ test_symbiotic_potential_shape PASSED")
+
+    def test_symbiotic_potential_non_negative(self):
+        """Test symbiotic potential V(x) ≥ 0."""
+        op = SymbioticHamiltonianOperator(dimension=20, verbose=False)
+        V = op.construct_symbiotic_potential()
+        assert np.all(V >= 0.0)
+        print("✅ test_symbiotic_potential_non_negative PASSED")
+
+    def test_symbiotic_potential_zero_sigma_raises(self):
+        """Test that sigma=0 raises ValueError."""
+        with pytest.raises(ValueError, match="Sigma must be > 0"):
+            SymbioticHamiltonianOperator(sigma=0.0)
+        print("✅ test_symbiotic_potential_zero_sigma_raises PASSED")
+
+    def test_symbiotic_potential_larger_sigma_smoother(self):
+        """Test larger sigma gives broader support (more non-zero entries)."""
+        op_narrow = SymbioticHamiltonianOperator(dimension=30, sigma=0.5, verbose=False)
+        op_wide = SymbioticHamiltonianOperator(dimension=30, sigma=2.0, verbose=False)
+        V_narrow = op_narrow.construct_symbiotic_potential()
+        V_wide = op_wide.construct_symbiotic_potential()
+        # Wider sigma → Gaussians are broader → more x values have V(x) > threshold
+        threshold = 0.1
+        support_narrow = int(np.sum(V_narrow > threshold))
+        support_wide = int(np.sum(V_wide > threshold))
+        assert support_wide >= support_narrow
+        print("✅ test_symbiotic_potential_larger_sigma_smoother PASSED")
+
+    # ---- Full Hamiltonian tests ----
+
+    def test_full_hamiltonian_shape(self):
+        """Test full Hamiltonian has correct shape."""
+        dim = 12
+        op = SymbioticHamiltonianOperator(dimension=dim, verbose=False)
+        H_full = op.construct_full_hamiltonian()
+        assert H_full.shape == (dim, dim)
+        print("✅ test_full_hamiltonian_shape PASSED")
+
+    def test_full_hamiltonian_hermitian(self):
+        """Test full Hamiltonian is Hermitian."""
+        op = SymbioticHamiltonianOperator(dimension=15, verbose=False)
+        H_full = op.construct_full_hamiltonian()
+        assert np.allclose(H_full, H_full.T.conj())
+        print("✅ test_full_hamiltonian_hermitian PASSED")
+
+    def test_full_hamiltonian_larger_than_bk(self):
+        """Test full Hamiltonian trace ≥ BK Hamiltonian trace (V ≥ 0)."""
+        op = SymbioticHamiltonianOperator(dimension=20, verbose=False)
+        H_bk = op.construct_berry_keating_hamiltonian()
+        H_full = op.construct_full_hamiltonian()
+        # V ≥ 0, so trace increases or stays the same
+        assert np.real(np.trace(H_full)) >= np.real(np.trace(H_bk)) - 1e-10
+        print("✅ test_full_hamiltonian_larger_than_bk PASSED")
+
+    def test_compute_full_spectrum_returns_result(self):
+        """Test compute_full_spectrum returns SymbioticHamiltonianResult."""
+        op = SymbioticHamiltonianOperator(dimension=15, verbose=False)
+        result = op.compute_full_spectrum()
+        assert isinstance(result, SymbioticHamiltonianResult)
+        assert len(result.eigenvalues) == 15
+        print("✅ test_compute_full_spectrum_returns_result PASSED")
+
+    def test_full_spectrum_eigenvalues_positive(self):
+        """Test full spectrum eigenvalues are positive (f0 offset dominates)."""
+        op = SymbioticHamiltonianOperator(dimension=15, f0=F0_QCAL, verbose=False)
+        result = op.compute_full_spectrum()
+        assert np.all(result.eigenvalues > 0)
+        print("✅ test_full_spectrum_eigenvalues_positive PASSED")
+
+    # ---- Montgomery correlation tests ----
+
+    def test_montgomery_correlation_returns_dict(self):
+        """Test Montgomery correlation returns a dictionary."""
+        op = RiemannZetaSpectrum(n_zeros=10, verbose=False)
+        result = op.compute_montgomery_correlation()
+        assert isinstance(result, dict)
+        assert "alpha" in result
+        assert "g_alpha" in result
+        assert "repulsion_verified" in result
+        print("✅ test_montgomery_correlation_returns_dict PASSED")
+
+    def test_montgomery_correlation_level_repulsion(self):
+        """Test g(0) = 0 (level repulsion at α=0)."""
+        op = RiemannZetaSpectrum(n_zeros=10, verbose=False)
+        alpha = np.array([0.0, 1.0, 2.0])
+        result = op.compute_montgomery_correlation(alpha_values=alpha)
+        assert np.isclose(result["g_alpha"][0], 0.0, atol=1e-10)
+        print("✅ test_montgomery_correlation_level_repulsion PASSED")
+
+    def test_montgomery_correlation_at_one(self):
+        """Test g(1) = 1 (no correlation at unit separation)."""
+        op = RiemannZetaSpectrum(n_zeros=10, verbose=False)
+        alpha = np.array([1.0])
+        result = op.compute_montgomery_correlation(alpha_values=alpha)
+        # sin(π)/π = 0, so g(1) = 1 - 0 = 1
+        assert np.isclose(result["g_alpha"][0], 1.0, atol=1e-10)
+        print("✅ test_montgomery_correlation_at_one PASSED")
+
+    def test_montgomery_correlation_range(self):
+        """Test g(α) ∈ [0, 1]."""
+        op = RiemannZetaSpectrum(n_zeros=10, verbose=False)
+        result = op.compute_montgomery_correlation()
+        g = result["g_alpha"]
+        assert np.all(g >= -1e-12)
+        assert np.all(g <= 1.0 + 1e-12)
+        print("✅ test_montgomery_correlation_range PASSED")
+
+    def test_montgomery_repulsion_verified_flag(self):
+        """Test repulsion_verified flag is True."""
+        op = RiemannZetaSpectrum(n_zeros=10, verbose=False)
+        result = op.compute_montgomery_correlation()
+        assert result["repulsion_verified"] == True
+        print("✅ test_montgomery_repulsion_verified_flag PASSED")
+
+    # ---- Wigner-Dyson tests ----
+
+    def test_wigner_dyson_returns_dict(self):
+        """Test Wigner-Dyson returns a dictionary."""
+        op = RiemannZetaSpectrum(n_zeros=10, verbose=False)
+        result = op.compute_wigner_dyson()
+        assert isinstance(result, dict)
+        assert "s" in result
+        assert "P_s" in result
+        assert "beta" in result
+        assert "repulsion_order" in result
+        print("✅ test_wigner_dyson_returns_dict PASSED")
+
+    def test_wigner_dyson_beta_equals_two(self):
+        """Test β=2 for GUE."""
+        op = RiemannZetaSpectrum(n_zeros=10, verbose=False)
+        result = op.compute_wigner_dyson()
+        assert result["beta"] == 2
+        assert result["repulsion_order"] == 2
+        print("✅ test_wigner_dyson_beta_equals_two PASSED")
+
+    def test_wigner_dyson_non_negative(self):
+        """Test P(s) ≥ 0."""
+        op = RiemannZetaSpectrum(n_zeros=10, verbose=False)
+        result = op.compute_wigner_dyson()
+        assert np.all(result["P_s"] >= 0.0)
+        print("✅ test_wigner_dyson_non_negative PASSED")
+
+    def test_wigner_dyson_level_repulsion(self):
+        """Test P(0) = 0 (quadratic level repulsion for β=2)."""
+        op = RiemannZetaSpectrum(n_zeros=10, verbose=False)
+        s_values = np.array([0.0, 1.0, 2.0])
+        result = op.compute_wigner_dyson(s_values=s_values)
+        assert np.isclose(result["P_s"][0], 0.0)
+        print("✅ test_wigner_dyson_level_repulsion PASSED")
+
+    def test_wigner_dyson_normalization(self):
+        """Test ∫P(s)ds ≈ 1."""
+        op = RiemannZetaSpectrum(n_zeros=10, verbose=False)
+        s_values = np.linspace(0, 10, 10000)
+        result = op.compute_wigner_dyson(s_values=s_values)
+        norm = float(np.trapezoid(result["P_s"], result["s"]))
+        assert np.isclose(norm, 1.0, atol=1e-3)
+        print("✅ test_wigner_dyson_normalization PASSED")
+
+    # ---- QuintoPostuladoAdelico.verificar_mosco_convergencia tests ----
+
+    def test_mosco_convergencia_returns_dict(self):
+        """Test verificar_mosco_convergencia returns a dictionary."""
+        op = QuintoPostuladoAdelico(verbose=False)
+        result = op.verificar_mosco_convergencia()
+        assert isinstance(result, dict)
+        assert "dims" in result
+        assert "spectral_gaps" in result
+        assert "relative_change" in result
+        assert "mosco_converged" in result
+        assert "mosco_quality" in result
+        print("✅ test_mosco_convergencia_returns_dict PASSED")
+
+    def test_mosco_quality_in_range(self):
+        """Test Mosco quality is in (0, 1]."""
+        op = QuintoPostuladoAdelico(verbose=False)
+        result = op.verificar_mosco_convergencia()
+        assert 0.0 < result["mosco_quality"] <= 1.0
+        print("✅ test_mosco_quality_in_range PASSED")
+
+    def test_mosco_spectral_gaps_positive(self):
+        """Test spectral gaps are positive."""
+        op = QuintoPostuladoAdelico(verbose=False)
+        result = op.verificar_mosco_convergencia()
+        assert all(g > 0 for g in result["spectral_gaps"])
+        print("✅ test_mosco_spectral_gaps_positive PASSED")
+
+    # ---- certificar_linea_critica tests ----
+
+    def test_critical_line_returns_dict(self):
+        """Test certificar_linea_critica returns a dictionary."""
+        op = QuintoPostuladoAdelico(n_zeros=10, verbose=False)
+        result = op.certificar_linea_critica()
+        assert isinstance(result, dict)
+        assert "n_zeros" in result
+        assert "zeros" in result
+        assert "max_deviation_from_critical_line" in result
+        assert "all_on_critical_line" in result
+        assert "certificate" in result
+        print("✅ test_critical_line_returns_dict PASSED")
+
+    def test_critical_line_certified(self):
+        """Test all zeros are on critical line."""
+        op = QuintoPostuladoAdelico(n_zeros=10, verbose=False)
+        result = op.certificar_linea_critica()
+        assert result["all_on_critical_line"] == True
+        print("✅ test_critical_line_certified PASSED")
+
+    def test_critical_line_certificate_format(self):
+        """Test certificate starts with expected prefix."""
+        op = QuintoPostuladoAdelico(n_zeros=10, verbose=False)
+        result = op.certificar_linea_critica()
+        assert result["certificate"].startswith("0xQCAL_CL_")
+        print("✅ test_critical_line_certificate_format PASSED")
+
+    def test_critical_line_deviation_small(self):
+        """Test max deviation from Re(s)=1/2 is negligible."""
+        op = QuintoPostuladoAdelico(n_zeros=10, verbose=False)
+        result = op.certificar_linea_critica()
+        assert result["max_deviation_from_critical_line"] < 1e-6
+        print("✅ test_critical_line_deviation_small PASSED")
+
+    # ---- activar() (weighted report) tests ----
+
+    def test_activar_returns_report(self):
+        """Test activar() returns QuintoPostuladoAdelicoReport."""
+        op = QuintoPostuladoAdelico(verbose=False)
+        report = op.activar(verbose=False)
+        assert isinstance(report, QuintoPostuladoAdelicoReport)
+        print("✅ test_activar_returns_report PASSED")
+
+    def test_activar_report_structure(self):
+        """Test report has all required fields."""
+        op = QuintoPostuladoAdelico(verbose=False)
+        report = op.activar(verbose=False)
+        assert hasattr(report, "psi_scale")
+        assert hasattr(report, "psi_symbio")
+        assert hasattr(report, "psi_gue")
+        assert hasattr(report, "psi_global")
+        assert hasattr(report, "convergencia_adelica")
+        assert hasattr(report, "mosco_converged")
+        assert hasattr(report, "critical_line_certified")
+        assert hasattr(report, "sha256")
+        assert hasattr(report, "timestamp")
+        assert hasattr(report, "f0_hz")
+        print("✅ test_activar_report_structure PASSED")
+
+    def test_weighted_coherence_formula(self):
+        """Test Ψ_global = 0.35·Ψ_scale + 0.40·Ψ_symbio + 0.25·Ψ_gue."""
+        op = QuintoPostuladoAdelico(verbose=False)
+        report = op.activar(verbose=False)
+        expected = (
+            0.35 * report.psi_scale
+            + 0.40 * report.psi_symbio
+            + 0.25 * report.psi_gue
+        )
+        assert np.isclose(report.psi_global, expected, atol=1e-8)
+        print("✅ test_weighted_coherence_formula PASSED")
+
+    def test_activar_coherences_in_range(self):
+        """Test all coherences are in [0, 1]."""
+        op = QuintoPostuladoAdelico(verbose=False)
+        report = op.activar(verbose=False)
+        assert 0.0 <= report.psi_scale <= 1.0
+        assert 0.0 <= report.psi_symbio <= 1.0
+        assert 0.0 <= report.psi_gue <= 1.0
+        assert 0.0 <= report.psi_global <= 1.0
+        print("✅ test_activar_coherences_in_range PASSED")
+
+    def test_activar_convergencia_matches_threshold(self):
+        """Test convergencia_adelica matches Ψ_global ≥ threshold."""
+        op = QuintoPostuladoAdelico(verbose=False)
+        report = op.activar(verbose=False)
+        expected = report.psi_global >= THRESHOLD_PSI
+        assert report.convergencia_adelica == expected
+        print("✅ test_activar_convergencia_matches_threshold PASSED")
+
+    def test_activar_sha256_format(self):
+        """Test SHA-256 certificate format."""
+        op = QuintoPostuladoAdelico(verbose=False)
+        report = op.activar(verbose=False)
+        assert report.sha256.startswith("0xQCAL_ADELICO_")
+        print("✅ test_activar_sha256_format PASSED")
+
+    def test_activar_f0_hz(self):
+        """Test f0_hz matches QCAL constant."""
+        op = QuintoPostuladoAdelico(verbose=False)
+        report = op.activar(verbose=False)
+        assert report.f0_hz == F0_QCAL
+        print("✅ test_activar_f0_hz PASSED")
+
+    def test_activar_critical_line_certified(self):
+        """Test critical line is certified in report."""
+        op = QuintoPostuladoAdelico(n_zeros=10, verbose=False)
+        report = op.activar(verbose=False)
+        assert report.critical_line_certified == True
+        print("✅ test_activar_critical_line_certified PASSED")
+
+    def test_report_repr(self):
+        """Test QuintoPostuladoAdelicoReport repr."""
+        op = QuintoPostuladoAdelico(verbose=False)
+        report = op.activar(verbose=False)
+        repr_str = repr(report)
+        assert "QuintoPostuladoAdelicoReport" in repr_str
+        assert "Ψ_global=" in repr_str
+        print("✅ test_report_repr PASSED")
+
+    def test_activar_verbose_output(self, capsys):
+        """Test activar() verbose output."""
+        op = QuintoPostuladoAdelico(verbose=True)
+        report = op.activar(verbose=True)
+        captured = capsys.readouterr()
+        assert "QUINTO POSTULADO ADÉLICO" in captured.out
+        assert "COHERENCIAS INDIVIDUALES" in captured.out
         assert "CERTIFICACIÓN SHA-256" in captured.out
         print("✅ test_activar_verbose_output PASSED")
 
