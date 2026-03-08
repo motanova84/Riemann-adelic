@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-03-08T13:13:57.811625",
+  "timestamp": "2026-03-08T13:17:29.392104",
   "qcal_frequency": 141.7001,
   "coherence_constant": 244.36,
   "doi": "10.5281/zenodo.17379721",
@@ -45,5 +45,5 @@
   "institution": "Instituto de Conciencia Cuántica (ICQ)",
   "orcid": "0009-0002-1923-0773",
   "qcal_signature": "∴𓂀Ω∞³Φ @ 141.7001 Hz",
-  "sha256": "3417e0a46c5323b461324c4365ca697709bcc5fa73fa159b3f9eb0fa7eef0dcb"
+  "sha256": "3bae897d093e7fbf2695d18d05bcbbf50a4fcb5ad1b978ad3cc2af07e247f363"
 }
