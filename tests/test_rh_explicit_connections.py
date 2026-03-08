@@ -49,6 +49,7 @@ from rh_explicit_connections import (
     # Constants
     F0_QCAL,
     C_COHERENCE,
+    C_PRIMARY,
     GUE_MEAN_SPACING,
     GUE_MEAN_SQ_SPACING,
 )
@@ -413,7 +414,6 @@ class TestQCALConstants:
         
         # C^∞ should be related to C_PRIMARY
         # CF = C'/C ≈ 0.388
-        from rh_explicit_connections import C_PRIMARY
         coherence_factor = C_COHERENCE / C_PRIMARY
         
         assert 0.3 < coherence_factor < 0.5

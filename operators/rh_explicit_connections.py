@@ -79,7 +79,7 @@ Signature: ∴𓂀Ω∞³Φ @ 141.7001 Hz
 
 import math
 import numpy as np
-from typing import Dict, List, Tuple, Optional, Callable
+from typing import Dict, List, Tuple, Optional, Callable, Any
 from numpy.typing import NDArray
 from dataclasses import dataclass, field
 import warnings
@@ -163,7 +163,8 @@ def logarithmic_integral(x: float, use_mpmath: bool = False) -> float:
         # Li(x) = Ei(log x) where Ei is the exponential integral
         return float(expi(np.log(x)))
     else:
-        # Fallback: numerical integration
+        # Fallback: numerical integration (single value only)
+        # This path is used when scipy is not available
         def integrand(t):
             return 1.0 / np.log(t) if t > 1 else 0.0
         
@@ -485,11 +486,11 @@ def dyson_mehta_delta3(zeros: NDArray, L: float, e_center: float = 50.0) -> floa
     # Compute Δ₃: integral of squared deviation
     if len(t) > 1:
         deviations = n - (A_fit + B_fit * t)
-        # Use trapezoid (numpy 2.0+) or fallback to trapz
+        # Use trapezoid (NumPy 2.0+) or fallback to trapz (NumPy < 2.0)
         try:
             delta3 = np.trapezoid(deviations**2, t) / L
         except AttributeError:
-            delta3 = np.trapz(deviations**2, t) / L
+            delta3 = np.trapz(deviations**2, t) / L  # type: ignore
     else:
         delta3 = 0.0
     
@@ -598,7 +599,7 @@ class EllipticCurveData:
     sha_order: int
 
 
-def bsd_connection(curve_data: EllipticCurveData) -> Dict[str, any]:
+def bsd_connection(curve_data: EllipticCurveData) -> Dict[str, Any]:
     """Analyze Birch-Swinnerton-Dyer conjecture for elliptic curve.
     
     BSD Conjecture:
