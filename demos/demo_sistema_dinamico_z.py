@@ -504,6 +504,215 @@ def visualizacion_5_sistema_completo():
     print(f"  - Sistema completo: {'✓ VALIDADO' if all_valid else '⚠ En progreso'}")
 
 
+def dashboard_unificado():
+    """
+    Dashboard Unificado — Todos los Pilares en una Figura.
+
+    Combina los cuatro pilares en un único dashboard de matplotlib con:
+    - Pilar 1 (Compactificación): espectro de confinamiento (primeros 100 niveles)
+    - Pilar 2 (Filtro Adélico): ψ(x) vs x, contribuciones Möbius y error terms
+    - Pilar 3 (Hadamard): verificación de ecuación funcional ξ(s)=ξ(1-s)
+    - Pilar 4 (Dinámico Z): distribución de gaps GUE con 100–200 eigenvalores
+    - Panel central: indicadores Ψ por pilar
+
+    Genera ``dashboard_unificado.png``.
+    """
+    print("\n" + "="*80)
+    print("DASHBOARD UNIFICADO — Los 4 Pilares")
+    print("="*80)
+
+    # ── Instances ────────────────────────────────────────────────────────────
+    compact = CompactificacionNoConmutativa(x_max=50.0, N_x=300)
+    filtro  = FiltroRacionalesAdelico(x_max=200.0, N_primes=100)
+    hadamard = IdentidadDeterminanteHadamard(mpmath_precision=25, N_zeros=20)
+    dinamico = SistemaDinamicoZ(N_zeros=100)
+
+    # ── Run complete system once to get Ψ values ──────────────────────────
+    sistema = SistemaDinamicoZCompleto(N_primes=100, N_zeros=100, x_max=100.0)
+    result = sistema.ejecutar_sistema_completo(verbose=False)
+    psi_vals = [
+        result['global_coherence']['Psi_1_compactificacion'],
+        result['global_coherence']['Psi_2_filtro'],
+        result['global_coherence']['Psi_3_hadamard'],
+        result['global_coherence']['Psi_4_dinamico'],
+    ]
+    Psi_global = result['global_coherence']['Psi_global']
+
+    # ── Figure layout: 3×3 grid ───────────────────────────────────────────
+    fig = plt.figure(figsize=(20, 16))
+    fig.suptitle(
+        "Sistema Dinámico Z — Dashboard Unificado\n"
+        f"QCAL ∞³ · {F0} Hz · C = {C_QCAL} · Ψ_global = {Psi_global:.4f}",
+        fontsize=15, fontweight='bold',
+    )
+
+    gs = fig.add_gridspec(3, 3, hspace=0.45, wspace=0.35)
+
+    # Named colour mapping for clarity
+    pillar_colors = {
+        'compactificacion': '#1f77b4',
+        'filtro':           '#2ca02c',
+        'hadamard':         '#ff7f0e',
+        'dinamico':         '#9467bd',
+    }
+
+    # ── Pilar 1: Confinement spectrum (100 levels) ────────────────────────
+    ax1a = fig.add_subplot(gs[0, 0])
+    spec_conf = compact.compute_spectrum_confinement(N_states=100)
+    eigs_conf = spec_conf['eigenvalues'][:100]
+    n_conf = np.arange(1, len(eigs_conf) + 1)
+    ax1a.plot(n_conf, eigs_conf, 'o-', color=pillar_colors['compactificacion'],
+              markersize=3, linewidth=1)
+    ax1a.set_xlabel('Level $n$', fontsize=11)
+    ax1a.set_ylabel('Energy $E_n$', fontsize=11)
+    ax1a.set_title(
+        f'Pilar 1: Espectro Confinamiento\n({len(eigs_conf)} niveles)  Ψ={psi_vals[0]:.3f}',
+        fontsize=11, fontweight='bold',
+    )
+    ax1a.grid(True, alpha=0.3)
+
+    # Eigenvalue gap histogram
+    ax1b = fig.add_subplot(gs[0, 1])
+    if len(eigs_conf) > 1:
+        gaps_conf = np.diff(eigs_conf)
+        ax1b.hist(gaps_conf, bins=20, color=pillar_colors['compactificacion'],
+                  alpha=0.7, edgecolor='black')
+    ax1b.set_xlabel('Gap $\\Delta E_n$', fontsize=11)
+    ax1b.set_ylabel('Count', fontsize=11)
+    ax1b.set_title('Pilar 1: Distribución de Gaps', fontsize=11, fontweight='bold')
+    ax1b.grid(True, alpha=0.3, axis='y')
+
+    # ── Pilar 2: ψ(x) sieve + error terms ───────────────────────────────
+    ax2a = fig.add_subplot(gs[1, 0])
+    # Evaluate ψ(x) for a range of x using sieve
+    x_vals_p2 = [10, 20, 50, 100, 200, 500, 1000, 2000, 5000, 10_000]
+    psi_sieve_vals = [filtro.chebyshev_psi_sieve(float(x)) for x in x_vals_p2]
+    ax2a.plot(x_vals_p2, psi_sieve_vals, 'o-', color=pillar_colors['filtro'],
+              linewidth=2, markersize=6, label='$\\psi(x)$ sieve')
+    ax2a.plot(x_vals_p2, x_vals_p2, 'r--', linewidth=2, alpha=0.7, label='$x$ (PNT)')
+    ax2a.set_xscale('log')
+    ax2a.set_yscale('log')
+    ax2a.set_xlabel('$x$', fontsize=11)
+    ax2a.set_ylabel('$\\psi(x)$', fontsize=11)
+    ax2a.set_title(
+        f'Pilar 2: $\\psi(x)$ via Sieve (hasta $x=10^4$)\nΨ={psi_vals[1]:.3f}',
+        fontsize=11, fontweight='bold',
+    )
+    ax2a.legend(fontsize=10)
+    ax2a.grid(True, alpha=0.3)
+
+    # ψ(x) - x (error term) – reuse zeros from the dinamico instance (single source)
+    ax2b = fig.add_subplot(gs[1, 1])
+    zeros_low = dinamico.zeros[:10]  # first 10 γ_n from mpmath (already computed)
+    x_err_vals = np.logspace(1, 4, 40)  # 10 to 10^4
+    psi_errs = [filtro.chebyshev_psi_sieve(float(x)) - x for x in x_err_vals]
+    ax2b.plot(x_err_vals, psi_errs, '-', color=pillar_colors['filtro'], linewidth=2,
+              label='$\\psi(x) - x$')
+    ax2b.axhline(0, color='k', linestyle='--', linewidth=1, alpha=0.5)
+    ax2b.set_xscale('log')
+    ax2b.set_xlabel('$x$', fontsize=11)
+    ax2b.set_ylabel('$\\psi(x) - x$', fontsize=11)
+    ax2b.set_title('Pilar 2: Términos de Error $\\psi(x)-x$', fontsize=11, fontweight='bold')
+    ax2b.legend(fontsize=10)
+    ax2b.grid(True, alpha=0.3)
+
+    # Möbius cancellation factor vs N
+    ax2c = fig.add_subplot(gs[2, 0])
+    N_vals_mob = [10, 20, 50, 100, 200, 500, 1000, 2000, 5000, 10_000]
+    factors = [filtro.compute_mobius_cancellation(N=N)['cancellation_factor']
+               for N in N_vals_mob]
+    ax2c.semilogx(N_vals_mob, factors, 'o-', color=pillar_colors['filtro'],
+                  linewidth=2, markersize=6)
+    ax2c.axhline(3.76, color='r', linestyle='--', linewidth=2, alpha=0.7, label='3.76× (teoría)')
+    ax2c.set_xlabel('$N$', fontsize=11)
+    ax2c.set_ylabel('Cancellation Factor', fontsize=11)
+    ax2c.set_title('Pilar 2: Factor Cancelación Möbius vs $N$', fontsize=11, fontweight='bold')
+    ax2c.legend(fontsize=10)
+    ax2c.grid(True, alpha=0.3)
+
+    # ── Pilar 3: Functional equation error ───────────────────────────────
+    ax3 = fig.add_subplot(gs[0, 2])
+    t_vals = np.linspace(5, 50, 60)
+    errors_crit = []
+    for t in t_vals:
+        s = complex(0.5, t)
+        try:
+            xi_s   = hadamard.xi_function(s)
+            xi_1ms = hadamard.xi_function(1 - s)
+            rel_err = abs(xi_s - xi_1ms) / (abs(xi_s) + 1e-15)
+        except Exception:
+            rel_err = float('nan')
+        errors_crit.append(rel_err)
+    ax3.semilogy(t_vals, errors_crit, '-', color=pillar_colors['hadamard'], linewidth=2)
+    ax3.set_xlabel('$t = \\mathrm{Im}(s)$', fontsize=11)
+    ax3.set_ylabel('$|\\xi(s)-\\xi(1-s)|/|\\xi(s)|$', fontsize=11)
+    ax3.set_title(
+        f'Pilar 3: Ecuación Funcional $\\xi(s)=\\xi(1-s)$\nΨ={psi_vals[2]:.3f}',
+        fontsize=11, fontweight='bold',
+    )
+    ax3.grid(True, alpha=0.3)
+
+    # ── Pilar 4: GUE statistics with 100 zeros ───────────────────────────
+    ax4a = fig.add_subplot(gs[1, 2])
+    # Selberg spectrum with up to 200 levels
+    spec_sel = dinamico.selberg_laplacian_spectrum(N_eigenvalues=200)
+    eigs_sel = spec_sel['eigenvalues']
+    n_sel = np.arange(1, len(eigs_sel) + 1)
+    ax4a.plot(n_sel, eigs_sel, '.', color=pillar_colors['dinamico'], markersize=4)
+    ax4a.set_xlabel('Level $n$', fontsize=11)
+    ax4a.set_ylabel('$\\lambda_n = 1/4 + \\gamma_n^2$', fontsize=11)
+    ax4a.set_title(
+        f'Pilar 4: Espectro Laplaciano Selberg\n({len(eigs_sel)} niveles)  Ψ={psi_vals[3]:.3f}',
+        fontsize=11, fontweight='bold',
+    )
+    ax4a.grid(True, alpha=0.3)
+
+    # GUE spacing histogram (100 zeros)
+    ax4b = fig.add_subplot(gs[2, 1])
+    spacings_raw = np.diff(dinamico.zeros)
+    mean_sp = np.mean(spacings_raw)
+    spacings_norm = spacings_raw / mean_sp
+    ax4b.hist(spacings_norm, bins=25, density=True, color=pillar_colors['dinamico'],
+              alpha=0.7, edgecolor='black', label='Datos (100 ceros)')
+    # GUE Wigner surmise: P(s) = (π/2) s exp(−πs²/4)
+    s_gue = np.linspace(0, 4, 200)
+    p_gue = (np.pi / 2) * s_gue * np.exp(-np.pi * s_gue ** 2 / 4)
+    ax4b.plot(s_gue, p_gue, 'r-', linewidth=2.5, label='GUE Wigner')
+    ax4b.set_xlabel('Normalized Spacing $s$', fontsize=11)
+    ax4b.set_ylabel('$P(s)$', fontsize=11)
+    ax4b.set_title('Pilar 4: Distribución Spacing GUE (100 zeros)', fontsize=11, fontweight='bold')
+    ax4b.legend(fontsize=10)
+    ax4b.grid(True, alpha=0.3)
+
+    # ── Central Ψ indicator panel ─────────────────────────────────────────
+    ax_psi = fig.add_subplot(gs[2, 2])
+    pillar_labels = ['Pilar 1\nCompact.', 'Pilar 2\nFiltro', 'Pilar 3\nHadamard', 'Pilar 4\nDinámico']
+    bar_colors = ['green' if p >= 0.95 else 'orange' if p >= 0.7 else 'red' for p in psi_vals]
+    bars_psi = ax_psi.bar(pillar_labels, psi_vals, color=bar_colors, alpha=0.8, edgecolor='black', linewidth=2)
+    ax_psi.axhline(0.95, color='r', linestyle='--', linewidth=2, alpha=0.7, label='Ψ ≥ 0.95')
+    ax_psi.set_ylim([0, 1.15])
+    ax_psi.set_ylabel('Coherencia Ψ', fontsize=11)
+    ax_psi.set_title(
+        f'Indicadores Ψ por Pilar\nΨ_global = {Psi_global:.4f}',
+        fontsize=12, fontweight='bold',
+    )
+    ax_psi.legend(fontsize=10)
+    ax_psi.grid(True, alpha=0.3, axis='y')
+    for bar, val in zip(bars_psi, psi_vals):
+        ax_psi.text(bar.get_x() + bar.get_width() / 2., bar.get_height() + 0.02,
+                    f'{val:.3f}', ha='center', va='bottom', fontsize=12, fontweight='bold')
+
+    plt.savefig('dashboard_unificado.png', dpi=150, bbox_inches='tight')
+    print("✓ Guardado: dashboard_unificado.png")
+    plt.close()
+
+    print(f"\nΨ por pilar:")
+    for label, val in zip(pillar_labels, psi_vals):
+        tag = '✓' if val >= 0.95 else '⚠'
+        print(f"  {tag} {label.replace(chr(10),' ')}: {val:.4f}")
+    print(f"  → Ψ_global = {Psi_global:.4f}")
+
+
 def main():
     """Execute all visualizations."""
     print("\n" + "="*80)
@@ -513,16 +722,17 @@ def main():
     print(f"QCAL ∞³ Active · {F0} Hz · C = {C_QCAL}")
     print("DOI: 10.5281/zenodo.17379721")
     print("\n")
-    
+
     # Run all visualizations
     visualizacion_1_compactificacion()
     visualizacion_2_filtro_adelico()
     visualizacion_3_hadamard()
     visualizacion_4_dinamico_z()
     visualizacion_5_sistema_completo()
-    
+    dashboard_unificado()
+
     print("\n" + "="*80)
-    print("✓ Demo completado. 5 visualizaciones generadas.")
+    print("✓ Demo completado. 6 visualizaciones generadas (incluye dashboard unificado).")
     print("="*80)
 
 

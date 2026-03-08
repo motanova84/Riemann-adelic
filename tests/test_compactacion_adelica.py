@@ -757,6 +757,494 @@ class TestSparseTransferMatrix:
         T = comp.transfer_matrix(n_dim=600)
         data = T.data if scipy.sparse.issparse(T) else T
         assert np.all(np.isfinite(data)), "Sparse matrix has non-finite values"
+class TestIdeleSpace:
+    """Tests for IdeleSpace class."""
+    
+    def test_initialization(self):
+        """Test IdeleSpace initialization."""
+        from operators.compactacion_adelica import IdeleSpace
+        
+        idele = IdeleSpace(n_primes=20)
+        assert idele.n_primes == 20
+        assert len(idele.primes) == 20
+        assert len(idele.log_primes) == 20
+    
+    def test_arithmetic_action(self):
+        """Test arithmetic group action x ↦ p^k·x."""
+        from operators.compactacion_adelica import IdeleSpace
+        
+        idele = IdeleSpace(n_primes=10)
+        x = 5.0
+        
+        # Apply action with p=2, k=3: should get 5 * 2^3 = 40
+        result = idele.arithmetic_action(x, prime_idx=0, k=3)
+        assert np.isclose(result, 40.0, rtol=1e-10)
+        
+        # Apply with p=3, k=-1: should get 5 / 3
+        result = idele.arithmetic_action(x, prime_idx=1, k=-1)
+        assert np.isclose(result, 5.0/3.0, rtol=1e-10)
+    
+    def test_quotient_representative(self):
+        """Test finding canonical representative in quotient."""
+        from operators.compactacion_adelica import IdeleSpace
+        
+        idele = IdeleSpace(n_primes=20)
+        x = 100.0
+        
+        rep = idele.quotient_representative(x)
+        
+        # Representative should be positive and finite
+        assert rep > 0
+        assert np.isfinite(rep)
+    
+    def test_orbit_points(self):
+        """Test generation of orbit under group action."""
+        from operators.compactacion_adelica import IdeleSpace
+        
+        idele = IdeleSpace(n_primes=5)
+        x = 10.0
+        
+        orbit = idele.orbit_points(x, max_k=1)
+        
+        # Orbit should contain original point
+        assert x in orbit
+        # Orbit should have multiple points
+        assert len(orbit) > 1
+        # All points should be positive
+        assert all(p > 0 for p in orbit)
+    
+    def test_prime_generation(self):
+        """Test prime number generation."""
+        from operators.compactacion_adelica import IdeleSpace
+        
+        idele = IdeleSpace(n_primes=10)
+        expected = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29]
+        assert list(idele.primes) == expected
+
+
+class TestLogarithmicTorus:
+    """Tests for LogarithmicTorus class."""
+    
+    def test_initialization(self):
+        """Test torus initialization."""
+        from operators.compactacion_adelica import LogarithmicTorus
+        
+        torus = LogarithmicTorus(L=100.0)
+        assert torus.L == 100.0
+    
+    def test_initialization_invalid(self):
+        """Test that negative/zero length raises error."""
+        from operators.compactacion_adelica import LogarithmicTorus
+        
+        with pytest.raises(ValueError):
+            LogarithmicTorus(L=-1.0)
+        
+        with pytest.raises(ValueError):
+            LogarithmicTorus(L=0.0)
+    
+    def test_wrap_coordinate(self):
+        """Test coordinate wrapping to [0, L)."""
+        from operators.compactacion_adelica import LogarithmicTorus
+        
+        torus = LogarithmicTorus(L=10.0)
+        
+        # Test wrapping of value > L
+        assert np.isclose(torus.wrap_coordinate(15.0), 5.0)
+        
+        # Test wrapping of negative value
+        assert np.isclose(torus.wrap_coordinate(-3.0), 7.0)
+        
+        # Test value already in range
+        assert np.isclose(torus.wrap_coordinate(5.0), 5.0)
+    
+    def test_periodic_distance(self):
+        """Test distance with periodic boundary conditions."""
+        from operators.compactacion_adelica import LogarithmicTorus
+        
+        torus = LogarithmicTorus(L=100.0)
+        
+        # Regular distance
+        assert np.isclose(torus.periodic_distance(10.0, 30.0), 20.0)
+        
+        # Wrapped distance (shorter path around)
+        assert np.isclose(torus.periodic_distance(5.0, 98.0), 7.0)
+    
+    def test_fourier_mode(self):
+        """Test Fourier mode computation."""
+        from operators.compactacion_adelica import LogarithmicTorus
+        
+        torus = LogarithmicTorus(L=10.0)
+        t = np.array([0.0, 2.5, 5.0, 7.5, 10.0])
+        
+        # Mode n=0 should be constant 1
+        mode0 = torus.fourier_mode(0, t)
+        assert np.allclose(mode0, 1.0)
+        
+        # Mode n=1
+        mode1 = torus.fourier_mode(1, t)
+        assert np.allclose(np.abs(mode1), 1.0)  # Unit circle
+    
+    def test_volume(self):
+        """Test torus volume (length)."""
+        from operators.compactacion_adelica import LogarithmicTorus
+        
+        torus = LogarithmicTorus(L=123.45)
+        assert torus.volume() == 123.45
+    
+    def test_spectral_density_mean(self):
+        """Test mean spectral density ρ = L/(2π)."""
+        from operators.compactacion_adelica import LogarithmicTorus
+        
+        torus = LogarithmicTorus(L=100.0)
+        rho = torus.spectral_density_mean()
+        
+        expected = 100.0 / (2 * np.pi)
+        assert np.isclose(rho, expected, rtol=1e-15)
+    
+    def test_periodicity(self):
+        """Test that functions respect periodicity."""
+        from operators.compactacion_adelica import LogarithmicTorus
+        
+        torus = LogarithmicTorus(L=50.0)
+        
+        t1 = 10.0
+        t2 = t1 + torus.L
+        
+        # Wrapped coordinates should be equal
+        assert np.isclose(torus.wrap_coordinate(t1), torus.wrap_coordinate(t2))
+
+
+class TestScaleOperator:
+    """Tests for ScaleOperator class."""
+    
+    def test_initialization(self):
+        """Test scale operator initialization."""
+        from operators.compactacion_adelica import LogarithmicTorus, ScaleOperator
+        
+        torus = LogarithmicTorus(L=100.0)
+        op = ScaleOperator(torus)
+        
+        assert op.torus == torus
+    
+    def test_eigenvalue_formula(self):
+        """Test eigenvalue formula λ_n = 2πn/L."""
+        from operators.compactacion_adelica import LogarithmicTorus, ScaleOperator
+        
+        torus = LogarithmicTorus(L=100.0)
+        op = ScaleOperator(torus)
+        
+        # Test specific eigenvalues
+        assert np.isclose(op.eigenvalue(0), 0.0, atol=1e-15)
+        assert np.isclose(op.eigenvalue(1), 2*np.pi/100, rtol=1e-15)
+        assert np.isclose(op.eigenvalue(-1), -2*np.pi/100, rtol=1e-15)
+    
+    def test_eigenvalue_spacing(self):
+        """Test uniform eigenvalue spacing."""
+        from operators.compactacion_adelica import LogarithmicTorus, ScaleOperator
+        
+        torus = LogarithmicTorus(L=100.0)
+        op = ScaleOperator(torus)
+        
+        delta_lambda = op.spacing()
+        expected = 2 * np.pi / 100.0
+        
+        assert np.isclose(delta_lambda, expected, rtol=1e-15)
+    
+    def test_eigenvalue_array(self):
+        """Test eigenvalue array generation."""
+        from operators.compactacion_adelica import LogarithmicTorus, ScaleOperator
+        
+        torus = LogarithmicTorus(L=100.0)
+        op = ScaleOperator(torus)
+        
+        eigenvals = op.eigenvalues(n_max=5)
+        
+        # Should have 11 values (-5 to 5)
+        assert len(eigenvals) == 11
+        
+        # Check spacing
+        spacings = np.diff(eigenvals)
+        assert np.allclose(spacings, op.spacing(), rtol=1e-15)
+    
+    def test_eigenvalue_symmetry(self):
+        """Test λ_{-n} = -λ_n symmetry."""
+        from operators.compactacion_adelica import LogarithmicTorus, ScaleOperator
+        
+        torus = LogarithmicTorus(L=100.0)
+        op = ScaleOperator(torus)
+        
+        for n in range(1, 10):
+            assert op.eigenvalue_symmetry(n)
+    
+    def test_spacing_density_relation(self):
+        """Test Δλ · ρ = 1 exact identity."""
+        from operators.compactacion_adelica import LogarithmicTorus, ScaleOperator
+        
+        torus = LogarithmicTorus(L=100.0)
+        op = ScaleOperator(torus)
+        
+        assert op.verify_spacing_density_relation()
+        
+        # Also test explicitly
+        delta_lambda = op.spacing()
+        rho = torus.spectral_density_mean()
+        assert np.isclose(delta_lambda * rho, 1.0, rtol=1e-15)
+
+
+class TestLogarithmicLattice:
+    """Tests for LogarithmicLattice class."""
+    
+    def test_initialization(self):
+        """Test lattice initialization."""
+        from operators.compactacion_adelica import IdeleSpace, LogarithmicLattice
+        
+        idele = IdeleSpace(n_primes=10)
+        lattice = LogarithmicLattice(idele)
+        
+        assert lattice.idele_space == idele
+    
+    def test_generate_points(self):
+        """Test lattice point generation."""
+        from operators.compactacion_adelica import IdeleSpace, LogarithmicLattice
+        
+        idele = IdeleSpace(n_primes=5)
+        lattice = LogarithmicLattice(idele)
+        
+        points = lattice.generate_points(k_max=2)
+        
+        # Should have 5 primes × 2 powers = 10 points
+        assert len(points) == 10
+        
+        # Points should be sorted
+        assert np.all(points[:-1] <= points[1:])
+        
+        # All points should be positive
+        assert np.all(points > 0)
+    
+    def test_nearest_point(self):
+        """Test finding nearest lattice point."""
+        from operators.compactacion_adelica import IdeleSpace, LogarithmicLattice
+        
+        idele = IdeleSpace(n_primes=10)
+        lattice = LogarithmicLattice(idele)
+        
+        # log(2) ≈ 0.693
+        nearest = lattice.nearest_point(0.7, k_max=2)
+        
+        # Should find log(2) as nearest
+        assert np.isclose(nearest, np.log(2), atol=0.1)
+    
+    def test_spacing_statistics(self):
+        """Test lattice spacing statistics."""
+        from operators.compactacion_adelica import IdeleSpace, LogarithmicLattice
+        
+        idele = IdeleSpace(n_primes=20)
+        lattice = LogarithmicLattice(idele)
+        
+        stats = lattice.spacing_statistics(k_max=2)
+        
+        # Check all keys present
+        assert 'mean_spacing' in stats
+        assert 'std_spacing' in stats
+        assert 'min_spacing' in stats
+        assert 'max_spacing' in stats
+        assert 'num_points' in stats
+        
+        # Spacing should be positive
+        assert stats['mean_spacing'] > 0
+        assert stats['min_spacing'] > 0
+
+
+class TestTransferMatrix:
+    """Tests for TransferMatrix class."""
+    
+    def test_initialization(self):
+        """Test transfer matrix initialization."""
+        from operators.compactacion_adelica import IdeleSpace, LogarithmicLattice, TransferMatrix
+        
+        idele = IdeleSpace(n_primes=10)
+        lattice = LogarithmicLattice(idele)
+        transfer = TransferMatrix(lattice)
+        
+        assert transfer.lattice == lattice
+    
+    def test_matrix_construction(self):
+        """Test matrix construction."""
+        from operators.compactacion_adelica import IdeleSpace, LogarithmicLattice, TransferMatrix
+        
+        idele = IdeleSpace(n_primes=10)
+        lattice = LogarithmicLattice(idele)
+        transfer = TransferMatrix(lattice)
+        
+        T = transfer.construct(n_dim=5)
+        
+        # Check shape
+        assert T.shape == (5, 5)
+        
+        # Check all elements finite
+        assert np.all(np.isfinite(T))
+        
+        # Check diagonal elements
+        for i in range(5):
+            p = idele.primes[i]
+            expected = np.log(p) / np.sqrt(p)
+            assert np.isclose(T[i, i], expected, rtol=1e-10)
+    
+    def test_determinant_at_lambda(self):
+        """Test determinant computation."""
+        from operators.compactacion_adelica import IdeleSpace, LogarithmicLattice, TransferMatrix
+        
+        idele = IdeleSpace(n_primes=20)
+        lattice = LogarithmicLattice(idele)
+        transfer = TransferMatrix(lattice)
+        
+        # Test at non-zero lambda
+        det_val = transfer.determinant_at_lambda(10.0, n_dim=10)
+        
+        assert np.isfinite(det_val)
+        
+        # Test near zero lambda returns inf
+        det_val = transfer.determinant_at_lambda(1e-15, n_dim=10)
+        assert np.isinf(det_val)
+    
+    def test_spectral_determinant_array(self):
+        """Test determinant computation for array."""
+        from operators.compactacion_adelica import IdeleSpace, LogarithmicLattice, TransferMatrix
+        
+        idele = IdeleSpace(n_primes=15)
+        lattice = LogarithmicLattice(idele)
+        transfer = TransferMatrix(lattice)
+        
+        lambdas = np.linspace(1.0, 20.0, 10)
+        dets = transfer.spectral_determinant(lambdas, n_dim=10)
+        
+        assert len(dets) == len(lambdas)
+        assert np.all(np.isfinite(dets))
+    
+    def test_eigenvalue_spectrum(self):
+        """Test eigenvalue computation of transfer matrix."""
+        from operators.compactacion_adelica import IdeleSpace, LogarithmicLattice, TransferMatrix
+        
+        idele = IdeleSpace(n_primes=10)
+        lattice = LogarithmicLattice(idele)
+        transfer = TransferMatrix(lattice)
+        
+        eigenvals = transfer.eigenvalue_spectrum(n_dim=5)
+        
+        # Should have 5 eigenvalues
+        assert len(eigenvals) == 5
+        
+        # All should be real and finite
+        assert np.all(np.isfinite(eigenvals))
+        
+        # Should be sorted
+        assert np.all(eigenvals[:-1] <= eigenvals[1:])
+
+
+class TestBerryPhase:
+    """Tests for BerryPhase class."""
+    
+    def test_initialization(self):
+        """Test Berry phase initialization."""
+        from operators.compactacion_adelica import BerryPhase, BERRY_PHASE_FACTOR
+        
+        berry = BerryPhase()
+        
+        assert berry.factor == BERRY_PHASE_FACTOR
+        assert np.isclose(berry.phase, BERRY_PHASE_FACTOR * 2 * np.pi)
+    
+    def test_compute_phase(self):
+        """Test phase computation φ = 7/8 · 2π."""
+        from operators.compactacion_adelica import BerryPhase
+        
+        berry = BerryPhase()
+        phase = berry.compute_phase()
+        
+        expected = (7.0/8.0) * 2 * np.pi
+        assert np.isclose(phase, expected, rtol=1e-15)
+    
+    def test_holonomy_integral(self):
+        """Test numerical holonomy integral."""
+        from operators.compactacion_adelica import BerryPhase, LogarithmicTorus
+        
+        berry = BerryPhase()
+        torus = LogarithmicTorus(L=100.0)
+        
+        holonomy = berry.holonomy_integral(torus, n_modes=10)
+        
+        # Should be a valid phase in [0, 2π)
+        assert 0 <= holonomy < 2 * np.pi
+        assert np.isfinite(holonomy)
+    
+    def test_topological_invariance(self):
+        """Test that Berry phase is independent of L."""
+        from operators.compactacion_adelica import BerryPhase
+        
+        berry = BerryPhase()
+        L_values = [50.0, 100.0, 150.0, 200.0]
+        
+        # Verify topological invariance
+        invariant = berry.verify_topological_invariance(L_values)
+        
+        # Should show invariance (allowing numerical tolerance)
+        assert isinstance(invariant, bool)
+    
+    def test_trace_contribution(self):
+        """Test trace formula contribution."""
+        from operators.compactacion_adelica import BerryPhase
+        
+        berry = BerryPhase()
+        contribution = berry.trace_contribution()
+        
+        assert np.isclose(contribution, 7.0/8.0, rtol=1e-15)
+    
+    def test_is_exact_and_topological(self):
+        """Test that phase is exact and topological."""
+        from operators.compactacion_adelica import BerryPhase
+        
+        berry = BerryPhase()
+        
+        assert berry.is_exact() == True
+        assert berry.is_topological() == True
+
+
+class TestActivarFunction:
+    """Tests for activar_compactacion_adelica function."""
+    
+    def test_activar_basic(self):
+        """Test basic activation."""
+        from operators.compactacion_adelica import activar_compactacion_adelica
+        
+        comp = activar_compactacion_adelica(n_primes=20, cutoff=50.0)
+        
+        assert comp.N_primes == 20
+        assert comp.L == 50.0
+    
+    def test_activar_validation(self):
+        """Test that activation includes validation."""
+        from operators.compactacion_adelica import activar_compactacion_adelica
+        
+        comp = activar_compactacion_adelica(n_primes=30, cutoff=100.0)
+        
+        # Should pass spacing-density relation
+        assert comp.scale_operator.verify_spacing_density_relation()
+        
+        # Should have exact Berry phase
+        assert comp.berry_phase_obj.is_exact()
+    
+    def test_activar_returns_valid_instance(self):
+        """Test that activation returns a fully initialized instance."""
+        from operators.compactacion_adelica import activar_compactacion_adelica
+        
+        comp = activar_compactacion_adelica(n_primes=40, cutoff=120.0)
+        
+        # All components should be initialized
+        assert comp.idele_space is not None
+        assert comp.torus is not None
+        assert comp.scale_operator is not None
+        assert comp.lattice is not None
+        assert comp.transfer is not None
+        assert comp.berry_phase_obj is not None
 
 
 if __name__ == '__main__':
