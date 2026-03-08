@@ -99,6 +99,29 @@ __all__ = [
 ]
 
 
+def _convert_to_native(obj):
+    """
+    Convert numpy types to Python natives for JSON serialization.
+    
+    Args:
+        obj: Object to convert (numpy type, dict, list, or native)
+        
+    Returns:
+        Object with all numpy types converted to Python natives
+    """
+    if isinstance(obj, np.integer):
+        return int(obj)
+    elif isinstance(obj, np.floating):
+        return float(obj)
+    elif isinstance(obj, np.ndarray):
+        return obj.tolist()
+    elif isinstance(obj, dict):
+        return {k: _convert_to_native(v) for k, v in obj.items()}
+    elif isinstance(obj, (list, tuple)):
+        return [_convert_to_native(item) for item in obj]
+    return obj
+
+
 class IdeleSpace:
     """
     Idele Space: A = ℝ⁺ / Γ_aritm
@@ -864,21 +887,6 @@ class CompactacionAdelica:
         berry_results = self.berry_phase_calculation()
         trace_results = self.trace_formula_exact(t=0.1)
         
-        # Convert numpy types to Python natives for JSON serialization
-        def convert_to_native(obj):
-            """Convert numpy types to Python natives."""
-            if isinstance(obj, np.integer):
-                return int(obj)
-            elif isinstance(obj, np.floating):
-                return float(obj)
-            elif isinstance(obj, np.ndarray):
-                return obj.tolist()
-            elif isinstance(obj, dict):
-                return {k: convert_to_native(v) for k, v in obj.items()}
-            elif isinstance(obj, (list, tuple)):
-                return [convert_to_native(item) for item in obj]
-            return obj
-        
         certificate = {
             'framework': 'QCAL ∞³ — Compactación Adélica',
             'timestamp': '2026-03-08',
@@ -908,7 +916,7 @@ class CompactacionAdelica:
                 'exact_form': 'Tr(e^{-tH}) = (1/2π)log(1/t)/t + 7/8 + Σ_primes + O(t)',
                 'berry_contribution': float(trace_results['berry_term']),
                 'berry_exact': True,
-                'sample_evaluation': convert_to_native(trace_results)
+                'sample_evaluation': _convert_to_native(trace_results)
             },
             
             'spectral_identity': {
@@ -917,7 +925,7 @@ class CompactacionAdelica:
                 'identity_exact': True
             },
             
-            'validation': convert_to_native(validation_results),
+            'validation': _convert_to_native(validation_results),
             
             'qcal_parameters': {
                 'frequency_f0': float(F0),
