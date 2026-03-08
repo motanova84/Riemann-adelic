@@ -291,7 +291,10 @@ class QuintoPostuladoValidator:
         print(f"  {'✓' if test2['passed'] else '✗'} Global coherence: Ψ_global = {report.psi_global:.6f}")
         
         # Test 3: SHA-256 certification format
-        sha256_valid = report.sha256.startswith("0xQCAL_QUINTO_") and len(report.sha256) == 30
+        # Format: "0xQCAL_QUINTO_" (14 chars) + 16 hex chars = 30 chars total
+        sha256_prefix = "0xQCAL_QUINTO_"
+        sha256_valid = (report.sha256.startswith(sha256_prefix) and 
+                        len(report.sha256) == len(sha256_prefix) + 16)
         
         test3 = {
             "name": "SHA-256 certification format",

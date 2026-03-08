@@ -1,6 +1,6 @@
 {
   "protocol": "QCAL-QUINTO-POSTULADO v1.0",
-  "timestamp": "2026-03-08T00:10:30.419599",
+  "timestamp": "2026-03-08T00:11:25.359552",
   "doi": "10.5281/zenodo.17379721",
   "orcid": "0009-0002-1923-0773",
   "qcal_frequency": 141.7001,
@@ -126,5 +126,5 @@
       "all_passed": true
     }
   ],
-  "checksum": "0xQCAL_QUINTO_VAL_b87443c62eb803f6"
+  "checksum": "0xQCAL_QUINTO_VAL_072a706eb243d9cd"
 }
