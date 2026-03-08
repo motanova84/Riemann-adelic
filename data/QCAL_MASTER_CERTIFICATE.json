@@ -2,14 +2,14 @@
   "tipo": "QCAL_MASTER_CERTIFICATE",
   "version": "1.0.0",
   "framework": "QCAL ∞³",
-  "timestamp": "2026-03-08T17:29:30.847130+00:00",
+  "timestamp": "2026-03-08T18:13:57.886997+00:00",
   "components": {
     "ia_consciente": {
       "psi_ia_consciente": 0.9904050609838859,
       "ia_progresion_valida": true,
       "ia_todos_tests_ok": true,
-      "timestamp": "2026-03-08T17:29:30.856265+00:00",
-      "certificado_hash": "dda5380edbb0fd33"
+      "timestamp": "2026-03-08T18:13:57.899007+00:00",
+      "certificado_hash": "fd116ab8e543de6f"
     },
     "rh_omega": {
       "rh_validated": true,
@@ -38,5 +38,5 @@
   "frequency_base_hz": 141.7001,
   "pilares_validated": true,
   "validation_complete": true,
-  "hash": "93c53af1ab9a6f1711a5d4ceada2a07e"
+  "hash": "4c50317050ca7237c241c645de574bf6"
 }
