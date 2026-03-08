@@ -1,0 +1,216 @@
+{
+  "certificate_type": "SISTEMA_DINAMICO_Z",
+  "timestamp": "2026-03-08T00:31:11.872940",
+  "author": "José Manuel Mota Burruezo Ψ ✧ ∞³",
+  "institute": "Instituto de Conciencia Cuántica (ICQ)",
+  "doi": "10.5281/zenodo.17379721",
+  "orcid": "0009-0002-1923-0773",
+  "signature": "∴𓂀Ω∞³Φ",
+  "results": {
+    "timestamp": "2026-03-08T00:31:11.872940",
+    "author": "José Manuel Mota Burruezo Ψ ✧ ∞³",
+    "institute": "Instituto de Conciencia Cuántica (ICQ)",
+    "doi": "10.5281/zenodo.17379721",
+    "qcal_constants": {
+      "F0": 141.7001,
+      "C": 244.36,
+      "phi": 1.618033988749895,
+      "lyapunov": 0.48121182505960347
+    },
+    "pillar_1_compactificacion": {
+      "compactness": {
+        "is_compact": true,
+        "haar_volume": 1.0000057721639306,
+        "haar_volume_correct": true,
+        "potential_grows": true,
+        "potential_logarithmic": true,
+        "measure_finite": true,
+        "integrated_measure": 9.21034036188462,
+        "Psi": 1.0
+      },
+      "spectrum": {
+        "eigenvalues": [
+          348040.8817717683,
+          558333.1781880502,
+          799929.1096029195,
+          1094174.7999333541,
+          1458168.3706936054,
+          1897790.928642578,
+          2412728.201313245,
+          3000738.617430632,
+          3658917.4351486927,
+          4383954.972153831,
+          5172175.360887565,
+          6019532.252416688,
+          6921595.030611524,
+          7873529.883769145,
+          8870073.670769917,
+          9905496.215592954,
+          10973544.443422036,
+          12067358.4879212,
+          13179345.36228668,
+          14300992.901339974,
+          15422624.80064143,
+          16533234.446840491,
+          17621184.231337965,
+          18678516.200509205,
+          19712266.933386683,
+          20752222.426884413,
+          21834011.962368477,
+          22979059.95138605,
+          24197405.319636837,
+          25496086.604747154,
+          26882320.85504785,
+          28364166.36863599,
+          29950736.880285688,
+          31652402.868444897,
+          33481039.639626406,
+          35450342.38774375,
+          37576232.38399017,
+          39877389.27875447,
+          42375961.784285076,
+          45098537.101892695,
+          48077496.78247644,
+          51352969.85288194,
+          54975747.563099414,
+          59011825.048501775,
+          63549870.02640617,
+          68714387.65133752,
+          74691187.61275601,
+          81783604.74585417,
+          90564947.37300627,
+          102485322.72358312
+        ],
+        "N_levels": 50,
+        "min_gap": 210292.29641628184,
+        "mean_gap": 2084434.3233022727,
+        "is_discrete": true,
+        "ground_state_energy": 348040.8817717683
+      },
+      "Psi": 1.0
+    },
+    "pillar_2_filtro": {
+      "mobius_cancellation": {
+        "total_sum": 206.14585682505478,
+        "prime_power_sum": 206.14585682505478,
+        "composite_contribution": 0.0,
+        "cancellation_ratio": 0.0,
+        "theoretical_ratio": 0.26595744680851063,
+        "ratio_match": false,
+        "cancellation_factor": Infinity
+      },
+      "poisson_trace": {
+        "left_sum": 10.714837100266884,
+        "right_integral": 25.06628274631,
+        "relative_error": 0.5725398453066813,
+        "test_function": "gaussian",
+        "sigma": 10.0,
+        "formula_holds": false
+      },
+      "filter_effective": false,
+      "Psi": 0.5
+    },
+    "pillar_3_hadamard": {
+      "functional_equation": {
+        "functional_equation_holds": true,
+        "max_error": 2.2796184007164928e-17,
+        "mean_error": 4.559236801432986e-18,
+        "A_coefficient": 0.0,
+        "A_is_zero": true
+      },
+      "B_coefficient": {
+        "xi_0": 0.5,
+        "xi_0_expected": 0.5,
+        "xi_0_error": 0.0,
+        "B_coefficient": -0.6931471805599453,
+        "B_expected": -0.6931471805599453,
+        "B_match": true
+      },
+      "trace_anomaly": {
+        "trace_anomaly": -0.5,
+        "expected": -0.5,
+        "matches_theory": true,
+        "interpretation": "Quantum anomaly from compactification"
+      },
+      "berry_phase": {
+        "berry_phase": 1.5707963267948966,
+        "berry_phase_degrees": 90.0,
+        "topological_invariant": "1/4",
+        "interpretation": "Geometric phase from adelic compactification"
+      },
+      "hadamard_identity_valid": true,
+      "Psi": 1.0
+    },
+    "pillar_4_dinamico": {
+      "lyapunov": {
+        "lambda_exact": 0.48121182505960347,
+        "lambda_numerical": 0.4814198878638502,
+        "phi": 1.618033988749895,
+        "error": 0.00020806280424673362,
+        "matches": true
+      },
+      "volume": {
+        "euler_characteristic": -0.16666666666666666,
+        "curvature": -1.0,
+        "volume_computed": 1.0471975511965976,
+        "volume_expected": 1.0471975511965976,
+        "error": 0.0,
+        "matches": true
+      },
+      "spectrum": {
+        "eigenvalues": [
+          200.04045483238687,
+          442.17615057408256,
+          625.792996894331,
+          925.9230872738962,
+          1084.9682817881735,
+          1412.970788586984,
+          1674.5915655950812,
+          1877.4852790897787,
+          2304.7445111236243,
+          2477.684399515386,
+          2806.104957452418,
+          3186.4288790782343,
+          3522.32163184682,
+          3700.7552784671793,
+          4239.893392413367,
+          4499.9509806728365,
+          4836.951990971984,
+          5193.925215278636,
+          5731.450193843964,
+          5951.576349252271
+        ],
+        "N_eigenvalues": 100,
+        "all_positive": true,
+        "all_real": true,
+        "min_gap": 159.04519451427734,
+        "is_discrete": true,
+        "smallest_eigenvalue": 200.04045483238687
+      },
+      "gue_statistics": {
+        "N_spacings": 99,
+        "mean_spacing_theory": 2.025687548107126,
+        "mean_spacing_actual": 2.2463586315563786,
+        "first_moment": 1.0,
+        "first_moment_gue": 1.1283791670955126,
+        "first_moment_error": 0.12837916709551256,
+        "second_moment": 1.2159080336448966,
+        "small_spacings_count": 0,
+        "level_repulsion": true,
+        "follows_gue": true
+      },
+      "dynamics_verified": true,
+      "Psi": 1.0
+    },
+    "global_coherence": {
+      "Psi_1_compactificacion": 1.0,
+      "Psi_2_filtro": 0.5,
+      "Psi_3_hadamard": 1.0,
+      "Psi_4_dinamico": 1.0,
+      "Psi_global": 0.875,
+      "all_pillars_valid": false,
+      "system_complete": false
+    }
+  },
+  "status": "EN_REVISION"
+}

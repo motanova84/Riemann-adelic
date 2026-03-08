@@ -37,6 +37,14 @@ from .operador_h_solenoide import (
     RIEMANN_ZEROS_10,
 )
 
+from .sistema_dinamico_z import (
+    CompactificacionNoConmutativa,
+    FiltroRacionalesAdelico,
+    IdentidadDeterminanteHadamard,
+    SistemaDinamicoZ,
+    SistemaDinamicoZCompleto
+)
+
 __all__ = [
     'PrimitivaPotencialOscilatorio',
     'EstimacionCuadraticaMedia',
@@ -56,4 +64,9 @@ __all__ = [
     'SistemaOperadorHSolenoide',
     'demostrar_operador_h_solenoide',
     'RIEMANN_ZEROS_10',
+    'CompactificacionNoConmutativa',
+    'FiltroRacionalesAdelico',
+    'IdentidadDeterminanteHadamard',
+    'SistemaDinamicoZ',
+    'SistemaDinamicoZCompleto'
 ]
