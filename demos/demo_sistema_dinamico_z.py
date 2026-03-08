@@ -548,14 +548,21 @@ def dashboard_unificado():
 
     gs = fig.add_gridspec(3, 3, hspace=0.45, wspace=0.35)
 
-    pillar_colors = ['#1f77b4', '#2ca02c', '#ff7f0e', '#9467bd']
+    # Named colour mapping for clarity
+    pillar_colors = {
+        'compactificacion': '#1f77b4',
+        'filtro':           '#2ca02c',
+        'hadamard':         '#ff7f0e',
+        'dinamico':         '#9467bd',
+    }
 
     # ── Pilar 1: Confinement spectrum (100 levels) ────────────────────────
     ax1a = fig.add_subplot(gs[0, 0])
     spec_conf = compact.compute_spectrum_confinement(N_states=100)
     eigs_conf = spec_conf['eigenvalues'][:100]
     n_conf = np.arange(1, len(eigs_conf) + 1)
-    ax1a.plot(n_conf, eigs_conf, 'o-', color=pillar_colors[0], markersize=3, linewidth=1)
+    ax1a.plot(n_conf, eigs_conf, 'o-', color=pillar_colors['compactificacion'],
+              markersize=3, linewidth=1)
     ax1a.set_xlabel('Level $n$', fontsize=11)
     ax1a.set_ylabel('Energy $E_n$', fontsize=11)
     ax1a.set_title(
@@ -568,7 +575,8 @@ def dashboard_unificado():
     ax1b = fig.add_subplot(gs[0, 1])
     if len(eigs_conf) > 1:
         gaps_conf = np.diff(eigs_conf)
-        ax1b.hist(gaps_conf, bins=20, color=pillar_colors[0], alpha=0.7, edgecolor='black')
+        ax1b.hist(gaps_conf, bins=20, color=pillar_colors['compactificacion'],
+                  alpha=0.7, edgecolor='black')
     ax1b.set_xlabel('Gap $\\Delta E_n$', fontsize=11)
     ax1b.set_ylabel('Count', fontsize=11)
     ax1b.set_title('Pilar 1: Distribución de Gaps', fontsize=11, fontweight='bold')
@@ -579,7 +587,7 @@ def dashboard_unificado():
     # Evaluate ψ(x) for a range of x using sieve
     x_vals_p2 = [10, 20, 50, 100, 200, 500, 1000, 2000, 5000, 10_000]
     psi_sieve_vals = [filtro.chebyshev_psi_sieve(float(x)) for x in x_vals_p2]
-    ax2a.plot(x_vals_p2, psi_sieve_vals, 'o-', color=pillar_colors[1],
+    ax2a.plot(x_vals_p2, psi_sieve_vals, 'o-', color=pillar_colors['filtro'],
               linewidth=2, markersize=6, label='$\\psi(x)$ sieve')
     ax2a.plot(x_vals_p2, x_vals_p2, 'r--', linewidth=2, alpha=0.7, label='$x$ (PNT)')
     ax2a.set_xscale('log')
@@ -593,13 +601,12 @@ def dashboard_unificado():
     ax2a.legend(fontsize=10)
     ax2a.grid(True, alpha=0.3)
 
-    # ψ(x) - x (error term)
+    # ψ(x) - x (error term) – reuse zeros from the dinamico instance (single source)
     ax2b = fig.add_subplot(gs[1, 1])
-    zeros_low = [14.134725, 21.022040, 25.010858, 30.424878, 32.935057,
-                 37.586176, 40.918720, 43.327073, 48.005150, 49.773832]
+    zeros_low = dinamico.zeros[:10]  # first 10 γ_n from mpmath (already computed)
     x_err_vals = np.logspace(1, 4, 40)  # 10 to 10^4
     psi_errs = [filtro.chebyshev_psi_sieve(float(x)) - x for x in x_err_vals]
-    ax2b.plot(x_err_vals, psi_errs, '-', color=pillar_colors[1], linewidth=2,
+    ax2b.plot(x_err_vals, psi_errs, '-', color=pillar_colors['filtro'], linewidth=2,
               label='$\\psi(x) - x$')
     ax2b.axhline(0, color='k', linestyle='--', linewidth=1, alpha=0.5)
     ax2b.set_xscale('log')
@@ -614,7 +621,7 @@ def dashboard_unificado():
     N_vals_mob = [10, 20, 50, 100, 200, 500, 1000, 2000, 5000, 10_000]
     factors = [filtro.compute_mobius_cancellation(N=N)['cancellation_factor']
                for N in N_vals_mob]
-    ax2c.semilogx(N_vals_mob, factors, 'o-', color=pillar_colors[1],
+    ax2c.semilogx(N_vals_mob, factors, 'o-', color=pillar_colors['filtro'],
                   linewidth=2, markersize=6)
     ax2c.axhline(3.76, color='r', linestyle='--', linewidth=2, alpha=0.7, label='3.76× (teoría)')
     ax2c.set_xlabel('$N$', fontsize=11)
@@ -636,7 +643,7 @@ def dashboard_unificado():
         except Exception:
             rel_err = float('nan')
         errors_crit.append(rel_err)
-    ax3.semilogy(t_vals, errors_crit, '-', color=pillar_colors[2], linewidth=2)
+    ax3.semilogy(t_vals, errors_crit, '-', color=pillar_colors['hadamard'], linewidth=2)
     ax3.set_xlabel('$t = \\mathrm{Im}(s)$', fontsize=11)
     ax3.set_ylabel('$|\\xi(s)-\\xi(1-s)|/|\\xi(s)|$', fontsize=11)
     ax3.set_title(
@@ -651,7 +658,7 @@ def dashboard_unificado():
     spec_sel = dinamico.selberg_laplacian_spectrum(N_eigenvalues=200)
     eigs_sel = spec_sel['eigenvalues']
     n_sel = np.arange(1, len(eigs_sel) + 1)
-    ax4a.plot(n_sel, eigs_sel, '.', color=pillar_colors[3], markersize=4)
+    ax4a.plot(n_sel, eigs_sel, '.', color=pillar_colors['dinamico'], markersize=4)
     ax4a.set_xlabel('Level $n$', fontsize=11)
     ax4a.set_ylabel('$\\lambda_n = 1/4 + \\gamma_n^2$', fontsize=11)
     ax4a.set_title(
@@ -665,7 +672,7 @@ def dashboard_unificado():
     spacings_raw = np.diff(dinamico.zeros)
     mean_sp = np.mean(spacings_raw)
     spacings_norm = spacings_raw / mean_sp
-    ax4b.hist(spacings_norm, bins=25, density=True, color=pillar_colors[3],
+    ax4b.hist(spacings_norm, bins=25, density=True, color=pillar_colors['dinamico'],
               alpha=0.7, edgecolor='black', label='Datos (100 ceros)')
     # GUE Wigner surmise: P(s) = (π/2) s exp(−πs²/4)
     s_gue = np.linspace(0, 4, 200)

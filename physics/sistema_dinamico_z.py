@@ -76,6 +76,10 @@ PSI_THRESHOLD = 0.95  # Coherence threshold for validation
 PHI = (1 + np.sqrt(5)) / 2  # Golden ratio
 LYAPUNOV_Z = np.log(PHI)  # Lyapunov exponent for SL(2,Z)\H
 
+# Numerical stability constants
+_NUMERICAL_TOLERANCE = 1e-12   # Guard against near-zero denominators
+_MIN_LOG_ARG = 1e-30           # Lower bound passed to log() to avoid −∞
+
 
 class CompactificacionNoConmutativa:
     """
@@ -401,7 +405,8 @@ class FiltroRacionalesAdelico:
         sieve[0] = sieve[1] = 0
         for i in range(2, int(limit ** 0.5) + 1):
             if sieve[i]:
-                sieve[i * i::i] = bytearray(len(sieve[i * i::i]))
+                for j in range(i * i, limit + 1, i):
+                    sieve[j] = 0
         return [i for i, v in enumerate(sieve) if v]
 
     @staticmethod
@@ -523,7 +528,7 @@ class FiltroRacionalesAdelico:
 
         # Trivial correction: log(2π) + ½ log(1 − 1/x²)
         if x > 1.0:
-            trivial_correction = np.log(2.0 * np.pi) + 0.5 * np.log(max(1.0 - 1.0 / x ** 2, 1e-30))
+            trivial_correction = np.log(2.0 * np.pi) + 0.5 * np.log(max(1.0 - 1.0 / x ** 2, _MIN_LOG_ARG))
         else:
             trivial_correction = np.log(2.0 * np.pi)
 
@@ -725,11 +730,11 @@ class FiltroRacionalesAdelico:
         composite_contribution = abs(composite_sum)
 
         # Cancellation ratio: |S_composites| / |S_primes|
-        if abs(prime_sum) > 1e-12:
+        if abs(prime_sum) > _NUMERICAL_TOLERANCE:
             ratio = composite_contribution / abs(prime_sum)
-        elif composite_contribution > 1e-12:
+        elif composite_contribution > _NUMERICAL_TOLERANCE:
             # prime_sum ≈ 0 but composites contribute → ratio large but finite
-            ratio = min(composite_contribution / 1e-12, 1.0)
+            ratio = min(composite_contribution / _NUMERICAL_TOLERANCE, 1.0)
         else:
             # Both are negligible: use the reciprocal convention → factor = 1.0
             ratio = 1.0
@@ -738,11 +743,11 @@ class FiltroRacionalesAdelico:
         theoretical_ratio = 1.0 / 3.76
 
         # cancellation_factor = |S_primes| / |S_composites|; guarded against inf
-        if composite_contribution > 1e-12:
+        if composite_contribution > _NUMERICAL_TOLERANCE:
             cancellation_factor = abs(prime_sum) / composite_contribution
         else:
             # No composite contribution yet (very small N): fall back to prime ratio
-            cancellation_factor = abs(prime_sum) / max(abs(mobius_sum), 1e-12)
+            cancellation_factor = abs(prime_sum) / max(abs(mobius_sum), _NUMERICAL_TOLERANCE)
 
         return {
             'total_sum': float(mobius_sum),
