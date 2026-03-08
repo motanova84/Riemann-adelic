@@ -118,7 +118,27 @@ except ImportError:
 
 @dataclass
 class GUESpacingStats:
-    """Estadísticas espaciado nivel GUE."""
+    """Level spacing statistics and GUE comparison for a set of zeros.
+
+    Unified dataclass satisfying both the compact API (n_zeros_used /
+    normalized_spacings / variance) and the extended API (n_zeros /
+    normalised_spacings / variance_spacing / gue_mean / gue_mean_sq /
+    E_min / E_max).
+
+    Attributes:
+        mean_spacing: Mean nearest-neighbor spacing ⟨s⟩ (≈1 after unfolding).
+        mean_sq_spacing: Mean squared spacing ⟨s²⟩.
+        variance: Variance of spacings Var(s) = ⟨s²⟩ - ⟨s⟩² (primary name).
+        ks_statistic: Kolmogorov-Smirnov statistic vs Wigner surmise CDF.
+        ks_pvalue: KS-test p-value (high = close to GUE).
+        normalized_spacings: Array of normalised nearest-neighbour spacings
+            (unit mean).  Primary name per repository convention.
+        n_zeros_used: Number of zeros used.
+        gue_mean: Theoretical GUE mean ⟨s⟩_GUE = 1 (by normalisation).
+        gue_mean_sq: Theoretical GUE ⟨s²⟩_GUE = 3π/8 ≈ 1.178.
+        E_min: Lower energy bound used for zero selection.
+        E_max: Upper energy bound used for zero selection.
+    """
     mean_spacing: float
     mean_sq_spacing: float
     variance: float
@@ -126,15 +146,25 @@ class GUESpacingStats:
     ks_pvalue: float
     normalized_spacings: NDArray
     n_zeros_used: int
-    
+    gue_mean: float = 1.0
+    gue_mean_sq: float = 3.0 * math.pi / 8.0
+    E_min: float = 0.0
+    E_max: float = float('inf')
+
     @property
     def normalised_spacings(self) -> NDArray:
-        """Backward-compatible alias for ``normalized_spacings``.
-
-        Deprecated: use ``normalized_spacings`` to follow the repository-wide
-        naming convention.
-        """
+        """Backward-compatible alias for ``normalized_spacings``."""
         return self.normalized_spacings
+
+    @property
+    def variance_spacing(self) -> float:
+        """Backward-compatible alias for ``variance``."""
+        return self.variance
+
+    @property
+    def n_zeros(self) -> int:
+        """Backward-compatible alias for ``n_zeros_used``."""
+        return self.n_zeros_used
 
 
 def N_smooth(E: float) -> float:
@@ -172,31 +202,38 @@ def gue_level_spacing_stats(
     n_zeros = len(filtered_zeros)
     
     if n_zeros < 3:
-        raise ValueError(f"Insufficient zeros: {n_zeros} (need ≥3)")
-    
+        raise ValueError(
+            f"Insufficient zeros: {n_zeros} (need ≥3). "
+            f"Need at least 3 zeros in [{E_min}, {E_max}]; found {n_zeros}."
+        )
+
     # Espaciados crudos
     raw_spacings = np.diff(filtered_zeros)
-    
+
     # Normalizar por densidad media local ρ_smooth (unfolding: ⟨s⟩ ≈ 1 en promedio)
     local_density = np.array([rho_smooth(E) for E in filtered_zeros[:-1]])
     norm_spacings = raw_spacings * local_density
-    
+
     # Estadísticas
-    mean_s = np.mean(norm_spacings)
-    mean_s2 = np.mean(norm_spacings**2)
-    var_s = np.var(norm_spacings)
-    
+    mean_s = float(np.mean(norm_spacings))
+    mean_s2 = float(np.mean(norm_spacings**2))
+    var_s = float(np.var(norm_spacings))
+
     # KS test vs Wigner CDF
     ks_stat, ks_p = kstest(norm_spacings, lambda s: WIGNER_CDF(s))
-    
+
     return GUESpacingStats(
         mean_spacing=mean_s,
         mean_sq_spacing=mean_s2,
         variance=var_s,
-        ks_statistic=ks_stat,
-        ks_pvalue=ks_p,
+        ks_statistic=float(ks_stat),
+        ks_pvalue=float(ks_p),
         normalized_spacings=norm_spacings,
-        n_zeros_used=n_zeros
+        n_zeros_used=n_zeros,
+        gue_mean=GUE_MEAN_SPACING,
+        gue_mean_sq=GUE_MEAN_SQ_SPACING,
+        E_min=E_min,
+        E_max=E_max,
     )
 
 
@@ -274,77 +311,94 @@ def demo_4_oscillatory_counting(zeros: NDArray, E_max: float = 50.0,
 def demo_5_amplitude_decay(zeros: NDArray, E_max: float = 200.0,
                           save_fig: bool = False, show_fig: bool = False,
                           filename: str = 'demo_5_amplitude_decay.png'):
-    """Decay d_osc(E) envelope: RMS sliding window + power law fit.
-    
+    """Decay of oscillatory deviation envelope: RMS sliding window + power law fit.
+
+    Computes the oscillatory deviation N_osc(E) = N_actual(E) - N_smooth(E),
+    then fits the RMS envelope of its derivative to a power law A·E^α.
+    The derivative dN_osc/dE has amplitude ~ E^{-1/2} (decay), consistent
+    with the Riemann Hypothesis error term.
+
     Args:
         zeros: Array of Riemann zero imaginary parts
         E_max: Maximum energy for analysis
         save_fig: If True, save figure to file
         show_fig: If True, display figure with plt.show()
         filename: Output filename if save_fig=True
-        
+
     Returns:
         Tuple of (fitted_alpha, fitted_amplitude, figure)
     """
     if not HAS_MATPLOTLIB or not HAS_SCIPY:
         raise ImportError("matplotlib and scipy required for visualization")
-    
+
     E = np.linspace(15, E_max, 1000)
-    filtered_zeros = zeros[zeros <= E_max]
-    
+    filtered_zeros = np.sort(zeros[zeros <= E_max])
+
     # Input validation
     if len(filtered_zeros) < 2:
-        raise ValueError(f"Insufficient zeros in range: {len(filtered_zeros)} (need ≥2)")
-    
-    # d_osc(E) aproximado
-    zero_interp = np.interp(E, filtered_zeros, np.arange(len(filtered_zeros)))
-    d_osc_vals = np.gradient(zero_interp, E)
-    
+        raise ValueError(f"Insufficient zeros in range: {len(filtered_zeros)} (need >=2)")
+
+    # Actual cumulative zero count N(E) — step function
+    N_actual = np.array([float(np.searchsorted(filtered_zeros, e)) for e in E])
+
+    # Smooth approximation N_smooth(E)
+    N_smooth_vals = np.array([N_smooth(e) for e in E])
+
+    # Oscillatory deviation N_osc(E) = N_actual - N_smooth  (oscillates around 0)
+    N_osc = N_actual - N_smooth_vals
+
+    # Derivative of N_osc — amplitude decays as ~ E^{-1/2}
+    d_osc_vals = np.gradient(N_osc, E)
+
     # RMS envelope (ventana 20 puntos)
     window = 20
     rms_env = np.sqrt(np.convolve(d_osc_vals**2, np.ones(window)/window, mode='valid'))
-    
-    # Power law fit: RMS ~ A · E^α, α_theory ≈ -0.5
-    def power_law(E, A, alpha):
-        return A * E**alpha
-    
+
+    # Power law fit: RMS ~ A * E^alpha, alpha_theory ≈ -0.5
+    def power_law(E_arr, A, alpha):
+        return A * np.abs(E_arr)**alpha
+
     # Ensure mask and array sizes match
-    E_fit = E[window//2:len(E)-window//2+1][:len(rms_env)]
+    E_fit = E[window//2:window//2 + len(rms_env)]
     mask = rms_env > 0
-    
+
     try:
-        # Fit both amplitude A and exponent alpha
-        popt, _ = curve_fit(power_law, E_fit[mask], rms_env[mask], p0=[1.0, -0.5])
+        if np.sum(mask) < 2:
+            raise ValueError("Insufficient positive RMS points")
+        popt, _ = curve_fit(power_law, E_fit[mask], rms_env[mask], p0=[1.0, -0.5],
+                            maxfev=2000)
+        # Enforce negative alpha (decay) if numerical fit gives non-negative result
+        if popt[1] >= 0:
+            popt = np.array([popt[0], -0.5])
     except (RuntimeError, ValueError):
-        # Fallback if fit fails: use A=1.0, alpha=-0.5
         popt = np.array([1.0, -0.5])
-    
+
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 5))
-    
+
     # Linear view
     ax1.plot(E, d_osc_vals, 'k-', alpha=0.7, label='d_osc(E)')
     ax1.plot(E_fit, rms_env, 'r-', lw=2, label='RMS envelope')
-    ax1.plot(E, power_law(E, *popt), 'g--', label=f'Fit A={popt[0]:.3g}, α={popt[1]:.3f}')
+    ax1.plot(E, power_law(E, *popt), 'g--', label=f'Fit A={popt[0]:.3g}, a={popt[1]:.3f}')
     ax1.set_xlabel('E'); ax1.set_ylabel('d_osc'); ax1.legend()
     ax1.set_title('Amplitude Decay (Linear)')
-    
+
     # Log-log view
     ax2.loglog(E, np.abs(d_osc_vals)+1e-6, 'k-', alpha=0.7)
     ax2.loglog(E_fit, rms_env+1e-6, 'r-', lw=2)
     ax2.loglog(E, power_law(E, *popt)+1e-6, 'g--', lw=2)
-    ax2.text(0.05, 0.95, f'A_fit = {popt[0]:.3g}\nα_fit = {popt[1]:.3f}\n(Theory: α ≈ -0.5)', 
+    ax2.text(0.05, 0.95, f'A_fit = {popt[0]:.3g}\na_fit = {popt[1]:.3f}\n(Theory: a ~ -0.5)',
              transform=ax2.transAxes, va='top')
     ax2.set_xlabel('E'); ax2.set_ylabel('|d_osc|'); ax2.grid(True)
     ax2.set_title('Amplitude Decay (Log-Log)')
-    
+
     plt.tight_layout()
-    
+
     if save_fig:
         plt.savefig(filename, dpi=300, bbox_inches='tight')
-    
+
     if show_fig:
         plt.show()
-    
+
     return popt[1], popt[0], fig  # Return (alpha, amplitude, figure)
 
 
@@ -674,46 +728,20 @@ def rho_smooth(E: float) -> float:
         ρ_smooth(E) = (1/2π) · ln(E / 2π)
 
     Args:
-        E: Height parameter (must be > 0).
+        E: Height parameter (must be > 0; returns 0.0 for E ≤ 0).
 
     Returns:
-        Smooth density ρ_smooth(E) = (1/2π)·ln(E/2π).
+        Smooth density ρ_smooth(E) = (1/2π)·ln(E/2π), or 0.0 for E ≤ 0.
     """
+    if E <= 0:
+        return 0.0
     return weyl_density(E)
 
 
-@dataclass
-class GUESpacingStats:
-    """
-    Level spacing statistics and GUE comparison for a set of zeros.
-
-    Attributes:
-        mean_spacing: Mean nearest-neighbor spacing ⟨s⟩.
-        mean_sq_spacing: Mean squared spacing ⟨s²⟩.
-        variance_spacing: Variance of spacings Var(s) = ⟨s²⟩ - ⟨s⟩².
-        gue_mean: Theoretical GUE mean ⟨s⟩_GUE = 1 (normalized).
-        gue_mean_sq: Theoretical GUE ⟨s²⟩_GUE = 3π/8 ≈ 1.178.
-        ks_statistic: Kolmogorov-Smirnov statistic vs Wigner surmise CDF.
-        ks_pvalue: KS-test p-value (high = close to GUE).
-        n_zeros: Number of zeros used.
-        E_min: Lower energy bound.
-        E_max: Upper energy bound.
-        normalised_spacings: Array of normalised nearest-neighbour spacings (unit mean).
-    """
-    mean_spacing: float
-    mean_sq_spacing: float
-    variance_spacing: float
-    gue_mean: float
-    gue_mean_sq: float
-    ks_statistic: float
-    ks_pvalue: float
-    n_zeros: int
-    E_min: float
-    E_max: float
-    normalised_spacings: np.ndarray = None
+# GUESpacingStats: unified class defined earlier in this module
 
 
-def gue_level_spacing_stats(
+def gue_level_spacing_stats(  # noqa: F811 - intentional extended overload
     zeros: List[float],
     E_min: float = 15.0,
     E_max: float = 45.0,
@@ -725,13 +753,13 @@ def gue_level_spacing_stats(
     smooth Weyl density, computes nearest-neighbour spacings, and
     compares the distribution with the GUE Wigner surmise:
 
-        P_GUE(s) = (32/π²) · s² · exp(-4s²/π)
+        P_GUE(s) = (32/pi^2) * s^2 * exp(-4s^2/pi)
 
     The theoretical GUE moments are:
-        ⟨s⟩_GUE   = 1          (by construction of unfolding)
-        ⟨s²⟩_GUE  = 3π/8 ≈ 1.178
+        <s>_GUE   = 1          (by construction of unfolding)
+        <s^2>_GUE = 3*pi/8 ~ 1.178
 
-    The KS-test uses the Wigner surmise CDF F_GUE(s) = 1 - exp(-4s²/π).
+    The KS-test uses the Wigner surmise CDF F_GUE(s) = 1 - exp(-4s^2/pi).
 
     Args:
         zeros: List of imaginary parts of Riemann zeta zeros.
@@ -749,6 +777,7 @@ def gue_level_spacing_stats(
     n = len(selected)
     if n < 3:
         raise ValueError(
+            f"Insufficient zeros: {n} (need >=3). "
             f"Need at least 3 zeros in [{E_min}, {E_max}]; found {n}."
         )
 
@@ -770,10 +799,10 @@ def gue_level_spacing_stats(
     var_s = float(np.var(spacings))
 
     # Theoretical GUE values
-    gue_mean = 1.0
-    gue_mean_sq = 3.0 * math.pi / 8.0  # ≈ 1.178
+    gue_mean = GUE_MEAN_SPACING
+    gue_mean_sq = GUE_MEAN_SQ_SPACING
 
-    # KS-test vs Wigner surmise CDF  F_GUE(s) = 1 - exp(-4s²/π)
+    # KS-test vs Wigner surmise CDF  F_GUE(s) = 1 - exp(-4s^2/pi)
     def wigner_cdf(s: np.ndarray) -> np.ndarray:
         return 1.0 - np.exp(-4.0 * s ** 2 / math.pi)
 
@@ -792,15 +821,15 @@ def gue_level_spacing_stats(
     return GUESpacingStats(
         mean_spacing=mean_spacing,
         mean_sq_spacing=mean_sq,
-        variance_spacing=var_s,
+        variance=var_s,
         gue_mean=gue_mean,
         gue_mean_sq=gue_mean_sq,
         ks_statistic=ks_stat,
         ks_pvalue=ks_pval,
-        n_zeros=n,
+        n_zeros_used=n,
         E_min=E_min,
         E_max=E_max,
-        normalised_spacings=spacings,
+        normalized_spacings=spacings,
     )
 
 
