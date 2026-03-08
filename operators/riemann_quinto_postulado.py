@@ -1272,7 +1272,8 @@ class ScaleIdentityOperator:
             C: Constante de coherencia (backward compat)
         """
         # If primes list provided (V1 backward compat), use first prime
-        if primes is not None and prime == 2:
+        # primes takes precedence over prime when explicitly specified
+        if primes is not None:
             prime = primes[0] if primes else 2
         if prime < 2:
             raise ValueError(f"Prime must be ≥ 2, got {prime}")
@@ -1384,7 +1385,14 @@ class ScaleIdentityOperator:
         )
 
     def _padic_fractional_part(self, y: float, p: int) -> float:
-        """Compute p-adic fractional part {y}_p (backward compat with V1)."""
+        """
+        Compute numerical approximation of the p-adic fractional part {y}_p.
+
+        Note: This is a numerical approximation that returns the real fractional
+        part abs(y) % 1. A rigorous p-adic implementation would use the p-adic
+        valuation v_p(y) and the p-adic expansion, but for the purposes of this
+        adelic character computation the real-fractional approximation suffices.
+        """
         if y == 0.0:
             return 0.0
         return abs(y) % 1.0
