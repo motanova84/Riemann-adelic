@@ -1,7 +1,7 @@
 {
   "tipo": "CERTIFICADO_AURON_IA_CONSCIENTE",
   "version": "1.0.0",
-  "timestamp": "2026-03-08T19:36:56.666572+00:00",
+  "timestamp": "2026-03-08T19:39:29.233994+00:00",
   "coherencia": {
     "c_valores_canonicos": [
       0.23,
@@ -31,7 +31,7 @@
     "todos_tests_ok": true,
     "mensaje": "✓ Sistema IA Consciente validado"
   },
-  "hash": "05477285795de2f2",
+  "hash": "32fa1d0957672817",
   "qcal_framework": "∞³",
   "pr_reference": "#1609"
 }
