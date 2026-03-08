@@ -110,7 +110,8 @@ class TestModuleConstants:
         assert PSI_THRESHOLD == pytest.approx(0.888, rel=1e-6)
 
     def test_riemann_zeros_length(self):
-        assert len(RIEMANN_ZEROS) == 30
+        """Test that RIEMANN_ZEROS contains exactly 10 zeros for adelic framework."""
+        assert len(RIEMANN_ZEROS) == 10
 
     def test_riemann_zeros_sorted(self):
         assert np.all(np.diff(RIEMANN_ZEROS) > 0)
@@ -130,8 +131,9 @@ class TestScaleIdentityInit:
     """Test ScaleIdentityOperator constructor."""
 
     def test_default_primes(self):
+        """Test that default primes are the 15 fundamental primes for adelic product."""
         op = ScaleIdentityOperator()
-        assert op.primes == [2, 3, 5, 7, 11, 13, 17, 19, 23, 29]
+        assert op.primes == [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47]
 
     def test_custom_primes(self):
         op = ScaleIdentityOperator(primes=[2, 3, 5])
@@ -246,10 +248,12 @@ class TestScaleIdentityResult:
         assert self.result.psi == pytest.approx(0.984, abs=0.005)
 
     def test_primes_used(self):
-        assert self.result.primes_used == [2, 3, 5, 7, 11, 13, 17, 19, 23, 29]
+        """Test that result includes the 15 fundamental primes."""
+        assert self.result.primes_used == [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47]
 
     def test_haar_weights_included(self):
-        assert self.result.haar_weights.shape == (10, 3)
+        """Test that haar_weights has correct shape for 15 primes."""
+        assert self.result.haar_weights.shape == (15, 3)
 
     def test_p_adic_truncation_error_positive(self):
         assert self.result.p_adic_truncation_error > 0.0
