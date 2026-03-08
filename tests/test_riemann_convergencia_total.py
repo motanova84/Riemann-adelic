@@ -3,7 +3,7 @@
 Tests for riemann_convergencia_total — Integración de los Cuatro Dominios
 ==========================================================================
 
-87 tests across 10 classes covering:
+124 tests across 10 classes covering:
 
 - Constants and module-level attributes
 - Helper utilities (_sieve_primes, _first_n_primes, _harmonic_mean)

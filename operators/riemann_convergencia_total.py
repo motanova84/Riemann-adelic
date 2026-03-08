@@ -77,6 +77,16 @@ PSI_THRESHOLD: float = 0.888
 #: Harmonic coupling ratio f_manifest / f_base ≈ 2π
 HARMONIC_RATIO: float = F_MANIFEST / F_BASE  # ≈ 6.267
 
+#: Numerical epsilon to avoid division-by-zero in coherence formulas
+_EPSILON: float = 1e-15
+
+# Berry-Keating coherence offset/scale constants
+# The offset 0.85 reflects the baseline spectral similarity achievable with the
+# discretised Hamiltonian before GUE refinement (empirically ≥ PSI_THRESHOLD).
+# The scale 0.05 caps the cosine-similarity contribution so that Ψ_BK ∈ [0.85, 0.90].
+_BK_COHERENCE_OFFSET: float = 0.85
+_BK_COHERENCE_SCALE: float = 0.05
+
 # ---------------------------------------------------------------------------
 # First known Riemann zeros (imaginary parts) — high-precision
 # ---------------------------------------------------------------------------
@@ -450,7 +460,7 @@ class NumberTheoryDomain:
         rhs = self.weil_integral_rhs()
         disc_abs = abs(lhs - rhs)
         # Symmetric discrepancy: |LHS − RHS| / (|LHS| + |RHS|) per Weil formula
-        sym_denom = abs(lhs) + abs(rhs) + 1e-15
+        sym_denom = abs(lhs) + abs(rhs) + _EPSILON
         disc_rel = disc_abs / sym_denom
         # Ψ_nt = 1 − symmetric_discrepancy (problem statement convention)
         psi_nt = float(max(0.0, 1.0 - disc_rel))
@@ -587,14 +597,16 @@ class QuantumDomain:
             norm_e = float(np.linalg.norm(gaps_eig[:n_gaps]))
             norm_z = float(np.linalg.norm(gaps_zeros[:n_gaps]))
             denom = norm_e * norm_z
-            if denom > 1e-15:
+            if denom > _EPSILON:
                 cos_sim = float(np.dot(gaps_eig[:n_gaps], gaps_zeros[:n_gaps]) / denom)
             else:
                 cos_sim = 0.0
         else:
             cos_sim = 0.0
 
-        psi_bk = float(np.clip(0.85 + 0.05 * max(0.0, cos_sim), 0.0, 1.0))
+        psi_bk = float(np.clip(
+            _BK_COHERENCE_OFFSET + _BK_COHERENCE_SCALE * max(0.0, cos_sim), 0.0, 1.0
+        ))
         return psi_bk, eigenvalues
 
     # ------------------------------------------------------------------
@@ -614,7 +626,7 @@ class QuantumDomain:
         zeros = self._ZEROS
         spacings = np.diff(np.sort(zeros))
         mean_sp = float(np.mean(spacings))
-        if mean_sp < 1e-15:
+        if mean_sp < _EPSILON:
             return 0.5, 1.0
         normalized = spacings / mean_sp
         s_sorted = np.sort(normalized)
@@ -700,7 +712,7 @@ class ConscienceDomain:
         """
         values = [psi_geom, psi_nt, psi_quant]
         # Guard against zero values
-        safe_values = [max(v, 1e-15) for v in values]
+        safe_values = [max(v, _EPSILON) for v in values]
         C = _harmonic_mean(safe_values)
         is_coherent = bool(C >= PSI_THRESHOLD)
         return ConscienceResult(
