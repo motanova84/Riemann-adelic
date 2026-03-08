@@ -98,7 +98,13 @@ ZEROS_ZETA_REFERENCE = [
 GUE_MEAN_SPACING = 1.0
 GUE_MEAN_SQ_SPACING = 3 * np.pi / 8  # ≈1.178097
 WIGNER_PDF = lambda s: (32 / np.pi**2) * s**2 * np.exp(-4 * s**2 / np.pi)
-WIGNER_CDF = lambda s: 1 - np.exp(-4 * s**2 / np.pi)
+# Correct CDF for the GUE Wigner surmise: d/ds WIGNER_CDF(s) == WIGNER_PDF(s)
+try:
+    from scipy.special import erf
+    WIGNER_CDF = lambda s: erf(2 * s / np.sqrt(np.pi)) - (4 / np.pi) * s * np.exp(-4 * s**2 / np.pi)
+except ImportError:
+    # Fallback if scipy.special not available (for erf function)
+    WIGNER_CDF = lambda s: 1 - np.exp(-4 * s**2 / np.pi)  # Simplified approximation
 
 
 @dataclass
@@ -109,8 +115,17 @@ class GUESpacingStats:
     variance: float
     ks_statistic: float
     ks_pvalue: float
-    normalised_spacings: NDArray
+    normalized_spacings: NDArray
     n_zeros_used: int
+    
+    @property
+    def normalised_spacings(self) -> NDArray:
+        """Backward-compatible alias for ``normalized_spacings``.
+
+        Deprecated: use ``normalized_spacings`` to follow the repository-wide
+        naming convention.
+        """
+        return self.normalized_spacings
 
 
 def N_smooth(E: float) -> float:
@@ -153,9 +168,9 @@ def gue_level_spacing_stats(
     # Espaciados crudos
     raw_spacings = np.diff(filtered_zeros)
     
-    # Normalizar por densidad media local ρ_smooth
+    # Normalizar por densidad media local ρ_smooth (unfolding: ⟨s⟩ ≈ 1 en promedio)
     local_density = np.array([rho_smooth(E) for E in filtered_zeros[:-1]])
-    norm_spacings = raw_spacings * local_density  # ⟨s⟩=1 por construcción
+    norm_spacings = raw_spacings * local_density
     
     # Estadísticas
     mean_s = np.mean(norm_spacings)
@@ -171,13 +186,26 @@ def gue_level_spacing_stats(
         variance=var_s,
         ks_statistic=ks_stat,
         ks_pvalue=ks_p,
-        normalised_spacings=norm_spacings,
+        normalized_spacings=norm_spacings,
         n_zeros_used=n_zeros
     )
 
 
-def demo_4_oscillatory_counting(zeros: NDArray, E_max: float = 50.0):
-    """Demo 3-panel: N_smooth + N_osc + d_osc vs ρ_smooth + GUE histo."""
+def demo_4_oscillatory_counting(zeros: NDArray, E_max: float = 50.0, 
+                                save_fig: bool = False, show_fig: bool = False,
+                                filename: str = 'demo_4_oscillatory_counting.png'):
+    """Demo 3-panel: N_smooth + N_osc + d_osc vs ρ_smooth + GUE histo.
+    
+    Args:
+        zeros: Array of Riemann zero imaginary parts
+        E_max: Maximum energy for analysis
+        save_fig: If True, save figure to file
+        show_fig: If True, display figure with plt.show()
+        filename: Output filename if save_fig=True
+        
+    Returns:
+        matplotlib Figure object
+    """
     if not HAS_MATPLOTLIB:
         raise ImportError("matplotlib required for visualization")
     
@@ -202,7 +230,7 @@ def demo_4_oscillatory_counting(zeros: NDArray, E_max: float = 50.0):
     if len(filtered_zeros) > 0:
         # Interpolate cumulative count to E grid
         zero_cum_interp = np.interp(E, filtered_zeros, zeros_cum)
-        d_osc_vals = np.gradient(zero_cum_interp)
+        d_osc_vals = np.gradient(zero_cum_interp, E)
         axs[1].plot(E, d_osc_vals, 'ro', markersize=2, label='d_osc(E)')
     axs[1].plot(E, rho_sm, 'b-', label='ρ_smooth(E)')
     axs[1].set_xlabel('E'); axs[1].set_ylabel('Densidad'); axs[1].legend()
@@ -211,7 +239,7 @@ def demo_4_oscillatory_counting(zeros: NDArray, E_max: float = 50.0):
     # Panel 3: GUE spacing histo
     try:
         stats = gue_level_spacing_stats(zeros, 15, 45)
-        axs[2].hist(stats.normalised_spacings, bins=15, density=True, alpha=0.7, label='Datos')
+        axs[2].hist(stats.normalized_spacings, bins=15, density=True, alpha=0.7, label='Datos')
         s = np.linspace(0, 4, 100)
         axs[2].plot(s, WIGNER_PDF(s), 'r-', lw=2, label='Wigner surmise')
         axs[2].axvline(stats.mean_spacing, color='g', ls='--', label=f'⟨s⟩={stats.mean_spacing:.3f}')
@@ -224,46 +252,70 @@ def demo_4_oscillatory_counting(zeros: NDArray, E_max: float = 50.0):
         axs[2].set_title('GUE Spacing (Error)')
     
     plt.tight_layout()
-    plt.savefig('demo_4_oscillatory_counting.png', dpi=300, bbox_inches='tight')
-    plt.show()
+    
+    if save_fig:
+        plt.savefig(filename, dpi=300, bbox_inches='tight')
+    
+    if show_fig:
+        plt.show()
+    
+    return fig
 
 
-def demo_5_amplitude_decay(zeros: NDArray, E_max: float = 200.0):
-    """Decay d_osc(E) envelope: RMS sliding window + power law fit."""
+def demo_5_amplitude_decay(zeros: NDArray, E_max: float = 200.0,
+                          save_fig: bool = False, show_fig: bool = False,
+                          filename: str = 'demo_5_amplitude_decay.png'):
+    """Decay d_osc(E) envelope: RMS sliding window + power law fit.
+    
+    Args:
+        zeros: Array of Riemann zero imaginary parts
+        E_max: Maximum energy for analysis
+        save_fig: If True, save figure to file
+        show_fig: If True, display figure with plt.show()
+        filename: Output filename if save_fig=True
+        
+    Returns:
+        Tuple of (fitted_alpha, fitted_amplitude, figure)
+    """
     if not HAS_MATPLOTLIB or not HAS_SCIPY:
         raise ImportError("matplotlib and scipy required for visualization")
     
     E = np.linspace(15, E_max, 1000)
     filtered_zeros = zeros[zeros <= E_max]
     
+    # Input validation
+    if len(filtered_zeros) < 2:
+        raise ValueError(f"Insufficient zeros in range: {len(filtered_zeros)} (need ≥2)")
+    
     # d_osc(E) aproximado
     zero_interp = np.interp(E, filtered_zeros, np.arange(len(filtered_zeros)))
-    d_osc_vals = np.gradient(zero_interp)
+    d_osc_vals = np.gradient(zero_interp, E)
     
     # RMS envelope (ventana 20 puntos)
     window = 20
     rms_env = np.sqrt(np.convolve(d_osc_vals**2, np.ones(window)/window, mode='valid'))
     
-    # Power law fit: RMS ~ E^α, α_theory ≈ -0.5
-    def power_law(E, alpha):
-        return E**alpha
+    # Power law fit: RMS ~ A · E^α, α_theory ≈ -0.5
+    def power_law(E, A, alpha):
+        return A * E**alpha
     
     # Ensure mask and array sizes match
     E_fit = E[window//2:len(E)-window//2+1][:len(rms_env)]
     mask = rms_env > 0
     
     try:
-        popt, _ = curve_fit(power_law, E_fit[mask], rms_env[mask], p0=[-0.5])
+        # Fit both amplitude A and exponent alpha
+        popt, _ = curve_fit(power_law, E_fit[mask], rms_env[mask], p0=[1.0, -0.5])
     except (RuntimeError, ValueError):
-        # Fallback if fit fails
-        popt = np.array([-0.5])
+        # Fallback if fit fails: use A=1.0, alpha=-0.5
+        popt = np.array([1.0, -0.5])
     
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 5))
     
     # Linear view
     ax1.plot(E, d_osc_vals, 'k-', alpha=0.7, label='d_osc(E)')
     ax1.plot(E_fit, rms_env, 'r-', lw=2, label='RMS envelope')
-    ax1.plot(E, power_law(E, *popt), 'g--', label=f'Fit α={popt[0]:.3f}')
+    ax1.plot(E, power_law(E, *popt), 'g--', label=f'Fit A={popt[0]:.3g}, α={popt[1]:.3f}')
     ax1.set_xlabel('E'); ax1.set_ylabel('d_osc'); ax1.legend()
     ax1.set_title('Amplitude Decay (Linear)')
     
@@ -271,15 +323,20 @@ def demo_5_amplitude_decay(zeros: NDArray, E_max: float = 200.0):
     ax2.loglog(E, np.abs(d_osc_vals)+1e-6, 'k-', alpha=0.7)
     ax2.loglog(E_fit, rms_env+1e-6, 'r-', lw=2)
     ax2.loglog(E, power_law(E, *popt)+1e-6, 'g--', lw=2)
-    ax2.text(0.05, 0.95, f'α_fit = {popt[0]:.3f}\n(Theory: -0.5)', 
+    ax2.text(0.05, 0.95, f'A_fit = {popt[0]:.3g}\nα_fit = {popt[1]:.3f}\n(Theory: α ≈ -0.5)', 
              transform=ax2.transAxes, va='top')
     ax2.set_xlabel('E'); ax2.set_ylabel('|d_osc|'); ax2.grid(True)
     ax2.set_title('Amplitude Decay (Log-Log)')
     
     plt.tight_layout()
-    plt.savefig('demo_5_amplitude_decay.png', dpi=300, bbox_inches='tight')
-    plt.show()
-    return popt[0]  # Exponente ajustado
+    
+    if save_fig:
+        plt.savefig(filename, dpi=300, bbox_inches='tight')
+    
+    if show_fig:
+        plt.show()
+    
+    return popt[1], popt[0], fig  # Return (alpha, amplitude, figure)
 
 
 def weyl_density(r: float) -> float:

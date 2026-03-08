@@ -1914,8 +1914,11 @@ class TestGUESpacingStatistics:
         zeros = np.array(ZEROS_ZETA_REFERENCE[:10])
         stats = gue_level_spacing_stats(zeros, 14, 50)
         
-        assert np.all(stats.normalised_spacings > 0), \
+        # Test both new name and backward-compatible alias
+        assert np.all(stats.normalized_spacings > 0), \
             "All normalized spacings should be positive"
+        assert np.all(stats.normalised_spacings > 0), \
+            "Backward-compatible alias should work"
     
     @pytest.mark.skipif(not HAS_SCIPY, reason="scipy not available")
     def test_gue_stats_different_ranges(self):
@@ -1967,10 +1970,12 @@ class TestDemoFunctions:
         zeros = np.array(ZEROS_ZETA_REFERENCE[:10])
         
         try:
-            # Don't show plot in test
+            # Don't show or save plot in test
             import matplotlib
             matplotlib.use('Agg')
-            demo_4_oscillatory_counting(zeros, E_max=50.0)
+            import matplotlib.pyplot as plt
+            fig = demo_4_oscillatory_counting(zeros, E_max=50.0, save_fig=False, show_fig=False)
+            plt.close(fig)
         except Exception as e:
             pytest.fail(f"demo_4 raised exception: {e}")
     
@@ -1981,13 +1986,18 @@ class TestDemoFunctions:
         zeros = np.array(ZEROS_ZETA_REFERENCE[:10])
         
         try:
-            # Don't show plot in test
+            # Don't show or save plot in test
             import matplotlib
             matplotlib.use('Agg')
-            alpha = demo_5_amplitude_decay(zeros, E_max=50.0)
+            import matplotlib.pyplot as plt
+            alpha, amplitude, fig = demo_5_amplitude_decay(zeros, E_max=50.0, 
+                                                           save_fig=False, show_fig=False)
+            plt.close(fig)
             
             # Alpha should be negative (decay)
             assert alpha < 0, f"Decay exponent should be negative, got {alpha}"
+            # Amplitude should be positive
+            assert amplitude > 0, f"Amplitude should be positive, got {amplitude}"
         except Exception as e:
             pytest.fail(f"demo_5 raised exception: {e}")
     
@@ -1996,30 +2006,37 @@ class TestDemoFunctions:
         """demo_4 should create matplotlib figure."""
         import matplotlib
         matplotlib.use('Agg')
+        import matplotlib.pyplot as plt
         
         zeros = np.array(ZEROS_ZETA_REFERENCE[:10])
-        demo_4_oscillatory_counting(zeros, E_max=50.0)
+        fig = demo_4_oscillatory_counting(zeros, E_max=50.0, save_fig=False, show_fig=False)
         
         # Check that figure was created
-        import matplotlib.pyplot as plt
-        assert len(plt.get_fignums()) > 0, "demo_4 should create a figure"
-        plt.close('all')
+        assert fig is not None, "demo_4 should return a figure"
+        assert len(fig.axes) == 3, "demo_4 should have 3 subplots"
+        plt.close(fig)
     
     @pytest.mark.skipif(not HAS_MATPLOTLIB or not HAS_SCIPY,
                         reason="matplotlib and scipy required")
     def test_demo_5_returns_exponent(self):
-        """demo_5 should return decay exponent."""
+        """demo_5 should return decay exponent and amplitude."""
         import matplotlib
         matplotlib.use('Agg')
+        import matplotlib.pyplot as plt
         
         zeros = np.array(ZEROS_ZETA_REFERENCE[:10])
-        alpha = demo_5_amplitude_decay(zeros, E_max=50.0)
+        alpha, amplitude, fig = demo_5_amplitude_decay(zeros, E_max=50.0, 
+                                                       save_fig=False, show_fig=False)
         
-        # Should return a number
+        # Should return numbers
         assert isinstance(alpha, (int, float)), "Should return numeric exponent"
+        assert isinstance(amplitude, (int, float)), "Should return numeric amplitude"
         
         # With small sample, fit may be poor - just check it's negative
         assert alpha < 0, f"Alpha should be negative (decay), got {alpha}"
+        assert amplitude > 0, f"Amplitude should be positive, got {amplitude}"
+        
+        plt.close(fig)
 
 
 # ============================================================================
