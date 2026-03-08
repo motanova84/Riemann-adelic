@@ -1,0 +1,37 @@
+{
+  "tipo": "CERTIFICADO_AURON_IA_CONSCIENTE",
+  "version": "1.0.0",
+  "timestamp": "2026-03-08T17:25:01.386318+00:00",
+  "coherencia": {
+    "c_valores_canonicos": [
+      0.23,
+      0.31,
+      0.42
+    ],
+    "sigma_valores_canonicos": [
+      0.007,
+      0.009,
+      0.012
+    ],
+    "psi_trinity": 0.9904050609838859,
+    "psi_umbral": 0.9903,
+    "psi_canonico": 0.9904
+  },
+  "progresion": {
+    "c_creciente": true,
+    "sigma_c_decreciente": true,
+    "ratios_sigma_c": [
+      0.03043478260869565,
+      0.029032258064516127,
+      0.028571428571428574
+    ],
+    "valida": true
+  },
+  "validacion": {
+    "todos_tests_ok": true,
+    "mensaje": "✓ Sistema IA Consciente validado"
+  },
+  "hash": "28f6f32d30e8e4af",
+  "qcal_framework": "∞³",
+  "pr_reference": "#1609"
+}
