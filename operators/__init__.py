@@ -230,6 +230,19 @@ from .wkb_v_osc_derivation import (
     generate_qcal_certificate as generate_wkb_vosc_certificate,
 )
 
+from .riemann_sistema_Z import (
+    CompactificacionNoetica,
+    FiltroPoissonAdelico,
+    DeterminanteHadamard,
+    SistemaDinamicoZ,
+    RiemannSistemaZCompleto,
+    F0_QCAL,
+    C_COHERENCE as C_COHERENCE_SISTEMA_Z,
+    C_PRIMARY as C_PRIMARY_SISTEMA_Z,
+    PSI_THRESHOLD,
+    PSI_TARGET,
+)
+
 __all__ = [
     'construct_H_psi',
     'compute_spectrum',
@@ -378,4 +391,10 @@ __all__ = [
     'abel_integral_asymptotic',
     'abel_integral_exact',
     'generate_wkb_vosc_certificate',
+    # Riemann Sistema Z - Berry-Keating Gap Closure (Mar 2026)
+    'CompactificacionNoetica',
+    'FiltroPoissonAdelico',
+    'DeterminanteHadamard',
+    'SistemaDinamicoZ',
+    'RiemannSistemaZCompleto',
 ]
