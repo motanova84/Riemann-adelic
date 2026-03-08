@@ -1,7 +1,7 @@
 {
   "certificate_type": "QCAL \u221e\u00b3 Machine-Check Verification",
   "version": "V5 Coronaci\u00f3n",
-  "timestamp": "2026-03-08T00:04:32.607459",
+  "timestamp": "2026-03-08T13:01:18.124481",
   "author": "Jos\u00e9 Manuel Mota Burruezo \u03a8 \u2727 \u221e\u00b3",
   "institution": "Instituto de Conciencia Cu\u00e1ntica (ICQ)",
   "doi_reference": "10.5281/zenodo.17379721",
@@ -12,7 +12,7 @@
     "equation": "\u03a8 = I \u00d7 A_eff\u00b2 \u00d7 C^\u221e"
   },
   "verification_results": {
-    "timestamp": "2026-03-08T00:04:32.607440",
+    "timestamp": "2026-03-08T13:01:18.124462",
     "precision": 25,
     "qcal_config": {
       "base_frequency": 141.7001,
@@ -80,27 +80,27 @@
         "steps": {
           "Step 1: Axioms \u2192 Lemmas": {
             "status": "PASSED",
-            "execution_time": 4.76837158203125e-06
+            "execution_time": 4.0531158447265625e-06
           },
           "Step 2: Archimedean Rigidity": {
             "status": "PASSED",
-            "execution_time": 0.00015664100646972656
+            "execution_time": 0.00012445449829101562
           },
           "Step 3: Paley-Wiener Uniqueness": {
             "status": "PASSED",
-            "execution_time": 2.384185791015625e-06
+            "execution_time": 2.86102294921875e-06
           },
           "Step 4A: de Branges Localization": {
             "status": "PASSED",
-            "execution_time": 0.0004124641418457031
+            "execution_time": 0.0004279613494873047
           },
           "Step 4B: Weil-Guinand Localization": {
             "status": "PASSED",
-            "execution_time": 1.9073486328125e-06
+            "execution_time": 1.6689300537109375e-06
           },
           "Step 5: Coronaci\u00f3n Integration": {
             "status": "PASSED",
-            "execution_time": 0.00011491775512695312
+            "execution_time": 0.00013589859008789062
           }
         },
         "total_passed": 6,
@@ -140,6 +140,7 @@
           "data/riemann_hypothesis_certificate_v5_improved.json",
           "data/spectral_emergence_certificate_20260107_102741.json",
           "data/axioms_origin_validation_certificate.json",
+          "data/riemann_quinto_postulado_certificate.json",
           "data/mathematical_certificate.json",
           "data/vaughan_identity_validation_certificate.json",
           "data/noesis_consolidation_certificate.json",
@@ -174,6 +175,8 @@
           "data/infinite_spectral_extension_certificate_20260108_213938.json",
           "data/nelson_self_adjointness_certificate.json",
           "data/hlsum_decompose_validation_certificate.json",
+          "data/operador_h_solenoide_certificate.json",
+          "data/sistema_dinamico_z_certificate.json",
           "data/yolo_certificate.json",
           "data/h_psi_complete_formalization_certificate.json",
           "data/spectral_bijection_certificate.json",
@@ -227,6 +230,7 @@
           "data/riemann_hypothesis_certificate_v5_improved.json",
           "data/spectral_emergence_certificate_20260107_102741.json",
           "data/axioms_origin_validation_certificate.json",
+          "data/riemann_quinto_postulado_certificate.json",
           "data/mathematical_certificate.json",
           "data/vaughan_identity_validation_certificate.json",
           "data/noesis_consolidation_certificate.json",
@@ -261,6 +265,8 @@
           "data/infinite_spectral_extension_certificate_20260108_213938.json",
           "data/nelson_self_adjointness_certificate.json",
           "data/hlsum_decompose_validation_certificate.json",
+          "data/operador_h_solenoide_certificate.json",
+          "data/sistema_dinamico_z_certificate.json",
           "data/yolo_certificate.json",
           "data/h_psi_complete_formalization_certificate.json",
           "data/spectral_bijection_certificate.json",
@@ -283,8 +289,8 @@
           "data/infinite_zeros_certificate.json",
           "data/strengthened_proof_certificate.json"
         ],
-        "total_found": 86,
-        "total_valid": 85,
+        "total_found": 89,
+        "total_valid": 88,
         "note": "Certificate verification is informational"
       },
       "numerical_precision": {
@@ -311,7 +317,7 @@
         "yolo_verified": true
       }
     },
-    "execution_time": 0.3327360153198242
+    "execution_time": 0.33512234687805176
   },
   "riemann_hypothesis_status": "PASSED",
   "certification_statement": "This certificate verifies that the Riemann Hypothesis proof via S-Finite Adelic Systems (V5 Coronaci\u00f3n) has been validated through comprehensive machine-check verification.",
