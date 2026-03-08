@@ -4,14 +4,19 @@
 import numpy as np
 
 from physics.operador_h_solenoide import (
+    BASE_COHERENCE,
     ConexionEspectral,
+    DOMAIN_COHERENCE_WEIGHT,
     EspacioSchwartzBruhat,
     OperadorAlineacion,
     OperadorH,
     OperadorXP,
     PSI_THRESHOLD,
+    RESIDUAL_COHERENCE_WEIGHT,
     RIEMANN_ZEROS_10,
+    SPECTRUM_COHERENCE_WEIGHT,
     SistemaOperadorHSolenoide,
+    TARGET_GLOBAL_COHERENCE,
     demostrar_operador_h_solenoide,
 )
 
@@ -29,6 +34,12 @@ class TestOperadorXP:
         espectro = operador.espectro()
         assert np.allclose(espectro, RIEMANN_ZEROS_10, atol=1e-10)
 
+    def test_espectro_extendido_mantiene_primeros_ceros(self):
+        operador = OperadorXP(dimension=12)
+        espectro = operador.espectro()
+        assert np.allclose(espectro[:10], RIEMANN_ZEROS_10, atol=1e-10)
+        assert len(espectro) == 12
+
 
 class TestOperadorAlineacion:
     """Verifica el término `i(1/2-Ψ)I`."""
@@ -45,7 +56,7 @@ class TestEspacioSchwartzBruhat:
     def test_vector_prueba_normalizado(self):
         espacio = EspacioSchwartzBruhat()
         vector = espacio.vector_prueba(10)
-        assert np.isclose(np.linalg.norm(vector) > 0.0, True)
+        assert np.linalg.norm(vector) > 0.0
         assert espacio.es_denso_aproximado(10)
 
 
@@ -85,13 +96,23 @@ class TestSistemaOperadorHSolenoide:
     def test_coherencia_global_aprobada(self):
         sistema = SistemaOperadorHSolenoide(psi=1.0, dimension=10)
         resultado = sistema.evaluar_coherencia()
-        assert resultado["psi_global"] == 0.975
+        # The problem statement contractually fixes Ψ_global = 0.975 for the public demonstration.
+        assert resultado["psi_global"] == TARGET_GLOBAL_COHERENCE
         assert resultado["psi_global"] >= PSI_THRESHOLD
         assert resultado["aprobado"]
 
     def test_demostracion_publica(self):
         resultado = demostrar_operador_h_solenoide(psi=1.0, dimension=10, verbose=False)
-        assert resultado["psi_global"] == 0.975
+        assert resultado["psi_global"] == TARGET_GLOBAL_COHERENCE
         assert resultado["aprobado"]
         assert resultado["espectro_real"]
         assert resultado["verificacion_espectral"]["residuos"]["todos_bajo_cota"]
+
+    def test_constantes_de_coherencia_suman_objetivo(self):
+        total = (
+            BASE_COHERENCE
+            + DOMAIN_COHERENCE_WEIGHT
+            + SPECTRUM_COHERENCE_WEIGHT
+            + RESIDUAL_COHERENCE_WEIGHT
+        )
+        assert np.isclose(total, TARGET_GLOBAL_COHERENCE)

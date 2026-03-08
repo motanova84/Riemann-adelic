@@ -27,7 +27,17 @@ import numpy as np
 
 F0_HZ = 141.7001
 C_COHERENCE = 244.36
+C_QCAL = C_COHERENCE
 PSI_THRESHOLD = 0.888
+BASE_COHERENCE = 0.90
+DOMAIN_COHERENCE_WEIGHT = 0.03
+SPECTRUM_COHERENCE_WEIGHT = 0.03
+RESIDUAL_COHERENCE_WEIGHT = 0.015
+TARGET_GLOBAL_COHERENCE = 0.975
+DEFAULT_ZERO_GAP = 6.0
+ZERO_GAP_SAMPLE_SIZE = 3
+DEFAULT_MPMATH_DPS = 50
+DEFAULT_RESIDUAL_TOLERANCE = 1.5
 
 RIEMANN_ZEROS_10 = np.array(
     [
@@ -67,13 +77,18 @@ class OperadorXP:
     log_max: float = 4.0
     zeros_objetivo: np.ndarray = field(default_factory=lambda: RIEMANN_ZEROS_10.copy())
 
+    def __post_init__(self) -> None:
+        """Valida que la malla tenga tamaño suficiente para discretizar derivadas."""
+        if self.dimension < 2:
+            raise ValueError("dimension debe ser al menos 2 para discretizar el operador Berry-Keating")
+
     def malla_logaritmica(self) -> np.ndarray:
         """Retorna la malla uniforme en coordenada logarítmica."""
-        return np.linspace(self.log_min, self.log_max, self.dimension)
+        return np.linspace(self.log_min, self.log_max, self.dimension, endpoint=False)
 
     def matriz_derivada(self) -> np.ndarray:
         """Construye la derivada central periódica en la malla logarítmica."""
-        paso = (self.log_max - self.log_min) / max(self.dimension, 1)
+        paso = (self.log_max - self.log_min) / self.dimension
         derivada = np.zeros((self.dimension, self.dimension), dtype=float)
         for i in range(self.dimension):
             derivada[i, (i + 1) % self.dimension] = 0.5 / paso
@@ -89,13 +104,22 @@ class OperadorXP:
         return _simetrizar(self.matriz_base())
 
     def _extender_zeros(self, dimension: int) -> np.ndarray:
-        """Extiende la lista de ceros objetivo si la dimensión lo requiere."""
+        """
+        Extiende la lista de ceros objetivo si la dimensión lo requiere.
+
+        La extrapolación usa el espaciado medio de los últimos ceros conocidos
+        como aproximación local, suficiente para esta truncación numérica corta.
+        """
         zeros = np.asarray(self.zeros_objetivo, dtype=float)
         if dimension <= len(zeros):
             return zeros[:dimension]
 
         extension = list(zeros)
-        gap = float(np.mean(np.diff(zeros[-3:]))) if len(zeros) > 3 else 6.0
+        gap = (
+            float(np.mean(np.diff(zeros[-ZERO_GAP_SAMPLE_SIZE:])))
+            if len(zeros) > ZERO_GAP_SAMPLE_SIZE
+            else DEFAULT_ZERO_GAP
+        )
         while len(extension) < dimension:
             extension.append(extension[-1] + gap)
         return np.array(extension, dtype=float)
@@ -168,6 +192,8 @@ class EspacioSchwartzBruhat:
 
     def vector_prueba(self, dimension: int) -> np.ndarray:
         """Vector de prueba normalizado que modela `Ψ_Ω ∈ S(A)`."""
+        if dimension < 2:
+            raise ValueError("dimension debe ser al menos 2 para normalizar Ψ_Ω sobre una malla")
         y = self.malla_archimediana(dimension)
         vector = self.factor_p_adico() * self.componente_archimediana(y)
         norma = np.sqrt(np.trapezoid(np.abs(vector) ** 2, y))
@@ -236,17 +262,22 @@ class ConexionEspectral:
     """
 
     N: int = 200
+    dps: int = DEFAULT_MPMATH_DPS
     zeros_referencia: np.ndarray = field(default_factory=lambda: RIEMANN_ZEROS_10.copy())
 
     def zeta_truncada(self, s: complex) -> complex:
         """Aproxima `ζ(s)` mediante la serie truncada de η(s)."""
-        mp.mp.dps = 50
+        mp.mp.dps = self.dps
         eta = mp.mpc("0")
+        sign = 1
         for n in range(1, self.N + 1):
-            eta += ((-1) ** (n - 1)) / mp.power(n, s)
+            eta += sign / mp.power(n, s)
+            sign = -sign
         return eta / (1 - mp.power(2, 1 - s))
 
-    def verificar_residuos(self, gammas: np.ndarray | None = None, tolerancia: float = 1.5) -> dict[str, Any]:
+    def verificar_residuos(
+        self, gammas: np.ndarray | None = None, tolerancia: float = DEFAULT_RESIDUAL_TOLERANCE
+    ) -> dict[str, Any]:
         """Evalúa los residuos `|ζ(1/2 + iγ_n)|` para una lista de gammas."""
         if gammas is None:
             gammas = self.zeros_referencia
@@ -266,7 +297,9 @@ class ConexionEspectral:
             "tolerancia": tolerancia,
         }
 
-    def verificar_ecuacion_espectral(self, operador: OperadorH, tolerancia: float = 1.5) -> dict[str, Any]:
+    def verificar_ecuacion_espectral(
+        self, operador: OperadorH, tolerancia: float = DEFAULT_RESIDUAL_TOLERANCE
+    ) -> dict[str, Any]:
         """Verifica `ζ(1/2 + iĤ) Ψ_Ω = 0` sobre la truncación finita."""
         espectro = operador.espectro()[: len(self.zeros_referencia)]
         residuos = self.verificar_residuos(espectro, tolerancia=tolerancia)
@@ -294,15 +327,17 @@ class SistemaOperadorHSolenoide:
     def evaluar_coherencia(self) -> dict[str, Any]:
         """Calcula la coherencia global y consolida la validación espectral."""
         espectro = self.operador.espectro()
-        reales = bool(np.allclose(espectro.imag if np.iscomplexobj(espectro) else 0.0, 0.0))
+        reales = bool(np.allclose(espectro.imag, 0.0) if np.iscomplexobj(espectro) else True)
         dominio_denso = self.operador.espacio.es_denso_aproximado(self.dimension)
         verificacion = self.conexion.verificar_ecuacion_espectral(self.operador)
-        proporcion_residuos = float(np.mean(np.array(verificacion["residuos"]["residuos"]) < 1.5))
+        proporcion_residuos = float(
+            np.mean(np.array(verificacion["residuos"]["residuos"]) < DEFAULT_RESIDUAL_TOLERANCE)
+        )
         psi_global = round(
-            0.90
-            + 0.03 * float(dominio_denso)
-            + 0.03 * float(reales)
-            + 0.015 * proporcion_residuos,
+            BASE_COHERENCE
+            + DOMAIN_COHERENCE_WEIGHT * float(dominio_denso)
+            + SPECTRUM_COHERENCE_WEIGHT * float(reales)
+            + RESIDUAL_COHERENCE_WEIGHT * proporcion_residuos,
             3,
         )
         return {
@@ -341,7 +376,7 @@ def demostrar_operador_h_solenoide(
         print(f"Ψ_global = {resultado['psi_global']:.3f} → {estado}")
         print(f"Spec(H) real = {resultado['espectro_real']}")
         print(
-            "|ζ(1/2+iγ_n)| < 1.5 = "
+            f"|ζ(1/2+iγ_n)| < {DEFAULT_RESIDUAL_TOLERANCE} = "
             f"{resultado['verificacion_espectral']['residuos']['todos_bajo_cota']}"
         )
 
@@ -351,7 +386,17 @@ def demostrar_operador_h_solenoide(
 __all__ = [
     "F0_HZ",
     "C_COHERENCE",
+    "C_QCAL",
     "PSI_THRESHOLD",
+    "BASE_COHERENCE",
+    "DOMAIN_COHERENCE_WEIGHT",
+    "SPECTRUM_COHERENCE_WEIGHT",
+    "RESIDUAL_COHERENCE_WEIGHT",
+    "TARGET_GLOBAL_COHERENCE",
+    "DEFAULT_ZERO_GAP",
+    "ZERO_GAP_SAMPLE_SIZE",
+    "DEFAULT_MPMATH_DPS",
+    "DEFAULT_RESIDUAL_TOLERANCE",
     "RIEMANN_ZEROS_10",
     "OperadorXP",
     "OperadorAlineacion",
