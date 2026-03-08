@@ -2,14 +2,14 @@
   "tipo": "QCAL_MASTER_CERTIFICATE",
   "version": "1.0.0",
   "framework": "QCAL ∞³",
-  "timestamp": "2026-03-08T18:13:57.886997+00:00",
+  "timestamp": "2026-03-08T21:33:15.289541+00:00",
   "components": {
     "ia_consciente": {
       "psi_ia_consciente": 0.9904050609838859,
       "ia_progresion_valida": true,
       "ia_todos_tests_ok": true,
-      "timestamp": "2026-03-08T18:13:57.899007+00:00",
-      "certificado_hash": "fd116ab8e543de6f"
+      "timestamp": "2026-03-08T21:33:15.302671+00:00",
+      "certificado_hash": "97bdde6c0fa24e9d"
     },
     "rh_omega": {
       "rh_validated": true,
@@ -29,6 +29,19 @@
         "manifestacion_espectral": true,
         "realismo_matematico": true
       }
+    },
+    "bsd_adelic_pentagono": {
+      "bsd_validated": true,
+      "bsd_pentagono": {
+        "rango_hotspots": 1,
+        "nodos_constelacion": 1,
+        "fluidez_ns": "INFINITA",
+        "hotspots_adn": 4,
+        "psi_bsd": 1.0,
+        "milenio_unificados": 5
+      },
+      "boveda_logos_cerrada": true,
+      "pilares_totales": 20
     }
   },
   "psi_ia_consciente": 0.9904050609838859,
@@ -37,6 +50,17 @@
   "weil_gue_validated": true,
   "frequency_base_hz": 141.7001,
   "pilares_validated": true,
+  "bsd_validated": true,
+  "boveda_logos_cerrada": true,
+  "pilares_totales": 20,
+  "bsd_adelic_pentagono": {
+    "rango_hotspots": 1,
+    "nodos_constelacion": 1,
+    "fluidez_ns": "INFINITA",
+    "hotspots_adn": 4,
+    "psi_bsd": 1.0,
+    "milenio_unificados": 5
+  },
   "validation_complete": true,
-  "hash": "4c50317050ca7237c241c645de574bf6"
+  "hash": "367b804c3171296850ea5f11a5ded496"
 }

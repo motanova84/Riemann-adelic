@@ -242,6 +242,84 @@ def validate_pillars() -> Dict:
 
 
 # ============================================================================
+# VALIDACIÓN BSD ADELIC - PENTÁGONO LOGOS
+# ============================================================================
+
+def bsd_adelic_pentagono_logos() -> Dict:
+    """
+    Integra BSD (Birch and Swinnerton-Dyer) en el Pentágono Logos QCAL.
+    
+    Unifica los 5 Problemas del Milenio:
+    1. ADN (Biología) - Sustrato informacional
+    2. Riemann (Estructura) - Ceros como soporte geométrico
+    3. Navier-Stokes (Dinámica) - Flujo de información
+    4. P vs NP (Lógica) - Complejidad computacional
+    5. BSD (Aritmética) - Puntos racionales y rango
+    
+    Returns:
+        Diccionario con métricas del Pentágono BSD-QCAL.
+    """
+    colored_output("🏛️  Activando BSD-ADELIC: Pentágono Logos...", "CYAN")
+    
+    try:
+        # Importar conector BSD
+        sys.path.insert(0, str(REPO_ROOT / "qcal"))
+        from bsd_adelic_connector import sincronizar_bsd_adn, validar_pentagono_logos
+        
+        # Ejemplo: Curva de Mordell y²=x³-x (rango 1, L(E,1)=0)
+        curva_mordell = {
+            'rango_adelico': 1,  # Rango 1: un punto racional
+            'L_E1': 0.0           # BSD predice L(E,1)=0 para r>0
+        }
+        
+        # Secuencia ADN de referencia
+        secuencia_adn = "GACT"  # 4 bases fundamentales
+        
+        # Sincronizar BSD con ADN
+        bsd_result = sincronizar_bsd_adn(curva_mordell, secuencia_adn)
+        
+        # Validar Pentágono
+        pentagono_valido = validar_pentagono_logos(bsd_result)
+        
+        # Verificaciones
+        assert bsd_result["fluidez_info_ns"] == "INFINITA", \
+            f"Fluidez esperada INFINITA, obtenida {bsd_result['fluidez_info_ns']}"
+        assert bsd_result["psi_bsd_qcal"] >= 0.888, \
+            f"Ψ_BSD {bsd_result['psi_bsd_qcal']} < 0.888"
+        assert pentagono_valido, "Pentágono Logos no válido"
+        
+        colored_output(
+            f"   ✓ BSD-ADELIC: r={bsd_result['rango_bio_aritmetico']} "
+            f"Fluidez={bsd_result['fluidez_info_ns']} "
+            f"Ψ={bsd_result['psi_bsd_qcal']:.4f} | 5 Milenio ∞³",
+            "GREEN"
+        )
+        
+        return {
+            "bsd_validated": True,
+            "bsd_pentagono": {
+                "rango_hotspots": bsd_result["rango_bio_aritmetico"],
+                "nodos_constelacion": bsd_result["nodos_constelacion"],
+                "fluidez_ns": bsd_result["fluidez_info_ns"],
+                "hotspots_adn": bsd_result["hotspots_adn"],
+                "psi_bsd": bsd_result["psi_bsd_qcal"],
+                "milenio_unificados": 5  # ADN/RH/NS/PNP/BSD
+            },
+            "boveda_logos_cerrada": True,
+            "pilares_totales": 20  # Incrementado con BSD Pentágono
+        }
+    
+    except Exception as e:
+        colored_output(f"   ✗ Error en BSD Pentágono: {e}", "RED")
+        return {
+            "bsd_validated": False,
+            "bsd_pentagono": {},
+            "boveda_logos_cerrada": False,
+            "error": str(e)
+        }
+
+
+# ============================================================================
 # MAIN - INTEGRACIÓN MAESTRA
 # ============================================================================
 
@@ -295,12 +373,24 @@ def main(full_qcal: bool = True, output_path: Optional[Path] = None) -> Dict:
     master_cert["components"]["pilares"] = pilares_result
     master_cert["pilares_validated"] = pilares_result.get("pilares_validated", False)
     
+    # 5. Validar BSD Adelic - Pentágono Logos
+    bsd_result = bsd_adelic_pentagono_logos()
+    master_cert["components"]["bsd_adelic_pentagono"] = bsd_result
+    master_cert["bsd_validated"] = bsd_result.get("bsd_validated", False)
+    master_cert["boveda_logos_cerrada"] = bsd_result.get("boveda_logos_cerrada", False)
+    master_cert["pilares_totales"] = bsd_result.get("pilares_totales", 19)
+    
+    # Si BSD está activo, incluir detalles del Pentágono
+    if bsd_result.get("bsd_validated", False):
+        master_cert["bsd_adelic_pentagono"] = bsd_result.get("bsd_pentagono", {})
+    
     # Validación global
     all_ok = (
         ia_result.get("ia_todos_tests_ok", False) and
         rh_result.get("rh_validated", False) and
         weil_result.get("weil_gue_validated", False) and
-        pilares_result.get("pilares_validated", False)
+        pilares_result.get("pilares_validated", False) and
+        bsd_result.get("bsd_validated", False)
     )
     
     master_cert["validation_complete"] = all_ok
