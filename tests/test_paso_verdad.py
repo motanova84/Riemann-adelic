@@ -22,8 +22,15 @@ from operators.paso_verdad_operator import (
     paso_verdad_complete_verification,
     verify_paso_verdad,
     F0_QCAL,
-    C_COHERENCE
+    C_COHERENCE,
+    HERMITICITY_TOLERANCE,
+    IMAGINARY_TOLERANCE,
+    NUMERICAL_EPSILON
 )
+
+# Test-specific tolerances
+EVENNESS_TOLERANCE = 1e-10  # Tolerance for evenness checks
+SYMMETRY_TOLERANCE = 1e-8  # Tolerance for matrix symmetry
 
 
 class TestPhiKernel:
@@ -44,7 +51,7 @@ class TestPhiKernel:
             phi_minus_u = kernel.phi(-u)
             
             # Should be equal (even function)
-            assert abs(phi_u - phi_minus_u) < 1e-10, f"Not even at u={u}"
+            assert abs(phi_u - phi_minus_u) < EVENNESS_TOLERANCE, f"Not even at u={u}"
     
     def test_phi_decay(self):
         """Test super-exponential decay of Φ."""
@@ -73,7 +80,7 @@ class TestPhiKernel:
             K_uv = kernel.kernel(u, v)
             K_vu = kernel.kernel(v, u)
             
-            assert abs(K_uv - K_vu) < 1e-10, f"Not Hermitian at ({u}, {v})"
+            assert abs(K_uv - K_vu) < EVENNESS_TOLERANCE, f"Not Hermitian at ({u}, {v})"
     
     def test_verify_evenness_method(self):
         """Test evenness verification method."""
@@ -84,7 +91,7 @@ class TestPhiKernel:
         assert 'is_even' in result
         assert 'max_even_error' in result
         assert result['is_even'] is True
-        assert result['max_even_error'] < 1e-10
+        assert result['max_even_error'] < EVENNESS_TOLERANCE
 
 
 class TestIntegralOperatorPasoVerdad:
@@ -105,16 +112,16 @@ class TestIntegralOperatorPasoVerdad:
         
         assert isinstance(result, dict)
         assert result['is_hermitian'] is True
-        assert result['hermiticity_error'] < 1e-8
+        assert result['hermiticity_error'] < SYMMETRY_TOLERANCE
     
     def test_operator_symmetry(self):
         """Test kernel matrix is symmetric."""
         operator = IntegralOperatorPasoVerdad(N=40)
         
         K = operator.K_matrix
-        symmetry_error = np.linalg.norm(K - K.T) / (np.linalg.norm(K) + 1e-16)
+        symmetry_error = np.linalg.norm(K - K.T) / (np.linalg.norm(K) + NUMERICAL_EPSILON)
         
-        assert symmetry_error < 1e-8
+        assert symmetry_error < SYMMETRY_TOLERANCE
     
     def test_kernel_l2_norm(self):
         """Test kernel L² norm is finite."""

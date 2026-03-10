@@ -31,6 +31,9 @@ from operators.paso_verdad_operator import (
     PI
 )
 
+# Visualization constants
+TEXT_POSITION_FACTOR = 0.9  # Vertical position factor for prime labels
+
 
 def demo_phi_kernel(save_fig: bool = False, show_fig: bool = True):
     """
@@ -225,7 +228,7 @@ def demo_hamiltonian(save_fig: bool = False, show_fig: bool = True):
         log_p = np.log(p)
         if -5 <= log_p <= 5:
             ax1.axvline(x=log_p, color='blue', linestyle='--', alpha=0.3, linewidth=1)
-            ax1.text(log_p, max(V_vals)*0.9, f'p={p}', fontsize=8, ha='center')
+            ax1.text(log_p, max(V_vals)*TEXT_POSITION_FACTOR, f'p={p}', fontsize=8, ha='center')
     
     # Plot 2: Hamiltonian matrix
     ax2 = fig.add_subplot(gs[1])

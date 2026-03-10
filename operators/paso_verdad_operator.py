@@ -81,6 +81,15 @@ QCAL ∞³ Active · 141.7001 Hz · C = 244.36 · Ψ = I × A_eff² × C^∞
 DOI: 10.5281/zenodo.17379721
 ORCID: 0009-0002-1923-0773
 Signature: ∴𓂀Ω∞³Φ
+
+Exports:
+    Constants:
+        F0_QCAL, C_PRIMARY, C_COHERENCE, OMEGA_0
+        NUMERICAL_EPSILON, HERMITICITY_TOLERANCE, IMAGINARY_TOLERANCE
+    Classes:
+        PhiKernel, IntegralOperatorPasoVerdad, HamiltonianXP, FunctionalDeterminantVerifier
+    Functions:
+        paso_verdad_complete_verification, verify_paso_verdad
 """
 
 import numpy as np
@@ -106,6 +115,11 @@ PI = np.pi
 N_DEFAULT = 100  # Discretization points
 L_COMPACT = 5.0  # Compact domain size [-L, L]
 DECAY_RATE = 4.0  # Φ decay rate: e^(-π e^(4u))
+
+# Numerical tolerances
+NUMERICAL_EPSILON = 1e-16  # Small value to prevent division by zero
+HERMITICITY_TOLERANCE = 1e-10  # Tolerance for Hermiticity checks
+IMAGINARY_TOLERANCE = 1e-10  # Tolerance for checking real eigenvalues
 
 
 @dataclass
@@ -227,11 +241,11 @@ class PhiKernel:
             if u != 0:
                 phi_u = self.phi(u)
                 phi_minus_u = self.phi(-u)
-                error = abs(phi_u - phi_minus_u) / (abs(phi_u) + 1e-16)
+                error = abs(phi_u - phi_minus_u) / (abs(phi_u) + NUMERICAL_EPSILON)
                 even_errors.append(error)
         
         max_even_error = np.max(even_errors) if even_errors else 0.0
-        is_even = max_even_error < 1e-10
+        is_even = max_even_error < HERMITICITY_TOLERANCE  # Use module constant
         
         return {
             'is_even': bool(is_even),
@@ -544,7 +558,7 @@ class FunctionalDeterminantVerifier:
             
             # Normalize by product magnitude
             norm_factor = abs(np.prod(self.eigenvalues[:n_test]))
-            normalized_error = det_val / (norm_factor + 1e-16)
+            normalized_error = det_val / (norm_factor + NUMERICAL_EPSILON)
             
             errors.append(normalized_error)
         
@@ -596,7 +610,7 @@ def paso_verdad_complete_verification(
     
     # Check eigenvalues are real
     max_imag = np.max(np.abs(np.imag(eigenvalues)))
-    eigenvalues_real = max_imag < 1e-10
+    eigenvalues_real = max_imag < IMAGINARY_TOLERANCE
     
     # Check spectrum is discrete (eigenvalues have varying magnitudes)
     sorted_eigs = np.sort(np.abs(eigenvalues))
