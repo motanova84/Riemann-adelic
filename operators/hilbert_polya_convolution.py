@@ -109,7 +109,7 @@ PHI = 1.6180339887498948         # Golden ratio
 LAMBDA_0 = 1.0 / C_PRIMARY       # First eigenvalue ≈ 0.001588050
 
 # Mathematical constants
-ZETA_PRIME_HALF = -3.9226461392442285  # ζ'(1/2) high precision value
+ZETA_PRIME_HALF = -3.9226461392442285  # ζ'(1/2) high precision value (for reference)
 
 
 @dataclass
@@ -167,24 +167,11 @@ def xi_function(s: complex, use_high_precision: bool = False) -> complex:
             result = prefactor * pi_term * gamma_term * zeta_term
             return complex(result)
         else:
-            # Fallback: approximate computation (less accurate)
-            # Handle special cases
-            if abs(s) < 1e-10:
-                return 0.0 + 0.0j
-            if abs(s - 1) < 1e-10:
-                return 0.0 + 0.0j
-            
-            # Use Stirling approximation for gamma
-            log_gamma_term = loggamma(0.5 * s)
-            log_pi_term = -0.5 * s * np.log(np.pi)
-            
-            # For zeta on critical line, use approximation
-            # This is a crude approximation - real implementation needs mpmath
-            zeta_approx = 1.0 / (s - 1) if abs(s.real - 1) > 0.1 else 1.0
-            
-            prefactor = 0.5 * s * (s - 1)
-            result = prefactor * np.exp(log_pi_term + log_gamma_term) * zeta_approx
-            return result
+            # mpmath is required for accurate complex zeta evaluation
+            raise ImportError(
+                "mpmath is required for xi_function. "
+                "Install it with: pip install mpmath"
+            )
 
 
 def Xi_function(t: float, use_high_precision: bool = False) -> float:
@@ -317,6 +304,7 @@ def build_integral_operator(u_grid: np.ndarray,
         - Uses trapezoidal rule for integral
         - Matrix element: T_ij = Φ(u_i - u_j) · Δu
         - Ensures exact self-adjointness
+        - Vectorized computation for efficiency
     """
     n = len(u_grid)
     du = u_grid[1] - u_grid[0] if len(u_grid) > 1 else 1.0
@@ -324,13 +312,14 @@ def build_integral_operator(u_grid: np.ndarray,
     # Compute Φ kernel
     phi = compute_phi_kernel(u_grid, n_phi_terms)
     
-    # Build operator matrix as convolution
-    T = np.zeros((n, n), dtype=float)
+    # Build operator matrix as convolution (vectorized)
+    # Create difference matrix: diff[i,j] = u_i - u_j
+    u_i = u_grid[:, np.newaxis]  # Column vector
+    u_j = u_grid[np.newaxis, :]  # Row vector
+    differences = u_i - u_j
     
-    for i in range(n):
-        for j in range(n):
-            diff = u_grid[i] - u_grid[j]
-            T[i, j] = compute_phi_kernel(np.array([diff]), n_phi_terms)[0]
+    # Compute Φ for all differences at once (flatten, compute, reshape)
+    T = compute_phi_kernel(differences.ravel(), n_phi_terms).reshape((n, n))
     
     # Normalize by integration measure
     if normalize:
