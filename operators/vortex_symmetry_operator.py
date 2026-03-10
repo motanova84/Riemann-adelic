@@ -154,8 +154,10 @@ class HilbertSpaceOmega:
         log_x = np.linspace(np.log(x_min), np.log(x_max), n_grid)
         self.x_grid = np.exp(log_x)
         
-        # Grid spacing
-        self.dx = self.x_grid[1] - self.x_grid[0]
+        # Note: Grid spacing varies in x-space but is uniform in log-space
+        # For integrals, use np.trapezoid/trapz which handles non-uniform grids
+        # dx_log is the uniform spacing in log space
+        self.dx_log = (np.log(x_max) - np.log(x_min)) / (n_grid - 1)
         
         # Measure: dx/x (invariant under x → 1/x)
         self.measure = np.ones(n_grid) / self.x_grid
@@ -172,7 +174,8 @@ class HilbertSpaceOmega:
             Inner product value
         """
         integrand = np.conj(psi) * phi * self.measure
-        # Use trapezoid (numpy >= 2.0) or fallback to trapz
+        # Use trapezoid (numpy >= 2.0) or fallback to trapz (numpy < 2.0)
+        # This handles non-uniform grids correctly
         try:
             return np.trapezoid(integrand, self.x_grid)
         except AttributeError:
@@ -308,10 +311,11 @@ class OperatorH_Omega:
         Build kinetic term H_0 = -i(x·d/dx + 1/2).
         
         Note: The dilation operator x·d/dx is anti-Hermitian, so -i(x·d/dx)
-        is Hermitian. We use a symmetric discretization.
+        is Hermitian. We use a symmetric discretization accounting for
+        non-uniform grid spacing.
         
-        Using finite differences:
-            (x·d/dx)ψ ≈ x·(ψ[i+1] - ψ[i-1])/(2·dx)
+        Using finite differences on non-uniform grid:
+            (x·d/dx)ψ ≈ x·(ψ[i+1] - ψ[i-1])/(x[i+1] - x[i-1])
         
         Returns:
             Kinetic operator matrix (Hermitian)
@@ -319,7 +323,6 @@ class OperatorH_Omega:
         n = self.n_grid
         H0 = np.zeros((n, n), dtype=complex)
         x = self.x_grid
-        dx = self.x_grid[1] - self.x_grid[0]  # Uniform spacing in log scale
         
         # Diagonal term: -i/2 (this is real and diagonal)
         H0 += -1j * 0.5 * np.eye(n)
@@ -327,17 +330,23 @@ class OperatorH_Omega:
         # Off-diagonal derivative terms: -i·x·d/dx
         # For Hermiticity, we need H[i,j] = H[j,i]*
         for i in range(1, n - 1):
-            # Central difference: -i·x·(ψ[i+1] - ψ[i-1])/(2·dx)
-            # This gives: H[i,i+1] = -i·x[i]/(2·dx) and H[i,i-1] = i·x[i]/(2·dx)
-            coeff = x[i] / (2.0 * dx)
+            # Central difference with non-uniform spacing
+            dx_forward = x[i+1] - x[i]
+            dx_backward = x[i] - x[i-1]
+            dx_central = x[i+1] - x[i-1]
+            
+            # Coefficient for central difference
+            coeff = x[i] / dx_central
             H0[i, i+1] += -1j * coeff
             H0[i, i-1] += 1j * coeff
         
         # Boundary conditions (one-sided differences)
         # At x_min:
-        H0[0, 1] += -1j * x[0] / dx
+        dx_0 = x[1] - x[0]
+        H0[0, 1] += -1j * x[0] / dx_0
         # At x_max:
-        H0[-1, -2] += 1j * x[-1] / dx
+        dx_n = x[-1] - x[-2]
+        H0[-1, -2] += 1j * x[-1] / dx_n
         
         # Make explicitly Hermitian by averaging with conjugate transpose
         H0 = (H0 + H0.conj().T) / 2.0
@@ -351,7 +360,7 @@ class OperatorH_Omega:
         The Dirac delta is approximated by a narrow Gaussian:
             δ(x - p^k) ≈ (1/(σ√(2π))) exp(-(x - p^k)²/(2σ²))
         
-        where σ is chosen as grid spacing.
+        where σ is chosen based on local grid spacing for better accuracy.
         
         Returns:
             Potential operator matrix (diagonal, real)
@@ -359,9 +368,6 @@ class OperatorH_Omega:
         n = self.n_grid
         V = np.zeros((n, n), dtype=complex)
         x = self.x_grid
-        
-        # Approximate grid width for delta function
-        sigma = (self.x_grid[-1] - self.x_grid[0]) / self.n_grid
         
         for pk in self.prime_powers:
             if pk < self.x_grid[0] or pk > self.x_grid[-1]:
@@ -377,6 +383,17 @@ class OperatorH_Omega:
             
             # Compute amplitude: (ln p) / p^(k/2)
             amplitude = np.log(p) / (p ** (k / 2.0))
+            
+            # Use local grid spacing for sigma (better for non-uniform grid)
+            # Find nearest grid point
+            idx = np.argmin(np.abs(x - pk))
+            if idx > 0 and idx < n - 1:
+                # Local spacing
+                sigma = (x[idx+1] - x[idx-1]) / 2.0
+            elif idx == 0:
+                sigma = x[1] - x[0]
+            else:
+                sigma = x[-1] - x[-2]
             
             # Add delta function contribution (Gaussian approximation)
             gaussian = amplitude * np.exp(-(x - pk)**2 / (2 * sigma**2)) / (sigma * np.sqrt(2 * np.pi))
@@ -410,16 +427,18 @@ class OperatorH_Omega:
         """
         Compute eigenvalues and eigenvectors of H_Omega.
         
+        Uses eigh (Hermitian eigenvalue solver) for better performance
+        and guaranteed real eigenvalues.
+        
         Returns:
-            eigenvalues: Sorted eigenvalues
+            eigenvalues: Sorted eigenvalues (real)
             eigenvectors: Corresponding eigenvectors
         """
-        # Since H_Omega should be self-adjoint, use eigh
-        # But H0 is anti-Hermitian (with -i), so H_Omega may be complex Hermitian
-        eigenvalues, eigenvectors = np.linalg.eig(self.H_matrix)
+        # Since H_Omega is Hermitian, use eigh for efficiency
+        eigenvalues, eigenvectors = np.linalg.eigh(self.H_matrix)
         
-        # Sort by real part
-        idx = np.argsort(eigenvalues.real)
+        # Already sorted by eigh, but ensure ascending order
+        idx = np.argsort(eigenvalues)
         eigenvalues = eigenvalues[idx]
         eigenvectors = eigenvectors[:, idx]
         

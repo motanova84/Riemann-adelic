@@ -175,7 +175,12 @@ class TestOperatorH_Omega:
         assert V.shape == (H_space.n_grid, H_space.n_grid)
     
     def test_potential_is_diagonal(self):
-        """Test that potential V(x) is diagonal (multiplicative)."""
+        """Test that potential V(x) is diagonal (multiplicative).
+        
+        Note: Due to Gaussian approximation of delta functions, there will
+        be some off-diagonal spread. We test that this spread is small
+        relative to the diagonal.
+        """
         H_space = HilbertSpaceOmega()
         op = OperatorH_Omega(H_space)
         
@@ -185,10 +190,13 @@ class TestOperatorH_Omega:
         V_diag = np.diag(V)
         V_off_diag = V - np.diag(V_diag)
         
-        # Off-diagonal should be small (Gaussian approximation has some spread)
+        # Off-diagonal should be small compared to diagonal
+        # (Gaussian approximation has ~50% spread for narrow peaks)
         off_diag_norm = np.linalg.norm(V_off_diag, 'fro')
         diag_norm = np.linalg.norm(V_diag)
         
+        # Allow 50% off-diagonal due to Gaussian approximation
+        # (delta functions are ideally diagonal, but numerical approximation spreads)
         assert off_diag_norm / (diag_norm + 1e-16) < 0.5
     
     def test_potential_is_real(self):
