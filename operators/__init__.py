@@ -29,6 +29,11 @@ Modules:
                               Tr(e^(-t·T_∞³)) ∼ Σ_p A_p(t) cos(γ_p·t + φ_p)
     - master_operator_o3: 𝒪_∞³ = 𝔻_s ⊗ 𝟙 + 𝟙 ⊗ H_Ψ master operator unifying
                          complex and real perspectives
+    - hilbert_polya_convolution: Convolution operator T via ξ function Fourier
+                                representation implementing Hilbert-Pólya approach:
+                                ξ(s) = (1/2)·s·(s-1)·π^(-s/2)·Γ(s/2)·ζ(s)
+                                (T ψ)(u) = ∫ Φ(u-v)·ψ(v) dv where Φ(u) is Riemann kernel
+                                T = e^(-H) connecting zeros to quantum operator spectrum
 """
 
 from .riemann_operator import (
@@ -243,6 +248,21 @@ from .riemann_sistema_Z import (
     PSI_TARGET,
 )
 
+from .hilbert_polya_convolution import (
+    xi_function,
+    Xi_function,
+    compute_phi_kernel,
+    construct_convolution_kernel,
+    build_integral_operator,
+    compute_operator_spectrum,
+    verify_operator_properties,
+    fourier_transform_operator,
+    hilbert_polya_interpretation,
+    analyze_hilbert_polya_operator,
+    validate_against_riemann_zeros,
+    HilbertPolyaResult,
+)
+
 __all__ = [
     'construct_H_psi',
     'compute_spectrum',
@@ -397,4 +417,17 @@ __all__ = [
     'DeterminanteHadamard',
     'SistemaDinamicoZ',
     'RiemannSistemaZCompleto',
+    # Hilbert-Pólya Convolution Operator (Mar 2026)
+    'xi_function',
+    'Xi_function',
+    'compute_phi_kernel',
+    'construct_convolution_kernel',
+    'build_integral_operator',
+    'compute_operator_spectrum',
+    'verify_operator_properties',
+    'fourier_transform_operator',
+    'hilbert_polya_interpretation',
+    'analyze_hilbert_polya_operator',
+    'validate_against_riemann_zeros',
+    'HilbertPolyaResult',
 ]
