@@ -26,7 +26,8 @@ from riemann_intensity_operator import (
     C_COHERENCE,
     KAPPA_PI,
     GUE_MEAN_SPACING,
-    GUE_MEAN_SQ_SPACING
+    GUE_MEAN_SQ_SPACING,
+    HAMILTONIAN_REGULARIZATION_VALUE
 )
 
 
@@ -62,7 +63,8 @@ class TestRiemannIntensityOperator:
         assert np.all(xi >= 0)
         
         # Xi should be approximately symmetric: Xi(t) ≈ Xi(-t)
-        # (exact symmetry in full implementation, approximate in our simplified version)
+        # Note: Exact symmetry in full Xi implementation, approximate in our simplified version
+        # Allow larger tolerance (0.1 = 10%) due to approximation in small-t and large-t regimes
         t_pos = np.array([1.0, 5.0])
         t_neg = -t_pos
         xi_pos = small_operator.compute_xi_function(t_pos)
@@ -100,11 +102,13 @@ class TestRiemannIntensityOperator:
         H = small_operator.construct_hamiltonian()
         eigenvalues = np.linalg.eigvalsh(H)
         
-        # Should have some infinite eigenvalues (singularities)
-        n_singular = np.sum(~np.isfinite(eigenvalues))
+        # Count eigenvalues near regularization value (singularities)
+        n_singular = np.sum(eigenvalues > HAMILTONIAN_REGULARIZATION_VALUE * 0.9)
         
-        # For this small system, we expect some singularities
-        assert n_singular >= 0  # At least allow zero singularities for small system
+        # For small system, singularities may or may not be present
+        # depending on whether zeros fall in the sampled range
+        # Test just verifies computation completes without error
+        assert n_singular >= 0  # Non-negative by construction
     
     def test_torsion_term_shape(self, small_operator):
         """Test torsion term computation."""

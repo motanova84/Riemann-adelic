@@ -6,6 +6,10 @@ Demo: Riemann Intensity Operator T_Ω
 Demonstration of the analytical solution framework for the Riemann Hypothesis
 using the intensity operator approach.
 
+Usage:
+    python3 demo_riemann_intensity_operator.py           # Interactive mode
+    python3 demo_riemann_intensity_operator.py --auto    # Non-interactive mode
+
 Author: José Manuel Mota Burruezo Ψ ✧ ∞³
 Date: March 2026
 """
@@ -14,7 +18,11 @@ import sys
 import os
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'operators'))
 
-from riemann_intensity_operator import RiemannIntensityOperator, F0_QCAL
+from riemann_intensity_operator import (
+    RiemannIntensityOperator, 
+    F0_QCAL,
+    HAMILTONIAN_REGULARIZATION_VALUE
+)
 import numpy as np
 
 
@@ -309,6 +317,11 @@ def demo_summary():
 
 def main():
     """Run all demonstrations."""
+    import sys
+    
+    # Check for non-interactive mode
+    non_interactive = '--auto' in sys.argv or '--non-interactive' in sys.argv
+    
     demos = [
         demo_basic_operator,
         demo_intensity_spectrum,
@@ -322,7 +335,10 @@ def main():
     for i, demo in enumerate(demos, 1):
         demo()
         if i < len(demos):
-            input("\nPress Enter to continue to next demo...\n")
+            if non_interactive:
+                print("\nContinuing to next demo...\n")
+            else:
+                input("\nPress Enter to continue to next demo...\n")
 
 
 if __name__ == "__main__":
