@@ -35,47 +35,47 @@ def generate_certificate(result: FiveStepProofResult, output_file: Path) -> dict
         
         "verification_results": {
             "step_1_hilbert_space": {
-                "passed": result.step1_hilbert_space,
+                "passed": bool(result.step1_hilbert_space),
                 "description": "Hilbert Space ℋ = L²(ℝ₊*, dx/x) ∩ {ψ(x) = ψ(1/x)}",
-                "valid": result.hilbert_space_valid,
+                "valid": bool(result.hilbert_space_valid),
             },
             "step_2_self_adjoint": {
-                "passed": result.step2_self_adjoint,
+                "passed": bool(result.step2_self_adjoint),
                 "description": "Essential Self-Adjointness Ĥ_Ω = -i(x∂_x + 1/2) + V̂_primes",
-                "hermitian": result.operator_hermitian,
+                "hermitian": bool(result.operator_hermitian),
             },
             "step_3_discrete_spectrum": {
-                "passed": result.step3_discrete_spectrum,
+                "passed": bool(result.step3_discrete_spectrum),
                 "description": "Discrete Spectrum σ(H) = {γₙ}",
-                "is_discrete": result.spectrum_discrete.is_discrete,
+                "is_discrete": bool(result.spectrum_discrete.is_discrete),
                 "min_gap": float(result.spectrum_discrete.min_gap),
                 "compactness": float(result.spectrum_discrete.compactness_measure),
             },
             "step_4_trace_formula": {
-                "passed": result.step4_trace_formula,
+                "passed": bool(result.step4_trace_formula),
                 "description": "Trace Formula (Gutzwiller-Selberg-Guinand-Weil)",
                 "balance": float(result.trace_formula.balance),
-                "verified": result.trace_formula.verification_passed,
+                "verified": bool(result.trace_formula.verification_passed),
             },
             "step_5_zeros_correspondence": {
-                "passed": result.step5_zeros_correspondence,
+                "passed": bool(result.step5_zeros_correspondence),
                 "description": "Eigenvalue-Zeros Correspondence Eₙ = γₙ",
                 "correlation": float(result.eigenvalue_correspondence.correlation),
-                "all_real": result.eigenvalue_correspondence.all_real,
-                "critical_line": result.eigenvalue_correspondence.critical_line_verified,
+                "all_real": bool(result.eigenvalue_correspondence.all_real),
+                "critical_line": bool(result.eigenvalue_correspondence.critical_line_verified),
             },
         },
         
         "overall_assessment": {
-            "proof_complete": result.proof_complete,
+            "proof_complete": bool(result.proof_complete),
             "confidence_score": float(result.confidence_score),
-            "steps_passed": sum([
+            "steps_passed": int(sum([
                 result.step1_hilbert_space,
                 result.step2_self_adjoint,
                 result.step3_discrete_spectrum,
                 result.step4_trace_formula,
                 result.step5_zeros_correspondence,
-            ]),
+            ])),
             "total_steps": 5,
         },
         

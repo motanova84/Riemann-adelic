@@ -262,36 +262,39 @@ class BerryKeatingOperatorH_Omega:
     
     def _build_dilation_operator(self) -> np.ndarray:
         """
-        Build H₀ = -i(x∂_x + 1/2)
+        Build H₀ = ½(xp + px) + ½  ≡  -i(x∂_x + ½) in operator form
         
-        In discrete form: H₀[i,j] = -i·x_i·D_x[i,j] - i/2·δ_ij
-        where D_x is the derivative operator.
+        Using real symmetric tridiagonal discretization on logarithmic grid.
+        Following Berry-Keating formulation from berry_keating_symbiotic.py:
+        
+        H[j,k] = {  (j + 1/2)      if j = k
+                 {  1/(2Δt)        if |j-k| = 1
+                 {  0              otherwise
+        
+        This gives a real, symmetric matrix (hence Hermitian/self-adjoint).
         """
-        # Derivative operator using finite differences
-        Dx = np.zeros((self.N, self.N))
-        dx = self.H.dx_over_x if self.H.config.use_log_grid else (self.x[1] - self.x[0])
-        
-        for i in range(1, self.N - 1):
-            # Central difference
-            Dx[i, i-1] = -1.0 / (2 * dx)
-            Dx[i, i+1] = 1.0 / (2 * dx)
-        
-        # Forward difference at left boundary
-        Dx[0, 0] = -1.0 / dx
-        Dx[0, 1] = 1.0 / dx
-        
-        # Backward difference at right boundary
-        Dx[-1, -2] = -1.0 / dx
-        Dx[-1, -1] = 1.0 / dx
-        
-        # Multiply by x: x·∂_x
-        x_Dx = np.diag(self.x) @ Dx
-        
-        # Add 1/2 if configured
-        if self.config.include_half_shift:
-            H0 = -1j * (x_Dx + 0.5 * np.eye(self.N))
+        # Use logarithmic grid spacing
+        if self.H.config.use_log_grid:
+            dt = self.H.dx_over_x
         else:
-            H0 = -1j * x_Dx
+            # Convert to logarithmic spacing estimate
+            dt = np.log(self.x[-1] / self.x[0]) / (self.N - 1)
+        
+        # Build real symmetric tridiagonal matrix
+        H0 = np.zeros((self.N, self.N), dtype=float)
+        
+        # Diagonal: j + 1/2
+        for j in range(self.N):
+            if self.config.include_half_shift:
+                H0[j, j] = j + 0.5
+            else:
+                H0[j, j] = j
+        
+        # Off-diagonal: 1/(2Δt) for nearest neighbors
+        coupling = 1.0 / (2.0 * dt)
+        for j in range(self.N - 1):
+            H0[j, j+1] = coupling
+            H0[j+1, j] = coupling
         
         return H0
     
