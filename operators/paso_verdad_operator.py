@@ -115,11 +115,13 @@ PI = np.pi
 N_DEFAULT = 100  # Discretization points
 L_COMPACT = 5.0  # Compact domain size [-L, L]
 DECAY_RATE = 4.0  # Φ decay rate: e^(-π e^(4u))
+OVERFLOW_THRESHOLD = 700  # Exponent threshold to prevent exp() overflow
 
 # Numerical tolerances
 NUMERICAL_EPSILON = 1e-16  # Small value to prevent division by zero
 HERMITICITY_TOLERANCE = 1e-10  # Tolerance for Hermiticity checks
 IMAGINARY_TOLERANCE = 1e-10  # Tolerance for checking real eigenvalues
+SYMMETRY_TOLERANCE = 1e-8  # Tolerance for matrix symmetry checks
 
 
 @dataclass
@@ -194,7 +196,7 @@ class PhiKernel:
         abs_u = abs(u)
         exponent_arg = self.decay_rate * abs_u
         
-        if exponent_arg > 700:  # Prevent overflow
+        if exponent_arg > OVERFLOW_THRESHOLD:
             return 0.0
         
         inner_exp = np.exp(exponent_arg)
@@ -309,12 +311,12 @@ class IntegralOperatorPasoVerdad:
         """
         K_dagger = self.K_matrix.T.conj()
         
-        hermiticity_error = norm(self.K_matrix - K_dagger) / (norm(self.K_matrix) + 1e-16)
-        is_hermitian = hermiticity_error < 1e-10
+        hermiticity_error = norm(self.K_matrix - K_dagger) / (norm(self.K_matrix) + NUMERICAL_EPSILON)
+        is_hermitian = hermiticity_error < HERMITICITY_TOLERANCE
         
         # Symmetry check
-        symmetry_error = norm(self.K_matrix - self.K_matrix.T) / (norm(self.K_matrix) + 1e-16)
-        is_symmetric = symmetry_error < 1e-10
+        symmetry_error = norm(self.K_matrix - self.K_matrix.T) / (norm(self.K_matrix) + NUMERICAL_EPSILON)
+        is_symmetric = symmetry_error < HERMITICITY_TOLERANCE
         
         return {
             'is_hermitian': bool(is_hermitian),

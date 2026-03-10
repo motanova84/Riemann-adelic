@@ -25,12 +25,12 @@ from operators.paso_verdad_operator import (
     C_COHERENCE,
     HERMITICITY_TOLERANCE,
     IMAGINARY_TOLERANCE,
-    NUMERICAL_EPSILON
+    NUMERICAL_EPSILON,
+    SYMMETRY_TOLERANCE
 )
 
 # Test-specific tolerances
 EVENNESS_TOLERANCE = 1e-10  # Tolerance for evenness checks
-SYMMETRY_TOLERANCE = 1e-8  # Tolerance for matrix symmetry
 
 
 class TestPhiKernel:
@@ -150,7 +150,7 @@ class TestIntegralOperatorPasoVerdad:
         
         # Eigenvalues should be real (for Hermitian operator)
         max_imag = np.max(np.abs(np.imag(eigenvalues)))
-        assert max_imag < 1e-8
+        assert max_imag < IMAGINARY_TOLERANCE
     
     def test_eigenvalues_real(self):
         """Test all eigenvalues are real."""
@@ -232,7 +232,7 @@ class TestHamiltonianXP:
         
         # Eigenvalues should be real
         max_imag = np.max(np.abs(np.imag(eigenvalues)))
-        assert max_imag < 1e-8
+        assert max_imag < IMAGINARY_TOLERANCE
 
 
 class TestFunctionalDeterminantVerifier:
