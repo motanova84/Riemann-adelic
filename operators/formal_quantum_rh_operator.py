@@ -530,7 +530,9 @@ class FormalQuantumRHOperator:
         
         # Verification: error should be small for large T
         # (finite-size effects dominate for small T)
-        large_T_mask = T_values > 20
+        # Threshold chosen where finite-size effects become subdominant
+        LARGE_T_THRESHOLD = 20.0  # Energy scale where asymptotic behavior dominates
+        large_T_mask = T_values > LARGE_T_THRESHOLD
         if np.any(large_T_mask):
             mean_error_large_T = np.mean(relative_error[large_T_mask])
             weyl_law_verified = mean_error_large_T < 0.2  # 20% tolerance
@@ -589,8 +591,10 @@ class FormalQuantumRHOperator:
                 orbit_lengths.append(orbit_length)
                 
                 # Contribution: -(log p)/p^(k/2) [e^(it ℓₚ) + e^(-it ℓₚ)]
-                # Using delta function approximation via Gaussian
+                # Using Gaussian approximation to delta function for numerical stability
+                # Width chosen to balance localization with finite grid effects
                 delta_width = 0.1
+                # Gaussian envelope provides smooth regularization of delta singularities
                 contribution = -(np.log(p) / p ** (k / 2)) * (
                     np.exp(1j * t * orbit_length) + np.exp(-1j * t * orbit_length)
                 ) * np.exp(-(t - orbit_length) ** 2 / (2 * delta_width ** 2))
@@ -612,7 +616,12 @@ class FormalQuantumRHOperator:
         resonance_frequencies = orbit_lengths
         
         # Verification threshold
-        threshold = 1.0  # Relaxed due to approximations
+        # Relaxed threshold due to:
+        # 1. Gaussian delta function approximation (width=0.1)
+        # 2. Finite prime truncation (limited to first 100 primes)
+        # 3. Finite grid discretization effects
+        # 4. Limited number of eigenvalues in spectrum
+        threshold = 1.0
         trace_identity_verified = trace_identity_error < threshold
         
         return TraceFormulaResult(

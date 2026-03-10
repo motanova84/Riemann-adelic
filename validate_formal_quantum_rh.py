@@ -169,7 +169,11 @@ if __name__ == "__main__":
     results = validate_formal_quantum_rh_operator()
     
     # Exit with appropriate code
-    if results['coherence']['passes_threshold']:
+    # Check both coherence threshold and all validations passed
+    all_validations_pass = all(results['validations'].values())
+    coherence_pass = results['coherence']['passes_threshold']
+    
+    if all_validations_pass and coherence_pass:
         sys.exit(0)
     else:
         sys.exit(1)

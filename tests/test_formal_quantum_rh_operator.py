@@ -111,8 +111,14 @@ class TestFormalQuantumRHOperator:
             log_p = np.log(p)
             # Find grid point closest to log_p
             idx = np.argmin(np.abs(np.log(operator.x_grid) - log_p))
-            # Potential should have local feature near prime
-            assert V[idx] != pytest.approx(BERRY_KEATING_C * log_p, rel=0.1)
+            
+            # Potential should differ from pure Berry-Keating term (has resonances)
+            V_berry_keating_only = BERRY_KEATING_C * np.log(operator.x_grid[idx])
+            assert V[idx] != pytest.approx(V_berry_keating_only, rel=0.1)
+            
+            # Resonance should make potential MORE negative (attractive)
+            # since we add -0.1 * log(p) * Gaussian
+            assert V[idx] < V_berry_keating_only
     
     def test_construct_operator_matrix(self, operator):
         """Test operator matrix construction."""
@@ -382,7 +388,7 @@ class TestTraceFormula:
         
         # Check some orbit lengths
         log_2 = np.log(2)
-        assert log_2 in trace.orbit_lengths or pytest.approx(log_2) in trace.orbit_lengths
+        assert any(pytest.approx(log_2, rel=1e-6) == x for x in trace.orbit_lengths)
     
     @pytest.mark.slow
     def test_resonance_frequencies(self, operator):
