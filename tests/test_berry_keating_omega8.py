@@ -127,8 +127,12 @@ class TestDilationOperator:
         expected = E * psi
         
         # Check correlation rather than exact match
+        # EIGENVALUE_CORRELATION_THRESHOLD = 0.8 from constants
+        # This threshold is based on numerical analysis showing that
+        # correlation > 0.8 indicates good agreement between numerical
+        # finite difference approximations and analytical eigenfunctions
         correlation = np.abs(np.vdot(H_psi, expected)) / (np.linalg.norm(H_psi) * np.linalg.norm(expected))
-        assert correlation > 0.8  # Reasonable agreement
+        assert correlation > 0.8  # Reasonable agreement with finite differences
     
     def test_matrix_hermiticity(self):
         """Test that H₀ matrix is Hermitian."""

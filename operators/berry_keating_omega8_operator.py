@@ -118,6 +118,27 @@ OMEGA_0 = 2 * np.pi * F0_QCAL   # Angular frequency (rad/s)
 C_PRIMARY = 629.83               # Primary spectral constant
 SQRT_PI = np.sqrt(np.pi)
 
+# Statistical testing parameters
+GUE_SIGNIFICANCE_LEVEL = 0.05    # P-value threshold for GUE test
+COHERENCE_NORMALIZATION_FACTOR = 10.0  # Normalization for MAE → Coherence
+# The factor of 10 provides reasonable coherence values in [0,1] range
+# when MAE is on the scale of Riemann zero spacings (~2-3)
+
+# Eigenvalue-zero correlation threshold
+EIGENVALUE_CORRELATION_THRESHOLD = 0.8  # Minimum correlation for eigenfunction test
+# Based on numerical analysis: correlation > 0.8 indicates good agreement
+# between numerical and analytical eigenfunctions with finite differences
+
+# Hardcoded first 20 Riemann zeros (imaginary parts γ_n)
+# Source: LMFDB (https://www.lmfdb.org/zeros/zeta/)
+# Precision: 6 decimal places, sufficient for numerical comparison
+RIEMANN_ZEROS_HARDCODED = np.array([
+    14.134725, 21.022040, 25.010858, 30.424876, 32.935062,
+    37.586178, 40.918719, 43.327073, 48.005151, 49.773832,
+    52.970321, 56.446248, 59.347044, 60.831779, 65.112544,
+    67.079810, 69.546402, 72.067158, 75.704691, 77.144840
+])
+
 
 # =============================================================================
 # PRIME UTILITIES
@@ -376,6 +397,8 @@ class DilationOperator:
         
         # Make Hermitian by symmetrization (average with adjoint)
         # This is valid since H₀ should be self-adjoint on proper domain
+        # Numerical workaround: finite differences may introduce small asymmetries
+        # due to discretization errors. Symmetrization enforces exact Hermiticity.
         H0 = 0.5 * (H0 + H0.conj().T)
         
         return H0
@@ -554,18 +577,18 @@ class Omega8Operator:
                 riemann_zeros.append(zero.imag)
             riemann_zeros = np.array(riemann_zeros)
         else:
-            # Hardcoded first 20 zeros (imaginary parts)
-            riemann_zeros = np.array([
-                14.134725, 21.022040, 25.010858, 30.424876, 32.935062,
-                37.586178, 40.918719, 43.327073, 48.005151, 49.773832,
-                52.970321, 56.446248, 59.347044, 60.831779, 65.112544,
-                67.079810, 69.546402, 72.067158, 75.704691, 77.144840
-            ])[:n_zeros]
+            # Use hardcoded zeros (faster, but limited precision)
+            riemann_zeros = RIEMANN_ZEROS_HARDCODED[:n_zeros]
         
         # Compare eigenvalues with zeros
-        # The relationship is: if λ is eigenvalue, then γ = √|λ| should match zeros
-        # Or, since zeros are at 1/2 + iγ, we expect eigenvalues ~ γ²/4 + 1/4
-        # For now, we scale eigenvalues to match the typical range of zeros
+        # Theoretical relationship: For Berry-Keating operator, eigenvalues E
+        # should satisfy E = γ where zeros are at ζ(1/2 + iγ) = 0
+        # However, numerical discretization introduces scaling artifacts.
+        # 
+        # Scaling strategy: Match the first eigenvalue to the first zero
+        # to align the overall scale. This is an empirical approach that
+        # provides reasonable comparison metrics until the theoretical
+        # relationship is fully implemented.
         
         # Take positive eigenvalues only and scale them
         positive_eigs = eigenvalues[eigenvalues > 0]
@@ -580,10 +603,11 @@ class Omega8Operator:
         eigs_to_compare = scaled_eigs[:n_compare]
         zeros_to_compare = riemann_zeros[:n_compare]
         
-        # Compute MAE
+        # Compute MAE and coherence
         if n_compare > 0:
             mae = np.mean(np.abs(eigs_to_compare - zeros_to_compare))
-            coherence = np.exp(-mae / 10.0)  # Normalize by 10 to get reasonable coherence
+            # Normalize by COHERENCE_NORMALIZATION_FACTOR to get reasonable values
+            coherence = np.exp(-mae / COHERENCE_NORMALIZATION_FACTOR)
         else:
             mae = 100.0
             coherence = 0.0
@@ -602,9 +626,9 @@ class Omega8Operator:
                 s = np.asarray(s)
                 return erf(2*s/SQRT_PI) - (4/np.pi)*s*np.exp(-4*s**2/np.pi)
             
-            # KS test
+            # KS test against GUE distribution
             ks_stat, p_value = kstest(normalized_spacings, wigner_gue_cdf)
-            passes_gue = p_value > 0.05
+            passes_gue = p_value > GUE_SIGNIFICANCE_LEVEL
         else:
             ks_stat, p_value, passes_gue = 0.0, 1.0, False
         
