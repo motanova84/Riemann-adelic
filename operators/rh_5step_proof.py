@@ -396,7 +396,7 @@ class DiscreteSpectrumResult:
     min_gap: float
     compactness_measure: float
     resolvent_norm_bound: float
-    verification_details: Dict[str, any] = field(default_factory=dict)
+    verification_details: Dict[str, Any] = field(default_factory=dict)
 
 
 class DiscreteSpectrumVerifier:
