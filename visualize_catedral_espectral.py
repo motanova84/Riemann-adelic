@@ -4,7 +4,7 @@
 
 This script visualizes the four fundamental pillars of the Riemann Hypothesis
 proof at the QCAL resonance frequency f₀ = 141.7001 Hz, demonstrating
-coherence Ψ = 1.0 across all components.
+coherence across all components (target Ψ = 1.0, achieved global Ψ ≈ 0.82).
 
 The Four Pillars:
 I.   EL OPERADOR - Momentum operator in the solenoid (logarithmic transformation)
@@ -290,9 +290,13 @@ def visualize_catedral_espectral():
     fig = plt.figure(figsize=(16, 12))
     gs = GridSpec(3, 3, figure=fig, hspace=0.35, wspace=0.3)
     
+    # Compute global coherence for title
+    global_coh = (pilar1_data['coherence'] + pilar2_data['coherence'] + 
+                  pilar3_data['coherence'] + pilar4_data['coherence']) / 4
+    
     # Title
     fig.suptitle('🏛️ CATEDRAL ESPECTRAL - Los 4 Pilares de la Hipótesis de Riemann\n' +
-                 f'Resonancia: f₀ = {F0_QCAL} Hz · Coherencia Global: Ψ = 1.0',
+                 f'Resonancia: f₀ = {F0_QCAL} Hz · Coherencia Global: Ψ = {global_coh:.4f}',
                  fontsize=14, fontweight='bold')
     
     # Pilar I: Top left - Operator in solenoid
