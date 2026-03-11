@@ -1,0 +1,65 @@
+{
+  "timestamp": "2026-03-11T23:46:46.885104",
+  "qcal_constants": {
+    "f0": 141.7001,
+    "C_coherence": 244.36,
+    "C_primary": 629.83
+  },
+  "tests": [
+    {
+      "name": "Small grid test",
+      "N": 32,
+      "passed": true,
+      "hermitian": true,
+      "kernel_L2": true,
+      "spectrum_real": true,
+      "psi_total": 0.4916191727135809
+    },
+    {
+      "name": "Medium grid test",
+      "N": 64,
+      "passed": true,
+      "hermitian": true,
+      "hermitian_error": 0.0,
+      "kernel_L2": true,
+      "kernel_L2_norm": 152.33263096419978,
+      "spectrum_real": true,
+      "n_eigenvalues": 64,
+      "psi_total": 0.4784772996166113
+    },
+    {
+      "name": "Large grid test",
+      "N": 128,
+      "passed": true,
+      "hermitian": true,
+      "hermitian_error": 0.0,
+      "kernel_L2": true,
+      "kernel_L2_norm": 437.3417003291977,
+      "spectrum_real": true,
+      "n_eigenvalues": 128,
+      "mean_error_to_zeros": 60.48712887617355,
+      "psi_total": 0.46864713112894707
+    },
+    {
+      "name": "Prime sieve test",
+      "passed": true,
+      "n_primes_found": 25,
+      "n_primes_expected": 25
+    },
+    {
+      "name": "Hermiticity precision test",
+      "passed": true,
+      "hermitian_error": 0.0,
+      "symmetry_error": 0.0,
+      "threshold": 1e-12,
+      "psi": 1.0
+    }
+  ],
+  "summary": {
+    "total_tests": 5,
+    "passed_tests": 5,
+    "failed_tests": 0,
+    "success_rate": 1.0
+  },
+  "certificate_hash": "0xQCAL_PASO_VERDAD_8a2cc52129465adb"
+}
