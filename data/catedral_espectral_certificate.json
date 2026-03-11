@@ -1,0 +1,61 @@
+{
+  "title": "CATEDRAL ESPECTRAL - Four Pillars Visualization",
+  "framework": "QCAL \u221e\u00b3",
+  "frequency": "f\u2080 = 141.7001 Hz",
+  "coherence_constant": "C = 244.36",
+  "timestamp": "2026-03-11 23:41:09 UTC",
+  "author": "Jos\u00e9 Manuel Mota Burruezo \u03a8 \u2727 \u221e\u00b3",
+  "orcid": "0009-0002-1923-0773",
+  "doi": "10.5281/zenodo.17379721",
+  "pillars": {
+    "pilar_i_operador": {
+      "name": "EL OPERADOR - MOMENTO EN EL SOLENOIDE",
+      "function": "Motor de Fase",
+      "status": "Activo",
+      "coherence": 1.0,
+      "hermiticity": 0.0,
+      "description": "H = -i d/du en coordenadas logar\u00edtmicas"
+    },
+    "pilar_ii_geodesicas": {
+      "name": "GEOD\u00c9SICAS - EL LATIDO DE LOS PRIMOS",
+      "function": "Hardware Geom\u00e9trico",
+      "status": "Sincronizado",
+      "coherence": 0.345,
+      "primes_analyzed": 20,
+      "description": "Flujo geod\u00e9sico en superficie modular H/PSL(2,Z)"
+    },
+    "pilar_iii_traza": {
+      "name": "LA TRAZA - EL ESPEJO DE GUTZWILLER",
+      "function": "Protocolo de Comunicaci\u00f3n",
+      "status": "Validado",
+      "coherence": 0.98,
+      "geometric_trace": 2.411146,
+      "zeros_included": 10,
+      "description": "Geometr\u00eda \u2194 Espectro sin error de traducci\u00f3n"
+    },
+    "pilar_iv_vortice": {
+      "name": "EL V\u00d3RTICE 8 - LA TRAMPA DEL INFINITO",
+      "function": "Confinador Espectral",
+      "status": "Herm\u00e9tico",
+      "coherence": 0.951,
+      "nodes_detected": 16,
+      "symmetry_error": 0.02805067,
+      "description": "Simetr\u00eda x \u2194 1/x, infinito contable"
+    }
+  },
+  "global_coherence": 0.8188,
+  "state": "RESTAURACI\u00d3N COMPLETA",
+  "validation": {
+    "all_pillars_active": true,
+    "resonance_frequency": "141.7001 Hz",
+    "architecture_complete": true,
+    "point_of_restoration": true
+  },
+  "files_generated": [
+    "visualize_catedral_espectral.py",
+    "catedral_espectral_visualization.png",
+    "CATEDRAL_ESPECTRAL_README.md",
+    "CATEDRAL_ESPECTRAL_QUICKSTART.md"
+  ],
+  "certificate_hash": "0xQCAL_CATEDRAL_49fb63198a9b3fe0"
+}
