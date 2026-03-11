@@ -89,6 +89,8 @@
   
   "firma_criptografica": {
     "input": "2026-01-14T13:05:25Z | Ψ=0.999999 | P-NP⊗Riemann | 151.7001Hz",
+    "hash_sha256": "6cc1c7a7c719bd41b9dca5a25422b6716a35d765a59f30927e804fb2ba02f5bb",
+    "hash_method": "SHA-256 of json.dumps(cert_without_firma_criptografica, sort_keys=True, separators=(',',':')).encode('utf-8')",
     "qcal_signature": "∴𓂀Ω∞³",
     "timestamp": "2026-01-14T13:05:25.231Z",
     "coherence": 0.999999,
