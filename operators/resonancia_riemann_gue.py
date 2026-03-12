@@ -104,6 +104,9 @@ except ImportError:
     F0 = 141.7001  # Hz
     C_COHERENCE = 244.36
 
+# QCAL coherence threshold
+COHERENCE_THRESHOLD = 0.888  # Minimum coherence for valid GUE signature
+
 
 def obtener_primos(n: int) -> np.ndarray:
     """
@@ -240,8 +243,12 @@ def construir_hamiltoniano(
     # -------------------------
     # Kinetic energy: -d²/du²
     # -------------------------
-    # Standard 3-point finite difference approximation
-    # -d²f/du² ≈ (f_{i-1} - 2f_i + f_{i+1}) / du²
+    # Standard 3-point finite difference approximation for second derivative:
+    # d²f/du² ≈ (f_{i-1} - 2f_i + f_{i+1}) / du²
+    # 
+    # Note: The matrix [1, -2, 1]/du² actually computes +d²/du², 
+    # but when we multiply it by -1 (implicitly via the Hamiltonian structure),
+    # we get the desired -d²/du² kinetic term.
     
     data = [np.ones(N - 1), -2 * np.ones(N), np.ones(N - 1)]
     offsets = [-1, 0, 1]
@@ -322,7 +329,7 @@ def calcular_estadisticas_gue(
     
     # Repulsion metric: fraction of spacings < 0.1
     # For GUE, this should be very small (~ 0) due to level repulsion
-    # For Poisson, this would be ~ exp(-0.1) ≈ 0.90
+    # For Poisson, this would be ~ exp(-0.1) ≈ 0.905
     repulsion_fraction = np.mean(s_normalized < 0.1) if len(s_normalized) > 0 else 1.0
     repulsion_quality = 1.0 - repulsion_fraction
     
@@ -454,9 +461,9 @@ def simular_resonancia_riemann_gue(
     stats = calcular_estadisticas_gue(eigenvalues, skip_low=20, skip_high=400)
     
     # QCAL coherence: higher repulsion quality → higher coherence
-    # Ψ ∈ [0.888, 1.0] for valid GUE signatures
-    coherence_base = 0.888
-    coherence = coherence_base + (1.0 - coherence_base) * stats['repulsion_quality']
+    # Ψ ∈ [COHERENCE_THRESHOLD, 1.0] for valid GUE signatures
+    coherence_range = 1.0 - COHERENCE_THRESHOLD
+    coherence = COHERENCE_THRESHOLD + coherence_range * stats['repulsion_quality']
     
     # Compile metrics
     metrics = {
@@ -487,6 +494,9 @@ def visualizar_resonancia_gue(
     """
     Create visualization of resonance landscape and GUE statistics.
     
+    Note: This function should be called before any other matplotlib usage
+    in headless environments to ensure proper backend configuration.
+    
     Parameters
     ----------
     u : np.ndarray
@@ -505,7 +515,8 @@ def visualizar_resonancia_gue(
     import matplotlib
     import os
     
-    # Check if we're in headless environment
+    # Check if we're in headless environment and configure backend
+    # Must be done before importing pyplot
     if not os.environ.get('DISPLAY') and show_plot:
         matplotlib.use('Agg')
         show_plot = False
@@ -595,8 +606,8 @@ if __name__ == "__main__":
     print(f"  QCAL Coherence Ψ: {metrics['coherence']:.4f}")
     print()
     
-    if metrics['coherence'] >= 0.888:
-        print("✓ Coherence Ψ ≥ 0.888 achieved — GUE signature detected")
+    if metrics['coherence'] >= COHERENCE_THRESHOLD:
+        print(f"✓ Coherence Ψ ≥ {COHERENCE_THRESHOLD} achieved — GUE signature detected")
     else:
         print("✗ Coherence below threshold — increase n_primos or k_max")
     

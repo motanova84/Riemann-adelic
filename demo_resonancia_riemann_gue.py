@@ -19,7 +19,8 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'operators'))
 from resonancia_riemann_gue import (
     simular_resonancia_riemann_gue,
     visualizar_resonancia_gue,
-    wigner_surmise_gue
+    wigner_surmise_gue,
+    COHERENCE_THRESHOLD
 )
 
 
@@ -65,10 +66,10 @@ def demo_basic():
     print(f"  ✓ QCAL Coherence Ψ: {metrics['coherence']:.4f}")
     print()
     
-    if metrics['coherence'] >= 0.888:
-        print("  🎉 SUCCESS: Ψ ≥ 0.888 — GUE signature detected!")
+    if metrics['coherence'] >= COHERENCE_THRESHOLD:
+        print(f"  🎉 SUCCESS: Ψ ≥ {COHERENCE_THRESHOLD} — GUE signature detected!")
     else:
-        print("  ⚠️  WARNING: Ψ < 0.888 — adjust parameters")
+        print(f"  ⚠️  WARNING: Ψ < {COHERENCE_THRESHOLD} — adjust parameters")
     print()
     
     # Create visualization (save to file, don't show)
@@ -112,7 +113,7 @@ def demo_parameter_scan():
             'repulsion_quality': metrics['repulsion_quality']
         })
         
-        status = "✓ GOOD" if metrics['coherence'] >= 0.888 else "✗ LOW"
+        status = "✓ GOOD" if metrics['coherence'] >= COHERENCE_THRESHOLD else "✗ LOW"
         print(f"{conf:>12.2f} | {metrics['coherence']:>8.4f} | "
               f"{metrics['repulsion_quality']:>10.4f} | {status:>10}")
     
@@ -235,7 +236,7 @@ def main():
     print("  1. GUE level repulsion emerges from prime-based arithmetic potential")
     print("  2. Confinement term is essential for bound states")
     print("  3. Both quadratic and tanh² confinement work well")
-    print("  4. Coherence Ψ ≥ 0.888 indicates valid GUE signature")
+    print(f"  4. Coherence Ψ ≥ {COHERENCE_THRESHOLD} indicates valid GUE signature")
     print()
     print("Generated files:")
     print("  - resonancia_riemann_gue_demo.png")

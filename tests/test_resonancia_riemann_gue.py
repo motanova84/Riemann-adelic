@@ -34,7 +34,8 @@ from operators.resonancia_riemann_gue import (
     construir_hamiltoniano,
     calcular_estadisticas_gue,
     wigner_surmise_gue,
-    simular_resonancia_riemann_gue
+    simular_resonancia_riemann_gue,
+    COHERENCE_THRESHOLD
 )
 
 
@@ -215,21 +216,16 @@ class TestGUEStatistics:
         assert np.all(np.abs(stats['s_normalized'] - 1.0) < 1e-10)
     
     def test_statistics_repulsion_metric(self):
-        """Test repulsion metric calculation."""
-        # Create spacings with some small values (relative to mean)
-        # Small absolute spacing but after normalization: 0.05/mean, 0.15/mean, 0.3/mean, ...
-        eigenvalues = np.array([0, 0.05, 0.2, 0.5, 1.0, 1.5, 2.0])
-        stats = calcular_estadisticas_gue(eigenvalues, skip_low=0)
-        
-        # After normalization by mean spacing, check if repulsion metric works
-        # Mean spacing here is 0.333, so 0.05 normalized is 0.15, not < 0.1
-        # Let's use eigenvalues that will have normalized spacings < 0.1
+        """Test repulsion metric calculation with properly normalized spacings."""
+        # Create eigenvalues that will have small normalized spacings
+        # Use spacings that are small relative to mean spacing
         eigenvalues_small = np.array([0, 0.01, 0.025, 0.05, 0.5, 1.0, 2.0])
         stats = calcular_estadisticas_gue(eigenvalues_small, skip_low=0)
         
-        # Should detect that some spacings are small
-        assert stats['repulsion_fraction'] >= 0  # Can be 0 or positive
+        # Repulsion metrics should be in valid range
+        assert 0 <= stats['repulsion_fraction'] <= 1.0
         assert 0 <= stats['repulsion_quality'] <= 1.0
+        assert stats['repulsion_quality'] == 1.0 - stats['repulsion_fraction']
 
 
 class TestSimulation:
@@ -369,9 +365,8 @@ class TestQCALIntegration:
             confinamiento=0.06
         )
         
-        # Coherence should be at least 0.888 * (1 + repulsion_quality)
-        expected_min = 0.888
-        assert metrics['coherence'] >= expected_min - 0.001
+        # Coherence should be at least COHERENCE_THRESHOLD * (1 + repulsion_quality)
+        assert metrics['coherence'] >= COHERENCE_THRESHOLD - 0.001
 
 
 if __name__ == "__main__":
