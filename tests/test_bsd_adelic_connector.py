@@ -264,7 +264,7 @@ class TestCasosEdge:
         resultado = sincronizar_bsd_adn(curva, "GAXCT123")
         
         # Solo deberían contarse las bases válidas (G, A, C, T)
-        assert resultado['hotspots_adn'] == 5  # G, A, C, T (X y números ignorados)
+        assert resultado['hotspots_adn'] == 4  # G, A, C, T (X y números ignorados)
     
     def test_rango_muy_alto(self):
         """Test con rango extremadamente alto."""

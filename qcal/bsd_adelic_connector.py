@@ -49,13 +49,13 @@ class CodificadorADNRiemann:
         Identifica hotspots de resonancia en una secuencia de ADN.
         
         Un hotspot es una posición donde la secuencia resuena con f₀.
-        En este mock, consideramos cada base única como un hotspot potencial.
+        En este mock, consideramos cada posición con base válida como un hotspot.
         
         Args:
             secuencia_gact: Secuencia de ADN (e.g., "GACT", "GGAATTCC")
         
         Returns:
-            Lista de índices de hotspots resonantes
+            Lista de índices de hotspots resonantes (todas las posiciones con bases válidas)
         """
         if not secuencia_gact:
             return []
@@ -136,14 +136,14 @@ def sincronizar_bsd_adn(curva_eliptica: Dict, secuencia_gact: str) -> Dict:
     r_bsd = curva_eliptica.get('rango_adelico', 1)
     
     # 2. Mapear a nodos de constelación QCAL (51 nodos totales)
-    # Cada punto racional activa aproximadamente r nodos
-    # Normalización: r * (F0 / F0) = r nodos
-    nodos_act = r_bsd * (F0 / 141.7001)  # ≈ r nodos (normalizado)
+    # Cada punto racional activa aproximadamente r nodos.
+    # Clampeamos al rango [0, 51] para respetar la constelación de 51 nodos.
+    nodos_act = max(0, min(int(r_bsd), 51))
     
     # 3. Calcular viscosidad del flujo de información (Navier-Stokes)
     l_e1 = curva_eliptica.get('L_E1', 0.0)
     # BSD predice L(E,1) = 0 para curvas con r > 0
-    # Umbral de superfluidad: |L(E,1)| < 1e-6
+    # Umbral de superfluidez: |L(E,1)| < 1e-6
     fluidez = "INFINITA" if abs(l_e1) < 1e-6 else "DISIPATIVA"
     
     # 4. Identificar hotspots resonantes en el ADN
@@ -167,6 +167,10 @@ def validar_pentagono_logos(resultado_bsd: Dict) -> bool:
     """
     Valida que el resultado BSD-ADN cumple con los criterios del Pentágono Logos.
     
+    Criterios:
+    1. Coherencia mínima: Ψ ≥ 0.888
+    2. Fluidez infinita para máxima coherencia (conceptual, no forzado)
+    
     Args:
         resultado_bsd: Resultado de sincronizar_bsd_adn()
     
@@ -174,11 +178,10 @@ def validar_pentagono_logos(resultado_bsd: Dict) -> bool:
         True si el Pentágono está coherente (Ψ ≥ 0.888)
     """
     psi = resultado_bsd.get("psi_bsd_qcal", 0.0)
-    fluidez = resultado_bsd.get("fluidez_info_ns", "DISIPATIVA")
     
-    # Criterios del Pentágono Logos:
+    # Criterios del Pentágono Logos (en este mock solo se valida la coherencia mínima):
     # 1. Coherencia mínima: Ψ ≥ 0.888
-    # 2. Fluidez infinita para máxima coherencia
+    # 2. Fluidez infinita para máxima coherencia (conceptual, no implementado aquí)
     coherencia_minima = psi >= 0.888
     
     return coherencia_minima

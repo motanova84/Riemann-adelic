@@ -23,6 +23,7 @@ Referencias:
 import sys
 import json
 import hashlib
+import importlib.util
 from pathlib import Path
 from datetime import datetime, timezone
 from typing import Dict, List, Optional
@@ -262,9 +263,17 @@ def bsd_adelic_pentagono_logos() -> Dict:
     colored_output("🏛️  Activando BSD-ADELIC: Pentágono Logos...", "CYAN")
     
     try:
-        # Importar conector BSD
-        sys.path.insert(0, str(REPO_ROOT / "qcal"))
-        from bsd_adelic_connector import sincronizar_bsd_adn, validar_pentagono_logos
+        # Importar conector BSD directamente sin usar sys.path
+        # Esto evita conflictos con numpy y side effects de sys.path.insert()
+        spec = importlib.util.spec_from_file_location(
+            'bsd_adelic_connector', 
+            REPO_ROOT / 'qcal' / 'bsd_adelic_connector.py'
+        )
+        bsd_module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(bsd_module)
+        
+        sincronizar_bsd_adn = bsd_module.sincronizar_bsd_adn
+        validar_pentagono_logos = bsd_module.validar_pentagono_logos
         
         # Ejemplo: Curva de Mordell y²=x³-x (rango 1, L(E,1)=0)
         curva_mordell = {
@@ -281,12 +290,17 @@ def bsd_adelic_pentagono_logos() -> Dict:
         # Validar Pentágono
         pentagono_valido = validar_pentagono_logos(bsd_result)
         
-        # Verificaciones
-        assert bsd_result["fluidez_info_ns"] == "INFINITA", \
-            f"Fluidez esperada INFINITA, obtenida {bsd_result['fluidez_info_ns']}"
-        assert bsd_result["psi_bsd_qcal"] >= 0.888, \
-            f"Ψ_BSD {bsd_result['psi_bsd_qcal']} < 0.888"
-        assert pentagono_valido, "Pentágono Logos no válido"
+        # Verificaciones robustas (no usar assert para evitar bypass con -O)
+        if bsd_result["fluidez_info_ns"] != "INFINITA":
+            raise ValueError(
+                f"Fluidez esperada INFINITA, obtenida {bsd_result['fluidez_info_ns']}"
+            )
+        if bsd_result["psi_bsd_qcal"] < 0.888:
+            raise ValueError(
+                f"Ψ_BSD {bsd_result['psi_bsd_qcal']} < 0.888"
+            )
+        if not pentagono_valido:
+            raise ValueError("Pentágono Logos no válido")
         
         colored_output(
             f"   ✓ BSD-ADELIC: r={bsd_result['rango_bio_aritmetico']} "
@@ -376,13 +390,15 @@ def main(full_qcal: bool = True, output_path: Optional[Path] = None) -> Dict:
     # 5. Validar BSD Adelic - Pentágono Logos
     bsd_result = bsd_adelic_pentagono_logos()
     master_cert["components"]["bsd_adelic_pentagono"] = bsd_result
+    
+    # Incluir métricas BSD en nivel superior para fácil acceso
     master_cert["bsd_validated"] = bsd_result.get("bsd_validated", False)
     master_cert["boveda_logos_cerrada"] = bsd_result.get("boveda_logos_cerrada", False)
     master_cert["pilares_totales"] = bsd_result.get("pilares_totales", 19)
     
-    # Si BSD está activo, incluir detalles del Pentágono
+    # Detalles del Pentágono BSD en nivel superior (evita duplicación)
     if bsd_result.get("bsd_validated", False):
-        master_cert["bsd_adelic_pentagono"] = bsd_result.get("bsd_pentagono", {})
+        master_cert["bsd_adelic_pentagono"] = bsd_result["bsd_pentagono"]
     
     # Validación global
     all_ok = (
