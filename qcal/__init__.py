@@ -78,6 +78,13 @@ from .master_lagrangian import (
     verify_energy_conservation,
 )
 
+# Import BSD Adelic Connector (Pentagon Logos)
+from .bsd_adelic_connector import (
+    sincronizar_bsd_adn,
+    validar_pentagono_logos,
+    CodificadorADNRiemann,
+)
+
 __all__ = [
     # Constants (Single Source of Truth)
     'F0',
@@ -120,6 +127,11 @@ __all__ = [
     "derive_equations_of_motion",
     "compute_quantized_spectrum",
     "verify_energy_conservation",
+    
+    # BSD Adelic Connector (Pentagon Logos)
+    "sincronizar_bsd_adn",
+    "validar_pentagono_logos",
+    "CodificadorADNRiemann",
 ]
 
 __version__ = "1.0.0"
