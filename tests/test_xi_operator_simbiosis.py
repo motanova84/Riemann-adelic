@@ -361,6 +361,70 @@ class TestLargeScale:
         assert len(zeros) > 10
 
 
+class TestXiSymmetry:
+    """Test Xi function symmetry Ξ(t) = Ξ(-t)."""
+    
+    def test_verify_xi_symmetry_method_exists(self):
+        """Test that verify_xi_symmetry method exists."""
+        xi_op = XiOperatorSimbiosis(n_dim=128, t_max=20.0)
+        
+        assert hasattr(xi_op, 'verify_xi_symmetry')
+    
+    def test_xi_symmetry_verification_returns_dict(self):
+        """Test xi symmetry verification returns correct structure."""
+        xi_op = XiOperatorSimbiosis(n_dim=128, t_max=20.0)
+        
+        result = xi_op.verify_xi_symmetry()
+        
+        assert isinstance(result, dict)
+        assert 'xi_symmetry_verified' in result
+        assert 'real_symmetry_error' in result
+        assert 'imag_antisymmetry_error' in result
+        assert 'psi' in result
+        assert 'connection_to_self_adjoint' in result
+    
+    def test_xi_symmetry_psi_in_range(self):
+        """Test coherence Ψ is in valid range [0, 1]."""
+        xi_op = XiOperatorSimbiosis(n_dim=128, t_max=20.0)
+        
+        result = xi_op.verify_xi_symmetry()
+        
+        assert 0.0 <= result['psi'] <= 1.0
+    
+    def test_xi_symmetry_errors_are_positive(self):
+        """Test symmetry errors are non-negative."""
+        xi_op = XiOperatorSimbiosis(n_dim=128, t_max=20.0)
+        
+        result = xi_op.verify_xi_symmetry()
+        
+        assert result['real_symmetry_error'] >= 0.0
+        assert result['imag_antisymmetry_error'] >= 0.0
+    
+    def test_xi_symmetry_central_value_exists(self):
+        """Test central value (at t=0) exists."""
+        xi_op = XiOperatorSimbiosis(n_dim=128, t_max=20.0)
+        
+        result = xi_op.verify_xi_symmetry()
+        
+        assert 'central_value' in result
+        assert np.isfinite(result['central_value'])
+    
+    def test_xi_symmetry_connection_self_adjoint(self):
+        """Test connection to self-adjoint property is boolean."""
+        xi_op = XiOperatorSimbiosis(n_dim=128, t_max=20.0)
+        
+        result = xi_op.verify_xi_symmetry()
+        
+        assert isinstance(result['connection_to_self_adjoint'], bool)
+    
+    def test_run_verification_includes_xi_symmetry(self):
+        """Test that full verification includes Xi symmetry."""
+        result = run_xi_spectral_verification(n_dim=128, t_max=20.0)
+        
+        assert 'xi_symmetry' in result
+        assert 'psi' in result['xi_symmetry']
+
+
 if __name__ == "__main__":
     # Run tests with pytest
     pytest.main([__file__, "-v", "--tb=short"])
