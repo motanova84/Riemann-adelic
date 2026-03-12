@@ -58,9 +58,23 @@ def pilar_i_operador_solenoide():
     # Phase flow in logarithmic coordinates
     phase_u = -np.gradient(psi_u, u) / (1j * psi_u + 1e-10)
     
-    # Compute self-adjointness metric (Hermiticity)
-    H_matrix = np.outer(psi_u, psi_u.conj())
-    hermiticity = np.linalg.norm(H_matrix - H_matrix.conj().T) / np.linalg.norm(H_matrix)
+    # Compute self-adjointness metric (Hermiticity) for H = -i d/du
+    # Discretize derivative operator with central differences and periodic BCs
+    n = u.size
+    du = np.mean(np.diff(u))
+    D = np.zeros((n, n), dtype=float)
+    # Interior points
+    for j in range(1, n - 1):
+        D[j, j + 1] = 1.0 / (2.0 * du)
+        D[j, j - 1] = -1.0 / (2.0 * du)
+    # Periodic boundaries
+    D[0, 1] = 1.0 / (2.0 * du)
+    D[0, n - 1] = -1.0 / (2.0 * du)
+    D[n - 1, 0] = 1.0 / (2.0 * du)
+    D[n - 1, n - 2] = -1.0 / (2.0 * du)
+    
+    H_op = -1j * D
+    hermiticity = np.linalg.norm(H_op - H_op.conj().T) / np.linalg.norm(H_op)
     
     psi_coherence = 1.0 - hermiticity
     
