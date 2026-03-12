@@ -9,6 +9,7 @@ Usage:
     python validate_tensor_fusion.py [--verbose]
 """
 
+import hashlib
 import json
 from pathlib import Path
 from datetime import datetime
