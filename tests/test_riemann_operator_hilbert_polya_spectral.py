@@ -408,8 +408,8 @@ class TestValidarEvidenciaBrutal:
         assert isinstance(corr, (float, np.floating))
     
     def test_validation_correlation_positive(self):
-        """Test that correlation tends to be positive."""
-        # With good parameters, correlation should be positive
+        """Test that correlation tends to be positive with good parameters."""
+        # With good parameters, correlation should be high
         corr = validar_evidencia_brutal(
             N_ceros=8,
             N_grid=512,
@@ -419,8 +419,9 @@ class TestValidarEvidenciaBrutal:
             epsilon=0.03
         )
         
-        # Should have at least some correlation with Riemann zeros
-        assert corr > 0.5  # Reasonable expectation
+        # Should have strong correlation with Riemann zeros
+        # Note: Use lower threshold for test stability, but typical values are > 0.95
+        assert corr > 0.85  # Reasonable expectation for this configuration
 
 
 class TestQCALIntegration:

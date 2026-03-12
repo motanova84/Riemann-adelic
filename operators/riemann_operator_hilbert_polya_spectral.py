@@ -53,8 +53,8 @@ import warnings
 
 try:
     import mpmath as mp
-    mp.mp.dps = 50  # Ultra-high precision
     HAS_MPMATH = True
+    # Note: mpmath precision is set per-function call to avoid global side effects
 except ImportError:
     HAS_MPMATH = False
     warnings.warn("mpmath not available. Using approximate zeros.")
@@ -139,8 +139,9 @@ def get_riemann_zeros(n_zeros: int) -> np.ndarray:
         Array of Riemann zeros (imaginary parts)
     """
     if HAS_MPMATH:
-        # Use mpmath for exact zeros
-        zeros = np.array([float(mp.zetazero(k).imag) for k in range(1, n_zeros + 1)])
+        # Use mpmath for exact zeros with local precision setting
+        with mp.workdps(50):  # Set precision locally to avoid global side effects
+            zeros = np.array([float(mp.zetazero(k).imag) for k in range(1, n_zeros + 1)])
     else:
         # Approximate zeros for testing without mpmath
         # These are the first few known zeros
@@ -159,9 +160,11 @@ def get_riemann_zeros(n_zeros: int) -> np.ndarray:
             zeros = np.array(known_zeros[:n_zeros])
         else:
             # Extend with approximate spacing for higher zeros
+            # Use Riemann-von Mangoldt formula: average spacing near nth zero ≈ 2π/ln(n)
             zeros = np.array(known_zeros)
-            mean_spacing = 2 * np.pi / np.log(len(known_zeros) + 10)
             for k in range(len(known_zeros), n_zeros):
+                # Approximate spacing for kth zero
+                mean_spacing = 2 * np.pi / np.log(k + 1)
                 zeros = np.append(zeros, zeros[-1] + mean_spacing)
     
     return zeros
@@ -285,13 +288,35 @@ class HilbertPolyaOperatorAdvanced:
         self.max_k = max_k
         self.epsilon_base = epsilon_base
         
-        # Generate primes
-        prime_limit = 1000  # Should be enough for first 40 primes
+        # Generate primes with dynamic limit calculation
+        # Use prime number theorem approximation: π(n) ≈ n/ln(n)
+        # So nth prime ≈ n * (ln(n) + ln(ln(n)))
+        if num_primes <= 0:
+            raise ValueError("num_primes must be positive")
+        
+        if num_primes > 1229:
+            raise ValueError(
+                f"num_primes={num_primes} exceeds reasonable limit. "
+                "Maximum supported: 1229 (primes below 10000)."
+            )
+        
+        # Calculate required prime limit
+        if num_primes < 10:
+            prime_limit = 30
+        elif num_primes < 100:
+            prime_limit = 600
+        else:
+            # Approximate nth prime
+            n = num_primes
+            prime_limit = int(n * (np.log(n) + np.log(np.log(n)) + 2)) + 100
+        
         all_primes = generate_primes_sieve(prime_limit)
+        
         if len(all_primes) < num_primes:
-            # Need more primes
-            prime_limit = 10000
-            all_primes = generate_primes_sieve(prime_limit)
+            raise ValueError(
+                f"Could not generate {num_primes} primes with limit {prime_limit}. "
+                f"Only found {len(all_primes)} primes."
+            )
         
         self.primes = all_primes[:num_primes]
         
@@ -460,23 +485,30 @@ class HilbertPolyaOperatorAdvanced:
     
     def fredholm_determinant_proxy(self, s: complex, n_evals: int = 10) -> complex:
         """
-        Compute proxy for Fredholm determinant: Σ log|s - λ_i|.
+        Compute spectral sum proxy: Σ log|s - λ_i|.
         
-        This approximates Re log ξ(s) for synchrony check with oscillatory behavior.
+        This provides a proxy for oscillatory synchrony with ξ(s).
+        Note: This is not exactly the Fredholm determinant but a spectral sum
+        that captures oscillatory behavior.
         
         Args:
             s: Complex point at which to evaluate
             n_evals: Number of eigenvalues to use
             
         Returns:
-            Approximate logarithmic determinant
+            Sum of log|s - λ_i| (spectral sum proxy)
         """
         evals = self.compute_eigenvalues(n_evals=n_evals)
         
-        # Compute sum of log|s - λ_i|
-        log_det = np.sum(np.log(np.abs(s - evals)))
+        # Compute sum of log|s - λ_i| with regularization for numerical stability
+        # Add small epsilon to prevent log(0) when s ≈ λ_i
+        epsilon_reg = 1e-10
+        differences = s - evals
         
-        return log_det
+        # Compute log|s - λ_i| with regularization
+        log_sum = np.sum(np.log(np.abs(differences) + epsilon_reg))
+        
+        return log_sum
 
 
 def validar_evidencia_brutal(
@@ -542,11 +574,11 @@ def validar_evidencia_brutal(
     else:
         print(f"⚠ SINCRO parcial: Correlación {corr:.4f}. Modelo sólido pero ajustar parámetros.")
     
-    # Compute Fredholm proxy at first zero
+    # Compute spectral sum proxy at first zero
     if len(zeros) > 0:
         s_test = complex(0.5, zeros[0])
-        logdet_approx = operator.fredholm_determinant_proxy(s_test, n_evals=min(10, N_ceros))
-        print(f"Proxy log|det(s - H)| (conceptual para sync con ξ) en s=0.5+i·γ₁: {round(logdet_approx.real, 4)}")
+        spectral_sum = operator.fredholm_determinant_proxy(s_test, n_evals=min(10, N_ceros))
+        print(f"Spectral sum Σ log|s-λ_i| (proxy para sync con ξ) en s=0.5+i·γ₁: {round(spectral_sum.real, 4)}")
     
     # Create result object
     result = SpectralValidationResult(
@@ -556,7 +588,7 @@ def validar_evidencia_brutal(
         max_zero=zeros[-1],
         psi=psi,
         is_synchronized=(corr > 0.96),
-        fredholm_proxy=logdet_approx if len(zeros) > 0 else 0.0,
+        fredholm_proxy=spectral_sum if len(zeros) > 0 else 0.0,
         timestamp=time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime()),
         computation_time_ms=computation_time,
         parameters={
