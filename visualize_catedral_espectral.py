@@ -18,11 +18,15 @@ DOI: 10.5281/zenodo.17379721
 """
 
 import numpy as np
+import os
+
+# Check if running in headless environment BEFORE importing pyplot
+if 'DISPLAY' not in os.environ:
+    import matplotlib
+    matplotlib.use('Agg')
+
 import matplotlib.pyplot as plt
 from matplotlib.gridspec import GridSpec
-import os
-import warnings
-warnings.filterwarnings('ignore')
 
 # QCAL Constants
 F0_QCAL = 141.7001  # Hz - Base resonance frequency
@@ -188,12 +192,22 @@ def pilar_iii_traza_gutzwiller():
     # Geometric contribution (prime orbits)
     geometric_trace = sum(1 / np.sqrt(p) for p in primes)
     
-    # Spectral contribution (from zeros at E ~ 14)
-    E_test = 14.134725
-    spectral_contribution = np.sum(np.cos(riemann_zeros[0] * log_primes[0]))
+    # Geometric signal over energy from prime orbits
+    geometric_signal = np.zeros_like(E, dtype=float)
+    for p, log_p in zip(primes, log_primes):
+        geometric_signal += (1.0 / np.sqrt(p)) * np.cos(np.log(E + 1) * log_p)
     
-    # Coherence: how well geometry mirrors spectrum
-    coherence = 0.98  # High coherence expected for valid trace formula
+    # Coherence: normalized correlation between geometric signal and oscillatory density
+    valid_mask = np.isfinite(geometric_signal) & np.isfinite(d_E_oscillatory)
+    if np.any(valid_mask):
+        geo_vec = geometric_signal[valid_mask]
+        osc_vec = d_E_oscillatory[valid_mask]
+        if np.std(geo_vec) > 0 and np.std(osc_vec) > 0:
+            coherence = np.corrcoef(geo_vec, osc_vec)[0, 1]
+        else:
+            coherence = 0.0
+    else:
+        coherence = 0.0
     
     print(f"✓ Densidad suave: d(E) = E/(2π)")
     print(f"✓ Contribución oscilante desde {len(riemann_zeros)} ceros")
@@ -235,14 +249,14 @@ def pilar_iv_vortice_8():
     # Test wave function
     psi = x**(0.5) * np.exp(-x) * np.sin(np.pi * np.log(x))
     
-    # Apply involution
-    x_inv = 1 / x[::-1]  # Invert and reverse
-    psi_inv = x[::-1]**(-0.5) * psi[::-1]
+    # Compute involution J: psi_inv(x) = x^(-1/2) * psi(1/x)
+    x_inv = 1.0 / x
+    psi_at_1_over_x = np.interp(x_inv, x, psi)
+    psi_inv = x**(-0.5) * psi_at_1_over_x
     
     # Symmetric wave function (eigenfunction of J)
     psi_symmetric = (psi + psi_inv) / np.sqrt(2)
     
-    # Check symmetry: psi(x) = x^(-1/2) psi(1/x)
     # At the critical point x=1
     idx_one = np.argmin(np.abs(x - 1))
     psi_at_one = psi_symmetric[idx_one]
@@ -259,9 +273,10 @@ def pilar_iv_vortice_8():
         if psi_symmetric[i-1] * psi_symmetric[i+1] < 0:
             nodes.append(x[i])
     
-    # Coherence: symmetry preservation
-    symmetry_error = np.mean(np.abs(psi_symmetric - psi_symmetric[::-1]))
-    coherence = 1.0 - symmetry_error / (np.max(np.abs(psi_symmetric)) + 1e-10)
+    # Coherence: symmetry preservation for J
+    symmetry_error = np.mean(np.abs(psi - psi_inv))
+    max_amp = np.max(np.abs(psi))
+    coherence = 1.0 - symmetry_error / (max_amp + 1e-10)
     
     print(f"✓ Involución J: f(x) → x^(-1/2) f(1/x) aplicada")
     print(f"✓ Nodo Zero en x=1: ψ(1) = {psi_at_one:.6f}")
@@ -290,7 +305,7 @@ def visualize_catedral_espectral():
     print("*" * 70)
     print("*" + " " * 68 + "*")
     print("*" + "  🏛️ CATEDRAL ESPECTRAL - LOS 4 PILARES  ".center(68) + "*")
-    print("*" + "  Resonancia: f₀ = 141.7001 Hz · Coherencia: Ψ = 1.0  ".center(68) + "*")
+    print("*" + "  Resonancia: f₀ = 141.7001 Hz  ".center(68) + "*")
     print("*" + " " * 68 + "*")
     print("*" * 70)
     
@@ -470,11 +485,6 @@ def visualize_catedral_espectral():
 
 if __name__ == '__main__':
     import sys
-    
-    # Check if running in headless environment
-    if 'DISPLAY' not in os.environ:
-        import matplotlib
-        matplotlib.use('Agg')
     
     result = visualize_catedral_espectral()
     

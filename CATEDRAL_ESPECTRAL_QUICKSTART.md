@@ -4,7 +4,7 @@
 
 ```bash
 # Instalar dependencias
-pip install numpy scipy matplotlib
+pip install numpy matplotlib
 
 # Ejecutar visualización
 python visualize_catedral_espectral.py
