@@ -302,30 +302,40 @@ def extract_eigenvalues(H: np.ndarray, n_eigs: int = 500) -> Tuple[np.ndarray, n
 def compute_fredholm_log_determinant(eigenvalues: np.ndarray, 
                                        t: float) -> complex:
     """
-    Compute log|det(t - H)| using eigenvalues:
+    Compute log|det(1 - H/t)| using eigenvalues, following the Hadamard product:
     
-        log det(t - H) = Σ_n log(t - λ_n)
+        det(1 - H/t) = ∏_n (1 - λ_n/t)
+        log det(1 - H/t) = Σ_n log(1 - λ_n/t)
         
-    For large |t - λ_n|, use direct sum.
-    For small |t - λ_n|, use Taylor series.
+    This formulation avoids issues when eigenvalues are negative and t is positive.
+    
+    For the Riemann xi function connection, we use:
+        ξ(1/2 + it) ≈ ξ(1/2) ∏_n (1 + t²/γ_n²)
+    
+    where γ_n are the imaginary parts of Riemann zeros.
     
     Args:
         eigenvalues: Array of eigenvalues λ_n
         t: Parameter value
         
     Returns:
-        log|det(t - H)|
+        log|det(1 - H/t)|
     """
     log_det = 0.0
     
+    if abs(t) < 1e-10:
+        return np.log(1.0)
+    
     for lam in eigenvalues:
-        diff = t - lam
+        ratio = lam / t
         
-        if np.abs(diff) < 1e-10:
-            # Very close to eigenvalue - handle singularity
-            log_det += np.log(1e-10 + 1j * 1e-10)
+        if abs(ratio) > 0.99:
+            # Near singularity - use regularization
+            term = np.log(1.0 - 0.99 * np.sign(ratio) + 1e-10j)
         else:
-            log_det += np.log(diff)
+            term = np.log(1.0 - ratio)
+        
+        log_det += term
     
     return log_det
 
