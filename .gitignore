@@ -303,3 +303,5 @@ VICTORIA_FINAL.md
 # Keep learning history (persistent knowledge)
 !.auron_learning.json
 outputs/
+# Demo-generated visualizations
+resonancia_riemann_gue*.png
