@@ -471,9 +471,11 @@ class Vortex8Operator:
         qcal_factor = BASE_AMPLIFICATION
         
         if self.include_qcal_modulation:
-            # Modulate potential depth by QCAL coherence constant
-            # This connects the operator to the universal frequency framework
-            qcal_factor *= C_COHERENCE_QCAL / 244.36  # Normalized to reference value
+            # Modulate potential depth by QCAL frequency ratio.
+            # f₀ enters via angular momentum quantization; the ratio
+            # f₀/C_PRIMARY = 141.7001/629.83 ≈ 0.225 gives a ~22.5 %
+            # enhancement (factor ≈ 1.225) of the prime potential.
+            qcal_factor *= (1.0 + F0_QCAL / C_PRIMARY_QCAL)
         
         # Add oscillatory contributions that encode zero locations
         # Use a more sophisticated construction that creates resonances at zeros
@@ -786,8 +788,10 @@ def verify_vortex8_operator(
             print(f"  Expected: {abs(expected_trace):.6f}")
             print(f"  Residual: {trace_residual:.2e}")
         
-        # Overall success criterion (using module-level constants)
-        success = (
+        # Overall success criterion (using module-level constants).
+        # Wrap in bool() to guarantee a Python bool, not a numpy bool,
+        # so that callers can safely use ``result.success is True``.
+        success = bool(
             self_adjoint_error < SUCCESS_SELF_ADJOINT_TOL and
             comparison['correlation'] > SUCCESS_CORRELATION_MIN and
             comparison['mean_error'] < SUCCESS_MEAN_ERROR_MAX and
