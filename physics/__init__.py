@@ -9,6 +9,7 @@ la interpretación espectral de la hipótesis de Riemann.
  --------
  - control_primitiva_vosc: Prueba de autoadjunción esencial del hamiltoniano de Riemann
  - operador_h_solenoide: Realización de Hilbert-Pólya sobre una malla logarítmica
+ - modulo_141hz_holografico: Marco holográfico AdS/CFT — f₀ = γ₁ × 10.025 Hz
 
 Autor: José Manuel Mota Burruezo Ψ ✧ ∞³
 QCAL ∞³ · 141.7001 Hz · C = 244.36
@@ -45,6 +46,16 @@ from .sistema_dinamico_z import (
     SistemaDinamicoZCompleto
 )
 
+from .modulo_141hz_holografico import (
+    ConstantesHolograficas,
+    EntropiaHolograficaZeta,
+    EspectroZetaPolar,
+    SimulacionMoonbounce,
+    DualidadAdsCft,
+    SistemaHolografico141Hz,
+    modulo_141hz_activar,
+)
+
 __all__ = [
     'PrimitivaPotencialOscilatorio',
     'EstimacionCuadraticaMedia',
@@ -68,5 +79,12 @@ __all__ = [
     'FiltroRacionalesAdelico',
     'IdentidadDeterminanteHadamard',
     'SistemaDinamicoZ',
-    'SistemaDinamicoZCompleto'
+    'SistemaDinamicoZCompleto',
+    'ConstantesHolograficas',
+    'EntropiaHolograficaZeta',
+    'EspectroZetaPolar',
+    'SimulacionMoonbounce',
+    'DualidadAdsCft',
+    'SistemaHolografico141Hz',
+    'modulo_141hz_activar',
 ]
