@@ -281,9 +281,11 @@ class XiIntegralKernelOperator:
         Compute Φ(u) kernel function.
         
         Mathematical formula:
-            Φ(u) = Σ_{n=1}^N (2π²n⁴e^{4u} - 3πn²e^{2u}) e^{-πn²e^{2u}}
+            Φ(u) = Σ_{n=1}^N (2π²n⁴e^{4|u|} - 3πn²e^{2|u|}) e^{-πn²e^{2|u|}}
         
-        This should be real and even: Φ(u) = Φ(-u).
+        The classical formula is defined for u ≥ 0 and extended to an even
+        function on ℝ via Φ(-u) = Φ(u). Using |u| in the exponentials
+        enforces this symmetry: Φ(u) = Φ(-u).
         
         Returns:
             PhiFunctionResult with Φ(u) values and verification
@@ -297,10 +299,14 @@ class XiIntegralKernelOperator:
             n4 = n2 * n2
             
             for i, u in enumerate(self.u_grid):
-                e2u = np.exp(2 * u)
+                # Use |u| to enforce the evenness property Φ(u) = Φ(-u).
+                # The classical formula is defined for u ≥ 0 and extended to ℝ
+                # as an even function.
+                abs_u = np.abs(u)
+                e2u = np.exp(2 * abs_u)
                 e4u = e2u * e2u
                 
-                # Avoid overflow for large u
+                # Avoid overflow for large |u|
                 exp_arg = -np.pi * n2 * e2u
                 if exp_arg < -100:
                     continue
@@ -484,6 +490,15 @@ class XiIntegralKernelOperator:
         # Compute eigendecomposition
         # Since H should be Hermitian, all eigenvalues should be real
         eigenvalues, eigenvectors = eigh(H)
+        
+        # Re-normalize eigenvectors with respect to the L²(du) measure.
+        # eigh returns ℓ²-normalized vectors (Σ|vᵢ|²=1); the tests and the
+        # physics require L²-normalization: √(Σ|vᵢ|² · du) = 1.
+        for k in range(eigenvectors.shape[1]):
+            vec = eigenvectors[:, k]
+            l2_norm = np.sqrt(np.sum(np.abs(vec)**2) * self.du)
+            if l2_norm > 1e-10:
+                eigenvectors[:, k] = vec / l2_norm
         
         # Check if eigenvalues are real
         imaginary_parts = np.imag(eigenvalues)
