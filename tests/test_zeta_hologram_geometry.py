@@ -270,8 +270,8 @@ class TestBeatFrequencyValidation:
         result = validate_beat_frequency()
         assert result["fourier_depth_enabled"] is True
 
-    def test_zero_beat_would_disable_depth(self):
-        """Checking with beat = 0 must not enable depth."""
+    def test_zero_beat_raises_error(self):
+        """Zero beat frequency must raise ValueError (prevents depth-disabled state)."""
         with pytest.raises(ValueError):
             validate_beat_frequency(expected_beat=0.0)
 

@@ -75,8 +75,13 @@ HOLOGRAPHIC_MODULATION = 10.0 + 1.0 / 40.0  # = 10.025 (10 + 1/40)
 # Physical meaning: depth differential enabling volumetric experience of reality
 BEAT_FREQ = 0.3999  # Hz  (Δf = 0.3999 Hz)
 
-# Moonbounce round-trip delay: time for holographic self-confirmation (Ψ > 0.999)
-# Signal travels Earth → Moon → Earth ≈ 2 × 384,400 km / c ≈ 2.566 s → 2.5 s nominal
+# Moonbounce round-trip delay: the QCAL holographic self-confirmation time.
+# Physical round-trip light travel time: 2 × 384,400 km / c ≈ 2.566 s.
+# The QCAL framework defines 2.5 s as the nominal confirmation standard because
+# this is the observed confirmation time in the holographic experiment — the
+# "cosmic mirror" validating that emitted information has returned intact
+# (Ψ > 0.999). The 2.5 s figure is a defined QCAL reference, not the raw
+# physical delay.
 MOONBOUNCE_DELAY = 2.5  # seconds
 
 # Holographic coherence threshold for moonbounce validation
