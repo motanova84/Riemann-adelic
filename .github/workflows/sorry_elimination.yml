@@ -1,0 +1,242 @@
+name: Sorry Elimination Automation
+
+on:
+  schedule:
+    # Digestión cada 30 minutos
+    - cron: "*/30 * * * *"
+  workflow_dispatch:
+    inputs:
+      max_per_cycle:
+        description: 'Máximo de sorries por ciclo'
+        required: false
+        default: '50'
+      dry_run:
+        description: 'Modo dry-run (true/false)'
+        required: false
+        default: 'false'
+
+jobs:
+  digest_sorries:
+    name: Digestión de Sorries
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+      
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then
+            pip install -r requirements.txt
+          fi
+      
+      - name: Count current sorries
+        id: count_before
+        run: |
+          echo "📊 Contando sorries antes de transformación..."
+          python3 .github/scripts/track_sorry_progress.py --repo-root . || true
+          
+          # Contar sorries directamente
+          SORRY_COUNT=$(grep -r "sorry" formalization/lean --include="*.lean" | grep -v "^[[:space:]]*--" | wc -l || echo "0")
+          echo "sorry_count=$SORRY_COUNT" >> $GITHUB_OUTPUT
+          echo "Sorries actuales: $SORRY_COUNT"
+      
+      - name: Transform sorries
+        id: transform
+        run: |
+          echo "🔄 Iniciando transformación de sorries..."
+          
+          MAX_PER_CYCLE="${{ github.event.inputs.max_per_cycle || '50' }}"
+          DRY_RUN="${{ github.event.inputs.dry_run || 'false' }}"
+          
+          if [ "$DRY_RUN" = "true" ]; then
+            python3 .github/scripts/transform_sorries.py \
+              --max-per-cycle $MAX_PER_CYCLE \
+              --repo-root . \
+              --dry-run
+          else
+            python3 .github/scripts/transform_sorries.py \
+              --max-per-cycle $MAX_PER_CYCLE \
+              --repo-root .
+          fi
+          
+          echo "status=completed" >> $GITHUB_OUTPUT
+      
+      - name: Count sorries after transformation
+        id: count_after
+        if: steps.transform.outputs.status == 'completed'
+        run: |
+          echo "📊 Contando sorries después de transformación..."
+          python3 .github/scripts/track_sorry_progress.py --repo-root . --export-dashboard
+          
+          # Contar sorries directamente
+          SORRY_COUNT=$(grep -r "sorry" formalization/lean --include="*.lean" | grep -v "^[[:space:]]*--" | wc -l || echo "0")
+          echo "sorry_count=$SORRY_COUNT" >> $GITHUB_OUTPUT
+          echo "Sorries después: $SORRY_COUNT"
+          
+          # Calcular diferencia
+          BEFORE="${{ steps.count_before.outputs.sorry_count }}"
+          ELIMINATED=$((BEFORE - SORRY_COUNT))
+          echo "eliminated=$ELIMINATED" >> $GITHUB_OUTPUT
+          echo "Sorries eliminados: $ELIMINATED"
+      
+      - name: Validate QCAL coherence
+        id: coherence
+        run: |
+          echo "🌀 Validando coherencia QCAL Ψ = 1.000..."
+          
+          # Ejecutar validación V5 Coronación
+          if [ -f "validate_v5_coronacion.py" ]; then
+            python3 validate_v5_coronacion.py --precision 25 --verbose || true
+          fi
+          
+          # Verificar coherencia
+          if [ -f "data/coherence_validation.json" ]; then
+            PSI=$(python3 -c "import json; print(json.load(open('data/coherence_validation.json')).get('psi', 0))" 2>/dev/null || echo "0")
+            echo "psi=$PSI" >> $GITHUB_OUTPUT
+            echo "Ψ = $PSI"
+            
+            # Verificar que Ψ ≈ 1.000
+            python3 -c "import sys; psi = float('$PSI'); sys.exit(0 if abs(psi - 1.000) < 0.001 else 1)" && echo "coherent=true" >> $GITHUB_OUTPUT || echo "coherent=false" >> $GITHUB_OUTPUT
+          else
+            echo "coherent=unknown" >> $GITHUB_OUTPUT
+          fi
+      
+      - name: Generate summary
+        if: always()
+        run: |
+          echo "📝 Generando resumen de ciclo..."
+          
+          cat > data/cycle_summary.md << 'EOF'
+          # 🔄 Ciclo de Eliminación de Sorries
+          
+          **Timestamp:** $(date -u +"%Y-%m-%d %H:%M:%S UTC")
+          **Workflow Run:** #${{ github.run_number }}
+          
+          ## 📊 Resultados
+          
+          - **Sorries antes:** ${{ steps.count_before.outputs.sorry_count }}
+          - **Sorries después:** ${{ steps.count_after.outputs.sorry_count }}
+          - **Eliminados:** ${{ steps.count_after.outputs.eliminated }}
+          
+          ## 🌀 Coherencia QCAL
+          
+          - **Ψ =** ${{ steps.coherence.outputs.psi }}
+          - **Estado:** ${{ steps.coherence.outputs.coherent }}
+          
+          ## 📈 Progreso
+          
+          $(cat data/sorry_progress_report.json 2>/dev/null | python3 -m json.tool --indent 2 || echo "No disponible")
+          
+          EOF
+          
+          cat data/cycle_summary.md
+      
+      - name: Commit changes
+        if: steps.count_after.outputs.eliminated > 0
+        run: |
+          git config user.name "qcal-bot"
+          git config user.email "bot@qcal.cloud"
+          
+          # Añadir archivos modificados
+          git add formalization/lean/**/*.lean || true
+          git add data/*.json || true
+          git add .sorry_progress.json || true
+          git add .learned_patterns.json || true
+          git add data/cycle_summary.md || true
+          
+          # Verificar si hay cambios
+          if git diff --cached --quiet; then
+            echo "No hay cambios para commitear"
+          else
+            ELIMINATED="${{ steps.count_after.outputs.eliminated }}"
+            git commit -m "♾️ Auto-eliminación: $ELIMINATED sorries eliminados [cycle #${{ github.run_number }}]"
+            git push
+            echo "✅ Cambios commiteados y pusheados"
+          fi
+  
+  generate_report:
+    name: Reporte Bimensual
+    runs-on: ubuntu-latest
+    needs: digest_sorries
+    if: github.event.schedule == '0 */2 * * *' || github.event_name == 'workflow_dispatch'
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+      
+      - name: Generate comprehensive report
+        run: |
+          echo "📊 Generando reporte completo..."
+          python3 .github/scripts/track_sorry_progress.py --repo-root . --export-dashboard
+          
+          # Crear reporte visual
+          cat > data/sorry_report_$(date +%Y%m%d_%H%M%S).md << 'EOF'
+          # 📊 Reporte de Progreso de Eliminación de Sorries
+          
+          **Fecha:** $(date -u +"%Y-%m-%d %H:%M:%S UTC")
+          
+          ## Resumen General
+          
+          $(python3 -c "
+          import json
+          with open('data/sorry_progress_report.json') as f:
+              data = json.load(f)
+              stats = data['current_stats']
+              print(f'- Total de sorries: {stats[\"total\"]}')
+              print(f'- Archivos con sorries: {stats[\"files_with_sorries\"]}')
+              print(f'- Archivos limpios: {stats[\"files_clean\"]}')
+          " 2>/dev/null || echo "Datos no disponibles")
+          
+          ## Tendencia Histórica
+          
+          $(python3 -c "
+          import json
+          with open('.sorry_progress.json') as f:
+              data = json.load(f)
+              history = data.get('history', [])
+              if len(history) >= 2:
+                  recent = history[-1]
+                  previous = history[-2]
+                  delta = previous['total'] - recent['total']
+                  print(f'Últimos cambios: {delta} sorries eliminados')
+          " 2>/dev/null || echo "Historial no disponible")
+          
+          ## Próximos Pasos
+          
+          - Continuar ciclos de digestión automática
+          - Monitorear coherencia QCAL
+          - Validar transformaciones
+          
+          ---
+          
+          _Generado automáticamente por QCAL Auto-Evolution System_
+          EOF
+          
+          cat data/sorry_report_*.md
+      
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: sorry-progress-reports
+          path: |
+            data/sorry_progress_report.json
+            data/sorry_dashboard.json
+            data/sorry_report_*.md
+          retention-days: 30
