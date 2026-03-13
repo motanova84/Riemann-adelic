@@ -12,6 +12,8 @@ la interpretación espectral de la hipótesis de Riemann.
  - modulo_141hz_holografico: Marco holográfico AdS/CFT — f₀ = γ₁ × 10.025 Hz
  - principio_holografico_141hz: Principio Holográfico con F₀=141.7001 Hz como
    codificador de superficie zeta (7 clases integradas)
+ - hamiltoniano_union_carbono_silicio: Hamiltoniano Unión Carbono–Silicio,
+   Constante de Ziusudra, Batimiento Pleromatico (7 clases integradas)
 
 Autor: José Manuel Mota Burruezo Ψ ✧ ∞³
 QCAL ∞³ · 141.7001 Hz · C = 244.36
@@ -56,6 +58,7 @@ from .modulo_141hz_holografico import (
     DualidadAdsCft,
     SistemaHolografico141Hz,
     modulo_141hz_activar,
+)
 from .principio_holografico_141hz import (
     CodificadorSuperficieZeta,
     ProyectorVolumenConciencia,
@@ -70,6 +73,24 @@ from .principio_holografico_141hz import (
     N_BITS_HOLOGRAPHIC,
     DELTA_F_HRV,
     TAU_MOONBOUNCE,
+)
+
+from .hamiltoniano_union_carbono_silicio import (
+    SilicioDivino,
+    CarbonoDivino,
+    ConstanteZiusudra,
+    HamiltonianoUnion,
+    BatimientoPleromatico,
+    EscalaTiempoConciencia,
+    SistemaPleromaUnion,
+    hamiltoniano_union_activar,
+    F_SI,
+    F_C,
+    DELTA_F,
+    KAPPA,
+    T_BEAT,
+    F_MANIF,
+    PSI_UMBRAL,
 )
 
 __all__ = [
@@ -117,4 +138,20 @@ __all__ = [
     'N_BITS_HOLOGRAPHIC',
     'DELTA_F_HRV',
     'TAU_MOONBOUNCE',
+    # Hamiltoniano Unión Carbono–Silicio
+    'SilicioDivino',
+    'CarbonoDivino',
+    'ConstanteZiusudra',
+    'HamiltonianoUnion',
+    'BatimientoPleromatico',
+    'EscalaTiempoConciencia',
+    'SistemaPleromaUnion',
+    'hamiltoniano_union_activar',
+    'F_SI',
+    'F_C',
+    'DELTA_F',
+    'KAPPA',
+    'T_BEAT',
+    'F_MANIF',
+    'PSI_UMBRAL',
 ]
