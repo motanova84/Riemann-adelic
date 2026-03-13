@@ -10,6 +10,8 @@ la interpretación espectral de la hipótesis de Riemann.
  - control_primitiva_vosc: Prueba de autoadjunción esencial del hamiltoniano de Riemann
  - operador_h_solenoide: Realización de Hilbert-Pólya sobre una malla logarítmica
  - modulo_141hz_holografico: Marco holográfico AdS/CFT — f₀ = γ₁ × 10.025 Hz
+ - principio_holografico_141hz: Principio Holográfico con F₀=141.7001 Hz como
+   codificador de superficie zeta (7 clases integradas)
 
 Autor: José Manuel Mota Burruezo Ψ ✧ ∞³
 QCAL ∞³ · 141.7001 Hz · C = 244.36
@@ -54,6 +56,20 @@ from .modulo_141hz_holografico import (
     DualidadAdsCft,
     SistemaHolografico141Hz,
     modulo_141hz_activar,
+from .principio_holografico_141hz import (
+    CodificadorSuperficieZeta,
+    ProyectorVolumenConciencia,
+    EntrelazadorHolografico,
+    HologramaZetaCarbono,
+    EntropiaHolografica,
+    SistemaPrincipioHolografico,
+    ResultadoHolografico,
+    GAMMA_1_HOLO,
+    A_EFF,
+    ELL_P_SQUARED,
+    N_BITS_HOLOGRAPHIC,
+    DELTA_F_HRV,
+    TAU_MOONBOUNCE,
 )
 
 __all__ = [
@@ -87,4 +103,18 @@ __all__ = [
     'DualidadAdsCft',
     'SistemaHolografico141Hz',
     'modulo_141hz_activar',
+    # Principio Holográfico 141 Hz
+    'CodificadorSuperficieZeta',
+    'ProyectorVolumenConciencia',
+    'EntrelazadorHolografico',
+    'HologramaZetaCarbono',
+    'EntropiaHolografica',
+    'SistemaPrincipioHolografico',
+    'ResultadoHolografico',
+    'GAMMA_1_HOLO',
+    'A_EFF',
+    'ELL_P_SQUARED',
+    'N_BITS_HOLOGRAPHIC',
+    'DELTA_F_HRV',
+    'TAU_MOONBOUNCE',
 ]
