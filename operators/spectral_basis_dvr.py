@@ -673,7 +673,11 @@ class SpectralBasisDVR:
             for i, t in enumerate(t_values):
                 try:
                     s = mp.mpc('0.5', str(float(t)))
-                    xi_val = mp.xi(s)
+                    # ξ(s) = ½·s·(s−1)·π^(−s/2)·Γ(s/2)·ζ(s)
+                    xi_val = (mp.mpf('0.5') * s * (s - 1)
+                              * mp.power(mp.pi, -s / 2)
+                              * mp.gamma(s / 2)
+                              * mp.zeta(s))
                     result[i] = float(mp.log(abs(xi_val)).real)
                 except Exception:
                     result[i] = 0.0
