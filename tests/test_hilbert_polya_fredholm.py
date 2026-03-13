@@ -26,8 +26,19 @@ from operators.hilbert_polya_fredholm import (
     HilbertPolyaFredholmOperator,
     generate_primes,
     F0_QCAL,
-    C_COHERENCE
+    C_COHERENCE,
+    HilbertPolyaFredholmResult,
 )
+
+# ---------------------------------------------------------------------------
+# Tolerances used across the test suite
+# ---------------------------------------------------------------------------
+# Tolerance for checking that eigenvalues are real (imaginary parts vanish)
+EIGENVALUE_REAL_TOL = 1e-6
+# Tolerance for checking Re(s_n) = 1/2 exactly (constructed by definition)
+CRITICAL_LINE_TOL = 1e-10
+# Minimum imaginary-part amplitude that counts as non-trivial oscillation
+OSCILLATION_THRESHOLD = 1e-6
 
 
 class TestPrimeGeneration:
@@ -523,6 +534,152 @@ class TestEdgeCases:
         )
         result = operator.validate_operator()
         assert result.psi > 0.5
+
+
+class TestPotentialEvenSymmetry:
+    """Test that the arithmetic potential has the required even symmetry V(-u) = V(u)."""
+
+    def test_potential_even_symmetry(self):
+        """Arithmetic potential must satisfy V(-u) = V(u) for even parity."""
+        operator = HilbertPolyaFredholmOperator(
+            u_max=8.0,
+            n_points=101,
+            n_primes=20,
+            max_power=2
+        )
+        assert operator.check_potential_even_symmetry()
+
+    def test_potential_even_symmetry_small(self):
+        """Potential symmetry holds for small domains too."""
+        operator = HilbertPolyaFredholmOperator(
+            u_max=3.0,
+            n_points=51,
+            n_primes=5,
+            max_power=1
+        )
+        assert operator.check_potential_even_symmetry()
+
+    def test_validate_operator_has_even_parity_flag(self):
+        """validate_operator reports even_parity_preserved based on potential symmetry."""
+        operator = HilbertPolyaFredholmOperator(
+            u_max=5.0,
+            n_points=51,
+            n_primes=10,
+            max_power=2
+        )
+        result = operator.validate_operator(hermitize=True)
+        assert result.even_parity_preserved is True
+
+
+class TestTraceFormula:
+    """Tests for Part III: Tr(e^{-itH}) = Σ_n e^{-iE_n t} (Riemann-Weil connection)."""
+
+    @pytest.fixture
+    def operator(self):
+        """Small operator for trace formula tests."""
+        return HilbertPolyaFredholmOperator(
+            u_max=5.0,
+            n_points=51,
+            n_primes=10,
+            max_power=2
+        )
+
+    def test_trace_formula_returns_array(self, operator):
+        """compute_trace_formula returns a complex array."""
+        t_values = np.linspace(0.0, 10.0, 50)
+        trace = operator.compute_trace_formula(t_values)
+        assert trace.shape == (50,)
+        assert np.iscomplexobj(trace)
+
+    def test_trace_formula_at_t0_equals_n(self, operator):
+        """Tr(e^{0}) = N (number of eigenvalues = dimension of space)."""
+        trace = operator.compute_trace_formula(np.array([0.0]))
+        n_eigenvalues = operator.n_points
+        assert abs(trace[0].real - n_eigenvalues) < EIGENVALUE_REAL_TOL
+
+    def test_trace_formula_with_precomputed_eigenvalues(self, operator):
+        """compute_trace_formula accepts precomputed eigenvalues."""
+        eigenvalues, _ = operator.compute_spectrum(hermitize=True)
+        t_values = np.linspace(0.0, 5.0, 20)
+        trace = operator.compute_trace_formula(t_values, eigenvalues=eigenvalues)
+        assert trace.shape == (20,)
+
+    def test_trace_formula_bounded(self, operator):
+        """Trace magnitude is bounded by number of eigenvalues (triangle inequality)."""
+        eigenvalues, _ = operator.compute_spectrum(hermitize=True)
+        t_values = np.linspace(0.0, 100.0, 200)
+        trace = operator.compute_trace_formula(t_values, eigenvalues=eigenvalues)
+        n = len(eigenvalues)
+        # |Tr(e^{-itH})| ≤ N for all t; allow a small numerical tolerance
+        assert np.all(np.abs(trace) <= n + EIGENVALUE_REAL_TOL)
+
+    def test_trace_formula_oscillatory(self, operator):
+        """Trace formula produces oscillatory behaviour for t > 0."""
+        eigenvalues, _ = operator.compute_spectrum(hermitize=True)
+        t_values = np.linspace(0.1, 10.0, 100)
+        trace = operator.compute_trace_formula(t_values, eigenvalues=eigenvalues)
+        # The imaginary part should be non-trivial (non-zero) for distinct eigenvalues
+        assert np.max(np.abs(np.imag(trace))) > OSCILLATION_THRESHOLD
+
+
+class TestCriticalLineVerification:
+    """Tests for the RH conclusion: t_n ∈ ℝ → s_n = 1/2 + it_n on Re(s) = 1/2."""
+
+    @pytest.fixture
+    def operator(self):
+        return HilbertPolyaFredholmOperator(
+            u_max=5.0,
+            n_points=51,
+            n_primes=10,
+            max_power=2
+        )
+
+    def test_verify_critical_line_returns_tuple(self, operator):
+        """verify_critical_line returns (bool, array, float)."""
+        result = operator.verify_critical_line()
+        assert isinstance(result, tuple)
+        assert len(result) == 3
+        verified, zeros_s, max_imag = result
+        assert isinstance(verified, bool)
+        assert zeros_s.dtype == np.complex128 or np.iscomplexobj(zeros_s)
+        assert isinstance(max_imag, float)
+
+    def test_zeros_on_critical_line(self, operator):
+        """All zeros s_n = 1/2 + it_n have Re(s_n) = 1/2."""
+        _, zeros_s, _ = operator.verify_critical_line()
+        real_parts = np.real(zeros_s)
+        np.testing.assert_allclose(real_parts, 0.5, atol=CRITICAL_LINE_TOL)
+
+    def test_zeros_count_matches_eigenvalues(self, operator):
+        """Number of zeros equals number of eigenvalues."""
+        eigenvalues, _ = operator.compute_spectrum(hermitize=True)
+        _, zeros_s, _ = operator.verify_critical_line(eigenvalues=eigenvalues)
+        assert len(zeros_s) == len(eigenvalues)
+
+    def test_critical_line_verified_flag(self, operator):
+        """verify_critical_line reports True for a hermitised operator."""
+        verified, _, _ = operator.verify_critical_line()
+        assert verified is True
+
+    def test_zeros_imaginary_parts_match_eigenvalues(self, operator):
+        """Im(s_n) = E_n (the eigenvalue)."""
+        eigenvalues, _ = operator.compute_spectrum(hermitize=True)
+        _, zeros_s, _ = operator.verify_critical_line(eigenvalues=eigenvalues)
+        np.testing.assert_allclose(
+            np.imag(zeros_s),
+            np.real(eigenvalues),
+            atol=CRITICAL_LINE_TOL
+        )
+
+    def test_validate_result_has_critical_line_fields(self, operator):
+        """validate_operator result includes critical_line_verified and n_zeros."""
+        result = operator.validate_operator(hermitize=True)
+        assert hasattr(result, 'critical_line_verified')
+        assert hasattr(result, 'n_zeros_on_critical_line')
+        assert hasattr(result, 'eigenvalues_imaginary_error')
+        assert result.critical_line_verified is True
+        assert result.n_zeros_on_critical_line == operator.n_points
+        assert result.eigenvalues_imaginary_error < EIGENVALUE_REAL_TOL
 
 
 if __name__ == "__main__":
