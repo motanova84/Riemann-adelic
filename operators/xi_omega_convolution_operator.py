@@ -83,7 +83,7 @@ Estado: ✅ IMPLEMENTACIÓN DEFINITIVA XI-OMEGA
 
 Author: José Manuel Mota Burruezo Ψ ✧ ∞³
 Institution: Instituto de Conciencia Cuántica (ICQ)
-Date: March 2026
+Date: 2026-03-13
 QCAL ∞³ Active · 141.7001 Hz · f₀ = 141.7001 Hz · Ψ = I × A_eff² × C^∞
 DOI: 10.5281/zenodo.17379721
 ORCID: 0009-0002-1923-0773
@@ -98,7 +98,7 @@ from dataclasses import dataclass, field
 from typing import Dict, List, Optional, Tuple
 import time
 
-warnings.filterwarnings('ignore')
+warnings.filterwarnings('ignore', category=RuntimeWarning)
 
 # Try to import QCAL constants from single source of truth
 try:
@@ -881,7 +881,7 @@ class XiOmegaConvolutionOperator:
                 z = mp.zetazero(k)
                 zeros_mp.append(float(mp.im(z)))
             return np.array(zeros_mp[:n])
-        except Exception:
+        except (ImportError, AttributeError, ValueError, ArithmeticError):
             pass
 
         n_use = min(n, len(zeros_table))
