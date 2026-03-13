@@ -1,0 +1,60 @@
+{
+  "timestamp": "2026-02-13T23:15:43.191745",
+  "camino_a": {
+    "success": true,
+    "details": {
+      "kernel_defined": true,
+      "poisson_sum": true,
+      "weyl_term": true,
+      "orbit_term": true,
+      "remainder_bounded": true
+    }
+  },
+  "camino_b": {
+    "success": true,
+    "details": {
+      "basis_invariance": true,
+      "spectral_collapse": true,
+      "rigidity_law": true,
+      "discretization_immunity": true,
+      "topological_invariance": true
+    }
+  },
+  "camino_c": {
+    "success": true,
+    "details": {
+      "v13_executed": true,
+      "kappa_inf": 2.5800409098522055,
+      "error_percent": 0.1059596964356346,
+      "alpha": 0.755979842707436,
+      "within_threshold": 1,
+      "alpha_valid": 1,
+      "pt_transition": true
+    }
+  },
+  "kernel_duro": {
+    "success": true,
+    "details": {
+      "espacio_fase": {
+        "adelic_torus": true,
+        "closed_orbits": true,
+        "prime_ideals": true
+      },
+      "cuantizacion": {
+        "operator_defined": true,
+        "self_adjoint": true,
+        "real_spectrum": true
+      },
+      "traza": {
+        "gutzwiller_trace": true,
+        "factor_1_over_k": true,
+        "weil_connection": true
+      },
+      "constante_kappa": {
+        "compactness_forced": true,
+        "kappa_anchored": true
+      }
+    }
+  },
+  "overall_status": true
+}
