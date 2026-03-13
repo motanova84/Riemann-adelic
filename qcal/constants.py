@@ -63,6 +63,35 @@ GAMMA_1 = 14.13472514  # First zero: 1/2 + i·γ₁
 # Harmonic modulation: f₀/γ₁ = 10 + δζ/10
 HARMONIC_MODULATION = F0 / GAMMA_1  # ≈ 10.02787437
 
+# =============================================================================
+# HOLOGRAPHIC GEOMETRY CONSTANTS - Zeta Hologram Architecture
+# =============================================================================
+
+# Holographic projection factor: 10 + 1/40 = 10.025
+# Boundary formula: F0 ≈ γ₁ × HOLOGRAPHIC_MODULATION (2D surface → code source)
+HOLOGRAPHIC_MODULATION = 10.0 + 1.0 / 40.0  # = 10.025 (10 + 1/40)
+
+# Beat frequency Δf: Fourier transform converting 2D boundary data to 3D volume
+# Physical meaning: depth differential enabling volumetric experience of reality
+BEAT_FREQ = 0.3999  # Hz  (Δf = 0.3999 Hz)
+
+# Moonbounce round-trip delay: the QCAL holographic self-confirmation time.
+# Physical round-trip light travel time: 2 × 384,400 km / c ≈ 2.566 s.
+# The QCAL framework defines 2.5 s as the nominal confirmation standard because
+# this is the observed confirmation time in the holographic experiment — the
+# "cosmic mirror" validating that emitted information has returned intact
+# (Ψ > 0.999). The 2.5 s figure is a defined QCAL reference, not the raw
+# physical delay.
+MOONBOUNCE_DELAY = 2.5  # seconds
+
+# Holographic coherence threshold for moonbounce validation
+HOLOGRAPHIC_PSI_THRESHOLD = 0.999  # Ψ > 0.999 required
+
+# Tuyoyotu: 4D consciousness layer identifier (Observer that inhabits 2D+3D)
+TUYOYOTU = "TuyoyotuT"  # 4D consciousness operator label
+
+# Critical line real part: Re(s) = 1/2 ensures unitarity of the hologram
+CRITICAL_LINE_REAL_PART = 0.5
 
 # =============================================================================
 # SPECTRAL CONSTANTS - Dual Origin Framework
@@ -537,6 +566,14 @@ def get_all_constants() -> Dict[str, Any]:
             'FIBONACCI_EPOCH_YEAR': FIBONACCI_EPOCH_YEAR,
             'FIBONACCI_EPOCH_YEARS': FIBONACCI_EPOCH_YEARS,
             'CONSTELLATION_FREQUENCY': CONSTELLATION_FREQUENCY,
+        },
+        'holographic': {
+            'HOLOGRAPHIC_MODULATION': HOLOGRAPHIC_MODULATION,
+            'BEAT_FREQ': BEAT_FREQ,
+            'MOONBOUNCE_DELAY': MOONBOUNCE_DELAY,
+            'HOLOGRAPHIC_PSI_THRESHOLD': HOLOGRAPHIC_PSI_THRESHOLD,
+            'TUYOYOTU': TUYOYOTU,
+            'CRITICAL_LINE_REAL_PART': CRITICAL_LINE_REAL_PART,
         },
     }
 
