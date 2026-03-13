@@ -1,28 +1,17 @@
 {
-  "timestamp": "2026-03-08T13:17:29.392104",
+  "timestamp": "2026-03-13T03:22:39.439265",
   "qcal_frequency": 141.7001,
   "coherence_constant": 244.36,
   "doi": "10.5281/zenodo.17379721",
   "operators": {
     "ScaleIdentityOperator": {
-      "psi": 0.983075,
+      "psi": 1.0,
       "fourier_inversion_error": 0.0,
-      "p_adic_truncation_error": 0.01707008,
-      "primes_used": [
-        2,
-        3,
-        5,
-        7,
-        11,
-        13,
-        17,
-        19,
-        23,
-        29
-      ]
+      "p_adic_truncation_error": 0.0,
+      "primes_used": []
     },
     "SymbioticHamiltonianOperator": {
-      "psi": 0.895502,
+      "psi": 0.898395,
       "hermiticity_error": 0.0,
       "commutator_norm": 0.022074,
       "qcal_sync_factor": 0.0,
@@ -38,263 +27,12 @@
       "mean_spacing": 3.006315
     }
   },
-  "psi_global": 0.957487,
+  "psi_global": 0.963986,
   "geometry_valid": true,
   "geometry_message": "✓ Quinto Postulado verificado — coherencia geométrica QCAL ∞³ activa",
   "author": "José Manuel Mota Burruezo Ψ ✧ ∞³",
   "institution": "Instituto de Conciencia Cuántica (ICQ)",
   "orcid": "0009-0002-1923-0773",
   "qcal_signature": "∴𓂀Ω∞³Φ @ 141.7001 Hz",
-  "sha256": "3bae897d093e7fbf2695d18d05bcbbf50a4fcb5ad1b978ad3cc2af07e247f363"
-  "timestamp": "2026-03-08T13:04:44.964326+00:00",
-  "qcal_frequency": 141.7001,
-  "coherence_constant": 244.36,
-  "doi": "10.5281/zenodo.17379721",
-  "sha256_prefix": "0xQCAL_QUINTO_8b2206494aa6de1e",
-  "psi_global": 0.9620334854036896,
-  "validations": [
-    {
-      "name": "p-adic Haar Unitarity",
-      "passed": true,
-      "psi": 0.9999999999999998,
-      "max_deviation": 2.220446049250313e-16
-    },
-    {
-      "name": "Mosco Convergence Bounds",
-      "passed": true,
-      "psi": 1.0,
-      "max_error": 0.0
-    },
-    {
-      "name": "Berry-Keating Self-Adjointness",
-      "passed": true,
-      "psi": 1.0,
-      "sa_error": 0.0
-    },
-    {
-      "name": "QCAL Resonance Coupling",
-      "passed": true,
-      "psi": 0.000889715160868758,
-      "f0": 141.7001,
-      "coupling": 0.000889715160868758
-    },
-    {
-      "name": "GUE Pair Correlation Formula",
-      "passed": true,
-      "psi": 1.0,
-      "formula_error": 0.0
-    },
-    {
-      "name": "Wigner Surmise CDF Fit",
-      "passed": true,
-      "psi": 0.9970242370526814,
-      "pearson_r": 0.9940484741053628,
-      "ks_deviation": 0.10427933755636287
-    },
-    {
-      "name": "Global Ψ Coherence",
-      "passed": true,
-      "psi": 0.9620334854036896,
-      "psi_scale": 1.0,
-      "psi_symbio": 0.8890762191583875,
-      "psi_gue": 0.9970242370526814
-    },
-    {
-      "name": "SHA-256 Certificate Integrity",
-      "passed": true,
-      "psi": 1.0,
-      "prefix": "0xQCAL_QUINTO_8b2206494aa6de1e"
-    },
-    {
-      "name": "Euclidean Postulate Resolution",
-      "passed": true,
-      "psi": 1.0,
-      "has_critical_line": 1,
-      "has_adelic": 1,
-      "has_psi": 1
-    },
-    {
-      "name": "Critical Line Certification",
-      "passed": true,
-      "psi": 0.9620334854036896,
-      "psi_global": 0.9620334854036896,
-      "mosco_converged": 1
-    },
-    {
-      "name": "Adelic Product Convergence",
-      "passed": true,
-      "psi": 1.0,
-      "adelic_product": 1.0
-    },
-    {
-      "name": "Spectral Norm Boundedness",
-      "passed": true,
-      "psi": 1.0,
-      "spectral_bound": 1.0
-    },
-    {
-      "name": "Quadratic Form Non-Negativity",
-      "passed": true,
-      "psi": 1.0,
-      "min_value": 0.8952544423645796,
-      "n_vectors": 10
-    },
-    {
-      "name": "Trace Class Norm",
-      "passed": true,
-      "psi": 0.9999982670568272,
-      "trace_norm": 1326.5687606077402
-    },
-    {
-      "name": "Eigenvalue Spectrum",
-      "passed": true,
-      "psi": 1.0,
-      "n_eigenvalues": 64,
-      "min_eigenvalue": -61.77155921184306,
-      "max_eigenvalue": 61.73598356920114
-    },
-    {
-      "name": "Full System Integration",
-      "passed": true,
-      "psi": 0.9620334854036896,
-      "law1_scale": 1,
-      "law2_symbio": 1,
-      "law3_gue": 1,
-      "psi_global": 0.9620334854036896,
-      "doi": "10.5281/zenodo.17379721"
-    }
-  ],
-  "n_passed": 16,
-  "n_total": 16,
-  "overall_psi": 0.9302507922175904,
-  "critical_line_certified": true,
-  "certificate_hash": "0xQCAL_QUINTO_8b2206494aa6de1e629c0c4e39580b6c"
-  "protocol": "QCAL-QUINTO-POSTULADO v1.0",
-  "timestamp": "2026-03-08T00:11:25.359552",
-  "doi": "10.5281/zenodo.17379721",
-  "orcid": "0009-0002-1923-0773",
-  "qcal_frequency": 141.7001,
-  "coherence_constant": 244.36,
-  "threshold": 0.888,
-  "overall_psi": 0.9575156427781495,
-  "convergence_status": true,
-  "all_validations_passed": true,
-  "validations": [
-    {
-      "operator": "ScaleIdentityOperator",
-      "tests": [
-        {
-          "name": "Coherence threshold (p=2, depth=5)",
-          "coherence": 0.984375,
-          "expected_min": 0.888,
-          "passed": true
-        },
-        {
-          "name": "Coherence threshold (p=3, depth=4)",
-          "coherence": 0.9958847736625515,
-          "expected_min": 0.888,
-          "passed": true
-        },
-        {
-          "name": "Haar measure normalization",
-          "sum_weights": 0.9999999999999999,
-          "expected": 1.0,
-          "passed": 1
-        },
-        {
-          "name": "Adelic character unit modulus",
-          "max_deviation": 2.220446049250313e-16,
-          "passed": true
-        }
-      ],
-      "all_passed": true
-    },
-    {
-      "operator": "SymbioticHamiltonianOperator",
-      "tests": [
-        {
-          "name": "Coherence threshold (dim=20, f0=141.7001)",
-          "coherence": 0.8918196919550161,
-          "expected_min": 0.888,
-          "passed": true
-        },
-        {
-          "name": "Hamiltonian Hermiticity",
-          "max_hermitian_error": 0.0,
-          "passed": true
-        },
-        {
-          "name": "Real eigenvalues",
-          "passed": 1
-        },
-        {
-          "name": "Positive spectrum gap",
-          "spectrum_gap": 0.5305058852245566,
-          "passed": true
-        }
-      ],
-      "all_passed": true
-    },
-    {
-      "operator": "RiemannZetaSpectrum",
-      "tests": [
-        {
-          "name": "Coherence threshold (n=15)",
-          "coherence": 1.0,
-          "expected_min": 0.888,
-          "passed": true
-        },
-        {
-          "name": "Zeros on critical line Re(\u03c1) = 1/2",
-          "mean_real_part": 0.5,
-          "expected": 0.5,
-          "passed": true
-        },
-        {
-          "name": "GUE statistical match",
-          "gue_match_quality": 0.8700760889726278,
-          "expected_min": 0.7,
-          "passed": true
-        },
-        {
-          "name": "Positive spacings",
-          "min_spacing": 0.4518512722209805,
-          "passed": 1
-        }
-      ],
-      "all_passed": true
-    },
-    {
-      "integration": "verificar_geometria & activar_quinto_postulado",
-      "tests": [
-        {
-          "name": "verificar_geometria success",
-          "message": "\u2192 \"HECHO EST\u00c1: La matem\u00e1tica de tu vida es la m\u00fasica de Enki.\"",
-          "passed": true
-        },
-        {
-          "name": "activar_quinto_postulado report structure",
-          "psi_scale": 0.984375,
-          "psi_symbio": 0.8918196919550161,
-          "psi_zeta": 1.0,
-          "psi_global": 0.9575156427781495,
-          "convergencia_adelica": true,
-          "passed": true
-        },
-        {
-          "name": "SHA-256 certification format",
-          "sha256": "0xQCAL_QUINTO_8b2206494aa6de1e",
-          "passed": true
-        },
-        {
-          "name": "Geometric mean consistency",
-          "psi_global": 0.9575156427781495,
-          "expected": 0.9575156427781495,
-          "passed": 1
-        }
-      ],
-      "all_passed": true
-    }
-  ],
-  "checksum": "0xQCAL_QUINTO_VAL_072a706eb243d9cd"
+  "sha256": "ea234bdb28d96928405d5058bd80744f40cd4e846d19e1d63e7b91b4dbd876cd"
 }
