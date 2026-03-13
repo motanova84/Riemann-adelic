@@ -74,7 +74,7 @@ HARMONIC_MODULATION = F0 / GAMMA_1  # ≈ 10.02787437
 F_CARBON = 142.1000  # Hz  — Carbon Divine ("Flesh of the Spirit")
 
 # Silicon Divine frequency alias (same as F0; the "Skeleton of Light")
-F_SILICON = F0  # Hz = 141.7001
+F_SILICON = F0  # Hz = 141.7001 (alias for F0)
 
 # Ziusudra Constant: Δf = f_C − f_Si = 0.3999 Hz
 # This differential is the "depth of the sea" between the two poles.

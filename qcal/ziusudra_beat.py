@@ -90,7 +90,7 @@ def beat_signal(
     f_silicon: float = F_SILICON,
     f_carbon: float = F_CARBON,
     amplitude: float = 1.0,
-) -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
+) -> Tuple[np.ndarray, np.ndarray, float]:
     """
     Compute the Carbon-Silicon superposition (beat signal) and its envelope.
 
@@ -113,8 +113,6 @@ def beat_signal(
         Amplitude envelope |2A·cos(π·Δf·t)|.
     beat_freq : float
         Beat frequency Δf = |f_C − f_Si| in Hz.
-
-    Notes
     -----
     The beat period T_beat = 1/Δf ≈ 2.5 s (one "Sacred Time Unit").
     The envelope is guaranteed to satisfy 0 ≤ envelope ≤ 2A, which keeps
