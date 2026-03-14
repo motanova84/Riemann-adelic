@@ -391,7 +391,7 @@ def verify_critical_line_as_event_horizon(zeros_t: List[float],
     # Event horizon sharpness
     horizon_sharpness = field.critical_line_coherence()
     
-    verified = min_phase > (1 - tolerance)
+    verified = bool(min_phase > (1 - tolerance))
     
     return {
         'verified': verified,
