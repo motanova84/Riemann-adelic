@@ -78,7 +78,7 @@ LAMBDA_C = LAMBDA_C_KM * 1e3  # Coherence length in meters
 MU_ADELIC = 1.0 / F0
 
 # Quantum Reynolds number: Re_q = (f0 * lambda_c) / mu_adelic = f0^2 * lambda_c
-RE_QUANTUM = F0 * LAMBDA_C * F0  # simplifies to f0^2 * lambda_c
+RE_QUANTUM = F0 ** 2 * LAMBDA_C
 
 # DNA base resonances at multiples of f0
 GACT_RESONANCES = {
@@ -155,7 +155,7 @@ def compute_psi_bio(x: np.ndarray, coherence_length: float = 1.0) -> np.ndarray:
     sigma = coherence_length
     amplitude = 1.0 / (sigma * np.sqrt(2.0 * np.pi))
     envelope = amplitude * np.exp(-x ** 2 / (2.0 * sigma ** 2))
-    phase = np.exp(1j * 2.0 * np.pi * F0 * x / F0)  # normalized phase
+    phase = np.exp(1j * 2.0 * np.pi * x)  # unit-frequency phase modulation
     return envelope * phase
 
 
@@ -408,7 +408,7 @@ def compute_residual_force(
         # String correction amplitude decreases with order
         c_k = (-1) ** (k + 1) * ZETA_PRIME_HALF / (k ** 2 * F0)
         decay = np.exp(-k * np.abs(x) / (lambda_c_norm * n))
-        oscillation = np.cos(2.0 * np.pi * k * F0 * x / F0)
+        oscillation = np.cos(2.0 * np.pi * k * x)
         f_superstring += c_k * decay * oscillation * psi
 
     f_res = f_gue + f_superstring
