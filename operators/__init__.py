@@ -180,6 +180,15 @@ from .berry_keating_self_adjointness import (
     HAS_MPMATH
 )
 
+from .qcal_spectral_operator import (
+    QCALSpectralOperator,
+    QCALSpectralResult,
+    certify_qcal_spectral_operator,
+    F0_QCAL as F0_QCAL_SPECTRAL,
+    C_QCAL as C_QCAL_SPECTRAL,
+    PSI_THRESHOLD as PSI_THRESHOLD_QCAL,
+)
+
 # FALLO Closures - Mathematical Derivations (Feb 2026)
 from .weyl_law_harmonic_oscillator import (
     WeylLawHarmonicOscillator,
@@ -354,6 +363,13 @@ __all__ = [
     'verify_berry_keating_self_adjointness',
     'C_BERRY_KEATING',
     'HAS_MPMATH',
+    # QCAL Spectral Operator (Mar 2026)
+    'QCALSpectralOperator',
+    'QCALSpectralResult',
+    'certify_qcal_spectral_operator',
+    'F0_QCAL_SPECTRAL',
+    'C_QCAL_SPECTRAL',
+    'PSI_THRESHOLD_QCAL',
     # FALLO Closures (Feb 2026)
     'WeylLawHarmonicOscillator',
     'WeylLawResult',
