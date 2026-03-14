@@ -105,13 +105,13 @@ from sympy import primerange
 import warnings
 
 try:
-    from .adelic_laplacian import AdelicLaplacian
+    from .adelic_laplacian import AdelicLaplacian, KAPPA_PI
 except ImportError:
     # Allow standalone usage
     import sys
     from pathlib import Path
     sys.path.insert(0, str(Path(__file__).parent))
-    from adelic_laplacian import AdelicLaplacian
+    from adelic_laplacian import AdelicLaplacian, KAPPA_PI
 
 # QCAL Constants
 F0 = 141.7001  # Hz - fundamental frequency
@@ -317,26 +317,127 @@ class NavierStokesAdelic:
         
         Args:
             n_eigenvalues: Number of eigenvalues to compute (default: all)
-from scipy.sparse import csr_matrix, diags
-from scipy.linalg import eigh
-from typing import Tuple, Optional, Dict, Callable
-import warnings
-
-try:
-    from .adelic_laplacian import AdelicLaplacian, F0, C_QCAL, KAPPA_PI, PHI
-except ImportError:
-    import sys
-    import os
-    sys.path.insert(0, os.path.dirname(__file__))
-    from adelic_laplacian import AdelicLaplacian, F0, C_QCAL, KAPPA_PI, PHI
-
+            
+        Returns:
+            Tuple of (eigenvalues, eigenvectors)
+        """
+        H = self.construct_matrix()
+        eigenvalues, eigenvectors = np.linalg.eigh(H)
+        
+        if n_eigenvalues is not None:
+            eigenvalues = eigenvalues[:n_eigenvalues]
+            eigenvectors = eigenvectors[:, :n_eigenvalues]
+        
+        return eigenvalues, eigenvectors
+    
+    def heat_kernel_trace(self, t: float, method: str = 'matrix') -> float:
+        """
+        Compute heat kernel trace Tr(e^{-tH}).
+        
+        Args:
+            t: Time parameter
+            method: 'matrix' or 'spectral'
+            
+        Returns:
+            Trace value
+        """
+        eigenvalues, _ = self.get_spectrum()
+        return float(np.sum(np.exp(-t * eigenvalues)))
+    
+    def weyl_term(self, t: float) -> float:
+        """
+        Compute Weyl asymptotic term.
+        
+        Args:
+            t: Time parameter
+            
+        Returns:
+            Weyl term value
+        """
+        return float(self.n_points / np.sqrt(4 * np.pi * t))
+    
+    def prime_sum_term(self, t: float, n_primes: int = 10, k_max: int = 3) -> float:
+        """
+        Compute prime sum contribution to heat kernel trace.
+        
+        Args:
+            t: Time parameter
+            n_primes: Number of primes to include
+            k_max: Maximum power of prime
+            
+        Returns:
+            Prime sum value
+        """
+        from sympy import primerange
+        primes = list(primerange(2, 100))[:n_primes]
+        result = 0.0
+        for p in primes:
+            for k in range(1, k_max + 1):
+                result += np.log(p) / (p ** (k / 2)) * np.exp(-t * k * np.log(p))
+        return float(result)
+    
+    def remainder_term(self, t: float) -> float:
+        """
+        Compute remainder term (should be small).
+        
+        Args:
+            t: Time parameter
+            
+        Returns:
+            Remainder value
+        """
+        weyl = self.weyl_term(t)
+        prime_sum = self.prime_sum_term(t)
+        trace = self.heat_kernel_trace(t)
+        return float(trace - weyl - prime_sum)
+    
+    def trace_decomposition(self, t: float) -> Dict[str, float]:
+        """
+        Compute full trace decomposition.
+        
+        Args:
+            t: Time parameter
+            
+        Returns:
+            Dictionary with decomposition components
+        """
+        weyl = self.weyl_term(t)
+        prime_sum = self.prime_sum_term(t)
+        total_approx = weyl + prime_sum
+        exact = self.heat_kernel_trace(t)
+        remainder = exact - total_approx
+        return {
+            'weyl': weyl,
+            'prime_sum': prime_sum,
+            'remainder': remainder,
+            'total_approx': total_approx,
+            'exact': exact,
+            'error': abs(exact - total_approx),
+        }
+    
+    def verify_self_adjointness(self) -> Dict[str, Any]:
+        """
+        Verify that the operator is self-adjoint.
+        
+        Returns:
+            Dictionary with verification results
+        """
+        H = self.construct_matrix()
+        hermiticity_error = float(np.max(np.abs(H - H.conj().T)))
+        eigenvalues, _ = np.linalg.eigh(H)
+        return {
+            'hermiticity_error': hermiticity_error,
+            'all_eigenvalues_real': bool(np.all(np.isreal(eigenvalues))),
+            'min_eigenvalue': float(eigenvalues.min()),
+        }
+    
 
 class NavierStokesAdelicOperator:
     """
     Complete Navier-Stokes Adelic Evolution Operator.
     
     Implements:
-        H_NS = -i(x∂_x + 1/2) + (1/κ)Δ_A + V_eff(x)
+        H_NS = -i(x*d/dx + 1/2) + (1/kappa)*Delta_A + V_eff(x)
     
     where:
         - First term: Transport/expansion (convective)
@@ -386,23 +487,23 @@ class NavierStokesAdelicOperator:
         
     def transport_operator(self, hermitian_version: bool = False) -> csr_matrix:
         """
-        Construct transport operator T = -x∂_x.
+        Construct transport operator T = -x*d/dx.
         
         This represents expansion in the Archimedean direction,
-        analogous to the convective term u·∇u in Navier-Stokes.
+        analogous to the convective term u*grad(u) in Navier-Stokes.
         
         In logarithmic coordinates, this is the natural scaling operator.
         
-        For Hermitian version, we symmetrize: T_H = (T + T†)/2
+        For Hermitian version, we symmetrize: T_H = (T + T_dag)/2
         
         Args:
             hermitian_version: If True, symmetrize the operator
             
         Returns:
-            Sparse matrix representation of -x∂_x (or symmetrized version)
+            Sparse matrix representation of -x*d/dx (or symmetrized version)
         """
-        # First derivative operator ∂_x (centered differences)
-        # ∂_x Ψ ≈ (Ψ_{i+1} - Ψ_{i-1}) / (2dx)
+        # First derivative operator d/dx (centered differences)
+        # d/dx Psi approx (Psi_{i+1} - Psi_{i-1}) / (2dx)
         diag_upper = np.ones(self.N) / (2.0 * self.dx)
         diag_lower = -np.ones(self.N) / (2.0 * self.dx)
         
