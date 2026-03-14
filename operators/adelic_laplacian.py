@@ -494,7 +494,11 @@ class SeeleyDeWittTensor:
         trace = trapezoid(kernel_diag, x)
         
         return trace
-    Adelic Laplacian operator Δ_A = Δ_R + Σ_p Δ_{Q_p}.
+
+
+class AdelicLaplacian:
+    """
+    Adelic Laplacian operator Delta_A = Delta_R + sum_p Delta_{Q_p}.
     
     Combines Archimedean (real) and p-adic Laplacians with position-dependent
     diffusion coefficients derived from the logarithmic potential.
@@ -538,7 +542,7 @@ class SeeleyDeWittTensor:
         Compute Archimedean diffusion kernel D_R(x) = 1/(1+|x|).
         
         This emerges from the logarithmic potential via gauge transformation:
-            V_eff(x) = ln(1+|x|) ↔ D(x) = 1/(1+|x|)
+            V_eff(x) = ln(1+|x|) <-> D(x) = 1/(1+|x|)
         
         Args:
             x: Spatial coordinate array
