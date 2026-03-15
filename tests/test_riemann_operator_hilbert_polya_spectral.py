@@ -493,7 +493,7 @@ class TestSparseOperator10000Primes:
         # 1230 ahora está dentro del nuevo límite de 10000
         op = HilbertPolyaOperatorAdvanced(space, num_primes=1230, max_k=1)
         assert len(op.primes) == 1230
-        assert op.primes[-1] > 9973  # 1229th prime es 9973
+        assert op.primes[-1] > 9973  # 1229th prime is 9973
 
     def test_nuevo_limite_10000_permitido(self):
         """Debe poder instanciarse con 10.000 primos."""

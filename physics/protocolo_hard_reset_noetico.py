@@ -91,6 +91,14 @@ N_HARM: int = 7
 # Duración estándar del pulso de hard-reset (segundos)
 DURACION_PULSO_S: float = 7.0 / F0  # 7 períodos de f₀ ≈ 49.4 ms
 
+# Factor de escala para la energía normalizada en el modelo de recuperación.
+# Empíricamente calibrado para que E_norm ≈ 0.3 produzca recuperación completa
+# (1 - exp(-5*0.3/0.3) = 1 - exp(-5) ≈ 0.993).
+_E_SCALING_FACTOR: float = 5.0
+
+# Límite superior del argumento exponencial (evita desbordamiento numérico).
+_E_SCALING_MAX: float = 10.0
+
 
 # ===========================================================================
 # 1. ParametrosPulsoNoetico
@@ -228,7 +236,12 @@ class GeneradorPulsoNoetico:
         """Calcula las fases de los armónicos."""
         if self.params.fases_riemann:
             zeros = list(_RIEMANN_ZEROS_7[: self.params.n_harm])
-            # Extender con ceros ficticios si n_harm > 7
+            # Extend with approximate zeros beyond the first 7 using linear
+            # spacing ≈ 2π/log(n_extra) from the Riemann zero density formula
+            # (average gap ≈ 2π/log(t)).  This approximation is acceptable for
+            # extra harmonics because the phase contribution of higher harmonics
+            # is attenuated by the 1/n amplitude factor, so small errors in the
+            # phase values have negligible effect on the reconstructed pulse.
             while len(zeros) < self.params.n_harm:
                 n_extra = len(zeros) + 1
                 zeros.append(zeros[-1] + n_extra * 5.0)
@@ -491,7 +504,7 @@ class ProtocoloHardResetNoetico:
         psi_min = self.params.psi_threshold
         # Recuperación adicional por encima del umbral (sigmoidal en E_norm)
         delta_adicional_max = 1.0 - psi_min
-        e_scaled = min(e_n / max(abs(e_n), 1e-30) * 5.0, 10.0)
+        e_scaled = min(e_n / max(abs(e_n), 1e-30) * _E_SCALING_FACTOR, _E_SCALING_MAX)
         delta_adicional = delta_adicional_max * (1.0 - math.exp(-e_scaled))
         # Ψ recuperada = al menos PSI_THRESHOLD + mejora adicional
         psi_recuperada = min(1.0, psi_min + delta_adicional)

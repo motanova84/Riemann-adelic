@@ -34,6 +34,10 @@ from physics.visualizacion_fluido_holografico import (
     _eta_sobre_s,
 )
 
+# Rango esperado del KSS bound ℏ/(4π k_B) ≈ 6.078 × 10⁻¹³ kg/K
+_KSS_LO = 6.0e-13
+_KSS_HI = 6.2e-13
+
 
 # ===========================================================================
 # Función auxiliar _eta_sobre_s
@@ -112,7 +116,7 @@ class TestMapaEtaSObrePsi:
         """KSS_BOUND debe ser ≈ ℏ/(4π k_B) ≈ 6.08 × 10⁻¹³."""
         mapa = MapaEtaSObrePsi()
         resultado = mapa.calcular()
-        assert 6.0e-13 < resultado.kss_bound < 6.2e-13
+        assert _KSS_LO < resultado.kss_bound < _KSS_HI
 
     def test_psi_grid_en_0_1(self):
         """El grid Ψ debe estar en [0, 1]."""
@@ -292,7 +296,7 @@ class TestKSSBoundConstante:
 
     def test_kss_bound_orden_magnitud(self):
         """KSS_BOUND debe estar en ~6 × 10⁻¹³ kg/K."""
-        assert 6.0e-13 < KSS_BOUND < 6.2e-13
+        assert _KSS_LO < KSS_BOUND < _KSS_HI
 
 
 # ===========================================================================
