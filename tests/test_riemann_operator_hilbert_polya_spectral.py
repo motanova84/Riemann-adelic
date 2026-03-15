@@ -484,6 +484,38 @@ class TestSpectralValidationResult:
         assert 0.0 <= result.psi <= 1.0
 
 
+class TestSparseOperator10000Primes:
+    """Tests de integración para el operador sparse con hasta 10.000 primos."""
+
+    def test_limite_anterior_1229_ahora_soportado(self):
+        """El antiguo límite de 1229 primos ya no debe ser el máximo."""
+        space = EvenHilbertSpace(N=50, u_max=20.0)
+        # 1230 ahora está dentro del nuevo límite de 10000
+        op = HilbertPolyaOperatorAdvanced(space, num_primes=1230, max_k=1)
+        assert len(op.primes) == 1230
+        assert op.primes[-1] > 9973  # 1229th prime es 9973
+
+    def test_nuevo_limite_10000_permitido(self):
+        """Debe poder instanciarse con 10.000 primos."""
+        space = EvenHilbertSpace(N=50, u_max=20.0)
+        op = HilbertPolyaOperatorAdvanced(space, num_primes=10000, max_k=1)
+        assert len(op.primes) == 10000
+        # El primo número 10000 es 104729
+        assert op.primes[-1] == 104729
+
+    def test_exceder_10000_lanza_error(self):
+        """Superar 10.000 primos debe lanzar ValueError."""
+        space = EvenHilbertSpace(N=50, u_max=20.0)
+        with pytest.raises(ValueError, match="10000"):
+            HilbertPolyaOperatorAdvanced(space, num_primes=10001)
+
+    def test_mensaje_error_actualizado(self):
+        """El mensaje de error debe mencionar el nuevo límite."""
+        space = EvenHilbertSpace(N=50, u_max=20.0)
+        with pytest.raises(ValueError, match="104729"):
+            HilbertPolyaOperatorAdvanced(space, num_primes=10001)
+
+
 if __name__ == "__main__":
     """Run tests with pytest."""
     pytest.main([__file__, "-v"])
