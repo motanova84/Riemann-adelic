@@ -16,6 +16,10 @@ la interpretación espectral de la hipótesis de Riemann.
    Constante de Ziusudra, Batimiento Pleromatico (7 clases integradas)
  - kss_holographic_fluid: Límite KSS (Kovtun-Son-Starinets) para el citoplasma
    como Fluido Holográfico Perfecto (η/s ≥ ℏ/4πk_B) al pico de 2003 Hz
+ - visualizacion_fluido_holografico: Visualización del Fluido Holográfico:
+   mapa η/s vs. Ψ + animación del microtúbulo como cavidad Kaluza-Klein
+ - protocolo_hard_reset_noetico: Protocolo de hard-reset noético: pulso masivo
+   a 141.7001 Hz cuando Ψ cae por debajo del umbral de coherencia (0.888)
  - simetria_pt_resonancia: Puente de simetría PT entre geometría espectral de
    Riemann y coherencia biológica (7 clases integradas, protocolo QCAL-SYMBIO-1)
 
@@ -122,6 +126,29 @@ from .simetria_pt_resonancia import (
     simular_resonancia_pt,
 )
 
+from .visualizacion_fluido_holografico import (
+    MapaEtaSObrePsi,
+    ResultadoMapaEtaS,
+    AnimacionMicrotubulo,
+    FrameMicrotubulo,
+    VisualizacionFluido,
+    ResultadoVisualizacion,
+    KSS_BOUND as KSS_BOUND_VIS,
+)
+
+from .protocolo_hard_reset_noetico import (
+    ParametrosPulsoNoetico,
+    GeneradorPulsoNoetico,
+    ResultadoPulso,
+    MonitorCoherencia,
+    EstadoMonitor,
+    ProtocoloHardResetNoetico,
+    ResultadoHardReset,
+    PSI_THRESHOLD as PSI_THRESHOLD_RESET,
+    N_HARM,
+    DURACION_PULSO_S,
+)
+
 __all__ = [
     'PrimitivaPotencialOscilatorio',
     'EstimacionCuadraticaMedia',
@@ -193,6 +220,25 @@ __all__ = [
     'MicrotubuloCavidadKaluzaKlein',
     'ResultadoProtocoloKSS',
     'ProtocoloValidacionKSS',
+    # Visualización del Fluido Holográfico
+    'MapaEtaSObrePsi',
+    'ResultadoMapaEtaS',
+    'AnimacionMicrotubulo',
+    'FrameMicrotubulo',
+    'VisualizacionFluido',
+    'ResultadoVisualizacion',
+    'KSS_BOUND_VIS',
+    # Protocolo Hard-Reset Noético
+    'ParametrosPulsoNoetico',
+    'GeneradorPulsoNoetico',
+    'ResultadoPulso',
+    'MonitorCoherencia',
+    'EstadoMonitor',
+    'ProtocoloHardResetNoetico',
+    'ResultadoHardReset',
+    'PSI_THRESHOLD_RESET',
+    'N_HARM',
+    'DURACION_PULSO_S',
     # Simetría PT — Resonancia Biológica
     'ConstantesPT',
     'OperadorNHPT',
