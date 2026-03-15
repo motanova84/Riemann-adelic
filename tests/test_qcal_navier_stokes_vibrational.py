@@ -39,6 +39,9 @@ from operators.qcal_navier_stokes_vibrational import (
     compute_gact_pressure,
     compute_residual_force,
     compute_quantum_reynolds_number,
+    rk4_step,
+    compute_biological_coherence,
+    plot_energy_spectrum,
     QCALNavierStokesVibrational,
 )
 
@@ -714,6 +717,203 @@ class TestPhysicalConsistency:
         result = compute_quantum_reynolds_number(lambda_c=LAMBDA_C, mu=MU_ADELIC, f0=F0)
         expected = F0 * LAMBDA_C / MU_ADELIC
         assert result['re_quantum'] == pytest.approx(expected, rel=1e-6)
+
+
+class TestRK4Step:
+    """Tests for the pseudospectral 2D RK4 integrator."""
+
+    def _make_spectral_grid(self, N: int = 16):
+        """Helper: build wavenumber grids and initial Fourier fields."""
+        from scipy.fft import fft2, fftfreq
+        kx = fftfreq(N, d=1.0 / N)
+        ky = fftfreq(N, d=1.0 / N)
+        kxx, kyy = np.meshgrid(kx, ky, indexing='ij')
+        k2 = kxx ** 2 + kyy ** 2
+        k2[0, 0] = 1.0  # avoid division by zero at DC mode
+        np.random.seed(42)
+        u0 = np.random.randn(N, N) * 0.01
+        v0 = np.random.randn(N, N) * 0.01
+        uhat = fft2(u0)
+        vhat = fft2(v0)
+        return uhat, vhat, kxx, kyy, k2, N
+
+    def test_rk4_step_output_shape(self):
+        """Test rk4_step returns arrays of the same shape as input."""
+        uhat, vhat, kxx, kyy, k2, N = self._make_spectral_grid(16)
+        grad_px = np.zeros((N, N), dtype=complex)
+        grad_py = np.zeros((N, N), dtype=complex)
+        uhat_new, vhat_new = rk4_step(
+            uhat, vhat, dt=0.01, rho=1.0, mu=MU_ADELIC,
+            k2=k2, kxx=kxx, kyy=kyy,
+            grad_px_hat=grad_px, grad_py_hat=grad_py, N=N,
+        )
+        assert uhat_new.shape == uhat.shape
+        assert vhat_new.shape == vhat.shape
+
+    def test_rk4_step_finite(self):
+        """Test rk4_step produces finite output."""
+        uhat, vhat, kxx, kyy, k2, N = self._make_spectral_grid(16)
+        grad_px = np.zeros((N, N), dtype=complex)
+        grad_py = np.zeros((N, N), dtype=complex)
+        uhat_new, vhat_new = rk4_step(
+            uhat, vhat, dt=0.01, rho=1.0, mu=MU_ADELIC,
+            k2=k2, kxx=kxx, kyy=kyy,
+            grad_px_hat=grad_px, grad_py_hat=grad_py, N=N,
+        )
+        assert np.all(np.isfinite(uhat_new))
+        assert np.all(np.isfinite(vhat_new))
+
+    def test_rk4_step_zero_velocity_unchanged(self):
+        """Zero velocity field should remain zero (no external forcing)."""
+        N = 16
+        from scipy.fft import fftfreq
+        kx = fftfreq(N, d=1.0 / N)
+        ky = fftfreq(N, d=1.0 / N)
+        kxx, kyy = np.meshgrid(kx, ky, indexing='ij')
+        k2 = kxx ** 2 + kyy ** 2
+        k2[0, 0] = 1.0
+        uhat = np.zeros((N, N), dtype=complex)
+        vhat = np.zeros((N, N), dtype=complex)
+        grad_px = np.zeros((N, N), dtype=complex)
+        grad_py = np.zeros((N, N), dtype=complex)
+        uhat_new, vhat_new = rk4_step(
+            uhat, vhat, dt=0.05, rho=1.0, mu=MU_ADELIC,
+            k2=k2, kxx=kxx, kyy=kyy,
+            grad_px_hat=grad_px, grad_py_hat=grad_py, N=N,
+        )
+        np.testing.assert_allclose(np.abs(uhat_new), 0.0, atol=1e-12)
+        np.testing.assert_allclose(np.abs(vhat_new), 0.0, atol=1e-12)
+
+    def test_rk4_step_complex_output(self):
+        """Test rk4_step returns complex arrays."""
+        uhat, vhat, kxx, kyy, k2, N = self._make_spectral_grid(16)
+        grad_px = np.zeros((N, N), dtype=complex)
+        grad_py = np.zeros((N, N), dtype=complex)
+        uhat_new, vhat_new = rk4_step(
+            uhat, vhat, dt=0.01, rho=1.0, mu=MU_ADELIC,
+            k2=k2, kxx=kxx, kyy=kyy,
+            grad_px_hat=grad_px, grad_py_hat=grad_py, N=N,
+        )
+        assert np.iscomplexobj(uhat_new)
+        assert np.iscomplexobj(vhat_new)
+
+    def test_rk4_step_energy_dissipation(self):
+        """Test that energy dissipates with viscosity (no external forcing)."""
+        N = 16
+        from scipy.fft import fft2, fftfreq
+        kx = fftfreq(N, d=1.0 / N)
+        ky = fftfreq(N, d=1.0 / N)
+        kxx, kyy = np.meshgrid(kx, ky, indexing='ij')
+        k2 = kxx ** 2 + kyy ** 2
+        k2[0, 0] = 1.0
+        # Simple single-mode initial condition
+        u0 = np.sin(2.0 * np.pi * np.linspace(0, 1, N)[:, None])
+        uhat = fft2(u0)
+        vhat = np.zeros((N, N), dtype=complex)
+        grad_px = np.zeros((N, N), dtype=complex)
+        grad_py = np.zeros((N, N), dtype=complex)
+
+        e0 = np.sum(np.abs(uhat) ** 2 + np.abs(vhat) ** 2)
+        # Evolve for several steps with large viscosity
+        for _ in range(10):
+            uhat, vhat = rk4_step(
+                uhat, vhat, dt=0.01, rho=1.0, mu=1.0,
+                k2=k2, kxx=kxx, kyy=kyy,
+                grad_px_hat=grad_px, grad_py_hat=grad_py, N=N,
+            )
+        e_final = np.sum(np.abs(uhat) ** 2 + np.abs(vhat) ** 2)
+        # Energy should decrease due to viscous dissipation
+        assert e_final < e0
+
+
+class TestComputeBiologicalCoherence:
+    """Tests for the biological coherence metric."""
+
+    def test_coherence_is_float(self):
+        """Test coherence returns a float."""
+        x = np.linspace(0, 2.0 * np.pi, 64)
+        u = np.sin(x)
+        coh = compute_biological_coherence(u, x, f0=F0)
+        assert isinstance(coh, float)
+
+    def test_coherence_range(self):
+        """Test coherence is in [0, 1]."""
+        x = np.linspace(0, 2.0 * np.pi, 64)
+        u = np.random.randn(64)
+        coh = compute_biological_coherence(u, x, f0=F0)
+        assert 0.0 <= coh <= 1.0
+
+    def test_coherence_perfect_logos_wave(self):
+        """Test perfect logos wave yields high coherence with itself."""
+        x = np.linspace(0, 2.0 * np.pi, 256)
+        u = np.sin(F0 * x)
+        coh = compute_biological_coherence(u, x, f0=F0)
+        # Perfect correlation with itself
+        assert coh == pytest.approx(1.0, abs=1e-6)
+
+    def test_coherence_constant_field(self):
+        """Test constant field returns 0 (degenerate correlation)."""
+        x = np.linspace(0, 1.0, 64)
+        u = np.ones(64)
+        coh = compute_biological_coherence(u, x, f0=F0)
+        assert coh == pytest.approx(0.0, abs=1e-10)
+
+    def test_coherence_2d_field(self):
+        """Test coherence works with 2D arrays (flattened internally)."""
+        N = 16
+        xx = np.linspace(0, 2.0 * np.pi, N * N).reshape(N, N)
+        u = np.random.randn(N, N)
+        coh = compute_biological_coherence(u, xx, f0=F0)
+        assert 0.0 <= coh <= 1.0
+
+
+class TestEvolveStepRK4:
+    """Tests for the QCALNavierStokesVibrational.evolve_step_rk4 method."""
+
+    def test_rk4_output_shape(self):
+        """Test evolve_step_rk4 preserves velocity field shape."""
+        ns = QCALNavierStokesVibrational(n_points=64)
+        u = ns.compute_velocity_field()
+        u_new = ns.evolve_step_rk4(u, dt=1e-4)
+        assert u_new.shape == u.shape
+
+    def test_rk4_output_finite(self):
+        """Test evolve_step_rk4 produces finite values."""
+        ns = QCALNavierStokesVibrational(n_points=64)
+        u = ns.compute_velocity_field()
+        u_new = ns.evolve_step_rk4(u, dt=1e-4)
+        assert np.all(np.isfinite(u_new))
+
+    def test_rk4_divergence_free(self):
+        """Test evolve_step_rk4 maintains divergence-free condition (zero mean)."""
+        ns = QCALNavierStokesVibrational(n_points=64)
+        u = ns.compute_velocity_field()
+        u_new = ns.evolve_step_rk4(u, dt=1e-4)
+        # 1D divergence-free: mean is zero
+        assert abs(np.mean(u_new)) < 1e-10
+
+    def test_rk4_vs_euler_accuracy(self):
+        """Test RK4 and Euler give similar results for small dt."""
+        ns = QCALNavierStokesVibrational(n_points=64)
+        u = ns.compute_velocity_field()
+        dt = 1e-5
+        u_euler = ns.evolve_step(u.copy(), dt=dt)
+        u_rk4 = ns.evolve_step_rk4(u.copy(), dt=dt)
+        # Both should be finite and close for very small steps
+        assert np.all(np.isfinite(u_euler))
+        assert np.all(np.isfinite(u_rk4))
+        # RK4 and Euler should be in the same ballpark for small dt
+        diff = np.max(np.abs(u_rk4 - u_euler))
+        u_scale = max(np.max(np.abs(u)), 1e-30)
+        assert diff / u_scale < 1.0  # relative difference < 100%
+
+    def test_rk4_multiple_steps_stable(self):
+        """Test that multiple RK4 steps remain stable."""
+        ns = QCALNavierStokesVibrational(n_points=64)
+        u = ns.compute_velocity_field()
+        for _ in range(20):
+            u = ns.evolve_step_rk4(u, dt=1e-4)
+        assert np.all(np.isfinite(u))
 
 
 if __name__ == '__main__':
