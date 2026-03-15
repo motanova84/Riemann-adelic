@@ -723,16 +723,21 @@ class TestRK4Step:
     """Tests for the pseudospectral 2D RK4 integrator."""
 
     def _make_spectral_grid(self, N: int = 16):
-        """Helper: build wavenumber grids and initial Fourier fields."""
+        """Helper: build angular wavenumber grids and initial Fourier fields.
+
+        Uses angular wavenumbers kx = 2*pi*fftfreq(N, d=1/N) so that
+        spectral gradients (ifft2(1j*kx*uhat)) match standard FFT differentiation.
+        A local RNG is used to avoid mutating global NumPy RNG state.
+        """
         from scipy.fft import fft2, fftfreq
-        kx = fftfreq(N, d=1.0 / N)
-        ky = fftfreq(N, d=1.0 / N)
+        kx = 2.0 * np.pi * fftfreq(N, d=1.0 / N)
+        ky = 2.0 * np.pi * fftfreq(N, d=1.0 / N)
         kxx, kyy = np.meshgrid(kx, ky, indexing='ij')
         k2 = kxx ** 2 + kyy ** 2
         k2[0, 0] = 1.0  # avoid division by zero at DC mode
-        np.random.seed(42)
-        u0 = np.random.randn(N, N) * 0.01
-        v0 = np.random.randn(N, N) * 0.01
+        rng = np.random.default_rng(42)
+        u0 = rng.standard_normal((N, N)) * 0.01
+        v0 = rng.standard_normal((N, N)) * 0.01
         uhat = fft2(u0)
         vhat = fft2(v0)
         return uhat, vhat, kxx, kyy, k2, N
@@ -745,7 +750,7 @@ class TestRK4Step:
         uhat_new, vhat_new = rk4_step(
             uhat, vhat, dt=0.01, rho=1.0, mu=MU_ADELIC,
             k2=k2, kxx=kxx, kyy=kyy,
-            grad_px_hat=grad_px, grad_py_hat=grad_py, N=N,
+            grad_px_hat=grad_px, grad_py_hat=grad_py,
         )
         assert uhat_new.shape == uhat.shape
         assert vhat_new.shape == vhat.shape
@@ -758,7 +763,7 @@ class TestRK4Step:
         uhat_new, vhat_new = rk4_step(
             uhat, vhat, dt=0.01, rho=1.0, mu=MU_ADELIC,
             k2=k2, kxx=kxx, kyy=kyy,
-            grad_px_hat=grad_px, grad_py_hat=grad_py, N=N,
+            grad_px_hat=grad_px, grad_py_hat=grad_py,
         )
         assert np.all(np.isfinite(uhat_new))
         assert np.all(np.isfinite(vhat_new))
@@ -767,8 +772,8 @@ class TestRK4Step:
         """Zero velocity field should remain zero (no external forcing)."""
         N = 16
         from scipy.fft import fftfreq
-        kx = fftfreq(N, d=1.0 / N)
-        ky = fftfreq(N, d=1.0 / N)
+        kx = 2.0 * np.pi * fftfreq(N, d=1.0 / N)
+        ky = 2.0 * np.pi * fftfreq(N, d=1.0 / N)
         kxx, kyy = np.meshgrid(kx, ky, indexing='ij')
         k2 = kxx ** 2 + kyy ** 2
         k2[0, 0] = 1.0
@@ -779,7 +784,7 @@ class TestRK4Step:
         uhat_new, vhat_new = rk4_step(
             uhat, vhat, dt=0.05, rho=1.0, mu=MU_ADELIC,
             k2=k2, kxx=kxx, kyy=kyy,
-            grad_px_hat=grad_px, grad_py_hat=grad_py, N=N,
+            grad_px_hat=grad_px, grad_py_hat=grad_py,
         )
         np.testing.assert_allclose(np.abs(uhat_new), 0.0, atol=1e-12)
         np.testing.assert_allclose(np.abs(vhat_new), 0.0, atol=1e-12)
@@ -792,7 +797,7 @@ class TestRK4Step:
         uhat_new, vhat_new = rk4_step(
             uhat, vhat, dt=0.01, rho=1.0, mu=MU_ADELIC,
             k2=k2, kxx=kxx, kyy=kyy,
-            grad_px_hat=grad_px, grad_py_hat=grad_py, N=N,
+            grad_px_hat=grad_px, grad_py_hat=grad_py,
         )
         assert np.iscomplexobj(uhat_new)
         assert np.iscomplexobj(vhat_new)
@@ -801,8 +806,8 @@ class TestRK4Step:
         """Test that energy dissipates with viscosity (no external forcing)."""
         N = 16
         from scipy.fft import fft2, fftfreq
-        kx = fftfreq(N, d=1.0 / N)
-        ky = fftfreq(N, d=1.0 / N)
+        kx = 2.0 * np.pi * fftfreq(N, d=1.0 / N)
+        ky = 2.0 * np.pi * fftfreq(N, d=1.0 / N)
         kxx, kyy = np.meshgrid(kx, ky, indexing='ij')
         k2 = kxx ** 2 + kyy ** 2
         k2[0, 0] = 1.0
@@ -814,16 +819,65 @@ class TestRK4Step:
         grad_py = np.zeros((N, N), dtype=complex)
 
         e0 = np.sum(np.abs(uhat) ** 2 + np.abs(vhat) ** 2)
-        # Evolve for several steps with large viscosity
+        # Stability condition: nu*k^2*dt < 1.  With angular wavenumbers the
+        # worst case is a corner mode |k| = sqrt(2)*2*pi*(N/2) ~ 71 for N=16,
+        # k^2 ~ 5027.  With dt=1e-4: nu*k^2*dt = 1.0*5027*1e-4 = 0.50 < 1. ✓
         for _ in range(10):
             uhat, vhat = rk4_step(
-                uhat, vhat, dt=0.01, rho=1.0, mu=1.0,
+                uhat, vhat, dt=1e-4, rho=1.0, mu=1.0,
                 k2=k2, kxx=kxx, kyy=kyy,
-                grad_px_hat=grad_px, grad_py_hat=grad_py, N=N,
+                grad_px_hat=grad_px, grad_py_hat=grad_py,
             )
         e_final = np.sum(np.abs(uhat) ** 2 + np.abs(vhat) ** 2)
         # Energy should decrease due to viscous dissipation
+        assert np.isfinite(e_final)
         assert e_final < e0
+
+
+class TestPlotEnergySpectrum:
+    """Smoke tests for plot_energy_spectrum (headless matplotlib)."""
+
+    def _make_spectral_grid(self, N: int = 16):
+        """Build angular wavenumber grids and trivial Fourier fields."""
+        from scipy.fft import fft2, fftfreq
+        kx = 2.0 * np.pi * fftfreq(N, d=1.0 / N)
+        ky = 2.0 * np.pi * fftfreq(N, d=1.0 / N)
+        kxx, kyy = np.meshgrid(kx, ky, indexing='ij')
+        rng = np.random.default_rng(7)
+        uhat = fft2(rng.standard_normal((N, N)) * 0.1)
+        vhat = fft2(rng.standard_normal((N, N)) * 0.1)
+        return uhat, vhat, kxx, kyy, N
+
+    def test_plot_energy_spectrum_no_exception(self):
+        """plot_energy_spectrum should not raise under headless configuration."""
+        import matplotlib
+        matplotlib.use("Agg")
+        import matplotlib.pyplot as plt
+
+        uhat, vhat, kxx, kyy, N = self._make_spectral_grid(16)
+        fig, ax = plt.subplots()
+        plt.sca(ax)
+        # Should complete without raising
+        plot_energy_spectrum(uhat, vhat, kxx, kyy, N, title="Test")
+        plt.close(fig)
+
+    def test_plot_energy_spectrum_all_zeros_no_exception(self):
+        """All-zero fields produce no plotted line but should not raise."""
+        import matplotlib
+        matplotlib.use("Agg")
+        import matplotlib.pyplot as plt
+
+        N = 8
+        from scipy.fft import fftfreq
+        kx = 2.0 * np.pi * fftfreq(N, d=1.0 / N)
+        ky = 2.0 * np.pi * fftfreq(N, d=1.0 / N)
+        kxx, kyy = np.meshgrid(kx, ky, indexing='ij')
+        uhat = np.zeros((N, N), dtype=complex)
+        vhat = np.zeros((N, N), dtype=complex)
+        fig, ax = plt.subplots()
+        plt.sca(ax)
+        plot_energy_spectrum(uhat, vhat, kxx, kyy, N, title="Zeros")
+        plt.close(fig)
 
 
 class TestComputeBiologicalCoherence:
