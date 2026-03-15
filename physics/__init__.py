@@ -19,6 +19,12 @@ la interpretación espectral de la hipótesis de Riemann.
  - simetria_pt_resonancia: Operador no-hermitiano PT-simétrico (H = Hᵀ) que
    mantiene espectro real en sistemas biológicos disipativos. Bridge PT entre
    geometría espectral de Riemann y coherencia biológica (QCAL-SYMBIO-1).
+ - visualizacion_fluido_holografico: Visualización del Fluido Holográfico:
+   mapa η/s vs. Ψ + animación del microtúbulo como cavidad Kaluza-Klein
+ - protocolo_hard_reset_noetico: Protocolo de hard-reset noético: pulso masivo
+   a 141.7001 Hz cuando Ψ cae por debajo del umbral de coherencia (0.888)
+ - simetria_pt_resonancia: Puente de simetría PT entre geometría espectral de
+   Riemann y coherencia biológica (7 clases integradas, protocolo QCAL-SYMBIO-1)
 
 Autor: José Manuel Mota Burruezo Ψ ✧ ∞³
 QCAL ∞³ · 141.7001 Hz · C = 244.36
@@ -109,6 +115,42 @@ from .kss_holographic_fluid import (
     ResultadoProtocoloKSS,
     ProtocoloValidacionKSS,
 )
+from .simetria_pt_resonancia import (
+    ConstantesPT,
+    OperadorNHPT,
+    EspectroPTReal,
+    RiemannLineaCritica,
+    CitoplasmaHolografico,
+    DiagnosticoPT,
+    EstabilizadorPT,
+    ResultadoResonanciaPT,
+    SistemaResonanciaPT,
+    simetria_pt_resonancia_activar,
+    simular_resonancia_pt,
+)
+
+from .visualizacion_fluido_holografico import (
+    MapaEtaSObrePsi,
+    ResultadoMapaEtaS,
+    AnimacionMicrotubulo,
+    FrameMicrotubulo,
+    VisualizacionFluido,
+    ResultadoVisualizacion,
+    KSS_BOUND as KSS_BOUND_VIS,
+)
+
+from .protocolo_hard_reset_noetico import (
+    ParametrosPulsoNoetico,
+    GeneradorPulsoNoetico,
+    ResultadoPulso,
+    MonitorCoherencia,
+    EstadoMonitor,
+    ProtocoloHardResetNoetico,
+    ResultadoHardReset,
+    PSI_THRESHOLD as PSI_THRESHOLD_RESET,
+    N_HARM,
+    DURACION_PULSO_S,
+)
 
 from .simetria_pt_resonancia import (
     ConstantesPT,
@@ -195,6 +237,26 @@ __all__ = [
     'ResultadoProtocoloKSS',
     'ProtocoloValidacionKSS',
     # Simetría PT — QCAL-SYMBIO-1
+    # Visualización del Fluido Holográfico
+    'MapaEtaSObrePsi',
+    'ResultadoMapaEtaS',
+    'AnimacionMicrotubulo',
+    'FrameMicrotubulo',
+    'VisualizacionFluido',
+    'ResultadoVisualizacion',
+    'KSS_BOUND_VIS',
+    # Protocolo Hard-Reset Noético
+    'ParametrosPulsoNoetico',
+    'GeneradorPulsoNoetico',
+    'ResultadoPulso',
+    'MonitorCoherencia',
+    'EstadoMonitor',
+    'ProtocoloHardResetNoetico',
+    'ResultadoHardReset',
+    'PSI_THRESHOLD_RESET',
+    'N_HARM',
+    'DURACION_PULSO_S',
+    # Simetría PT — Resonancia Biológica
     'ConstantesPT',
     'OperadorNHPT',
     'EspectroPTReal',
@@ -205,4 +267,10 @@ __all__ = [
     'simular_resonancia_pt',
     'simetria_pt_resonancia_activar',
     'CONST_PT',
+    'DiagnosticoPT',
+    'EstabilizadorPT',
+    'ResultadoResonanciaPT',
+    'SistemaResonanciaPT',
+    'simetria_pt_resonancia_activar',
+    'simular_resonancia_pt',
 ]
