@@ -1,7 +1,7 @@
 {
   "title": "QCAL-∞³-SPECTRAL Mathematical Validity Certificate",
   "subtitle": "Acta de Validez Matemática",
-  "timestamp": "2026-01-07T10:23:14.874021",
+  "timestamp": "2026-03-15T08:04:29.221608",
   "framework": "QCAL ∞³",
   "author": "José Manuel Mota Burruezo Ψ ✧ ∞³",
   "institution": "Instituto de Conciencia Cuántica (ICQ)",
@@ -27,19 +27,19 @@
       "interpretation": "Closes the Hilbert-Pólya debate"
     },
     "fundamental_frequency": {
-      "f0_hz": "141.70009999999999195097188931",
+      "f0_hz": "141.7001",
       "verified": true,
       "interpretation": "The tempo of prime music - without this frequency, the spectrum would collapse"
     },
     "coherence": {
-      "C": "244.360000000000013642420526594",
+      "C": "244.36",
       "verified": true,
       "interpretation": "QCAL coherence constant from spectral moment"
     }
   },
   "cryptographic_seal": {
     "algorithm": "SHA-256",
-    "hash": "53707e1b02bbeff85cca02943759e484ddb53b36a2bf4b923090bebd48698e08",
+    "hash": "39b022e886b37de7759ff2810d380d3c8809eb8a08678df8413e421a66732fcb",
     "interpretation": "Links this historical moment with the Riemann-adelic code state"
   },
   "conclusion": {
