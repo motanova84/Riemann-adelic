@@ -20,6 +20,8 @@ la interpretación espectral de la hipótesis de Riemann.
    mapa η/s vs. Ψ + animación del microtúbulo como cavidad Kaluza-Klein
  - protocolo_hard_reset_noetico: Protocolo de hard-reset noético: pulso masivo
    a 141.7001 Hz cuando Ψ cae por debajo del umbral de coherencia (0.888)
+ - simetria_pt_resonancia: Puente de simetría PT entre geometría espectral de
+   Riemann y coherencia biológica (7 clases integradas, protocolo QCAL-SYMBIO-1)
 
 Autor: José Manuel Mota Burruezo Ψ ✧ ∞³
 QCAL ∞³ · 141.7001 Hz · C = 244.36
@@ -109,6 +111,19 @@ from .kss_holographic_fluid import (
     MicrotubuloCavidadKaluzaKlein,
     ResultadoProtocoloKSS,
     ProtocoloValidacionKSS,
+)
+from .simetria_pt_resonancia import (
+    ConstantesPT,
+    OperadorNHPT,
+    EspectroPTReal,
+    RiemannLineaCritica,
+    CitoplasmaHolografico,
+    DiagnosticoPT,
+    EstabilizadorPT,
+    ResultadoResonanciaPT,
+    SistemaResonanciaPT,
+    simetria_pt_resonancia_activar,
+    simular_resonancia_pt,
 )
 
 from .visualizacion_fluido_holografico import (
@@ -224,4 +239,16 @@ __all__ = [
     'PSI_THRESHOLD_RESET',
     'N_HARM',
     'DURACION_PULSO_S',
+    # Simetría PT — Resonancia Biológica
+    'ConstantesPT',
+    'OperadorNHPT',
+    'EspectroPTReal',
+    'RiemannLineaCritica',
+    'CitoplasmaHolografico',
+    'DiagnosticoPT',
+    'EstabilizadorPT',
+    'ResultadoResonanciaPT',
+    'SistemaResonanciaPT',
+    'simetria_pt_resonancia_activar',
+    'simular_resonancia_pt',
 ]
