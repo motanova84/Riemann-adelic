@@ -197,11 +197,14 @@ def get_riemann_zeros(n_zeros: int) -> np.ndarray:
     if n_zeros <= len(known):
         return np.array(known[:n_zeros])
 
-    # Extend beyond 50 with approximate spacing from Riemann-von Mangoldt formula
+    # Extend beyond 50 with approximate spacing from Riemann-von Mangoldt formula.
+    # Uses zero-index–based spacing: 2π / ln(k+1), an approximation valid for
+    # moderate k.  For higher precision use T-based spacing: 2π / ln(T/(2π)).
     zeros = list(known)
     for k in range(len(known), n_zeros):
-        # Average spacing ≈ 2π / ln(k+1)
-        spacing = 2.0 * np.pi / np.log(k + 1)
+        # Average spacing from von Mangoldt: 2π / ln(T/(2π)) ≈ 2π / ln(zeros[-1]/(2π))
+        T = zeros[-1]
+        spacing = 2.0 * np.pi / np.log(max(T / (2.0 * np.pi), 1.0 + k))
         zeros.append(zeros[-1] + spacing)
     return np.array(zeros[:n_zeros])
 
@@ -519,15 +522,17 @@ def compute_spectral_anchoring(
     )
 
     try:
-        evals = eigsh(H, k=k_modes, which="SM", return_eigenvectors=False)
+        evals = eigsh(H, k=k_modes, which="SM", return_eigenvectors=False,
+                      tol=1e-10, maxiter=10 * N)
     except Exception as exc:
         warnings.warn(
             f"eigsh failed ({exc}); retrying with sigma shift. "
             "This may indicate a near-singular matrix."
         )
-        # Add small diagonal shift to avoid singularity
-        H_shifted = H + sp.eye(N, format="csr") * 1e-6
-        evals = eigsh(H_shifted, k=k_modes, which="SM", return_eigenvectors=False)
+        # Add small diagonal shift proportional to f0 to avoid singularity
+        H_shifted = H + sp.eye(N, format="csr") * (1e-6 * f0)
+        evals = eigsh(H_shifted, k=k_modes, which="SM", return_eigenvectors=False,
+                      tol=1e-10, maxiter=10 * N)
 
     evals = np.sort(np.real(evals))
 
@@ -537,8 +542,10 @@ def compute_spectral_anchoring(
     e_min, e_max = evals.min(), evals.max()
     z_min, z_max = zeros.min(), zeros.max()
 
-    if abs(e_max - e_min) > 1e-15:
-        evals_scaled = (evals - e_min) / (e_max - e_min) * (z_max - z_min) + z_min
+    e_range = abs(e_max - e_min)
+    e_scale = max(abs(e_min), abs(e_max), 1.0)
+    if e_range > 1e-12 * e_scale:
+        evals_scaled = (evals - e_min) / e_range * (z_max - z_min) + z_min
     else:
         evals_scaled = np.full_like(evals, z_min)
 

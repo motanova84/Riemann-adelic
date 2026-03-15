@@ -240,6 +240,11 @@ class TestVModSparse:
         with pytest.raises(ValueError, match="log_primes"):
             v_mod_sparse(16, np.array([0.0, 1.0]))
 
+    def test_negative_log_prime_raises(self):
+        """Negative log_primes values must raise ValueError."""
+        with pytest.raises(ValueError, match="log_primes"):
+            v_mod_sparse(16, np.array([-1.0, 0.5]))
+
 
 # ===========================================================================
 # h_bk_sparse
@@ -323,9 +328,10 @@ class TestVCorrectionsSparse:
         assert off == pytest.approx(0.0, abs=1e-15)
 
     def test_zero_amplitude_gives_zero(self):
-        """amplitude=0 must give an all-zero matrix."""
+        """amplitude=0 must give a matrix with all-zero values."""
         V = v_corrections_sparse(16, amplitude=0.0)
-        assert V.nnz == 0 or np.allclose(V.toarray(), 0.0)
+        # dia_matrix may still store zeros structurally; check values are zero.
+        np.testing.assert_allclose(V.toarray(), 0.0, atol=1e-15)
 
     def test_diagonal_nonnegative(self):
         """Diagonal values must be ≥ 0 for positive amplitude."""
