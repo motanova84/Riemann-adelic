@@ -71,6 +71,13 @@ except ImportError:
 # Spectral rescaling constant  f₀ = γ₁ / π  (first zero / π)
 F0_SPECTRAL: float = 14.134725 / np.pi
 
+# Support window radius for the log-prime potential (in natural u-grid units).
+# Only grid points with |u_i − ln(p)| < SUPPORT_WINDOW_RADIUS accumulate a
+# contribution from prime p.  Value 3.0 covers ≈ 14σ at σ=0.21, ensuring
+# that essentially the entire Lorentzian tail is captured while keeping the
+# inner loop sparse.
+SUPPORT_WINDOW_RADIUS: float = 3.0
+
 # First 20 known Riemann zeros (imaginary parts γ_n)
 RIEMANN_ZEROS_20: np.ndarray = np.array([
     14.134725, 21.022040, 25.010858, 30.424876,
@@ -249,11 +256,13 @@ def build_potential_sparse(
     """
     Build the fractal log-prime diagonal potential V_mod as a sparse matrix.
 
-    For each prime p with log(p) = lp, we add a Lorentzian-shaped bump:
+    For each prime p with ln(p) = lp, we add a Lorentzian-shaped bump:
 
-        V(u_i) += α · ln(lp + 1) / (1 + (u_i − lp)² / σ²)
+        V(u_i) += α · ln(p + 1) / (1 + (u_i − lp)² / σ²)
 
-    only for grid points within the support window |u_i − lp| < 3.
+    only for grid points within the support window
+    ``|u_i − lp| < SUPPORT_WINDOW_RADIUS`` (in natural u-grid units,
+    i.e., the same units as the u-axis; at σ=0.21 this covers ≈14σ).
 
     Args:
         u:          Grid array (uniform, shape (N,)).
@@ -276,9 +285,10 @@ def build_potential_sparse(
     V_diag = np.zeros(N)
 
     for lp in log_primes:
-        mask = np.abs(u - lp) < 3.0
+        mask = np.abs(u - lp) < SUPPORT_WINDOW_RADIUS
         dist_sq = (u[mask] - lp) ** 2
-        V_diag[mask] += np.log(lp + 1.0) / (1.0 + dist_sq / sigma**2)
+        # Note: the weight is ln(p + 1) where p = exp(lp), so ln(exp(lp) + 1)
+        V_diag[mask] += np.log(np.exp(lp) + 1.0) / (1.0 + dist_sq / sigma**2)
 
     V_diag *= alpha
     return sparse.diags(V_diag, offsets=0, shape=(N, N), format="csc", dtype=float)
@@ -405,7 +415,7 @@ def compute_sparse_spectrum(
         mean_error = 100.0
 
     # ── QCAL Ψ coherence proxy ───────────────────────────────────────────────
-    # Ψ ≈ exp(-mean_error/100) maps error→coherence: 0% error → Ψ=1, ~70% → Ψ≈0.50
+    # Ψ ≈ exp(-mean_error/100) maps error→coherence: 0% error → Ψ=1, ~70% → Ψ≈0.497
     psi = float(np.exp(-mean_error / 100.0))
 
     t_end = time.time()
@@ -594,7 +604,11 @@ class QCALStringsSparse264:
             "-" * 52,
         ]
         for i, (gamma, lam, err) in enumerate(
-            zip(result.riemann_zeros, result.positive_eigenvalues, result.errors_pct),
+            zip(
+                result.riemann_zeros[: result.n_matched],
+                result.positive_eigenvalues[: result.n_matched],
+                result.errors_pct[: result.n_matched],
+            ),
             start=1,
         ):
             lines.append(f"  {i:2d} |  {gamma:14.6f}  |  {lam:12.6f}  |  {err:.4f}")

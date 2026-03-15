@@ -257,6 +257,7 @@ class TestComputeSparseSpectrum:
         result = compute_sparse_spectrum(small_config)
         assert isinstance(result.eigenvalues, np.ndarray)
         assert len(result.eigenvalues) > 0
+        assert len(result.eigenvalues) <= _SMALL_K
 
     def test_eigenvalues_real(self, small_config):
         result = compute_sparse_spectrum(small_config)
