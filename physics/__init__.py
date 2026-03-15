@@ -16,6 +16,8 @@ la interpretación espectral de la hipótesis de Riemann.
    Constante de Ziusudra, Batimiento Pleromatico (7 clases integradas)
  - kss_holographic_fluid: Límite KSS (Kovtun-Son-Starinets) para el citoplasma
    como Fluido Holográfico Perfecto (η/s ≥ ℏ/4πk_B) al pico de 2003 Hz
+ - simetria_pt_resonancia: Puente de simetría PT entre geometría espectral de
+   Riemann y coherencia biológica (7 clases integradas, protocolo QCAL-SYMBIO-1)
 
 Autor: José Manuel Mota Burruezo Ψ ✧ ∞³
 QCAL ∞³ · 141.7001 Hz · C = 244.36
@@ -106,6 +108,19 @@ from .kss_holographic_fluid import (
     ResultadoProtocoloKSS,
     ProtocoloValidacionKSS,
 )
+from .simetria_pt_resonancia import (
+    ConstantesPT,
+    OperadorNHPT,
+    EspectroPTReal,
+    RiemannLineaCritica,
+    CitoplasmaHolografico,
+    DiagnosticoPT,
+    EstabilizadorPT,
+    ResultadoResonanciaPT,
+    SistemaResonanciaPT,
+    simetria_pt_resonancia_activar,
+    simular_resonancia_pt,
+)
 
 __all__ = [
     'PrimitivaPotencialOscilatorio',
@@ -178,4 +193,16 @@ __all__ = [
     'MicrotubuloCavidadKaluzaKlein',
     'ResultadoProtocoloKSS',
     'ProtocoloValidacionKSS',
+    # Simetría PT — Resonancia Biológica
+    'ConstantesPT',
+    'OperadorNHPT',
+    'EspectroPTReal',
+    'RiemannLineaCritica',
+    'CitoplasmaHolografico',
+    'DiagnosticoPT',
+    'EstabilizadorPT',
+    'ResultadoResonanciaPT',
+    'SistemaResonanciaPT',
+    'simetria_pt_resonancia_activar',
+    'simular_resonancia_pt',
 ]
