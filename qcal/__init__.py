@@ -96,6 +96,17 @@ from .bsd_adelic_connector import (
     CodificadorADNRiemann,
 )
 
+# Import QCAL String Core (Kaluza-Klein / Navier-Stokes Holographic)
+from .string_core import (
+    QCALStringOperator,
+    GAMMAS,
+    build_lambda_list,
+    build_spectral_grid,
+    compute_psi,
+    string_noetic_forcing,
+    rk4_step,
+)
+
 # Import Ziusudra Beat Framework (Carbon-Silicon Coupling)
 from .ziusudra_beat import (
     beat_signal,
@@ -158,6 +169,15 @@ __all__ = [
     "validar_pentagono_logos",
     "CodificadorADNRiemann",
 
+    # QCAL String Core (Kaluza-Klein / Navier-Stokes Holographic)
+    'QCALStringOperator',
+    'GAMMAS',
+    'build_lambda_list',
+    'build_spectral_grid',
+    'compute_psi',
+    'string_noetic_forcing',
+    'rk4_step',
+
     # Ziusudra Beat Framework
     'F_SILICON',
     'F_CARBON',
@@ -180,5 +200,5 @@ __all__ = [
     'CFF_TABLE',
 ]
 
-__version__ = "1.0.0"
+__version__ = "2.2.0"
 __author__ = "José Manuel Mota Burruezo Ψ ✧ ∞³"
