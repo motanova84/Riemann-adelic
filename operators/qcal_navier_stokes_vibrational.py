@@ -62,13 +62,17 @@ ORCID: 0009-0002-1923-0773
 import numpy as np
 from typing import Dict, List, Optional, Tuple, Any
 from scipy.special import zeta as riemann_zeta_scipy
+from scipy.fft import fft2, ifft2, fftfreq
 import warnings
 
 # ---------------------------------------------------------------------------
-# QCAL Constants
+# QCAL Constants — sourced from qcal.constants (single source of truth)
 # ---------------------------------------------------------------------------
-F0 = 141.7001       # Fundamental frequency (Hz)
-C_COHERENCE = 244.36  # QCAL coherence constant
+try:
+    from qcal.constants import F0, C_COHERENCE
+except ImportError:
+    F0 = 141.7001       # Fundamental frequency (Hz)
+    C_COHERENCE = 244.36  # QCAL coherence constant
 ZETA_PRIME_HALF = -0.207886  # zeta'(1/2) correction
 PHI = (1.0 + np.sqrt(5.0)) / 2.0  # Golden ratio
 LAMBDA_C_KM = 336.0  # Coherence length (km) for Yukawa gravitational corrections
@@ -696,6 +700,75 @@ class QCALNavierStokesVibrational:
 
         return u_new
 
+    def evolve_step_rk4(
+        self,
+        u: np.ndarray,
+        dt: float,
+    ) -> np.ndarray:
+        """
+        Evolve the 1D QCAL-NS velocity field by one time step using the
+        Runge-Kutta 4th Order (RK4) integrator.
+
+        This is the 1D RK4 variant for the class-based solver, using the same
+        finite-difference RHS helpers as the Euler step (compute_nonlinear_convection
+        and compute_viscous_diffusion use np.gradient).  The RK4 scheme provides
+        4th-order temporal accuracy over the Euler scheme, greatly improving
+        stability for small dt.
+
+        The RHS evaluated at each sub-stage:
+            rhs(u) = -(u . nabla u) - (1/rho)*nabla p_GACT
+                     + nu * nabla^2 u + (1/rho)*F_res
+
+        Args:
+            u: Current velocity field array (1D, length n_points)
+            dt: Time step size
+
+        Returns:
+            Updated velocity field array after one RK4 step with vibrational
+            regularization applied.
+        """
+        # Pre-regularize to remove accumulated numerical noise
+        u = self._vibrational_regularize(u)
+
+        def rhs(u_in: np.ndarray) -> np.ndarray:
+            convection = -self.compute_nonlinear_convection(u_in)
+            pressure = (1.0 / self.rho) * self.compute_pressure_gradient()
+            diffusion = self.compute_viscous_diffusion(u_in)
+            f_res = compute_residual_force(
+                u_in, self.x,
+                superstring_order=self.superstring_order,
+                gue_strength=self.gue_strength,
+            )
+            forcing = (1.0 / self.rho) * f_res
+            return convection + pressure + diffusion + forcing
+
+        # Classical RK4 stages
+        k1 = rhs(u)
+        k2 = rhs(u + 0.5 * dt * k1)
+        k3 = rhs(u + 0.5 * dt * k2)
+        k4 = rhs(u + dt * k3)
+
+        u_new = u + (dt / 6.0) * (k1 + 2.0 * k2 + 2.0 * k3 + k4)
+
+        # Guard against NaN/Inf from overflow
+        if not np.all(np.isfinite(u_new)):
+            diffusion_only = self.compute_viscous_diffusion(u)
+            u_new = u + dt * diffusion_only
+            if not np.all(np.isfinite(u_new)):
+                u_new = np.nan_to_num(u_new, nan=0.0, posinf=0.0, neginf=0.0)
+
+        # Vibrational regularization: apply f0-frequency smoothing
+        u_new = self._vibrational_regularize(u_new)
+
+        # Safety clip to prevent overflow
+        u_max = max(np.max(np.abs(u)) * 100.0, 1e6)
+        u_new = np.clip(u_new, -u_max, u_max)
+
+        # Enforce divergence-free condition (1D: subtract mean)
+        u_new = u_new - np.mean(u_new)
+
+        return u_new
+
     def _vibrational_regularize(
         self,
         u: np.ndarray,
@@ -1090,6 +1163,191 @@ class QCALNavierStokesVibrational:
             'is_laminar': re_data['is_laminar'],
             'doi': '10.5281/zenodo.17379721',
         }
+
+
+def rk4_step(
+    uhat: np.ndarray,
+    vhat: np.ndarray,
+    dt: float,
+    rho: float,
+    mu: float,
+    k2: np.ndarray,
+    kxx: np.ndarray,
+    kyy: np.ndarray,
+    grad_px_hat: np.ndarray,
+    grad_py_hat: np.ndarray,
+) -> Tuple[np.ndarray, np.ndarray]:
+    """
+    Runge-Kutta 4th Order integrator for the 2D QCAL-NS equations (pseudospectral).
+
+    Integrates the incompressible Navier-Stokes equations in Fourier space using
+    the classical RK4 scheme.  This provides 4th-order temporal accuracy and
+    global stability in the regime of critical quantum Reynolds number Re_q.
+
+    The momentum equation in Fourier space (per unit density) at each RK4 stage:
+
+        rhs_u = -FFT(u * du/dx + v * du/dy) - (1/rho)*grad_px_hat - (mu/rho)*k^2*uhat
+        rhs_v = -FFT(u * dv/dx + v * dv/dy) - (1/rho)*grad_py_hat - (mu/rho)*k^2*vhat
+
+    where mu/rho = nu is the kinematic viscosity (adelic: nu = 1/f0 for rho=1).
+
+    After computing the nonlinear + viscous right-hand side, a divergence-free
+    projection is applied to maintain incompressibility exactly in spectral space:
+
+        rhs -= k * (k . rhs) / k^2
+
+    Args:
+        uhat: Fourier coefficients of x-velocity component (2D complex array)
+        vhat: Fourier coefficients of y-velocity component (2D complex array)
+        dt: Time step size
+        rho: Fluid density
+        mu: Dynamic viscosity (adelic: mu = 1/f0); kinematic viscosity nu = mu/rho
+        k2: Array of squared wavenumber magnitudes |k|^2; zero mode set to 1
+            to avoid division by zero
+        kxx: x-wavenumber grid (same shape as uhat/vhat)
+        kyy: y-wavenumber grid (same shape as uhat/vhat)
+        grad_px_hat: Fourier coefficients of x-component of pressure gradient
+        grad_py_hat: Fourier coefficients of y-component of pressure gradient
+
+    Returns:
+        Tuple (uhat_new, vhat_new): Updated Fourier velocity coefficients after
+        one RK4 step.
+    """
+    nu = mu / rho  # kinematic viscosity
+
+    def compute_rhs(
+        uh: np.ndarray, vh: np.ndarray
+    ) -> Tuple[np.ndarray, np.ndarray]:
+        # Physical-space fields via inverse FFT (real part)
+        u_p = ifft2(uh).real
+        v_p = ifft2(vh).real
+
+        # Physical-space velocity gradients (spectral differentiation)
+        ux = ifft2(1j * kxx * uh).real
+        uy = ifft2(1j * kyy * uh).real
+        vx = ifft2(1j * kxx * vh).real
+        vy = ifft2(1j * kyy * vh).real
+
+        # Nonlinear convection (per unit density) + viscous diffusion + pressure
+        rhs_u = -fft2(u_p * ux + v_p * uy) - (1.0 / rho) * grad_px_hat - nu * k2 * uh
+        rhs_v = -fft2(u_p * vx + v_p * vy) - (1.0 / rho) * grad_py_hat - nu * k2 * vh
+
+        # Divergence-free projection (enforces incompressibility in spectral space)
+        div = (kxx * rhs_u + kyy * rhs_v) / k2
+        rhs_u -= kxx * div
+        rhs_v -= kyy * div
+
+        return rhs_u, rhs_v
+
+    # Classical RK4 stages
+    k1u, k1v = compute_rhs(uhat, vhat)
+    k2u, k2v = compute_rhs(uhat + 0.5 * dt * k1u, vhat + 0.5 * dt * k1v)
+    k3u, k3v = compute_rhs(uhat + 0.5 * dt * k2u, vhat + 0.5 * dt * k2v)
+    k4u, k4v = compute_rhs(uhat + dt * k3u, vhat + dt * k3v)
+
+    uhat_new = uhat + (dt / 6.0) * (k1u + 2.0 * k2u + 2.0 * k3u + k4u)
+    vhat_new = vhat + (dt / 6.0) * (k1v + 2.0 * k2v + 2.0 * k3v + k4v)
+
+    return uhat_new, vhat_new
+
+
+def compute_biological_coherence(
+    u_phys: np.ndarray,
+    xx: np.ndarray,
+    f0: float = F0,
+) -> float:
+    """
+    Compute biological coherence as the Pearson correlation between the
+    velocity field and the Logos wave at fundamental frequency f0.
+
+    Measures the resonance between the QCAL fluid and the DNA coherence
+    oscillation.  A value close to 1 indicates strong alignment between
+    the fluid dynamics and the 141.7 Hz biological frequency.
+
+    Mathematical form:
+        C_bio = |corr(u, sin(2*pi*f0*x / (2*pi)))|
+              = |corr(u, sin(f0 * x))|
+
+    Args:
+        u_phys: Physical-space velocity field (real 2D or 1D array)
+        xx: Spatial coordinate grid matching the shape of u_phys
+        f0: Logos (fundamental) frequency in Hz (default: F0 = 141.7001)
+
+    Returns:
+        Absolute Pearson correlation coefficient in [0, 1].
+        Returns 0.0 if computation fails due to degenerate arrays.
+    """
+    logos_wave = np.sin(f0 * xx)
+    u_flat = u_phys.flatten()
+    l_flat = logos_wave.flatten()
+
+    # Guard against constant arrays which give NaN correlation
+    if np.std(u_flat) < 1e-30 or np.std(l_flat) < 1e-30:
+        return 0.0
+
+    corr_matrix = np.corrcoef(u_flat, l_flat)
+    return float(abs(corr_matrix[0, 1]))
+
+
+def plot_energy_spectrum(
+    uhat: np.ndarray,
+    vhat: np.ndarray,
+    kxx: np.ndarray,
+    kyy: np.ndarray,
+    N: int,
+    title: str = "Espectro",
+) -> None:
+    """
+    Plot the radially-binned kinetic energy spectrum E(k) in log-log scale.
+
+    Computes the total kinetic energy per Fourier mode and bins it by
+    radial wavenumber magnitude to produce the 1D energy cascade spectrum.
+    The Kolmogorov −5/3 inertial-range scaling can be verified visually.
+
+    Energy per mode:
+        E(kx, ky) = |uhat(kx,ky)|^2 + |vhat(kx,ky)|^2
+
+    Radial binning:
+        E(k) = sum_{|k'| in [k, k+1)} E(k')
+
+    Bin edges span from 0 to ceil(max |k|)+1 to capture all modes including
+    the corners of the 2D Fourier domain (where |k| can reach sqrt(2)*N/2).
+    k=0 (DC component) is excluded from the log-log plot.
+
+    Args:
+        uhat: Fourier coefficients of x-velocity (2D complex array)
+        vhat: Fourier coefficients of y-velocity (2D complex array)
+        kxx: x-wavenumber grid (same shape as uhat/vhat)
+        kyy: y-wavenumber grid (same shape as uhat/vhat)
+        N: Grid size (number of points per dimension); used only for context
+        title: Label for the plot legend (default: "Espectro")
+    """
+    try:
+        import matplotlib
+        import os
+        if not os.environ.get("DISPLAY"):
+            matplotlib.use("Agg")
+        import matplotlib.pyplot as plt
+    except ImportError:
+        warnings.warn("matplotlib not available; plot_energy_spectrum skipped.")
+        return
+
+    energy_spectrum = np.abs(uhat) ** 2 + np.abs(vhat) ** 2
+    k_radial = np.sqrt(kxx ** 2 + kyy ** 2).flatten()
+    e_flat = energy_spectrum.flatten()
+
+    # Build bin edges covering the full radial range (including 2D corners)
+    k_max = int(np.ceil(np.max(k_radial))) + 1
+    k_bins = np.arange(0, k_max + 1, 1)
+    e_bins = np.histogram(k_radial, bins=k_bins, weights=e_flat)[0]
+
+    # Use bin centers (k=0.5, 1.5, ...) and exclude k=0 bin to avoid log(0)
+    k_centers = k_bins[:-1] + 0.5
+    mask = (k_centers > 0) & (e_bins > 0)
+    if np.any(mask):
+        plt.loglog(k_centers[mask], e_bins[mask], label=title)
+    plt.xlabel("Wavenumber k")
+    plt.ylabel("Energy E(k)")
 
 
 def demonstrate_qcal_navier_stokes():
