@@ -14,6 +14,8 @@ la interpretación espectral de la hipótesis de Riemann.
    codificador de superficie zeta (7 clases integradas)
  - hamiltoniano_union_carbono_silicio: Hamiltoniano Unión Carbono–Silicio,
    Constante de Ziusudra, Batimiento Pleromatico (7 clases integradas)
+ - riemann_adelic_core: Ψ_min exacto (φ + Berry 7/8), Ĥ_QCAL toy model,
+   kernel de Dirichlet y análisis de falsificabilidad LIGO/GWOSC
 
 Autor: José Manuel Mota Burruezo Ψ ✧ ∞³
 QCAL ∞³ · 141.7001 Hz · C = 244.36
@@ -93,6 +95,17 @@ from .hamiltoniano_union_carbono_silicio import (
     PSI_UMBRAL,
 )
 
+from .riemann_adelic_core import (
+    BERRY_7_8_FACTOR,
+    PSI_MIN_THRESHOLD,
+    RIEMANN_ZEROS_10,
+    psi_min_exact,
+    simulate_h_qcal,
+    simulate_h_qcal_full,
+    dirichlet_convolution_kernel,
+    analyze_ligo_ringdown_band,
+)
+
 __all__ = [
     'PrimitivaPotencialOscilatorio',
     'EstimacionCuadraticaMedia',
@@ -154,4 +167,13 @@ __all__ = [
     'T_BEAT',
     'F_MANIF',
     'PSI_UMBRAL',
+    # Riemann Adelic Core
+    'BERRY_7_8_FACTOR',
+    'PSI_MIN_THRESHOLD',
+    'RIEMANN_ZEROS_10',
+    'psi_min_exact',
+    'simulate_h_qcal',
+    'simulate_h_qcal_full',
+    'dirichlet_convolution_kernel',
+    'analyze_ligo_ringdown_band',
 ]
