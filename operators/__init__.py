@@ -264,6 +264,18 @@ from .riemann_sistema_Z import (
     PSI_TARGET,
 )
 
+from .riemann_operator_H_omega import (
+    HOmegaOperator,
+    Vortex8Geometry,
+    DeltaCombPotential,
+    DeltaCombPotentialConfig,
+    MellinTransform,
+    TraceFormulaAnalysis,
+    GUEStatistics,
+    HOmegaResult,
+    verify_h_omega_operator,
+)
+
 __all__ = [
     'construct_H_psi',
     'compute_spectrum',
@@ -434,4 +446,14 @@ __all__ = [
     'DeterminanteHadamard',
     'SistemaDinamicoZ',
     'RiemannSistemaZCompleto',
+    # H_Omega Berry-Keating Operator (Mar 2026)
+    'HOmegaOperator',
+    'Vortex8Geometry',
+    'DeltaCombPotential',
+    'DeltaCombPotentialConfig',
+    'MellinTransform',
+    'TraceFormulaAnalysis',
+    'GUEStatistics',
+    'HOmegaResult',
+    'verify_h_omega_operator',
 ]
