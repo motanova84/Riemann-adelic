@@ -264,6 +264,12 @@ from .riemann_sistema_Z import (
     PSI_TARGET,
 )
 
+from .fractal_qcal_operator import (
+    FractalQCALOperator,
+    RIEMANN_ZEROS_20,
+    generate_primes,
+)
+
 __all__ = [
     'construct_H_psi',
     'compute_spectrum',
@@ -434,4 +440,8 @@ __all__ = [
     'DeterminanteHadamard',
     'SistemaDinamicoZ',
     'RiemannSistemaZCompleto',
+    # FractalQCAL Operator - Adelic-Fractal Spectral Operator
+    'FractalQCALOperator',
+    'RIEMANN_ZEROS_20',
+    'generate_primes',
 ]
