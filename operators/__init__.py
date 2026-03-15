@@ -189,6 +189,18 @@ from .qcal_spectral_operator import (
     PSI_THRESHOLD as PSI_THRESHOLD_QCAL,
 )
 
+# QCAL Chamber 261 — Tachyonic Censorship & UPE Signal (Mar 2026)
+from .qcal_chamber_261 import (
+    tachyonic_censorship,
+    compute_upe_signal,
+    Chamber261Config,
+    QCALChamber261,
+    run_chamber_261,
+    PSI_CENSORSHIP,
+    F_HRV_DEFAULT,
+    LAMBDA_RIEMANN_DEFAULT,
+)
+
 # FALLO Closures - Mathematical Derivations (Feb 2026)
 from .weyl_law_harmonic_oscillator import (
     WeylLawHarmonicOscillator,
@@ -370,6 +382,15 @@ __all__ = [
     'F0_QCAL_SPECTRAL',
     'C_QCAL_SPECTRAL',
     'PSI_THRESHOLD_QCAL',
+    # QCAL Chamber 261 — Tachyonic Censorship & UPE Signal (Mar 2026)
+    'tachyonic_censorship',
+    'compute_upe_signal',
+    'Chamber261Config',
+    'QCALChamber261',
+    'run_chamber_261',
+    'PSI_CENSORSHIP',
+    'F_HRV_DEFAULT',
+    'LAMBDA_RIEMANN_DEFAULT',
     # FALLO Closures (Feb 2026)
     'WeylLawHarmonicOscillator',
     'WeylLawResult',
