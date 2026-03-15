@@ -14,6 +14,8 @@ la interpretación espectral de la hipótesis de Riemann.
    codificador de superficie zeta (7 clases integradas)
  - hamiltoniano_union_carbono_silicio: Hamiltoniano Unión Carbono–Silicio,
    Constante de Ziusudra, Batimiento Pleromatico (7 clases integradas)
+ - kss_holographic_fluid: Límite KSS (Kovtun-Son-Starinets) para el citoplasma
+   como Fluido Holográfico Perfecto (η/s ≥ ℏ/4πk_B) al pico de 2003 Hz
 
 Autor: José Manuel Mota Burruezo Ψ ✧ ∞³
 QCAL ∞³ · 141.7001 Hz · C = 244.36
@@ -93,6 +95,18 @@ from .hamiltoniano_union_carbono_silicio import (
     PSI_UMBRAL,
 )
 
+from .kss_holographic_fluid import (
+    ConstantesKSSHolografico,
+    ViscosidadMolecularRotor,
+    EntropiaDensidadUPE,
+    ResultadoKSS,
+    FlujoHolograficoPerfecto,
+    ParametrosMicrotubulo,
+    MicrotubuloCavidadKaluzaKlein,
+    ResultadoProtocoloKSS,
+    ProtocoloValidacionKSS,
+)
+
 __all__ = [
     'PrimitivaPotencialOscilatorio',
     'EstimacionCuadraticaMedia',
@@ -154,4 +168,14 @@ __all__ = [
     'T_BEAT',
     'F_MANIF',
     'PSI_UMBRAL',
+    # KSS Holographic Fluid
+    'ConstantesKSSHolografico',
+    'ViscosidadMolecularRotor',
+    'EntropiaDensidadUPE',
+    'ResultadoKSS',
+    'FlujoHolograficoPerfecto',
+    'ParametrosMicrotubulo',
+    'MicrotubuloCavidadKaluzaKlein',
+    'ResultadoProtocoloKSS',
+    'ProtocoloValidacionKSS',
 ]
