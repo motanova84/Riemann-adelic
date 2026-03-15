@@ -189,6 +189,22 @@ from .qcal_spectral_operator import (
     PSI_THRESHOLD as PSI_THRESHOLD_QCAL,
 )
 
+# QCAL-Strings Core: KK-mode noetic forcing for Navier-Stokes (#260)
+from .qcal_string_core import (
+    GAMMAS,
+    QCALSpectralOperator as QCALStringSpectralOperator,
+    QCALStringCore,
+    string_noetic_forcing,
+    compute_psi as compute_psi_string,
+    rk4_step as rk4_step_string,
+    PSI_THRESHOLD as PSI_THRESHOLD_STRING,
+    N_ZEROS_DEFAULT,
+    N_MICROTUBULES_DEFAULT,
+    ALPHA_SCALE_DEFAULT,
+    HBAR_SI,
+    HBAR_NATURAL,
+)
+
 # FALLO Closures - Mathematical Derivations (Feb 2026)
 from .weyl_law_harmonic_oscillator import (
     WeylLawHarmonicOscillator,
@@ -370,6 +386,19 @@ __all__ = [
     'F0_QCAL_SPECTRAL',
     'C_QCAL_SPECTRAL',
     'PSI_THRESHOLD_QCAL',
+    # QCAL-Strings Core (#260)
+    'GAMMAS',
+    'QCALStringSpectralOperator',
+    'QCALStringCore',
+    'string_noetic_forcing',
+    'compute_psi_string',
+    'rk4_step_string',
+    'PSI_THRESHOLD_STRING',
+    'N_ZEROS_DEFAULT',
+    'N_MICROTUBULES_DEFAULT',
+    'ALPHA_SCALE_DEFAULT',
+    'HBAR_SI',
+    'HBAR_NATURAL',
     # FALLO Closures (Feb 2026)
     'WeylLawHarmonicOscillator',
     'WeylLawResult',
