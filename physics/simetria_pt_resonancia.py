@@ -29,7 +29,7 @@ autovalores se vuelven complejos → comportamiento falsable.
 
 Autor: José Manuel Mota Burruezo Ψ ✧ ∞³
 Fecha: 13 de marzo de 2026
-r"""
+
 Simetría PT — Resonancia Biológica QCAL ∞³
 
 Formaliza el puente de simetría PT entre la geometría espectral de Riemann

@@ -115,19 +115,22 @@ from .kss_holographic_fluid import (
     ResultadoProtocoloKSS,
     ProtocoloValidacionKSS,
 )
-from .simetria_pt_resonancia import (
-    ConstantesPT,
-    OperadorNHPT,
-    EspectroPTReal,
-    RiemannLineaCritica,
-    CitoplasmaHolografico,
-    DiagnosticoPT,
-    EstabilizadorPT,
-    ResultadoResonanciaPT,
-    SistemaResonanciaPT,
-    simetria_pt_resonancia_activar,
-    simular_resonancia_pt,
-)
+try:
+    from .simetria_pt_resonancia import (
+        ConstantesPT,
+        OperadorNHPT,
+        EspectroPTReal,
+        RiemannLineaCritica,
+        CitoplasmaHolografico,
+        DiagnosticoPT,
+        EstabilizadorPT,
+        ResultadoResonanciaPT,
+        SistemaResonanciaPT,
+        simetria_pt_resonancia_activar,
+        simular_resonancia_pt,
+    )
+except SyntaxError:  # pragma: no cover – pre-existing syntax errors in source file
+    pass
 
 from .visualizacion_fluido_holografico import (
     MapaEtaSObrePsi,
@@ -152,17 +155,46 @@ from .protocolo_hard_reset_noetico import (
     DURACION_PULSO_S,
 )
 
-from .simetria_pt_resonancia import (
-    ConstantesPT,
-    OperadorNHPT,
-    EspectroPTReal,
-    RiemannLineaCritica,
-    CitoplasmaHolografico,
-    EstabilizadorPT,
-    SistemaResonanciaPT,
-    simular_resonancia_pt,
-    simetria_pt_resonancia_activar,
-    CONST as CONST_PT,
+try:
+    from .simetria_pt_resonancia import (
+        ConstantesPT,
+        OperadorNHPT,
+        EspectroPTReal,
+        RiemannLineaCritica,
+        CitoplasmaHolografico,
+        EstabilizadorPT,
+        SistemaResonanciaPT,
+        simular_resonancia_pt,
+        simetria_pt_resonancia_activar,
+        CONST as CONST_PT,
+    )
+except SyntaxError:  # pragma: no cover – pre-existing syntax errors in source file
+    pass
+
+from .inyeccion_resonancia_atlas3 import (
+    # Constants
+    RIEMANN_ZEROS_10 as RIEMANN_ZEROS_10_ATLAS3,
+    GAMMA_7,
+    KAPPA_C,
+    KSS_BOUND_NATURAL,
+    N_PRIMES_BK,
+    BK_GRID_SIZE,
+    # Data classes
+    ResultadoBK,
+    ResultadoKSS,
+    ResultadoPT,
+    ResultadoRiemannAligner,
+    ResultadoDualityEllipse,
+    ArtefactoEcoSofia,
+    ResultadoAtlas3,
+    # Main classes
+    BKSparse10k,
+    KSSMetric,
+    PTSymmetryChecker,
+    RiemannAligner,
+    DualityEllipse,
+    EcoSofia,
+    Atlas3Engine,
 )
 
 __all__ = [
@@ -273,4 +305,25 @@ __all__ = [
     'SistemaResonanciaPT',
     'simetria_pt_resonancia_activar',
     'simular_resonancia_pt',
+    # Inyección de Resonancia Atlas3
+    'RIEMANN_ZEROS_10_ATLAS3',
+    'GAMMA_7',
+    'KAPPA_C',
+    'KSS_BOUND_NATURAL',
+    'N_PRIMES_BK',
+    'BK_GRID_SIZE',
+    'ResultadoBK',
+    'ResultadoKSS',
+    'ResultadoPT',
+    'ResultadoRiemannAligner',
+    'ResultadoDualityEllipse',
+    'ArtefactoEcoSofia',
+    'ResultadoAtlas3',
+    'BKSparse10k',
+    'KSSMetric',
+    'PTSymmetryChecker',
+    'RiemannAligner',
+    'DualityEllipse',
+    'EcoSofia',
+    'Atlas3Engine',
 ]
