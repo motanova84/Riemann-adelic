@@ -185,8 +185,8 @@ class TestGroundStateDensity:
     def test_max_at_zero_attractive(self):
         """Attractive delta (λ<0) with harmonic potential localises ground state at origin."""
         H, x = build_nodo_zero_hamiltonian(N=201, L=8.0, lambda_delta=-2.0, alpha_pt=0.5)
-        from scipy.sparse.linalg import eigsh as _eigsh
-        vals, vecs = _eigsh(H, k=1, which="SM")
+        from scipy.sparse.linalg import eigsh
+        vals, vecs = eigsh(H, k=1, which="SM")
         assert ground_state_density_max_at_zero(vecs, x)
 
 
@@ -237,7 +237,7 @@ class TestVerticalTransform:
 
     def _psi_exp(self, t: float) -> float:
         """Simple test function: Ψ(t) = exp(−t)."""
-        return float(np.exp(-t))
+        return np.exp(-t)
 
     def test_finite_result(self):
         """L_v must return a finite complex value."""

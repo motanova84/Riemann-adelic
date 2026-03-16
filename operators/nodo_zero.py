@@ -211,7 +211,7 @@ def build_nodo_zero_hamiltonian(
     V_pt = alpha_pt * x**2
 
     # --- Dirac delta potential at x = 0: approximated as λ/Δx at nearest grid point
-    idx_zero = int(np.argmin(np.abs(x)))  # index closest to x=0
+    idx_zero = np.argmin(np.abs(x))  # index closest to x=0
     V_delta = np.zeros(N)
     V_delta[idx_zero] = lambda_delta / dx
 
@@ -317,7 +317,7 @@ def ground_state_density_max_at_zero(
     psi0 = eigenvectors[:, 0]
     density = np.abs(psi0) ** 2
 
-    idx_max = int(np.argmax(density))
+    idx_max = np.argmax(density)
     x_max = x[idx_max]
 
     L = x[-1]  # domain half-width
@@ -461,7 +461,8 @@ def validate_nodo_zero(
     gs_at_zero = ground_state_density_max_at_zero(spectrum.eigenvectors, x)
 
     # Vertical transform: use a simple decaying test function Ψ(t) = exp(−t)
-    psi_test: Callable[[float], float] = lambda t: np.exp(-t)
+    def psi_test(t: float) -> float:
+        return np.exp(-t)
     s_test = np.array([1.0 + 0j])
     vt_result = vertical_transform(psi_test, s_test)
     vt_finite = bool(np.isfinite(vt_result.L_v_values[0]))
