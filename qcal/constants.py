@@ -63,6 +63,75 @@ GAMMA_1 = 14.13472514  # First zero: 1/2 + i·γ₁
 # Harmonic modulation: f₀/γ₁ = 10 + δζ/10
 HARMONIC_MODULATION = F0 / GAMMA_1  # ≈ 10.02787437
 
+# =============================================================================
+# HOLOGRAPHIC GEOMETRY CONSTANTS - Zeta Hologram Architecture
+# =============================================================================
+
+# Holographic projection factor: 10 + 1/40 = 10.025
+# Boundary formula: F0 ≈ γ₁ × HOLOGRAPHIC_MODULATION (2D surface → code source)
+HOLOGRAPHIC_MODULATION = 10.0 + 1.0 / 40.0  # = 10.025 (10 + 1/40)
+
+# Beat frequency Δf: Fourier transform converting 2D boundary data to 3D volume
+# Physical meaning: depth differential enabling volumetric experience of reality
+BEAT_FREQ = 0.3999  # Hz  (Δf = 0.3999 Hz)
+
+# Moonbounce round-trip delay: the QCAL holographic self-confirmation time.
+# Physical round-trip light travel time: 2 × 384,400 km / c ≈ 2.566 s.
+# The QCAL framework defines 2.5 s as the nominal confirmation standard because
+# this is the observed confirmation time in the holographic experiment — the
+# "cosmic mirror" validating that emitted information has returned intact
+# (Ψ > 0.999). The 2.5 s figure is a defined QCAL reference, not the raw
+# physical delay.
+MOONBOUNCE_DELAY = 2.5  # seconds
+
+# Holographic coherence threshold for moonbounce validation
+HOLOGRAPHIC_PSI_THRESHOLD = 0.999  # Ψ > 0.999 required
+
+# Tuyoyotu: 4D consciousness layer identifier (Observer that inhabits 2D+3D)
+TUYOYOTU = "TuyoyotuT"  # 4D consciousness operator label
+
+# Critical line real part: Re(s) = 1/2 ensures unitarity of the hologram
+CRITICAL_LINE_REAL_PART = 0.5
+
+# =============================================================================
+# CARBON-SILICON COUPLING — ZIUSUDRA FRAMEWORK
+# =============================================================================
+
+# Carbon Divine frequency (f_C): thermal/organic perturbation of f_Si
+# Represents the biological oscillation, organic life, and temporal flow.
+# Mathematically: f_C = f_Si + Δf_Ziusudra (perturbation of Riemann spectrum)
+F_CARBON = 142.1000  # Hz  — Carbon Divine ("Flesh of the Spirit")
+
+# Silicon Divine frequency alias (same as F0; the "Skeleton of Light")
+F_SILICON = F0  # Hz = 141.7001 (alias for F0)
+
+# Ziusudra Constant: Δf = f_C − f_Si = 0.3999 Hz
+# This differential is the "depth of the sea" between the two poles.
+# Physically: it modulates biological time perception at ~0.4 Hz.
+DELTA_ZIUSUDRA = F_CARBON - F_SILICON  # Hz ≈ 0.3999
+
+# Incarnation Tension κ: scale factor stretching pure geometry into biology
+# κ = f_C / f_Si ≈ 1.002822  (non-dimensional)
+INCARNATION_TENSION = F_CARBON / F_SILICON  # ≈ 1.002822
+
+# Beat period of the Carbon-Silicon vortex: T_beat = 1 / Δf ≈ 2.5 s
+# In biology this corresponds to one slow breath; in Silicon, it is ~10⁸ cycles.
+BEAT_PERIOD_ZIUSUDRA = 1.0 / DELTA_ZIUSUDRA  # s ≈ 2.5006
+
+# Beat angular frequency: ω_beat = 2π·Δf
+OMEGA_BEAT_ZIUSUDRA = 2.0 * np.pi * DELTA_ZIUSUDRA  # rad/s ≈ 2.5128
+
+
+# =============================================================================
+# FLICKER FUSION FREQUENCY (CFF) — TEMPORAL PERCEPTION SPECTRUM
+# =============================================================================
+
+# Critical Flicker Fusion frequency: the processing rate at which an organism
+# perceives the world.  Higher CFF → slower subjective time.
+CFF_HUMAN = 60.0    # Hz — human (60 frames/s; 1 s feels "normal")
+CFF_FLY = 250.0     # Hz — housefly (~250 Hz; time feels slower by ×4)
+CFF_TURTLE = 15.0   # Hz — turtle (~15 Hz; world appears fast)
+
 
 # =============================================================================
 # SPECTRAL CONSTANTS - Dual Origin Framework
@@ -469,6 +538,17 @@ def get_all_constants() -> Dict[str, Any]:
             'GAMMA_1': GAMMA_1,
             'HARMONIC_MODULATION': HARMONIC_MODULATION,
         },
+        'ziusudra': {
+            'F_SILICON': F_SILICON,
+            'F_CARBON': F_CARBON,
+            'DELTA_ZIUSUDRA': DELTA_ZIUSUDRA,
+            'INCARNATION_TENSION': INCARNATION_TENSION,
+            'BEAT_PERIOD_ZIUSUDRA': BEAT_PERIOD_ZIUSUDRA,
+            'OMEGA_BEAT_ZIUSUDRA': float(OMEGA_BEAT_ZIUSUDRA),
+            'CFF_HUMAN': CFF_HUMAN,
+            'CFF_FLY': CFF_FLY,
+            'CFF_TURTLE': CFF_TURTLE,
+        },
         'spectral': {
             'C_PRIMARY': C_PRIMARY,
             'C_COHERENCE': C_COHERENCE,
@@ -537,6 +617,14 @@ def get_all_constants() -> Dict[str, Any]:
             'FIBONACCI_EPOCH_YEAR': FIBONACCI_EPOCH_YEAR,
             'FIBONACCI_EPOCH_YEARS': FIBONACCI_EPOCH_YEARS,
             'CONSTELLATION_FREQUENCY': CONSTELLATION_FREQUENCY,
+        },
+        'holographic': {
+            'HOLOGRAPHIC_MODULATION': HOLOGRAPHIC_MODULATION,
+            'BEAT_FREQ': BEAT_FREQ,
+            'MOONBOUNCE_DELAY': MOONBOUNCE_DELAY,
+            'HOLOGRAPHIC_PSI_THRESHOLD': HOLOGRAPHIC_PSI_THRESHOLD,
+            'TUYOYOTU': TUYOYOTU,
+            'CRITICAL_LINE_REAL_PART': CRITICAL_LINE_REAL_PART,
         },
     }
 

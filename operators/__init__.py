@@ -180,6 +180,27 @@ from .berry_keating_self_adjointness import (
     HAS_MPMATH
 )
 
+from .qcal_spectral_operator import (
+    QCALSpectralOperator,
+    QCALSpectralResult,
+    certify_qcal_spectral_operator,
+    F0_QCAL as F0_QCAL_SPECTRAL,
+    C_QCAL as C_QCAL_SPECTRAL,
+    PSI_THRESHOLD as PSI_THRESHOLD_QCAL,
+)
+
+# QCAL Chamber 261 — Tachyonic Censorship & UPE Signal (Mar 2026)
+from .qcal_chamber_261 import (
+    tachyonic_censorship,
+    compute_upe_signal,
+    Chamber261Config,
+    QCALChamber261,
+    run_chamber_261,
+    PSI_CENSORSHIP,
+    F_HRV_DEFAULT,
+    LAMBDA_RIEMANN_DEFAULT,
+)
+
 # FALLO Closures - Mathematical Derivations (Feb 2026)
 from .weyl_law_harmonic_oscillator import (
     WeylLawHarmonicOscillator,
@@ -354,6 +375,22 @@ __all__ = [
     'verify_berry_keating_self_adjointness',
     'C_BERRY_KEATING',
     'HAS_MPMATH',
+    # QCAL Spectral Operator (Mar 2026)
+    'QCALSpectralOperator',
+    'QCALSpectralResult',
+    'certify_qcal_spectral_operator',
+    'F0_QCAL_SPECTRAL',
+    'C_QCAL_SPECTRAL',
+    'PSI_THRESHOLD_QCAL',
+    # QCAL Chamber 261 — Tachyonic Censorship & UPE Signal (Mar 2026)
+    'tachyonic_censorship',
+    'compute_upe_signal',
+    'Chamber261Config',
+    'QCALChamber261',
+    'run_chamber_261',
+    'PSI_CENSORSHIP',
+    'F_HRV_DEFAULT',
+    'LAMBDA_RIEMANN_DEFAULT',
     # FALLO Closures (Feb 2026)
     'WeylLawHarmonicOscillator',
     'WeylLawResult',

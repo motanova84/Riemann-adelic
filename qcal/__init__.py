@@ -39,6 +39,17 @@ from .constants import (
     EULER_GAMMA,
     PI,
     
+    # Ziusudra / Carbon-Silicon coupling
+    F_SILICON,
+    F_CARBON,
+    DELTA_ZIUSUDRA,
+    INCARNATION_TENSION,
+    BEAT_PERIOD_ZIUSUDRA,
+    OMEGA_BEAT_ZIUSUDRA,
+    CFF_HUMAN,
+    CFF_FLY,
+    CFF_TURTLE,
+    
     # QCAL framework
     PSI_EQUATION,
     QCAL_SIGNATURE,
@@ -76,6 +87,27 @@ from .master_lagrangian import (
     derive_equations_of_motion,
     compute_quantized_spectrum,
     verify_energy_conservation,
+)
+
+# Import BSD Adelic Connector (Pentagon Logos)
+from .bsd_adelic_connector import (
+    sincronizar_bsd_adn,
+    validar_pentagono_logos,
+    CodificadorADNRiemann,
+)
+
+# Import Ziusudra Beat Framework (Carbon-Silicon Coupling)
+from .ziusudra_beat import (
+    beat_signal,
+    beat_coherence,
+    total_hamiltonian,
+    interaction_hamiltonian_diagonal,
+    compute_incarnation_tension,
+    temporal_perception_table,
+    subjective_second,
+    processing_frequency_limit,
+    ziusudra_summary,
+    CFF_TABLE,
 )
 
 __all__ = [
@@ -120,6 +152,32 @@ __all__ = [
     "derive_equations_of_motion",
     "compute_quantized_spectrum",
     "verify_energy_conservation",
+    
+    # BSD Adelic Connector (Pentagon Logos)
+    "sincronizar_bsd_adn",
+    "validar_pentagono_logos",
+    "CodificadorADNRiemann",
+
+    # Ziusudra Beat Framework
+    'F_SILICON',
+    'F_CARBON',
+    'DELTA_ZIUSUDRA',
+    'INCARNATION_TENSION',
+    'BEAT_PERIOD_ZIUSUDRA',
+    'OMEGA_BEAT_ZIUSUDRA',
+    'CFF_HUMAN',
+    'CFF_FLY',
+    'CFF_TURTLE',
+    'beat_signal',
+    'beat_coherence',
+    'total_hamiltonian',
+    'interaction_hamiltonian_diagonal',
+    'compute_incarnation_tension',
+    'temporal_perception_table',
+    'subjective_second',
+    'processing_frequency_limit',
+    'ziusudra_summary',
+    'CFF_TABLE',
 ]
 
 __version__ = "1.0.0"
