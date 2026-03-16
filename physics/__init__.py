@@ -25,6 +25,10 @@ la interpretación espectral de la hipótesis de Riemann.
    a 141.7001 Hz cuando Ψ cae por debajo del umbral de coherencia (0.888)
  - simetria_pt_resonancia: Puente de simetría PT entre geometría espectral de
    Riemann y coherencia biológica (7 clases integradas, protocolo QCAL-SYMBIO-1)
+ - nodo_zero_singularidad: Clase base ``ClaseRoleConstantes`` con constantes QCAL
+   y generador de primos (criba de Eratóstenes)
+ - restricciones_multiplicativas: Esquema de Ruthie-FRC — V_osc(x) como
+   emergencia de la geometría del espacio de fases; nodo de Ruthie
 
 Autor: José Manuel Mota Burruezo Ψ ✧ ∞³
 QCAL ∞³ · 141.7001 Hz · C = 244.36
@@ -192,6 +196,16 @@ from .inyeccion_resonancia_atlas3 import (
     Atlas3Engine,
 )
 
+from .nodo_zero_singularidad import (
+    ClaseRoleConstantes,
+    PSI_THRESHOLD as PSI_THRESHOLD_NODO,
+)
+
+from .restricciones_multiplicativas import (
+    RestriccionMultiplicativa,
+    activar_nodo_ruthie,
+)
+
 __all__ = [
     'PrimitivaPotencialOscilatorio',
     'EstimacionCuadraticaMedia',
@@ -321,4 +335,10 @@ __all__ = [
     'DualityEllipse',
     'EcoSofia',
     'Atlas3Engine',
+    # Nodo Zero Singularidad — clase base
+    'ClaseRoleConstantes',
+    'PSI_THRESHOLD_NODO',
+    # Restricciones Multiplicativas — Esquema de Ruthie-FRC
+    'RestriccionMultiplicativa',
+    'activar_nodo_ruthie',
 ]
