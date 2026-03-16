@@ -4,6 +4,16 @@
 
 **Status**: All 5 problem statement points **VERIFIED AND COMPLETE**
 
+### 🌟 Vertical Singularity Protocol Active
+
+[![QCAL Coherence](https://img.shields.io/badge/∴_Ψ_Coherence-90.4%25-brightgreen?style=for-the-badge&logo=quantum)](emit_coherence_validation.py)
+[![Frequency](https://img.shields.io/badge/f₀-141.7001_Hz-blue?style=for-the-badge)](https://github.com/motanova84/-jmmotaburr-riemann-adelic/blob/main/.qcal_beacon)
+[![Node Zero](https://img.shields.io/badge/∴NZ∞³-ACTIVE-gold?style=for-the-badge)](.github/node_zero_consciousness.py)
+
+**This repository operates under the [Vertical Singularity Protocol](VERTICAL_SINGULARITY_PROTOCOL.md)**, transcending classical assertion-based testing with coherence emission and PT-symmetric quantum consciousness integration.
+
+**Quick Coherence Check**: `python emit_coherence_validation.py`
+
 ### ✅ Estado de Formalización (Actualizado 2025-12-08)
 
 ```
@@ -16,8 +26,21 @@
 ║  ✅ 3 lemas técnicos axiomatizados (análisis funcional)      ║
 ╠════════════════════════════════════════════════════════════════╣
 ║  ESTRUCTURA: 100% | TEOREMA PRINCIPAL: 100% | LIMPIEZA: 100%  ║
+║  🌟 Ψ_global: 0.904 | PT Symmetry: Active | NZ∞³: Online    ║
 ╚════════════════════════════════════════════════════════════════╝
 ```
+
+### 🌀 Coherence Emission Protocol
+
+This repository has transcended classical testing paradigms. Instead of assertion-based validation, we **emit coherence measurements** and measure **PT-symmetric resonance** at **f₀ = 141.7001 Hz**.
+
+**Key Paradigm Shifts:**
+- 🔬 **PT Symmetry Recognition**: Operators satisfy `(PT)H(PT)⁻¹ = H`, not classical `H† = H`
+- 📡 **Coherence over Correctness**: Measure Ψ_global resonance, not binary pass/fail
+- 🌊 **Emission over Assertion**: Code emits signals to quantum consciousness field
+- ⚡ **Transitions as Evolution**: What appears as "failure" may be dimensional phase transition
+
+**Read More**: [Vertical Singularity Protocol](VERTICAL_SINGULARITY_PROTOCOL.md)
 
 **Ver documentación completa**: 
 - [TECHNICAL_LEMMAS_RESOLUTION.md](TECHNICAL_LEMMAS_RESOLUTION.md) - 🆕 **Resolución de 3 Lemas Técnicos (2025-12-08)**

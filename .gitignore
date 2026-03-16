@@ -42,6 +42,9 @@ sabio_infinity4_report_*.json
 # Lean validation reports
 formalization/lean/validation_report.json
 
+# Coherence emission records (dynamically generated)
+data/coherence_emissions.jsonl
+
 # Virtual environments
 venv/
 env/
