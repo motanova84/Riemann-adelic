@@ -1,24 +1,52 @@
 # Security Update: Dependency Vulnerability Fixes
 
 **Date**: 2026-03-16  
-**Priority**: HIGH  
-**Status**: ✅ PATCHED  
+**Update**: 2026-03-16 (Second pass - major version upgrade)  
+**Priority**: CRITICAL  
+**Status**: ✅ FULLY PATCHED  
 
 ---
 
 ## 🔒 Vulnerabilities Addressed
 
-### 1. Next.js - DoS Vulnerabilities (CRITICAL)
+### 1. Next.js - DoS Vulnerabilities (CRITICAL) — UPDATED
 
-**Affected Version**: 14.2.32  
-**Patched Version**: 14.2.35  
+**Previous Version**: 14.2.32 → 14.2.35 (still vulnerable)  
+**Final Patched Version**: 15.5.12 (all CVEs resolved)
+
+**Issue Recognition**: Version 14.2.35 was still in the vulnerable range (>= 13.0.0, < 15.0.8). Required major version upgrade to 15.x line.
 
 **Vulnerabilities**:
 - **CVE**: HTTP request deserialization can lead to DoS when using insecure React Server Components
-- **Affected Ranges**: Multiple version ranges from 13.0.0 through 16.1.x
+- **Affected Ranges**: 
+  - 13.0.0 - 15.0.8 (requires 15.0.8+)
+  - 15.1.1-canary.0 - 15.1.12 (requires 15.1.12+)
+  - 15.2.0-canary.0 - 15.2.9 (requires 15.2.9+)
+  - 15.3.0-canary.0 - 15.3.9 (requires 15.3.9+)
+  - 15.4.0-canary.0 - 15.4.11 (requires 15.4.11+)
+  - 15.5.1-canary.0 - 15.5.10 (requires 15.5.10+)
+  - 16.0.0-beta.0 - 16.0.11 (requires 16.0.11+)
+  - 16.1.0-canary.0 - 16.1.5 (requires 16.1.5+)
 - **Impact**: Denial of Service attacks possible through malicious HTTP requests
 
-**Fix Applied**: Updated `package.json` from `next: 14.2.32` → `next: 14.2.35`
+**Fix Applied**: 
+```diff
+- "next": "14.2.32" (initial)
+- "next": "14.2.35" (incomplete patch)
++ "next": "15.5.12" (full patch - backport tag, all 15.x fixes)
+```
+
+Also updated eslint-config-next for compatibility:
+```diff
+- "eslint-config-next": "14.2.18"
++ "eslint-config-next": "15.5.12"
+```
+
+**Why 15.5.12?**
+- Tagged as "backport" by Next.js team
+- Contains all security patches for 15.x line
+- Stable release (not canary/beta)
+- Resolves all 9 reported DoS CVEs
 
 ---
 
@@ -60,7 +88,7 @@ qiskit>=1.5.0,!=1.3.3  # Excludes vulnerable 1.3.3
 
 ## 📊 Security Impact Assessment
 
-### Before Updates
+### Before Updates (Initial State)
 
 | Dependency | Version | Vulnerabilities | Severity |
 |------------|---------|-----------------|----------|
@@ -68,11 +96,19 @@ qiskit>=1.5.0,!=1.3.3  # Excludes vulnerable 1.3.3
 | nbconvert | 7.16.4 | Code execution | HIGH |
 | qiskit | 1.3.3 (if installed) | Code execution | CRITICAL |
 
-### After Updates
+### After First Update (Incomplete)
 
 | Dependency | Version | Vulnerabilities | Status |
 |------------|---------|-----------------|--------|
-| next | 14.2.35 | 0 | ✅ SECURE |
+| next | 14.2.35 | 9 DoS issues (still in range 13.0.0-15.0.8) | ⚠️ INCOMPLETE |
+| nbconvert | >=7.17.0 | 0 | ✅ SECURE |
+| qiskit | >=1.5.0, !=1.3.3 | 0 | ✅ SECURE |
+
+### After Final Update (Complete)
+
+| Dependency | Version | Vulnerabilities | Status |
+|------------|---------|-----------------|--------|
+| next | 15.5.12 | 0 | ✅ FULLY SECURE |
 | nbconvert | >=7.17.0 | 0 | ✅ SECURE |
 | qiskit | >=1.5.0, !=1.3.3 | 0 | ✅ SECURE |
 
@@ -80,10 +116,20 @@ qiskit>=1.5.0,!=1.3.3  # Excludes vulnerable 1.3.3
 
 ## 🔧 Changes Made
 
-### package.json
+### package.json (Updated)
+
+**First attempt (incomplete)**:
 ```diff
 - "next": "14.2.32",
-+ "next": "14.2.35",
++ "next": "14.2.35",  // Still vulnerable!
+```
+
+**Final fix (complete)**:
+```diff
+- "next": "14.2.35",
++ "next": "15.5.12",  // Fully patched
+- "eslint-config-next": "14.2.18"
++ "eslint-config-next": "15.5.12"  // Updated for compatibility
 ```
 
 ### requirements.txt
@@ -94,6 +140,58 @@ qiskit>=1.5.0,!=1.3.3  # Excludes vulnerable 1.3.3
 - qiskit>=1.5.0
 + qiskit>=1.5.0,!=1.3.3  # Security: Exclude vulnerable versions with QPY arbitrary code execution (CVE)
 ```
+
+---
+
+## ⚠️ Breaking Changes & Migration Notes
+
+### Next.js 14.x → 15.x Upgrade
+
+**This is a major version upgrade** from 14.2.35 to 15.5.12. While necessary for security, it may introduce breaking changes.
+
+**Key Changes in Next.js 15**:
+1. **React 19 Support**: Next.js 15 supports React 19 (current package.json uses React 18 - compatible)
+2. **Turbopack Dev**: New dev server (optional, not breaking)
+3. **Fetch Requests**: Caching behavior changes (review API routes if used)
+4. **Image Optimization**: Enhanced but backward compatible
+5. **Middleware**: Some edge cases updated
+
+**Mitigation**:
+- Current React version (^18) is compatible with Next.js 15
+- Most 14.x code runs unchanged in 15.x
+- Test all routes and server components after upgrade
+- Review Next.js 15 migration guide if issues arise
+
+**Testing Checklist**:
+```bash
+# Install dependencies
+npm install
+
+# Test development server
+npm run dev
+
+# Test production build
+npm run build
+npm run start
+
+# Run linter
+npm run lint
+
+# Check for Next.js-specific warnings
+npm run build 2>&1 | grep -i "warning\|deprecated"
+```
+
+**Rollback Plan** (if needed):
+If the upgrade causes breaking issues in production:
+1. Revert to `next: 14.2.35` temporarily
+2. Implement workaround for Server Components (disable or secure)
+3. Plan migration to 15.x for long-term security
+
+**Security vs. Stability Trade-off**:
+- ✅ **Recommended**: Upgrade to 15.5.12 (all CVEs patched)
+- ⚠️ **Alternative**: Stay on 14.x only if Server Components are not used AND external inputs are validated
+
+**QCAL Coherence Note**: Breaking changes that improve security increase Ψ_security and overall Ψ_global. Short-term disruption for long-term coherence enhancement.
 
 ---
 
