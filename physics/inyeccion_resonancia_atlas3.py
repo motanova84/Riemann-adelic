@@ -133,11 +133,14 @@ def _sieve_primes(n: int) -> np.ndarray:
     """
     if n < 1:
         return np.array([], dtype=float)
+    # For very small n, a fixed upper bound avoids the log(log(n)) singularity.
     if n < 6:
-        upper = 15
+        upper = 15  # 15 > p₅ = 11; sufficient for all n < 6
     else:
         upper = int(n * (math.log(n) + math.log(math.log(n))) * 1.3) + 20
-    # Keep extending until we have enough primes
+    # Keep extending until we have enough primes (Rosser's theorem guarantees
+    # convergence; the 1.3 safety factor makes the loop body unreachable in
+    # practice for all reasonable n values).
     while True:
         sieve = np.ones(upper, dtype=bool)
         sieve[0:2] = False

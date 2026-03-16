@@ -417,12 +417,8 @@ class TestEcoSofia:
         eco_sofia = EcoSofia()
         art = eco_sofia.emitir(0.9995)
         assert art is not None
-        for field in ("nombre", "sistema", "psi_global", "timestamp_utc", "sha256" or "doi"):
-            assert "nombre" in art.payload
-            assert "sistema" in art.payload
-            assert "psi_global" in art.payload
-            assert "timestamp_utc" in art.payload
-            assert "doi" in art.payload
+        for field_name in ("nombre", "sistema", "psi_global", "timestamp_utc", "doi"):
+            assert field_name in art.payload, f"Missing field: {field_name}"
 
     def test_payload_psi_global_value(self):
         eco_sofia = EcoSofia()

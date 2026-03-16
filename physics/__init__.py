@@ -30,6 +30,8 @@ Autor: José Manuel Mota Burruezo Ψ ✧ ∞³
 QCAL ∞³ · 141.7001 Hz · C = 244.36
 """
 
+import warnings
+
 from .control_primitiva_vosc import (
     PrimitivaPotencialOscilatorio,
     EstimacionCuadraticaMedia,
@@ -128,9 +130,18 @@ try:
         SistemaResonanciaPT,
         simetria_pt_resonancia_activar,
         simular_resonancia_pt,
+        CONST as CONST_PT,
     )
-except SyntaxError:  # pragma: no cover – pre-existing syntax errors in source file
-    pass
+except SyntaxError:  # pragma: no cover
+    # physics/simetria_pt_resonancia.py has pre-existing syntax errors caused
+    # by concatenation of two file versions.  The rest of the physics package
+    # remains importable; the simetria_pt_resonancia symbols are unavailable.
+    warnings.warn(
+        "physics.simetria_pt_resonancia failed to import due to pre-existing "
+        "syntax errors.  Affected symbols: ConstantesPT, OperadorNHPT, etc.",
+        ImportWarning,
+        stacklevel=2,
+    )
 
 from .visualizacion_fluido_holografico import (
     MapaEtaSObrePsi,
@@ -154,22 +165,6 @@ from .protocolo_hard_reset_noetico import (
     N_HARM,
     DURACION_PULSO_S,
 )
-
-try:
-    from .simetria_pt_resonancia import (
-        ConstantesPT,
-        OperadorNHPT,
-        EspectroPTReal,
-        RiemannLineaCritica,
-        CitoplasmaHolografico,
-        EstabilizadorPT,
-        SistemaResonanciaPT,
-        simular_resonancia_pt,
-        simetria_pt_resonancia_activar,
-        CONST as CONST_PT,
-    )
-except SyntaxError:  # pragma: no cover – pre-existing syntax errors in source file
-    pass
 
 from .inyeccion_resonancia_atlas3 import (
     # Constants
