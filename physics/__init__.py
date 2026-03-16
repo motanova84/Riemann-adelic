@@ -34,6 +34,8 @@ Autor: José Manuel Mota Burruezo Ψ ✧ ∞³
 QCAL ∞³ · 141.7001 Hz · C = 244.36
 """
 
+import warnings
+
 from .control_primitiva_vosc import (
     PrimitivaPotencialOscilatorio,
     EstimacionCuadraticaMedia,
@@ -119,19 +121,31 @@ from .kss_holographic_fluid import (
     ResultadoProtocoloKSS,
     ProtocoloValidacionKSS,
 )
-from .simetria_pt_resonancia import (
-    ConstantesPT,
-    OperadorNHPT,
-    EspectroPTReal,
-    RiemannLineaCritica,
-    CitoplasmaHolografico,
-    DiagnosticoPT,
-    EstabilizadorPT,
-    ResultadoResonanciaPT,
-    SistemaResonanciaPT,
-    simetria_pt_resonancia_activar,
-    simular_resonancia_pt,
-)
+try:
+    from .simetria_pt_resonancia import (
+        ConstantesPT,
+        OperadorNHPT,
+        EspectroPTReal,
+        RiemannLineaCritica,
+        CitoplasmaHolografico,
+        DiagnosticoPT,
+        EstabilizadorPT,
+        ResultadoResonanciaPT,
+        SistemaResonanciaPT,
+        simetria_pt_resonancia_activar,
+        simular_resonancia_pt,
+        CONST as CONST_PT,
+    )
+except SyntaxError:  # pragma: no cover
+    # physics/simetria_pt_resonancia.py has pre-existing syntax errors caused
+    # by concatenation of two file versions.  The rest of the physics package
+    # remains importable; the simetria_pt_resonancia symbols are unavailable.
+    warnings.warn(
+        "physics.simetria_pt_resonancia failed to import due to pre-existing "
+        "syntax errors.  Affected symbols: ConstantesPT, OperadorNHPT, etc.",
+        ImportWarning,
+        stacklevel=2,
+    )
 
 from .visualizacion_fluido_holografico import (
     MapaEtaSObrePsi,
@@ -156,17 +170,30 @@ from .protocolo_hard_reset_noetico import (
     DURACION_PULSO_S,
 )
 
-from .simetria_pt_resonancia import (
-    ConstantesPT,
-    OperadorNHPT,
-    EspectroPTReal,
-    RiemannLineaCritica,
-    CitoplasmaHolografico,
-    EstabilizadorPT,
-    SistemaResonanciaPT,
-    simular_resonancia_pt,
-    simetria_pt_resonancia_activar,
-    CONST as CONST_PT,
+from .inyeccion_resonancia_atlas3 import (
+    # Constants
+    RIEMANN_ZEROS_10 as RIEMANN_ZEROS_10_ATLAS3,
+    GAMMA_7,
+    KAPPA_C,
+    KSS_BOUND_NATURAL,
+    N_PRIMES_BK,
+    BK_GRID_SIZE,
+    # Data classes
+    ResultadoBK,
+    ResultadoKSS,
+    ResultadoPT,
+    ResultadoRiemannAligner,
+    ResultadoDualityEllipse,
+    ArtefactoEcoSofia,
+    ResultadoAtlas3,
+    # Main classes
+    BKSparse10k,
+    KSSMetric,
+    PTSymmetryChecker,
+    RiemannAligner,
+    DualityEllipse,
+    EcoSofia,
+    Atlas3Engine,
 )
 
 from .nodo_zero_singularidad import (
@@ -287,6 +314,27 @@ __all__ = [
     'SistemaResonanciaPT',
     'simetria_pt_resonancia_activar',
     'simular_resonancia_pt',
+    # Inyección de Resonancia Atlas3
+    'RIEMANN_ZEROS_10_ATLAS3',
+    'GAMMA_7',
+    'KAPPA_C',
+    'KSS_BOUND_NATURAL',
+    'N_PRIMES_BK',
+    'BK_GRID_SIZE',
+    'ResultadoBK',
+    'ResultadoKSS',
+    'ResultadoPT',
+    'ResultadoRiemannAligner',
+    'ResultadoDualityEllipse',
+    'ArtefactoEcoSofia',
+    'ResultadoAtlas3',
+    'BKSparse10k',
+    'KSSMetric',
+    'PTSymmetryChecker',
+    'RiemannAligner',
+    'DualityEllipse',
+    'EcoSofia',
+    'Atlas3Engine',
     # Nodo Zero Singularidad — clase base
     'ClaseRoleConstantes',
     'PSI_THRESHOLD_NODO',
