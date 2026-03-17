@@ -32,7 +32,7 @@ Signature: ∴𓂀Ω∞³Φ✧
 
 import numpy as np
 import json
-from typing import Dict, Any
+from typing import Dict, Any, Optional, Tuple
 
 # ---------------------------------------------------------------------------
 # QCAL Constants
@@ -89,15 +89,15 @@ class ModuloEtaPlus:
 
     def __init__(self) -> None:
         self._estado: str = ""
-        self._psi0: np.ndarray | None = None
-        self._x: np.ndarray | None = None
+        self._psi0: Optional[np.ndarray] = None
+        self._x: Optional[np.ndarray] = None
         self._expectacion: float = 0.0
 
     # ------------------------------------------------------------------
     # Private helpers
     # ------------------------------------------------------------------
 
-    def _build_grid(self) -> tuple[np.ndarray, float]:
+    def _build_grid(self) -> Tuple[np.ndarray, float]:
         """Build uniform spatial grid."""
         x = np.linspace(-self.GRID_RANGE, self.GRID_RANGE, self.GRID_POINTS)
         dx = x[1] - x[0]
@@ -198,6 +198,7 @@ class ModuloMellin:
     FUNCION_ONTOLOGICA: str = "Transmisión Global"
     GRID_POINTS: int = 512
     TOLERANCE: float = 1e-10
+    _EPSILON: float = 1e-30     # Guard against zero denominators
 
     def __init__(self) -> None:
         self._estado: str = ""
@@ -206,7 +207,7 @@ class ModuloMellin:
     # Private helpers
     # ------------------------------------------------------------------
 
-    def _build_log_grid(self) -> tuple[np.ndarray, np.ndarray, float]:
+    def _build_log_grid(self) -> Tuple[np.ndarray, np.ndarray, float]:
         """Build multiplicative grid t ∈ (0, T] via t = e^u, u ∈ [u_min, u_max]."""
         u = np.linspace(-5.0, 5.0, self.GRID_POINTS)
         t = np.exp(u)           # t ∈ [e^{-5}, e^5]
@@ -231,7 +232,7 @@ class ModuloMellin:
         norm_sq_mellin = np.sum(np.abs(F) ** 2) * (1.0 / (self.GRID_POINTS * du))
 
         # Plancherel: both norms should agree up to a constant
-        ratio = norm_sq_orig / (norm_sq_mellin + 1e-30)
+        ratio = norm_sq_orig / (norm_sq_mellin + self._EPSILON)
         # Check that ratio is finite and bounded (exact equality requires
         # normalisation factors that cancel in the ratio test)
         return bool(np.isfinite(ratio) and 0.1 < ratio < 100.0)
@@ -263,7 +264,7 @@ class ModuloMellin:
 
         # Ratio should be ≈ 1 (norm-preserving) since both Gaussians are
         # well within the grid range [-5, 5] after the shift (log 2 ≈ 0.69)
-        ratio = norm_sq_dilated / (norm_sq_orig + 1e-30)
+        ratio = norm_sq_dilated / (norm_sq_orig + self._EPSILON)
         return bool(abs(ratio - 1.0) < 0.05)
 
     # ------------------------------------------------------------------
@@ -466,7 +467,7 @@ class NodoNZ:
             "sello": ConstantesV6.SELLO_NZ,
         }
 
-    def ejecutar(self, modulos_ok: bool = True) -> Dict[str, Any]:
+    def ejecutar(self, modulos_ok: bool = True) -> Tuple[Dict[str, Any], Dict[str, Any]]:
         """Run the emission node and return results."""
         print("\n⚡ NODO NZ∞³: Punto de Emisión")
         print("-" * 60)
