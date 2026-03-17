@@ -589,14 +589,23 @@ class TestSpectralDensity:
         assert isinstance(rho, float)
 
     def test_osc_k_max_increases_magnitude(self, solenoid):
-        """More terms in the sum should change the value (not identically zero)."""
+        """More terms in the sum must produce a different value (k_max has effect)."""
         E = 14.135
         rho_k1 = solenoid.spectral_density_osc(E, k_max=1)
         rho_k5 = solenoid.spectral_density_osc(E, k_max=5)
-        # They can be equal only if k>1 terms are all zero (very unlikely)
-        # Just verify both are finite
         assert np.isfinite(rho_k1)
         assert np.isfinite(rho_k5)
+        # k_max=5 includes k=2..5 contributions, so values must differ
+        assert not np.isclose(rho_k1, rho_k5), (
+            f"k_max=1 and k_max=5 gave the same value {rho_k1}; k_max has no effect"
+        )
+
+    def test_osc_k_max_invalid_raises(self, solenoid):
+        """k_max <= 0 must raise ValueError."""
+        with pytest.raises(ValueError):
+            solenoid.spectral_density_osc(14.135, k_max=0)
+        with pytest.raises(ValueError):
+            solenoid.spectral_density_osc(14.135, k_max=-1)
 
     def test_osc_uses_prime_structure(self, solenoid):
         """ρ_osc formula uses log p weights from primes (first-prime term check)."""
@@ -665,9 +674,14 @@ class TestPeterWeylDiscreteness:
 
     def test_characters_key(self, pw):
         assert "characters" in pw
-        # Characters must be indexed by a countable set (Pontryagin duality: Σ̂ ≅ ℚ_discrete)
         chars = pw["characters"].lower()
+        # Must mention additive character formula exp(2πi⟨q,x⟩) and countable index set
+        assert "exp" in chars or "2πi" in chars or "exp(2" in pw["characters"]
         assert "countable" in chars or "pontryagin" in chars or "ℚ" in chars
+
+    def test_equivariance_key(self, pw):
+        assert "equivariance" in pw
+        assert "equivariant" in pw["equivariance"].lower() or "commutes" in pw["equivariance"].lower()
 
     def test_domain_da_key(self, pw):
         assert "domain_DA" in pw

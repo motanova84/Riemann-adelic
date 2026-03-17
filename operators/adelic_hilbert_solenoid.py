@@ -574,11 +574,16 @@ class AdelicHilbertSolenoid:
 
         Args:
             E:     Energy level.
-            k_max: Maximum prime-power index in the sum (default: 10).
+            k_max: Maximum prime-power index in the sum (default: 10); must be an int >= 1.
 
         Returns:
             Oscillatory density ρ_osc(E).
+
+        Raises:
+            ValueError: If k_max < 1.
         """
+        if not isinstance(k_max, (int, np.integer)) or k_max < 1:
+            raise ValueError(f"k_max must be an integer >= 1; got k_max={k_max!r}")
         total = 0.0
         for p in self.primes:
             ln_p = np.log(p)
@@ -604,13 +609,13 @@ class AdelicHilbertSolenoid:
 
         Args:
             E:     Energy level (must be positive).
-            k_max: Maximum prime-power index in the oscillatory sum.
+            k_max: Maximum prime-power index in the oscillatory sum (must be int >= 1).
 
         Returns:
             Total spectral density ρ(E).
 
         Raises:
-            ValueError: If E ≤ 0.
+            ValueError: If E ≤ 0 or k_max < 1.
         """
         return self.spectral_density_mean(E) + self.spectral_density_osc(E, k_max)
 
@@ -620,44 +625,54 @@ class AdelicHilbertSolenoid:
 
         Because the adelic solenoid Σ = 𝔸_ℚ/ℚ is a **compact** abelian group,
         the Peter-Weyl theorem guarantees that L²(Σ, dμ) decomposes into a
-        countable direct sum of finite-dimensional irreducible unitary
-        representations of Σ (here each representation is one-dimensional since
-        Σ is abelian).  By Pontryagin duality, the dual group Σ̂ is isomorphic
-        to ℚ with the discrete topology, so the characters are indexed by a
-        **countable** set q ∈ ℚ — there is no contradiction with the countable
-        decomposition.  The domain D_A consists of Schwartz-Bruhat functions
-        satisfying prime invariance f(px) = f(x) for all primes p (Enki Scale
-        Invariance), which selects a sub-lattice of the countable character set.
+        countable direct sum of one-dimensional irreducible unitary representations.
+        By Pontryagin duality, the dual group Σ̂ is isomorphic to ℚ with the
+        discrete topology.  The unitary characters of Σ are the **additive**
+        Hecke characters:
 
-        Consequently, the spectrum of Ĥ restricted to D_A is **purely discrete
-        (pure point spectrum)** — in contrast to the unbounded case on ℝ⁺ where
-        H has continuous spectrum.
+            χ_q(x) = exp(2πi ⟨q, x⟩),  q ∈ ℚ
+
+        where ⟨·, ·⟩ denotes the canonical pairing of 𝔸_ℚ/ℚ with its
+        Pontryagin dual ℚ_discrete.  This index set is countable, consistent with
+        the countable decomposition asserted by Peter-Weyl.
+
+        For Ĥ = -i(x d/dx + 1/2) restricted to D_A, spectral discreteness holds
+        because Ĥ commutes with the translation action of Σ (it is equivariant),
+        so it is diagonal in the character basis {χ_q}, and its spectrum on the
+        sub-lattice selected by the prime-invariance condition f(px) = f(x) is
+        a discrete subset of ℝ.
 
         Returns:
             Dictionary with keys:
-                ``theorem``      – name of the theorem invoked
-                ``group``        – the compact group Σ
-                ``consequence``  – description of spectral discreteness
-                ``characters``   – description of the unitary characters (countable index set)
-                ``domain_DA``    – description of the domain D_A (prime invariance)
-                ``spectrum_type``– "pure point (discrete)"
-                ``discreteness`` – True (always for compact groups via Peter-Weyl)
+                ``theorem``        – name of the theorem invoked
+                ``group``          – the compact group Σ
+                ``consequence``    – description of spectral discreteness
+                ``characters``     – additive character formula with countable index
+                ``domain_DA``      – description of the domain D_A (prime invariance)
+                ``equivariance``   – why Peter-Weyl implies discrete spectrum for Ĥ
+                ``spectrum_type``  – "pure point (discrete)"
+                ``discreteness``   – True (compact group + equivariant operator)
         """
         return {
             "theorem": "Peter-Weyl theorem on compact abelian groups",
-            "group": "Σ = 𝔸_ℚ/ℚ  (adelic solenoid)",
+            "group": "Σ = 𝔸_ℚ/ℚ  (adelic solenoid, compact additive group)",
             "consequence": (
                 "L²(Σ, dμ) decomposes into countable discrete direct sum of "
-                "one-dimensional unitary characters (Pontryagin duality: Σ̂ ≅ ℚ_discrete); "
+                "one-dimensional additive characters (Pontryagin dual Σ̂ ≅ ℚ_discrete); "
                 "spectrum of Ĥ|_{D_A} is purely discrete."
             ),
             "characters": (
-                "χ_q indexed by q ∈ ℚ (discrete, countable via Pontryagin duality Σ̂ ≅ ℚ); "
-                "each χ_q is a Hecke character of the solenoid"
+                "χ_q(x) = exp(2πi⟨q, x⟩) for q ∈ ℚ  "
+                "(additive Hecke characters; countable index via Pontryagin duality Σ̂ ≅ ℚ_discrete)"
             ),
             "domain_DA": (
                 "Schwartz-Bruhat functions on 𝔸_ℚ satisfying prime invariance: "
                 "f(px) = f(x) for all primes p  (Enki Scale Invariance)"
+            ),
+            "equivariance": (
+                "Ĥ = -i(x d/dx + 1/2) commutes with the Σ-translation action "
+                "(equivariant operator), so it is diagonal in the character basis {χ_q}; "
+                "Peter-Weyl then implies pure point spectrum on the selected sub-lattice."
             ),
             "spectrum_type": "pure point (discrete)",
             "discreteness": True,
