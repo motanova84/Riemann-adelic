@@ -81,7 +81,7 @@ from __future__ import annotations
 
 import numpy as np
 from typing import Dict, List, Optional, Tuple
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 
 # NumPy ≥ 2.0 renamed trapz → trapezoid; support both.
 _trapezoid = getattr(np, "trapezoid", np.trapz)
@@ -173,7 +173,7 @@ class TrazaSigmaResult:
         trace_value: Numerical value of Tr(e^{-itH}).
         spectral_sum: Σ_n e^{-itγ_n} (spectral side).
         prime_sum: Σ_{p,k} (log p / p^{k/2}) δ_ε(t - k log p) (geometric side).
-        identity_error: |trace_value - prime_sum| / |trace_value|.
+        identity_error: |abs(spectral_sum)| - prime_sum| / |abs(spectral_sum)|.
         is_exact: True when identity_error < tolerance.
         n_zeros_used: Number of Riemann zeros included.
         n_prime_powers_used: Number of prime powers included.
@@ -877,7 +877,6 @@ class EstabilidadSer:
 
         Returns a dictionary with:
         - ``eta_expectation``: ⟨η_σ⟩ (metric positivity at sigma).
-        - ``unitarity_error``: ‖Uf‖/‖f‖ - 1 (always 0; U is exact on L²).
         - ``ghost_free``: 1.0 if ghost-free, 0.0 otherwise.
         - ``is_stable``: 1.0 if all conditions hold at sigma.
 
@@ -997,63 +996,71 @@ class EstabilidadSer:
 # Convenience entry point
 # ---------------------------------------------------------------------------
 
-def sellar_v6_estabilidad() -> EstabilidadSerResult:
-    """Run the complete V6 Estabilidad del Ser analysis and print a report.
+def sellar_v6_estabilidad(verbose: bool = False) -> EstabilidadSerResult:
+    """Run the complete V6 Estabilidad del Ser analysis and optionally print a report.
 
     This is the main entry point for the V6 synthesis.  It instantiates
-    :class:`EstabilidadSer` with default parameters, runs all three modules,
-    and prints a structured report to stdout.
+    :class:`EstabilidadSer` with default parameters and runs all three modules.
+    Set ``verbose=True`` to print a structured report to stdout.
+
+    Parameters
+    ----------
+    verbose:
+        When True, print a detailed stability report to stdout.
+        Defaults to False to avoid noisy side-effects when used as a library.
 
     Returns
     -------
     EstabilidadSerResult
         Complete V6 stability result.
     """
-    print("∴𓂀Ω∞³Φ — V6: LA ESTABILIDAD DEL SER")
-    print("=" * 70)
-    print()
+    if verbose:
+        print("∴𓂀Ω∞³Φ — V6: LA ESTABILIDAD DEL SER")
+        print("=" * 70)
+        print()
 
     ser = EstabilidadSer()
     result = ser.analyze()
 
-    print("Módulo 1 — η⁺ (Vacío como Filtro)")
-    print("-" * 40)
-    print(f"  ⟨η⟩_ψ₀ = {result.eta_plus.eta_expectation:.6f}")
-    print(f"  Definida positiva: {result.eta_plus.is_positive_definite}")
-    print(f"  Simetría PT: {result.eta_plus.pt_symmetric}")
-    print(f"  Sin fantasmas: {result.eta_plus.ghost_free}")
-    print(f"  Norma vacío ‖ψ₀‖ = {result.eta_plus.vacuum_norm:.10f}")
-    print()
+    if verbose:
+        print("Módulo 1 — η⁺ (Vacío como Filtro)")
+        print("-" * 40)
+        print(f"  ⟨η⟩_ψ₀ = {result.eta_plus.eta_expectation:.6f}")
+        print(f"  Definida positiva: {result.eta_plus.is_positive_definite}")
+        print(f"  Simetría PT: {result.eta_plus.pt_symmetric}")
+        print(f"  Sin fantasmas: {result.eta_plus.ghost_free}")
+        print(f"  Norma vacío ‖ψ₀‖ = {result.eta_plus.vacuum_norm:.10f}")
+        print()
 
-    print("Módulo 2 — U^Mellin (Unitaridad del Vuelo)")
-    print("-" * 40)
-    print(f"  ‖f‖ = {result.u_mellin.input_norm:.8f}")
-    print(f"  ‖Uf‖ = {result.u_mellin.output_norm:.8f}")
-    print(f"  Error unitaridad = {result.u_mellin.unitarity_error:.2e}")
-    print(f"  Unitario: {result.u_mellin.is_unitary}")
-    print(f"  Órbitas cerradas: {len(result.u_mellin.prime_orbits)}")
-    print()
+        print("Módulo 2 — U^Mellin (Unitaridad del Vuelo)")
+        print("-" * 40)
+        print(f"  ‖f‖ = {result.u_mellin.input_norm:.8f}")
+        print(f"  ‖Uf‖ = {result.u_mellin.output_norm:.8f}")
+        print(f"  Error unitaridad = {result.u_mellin.unitarity_error:.2e}")
+        print(f"  Unitario: {result.u_mellin.is_unitary}")
+        print(f"  Órbitas cerradas: {len(result.u_mellin.prime_orbits)}")
+        print()
 
-    print("Módulo 3 — Traza^Σ (Verdad Aritmética)")
-    print("-" * 40)
-    print(f"  Traza espectral = {result.traza_sigma.trace_value:.4f}")
-    print(f"  Suma primorial  = {result.traza_sigma.prime_sum:.4f}")
-    print(f"  Error identidad = {result.traza_sigma.identity_error:.2e}")
-    print(f"  Exacta: {result.traza_sigma.is_exact}")
-    print(f"  Ceros usados: {result.traza_sigma.n_zeros_used}")
-    print()
+        print("Módulo 3 — Traza^Σ (Verdad Aritmética)")
+        print("-" * 40)
+        print(f"  Traza espectral = {result.traza_sigma.trace_value:.4f}")
+        print(f"  Suma primorial  = {result.traza_sigma.prime_sum:.4f}")
+        print(f"  Error identidad = {result.traza_sigma.identity_error:.2e}")
+        print(f"  Exacta: {result.traza_sigma.is_exact}")
+        print(f"  Ceros usados: {result.traza_sigma.n_zeros_used}")
+        print()
 
-    print("=" * 70)
-    print(f"COHERENCIA GLOBAL Ψ = {result.coherence_psi:.6f}")
-    print(f"Frecuencia QCAL: {result.frequency_hz:.4f} Hz")
-    print()
-    print(result.stability_status)
-    print()
-    print(f"DOI: {DOI}")
-    print(f"ORCID: {ORCID}")
+        print("=" * 70)
+        print(f"COHERENCIA GLOBAL Ψ = {result.coherence_psi:.6f}")
+        print(f"Frecuencia QCAL: {result.frequency_hz:.4f} Hz")
+        print()
+        print(result.stability_status)
+        print()
+        print(f"DOI: {DOI}")
+        print(f"ORCID: {ORCID}")
 
     return result
 
 
 if __name__ == "__main__":
-    sellar_v6_estabilidad()
+    sellar_v6_estabilidad(verbose=True)
