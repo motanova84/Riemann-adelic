@@ -554,7 +554,7 @@ class AdelicHilbertSolenoid:
         """
         if E <= 0:
             raise ValueError(f"E must be strictly positive (E > 0); got E={E}")
-        return np.log(E / (2.0 * PI)) / (2.0 * PI)
+        return float(np.log(E / (2.0 * PI)) / (2.0 * PI))
 
     def spectral_density_osc(self, E: float, k_max: int = 10) -> float:
         """
@@ -562,8 +562,9 @@ class AdelicHilbertSolenoid:
 
         Derived from the Selberg/Gutzwiller trace formula on the compact
         adelic solenoid Σ = 𝔸_ℚ/ℚ.  The only closed orbits under the
-        scale flow α_t(x) = e^t x that are compatible with the multiplicative
-        Q*-invariance have periods T = k log p for primes p and k ≥ 1.
+        scale flow α_t(x) = e^t x that are compatible with the prime
+        invariance condition f(px) = f(x) (Enki Scale Invariance, the
+        domain D_A condition) have periods T = k log p for primes p and k ≥ 1.
 
         The resulting oscillatory contribution to the density of states is:
 
@@ -585,7 +586,7 @@ class AdelicHilbertSolenoid:
             for k in range(1, k_max + 1):
                 weight = ln_p / (p_sqrt ** k)
                 total += weight * np.cos(E * k * ln_p)
-        return total / PI
+        return float(total / PI)
 
     def spectral_density(self, E: float, k_max: int = 10) -> float:
         """
@@ -621,9 +622,12 @@ class AdelicHilbertSolenoid:
         the Peter-Weyl theorem guarantees that L²(Σ, dμ) decomposes into a
         countable direct sum of finite-dimensional irreducible unitary
         representations of Σ (here each representation is one-dimensional since
-        Σ is abelian).  The unitary characters of Σ are the Hecke characters
-        χ_E(x) = |x|^{iE} (E ∈ ℝ), and the restriction to the D_A domain
-        selects a discrete sub-lattice of E values.
+        Σ is abelian).  By Pontryagin duality, the dual group Σ̂ is isomorphic
+        to ℚ with the discrete topology, so the characters are indexed by a
+        **countable** set q ∈ ℚ — there is no contradiction with the countable
+        decomposition.  The domain D_A consists of Schwartz-Bruhat functions
+        satisfying prime invariance f(px) = f(x) for all primes p (Enki Scale
+        Invariance), which selects a sub-lattice of the countable character set.
 
         Consequently, the spectrum of Ĥ restricted to D_A is **purely discrete
         (pure point spectrum)** — in contrast to the unbounded case on ℝ⁺ where
@@ -634,8 +638,8 @@ class AdelicHilbertSolenoid:
                 ``theorem``      – name of the theorem invoked
                 ``group``        – the compact group Σ
                 ``consequence``  – description of spectral discreteness
-                ``characters``   – formula for the unitary characters
-                ``domain_DA``    – description of the domain D_A
+                ``characters``   – description of the unitary characters (countable index set)
+                ``domain_DA``    – description of the domain D_A (prime invariance)
                 ``spectrum_type``– "pure point (discrete)"
                 ``discreteness`` – True (always for compact groups via Peter-Weyl)
         """
@@ -644,12 +648,16 @@ class AdelicHilbertSolenoid:
             "group": "Σ = 𝔸_ℚ/ℚ  (adelic solenoid)",
             "consequence": (
                 "L²(Σ, dμ) decomposes into countable discrete direct sum of "
-                "one-dimensional unitary characters; spectrum of Ĥ|_{D_A} is purely discrete."
+                "one-dimensional unitary characters (Pontryagin duality: Σ̂ ≅ ℚ_discrete); "
+                "spectrum of Ĥ|_{D_A} is purely discrete."
             ),
-            "characters": "χ_E(x) = |x|^{iE}, E ∈ ℝ",
+            "characters": (
+                "χ_q indexed by q ∈ ℚ (discrete, countable via Pontryagin duality Σ̂ ≅ ℚ); "
+                "each χ_q is a Hecke character of the solenoid"
+            ),
             "domain_DA": (
-                "Schwartz-Bruhat functions on 𝔸_ℚ invariant under Q*-action: "
-                "f(qx) = f(x) for all q ∈ Q*"
+                "Schwartz-Bruhat functions on 𝔸_ℚ satisfying prime invariance: "
+                "f(px) = f(x) for all primes p  (Enki Scale Invariance)"
             ),
             "spectrum_type": "pure point (discrete)",
             "discreteness": True,
@@ -799,7 +807,7 @@ def sellar_solenoid_adélico() -> Dict[str, Any]:
             "hilbert_space": "L²(𝔸_ℚ/ℚ)",
             "inner_product": "⟨f,g⟩ = ∫₀^∞ f̄ g dx/x  (Haar measure)",
             "operator": "Ĥ = -i(x d/dx + 1/2)  (Berry-Keating symmetrized)",
-            "domain": "𝒟(H) ∋ f : f(qx) = f(x) for all q ∈ Q*  (Q*-invariance)",
+            "domain": "𝒟(H) ∋ f : f(px) = f(x) for all primes p  (Enki Scale Invariance)",
             "eigenfunction": "ψ_E(x) = x^(-1/2 + iE)",
             "critical_line": "Re(s) = 1/2 iff E ∈ ℝ",
             "spectral_density": "ρ(E) = (1/2π)ln(E/2π) + (1/π)Σ_{p,k}(log p/p^{k/2})cos(Ek log p)",

@@ -599,14 +599,15 @@ class TestSpectralDensity:
         assert np.isfinite(rho_k5)
 
     def test_osc_uses_prime_structure(self, solenoid):
-        """ρ_osc formula uses log p weights from primes."""
+        """ρ_osc formula uses log p weights from primes (first-prime term check)."""
         E = 10.0
-        rho = solenoid.spectral_density_osc(E, k_max=1)
-        # Manual computation for first prime (p=2, k=1)
+        # Build a single-prime solenoid to isolate the p=2, k=1 contribution
+        sol1 = AdelicHilbertSolenoid(n_primes=1)
+        rho = sol1.spectral_density_osc(E, k_max=1)
+        # First prime is 2; k=1: weight = log(2)/sqrt(2), term = weight*cos(E*log(2))
         ln2 = np.log(2)
-        manual = ln2 / (2 ** 0.5) * np.cos(E * ln2) / np.pi
-        # The full sum has many primes, so just verify sign consistency
-        assert np.isfinite(rho)
+        expected = ln2 / np.sqrt(2) * np.cos(E * ln2) / np.pi
+        assert np.isclose(rho, expected, rtol=1e-10)
 
     # --- total density ---
 
@@ -664,10 +665,14 @@ class TestPeterWeylDiscreteness:
 
     def test_characters_key(self, pw):
         assert "characters" in pw
+        # Characters must be indexed by a countable set (Pontryagin duality: Σ̂ ≅ ℚ_discrete)
+        chars = pw["characters"].lower()
+        assert "countable" in chars or "pontryagin" in chars or "ℚ" in chars
 
     def test_domain_da_key(self, pw):
         assert "domain_DA" in pw
-        assert "Q*" in pw["domain_DA"] or "Q^*" in pw["domain_DA"] or "ℚ" in pw["domain_DA"]
+        da = pw["domain_DA"].lower()
+        assert "prime" in da or "primes" in da or "enki" in da
 
     def test_consequence_key(self, pw):
         assert "consequence" in pw
