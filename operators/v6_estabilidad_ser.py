@@ -876,6 +876,7 @@ class EstabilidadSer:
         """Evaluate stability indicators at Re(s) = sigma.
 
         Returns a dictionary with:
+        - ``sigma``: Real part of s at which stability is evaluated.
         - ``eta_expectation``: ⟨η_σ⟩ (metric positivity at sigma).
         - ``ghost_free``: 1.0 if ghost-free, 0.0 otherwise.
         - ``is_stable``: 1.0 if all conditions hold at sigma.
