@@ -519,3 +519,177 @@ class TestSellarSolenoidAdelico:
 
     def test_frequency(self, seal_result):
         assert np.isclose(seal_result["frequency"], F_UNITY)
+
+    def test_spectral_density_mean_finite(self, seal_result):
+        assert np.isfinite(seal_result["spectral_density_mean"])
+
+    def test_spectral_density_osc_finite(self, seal_result):
+        assert np.isfinite(seal_result["spectral_density_osc"])
+
+    def test_spectral_density_total_finite(self, seal_result):
+        assert np.isfinite(seal_result["spectral_density_total"])
+
+    def test_peter_weyl_discreteness(self, seal_result):
+        assert seal_result["peter_weyl"]["discreteness"] is True
+
+    def test_peter_weyl_spectrum_type(self, seal_result):
+        assert "discrete" in seal_result["peter_weyl"]["spectrum_type"]
+
+    def test_framework_spectral_density_key(self, seal_result):
+        assert "spectral_density" in seal_result["framework"]
+
+    def test_framework_spectrum_type_key(self, seal_result):
+        assert "spectrum_type" in seal_result["framework"]
+
+
+# ===========================================================================
+# 15. Spectral density
+# ===========================================================================
+
+class TestSpectralDensity:
+    """Tests for ρ(E) = ⟨ρ(E)⟩ + ρ_osc(E)."""
+
+    # --- mean density ---
+
+    def test_mean_positive_for_large_E(self, solenoid):
+        """⟨ρ(E)⟩ = (1/2π) ln(E/2π) > 0 for E > 2π."""
+        rho = solenoid.spectral_density_mean(20.0)
+        assert rho > 0.0
+
+    def test_mean_grows_with_E(self, solenoid):
+        """Weyl law: ⟨ρ⟩ is monotonically increasing in E."""
+        rho_lo = solenoid.spectral_density_mean(10.0)
+        rho_hi = solenoid.spectral_density_mean(100.0)
+        assert rho_hi > rho_lo
+
+    def test_mean_finite(self, solenoid):
+        for E in [5.0, 14.135, 21.022, 100.0]:
+            assert np.isfinite(solenoid.spectral_density_mean(E))
+
+    def test_mean_formula(self, solenoid):
+        """Verify formula: ⟨ρ(E)⟩ = (1/2π) ln(E/2π)."""
+        E = 14.135
+        expected = np.log(E / (2.0 * np.pi)) / (2.0 * np.pi)
+        assert np.isclose(solenoid.spectral_density_mean(E), expected, rtol=1e-12)
+
+    def test_mean_raises_for_nonpositive_E(self, solenoid):
+        with pytest.raises(ValueError):
+            solenoid.spectral_density_mean(0.0)
+        with pytest.raises(ValueError):
+            solenoid.spectral_density_mean(-1.0)
+
+    # --- oscillatory density ---
+
+    def test_osc_finite(self, solenoid):
+        for E in [1.0, 5.0, 14.135, 21.022]:
+            assert np.isfinite(solenoid.spectral_density_osc(E))
+
+    def test_osc_returns_real(self, solenoid):
+        rho = solenoid.spectral_density_osc(14.135)
+        assert isinstance(rho, float)
+
+    def test_osc_k_max_increases_magnitude(self, solenoid):
+        """More terms in the sum must produce a different value (k_max has effect)."""
+        E = 14.135
+        rho_k1 = solenoid.spectral_density_osc(E, k_max=1)
+        rho_k5 = solenoid.spectral_density_osc(E, k_max=5)
+        assert np.isfinite(rho_k1)
+        assert np.isfinite(rho_k5)
+        # k_max=5 includes k=2..5 contributions, so values must differ
+        assert not np.isclose(rho_k1, rho_k5), (
+            f"k_max=1 and k_max=5 gave the same value {rho_k1}; k_max has no effect"
+        )
+
+    def test_osc_k_max_invalid_raises(self, solenoid):
+        """k_max <= 0 must raise ValueError."""
+        with pytest.raises(ValueError):
+            solenoid.spectral_density_osc(14.135, k_max=0)
+        with pytest.raises(ValueError):
+            solenoid.spectral_density_osc(14.135, k_max=-1)
+
+    def test_osc_uses_prime_structure(self, solenoid):
+        """ρ_osc formula uses log p weights from primes (first-prime term check)."""
+        E = 10.0
+        # Build a single-prime solenoid to isolate the p=2, k=1 contribution
+        sol1 = AdelicHilbertSolenoid(n_primes=1)
+        rho = sol1.spectral_density_osc(E, k_max=1)
+        # First prime is 2; k=1: weight = log(2)/sqrt(2), term = weight*cos(E*log(2))
+        ln2 = np.log(2)
+        expected = ln2 / np.sqrt(2) * np.cos(E * ln2) / np.pi
+        assert np.isclose(rho, expected, rtol=1e-10)
+
+    # --- total density ---
+
+    def test_total_equals_mean_plus_osc(self, solenoid):
+        """ρ(E) = ⟨ρ(E)⟩ + ρ_osc(E)."""
+        E = 14.135
+        k = 5
+        total = solenoid.spectral_density(E, k_max=k)
+        mean = solenoid.spectral_density_mean(E)
+        osc = solenoid.spectral_density_osc(E, k_max=k)
+        assert np.isclose(total, mean + osc, rtol=1e-12)
+
+    def test_total_finite(self, solenoid):
+        for E in [5.0, 14.135, 21.022, 30.0]:
+            assert np.isfinite(solenoid.spectral_density(E))
+
+    def test_total_raises_for_nonpositive_E(self, solenoid):
+        with pytest.raises(ValueError):
+            solenoid.spectral_density(0.0)
+
+    @pytest.mark.parametrize("E", [14.1347, 21.022, 25.011])
+    def test_total_at_riemann_zeros(self, solenoid, E):
+        """Total density is well-defined at imaginary parts of Riemann zeros."""
+        rho = solenoid.spectral_density(E)
+        assert np.isfinite(rho)
+
+
+# ===========================================================================
+# 16. Peter-Weyl discreteness
+# ===========================================================================
+
+class TestPeterWeylDiscreteness:
+    """Tests for the Peter-Weyl theorem discreteness documentation."""
+
+    @pytest.fixture(scope="class")
+    def pw(self, solenoid):
+        return solenoid.peter_weyl_discreteness()
+
+    def test_returns_dict(self, pw):
+        assert isinstance(pw, dict)
+
+    def test_discreteness_true(self, pw):
+        assert pw["discreteness"] is True
+
+    def test_spectrum_type_discrete(self, pw):
+        assert "discrete" in pw["spectrum_type"]
+
+    def test_theorem_key(self, pw):
+        assert "theorem" in pw
+        assert "Peter-Weyl" in pw["theorem"]
+
+    def test_group_key(self, pw):
+        assert "group" in pw
+        assert "𝔸" in pw["group"] or "Sigma" in pw["group"] or "Σ" in pw["group"]
+
+    def test_characters_key(self, pw):
+        assert "characters" in pw
+        chars = pw["characters"].lower()
+        # Must mention additive character formula exp(2πi⟨q,x⟩) and countable index set
+        assert "exp" in chars or "2πi" in chars or "exp(2" in pw["characters"]
+        assert "countable" in chars or "pontryagin" in chars or "ℚ" in chars
+
+    def test_equivariance_key(self, pw):
+        assert "equivariance" in pw
+        assert "equivariant" in pw["equivariance"].lower() or "commutes" in pw["equivariance"].lower()
+
+    def test_domain_da_key(self, pw):
+        assert "domain_DA" in pw
+        da = pw["domain_DA"].lower()
+        assert "prime" in da or "primes" in da or "enki" in da
+
+    def test_consequence_key(self, pw):
+        assert "consequence" in pw
+        desc = pw["consequence"].lower()
+        assert "discrete" in desc or "puntual" in desc or "pure point" in desc
+
