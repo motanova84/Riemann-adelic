@@ -334,8 +334,12 @@ class UMellinTransform:
         if f is None:
             f = self._schwartz_bruhat(self.x, sigma=sigma)
 
-        # D_t f: shift log_x by -t and interpolate
-        log_x_shifted = self.log_x + t  # D_t f(x) = f(x e^{-t}) → log shifts by +t
+        # D_t f: evaluate D_t f(x) = f(e^{-t}·x) on the log-grid.
+        # In log coordinates: log(e^{-t}·x) = log(x) - t, so the function
+        # f_dilated evaluated at log_x[n] equals f evaluated at log_x[n] - t.
+        # Using np.interp: interp(query_points, known_x, known_y) → y at query.
+        # We query f at shifted points (log_x - t):
+        log_x_shifted = self.log_x - t  # points where we evaluate f for D_t f
         f_dilated = np.interp(log_x_shifted, self.log_x, f, left=0.0, right=0.0)
 
         freqs, Uf_dilated = self.fourier_bruhat_transform(f_dilated)

@@ -429,8 +429,9 @@ class TrazaSigmaOperator:
         log_primes = np.log(self._primes)
         reconstruction_errors = []
         for gamma in self._zeros[:10]:
-            val = float(np.sum(np.log(self._primes) * np.cos(gamma * log_primes)))
-            reconstruction_errors.append(abs(val))
+            # Σ_p (log p) cos(γ log p) measures how strongly primes encode zero γ.
+            prime_cos_sum = float(np.sum(np.log(self._primes) * np.cos(gamma * log_primes)))
+            reconstruction_errors.append(abs(prime_cos_sum))
         zero_recon_err = float(np.mean(reconstruction_errors))
 
         # Status: orbit bijection (exact arithmetic) + Weil formula agreement

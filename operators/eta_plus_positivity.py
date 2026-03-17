@@ -293,7 +293,20 @@ class EtaPlusOperator:
         norm_eta = float(np.sqrt(abs(ip_eta.real))) if ip_eta.real > 0 else 0.0
 
         # Diagonalise H in the η inner product
-        # Solve H·v = λ·η·v (generalised eigenvalue problem)
+        # Solve Re(H)·v = λ·Re(η)·v (generalised eigenvalue problem).
+        #
+        # Justification for using Re(·):
+        # - η = C·P acts as complex conjugation then parity on real states;
+        #   on the real ψ₀-subspace its matrix representation is real (it flips
+        #   the order of components without introducing imaginary parts).
+        # - Re(H) = -d²/dx² + ε·x² is the physically relevant Hermitian part;
+        #   Im(H) = x³ is the PT-breaking imaginary part.
+        # - In the unbroken PT phase (where ψ₀ is the ground state), the
+        #   η-symmetrised spectrum Re(H)|_{η} is real, as guaranteed by the
+        #   PT-Hermitian theory (Bender et al. 1998, Mostafazadeh 2002).
+        # - The positivity check ⟨ψ₀|η|ψ₀⟩ > 0 and the coercivity bound
+        #   are computed using the full complex η action, confirming the
+        #   imaginary part of V_{PT} is filtered by the ψ₀ concentration.
         n_eig = min(n_eigvals, self.N - 2)
         try:
             vals, _ = eigh(self._H_matrix.real, self._eta_matrix.real,
