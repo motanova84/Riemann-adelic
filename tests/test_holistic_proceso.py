@@ -85,8 +85,10 @@ class TestModelMatematico:
         """summary() contains all expected keys."""
         m = ModelMatematico().build()
         keys = m.summary()
-        for expected in ("f0_Hz", "omega0_rad_s", "C", "n_zeros", "n_spectral_lines",
-                         "coherence_field"):
+        for expected in (
+            "f0_Hz", "omega0_rad_s", "C", "n_zeros", "n_spectral_lines",
+            "coherence_field",
+        ):
             assert expected in keys
 
 
@@ -192,10 +194,8 @@ class TestExperienciaBiologica:
         """Cells at exactly f₀ have the highest possible resonance score."""
         # Use n_cells=1 with a mock where frequency = f₀ exactly.
         # We test the formula directly: at r=1, |H|=Q, score = Q/Q = 1.
-        f0 = model.f0
-        omega0 = model.omega0
         Q = 100.0
-        r = omega0 / (2.0 * np.pi * f0)  # = 1.0
+        r = 1.0  # driving frequency equals cell frequency
         h_sq = 1.0 / ((1.0 - r**2) ** 2 + (r / Q) ** 2)
         h_abs = np.sqrt(h_sq)
         score = np.clip(h_abs / Q, 0.0, 1.0)

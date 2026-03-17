@@ -43,12 +43,11 @@ from enum import Enum, auto
 from typing import Dict, List, Optional, Tuple
 
 try:
-    from qcal.constants import F0, C_COHERENCE, OMEGA_0, GAMMA_1
+    from qcal.constants import F0, C_COHERENCE, OMEGA_0
 except ImportError:  # fallback if qcal package is unavailable
     F0 = 141.7001          # Hz — fundamental QCAL frequency
     C_COHERENCE = 244.36   # universal coherence constant
     OMEGA_0 = 2 * np.pi * F0
-    GAMMA_1 = 14.13472514  # first Riemann zero imaginary part
 
 
 # ---------------------------------------------------------------------------
@@ -269,7 +268,11 @@ class ExperienciaBiologica:
             h_sq = 1.0 / ((1.0 - r**2) ** 2 + (r / Q) ** 2)
             h_abs = float(np.sqrt(h_sq))
 
-            # Normalise by the peak response (at resonance, r=1): |H|_peak = Q
+            # Normalise by the peak response at resonance (r=1): |H|_peak = Q.
+            # For high-Q oscillators the true maximum of |H| occurs at
+            # r² = 1 − 1/(2Q²), giving |H|_max = Q/√(1 − 1/(4Q²)) ≈ Q·(1 + ε)
+            # where ε ≈ 1/(8Q²) << 1.  np.clip(·, 0, 1) safely caps this tiny
+            # over-shoot so the score always lies in [0, 1].
             score = float(np.clip(h_abs / Q, 0.0, 1.0))
             self.resonance_scores.append(score)
 
