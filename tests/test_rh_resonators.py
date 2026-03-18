@@ -618,6 +618,7 @@ class TestPerformance:
 
 
 if __name__ == "__main__":
+    pass
 from pathlib import Path
 import sys
 

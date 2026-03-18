@@ -413,6 +413,7 @@ def hierarchy():
 
 if __name__ == "__main__":
     pytest.main([__file__, "-v", "--tb=short"])
+"""
 Tests for the Unified Hierarchy Framework
 
 This test suite validates that all five systems correctly converge to ζ(s)
