@@ -1,34 +1,34 @@
 {
-  "total_sorries": 2940,
-  "total_files": 450,
+  "total_sorries": 2944,
+  "total_files": 451,
   "category_distribution": {
     "qcal": {
       "count": 1147,
-      "percentage": 39.01360544217687
+      "percentage": 38.96059782608695
     },
     "unknown": {
-      "count": 825,
-      "percentage": 28.061224489795915
+      "count": 827,
+      "percentage": 28.091032608695656
     },
     "spectral": {
-      "count": 369,
-      "percentage": 12.551020408163266
+      "count": 370,
+      "percentage": 12.567934782608695
     },
     "correspondence": {
       "count": 33,
-      "percentage": 1.1224489795918366
+      "percentage": 1.1209239130434783
     },
     "adelic": {
       "count": 117,
-      "percentage": 3.9795918367346936
+      "percentage": 3.974184782608696
     },
     "analytic": {
       "count": 190,
-      "percentage": 6.462585034013606
+      "percentage": 6.453804347826086
     },
     "trivial": {
-      "count": 259,
-      "percentage": 8.80952380952381
+      "count": 260,
+      "percentage": 8.831521739130435
     }
   },
   "detailed": {
@@ -1705,6 +1705,60 @@
         "line": 319,
         "code": "- Numerical comparisons: Marked with sorry (require interval arithmetic)",
         "context": "\u2705 **Formal Verification Status**:\n   - Structural theorems: Proven\n   - Positivity theorems: Proven\n   - Numerical comparisons: Marked with sorry (require interval arithmetic)\n\n\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      }
+    ],
+    "formalization/lean/AdelicSolenoidInverseLimit.lean": [
+      {
+        "line": 141,
+        "code": "sorry",
+        "context": "  -- La clave: \u222b h \u2218 \u03c6_{-t} d\u03bc = \u222b h d\u03bc cuando \u03c6_{-t} preserva \u03bc\n  -- (scalingFlow_preserves_haar (-t))\n  -- TODO: Complete via MeasureTheory.MeasurePreserving.integral_comp\n  sorry\n\n/-- U_t es automorfismo de grupo: U_{t+s} = U_t \u2218 U_s -/\ntheorem transferOperator_group_hom (s t : \u211d) (f : SolenoideAdelico \u2192 \u2102) :",
+        "primary_category": "spectral",
+        "all_categories": {
+          "adelic": 0.6,
+          "spectral": 0.65
+        },
+        "complexity": 4,
+        "similar_solutions": [
+          {
+            "repo": "Riemann-adelic",
+            "proof_snippet": "-- La clave: \u222b h \u2218 \u03c6_{-t} d\u03bc = \u222b h d\u03bc cuando \u03c6_{-t} preserva \u03bc",
+            "similarity": 0.3157894736842105,
+            "type": "proof_pattern"
+          }
+        ]
+      },
+      {
+        "line": 186,
+        "code": "sorry",
+        "context": "    \u2203 (rt : ReturnTime), rt.time = t := by\n  -- t = log(e^t) = log(q) \u2208 {k log p : p primo, k \u2265 1}\n  -- cuando q \u2208 \u211a\u207a es una potencia de primo\n  sorry\n\n/-- El peso de la \u00f3rbita (p, k) en la f\u00f3rmula de traza de Selberg:\n    contribuci\u00f3n (log p) / p^(k/2) al kernel de traza. -/",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 261,
+        "code": "sorry",
+        "context": "  -- ecuaci\u00f3n funcional difieren solo por un factor exponencial exp(As+B).\n  -- La normalizaci\u00f3n en s=0 (ambas no nulas) fija C.\n  -- TODO: Complete using Selberg-class uniqueness and Hadamard factorization\n  sorry\n\n/-- Corolario: la Hip\u00f3tesis de Riemann.\n    Si los autovalores de H son reales (H autoadjunto), todos los ceros no triviales",
+        "primary_category": "trivial",
+        "all_categories": {
+          "trivial": 0.8
+        },
+        "complexity": 1,
+        "similar_solutions": []
+      },
+      {
+        "line": 273,
+        "code": "sorry",
+        "context": "  -- \u03be(s) = 0 \u2194 \u2203 n, s = 1/2 \u00b1 i\u03b3_n  (por xi_zeros)\n  -- Por tanto Re(s) = 1/2\n  -- TODO: Complete using xi_zeros and H autoadjointness\n  sorry\n\n-- ============================================================\n-- \u00a75.  Comprobaciones de tipos",
         "primary_category": "unknown",
         "all_categories": {
           "unknown": 1.0
@@ -35509,6 +35563,6 @@
   },
   "summary": {
     "most_common_category": "qcal",
-    "avg_complexity": 3.730612244897959
+    "avg_complexity": 3.730638586956522
   }
 }
