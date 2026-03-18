@@ -796,7 +796,10 @@ class AdelicHilbertSolenoid:
         norm_full = float(np.sqrt(abs(self.haar_inner_product(F_full, F_full, x))))
         norm_half = float(np.sqrt(abs(self.haar_inner_product(F_half, F_half, x))))
         convergence_error = abs(norm_full - norm_half) / (norm_full + 1e-30)
-        is_real = float(np.max(np.abs(F_full.imag))) < 1e-10 * (float(np.max(np.abs(F_full.real))) + 1e-30)
+        # Imaginary tolerance: |imag| < 1e-10 * (|real| + guard)
+        real_scale = float(np.max(np.abs(F_full.real))) + 1e-30
+        imag_max = float(np.max(np.abs(F_full.imag)))
+        is_real = imag_max < 1e-10 * real_scale
         nontrivial = norm_full > 0
         return {
             "invariant": nontrivial and convergence_error < tol,
