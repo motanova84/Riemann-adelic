@@ -29,6 +29,9 @@ Modules:
                               Tr(e^(-t·T_∞³)) ∼ Σ_p A_p(t) cos(γ_p·t + φ_p)
     - master_operator_o3: 𝒪_∞³ = 𝔻_s ⊗ 𝟙 + 𝟙 ⊗ H_Ψ master operator unifying
                          complex and real perspectives
+    - idele_class_selfadjoint_xi: H_id self-adjoint operator on idele class group
+                         C_ℚ = 𝔸_ℚ*/ℚ* connected to ξ(s) via Mellin transform;
+                         spectrum encodes Riemann zeros on the critical line
 """
 
 from .riemann_operator import (
@@ -264,6 +267,20 @@ from .riemann_sistema_Z import (
     PSI_TARGET,
 )
 
+# Idele Class Self-Adjoint Operator and ξ(s) — Mar 2026
+from .idele_class_selfadjoint_xi import (
+    IdeleClassSelfAdjointXiOperator,
+    IdeleHilbertSpaceResult,
+    XiFunctionResult,
+    SelfAdjointOperatorResult,
+    SpectrumResult as IdeleSpectrumResult,
+    FunctionalEquationResult,
+    XiSpectralCorrespondenceResult,
+    IdeleClassValidationCertificate,
+    verify_idele_class_selfadjoint_xi,
+    RIEMANN_ZEROS_IMAGINARY,
+)
+
 __all__ = [
     'construct_H_psi',
     'compute_spectrum',
@@ -434,4 +451,15 @@ __all__ = [
     'DeterminanteHadamard',
     'SistemaDinamicoZ',
     'RiemannSistemaZCompleto',
+    # Idele Class Self-Adjoint Operator and ξ(s) (Mar 2026)
+    'IdeleClassSelfAdjointXiOperator',
+    'IdeleHilbertSpaceResult',
+    'XiFunctionResult',
+    'SelfAdjointOperatorResult',
+    'IdeleSpectrumResult',
+    'FunctionalEquationResult',
+    'XiSpectralCorrespondenceResult',
+    'IdeleClassValidationCertificate',
+    'verify_idele_class_selfadjoint_xi',
+    'RIEMANN_ZEROS_IMAGINARY',
 ]
