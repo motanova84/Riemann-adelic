@@ -143,7 +143,10 @@ theorem dilation_eigenvalue_eq (λ : ℝ) (x : ℝ) (hx : x > 0) :
   -- The derivative of x^{iλ} = exp(iλ log x) is iλ/x · exp(iλ log x)
   -- So -x · d/dx [exp(iλ log x)] = -x · (iλ/x) · exp(iλ log x) = iλ · exp(iλ log x)
   ring_nf
-  sorry -- Requires Mathlib chain rule for complex exponential composition
+  -- TODO: requires Mathlib chain rule for the composition exp ∘ (iλ · log)
+  -- Specifically: HasDerivAt (fun x => Complex.exp (Complex.I * λ * Real.log x)) at x
+  -- Relevant Mathlib lemmas: Real.hasDerivAt_log, Complex.hasDerivAt_exp, HasDerivAt.comp
+  sorry
 
 /-!
 ## §3. Multiplicative Boundary Conditions
@@ -188,6 +191,13 @@ theorem eigenfunction_satisfies_multiplicativeBC (λ : ℝ) (p : ℕ)
       rw [Complex.exp_add]
       ring
     sorry
+-- TODO: The second goal from `simp only [eigenfunction, hx, ...]` requires
+-- showing the `mul_pos` side condition holds.  This reduces to the fact that
+-- p : ℕ is prime ≥ 2 > 0 and x > 0, which is arithmetic but needs careful
+-- casting between ℕ and ℝ.  Relevant lemmas:
+-- · Nat.Prime.pos (hp : Nat.Prime p) : 0 < p
+-- · Nat.cast_pos.mpr : 0 < (p : ℝ) when 0 < p
+-- · mul_pos : 0 < a → 0 < b → 0 < a * b
 
 /-!
 ## §4. Spectral Discretization from Multiplicative Constraints

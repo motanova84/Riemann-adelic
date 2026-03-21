@@ -88,7 +88,9 @@ class TestSievePrimes:
         """No composite numbers in the output."""
         primes = sieve_primes(50)
         for p in primes:
-            assert all(p % d != 0 for d in range(2, p)), f"{p} is not prime"
+            assert all(p % d != 0 for d in range(2, int(p**0.5) + 1)), (
+                f"{p} is not prime"
+            )
 
 
 # ---------------------------------------------------------------------------
@@ -469,8 +471,11 @@ class TestStructuralConnection:
             assert isinstance(v, float)
 
     def test_v_osc_symmetry(self):
-        """V_osc(-x) ≠ V_osc(x) in general (cosines are even, but shifted)."""
-        # cos((-x) log p) = cos(x log p), so V_osc is even
+        """V_osc is an even function: V_osc(-x) = V_osc(x).
+
+        Since cos((-x) log p) = cos(x log p) for all primes p, the sum
+        V_osc(x) = Σ_p (log p / √p) cos(x log p) satisfies V_osc(-x) = V_osc(x).
+        """
         deriv = VOscStructuralDerivation(p_max=200)
         for x in [3.0, 7.0, 14.1347]:
             assert abs(deriv.v_osc(x) - deriv.v_osc(-x)) < 1e-10, (

@@ -73,7 +73,7 @@ from __future__ import annotations
 import cmath
 import math
 from dataclasses import dataclass, field
-from typing import Dict, List, Optional, Tuple
+from typing import Callable, Dict, List, Optional, Tuple
 
 import numpy as np
 from scipy.integrate import quad
@@ -172,7 +172,7 @@ class MultiplicativeBoundaryCondition:
                 return False
         return True
 
-    def apply(self, f: callable, x: float) -> complex:
+    def apply(self, f: Callable[[float], complex], x: float) -> complex:
         """Check that f satisfies the multiplicative BC at point x.
 
         Returns f(p·x) - e^{iθ} f(x).  Should be 0 if the BC is satisfied.
@@ -425,7 +425,7 @@ class VOscStructuralDerivation:
     Parameters
     ----------
     p_max : int
-        Upper bound for primes. Default 10 000.
+        Upper bound for primes. Default 10_000.
 
     Attributes
     ----------
