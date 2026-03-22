@@ -39,7 +39,7 @@
 - `spectrum_eq_zeros.lean`: **Identificación espectral completa Spec(H_Ψ) = {γₙ}**
 - `D_spectral.lean`: Determinante ζ-regularizado del operador H_Ψ
 - `spectrum_Hψ_equals_zeta_zeros.lean`: Equivalencia espectral Spec(H_Ψ) = {γ | ζ(1/2+iγ)=0}
-- `NuclearityExplicit.lean`: ✅ Construcción explícita nuclear (trace-class) de H_Ψ (0 sorrys)
+- `NuclearityExplicit.lean`: ✅ Construcción explícita nuclear (trace-class) de H_Ψ (0 sorrys) — parámetro de truncación T = 888, frecuencia base 141.7001 Hz
 - `Dchi_eq_Xi_formal.lean`: ✅ **NUEVO** - Equivalencia formal Dχ(s) = Ξ(s) para el carácter trivial
 - `xi_equiv_dchi.lean`: Equivalencia Ξ(s) ≡ Dχ(s) mediante trazas espectrales
 - `lakefile.lean`, `lean-toolchain`, `CITATION.cff`
