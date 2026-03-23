@@ -1,34 +1,34 @@
 {
-  "total_sorries": 2944,
-  "total_files": 451,
+  "total_sorries": 2954,
+  "total_files": 453,
   "category_distribution": {
     "qcal": {
       "count": 1147,
-      "percentage": 38.96059782608695
+      "percentage": 38.82870683818551
     },
     "unknown": {
-      "count": 827,
-      "percentage": 28.091032608695656
+      "count": 833,
+      "percentage": 28.199052132701425
     },
     "spectral": {
       "count": 370,
-      "percentage": 12.567934782608695
+      "percentage": 12.525389302640487
     },
     "correspondence": {
       "count": 33,
-      "percentage": 1.1209239130434783
+      "percentage": 1.1171293161814488
     },
     "adelic": {
       "count": 117,
-      "percentage": 3.974184782608696
+      "percentage": 3.9607312119160456
     },
     "analytic": {
       "count": 190,
-      "percentage": 6.453804347826086
+      "percentage": 6.431956668923494
     },
     "trivial": {
-      "count": 260,
-      "percentage": 8.831521739130435
+      "count": 264,
+      "percentage": 8.93703452945159
     }
   },
   "detailed": {
@@ -1383,7 +1383,7 @@
     ],
     "formalization/lean/Main.lean": [
       {
-        "line": 78,
+        "line": 82,
         "code": "-- Paley-Wiener Uniqueness Theorem (100% formal, zero sorry)",
         "context": "import RiemannAdelic.lengths_derived\nimport RiemannAdelic.paley_wiener_uniqueness\n\n-- Paley-Wiener Uniqueness Theorem (100% formal, zero sorry)\nimport paley.paley_wiener_uniqueness\n-- Identity Principle for Exponential Type Functions\nimport paley.identity_principle_exp_type",
         "primary_category": "adelic",
@@ -1394,7 +1394,7 @@
         "similar_solutions": []
       },
       {
-        "line": 307,
+        "line": 311,
         "code": "IO.println \"  \u2022 Paley-Wiener Uniqueness (100% formal - ZERO sorry)\"",
         "context": "  IO.println \"  \u2022 Spectral RH operator H_\u03b5 (with prime harmonic potential)\"\n  IO.println \"  \u2022 Paley-Wiener theory\"\n  IO.println \"  \u2022 Paley-Wiener uniqueness theorem\"\n  IO.println \"  \u2022 Paley-Wiener Uniqueness (100% formal - ZERO sorry)\"\n  IO.println \"  \u2022 Identity Principle for Exponential Type Functions\"\n  IO.println \"  \u2022 Spectral RH operator (H_\u03b5 with prime harmonic potential)\"\n  IO.println \"  \u2022 Critical line proof via spectral operators\"",
         "primary_category": "spectral",
@@ -1405,7 +1405,7 @@
         "similar_solutions": []
       },
       {
-        "line": 327,
+        "line": 331,
         "code": "IO.println \"  \u2022 Heat Kernel Convergence to \u03b4\u2080 + Arithmetic Distribution (formalization in progress; contains sorry/axiom)\"",
         "context": "  IO.println \"  \u2022 Kernel positivity (purge_axioms branch)\"\n  IO.println \"  \u2022 Gamma trivial exclusion (purge_axioms branch)\"\n  IO.println \"  \u2022 Selberg Trace Formula (strong form with exact convergence)\"\n  IO.println \"  \u2022 Heat Kernel Convergence to \u03b4\u2080 + Arithmetic Distribution (formalization in progress; contains sorry/axiom)\"\n  IO.println \"  \u2022 NEW: Weil Explicit Formula (spectral derivation from H_\u03a8)\"\n  IO.println \"    - Connects zeta zeros with prime distribution via spectrum\"\n  IO.println \"    - \u2211g(\u03bb\u2099) + g(-\u03bb\u2099) - \u222bg(t)K(t)dt = \u2211g(Im \u03c1)\"",
         "primary_category": "qcal",
@@ -1419,7 +1419,7 @@
         "similar_solutions": []
       },
       {
-        "line": 340,
+        "line": 344,
         "code": "IO.println \"    - Complete theorem: no sorry (zero pending proofs)\"",
         "context": "  IO.println \"  \u2022 NEW: Script 13/\u221e\u00b3 - Eigenfunctions Dense in L\u00b2(\u211d) (26 November 2025)\"\n  IO.println \"    - spectral/eigenfunctions_dense_L2R: Orthonormal basis of eigenfunctions\"\n  IO.println \"    - eigenfunctions_dense_L2R: \u2203 (e : \u2115 \u2192 H), orthonormal \u2102 e \u2227 span(e) = \u22a4\"\n  IO.println \"    - Complete theorem: no sorry (zero pending proofs)\"\n  IO.println \"    - Key for spectral development and heat kernel expansions\"\n  IO.println \"  \u2022 NEW: Script 42/\u221e\u00b3 - Compact Self-Adjoint Spectrum (27 November 2025)\"\n  IO.println \"    - spectral/compact_selfadjoint_spectrum: Discrete spectrum theorem\"",
         "primary_category": "spectral",
@@ -1430,7 +1430,7 @@
         "similar_solutions": []
       },
       {
-        "line": 446,
+        "line": 450,
         "code": "/-- The complete system theorem: combines all components without sorrys -/",
         "context": "/-- Noesis decides -/\naxiom noesis_proven : NoesisInfinity.Noesis_decides\n\n/-- The complete system theorem: combines all components without sorrys -/\ntheorem Hilbert_Polya_System_Complete : \n  HS \u2227 CompactResolvent.is_hilbert_schmidt \u2227 Bijection \u2227 \n  (\u2200 s : \u2102, Complex.riemannZeta s = 0 \u2192 (0 < s.re \u2227 s.re < 1) \u2192 s.re = 1/2) \u2227 ",
         "primary_category": "correspondence",
@@ -15409,6 +15409,30 @@
           "adelic": 1.2
         },
         "complexity": 5,
+        "similar_solutions": []
+      }
+    ],
+    "formalization/lean/spectral/v_osc_structural_derivation.lean": [
+      {
+        "line": 149,
+        "code": "sorry",
+        "context": "  -- TODO: requires Mathlib chain rule for the composition exp \u2218 (i\u03bb \u00b7 log)\n  -- Specifically: HasDerivAt (fun x => Complex.exp (Complex.I * \u03bb * Real.log x)) at x\n  -- Relevant Mathlib lemmas: Real.hasDerivAt_log, Complex.hasDerivAt_exp, HasDerivAt.comp\n  sorry\n\n/-!\n## \u00a73. Multiplicative Boundary Conditions",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 193,
+        "code": "sorry",
+        "context": "      ring_nf\n      rw [Complex.exp_add]\n      ring\n    sorry\n-- TODO: The second goal from `simp only [eigenfunction, hx, ...]` requires\n-- showing the `mul_pos` side condition holds.  This reduces to the fact that\n-- p : \u2115 is prime \u2265 2 > 0 and x > 0, which is arithmetic but needs careful",
+        "primary_category": "trivial",
+        "all_categories": {
+          "trivial": 0.8
+        },
+        "complexity": 1,
         "similar_solutions": []
       }
     ],
@@ -34186,7 +34210,7 @@
         "similar_solutions": []
       },
       {
-        "line": 736,
+        "line": 777,
         "code": "sorry  -- Follows from Gaussian decay: exp(-(x-f\u2080)\u00b2/2) when |x-f\u2080| > 10",
         "context": "    (h\u03b1_large : |\u03b1.re - f\u2080| > 10) :\n    spectral_kernel \u03b1 < Real.exp (-50) := by\n  unfold spectral_kernel\n  sorry  -- Follows from Gaussian decay: exp(-(x-f\u2080)\u00b2/2) when |x-f\u2080| > 10\n\n/-!\n## Main Theorem: Exponential Sum Bound on Minor Arcs",
         "primary_category": "qcal",
@@ -34197,7 +34221,7 @@
         "similar_solutions": []
       },
       {
-        "line": 773,
+        "line": 814,
         "code": "sorry  -- Full proof requires:",
         "context": "  -- 4. Bound TypeIII via sieve methods (small remainder)\n  -- 5. Combine via triangle inequality\n  \n  sorry  -- Full proof requires:\n  -- - Large Sieve inequality (Montgomery)\n  -- - Vinogradov-Korobov bounds\n  -- - Diophantine approximation (\u03b1 far from rationals)",
         "primary_category": "adelic",
@@ -34208,7 +34232,7 @@
         "similar_solutions": []
       },
       {
-        "line": 805,
+        "line": 846,
         "code": "sorry  -- Follows from exponential_sum_minor_arc_bound by cubing and integrating",
         "context": "        (\u2211 n in Finset.range N, VaughanIdentity.vonMangoldt n * Complex.exp (2 * \u03c0 * I * \u03b1 * n))^3 \n          * Complex.exp (-2 * \u03c0 * I * \u03b1 * N)| \n        \u2264 C * N / (Real.log N)^A) := by\n  sorry  -- Follows from exponential_sum_minor_arc_bound by cubing and integrating\n\n/-!\n## Final Result: The \"10/10\" Analytic Achievement",
         "primary_category": "analytic",
@@ -34846,6 +34870,50 @@
         },
         "complexity": 5,
         "similar_solutions": []
+      },
+      {
+        "line": 406,
+        "code": "sorry  -- Consecuencia de la representaci\u00f3n de GoldbachIntegral como cuenta de pares de primos",
+        "context": "lemma existence_from_positivity {N n : \u2115}\n    (h_pos : Complex.re (GoldbachIntegral N n) > 0) :\n    \u2203 p q : \u2115, Nat.Prime p \u2227 Nat.Prime q \u2227 p + q = n :=\n  sorry  -- Consecuencia de la representaci\u00f3n de GoldbachIntegral como cuenta de pares de primos\n\n/-- Cota inferior estructural para arcos mayores (forma compacta). -/\nlemma majorArc_lower_bound_structural (n : \u2115) :",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 414,
+        "code": "sorry  -- Consecuencia de major_arc_lower_bound_structural + singularSeries_pos",
+        "context": "      \u2203 N \u2265 n, Complex.re (\u222b \u03b1 in MajorArcs N,\n          (HLsum_vonMangoldt N \u03b1)^2 * Complex.exp (-2 * Real.pi * I * \u03b1 * n))\n        \u2265 c * (n : \u211d) / (Real.log n)^2 :=\n  sorry  -- Consecuencia de major_arc_lower_bound_structural + singularSeries_pos\n\n/-- Cota superior para la contribuci\u00f3n de arcos menores (forma compacta). -/\nlemma minorArc_contribution_bound (n : \u2115) :",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 422,
+        "code": "sorry  -- Consecuencia de minor_arc_bound con A = 6",
+        "context": "      Complex.abs (\u222b \u03b1 in MinorArcs N,\n          (HLsum_vonMangoldt N \u03b1)^2 * Complex.exp (-2 * Real.pi * I * \u03b1 * n))\n        \u2264 C * (n : \u211d) / (Real.log n)^6 :=\n  sorry  -- Consecuencia de minor_arc_bound con A = 6\n\n/-- Dominancia de la se\u00f1al sobre el ruido para n suficientemente grande. -/\nlemma dominance_of_signal {n : \u2115}",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 436,
+        "code": "sorry  -- n/log\u00b2 n dominates n/log\u2076 n for n >> 0",
+        "context": "          \u2264 C * (n : \u211d) / (Real.log n)^6) :\n    \u2203 N \u2265 n, \u2200 (h_siegel : SiegelWalfisz),\n      Complex.re (GoldbachIntegral N n) > 0 :=\n  sorry  -- n/log\u00b2 n dominates n/log\u2076 n for n >> 0\n\n/--\n  TEOREMA FINAL: goldbach_existence",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
       }
     ],
     "formalization/lean/RiemannAdelic/core/analytic/von_mangoldt.lean": [
@@ -35023,18 +35091,7 @@
         "similar_solutions": []
       },
       {
-        "line": 362,
-        "code": "sorry",
-        "context": "  -- 2. Aplicar Parseval: \u222b|\u015c(\u03b1)|\u00b2 \u03c6(\u03b1) d\u03b1 = \u03a3_{a\u2080,q} |S(a\u2080/q)|\u00b2\n  -- 3. Mayorar \u03c6\u0302(n) usando cotas de sumas de Ramanujan\n  -- 4. Concluir con Cauchy-Schwarz\n  sorry\n\n/-- \n  Versi\u00f3n refinada de la Large Sieve con rango a\u2080 \u2208 [0, q-1].",
-        "primary_category": "unknown",
-        "all_categories": {
-          "unknown": 1.0
-        },
-        "complexity": 5,
-        "similar_solutions": []
-      },
-      {
-        "line": 384,
+        "line": 375,
         "code": "-- Por ahora, mantenemos el `sorry` ya que es un teorema profundo de an\u00e1lisis.",
         "context": "  -- Esta versi\u00f3n es matem\u00e1ticamente id\u00e9ntica a largeSieve_discrete\n  -- pero usa un rango ligeramente diferente.\n  -- La prueba cl\u00e1sica usa dualidad de Selberg o el lema de Bombieri.\n  -- Por ahora, mantenemos el `sorry` ya que es un teorema profundo de an\u00e1lisis.\n  -- La implementaci\u00f3n completa requerir\u00eda:\n  -- 1. Transformaci\u00f3n de la suma doble en una norma de operador\n  -- 2. Acotaci\u00f3n de los valores propios de una matriz de Hilbert",
         "primary_category": "unknown",
@@ -35045,7 +35102,7 @@
         "similar_solutions": []
       },
       {
-        "line": 389,
+        "line": 380,
         "code": "sorry",
         "context": "  -- 1. Transformaci\u00f3n de la suma doble en una norma de operador\n  -- 2. Acotaci\u00f3n de los valores propios de una matriz de Hilbert\n  -- 3. Uso de la f\u00f3rmula de suma de Poisson o desigualdad de Hilbert\n  sorry\n\n/-- \n  Corolario: Cota puntual para una suma exponencial individual.",
         "primary_category": "unknown",
@@ -35056,7 +35113,7 @@
         "similar_solutions": []
       },
       {
-        "line": 417,
+        "line": 408,
         "code": "sorry",
         "context": "  -- aproximaci\u00f3n con |\u03b8 - a\u2080/q| \u2264 1/(qQ).\n  -- Luego usamos continuidad de expAdd para relacionar \n  -- expSum a N \u03b8 con expSum a N (a\u2080/q).\n  sorry\n\n/-- \n  Versi\u00f3n flexible para sumas bilineales.",
         "primary_category": "unknown",
@@ -35067,7 +35124,7 @@
         "similar_solutions": []
       },
       {
-        "line": 446,
+        "line": 437,
         "code": "sorry",
         "context": "  --\n  -- La flexibilidad en la cota (U*V + Q\u00b2*(U+V)) es crucial para\n  -- navegar cuando los t\u00e9rminos U, V y Q empiezan a chocar entre s\u00ed.\n  sorry\n\n/-- \n  Versi\u00f3n est\u00e1ndar (menos flexible pero m\u00e1s simple).",
         "primary_category": "trivial",
@@ -35078,7 +35135,7 @@
         "similar_solutions": []
       },
       {
-        "line": 464,
+        "line": 455,
         "code": "sorry",
         "context": "  -- Obtenemos esto del teorema anterior tomando un solo t\u00e9rmino.\n  -- Necesitamos encontrar q \u2264 Q y a\u2080 coprimo a q tales que \u03b8 \u2248 a\u2080/q.\n  -- Esto es posible por aproximaci\u00f3n diof\u00e1ntica (Dirichlet).\n  sorry\n\n/-- \n  Versi\u00f3n simplificada para sumas bilineales.",
         "primary_category": "trivial",
@@ -35089,7 +35146,7 @@
         "similar_solutions": []
       },
       {
-        "line": 501,
+        "line": 492,
         "code": "sorry",
         "context": "  -- Aplicamos Cauchy-Schwarz y luego large sieve a cada variable.\n  -- Este es el paso que convierte el problema bilineal en uno lineal manejable.\n  -- La constante C captura factores de optimalidad en la aplicaci\u00f3n del m\u00e9todo.\n  sorry\n\nend AnalyticNumberTheory\n",
         "primary_category": "analytic",
@@ -35199,6 +35256,63 @@
         "primary_category": "analytic",
         "all_categories": {
           "analytic": 0.6
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      }
+    ],
+    "formalization/lean/RiemannAdelic/core/analytic/multiplicative_boundary_conditions.lean": [
+      {
+        "line": 119,
+        "code": "sorry -- Standard complex derivative computation",
+        "context": "    have := Complex.HasDerivAt.exp (hasDerivAt_id u |>.const_mul (Complex.I * \u03bb))\n    simp [mul_comm] at this \u22a2\n    rw [hasDerivAt_iff_isLittleO] at this\n    sorry -- Standard complex derivative computation\n  rw [hderiv]\n  ring\n",
+        "primary_category": "trivial",
+        "all_categories": {
+          "trivial": 0.8
+        },
+        "complexity": 1,
+        "similar_solutions": []
+      },
+      {
+        "line": 190,
+        "code": "sorry -- exp(i\u03bb\u00b7log p) = 1 \u2194 \u03bb\u00b7log p \u2208 2\u03c0\u00b7\u2124",
+        "context": "    -- \u2194 \u03bb\u00b7log p \u2208 2\u03c0\u00b7\u2124\n    have h0 := h 0\n    simp [Complex.exp_add, Complex.exp_mul] at h0\n    sorry -- exp(i\u03bb\u00b7log p) = 1 \u2194 \u03bb\u00b7log p \u2208 2\u03c0\u00b7\u2124\n  \u00b7 intro \u27e8k, hk\u27e9 u\n    simp [Complex.exp_add, Complex.exp_mul]\n    have : Complex.exp (Complex.I * \u03bb * Real.log p) = 1 := by",
+        "primary_category": "trivial",
+        "all_categories": {
+          "trivial": 0.8
+        },
+        "complexity": 1,
+        "similar_solutions": []
+      },
+      {
+        "line": 198,
+        "code": "sorry",
+        "context": "      rw [hk]\n      simp [Complex.exp_int_cast_mul_two_pi_I]\n    linarith [this]  -- rearrange to conclude\n    sorry\n\n/-- La frecuencia fundamental de cada primo: \u03c9_p = 2\u03c0 / log p.\n",
+        "primary_category": "trivial",
+        "all_categories": {
+          "trivial": 0.8
+        },
+        "complexity": 1,
+        "similar_solutions": []
+      },
+      {
+        "line": 330,
+        "code": "sorry",
+        "context": "    (hpq : p < q) (hp_large : Real.exp 2 \u2264 (p : \u211d)) :\n    Real.log q / Real.sqrt q \u2264 Real.log p / Real.sqrt p := by\n  -- d/dx[(log x)/\u221ax] = (2 - log x)/(2x^{3/2}) < 0 for x > e\u00b2\n  sorry\n\n/-- Unicidad: V_osc es el \u00fanico potencial compatible con las restricciones.\n",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 345,
+        "code": "sorry",
+        "context": "        (1 / Real.pi) * (Real.log p / Real.sqrt p) * Real.cos (E * Real.log p))) :\n    \u2200 x : \u211d, \u2203 \u03c6 : \u211d,\n      W x = \u2211 p \u2208 primes, (Real.log p / Real.sqrt p) * Real.cos (x * Real.log p + \u03c6) := by\n  sorry\n\n-- ============================================================================\n-- PARTE VII: INTEGRACI\u00d3N CON EL MARCO RIEMANN-AD\u00c9LICO",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
         },
         "complexity": 5,
         "similar_solutions": []
@@ -35563,6 +35677,6 @@
   },
   "summary": {
     "most_common_category": "qcal",
-    "avg_complexity": 3.730638586956522
+    "avg_complexity": 3.729519295870007
   }
 }
