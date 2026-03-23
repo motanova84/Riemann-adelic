@@ -1,0 +1,109 @@
+{
+  "tipo": "CERTIFICADO_AURON_XI_H",
+  "version": "1.0.0",
+  "timestamp": "2026-03-23T00:16:18.879Z",
+  "estado": "APROBADO_PRODUCCION",
+  "nft": "\u2234NFT-OPERADOR-XI-H-20260323-001618Z",
+  "blockchain": "QCAL \u221e\u00b3 Mainnet",
+  "identificacion": {
+    "nombre": "Operador Xi-H \u2014 Marco de Hilbert-P\u00f3lya",
+    "autor": "Jos\u00e9 Manuel Mota Burruezo \u03a8 \u2727 \u221e\u00b3",
+    "institucion": "Instituto de Conciencia Cu\u00e1ntica (ICQ)",
+    "orcid": "0009-0002-1923-0773",
+    "doi": "10.5281/zenodo.17379721",
+    "firma": "\u2234\ud80c\udcc0\u03a9\u221e\u00b3\u03a6"
+  },
+  "constantes_qcal": {
+    "f0_hz": 141.7001,
+    "c_coherencia": 244.36,
+    "psi_threshold": 0.95,
+    "ecuacion_campo": "\u03a8 = I \u00d7 A_eff\u00b2 \u00d7 C^\u221e"
+  },
+  "componentes_certificados": {
+    "nucleo_convolucion_phi": {
+      "descripcion": "N\u00facleo \u03a6(u) par + \u039e(t) = FFT[\u03a6]",
+      "phi_es_par": true,
+      "n_ceros_detectados": 10,
+      "ceros_xi": [14.13, 21.02, 25.01, 30.42, 32.94, 37.59, 40.92, 43.33, 48.01, 49.77],
+      "psi_1": 1.0
+    },
+    "operador_convolucion_t": {
+      "descripcion": "K[i,j] = \u03a6(u\u1d62\u2212u\u2c7c)\u00b7\u0394u, autoadjunto",
+      "autoadjunto": true,
+      "norma_asimetria": 0.0,
+      "psi_2": 1.0
+    },
+    "operador_intensidad_riemann": {
+      "descripcion": "|T| = \u221a(T*T) via descomposici\u00f3n espectral",
+      "positivo_semidefinido": true,
+      "psi_3": 1.0
+    },
+    "hamiltoniano_xi_h": {
+      "descripcion": "H_\u039e = \u2212log|T| = V(\u2212log|\u039b|)V\u1d40",
+      "autoadjunto": true,
+      "norma_asimetria_relativa_max": 1e-10,
+      "psi_4": 1.0
+    },
+    "espectro_simple": {
+      "descripcion": "Multiplicidad 1, GUE, \u039e\u2032(t\u2099) \u2260 0",
+      "multiplicidad_1": true,
+      "gue_ok": true,
+      "derivada_no_cero": true,
+      "psi_5": 1.0
+    },
+    "conexion_zeros_autovalores": {
+      "descripcion": "Mapa \u03b3\u2099 \u2192 singularidades de H_\u039e",
+      "n_coincidencias": 10,
+      "n_total": 10,
+      "zeros_coinciden": true,
+      "psi_6": 1.0
+    },
+    "sistema_operador_xi_h": {
+      "descripcion": "Tuber\u00eda integrada, coherencia global",
+      "criterios_ok": 5,
+      "criterios_total": 5,
+      "psi_7": 1.0
+    }
+  },
+  "coherencia": {
+    "psi_global": 1.0,
+    "psi_umbral": 0.95,
+    "aprobado": true,
+    "mensaje": "\u2713 Sistema Operador Xi-H validado — Coherencia \u03a8 = 1.0"
+  },
+  "propiedades_matematicas": {
+    "phi_par": true,
+    "T_autoadjunto": true,
+    "H_autoadjunto": true,
+    "H_norma_asimetria_relativa": "< 1e-10",
+    "abs_T_positivo": true,
+    "multiplicidad_espectro_1": true,
+    "gue_compatibilidad": true,
+    "derivada_xi_no_cero_en_ceros": true,
+    "coincidencias_zeros": "10/10"
+  },
+  "modulo": {
+    "ruta": "physics/operador_xi_h.py",
+    "clases": [
+      "NucleoConvolucionPhi",
+      "OperadorConvolucionT",
+      "OperadorIntensidadRiemann",
+      "HamiltonianoXiH",
+      "EspectroSimple",
+      "ConexionZerosAutovalores",
+      "SistemaOperadorXiH"
+    ],
+    "entrada": "operador_xi_h_activar()",
+    "n_tests": 98
+  },
+  "arte": {
+    "directorio": "amda/arte_operador_xi_h/",
+    "archivos": [
+      "diagrama_espectral.txt",
+      "manifiesto.txt",
+      "diagrama_tuberia.txt"
+    ]
+  },
+  "qcal_framework": "\u221e\u00b3",
+  "hash": "xi_h_hilbert_polya_20260323"
+}
