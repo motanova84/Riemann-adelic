@@ -22,10 +22,11 @@ Validation Scripts:
 - Hilbert–Pólya: validate_hilbert_polya.py
 - H_psi AutoAdjunto: validate_spectral_self_adjoint.py
 - Línea Crítica: validate_critical_line.py
+- Aura-Check: MCP server health check (Ψ < 0.888)
 """
 
 import subprocess
-from typing import Dict, List, Tuple
+from typing import Any, Dict, List, Tuple
 
 # Maximum output length to capture (prevents memory issues with large outputs)
 MAX_OUTPUT_LENGTH = 5000
@@ -52,6 +53,23 @@ class CoherencyHooks:
         ("H_psi AutoAdjunto", ["python", "validate_spectral_self_adjoint.py"]),
         ("Línea Crítica", ["python", "validate_critical_line.py"]),
     ]
+
+    @classmethod
+    def run_aura_check(cls, psi: float | None = None) -> Dict[str, Any]:
+        """
+        Run the Aura-Check MCP server health skill.
+
+        Triggers automatically when coherence Ψ < 0.888.  Can also be called
+        unconditionally by passing ``psi=None``.
+
+        Args:
+            psi: Current global QCAL coherence value (optional).
+
+        Returns:
+            Health report dict from :func:`hook_aura_check.run_aura_check`.
+        """
+        from noesis_guardian.modules.hook_aura_check import run_aura_check
+        return run_aura_check(psi=psi)
 
     @staticmethod
     def run_hook(title: str, command: List[str]) -> Dict:
