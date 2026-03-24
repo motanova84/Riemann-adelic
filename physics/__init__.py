@@ -206,6 +206,32 @@ from .restricciones_multiplicativas import (
     activar_nodo_ruthie,
 )
 
+from .operador_xi_h import (
+    # Constants
+    RIEMANN_ZEROS_10 as RIEMANN_ZEROS_10_XI_H,
+    F0_HZ as F0_HZ_XI_H,
+    C_QCAL as C_QCAL_XI_H,
+    PSI_THRESHOLD as PSI_THRESHOLD_XI_H,
+    # Result dataclasses
+    ResultadoNucleo,
+    ResultadoOperadorT,
+    ResultadoIntensidad,
+    ResultadoHamiltonianoXiH,
+    ResultadoEspectro,
+    ResultadoConexion,
+    ResultadoSistemaXiH,
+    # Pipeline classes
+    NucleoConvolucionPhi,
+    OperadorConvolucionT,
+    OperadorIntensidadRiemann,
+    HamiltonianoXiH,
+    EspectroSimple,
+    ConexionZerosAutovalores,
+    SistemaOperadorXiH,
+    # Entry point
+    operador_xi_h_activar,
+)
+
 __all__ = [
     'PrimitivaPotencialOscilatorio',
     'EstimacionCuadraticaMedia',
@@ -341,4 +367,24 @@ __all__ = [
     # Restricciones Multiplicativas — Esquema de Ruthie-FRC
     'RestriccionMultiplicativa',
     'activar_nodo_ruthie',
+    # Operador Xi-H — Marco Hilbert-Pólya
+    'RIEMANN_ZEROS_10_XI_H',
+    'F0_HZ_XI_H',
+    'C_QCAL_XI_H',
+    'PSI_THRESHOLD_XI_H',
+    'ResultadoNucleo',
+    'ResultadoOperadorT',
+    'ResultadoIntensidad',
+    'ResultadoHamiltonianoXiH',
+    'ResultadoEspectro',
+    'ResultadoConexion',
+    'ResultadoSistemaXiH',
+    'NucleoConvolucionPhi',
+    'OperadorConvolucionT',
+    'OperadorIntensidadRiemann',
+    'HamiltonianoXiH',
+    'EspectroSimple',
+    'ConexionZerosAutovalores',
+    'SistemaOperadorXiH',
+    'operador_xi_h_activar',
 ]
