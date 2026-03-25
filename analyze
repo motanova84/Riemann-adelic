@@ -1,34 +1,34 @@
 {
-  "total_sorries": 2954,
-  "total_files": 453,
+  "total_sorries": 2955,
+  "total_files": 454,
   "category_distribution": {
     "qcal": {
       "count": 1147,
-      "percentage": 38.82870683818551
+      "percentage": 38.81556683587141
     },
     "unknown": {
       "count": 833,
-      "percentage": 28.199052132701425
+      "percentage": 28.189509306260575
     },
     "spectral": {
       "count": 370,
-      "percentage": 12.525389302640487
+      "percentage": 12.521150592216582
     },
     "correspondence": {
       "count": 33,
-      "percentage": 1.1171293161814488
+      "percentage": 1.116751269035533
     },
     "adelic": {
       "count": 117,
-      "percentage": 3.9607312119160456
+      "percentage": 3.9593908629441623
     },
     "analytic": {
       "count": 190,
-      "percentage": 6.431956668923494
+      "percentage": 6.429780033840947
     },
     "trivial": {
-      "count": 264,
-      "percentage": 8.93703452945159
+      "count": 265,
+      "percentage": 8.967851099830796
     }
   },
   "detailed": {
@@ -35318,6 +35318,19 @@
         "similar_solutions": []
       }
     ],
+    "formalization/lean/RiemannAdelic/core/operator/spectral_projection.lean": [
+      {
+        "line": 184,
+        "code": "sorry",
+        "context": "      \u211d \u2192L[\u211d] (H \u2192L[\u2102] H)).toLinearMap.toFun |>.toFun |> id\n      |> fun _ => (ContinuousLinearMap.id \u2102 H))\n  -- Simplified stub; full definition would use `innerSL` properly\n  sorry\n\n/-!\n## Resolution of Identity",
+        "primary_category": "trivial",
+        "all_categories": {
+          "trivial": 0.8
+        },
+        "complexity": 1,
+        "similar_solutions": []
+      }
+    ],
     "formalization/lean/RiemannAdelic/core/operator/CompactacionAdelica.lean": [
       {
         "line": 151,
@@ -35677,6 +35690,6 @@
   },
   "summary": {
     "most_common_category": "qcal",
-    "avg_complexity": 3.729519295870007
+    "avg_complexity": 3.728595600676819
   }
 }
