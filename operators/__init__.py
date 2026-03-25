@@ -280,6 +280,15 @@ from .idele_class_selfadjoint_xi import (
     verify_idele_class_selfadjoint_xi,
     RIEMANN_ZEROS_IMAGINARY,
 )
+# Spectral Projection Operator P_Ω (Mar 2026)
+from .spectral_projection_operator import (
+    SpectralProjectionOperator,
+    ProjectionResult,
+    ResolutionOfIdentityResult,
+    SpectralSubspaceResult,
+    build_spectral_projection,
+    generate_projection_certificate,
+)
 
 __all__ = [
     'construct_H_psi',
@@ -462,4 +471,11 @@ __all__ = [
     'IdeleClassValidationCertificate',
     'verify_idele_class_selfadjoint_xi',
     'RIEMANN_ZEROS_IMAGINARY',
+    # Spectral Projection Operator P_Ω (Mar 2026)
+    'SpectralProjectionOperator',
+    'ProjectionResult',
+    'ResolutionOfIdentityResult',
+    'SpectralSubspaceResult',
+    'build_spectral_projection',
+    'generate_projection_certificate',
 ]
