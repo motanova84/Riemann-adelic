@@ -152,14 +152,7 @@
           "unknown": 1.0
         },
         "complexity": 5,
-        "similar_solutions": [
-          {
-            "repo": "Riemann-adelic",
-            "proof_snippet": "-- Por simetr\u00eda del producto infinito bajo \u03bb \u2192 \u03bb\u0304",
-            "similarity": 0.37037037037037035,
-            "type": "proof_pattern"
-          }
-        ]
+        "similar_solutions": []
       },
       {
         "line": 183,
@@ -1565,14 +1558,7 @@
           "unknown": 1.0
         },
         "complexity": 5,
-        "similar_solutions": [
-          {
-            "repo": "Riemann-adelic",
-            "proof_snippet": "-- La suma geom\u00e9trica con raz\u00f3n z = exp(2\u03c0i h \u03b1)",
-            "similarity": 0.3548387096774194,
-            "type": "proof_pattern"
-          }
-        ]
+        "similar_solutions": []
       },
       {
         "line": 101,
@@ -1583,14 +1569,7 @@
           "unknown": 1.0
         },
         "complexity": 5,
-        "similar_solutions": [
-          {
-            "repo": "Riemann-adelic",
-            "proof_snippet": "-- Se usa la teor\u00eda de Fourier sobre T\u00b9 y aproximaci\u00f3n de funciones continuas",
-            "similarity": 0.5,
-            "type": "proof_pattern"
-          }
-        ]
+        "similar_solutions": []
       },
       {
         "line": 215,
@@ -1724,14 +1703,7 @@
           "spectral": 0.65
         },
         "complexity": 4,
-        "similar_solutions": [
-          {
-            "repo": "Riemann-adelic",
-            "proof_snippet": "-- La clave: \u222b h \u2218 \u03c6_{-t} d\u03bc = \u222b h d\u03bc cuando \u03c6_{-t} preserva \u03bc",
-            "similarity": 0.3157894736842105,
-            "type": "proof_pattern"
-          }
-        ]
+        "similar_solutions": []
       },
       {
         "line": 186,
@@ -1880,14 +1852,7 @@
           "unknown": 1.0
         },
         "complexity": 5,
-        "similar_solutions": [
-          {
-            "repo": "Riemann-adelic",
-            "proof_snippet": "verified numerical computation (e.g., using FLINT, mpmath, or a verified IA library).",
-            "similarity": 0.3333333333333333,
-            "type": "proof_pattern"
-          }
-        ]
+        "similar_solutions": []
       },
       {
         "line": 151,
@@ -1966,26 +1931,7 @@
           "qcal": 0.75
         },
         "complexity": 3,
-        "similar_solutions": [
-          {
-            "repo": "Riemann-adelic",
-            "proof_snippet": "-- TODO: Complete using QCAL.Noesis.spectral_correspondence",
-            "similarity": 0.5,
-            "type": "proof_pattern"
-          },
-          {
-            "repo": "Riemann-adelic",
-            "proof_snippet": "-- TODO: Complete using QCAL.Noesis.spectral_correspondence",
-            "similarity": 0.5,
-            "type": "proof_pattern"
-          },
-          {
-            "repo": "Riemann-adelic",
-            "proof_snippet": "-- TODO: Complete using QCAL.Noesis.spectral_correspondence",
-            "similarity": 0.5,
-            "type": "proof_pattern"
-          }
-        ]
+        "similar_solutions": []
       },
       {
         "line": 206,
@@ -2249,14 +2195,7 @@
           "qcal": 0.75
         },
         "complexity": 3,
-        "similar_solutions": [
-          {
-            "repo": "Riemann-adelic",
-            "proof_snippet": "-- The leading coefficient encodes deep arithmetic geometry",
-            "similarity": 0.42105263157894735,
-            "type": "proof_pattern"
-          }
-        ]
+        "similar_solutions": []
       },
       {
         "line": 332,
@@ -2281,14 +2220,7 @@
           "adelic": 0.6
         },
         "complexity": 5,
-        "similar_solutions": [
-          {
-            "repo": "Riemann-adelic",
-            "proof_snippet": "-- La convergencia se debe a que |singularLocal p n - 1| \u226a 1/p\u00b2",
-            "similarity": 0.3611111111111111,
-            "type": "proof_pattern"
-          }
-        ]
+        "similar_solutions": []
       },
       {
         "line": 97,
@@ -2299,14 +2231,7 @@
           "adelic": 0.6
         },
         "complexity": 5,
-        "similar_solutions": [
-          {
-            "repo": "Riemann-adelic",
-            "proof_snippet": "-- La convergencia se debe a que |singularLocal p n - 1| \u226a 1/p\u00b2",
-            "similarity": 0.3111111111111111,
-            "type": "proof_pattern"
-          }
-        ]
+        "similar_solutions": []
       },
       {
         "line": 159,
@@ -2339,14 +2264,7 @@
           "adelic": 0.6
         },
         "complexity": 5,
-        "similar_solutions": [
-          {
-            "repo": "Riemann-adelic",
-            "proof_snippet": "-- Esto requiere teor\u00eda de productos infinitos de t\u00e9rminos positivos",
-            "similarity": 0.3103448275862069,
-            "type": "proof_pattern"
-          }
-        ]
+        "similar_solutions": []
       },
       {
         "line": 208,
@@ -2855,14 +2773,7 @@
           "unknown": 1.0
         },
         "complexity": 5,
-        "similar_solutions": [
-          {
-            "repo": "P-NP",
-            "proof_snippet": "-- For sufficiently large n, log n < n/10",
-            "similarity": 0.3333333333333333,
-            "type": "proof_pattern"
-          }
-        ]
+        "similar_solutions": []
       },
       {
         "line": 192,
@@ -2884,14 +2795,7 @@
           "trivial": 0.8
         },
         "complexity": 1,
-        "similar_solutions": [
-          {
-            "repo": "Riemann-adelic",
-            "proof_snippet": "use fun n => delta_17 / (n + 1 : \u211d)",
-            "similarity": 0.44,
-            "type": "proof_pattern"
-          }
-        ]
+        "similar_solutions": []
       },
       {
         "line": 268,
@@ -2902,14 +2806,7 @@
           "trivial": 0.8
         },
         "complexity": 1,
-        "similar_solutions": [
-          {
-            "repo": "Riemann-adelic",
-            "proof_snippet": "use fun n => delta_17 / (n + 1 : \u211d)",
-            "similarity": 0.32,
-            "type": "proof_pattern"
-          }
-        ]
+        "similar_solutions": []
       },
       {
         "line": 269,
@@ -2967,14 +2864,7 @@
           "qcal": 0.75
         },
         "complexity": 3,
-        "similar_solutions": [
-          {
-            "repo": "Riemann-adelic",
-            "proof_snippet": "-- The double integral of 4\u00b2\u00b7exp(-4|u-v|) over \u211d\u00d7\u211d equals 8",
-            "similarity": 0.3333333333333333,
-            "type": "proof_pattern"
-          }
-        ]
+        "similar_solutions": []
       },
       {
         "line": 171,
@@ -3086,26 +2976,7 @@
           "adelic": 0.6
         },
         "complexity": 3,
-        "similar_solutions": [
-          {
-            "repo": "Riemann-adelic",
-            "proof_snippet": "-- TODO: Complete using QCAL.Noesis.spectral_correspondence",
-            "similarity": 0.45454545454545453,
-            "type": "proof_pattern"
-          },
-          {
-            "repo": "Riemann-adelic",
-            "proof_snippet": "-- TODO: Complete using QCAL.Noesis.spectral_correspondence",
-            "similarity": 0.45454545454545453,
-            "type": "proof_pattern"
-          },
-          {
-            "repo": "Riemann-adelic",
-            "proof_snippet": "-- TODO: Complete using QCAL.Noesis.spectral_correspondence",
-            "similarity": 0.45454545454545453,
-            "type": "proof_pattern"
-          }
-        ]
+        "similar_solutions": []
       },
       {
         "line": 77,
@@ -3252,14 +3123,7 @@
           "unknown": 1.0
         },
         "complexity": 5,
-        "similar_solutions": [
-          {
-            "repo": "Riemann-adelic",
-            "proof_snippet": "have : I * (s.im - 1/2 : \u2102) = I * (t - 1/2 : \u2102) := by",
-            "similarity": 0.32,
-            "type": "proof_pattern"
-          }
-        ]
+        "similar_solutions": []
       }
     ],
     "formalization/lean/RiemannZeta.lean": [
@@ -4406,14 +4270,7 @@
           "qcal": 0.75
         },
         "complexity": 3,
-        "similar_solutions": [
-          {
-            "repo": "Riemann-adelic",
-            "proof_snippet": "-- The leading coefficient formula connects geometry and arithmetic",
-            "similarity": 0.3333333333333333,
-            "type": "proof_pattern"
-          }
-        ]
+        "similar_solutions": []
       }
     ],
     "formalization/lean/test_weierstrass.lean": [
@@ -4779,26 +4636,7 @@
           "qcal": 2.25
         },
         "complexity": 3,
-        "similar_solutions": [
-          {
-            "repo": "Riemann-adelic",
-            "proof_snippet": "-- TODO: Complete using QCAL.Noesis.spectral_correspondence",
-            "similarity": 0.3125,
-            "type": "proof_pattern"
-          },
-          {
-            "repo": "Riemann-adelic",
-            "proof_snippet": "-- TODO: Complete using QCAL.Noesis.spectral_correspondence",
-            "similarity": 0.3125,
-            "type": "proof_pattern"
-          },
-          {
-            "repo": "Riemann-adelic",
-            "proof_snippet": "-- TODO: Complete using QCAL.Noesis.spectral_correspondence",
-            "similarity": 0.3125,
-            "type": "proof_pattern"
-          }
-        ]
+        "similar_solutions": []
       },
       {
         "line": 258,
@@ -4922,14 +4760,7 @@
           "trivial": 0.8
         },
         "complexity": 1,
-        "similar_solutions": [
-          {
-            "repo": "Riemann-adelic",
-            "proof_snippet": "-- Simplified bound - actual proof would use detailed product estimates",
-            "similarity": 0.3055555555555556,
-            "type": "proof_pattern"
-          }
-        ]
+        "similar_solutions": []
       },
       {
         "line": 91,
@@ -5924,26 +5755,7 @@
           "qcal": 0.75
         },
         "complexity": 1,
-        "similar_solutions": [
-          {
-            "repo": "Riemann-adelic",
-            "proof_snippet": "-- TODO: Complete using QCAL.Noesis.spectral_correspondence",
-            "similarity": 0.35714285714285715,
-            "type": "proof_pattern"
-          },
-          {
-            "repo": "Riemann-adelic",
-            "proof_snippet": "-- TODO: Complete using QCAL.Noesis.spectral_correspondence",
-            "similarity": 0.35714285714285715,
-            "type": "proof_pattern"
-          },
-          {
-            "repo": "Riemann-adelic",
-            "proof_snippet": "-- TODO: Complete using QCAL.Noesis.spectral_correspondence",
-            "similarity": 0.35714285714285715,
-            "type": "proof_pattern"
-          }
-        ]
+        "similar_solutions": []
       },
       {
         "line": 105,
@@ -5967,26 +5779,7 @@
           "qcal": 1.5
         },
         "complexity": 3,
-        "similar_solutions": [
-          {
-            "repo": "Riemann-adelic",
-            "proof_snippet": "-- TODO: Complete using QCAL.Noesis.spectral_correspondence",
-            "similarity": 0.5,
-            "type": "proof_pattern"
-          },
-          {
-            "repo": "Riemann-adelic",
-            "proof_snippet": "-- TODO: Complete using QCAL.Noesis.spectral_correspondence",
-            "similarity": 0.5,
-            "type": "proof_pattern"
-          },
-          {
-            "repo": "Riemann-adelic",
-            "proof_snippet": "-- TODO: Complete using QCAL.Noesis.spectral_correspondence",
-            "similarity": 0.5,
-            "type": "proof_pattern"
-          }
-        ]
+        "similar_solutions": []
       },
       {
         "line": 122,
@@ -7066,14 +6859,7 @@
           "spectral": 0.65
         },
         "complexity": 1,
-        "similar_solutions": [
-          {
-            "repo": "P-NP",
-            "proof_snippet": "have : 2 > 1 := by norm_num",
-            "similarity": 0.3333333333333333,
-            "type": "proof_pattern"
-          }
-        ]
+        "similar_solutions": []
       }
     ],
     "formalization/lean/D_equals_Xi_noncircular.lean": [
@@ -7507,26 +7293,7 @@
           "qcal": 0.75
         },
         "complexity": 3,
-        "similar_solutions": [
-          {
-            "repo": "Riemann-adelic",
-            "proof_snippet": "-- TODO: Complete using QCAL.Noesis.spectral_correspondence",
-            "similarity": 0.38461538461538464,
-            "type": "proof_pattern"
-          },
-          {
-            "repo": "Riemann-adelic",
-            "proof_snippet": "-- TODO: Complete using QCAL.Noesis.spectral_correspondence",
-            "similarity": 0.38461538461538464,
-            "type": "proof_pattern"
-          },
-          {
-            "repo": "Riemann-adelic",
-            "proof_snippet": "-- TODO: Complete using QCAL.Noesis.spectral_correspondence",
-            "similarity": 0.38461538461538464,
-            "type": "proof_pattern"
-          }
-        ]
+        "similar_solutions": []
       },
       {
         "line": 187,
@@ -7538,26 +7305,7 @@
           "qcal": 0.75
         },
         "complexity": 3,
-        "similar_solutions": [
-          {
-            "repo": "Riemann-adelic",
-            "proof_snippet": "-- TODO: Complete using QCAL.Noesis.spectral_correspondence",
-            "similarity": 0.38461538461538464,
-            "type": "proof_pattern"
-          },
-          {
-            "repo": "Riemann-adelic",
-            "proof_snippet": "-- TODO: Complete using QCAL.Noesis.spectral_correspondence",
-            "similarity": 0.38461538461538464,
-            "type": "proof_pattern"
-          },
-          {
-            "repo": "Riemann-adelic",
-            "proof_snippet": "-- TODO: Complete using QCAL.Noesis.spectral_correspondence",
-            "similarity": 0.38461538461538464,
-            "type": "proof_pattern"
-          }
-        ]
+        "similar_solutions": []
       },
       {
         "line": 204,
@@ -14872,26 +14620,7 @@
           "spectral": 0.65
         },
         "complexity": 3,
-        "similar_solutions": [
-          {
-            "repo": "Riemann-adelic",
-            "proof_snippet": "-- TODO: Complete using QCAL.Noesis.spectral_correspondence",
-            "similarity": 0.35714285714285715,
-            "type": "proof_pattern"
-          },
-          {
-            "repo": "Riemann-adelic",
-            "proof_snippet": "-- TODO: Complete using QCAL.Noesis.spectral_correspondence",
-            "similarity": 0.35714285714285715,
-            "type": "proof_pattern"
-          },
-          {
-            "repo": "Riemann-adelic",
-            "proof_snippet": "-- TODO: Complete using QCAL.Noesis.spectral_correspondence",
-            "similarity": 0.35714285714285715,
-            "type": "proof_pattern"
-          }
-        ]
+        "similar_solutions": []
       },
       {
         "line": 88,
@@ -18260,14 +17989,7 @@
           "trivial": 0.8
         },
         "complexity": 1,
-        "similar_solutions": [
-          {
-            "repo": "P-NP",
-            "proof_snippet": "have h5 : (1 + Real.sqrt 5) / 2 < 1.72 := by",
-            "similarity": 0.3448275862068966,
-            "type": "proof_pattern"
-          }
-        ]
+        "similar_solutions": []
       },
       {
         "line": 520,
@@ -18278,14 +18000,7 @@
           "trivial": 0.8
         },
         "complexity": 1,
-        "similar_solutions": [
-          {
-            "repo": "P-NP",
-            "proof_snippet": "have h5 : (1 + Real.sqrt 5) / 2 < 1.72 := by",
-            "similarity": 0.3333333333333333,
-            "type": "proof_pattern"
-          }
-        ]
+        "similar_solutions": []
       },
       {
         "line": 522,
@@ -18296,20 +18011,7 @@
           "trivial": 0.8
         },
         "complexity": 1,
-        "similar_solutions": [
-          {
-            "repo": "P-NP",
-            "proof_snippet": "have h5 : (1 + Real.sqrt 5) / 2 < 1.72 := by",
-            "similarity": 0.3448275862068966,
-            "type": "proof_pattern"
-          },
-          {
-            "repo": "P-NP",
-            "proof_snippet": "have : 2 > 1 := by norm_num",
-            "similarity": 0.3076923076923077,
-            "type": "proof_pattern"
-          }
-        ]
+        "similar_solutions": []
       },
       {
         "line": 580,
@@ -18691,221 +18393,6 @@
           "trivial": 0.8
         },
         "complexity": 1,
-        "similar_solutions": []
-      }
-    ],
-    "formalization/lean/Arpeth/Examples/BasicUsage.lean": [
-      {
-        "line": 153,
-        "code": "sorry  -- Requiere c\u00e1lculo num\u00e9rico m\u00e1s detallado",
-        "context": "    abs (f\u2080 - sqrt universal_C / (2 * \u03c0)) < 0.1 := by\n  unfold f\u2080 universal_C\n  norm_num\n  sorry  -- Requiere c\u00e1lculo num\u00e9rico m\u00e1s detallado\n\n/-!\n## Ejemplo 10: Uso Combinado",
-        "primary_category": "trivial",
-        "all_categories": {
-          "trivial": 0.8,
-          "qcal": 0.75
-        },
-        "complexity": 1,
-        "similar_solutions": []
-      }
-    ],
-    "formalization/lean/Mathlib/NumberTheory/Zeta/VerifiedZeros.lean": [
-      {
-        "line": 170,
-        "code": "def zeta_approx (s : \u2102) (N : \u2115) : \u2102 := sorry",
-        "context": "    Para Re(s) > 1: \u03b6(s) \u2248 \u2211_{n=1}^N n^{-s}\n    Para otros valores se usa la ecuaci\u00f3n funcional.\n-/\ndef zeta_approx (s : \u2102) (N : \u2115) : \u2102 := sorry\n\n/-- La aproximaci\u00f3n converge a \u03b6(s) cuando N \u2192 \u221e -/\naxiom zeta_approx_converges (s : \u2102) (hs : s.re > 0 \u2227 s \u2260 1) :",
-        "primary_category": "analytic",
-        "all_categories": {
-          "analytic": 1.2
-        },
-        "complexity": 5,
-        "similar_solutions": []
-      },
-      {
-        "line": 206,
-        "code": "(known_zeros.get \u27e8i, by sorry\u27e9).t < (known_zeros.get \u27e8j, by sorry\u27e9).t := by",
-        "context": "/-- Los ceros est\u00e1n ordenados por su parte imaginaria -/\ntheorem zeros_ordered :\n    \u2200 i j : \u2115, i < j \u2192 j < known_zeros.length \u2192\n    (known_zeros.get \u27e8i, by sorry\u27e9).t < (known_zeros.get \u27e8j, by sorry\u27e9).t := by\n  -- TODO: Complete using QCAL.Noesis.spectral_correspondence\n  sorry\n",
-        "primary_category": "qcal",
-        "all_categories": {
-          "correspondence": 0.7,
-          "qcal": 0.75
-        },
-        "complexity": 3,
-        "similar_solutions": []
-      },
-      {
-        "line": 208,
-        "code": "sorry",
-        "context": "    \u2200 i j : \u2115, i < j \u2192 j < known_zeros.length \u2192\n    (known_zeros.get \u27e8i, by sorry\u27e9).t < (known_zeros.get \u27e8j, by sorry\u27e9).t := by\n  -- TODO: Complete using QCAL.Noesis.spectral_correspondence\n  sorry\n\n/-- Espaciamiento m\u00ednimo entre ceros consecutivos -/\ndef min_zero_spacing : \u211d := ",
-        "primary_category": "qcal",
-        "all_categories": {
-          "correspondence": 0.7,
-          "qcal": 0.75
-        },
-        "complexity": 3,
-        "similar_solutions": []
-      },
-      {
-        "line": 213,
-        "code": "sorry",
-        "context": "/-- Espaciamiento m\u00ednimo entre ceros consecutivos -/\ndef min_zero_spacing : \u211d := \n  -- TODO: Complete using QCAL.Noesis.spectral_correspondence\n  sorry\n\n-- ===========================================================================\n-- 5. CONEXI\u00d3N CON LA DEMOSTRACI\u00d3N ESPECTRAL",
-        "primary_category": "qcal",
-        "all_categories": {
-          "correspondence": 0.7,
-          "qcal": 0.75
-        },
-        "complexity": 3,
-        "similar_solutions": []
-      }
-    ],
-    "formalization/lean/Mathlib/Analysis/SpectralTrace.lean": [
-      {
-        "line": 57,
-        "code": "def spectral_trace (s : \u2102) : \u2102 := sorry",
-        "context": "    donde la suma es sobre todos los autovalores \u03bb del operador H_\u03a8.\n    Para H_\u03a8, el espectro es continuo en la l\u00ednea Re(\u03bb) = 1/2.\n-/\ndef spectral_trace (s : \u2102) : \u2102 := sorry\n\n/-- Versi\u00f3n regularizada usando densidad espectral:\n    ",
-        "primary_category": "qcal",
-        "all_categories": {
-          "qcal": 1.5
-        },
-        "complexity": 3,
-        "similar_solutions": []
-      },
-      {
-        "line": 106,
-        "code": "sorry",
-        "context": "-/\ntheorem zeta_equals_spectral_trace (s : \u2102) (hs : s \u2260 1) :\n    Complex.zetaFunction s = spectral_trace s := by\n  sorry\n\n/-- Versi\u00f3n en la franja cr\u00edtica 0 < Re(s) < 1 -/\ntheorem zeta_equals_trace_in_critical_strip (s : \u2102) ",
-        "primary_category": "analytic",
-        "all_categories": {
-          "analytic": 0.6
-        },
-        "complexity": 5,
-        "similar_solutions": []
-      },
-      {
-        "line": 149,
-        "code": "sorry",
-        "context": "    (h\u03b6 : Complex.zetaFunction s = 0)\n    (hre : 0 < s.re \u2227 s.re < 1) :\n  \u2203 t : \u211d, s = (1/2 : \u2102) + I * t := by\n  sorry\n\n-- ===========================================================================\n-- 5. F\u00d3RMULA DE TRAZA EXPL\u00cdCITA",
-        "primary_category": "analytic",
-        "all_categories": {
-          "analytic": 1.2
-        },
-        "complexity": 5,
-        "similar_solutions": []
-      },
-      {
-        "line": 167,
-        "code": "MellinTransform.mellinTransform sorry s",
-        "context": "/-- Relaci\u00f3n con la integral de Mellin -/\naxiom trace_mellin_representation (s : \u2102) :\n  spectral_trace s = \n    MellinTransform.mellinTransform sorry s\n\n-- ===========================================================================\n-- 6. FORMULACI\u00d3N FINAL DE LA DEMOSTRACI\u00d3N",
-        "primary_category": "unknown",
-        "all_categories": {
-          "unknown": 1.0
-        },
-        "complexity": 5,
-        "similar_solutions": []
-      },
-      {
-        "line": 200,
-        "code": "sorry",
-        "context": "theorem spectral_poles_only_on_critical_line :\n    \u2200 s : \u2102, spectral_trace s = 0 \u2192 s.re = 1/2 := by\n  -- TODO: Complete using QCAL.Noesis.spectral_correspondence\n  sorry\n\n-- ===========================================================================\n-- 7. C\u00c1LCULOS NUM\u00c9RICOS Y VERIFICACI\u00d3N",
-        "primary_category": "qcal",
-        "all_categories": {
-          "correspondence": 0.7,
-          "qcal": 0.75
-        },
-        "complexity": 3,
-        "similar_solutions": []
-      },
-      {
-        "line": 209,
-        "code": "sorry",
-        "context": "/-- Aproximaci\u00f3n num\u00e9rica de la traza usando N t\u00e9rminos -/\ndef trace_approx (s : \u2102) (N : \u2115) : \u2102 :=\n  (1 / (2 * \u03c0)) * -- TODO: Complete using QCAL.Noesis.spectral_correspondence\n sorry\n\n/-- La aproximaci\u00f3n converge a la traza -/\naxiom trace_approx_converges (s : \u2102) (hs : s.re > 1) :",
-        "primary_category": "qcal",
-        "all_categories": {
-          "correspondence": 0.7,
-          "qcal": 0.75
-        },
-        "complexity": 3,
-        "similar_solutions": []
-      }
-    ],
-    "formalization/lean/Mathlib/Analysis/Operator/HpsiOperator.lean": [
-      {
-        "line": 57,
-        "code": "def smooth_compactly_supported : Type := sorry",
-        "context": "    Este es el dominio natural donde H_\u03a8 est\u00e1 bien definido.\n    Son funciones C^\u221e que se anulan fuera de un compacto en (0,\u221e).\n-/\ndef smooth_compactly_supported : Type := sorry\n\n/-- Las funciones en el dominio est\u00e1n en L\u00b2(\u211d\u207a, dx/x) -/\naxiom smooth_compactly_supported_in_L2 : ",
-        "primary_category": "qcal",
-        "all_categories": {
-          "qcal": 1.5
-        },
-        "complexity": 3,
-        "similar_solutions": []
-      },
-      {
-        "line": 69,
-        "code": "MellinTransform.L2_Rplus_dx_over_x := sorry",
-        "context": "    En coordenadas, act\u00faa como un operador diferencial de primer orden.\n-/\ndef H_psi_action (f : smooth_compactly_supported) : \n    MellinTransform.L2_Rplus_dx_over_x := sorry\n\n/-- H_\u03a8 es lineal -/\naxiom H_psi_linear (a b : \u2102) (f g : smooth_compactly_supported) :",
-        "primary_category": "qcal",
-        "all_categories": {
-          "qcal": 1.5
-        },
-        "complexity": 3,
-        "similar_solutions": []
-      },
-      {
-        "line": 188,
-        "code": "(\u2203 f : MellinTransform.L2_Rplus_dx_over_x, f \u2260 0 \u2227 H_psi_action sorry = s \u2022 f) \u2194",
-        "context": "    Esto conecta los polos de la resolvente con el espectro.\n-/\naxiom resolvent_poles_at_spectrum (s : \u2102) :\n  (\u2203 f : MellinTransform.L2_Rplus_dx_over_x, f \u2260 0 \u2227 H_psi_action sorry = s \u2022 f) \u2194 \n  s.re = 1/2\n\n/-- Conexi\u00f3n con la funci\u00f3n zeta:",
-        "primary_category": "spectral",
-        "all_categories": {
-          "spectral": 0.65,
-          "analytic": 0.6
-        },
-        "complexity": 4,
-        "similar_solutions": []
-      }
-    ],
-    "formalization/lean/Mathlib/Analysis/Integral/MellinTransform.lean": [
-      {
-        "line": 57,
-        "code": "def dx_over_x_measure : Measure \u211d := sorry",
-        "context": "    x \u21a6 \u03bbx para \u03bb > 0, lo que hace que la transformada de Mellin\n    sea el an\u00e1logo natural de Fourier en el grupo multiplicativo \u211d\u207a.\n-/\ndef dx_over_x_measure : Measure \u211d := sorry\n\n/-- Espacio L\u00b2(\u211d\u207a, dx/x) \n    ",
-        "primary_category": "unknown",
-        "all_categories": {
-          "unknown": 1.0
-        },
-        "complexity": 5,
-        "similar_solutions": []
-      },
-      {
-        "line": 64,
-        "code": "def L2_Rplus_dx_over_x : Type := sorry",
-        "context": "    Espacio de Hilbert de funciones f: \u211d\u207a \u2192 \u2102 con\n    \u222b\u2080^\u221e |f(x)|\u00b2 dx/x < \u221e\n-/\ndef L2_Rplus_dx_over_x : Type := sorry\n\n/-- L\u00b2(\u211d\u207a, dx/x) es un espacio de Hilbert completo -/\naxiom L2_complete : CompleteSpace L2_Rplus_dx_over_x",
-        "primary_category": "unknown",
-        "all_categories": {
-          "unknown": 1.0
-        },
-        "complexity": 5,
-        "similar_solutions": []
-      },
-      {
-        "line": 72,
-        "code": "def inner_dx_over_x (f g : L2_Rplus_dx_over_x) : \u2102 := sorry",
-        "context": "/-- Producto interno en L\u00b2(\u211d\u207a, dx/x):\n    \u27e8f, g\u27e9 = \u222b\u2080^\u221e f\u0304(x) g(x) dx/x\n-/\ndef inner_dx_over_x (f g : L2_Rplus_dx_over_x) : \u2102 := sorry\n\n/-- L\u00b2(\u211d\u207a, dx/x) tiene estructura de espacio de producto interno -/\naxiom L2_inner_product_space : InnerProductSpace \u2102 L2_Rplus_dx_over_x",
-        "primary_category": "unknown",
-        "all_categories": {
-          "unknown": 1.0
-        },
-        "complexity": 5,
-        "similar_solutions": []
-      },
-      {
-        "line": 193,
-        "code": "1 / (s - 1) + mellinTransform (fun x => sorry) s",
-        "context": "-/\naxiom zeta_as_mellin_transform (s : \u2102) (hs : s.re > 1) :\n  Complex.zetaFunction s = \n    1 / (s - 1) + mellinTransform (fun x => sorry) s\n\n/-- Conexi\u00f3n con la ecuaci\u00f3n funcional de \u03b6 v\u00eda Mellin -/\naxiom zeta_functional_via_mellin : True",
-        "primary_category": "analytic",
-        "all_categories": {
-          "analytic": 1.2
-        },
-        "complexity": 5,
         "similar_solutions": []
       }
     ],
@@ -19365,14 +18852,7 @@
           "qcal": 0.75
         },
         "complexity": 3,
-        "similar_solutions": [
-          {
-            "repo": "P-NP",
-            "proof_snippet": "have base_gt : (n + 1 : \u211d) > n := by linarith",
-            "similarity": 0.3225806451612903,
-            "type": "proof_pattern"
-          }
-        ]
+        "similar_solutions": []
       },
       {
         "line": 204,
@@ -21933,136 +21413,6 @@
           "analytic": 0.6
         },
         "complexity": 4,
-        "similar_solutions": []
-      }
-    ],
-    "formalization/lean/RH_final_v6/Operator/H\u03c8.lean": [
-      {
-        "line": 73,
-        "code": "sorry",
-        "context": "    funext f\n    -- Uniqueness follows from von Neumann's theorem\n    -- TODO: Complete using QCAL.Noesis.spectral_correspondence\n    sorry\n\n/-!\n## Connection to Berry-Keating Framework",
-        "primary_category": "qcal",
-        "all_categories": {
-          "correspondence": 0.7,
-          "qcal": 0.75
-        },
-        "complexity": 3,
-        "similar_solutions": []
-      },
-      {
-        "line": 89,
-        "code": "sorry",
-        "context": "\ntheorem eigenvalues_are_real (n : \u2115) :\n    \u2203 (f : \u2102 \u2192 \u2102), is_eigenfunction f (berry_keating_eigenvalue n) := by\n  sorry\n  -- Eigenfunctions exist via spectral theory\n\nend Operator",
-        "primary_category": "spectral",
-        "all_categories": {
-          "spectral": 1.3
-        },
-        "complexity": 4,
-        "similar_solutions": []
-      }
-    ],
-    "formalization/lean/RH_final_v6/PaleyWiener/Unicity.lean": [
-      {
-        "line": 44,
-        "code": "sorry",
-        "context": "    (hgrowth : \u2203 (M : \u211d), \u2200 (z : \u2102), \u2016f z\u2016 \u2264 M * (1 + abs z.im)^2) :\n    \u2200 (z : \u2102), f z = 0 := by\n  -- TODO: Complete using QCAL.Noesis.spectral_correspondence\n  sorry\n  -- Full proof uses Phragm\u00e9n-Lindel\u00f6f theorem and complex analysis\n\n/-!",
-        "primary_category": "qcal",
-        "all_categories": {
-          "correspondence": 0.7,
-          "qcal": 0.75
-        },
-        "complexity": 3,
-        "similar_solutions": []
-      },
-      {
-        "line": 63,
-        "code": "sorry",
-        "context": "    (hg_growth : \u2203 (M : \u211d), \u2200 (z : \u2102), \u2016g z\u2016 \u2264 M * (1 + abs z.im)^2) :\n    \u2203 (c : \u2102), \u2200 (z : \u2102), f z = c * g z := by\n  -- TODO: Complete using QCAL.Noesis.spectral_correspondence\n  sorry\n  -- Follows from unicity_on_critical_line applied to f - cg\n\nend PaleyWiener",
-        "primary_category": "qcal",
-        "all_categories": {
-          "correspondence": 0.7,
-          "qcal": 0.75
-        },
-        "complexity": 3,
-        "similar_solutions": []
-      }
-    ],
-    "formalization/lean/RH_final_v6/Zeta/FunctionalEquation.lean": [
-      {
-        "line": 81,
-        "code": "sorry",
-        "context": "    \u2203 (\u03bb : \u211d), \u03bb = \u03b3 \u2227 \n    \u2203 (f : \u2102 \u2192 \u2102), f \u2260 0 := by\n  -- TODO: Complete using QCAL.Noesis.spectral_correspondence\n  sorry\n  -- This is the key spectral identification\n\nend Zeta",
-        "primary_category": "qcal",
-        "all_categories": {
-          "correspondence": 0.7,
-          "qcal": 0.75,
-          "analytic": 0.6
-        },
-        "complexity": 3,
-        "similar_solutions": []
-      }
-    ],
-    "formalization/lean/RH_final_v6/Spectral/MellinIdentification.lean": [
-      {
-        "line": 54,
-        "code": "sorry",
-        "context": "    \u2203 (s : \u2102), s.re = 1/2 \u2227 s.im = \u03bb \u2227\n    (\u2203 (M : \u2102 \u2192 \u2102), M s = 0 \u2228 \u2203 (c : \u2102), M s = c \u2227 c \u2260 0) := by\n  -- TODO: Complete using QCAL.Noesis.spectral_correspondence\n  sorry\n  -- The Mellin transform of an eigenfunction has special behavior at s = 1/2 + i\u03bb\n\n/-!",
-        "primary_category": "qcal",
-        "all_categories": {
-          "correspondence": 0.7,
-          "qcal": 0.75
-        },
-        "complexity": 3,
-        "similar_solutions": []
-      },
-      {
-        "line": 67,
-        "code": "sorry",
-        "context": "theorem D_xi_identification (s : \u2102) :\n    \u2203 (\u03b5 : \u211d), \u03b5 > 0 \u2227 \n    abs (D_function s - xi_function s) < \u03b5 * abs s := by\n  sorry\n  -- D(s) approximates \u03be(s)/P(s) with controlled error\n\ntheorem D_zero_from_zeta_zero",
-        "primary_category": "analytic",
-        "all_categories": {
-          "analytic": 0.6
-        },
-        "complexity": 5,
-        "similar_solutions": []
-      },
-      {
-        "line": 74,
-        "code": "sorry",
-        "context": "    {\u03b3 : \u211d} (h\u03b6 : zeta \u27e81/2, \u03b3\u27e9 = 0) :\n    D_function \u27e81/2, \u03b3\u27e9 = 0 := by\n  -- TODO: Complete using QCAL.Noesis.spectral_correspondence\n  sorry\n  -- If \u03b6(1/2 + i\u03b3) = 0, then \u03be(1/2 + i\u03b3) = 0, hence D(1/2 + i\u03b3) = 0\n\ntheorem zeta_zero_from_D_zero",
-        "primary_category": "analytic",
-        "all_categories": {
-          "correspondence": 0.7,
-          "qcal": 0.75,
-          "analytic": 1.2
-        },
-        "complexity": 5,
-        "similar_solutions": []
-      },
-      {
-        "line": 81,
-        "code": "sorry",
-        "context": "    {s : \u2102} (hD : D_function s = 0) (hs : s.re = 1/2) :\n    zeta s = 0 := by\n  -- TODO: Complete using QCAL.Noesis.spectral_correspondence\n  sorry\n  -- If D(s) = 0 and Re(s) = 1/2, then \u03be(s) = 0, hence \u03b6(s) = 0\n\n-- Import operator definition for proper type",
-        "primary_category": "analytic",
-        "all_categories": {
-          "correspondence": 0.7,
-          "qcal": 0.75,
-          "spectral": 0.65,
-          "analytic": 1.2
-        },
-        "complexity": 5,
-        "similar_solutions": []
-      },
-      {
-        "line": 90,
-        "code": "sorry",
-        "context": "theorem eigenfunction_from_D_zero\n    {\u03bb : \u211d} (hD : D_function \u27e81/2, \u03bb\u27e9 = 0) :\n    \u2203 (f : \u2102 \u2192 \u2102), f \u2260 0 \u2227 Operator.H_\u03a8_selfAdjoint f = fun z => \u03bb \u2022 f z := by\n  sorry\n  -- D(1/2 + i\u03bb) = 0 implies existence of eigenfunction with eigenvalue \u03bb\n  -- This follows from spectral theory: zeros of characteristic function\n  -- correspond to eigenvalues of the operator",
-        "primary_category": "qcal",
-        "all_categories": {
-          "qcal": 1.5,
-          "spectral": 1.3
-        },
-        "complexity": 3,
         "similar_solutions": []
       }
     ],
@@ -25112,26 +24462,7 @@
           "adelic": 0.6
         },
         "complexity": 3,
-        "similar_solutions": [
-          {
-            "repo": "Riemann-adelic",
-            "proof_snippet": "-- TODO: Complete using QCAL.Noesis.spectral_correspondence",
-            "similarity": 0.3333333333333333,
-            "type": "proof_pattern"
-          },
-          {
-            "repo": "Riemann-adelic",
-            "proof_snippet": "-- TODO: Complete using QCAL.Noesis.spectral_correspondence",
-            "similarity": 0.3333333333333333,
-            "type": "proof_pattern"
-          },
-          {
-            "repo": "Riemann-adelic",
-            "proof_snippet": "-- TODO: Complete using QCAL.Noesis.spectral_correspondence",
-            "similarity": 0.3333333333333333,
-            "type": "proof_pattern"
-          }
-        ]
+        "similar_solutions": []
       },
       {
         "line": 134,
@@ -25192,26 +24523,7 @@
           "qcal": 0.75
         },
         "complexity": 3,
-        "similar_solutions": [
-          {
-            "repo": "Riemann-adelic",
-            "proof_snippet": "-- TODO: Complete using QCAL.Noesis.spectral_correspondence",
-            "similarity": 0.3333333333333333,
-            "type": "proof_pattern"
-          },
-          {
-            "repo": "Riemann-adelic",
-            "proof_snippet": "-- TODO: Complete using QCAL.Noesis.spectral_correspondence",
-            "similarity": 0.3333333333333333,
-            "type": "proof_pattern"
-          },
-          {
-            "repo": "Riemann-adelic",
-            "proof_snippet": "-- TODO: Complete using QCAL.Noesis.spectral_correspondence",
-            "similarity": 0.3333333333333333,
-            "type": "proof_pattern"
-          }
-        ]
+        "similar_solutions": []
       },
       {
         "line": 178,
@@ -25224,26 +24536,7 @@
           "adelic": 1.2
         },
         "complexity": 5,
-        "similar_solutions": [
-          {
-            "repo": "Riemann-adelic",
-            "proof_snippet": "-- TODO: Complete using QCAL.Noesis.spectral_correspondence",
-            "similarity": 0.3333333333333333,
-            "type": "proof_pattern"
-          },
-          {
-            "repo": "Riemann-adelic",
-            "proof_snippet": "-- TODO: Complete using QCAL.Noesis.spectral_correspondence",
-            "similarity": 0.3333333333333333,
-            "type": "proof_pattern"
-          },
-          {
-            "repo": "Riemann-adelic",
-            "proof_snippet": "-- TODO: Complete using QCAL.Noesis.spectral_correspondence",
-            "similarity": 0.3333333333333333,
-            "type": "proof_pattern"
-          }
-        ]
+        "similar_solutions": []
       },
       {
         "line": 207,
@@ -27259,26 +26552,7 @@
           "qcal": 0.75
         },
         "complexity": 3,
-        "similar_solutions": [
-          {
-            "repo": "Riemann-adelic",
-            "proof_snippet": "-- TODO: Complete using QCAL.Noesis.spectral_correspondence",
-            "similarity": 0.3125,
-            "type": "proof_pattern"
-          },
-          {
-            "repo": "Riemann-adelic",
-            "proof_snippet": "-- TODO: Complete using QCAL.Noesis.spectral_correspondence",
-            "similarity": 0.3125,
-            "type": "proof_pattern"
-          },
-          {
-            "repo": "Riemann-adelic",
-            "proof_snippet": "-- TODO: Complete using QCAL.Noesis.spectral_correspondence",
-            "similarity": 0.3125,
-            "type": "proof_pattern"
-          }
-        ]
+        "similar_solutions": []
       },
       {
         "line": 231,
@@ -27644,26 +26918,7 @@
           "analytic": 0.6
         },
         "complexity": 3,
-        "similar_solutions": [
-          {
-            "repo": "Riemann-adelic",
-            "proof_snippet": "-- TODO: Complete using QCAL.Noesis.spectral_correspondence",
-            "similarity": 0.38461538461538464,
-            "type": "proof_pattern"
-          },
-          {
-            "repo": "Riemann-adelic",
-            "proof_snippet": "-- TODO: Complete using QCAL.Noesis.spectral_correspondence",
-            "similarity": 0.38461538461538464,
-            "type": "proof_pattern"
-          },
-          {
-            "repo": "Riemann-adelic",
-            "proof_snippet": "-- TODO: Complete using QCAL.Noesis.spectral_correspondence",
-            "similarity": 0.38461538461538464,
-            "type": "proof_pattern"
-          }
-        ]
+        "similar_solutions": []
       },
       {
         "line": 115,
@@ -28326,26 +27581,7 @@
           "spectral": 0.65
         },
         "complexity": 3,
-        "similar_solutions": [
-          {
-            "repo": "Riemann-adelic",
-            "proof_snippet": "-- TODO: Complete using QCAL.Noesis.spectral_correspondence",
-            "similarity": 0.35714285714285715,
-            "type": "proof_pattern"
-          },
-          {
-            "repo": "Riemann-adelic",
-            "proof_snippet": "-- TODO: Complete using QCAL.Noesis.spectral_correspondence",
-            "similarity": 0.35714285714285715,
-            "type": "proof_pattern"
-          },
-          {
-            "repo": "Riemann-adelic",
-            "proof_snippet": "-- TODO: Complete using QCAL.Noesis.spectral_correspondence",
-            "similarity": 0.35714285714285715,
-            "type": "proof_pattern"
-          }
-        ]
+        "similar_solutions": []
       }
     ],
     "formalization/lean/RiemannAdelic/RH_equivalence.lean": [
@@ -34071,6 +33307,583 @@
         "similar_solutions": []
       }
     ],
+    "formalization/lean/RHComplete/RH_Complete_Proof_Final.lean": [
+      {
+        "line": 252,
+        "code": "sorry -- Full proof requires explicit formula analysis",
+        "context": "  use (fun x => x^(1/2) * (Real.log x)^2)\n  -- Proof that this is indeed O(x^(1/2) * log\u00b2(x))\n  simp [O]\n  sorry -- Full proof requires explicit formula analysis\n\n/-!\n## TRACE CLASS OPERATOR VALIDATION",
+        "primary_category": "trivial",
+        "all_categories": {
+          "trivial": 0.8,
+          "spectral": 0.65
+        },
+        "complexity": 1,
+        "similar_solutions": []
+      },
+      {
+        "line": 279,
+        "code": "sorry -- Full proof requires detailed spectral analysis",
+        "context": "    use 1.0 / (n : \u211d)^1.234\n    -- This bound is tight for the Hermite basis construction\n    simp\n    sorry -- Full proof requires detailed spectral analysis\n\n/-- **Theorem**: The Fredholm determinant D(s) is entire.\n    ",
+        "primary_category": "trivial",
+        "all_categories": {
+          "trivial": 0.8,
+          "spectral": 0.65
+        },
+        "complexity": 1,
+        "similar_solutions": []
+      },
+      {
+        "line": 295,
+        "code": "sorry -- Full proof requires Fredholm determinant theory",
+        "context": "  constructor\n  \u00b7 norm_num\n  \u00b7 -- Continuity follows from trace class property\n    sorry -- Full proof requires Fredholm determinant theory\n\n/-!\n## FUNCTIONAL EQUATION AND SYMMETRY",
+        "primary_category": "trivial",
+        "all_categories": {
+          "trivial": 0.8,
+          "spectral": 0.65
+        },
+        "complexity": 1,
+        "similar_solutions": []
+      },
+      {
+        "line": 312,
+        "code": "sorry -- Requires Xi functional equation axiom",
+        "context": "  -- Use D = Xi and the functional equation for Xi\n  rw [D_equals_Xi_final, D_equals_Xi_final]\n  -- Xi satisfies \u03be(s) = \u03be(1-s)\n  sorry -- Requires Xi functional equation axiom\n\n/-- **Theorem**: Spectrum-Zero correspondence.\n    ",
+        "primary_category": "correspondence",
+        "all_categories": {
+          "correspondence": 0.7,
+          "spectral": 0.65
+        },
+        "complexity": 4,
+        "similar_solutions": []
+      },
+      {
+        "line": 424,
+        "code": "of the RH proof. Some supporting theorems contain `sorry` statements which are",
+        "context": "```\n\n**Important**: This is a proof *framework* that establishes the logical structure\nof the RH proof. Some supporting theorems contain `sorry` statements which are \nplaceholders for detailed proofs that require:\n- Full Fredholm determinant theory formalization\n- Complete spectral analysis",
+        "primary_category": "spectral",
+        "all_categories": {
+          "spectral": 0.65
+        },
+        "complexity": 4,
+        "similar_solutions": []
+      }
+    ],
+    "formalization/lean/RHComplete/RHSpectralProof.lean": [
+      {
+        "line": 166,
+        "code": "sorry",
+        "context": "    have h\u039e : \u039e s = 0 := by rw [\u2190 D\u03c7_equiv_\u039e]; exact hD\u03c7\n    -- From \u039e(s) = 0, extracting \u03b6(s) = 0 requires more analysis\n    -- This is established in other modules\n    sorry\n\nend RHComplete.RHSpectralProof\n",
+        "primary_category": "analytic",
+        "all_categories": {
+          "analytic": 0.6
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      }
+    ],
+    "formalization/lean/RHComplete/NuclearityExplicit.lean": [
+      {
+        "line": 170,
+        "code": "\u2705 No sorrys in proofs",
+        "context": "\u2705 Explicit bound: \u2016H_\u03a8\u2016_tr < 1000\n\u2705 Singular values: \u03bb\u2099 ~ n\u207b\u00b2\n\u2705 Spectrum is discrete and real\n\u2705 No sorrys in proofs\n\nThis establishes 100% that H_\u03a8 satisfies all required properties\nfor the spectral approach to the Riemann Hypothesis.",
+        "primary_category": "qcal",
+        "all_categories": {
+          "qcal": 1.5,
+          "spectral": 0.65
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      }
+    ],
+    "formalization/lean/RHComplete/NoExtraneousEigenvalues.lean": [
+      {
+        "line": 190,
+        "code": "\u2705 No sorrys",
+        "context": "\u2705 Counting functions match perfectly\n\u2705 No continuous or residual spectrum\n\u2705 No hidden or spurious eigenvalues\n\u2705 No sorrys\n\nThis establishes 100% that the spectral problem captures\nEXACTLY the zeros of \u03b6, with no extras and no omissions.",
+        "primary_category": "spectral",
+        "all_categories": {
+          "spectral": 1.3,
+          "analytic": 0.6
+        },
+        "complexity": 4,
+        "similar_solutions": []
+      }
+    ],
+    "formalization/lean/RHComplete/UniquenessWithoutRH.lean": [
+      {
+        "line": 152,
+        "code": "\u2705 No sorrys",
+        "context": "\u2705 No missing zeros\n\u2705 No extra eigenvalues  \n\u2705 Proven WITHOUT assuming RH\n\u2705 No sorrys\n\nThis establishes that the spectral problem for H_\u03a8 is EXACTLY\nequivalent to the zero problem for \u039e(s), with perfect 1-1 correspondence.",
+        "primary_category": "qcal",
+        "all_categories": {
+          "correspondence": 0.7,
+          "qcal": 1.5,
+          "spectral": 0.65
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      }
+    ],
+    "formalization/lean/RHComplete/ZerosXiStructure.lean": [
+      {
+        "line": 120,
+        "code": "sorry",
+        "context": "  \u00b7 intro hz\n    -- The zeros come in conjugate pairs\n    -- TODO: Complete using QCAL.Noesis.spectral_correspondence\n    sorry\n  \u00b7 intro hz\n    -- TODO: Complete using QCAL.Noesis.spectral_correspondence\n    sorry",
+        "primary_category": "qcal",
+        "all_categories": {
+          "correspondence": 0.7,
+          "qcal": 0.75
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      },
+      {
+        "line": 123,
+        "code": "sorry",
+        "context": "    sorry\n  \u00b7 intro hz\n    -- TODO: Complete using QCAL.Noesis.spectral_correspondence\n    sorry\n\n/-- The set of zeros equals the spectrum -/\ntheorem zeros_equal_spectrum :",
+        "primary_category": "qcal",
+        "all_categories": {
+          "correspondence": 0.7,
+          "qcal": 0.75,
+          "spectral": 0.65
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      },
+      {
+        "line": 140,
+        "code": "sorry",
+        "context": "      exact h.2.1 n\n  \u00b7 intro \u27e8h_spec, h_real\u27e9\n    -- Every real element of spectrum corresponds to some \u039b n\n    sorry\n\n/-- Eigenvalues are ordered by increasing magnitude -/\naxiom eigenvalues_ordered : \u2200 n : \u2115, Complex.abs (\u039b n) \u2264 Complex.abs (\u039b (n + 1))",
+        "primary_category": "spectral",
+        "all_categories": {
+          "spectral": 1.3
+        },
+        "complexity": 4,
+        "similar_solutions": []
+      },
+      {
+        "line": 164,
+        "code": "sorry",
+        "context": "  -- From xi_hadamard and the relationship between zeros and eigenvalues\n  -- Division by \u039b n is well-defined since eigenvalues_nonzero\n  -- TODO: Complete using QCAL.Noesis.spectral_correspondence\n  sorry\n\n/-! ## Functional Equation Preservation -/\n",
+        "primary_category": "qcal",
+        "all_categories": {
+          "correspondence": 0.7,
+          "qcal": 0.75,
+          "spectral": 0.65
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      },
+      {
+        "line": 177,
+        "code": "sorry",
+        "context": "  -- 2. Zeros come in symmetric pairs about Re(s) = 1/2\n  -- 3. The product over (s - \u03c1)(s - \u03c1\u0304) is symmetric under s \u2194 1-s\n  -- TODO: Complete using QCAL.Noesis.spectral_correspondence\n  sorry\n\n/-! ## Growth Estimates -/\n",
+        "primary_category": "qcal",
+        "all_categories": {
+          "correspondence": 0.7,
+          "qcal": 0.75
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      }
+    ],
+    "formalization/lean/RHComplete/RiemannSiegel.lean": [
+      {
+        "line": 169,
+        "code": "\u2705 No sorrys (except implicit gram point definition)",
+        "context": "\u2705 First 10^13 zeros verified on critical line\n\u2705 Independent computational check\n\u2705 Z-function sign changes confirmed\n\u2705 No sorrys (except implicit gram point definition)\n\nThe Riemann-Siegel formula provides rigorous computational\nverification that complements the theoretical proof.",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      }
+    ],
+    "formalization/lean/RHComplete/Rh_Spectral_Proof.lean": [
+      {
+        "line": 26,
+        "code": "sorry",
+        "context": "@[reducible]\ndef H\u03c7_operator (\u03c7 : DirichletCharacter \u2124) : \u2102 \u2192 \u2102 :=\n  -- Placeholder para el operador integral espectral definido v\u00eda transformada adelica\n  sorry\n\n\n-- Definimos la funci\u00f3n D_\u03c7(s) como determinante de Fredholm del operador H\u03c7",
+        "primary_category": "spectral",
+        "all_categories": {
+          "adelic": 0.6,
+          "spectral": 1.3
+        },
+        "complexity": 4,
+        "similar_solutions": []
+      },
+      {
+        "line": 33,
+        "code": "sorry",
+        "context": "@[reducible]\ndef D\u03c7 (\u03c7 : DirichletCharacter \u2124) (s : \u2102) : \u2102 :=\n  -- En la implementaci\u00f3n final: det(Id - K_s), con K_s operador de traza clase Hilbert\u2013Schmidt\n  sorry\n\n\n-- Definimos \u039e(s) como la continuaci\u00f3n holomorfa de \u03b6(s) multiplicada por Gamma(s/2) y \u03c0^{-s/2}",
+        "primary_category": "analytic",
+        "all_categories": {
+          "analytic": 0.6
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      }
+    ],
+    "formalization/lean/RHComplete/FredholmDetEqualsXi.lean": [
+      {
+        "line": 157,
+        "code": "\u2705 No sorrys",
+        "context": "\u2705 Functional equation verified\n\u2705 Growth bounds correct\n\u2705 No circular reasoning\n\u2705 No sorrys\n\nThis is the KEY identity that connects operator spectral theory\nto the zeros of the zeta function without any circularity.",
+        "primary_category": "spectral",
+        "all_categories": {
+          "spectral": 0.65,
+          "analytic": 0.6
+        },
+        "complexity": 4,
+        "similar_solutions": []
+      }
+    ],
+    "formalization/lean/Arpeth/Examples/BasicUsage.lean": [
+      {
+        "line": 153,
+        "code": "sorry  -- Requiere c\u00e1lculo num\u00e9rico m\u00e1s detallado",
+        "context": "    abs (f\u2080 - sqrt universal_C / (2 * \u03c0)) < 0.1 := by\n  unfold f\u2080 universal_C\n  norm_num\n  sorry  -- Requiere c\u00e1lculo num\u00e9rico m\u00e1s detallado\n\n/-!\n## Ejemplo 10: Uso Combinado",
+        "primary_category": "trivial",
+        "all_categories": {
+          "trivial": 0.8,
+          "qcal": 0.75
+        },
+        "complexity": 1,
+        "similar_solutions": []
+      }
+    ],
+    "formalization/lean/Mathlib/Analysis/SpectralTrace.lean": [
+      {
+        "line": 57,
+        "code": "def spectral_trace (s : \u2102) : \u2102 := sorry",
+        "context": "    donde la suma es sobre todos los autovalores \u03bb del operador H_\u03a8.\n    Para H_\u03a8, el espectro es continuo en la l\u00ednea Re(\u03bb) = 1/2.\n-/\ndef spectral_trace (s : \u2102) : \u2102 := sorry\n\n/-- Versi\u00f3n regularizada usando densidad espectral:\n    ",
+        "primary_category": "qcal",
+        "all_categories": {
+          "qcal": 1.5
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      },
+      {
+        "line": 106,
+        "code": "sorry",
+        "context": "-/\ntheorem zeta_equals_spectral_trace (s : \u2102) (hs : s \u2260 1) :\n    Complex.zetaFunction s = spectral_trace s := by\n  sorry\n\n/-- Versi\u00f3n en la franja cr\u00edtica 0 < Re(s) < 1 -/\ntheorem zeta_equals_trace_in_critical_strip (s : \u2102) ",
+        "primary_category": "analytic",
+        "all_categories": {
+          "analytic": 0.6
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 149,
+        "code": "sorry",
+        "context": "    (h\u03b6 : Complex.zetaFunction s = 0)\n    (hre : 0 < s.re \u2227 s.re < 1) :\n  \u2203 t : \u211d, s = (1/2 : \u2102) + I * t := by\n  sorry\n\n-- ===========================================================================\n-- 5. F\u00d3RMULA DE TRAZA EXPL\u00cdCITA",
+        "primary_category": "analytic",
+        "all_categories": {
+          "analytic": 1.2
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 167,
+        "code": "MellinTransform.mellinTransform sorry s",
+        "context": "/-- Relaci\u00f3n con la integral de Mellin -/\naxiom trace_mellin_representation (s : \u2102) :\n  spectral_trace s = \n    MellinTransform.mellinTransform sorry s\n\n-- ===========================================================================\n-- 6. FORMULACI\u00d3N FINAL DE LA DEMOSTRACI\u00d3N",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 200,
+        "code": "sorry",
+        "context": "theorem spectral_poles_only_on_critical_line :\n    \u2200 s : \u2102, spectral_trace s = 0 \u2192 s.re = 1/2 := by\n  -- TODO: Complete using QCAL.Noesis.spectral_correspondence\n  sorry\n\n-- ===========================================================================\n-- 7. C\u00c1LCULOS NUM\u00c9RICOS Y VERIFICACI\u00d3N",
+        "primary_category": "qcal",
+        "all_categories": {
+          "correspondence": 0.7,
+          "qcal": 0.75
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      },
+      {
+        "line": 209,
+        "code": "sorry",
+        "context": "/-- Aproximaci\u00f3n num\u00e9rica de la traza usando N t\u00e9rminos -/\ndef trace_approx (s : \u2102) (N : \u2115) : \u2102 :=\n  (1 / (2 * \u03c0)) * -- TODO: Complete using QCAL.Noesis.spectral_correspondence\n sorry\n\n/-- La aproximaci\u00f3n converge a la traza -/\naxiom trace_approx_converges (s : \u2102) (hs : s.re > 1) :",
+        "primary_category": "qcal",
+        "all_categories": {
+          "correspondence": 0.7,
+          "qcal": 0.75
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      }
+    ],
+    "formalization/lean/Mathlib/NumberTheory/Zeta/VerifiedZeros.lean": [
+      {
+        "line": 170,
+        "code": "def zeta_approx (s : \u2102) (N : \u2115) : \u2102 := sorry",
+        "context": "    Para Re(s) > 1: \u03b6(s) \u2248 \u2211_{n=1}^N n^{-s}\n    Para otros valores se usa la ecuaci\u00f3n funcional.\n-/\ndef zeta_approx (s : \u2102) (N : \u2115) : \u2102 := sorry\n\n/-- La aproximaci\u00f3n converge a \u03b6(s) cuando N \u2192 \u221e -/\naxiom zeta_approx_converges (s : \u2102) (hs : s.re > 0 \u2227 s \u2260 1) :",
+        "primary_category": "analytic",
+        "all_categories": {
+          "analytic": 1.2
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 206,
+        "code": "(known_zeros.get \u27e8i, by sorry\u27e9).t < (known_zeros.get \u27e8j, by sorry\u27e9).t := by",
+        "context": "/-- Los ceros est\u00e1n ordenados por su parte imaginaria -/\ntheorem zeros_ordered :\n    \u2200 i j : \u2115, i < j \u2192 j < known_zeros.length \u2192\n    (known_zeros.get \u27e8i, by sorry\u27e9).t < (known_zeros.get \u27e8j, by sorry\u27e9).t := by\n  -- TODO: Complete using QCAL.Noesis.spectral_correspondence\n  sorry\n",
+        "primary_category": "qcal",
+        "all_categories": {
+          "correspondence": 0.7,
+          "qcal": 0.75
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      },
+      {
+        "line": 208,
+        "code": "sorry",
+        "context": "    \u2200 i j : \u2115, i < j \u2192 j < known_zeros.length \u2192\n    (known_zeros.get \u27e8i, by sorry\u27e9).t < (known_zeros.get \u27e8j, by sorry\u27e9).t := by\n  -- TODO: Complete using QCAL.Noesis.spectral_correspondence\n  sorry\n\n/-- Espaciamiento m\u00ednimo entre ceros consecutivos -/\ndef min_zero_spacing : \u211d := ",
+        "primary_category": "qcal",
+        "all_categories": {
+          "correspondence": 0.7,
+          "qcal": 0.75
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      },
+      {
+        "line": 213,
+        "code": "sorry",
+        "context": "/-- Espaciamiento m\u00ednimo entre ceros consecutivos -/\ndef min_zero_spacing : \u211d := \n  -- TODO: Complete using QCAL.Noesis.spectral_correspondence\n  sorry\n\n-- ===========================================================================\n-- 5. CONEXI\u00d3N CON LA DEMOSTRACI\u00d3N ESPECTRAL",
+        "primary_category": "qcal",
+        "all_categories": {
+          "correspondence": 0.7,
+          "qcal": 0.75
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      }
+    ],
+    "formalization/lean/Mathlib/Analysis/Operator/HpsiOperator.lean": [
+      {
+        "line": 57,
+        "code": "def smooth_compactly_supported : Type := sorry",
+        "context": "    Este es el dominio natural donde H_\u03a8 est\u00e1 bien definido.\n    Son funciones C^\u221e que se anulan fuera de un compacto en (0,\u221e).\n-/\ndef smooth_compactly_supported : Type := sorry\n\n/-- Las funciones en el dominio est\u00e1n en L\u00b2(\u211d\u207a, dx/x) -/\naxiom smooth_compactly_supported_in_L2 : ",
+        "primary_category": "qcal",
+        "all_categories": {
+          "qcal": 1.5
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      },
+      {
+        "line": 69,
+        "code": "MellinTransform.L2_Rplus_dx_over_x := sorry",
+        "context": "    En coordenadas, act\u00faa como un operador diferencial de primer orden.\n-/\ndef H_psi_action (f : smooth_compactly_supported) : \n    MellinTransform.L2_Rplus_dx_over_x := sorry\n\n/-- H_\u03a8 es lineal -/\naxiom H_psi_linear (a b : \u2102) (f g : smooth_compactly_supported) :",
+        "primary_category": "qcal",
+        "all_categories": {
+          "qcal": 1.5
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      },
+      {
+        "line": 188,
+        "code": "(\u2203 f : MellinTransform.L2_Rplus_dx_over_x, f \u2260 0 \u2227 H_psi_action sorry = s \u2022 f) \u2194",
+        "context": "    Esto conecta los polos de la resolvente con el espectro.\n-/\naxiom resolvent_poles_at_spectrum (s : \u2102) :\n  (\u2203 f : MellinTransform.L2_Rplus_dx_over_x, f \u2260 0 \u2227 H_psi_action sorry = s \u2022 f) \u2194 \n  s.re = 1/2\n\n/-- Conexi\u00f3n con la funci\u00f3n zeta:",
+        "primary_category": "spectral",
+        "all_categories": {
+          "spectral": 0.65,
+          "analytic": 0.6
+        },
+        "complexity": 4,
+        "similar_solutions": []
+      }
+    ],
+    "formalization/lean/Mathlib/Analysis/Integral/MellinTransform.lean": [
+      {
+        "line": 57,
+        "code": "def dx_over_x_measure : Measure \u211d := sorry",
+        "context": "    x \u21a6 \u03bbx para \u03bb > 0, lo que hace que la transformada de Mellin\n    sea el an\u00e1logo natural de Fourier en el grupo multiplicativo \u211d\u207a.\n-/\ndef dx_over_x_measure : Measure \u211d := sorry\n\n/-- Espacio L\u00b2(\u211d\u207a, dx/x) \n    ",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 64,
+        "code": "def L2_Rplus_dx_over_x : Type := sorry",
+        "context": "    Espacio de Hilbert de funciones f: \u211d\u207a \u2192 \u2102 con\n    \u222b\u2080^\u221e |f(x)|\u00b2 dx/x < \u221e\n-/\ndef L2_Rplus_dx_over_x : Type := sorry\n\n/-- L\u00b2(\u211d\u207a, dx/x) es un espacio de Hilbert completo -/\naxiom L2_complete : CompleteSpace L2_Rplus_dx_over_x",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 72,
+        "code": "def inner_dx_over_x (f g : L2_Rplus_dx_over_x) : \u2102 := sorry",
+        "context": "/-- Producto interno en L\u00b2(\u211d\u207a, dx/x):\n    \u27e8f, g\u27e9 = \u222b\u2080^\u221e f\u0304(x) g(x) dx/x\n-/\ndef inner_dx_over_x (f g : L2_Rplus_dx_over_x) : \u2102 := sorry\n\n/-- L\u00b2(\u211d\u207a, dx/x) tiene estructura de espacio de producto interno -/\naxiom L2_inner_product_space : InnerProductSpace \u2102 L2_Rplus_dx_over_x",
+        "primary_category": "unknown",
+        "all_categories": {
+          "unknown": 1.0
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 193,
+        "code": "1 / (s - 1) + mellinTransform (fun x => sorry) s",
+        "context": "-/\naxiom zeta_as_mellin_transform (s : \u2102) (hs : s.re > 1) :\n  Complex.zetaFunction s = \n    1 / (s - 1) + mellinTransform (fun x => sorry) s\n\n/-- Conexi\u00f3n con la ecuaci\u00f3n funcional de \u03b6 v\u00eda Mellin -/\naxiom zeta_functional_via_mellin : True",
+        "primary_category": "analytic",
+        "all_categories": {
+          "analytic": 1.2
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      }
+    ],
+    "formalization/lean/RH_final_v6/Operator/H\u03c8.lean": [
+      {
+        "line": 73,
+        "code": "sorry",
+        "context": "    funext f\n    -- Uniqueness follows from von Neumann's theorem\n    -- TODO: Complete using QCAL.Noesis.spectral_correspondence\n    sorry\n\n/-!\n## Connection to Berry-Keating Framework",
+        "primary_category": "qcal",
+        "all_categories": {
+          "correspondence": 0.7,
+          "qcal": 0.75
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      },
+      {
+        "line": 89,
+        "code": "sorry",
+        "context": "\ntheorem eigenvalues_are_real (n : \u2115) :\n    \u2203 (f : \u2102 \u2192 \u2102), is_eigenfunction f (berry_keating_eigenvalue n) := by\n  sorry\n  -- Eigenfunctions exist via spectral theory\n\nend Operator",
+        "primary_category": "spectral",
+        "all_categories": {
+          "spectral": 1.3
+        },
+        "complexity": 4,
+        "similar_solutions": []
+      }
+    ],
+    "formalization/lean/RH_final_v6/PaleyWiener/Unicity.lean": [
+      {
+        "line": 44,
+        "code": "sorry",
+        "context": "    (hgrowth : \u2203 (M : \u211d), \u2200 (z : \u2102), \u2016f z\u2016 \u2264 M * (1 + abs z.im)^2) :\n    \u2200 (z : \u2102), f z = 0 := by\n  -- TODO: Complete using QCAL.Noesis.spectral_correspondence\n  sorry\n  -- Full proof uses Phragm\u00e9n-Lindel\u00f6f theorem and complex analysis\n\n/-!",
+        "primary_category": "qcal",
+        "all_categories": {
+          "correspondence": 0.7,
+          "qcal": 0.75
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      },
+      {
+        "line": 63,
+        "code": "sorry",
+        "context": "    (hg_growth : \u2203 (M : \u211d), \u2200 (z : \u2102), \u2016g z\u2016 \u2264 M * (1 + abs z.im)^2) :\n    \u2203 (c : \u2102), \u2200 (z : \u2102), f z = c * g z := by\n  -- TODO: Complete using QCAL.Noesis.spectral_correspondence\n  sorry\n  -- Follows from unicity_on_critical_line applied to f - cg\n\nend PaleyWiener",
+        "primary_category": "qcal",
+        "all_categories": {
+          "correspondence": 0.7,
+          "qcal": 0.75
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      }
+    ],
+    "formalization/lean/RH_final_v6/Zeta/FunctionalEquation.lean": [
+      {
+        "line": 81,
+        "code": "sorry",
+        "context": "    \u2203 (\u03bb : \u211d), \u03bb = \u03b3 \u2227 \n    \u2203 (f : \u2102 \u2192 \u2102), f \u2260 0 := by\n  -- TODO: Complete using QCAL.Noesis.spectral_correspondence\n  sorry\n  -- This is the key spectral identification\n\nend Zeta",
+        "primary_category": "qcal",
+        "all_categories": {
+          "correspondence": 0.7,
+          "qcal": 0.75,
+          "analytic": 0.6
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      }
+    ],
+    "formalization/lean/RH_final_v6/Spectral/MellinIdentification.lean": [
+      {
+        "line": 54,
+        "code": "sorry",
+        "context": "    \u2203 (s : \u2102), s.re = 1/2 \u2227 s.im = \u03bb \u2227\n    (\u2203 (M : \u2102 \u2192 \u2102), M s = 0 \u2228 \u2203 (c : \u2102), M s = c \u2227 c \u2260 0) := by\n  -- TODO: Complete using QCAL.Noesis.spectral_correspondence\n  sorry\n  -- The Mellin transform of an eigenfunction has special behavior at s = 1/2 + i\u03bb\n\n/-!",
+        "primary_category": "qcal",
+        "all_categories": {
+          "correspondence": 0.7,
+          "qcal": 0.75
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      },
+      {
+        "line": 67,
+        "code": "sorry",
+        "context": "theorem D_xi_identification (s : \u2102) :\n    \u2203 (\u03b5 : \u211d), \u03b5 > 0 \u2227 \n    abs (D_function s - xi_function s) < \u03b5 * abs s := by\n  sorry\n  -- D(s) approximates \u03be(s)/P(s) with controlled error\n\ntheorem D_zero_from_zeta_zero",
+        "primary_category": "analytic",
+        "all_categories": {
+          "analytic": 0.6
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 74,
+        "code": "sorry",
+        "context": "    {\u03b3 : \u211d} (h\u03b6 : zeta \u27e81/2, \u03b3\u27e9 = 0) :\n    D_function \u27e81/2, \u03b3\u27e9 = 0 := by\n  -- TODO: Complete using QCAL.Noesis.spectral_correspondence\n  sorry\n  -- If \u03b6(1/2 + i\u03b3) = 0, then \u03be(1/2 + i\u03b3) = 0, hence D(1/2 + i\u03b3) = 0\n\ntheorem zeta_zero_from_D_zero",
+        "primary_category": "analytic",
+        "all_categories": {
+          "correspondence": 0.7,
+          "qcal": 0.75,
+          "analytic": 1.2
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 81,
+        "code": "sorry",
+        "context": "    {s : \u2102} (hD : D_function s = 0) (hs : s.re = 1/2) :\n    zeta s = 0 := by\n  -- TODO: Complete using QCAL.Noesis.spectral_correspondence\n  sorry\n  -- If D(s) = 0 and Re(s) = 1/2, then \u03be(s) = 0, hence \u03b6(s) = 0\n\n-- Import operator definition for proper type",
+        "primary_category": "analytic",
+        "all_categories": {
+          "correspondence": 0.7,
+          "qcal": 0.75,
+          "spectral": 0.65,
+          "analytic": 1.2
+        },
+        "complexity": 5,
+        "similar_solutions": []
+      },
+      {
+        "line": 90,
+        "code": "sorry",
+        "context": "theorem eigenfunction_from_D_zero\n    {\u03bb : \u211d} (hD : D_function \u27e81/2, \u03bb\u27e9 = 0) :\n    \u2203 (f : \u2102 \u2192 \u2102), f \u2260 0 \u2227 Operator.H_\u03a8_selfAdjoint f = fun z => \u03bb \u2022 f z := by\n  sorry\n  -- D(1/2 + i\u03bb) = 0 implies existence of eigenfunction with eigenvalue \u03bb\n  -- This follows from spectral theory: zeros of characteristic function\n  -- correspond to eigenvalues of the operator",
+        "primary_category": "qcal",
+        "all_categories": {
+          "qcal": 1.5,
+          "spectral": 1.3
+        },
+        "complexity": 3,
+        "similar_solutions": []
+      }
+    ],
     "formalization/lean/RiemannAdelic/core/formal/D_as_det.lean": [
       {
         "line": 128,
@@ -35418,257 +35231,6 @@
         "primary_category": "spectral",
         "all_categories": {
           "spectral": 1.3
-        },
-        "complexity": 4,
-        "similar_solutions": []
-      }
-    ],
-    "formalization/lean/RHComplete/RH_Complete_Proof_Final.lean": [
-      {
-        "line": 252,
-        "code": "sorry -- Full proof requires explicit formula analysis",
-        "context": "  use (fun x => x^(1/2) * (Real.log x)^2)\n  -- Proof that this is indeed O(x^(1/2) * log\u00b2(x))\n  simp [O]\n  sorry -- Full proof requires explicit formula analysis\n\n/-!\n## TRACE CLASS OPERATOR VALIDATION",
-        "primary_category": "trivial",
-        "all_categories": {
-          "trivial": 0.8,
-          "spectral": 0.65
-        },
-        "complexity": 1,
-        "similar_solutions": []
-      },
-      {
-        "line": 279,
-        "code": "sorry -- Full proof requires detailed spectral analysis",
-        "context": "    use 1.0 / (n : \u211d)^1.234\n    -- This bound is tight for the Hermite basis construction\n    simp\n    sorry -- Full proof requires detailed spectral analysis\n\n/-- **Theorem**: The Fredholm determinant D(s) is entire.\n    ",
-        "primary_category": "trivial",
-        "all_categories": {
-          "trivial": 0.8,
-          "spectral": 0.65
-        },
-        "complexity": 1,
-        "similar_solutions": []
-      },
-      {
-        "line": 295,
-        "code": "sorry -- Full proof requires Fredholm determinant theory",
-        "context": "  constructor\n  \u00b7 norm_num\n  \u00b7 -- Continuity follows from trace class property\n    sorry -- Full proof requires Fredholm determinant theory\n\n/-!\n## FUNCTIONAL EQUATION AND SYMMETRY",
-        "primary_category": "trivial",
-        "all_categories": {
-          "trivial": 0.8,
-          "spectral": 0.65
-        },
-        "complexity": 1,
-        "similar_solutions": []
-      },
-      {
-        "line": 312,
-        "code": "sorry -- Requires Xi functional equation axiom",
-        "context": "  -- Use D = Xi and the functional equation for Xi\n  rw [D_equals_Xi_final, D_equals_Xi_final]\n  -- Xi satisfies \u03be(s) = \u03be(1-s)\n  sorry -- Requires Xi functional equation axiom\n\n/-- **Theorem**: Spectrum-Zero correspondence.\n    ",
-        "primary_category": "correspondence",
-        "all_categories": {
-          "correspondence": 0.7,
-          "spectral": 0.65
-        },
-        "complexity": 4,
-        "similar_solutions": []
-      },
-      {
-        "line": 424,
-        "code": "of the RH proof. Some supporting theorems contain `sorry` statements which are",
-        "context": "```\n\n**Important**: This is a proof *framework* that establishes the logical structure\nof the RH proof. Some supporting theorems contain `sorry` statements which are \nplaceholders for detailed proofs that require:\n- Full Fredholm determinant theory formalization\n- Complete spectral analysis",
-        "primary_category": "spectral",
-        "all_categories": {
-          "spectral": 0.65
-        },
-        "complexity": 4,
-        "similar_solutions": []
-      }
-    ],
-    "formalization/lean/RHComplete/RHSpectralProof.lean": [
-      {
-        "line": 166,
-        "code": "sorry",
-        "context": "    have h\u039e : \u039e s = 0 := by rw [\u2190 D\u03c7_equiv_\u039e]; exact hD\u03c7\n    -- From \u039e(s) = 0, extracting \u03b6(s) = 0 requires more analysis\n    -- This is established in other modules\n    sorry\n\nend RHComplete.RHSpectralProof\n",
-        "primary_category": "analytic",
-        "all_categories": {
-          "analytic": 0.6
-        },
-        "complexity": 5,
-        "similar_solutions": []
-      }
-    ],
-    "formalization/lean/RHComplete/NuclearityExplicit.lean": [
-      {
-        "line": 170,
-        "code": "\u2705 No sorrys in proofs",
-        "context": "\u2705 Explicit bound: \u2016H_\u03a8\u2016_tr < 1000\n\u2705 Singular values: \u03bb\u2099 ~ n\u207b\u00b2\n\u2705 Spectrum is discrete and real\n\u2705 No sorrys in proofs\n\nThis establishes 100% that H_\u03a8 satisfies all required properties\nfor the spectral approach to the Riemann Hypothesis.",
-        "primary_category": "qcal",
-        "all_categories": {
-          "qcal": 1.5,
-          "spectral": 0.65
-        },
-        "complexity": 3,
-        "similar_solutions": []
-      }
-    ],
-    "formalization/lean/RHComplete/NoExtraneousEigenvalues.lean": [
-      {
-        "line": 190,
-        "code": "\u2705 No sorrys",
-        "context": "\u2705 Counting functions match perfectly\n\u2705 No continuous or residual spectrum\n\u2705 No hidden or spurious eigenvalues\n\u2705 No sorrys\n\nThis establishes 100% that the spectral problem captures\nEXACTLY the zeros of \u03b6, with no extras and no omissions.",
-        "primary_category": "spectral",
-        "all_categories": {
-          "spectral": 1.3,
-          "analytic": 0.6
-        },
-        "complexity": 4,
-        "similar_solutions": []
-      }
-    ],
-    "formalization/lean/RHComplete/UniquenessWithoutRH.lean": [
-      {
-        "line": 152,
-        "code": "\u2705 No sorrys",
-        "context": "\u2705 No missing zeros\n\u2705 No extra eigenvalues  \n\u2705 Proven WITHOUT assuming RH\n\u2705 No sorrys\n\nThis establishes that the spectral problem for H_\u03a8 is EXACTLY\nequivalent to the zero problem for \u039e(s), with perfect 1-1 correspondence.",
-        "primary_category": "qcal",
-        "all_categories": {
-          "correspondence": 0.7,
-          "qcal": 1.5,
-          "spectral": 0.65
-        },
-        "complexity": 3,
-        "similar_solutions": []
-      }
-    ],
-    "formalization/lean/RHComplete/ZerosXiStructure.lean": [
-      {
-        "line": 120,
-        "code": "sorry",
-        "context": "  \u00b7 intro hz\n    -- The zeros come in conjugate pairs\n    -- TODO: Complete using QCAL.Noesis.spectral_correspondence\n    sorry\n  \u00b7 intro hz\n    -- TODO: Complete using QCAL.Noesis.spectral_correspondence\n    sorry",
-        "primary_category": "qcal",
-        "all_categories": {
-          "correspondence": 0.7,
-          "qcal": 0.75
-        },
-        "complexity": 3,
-        "similar_solutions": [
-          {
-            "repo": "Riemann-adelic",
-            "proof_snippet": "-- TODO: Complete using QCAL.Noesis.spectral_correspondence",
-            "similarity": 0.3333333333333333,
-            "type": "proof_pattern"
-          },
-          {
-            "repo": "Riemann-adelic",
-            "proof_snippet": "-- TODO: Complete using QCAL.Noesis.spectral_correspondence",
-            "similarity": 0.3333333333333333,
-            "type": "proof_pattern"
-          },
-          {
-            "repo": "Riemann-adelic",
-            "proof_snippet": "-- TODO: Complete using QCAL.Noesis.spectral_correspondence",
-            "similarity": 0.3333333333333333,
-            "type": "proof_pattern"
-          }
-        ]
-      },
-      {
-        "line": 123,
-        "code": "sorry",
-        "context": "    sorry\n  \u00b7 intro hz\n    -- TODO: Complete using QCAL.Noesis.spectral_correspondence\n    sorry\n\n/-- The set of zeros equals the spectrum -/\ntheorem zeros_equal_spectrum :",
-        "primary_category": "qcal",
-        "all_categories": {
-          "correspondence": 0.7,
-          "qcal": 0.75,
-          "spectral": 0.65
-        },
-        "complexity": 3,
-        "similar_solutions": []
-      },
-      {
-        "line": 140,
-        "code": "sorry",
-        "context": "      exact h.2.1 n\n  \u00b7 intro \u27e8h_spec, h_real\u27e9\n    -- Every real element of spectrum corresponds to some \u039b n\n    sorry\n\n/-- Eigenvalues are ordered by increasing magnitude -/\naxiom eigenvalues_ordered : \u2200 n : \u2115, Complex.abs (\u039b n) \u2264 Complex.abs (\u039b (n + 1))",
-        "primary_category": "spectral",
-        "all_categories": {
-          "spectral": 1.3
-        },
-        "complexity": 4,
-        "similar_solutions": []
-      },
-      {
-        "line": 164,
-        "code": "sorry",
-        "context": "  -- From xi_hadamard and the relationship between zeros and eigenvalues\n  -- Division by \u039b n is well-defined since eigenvalues_nonzero\n  -- TODO: Complete using QCAL.Noesis.spectral_correspondence\n  sorry\n\n/-! ## Functional Equation Preservation -/\n",
-        "primary_category": "qcal",
-        "all_categories": {
-          "correspondence": 0.7,
-          "qcal": 0.75,
-          "spectral": 0.65
-        },
-        "complexity": 3,
-        "similar_solutions": []
-      },
-      {
-        "line": 177,
-        "code": "sorry",
-        "context": "  -- 2. Zeros come in symmetric pairs about Re(s) = 1/2\n  -- 3. The product over (s - \u03c1)(s - \u03c1\u0304) is symmetric under s \u2194 1-s\n  -- TODO: Complete using QCAL.Noesis.spectral_correspondence\n  sorry\n\n/-! ## Growth Estimates -/\n",
-        "primary_category": "qcal",
-        "all_categories": {
-          "correspondence": 0.7,
-          "qcal": 0.75
-        },
-        "complexity": 3,
-        "similar_solutions": []
-      }
-    ],
-    "formalization/lean/RHComplete/RiemannSiegel.lean": [
-      {
-        "line": 169,
-        "code": "\u2705 No sorrys (except implicit gram point definition)",
-        "context": "\u2705 First 10^13 zeros verified on critical line\n\u2705 Independent computational check\n\u2705 Z-function sign changes confirmed\n\u2705 No sorrys (except implicit gram point definition)\n\nThe Riemann-Siegel formula provides rigorous computational\nverification that complements the theoretical proof.",
-        "primary_category": "unknown",
-        "all_categories": {
-          "unknown": 1.0
-        },
-        "complexity": 5,
-        "similar_solutions": []
-      }
-    ],
-    "formalization/lean/RHComplete/Rh_Spectral_Proof.lean": [
-      {
-        "line": 26,
-        "code": "sorry",
-        "context": "@[reducible]\ndef H\u03c7_operator (\u03c7 : DirichletCharacter \u2124) : \u2102 \u2192 \u2102 :=\n  -- Placeholder para el operador integral espectral definido v\u00eda transformada adelica\n  sorry\n\n\n-- Definimos la funci\u00f3n D_\u03c7(s) como determinante de Fredholm del operador H\u03c7",
-        "primary_category": "spectral",
-        "all_categories": {
-          "adelic": 0.6,
-          "spectral": 1.3
-        },
-        "complexity": 4,
-        "similar_solutions": []
-      },
-      {
-        "line": 33,
-        "code": "sorry",
-        "context": "@[reducible]\ndef D\u03c7 (\u03c7 : DirichletCharacter \u2124) (s : \u2102) : \u2102 :=\n  -- En la implementaci\u00f3n final: det(Id - K_s), con K_s operador de traza clase Hilbert\u2013Schmidt\n  sorry\n\n\n-- Definimos \u039e(s) como la continuaci\u00f3n holomorfa de \u03b6(s) multiplicada por Gamma(s/2) y \u03c0^{-s/2}",
-        "primary_category": "analytic",
-        "all_categories": {
-          "analytic": 0.6
-        },
-        "complexity": 5,
-        "similar_solutions": []
-      }
-    ],
-    "formalization/lean/RHComplete/FredholmDetEqualsXi.lean": [
-      {
-        "line": 157,
-        "code": "\u2705 No sorrys",
-        "context": "\u2705 Functional equation verified\n\u2705 Growth bounds correct\n\u2705 No circular reasoning\n\u2705 No sorrys\n\nThis is the KEY identity that connects operator spectral theory\nto the zeros of the zeta function without any circularity.",
-        "primary_category": "spectral",
-        "all_categories": {
-          "spectral": 0.65,
-          "analytic": 0.6
         },
         "complexity": 4,
         "similar_solutions": []
