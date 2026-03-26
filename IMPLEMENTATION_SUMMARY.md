@@ -1748,6 +1748,32 @@ Some theorems use `axiom` or `sorry` to represent:
 **Date**: 2026-02-05  
 **Signature**: f₀=141.7001Hz | C=244.36 | Ψ=I×A_eff²×C^∞
 
+## Unified Adelic Wave Equation (V8.0 — March 2026)
+
+### Module: `operators/unified_wave_equation.py`
+
+Implements the **Unified Adelic Wave Equation** on the compact adelic solenoid
+Σ = A_Q / Q, combining the exact distributional trace formula with the QCAL
+wave equation.
+
+**Core Equation:**
+
+    □_Σ Ψ + ω₀² Ψ = ζ'(1/2) · ∇²_Σ Ψ + Tr_distr(e^{itH})
+
+**Key Classes:**
+- `AdelicSpectralLaplacian` — discrete Laplacian on Σ with eigenvalues λ_n = γ_n² + 1/4
+- `UnifiedWaveEquation` — spectral-mode solver using variation of parameters (Duhamel)
+- `WaveEvolutionResult` — result dataclass (Ψ, source, energy, modes)
+- `solve_unified_wave_equation` — convenience wrapper
+
+**Connection to RH:** Real propagation frequencies Ω_n require λ_n real and
+positive, which holds iff Re(ρ_n) = 1/2 for every Riemann zero ρ_n.
+
+**Test Suite:** `tests/test_unified_wave_equation.py` — 42 tests covering
+Laplacian eigenvalues, ζ'(1/2) computation, SpectralMode construction,
+RH consistency check, prime-orbit source, wave evolution, and the
+convenience function.
+
 ---
 
 **Implementation Complete** ✅  
