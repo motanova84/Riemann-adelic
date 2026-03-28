@@ -1,5 +1,39 @@
 # QCAL Build Verification - Implementation Summary
 
+## 🟢 ESCALADO EXTREMO v3.0 — GPU/CPU Hamiltonian Ultra-Rápido (March 2026)
+
+**Status**: ✅ IMPLEMENTED
+
+- **Python Module**: `operators/escalado_extremo_v3.py`
+- **Test Suite**: `tests/test_escalado_extremo_v3.py` (27 tests, all passing)
+- **Core functions**: `segmented_sieve`, `build_hamiltonian`, `compute_single`, `ejecutar_escalado_extremo`, `plot_gue_purified`, `plot_error_map`, `decreto_dilmun_v3`
+- **Core dataclass**: `EscaladoResult`
+- **Public entry point**: `ejecutar_escalado_extremo()` → `EscaladoResult` con los mejores parámetros (ε, α), eigenvalores alineados y correlación con ceros de Riemann.
+
+### Module Overview
+
+Implements the **ESCALADO EXTREMO v3.0** operator for high-dimensional spectral
+analysis of the Riemann Hypothesis:
+
+1. **Ultra-fast segmented sieve** — generates all primes up to `PRIMES_LIMIT_DEFAULT` (15000)
+2. **Sparse Hamiltonian** H = K + V_conf + V_prime on an N-point DVR grid [-L, L]:
+   - Kinetic operator K (2nd-order finite-difference tridiagonal)
+   - Quadratic confinement V_conf(u) = α·u²
+   - Symmetric Gaussian comb V_prime: Σ_{p,k} (ln p / p^{k/2}) · G(u; k·ln p, ε_k) with ε_k = ε/√k
+3. **GPU acceleration** — automatic CuPy detection; silent CPU fallback
+4. **Parallel hyperparameter sweep** over (ε, α) grids using `joblib`
+5. **Spectral alignment** via least-squares scale factor; correlation with mpmath Riemann zeros
+6. **GUE statistics** — Wigner β=2 spacing histogram
+7. **Extended error map** |λ_n − γ_n| up to n=500
+
+### Files Created/Modified
+
+- `operators/escalado_extremo_v3.py` — main module (new)
+- `tests/test_escalado_extremo_v3.py` — unit tests (new)
+- `IMPLEMENTATION_SUMMARY.md` — this entry (updated)
+
+---
+
 ## 🟢 OPERADOR_H_SOLENOIDE - Hilbert-Pólya sobre malla logarítmica (March 2026)
 
 **Status**: ✅ IMPLEMENTED
