@@ -290,6 +290,20 @@ from .spectral_projection_operator import (
     generate_projection_certificate,
 )
 
+# Ruelle-Selberg Transfer Operator and Gesto Final de Mathesis (Mar 2026)
+from .ruelle_selberg_transfer_operator import (
+    RuelleSelbergTransferOperator,
+    NuclearTraceResult,
+    TransverseJacobian,
+    PoincareDeterminantResult,
+    ArchimedeanWeylTerm,
+    ArchimedeanResult,
+    MathesisFredholmXi,
+    FredholmDeterminantResult,
+    MathesisGestoResult,
+    gesto_final_mathesis,
+)
+
 __all__ = [
     'construct_H_psi',
     'compute_spectrum',
@@ -478,4 +492,15 @@ __all__ = [
     'SpectralSubspaceResult',
     'build_spectral_projection',
     'generate_projection_certificate',
+    # Ruelle-Selberg Transfer Operator and Gesto Final de Mathesis (Mar 2026)
+    'RuelleSelbergTransferOperator',
+    'NuclearTraceResult',
+    'TransverseJacobian',
+    'PoincareDeterminantResult',
+    'ArchimedeanWeylTerm',
+    'ArchimedeanResult',
+    'MathesisFredholmXi',
+    'FredholmDeterminantResult',
+    'MathesisGestoResult',
+    'gesto_final_mathesis',
 ]
