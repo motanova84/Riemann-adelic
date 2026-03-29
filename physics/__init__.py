@@ -232,6 +232,19 @@ from .operador_xi_h import (
     operador_xi_h_activar,
 )
 
+from .operador_autoadjunto_H import (
+    # Result dataclass
+    ResultadoOperadorH,
+    # Main class
+    OperadorH_Ideles,
+    # Entry point
+    operador_h_ideles_activar,
+    # Constants
+    DEFAULT_PRECISION,
+    AUTOADJOINT_TOLERANCE,
+    MACROSCOPIC_COHERENCE_THRESHOLD,
+)
+
 __all__ = [
     'PrimitivaPotencialOscilatorio',
     'EstimacionCuadraticaMedia',
@@ -387,4 +400,11 @@ __all__ = [
     'ConexionZerosAutovalores',
     'SistemaOperadorXiH',
     'operador_xi_h_activar',
+    # Operador Autoadjunto H — Generador del Flujo de Escala Adélico
+    'ResultadoOperadorH',
+    'OperadorH_Ideles',
+    'operador_h_ideles_activar',
+    'DEFAULT_PRECISION',
+    'AUTOADJOINT_TOLERANCE',
+    'MACROSCOPIC_COHERENCE_THRESHOLD',
 ]
