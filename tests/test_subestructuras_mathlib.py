@@ -3,7 +3,7 @@
 Tests for subestructuras_mathlib
 =================================
 
-147 tests covering:
+166 tests covering:
   - Module-level constants
   - Utility helpers (_sieve_primes, _von_mangoldt, _make_sha256,
     _pearson_correlation)
