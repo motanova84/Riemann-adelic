@@ -29,6 +29,9 @@ la interpretación espectral de la hipótesis de Riemann.
    y generador de primos (criba de Eratóstenes)
  - restricciones_multiplicativas: Esquema de Ruthie-FRC — V_osc(x) como
    emergencia de la geometría del espacio de fases; nodo de Ruthie
+ - transmutacion_stone_vosc: Transmutación QCAL — Operador H Stone autoadjunto
+   con derivación estructural de V_osc(x) desde condiciones multiplicativas.
+   Implementa Teorema de Stone, flujo de escala adélico, y nuclearidad Schatten-1.
 
 Autor: José Manuel Mota Burruezo Ψ ✧ ∞³
 QCAL ∞³ · 141.7001 Hz · C = 244.36
@@ -232,6 +235,14 @@ from .operador_xi_h import (
     operador_xi_h_activar,
 )
 
+from .transmutacion_stone_vosc import (
+    OperadorH_Stone_Transmutacion,
+    ResultadoStone,
+    ResultadoVOsc,
+    CertificadoTransmutacion,
+    ejecutar_transmutacion_completa,
+)
+
 __all__ = [
     'PrimitivaPotencialOscilatorio',
     'EstimacionCuadraticaMedia',
@@ -387,4 +398,10 @@ __all__ = [
     'ConexionZerosAutovalores',
     'SistemaOperadorXiH',
     'operador_xi_h_activar',
+    # Transmutación Stone + V_osc — Operador H autoadjunto con derivación estructural
+    'OperadorH_Stone_Transmutacion',
+    'ResultadoStone',
+    'ResultadoVOsc',
+    'CertificadoTransmutacion',
+    'ejecutar_transmutacion_completa',
 ]
