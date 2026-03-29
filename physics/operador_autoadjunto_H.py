@@ -448,7 +448,7 @@ class OperadorH_Ideles:
         self.metrica = MetricaVacio(self)
 
         # For demo compatibility
-        self.n = n_zeros  # Alias for compatibility
+        self.n = self.n_zeros  # Alias for compatibility
 
     def _construir_generador_flujo_escala(self) -> np.ndarray:
         """
