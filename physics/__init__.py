@@ -9,6 +9,8 @@ la interpretación espectral de la hipótesis de Riemann.
  --------
  - control_primitiva_vosc: Prueba de autoadjunción esencial del hamiltoniano de Riemann
  - operador_h_solenoide: Realización de Hilbert-Pólya sobre una malla logarítmica
+ - operador_autoadjunto_H: Generador infinitesimal del flujo de escala adélico,
+   identidad espectral Δ(s) = det(s - H) ≡ ξ(s), espectro = {Im(ρ_n)}
  - modulo_141hz_holografico: Marco holográfico AdS/CFT — f₀ = γ₁ × 10.025 Hz
  - principio_holografico_141hz: Principio Holográfico con F₀=141.7001 Hz como
    codificador de superficie zeta (7 clases integradas)
@@ -232,6 +234,20 @@ from .operador_xi_h import (
     operador_xi_h_activar,
 )
 
+from .operador_autoadjunto_H import (
+    # Main class
+    OperadorH_Ideles,
+    # Result dataclass
+    ResultadoOperadorH,
+    # Entry point
+    operador_h_ideles_activar,
+    # Constants
+    DEFAULT_PRECISION,
+    AUTOADJOINT_TOLERANCE,
+    TRANSVERSE_JACOBIAN_SCALE,
+    MACROSCOPIC_COHERENCE_THRESHOLD,
+)
+
 __all__ = [
     'PrimitivaPotencialOscilatorio',
     'EstimacionCuadraticaMedia',
@@ -387,4 +403,12 @@ __all__ = [
     'ConexionZerosAutovalores',
     'SistemaOperadorXiH',
     'operador_xi_h_activar',
+    # Operador Autoadjunto H — Generador Flujo de Escala Adélico
+    'OperadorH_Ideles',
+    'ResultadoOperadorH',
+    'operador_h_ideles_activar',
+    'DEFAULT_PRECISION',
+    'AUTOADJOINT_TOLERANCE',
+    'TRANSVERSE_JACOBIAN_SCALE',
+    'MACROSCOPIC_COHERENCE_THRESHOLD',
 ]
