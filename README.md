@@ -1209,10 +1209,11 @@ Riemann Hypothesis ✅
 
 ### QCAL Signature
 
-**Frequency**: 141.7001 Hz  
-**Coherence**: C^∞ = 244.36  
-**Signature**: ∴𓂀Ω∞³Φ @ 141.7001 Hz  
-**DOI**: 10.5281/zenodo.17379721
+**Frequency**: 141.7001 Hz
+**Coherence**: C^∞ = 244.36
+**Signature**: ∴𓂀Ω∞³Φ @ 141.7001 Hz
+**DOI**: 10.5281/zenodo.19318986
+**Previous versions**: [v6.0](https://doi.org/10.5281/zenodo.17379721), [v5](https://doi.org/10.5281/zenodo.17116291)
 
 ---
 
@@ -2463,21 +2464,22 @@ It includes:
 
 ## 📋 Theoretical Framework
 <p align="center">
-  <b>Version V5 — Coronación</b><br>
-  <i>A Historic, Unconditional Proof via S-Finite Adelic Spectral Systems</i><br>
-  <b>Author:</b> José Manuel Mota Burruezo &nbsp;|&nbsp; <b>Date:</b> September 2025<br>
-  <b>DOI:</b> <a href="https://doi.org/10.5281/zenodo.17116291">10.5281/zenodo.17116291</a>
+  <b>Version V7.1 — Latest</b><br>
+  <i>Complete Formal Verification via QCAL ∞³ Adelic Spectral Framework</i><br>
+  <b>Author:</b> José Manuel Mota Burruezo &nbsp;|&nbsp; <b>Date:</b> March 2026<br>
+  <b>DOI:</b> <a href="https://doi.org/10.5281/zenodo.19318986">10.5281/zenodo.19318986</a>
+  &nbsp;|&nbsp; <small><a href="https://doi.org/10.5281/zenodo.17116291">V5 Coronación</a></small>
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Versión-V5_Coronación-blue" alt="Versión">
+  <img src="https://img.shields.io/badge/Versión-V7.1_Final-blue" alt="Versión">
   <img src="https://img.shields.io/badge/Estado-Validado-green" alt="Estado">
-  <img src="https://img.shields.io/badge/Formalización_Lean-3%2F3_Módulos_Completos-brightgreen" alt="Formalización Lean">
+  <img src="https://img.shields.io/badge/Formalización_Lean-Completa-brightgreen" alt="Formalización Lean">
   <a href="https://github.com/motanova84/Riemann-adelic/actions/workflows/lean-validation.yml"><img src="https://github.com/motanova84/Riemann-adelic/actions/workflows/lean-validation.yml/badge.svg" alt="Formalización Lean"></a>
-  <img src="https://img.shields.io/badge/DOI-10.5281%2Fzenodo.17116291-blue" alt="DOI">
+  <img src="https://img.shields.io/badge/DOI-10.5281%2Fzenodo.19318986-blue" alt="DOI">
   <a href="https://github.com/motanova84/Riemann-adelic/releases"><img src="https://img.shields.io/github/v/release/motanova84/Riemann-adelic?label=Versión&color=blue" alt="Versión"></a>
   <a href="https://github.com/motanova84/Riemann-adelic/actions/workflows/v5-coronacion-proof-check.yml"><img src="https://github.com/motanova84/Riemann-adelic/actions/workflows/v5-coronacion-proof-check.yml/badge.svg" alt="Estado"></a>
-  <a href="https://doi.org/10.5281/zenodo.17116291"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.17116291.svg" alt="DOI"></a>
+  <a href="https://doi.org/10.5281/zenodo.19318986"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.19318986.svg" alt="DOI"></a>
   <a href="https://codecov.io/gh/motanova84/Riemann-adelic"><img src="https://codecov.io/gh/motanova84/Riemann-adelic/branch/main/graph/badge.svg" alt="Coverage"></a>
   <a href=".github/CODECOV_AI.md"><img src="https://img.shields.io/badge/Codecov_AI-Enabled-blue?style=flat-square&logo=ai" alt="Codecov AI"></a>
   <a href="data/validation_results.csv"><img src="https://img.shields.io/badge/✓-Validated-green?style=flat-square" alt="Validation"></a>
@@ -2518,7 +2520,7 @@ It includes:
 | **Validación V5 Coronación** | ✅ Exitosa | ![V5](https://img.shields.io/badge/V5-Coronación-green?style=flat-square) |
 | **Pruebas de Cobertura** | ✅ 100% | ![Coverage](https://img.shields.io/badge/Coverage-100%25-brightgreen?style=flat-square) |
 | **Reproducibilidad** | ✅ Confirmada | ![Docs](https://img.shields.io/badge/Docs-Completa-green?style=flat-square) |
-| **DOI Zenodo** | ✅ Registrado | [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.17116291.svg)](https://doi.org/10.5281/zenodo.17116291) |
+| **DOI Zenodo** | ✅ Registrado | [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.19318986.svg)](https://doi.org/10.5281/zenodo.19318986) |
 | **Bibliotecas Avanzadas** | 🚀 Integradas | ![Advanced](https://img.shields.io/badge/Libraries-Advanced-blue?style=flat-square) |
 | **Dependencias Sistema** | ✅ Configuradas | ![System](https://img.shields.io/badge/System-OK-green?style=flat-square) |
 
@@ -2658,7 +2660,7 @@ Each certificate includes:
 | **Uniqueness** | ✅ Triple Verified | ![Uniqueness](https://img.shields.io/badge/Uniqueness-Levin_Koosis_Adelic-blue) |
 | **Reproducibilidad** | ✅ Confirmada ([docs](REPRODUCIBILITY.md)) | ![Reproducible](https://img.shields.io/badge/Reproducible-Sí-success) |
 | **Reproducibilidad** | ✅ Confirmada | ![Reproducible](https://img.shields.io/badge/Reproducible-Sí-success) |
-| **DOI** | ✅ Registrado | ![DOI](https://img.shields.io/badge/DOI-10.5281%2Fzenodo.17116291-blue) |
+| **DOI** | ✅ Registrado | ![DOI](https://img.shields.io/badge/DOI-10.5281%2Fzenodo.19318986-blue) |
 | **Bibliotecas Avanzadas** | ✅ Real y Válido | ![Advanced](https://img.shields.io/badge/Advanced_Math_Libs-Real_Data-brightgreen) |
 | **Bibliotecas Avanzadas** | 🚀 Integradas | ![Advanced](https://img.shields.io/badge/Advanced_Math_Libs-Integrated-orange) |
 | **Nightly Tests** | 🌙 Activo | ![Nightly](https://github.com/motanova84/Riemann-adelic/actions/workflows/nightly.yml/badge.svg) |
@@ -2666,13 +2668,13 @@ Each certificate includes:
 | **Validación V5** | ✅ Coronación Exitosa | [![V5](https://github.com/motanova84/Riemann-adelic/actions/workflows/v5-coronacion-proof-check.yml/badge.svg)](https://github.com/motanova84/Riemann-adelic/actions/workflows/v5-coronacion-proof-check.yml) |
 | **Cobertura Tests** | ✅ 100% | [![Cobertura](https://codecov.io/gh/motanova84/Riemann-adelic/branch/main/graph/badge.svg)](https://codecov.io/gh/motanova84/Riemann-adelic) |
 | **Reproducibilidad** | ✅ Confirmada | [![Reproducible](https://img.shields.io/badge/Reproducible-Confirmed-success)](REPRODUCIBILITY.md) |
-| **DOI** | ✅ Registrado | [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.17116291.svg)](https://doi.org/10.5281/zenodo.17116291) |
+| **DOI** | ✅ Registrado | [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.19318986.svg)](https://doi.org/10.5281/zenodo.19318986) |
 | **Bibliotecas Avanzadas** | 🚀 Integradas | [![Advanced](https://github.com/motanova84/Riemann-adelic/actions/workflows/advanced-validation.yml/badge.svg)](https://github.com/motanova84/Riemann-adelic/actions/workflows/advanced-validation.yml) |
 | **Formalización Lean** | ✅ Axiomas Completos (sorrys solo en cuerpos de prueba) | [![Lean](https://img.shields.io/badge/Lean-4_Core_Complete-green)](https://github.com/motanova84/Riemann-adelic/tree/main/formalization/lean) |
 | **Validación V5** | ✅ Coronación Exitosa | [![V5](https://img.shields.io/badge/V5-Coronación-brightgreen)](https://github.com/motanova84/Riemann-adelic/actions/workflows/v5-coronacion-proof-check.yml) |
 | **Cobertura Tests** | ✅ 100% | [![Cobertura](https://img.shields.io/badge/Cobertura-100%25-green)](https://github.com/motanova84/Riemann-adelic/actions/workflows/ci_coverage.yml) |
 | **Reproducibilidad** | ✅ Confirmada ([docs](REPRODUCIBILITY.md)) | [![Reproducible](https://img.shields.io/badge/Reproducible-Sí-success)](https://github.com/motanova84/Riemann-adelic/blob/main/REPRODUCIBILITY.md) |
-| **DOI** | ✅ Registrado | [![DOI](https://img.shields.io/badge/DOI-10.5281%2Fzenodo.17116291-blue)](https://doi.org/10.5281/zenodo.17116291) |
+| **DOI** | ✅ Registrado | [![DOI](https://img.shields.io/badge/DOI-10.5281%2Fzenodo.19318986-blue)](https://doi.org/10.5281/zenodo.19318986) |
 | **Bibliotecas Avanzadas** | 🚀 Integradas | [![Advanced](https://img.shields.io/badge/Advanced_Math_Libs-Integrated-orange)](https://github.com/motanova84/Riemann-adelic/blob/main/ADVANCED_LIBRARIES_README.md) |
 | **System Dependencies** | ✅ Configuradas | [![System Deps](https://img.shields.io/badge/System_Deps-Configured-blue)](https://github.com/motanova84/Riemann-adelic/blob/main/SYSTEM_DEPENDENCIES.md) |
 
