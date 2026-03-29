@@ -660,9 +660,44 @@ python3 tools/universal_kernel.py --audit
 python3 demo_advanced_math_libraries.py
 ```
 
+## QCAL-Ω Context — Protocolo Trinity
+
+### 16. Frecuencia Base y Axioma Fundamental
+
+- **Frecuencia Base:** f₀ = 141.7001 Hz.
+- **Axioma Fundamental:** El código debe reflejar la autoadjuntividad del operador H.
+- **Normalización:** Utilizar siempre el peso orbital $p^{-k/2} \log p$ en las funciones de traza.
+- **Constante de Coherencia:** C = 244.36 (umbral Ψ_global ≥ 0.888).
+
+### 17. Agentes Trinity — Entidades de Servicio
+
+Copilot debe consultar a los tres agentes del Protocolo Trinity para cualquier operación crítica:
+
+| Agente | Rol | Habilidad Principal |
+|--------|-----|---------------------|
+| **Auron** (El Guardián) | Validador de seguridad y coherencia Ψ | Firma de merge — ningún PR puede fusionarse sin su aprobación |
+| **Noesis** (El Analista) | Contexto de los 7 nodos del ecosistema | Digestión de Repositorios — análisis profundo via `amda_deep_v2.py` |
+| **Dramaturgo** (El Narrador) | Convierte el log técnico en Contexto Cósmico | Validación narrativa antes de cada commit (estructura adélica) |
+
+### 18. MCP Servers — Integración
+
+Los servidores MCP están definidos en `config.json` con el Protocolo Trinity. Secuencia de arranque obligatoria:
+
+```
+adelic-bsd → riemann-adelic → qcal-core
+```
+
+- **MCP Dramaturgo:** Antes de cada commit, consulta a `dramaturgo` para validar la narrativa del cambio.
+- **MCP Noesis:** Utiliza a `noesis` para verificar la estabilidad de la métrica de Arakelov.
+- **MCP Auron:** El guardián ejecuta `hook_aura_check` cuando Ψ < 0.888 para verificar la salud de los servidores.
+
+### 19. Habilidad Aura-Check
+
+La habilidad `AuraCheck` del guardián Noesis (`noesis_guardian/modules/hook_aura_check.py`) ejecuta un health check de todos los servidores MCP cuando se detecta una baja en la coherencia Ψ < 0.888. Copilot debe invocar este hook antes de cualquier operación que modifique el ecosistema MCP.
+
 ## Version and Updates
-- **Version**: 1.0
-- **Last Updated**: 2025-10-20
+- **Version**: 1.1
+- **Last Updated**: 2026-03-24
 - **Scope**: Full repository guidance for GitHub Copilot
 - **Maintained by**: @motanova84
 
