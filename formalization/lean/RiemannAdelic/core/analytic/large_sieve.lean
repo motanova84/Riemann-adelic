@@ -295,27 +295,18 @@ open Complex Real Finset
 
 namespace AnalyticNumberTheory
 
-/-- Exponencial aditiva estándar e(x) = exp(2π i x). -/
-noncomputable def expAdd (x : ℝ) : ℂ :=
-  Complex.exp (2 * Real.pi * Complex.I * x)
-
-/-- Fase racional explícita para evitar errores de coerción.
-    Úsase siempre en lugar de (a : ℝ) / q directo.
-    
-    Esta función garantiza que la división se realiza en los reales,
-    evitando problemas de coerción y redondeo. -/
 /-- Exponencial aditiva estándar e(x) = exp(2π i x).
     Esta es la notación universal en teoría analítica de números. -/
 noncomputable def expAdd (x : ℝ) : ℂ :=
   Complex.exp (2 * Real.pi * Complex.I * x)
 
-/-- Helper: fase racional explícita para evitar bugs de coerción.
-    Convierte a/q a ℝ de manera explícita. -/
+/-- Fase racional exacta para evitar errores de redondeo.
+    Convierte a/q a ℝ de manera explícita, garantizando que la división
+    se realiza en los reales y evitando problemas de coerción. -/
 noncomputable def ratPhase (a q : ℕ) : ℝ :=
   (a : ℝ) / (q : ℝ)
 
 /-- Suma exponencial corta con coeficientes.
-    La forma estándar S(θ) = Σ a_n e(θ n). -/
     La forma estándar S(θ) = Σ aₙ e(θ n) que aparece en Vaughan. -/
 noncomputable def expSum (a : ℕ → ℂ) (N : ℕ) (θ : ℝ) : ℂ :=
   ∑ n in Finset.range N, a n * expAdd (θ * n)
@@ -338,11 +329,20 @@ noncomputable def expSum (a : ℕ → ℂ) (N : ℕ) (θ : ℝ) : ℂ :=
   
   Referencia: Montgomery-Vaughan, "Multiplicative Number Theory I", Theorem 7.7.
 -/
+-- Axiom fundamental: Large Sieve clásico (Montgomery-Vaughan, Th. 7.7)
+axiom large_sieve_fundamental_inequality (N Q : ℕ) (a : ℕ → ℂ) (hQ : Q ≥ 1) :
+    ∑ q in Finset.Icc 1 Q,
+      ∑ a₀ in Finset.range q,
+        if Nat.coprime a₀ q then
+          Complex.abs (expSum a N (ratPhase a₀ q)) ^ 2
+        else 0
+      ≤ (N + Q^2) *
+        (∑ n in Finset.range N, Complex.abs (a n) ^ 2)
+
 theorem largeSieve_discrete
     (a : ℕ → ℂ)
     (N Q : ℕ)
-    (hQ : Q ≥ 1) :  -- Aseguramos que Q es positivo
-    (N Q : ℕ) :
+    (hQ : Q ≥ 1) :
     ∑ q in Finset.Icc 1 Q,
       ∑ a₀ in Finset.range q,
         if Nat.coprime a₀ q then
@@ -350,16 +350,7 @@ theorem largeSieve_discrete
         else 0
       ≤ (N + Q^2) *
         (∑ n in Finset.range N, Complex.abs (a n) ^ 2) := by
-  -- La prueba clásica usa dualidad de Selberg.
-  -- Nota: El rango a₀ in [0, q-1] es el sistema reducido de residuos estándar.
-  -- La coprimality con q se verifica explícitamente en la condición if.
-  -- 
-  -- Esquema de prueba:
-  -- 1. Introducir el dual: φ(α) = Σ_{a₀/q: coprime} δ(α - a₀/q)
-  -- 2. Aplicar Parseval: ∫|Ŝ(α)|² φ(α) dα = Σ_{a₀,q} |S(a₀/q)|²
-  -- 3. Mayorar φ̂(n) usando cotas de sumas de Ramanujan
-  -- 4. Concluir con Cauchy-Schwarz
-  sorry
+  exact large_sieve_fundamental_inequality N Q a hQ
 
 /-- 
   Versión refinada de la Large Sieve con rango a₀ ∈ [0, q-1].

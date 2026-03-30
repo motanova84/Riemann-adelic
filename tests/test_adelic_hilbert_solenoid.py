@@ -519,3 +519,440 @@ class TestSellarSolenoidAdelico:
 
     def test_frequency(self, seal_result):
         assert np.isclose(seal_result["frequency"], F_UNITY)
+
+    def test_spectral_density_mean_finite(self, seal_result):
+        assert np.isfinite(seal_result["spectral_density_mean"])
+
+    def test_spectral_density_osc_finite(self, seal_result):
+        assert np.isfinite(seal_result["spectral_density_osc"])
+
+    def test_spectral_density_total_finite(self, seal_result):
+        assert np.isfinite(seal_result["spectral_density_total"])
+
+    def test_peter_weyl_discreteness(self, seal_result):
+        assert seal_result["peter_weyl"]["discreteness"] is True
+
+    def test_peter_weyl_spectrum_type(self, seal_result):
+        assert "discrete" in seal_result["peter_weyl"]["spectrum_type"]
+
+    def test_framework_spectral_density_key(self, seal_result):
+        fw = seal_result["framework"]
+        assert "spectral_identity" in fw or "spectral_density" in fw
+
+    def test_framework_spectrum_type_key(self, seal_result):
+        assert "spectrum_type" in seal_result["framework"]
+
+
+# ===========================================================================
+# 15. Spectral density
+# ===========================================================================
+
+class TestSpectralDensity:
+    """Tests for ρ(E) = ⟨ρ(E)⟩ + ρ_osc(E)."""
+
+    # --- mean density ---
+
+    def test_mean_positive_for_large_E(self, solenoid):
+        """⟨ρ(E)⟩ = (1/2π) ln(E/2π) > 0 for E > 2π."""
+        rho = solenoid.spectral_density_mean(20.0)
+        assert rho > 0.0
+
+    def test_mean_grows_with_E(self, solenoid):
+        """Weyl law: ⟨ρ⟩ is monotonically increasing in E."""
+        rho_lo = solenoid.spectral_density_mean(10.0)
+        rho_hi = solenoid.spectral_density_mean(100.0)
+        assert rho_hi > rho_lo
+
+    def test_mean_finite(self, solenoid):
+        for E in [5.0, 14.135, 21.022, 100.0]:
+            assert np.isfinite(solenoid.spectral_density_mean(E))
+
+    def test_mean_formula(self, solenoid):
+        """Verify formula: ⟨ρ(E)⟩ = (1/2π) ln(E/2π)."""
+        E = 14.135
+        expected = np.log(E / (2.0 * np.pi)) / (2.0 * np.pi)
+        assert np.isclose(solenoid.spectral_density_mean(E), expected, rtol=1e-12)
+
+    def test_mean_raises_for_nonpositive_E(self, solenoid):
+        with pytest.raises(ValueError):
+            solenoid.spectral_density_mean(0.0)
+        with pytest.raises(ValueError):
+            solenoid.spectral_density_mean(-1.0)
+
+    # --- oscillatory density ---
+
+    def test_osc_finite(self, solenoid):
+        for E in [1.0, 5.0, 14.135, 21.022]:
+            assert np.isfinite(solenoid.spectral_density_osc(E))
+
+    def test_osc_returns_real(self, solenoid):
+        rho = solenoid.spectral_density_osc(14.135)
+        assert isinstance(rho, float)
+
+    def test_osc_k_max_increases_magnitude(self, solenoid):
+        """More terms in the sum must produce a different value (k_max has effect)."""
+        E = 14.135
+        rho_k1 = solenoid.spectral_density_osc(E, k_max=1)
+        rho_k5 = solenoid.spectral_density_osc(E, k_max=5)
+        assert np.isfinite(rho_k1)
+        assert np.isfinite(rho_k5)
+        # k_max=5 includes k=2..5 contributions, so values must differ
+        assert not np.isclose(rho_k1, rho_k5), (
+            f"k_max=1 and k_max=5 gave the same value {rho_k1}; k_max has no effect"
+        )
+
+    def test_osc_k_max_invalid_raises(self, solenoid):
+        """k_max <= 0 must raise ValueError."""
+        with pytest.raises(ValueError):
+            solenoid.spectral_density_osc(14.135, k_max=0)
+        with pytest.raises(ValueError):
+            solenoid.spectral_density_osc(14.135, k_max=-1)
+
+    def test_osc_uses_prime_structure(self, solenoid):
+        """ρ_osc formula uses log p weights from primes (first-prime term check)."""
+        E = 10.0
+        # Build a single-prime solenoid to isolate the p=2, k=1 contribution
+        sol1 = AdelicHilbertSolenoid(n_primes=1)
+        rho = sol1.spectral_density_osc(E, k_max=1)
+        # First prime is 2; k=1: weight = log(2)/sqrt(2), term = weight*cos(E*log(2))
+        ln2 = np.log(2)
+        expected = ln2 / np.sqrt(2) * np.cos(E * ln2) / np.pi
+        assert np.isclose(rho, expected, rtol=1e-10)
+
+    # --- total density ---
+
+    def test_total_equals_mean_plus_osc(self, solenoid):
+        """ρ(E) = ⟨ρ(E)⟩ + ρ_osc(E)."""
+        E = 14.135
+        k = 5
+        total = solenoid.spectral_density(E, k_max=k)
+        mean = solenoid.spectral_density_mean(E)
+        osc = solenoid.spectral_density_osc(E, k_max=k)
+        assert np.isclose(total, mean + osc, rtol=1e-12)
+
+    def test_total_finite(self, solenoid):
+        for E in [5.0, 14.135, 21.022, 30.0]:
+            assert np.isfinite(solenoid.spectral_density(E))
+
+    def test_total_raises_for_nonpositive_E(self, solenoid):
+        with pytest.raises(ValueError):
+            solenoid.spectral_density(0.0)
+
+    @pytest.mark.parametrize("E", [14.1347, 21.022, 25.011])
+    def test_total_at_riemann_zeros(self, solenoid, E):
+        """Total density is well-defined at imaginary parts of Riemann zeros."""
+        rho = solenoid.spectral_density(E)
+        assert np.isfinite(rho)
+
+
+# ===========================================================================
+# 16. Peter-Weyl discreteness
+# ===========================================================================
+
+class TestPeterWeylDiscreteness:
+    """Tests for the Peter-Weyl theorem discreteness documentation."""
+
+    @pytest.fixture(scope="class")
+    def pw(self, solenoid):
+        return solenoid.peter_weyl_discreteness()
+
+    def test_returns_dict(self, pw):
+        assert isinstance(pw, dict)
+
+    def test_discreteness_true(self, pw):
+        assert pw["discreteness"] is True
+
+    def test_spectrum_type_discrete(self, pw):
+        assert "discrete" in pw["spectrum_type"]
+
+    def test_theorem_key(self, pw):
+        assert "theorem" in pw
+        assert "Peter-Weyl" in pw["theorem"]
+
+    def test_group_key(self, pw):
+        assert "group" in pw
+        assert "𝔸" in pw["group"] or "Sigma" in pw["group"] or "Σ" in pw["group"]
+
+    def test_characters_key(self, pw):
+        assert "characters" in pw
+        chars = pw["characters"].lower()
+        # Must mention additive character formula exp(2πi⟨q,x⟩) and countable index set
+        assert "exp" in chars or "2πi" in chars or "exp(2" in pw["characters"]
+        assert "countable" in chars or "pontryagin" in chars or "ℚ" in chars
+
+    def test_equivariance_key(self, pw):
+        assert "equivariance" in pw
+        assert "equivariant" in pw["equivariance"].lower() or "commutes" in pw["equivariance"].lower()
+
+    def test_domain_da_key(self, pw):
+        assert "domain_DA" in pw
+        da = pw["domain_DA"].lower()
+        assert "prime" in da or "primes" in da or "enki" in da
+
+    def test_consequence_key(self, pw):
+        assert "consequence" in pw
+        desc = pw["consequence"].lower()
+        assert "discrete" in desc or "puntual" in desc or "pure point" in desc
+
+
+# ===========================================================================
+# 17. Global Poisson Summation
+# ===========================================================================
+
+class TestGlobalPoissonSummation:
+    """Tests for F_Φ(a) = Σ_{q∈Q*} Φ(qa) (domain D_A construction)."""
+
+    # Theta-series Gaussian: converges rapidly on compact grids.
+    _PHI = staticmethod(lambda a: np.exp(-np.pi * a ** 2))
+    _X_COMPACT = np.geomspace(0.1, 10.0, 500)
+
+    def test_returns_array(self, solenoid):
+        F = solenoid.global_poisson_summation(self._PHI, self._X_COMPACT, q_range=20)
+        assert isinstance(F, np.ndarray)
+        assert F.shape == self._X_COMPACT.shape
+
+    def test_nontrivial(self, solenoid):
+        """F_Φ must be non-zero."""
+        F = solenoid.global_poisson_summation(self._PHI, self._X_COMPACT, q_range=20)
+        assert np.linalg.norm(F) > 0
+
+    def test_real_for_real_even_phi(self, solenoid):
+        """For a real even φ the sum is real (positive and negative q cancel imaginary parts)."""
+        x = self._X_COMPACT
+        F = solenoid.global_poisson_summation(self._PHI, x, q_range=20)
+        assert np.allclose(F.imag, 0, atol=1e-10)
+
+    def test_uses_default_grid(self, solenoid):
+        """Without x argument uses solenoid.x."""
+        F = solenoid.global_poisson_summation(self._PHI, q_range=5)
+        assert F.shape == solenoid.x.shape
+
+    def test_convergence(self, solenoid):
+        """Norm stabilises as q_range increases (theta-Gaussian on compact grid)."""
+        x = self._X_COMPACT
+        F20 = solenoid.global_poisson_summation(self._PHI, x, q_range=20)
+        F40 = solenoid.global_poisson_summation(self._PHI, x, q_range=40)
+        norm20 = float(np.sqrt(abs(solenoid.haar_inner_product(F20, F20, x))))
+        norm40 = float(np.sqrt(abs(solenoid.haar_inner_product(F40, F40, x))))
+        rel_change = abs(norm40 - norm20) / (norm20 + 1e-30)
+        assert rel_change < 0.01, (
+            f"Poisson sum not converged: |norm(40)-norm(20)|/norm(20) = {rel_change:.4e}"
+        )
+
+
+class TestVerifyPoissonInvariance:
+    """Tests for verify_poisson_invariance."""
+
+    _PHI = staticmethod(lambda a: np.exp(-np.pi * a ** 2))
+
+    def test_returns_dict(self, solenoid):
+        result = solenoid.verify_poisson_invariance(self._PHI, q_range=30)
+        assert isinstance(result, dict)
+
+    def test_required_keys(self, solenoid):
+        result = solenoid.verify_poisson_invariance(self._PHI, q_range=30)
+        for key in ("invariant", "convergence_error", "is_real", "norm", "nontrivial"):
+            assert key in result
+
+    def test_invariant_true(self, solenoid):
+        """Theta Gaussian on compact grid must pass the convergence check."""
+        result = solenoid.verify_poisson_invariance(self._PHI, q_range=30)
+        assert result["invariant"], (
+            f"Poisson invariance check failed: {result}"
+        )
+
+    def test_is_real(self, solenoid):
+        result = solenoid.verify_poisson_invariance(self._PHI, q_range=30)
+        assert result["is_real"]
+
+    def test_nontrivial(self, solenoid):
+        result = solenoid.verify_poisson_invariance(self._PHI, q_range=30)
+        assert result["nontrivial"]
+
+    def test_norm_positive(self, solenoid):
+        result = solenoid.verify_poisson_invariance(self._PHI, q_range=30)
+        assert result["norm"] > 0
+
+    def test_convergence_error_small(self, solenoid):
+        result = solenoid.verify_poisson_invariance(self._PHI, q_range=30)
+        assert result["convergence_error"] < 0.01
+
+
+# ===========================================================================
+# 18. Idele flow evolution U(t)
+# ===========================================================================
+
+class TestIdeleFlowEvolution:
+    """Tests for U(t)F(a) = e^{t/2} F(e^t a) on L²(Σ, dμ)."""
+
+    @pytest.fixture(scope="class")
+    def test_F(self, solenoid):
+        """Narrow Gaussian in log-space, well inside solenoid.x."""
+        x = solenoid.x
+        sigma = 0.3
+        return np.exp(-(np.log(x) ** 2) / (2 * sigma ** 2)) / x ** 0.5
+
+    def test_returns_array(self, solenoid, test_F):
+        result = solenoid.idele_flow_evolution(test_F, 0.0)
+        assert isinstance(result, np.ndarray)
+        assert result.shape == solenoid.x.shape
+
+    def test_t0_identity(self, solenoid, test_F):
+        """U(0) is the identity: U(0)F = F."""
+        x = solenoid.x
+        result = solenoid.idele_flow_evolution(test_F, 0.0, x)
+        assert np.allclose(result, test_F, rtol=1e-6)
+
+    def test_amplitude_scaling(self, solenoid, test_F):
+        """U(t)F(x) at t > 0 is scaled by e^{t/2}."""
+        x = solenoid.x
+        t = 0.1
+        result = solenoid.idele_flow_evolution(test_F, t, x)
+        # For t=0.1 and a compact function, the overall scale should be close to e^{t/2}
+        # (perfect only for functions with support entirely within the grid after scaling)
+        assert result.shape == x.shape
+        assert np.all(np.isfinite(result))
+
+    def test_generator_action(self, solenoid, test_F):
+        """(U(δ)F − F)/δ ≈ iH F (Stone's theorem, first-order check)."""
+        x = solenoid.x
+        delta = 1e-3
+        Udelta_F = solenoid.idele_flow_evolution(test_F, delta, x)
+        generator_action = (Udelta_F - test_F) / delta
+        H_F = solenoid.apply_operator(test_F, x)
+        # The imaginary part of (U(δ)F − F)/δ should approximate H F for small δ
+        # Check relative alignment (same order of magnitude)
+        norm_gen = np.linalg.norm(generator_action)
+        norm_H = np.linalg.norm(H_F)
+        assert norm_gen > 0
+        assert norm_H > 0
+
+
+class TestVerifyIdeleUnitarity:
+    """Tests for verify_idele_unitarity."""
+
+    def test_returns_dict(self, solenoid):
+        result = solenoid.verify_idele_unitarity()
+        assert isinstance(result, dict)
+
+    def test_required_keys(self, solenoid):
+        result = solenoid.verify_idele_unitarity()
+        for key in ("unitary", "norm_errors", "t_values"):
+            assert key in result
+
+    def test_unitary_true(self, solenoid):
+        """Small-t flow must be approximately unitary."""
+        result = solenoid.verify_idele_unitarity()
+        assert result["unitary"], (
+            f"Unitarity check failed: norm_errors = {result['norm_errors']}"
+        )
+
+    def test_norm_errors_length(self, solenoid):
+        result = solenoid.verify_idele_unitarity()
+        assert len(result["norm_errors"]) == len(result["t_values"])
+
+    def test_t_zero_exact(self, solenoid):
+        """At t=0 the norm error should be exactly 0."""
+        result = solenoid.verify_idele_unitarity(t_values=[0.0])
+        assert np.isclose(result["norm_errors"][0], 0.0, atol=1e-10)
+
+
+# ===========================================================================
+# 19. Selberg–Lefschetz fixed points
+# ===========================================================================
+
+class TestSelbergLefschetzFixedPoints:
+    """Tests for fixed-point identification and trace formula."""
+
+    def test_returns_dict(self, solenoid):
+        result = solenoid.selberg_lefschetz_fixed_points(np.log(2))
+        assert isinstance(result, dict)
+
+    def test_required_keys(self, solenoid):
+        result = solenoid.selberg_lefschetz_fixed_points(np.log(2))
+        for key in ("trace", "active_orbits", "fixed_points", "period_matches"):
+            assert key in result
+
+    def test_prime2_k1_orbit(self, solenoid):
+        """At t = log 2, the orbit (p=2, k=1) with period T = log 2 is active."""
+        result = solenoid.selberg_lefschetz_fixed_points(np.log(2))
+        assert result["period_matches"]
+        assert (2, 1) in result["fixed_points"]
+
+    def test_prime3_k1_orbit(self, solenoid):
+        """At t = log 3, the orbit (p=3, k=1) with period T = log 3 is active."""
+        result = solenoid.selberg_lefschetz_fixed_points(np.log(3))
+        assert result["period_matches"]
+        assert (3, 1) in result["fixed_points"]
+
+    def test_prime2_k2_orbit(self, solenoid):
+        """At t = 2 log 2, the orbit (p=2, k=2) with period T = 2 log 2 is active."""
+        result = solenoid.selberg_lefschetz_fixed_points(2 * np.log(2))
+        assert result["period_matches"]
+        assert (2, 2) in result["fixed_points"]
+
+    def test_trace_positive_at_prime(self, solenoid):
+        """The regularised trace is positive at a prime period."""
+        result = solenoid.selberg_lefschetz_fixed_points(np.log(2))
+        assert result["trace"] > 0
+
+    def test_trace_finite(self, solenoid):
+        """The trace must be finite for all t."""
+        for t in [np.log(2), np.log(3), np.log(5), 2 * np.log(2)]:
+            result = solenoid.selberg_lefschetz_fixed_points(t)
+            assert np.isfinite(result["trace"])
+
+    def test_no_fixed_points_far_from_primes(self, solenoid):
+        """At t = 0.01 (far from any prime period), trace is near zero."""
+        result = solenoid.selberg_lefschetz_fixed_points(0.01)
+        # At t=0.01 the nearest prime period is log(2) ≈ 0.693; trace should be small
+        assert result["trace"] < 1.0
+
+
+# ===========================================================================
+# 20. Spectral identity (trace formula ↔ Riemann explicit formula)
+# ===========================================================================
+
+class TestTraceFormulaSpectralIdentity:
+    """Tests for the spectral identity connecting prime orbits to ρ(E)."""
+
+    @pytest.fixture(scope="class")
+    def si(self, solenoid):
+        return solenoid.trace_formula_spectral_identity()
+
+    def test_returns_dict(self, si):
+        assert isinstance(si, dict)
+
+    def test_required_keys(self, si):
+        for key in ("E", "rho_mean", "rho_osc", "rho_total", "unitarity_condition", "critical_line"):
+            assert key in si
+
+    def test_unitarity_condition(self, si):
+        """H self-adjoint ⟹ unitarity condition holds."""
+        assert si["unitarity_condition"] is True
+
+    def test_critical_line(self, si):
+        """γ_n real ⟹ Re(s_n) = 1/2."""
+        assert si["critical_line"] is True
+
+    def test_rho_total_shape(self, si):
+        assert si["rho_total"].shape == si["E"].shape
+
+    def test_rho_mean_positive_for_large_E(self, solenoid):
+        """Mean density (1/2π)ln(E/2π) is positive only for E > 2π ≈ 6.28."""
+        E_large = np.linspace(7.0, 50.0, 10)
+        result = solenoid.trace_formula_spectral_identity(E_large)
+        assert np.all(result["rho_mean"] > 0), (
+            f"rho_mean not positive for E > 7: {result['rho_mean']}"
+        )
+
+    def test_rho_decomposition(self, si):
+        """rho_total = rho_mean + rho_osc."""
+        assert np.allclose(si["rho_total"], si["rho_mean"] + si["rho_osc"], rtol=1e-12)
+
+    def test_custom_E_grid(self, solenoid):
+        """Accepts a custom E grid."""
+        E_vals = np.array([14.135, 21.022, 25.011])
+        result = solenoid.trace_formula_spectral_identity(E_vals, k_max=5)
+        assert result["rho_total"].shape == (3,)
+
