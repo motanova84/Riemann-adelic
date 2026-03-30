@@ -1,8 +1,8 @@
 name: 🧠 NOESIS COMPLETE INTEGRATION
 
 on:
-  schedule:
-    - cron: '0 */1 * * *'  # Cada hora
+  # schedule:
+  #   - cron: '0 */1 * * *'  # Cada hora - PAUSED temporarily
   workflow_dispatch:
     inputs:
       parallel_jobs:
