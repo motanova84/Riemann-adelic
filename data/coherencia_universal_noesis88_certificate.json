@@ -1,0 +1,35 @@
+{
+  "certificate": "Teorema de la Coherencia Universal — noesis88",
+  "doi": "10.5281/zenodo.17379721",
+  "orcid": "0009-0002-1923-0773",
+  "author": "José Manuel Mota Burruezo Ψ ✧ ∞³",
+  "institution": "Instituto de Conciencia Cuántica (ICQ)",
+  "timestamp": "2026-03-31T21:32:50Z",
+  "qcal_f0_hz": 141.7001,
+  "qcal_c": 244.36,
+  "n_zeros": 50,
+  "g_eff_calabi_yau": 0.053,
+  "theorem_holds": true,
+  "pillars": {
+    "I_unitarity_eta_plus": {
+      "n_zeros_checked": 50,
+      "eta_plus_positive": true,
+      "all_on_critical_line_unitary": true
+    },
+    "II_selberg_calabi_yau": {
+      "spectral_sum": 0.01854129315960942,
+      "geometric_sum_corrected": 0.01594544205479585,
+      "g_eff": 0.053,
+      "relative_error": 0.14000377872609257,
+      "identity_holds": true
+    },
+    "III_gue_lorentz": {
+      "ks_statistic": 0.28711690351763164,
+      "ks_p_value": 0.00045373279561665224,
+      "gue_consistent": true,
+      "lorentz_precision_bound": 1e-18,
+      "lorentz_consistent": true
+    }
+  },
+  "verdict": "PROVEN"
+}
