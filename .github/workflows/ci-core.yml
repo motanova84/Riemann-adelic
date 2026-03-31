@@ -47,7 +47,14 @@ jobs:
       - name: ⚙️ Install Lean 4 toolchain
         uses: leanprover/lean-action@v1
         with:
-          lean-version: "leanprover/lean4:v4.5.0"
+          toolchain: leanprover/lean4:v4.5.0
+
+      - name: 🧷 Ensure default Lean toolchain
+        run: |
+          elan toolchain install leanprover/lean4:v4.5.0
+          elan default leanprover/lean4:v4.5.0
+          lean --version
+          lake --version
 
       - name: 🔧 Setup Lean project
         id: setup

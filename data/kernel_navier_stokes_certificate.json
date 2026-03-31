@@ -1,0 +1,55 @@
+{
+  "kernel": "NavierStokesQCAL",
+  "version": "1.0.0",
+  "C7": [
+    2,
+    3,
+    5,
+    7,
+    11,
+    13,
+    17
+  ],
+  "f0_Hz": 141.7001,
+  "componentes": {
+    "MatrizTraslacionUnitaria": {
+      "det_V": 1.0,
+      "V_pow_7_eq_I": true,
+      "coherencia": 1.0
+    },
+    "IntegradorCuantico": {
+      "dt_ms": 7.057158040114298,
+      "T_ms": 49.40010628080009,
+      "coherencia": 0.9999999999999997
+    },
+    "FlujoCuanticoConservativo": {
+      "divergencia": 0.0,
+      "incompresible": true,
+      "energia_conservada": true,
+      "coherencia": 1.0
+    }
+  },
+  "validacion": {
+    "coherencia_global": 0.9999999999999999,
+    "threshold": 0.888,
+    "es_valido": true,
+    "status": "COHERENT"
+  },
+  "topologia": {
+    "fase_berry": 18.84955592153876,
+    "potencial_chern_simons": 6.283185307179586
+  },
+  "alineacion_espectral": {
+    "frecuencia_Hz": 141.7001,
+    "error_relativo": 0.0,
+    "brecha_b_sellada": true
+  },
+  "qcal_signature": "QCAL ∞³ · 141.7001 Hz · Ψ = I × A_eff² × C^∞",
+  "timestamp": "2026-03-30T21:58:22.275442",
+  "brechas_selladas": {
+    "A": true,
+    "B": true,
+    "C": true,
+    "todas": true
+  }
+}

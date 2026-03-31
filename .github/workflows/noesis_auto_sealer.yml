@@ -1,8 +1,8 @@
 name: 🤖 NOESIS-AMDA-AURON Auto Sealer
 
 on:
-  schedule:
-    - cron: '0 */2 * * *'  # Cada 2 horas
+  # schedule:
+  #   - cron: '0 */2 * * *'  # Cada 2 horas - PAUSED temporarily
   workflow_dispatch:  # Permite ejecución manual
     inputs:
       max_changes:
