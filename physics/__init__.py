@@ -232,6 +232,25 @@ from .operador_xi_h import (
     operador_xi_h_activar,
 )
 
+from .interaccion_schrodinger_riemann import (
+    # Constants dataclass
+    ConstantesInteraccion,
+    # Physical constants
+    G_EFF_DEFAULT,
+    MU_DEFAULT,
+    # Operator / Lagrangian classes
+    OperadorHPi,
+    LagrangianoInteraccion,
+    HamiltonianoTotal,
+    EvolucionSchrodinger,
+    # Result dataclass
+    ResultadoInteraccion,
+    # Orchestrator
+    SistemaInteraccionSR,
+    # Entry point
+    interaccion_schrodinger_riemann_activar,
+)
+
 __all__ = [
     'PrimitivaPotencialOscilatorio',
     'EstimacionCuadraticaMedia',
@@ -387,4 +406,15 @@ __all__ = [
     'ConexionZerosAutovalores',
     'SistemaOperadorXiH',
     'operador_xi_h_activar',
+    # Interacción Schrödinger-Riemann
+    'ConstantesInteraccion',
+    'G_EFF_DEFAULT',
+    'MU_DEFAULT',
+    'OperadorHPi',
+    'LagrangianoInteraccion',
+    'HamiltonianoTotal',
+    'EvolucionSchrodinger',
+    'ResultadoInteraccion',
+    'SistemaInteraccionSR',
+    'interaccion_schrodinger_riemann_activar',
 ]
