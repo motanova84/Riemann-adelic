@@ -494,7 +494,8 @@ class EvolucionSchrodinger:
             Coherencia cuántica en cada instante.
         """
         n = estados.shape[1] + _EPS
-        return (np.abs(np.sum(estados, axis=1)) ** 2) / n
+        # Garantizar no-negatividad (seguridad numérica)
+        return np.maximum((np.abs(np.sum(estados, axis=1)) ** 2) / n, 0.0)
 
 
 # ===========================================================================
@@ -549,7 +550,7 @@ class ResultadoInteraccion:
             f"  λ_min(Ĥ_total)      : {self.espectro_H_total.min():.6e}",
             f"  λ_max(Ĥ_total)      : {self.espectro_H_total.max():.6e}",
             f"  Coherencia media    : {self.coherencia_media:.6f}",
-            f"  HR validada         : {self.rh_validada}",
+            f"  RH validada         : {self.rh_validada}",
             "-" * 62,
             f"  g_eff = {self.metadata.get('g_eff', 'N/A')}  "
             f"μ = {self.metadata.get('mu', 'N/A')}  "
@@ -634,7 +635,9 @@ class SistemaInteraccionSR:
             )
 
         if not ceros:
-            # Usar fallback; extender si n_zeros > len(fallback)
+            # Usar fallback; extender si n_zeros > len(fallback).
+            # Nota: la extensión lineal (+10.0) es una aproximación conservadora;
+            # para n_zeros ≤ 10 siempre se usan los valores exactos de la tabla.
             fallback = list(_RIEMANN_ZEROS_FALLBACK)
             while len(fallback) < self._n_zeros:
                 fallback.append(fallback[-1] + 10.0)
@@ -675,7 +678,7 @@ class SistemaInteraccionSR:
             return np.diag(np.asarray(ceros, dtype=float))
 
     # ------------------------------------------------------------------
-    def _estado_inicial(self, n: int) -> np.ndarray:
+    def _estado_inicial(self, ceros: List[float]) -> np.ndarray:
         """
         Construir el estado inicial Ψ(0) como superposición coherente normalizada.
 
@@ -684,16 +687,17 @@ class SistemaInteraccionSR:
 
         Parámetros
         ----------
-        n : int
-            Dimensión del espacio de Hilbert.
+        ceros : list of float
+            Partes imaginarias de los ceros de Riemann Im(ρ_n) que definen
+            la base espectral.
 
         Returns
         -------
-        np.ndarray, shape (n,), dtype complex
+        np.ndarray, shape (N,), dtype complex
             Estado inicial normalizado.
         """
         gamma1 = self._constantes.gamma_1
-        gamma_n = np.linspace(gamma1, gamma1 * n, n)
+        gamma_n = np.asarray(ceros, dtype=float)
         amplitudes = np.exp(-gamma_n / (2.0 * gamma1))
         psi0 = amplitudes.astype(complex)
         psi0 /= np.linalg.norm(psi0)
@@ -730,7 +734,7 @@ class SistemaInteraccionSR:
         espectro = H_total_obj.espectro()
 
         # 5. Estado inicial y L_int
-        psi0 = self._estado_inicial(n)
+        psi0 = self._estado_inicial(ceros)
         lagrangiano = LagrangianoInteraccion(H_riemann, self._constantes)
         l_int_inicial = lagrangiano.evaluar(psi0)
 
@@ -740,7 +744,7 @@ class SistemaInteraccionSR:
         coherencia_t = evolucion.coherencia(estados)
         coherencia_media = float(np.mean(coherencia_t))
 
-        # 7. Verificación HR: coherencia sostenida ≥ PSI_THRESHOLD
+        # 7. Verificación RH: coherencia sostenida ≥ PSI_THRESHOLD
         rh_validada = coherencia_media >= self._constantes.psi_threshold
 
         return ResultadoInteraccion(

@@ -260,12 +260,11 @@ class TestHamiltonianoTotal:
         assert np.all(np.diff(eigenvalues) >= 0.0)
 
     def test_hermiticidad_falla_con_tolerancia_cero(self, hamiltoniano):
-        """Con tolerancia 0 la verificación debe fallar (errores numéricos)."""
+        """Con tolerancia 0 la verificación devuelve False (errores numéricos de punto flotante)."""
         ht, _ = hamiltoniano
-        # Tolerancia estrictamente cero siempre falla en aritmética de punto flotante
         resultado = ht.verificar_hermiticidad(tolerancia=0.0)
-        # No exigimos resultado específico; solo que no lanza excepción
-        assert isinstance(resultado, bool)
+        # Punto flotante siempre introduce una discrepancia no nula → debe ser False
+        assert resultado is False
 
     def test_construir_idempotente(self, hamiltoniano):
         """Llamar a construir() dos veces debe devolver la misma matriz."""
@@ -321,7 +320,7 @@ class TestEvolucionSchrodinger:
         psi0 = np.ones(n, dtype=complex) / np.sqrt(n)
         _, estados = ev.propagar(psi0, t_final=0.1, n_pasos=20)
         coh = ev.coherencia(estados)
-        assert np.all(coh >= -1e-12)   # no negativa (tolerancia numérica)
+        assert np.all(coh >= 0.0), "La coherencia cuántica debe ser no negativa"
         assert np.all(coh <= 1.0 + 1e-12)
 
     def test_coherencia_longitud(self, evolucion):
@@ -372,7 +371,7 @@ class TestResultadoInteraccion:
         s = str(resultado_basico)
         assert "hermitiano" in s.lower() or "Ĥ" in s
         assert "coherencia" in s.lower() or "Coherencia" in s
-        assert "validada" in s.lower() or "HR" in s
+        assert "validada" in s.lower() or "RH" in s
 
     def test_metadata_dict(self, resultado_basico):
         """El campo metadata debe ser un diccionario."""
