@@ -1,15 +1,17 @@
 {
   "project": "Riemann-Adelic Formalization",
-  "milestone": "CRITICAL SPECTRAL THEOREMS ADDED",
-  "date": "2025-12-27T13:42:09.202055",
+  "milestone": "Actualizaci\u00f3n autom\u00e1tica - Revisi\u00f3n Q1 2026",
+  "date": "2026-03-31T22:00:50.665579",
   "metrics": {
-    "total_lean_files": 390,
-    "files_with_sorry": 283,
-    "total_sorry_statements": 1691,
-    "total_admit_statements": 79,
+    "total_lean_files": 581,
+    "files_with_sorry": 396,
+    "total_sorry_statements": 2454,
+    "total_admit_statements": 33,
+    "total_axiom_statements": 2066,
+    "total_incomplete": 4553,
     "critical_modules_complete": 2,
     "critical_modules_nearly_complete": 1,
-    "lines_of_lean_code_added": 398
+    "estimated_completion_pct": 21.6
   },
   "new_modules": [
     {
