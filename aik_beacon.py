@@ -3,7 +3,7 @@ AIK Beacons (Authentic Immutable Knowledge)
 ============================================
 
 Sistema de certificación matemática usando:
-- Firma: ECDSA (secp256k1)
+- Firma: ECDSA (secp256k1) via cryptography library
 - Hash: SHA3-256
 - Timestamp: UTC ISO8601
 - Frecuencia base: f0 = 141.7001 Hz (QCAL ∞³)
@@ -13,18 +13,19 @@ Formato de Beacon:
 
 Donde:
     H = SHA3-256(Teorema + Prueba + Metadatos)
-    σ = ECDSA_Sign(SK, H)
+    σ = ECDSA_Sign(SK, Data, SHA3-256)
 
 Verificación:
-    ECDSA_Verify(PK, H, σ) == true
+    ECDSA_Verify(PK, Data, σ, SHA3-256) == true
 
 Author: José Manuel Mota Burruezo Ψ ✧ ∞³
 Institution: Instituto de Conciencia Cuántica (ICQ)
 License: Creative Commons BY-NC-SA 4.0
 """
 
-from ecdsa import SigningKey, VerifyingKey, SECP256k1
-from ecdsa.util import sigencode_der, sigdecode_der
+from cryptography.hazmat.primitives.asymmetric import ec
+from cryptography.hazmat.primitives import hashes, serialization
+from cryptography.exceptions import InvalidSignature
 import hashlib
 import json
 from datetime import datetime, timezone
@@ -40,8 +41,8 @@ class AIKBeacon:
     y sus pruebas formales usando ECDSA + SHA3-256.
 
     Attributes:
-        sk (SigningKey): Clave privada ECDSA (secp256k1)
-        pk (VerifyingKey): Clave pública ECDSA (secp256k1)
+        sk (ec.EllipticCurvePrivateKey): Clave privada ECDSA (secp256k1)
+        pk (ec.EllipticCurvePublicKey): Clave pública ECDSA (secp256k1)
     """
 
     def __init__(self, private_key: Optional[bytes] = None):
@@ -49,14 +50,15 @@ class AIKBeacon:
         Inicializa el generador de beacons.
 
         Args:
-            private_key: Clave privada ECDSA en formato bytes. Si no se proporciona,
-                        se genera una nueva clave.
+            private_key: Clave privada ECDSA en formato bytes (entero de 32 bytes big-endian).
+                        Si no se proporciona, se genera una nueva clave.
         """
         if private_key:
-            self.sk = SigningKey.from_string(private_key, curve=SECP256k1)
+            private_value = int.from_bytes(private_key, 'big')
+            self.sk = ec.derive_private_key(private_value, ec.SECP256K1())
         else:
-            self.sk = SigningKey.generate(curve=SECP256k1)
-        self.pk = self.sk.verifying_key
+            self.sk = ec.generate_private_key(ec.SECP256K1())
+        self.pk = self.sk.public_key()
 
     def create_beacon(
         self,
@@ -112,15 +114,15 @@ class AIKBeacon:
         data = json.dumps(metadata, sort_keys=True).encode()
         hash_val = hashlib.sha3_256(data).digest()
 
-        # Firmar el hash con ECDSA
-        signature = self.sk.sign(hash_val, sigencode=sigencode_der)
+        # Firmar los datos con ECDSA + SHA3-256
+        signature = self.sk.sign(data, ec.ECDSA(hashes.SHA3_256()))
 
         # Construir el beacon completo
         beacon = {
             "data": metadata,
             "hash": hash_val.hex(),
             "signature": signature.hex(),
-            "public_key": self.pk.to_string().hex()
+            "public_key": self._export_public_key()
         }
 
         return beacon
@@ -153,14 +155,15 @@ class AIKBeacon:
                 return False
 
             # Recuperar la clave pública
-            vk = VerifyingKey.from_string(
-                bytes.fromhex(beacon["public_key"]),
-                curve=SECP256k1
-            )
+            vk = self._import_public_key(beacon["public_key"])
 
             # Verificar la firma ECDSA
             signature = bytes.fromhex(beacon["signature"])
-            return vk.verify(signature, hash_val, sigdecode=sigdecode_der)
+            try:
+                vk.verify(signature, data, ec.ECDSA(hashes.SHA3_256()))
+                return True
+            except InvalidSignature:
+                return False
 
         except Exception as e:
             # En caso de error en la verificación, el beacon es inválido
@@ -217,6 +220,32 @@ class AIKBeacon:
         with open(input_path, "r", encoding="utf-8") as f:
             return json.load(f)
 
+    def _export_public_key(self) -> str:
+        """
+        Exporta la clave pública como 64 bytes sin comprimir (x+y, sin prefijo 04).
+
+        Returns:
+            Clave pública en formato hexadecimal (64 bytes)
+        """
+        raw = self.pk.public_bytes(
+            serialization.Encoding.X962,
+            serialization.PublicFormat.UncompressedPoint
+        )
+        return raw[1:].hex()  # strip the 04 uncompressed-point prefix
+
+    def _import_public_key(self, hex_key: str) -> ec.EllipticCurvePublicKey:
+        """
+        Importa una clave pública desde 64 bytes sin comprimir en formato hex.
+
+        Args:
+            hex_key: Clave pública en formato hexadecimal (64 bytes, sin prefijo 04)
+
+        Returns:
+            EllipticCurvePublicKey
+        """
+        raw = bytes.fromhex(hex_key)
+        return ec.EllipticCurvePublicKey.from_encoded_point(ec.SECP256K1(), b'\x04' + raw)
+
     def export_keys(self) -> Dict[str, str]:
         """
         Exporta las claves públicas y privadas en formato hexadecimal.
@@ -224,9 +253,10 @@ class AIKBeacon:
         Returns:
             Diccionario con 'private_key' y 'public_key' en hex
         """
+        private_value = self.sk.private_numbers().private_value
         return {
-            "private_key": self.sk.to_string().hex(),
-            "public_key": self.pk.to_string().hex()
+            "private_key": private_value.to_bytes(32, 'big').hex(),
+            "public_key": self._export_public_key()
         }
 
     def prepare_onchain_data(self, beacon: Dict[str, Any], ipfs_cid: str) -> Dict[str, Any]:

@@ -8,12 +8,12 @@ matplotlib>=3.10.1
 
 # Jupyter and notebook execution
 jupyter>=1.0.0
-nbconvert==7.16.4
+nbconvert==7.17.0
 mistune==2.0.5
 
 # HTTP requests for data fetching
 requests==2.32.4
-urllib3>=2.6.0  # Security: CVE fixes for decompression vulnerabilities
+urllib3>=2.6.3  # Security: CVE fixes for decompression vulnerabilities
 httpx>=0.27.0
 
 # QCAL ∞³ Auto-Orchestration dependencies
@@ -84,7 +84,8 @@ sparse>=0.14.0  # Sparse multi-dimensional arrays
 nlopt>=2.7.1  # Nonlinear optimization library
 
 # ECDSA signatures for mathematical proof certification
-ecdsa>=0.18.0
+# ecdsa is replaced by cryptography due to unpatched Minerva timing attack (CVE)
+cryptography>=46.0.5
 
 # Development and code quality tools
 flake8>=6.0.0
