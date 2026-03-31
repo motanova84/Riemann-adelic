@@ -487,10 +487,8 @@ def dyson_mehta_delta3(zeros: NDArray, L: float, e_center: float = 50.0) -> floa
     if len(t) > 1:
         deviations = n - (A_fit + B_fit * t)
         # Use trapezoid (NumPy 2.0+) or fallback to trapz (NumPy < 2.0)
-        try:
-            delta3 = np.trapezoid(deviations**2, t) / L
-        except AttributeError:
-            delta3 = np.trapz(deviations**2, t) / L  # type: ignore
+        _trapz = getattr(np, "trapezoid", None) or getattr(np, "trapz", None)
+        delta3 = _trapz(deviations**2, t) / L
     else:
         delta3 = 0.0
     

@@ -84,7 +84,7 @@ from typing import Dict, List, Optional, Tuple
 from dataclasses import dataclass
 
 # NumPy ≥ 2.0 renamed trapz → trapezoid; support both.
-_trapezoid = getattr(np, "trapezoid", np.trapz)
+_trapezoid = getattr(np, "trapezoid", None) or getattr(np, "trapz", None)
 
 # ---------------------------------------------------------------------------
 # QCAL Constants — single source of truth

@@ -25,7 +25,7 @@ import mpmath as mp
 import matplotlib.pyplot as plt
 
 # Configuración de precisión
-mp.dps = 25
+mp.mp.dps = 25
 
 # ============================================================================
 # PASO 1: Construcción del operador modelo H_model

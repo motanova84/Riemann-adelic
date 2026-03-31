@@ -13,7 +13,7 @@ import numpy as np
 import mpmath as mp
 
 # Set high precision for accurate computations
-mp.dps = 50
+mp.mp.dps = 50
 
 
 def load_riemann_zeros(max_zeros=5):

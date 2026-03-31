@@ -1,6 +1,24 @@
 # Lean 4 Formalization Status - Riemann Hypothesis
 
-## ✅ LATEST UPDATE: 3 Technical Lemmas Resolved via Axiomatization (2025-12-08)
+## 📊 REVISIÓN Q1 2026: Estado Global del Repositorio (2026-03-31)
+
+**Estado actual**: 📝 **EN DESARROLLO ACTIVO** — 4553 statements pendientes
+
+| Métrica | Valor |
+|---------|-------|
+| Archivos Lean totales | **581** (+109 desde enero 2026) |
+| Statements `sorry` | **2454** (en 396 archivos) |
+| Statements `admit` | **33** (en 9 archivos) |
+| Statements `axiom` | **2066** (en 341 archivos) |
+| **Total incompleto** | **4553** |
+| Completación estimada | **21.6%** |
+
+> ℹ️ Los datos de formalización se actualizan automáticamente vía `scripts/count_formalization_status.py`.
+> Fuente de verdad: `data/formalization_status.json`
+
+---
+
+## ✅ ACTUALIZACIÓN ANTERIOR: 3 Technical Lemmas Resolved via Axiomatization (2025-12-08)
 
 **Status**: ✅ **ALL TECHNICAL LEMMAS ADDRESSED**
 

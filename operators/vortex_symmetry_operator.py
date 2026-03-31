@@ -176,10 +176,8 @@ class HilbertSpaceOmega:
         integrand = np.conj(psi) * phi * self.measure
         # Use trapezoid (numpy >= 2.0) or fallback to trapz (numpy < 2.0)
         # This handles non-uniform grids correctly
-        try:
-            return np.trapezoid(integrand, self.x_grid)
-        except AttributeError:
-            return np.trapz(integrand, self.x_grid)
+        _trapz = getattr(np, "trapezoid", None) or getattr(np, "trapz", None)
+        return _trapz(integrand, self.x_grid)
     
     def norm(self, psi: np.ndarray) -> float:
         """

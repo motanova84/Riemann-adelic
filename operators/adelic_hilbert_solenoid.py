@@ -82,10 +82,7 @@ from typing import Callable, Dict, List, Optional, Tuple, Any
 # ---------------------------------------------------------------------------
 # NumPy version compatibility: choose trapezoid function once at import time
 # ---------------------------------------------------------------------------
-try:
-    _trapezoid = np.trapezoid  # NumPy 2.0+
-except AttributeError:
-    _trapezoid = np.trapz  # NumPy < 2.0
+_trapezoid = getattr(np, "trapezoid", None) or getattr(np, "trapz", None)
 
 # ---------------------------------------------------------------------------
 # QCAL constants
