@@ -304,6 +304,26 @@ from .ruelle_selberg_transfer_operator import (
     gesto_final_mathesis,
 )
 
+# Derivación Beta Adélica — Aritmética del Vacío (May 2026)
+from .derivacion_beta_adelica import (
+    ConstantesDerivacionBeta,
+    ProductoEulerZeta,
+    ProductoAdelico,
+    VolumenCalabiYau,
+    DerivacionBeta,
+    ResultadoDerivacionBeta,
+    TorsionAdelica,
+    ResultadoTorsionAdelica,
+    CoherenciaDerivacionBeta,
+    SistemaDerivacionBetaAdelica,
+    ResultadoSistemaDerivacionBeta,
+    ejecutar_derivacion_beta_adelica,
+    PRIMES_P20,
+    ALPHA_EXPERIMENTAL,
+    PSI_MINIMO,
+    V6,
+)
+
 __all__ = [
     'construct_H_psi',
     'compute_spectrum',
@@ -503,4 +523,21 @@ __all__ = [
     'FredholmDeterminantResult',
     'MathesisGestoResult',
     'gesto_final_mathesis',
+    # Derivación Beta Adélica — Aritmética del Vacío (May 2026)
+    'ConstantesDerivacionBeta',
+    'ProductoEulerZeta',
+    'ProductoAdelico',
+    'VolumenCalabiYau',
+    'DerivacionBeta',
+    'ResultadoDerivacionBeta',
+    'TorsionAdelica',
+    'ResultadoTorsionAdelica',
+    'CoherenciaDerivacionBeta',
+    'SistemaDerivacionBetaAdelica',
+    'ResultadoSistemaDerivacionBeta',
+    'ejecutar_derivacion_beta_adelica',
+    'PRIMES_P20',
+    'ALPHA_EXPERIMENTAL',
+    'PSI_MINIMO',
+    'V6',
 ]

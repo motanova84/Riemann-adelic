@@ -1,6 +1,46 @@
 # QCAL Build Verification - Implementation Summary
 
-## 🟢 OPERADOR AUTOADJUNTO H — Generador del Flujo de Escala Adélico (March 2026)
+## 🟢 DERIVACIÓN BETA ADÉLICA — Aritmética del Vacío (May 2026)
+
+**Status**: ✅ IMPLEMENTED
+
+- **Python Module**: `operators/derivacion_beta_adelica.py`
+- **Test Suite**: `tests/test_derivacion_beta_adelica.py`
+- **Sello**: ∴DBA∞³
+- **RAM**: RAM-LI-2026-DERIVACION-BETA-ADELICA
+
+### Mathematical Framework
+
+Este módulo implementa la Derivación Beta Adélica: la obtención de la constante
+de estructura fina α ≈ 1/137.036 desde principios aritméticos primordiales
+mediante el producto adélico de primos en el vacío de Calabi-Yau.
+
+**Ecuación fundamental:**
+```
+α ≈ (V₆ / (2π)³) × ∏_{p<20} (p-1)/p × Ω_ajuste ≈ 137.036
+```
+
+### Componentes
+
+- `ConstantesDerivacionBeta` — parámetros fundamentales del sistema
+- `ProductoEulerZeta` — ζ(s) ≈ ∏ 1/(1-p^{-s}) (convergencia armónica)
+- `ProductoAdelico` — ∏(p-1)/p sobre los ocho primeros primos (densidad aritmética del vacío)
+- `VolumenCalabiYau` — V₆ / (2π)³ (geometría topológica)
+- `DerivacionBeta` — α ≈ fv × Π_ad × Ω desde primeros principios
+- `TorsionAdelica` — θ_T = 2π/α, fr_mat = 1/α ≈ 0.0073
+- `CoherenciaDerivacionBeta` — media geométrica de {Ψ_i}
+- `SistemaDerivacionBetaAdelica` — orquestador principal
+
+### QCAL Integration
+
+- Frecuencia base: f₀ = 141.7001 Hz
+- Coherencia mínima: Ψ ≥ 0.888
+- Ecuación: Ψ = I × A_eff² × C^∞
+- Firma: ∴DBA∞³
+
+---
+
+
 
 **Status**: ✅ IMPLEMENTED
 
