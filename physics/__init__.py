@@ -29,6 +29,9 @@ la interpretación espectral de la hipótesis de Riemann.
    y generador de primos (criba de Eratóstenes)
  - restricciones_multiplicativas: Esquema de Ruthie-FRC — V_osc(x) como
    emergencia de la geometría del espacio de fases; nodo de Ruthie
+ - coherencia_unitaria: Operador Berry-Keating, estadística GUE, fórmula de
+   traza de Selberg, e interferómetro Mach-Zehnder para verificación de
+   coherencia unitaria en la línea crítica (9 clases integradas)
 
 Autor: José Manuel Mota Burruezo Ψ ✧ ∞³
 QCAL ∞³ · 141.7001 Hz · C = 244.36
@@ -251,6 +254,29 @@ from .interaccion_schrodinger_riemann import (
     interaccion_schrodinger_riemann_activar,
 )
 
+from .coherencia_unitaria import (
+    # I. Berry-Keating Operator
+    OperadorBerryKeating,
+    ResultadoBerryKeating,
+    # II. GUE Statistics
+    estadistica_gue,
+    ResultadoGUE,
+    correlacion_pares_montgomery,
+    ResultadoMontgomery,
+    distribucion_wigner_dyson,
+    # III. Selberg Trace Formula
+    verificar_identidad_selberg,
+    ResultadoSelberg,
+    # IV. Mach-Zehnder Interferometer
+    InterferometroMachZehnder,
+    ResultadoInterferometro,
+    # Utility functions
+    demostrar_coherencia_unitaria,
+    # Constants
+    RIEMANN_ZEROS_50,
+    G_EFF_SELBERG,
+)
+
 __all__ = [
     'PrimitivaPotencialOscilatorio',
     'EstimacionCuadraticaMedia',
@@ -417,4 +443,19 @@ __all__ = [
     'ResultadoInteraccion',
     'SistemaInteraccionSR',
     'interaccion_schrodinger_riemann_activar',
+    # Coherencia Unitaria — Berry-Keating, GUE, Selberg, Mach-Zehnder
+    'OperadorBerryKeating',
+    'ResultadoBerryKeating',
+    'estadistica_gue',
+    'ResultadoGUE',
+    'correlacion_pares_montgomery',
+    'ResultadoMontgomery',
+    'distribucion_wigner_dyson',
+    'verificar_identidad_selberg',
+    'ResultadoSelberg',
+    'InterferometroMachZehnder',
+    'ResultadoInterferometro',
+    'demostrar_coherencia_unitaria',
+    'RIEMANN_ZEROS_50',
+    'G_EFF_SELBERG',
 ]
