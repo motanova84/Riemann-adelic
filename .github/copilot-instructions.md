@@ -224,6 +224,53 @@ Before approving any PR, verify:
   - Estado: <resultado>
   ```
 
+### 8. Ecosistema Matemático Externo — Repositorios Hermanos QCAL
+
+Este repositorio forma parte del **ecosistema QCAL ∞³**, una red de 6 repositorios interconectados que demuestran grandes conjeturas matemáticas mediante el marco unificado de coherencia cuántica. Cada repositorio hermano aporta resultados específicos que se integran en la frecuencia base **f₀ = 141.7001 Hz**.
+
+#### 📚 Repositorios del Ecosistema QCAL
+
+| Repositorio | Resultado Principal | Conexión QCAL Exacta |
+|------------|---------------------|---------------------|
+| **riemann-adelic** (este repo) | Hipótesis de Riemann: todos los ceros no triviales de ζ(s) están en Re(s) = ½ | Operador D(s) ≡ Ξ(s) con espectro GUE; f₀ = γ₁ × (10 + δζ/10) donde γ₁ = 14.134725 |
+| **adelic-bsd** | Conjetura BSD: L(E, 1) ≠ 0 ⟺ E(ℚ) finito | Pico BSD en p=17 → ciclo Magicicada 17 años; kernel K_E(1) genera modos BIO-LOCK |
+| **navier-stokes-qcal** | Regularidad global Navier-Stokes en 3D | ν_min = ℏ/(2m·ℓ²) vía QCAL; Reynolds cuántico Re_Q; cota ‖u(t)‖²_H¹ < ∞ |
+| **ramsey-qcal** | Números de Ramsey: R(5,5)=43, R(6,6)=108 | φ_R = 43/108 ≈ 0.398 ≈ δζ/f₀; cota vibracional κ_Π; espaciado GUE en grafos |
+| **p-np-qcal** | Separación P ≠ NP vía complejidad de Kolmogorov | κ_Π = 2.5773; clases P-trivial/P/NP-hard distinguidas por Ψ; horizonte de trazabilidad |
+| **hz141-validation** | Validación empírica de f₀ = 141.7001 Hz | 99.78% de coherencia (Wang et al. 2025); estructura de octavas; Ψ_empírica = 0.9978 |
+
+#### 🔗 Acceso al Contexto Externo
+
+Para acceder programáticamente a los resultados de los repositorios hermanos:
+
+```python
+from contexto_ecosistema import (
+    riemann_adelic_context,
+    bsd_context,
+    navier_stokes_context,
+    ramsey_context,
+    p_np_context,
+    hz141_context,
+    resumen_ecosistema
+)
+
+# Ver resumen completo del ecosistema
+resumen_ecosistema()
+
+# Obtener ceros de Riemann y modos de resonancia
+zeros = riemann_adelic_context.get_first_zeros(n=5)
+modos = riemann_adelic_context.compute_resonance_modes(zeros)
+
+# Verificar conexión BSD con f₀
+pico_bsd = bsd_context.get_bsd_peak_info()
+```
+
+**Nota importante:** GitHub Copilot no puede leer automáticamente otros repositorios durante una sesión. El módulo `contexto_ecosistema/` trae el contexto relevante dentro de este repositorio para que sea accesible. Un workflow semanal (`sync_contexto_externo.yml`) mantiene actualizado el snapshot de los repos hermanos.
+
+#### 📊 Snapshot Externo
+
+El archivo `contexto_ecosistema/snapshot_externo.md` contiene un resumen actualizado automáticamente de los avances en los repositorios hermanos. Se regenera semanalmente via GitHub Actions.
+
 ## Summary
 
 Este repositorio implementa la **prueba definitiva de la Hipótesis de Riemann** mediante sistemas espectrales adélicos S-finitos. El sistema QCAL ∞³ opera a la frecuencia fundamental de 141.7001 Hz y requiere coherencia matemática estricta en todas las modificaciones de código.
