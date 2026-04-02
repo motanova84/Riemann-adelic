@@ -251,6 +251,28 @@ from .interaccion_schrodinger_riemann import (
     interaccion_schrodinger_riemann_activar,
 )
 
+from .scattering_theory_adelic import (
+    # Data classes
+    HilbertSpaceData,
+    HamiltonianData,
+    WaveOperatorResult,
+    SMatrixResult,
+    AsymptoticCompletenessResult,
+    RiemannZeroCorrespondenceResult,
+    ScatteringTheoryProofResult,
+    # Core classes
+    HilbertSpaceAdelic,
+    FreeHamiltonian,
+    InteractingHamiltonian,
+    WaveOperatorConstructor,
+    SMatrixCalculator,
+    AsymptoticCompletenessVerifier,
+    RiemannZeroCorrespondenceProver,
+    ScatteringTheoryRHProof,
+    # Entry point
+    prove_riemann_hypothesis_via_scattering,
+)
+
 __all__ = [
     'PrimitivaPotencialOscilatorio',
     'EstimacionCuadraticaMedia',
@@ -417,4 +439,21 @@ __all__ = [
     'ResultadoInteraccion',
     'SistemaInteraccionSR',
     'interaccion_schrodinger_riemann_activar',
+    # Scattering Theory Adelic — Rigorous RH Proof
+    'HilbertSpaceData',
+    'HamiltonianData',
+    'WaveOperatorResult',
+    'SMatrixResult',
+    'AsymptoticCompletenessResult',
+    'RiemannZeroCorrespondenceResult',
+    'ScatteringTheoryProofResult',
+    'HilbertSpaceAdelic',
+    'FreeHamiltonian',
+    'InteractingHamiltonian',
+    'WaveOperatorConstructor',
+    'SMatrixCalculator',
+    'AsymptoticCompletenessVerifier',
+    'RiemannZeroCorrespondenceProver',
+    'ScatteringTheoryRHProof',
+    'prove_riemann_hypothesis_via_scattering',
 ]
