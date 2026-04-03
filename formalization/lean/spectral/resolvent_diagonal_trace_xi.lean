@@ -175,9 +175,12 @@ def dirichletSeries (s : ℂ) : ℂ :=
 
     This is the classical identity relating the prime-orbit sum to the
     logarithmic derivative of the Riemann zeta function via the Euler product:
-      ζ(s) = Π_p (1 − p^{-s})^{-1}  ⟹  ζ'(s)/ζ(s) = −T_fin(s). -/
+      ζ(s) = Π_p (1 − p^{-s})^{-1}  ⟹  ζ'(s)/ζ(s) = −T_fin(s).
+
+    Concretely, the right-hand side is:
+      −ζ'(s)/ζ(s) = (−deriv riemannZeta s) / riemannZeta s -/
 theorem von_mangoldt_identity (s : ℂ) (hs : 1 < s.re) :
-    dirichletSeries s = sorry := by
+    dirichletSeries s = -(deriv riemannZeta s) / riemannZeta s := by
   sorry
 
 /-!

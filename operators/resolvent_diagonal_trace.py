@@ -239,8 +239,9 @@ class DiagonalKernelResolver:
         tau_star = self._saddle_point(q)
         # kernel value = e^{-τ*(s - 1/2)}
         kernel_val = complex(np.exp(-tau_star * (s - 0.5)))
-        # orbit weight = (ln p) · p^{-ks}
-        orbit_weight = float(np.log(p) * p ** (-k * s.real))
+        # orbit weight magnitude = Re[(ln p) · p^{-ks}]; captures exponential decay
+        # rate from Re(s) > 1, independent of oscillatory Im(s) contributions.
+        orbit_weight = float(np.real(np.log(p) * np.exp(-k * s * np.log(p))))
         return DiagonalKernelResult(
             s=s,
             q_rational=float(q),
@@ -383,7 +384,8 @@ class DirichletSeriesDecomposition:
         rows = []
         for p in self._primes:
             for k in range(1, self.k_max + 1):
-                w = float(np.log(float(p)) * float(p) ** (-k * s.real))
+                # Real part of (ln p) · p^{-ks} gives the exponential decay magnitude.
+                w = float(np.real(np.log(float(p)) * np.exp(-k * s * np.log(float(p)))))
                 rows.append((int(p), k, w))
         return rows
 

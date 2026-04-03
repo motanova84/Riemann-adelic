@@ -410,7 +410,7 @@ class TestFullPipeline:
         # Step 3: Dirichlet series from prime-power orbits
         ds = DirichletSeriesDecomposition(n_primes=60, k_max=15, precision=50)
         t_fin = ds.prime_power_sum(s)
-        assert t_fin.real > 0  # positive von Mangoldt sum for real s > 1
+        assert t_fin.real > 0  # prime_power_sum = Σ (ln p) p^{-ks} is positive; ζ'/ζ = -t_fin
         zeta_contrib = -t_fin  # ζ'/ζ = -prime_power_sum
 
         # Archimedean contribution
