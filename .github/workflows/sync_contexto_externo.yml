@@ -1,0 +1,237 @@
+name: Sync Contexto Externo
+
+# Sincronización semanal de contexto de repositorios hermanos QCAL
+# Actualiza snapshot_externo.md con información de los 6 repos del ecosistema
+
+on:
+  schedule:
+    # Cada lunes a las 00:00 UTC
+    - cron: '0 0 * * 1'
+
+  push:
+    branches:
+      - main
+    paths:
+      - 'contexto_ecosistema/**'
+      - '.github/workflows/sync_contexto_externo.yml'
+
+  workflow_dispatch:
+    # Permite ejecución manual
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  sync-external-context:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          pip install requests pyyaml
+
+      - name: Sync external repository context
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          python3 << 'EOF'
+          import os
+          import json
+          import requests
+          from datetime import datetime, timezone
+
+          # Lista de repositorios hermanos
+          REPOS = [
+              'motanova84/adelic-bsd',
+              'motanova84/navier-stokes-qcal',
+              'motanova84/ramsey-qcal',
+              'motanova84/p-np-qcal',
+              'motanova84/hz141-validation',
+          ]
+
+          GITHUB_TOKEN = os.environ.get('GITHUB_TOKEN')
+          headers = {'Authorization': f'token {GITHUB_TOKEN}'} if GITHUB_TOKEN else {}
+
+          def get_repo_info(repo_name):
+              """Obtiene información de un repositorio via GitHub API."""
+              api_url = f'https://api.github.com/repos/{repo_name}'
+              try:
+                  response = requests.get(api_url, headers=headers, timeout=10)
+                  if response.status_code == 200:
+                      return response.json()
+                  else:
+                      print(f"⚠️  Advertencia: No se pudo acceder a {repo_name} (status {response.status_code})")
+                      return None
+              except Exception as e:
+                  print(f"⚠️  Error al obtener info de {repo_name}: {e}")
+                  return None
+
+          def get_latest_commit(repo_name):
+              """Obtiene el último commit de un repositorio."""
+              api_url = f'https://api.github.com/repos/{repo_name}/commits/main'
+              try:
+                  response = requests.get(api_url, headers=headers, timeout=10)
+                  if response.status_code == 200:
+                      commit = response.json()
+                      return {
+                          'sha': commit['sha'][:7],
+                          'message': commit['commit']['message'].split('\n')[0],
+                          'date': commit['commit']['author']['date'],
+                          'author': commit['commit']['author']['name'],
+                      }
+                  else:
+                      return None
+              except Exception as e:
+                  print(f"⚠️  Error al obtener commits de {repo_name}: {e}")
+                  return None
+
+          def get_readme_snippet(repo_name, max_lines=10):
+              """Obtiene las primeras líneas del README."""
+              api_url = f'https://api.github.com/repos/{repo_name}/readme'
+              try:
+                  response = requests.get(api_url, headers=headers, timeout=10)
+                  if response.status_code == 200:
+                      import base64
+                      content = base64.b64decode(response.json()['content']).decode('utf-8')
+                      lines = content.split('\n')[:max_lines]
+                      return '\n'.join(lines)
+                  else:
+                      return None
+              except Exception as e:
+                  print(f"⚠️  Error al obtener README de {repo_name}: {e}")
+                  return None
+
+          # Recopilar información de todos los repos
+          print("🔍 Recopilando información de repositorios hermanos...")
+          repos_info = {}
+
+          for repo in REPOS:
+              print(f"  → {repo}")
+              info = get_repo_info(repo)
+              commit = get_latest_commit(repo)
+              readme = get_readme_snippet(repo, max_lines=5)
+
+              repos_info[repo] = {
+                  'exists': info is not None,
+                  'info': info,
+                  'latest_commit': commit,
+                  'readme_snippet': readme,
+              }
+
+          # Guardar información en JSON para uso posterior
+          with open('contexto_ecosistema/repos_sync.json', 'w') as f:
+              json.dump({
+                  'timestamp': datetime.now(timezone.utc).isoformat(),
+                  'repos': repos_info,
+              }, f, indent=2)
+
+          print("✅ Información recopilada y guardada en repos_sync.json")
+
+          # Actualizar snapshot_externo.md
+          print("📝 Actualizando snapshot_externo.md...")
+
+          snapshot_path = 'contexto_ecosistema/snapshot_externo.md'
+          with open(snapshot_path, 'r') as f:
+              content = f.read()
+
+          # Actualizar timestamp
+          timestamp_str = datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M UTC')
+          content = content.replace(
+              '**Última actualización:** 2026-04-02 00:42 UTC',
+              f'**Última actualización:** {timestamp_str}'
+          )
+
+          # Actualizar sección "Avances Recientes" para cada repo si hay commits nuevos
+          for repo, data in repos_info.items():
+              if data['latest_commit']:
+                  commit = data['latest_commit']
+                  repo_short = repo.split('/')[1]
+
+                  # Buscar sección del repo y actualizar
+                  update_marker = '### Avances Recientes\n- *(Se actualizará automáticamente vía workflow)*'
+                  if update_marker in content:
+                      # Primera ocurrencia después del repo_short
+                      if repo_short in content:
+                          new_section = f'### Avances Recientes\n'
+                          new_section += f'- **Último commit:** {commit["date"][:10]} - {commit["message"]}\n'
+                          new_section += f'- **Autor:** {commit["author"]}\n'
+                          new_section += f'- **SHA:** {commit["sha"]}'
+
+                          # Reemplazar solo para este repo
+                          # (implementación simplificada: actualiza todas las secciones)
+                          content = content.replace(update_marker, new_section, 1)
+
+          # Escribir snapshot actualizado
+          with open(snapshot_path, 'w') as f:
+              f.write(content)
+
+          print("✅ snapshot_externo.md actualizado")
+          EOF
+
+      - name: Check for changes
+        id: check_changes
+        run: |
+          if git diff --quiet contexto_ecosistema/snapshot_externo.md; then
+            echo "changes=false" >> $GITHUB_OUTPUT
+            echo "ℹ️  No hay cambios en snapshot_externo.md"
+          else
+            echo "changes=true" >> $GITHUB_OUTPUT
+            echo "✅ Detectados cambios en snapshot_externo.md"
+          fi
+
+      - name: Commit and push if changed
+        if: steps.check_changes.outputs.changes == 'true'
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "QCAL Ecosystem Sync[bot]"
+
+          git add contexto_ecosistema/snapshot_externo.md
+          git add contexto_ecosistema/repos_sync.json 2>/dev/null || true
+
+          git commit -m "🔄 [QCAL] Actualizar snapshot contexto ecosistema externo
+
+Sincronización automática semanal de repositorios hermanos.
+
+- Actualizado: contexto_ecosistema/snapshot_externo.md
+- Fecha: $(date -u +%Y-%m-%d)
+- Workflow: sync_contexto_externo.yml
+
+Ψ = I × A_eff² × C^∞"
+
+          git push
+
+      - name: Summary
+        run: |
+          echo "## 🔄 Sincronización Contexto Ecosistema QCAL ∞³" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Timestamp:** $(date -u +%Y-%m-%d\ %H:%M\ UTC)" >> $GITHUB_STEP_SUMMARY
+          echo "**Cambios detectados:** ${{ steps.check_changes.outputs.changes }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+
+          if [ "${{ steps.check_changes.outputs.changes }}" == "true" ]; then
+            echo "✅ Snapshot actualizado y commiteado" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "ℹ️  Sin cambios - snapshot ya está actualizado" >> $GITHUB_STEP_SUMMARY
+          fi
+
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Repositorios sincronizados:" >> $GITHUB_STEP_SUMMARY
+          echo "- adelic-bsd" >> $GITHUB_STEP_SUMMARY
+          echo "- navier-stokes-qcal" >> $GITHUB_STEP_SUMMARY
+          echo "- ramsey-qcal" >> $GITHUB_STEP_SUMMARY
+          echo "- p-np-qcal" >> $GITHUB_STEP_SUMMARY
+          echo "- hz141-validation" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**f₀ = 141.7001 Hz · C = 244.36 · Ψ ≥ 0.888**" >> $GITHUB_STEP_SUMMARY
