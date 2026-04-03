@@ -304,6 +304,18 @@ from .ruelle_selberg_transfer_operator import (
     gesto_final_mathesis,
 )
 
+# Resolvent Diagonal Kernel and Regularized Trace: Tr_reg(R_s) = ξ'(s)/ξ(s) (Apr 2026)
+from .resolvent_diagonal_trace import (
+    DiagonalKernelResolver,
+    DiagonalKernelResult,
+    DirichletSeriesDecomposition,
+    ArchimedeanContributionComputer,
+    XiLogarithmicDerivative,
+    RegularizedTraceResolver,
+    TraceDecompositionResult,
+    verify_resolvent_trace_identity,
+)
+
 __all__ = [
     'construct_H_psi',
     'compute_spectrum',
@@ -503,4 +515,13 @@ __all__ = [
     'FredholmDeterminantResult',
     'MathesisGestoResult',
     'gesto_final_mathesis',
+    # Resolvent Diagonal Kernel and Regularized Trace (Apr 2026)
+    'DiagonalKernelResolver',
+    'DiagonalKernelResult',
+    'DirichletSeriesDecomposition',
+    'ArchimedeanContributionComputer',
+    'XiLogarithmicDerivative',
+    'RegularizedTraceResolver',
+    'TraceDecompositionResult',
+    'verify_resolvent_trace_identity',
 ]
