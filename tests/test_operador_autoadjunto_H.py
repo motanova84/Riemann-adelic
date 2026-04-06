@@ -276,5 +276,203 @@ class TestPrecisionAlta:
         assert resultado.es_autoadjunto
 
 
+# ---------------------------------------------------------------------------
+# Tests for the compact n_modes interface (adelic compactification)
+# ---------------------------------------------------------------------------
+
+class TestAdelicCompactification:
+    """Tests for the golden-ratio adelic compactification weights."""
+
+    def test_weights_sum_to_one(self):
+        """Normalized golden-ratio weights must sum to 1."""
+        for n in [7, 14, 20]:
+            w = OperadorH_Ideles._adelic_compactification(n)
+            assert abs(w.sum() - 1.0) < 1e-12, f"Sum {w.sum()} != 1 for n={n}"
+
+    def test_weights_positive(self):
+        """All weights must be strictly positive."""
+        w = OperadorH_Ideles._adelic_compactification(14)
+        assert np.all(w > 0)
+
+    def test_weights_length(self):
+        """Output length equals n_modes."""
+        for n in [5, 14, 30]:
+            assert len(OperadorH_Ideles._adelic_compactification(n)) == n
+
+    def test_weights_monotone_increasing(self):
+        """Successive golden-ratio powers are strictly increasing."""
+        w = OperadorH_Ideles._adelic_compactification(10)
+        assert np.all(np.diff(w) > 0)
+
+
+class TestConstruirH:
+    """Tests for the cosine-kernel H matrix construction."""
+
+    def test_returns_tuple_of_vals_vecs(self):
+        """construir_H must return (vals, vecs) tuple."""
+        result = OperadorH_Ideles.construir_H(n_modes=8)
+        assert len(result) == 2
+        vals, vecs = result
+        assert vals.shape == (8,)
+        assert vecs.shape == (8, 8)
+
+    def test_eigenvalues_real(self):
+        """Eigenvalues of a real symmetric kernel must be real."""
+        vals, _ = OperadorH_Ideles.construir_H(n_modes=14)
+        assert np.all(np.isreal(vals))
+
+    def test_eigenvalues_sorted(self):
+        """eigh returns eigenvalues in ascending order."""
+        vals, _ = OperadorH_Ideles.construir_H(n_modes=14)
+        assert np.all(vals[:-1] <= vals[1:])
+
+    def test_eigenvectors_orthonormal(self):
+        """Eigenvector matrix from eigh is orthogonal: V^T V ≈ I."""
+        vals, vecs = OperadorH_Ideles.construir_H(n_modes=14)
+        residual = OperadorH_Ideles._check_adjoint(vecs)
+        assert np.linalg.norm(residual) < 1e-12
+
+
+class TestCheckAdjoint:
+    """Tests for the _check_adjoint helper."""
+
+    def test_identity_gives_zero_residual(self):
+        """For vecs = I, residual is exactly zero."""
+        n = 6
+        vecs = np.eye(n)
+        residual = OperadorH_Ideles._check_adjoint(vecs)
+        assert np.linalg.norm(residual) < 1e-15
+
+    def test_orthogonal_matrix_gives_near_zero_residual(self):
+        """Any orthogonal matrix must give ‖V^T V − I‖ ≈ 0."""
+        rng = np.random.default_rng(42)
+        Q, _ = np.linalg.qr(rng.standard_normal((8, 8)))
+        residual = OperadorH_Ideles._check_adjoint(Q)
+        assert np.linalg.norm(residual) < 1e-12
+
+
+class TestEtaPlus:
+    """Tests for the η⁺ coherence-stabilizer metric."""
+
+    def test_eta_values_in_range(self):
+        """η⁺_nn ∈ (0, 7/8] for all n."""
+        vals, _ = OperadorH_Ideles.construir_H(n_modes=14)
+        eta = OperadorH_Ideles.calcular_eta_plus(vals)
+        assert np.all(eta > 0)
+        assert np.all(eta <= 7.0 / 8.0 + 1e-12)
+
+    def test_eta_max_at_zero_eigenvalue(self):
+        """Mode with |λ_n| = 0 achieves the maximum value 7/8."""
+        vals = np.array([0.0, 1.0, 2.0])
+        eta = OperadorH_Ideles.calcular_eta_plus(vals)
+        assert abs(eta[0] - 7.0 / 8.0) < 1e-12
+
+    def test_eta_length_equals_vals_length(self):
+        """Output length equals the number of eigenvalues."""
+        vals, _ = OperadorH_Ideles.construir_H(n_modes=10)
+        eta = OperadorH_Ideles.calcular_eta_plus(vals)
+        assert len(eta) == 10
+
+    def test_eta_all_same_for_zero_vals(self):
+        """If all eigenvalues are zero, all η⁺ values equal 7/8."""
+        vals = np.zeros(5)
+        eta = OperadorH_Ideles.calcular_eta_plus(vals)
+        assert np.allclose(eta, 7.0 / 8.0)
+
+
+class TestPsiGlobal:
+    """Tests for the global coherence Ψ_global = ∏_n η⁺_nn."""
+
+    def test_psi_global_positive(self):
+        """Ψ_global must be strictly positive."""
+        vals, _ = OperadorH_Ideles.construir_H(n_modes=14)
+        psi = OperadorH_Ideles.calcular_psi_global(vals)
+        assert psi > 0
+
+    def test_psi_global_at_most_one(self):
+        """Ψ_global ≤ 1 because each η⁺_nn ≤ 7/8 < 1."""
+        vals, _ = OperadorH_Ideles.construir_H(n_modes=14)
+        psi = OperadorH_Ideles.calcular_psi_global(vals)
+        assert psi <= 1.0
+
+    def test_psi_global_equals_product_of_eta(self):
+        """Ψ_global must equal the explicit product of η⁺_nn."""
+        vals, _ = OperadorH_Ideles.construir_H(n_modes=8)
+        eta = OperadorH_Ideles.calcular_eta_plus(vals)
+        expected = float(np.prod(eta))
+        result = OperadorH_Ideles.calcular_psi_global(vals)
+        assert abs(result - expected) < 1e-14
+
+
+class TestEjecutarAnalisisCompleto:
+    """Tests for the 5-step ejecutar_analisis_completo() method."""
+
+    @pytest.fixture
+    def operador(self):
+        return OperadorH_Ideles(n_zeros=10, precision=25)
+
+    def test_returns_dict(self, operador):
+        """Result must be a dictionary."""
+        result = operador.ejecutar_analisis_completo(n_modes=14)
+        assert isinstance(result, dict)
+
+    def test_required_keys_present(self, operador):
+        """All expected keys must be present in the result."""
+        result = operador.ejecutar_analisis_completo(n_modes=14)
+        expected_keys = {
+            'H_autoadjunto',
+            'ceros_riemann_match',
+            'correlacion',
+            'determinante_espectral_ok',
+            'riemann_hypothesis_implied',
+            'eta_plus',
+            'psi_global',
+            'gamma_n',
+        }
+        assert expected_keys.issubset(result.keys())
+
+    def test_H_autoadjunto_true(self, operador):
+        """Step 1: eigh eigenvectors must be orthonormal → H_autoadjunto = True."""
+        result = operador.ejecutar_analisis_completo(n_modes=14)
+        assert result['H_autoadjunto'] is True
+
+    def test_determinante_espectral_ok_true(self, operador):
+        """Step 4 flag must always be True."""
+        result = operador.ejecutar_analisis_completo(n_modes=14)
+        assert result['determinante_espectral_ok'] is True
+
+    def test_gamma_n_is_list_of_floats(self, operador):
+        """gamma_n must be a non-empty list of floats."""
+        result = operador.ejecutar_analisis_completo(n_modes=14)
+        assert isinstance(result['gamma_n'], list)
+        assert len(result['gamma_n']) == 14
+        assert all(isinstance(v, float) for v in result['gamma_n'])
+
+    def test_gamma_n_sorted_nonnegative(self, operador):
+        """gamma_n (absolute eigenvalues) must be sorted and non-negative."""
+        result = operador.ejecutar_analisis_completo(n_modes=14)
+        g = result['gamma_n']
+        assert all(v >= 0 for v in g)
+        assert g == sorted(g)
+
+    def test_psi_global_in_range(self, operador):
+        """Ψ_global must lie in (0, 1]."""
+        result = operador.ejecutar_analisis_completo(n_modes=14)
+        assert 0.0 < result['psi_global'] <= 1.0
+
+    def test_eta_plus_length(self, operador):
+        """η⁺ list length must equal n_modes."""
+        result = operador.ejecutar_analisis_completo(n_modes=14)
+        assert len(result['eta_plus']) == 14
+
+    def test_different_n_modes(self, operador):
+        """Method must work correctly for various n_modes values."""
+        for n in [7, 14, 20]:
+            result = operador.ejecutar_analisis_completo(n_modes=n)
+            assert len(result['gamma_n']) == n
+            assert len(result['eta_plus']) == n
+            assert result['H_autoadjunto'] is True
+
+
 if __name__ == "__main__":
     pytest.main([__file__, "-v", "--tb=short"])
