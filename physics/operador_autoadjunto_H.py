@@ -131,7 +131,9 @@ MACROSCOPIC_COHERENCE_THRESHOLD = 0.999
 # Constantes del análisis compacto n_modes
 # ---------------------------------------------------------------------------
 
-# Primeros ceros de Riemann conocidos (Im(ρ_n)), usados para correlación
+# Primeros ceros de Riemann conocidos (Im(ρ_n)), usados para correlación.
+# Source: Odlyzko, A.M. — tables of the first zeros of the Riemann zeta function
+# (https://www.dtc.umn.edu/~odlyzko/zeta_tables/).
 RIEMANN_ZEROS_COMPACT = np.array([14.1347, 21.0220, 25.0109])
 
 # Número de ceros de referencia usados en la correlación espectral
@@ -630,11 +632,9 @@ class OperadorH_Ideles:
             eigenvectors (columns) from :func:`scipy.linalg.eigh`.
         """
         weights = OperadorH_Ideles._adelic_compactification(n_modes)
-        K = np.zeros((n_modes, n_modes))
-        for i in range(n_modes):
-            for j in range(n_modes):
-                K[i, j] = (weights[i] * weights[j]
-                           * np.cos(2.0 * np.pi * (i - j) / n_modes))
+        idx = np.arange(n_modes)
+        i_grid, j_grid = np.meshgrid(idx, idx, indexing='ij')
+        K = np.outer(weights, weights) * np.cos(2.0 * np.pi * (i_grid - j_grid) / n_modes)
         vals, vecs = eigh(K)
         return vals, vecs
 
@@ -667,6 +667,9 @@ class OperadorH_Ideles:
         dampens high-frequency modes:
 
             η⁺_nn = (7/8) / (1 + |λ_n| / λ_max)
+
+        Edge case: when all eigenvalues satisfy |λ_n| < ``EIGENVALUE_ZERO_THRESHOLD``
+        (effectively a zero matrix), every η⁺_nn defaults to the maximum value 7/8.
 
         Args:
             vals: Array of eigenvalues λ_n from :meth:`construir_H`.
@@ -740,8 +743,8 @@ class OperadorH_Ideles:
             )[0, 1])
         else:
             warnings.warn(
-                f"Only {n_compare} modes available; cannot compute correlation "
-                f"(need at least 2). Setting correlacion=None.",
+                f"Insufficient modes (n_modes={n_modes}) for correlation "
+                f"computation (need at least 2); setting correlacion=None.",
                 UserWarning,
             )
             correlacion = None
