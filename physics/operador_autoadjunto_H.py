@@ -127,6 +127,22 @@ TRANSVERSE_JACOBIAN_SCALE = 2.0
 # Threshold de coherencia cuántica macroscópica
 MACROSCOPIC_COHERENCE_THRESHOLD = 0.999
 
+# ---------------------------------------------------------------------------
+# Constantes del análisis compacto n_modes
+# ---------------------------------------------------------------------------
+
+# Primeros ceros de Riemann conocidos (Im(ρ_n)), usados para correlación
+RIEMANN_ZEROS_COMPACT = np.array([14.1347, 21.0220, 25.0109])
+
+# Número de ceros de referencia usados en la correlación espectral
+N_ZEROS_TO_COMPARE = 3
+
+# Tolerancia sobre Im(Δ(s)) para verificar que los ceros están en la línea crítica
+FREDHOLM_IMAGINARY_TOLERANCE = 1e-8
+
+# Umbral para considerar un autovalor efectivamente nulo al calcular η⁺
+EIGENVALUE_ZERO_THRESHOLD = 1e-15
+
 
 # ---------------------------------------------------------------------------
 # Clase Principal: OperadorH_Ideles
@@ -659,7 +675,7 @@ class OperadorH_Ideles:
             Array of shape (n,) with η⁺_nn values in (0, 7/8].
         """
         lambda_max = np.max(np.abs(vals))
-        if lambda_max < 1e-15:
+        if lambda_max < EIGENVALUE_ZERO_THRESHOLD:
             return np.full(len(vals), 7.0 / 8.0)
         return (7.0 / 8.0) / (1.0 + np.abs(vals) / lambda_max)
 
@@ -702,7 +718,7 @@ class OperadorH_Ideles:
                 - ``ceros_riemann_match`` (bool): Correlation with known zeros > 0.99.
                 - ``correlacion`` (float): Pearson correlation coefficient.
                 - ``determinante_espectral_ok`` (bool): Step 4 always passes.
-                - ``riemann_hypothesis_implied`` (bool): Step 5 — all Im(Δ) < 1e-8.
+                - ``riemann_hypothesis_implied`` (bool): Step 5 — all Im(Δ) < ``FREDHOLM_IMAGINARY_TOLERANCE``.
                 - ``eta_plus`` (list): η⁺ diagonal entries.
                 - ``psi_global`` (float): Global coherence det(η⁺).
                 - ``gamma_n`` (list): Sorted absolute eigenvalues.
@@ -717,20 +733,24 @@ class OperadorH_Ideles:
         gamma_n = np.sort(np.abs(vals))
 
         # Step 4 & match with known Riemann zeros
-        riemann_zeros = np.array([14.1347, 21.0220, 25.0109])
-        n_compare = min(3, len(gamma_n))
+        n_compare = min(N_ZEROS_TO_COMPARE, len(gamma_n))
         if n_compare >= 2:
             correlacion = float(np.corrcoef(
-                gamma_n[:n_compare], riemann_zeros[:n_compare]
+                gamma_n[:n_compare], RIEMANN_ZEROS_COMPACT[:n_compare]
             )[0, 1])
         else:
-            correlacion = float("nan")
-        ceros_match = not np.isnan(correlacion) and correlacion > 0.99
+            warnings.warn(
+                f"Only {n_compare} modes available; cannot compute correlation "
+                f"(need at least 2). Setting correlacion=None.",
+                UserWarning,
+            )
+            correlacion = None
+        ceros_match = correlacion is not None and correlacion > 0.99
 
         # Step 5: Fredholm determinant on the critical line
         rh_implicado = bool(np.all(
             np.abs(np.imag([self.determinante_fredholm(0.5 + 1j * g)
-                            for g in gamma_n])) < 1e-8
+                            for g in gamma_n])) < FREDHOLM_IMAGINARY_TOLERANCE
         ))
 
         # η⁺ metric and global coherence

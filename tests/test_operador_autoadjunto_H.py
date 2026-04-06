@@ -24,6 +24,10 @@ from physics.operador_autoadjunto_H import (
     ResultadoOperadorH,
     AUTOADJOINT_TOLERANCE,
     MACROSCOPIC_COHERENCE_THRESHOLD,
+    RIEMANN_ZEROS_COMPACT,
+    N_ZEROS_TO_COMPARE,
+    FREDHOLM_IMAGINARY_TOLERANCE,
+    EIGENVALUE_ZERO_THRESHOLD,
 )
 
 
@@ -472,6 +476,12 @@ class TestEjecutarAnalisisCompleto:
             assert len(result['gamma_n']) == n
             assert len(result['eta_plus']) == n
             assert result['H_autoadjunto'] is True
+
+    def test_correlacion_none_when_insufficient_modes(self, operador):
+        """When n_modes < 2 the correlation cannot be computed (correlacion is None)."""
+        result = operador.ejecutar_analisis_completo(n_modes=1)
+        assert result['correlacion'] is None
+        assert result['ceros_riemann_match'] is False
 
 
 if __name__ == "__main__":
