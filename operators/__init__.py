@@ -316,6 +316,14 @@ from .resolvent_diagonal_trace import (
     verify_resolvent_trace_identity,
 )
 
+# Trinity_QCAL: Riemann Hypothesis as Quantum Coherence Condition (Apr 2026)
+from .trinity_qcal import (
+    compute_complex_amplitude,
+    compute_entropy_gradient,
+    compute_trinity_qcal,
+    validate_trinity_for_critical_line,
+)
+
 __all__ = [
     'construct_H_psi',
     'compute_spectrum',
@@ -524,4 +532,9 @@ __all__ = [
     'RegularizedTraceResolver',
     'TraceDecompositionResult',
     'verify_resolvent_trace_identity',
+    # Trinity_QCAL
+    'compute_complex_amplitude',
+    'compute_entropy_gradient',
+    'compute_trinity_qcal',
+    'validate_trinity_for_critical_line',
 ]
