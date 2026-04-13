@@ -1,0 +1,14 @@
+{
+  "validation_type": "unconditional_spectral_equivalence",
+  "timestamp": "1767819838.518626",
+  "qcal": {
+    "frequency_hz": 141.7001,
+    "coherence": 244.36,
+    "omega_0": 890.327986345878
+  },
+  "validation_results": {
+    "n_zeros_tested": 100,
+    "n_matches": 100,
+    "max_relative_error": 2.856342488712374,
+    "mellin_identity_error": 0.0,
+    "passed": 

@@ -1,5 +1,23 @@
 # Weil Explicit Formula Usage Examples
 
+## Data Fetching with Height Parameters
+
+The enhanced `fetch_odlyzko.py` script now supports height-based fetching for computational precision scaling:
+
+```bash
+# Fetch zeros for computational height T ~ 10^8 (robust for initial testing)
+python utils/fetch_odlyzko.py --height 1e8
+
+# Scale to T ~ 10^10 for increased robustness  
+python utils/fetch_odlyzko.py --height 1e10
+
+# Full precision scaling to T ~ 10^12 (complete Odlyzko dataset)
+python utils/fetch_odlyzko.py --height 1e12 --force
+
+# Validate existing data for specific height
+python utils/fetch_odlyzko.py --height 1e8 --validate-only
+```
+
 ## Basic Usage
 
 ```bash
@@ -26,7 +44,7 @@ python validate_explicit_formula.py --use_weil_formula \
 ```
 
 **Note:** Higher precision requires:
-- More Odlyzko zeros (full `zeros_t1e8.txt` dataset)
+- More Odlyzko zeros (use `python utils/fetch_odlyzko.py --height 1e8` for T~10^8)
 - Higher precision arithmetic (`--precision_dps 50+`)
 - More integration points (`--integration_t 100+`)
 - More prime powers (`--prime_powers 10+`)

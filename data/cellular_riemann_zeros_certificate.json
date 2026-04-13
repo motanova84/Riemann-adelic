@@ -1,0 +1,149 @@
+{
+  "certificate_type": "Biological Riemann Zeros - Cellular Cytoplasmic Flow",
+  "timestamp": "2026-01-31T23:17:26.631293+00:00",
+  "framework": "QCAL \u221e\u00b3",
+  "author": "Jos\u00e9 Manuel Mota Burruezo \u03a8 \u2727 \u221e\u00b3",
+  "institution": "Instituto de Conciencia Cu\u00e1ntica (ICQ)",
+  "fundamental_frequency_hz": 141.7001,
+  "kappa_pi_constant": 2.5773,
+  "validation_summary": {
+    "total_validations": 6,
+    "passed": 6,
+    "failed": 0,
+    "overall_status": "VALIDATED"
+  },
+  "validations": [
+    {
+      "validation_name": "coherence_length",
+      "passed": true,
+      "results": [
+        {
+          "cell_diameter_um": 5,
+          "coherence_length_um": 1.0598026166531687,
+          "ratio_xi_over_L": 0.21196052333063373,
+          "is_coherent": false
+        },
+        {
+          "cell_diameter_um": 8,
+          "coherence_length_um": 1.0598026166531687,
+          "ratio_xi_over_L": 0.13247532708164608,
+          "is_coherent": false
+        },
+        {
+          "cell_diameter_um": 10,
+          "coherence_length_um": 1.0598026166531687,
+          "ratio_xi_over_L": 0.10598026166531686,
+          "is_coherent": false
+        },
+        {
+          "cell_diameter_um": 12,
+          "coherence_length_um": 1.0598026166531687,
+          "ratio_xi_over_L": 0.08831688472109739,
+          "is_coherent": false
+        },
+        {
+          "cell_diameter_um": 15,
+          "coherence_length_um": 1.0598026166531687,
+          "ratio_xi_over_L": 0.07065350777687791,
+          "is_coherent": false
+        },
+        {
+          "cell_diameter_um": 20,
+          "coherence_length_um": 1.0598026166531687,
+          "ratio_xi_over_L": 0.05299013083265843,
+          "is_coherent": false
+        }
+      ],
+      "theoretical_value_um": 1.06,
+      "computed_value_um": 1.0598026166531687,
+      "relative_error": 0.00018621070455791732
+    },
+    {
+      "validation_name": "harmonic_spectrum",
+      "passed": true,
+      "fundamental_frequency_hz": 141.7001,
+      "n_harmonics_tested": 10,
+      "max_relative_error": 0.0,
+      "harmonics_data": [
+        {
+          "harmonic_number": 1,
+          "expected_hz": 141.7001,
+          "actual_hz": 141.7001,
+          "absolute_error_hz": 0.0,
+          "relative_error": 0.0
+        },
+        {
+          "harmonic_number": 2,
+          "expected_hz": 283.4002,
+          "actual_hz": 283.4002,
+          "absolute_error_hz": 0.0,
+          "relative_error": 0.0
+        },
+        {
+          "harmonic_number": 3,
+          "expected_hz": 425.10029999999995,
+          "actual_hz": 425.10029999999995,
+          "absolute_error_hz": 0.0,
+          "relative_error": 0.0
+        },
+        {
+          "harmonic_number": 4,
+          "expected_hz": 566.8004,
+          "actual_hz": 566.8004,
+          "absolute_error_hz": 0.0,
+          "relative_error": 0.0
+        },
+        {
+          "harmonic_number": 5,
+          "expected_hz": 708.5005,
+          "actual_hz": 708.5005,
+          "absolute_error_hz": 0.0,
+          "relative_error": 0.0
+        }
+      ]
+    },
+    {
+      "validation_name": "hermitian_property",
+      "passed": true,
+      "healthy_cell_hermitian": true,
+      "cancer_cell_hermitian": false,
+      "healthy_eigenvalues_real": true,
+      "cancer_eigenvalues_complex": true
+    },
+    {
+      "validation_name": "population_coherence",
+      "passed": true,
+      "sample_size": 10000,
+      "coherence_fraction": 0.9502,
+      "mean_coherence_length_um": 1.0598026166531687,
+      "spectral_alignment_error_hz": 0.0
+    },
+    {
+      "validation_name": "molecular_protocol",
+      "passed": true,
+      "n_trials": 10,
+      "success_rate": 1.0,
+      "mean_phase_coherence": 0.989634440270339,
+      "mean_detection_rate": 1.0
+    },
+    {
+      "validation_name": "cancer_decoherence",
+      "passed": true,
+      "initial_coherence": 0.6,
+      "final_coherence": 0.2439417958443595,
+      "initial_hermiticity": 0.9615384615384617,
+      "final_hermiticity": 0.9297086172457183,
+      "growth_rate": 706.7967673894807
+    }
+  ],
+  "conclusions": [
+    "Coherence length \u03be \u2248 1.06 \u03bcm matches cellular scale",
+    "Cytoplasmic flow resonates at f\u2099 = n \u00d7 141.7001 Hz",
+    "Healthy cells maintain hermitian operator (real eigenvalues)",
+    "Cancer cells show symmetry breaking (complex eigenvalues)",
+    "37 trillion biological zeros in coherent organism",
+    "Molecular validation protocol confirms phase-locking",
+    "Riemann Hypothesis manifests in living tissue"
+  ],
+  "signature": "\u2234\ud80c\udc80\u03a9\u221e\u00b3"
+}

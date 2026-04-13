@@ -1,0 +1,14 @@
+{
+  "t": 14.134725141734695,
+  "delta_psi": 1,
+  "zeta_magnitude": 6.668186342283778e-16,
+  "resonance_level": "STRONG (Perfect Resonance)",
+  "frequency_hz": 460.470256876908,
+  "is_sound": true,
+  "quantum_collapse": true,
+  "qcal_framework": {
+    "base_frequency": 141.7001,
+    "coherence_constant": 244.36,
+    "critical_line_re": 0.5
+  }
+}

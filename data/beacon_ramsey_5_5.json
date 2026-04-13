@@ -1,0 +1,18 @@
+{
+  "data": {
+    "theorem": "Rψ(5,5) ≤ 16",
+    "proof_hash": "9d220d1a44658ebfcd5d5182a59d66ac4de939a00d1e0d1a1948c3d1ac8fa22d",
+    "doi": "10.5281/zenodo.17315719",
+    "f0": 141.7001,
+    "timestamp": "2025-11-16T12:38:57.376160Z",
+    "additional": {
+      "author": "José Manuel Mota Burruezo Ψ ✧ ∞³",
+      "institution": "Instituto de Conciencia Cuántica (ICQ)",
+      "coherence": "C = 244.36",
+      "framework": "QCAL ∞³"
+    }
+  },
+  "hash": "250baa3b50c123e7ee0e6ff4a3e736284c062a0f4818a6aded29e52df9069e54",
+  "signature": "3046022100898463e9a872b78016142d43086b95085b15253ecd75b490bc5603db929f2a010221009c33750b8408c7747defa8a3b1aa735886d440fc8546c7f9ad75cb8d88485018",
+  "public_key": "17ee0d78c613b0056ca6f2a37d3362ceec5aa90ecbd1e1bae9cd7c961ecbd44107783dc91283d8d2adb7d40102df7097cce88953bd7c9d921dff74fea09f37a0"
+}

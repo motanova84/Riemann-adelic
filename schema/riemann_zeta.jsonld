@@ -1,0 +1,28 @@
+{
+  "@context": {
+    "dc": "http://purl.org/dc/elements/1.1/",
+    "formal": "https://qcal.example/formal#",
+    "sem": "https://qcal.example/semantic#",
+    "hash": "https://qcal.example/hash#",
+    "freq": "https://qcal.example/frequency#",
+    "prov": "http://www.w3.org/ns/prov#"
+  },
+  "@id": "urn:qcal:riemann:thm:001",
+  "dc:title": "Riemann Hypothesis Spectral Trace Formalization",
+  "formal:kernel": "Lean4",
+  "formal:proof": "formalization/lean/RH_final.lean",
+  "formal:axioms": [
+    "AnalyticContinuation",
+    "EulerProduct",
+    "SpectralTraceConsistency"
+  ],
+  "sem:dependsOn": [
+    "urn:qcal:base:nat:axioms",
+    "urn:qcal:riemann:definition:zeta"
+  ],
+  "equation": "Ψ = I × A_eff²",
+  "hash:sha256": "sha256-6bbe64000277d78e80c4ad7a70258f6a20136fb558415c8a891a65e5fa22a601",
+  "freq:Hz": 141.70387057,
+  "freq:tolerance": 0.0001,
+  "prov:wasGeneratedBy": "motanova84/-jmmotaburr-riemann-adelic"
+}

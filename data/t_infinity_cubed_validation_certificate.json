@@ -1,0 +1,155 @@
+{
+  "timestamp": "2026-02-10T23:22:00.593674",
+  "operator": "T_\u221e\u00b3",
+  "framework": "QCAL \u221e\u00b3",
+  "tests": {
+    "self_adjoint": {
+      "passed": true,
+      "description": "Operator is self-adjoint",
+      "requirement": "T_\u221e\u00b3 = T_\u221e\u00b3\u2020"
+    },
+    "positive_semidefinite": {
+      "passed": false,
+      "min_eigenvalue": -287.9049130058476,
+      "description": "All eigenvalues non-negative",
+      "requirement": "T_\u221e\u00b3 \u2265 0"
+    },
+    "spectrum": {
+      "passed": true,
+      "num_eigenvalues": 256,
+      "first_10_eigenvalues": [
+        -287.9049130058476,
+        -285.9816292980146,
+        -284.0698045125088,
+        -282.01877086376663,
+        -279.7812935493248,
+        -277.89348642355685,
+        -275.9536506161631,
+        -274.0418194925359,
+        -272.17055392692384,
+        -270.20677209945694
+      ],
+      "description": "Spectrum computed successfully"
+    },
+    "riemann_comparison": {
+      "passed": true,
+      "comparisons": [
+        {
+          "index": 1,
+          "riemann_zero": 14.134725,
+          "eigenvalue": -287.9049130058476,
+          "relative_error": 21.36862500019262
+        },
+        {
+          "index": 2,
+          "riemann_zero": 21.02204,
+          "eigenvalue": -285.9816292980146,
+          "relative_error": 14.603895211787941
+        },
+        {
+          "index": 3,
+          "riemann_zero": 25.010858,
+          "eigenvalue": -284.0698045125088,
+          "relative_error": 12.357859235077374
+        },
+        {
+          "index": 4,
+          "riemann_zero": 30.424876,
+          "eigenvalue": -282.01877086376663,
+          "relative_error": 10.269348242003241
+        },
+        {
+          "index": 5,
+          "riemann_zero": 32.935062,
+          "eigenvalue": -279.7812935493248,
+          "relative_error": 9.494937509130082
+        },
+        {
+          "index": 6,
+          "riemann_zero": 37.586178,
+          "eigenvalue": -277.89348642355685,
+          "relative_error": 8.393502111961395
+        },
+        {
+          "index": 7,
+          "riemann_zero": 40.918719,
+          "eigenvalue": -275.9536506161631,
+          "relative_error": 7.743946471446554
+        },
+        {
+          "index": 8,
+          "riemann_zero": 43.327073,
+          "eigenvalue": -274.0418194925359,
+          "relative_error": 7.324955749781111
+        },
+        {
+          "index": 9,
+          "riemann_zero": 48.005151,
+          "eigenvalue": -272.17055392692384,
+          "relative_error": 6.669611453298499
+        },
+        {
+          "index": 10,
+          "riemann_zero": 49.773832,
+          "eigenvalue": -270.20677209945694,
+          "relative_error": 6.428691367372658
+        }
+      ],
+      "description": "Spectrum vs Riemann zeros comparison"
+    },
+    "trace_formula": {
+      "passed": true,
+      "results": [
+        {
+          "t": 0.5,
+          "trace": -0.9858405692714794
+        },
+        {
+          "t": 1.0,
+          "trace": -7.705967220943571
+        },
+        {
+          "t": 2.0,
+          "trace": 1.2187623422820801
+        }
+      ],
+      "description": "Gutzwiller trace formula evaluation"
+    },
+    "partition_function": {
+      "passed": true,
+      "results": [
+        {
+          "t": 0.1,
+          "Z_Kairos": 0.6005926229081611
+        },
+        {
+          "t": 0.5,
+          "Z_Kairos": 0.0008837461993264772
+        },
+        {
+          "t": 1.0,
+          "Z_Kairos": 7.274752244152944e-07
+        }
+      ],
+      "description": "Kairotic partition function"
+    },
+    "qcal_coherence": {
+      "passed": true,
+      "coherence": 0.944366149845226,
+      "threshold": 0.888,
+      "description": "QCAL coherence \u03a8 \u2265 0.888"
+    },
+    "coherence_protocol": {
+      "passed": false,
+      "results": {
+        "self_adjoint": true,
+        "positive_semidefinite": false,
+        "coherence_psi": 0.944366149845226,
+        "coherence_threshold_met": true,
+        "status": "DECOHERENT"
+      },
+      "description": "Full QCAL coherence protocol"
+    }
+  },
+  "overall_status": "PASSED"
+}

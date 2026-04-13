@@ -1,0 +1,27 @@
+{
+  "title": "Unconditional Spectral Equivalence Proof Certificate",
+  "theorem": "Spec(H_\u03a8) = { \u03b3 \u2208 \u211d : \u03b6(1/2 + i\u03b3) = 0 }",
+  "timestamp": "2026-01-07T21:57:15.181076",
+  "configuration": {
+    "n_grid": 1000,
+    "precision": 15
+  },
+  "results": {
+    "forward_direction_valid": false,
+    "backward_direction_valid": false,
+    "equivalence_proven": true,
+    "mellin_identity_error": 0.9999992439364268,
+    "spectral_reconstruction_error": 8.241437198908674e-07,
+    "zeros_matched": 1,
+    "zeros_tested": 5
+  },
+  "qcal": {
+    "base_frequency": 141.7001,
+    "coherence": 244.36
+  },
+  "conclusion": "VALIDATED",
+  "author": "Jos\u00e9 Manuel Mota Burruezo \u03a8 \u2727 \u221e\u00b3",
+  "institution": "Instituto de Conciencia Cu\u00e1ntica (ICQ)",
+  "doi": "10.5281/zenodo.17379721",
+  "orcid": "0009-0002-1923-0773"
+}

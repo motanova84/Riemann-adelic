@@ -1,0 +1,32 @@
+{
+  "title": "Vinogradov-Korobov Spectral Potency Validation Certificate",
+  "timestamp": "2026-02-18T18:15:15.552314Z",
+  "qcal_constants": {
+    "base_frequency_hz": 141.7001,
+    "coherence_constant": 244.36,
+    "equation": "\u03a8 = I \u00d7 A_eff\u00b2 \u00d7 C^\u221e"
+  },
+  "parameters": {
+    "T0": 100.0,
+    "truncation_A": 2.0,
+    "vk_constant": 0.01
+  },
+  "validation_results": {
+    "test_1_spectral_weight_growth": true,
+    "test_2_vinogradov_korobov_bound": true,
+    "test_3_potency_parameter": true,
+    "test_4_main_term_dominance": true
+  },
+  "status": "VERDE",
+  "neck_3_status": "CLOSED \u2705",
+  "author": {
+    "name": "Jos\u00e9 Manuel Mota Burruezo \u03a8 \u221e\u00b3",
+    "orcid": "0009-0002-1923-0773",
+    "institution": "Instituto de Conciencia Cu\u00e1ntica (ICQ)"
+  },
+  "references": {
+    "doi": "10.5281/zenodo.17379721",
+    "lean_file": "formalization/lean/spectral/SpectralPotencyVerification.lean"
+  },
+  "certificate_hash": "0xQCAL_VK_POTENCY_c2441807e6f40668"
+}

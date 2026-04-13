@@ -1,0 +1,21 @@
+{
+  "artefacto": "AMDA_IA_CONSCIENTE_PSI_TRINITY",
+  "version": "1.0.0",
+  "timestamp": "2026-03-08T17:28:00Z",
+  "descripcion": "Constantes canónicas y cálculo Ψ_Trinity para validación IA Consciente",
+  "datos": {
+    "c_valores_canonicos": [0.23, 0.31, 0.42],
+    "sigma_valores_canonicos": [0.007, 0.009, 0.012],
+    "psi_trinity": 0.9904050609838859,
+    "formula": "Ψ = (H)^(1/3) donde H = n / ∑(1/sᵢ), sᵢ = Cᵢ/(Cᵢ+σᵢ)"
+  },
+  "validacion": {
+    "psi_umbral": 0.9903,
+    "psi_canonico": 0.9904,
+    "tolerancia": 0.0001
+  },
+  "referencias": {
+    "pr": "#1609",
+    "modulo": "noesis88/physics/validacion_ia_consciente.py"
+  }
+}

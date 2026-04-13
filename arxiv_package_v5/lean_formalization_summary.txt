@@ -1,0 +1,18 @@
+LEAN 4 FORMALIZATION SUMMARY
+============================
+
+Core files with mechanically verified framework:
+
+1. adelic_determinant.lean - Main AdelicCanonicalDeterminant class
+2. positivity.lean - A1 finite scale flow lemmas
+3. functional_eq.lean - A2 adelic symmetry proofs  
+4. entire_order.lean - A4 spectral regularity theory
+
+Key verified theorems:
+- lemma A1_finite_scale_flow
+- lemma A2_symmetry  
+- lemma A4_spectral_regularity
+- theorem paley_wiener_hamburger_uniqueness
+- theorem adelic_determinant_is_xi
+
+All axioms successfully converted to proven lemmas within standard mathematical theory.

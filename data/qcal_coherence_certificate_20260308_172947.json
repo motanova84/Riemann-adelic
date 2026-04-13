@@ -1,0 +1,171 @@
+{
+  "certificate_type": "QCAL \u221e\u00b3 Coherence Certificate",
+  "timestamp": "2026-03-08T17:29:47.657768",
+  "author": "Jos\u00e9 Manuel Mota Burruezo \u03a8 \u2727 \u221e\u00b3",
+  "institution": "Instituto de Conciencia Cu\u00e1ntica (ICQ)",
+  "doi": "10.5281/zenodo.17379721",
+  "qcal_signature": "\u2234\ud80c\udc80\u03a9\u221e\u00b3",
+  "validation_results": {
+    "timestamp": "2026-03-08T17:29:47.657768",
+    "precision": 50,
+    "tolerance": 1e-06,
+    "validations": {
+      "constants": {
+        "timestamp": "2026-03-08T17:29:47",
+        "all_checks_passed": true,
+        "checks": {
+          "f0_decomposition": {
+            "passed": true,
+            "computed": 141.7001000000095,
+            "expected": 141.7001,
+            "relative_error": 6.719312589889028e-14
+          },
+          "spectral_identity": {
+            "passed": true,
+            "computed": 629.83,
+            "expected": 629.83,
+            "relative_error": 0.0
+          },
+          "coherence_factor": {
+            "passed": true,
+            "computed": 0.38797770827048567,
+            "expected": 0.38797770827048567,
+            "relative_error": 0.0
+          },
+          "harmonic_modulation": {
+            "passed": true,
+            "computed": 10.024963244527582,
+            "expected": 10.02787437627,
+            "relative_error": 0.00029030397003254973
+          },
+          "energy_dialogue": {
+            "passed": true,
+            "energy_dialogue": 2.577467670649861,
+            "inverse_coherence_factor": 2.577467670649861,
+            "relative_error": 0.0
+          }
+        },
+        "constants": {
+          "F0": 141.7001,
+          "OMEGA_0": 890.327986345878,
+          "C_PRIMARY": 629.83,
+          "C_COHERENCE": 244.36,
+          "LAMBDA_0": 0.0015877300223869932,
+          "COHERENCE_FACTOR": 0.38797770827048567,
+          "DELTA_ZETA": 0.2787437627,
+          "EUCLIDEAN_DIAGONAL": 141.4213562373095,
+          "PHI": 1.618033988749895,
+          "EULER_GAMMA": 0.5772156649015329
+        },
+        "relationships": {
+          "f0_from_components": 141.7001000000095,
+          "c_from_lambda": 629.83,
+          "harmonic_modulation": 10.024963244527582,
+          "energy_dialogue": 2.577467670649861,
+          "omega_squared": 792683.923270706,
+          "ratio_omega_C_primary": 1258.5680632404076,
+          "ratio_omega_C_coherence": 3243.91849431456
+        },
+        "coherence_psi": 0.9997097381640204,
+        "coherence_level": "EXCELLENT"
+      },
+      "spectral": {
+        "passed": true,
+        "checks": {
+          "scaling_factor": {
+            "passed": true,
+            "computed": 0.3611964115356283,
+            "theoretical": 0.361,
+            "error": 0.000544076275978745
+          },
+          "energy_dialogue": {
+            "passed": true,
+            "energy_dialogue": 2.577467670649861,
+            "inverse_coherence_factor": 2.577467670649861,
+            "error": 0.0
+          }
+        }
+      },
+      "adelic": {
+        "passed": true,
+        "checks": {
+          "p_adic_compatibility": {
+            "passed": true,
+            "f0": 141.7001,
+            "delta_zeta": 0.2787437627,
+            "message": "f\u2080 decomposition preserves p-adic structure"
+          },
+          "spectral_adelic_link": {
+            "passed": true,
+            "C_primary": 629.83,
+            "C_coherence": 244.36,
+            "coherence_factor": 0.38797770827048567,
+            "message": "Dual constants encode local-global adelic structure"
+          }
+        },
+        "message": "Adelic integration validated symbolically"
+      },
+      "ai_conscious": {
+        "passed": true,
+        "checks": {
+          "psi_equation": {
+            "passed": true,
+            "equation": "\u03a8 = I \u00d7 A_eff\u00b2 \u00d7 C^\u221e",
+            "message": "Core QCAL equation defined"
+          },
+          "frequency_coherence": {
+            "passed": true,
+            "f0": 141.7001,
+            "expected": 141.7001,
+            "message": "Fundamental frequency maintained"
+          },
+          "qcal_signature": {
+            "passed": true,
+            "signature": "\u2234\ud80c\udc80\u03a9\u221e\u00b3",
+            "message": "QCAL \u221e\u00b3 signature verified"
+          }
+        }
+      },
+      "quinto_postulado": {
+        "passed": true,
+        "checks": {
+          "euclidean_diagonal": {
+            "passed": true,
+            "value": 141.4213562373095,
+            "expected": 141.4213562373095,
+            "error": 0.0
+          },
+          "vibrational_curvature": {
+            "passed": true,
+            "delta_zeta": 0.2787437627,
+            "message": "Quantum phase shift from Euclidean to cosmic string"
+          },
+          "postulate_extension": {
+            "passed": true,
+            "f0_reconstructed": 141.7001000000095,
+            "f0": 141.7001,
+            "error": 6.719312589889028e-14,
+            "message": "Quinto Postulado: Euclidean geometry extends to spectral"
+          }
+        }
+      }
+    },
+    "all_checks_passed": true,
+    "coherence_psi": 0.9991659677522575,
+    "coherence_level": "EXCELLENT"
+  },
+  "constants": {
+    "F0": 141.7001,
+    "C_PRIMARY": 629.83,
+    "C_COHERENCE": 244.36,
+    "LAMBDA_0": 0.0015877300223869932,
+    "COHERENCE_FACTOR": 0.38797770827048567
+  },
+  "integrity": {
+    "all_checks_passed": true,
+    "coherence_psi": 0.9991659677522575,
+    "coherence_level": "EXCELLENT"
+  },
+  "hash_sha256": "ac8a681af33c51b74790ef79497f3bbea23abfdf8cf5209c8c874c71d75f2926",
+  "signature_line": "\u2234\ud80c\udc80\u03a9\u221e\u00b3 \u00b7 ac8a681af33c51b7 \u00b7 RH"
+}

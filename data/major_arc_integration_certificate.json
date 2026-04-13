@@ -1,0 +1,14 @@
+{
+  "title": "Major Arc Integration Validation Certificate",
+  "date": "2026-02-26T14:30:23.530724",
+  "framework": "QCAL \u221e\u00b3",
+  "constants": {
+    "f0_Hz": 141.7001,
+    "C_coherence": 244.36
+  },
+  "tests_passed": "All",
+  "doi": "10.5281/zenodo.17379721",
+  "orcid": "0009-0002-1923-0773",
+  "author": "Jos\u00e9 Manuel Mota Burruezo \u03a8 \u2727 \u221e\u00b3",
+  "hash": "0xQCAL_MAJOR_ARC_e298469fbe55e3e"
+}

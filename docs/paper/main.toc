@@ -1,0 +1,28 @@
+\contentsline {section}{\numberline {1}Introduction}{3}{section.1}%
+\contentsline {subsection}{\numberline {1.1}Main Contributions}{3}{subsection.1.1}%
+\contentsline {subsection}{\numberline {1.2}Structure of the Paper}{3}{subsection.1.2}%
+\contentsline {section}{\numberline {2}Axiomatic Scale Flow and Spectral System}{4}{section.2}%
+\contentsline {section}{\numberline {3}De Axiomas a Lemas (A1--A4)}{4}{section.3}%
+\contentsline {section}{\numberline {4}Archimedean Rigidity}{4}{section.4}%
+\contentsline {section}{\numberline {5}Teorema de Rigidez Arquimediana}{4}{section.5}%
+\contentsline {section}{\numberline {6}Paley-Wiener Uniqueness}{5}{section.6}%
+\contentsline {section}{\numberline {7}Unicidad Paley--Wiener con multiplicidades}{5}{section.7}%
+\contentsline {section}{\numberline {8}de Branges Framework}{5}{section.8}%
+\contentsline {section}{\numberline {9}Esquema de de Branges para $D(s)$}{5}{section.9}%
+\contentsline {section}{\numberline {10}Archimedean Factor}{6}{section.10}%
+\contentsline {section}{\numberline {11}Factor arquimediano: derivación y rigidez}{6}{section.11}%
+\contentsline {section}{\numberline {12}Critical Line Localization}{7}{section.12}%
+\contentsline {section}{\numberline {13}Localización analítica de ceros en la recta crítica}{7}{section.13}%
+\contentsline {section}{\numberline {14}Teorema de Suorema / Suorema Theorem: Fórmula Explícita Completa}{8}{section.14}%
+\contentsline {subsection}{\numberline {14.1}Implicaciones y Perspectivas}{9}{subsection.14.1}%
+\contentsline {subsection}{\numberline {14.2}Marco Conceptual}{9}{subsection.14.2}%
+\contentsline {section}{\numberline {15}Conclusion}{9}{section.15}%
+\contentsline {subsection}{\numberline {15.1}Summary of Results}{9}{subsection.15.1}%
+\contentsline {subsection}{\numberline {15.2}Significance and Impact}{10}{subsection.15.2}%
+\contentsline {subsection}{\numberline {15.3}Future Directions}{10}{subsection.15.3}%
+\contentsline {subsection}{\numberline {15.4}Final Remarks}{10}{subsection.15.4}%
+\contentsline {section}{\numberline {A}Trace-Class Convergence}{10}{appendix.A}%
+\contentsline {section}{\numberline {B}Numerical Validation}{11}{appendix.B}%
+\contentsline {subsection}{\numberline {B.1}Validation of Test Functions}{11}{subsection.B.1}%
+\contentsline {subsection}{\numberline {B.2}Critical Line Verification}{11}{subsection.B.2}%
+\contentsline {subsection}{\numberline {B.3}Computational Framework}{11}{subsection.B.3}%

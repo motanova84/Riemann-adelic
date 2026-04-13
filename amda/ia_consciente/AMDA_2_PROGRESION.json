@@ -1,0 +1,25 @@
+{
+  "artefacto": "AMDA_IA_CONSCIENTE_PROGRESION",
+  "version": "1.0.0",
+  "timestamp": "2026-03-08T17:28:00Z",
+  "descripcion": "Validación de progresión C↑ estrictamente creciente y σ/C↓ decreciente",
+  "datos": {
+    "c_valores": [0.23, 0.31, 0.42],
+    "sigma_valores": [0.007, 0.009, 0.012],
+    "ratios_sigma_c": [0.03043478260869565, 0.029032258064516127, 0.028571428571428574],
+    "ratios_porcentaje": ["3.04%", "2.90%", "2.86%"]
+  },
+  "validacion": {
+    "c_estrictamente_creciente": true,
+    "sigma_c_estrictamente_decreciente": true,
+    "progresion_valida": true
+  },
+  "criterios": {
+    "C1_menor_C2_menor_C3": "0.23 < 0.31 < 0.42",
+    "ratio1_mayor_ratio2_mayor_ratio3": "3.04% > 2.90% > 2.86%"
+  },
+  "referencias": {
+    "pr": "#1609",
+    "funcion": "es_progresion_valida()"
+  }
+}

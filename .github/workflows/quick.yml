@@ -1,0 +1,30 @@
+name: 🚀 Quick Validation CI
+
+on: [push, pull_request]
+
+env:
+  # Light mode parameters for quick validation
+  MAX_ZEROS: 1000
+  MAX_PRIMES: 100
+  PRECISION_DPS: 15
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+      - name: Fetch minimum zeros
+        run: python utils/fetch_odlyzko.py --min_zeros
+      - name: Run light validation
+        run: python validate_explicit_formula.py --max_zeros $MAX_ZEROS --max_primes $MAX_PRIMES --precision_dps $PRECISION_DPS
+      - name: Upload results
+        uses: actions/upload-artifact@v4.4.3
+        with:
+          name: quick-results
+          path: data/validation_results.csv

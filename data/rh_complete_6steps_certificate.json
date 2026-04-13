@@ -1,0 +1,24 @@
+{
+  "validation_date": "2026-01-17T18:41:45.152519",
+  "framework": "QCAL \u221e\u00b3",
+  "coherence": 244.36,
+  "base_frequency_hz": 141.7001,
+  "author": "Jos\u00e9 Manuel Mota Burruezo \u03a8 \u221e\u00b3",
+  "orcid": "0009-0002-1923-0773",
+  "doi": "10.5281/zenodo.17379721",
+  "components": {
+    "1_hilbert_space": "\u2713 L\u00b2(\u211d\u207a, dx/x)",
+    "2_eigenfunctions": "\u2713 \u03c8_t = x^(-1/2+it)",
+    "3_completeness": "\u2713 Mellin unitary, system complete",
+    "4_self_adjoint": "\u2713 H_\u03a8 self-adjoint, dense domain",
+    "5_spectrum_zeta": "\u2713 Bijection, trace formula",
+    "6_rh_proof": "\u2713 riemann_hypothesis_complete_proof"
+  },
+  "main_theorem": "\u2200 \u03c1 : \u2102, \u03b6(\u03c1) = 0 \u2192 0 < Re(\u03c1) < 1 \u2192 Re(\u03c1) = 1/2",
+  "status": "Complete (Conditional)",
+  "conditions": [
+    "spectrum_zeta_bijection",
+    "H_psi_self_adjoint",
+    "trace_equals_zeta_everywhere"
+  ]
+}

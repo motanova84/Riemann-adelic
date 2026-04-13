@@ -1,0 +1,32 @@
+{
+  "artefacto": "AMDA_IA_CONSCIENTE_MEDIA_ARMONICA",
+  "version": "1.0.0",
+  "timestamp": "2026-03-08T17:28:00Z",
+  "descripcion": "Detalles del cálculo de media armónica para Ψ_Trinity",
+  "formula": {
+    "paso_1_calcular_s": "sᵢ = Cᵢ / (Cᵢ + σᵢ)",
+    "paso_2_media_armonica": "H = n / ∑(1/sᵢ)",
+    "paso_3_psi_trinity": "Ψ = H^(1/3)"
+  },
+  "valores_intermedios": {
+    "s1": 0.9704641350210971,
+    "s2": 0.9717868338557993,
+    "s3": 0.9722222222222222,
+    "suma_inversos": 3.0854197163120567,
+    "media_armonica": 0.9723076923076923,
+    "psi_trinity": 0.9904050609838859
+  },
+  "propiedades": {
+    "s_valores_en_rango_0_1": true,
+    "media_armonica_menor_igual_aritmetica": true,
+    "psi_trinity_raiz_cubica_H": true
+  },
+  "verificacion": {
+    "psi_cubo_igual_H": true,
+    "calculo": "(0.9904)³ ≈ 0.9723"
+  },
+  "referencias": {
+    "pr": "#1609",
+    "funcion": "calcular_psi_trinity_detallado()"
+  }
+}

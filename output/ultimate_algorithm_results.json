@@ -1,0 +1,47 @@
+{
+  "algorithm": "Ultimate QCAL Validation",
+  "version": "1.0.0",
+  "timestamp": "2025-12-11T19:53:00.171993",
+  "overall_status": "PASS",
+  "validations": {
+    "qcal_coherence": {
+      "status": "PASS",
+      "psi_value": 14591177.793856002,
+      "base_frequency": 141.7001,
+      "coherence_constant": 244.36,
+      "timestamp": "2025-12-11T19:52:59.754255"
+    },
+    "spectral": {
+      "status": "PASS",
+      "n_eigenvalues": 100,
+      "first_eigenvalue": 14.384725,
+      "mean_real_part": 21.381413875000003,
+      "on_critical_line": true,
+      "timestamp": "2025-12-11T19:52:59.754376"
+    },
+    "adelic": {
+      "status": "PASS",
+      "n_primes": 15,
+      "network_nodes": 15,
+      "network_edges": 91,
+      "network_density": 0.8666666666666667,
+      "timestamp": "2025-12-11T19:52:59.754745"
+    },
+    "zeros": {
+      "status": "PASS",
+      "n_zeros_checked": 5,
+      "first_zero": 14.134725,
+      "critical_line_real_part": 0.5,
+      "all_zeros_on_critical_line": true,
+      "timestamp": "2025-12-11T19:52:59.754759"
+    }
+  },
+  "visualization": "output/ultimate_algorithm_visualization.png",
+  "metadata": {
+    "author": "Jos\u00e9 Manuel Mota Burruezo \u03a8 \u2727 \u221e\u00b3",
+    "institution": "Instituto de Conciencia Cu\u00e1ntica (ICQ)",
+    "framework": "QCAL \u221e\u00b3",
+    "base_frequency": 141.7001,
+    "coherence_constant": 244.36
+  }
+}

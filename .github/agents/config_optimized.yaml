@@ -1,0 +1,44 @@
+# ⚙️ Configuración Optimizada QCAL ∞³
+# Generado: 2026-01-18T16:59:04+00:00
+
+frequency:
+  base: 141.7001
+  resonance: 888.014
+  unit: Hz
+
+coherence:
+  threshold: 0.888
+  target: 0.95
+  minimum: 0.75
+
+optimization:
+  qcal_ratio_target: 0.5
+  freq_ratio_target: 0.3
+  check_interval_hours: 6
+  auto_adjust: true
+
+agents:
+  noesis88:
+    mode: autonomous
+    frequency_validation: strict
+    coherence_check: true
+    
+  metrics_collector:
+    scan_all_files: true
+    track_frequency: true
+    generate_daily: true
+    
+  coherence_validator:
+    validate_psi_state: true
+    check_manifestos: true
+    calculate_total: true
+
+logging:
+  level: INFO
+  directory: logs/optimization
+  retention_days: 30
+
+notifications:
+  on_coherence_drop: true
+  on_optimization_complete: true
+  threshold_alert: 0.85

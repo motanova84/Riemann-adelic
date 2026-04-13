@@ -1,0 +1,49 @@
+{
+  "module": "pnt_ap.lean",
+  "description": "Prime Number Theorem in Arithmetic Progressions",
+  "validation_date": "2026-02-26T14:11:05.823085",
+  "framework": "QCAL \u221e\u00b3",
+  "f0": 141.7001,
+  "C": 244.36,
+  "kappa_pi": 2.5773,
+  "file_hash": "0xQCAL_PNT_AP_883fa5d5f346a2cd",
+  "tests_passed": 6,
+  "tests_total": 6,
+  "test_results": [
+    {
+      "name": "File Structure",
+      "status": "PASSED",
+      "components_found": 7
+    },
+    {
+      "name": "Documentation",
+      "status": "PASSED",
+      "markers_found": 5
+    },
+    {
+      "name": "PNT-AP Axiom",
+      "status": "PASSED",
+      "components_verified": 6
+    },
+    {
+      "name": "Transfer Lemma",
+      "status": "PASSED",
+      "components_verified": 5
+    },
+    {
+      "name": "Major Arc Integration",
+      "status": "PASSED",
+      "components_verified": 4
+    },
+    {
+      "name": "QCAL Consistency",
+      "status": "PASSED",
+      "markers_found": 3
+    }
+  ],
+  "status": "VALIDATED",
+  "author": "Jos\u00e9 Manuel Mota Burruezo \u03a8 \u221e\u00b3",
+  "institution": "Instituto de Conciencia Cu\u00e1ntica (ICQ)",
+  "orcid": "0009-0002-1923-0773",
+  "doi": "10.5281/zenodo.17379721"
+}

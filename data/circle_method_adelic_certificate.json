@@ -1,0 +1,168 @@
+{
+  "module": "circle_method_adelic.lean",
+  "validation_date": "2026-02-25T22:47:17.080820",
+  "author": "Jos\u00e9 Manuel Mota Burruezo \u03a8 \u2727 \u221e\u00b3",
+  "orcid": "0009-0002-1923-0773",
+  "qcal_signature": "\u2234\ud80c\udc80\u03a9\u221e\u00b3\u00b7RH\u00b7GOLDBACH",
+  "doi": "10.5281/zenodo.17379721",
+  "base_frequency_hz": 141.7001,
+  "coherence_constant": 244.36,
+  "bridge_constant": 2.5773,
+  "tests_run": 6,
+  "tests_passed": 6,
+  "results": {
+    "test_1": {
+      "name": "Major Arc Threshold Scaling",
+      "status": "PASSED",
+      "details": [
+        {
+          "N": 100,
+          "threshold": 0.02231669321453111,
+          "order": 3.1622776601683795
+        },
+        {
+          "N": 1000,
+          "threshold": 0.03968531604355601,
+          "order": 5.623413251903491
+        },
+        {
+          "N": 10000,
+          "threshold": 0.07057158040114297,
+          "order": 10.0
+        },
+        {
+          "N": 100000,
+          "threshold": 0.12549598836125894,
+          "order": 17.78279410038923
+        }
+      ]
+    },
+    "test_2": {
+      "name": "Singular Series Positivity",
+      "status": "PASSED",
+      "details": [
+        {
+          "n": 10,
+          "sigma_partial": 1.6293351737071724,
+          "bound_satisfied": true
+        },
+        {
+          "n": 20,
+          "sigma_partial": 1.6293351737071724,
+          "bound_satisfied": true
+        },
+        {
+          "n": 50,
+          "sigma_partial": 1.6293351737071724,
+          "bound_satisfied": true
+        },
+        {
+          "n": 100,
+          "sigma_partial": 1.6293351737071724,
+          "bound_satisfied": true
+        },
+        {
+          "n": 200,
+          "sigma_partial": 1.6293351737071724,
+          "bound_satisfied": true
+        },
+        {
+          "n": 1000,
+          "sigma_partial": 1.6293351737071724,
+          "bound_satisfied": true
+        }
+      ]
+    },
+    "test_3": {
+      "name": "Arc Partition Coverage",
+      "status": "PASSED",
+      "details": {
+        "N": 10000,
+        "Q": 100,
+        "threshold": 0.07057158040114297,
+        "num_major_arcs": 3044,
+        "major_fraction_approx": 0.95,
+        "minor_fraction_approx": 0.050000000000000044
+      }
+    },
+    "test_4": {
+      "name": "Exponential Sum Decay",
+      "status": "PASSED",
+      "details": [
+        {
+          "alpha": 0.41421356237309515,
+          "magnitude": 0.6449941820686624,
+          "relative_size": 0.0006449941820686624
+        },
+        {
+          "alpha": 0.7853981633974483,
+          "magnitude": 1.5205982440553885,
+          "relative_size": 0.0015205982440553885
+        },
+        {
+          "alpha": 0.7182818284590451,
+          "magnitude": 1.0002834356568562,
+          "relative_size": 0.001000283435656856
+        },
+        {
+          "alpha": 0.6180339887498949,
+          "magnitude": 0.11434796651672868,
+          "relative_size": 0.00011434796651672868
+        }
+      ]
+    },
+    "test_5": {
+      "name": "Goldbach Numerical Verification",
+      "status": "PASSED",
+      "details": [
+        {
+          "n": 4,
+          "count": 1
+        },
+        {
+          "n": 6,
+          "count": 1
+        },
+        {
+          "n": 8,
+          "count": 1
+        },
+        {
+          "n": 10,
+          "count": 2
+        },
+        {
+          "n": 20,
+          "count": 2
+        },
+        {
+          "n": 30,
+          "count": 3
+        },
+        {
+          "n": 50,
+          "count": 4
+        },
+        {
+          "n": 100,
+          "count": 6
+        },
+        {
+          "n": 200,
+          "count": 8
+        }
+      ]
+    },
+    "test_6": {
+      "name": "QCAL Constants Consistency",
+      "status": "PASSED",
+      "details": {
+        "f0": 141.7001,
+        "C": 244.36,
+        "kappa_pi": 2.5773,
+        "threshold_test": 0.07057158040114297
+      }
+    }
+  },
+  "certificate_hash": "0xQCAL_CIRCLE_METHOD_a6a0d3f7eee1d45f"
+}

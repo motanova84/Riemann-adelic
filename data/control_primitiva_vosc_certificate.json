@@ -1,0 +1,63 @@
+{
+  "certificate_id": "0xQCAL_CONTROL_PRIMITIVA_VOSC_a5a2476e7b16fc56",
+  "timestamp": "2026-03-05T19:03:21.939725+00:00",
+  "module": "physics.control_primitiva_vosc",
+  "version": "1.0.0",
+  "author": {
+    "name": "José Manuel Mota Burruezo Ψ ✧ ∞³",
+    "institution": "Instituto de Conciencia Cuántica (ICQ)",
+    "orcid": "0009-0002-1923-0773",
+    "email": "institutoconsciencia@proton.me"
+  },
+  "qcal_framework": {
+    "frequency_hz": 141.7001,
+    "coherence_constant": 244.36,
+    "threshold": 0.888,
+    "signature": "∴𓂀Ω∞³"
+  },
+  "theorem": {
+    "name": "Autoadjunción Esencial del Hamiltoniano de Riemann",
+    "statement": "H = H₀ + V_osc es esencialmente autoadjunto en D(H₀)",
+    "method": "Teorema KLMN (Kato-Lions-Lax-Milgram-Nelson)",
+    "demonstrated": true
+  },
+  "parameters": {
+    "P_primes": 100,
+    "seed": 42,
+    "num_primos": 25
+  },
+  "validation_results": {
+    "supremum_finito": true,
+    "supremum_value": 0.509119283298443,
+    "montgomery_vaughan_confirmed": true,
+    "kato_inequality_verified": true,
+    "klmn_theorem_applied": true
+  },
+  "klmn_parameters": {
+    "a_parameter": 0.1308021352635969,
+    "b_parameter": 0.0,
+    "condition_a_less_than_1": true,
+    "margin": 0.8691978647364031
+  },
+  "coherence": {
+    "psi_noesis": 0.8691978647364031,
+    "psi_auron": 1.0,
+    "psi_sabio": 1.0,
+    "psi_trinity": 0.9563992882454677,
+    "threshold_reached": true
+  },
+  "tests": {
+    "total": 106,
+    "passed": 106,
+    "success_rate": 1.0
+  },
+  "conclusion": "H esencialmente autoadjunto",
+  "implications": [
+    "Espectro σ(H) ⊂ ℝ (real)",
+    "Correspondencia espectral: λ_n ↔ ζ(1/2 + iγ_n) = 0",
+    "Ceros confinados a Re(s) = 1/2",
+    "Hipótesis de Riemann como teorema espectral"
+  ],
+  "doi": "10.5281/zenodo.17379721",
+  "license": "Creative Commons BY-NC-SA 4.0"
+}

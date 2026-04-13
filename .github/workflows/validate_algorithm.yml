@@ -1,0 +1,27 @@
+name: Validate Ultimate Algorithm
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  run-validation:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Setup Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+
+    - name: Install Dependencies
+      run: pip install numpy networkx matplotlib scipy
+
+    - name: Run Algorithm
+      run: python src/ultimate_algorithm.py
+
+    - name: Verify Output Hash
+      run: sha256sum output/ultimate_algorithm_results.json

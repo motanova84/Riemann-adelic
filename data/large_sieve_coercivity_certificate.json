@@ -1,0 +1,111 @@
+{
+  "certificate_type": "LARGE_SIEVE_COERCIVITY_VALIDATION",
+  "timestamp": "2026-02-18T00:00:00Z",
+  "author": "Jos\u00e9 Manuel Mota Burruezo \u03a8 \u2727 \u221e\u00b3",
+  "institution": "Instituto de Conciencia Cu\u00e1ntica (ICQ)",
+  "orcid": "0009-0002-1923-0773",
+  "doi": "10.5281/zenodo.17379721",
+  "qcal_integration": {
+    "frequency_hz": 141.7001,
+    "coherence": 244.36,
+    "omega_0": 890.327986345878,
+    "equation": "\u03a8 = I \u00d7 A_eff\u00b2 \u00d7 C^\u221e"
+  },
+  "validation_results": {
+    "test_1": {
+      "test_name": "Montgomery Large Sieve",
+      "X": 200,
+      "q": 100,
+      "actual_sum": 642886.9871208468,
+      "theoretical_bound": 57267220.50999562,
+      "margin": 0.9887739097271425,
+      "inequality_holds": true
+    },
+    "test_2": {
+      "test_name": "Spectral Weight Power Growth",
+      "delta": 0.08596734881321429,
+      "c": 65.28541606141869,
+      "power_law_growth": true,
+      "max_relative_error": 0.20121216414860477,
+      "gamma_values": [
+        1.0,
+        5.0,
+        10.0,
+        14.134725,
+        21.02204,
+        25.010858,
+        50.0,
+        100.0
+      ],
+      "weights": [
+        54.349612841035196,
+        88.1742224262659,
+        78.47006506974165,
+        91.37263400679589,
+        92.67060841085447,
+        89.91392426814237,
+        88.83323939614908,
+        81.27569621257884
+      ],
+      "fitted_curve": [
+        65.28541606141869,
+        74.97298017205189,
+        79.57626020223576,
+        81.97913493314087,
+        84.82483569503026,
+        86.10127536257234,
+        91.38441229654651,
+        96.99534091682293
+      ]
+    },
+    "test_3": {
+      "test_name": "H^\u03b4 Compact Embedding",
+      "delta": 0.08596734881321429,
+      "expected_exponent": -0.17193469762642857,
+      "fitted_exponent": -0.15970240551161716,
+      "exponent_close": true,
+      "compact_embedding": true,
+      "eigenvalues": [
+        0.8914369396699439,
+        0.9761810348364288,
+        0.8513050879485468,
+        0.6692404541262962,
+        0.7143947180042635,
+        0.8562257292235327,
+        0.5419817652514767,
+        0.6694047302780062,
+        0.7721468292557813,
+        0.6147394784110205,
+        0.6171862983218065,
+        0.646127966345439,
+        0.7393448236332286,
+        0.5946584776789916,
+        0.599882324904775,
+        0.5938604776767233,
+        0.7499184088147457,
+        0.741419987184828,
+        0.6632703677148705,
+        0.6205316159868594
+      ]
+    },
+    "test_4": {
+      "test_name": "No Continuous Spectrum",
+      "min_gap": 1.0806848719932844,
+      "mean_gap": 9.87488892587763,
+      "gap_ratio": 0.11878493834305318,
+      "density_ratio": 0.03571428571428571,
+      "discrete_spectrum": true,
+      "low_density": true,
+      "no_continuous": true
+    },
+    "all_tests_passed": true
+  },
+  "certificate_hash": "0xQCAL_LARGE_SIEVE_19137ac2c42102da",
+  "status": "SEALED",
+  "clay_compliance": {
+    "non_circular": true,
+    "algebraic_precision": true,
+    "explicit_constants": true,
+    "machine_verifiable": true
+  }
+}

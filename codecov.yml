@@ -1,0 +1,75 @@
+# Codecov Configuration
+# Official documentation: https://docs.codecov.com/docs/codecov-yaml
+
+coverage:
+  precision: 2
+  round: down
+  range: "70...100"
+
+  status:
+    project:
+      default:
+        target: auto
+        threshold: 1%
+        informational: true
+    patch:
+      default:
+        target: auto
+        threshold: 1%
+        informational: true
+
+parsers:
+  gcov:
+    branch_detection:
+      conditional: yes
+      loop: yes
+      method: no
+      macro: no
+
+comment:
+  layout: "reach,diff,flags,files,footer"
+  behavior: default
+  require_changes: false
+  require_base: false
+  require_head: true
+
+github_checks:
+  annotations: true
+
+# Ignore paths that should not be included in coverage
+ignore:
+  - "tests/**/*"
+  - "**/__init__.py"
+  - "**/conftest.py"
+  - ".github/**/*"
+  - "docs/**/*"
+  - "formalization/**/*"
+  - "notebooks/**/*"
+  - "examples/**/*"
+  - "*.md"
+  - "*.txt"
+  - "*.json"
+  - "*.yml"
+  - "*.yaml"
+  - "*.toml"
+  - "*.cfg"
+  - "*.ini"
+  - "setup.py"
+  - "conftest.py"
+
+# Flag management for different test types
+flags:
+  unittests:
+    paths:
+      - "utils/**/*"
+      - "spectral_RH/**/*"
+      - "inversion/**/*"
+      - "dualidad/**/*"
+      - "unicidad/**/*"
+      - "operador/**/*"
+    carryforward: true
+  validation:
+    paths:
+      - "validate_*.py"
+      - "validar_*.py"
+    carryforward: true

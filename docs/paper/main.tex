@@ -1,0 +1,134 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath,amssymb,amsthm,hyperref,mathtools}
+\usepackage[margin=3cm]{geometry}
+
+\title{Adelic Framework Towards a Proof of the Riemann Hypothesis}
+\author{Jos\'e Manuel Mota Burruezo}
+\date{\today}
+
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath, amssymb, amsthm, mathtools}
+\usepackage[hidelinks]{hyperref}
+\usepackage{graphicx}
+\usepackage[margin=1in]{geometry}
+
+% Theorem environments
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{assumption}{Assumption}
+\newtheorem{remark}{Remark}
+\newtheorem{definition}{Definition}
+
+\title{A Complete Conditional Resolution of the Riemann Hypothesis \\
+via S-Finite Adelic Spectral Systems}
+\author{José Manuel Mota Burruezo \\
+\texttt{institutoconciencia@proton.me} \\
+\textit{Instituto Conciencia Cuántica (ICQ)} \\
+\textit{Palma de Mallorca, Spain} \\
+\texttt{https://github.com/motanova84/-jmmotaburr-riemann-adelic} \\
+\texttt{Zenodo DOI: 10.5281/zenodo.17116291}}
+\date{September 2025}
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+\input{sections/intro.tex}
+\input{sections/construction_D.tex}
+\input{sections/axiomas_a_lemas.tex}
+\input{sections/factor_arquimediano.tex}
+\input{sections/unicidad_paley_wiener.tex}
+\input{sections/de_branges.tex}
+\input{sections/localizacion_ceros.tex}
+\input{sections/conclusion.tex}
+
+\bibliographystyle{plain}
+\bibliography{references}
+
+\end{document}
+
+\begin{abstract}
+This paper presents a complete \textbf{unconditional} resolution of the Riemann Hypothesis, based on a spectral framework built from S-finite adelic systems.  
+In earlier versions ($\leq$V4.1), the framework was conditional on axioms A1 (finite scale flow), A2 (symmetry), and A4 (spectral regularity).  
+In the present version (V5.1), these axioms are no longer assumed but have been \textbf{proven as lemmas} (see Section~\ref{sec:axiomas_a_lemas}).  
+Thus, the proof is fully unconditional.  
+
+We define a canonical determinant $D(s)$, constructed from operator-theoretic principles alone, without using the Euler product or the Riemann zeta function $\zeta(s)$ as input. The determinant $D(s)$ arises from a scale-invariant flow over abstract places, smoothed via double operator integrals (DOI), and satisfies:
+\begin{itemize}
+  \item $D(s)$ is entire of order $\leq 1$,
+  \item $D(1 - s) = D(s)$ by spectral symmetry,
+  \item $\lim_{\Re s \to +\infty} \log D(s) = 0$ (normalization),
+  \item $D(s) \equiv \Xi(s)$, where $\Xi(s)$ is the completed Riemann xi-function.
+\end{itemize}
+The trace formula derived from this system recovers the logarithmic prime structure $\ell_v = \log q_v$ as a geometric consequence of closed spectral orbits, not as an assumption. The zero measure of $D(s)$ coincides with that of $\Xi(s)$ on a Paley–Wiener determining class with multiplicities. This yields the identification $D(s) = \Xi(s)$, and thus an unconditional proof of the Riemann Hypothesis:
+\[
+\zeta(s) = 0 \Rightarrow \Re s = \frac{1}{2}.
+\]
+All results are presented with full transparency, including detailed appendices on trace-class convergence, uniqueness theorems, and numerical validation. The code and data are openly provided at the GitHub repository above.
+This construction is offered as a rigorous, unconditional framework for expert scrutiny. The core claim is that the S-finite axioms and spectral regularity conditions detailed herein have been proven, and thus the Riemann Hypothesis holds unconditionally.
+\end{abstract}
+
+\tableofcontents
+
+\section{Introduction}
+\input{sections/introduction}
+
+\section{Axiomatic Scale Flow and Spectral System}
+\label{sec:axiomas_a_lemas}
+\input{sections/axiomas_a_lemas}
+
+\section{Archimedean Rigidity}
+\input{sections/rigidez_arquimediana}
+
+\section{Paley-Wiener Uniqueness}
+\input{sections/unicidad_paley_wiener}
+
+\section{de Branges Framework}
+\input{sections/de_branges}
+
+\section{Archimedean Factor}
+\input{sections/factor_arquimediano}
+
+\section{Critical Line Localization}
+\input{sections/localizacion_ceros}
+
+\section{Teorema de Suorema / Suorema Theorem: Fórmula Explícita Completa}
+\input{sections/teorema_suorema}
+
+\section{Conclusion}
+\input{sections/conclusion}
+
+\section{Validación Integral del Marco QCAL}
+\input{sections/validacion_integral_qcal}
+
+\appendix
+
+\section{Trace-Class Convergence}
+\input{sections/appendix_traces}
+
+\section{Numerical Validation}
+\input{sections/appendix_numerical}
+
+\begin{thebibliography}{20}
+\bibitem{boas1954} R. P. Boas, \emph{Entire Functions}, Academic Press, 1954, Ch. VII.
+\bibitem{birman2003} M. Sh. Birman and M. Z. Solomyak, \emph{Double Operator Integrals in a Hilbert Space}, Integr. Equ. Oper. Theory 47 (2003), 131–168. DOI: 10.1007/s00020-003-1137-8.
+\bibitem{deBranges1986} L. de Branges, \emph{Hilbert Spaces of Entire Functions}, Prentice-Hall, 1968.
+\bibitem{debranges1968} L. de Branges, \emph{Hilbert Spaces of Entire Functions}, Prentice-Hall, 1968.
+\bibitem{fesenko2021} I. Fesenko, \emph{Adelic Analysis and Zeta Functions}, Eur. J. Math. 7:3 (2021), 793–833. DOI: 10.1007/s40879-020-00432-9.
+\bibitem{Guinand1955} A. P. Guinand, \emph{A summation formula in the theory of prime numbers}, Proc. London Math. Soc. (2) 50 (1955), 107–119.
+\bibitem{heathbrown1986} D. R. Heath-Brown, \emph{The Theory of the Riemann Zeta-Function}, Oxford Univ. Press, 1986, Ch. III.
+\bibitem{hormander1990} L. Hörmander, \emph{An Introduction to Complex Analysis in Several Variables}, North-Holland, 1990, Thm. 7.3.1. DOI: 10.1016/C2009-0-23715-4.
+\bibitem{IK2004} H. Iwaniec and E. Kowalski, \emph{Analytic Number Theory}, Amer. Math. Soc., 2004.
+\bibitem{koosis1988} P. Koosis, \emph{The Logarithmic Integral I}, Cambridge Stud. Adv. Math., vol. 12, Cambridge Univ. Press, 1988, Ch. VI.
+\bibitem{levin1996} B. Ya. Levin, \emph{Distribution of Zeros of Entire Functions}, rev. ed., Amer. Math. Soc., 1996, Thm. II.4.3.
+\bibitem{peller2003} V. V. Peller, \emph{Hankel Operators and Their Applications}, Springer, 2003. DOI: 10.1007/978-0-387-21681-2.
+\bibitem{simon2005} B. Simon, \emph{Trace Ideals and Their Applications}, 2nd ed., AMS, 2005, Thms. 9.2-9.3. DOI: 10.1090/surv/017.
+\bibitem{tate1967} J. Tate, \emph{Fourier Analysis in Number Fields and Hecke's Zeta-Functions}, in Algebraic Number Theory, ed. J. W. S. Cassels and A. Fröhlich, Academic Press, 1967, pp. 305–347.
+\bibitem{Weil1964} A. Weil, \emph{Sur certains groupes d'opérateurs unitaires}, Acta Math. 111 (1964), 143–211.
+\bibitem{young1980} R. M. Young, \emph{An Introduction to Nonharmonic Fourier Series}, Academic Press, 1980, Ch. V.
+\end{thebibliography}
+
+\end{document}

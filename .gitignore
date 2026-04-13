@@ -21,6 +21,7 @@ wheels/
 *.egg-info/
 .installed.cfg
 *.egg
+*.whl
 
 # Jupyter Notebook
 .ipynb_checkpoints
@@ -34,6 +35,43 @@ htmlcov/
 .tox/
 coverage.xml
 *.cover
+
+# SABIO ∞⁴ generated reports
+sabio_infinity4_report_*.json
+
+# Integration diagnostic reports
+INTEGRATION_FIX_REPORT.md
+
+# Lean validation reports
+formalization/lean/validation_report.json
+
+# NOESIS-AMDA-AURON system generated files
+amda_report.json
+amda_stats.json
+auron_changes.json
+metrics.md
+noesis_auto_seal.log
+
+# NOESIS Digestive System generated files (keep learning files, ignore reports)
+digestive_*_report.md
+digestive_meal.md
+digestive_meal.json
+
+# NOESIS Integration generated files
+noesis_integrated_report.md
+noesis_integration_results.json
+noesis_complete.md
+noesis_sync_state.json
+VICTORY.md
+# NOESIS CEREBRAL V2.0 generated files
+amda_report_v2.json
+amda_report_v2.md
+auron_results_v2.json
+auron_neural.log
+noesis_cerebral_v2.log
+noesis_cerebral_v2_summary.json
+commit_msg_*.txt
+*.lean.bak.*
 
 # Virtual environments
 venv/
@@ -50,14 +88,34 @@ ENV/
 
 # OS files
 .DS_Store
+Thumbs.db__pycache__/
 Thumbs.db
 
 # Generated validation results (keep structure but not data)
-data/validation_results*.csv
+data/validation_results_*.csv
 data/validation_output*.csv
 data/temp_*
 data/*.tmp
+data/validation/results/*
+data/validation/certificates/*
+data/qcal_validation_certificate.json
+data/audit_report.json
+data/sorry_count.json
+data/QCAL_MASTER_CERTIFICATE.json
+!data/validation/results/.gitkeep
+!data/validation/certificates/.gitkeep
+!data/validation_results.csv
 
+# Generated 141.7 Hz validation outputs
+resultados/*.json
+resultados/certificates/
+!resultados/.gitkeep
+
+# Checksum files
+*.md5
+
+# Generated HTML output
+docs/validation.html
 # Generated HTML output  
 docs/validation*.html
 docs/temp_*
@@ -69,13 +127,22 @@ zeros/*.tmp
 zeros/*.gz
 logs/*.log
 logs/temp_*
+logs/validation/*
+logs/performance/benchmark_results_*.json
+logs/performance/benchmark_results_*_report.md
+!logs/validation/.gitkeep
+
+# NOESIS GUARDIAN 3.0 logs
+noesis_guardian/logs/*.json
+noesis_guardian/logs/*.log
+!noesis_guardian/logs/.gitkeep
 
 # CI/CD artifacts
 artifacts/
 reports/
 .pytest_cache/
 
-# LaTeX build files (for paper directory)
+# LaTeX build files (for paper directories)
 paper/*.aux
 paper/*.log
 paper/*.out
@@ -90,6 +157,22 @@ paper/*.run.xml
 paper/*.nav
 paper/*.snm
 paper/*.vrb
+
+# LaTeX build files (for docs/paper directory)
+docs/paper/*.aux
+docs/paper/*.log
+docs/paper/*.out
+docs/paper/*.fdb_latexmk
+docs/paper/*.fls
+docs/paper/*.synctex.gz
+docs/paper/*.toc
+docs/paper/*.bbl
+docs/paper/*.blg
+docs/paper/*.bcf
+docs/paper/*.run.xml
+docs/paper/*.nav
+docs/paper/*.snm
+docs/paper/*.vrb
 
 # Temporary computational files
 *.tmp
@@ -109,3 +192,115 @@ zeros/*_t1e12.txt
 .mypy_cache/
 .dmypy.json
 dmypy.json
+
+# Node.js dependencies
+node_modules/
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Next.js build output
+.next/
+out/
+next-env.d.ts
+
+# Build artifacts
+dist/
+build/
+
+# Disabled workflow files
+*.disabled
+
+# Generated visualization files (thermal kernel demo)
+eigenvalue_dist.png
+zero_comparison.png
+# Monitoring system - evidence and sensitive data
+monitoring/evidence/
+monitoring/alerts/*.json
+!monitoring/alerts/.gitkeep
+examples/__pycache__/
+
+# Noesis Guardian logs (keep directory structure)
+noesis_guardian/logs/guardian_log.json
+!noesis_guardian/logs/.gitkeep
+
+# QCAL auto-generated state files
+tools/qcal_state.json
+.qcal_state
+.qcal_continuation_summary.json
+# Spectral framework demo images
+*_demo.png
+*_spectrum.png
+G4_spectrum_plot.png
+
+# Validation notebook generated images
+evac_zeta_visualization.png
+convexity_gamma_visualization.png
+validation_summary.png
+validation_summary.txt
+G4_spectrum_plot.png
+
+# NOESIS Guardian generated files
+.noesis_backups/
+noesis_guardian/guardian_log.json
+_codeql_detected_source_root/
+
+# Ultimate Algorithm generated outputs (keep directory structure)
+output/ultimate_algorithm_results.json
+output/ultimate_algorithm_visualization.png
+trace_class_complete_validation.png
+
+# Pipeline execution logs
+logs/pipeline_*/
+data/pipeline_report_*.json
+*.backup.*
+requirements-lock.txt.backup
+*.backup
+/output/*.json
+
+# Orchestration system generated files
+venv_qcal/
+axioms/*.json
+metrics/*.json
+dependencies.json
+reports/noesis88/
+reports/qcal_prover/
+reports/axiom_emitter/
+logs/20*/
+!reports/.gitkeep
+!axioms/.gitkeep
+!metrics/.gitkeep
+# Generated axioms (test artifacts)
+axioms/axioms_generated_*.json
+axioms/qcal_axioms_*.lean
+data/noesis_session_test-*.json
+# Noesis Sentinel logs
+consciousness/sentinel_log.json
+validation/spectral_integrity_results.json
+
+# RH Genetic Simulator generated plots
+demo_aug_waveform.png
+demo_codon_comparison.png
+rh_genetic_*.png
+kappa_experiment_results/
+noesis_cerebral.log
+test_*.json
+test_*.md
+.auron_backups/
+
+# NOESIS CEREBRAL V2.0 generated files
+amda_report_v2.json
+amda_report_v2.md
+auron_results_v2.json
+auron_neural.log
+noesis_cerebral_v2.log
+amda_deep_v2.log
+commit_msg_*.txt
+noesis_cycle_metrics.md
+*.lean.bak
+*.lean.bak.*
+VICTORIA_FINAL.md
+# Keep learning history (persistent knowledge)
+!.auron_learning.json
+outputs/
+resultados_v6.json

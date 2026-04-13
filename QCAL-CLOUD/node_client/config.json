@@ -1,0 +1,10 @@
+{
+  "node_id": "local-dev-node",
+  "api_base": "http://localhost:8000",
+  "websocket_url": "ws://localhost:8000/ws/live",
+  "poll_interval": 1800,
+  "precision": 25,
+  "evac_frequency": 1.0,
+  "validate_script": "validate_v5_coronacion.py",
+  "evac_script": "Evac_Rpsi"
+}

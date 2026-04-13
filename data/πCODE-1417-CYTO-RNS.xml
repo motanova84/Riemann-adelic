@@ -1,0 +1,63 @@
+<?xml version="1.0" ?>
+<ST26SequenceListing xmlns="http://www.wipo.int/standards/XMLSchema/ST26" dtdVersion="V1_3" fileName="πCODE-1417-CYTO-RNS.xml" softwareName="QCAL-∞³-BioSequencer" softwareVersion="1.0" productionDate="2026-01-31">
+  <ApplicationIdentification>
+    <IPOfficeCode>WO</IPOfficeCode>
+    <ApplicationNumberText>QCAL-2026-CYTO-RNS</ApplicationNumberText>
+    <FilingDate>2026-01-31</FilingDate>
+    <ApplicantName>
+      <ApplicantNameText>José Manuel Mota Burruezo (JMMB Ψ✧)</ApplicantNameText>
+    </ApplicantName>
+    <InventorName>
+      <InventorNameText>José Manuel Mota Burruezo</InventorNameText>
+    </InventorName>
+  </ApplicationIdentification>
+  <SequenceTotalQuantity>1</SequenceTotalQuantity>
+  <SequenceData sequenceIDNumber="1">
+    <SequenceLength>53</SequenceLength>
+    <MolType>RNA</MolType>
+    <SequenceType>synthetic</SequenceType>
+    <Feature>
+      <FeatureKey>source</FeatureKey>
+      <FeatureLocation>
+        <Location>
+          <SequenceInterval>
+            <BeginPosition>1</BeginPosition>
+            <EndPosition>53</EndPosition>
+          </SequenceInterval>
+        </Location>
+      </FeatureLocation>
+      <Qualifier>
+        <QualifierName>organism</QualifierName>
+        <QualifierValue>Synthetic construct</QualifierValue>
+      </Qualifier>
+      <Qualifier>
+        <QualifierName>mol_type</QualifierName>
+        <QualifierValue>other RNA</QualifierValue>
+      </Qualifier>
+      <Qualifier>
+        <QualifierName>note</QualifierName>
+        <QualifierValue>Cytoplasmic resonance sequence. Frequency: 141.7001 Hz. QCAL-∞³ coherence optimized. Riemann-Navier-Stokes coupling.</QualifierValue>
+      </Qualifier>
+      <Qualifier>
+        <QualifierName>artificial_location</QualifierName>
+        <QualifierValue>synthetic construct</QualifierValue>
+      </Qualifier>
+    </Feature>
+    <Feature>
+      <FeatureKey>CDS</FeatureKey>
+      <FeatureLocation>
+        <Location>
+          <SequenceInterval>
+            <BeginPosition>1</BeginPosition>
+            <EndPosition>53</EndPosition>
+          </SequenceInterval>
+        </Location>
+      </FeatureLocation>
+      <Qualifier>
+        <QualifierName>translation</QualifierName>
+        <QualifierValue>MFGASVLDKRVYLVLKA</QualifierValue>
+      </Qualifier>
+    </Feature>
+    <INSDSeq_sequence>AUGUUUGGAGCUAGUGCUCGAUUAAGAGGGUCUACCUCGUACUGAAGGCGUAG</INSDSeq_sequence>
+  </SequenceData>
+</ST26SequenceListing>

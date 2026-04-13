@@ -1,0 +1,104 @@
+{
+  "timestamp": "2026-02-26T11:09:09.049993",
+  "framework": "QCAL \u221e\u00b3",
+  "f0_hz": 141.7001,
+  "coherence": 244.36,
+  "kappa_pi": 2.5773,
+  "validation_type": "Goldbach Conditional Theorem",
+  "stats": {
+    "small_range": {
+      "range": [
+        4,
+        1000
+      ],
+      "total_tested": 499,
+      "failures": [],
+      "success_rate": 1.0,
+      "count_stats": {
+        "mean": 16.47695390781563,
+        "median": 15.0,
+        "min": 1,
+        "max": 52,
+        "std": 9.70491322068992
+      },
+      "heuristic_accuracy": {
+        "mean_ratio": 0.23218534097235194,
+        "correlation": 0.1689869391494285
+      },
+      "singular_series": {
+        "mean": 4.771272431059097,
+        "min": 1.9785089846010566,
+        "max": 6.33122875072338,
+        "all_positive": true
+      }
+    },
+    "asymptotic_dominance": {
+      "test_values": [
+        100,
+        500,
+        1000,
+        5000,
+        10000,
+        50000
+      ],
+      "results": [
+        {
+          "n": 100,
+          "log_n": 4.605170185988092,
+          "signal_estimate": 29.562223884148814,
+          "noise_estimate": 1.0239127404318995,
+          "signal_to_noise": 28.87181955727896,
+          "actual_count": 6,
+          "dominance_holds": true
+        },
+        {
+          "n": 500,
+          "log_n": 6.214608098422191,
+          "signal_estimate": 81.16540900957239,
+          "noise_estimate": 2.083189435261064,
+          "signal_to_noise": 38.962087477848975,
+          "actual_count": 13,
+          "dominance_holds": true
+        },
+        {
+          "n": 1000,
+          "log_n": 6.907755278982137,
+          "signal_estimate": 131.3876617073281,
+          "noise_estimate": 3.0338155272056295,
+          "signal_to_noise": 43.30772933591844,
+          "actual_count": 28,
+          "dominance_holds": true
+        },
+        {
+          "n": 5000,
+          "log_n": 8.517193191416238,
+          "signal_estimate": 432.12110530282615,
+          "noise_estimate": 8.092459034132006,
+          "signal_to_noise": 53.397997256488466,
+          "actual_count": 76,
+          "dominance_holds": true
+        },
+        {
+          "n": 10000,
+          "log_n": 9.210340371976184,
+          "signal_estimate": 739.0555971037204,
+          "noise_estimate": 12.798909255398742,
+          "signal_to_noise": 57.743639114557936,
+          "actual_count": 127,
+          "dominance_holds": true
+        },
+        {
+          "n": 50000,
+          "log_n": 10.819778284410283,
+          "signal_estimate": 2677.6989723794522,
+          "noise_estimate": 39.47434387043046,
+          "signal_to_noise": 67.83390703512794,
+          "actual_count": 450,
+          "dominance_holds": true
+        }
+      ],
+      "all_dominant": true
+    }
+  },
+  "certificate_hash": "0xQCAL_GOLDBACH_a9171b85d6f59802"
+}

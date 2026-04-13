@@ -1,0 +1,527 @@
+"""
+Operators module for QCAL Riemann Hypothesis proof.
+
+This module contains Hermitian operators that encode Riemann zeros
+in their spectrum via constructive spectral theory.
+
+Modules:
+    - riemann_operator: H_Ψ Hermitian operator with spectrum reproducing
+                        Riemann zeros to ultra-high precision
+    - discrete_symmetry_operator: H_DS operator that validates space structure
+                                 and enforces discrete symmetry G ≅ Z
+    - operator_connection: Connection between H_Ψ and H_DS that demonstrates
+                          how discrete symmetry forces zero reality
+    - noetic_operator: H_ψ = -Δ + V_ψ noetic operator with p-adic corrections
+                       implementing the spectral hierarchy:
+                       Level 1: λ₀ ≈ 0.001588 → C = 1/λ₀ ≈ 629.83 (structure)
+                       Level 2: C_QCAL = ⟨λ⟩²/λ₀ ≈ 244.36 (coherence)
+                       Fusion: f₀ = 141.7001 Hz (harmonization)
+                       implementing λ₀ ≈ 0.001588 and C = 1/λ₀ ≈ 629.83
+    - spectral_constants: Dual spectral constants framework unifying
+                         C_PRIMARY = 629.83 (structure) and 
+                         C_COHERENCE = 244.36 (form) to derive f₀ = 141.7001 Hz
+    - dirac_spectral_operator: 𝔻_s = i d/ds Dirac spectral operator acting on
+                               complex s-plane, dual to H_Ψ
+    - hermetic_trace_operator: T_∞³ = √(1 + D_s²) Hermetic Noetic operator
+                              implementing PHASE VI - Noetic Spectral Identity:
+                              ζ(s) = Tr(T_∞³^(-s))
+                              Hermetic Trace Formula (Gutzwiller-type):
+                              Tr(e^(-t·T_∞³)) ∼ Σ_p A_p(t) cos(γ_p·t + φ_p)
+    - master_operator_o3: 𝒪_∞³ = 𝔻_s ⊗ 𝟙 + 𝟙 ⊗ H_Ψ master operator unifying
+                         complex and real perspectives
+    - idele_class_selfadjoint_xi: H_id self-adjoint operator on idele class group
+                         C_ℚ = 𝔸_ℚ*/ℚ* connected to ξ(s) via Mellin transform;
+                         spectrum encodes Riemann zeros on the critical line
+"""
+
+from .riemann_operator import (
+    construct_H_psi,
+    compute_spectrum,
+    validate_spectrum,
+    load_riemann_zeros,
+    oscillatory_weight,
+    wave_equation_rhs,
+    F0,
+    OMEGA_0,
+    ZETA_PRIME_HALF,
+    C_QCAL,
+    LAMBDA_0,
+    C_UNIVERSAL
+)
+
+from .discrete_symmetry_operator import DiscreteSymmetryOperator
+
+from .operator_connection import OperatorConnection
+
+from .noetic_operator import (
+    # Operator construction
+    build_noetic_operator,
+    build_discrete_laplacian,
+    build_padic_potential,
+    # Eigenvalue computation
+    compute_first_eigenvalue,
+    compute_C_from_lambda,
+    # Spectral hierarchy (new)
+    compute_spectral_mean,
+    compute_C_coherence,
+    compute_f0_from_hierarchy,
+    validate_spectral_hierarchy,
+    # Validation functions
+    validate_lambda_C_relationship,
+    analyze_f0_C_relationship,
+    validate_operator_self_adjoint,
+    run_complete_noetic_validation,
+    # Constants - spectral hierarchy
+    F0_TARGET,
+    C_PRIMARY,
+    C_COHERENCE,
+    C_TARGET,
+    LAMBDA_0_TARGET,
+    EULER_MASCHERONI,
+    PHI,
+    DELTA_FRACTAL,
+    O4_REFINEMENT
+)
+
+from .spectral_constants import (
+    # Fundamental constants
+    C_PRIMARY,
+    C_COHERENCE,
+    LAMBDA_0,
+    F0 as F0_SPECTRAL,
+    OMEGA_0 as OMEGA_0_SPECTRAL,
+    PHI,
+    EULER_GAMMA,
+    COHERENCE_FACTOR,
+    # Classes
+    SpectralLevel,
+    # Functions
+    compute_primary_constant,
+    compute_coherence_constant,
+    compute_coherence_factor,
+    derive_f0_from_constants,
+    verify_f0_coherence,
+    validate_dual_constants
+)
+
+from .spectral_coordinates import (
+    # Constants
+    F0 as F0_COORDINATES,
+    GAMMA_1,
+    TAU_IMAGINARY_CONSTANT,
+    # Functions
+    compute_tau,
+    compute_tau_real,
+    compute_tau_imaginary,
+    compute_tau_batch,
+    compute_tau_dictionary,
+    verify_monotonicity,
+    verify_constant_imaginary,
+    get_standard_examples,
+    analyze_spectral_coordinates,
+    validate_spectral_coordinates
+)
+
+from .horizon_detector import (
+    HorizonDetector,
+    detect_horizons_from_operator,
+    validate_horizon_riemann_correspondence
+)
+from .dirac_spectral_operator import DiracSpectralOperator
+
+from .hermetic_trace_operator import (
+    # Operator construction
+    build_dirac_spectral_operator,
+    build_hermetic_noetic_operator,
+    # Trace formula functions
+    compute_trace_zeta_regularized,
+    compute_hermetic_trace_formula,
+    # Verification
+    verify_spectral_identity,
+    demonstrate_hermetic_trace_identity
+)
+
+from .master_operator_o3 import MasterOperatorO3
+from .t_infinity_cubed import TInfinityCubedOperator
+
+# Flancos Rojos Closure modules
+from .adelic_viscosity_operator import (
+    VladimirLaplacian,
+    AdelicViscosityOperator,
+    demonstrate_remainder_control,
+    NU_ADELIC,
+    is_prime,
+    first_n_primes
+)
+
+from .hadamard_abc_coherence import (
+    HadamardFactorization,
+    ABCCoherenceLemma,
+    XiOperatorIdentity,
+    demonstrate_hadamard_abc_closure,
+    xi_function,
+    xi_normalized
+)
+
+# All exports
+from .atlas3_kato_rellich import (
+    RelativeBoundednessTest,
+    verify_atlas3_kato_rellich,
+)
+from .reduced_model_operator import ReducedModelOperator
+
+from .berry_keating_self_adjointness import (
+    BerryKeatingOperator,
+    KatoRellichVerifier,
+    NelsonCommutatorVerifier,
+    VonNeumannExtensionVerifier,
+    ResolventControlVerifier,
+    SpectrumExclusionVerifier,
+    SpectralCorrespondenceVerifier,
+    verify_berry_keating_self_adjointness,
+    C_BERRY_KEATING,
+    HAS_MPMATH
+)
+
+from .qcal_spectral_operator import (
+    QCALSpectralOperator,
+    QCALSpectralResult,
+    certify_qcal_spectral_operator,
+    F0_QCAL as F0_QCAL_SPECTRAL,
+    C_QCAL as C_QCAL_SPECTRAL,
+    PSI_THRESHOLD as PSI_THRESHOLD_QCAL,
+)
+
+# QCAL Chamber 261 — Tachyonic Censorship & UPE Signal (Mar 2026)
+from .qcal_chamber_261 import (
+    tachyonic_censorship,
+    compute_upe_signal,
+    Chamber261Config,
+    QCALChamber261,
+    run_chamber_261,
+    PSI_CENSORSHIP,
+    F_HRV_DEFAULT,
+    LAMBDA_RIEMANN_DEFAULT,
+)
+
+# FALLO Closures - Mathematical Derivations (Feb 2026)
+from .weyl_law_harmonic_oscillator import (
+    WeylLawHarmonicOscillator,
+    WeylLawResult,
+    HarmonicOscillatorSpectrum,
+    generate_weyl_law_certificate
+)
+from .compact_support_convergence import (
+    CompactSupportConvergence,
+    CompactSupportResult,
+    generate_compact_support_certificate
+)
+from .scattering_wave_operators import (
+    ScatteringTheoryHPsi,
+    WaveOperatorResult,
+    SMatrixResult,
+    generate_scattering_certificate
+)
+from .weyl_coefficient_integral import (
+    WeylCoefficientIntegral,
+    WeylCoefficientResult,
+    generate_weyl_coefficient_certificate,
+    ALPHA_ORIGINAL,
+    ALPHA_CORRECTED
+)
+
+from .langer_olver_transformation import (
+    LangerOlverTransformation,
+    LangerOlverResult,
+    compute_weyl_m_function,
+    compute_scattering_phase,
+    generate_qcal_certificate as generate_langer_olver_certificate
+)
+
+from .wkb_v_osc_derivation import (
+    WKBQuantization,
+    DensityOfStates,
+    AbelTransform,
+    VOscPotential,
+    WuSprungHamiltonianCorrected,
+    WKBResult,
+    AbelTransformResult,
+    VOscResult,
+    compute_smooth_density,
+    compute_oscillatory_density,
+    abel_integral_asymptotic,
+    abel_integral_exact,
+    generate_qcal_certificate as generate_wkb_vosc_certificate,
+)
+
+from .riemann_sistema_Z import (
+    CompactificacionNoetica,
+    FiltroPoissonAdelico,
+    DeterminanteHadamard,
+    SistemaDinamicoZ,
+    RiemannSistemaZCompleto,
+    F0_QCAL,
+    C_COHERENCE as C_COHERENCE_SISTEMA_Z,
+    C_PRIMARY as C_PRIMARY_SISTEMA_Z,
+    PSI_THRESHOLD,
+    PSI_TARGET,
+)
+
+# Idele Class Self-Adjoint Operator and ξ(s) — Mar 2026
+from .idele_class_selfadjoint_xi import (
+    IdeleClassSelfAdjointXiOperator,
+    IdeleHilbertSpaceResult,
+    XiFunctionResult,
+    SelfAdjointOperatorResult,
+    SpectrumResult as IdeleSpectrumResult,
+    FunctionalEquationResult,
+    XiSpectralCorrespondenceResult,
+    IdeleClassValidationCertificate,
+    verify_idele_class_selfadjoint_xi,
+    RIEMANN_ZEROS_IMAGINARY,
+)
+# Spectral Projection Operator P_Ω (Mar 2026)
+from .spectral_projection_operator import (
+    SpectralProjectionOperator,
+    ProjectionResult,
+    ResolutionOfIdentityResult,
+    SpectralSubspaceResult,
+    build_spectral_projection,
+    generate_projection_certificate,
+)
+
+# Ruelle-Selberg Transfer Operator and Gesto Final de Mathesis (Mar 2026)
+from .ruelle_selberg_transfer_operator import (
+    RuelleSelbergTransferOperator,
+    NuclearTraceResult,
+    TransverseJacobian,
+    PoincareDeterminantResult,
+    ArchimedeanWeylTerm,
+    ArchimedeanResult,
+    MathesisFredholmXi,
+    FredholmDeterminantResult,
+    MathesisGestoResult,
+    gesto_final_mathesis,
+)
+
+# Resolvent Diagonal Kernel and Regularized Trace: Tr_reg(R_s) = ξ'(s)/ξ(s) (Apr 2026)
+from .resolvent_diagonal_trace import (
+    DiagonalKernelResolver,
+    DiagonalKernelResult,
+    DirichletSeriesDecomposition,
+    ArchimedeanContributionComputer,
+    XiLogarithmicDerivative,
+    RegularizedTraceResolver,
+    TraceDecompositionResult,
+    verify_resolvent_trace_identity,
+)
+
+__all__ = [
+    'construct_H_psi',
+    'compute_spectrum',
+    'validate_spectrum',
+    'load_riemann_zeros',
+    'oscillatory_weight',
+    'wave_equation_rhs',
+    'F0',
+    'OMEGA_0',
+    'ZETA_PRIME_HALF',
+    'C_QCAL',
+    'LAMBDA_0',
+    'C_UNIVERSAL',
+    'DiscreteSymmetryOperator',
+    'OperatorConnection',
+    # Noetic operator exports
+    'build_noetic_operator',
+    'build_discrete_laplacian',
+    'build_padic_potential',
+    'compute_first_eigenvalue',
+    'compute_C_from_lambda',
+    # Spectral hierarchy
+    'compute_spectral_mean',
+    'compute_C_coherence',
+    'compute_f0_from_hierarchy',
+    'validate_spectral_hierarchy',
+    # Validation
+    'validate_lambda_C_relationship',
+    'analyze_f0_C_relationship',
+    'validate_operator_self_adjoint',
+    'run_complete_noetic_validation',
+    # Constants from noetic_operator
+    'F0_TARGET',
+    'C_TARGET',
+    'LAMBDA_0_TARGET',
+    'EULER_MASCHERONI',
+    'DELTA_FRACTAL',
+    'O4_REFINEMENT',
+    # Spectral constants exports
+    'C_PRIMARY',
+    'C_COHERENCE',
+    'F0_SPECTRAL',
+    'OMEGA_0_SPECTRAL',
+    'PHI',
+    'EULER_GAMMA',
+    'COHERENCE_FACTOR',
+    'SpectralLevel',
+    'compute_primary_constant',
+    'compute_coherence_constant',
+    'compute_coherence_factor',
+    'derive_f0_from_constants',
+    'verify_f0_coherence',
+    'validate_dual_constants',
+    # Horizon detector exports
+    'HorizonDetector',
+    'detect_horizons_from_operator',
+    'validate_horizon_riemann_correspondence',
+    # Operator duality exports
+    'DiracSpectralOperator',
+    # Hermetic trace operator exports (PHASE VI)
+    'build_dirac_spectral_operator',
+    'build_hermetic_noetic_operator',
+    'compute_trace_zeta_regularized',
+    'compute_hermetic_trace_formula',
+    'verify_spectral_identity',
+    'demonstrate_hermetic_trace_identity',
+    # Master operator
+    'MasterOperatorO3',
+    'TInfinityCubedOperator',
+    # Spectral coordinates exports
+    'F0_COORDINATES',
+    'GAMMA_1',
+    'TAU_IMAGINARY_CONSTANT',
+    'compute_tau',
+    'compute_tau_real',
+    'compute_tau_imaginary',
+    'compute_tau_batch',
+    'compute_tau_dictionary',
+    'verify_monotonicity',
+    'verify_constant_imaginary',
+    'get_standard_examples',
+    'analyze_spectral_coordinates',
+    'validate_spectral_coordinates',
+    # Flancos Rojos closure - Adelic Viscosity
+    'VladimirLaplacian',
+    'AdelicViscosityOperator',
+    'demonstrate_remainder_control',
+    'NU_ADELIC',
+    # Flancos Rojos closure - Hadamard-ABC
+    'HadamardFactorization',
+    'ABCCoherenceLemma',
+    'XiOperatorIdentity',
+    'demonstrate_hadamard_abc_closure',
+    'xi_function',
+    'xi_normalized',
+    # ATLAS³ Kato-Rellich exports
+    'RelativeBoundednessTest',
+    'verify_atlas3_kato_rellich',
+    # Reduced model operator exports
+    'ReducedModelOperator',
+    # Berry-Keating self-adjointness exports
+    'BerryKeatingOperator',
+    'KatoRellichVerifier',
+    'NelsonCommutatorVerifier',
+    'VonNeumannExtensionVerifier',
+    'ResolventControlVerifier',
+    'SpectrumExclusionVerifier',
+    'SpectralCorrespondenceVerifier',
+    'verify_berry_keating_self_adjointness',
+    'C_BERRY_KEATING',
+    'HAS_MPMATH',
+    # QCAL Spectral Operator (Mar 2026)
+    'QCALSpectralOperator',
+    'QCALSpectralResult',
+    'certify_qcal_spectral_operator',
+    'F0_QCAL_SPECTRAL',
+    'C_QCAL_SPECTRAL',
+    'PSI_THRESHOLD_QCAL',
+    # QCAL Chamber 261 — Tachyonic Censorship & UPE Signal (Mar 2026)
+    'tachyonic_censorship',
+    'compute_upe_signal',
+    'Chamber261Config',
+    'QCALChamber261',
+    'run_chamber_261',
+    'PSI_CENSORSHIP',
+    'F_HRV_DEFAULT',
+    'LAMBDA_RIEMANN_DEFAULT',
+    # FALLO Closures (Feb 2026)
+    'WeylLawHarmonicOscillator',
+    'WeylLawResult',
+    'HarmonicOscillatorSpectrum',
+    'generate_weyl_law_certificate',
+    'CompactSupportConvergence',
+    'CompactSupportResult',
+    'generate_compact_support_certificate',
+    'ScatteringTheoryHPsi',
+    'WaveOperatorResult',
+    'SMatrixResult',
+    'generate_scattering_certificate',
+    'WeylCoefficientIntegral',
+    'WeylCoefficientResult',
+    'generate_weyl_coefficient_certificate',
+    'ALPHA_ORIGINAL',
+    'ALPHA_CORRECTED',
+    # Langer-Olver Transformation (Feb 2026)
+    'LangerOlverTransformation',
+    'LangerOlverResult',
+    'compute_weyl_m_function',
+    'compute_scattering_phase',
+    'generate_langer_olver_certificate',
+    # WKB Quantization and V_osc Derivation (Mar 2026)
+    'WKBQuantization',
+    'DensityOfStates',
+    'AbelTransform',
+    'VOscPotential',
+    'WuSprungHamiltonianCorrected',
+    'WKBResult',
+    'AbelTransformResult',
+    'VOscResult',
+    'compute_smooth_density',
+    'compute_oscillatory_density',
+    'abel_integral_asymptotic',
+    'abel_integral_exact',
+    'generate_wkb_vosc_certificate',
+    # Riemann Sistema Z - Berry-Keating Gap Closure (Mar 2026)
+    'CompactificacionNoetica',
+    'FiltroPoissonAdelico',
+    'DeterminanteHadamard',
+    'SistemaDinamicoZ',
+    'RiemannSistemaZCompleto',
+    # Idele Class Self-Adjoint Operator and ξ(s) (Mar 2026)
+    'IdeleClassSelfAdjointXiOperator',
+    'IdeleHilbertSpaceResult',
+    'XiFunctionResult',
+    'SelfAdjointOperatorResult',
+    'IdeleSpectrumResult',
+    'FunctionalEquationResult',
+    'XiSpectralCorrespondenceResult',
+    'IdeleClassValidationCertificate',
+    'verify_idele_class_selfadjoint_xi',
+    'RIEMANN_ZEROS_IMAGINARY',
+    # Spectral Projection Operator P_Ω (Mar 2026)
+    'SpectralProjectionOperator',
+    'ProjectionResult',
+    'ResolutionOfIdentityResult',
+    'SpectralSubspaceResult',
+    'build_spectral_projection',
+    'generate_projection_certificate',
+    # Ruelle-Selberg Transfer Operator and Gesto Final de Mathesis (Mar 2026)
+    'RuelleSelbergTransferOperator',
+    'NuclearTraceResult',
+    'TransverseJacobian',
+    'PoincareDeterminantResult',
+    'ArchimedeanWeylTerm',
+    'ArchimedeanResult',
+    'MathesisFredholmXi',
+    'FredholmDeterminantResult',
+    'MathesisGestoResult',
+    'gesto_final_mathesis',
+    # Resolvent Diagonal Kernel and Regularized Trace (Apr 2026)
+    'DiagonalKernelResolver',
+    'DiagonalKernelResult',
+    'DirichletSeriesDecomposition',
+    'ArchimedeanContributionComputer',
+    'XiLogarithmicDerivative',
+    'RegularizedTraceResolver',
+    'TraceDecompositionResult',
+    'verify_resolvent_trace_identity',
+]

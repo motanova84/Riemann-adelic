@@ -1,0 +1,274 @@
+{
+  "timestamp": "2026-02-18T17:22:11.556877",
+  "qcal_constants": {
+    "f0": 141.7001,
+    "C": 244.36,
+    "log_scale": 4.953712852412687
+  },
+  "tests": {
+    "rapid_decay": {
+      "passed": true,
+      "details": [
+        {
+          "exponent_n": 2,
+          "constant_C_n": 9.176865662002067,
+          "max_ratio": 9.176865662002067,
+          "decay_verified": "True",
+          "decay_points_checked": 1000
+        },
+        {
+          "exponent_n": 3,
+          "constant_C_n": 31.609552735298006,
+          "max_ratio": 31.609552735298006,
+          "decay_verified": "True",
+          "decay_points_checked": 1000
+        },
+        {
+          "exponent_n": 4,
+          "constant_C_n": 120.91269417412158,
+          "max_ratio": 120.91269417412158,
+          "decay_verified": "True",
+          "decay_points_checked": 1000
+        },
+        {
+          "exponent_n": 5,
+          "constant_C_n": 503.011565303579,
+          "max_ratio": 503.011565303579,
+          "decay_verified": "True",
+          "decay_points_checked": 1000
+        }
+      ]
+    },
+    "tate_integrals": {
+      "passed": true,
+      "details": [
+        {
+          "prime": 2,
+          "approximation": "(1.3333333333333333+0j)",
+          "euler_factor": "(1.3333333333333333+0j)",
+          "relative_error": 0.0
+        },
+        {
+          "prime": 3,
+          "approximation": "(1.125+0j)",
+          "euler_factor": "(1.125+0j)",
+          "relative_error": 0.0
+        },
+        {
+          "prime": 5,
+          "approximation": "(1.0416666666666667+0j)",
+          "euler_factor": "(1.0416666666666667+0j)",
+          "relative_error": 0.0
+        },
+        {
+          "prime": 7,
+          "approximation": "(1.0208333333333333+0j)",
+          "euler_factor": "(1.0208333333333333+0j)",
+          "relative_error": 0.0
+        },
+        {
+          "prime": 11,
+          "approximation": "(1.0083333333333333+0j)",
+          "euler_factor": "(1.0083333333333333+0j)",
+          "relative_error": 0.0
+        },
+        {
+          "prime": 13,
+          "approximation": "(1.005952380952381+0j)",
+          "euler_factor": "(1.005952380952381+0j)",
+          "relative_error": 0.0
+        },
+        {
+          "prime": 17,
+          "approximation": "(1.0034722222222223+0j)",
+          "euler_factor": "(1.0034722222222223+0j)",
+          "relative_error": 0.0
+        },
+        {
+          "prime": 19,
+          "approximation": "(1.0027777777777778+0j)",
+          "euler_factor": "(1.0027777777777778+0j)",
+          "relative_error": 0.0
+        },
+        {
+          "prime": 23,
+          "approximation": "(1.0018939393939394+0j)",
+          "euler_factor": "(1.0018939393939394+0j)",
+          "relative_error": 0.0
+        },
+        {
+          "prime": 29,
+          "approximation": "(1.0011904761904762+0j)",
+          "euler_factor": "(1.0011904761904762+0j)",
+          "relative_error": 0.0
+        }
+      ]
+    },
+    "von_mangoldt_emergence": {
+      "passed": true,
+      "details": [
+        {
+          "prime_p": 2,
+          "log_p": 0.6931471805599453,
+          "log_derivative_at_half": "(1.6734053240284927+0j)",
+          "expected_value": "(1.673405324028493+0j)",
+          "relative_error": 1.326902703945566e-16,
+          "extracted_log_p": 0.6931471805599452,
+          "log_p_extraction_error": 1.6017132519074588e-16,
+          "emergence_verified": "True"
+        },
+        {
+          "prime_p": 3,
+          "log_p": 1.0986122886681098,
+          "log_derivative_at_half": "(1.5007322952304007+0j)",
+          "expected_value": "(1.5007322952304005+0j)",
+          "relative_error": 1.4795750423358606e-16,
+          "extracted_log_p": 1.0986122886681098,
+          "log_p_extraction_error": 0.0,
+          "emergence_verified": "True"
+        },
+        {
+          "prime_p": 5,
+          "log_p": 1.6094379124341003,
+          "log_derivative_at_half": "(1.3020626225505254+0j)",
+          "expected_value": "(1.3020626225505254+0j)",
+          "relative_error": 0.0,
+          "extracted_log_p": 1.6094379124341,
+          "log_p_extraction_error": 1.379640700704092e-16,
+          "emergence_verified": "True"
+        },
+        {
+          "prime_p": 7,
+          "log_p": 1.9459101490553132,
+          "log_derivative_at_half": "(1.1823840795220504+0j)",
+          "expected_value": "(1.1823840795220504+0j)",
+          "relative_error": 0.0,
+          "extracted_log_p": 1.9459101490553132,
+          "log_p_extraction_error": 0.0,
+          "emergence_verified": "True"
+        },
+        {
+          "prime_p": 11,
+          "log_p": 2.3978952727983707,
+          "log_derivative_at_half": "(1.035081417923747+0j)",
+          "expected_value": "(1.035081417923747+0j)",
+          "relative_error": 0.0,
+          "extracted_log_p": 2.3978952727983707,
+          "log_p_extraction_error": 0.0,
+          "emergence_verified": "True"
+        }
+      ]
+    },
+    "mellin_transform": {
+      "passed": true,
+      "details": {
+        "results": [
+          {
+            "s": "(2+0j)",
+            "mellin_infinite": "(0.9087172784699058+0j)",
+            "euler_product_finite": "(1.6330704904957392+0j)",
+            "zeta_reference": "(1.6449340668482266+0j)",
+            "product_consistency": "True"
+          },
+          {
+            "s": "(2.5+0j)",
+            "mellin_infinite": "(1.0297068199416877+0j)",
+            "euler_product_finite": "(1.3402411943371024+0j)",
+            "zeta_reference": "(1.3414872572509176+0j)",
+            "product_consistency": "True"
+          },
+          {
+            "s": "(3+0j)",
+            "mellin_infinite": "(1.273848164590282+0j)",
+            "euler_product_finite": "(1.2018992716758672+0j)",
+            "zeta_reference": "(1.202056903159594+0j)",
+            "product_consistency": "True"
+          }
+        ],
+        "primes_used": [
+          2,
+          3,
+          5,
+          7,
+          11,
+          13,
+          17,
+          19,
+          23,
+          29
+        ],
+        "convergence_verified": true
+      }
+    },
+    "von_mangoldt_function": {
+      "passed": true,
+      "details": [
+        {
+          "n": 2,
+          "\u039b(n)": 0.6931471805599453
+        },
+        {
+          "n": 3,
+          "\u039b(n)": 1.0986122886681098
+        },
+        {
+          "n": 4,
+          "\u039b(n)": 0.6931471805599453
+        },
+        {
+          "n": 5,
+          "\u039b(n)": 1.6094379124341003
+        },
+        {
+          "n": 7,
+          "\u039b(n)": 1.9459101490553132
+        },
+        {
+          "n": 8,
+          "\u039b(n)": 0.6931471805599453
+        },
+        {
+          "n": 9,
+          "\u039b(n)": 1.0986122886681098
+        },
+        {
+          "n": 11,
+          "\u039b(n)": 2.3978952727983707
+        },
+        {
+          "n": 13,
+          "\u039b(n)": 2.5649493574615367
+        },
+        {
+          "n": 16,
+          "\u039b(n)": 0.6931471805599453
+        },
+        {
+          "n": 17,
+          "\u039b(n)": 2.833213344056216
+        },
+        {
+          "n": 19,
+          "\u039b(n)": 2.9444389791664403
+        },
+        {
+          "n": 23,
+          "\u039b(n)": 3.1354942159291497
+        },
+        {
+          "n": 25,
+          "\u039b(n)": 1.6094379124341003
+        },
+        {
+          "n": 27,
+          "\u039b(n)": 1.0986122886681098
+        },
+        {
+          "n": 29,
+          "\u039b(n)": 3.367295829986474
+        }
+      ]
+    }
+  },
+  "path_a_status": "COMPLETE"
+}

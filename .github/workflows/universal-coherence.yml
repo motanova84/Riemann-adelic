@@ -1,0 +1,42 @@
+name: 🔄 Universal Coherence Validation
+
+on:
+  push:
+    paths:
+      - 'schema/**'
+      - 'tools/**'
+      - '.github/workflows/universal-coherence.yml'
+      - 'formalization/lean/**'
+  pull_request:
+    paths:
+      - 'schema/**'
+      - 'tools/**'
+      - '.github/workflows/universal-coherence.yml'
+      - 'formalization/lean/**'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip==24.3.1
+          pip install -r requirements-lock.txt
+      - name: Universal Coherence Validation
+        run: |
+          python tools/universal_kernel.py schema/*.jsonld --allow-kernel Lean4 --allow-kernel Dedukti
+      - name: Build semantic graph
+        run: |
+          python tools/build_graph.py schema/*.jsonld --output graph.ttl
+      - name: Upload coherence artefacts
+        uses: actions/upload-artifact@v4.4.3
+        with:
+          name: universal-coherence
+          path: |
+            graph.ttl
+            schema/*.jsonld

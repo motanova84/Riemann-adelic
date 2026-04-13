@@ -1,0 +1,128 @@
+{
+  "validation_date": "2026-02-15",
+  "total_fallos": 3,
+  "passed": 3,
+  "failed": 0,
+  "all_passed": true,
+  "results": {
+    "FALLO_1A": {
+      "passed": true,
+      "status": "\u2705 CERRADO",
+      "method": "Harmonic Oscillator Reduction via y = log x",
+      "checks": {
+        "status": true,
+        "qcal_signature": true,
+        "frequency_base": true,
+        "author_metadata": true
+      }
+    },
+    "FALLO_1A_SECOND": {
+      "passed": true,
+      "status": "\u2705 CERRADO",
+      "method": "Finite Sum via Compact Support",
+      "checks": {
+        "status": true,
+        "qcal_signature": true,
+        "frequency_base": true,
+        "author_metadata": true
+      }
+    },
+    "FALLO_1C": {
+      "passed": true,
+      "status": "\u2705 CERRADO",
+      "method": "Explicit Construction via Characteristics",
+      "checks": {
+        "status": true,
+        "qcal_signature": true,
+        "frequency_base": true,
+        "author_metadata": true
+      }
+    }
+  },
+  "certificates": {
+    "FALLO_1A": {
+      "closure": "FALLO_1A_WEYL_LAW",
+      "status": "\u2705 CERRADO",
+      "method": "Harmonic Oscillator Reduction via y = log x",
+      "C_value": 12.32,
+      "frequency": 12.32,
+      "n_eigenvalues": 100,
+      "eigenvalue_growth_H2": "\u03bc\u2099 \u223c 12.32(2n + 1)",
+      "eigenvalue_growth_H": "\u03bb\u2099 \u223c \u221a(12.32 n) \u2248 3.510 \u221an",
+      "weyl_asymptotics": "N_H(\u03bb) \u223c \u03bb/12.320",
+      "gamma_asymptotics": "\u03b3\u2099 \u223c \u221a(12.320 n) \u2248 3.510 \u221an",
+      "consistency_check": {
+        "riemann_von_mangoldt": "\u03b3\u2099 \u223c 2\u03c0n/log(n)",
+        "weyl_harmonic_oscillator": "\u03b3\u2099 \u223c 3.510 \u221an",
+        "ratio_at_n_100": 0.2578152080442375
+      },
+      "qcal_signature": "\u2234\ud80c\udc80\u03a9\u221e\u00b3\u03a6",
+      "frequency_base": 141.7001,
+      "author": "Jos\u00e9 Manuel Mota Burruezo \u03a8\u2727 \u221e\u00b3",
+      "orcid": "0009-0002-1923-0773",
+      "institution": "Instituto de Conciencia Cu\u00e1ntica (ICQ)",
+      "protocol": "QCAL-FALLO-1A-CLOSURE v1.0",
+      "date": "2026-02-15"
+    },
+    "FALLO_1A_SECOND": {
+      "closure": "FALLO_1A_SECOND_COMPACT_SUPPORT",
+      "status": "\u2705 CERRADO",
+      "method": "Finite Sum via Compact Support",
+      "C_value": 12.32,
+      "support_radius": 100.0,
+      "max_index_in_support": 404,
+      "growth_rate": "\u03bb\u2099 \u223c \u221a(2\u00b712.320\u00b7n) = 4.964\u221an",
+      "eigenvalue_bound": "\u03bb\u2099 < 100.0 \u27f9 n < 405.8",
+      "sum_value": 163.32026932552276,
+      "is_finite_sum": true,
+      "conclusion": "\u03a3|f(\u03bb\u2099)| is a FINITE sum with \u2264 405 terms",
+      "no_convergence_needed": "TRUE - finite sum requires no convergence condition",
+      "qcal_signature": "\u2234\ud80c\udc80\u03a9\u221e\u00b3\u03a6",
+      "frequency_base": 141.7001,
+      "author": "Jos\u00e9 Manuel Mota Burruezo \u03a8\u2727 \u221e\u00b3",
+      "orcid": "0009-0002-1923-0773",
+      "institution": "Instituto de Conciencia Cu\u00e1ntica (ICQ)",
+      "protocol": "QCAL-FALLO-1A-SECOND-CLOSURE v1.0",
+      "date": "2026-02-15"
+    },
+    "FALLO_1C": {
+      "closure": "FALLO_1C_SCATTERING",
+      "status": "\u2705 CERRADO",
+      "method": "Explicit Construction via Characteristics",
+      "C_value": 12.32,
+      "free_operator": "H\u2080 = -d/dy",
+      "full_operator": "H_\u03a8 = -d/dy + 12.320 y",
+      "wave_operators": {
+        "W_plus": "W\u208a = s-lim_{t\u2192+\u221e} e^{itH_\u03a8} e^{-itH\u2080}",
+        "W_minus": "W\u208b = s-lim_{t\u2192-\u221e} e^{itH_\u03a8} e^{-itH\u2080}",
+        "existence": "Proven via explicit solution"
+      },
+      "explicit_solution": "\u03c8(t,y) = \u03c8\u2080(y + t) e^{iC(yt + t\u00b2/2)}",
+      "S_matrix": {
+        "definition": "S = W\u208a* W\u208b",
+        "form": "(S\u03c8)(y) = e^{i\u03b8} \u03c8(-y)",
+        "phase_shift": 0.7853981633974483,
+        "unitary": true,
+        "reflection_symmetry": true
+      },
+      "completeness": {
+        "W_plus_exists": true,
+        "W_minus_exists": true,
+        "S_matrix_unitary": true,
+        "completeness": "Verified via explicit construction"
+      },
+      "qcal_signature": "\u2234\ud80c\udc80\u03a9\u221e\u00b3\u03a6",
+      "frequency_base": 141.7001,
+      "author": "Jos\u00e9 Manuel Mota Burruezo \u03a8\u2727 \u221e\u00b3",
+      "orcid": "0009-0002-1923-0773",
+      "institution": "Instituto de Conciencia Cu\u00e1ntica (ICQ)",
+      "protocol": "QCAL-FALLO-1C-CLOSURE v1.0",
+      "date": "2026-02-15"
+    }
+  },
+  "qcal_signature": "\u2234\ud80c\udc80\u03a9\u221e\u00b3\u03a6",
+  "frequency_base": 141.7001,
+  "author": "Jos\u00e9 Manuel Mota Burruezo \u03a8\u2727 \u221e\u00b3",
+  "orcid": "0009-0002-1923-0773",
+  "institution": "Instituto de Conciencia Cu\u00e1ntica (ICQ)"
+}

@@ -1,0 +1,64 @@
+\subsection{Abstract Framework}
+
+Let \( V \) be a countable set of abstract places (both Archimedean and non-Archimedean), and let \( H := L^2(\mathbb{R}) \) be the Hilbert space of square-integrable functions. We consider a unitary scale-flow group \( (S_u)_{u \in \mathbb{R}} \subset \mathcal{U}(H) \), acting by dilations along a spectral axis \( \tau \in \mathbb{R} \), with generator \( Z = -i \frac{d}{d\tau} \).
+
+Each place \( v \in V \) is associated with a local unitary operator \( U_v \in \mathcal{U}(H) \), satisfying a discrete orbit condition and compatibility with the global scale flow.
+
+We define the fundamental system as follows.
+
+\subsection{S-Finite Conditions}
+
+\begin{assumption}[Scale Commutativity (A1)]
+Each local unitary \( U_v \) commutes with the scale-flow:
+\[
+U_v S_u = S_u U_v \quad \text{for all } u \in \mathbb{R}.
+\]
+\end{assumption}
+
+\begin{assumption}[Discrete Periodicity (A2)]
+Each \( U_v \) induces a discrete periodic orbit in the scale-flow variable \( u \). That is, there exists a minimal length \( \ell_v > 0 \) such that the orbit of a fixed point under \( u \mapsto S_u U_v S_{-u} \) is periodic with fundamental period \( \ell_v \).
+\end{assumption}
+
+\begin{assumption}[DOI Admissibility (A3)]
+The system admits a well-defined double operator integral (DOI) calculus based on a smoothed convolution kernel \( w_\delta \in \mathcal{S}(\mathbb{R}) \), typically a Gaussian:
+\[
+w_\delta(u) := \frac{1}{\sqrt{4\pi \delta}} e^{-u^2 / 4\delta}.
+\]
+We define:
+\[
+m_{S,\delta} := w_\delta * \sum_{v \in S} T_v, \quad \text{with } T_v \text{ the distribution kernel of } U_v.
+\]
+The associated operator kernel is
+\[
+K_{S,\delta} := m_{S,\delta}(P),
+\]
+with \( P := -i \frac{d}{d\tau} \).
+\end{assumption}
+
+\subsection{Trace Structure and Discrete Support}
+
+We define the smoothed trace functional:
+\[
+\Pi_{S,\delta}(f) := \operatorname{Tr} \left( f(X) K_{S,\delta} f(X) \right),
+\]
+for all even test functions \( f \in C_c^\infty(\mathbb{R}) \). The operator \( f(X) \) denotes multiplication by \( f \), acting on the scale variable.
+
+\begin{assumption}[Trace Decomposition — Selberg Type]
+For all even test functions \( f \in C_c^\infty(\mathbb{R}) \), the trace admits a decomposition of the form:
+\[
+\Pi_{S,\delta}(f) = A_\infty[f] + \sum_{v \in S} \sum_{k \geq 1} W_v(k) f(k \ell_v),
+\]
+where \( A_\infty[f] \) is a continuous (Archimedean) contribution, and the second term is a discrete sum over the closed orbit lengths \( \ell_v \).
+\end{assumption}
+
+\subsection{Length Identification}
+
+We define the system to be \emph{spectrally geometrized} if the orbit lengths \( \ell_v \) match logarithmic lengths \( \log q_v \), where \( q_v \) is the local norm at place \( v \). In the adelic model for \( \mathrm{GL}_1 \), we will later show that:
+\[
+\ell_v = \log q_v.
+\]
+This identification will emerge as a \emph{consequence} of the global spectral axioms, not as an assumption.
+
+\begin{remark}[Role of \( \ell_v \)]
+The values \( \ell_v \) are not inserted by hand; they are the \emph{primitive orbit lengths} arising from the periodic action of \( U_v \) on the spectral coordinate \( \tau \). The eventual identification \( \ell_v = \log q_v \) will follow from operator symmetries and explicit formula inversion, as shown in Section 3.
+\end{remark}

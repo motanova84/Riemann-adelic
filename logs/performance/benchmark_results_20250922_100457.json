@@ -1,0 +1,30 @@
+{
+  "metadata": {
+    "timestamp": "2025-09-22T10:04:57.230766",
+    "python_version": "3.12.3 (main, Aug 14 2025, 17:47:21) [GCC 13.3.0]",
+    "platform": "linux",
+    "cpu_count": 4,
+    "total_memory_gb": 15.620681762695312
+  },
+  "results": [
+    {
+      "timestamp": "2025-09-22T10:04:57.230667",
+      "test_name": "quick_test",
+      "parameters": {
+        "max_primes": 50,
+        "max_zeros": 50,
+        "precision_dps": 15,
+        "integration_t": 5
+      },
+      "execution_time": 4.805058240890503,
+      "memory_peak_mb": 4.125,
+      "memory_average_mb": 2.375,
+      "arithmetic_result": "2.73379095183596",
+      "zero_result": "-0.002678284255677",
+      "absolute_error": "2.73646923609164",
+      "relative_error": "1.00097969607145",
+      "convergence_rate": null,
+      "stability_score": null
+    }
+  ]
+}

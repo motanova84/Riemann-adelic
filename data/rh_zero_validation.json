@@ -1,0 +1,16 @@
+{
+  "timestamp": "2025-11-29T19:36:36.898435",
+  "version": "V7.0-Coronaci\u00f3n-Final",
+  "total_zeros_checked": 50,
+  "valid_zeros": 50,
+  "failed_zeros": 0,
+  "success_rate": 1.0,
+  "max_error": 3.5422857690865914e-14,
+  "functional_eq_checks": 0,
+  "functional_eq_valid": 1,
+  "precision_threshold": 1e-10,
+  "qcal_frequency": 141.7001,
+  "qcal_coherence": 244.36,
+  "elapsed_seconds": 0.09565591812133789,
+  "status": "SUCCESS"
+}

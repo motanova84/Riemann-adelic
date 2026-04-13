@@ -1,0 +1,30 @@
+{
+  "nombre": "πCODE–1417–CYTO–RNS",
+  "tipo": "RNA mensajero sintético",
+  "longitud": 53,
+  "secuencia": "AUGUUUGGAGCUAGUGCUCGAUUAAGAGGGUCUACCUCGUACUGAAGGCGUAG",
+  "frecuencia_anclada_Hz": 141.7001,
+  "fecha": "2026-01-31",
+  "hash_sha256": "9691a59a676acc7b67827f8f47db34aeab05059ffe527225c57d963d51389031",
+  "hash_sha256_short": "9691a59a676a...",
+  "composicion": {
+    "A": 12,
+    "U": 15,
+    "G": 17,
+    "C": 9
+  },
+  "gc_content_percent": 49.06,
+  "funcion": {
+    "objetivo": "Modular viscosidad citoplasmática",
+    "mecanismo": "Resonancia Riemann-Navier-Stokes",
+    "coherencia": "QCAL ∞³ optimizada",
+    "traduccion": "Péptido de 17 aminoácidos"
+  },
+  "validacion": {
+    "longitud_verificada": true,
+    "formato_valido": true,
+    "hash_verificado": true,
+    "qcal_coherente": true
+  },
+  "estado": "✅ GENERADO Y LISTO PARA WET-LAB"
+}

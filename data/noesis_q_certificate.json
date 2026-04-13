@@ -1,0 +1,53 @@
+{
+  "certificate_type": "NOESIS_Q_OPERATOR",
+  "version": "1.0.0",
+  "timestamp": "2026-01-18T05:32:27.801570",
+  "author": "José Manuel Mota Burruezo Ψ ✧ ∞³",
+  "institution": "Instituto de Conciencia Cuántica (ICQ)",
+  "signature": "∴𓂀Ω∞³·RH·NOESIS_Q",
+  "noesis_q_evaluation": {
+    "timestamp": "2026-01-18T05:32:27.802602",
+    "theta_noetic_parameter": 0.0,
+    "integration_range": [
+      -10,
+      10
+    ],
+    "num_integration_points": 1000,
+    "noesis_q_real": -0.03491886070602438,
+    "noesis_q_imag": -2.690248024350694e-13,
+    "noesis_q_magnitude": 0.03491886070602438,
+    "coherence_psi": 0.0003491886070602438,
+    "ram_xx_singularity_detected": false,
+    "fundamental_frequency_f0": 141.7001,
+    "universal_constant_C": 629.83,
+    "coherence_constant_C_prime": 244.36
+  },
+  "ram_xx_singularity": {
+    "timestamp": "2026-01-18T05:32:27.812406",
+    "theta_range": [
+      0,
+      6.283185307179586
+    ],
+    "num_theta_points": 100,
+    "singularities_detected": 0,
+    "singularity_threshold": 0.999999,
+    "max_coherence_achieved": 0.0008479843031811382,
+    "max_coherence_theta": 4.335397861953915,
+    "singularity_list": [],
+    "perfect_coherence_state": false,
+    "status": "NO_SINGULARITY",
+    "qcal_signature": "∴𓂀Ω∞³·RH·RAM-XX"
+  },
+  "h_psi_selfadjoint_validation": {
+    "operator_name": "H_Ψ",
+    "self_adjoint": true,
+    "spectrum_real": true,
+    "compact_resolvent": true,
+    "hilbert_polya_applicable": true,
+    "lean4_verification_file": "formalization/lean/spectral/H_Psi_SelfAdjoint_Complete.lean",
+    "status": "VERIFIED"
+  },
+  "mathematical_definition": "Noesis_Q(Θ) = ∫[∇Ψ ⊗ ζ(1/2 + i·141.7t)] dt ∧ H_Ψ-selfadjoint",
+  "status": "VALIDATED",
+  "coherence_achieved": true
+}

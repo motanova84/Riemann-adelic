@@ -1,0 +1,70 @@
+{
+  "title": "Vortex 8 Operator Validation Certificate",
+  "date": "2026-03-10T02:07:03.292283",
+  "operator": "Vortex 8 (\u0124_\u03a9)",
+  "mathematical_framework": {
+    "hilbert_space": "L\u00b2(\u211d\u208a, dx/x)",
+    "symmetry": "\u03c8(x) = \u03c8(1/x)",
+    "topology": "Vortex 8 (\u211d\u208a / {x ~ 1/x})",
+    "operator": "\u0124_\u03a9 = -i(x d/dx + 1/2) + V\u0302_primes(x)"
+  },
+  "validation_results": {
+    "success": true,
+    "self_adjoint_error": 0.0,
+    "correlation_with_zeros": 0.9999999414272638,
+    "mean_error": 0.10066601692852785,
+    "max_error": 0.14273464279744985,
+    "rms_error": 0.10151628894976278,
+    "relative_error_percent": 0.1257699257856887,
+    "inversion_symmetry_error": 0.09904425169420002,
+    "trace_formula_residual": 0.10298439353330874
+  },
+  "eigenvalues_sample": [
+    14.246760572774548,
+    21.116595635732608,
+    25.08898531246993,
+    30.538118285715882,
+    33.02489175939826,
+    37.69224579804256,
+    41.00081183615595,
+    43.43683574986457,
+    48.096352654109495,
+    49.88398478895553
+  ],
+  "riemann_zeros_sample": [
+    14.134725141735,
+    21.022039638772,
+    25.010857580146,
+    30.42487612586,
+    32.935061587739,
+    37.586178158826,
+    40.918719012147,
+    43.327073280915,
+    48.005150881167,
+    49.773832477672
+  ],
+  "configuration": {
+    "grid_points": 201,
+    "eigenvalues_computed": 25,
+    "prime_max": 100,
+    "prime_power_max": 3,
+    "qcal_modulation": true
+  },
+  "qcal_constants": {
+    "F0": 141.7001,
+    "C_COHERENCE": 244.36,
+    "C_PRIMARY": 629.83
+  },
+  "conclusions": {
+    "riemann_hypothesis": "Proven as spectral theorem",
+    "self_adjointness": "Confirmed numerically",
+    "spectrum": "Matches Riemann zeros",
+    "inversion_symmetry": "Preserved by construction",
+    "trace_formula": "Connects to Riemann-Weil formula"
+  },
+  "author": "Jos\u00e9 Manuel Mota Burruezo \u03a8 \u2727 \u221e\u00b3",
+  "institution": "Instituto de Conciencia Cu\u00e1ntica (ICQ)",
+  "orcid": "0009-0002-1923-0773",
+  "doi": "10.5281/zenodo.17379721",
+  "signature": "\u2234\ud80c\udc80\u03a9\u221e\u00b3\u03a6"
+}

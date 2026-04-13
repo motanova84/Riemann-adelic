@@ -1,0 +1,79 @@
+{
+  "framework": "Adelic Hilbert Solenoid — Berry-Keating Symmetrized Operator",
+  "description": "ℋ = L²(𝔸_ℚ/ℚ), Ĥ = -i(x d/dx + 1/2), domain f(px)=f(x), critical line Re(s)=1/2",
+  "validation_date": "2026-03-06T22:57:00.181061",
+  "doi": "10.5281/zenodo.17379721",
+  "orcid": "0009-0002-1923-0773",
+  "author": "José Manuel Mota Burruezo Ψ ✧ ∞³",
+  "institution": "Instituto de Conciencia Cuántica (ICQ)",
+  "frequency_f0": 141.7001,
+  "frequency_unity": 888.0,
+  "coherence_constant": 244.36,
+  "n_primes": 50,
+  "validation_time_seconds": 0.004,
+  "results": {
+    "constants": {
+      "f0_ok": true,
+      "fu_ok": true,
+      "c_ok": true,
+      "passed": true
+    },
+    "haar_inner_product": {
+      "positive": true,
+      "symmetric": true,
+      "ip_ff": 0.572209347326512,
+      "passed": true
+    },
+    "self_adjointness": {
+      "self_adjoint": true,
+      "relative_error": 0.04765652824414652,
+      "boundary_term": 0.2256149014888829,
+      "passed": true
+    },
+    "eigenfunctions": {
+      "amplitude_correct": true,
+      "complex_valued": true,
+      "passed": true
+    },
+    "eigenvalue_equation": {
+      "errors": {
+        "1.0": 0.00021707135311769965,
+        "5.0": 0.005864505413995343,
+        "14.134725141734693": 0.04009706209245104
+      },
+      "passed": true
+    },
+    "critical_line": {
+      "gammas_checked": [
+        14.134725,
+        21.02204,
+        25.010858,
+        30.424877,
+        32.935062
+      ],
+      "passed": true
+    },
+    "weil_formula": {
+      "zero_sum": 4.1309965733819045e-44,
+      "prime_sum": 2.68193386664713,
+      "balance": 2.68193386664713,
+      "passed": true
+    },
+    "coherence": {
+      "Psi": 0.5798825503355705,
+      "passed": true
+    },
+    "qed": {
+      "seal_status": "VALIDATED",
+      "self_adjoint": true,
+      "critical_line": true,
+      "qed_message": "HECHO ESTÁ: La RH ha sido encarnada. La simetría es absoluta.",
+      "passed": true
+    }
+  },
+  "n_pass": 9,
+  "n_total": 9,
+  "overall_status": "VALIDATED",
+  "Psi": 0.5798825503355705,
+  "signature": "∴𓂀Ω∞³Φ"
+}

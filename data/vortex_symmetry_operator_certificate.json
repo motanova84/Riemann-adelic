@@ -1,0 +1,54 @@
+{
+  "validation_type": "vortex_symmetry_operator",
+  "timestamp": "2026-03-10T01:47:25.348356+00:00",
+  "qcal_constants": {
+    "f0": 141.7001,
+    "c_coherence": 244.36
+  },
+  "tests": {
+    "hilbert_space": {
+      "passed": true,
+      "x_min": 0.1,
+      "x_max": 10.0,
+      "n_grid": 200
+    },
+    "vortex_symmetry": {
+      "passed": true,
+      "mean_error": 2.393403006960379e-15,
+      "max_error": 5.96021852840911e-15,
+      "n_pairs": 200
+    },
+    "operator_construction": {
+      "passed": true,
+      "matrix_shape": [
+        200,
+        200
+      ],
+      "n_primes": 18
+    },
+    "hermiticity": {
+      "passed": true,
+      "error": 0.0,
+      "threshold": 1e-08
+    },
+    "spectrum_reality": {
+      "passed": true,
+      "n_eigenvalues": 200,
+      "n_real_eigenvalues": 200,
+      "max_imag": 0.0
+    },
+    "self_adjointness": {
+      "passed": true,
+      "verdict": "\u2705 VEREDICTO: El Operador H_Omega es AUTOADJUNTO. Paso 1 COMPLETADO."
+    },
+    "potential_reality": {
+      "passed": true,
+      "max_imag": 0.0
+    }
+  },
+  "summary": {
+    "all_passed": true,
+    "n_tests": 7,
+    "n_passed": 7
+  }
+}
