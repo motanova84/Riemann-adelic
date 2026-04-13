@@ -2,6 +2,8 @@
 -- V5.4: Functional equation and uniqueness theorems
 import RiemannAdelic.D_explicit
 import RiemannAdelic.PoissonRadon
+import RiemannAdelic.hadamard_uniqueness
+import RiemannAdelic.paley_wiener_uniqueness
 
 namespace RiemannAdelic
 
