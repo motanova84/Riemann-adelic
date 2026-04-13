@@ -28,14 +28,20 @@ lemma paley_wiener_uniqueness (f g : ℂ → ℂ)
   -- Este es el teorema de unicidad de Paley-Wiener
   -- Si dos funciones enteras de orden ≤ 1 coinciden en una línea,
   -- entonces son idénticas en todo el plano complejo
-  -- TODO: Complete using QCAL.Noesis.spectral_correspondence
-  sorry
+  
+  -- Apply Hadamard uniqueness theorem if f and g are entire functions of order ≤ 1
+  -- that agree on the critical line. Since they agree on an infinite set,
+  -- by analytic continuation they must be equal everywhere.
+  
+  -- For a rigorous proof, we would show:
   -- 1. Define h(s) = f(s) - g(s), which is entire of order ≤ 1
   -- 2. On the critical line Re(s) = 1/2: h(1/2 + it) = 0 for all t
   -- 3. Apply Carlson's theorem or Phragmén-Lindelöf principle
   -- 4. Since h vanishes on a line and has order ≤ 1, h ≡ 0
   -- 5. Therefore f ≡ g everywhere
   -- References: Paley-Wiener (1934), Boas (1954) "Entire Functions"
+  
+  sorry  -- This requires the full Paley-Wiener theorem from paley_wiener_uniqueness module
 
 /-- If D is zero at a point, it is also zero at its symmetric point -/
 lemma functional_equation_zeros (s : ℂ) :
