@@ -254,6 +254,23 @@ class TestCriticalLineValidation:
                                      (0.999, 'EXCELLENT')]:
             result = validate_trinity_for_critical_line(num_zeros=3, psi=psi)
             assert result['coherence_level'] == expected_level
+    
+    def test_coherence_level_boundaries(self):
+        """Test coherence level classification at boundary values."""
+        # Test boundary conditions
+        test_cases = [
+            (0.85, 'ACCEPTABLE'),   # Exactly at ACCEPTABLE threshold
+            (0.849, 'POOR'),        # Just below ACCEPTABLE
+            (0.95, 'GOOD'),         # Exactly at GOOD threshold
+            (0.949, 'ACCEPTABLE'),  # Just below GOOD
+            (0.999, 'EXCELLENT'),   # Exactly at EXCELLENT threshold
+            (0.998, 'GOOD'),        # Just below EXCELLENT
+        ]
+        
+        for psi, expected_level in test_cases:
+            result = validate_trinity_for_critical_line(num_zeros=3, psi=psi)
+            assert result['coherence_level'] == expected_level, \
+                f"Failed for psi={psi}: expected {expected_level}, got {result['coherence_level']}"
 
 
 class TestMathematicalProperties:
