@@ -1164,11 +1164,8 @@ def validate_v5_coronacion(precision=30, verbose=False, save_certificate=False, 
         )
         
         # Get system coherence Ψ from QCAL results if available
-        if qcal_results and hasattr(qcal_results, 'step5_coherence'):
-            psi = qcal_results.step5_coherence
-        else:
-            # Use canonical coherence value
-            psi = 0.888
+        # Use getattr with default to safely handle qcal_results structure
+        psi = getattr(qcal_results, 'step5_coherence', 0.888) if qcal_results else 0.888
         
         # Validate Trinity for critical line zeros
         trinity_validation = validate_trinity_for_critical_line(
