@@ -151,7 +151,7 @@ Sistema QCAL Globalmente Estable  ∴𓂀Ω∞³
 El teorema central es:
 
 $$
-\operatorname{Spec}(H) = \{\,t_n \in \mathbb{R} : \zeta(\tfrac{1}{2}+it_n)=0\,\}
+\mathrm{Spec}(H) = \{\,t_n \in \mathbb{R} : \zeta(\tfrac{1}{2}+it_n)=0\,\}
 $$
 
 donde $H = -i(x\partial_x + \tfrac{1}{2})$ es autoadjunto en $L^2(\mathbb{R}_+, dx)$.
@@ -166,7 +166,7 @@ donde $H = -i(x\partial_x + \tfrac{1}{2})$ es autoadjunto en $L^2(\mathbb{R}_+, 
 | P3 | Traza renormalizable (parte finita de Hadamard bien definida) | ✅ | [§2](RIGOROUS_FOUNDATIONS.md#2-proposiciones) |
 | P4 | Determinante jacobiano $\gamma_{p,k}$ es exactamente $p^{k/2}$ | ✅ | [§4.3](RIGOROUS_FOUNDATIONS.md#43-demostración-de-p4-el-jacobiano-de-γpk-es-pk2) |
 | P5 | La suma de Connes sobre órbitas primas converge absolutamente | ✅ | [§2](RIGOROUS_FOUNDATIONS.md#2-proposiciones) |
-| **T1** | **$\operatorname{Spec}(H)=\{t_n\}$** (Hilbert-Pólya) | ✅ | [§4.5](RIGOROUS_FOUNDATIONS.md#45-demostración-de-t1-spech--tn) |
+| **T1** | **$\mathrm{Spec}(H)=\{t_n\}$** (Hilbert-Pólya) | ✅ | [§4.5](RIGOROUS_FOUNDATIONS.md#45-demostración-de-t1-spech--tn) |
 | **T2** | **Fórmula de Traza Explícita** (Weil–Selberg–Connes) | ✅ | [§4.4](RIGOROUS_FOUNDATIONS.md#44-demostración-de-t2-fórmula-de-traza-explícita) |
 
 ### Verificación independiente rápida
