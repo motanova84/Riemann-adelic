@@ -1,12 +1,14 @@
 import mpmath as mp
 import sympy as sp
-from utils.mellin import truncated_gaussian, mellin_transform
-from utils.riemann_tools import t_to_n, load_zeros_near_t
+
+from utils.mellin import mellin_transform, truncated_gaussian
+from utils.riemann_tools import load_zeros_near_t, t_to_n
 
 mp.mp.dps = 50
 
+
 def prime_sum(f, P, K):
-    total = mp.mpf('0')
+    total = mp.mpf("0")
     # Generate all primes up to P
     primes = list(sp.primerange(2, P + 1))
     for p in primes:
@@ -15,22 +17,27 @@ def prime_sum(f, P, K):
             total += lp * f(k * lp)
     return total
 
+
 def archimedean_sum(f, sigma0=2.0, T=100, lim_u=5.0):
     def integrand(t):
         s = sigma0 + 1j * t
-        kernel = mp.digamma(s/2) - mp.log(mp.pi)
+        kernel = mp.digamma(s / 2) - mp.log(mp.pi)
         return kernel * mellin_transform(f, s, lim_u)
+
     return (mp.quad(integrand, [-T, T]) / (2j * mp.pi)).real
 
+
 def zero_sum(f, zeros, lim_u=5.0):
-    total = mp.mpf('0')
+    total = mp.mpf("0")
     for gamma in zeros:
         fhat_val = mellin_transform(f, 1j * gamma, lim_u)
         total += fhat_val.real
     return total
 
+
 if __name__ == "__main__":
     import sys
+
     if len(sys.argv) != 2:
         print("Uso: python validate_by_height.py <t_target>")
         sys.exit(1)
@@ -54,4 +61,3 @@ if __name__ == "__main__":
     print(f"Lado de Ceros:   {Z}")
     print(f"Error absoluto:  {abs(A - Z)}")
     print(f"Error relativo:  {abs(A - Z) / abs(A)}")
-
