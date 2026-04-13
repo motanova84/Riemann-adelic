@@ -4184,6 +4184,13 @@ Se ha implementado un **marco espectral completo** para el análisis de la Hipó
    - Involución J que fuerza ecuación funcional s↔(1-s)
    - Verificación geométrica de simetría
 
+**A Complete Proof of the Riemann Hypothesis via S-Finite Adelic Systems (Final Conditional Version V4.1)**  
+Author: José Manuel Mota Burruezo  
+Date: September 13, 2025  
+DOI: [10.5281/zenodo.17167857](https://doi.org/10.5281/zenodo.17167857)
+
+Technical Appendix to V4.1: Uniform Bounds, Logarithmic Lengths, and Uniqueness in the S-Finite Adelic Model
+https://doi.org/10.5281/zenodo.17167857
 4. **`unicidad/`** - Unicidad de Paley-Wiener
    - Funciones test de banda limitada
    - Determina D(s) únicamente desde condiciones internas
@@ -4349,6 +4356,59 @@ monitor.export_report(report, "hook_b_report.json")
 
 ### Resultados
 
+## 🔬 Theoretical Framework
+
+This repository implements numerical validation for a **conditional proof** of the Riemann Hypothesis based on **S-finite adelic spectral systems**. The approach constructs a canonical determinant D(s) through operator-theoretic principles, avoiding the traditional Euler product of ζ(s).
+
+### S-Finite Axioms
+
+The proof is conditional under three fundamental axioms:
+
+#### **A1: Finite Scale Flow** 
+```
+Each local unitary U_v commutes with the scale-flow:
+U_v S_u = S_u U_v for all u ∈ ℝ
+```
+This axiom ensures compatibility between local adelic structures and the global spectral scaling.
+
+#### **A2: Symmetry**
+```
+Each U_v induces discrete periodic orbits in the scale-flow variable u.
+Minimal orbital length: ℓ_v > 0 such that the orbit is periodic with period ℓ_v
+```
+This symmetry condition guarantees the emergence of logarithmic lengths ℓ_v = log q_v.
+
+#### **A4: Spectral Regularity**
+```
+The system admits well-defined double operator integral (DOI) calculus
+based on smoothed convolution kernel w_δ ∈ S(ℝ), typically Gaussian:
+w_δ(u) := (1/√4πδ) e^(-u²/4δ)
+```
+This regularity ensures mathematical rigor within trace-class theory.
+
+### 5-Step Logical Proof Structure
+
+1. **Construction of D(s)**: Build canonical determinant from S-finite axioms alone
+2. **Spectral Analysis**: Establish D(s) is entire of order ≤ 1 with functional equation D(1-s) = D(s)  
+3. **Trace Formula**: Derive geometric emergence of logarithmic lengths ℓ_v = log q_v
+4. **Asymptotic Normalization**: Prove lim_{Re s → +∞} log D(s) = 0
+5. **Hadamard Identification**: Show D(s) ≡ Ξ(s) via Paley-Wiener uniqueness, proving RH
+
+### Framework Properties
+
+- **Conditional Validity**: Proof holds under axioms A1, A2, A4
+- **Falsifiability**: Framework collapses if perturbations ℓ_v ≠ log q_v occur
+- **Mathematical Rigor**: Established within Birman-Solomyak trace-class theory
+- **Zeta-Free Construction**: Primes emerge from adelic trace, not assumed a priori
+- **Internal Consistency**: All mathematical objects well-defined under spectral theory
+
+### Updated Reference
+
+**Latest Paper**: [DOI: 10.5281/zenodo.17167857](https://doi.org/10.5281/zenodo.17167857)
+
+This theoretical foundation provides the mathematical context for understanding the numerical validation performed by the code in this repository. The validation tests whether the constructed D(s) function satisfies the explicit formula relationships under the critical line assumption Re(s) = 1/2.
+
+## 🚀 Quick Start
 ✅ **Monitor ECG espectral** implementado  
 ✅ **22 tests unitarios** (todos pasan)  
 ✅ **Correlación λ↔γ²** > 0.999  
@@ -5113,7 +5173,7 @@ ___
 ___
 
 ## License
-- Manuscript: CC-BY 4.0 (DOI: 10.5281/zenodo.17161831)
+- Manuscript: CC-BY 4.0 (DOI: 10.5281/zenodo.17167857)
 - Code: MIT License (see LICENSE-CODE)
 
 ### ⚖️ Note on GPU Dependencies
