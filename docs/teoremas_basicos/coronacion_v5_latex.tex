@@ -40,19 +40,19 @@ El teorema de Kato--Rellich implica entonces la autoadjunción esencial de $\wid
 \begin{theorem}[Fórmula de traza exacta]\label{thm:traza-exacta-latex}
 Para toda $f \in C_c^\infty(\mathbb{R})$ con transformada de Fourier $\widehat{f} \in C_c^\infty(\mathbb{R})$ se tiene
 \[
-  \operatorname{Tr}(f(\widehat{A})) = \sum_{\gamma_n} f(\gamma_n) + \frac{1}{2\pi} \int_{\mathbb{R}} f(t)\left[\log \pi - \frac{\Gamma'}{\Gamma}\Big(\frac{1}{4} + \frac{it}{2}\Big)\right] dt.
+  \mathrm{Tr}(f(\widehat{A})) = \sum_{\gamma_n} f(\gamma_n) + \frac{1}{2\pi} \int_{\mathbb{R}} f(t)\left[\log \pi - \frac{\Gamma'}{\Gamma}\Big(\frac{1}{4} + \frac{it}{2}\Big)\right] dt.
 \]
 \end{theorem}
 
 \begin{proof}
 La demostración procede en cuatro pasos.
 \begin{enumerate}
-  \item Consideramos $f_t(x) = e^{-itx}$ y calculamos $\operatorname{Tr}(e^{-it \widehat{A}})$ usando la representación de Weyl.
+  \item Consideramos $f_t(x) = e^{-itx}$ y calculamos $\mathrm{Tr}(e^{-it \widehat{A}})$ usando la representación de Weyl.
   \item Aplicamos la fórmula explícita de Weil para obtener
   \[
     \sum_{\gamma_n} f(\gamma_n) = \widehat{f}(0) - \frac{\widehat{f}(0)}{2}\log \pi + \frac{1}{2\pi}\int_{\mathbb{R}} f(t) \frac{\Gamma'}{\Gamma}\Big(\frac{1}{4} + \frac{it}{2}\Big) dt - \sum_{p,k} \frac{\Lambda(p^k)}{p^{k/2}}\widehat{f}(k \log p).
   \]
-  \item Se verifica que $\operatorname{Tr}(e^{-it \widehat{A}})$ reproduce exactamente los términos geométricos.
+  \item Se verifica que $\mathrm{Tr}(e^{-it \widehat{A}})$ reproduce exactamente los términos geométricos.
   \item La densidad de las funciones de prueba en $C_c^\infty$ asegura la igualdad espectral.
 \end{enumerate}
 \end{proof}
@@ -69,7 +69,7 @@ Definimos el determinante zeta-regularizado mediante
 \]
 donde la función zeta relativa es
 \[
-  \zeta_{Z_\sigma, Z}(z,s) = \operatorname{Tr}\left[(Z_\sigma^2 + (s-\tfrac{1}{2})^2)^{-z} - (Z^2 + (s-\tfrac{1}{2})^2)^{-z}\right].
+  \zeta_{Z_\sigma, Z}(z,s) = \mathrm{Tr}\left[(Z_\sigma^2 + (s-\tfrac{1}{2})^2)^{-z} - (Z^2 + (s-\tfrac{1}{2})^2)^{-z}\right].
 \]
 
 \begin{theorem}[Convergencia meromorfa]\label{thm:determinante-latex}
@@ -95,7 +95,7 @@ El símbolo semiclasico de $\widehat{H}$ es
 \begin{lemma}[Volumen de fase]\label{lem:volumen-fase-latex}
 Para $T$ grande,
 \[
-  \operatorname{Vol}\{(x,p) : |\sigma(x,p)| \le T\} = \frac{2T}{\pi} L - \frac{T}{\pi} + O(1).
+  \mathrm{Vol}\{(x,p) : |\sigma(x,p)| \le T\} = \frac{2T}{\pi} L - \frac{T}{\pi} + O(1).
 \]
 \end{lemma}
 
