@@ -34,6 +34,7 @@ except ImportError:  # pragma: no cover
     QCAL_F0 = 141.7001
 
 F0: float = float(QCAL_F0)
+# KSS bound: mínimo cociente viscosidad/entropía (Kovtun-Son-Starinets, AdS/CFT).
 ETA_OVER_S_KSS: float = 1.0 / (4.0 * np.pi)
 COHERENCIA_UMBRAL: float = 0.888
 KAPPA_PI: float = 2.5773
@@ -206,7 +207,7 @@ class FirmaEspectral:
 
     def bandas_laterales(self) -> List[Dict[str, float]]:
         """Genera bandas m_H ± n·ℏω₀."""
-        # Se usa ℏ en GeV·s para mantener consistencia dimensional con m_H en GeV.
+        # Shift energético en GeV: ℏω₀ con ℏ[GeV·s] y ω₀[rad/s].
         delta = HBAR_GEV_S * self.omega_0
         bandas: List[Dict[str, float]] = []
         for n in range(1, self.n_bandas + 1):
@@ -291,6 +292,7 @@ class SustratoCuantico:
         }
 
         psi_vals = np.array(list(psi_componentes.values()), dtype=float)
+        # Piso numérico para evitar media geométrica nula por redondeo.
         psi_vals = np.clip(psi_vals, 1e-12, 1.0)
         psi_global = float(np.prod(psi_vals) ** (1.0 / len(psi_vals)))
 

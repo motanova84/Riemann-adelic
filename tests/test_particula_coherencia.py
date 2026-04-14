@@ -83,7 +83,7 @@ def test_vacio_superfluo(case: int) -> None:
     elif case == 14:
         assert vacio.U.dtype == np.complex128
     elif case == 15:
-        # En la matriz de corrimiento C₇, la traza es 0 (ningún 1 en diagonal).
+        # En permutación cíclica C₇ ningún estado queda fijo, por eso traza(U)=0.
         assert np.trace(vacio.U) == pytest.approx(0.0, abs=1e-12)
     elif case == 16:
         eig = np.linalg.eigvals(vacio.U)
@@ -93,7 +93,8 @@ def test_vacio_superfluo(case: int) -> None:
     elif case == 18:
         assert vacio.eta_s() < 0.1
     elif case == 19:
-        assert vacio.coherencia() == pytest.approx(vacio.coherencia(), rel=0.0)
+        vacio_viscoso = VacioSuperfluo(viscosidad_kinematica=1e-3)
+        assert vacio_viscoso.coherencia() < vacio.coherencia()
 
 
 @pytest.mark.parametrize("case", range(20))
@@ -139,7 +140,8 @@ def test_particula_coherencia(case: int) -> None:
     elif case == 17:
         assert pc.fase_berry < 1
     elif case == 18:
-        assert pc.coherencia() == pytest.approx(pc.coherencia(), rel=0.0)
+        pc_max = ParticulaCoherencia(fraccion_oscura=1.0)
+        assert pc_max.coherencia() >= pc.coherencia()
     elif case == 19:
         assert np.isfinite(pc.coherencia())
 
@@ -283,7 +285,8 @@ def test_foton_fase_coherente(case: int) -> None:
     elif case == 16:
         assert FotonFaseCoherente(psi=0.0).coherencia() <= foton.coherencia()
     elif case == 17:
-        assert foton.coherencia() == pytest.approx(foton.coherencia(), rel=0.0)
+        foton_off = FotonFaseCoherente(psi=1.0, cooperatividad_xi=0.2)
+        assert foton_off.sincronizacion_dicke() < foton.sincronizacion_dicke()
 
 
 @pytest.mark.parametrize("case", range(18))
