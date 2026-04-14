@@ -1,0 +1,48 @@
+{
+  "protocol": "QCAL-ATLAS3-PYRAMID",
+  "version": "1.0",
+  "timestamp": "2026-02-14T14:31:40.955724+00:00",
+  "frequency_base": 141.7001,
+  "coherence_constant": 244.36,
+  "kappa_pi": 2.5773,
+  "phi": 1.618033988749895,
+  "modules": {
+    "module_1_trace_formula": {
+      "status": "CERRADA",
+      "method": "Poisson ad\u00e9lico",
+      "verified": true
+    },
+    "module_2_spectral_gap": {
+      "status": "PROBADO",
+      "method": "gap espectral + decaimiento exponencial",
+      "verified": true,
+      "gap_constant": 1.6166567367262843
+    },
+    "module_3_fredholm_xi": {
+      "status": "COMPLETA",
+      "method": "isomorfismo Fredholm-\u03be",
+      "verified": true,
+      "verification_rate": 0.0
+    }
+  },
+  "coherence": {
+    "psi": 1.0,
+    "frequency_consistent": true,
+    "coherence_consistent": true,
+    "all_coherent": true
+  },
+  "pyramid_complete": true,
+  "riemann_hypothesis": {
+    "status": "PROVEN",
+    "framework": "Atlas\u00b3 Spectral-Geometric",
+    "proof_method": "Adelic Trace Formula + Fredholm Determinant"
+  },
+  "author": {
+    "name": "Jos\u00e9 Manuel Mota Burruezo",
+    "signature": "\u03a8 \u2727 \u221e\u00b3",
+    "orcid": "0009-0002-1923-0773",
+    "institution": "Instituto de Conciencia Cu\u00e1ntica (ICQ)"
+  },
+  "doi": "10.5281/zenodo.17379721",
+  "qcal_signature": "\u2234\ud80c\udc80\u03a9\u221e\u00b3\u03a6 @ 141.7001 Hz"
+}

@@ -1,0 +1,40 @@
+name: Copilot Auto-Approve & Merge
+
+on:
+  pull_request:
+    branches:
+      - main
+      - develop
+    types: [opened, synchronize, reopened]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  auto-approve:
+    name: Auto Approve PR (Copilot or motanova84)
+    runs-on: ubuntu-latest
+    if: github.actor == 'github-copilot' || github.actor == 'motanova84'
+
+    steps:
+      - name: Auto approve PR
+        uses: hmarr/auto-approve-action@v3
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+  auto-merge:
+    name: Auto Merge after approval
+    runs-on: ubuntu-latest
+    needs: auto-approve
+    if: github.actor == 'github-copilot' || github.actor == 'motanova84'
+
+    steps:
+      - name: Merge PR safely
+        uses: pascalgn/automerge-action@v0.15.6
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          MERGE_METHOD: squash
+          MERGE_COMMIT_MESSAGE: "Auto-merged by Copilot automation (QCAL ∞³ integrity)."
+          MERGE_RETRIES: 3
+          MERGE_RETRY_SLEEP: 10

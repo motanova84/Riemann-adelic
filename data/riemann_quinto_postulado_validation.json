@@ -1,0 +1,183 @@
+{
+  "timestamp": "2026-03-08T13:13:57.827264",
+  "qcal_frequency": 141.7001,
+  "coherence_constant": 244.36,
+  "total_checks": 16,
+  "passed": 16,
+  "failed": 0,
+  "all_passed": true,
+  "checks": [
+    {
+      "name": "A1 — QCAL constants correct",
+      "status": "PASS",
+      "passed": true,
+      "metrics": {
+        "F0_QCAL": 141.7001,
+        "C_COHERENCE": 244.36,
+        "PSI_THRESHOLD": 0.888
+      },
+      "detail": ""
+    },
+    {
+      "name": "A2 — 30 Riemann zeros present and ordered",
+      "status": "PASS",
+      "passed": 1,
+      "metrics": {
+        "n_zeros": 30,
+        "first_zero": 14.134725141734695
+      },
+      "detail": ""
+    },
+    {
+      "name": "B1 — Haar measure weights positive & decreasing",
+      "status": "PASS",
+      "passed": true,
+      "metrics": {
+        "shape": [
+          10,
+          3
+        ],
+        "min_weight": 0.0011890606420927466,
+        "max_weight": 1.0
+      },
+      "detail": ""
+    },
+    {
+      "name": "B2 — Adelic character unit modulus",
+      "status": "PASS",
+      "passed": true,
+      "metrics": {
+        "max_modulus_error": 0.0
+      },
+      "detail": "max_err=0.00e+00"
+    },
+    {
+      "name": "B3 — ScaleIdentityOperator Ψ_S ≥ 0.888 and ≈ 0.984",
+      "status": "PASS",
+      "passed": true,
+      "metrics": {
+        "psi_S": 0.983075,
+        "p_adic_truncation_error": 0.01707008
+      },
+      "detail": ""
+    },
+    {
+      "name": "C1 — Hamiltonian Hermitian (‖H−H†‖/‖H‖ < 1e-12)",
+      "status": "PASS",
+      "passed": true,
+      "metrics": {
+        "hermiticity_error": 0.0
+      },
+      "detail": ""
+    },
+    {
+      "name": "C2 — Commutator ‖[S,H]‖ finite and < 0.5",
+      "status": "PASS",
+      "passed": true,
+      "metrics": {
+        "commutator_norm": 0.022074
+      },
+      "detail": ""
+    },
+    {
+      "name": "C3 — SymbioticHamiltonianOperator Ψ_H ≥ 0.888 and ≈ 0.892",
+      "status": "PASS",
+      "passed": true,
+      "metrics": {
+        "psi_H": 0.895502,
+        "hermiticity_error": 0.0,
+        "commutator_norm": 0.022074
+      },
+      "detail": ""
+    },
+    {
+      "name": "D1 — GUE spacing statistics (p_GUE > 0.3 > p_Poisson)",
+      "status": "PASS",
+      "passed": true,
+      "metrics": {
+        "ks_gue": 0.121195,
+        "p_gue": 0.743125,
+        "ks_poisson": 0.334429,
+        "p_poisson": 0.00215
+      },
+      "detail": ""
+    },
+    {
+      "name": "D2 — GUE CDF is monotone and bounded in [0,1]",
+      "status": "PASS",
+      "passed": true,
+      "metrics": {
+        "cdf_min": 0.0,
+        "cdf_max": 0.999999997030743,
+        "monotone": true
+      },
+      "detail": ""
+    },
+    {
+      "name": "D3 — RiemannZetaSpectrum Ψ_Z ≥ 0.888 and ≈ 1.000",
+      "status": "PASS",
+      "passed": true,
+      "metrics": {
+        "psi_Z": 0.997115,
+        "gue_ks_pvalue": 0.743125,
+        "poisson_ks_pvalue": 0.00215
+      },
+      "detail": ""
+    },
+    {
+      "name": "E1 — Global Ψ_global ≥ 0.888 and ≈ 0.957",
+      "status": "PASS",
+      "passed": true,
+      "metrics": {
+        "psi_S": 0.983075,
+        "psi_H": 0.895502,
+        "psi_Z": 0.997115,
+        "psi_global": 0.957487
+      },
+      "detail": ""
+    },
+    {
+      "name": "E2 — verificar_geometria() returns True with canonical message",
+      "status": "PASS",
+      "passed": true,
+      "metrics": {
+        "valid": true,
+        "message": "✓ Quinto Postulado verificado — coherencia geométrica QCAL ∞³ activa"
+      },
+      "detail": ""
+    },
+    {
+      "name": "E3 — SHA-256 certificate generated and valid",
+      "status": "PASS",
+      "passed": true,
+      "metrics": {
+        "sha256_prefix": "3417e0a46c5323b4…",
+        "geometry_valid": true
+      },
+      "detail": ""
+    },
+    {
+      "name": "E4 — Certificate JSON complete with correct DOI",
+      "status": "PASS",
+      "passed": true,
+      "metrics": {
+        "has_required_keys": true,
+        "doi_correct": true,
+        "has_all_operators": true
+      },
+      "detail": ""
+    },
+    {
+      "name": "E5 — Two activations both pass geometry validation",
+      "status": "PASS",
+      "passed": true,
+      "metrics": {
+        "run1_valid": true,
+        "run2_valid": true,
+        "run1_psi": 0.957487,
+        "run2_psi": 0.957487
+      },
+      "detail": ""
+    }
+  ]
+}

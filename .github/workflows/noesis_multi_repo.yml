@@ -1,0 +1,164 @@
+name: 🧠 NOESIS MULTI-REPO Auto Sealer
+
+on:
+  schedule:
+    - cron: '0 */6 * * *'  # Cada 6 horas
+  workflow_dispatch:
+    inputs:
+      force_sync:
+        description: 'Forzar sincronización de todos los repositorios'
+        type: boolean
+        default: false
+      dry_run:
+        description: 'Modo de prueba (sin aplicar cambios reales)'
+        type: boolean
+        default: true
+
+jobs:
+  multi-repo-seal:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+      actions: read
+    
+    steps:
+      - name: 🔄 Checkout Riemann-adelic
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: 🔧 Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: 📦 Install dependencies
+        run: |
+          pip install --upgrade pip
+          # Dependencias mínimas necesarias
+          pip install pyyaml
+
+      - name: 🧠 NOESIS CEREBRAL - Sincronizar repositorios públicos
+        id: noesis
+        continue-on-error: true
+        run: |
+          cd $GITHUB_WORKSPACE
+          python .github/scripts/noesis_cerebral.py --mode sync
+
+      - name: 📊 Mostrar estado de la base de conocimiento
+        if: steps.noesis.outcome == 'success'
+        run: |
+          if [ -f "/tmp/noesis_knowledge/knowledge.pkl" ]; then
+            echo "✅ Base de conocimiento creada exitosamente"
+            python .github/scripts/knowledge_dashboard.py || echo "⚠️ Dashboard no generado"
+          else
+            echo "⚠️ Base de conocimiento no encontrada"
+          fi
+
+      - name: 🔍 AMDA - Análisis de sorrys (ANTES)
+        id: amda_before
+        run: |
+          cd $GITHUB_WORKSPACE
+          python .github/scripts/amda_analyzer.py \
+            --cross-repo \
+            --output amda_report_before.json
+
+      - name: ⚡ AURON - Ejecutar transformaciones
+        id: auron
+        env:
+          DRY_RUN: ${{ github.event.inputs.dry_run || 'true' }}
+        run: |
+          cd $GITHUB_WORKSPACE
+          
+          DRY_RUN_FLAG=""
+          if [ "$DRY_RUN" = "true" ]; then
+            DRY_RUN_FLAG="--dry-run"
+            echo "🔍 Modo DRY-RUN activado"
+          fi
+          
+          python .github/scripts/auron_executor.py \
+            --input amda_report_before.json \
+            --cross-repo \
+            --output auron_changes.json \
+            $DRY_RUN_FLAG
+
+      - name: 📊 Generar métricas
+        if: always()
+        run: |
+          cd $GITHUB_WORKSPACE
+          python .github/scripts/metrics_generator.py \
+            --before amda_report_before.json \
+            --after auron_changes.json \
+            --output metrics.md \
+            --multi-repo
+
+      - name: 📋 Mostrar resumen
+        if: always()
+        run: |
+          cd $GITHUB_WORKSPACE
+          if [ -f "metrics.md" ]; then
+            cat metrics.md
+          fi
+          
+          if [ -f "auron_changes.json" ]; then
+            echo "📊 Resumen AURON:"
+            python -c "import json; data=json.load(open('auron_changes.json')); print(f\"  ✅ Exitosas: {data.get('success_count', 0)}\"); print(f\"  ❌ Fallidas: {data.get('failure_count', 0)}\")"
+          fi
+
+      - name: 🔀 Crear Pull Request
+        if: |
+          github.event.inputs.dry_run != 'true' &&
+          steps.auron.outcome == 'success'
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "🧠 [MULTI-REPO] Sellado con sabiduría de repositorios públicos [skip ci]"
+          title: "🧠 NOESIS CEREBRAL - Sellado multi-repositorio ${{ github.run_number }}"
+          body-path: metrics.md
+          branch: multi-repo/noesis-${{ github.run_id }}
+          base: main
+          labels: automated,noesis,multi-repo,cerebral
+          delete-branch: true
+
+      - name: 📤 Upload artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: noesis-reports-${{ github.run_id }}
+          path: |
+            amda_report_before.json
+            auron_changes.json
+            metrics.md
+            noesis_cerebral.log
+          retention-days: 30
+
+      - name: 📊 Summary
+        if: always()
+        run: |
+          echo "## 🧠 NOESIS CEREBRAL - Resumen de Ejecución" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Timestamp:** $(date -u +"%Y-%m-%d %H:%M:%S UTC")" >> $GITHUB_STEP_SUMMARY
+          echo "**Run ID:** ${{ github.run_id }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Modo:** ${{ github.event.inputs.dry_run == 'true' && 'DRY-RUN' || 'PRODUCCIÓN' }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          
+          if [ -f "auron_changes.json" ]; then
+            echo "### 📊 Resultados" >> $GITHUB_STEP_SUMMARY
+            python -c "
+import json
+data = json.load(open('auron_changes.json'))
+print(f\"- ✅ Transformaciones exitosas: {data.get('success_count', 0)}\")
+print(f\"- ❌ Transformaciones fallidas: {data.get('failure_count', 0)}\")
+print(f\"- 🔗 Cross-repo habilitado: {data.get('cross_repo_enabled', False)}\")
+print(f\"- 🧪 Dry-run: {data.get('dry_run', False)}\")
+" >> $GITHUB_STEP_SUMMARY
+          fi
+          
+          if [ -f "noesis_cerebral.log" ]; then
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "### 📝 Últimas líneas del log" >> $GITHUB_STEP_SUMMARY
+            echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+            tail -20 noesis_cerebral.log >> $GITHUB_STEP_SUMMARY
+            echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          fi

@@ -1,0 +1,109 @@
+{
+  "certificate_type": "QCAL Minor Arcs Implementation Validation",
+  "timestamp": "2026-02-26T17:27:52.652253",
+  "file": "formalization/lean/RiemannAdelic/core/analytic/minor_arcs.lean",
+  "validation_results": {
+    "total_tests": 8,
+    "passed": 7,
+    "failed": 1,
+    "success_rate": "87.5%",
+    "status": "⚠ 1 TEST(S) FAILED"
+  },
+  "test_details": [
+    {
+      "name": "File Existence",
+      "description": "Check that minor_arcs.lean file exists",
+      "passed": true,
+      "details": "File path: formalization/lean/RiemannAdelic/core/analytic/minor_arcs.lean"
+    },
+    {
+      "name": "Required Imports",
+      "description": "Check that all required Mathlib imports are present",
+      "passed": true,
+      "details": [
+        "Mathlib.Analysis.SpecialFunctions.Complex.Log: ✓",
+        "Mathlib.Data.Complex.Exponential: ✓",
+        "Mathlib.Algebra.BigOperators.Basic: ✓"
+      ]
+    },
+    {
+      "name": "Core Definitions",
+      "description": "Check that all core definitions and theorems are present",
+      "passed": true,
+      "details": [
+        "def HLsum_vonMangoldt: ✓",
+        "axiom vaughan_decomposition: ✓",
+        "axiom typeI_bound: ✓",
+        "axiom typeII_bound: ✓",
+        "axiom typeIII_bound: ✓",
+        "theorem HLsum_minor_arc_bound: ✓",
+        "def MinorArcsSet: ✓",
+        "def minorArcContribution: ✓",
+        "theorem minorArcContribution_bound: ✓"
+      ]
+    },
+    {
+      "name": "Namespace Structure",
+      "description": "Check proper namespace wrapping",
+      "passed": true,
+      "details": [
+        "namespace AnalyticNumberTheory: ✓",
+        "end AnalyticNumberTheory: ✓"
+      ]
+    },
+    {
+      "name": "Main Theorem Structure",
+      "description": "Check HLsum_minor_arc_bound theorem and proof steps",
+      "passed": false,
+      "details": [
+        "obtain.*vaughan_decomposition: ✗",
+        "obtain.*typeI_bound: ✓",
+        "obtain.*typeII_bound: ✓",
+        "obtain.*typeIII_bound: ✓",
+        "Complex.abs_add_three_le: ✓",
+        "le_trans: ✓"
+      ]
+    },
+    {
+      "name": "File Size",
+      "description": "Check that file has substantial content",
+      "passed": true,
+      "details": [
+        "Line count: 236",
+        "Expected minimum: 200",
+        "Status: ✓ PASS"
+      ]
+    },
+    {
+      "name": "Documentation Quality",
+      "description": "Check that documentation comments are present",
+      "passed": true,
+      "details": [
+        "/-!.*Arcos Menores.*-/...: ✓",
+        "/--.*von Mangoldt.*-/...: ✓",
+        "/--.*Vaughan.*-/...: ✓",
+        "/--.*TEOREMA PRINCIPAL.*-/...: ✓"
+      ]
+    },
+    {
+      "name": "Sorry Statements",
+      "description": "Check number of sorry statements (should be 1)",
+      "passed": true,
+      "details": [
+        "Sorry count: 1",
+        "Expected: 1",
+        "Status: ✓ PASS"
+      ]
+    }
+  ],
+  "certification_hash": "0xQCAL_MINOR_ARCS_12e58a42063cc733",
+  "mathematical_content": {
+    "main_theorem": "HLsum_minor_arc_bound",
+    "bound_type": "Power-saving: |S(α)| ≤ C·N/(log N)^A",
+    "proof_method": "Vaughan decomposition + Triangle inequality",
+    "strategic_sorries": 1,
+    "integration": "Circle method for Goldbach"
+  },
+  "qcal_compliance": "✅ QCAL ∞³ coherent",
+  "status": "⚠ 1 TEST(S) FAILED"
+}

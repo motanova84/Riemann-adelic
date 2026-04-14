@@ -1,0 +1,89 @@
+name: Check for problematic Unicode characters
+on: 
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  check-unicode:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+          
+      - name: Check for problematic Unicode characters
+        run: |
+          echo "🔍 Checking for problematic Unicode characters in notebooks..."
+          
+          # Define problematic characters that can cause Python syntax errors
+          # Using Unicode escape sequences to avoid confusion with JSON quotes
+          PROBLEMATIC_CHARS=$'\u226A\u226B\u2260\u2264\u2265\u2013\u2014\u2018\u2019\u201C\u201D\u2026'
+          
+          # Check notebooks directory
+          if find notebooks/ -name "*.ipynb" -exec grep -l "[$PROBLEMATIC_CHARS]" {} \; | head -1 | read; then
+            echo "❌ Found problematic Unicode characters in notebook files:"
+            find notebooks/ -name "*.ipynb" -exec grep -Hn "[$PROBLEMATIC_CHARS]" {} \;
+            echo ""
+            echo "💡 Replace these characters with ASCII equivalents:"
+            echo "   ≪ → <<"
+            echo "   ≫ → >>"
+            echo "   ≠ → !="
+            echo "   ≤ → <="
+            echo "   ≥ → >="
+            echo "   – → -"
+            echo "   — → -"
+            echo "   ' → ' [U+2018 left single quote]"
+            echo "   ' → ' [U+2019 right single quote]"
+            echo "   \" → \" [U+201C left double quote]"
+            echo "   \" → \" [U+201D right double quote]"
+            echo "   … → ..."
+            echo ""
+            echo "Run: python3 fix_unicode.py"
+            exit 1
+          fi
+          
+          # Check root level notebooks
+          if find . -maxdepth 1 -name "*.ipynb" -exec grep -l "[$PROBLEMATIC_CHARS]" {} \; | head -1 | read; then
+            echo "❌ Found problematic Unicode characters in root notebook files:"
+            find . -maxdepth 1 -name "*.ipynb" -exec grep -Hn "[$PROBLEMATIC_CHARS]" {} \;
+            exit 1
+          fi
+          
+          echo "✅ No problematic Unicode characters found in notebooks"
+          
+      - name: Validate notebook JSON structure
+        run: |
+          echo "🔍 Validating JSON structure of notebooks..."
+          python -c "
+          import json
+          import glob
+          import sys
+          
+          notebooks = glob.glob('notebooks/*.ipynb') + glob.glob('*.ipynb')
+          errors = 0
+          
+          for notebook in notebooks:
+              try:
+                  with open(notebook, 'r', encoding='utf-8') as f:
+                      json.load(f)
+                  print(f'✅ {notebook}: Valid JSON')
+              except json.JSONDecodeError as e:
+                  print(f'❌ {notebook}: Invalid JSON - {e}')
+                  errors += 1
+              except Exception as e:
+                  print(f'❌ {notebook}: Error - {e}')
+                  errors += 1
+          
+          if errors > 0:
+              print(f'\\n❌ {errors} notebook(s) have JSON errors')
+              sys.exit(1)
+          else:
+              print(f'\\n✅ All {len(notebooks)} notebooks have valid JSON structure')
+          "

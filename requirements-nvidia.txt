@@ -1,0 +1,35 @@
+# Optional NVIDIA GPU Dependencies
+# ==================================
+# 
+# This file contains NVIDIA-specific packages for advanced GPU acceleration
+# and distributed training. These packages are NOT included in the main
+# requirements.txt due to NVIDIA-specific license terms.
+#
+# ⚠️ IMPORTANT LICENSE NOTICE:
+# 
+# NVIDIA packages (nvidia-nccl-cu12, etc.) are distributed under NVIDIA's
+# proprietary license terms. Please review NVIDIA's license agreement at:
+# https://docs.nvidia.com/cuda/eula/index.html
+#
+# These packages require:
+# - NVIDIA GPU with CUDA support
+# - NVIDIA CUDA Toolkit installed
+# - Appropriate NVIDIA drivers
+#
+# Installation:
+# -------------
+# Only install these packages if you need distributed GPU training
+# or NVIDIA-specific acceleration features:
+#
+#   pip install -r requirements-nvidia.txt
+#
+# Note: CuPy (cupy-cuda12x) is already included conditionally in the main
+# requirements.txt for Linux x86_64 systems and does not require this file.
+
+# NVIDIA Collective Communications Library (NCCL)
+# For multi-GPU distributed training
+# Uncomment if needed:
+# nvidia-nccl-cu12  # Use latest version or specify as needed
+
+# Additional NVIDIA packages can be added here as needed
+# Always check license compatibility before adding

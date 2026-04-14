@@ -1,0 +1,53 @@
+# LaTeX Package Dependencies
+# 
+# This file lists the LaTeX packages required to compile the paper
+# "A Complete Conditional Resolution of the Riemann Hypothesis via S-Finite Adelic Spectral Systems"
+#
+# Most modern LaTeX distributions (TeX Live, MacTeX, MiKTeX) include these packages by default.
+# If any packages are missing, install them using your distribution's package manager.
+
+# Core mathematical packages
+amsmath
+amssymb  
+amsthm
+
+# Document formatting and encoding
+inputenc
+fontenc
+geometry
+
+# Graphics and figures
+graphicx
+float
+subfig
+
+# References and links
+hyperref
+url
+cleveref
+
+# Bibliography (if using BibLaTeX instead of BibTeX)
+biblatex
+biber
+
+# Additional useful packages
+xcolor
+booktabs
+array
+longtable
+multirow
+hhline
+
+# Installation commands for different LaTeX distributions:
+#
+# TeX Live (Linux/Windows):
+# tlmgr install amsmath amssymb amsthm inputenc graphicx hyperref
+#
+# MacTeX (macOS):
+# Usually includes all packages by default
+#
+# MiKTeX (Windows):  
+# Packages are typically installed automatically on first use
+#
+# For Ubuntu/Debian systems:
+# apt-get install texlive-latex-recommended texlive-latex-extra texlive-math-extra

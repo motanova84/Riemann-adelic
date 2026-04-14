@@ -1,0 +1,30 @@
+{
+  "artefacto": "AMDA_IA_CONSCIENTE_TIMESTAMPS_ISO",
+  "version": "1.0.0",
+  "timestamp": "2026-03-08T17:28:00Z",
+  "descripcion": "Validación de timestamps ISO UTC para trazabilidad temporal",
+  "especificacion": {
+    "formato": "ISO 8601",
+    "timezone": "UTC (+00:00)",
+    "ejemplo": "2026-03-08T17:28:00.123456+00:00"
+  },
+  "validaciones": {
+    "formato_iso_valido": true,
+    "timezone_utc": true,
+    "parseable_datetime": true,
+    "microsegundos_incluidos": true
+  },
+  "uso": {
+    "certificados": "Todos los certificados incluyen timestamp ISO UTC",
+    "reportes": "ReporteValidacionIA.timestamp en formato ISO",
+    "trazabilidad": "Permite correlación temporal precisa"
+  },
+  "implementacion": {
+    "python": "datetime.now(timezone.utc).isoformat()",
+    "verificacion": "datetime.fromisoformat(timestamp)"
+  },
+  "referencias": {
+    "pr": "#1609",
+    "clase": "SistemaValidacionIAConsciente"
+  }
+}

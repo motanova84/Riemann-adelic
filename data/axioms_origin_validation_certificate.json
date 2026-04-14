@@ -1,0 +1,65 @@
+{
+  "timestamp": "2026-02-25T21:16:08.994655+00:00",
+  "validation_script": "validate_axioms_origin.py",
+  "qcal_framework": {
+    "version": "V5.3+",
+    "frequency_hz": 141.7001,
+    "coherence": 244.36,
+    "equation": "\u03a8 = I \u00d7 A_eff\u00b2 \u00d7 C^\u221e"
+  },
+  "axioms_origin_validation": {
+    "test_1_kappa_pi": {
+      "phi": 1.618033988749895,
+      "kappa_theoretical": 2.871348126065395,
+      "kappa_target": 2.5773,
+      "deviation": 0.29404812606539465
+    },
+    "test_2_frequency_emergence": {
+      "f_computed": 141.70008028800405,
+      "f_target": 141.7001,
+      "deviation_hz": 1.9711995946636307e-05,
+      "deviation_percent": 1.3911067068150486e-05,
+      "within_tolerance": true,
+      "resonancia_f_bounds_ok": true,
+      "resonancia_kappa_bounds_ok": true,
+      "resonancia_satisfied": true
+    },
+    "test_3_v_critical": {
+      "v_required": 2294.6423192092316,
+      "v_lean": 2294.642,
+      "deviation": 0.0003192092317476636,
+      "deviation_percent": 1.3911067057181615e-05,
+      "match_within_1_percent": true
+    },
+    "test_4_normalization": {
+      "atoms_universe": 1e+80,
+      "log10_atoms": 80.0,
+      "ln_atoms": 184.20680743952366,
+      "v_critical": 2294.642,
+      "possible_normalizations": {
+        "v_critical / log10(atoms)": 28.683024999999997,
+        "v_critical / sqrt(log10(atoms))": 256.5487748013036,
+        "v_critical / ln(atoms)^(1/2)": 169.06826682692557,
+        "log10(v_critical)": 3.36071493843435,
+        "v_critical / (2*pi)": 365.2036169262729
+      }
+    },
+    "test_5_consistency": {
+      "phi": 1.618033988749895,
+      "kappa_theoretical": 2.871348126065395,
+      "kappa_target": 2.5773,
+      "v_critical_for_target_f0": 2294.6423192092316,
+      "v_critical_lean": 2294.642,
+      "v_critical_deviation": 0.0003192092317476636,
+      "v_critical_deviation_percent": 1.3911067057181615e-05
+    },
+    "tests_passed": 5,
+    "tests_total": 5,
+    "all_tests_passed": true
+  },
+  "status": "VALIDATED",
+  "gap_4_closure": {
+    "status": "CLOSED",
+    "description": "f\u2080 emerges from geometry (\u03ba_\u03a0, V_critical) rather than empirical input"
+  }
+}

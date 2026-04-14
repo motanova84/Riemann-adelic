@@ -1,0 +1,219 @@
+{
+  "timestamp": "2026-02-11T00:37:39.309728+00:00",
+  "repository": "/home/runner/work/Riemann-adelic/Riemann-adelic",
+  "checks": {
+    "qcal_beacon": {
+      "valid": true,
+      "checks": {
+        "f0": {
+          "valid": true,
+          "expected": 141.7001,
+          "found": 141.7001
+        },
+        "delta_zeta": {
+          "valid": true,
+          "expected": 0.2787437627,
+          "found": 0.2787437627
+        },
+        "equation": {
+          "valid": true
+        }
+      }
+    },
+    "phase_sensitivity": {
+      "valid": false,
+      "violations": [
+        {
+          "file": "spectral_constants.py",
+          "line": 410,
+          "context": "results['relationships']['C_lambda_match'] = abs(C_from_lambda - C_PRIMARY) < 0.01",
+          "severity": "high"
+        },
+        {
+          "file": "spectral_constants.py",
+          "line": 413,
+          "context": "results['relationships']['coherence_factor_check'] = abs(",
+          "severity": "high"
+        },
+        {
+          "file": "invariance_operator.py",
+          "line": 291,
+          "context": "on_critical = abs(float(s_mp.real) - 0.5) < 1e-10",
+          "severity": "high"
+        },
+        {
+          "file": "invariance_operator.py",
+          "line": 292,
+          "context": "perfect_coherence = abs(psi_coherence - 1.0) < 1e-10",
+          "severity": "high"
+        },
+        {
+          "file": "riemann_operator.py",
+          "line": 126,
+          "context": "log_x = np.where(x > 0, np.log(np.abs(x) + LOG_X_EPSILON), 0.0)",
+          "severity": "high"
+        },
+        {
+          "file": "vibrational_hpsi.py",
+          "line": 263,
+          "context": "norm = np.sqrt(trapezoid(np.abs(eigenvectors[:, i])**2, self.x))",
+          "severity": "high"
+        },
+        {
+          "file": "curved_spacetime_operator.py",
+          "line": 286,
+          "context": "phi = np.log(np.abs(x_dot_u) + epsilon)",
+          "severity": "high"
+        },
+        {
+          "file": "curved_spacetime_operator.py",
+          "line": 512,
+          "context": "idx = np.argsort(np.abs(eigenvalues))",
+          "severity": "high"
+        },
+        {
+          "file": "discrete_symmetry_operator.py",
+          "line": 108,
+          "context": "log_R = np.log(np.abs(R_psi) + EPSILON)  # Avoid log(0)",
+          "severity": "high"
+        },
+        {
+          "file": "discrete_symmetry_operator.py",
+          "line": 123,
+          "context": "R_psi = np.abs(R_psi) + EPSILON  # Avoid division by zero",
+          "severity": "high"
+        },
+        {
+          "file": "t_infinity_cubed.py",
+          "line": 432,
+          "context": "coherence = np.abs(np.dot(gamma_norm, lambda_norm))",
+          "severity": "high"
+        },
+        {
+          "file": "t_infinity_cubed.py",
+          "line": 539,
+          "context": "diff = abs(gamma - lam)",
+          "severity": "high"
+        },
+        {
+          "file": "curved_spacetime_hpsi.py",
+          "line": 391,
+          "context": "integrand = np.abs(eigenvectors[:, i])**2 * self.Omega",
+          "severity": "high"
+        }
+      ],
+      "legitimate_usage": 44,
+      "message": "Found 13 potential phase violations"
+    },
+    "hamiltonian": {
+      "valid": true,
+      "files_checked": 2,
+      "checks": {
+        "riemann_operator.py": {
+          "hermitian_mentioned": true,
+          "real_spectrum_mentioned": false
+        },
+        "operador_H.py": {
+          "hermitian_mentioned": true,
+          "real_spectrum_mentioned": false
+        }
+      }
+    },
+    "spectral_alignment": {
+      "valid": true,
+      "files_checked": 2,
+      "checks": {
+        "spectral_coordinates.py": {
+          "riemann_zeros_referenced": true,
+          "f0_referenced": true
+        },
+        "spectral_constants.py": {
+          "riemann_zeros_referenced": false,
+          "f0_referenced": true
+        }
+      }
+    },
+    "normalizations": {
+      "valid": false,
+      "violations": [
+        {
+          "file": "critical_line_horizon.py",
+          "pattern": "Absolute value on eigenvalue",
+          "match": "np.abs(eigenvalue"
+        },
+        {
+          "file": "riemann_operator.py",
+          "pattern": "Absolute value on psi",
+          "match": "np.abs(x) + LOG_X_EPSI"
+        },
+        {
+          "file": "riemann_operator.py",
+          "pattern": "Absolute value on psi",
+          "match": "np.abs(H_psi - H_psi"
+        },
+        {
+          "file": "curved_spacetime_operator.py",
+          "pattern": "Absolute value on psi",
+          "match": "np.abs(x_dot_u) + epsi"
+        },
+        {
+          "file": "curved_spacetime_operator.py",
+          "pattern": "Absolute value on eigenvalue",
+          "match": "np.abs(eigenvalue"
+        },
+        {
+          "file": "discrete_symmetry_operator.py",
+          "pattern": "Absolute value on psi",
+          "match": "np.abs(R_psi) + EPSI"
+        },
+        {
+          "file": "discrete_symmetry_operator.py",
+          "pattern": "Absolute value on psi",
+          "match": "np.abs(R_psi) + EPSI"
+        },
+        {
+          "file": "discrete_symmetry_operator.py",
+          "pattern": "Absolute value on eigenvalue",
+          "match": "np.abs(np.imag(eigenvalue"
+        },
+        {
+          "file": "horizon_detector.py",
+          "pattern": "Absolute value on eigenvalue",
+          "match": "np.abs(self.eigenvalue"
+        },
+        {
+          "file": "horizon_detector.py",
+          "pattern": "Absolute value on eigenvalue",
+          "match": "np.abs(self.eigenvalue"
+        },
+        {
+          "file": "horizon_detector.py",
+          "pattern": "Absolute value on eigenvalue",
+          "match": "np.abs(resolvent_eigenvalue"
+        },
+        {
+          "file": "horizon_detector.py",
+          "pattern": "Absolute value on eigenvalue",
+          "match": "np.abs(self.eigenvalue"
+        },
+        {
+          "file": "horizon_detector.py",
+          "pattern": "Absolute value on eigenvalue",
+          "match": "np.abs(self.eigenvalue"
+        },
+        {
+          "file": "horizon_detector.py",
+          "pattern": "Absolute value on eigenvalue",
+          "match": "np.abs(self.eigenvalue"
+        },
+        {
+          "file": "horizon_detector.py",
+          "pattern": "Absolute value on eigenvalue",
+          "match": "np.abs(self.eigenvalue"
+        }
+      ],
+      "message": "Found 15 inappropriate normalizations"
+    }
+  },
+  "valid": false
+}

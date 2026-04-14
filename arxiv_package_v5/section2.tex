@@ -1,0 +1,66 @@
+\subsection{Smoothing and Operator Perturbation}
+
+Let \( Z = -i \frac{d}{d\tau} \) be the generator of the scale-flow \( (S_u) \), acting on the Hilbert space \( H = L^2(\mathbb{R}) \). Let \( P = Z \) by notation. Consider the total perturbation kernel:
+\[
+K_{S,\delta} := \sum_{v \in S} K_{v,\delta}, \quad \text{where} \quad K_{v,\delta} := \left( w_\delta * T_v \right)(P),
+\]
+with \( w_\delta \in \mathcal{S}(\mathbb{R}) \) an even Gaussian smoothing kernel.
+
+We define the perturbed (self-adjoint) operator:
+\[
+A_{S,\delta} := Z + K_{S,\delta}.
+\]
+This defines a family of trace-class perturbations of the unperturbed operator \( A_0 := Z \), indexed by finite sets \( S \subset V \).
+
+\subsection{Smoothed Resolvent and Trace Perturbation}
+
+Let \( s = \sigma + it \in \mathbb{C} \), with \( \sigma > \frac{1}{2} \). Define the smoothed resolvent kernel:
+\[
+R_\delta(s; A) := \int_{\mathbb{R}} e^{(\sigma - \frac{1}{2})u} e^{itu} w_\delta(u) e^{iuA} \, du.
+\]
+Then we define the difference operator:
+\[
+B_{S,\delta}(s) := R_\delta(s; A_{S,\delta}) - R_\delta(s; A_0),
+\]
+and the canonical determinant:
+\[
+D_{S,\delta}(s) := \det \left( I + B_{S,\delta}(s) \right).
+\]
+
+\subsection{Holomorphy and Schatten Control}
+
+\begin{proposition}
+For each fixed \( \delta > 0 \), and on every vertical strip \( \Omega_\varepsilon = \{ s : |\Re s - \frac{1}{2}| \geq \varepsilon \} \), the operator \( B_{S,\delta}(s) \in \mathcal{S}_1 \) (trace-class), and the map \( s \mapsto D_{S,\delta}(s) \) is holomorphic on \( \Omega_\varepsilon \).
+\end{proposition}
+
+\begin{proof}[Sketch]
+Since \( w_\delta \in \mathcal{S}(\mathbb{R}) \), the smoothed resolvent is an operator-valued Bochner integral. The boundedness and trace-class property follow from Kato–Seiler–Simon estimates on convolutions and perturbation theory. Holomorphy follows from standard results on trace-class valued holomorphic families (Simon, 2005).
+\end{proof}
+
+\subsection{Limit and Canonical Determinant \( D(s) \)}
+
+Taking the limit \( S \uparrow V \), we define the full kernel:
+\[
+K_\delta := \sum_{v \in V} K_{v,\delta}, \quad A_\delta := Z + K_\delta.
+\]
+By uniform convergence in \( \mathcal{S}_1 \), the family \( B_{S,\delta}(s) \to B_\delta(s) := R_\delta(s; A_\delta) - R_\delta(s; A_0) \) uniformly on \( \Omega_\varepsilon \), and we define the canonical determinant:
+\[
+D(s) := \det \left( I + B_\delta(s) \right).
+\]
+
+\subsection{Functional Equation}
+
+Let \( J \) be the parity operator on \( H \), defined by \( (J\varphi)(\tau) := \varphi(-\tau) \). Then \( J Z J^{-1} = -Z \), and \( J A_\delta J^{-1} = 1 - A_\delta \). This yields the symmetry:
+\[
+B_\delta(1 - s) = J B_\delta(s) J^{-1} \quad \Rightarrow \quad D(1 - s) = D(s).
+\]
+
+\subsection{Remarks}
+
+\begin{remark}[Zeta-Free Construction]
+At no point is \( \zeta(s) \), \( \Xi(s) \), or the Euler product used in the definition of \( D(s) \). The entire construction arises from operator theory, smoothing, and spectral perturbations of a scale-invariant system.
+\end{remark}
+
+\begin{remark}[Order and Growth]
+The determinant \( D(s) \) is entire of order \( \leq 1 \), as shown in Section 4, by Hadamard theory and uniform norm control on \( B_\delta(s) \). Its zero set and asymptotics will be analyzed via explicit formulas and trace inversion in the following sections.
+\end{remark}

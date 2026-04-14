@@ -1,0 +1,71 @@
+This appendix establishes uniform bounds for the canonical determinant \( D(s) \) and proves the spectral stability of the construction under variations in the S-finite parameters.
+
+\subsection{Growth Estimates}
+
+The growth of \( D(s) \) as a function of the complex parameter \( s \) is controlled by the underlying spectral theory.
+
+\begin{theorem}[Uniform Growth Bound]
+For any \( \varepsilon > 0 \), there exist constants \( C_\varepsilon, R_\varepsilon > 0 \) such that:
+\[
+|D(s)| \leq C_\varepsilon e^{(\varepsilon + o(1))|s|}, \quad |s| > R_\varepsilon.
+\]
+This confirms that \( D(s) \) is of order at most 1.
+\end{theorem}
+
+\begin{proof}[Proof Outline]
+The bound follows from the trace-class estimates on \( B_\delta(s) \) established in Section 2. Using the Golden-Thompson inequality and properties of operator exponentials:
+\[
+\|B_\delta(s)\|_1 \leq \sum_{v \in V} \|K_{v,\delta}\|_1 \cdot |R_\delta(s; Z)|,
+\]
+where the resolvent term \( |R_\delta(s; Z)| \) has exponential decay for \( \Re s > \frac{1}{2} + \varepsilon \).
+\end{proof}
+
+\subsection{Parameter Stability}
+
+The dependence of \( D(s) \) on the smoothing parameter \( \delta \) and finite approximations \( S \subset V \) is controlled:
+
+\begin{proposition}[Parameter Dependence]
+For \( 0 < \delta_1, \delta_2 < 1 \) and finite sets \( S_1, S_2 \subset V \), we have:
+\[
+|D_{S_1,\delta_1}(s) - D_{S_2,\delta_2}(s)| \leq C(s) \left[ |\delta_1 - \delta_2| + e^{-c|S_1 \triangle S_2|} \right],
+\]
+uniformly on compact subsets of \( \mathbb{C} \setminus \{0, 1\} \).
+\end{proposition}
+
+\subsection{Spectral Gap Estimates}
+
+The spectral stability is closely related to the existence of a spectral gap in the operator \( A_\delta \).
+
+\begin{lemma}[Spectral Gap]
+The operator \( A_\delta = Z + K_\delta \) has a spectral gap of size \( \geq c\delta \) around the continuous spectrum of \( Z \), for some universal constant \( c > 0 \).
+\end{lemma}
+
+This spectral gap ensures that small perturbations in the construction parameters lead to small changes in the determinant \( D(s) \).
+
+\subsection{Convergence Rates}
+
+For the numerical validation, precise convergence rates are essential:
+
+\begin{theorem}[Exponential Convergence]
+Let \( D_N(s) \) denote the approximation to \( D(s) \) using the first \( N \) terms in various series expansions. Then:
+\[
+|D(s) - D_N(s)| \leq C(s) e^{-cN^{1/2}},
+\]
+for appropriate constants \( C(s), c > 0 \).
+\end{theorem}
+
+This exponential convergence rate validates the numerical approach and ensures that computational approximations rapidly approach the exact theoretical values.
+
+\subsection{Robustness Analysis}
+
+The construction is robust under small modifications of the S-finite axioms:
+
+\begin{corollary}[Robustness]
+If the axioms (A1)-(A3) are satisfied up to errors of size \( \varepsilon \), then the resulting canonical determinant \( D_\varepsilon(s) \) satisfies:
+\[
+|D_\varepsilon(s) - D(s)| \leq C(s) \varepsilon,
+\]
+with explicit dependence on \( s \) that can be computed from the spectral bounds.
+\end{corollary}
+
+This robustness is crucial for applications and ensures that the theoretical framework has practical computational implementations.

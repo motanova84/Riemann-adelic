@@ -1,0 +1,79 @@
+{
+  "test1_potential": {
+    "even_error": 0.0,
+    "even_passed": true,
+    "min_V": 1.3863006173680579,
+    "pos_passed": true,
+    "is_smooth": true,
+    "all_passed": true
+  },
+  "test2_phase": {
+    "Phi_zero": 0.0,
+    "zero_passed": true,
+    "deriv_error": 1.2085808466490989e-06,
+    "deriv_passed": true,
+    "odd_error": 2.842170943040401e-14,
+    "odd_passed": true,
+    "all_passed": true
+  },
+  "test3_unitarity": {
+    "norm_error": 2.220446049250313e-16,
+    "phase_passed": true,
+    "mean_norm_error": 3.346042947673216e-17,
+    "norm_preservation_passed": true,
+    "inverse_error": 2.2708279691757263e-16,
+    "inverse_passed": true,
+    "all_passed": true
+  },
+  "test4_conjugation": {
+    "conjugation_errors": [
+      0.09092592285576834,
+      0.09696012462113188,
+      0.10257516023501011,
+      0.10879902519654833,
+      0.11690065882226425
+    ],
+    "mean_error": 0.10323217834614458,
+    "max_error": 0.11690065882226425,
+    "conjugation_passed": true,
+    "all_passed": true
+  },
+  "test5_spectrum": {
+    "eigenvalues_real": [
+      -135.72293060029205,
+      -135.63469744657607,
+      -135.547431241239,
+      -135.461105371025,
+      -135.37569412664118,
+      -135.29117267262856,
+      -135.20751701785744,
+      -135.12470398666085,
+      -135.04271119066524,
+      -134.96151700132575
+    ],
+    "eigenvalues_imag": [
+      -2.282991735244682e-15,
+      -2.7146067755478914e-15,
+      4.905092642356361e-15,
+      3.6599851131086474e-15,
+      5.5694348672724386e-14,
+      4.2233842611845784e-15,
+      1.811393174011392e-15,
+      1.170220025705811e-14,
+      4.973133706346681e-15,
+      4.301303276695504e-15
+    ],
+    "max_imag": 5.5694348672724386e-14,
+    "spectrum_real": true,
+    "all_passed": true
+  },
+  "metadata": {
+    "timestamp": "2026-02-18T16:10:02.203681",
+    "author": "Jos\u00e9 Manuel Mota Burruezo",
+    "orcid": "0009-0002-1923-0773",
+    "doi": "10.5281/zenodo.17379721",
+    "qcal_frequency": 141.7001,
+    "qcal_coherence": 244.36,
+    "all_passed": true
+  }
+}

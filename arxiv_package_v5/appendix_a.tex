@@ -1,0 +1,39 @@
+In this appendix, we establish the uniqueness of the canonical determinant \( D(s) \) within the class of entire functions satisfying the S-finite spectral conditions.
+
+\subsection{Paley-Wiener Space Structure}
+
+Let \( \mathcal{PW}_\sigma \) denote the Paley-Wiener space of entire functions of exponential type \( \leq \sigma \) that are square-integrable on the real axis. The trace functional \( \Pi_{S,\delta}(f) \) naturally acts on test functions whose Mellin transforms lie in appropriate Paley-Wiener spaces.
+
+\begin{definition}[Determining Class]
+A collection \( \mathcal{F} \) of test functions is called \emph{determining} for entire functions of order \( \leq 1 \) if any such function \( F(s) \) satisfying \( \hat{f}(F) = 0 \) for all \( f \in \mathcal{F} \) must be identically zero, where \( \hat{f}(F) = \int f(u) F(u) \, du \).
+\end{definition}
+
+\subsection{Multiplicity Structure}
+
+The zeros of \( D(s) \) carry multiplicity information that must be preserved in any uniqueness statement. We establish:
+
+\begin{theorem}[Uniqueness with Multiplicities]
+Let \( D_1(s) \) and \( D_2(s) \) be two entire functions of order \( \leq 1 \) satisfying:
+\begin{enumerate}
+\item The functional equation \( D_i(1-s) = D_i(s) \) for \( i = 1,2 \)
+\item The same trace formula on a determining class \( \mathcal{F} \)
+\item The normalization \( \lim_{\Re s \to +\infty} \log D_i(s) = 0 \)
+\end{enumerate}
+Then \( D_1(s) = D_2(s) \) identically, including multiplicities at all zeros.
+\end{theorem}
+
+\begin{proof}[Proof Sketch]
+The proof follows from the Paley-Wiener theorem and properties of the Mellin transform. The determining class \( \mathcal{F} \) contains enough test functions to separate zeros of entire functions of bounded type. The functional equation and normalization provide additional constraints that force uniqueness.
+
+Specifically, consider \( G(s) = D_1(s)/D_2(s) \). Under our assumptions, \( G(s) \) is entire, satisfies \( G(1-s) = G(s) \), and has bounded growth. The trace formula conditions imply that \( G(s) \) has no poles or zeros, hence \( G(s) \) is constant. The normalization forces this constant to be 1.
+\end{proof}
+
+\subsection{Spectral Stability}
+
+An important corollary of the uniqueness theorem is the stability of the spectral construction under perturbations.
+
+\begin{corollary}[Stability]
+Small perturbations in the S-finite axioms lead to correspondingly small changes in the canonical determinant \( D(s) \), measured in appropriate function spaces.
+\end{corollary}
+
+This stability property is crucial for the numerical validation, as it ensures that computational approximations converge to the exact theoretical construction.

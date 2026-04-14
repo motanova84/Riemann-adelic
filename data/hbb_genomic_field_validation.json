@@ -1,0 +1,52 @@
+{
+  "qcal_version": "\u221e\u00b3",
+  "frequency_f0": 141.7001,
+  "coherence_c": 244.36,
+  "sequence": {
+    "length": 93,
+    "num_codons": 31
+  },
+  "metrics": {
+    "psi_gen_magnitude": 18.976301009416986,
+    "psi_gen_phase": -1.481090637777837,
+    "total_coherence": 0.20404624741308586,
+    "sovereignty_score": 0.12835167175984433,
+    "is_sovereign": false,
+    "sovereignty_threshold": 0.888
+  },
+  "codons": {
+    "resonant_count": 8,
+    "dissonant_count": 23,
+    "resonant_percent": 25.806451612903224,
+    "dissonant_percent": 74.19354838709677
+  },
+  "mutation_analysis": {
+    "chirality": 0.054838709677419134,
+    "chirality_deviation": 0.9451612903225809,
+    "mutation_probability": 0.9451612903225809,
+    "is_stable": false,
+    "hotspot_count": 0,
+    "hotspot_density_percent": 0.0,
+    "prediction_precision": 0.002
+  },
+  "torsion_tensor": [
+    [
+      0.0013688937772350425,
+      -0.011449567241325372,
+      0.018932012720762916
+    ],
+    [
+      -0.011449567241325372,
+      -0.008149829809389811,
+      0.021196023230228647
+    ],
+    [
+      0.018932012720762916,
+      0.021196023230228647,
+      0.0616196457095739
+    ]
+  ],
+  "author": "Jos\u00e9 Manuel Mota Burruezo \u03a8 \u2727 \u221e\u00b3",
+  "institution": "Instituto de Conciencia Cu\u00e1ntica (ICQ)",
+  "doi": "10.5281/zenodo.17379721"
+}

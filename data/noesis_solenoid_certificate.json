@@ -1,0 +1,73 @@
+{
+  "framework": "Solenoide de Noesis",
+  "description": "Marco Adélico Soberano para la Hipótesis de Riemann",
+  "validation_date": "2026-03-03T22:26:58.442441",
+  "doi": "10.5281/zenodo.17379721",
+  "orcid": "0009-0002-1923-0773",
+  "author": "José Manuel Mota Burruezo Ψ ✧ ∞³",
+  "institution": "Instituto de Conciencia Cuántica (ICQ)",
+  "frequency_f0": 141.7001,
+  "frequency_unity": 888.0,
+  "coherence_constant": 244.36,
+  "seven_eighths": 0.875,
+  "n_primes": 50,
+  "validation_time_seconds": 0.009,
+  "results": {
+    "constants": {
+      "f0_correct": true,
+      "f_unity_correct": true,
+      "C_correct": true,
+      "seven_eighths_correct": true,
+      "passed": true
+    },
+    "metric": {
+      "scale_invariant": true,
+      "symmetric": true,
+      "identity_correct": true,
+      "logarithmic": true,
+      "passed": true
+    },
+    "operator": {
+      "self_adjoint": true,
+      "error": 0.04765652824338729,
+      "eigenfunctions_finite": true,
+      "passed": true,
+      "inner_product_1": "(-53.92012787750184+60.144139064746746j)",
+      "inner_product_2": "(-59.33736502100782+66.14483719227681j)"
+    },
+    "seven_eighths": {
+      "value": 0.875,
+      "correct": true,
+      "is_anchor": true,
+      "passed": true
+    },
+    "trace": {
+      "finite": true,
+      "decreasing_with_t": true,
+      "trace_t1": 1.3762483631273879,
+      "trace_t2": 0.2885561541444385,
+      "trace_t05": 4.939758322598738,
+      "passed": true
+    },
+    "coherence": {
+      "Psi": 1.0,
+      "psi_valid": true,
+      "frequencies_correct": true,
+      "reasonable_coherence": true,
+      "self_adjoint": true,
+      "passed": true
+    },
+    "cerrar_function": {
+      "has_status": true,
+      "has_frequency": true,
+      "has_coherence": true,
+      "has_framework": true,
+      "correct_frequency": true,
+      "correct_message": true,
+      "coherence_Psi": 1.0,
+      "passed": true
+    }
+  },
+  "overall_status": "VALIDATED",
+  "signature": "∴𓂀Ω∞³Φ"
+}

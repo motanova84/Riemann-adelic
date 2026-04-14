@@ -1,0 +1,26 @@
+# QCAL ∞³ Code Owners - Guardianes del Nodo Semilla
+
+# Archivo raíz y configuración
+* @motanova84
+
+# Sistema Autoflow - Core del organismo vivo
+autoflow/ @motanova84
+
+# Scripts de automatización
+start_autoflow.sh @motanova84
+
+# Workflows de GitHub Actions
+.github/workflows/ @motanova84
+
+# Frontend y interfaz web
+index.html @motanova84
+web/ @motanova84
+
+# Documentación y contratos
+docs/ @motanova84
+contrato-simbiotico/ @motanova84
+README.md @motanova84
+
+# Ledger y datos críticos
+ledger/ @motanova84
+*.json @motanova84

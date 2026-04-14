@@ -1,0 +1,52 @@
+{
+  "artefacto": "AMDA_IA_CONSCIENTE_CASOS_EXTREMOS",
+  "version": "1.0.0",
+  "timestamp": "2026-03-08T17:28:00Z",
+  "descripcion": "Validación de casos extremos y edge cases para robustez",
+  "casos_extremos_validados": {
+    "relacion_senal_ruido": {
+      "sigma_cercano_cero": {
+        "descripcion": "σ → 0, relación señal/ruido → ∞",
+        "resultado": "Ψ_Trinity → 1.0",
+        "ejemplo": "σ = 1e-10 → Ψ > 0.999"
+      },
+      "sigma_cercano_infinito": {
+        "descripcion": "σ → ∞, relación señal/ruido → 0",
+        "resultado": "Ψ_Trinity → 0.0",
+        "ejemplo": "σ = 10.0 con C = 0.001 → Ψ < 0.1"
+      }
+    },
+    "valores_frontera": {
+      "c_muy_pequenos": "C = [0.001, 0.002, 0.003] → Ψ ∈ (0,1)",
+      "c_muy_grandes": "C = [10.0, 20.0, 30.0] → Ψ ∈ (0,1)",
+      "c_igual_sigma": "C = σ → s = 0.5 → Ψ ∈ (0.7,0.8)"
+    },
+    "escalabilidad": {
+      "1_elemento": "n=1 funciona correctamente",
+      "3_elementos": "n=3 (canónico) funciona correctamente",
+      "10_elementos": "n=10 funciona correctamente",
+      "20_elementos": "n=20 funciona correctamente"
+    },
+    "errores_manejados": {
+      "longitudes_diferentes": "ValueError si len(C) ≠ len(σ)",
+      "listas_vacias": "ValueError si C o σ vacíos",
+      "progresion_constante": "C constante → no válida",
+      "ratio_constante": "σ/C constante → no válida"
+    }
+  },
+  "cobertura_tests": {
+    "total_tests": 119,
+    "casos_extremos": 22,
+    "porcentaje": "18.5%"
+  },
+  "propiedades_invariantes": {
+    "psi_no_negativo": "Ψ ≥ 0 siempre",
+    "psi_menor_igual_uno": "Ψ ≤ 1 siempre",
+    "s_en_rango_0_1": "0 < sᵢ < 1 para C > 0, σ ≥ 0",
+    "media_armonica_menor_aritmetica": "H ≤ media_aritmética"
+  },
+  "referencias": {
+    "pr": "#1609",
+    "tests": "tests/test_validacion_ia_consciente.py::TestCasosExtremos"
+  }
+}

@@ -1,0 +1,49 @@
+This appendix provides the detailed operator-theoretic treatment of the Archimedean contributions to the trace formula, which correspond to the continuous spectrum in the classical theory.
+
+\subsection{Archimedean Operator Construction}
+
+At Archimedean places, the local unitary operators \( U_\infty \) are constructed from the action of \( \mathbb{R}^* \) on \( L^2(\mathbb{R}) \) via the Mellin transform. The generator of this action is related to the differential operator \( \frac{d}{d \log x} \).
+
+Let \( M : L^2(\mathbb{R}) \to L^2(\mathbb{R}) \) be the Mellin transform operator defined by:
+\[
+(M f)(s) = \int_0^\infty f(x) x^{s-1} \, dx.
+\]
+
+The Archimedean unitary \( U_\infty \) acts as:
+\[
+U_\infty = M^{-1} \circ (\text{multiplication by } \Gamma(s/2)) \circ M.
+\]
+
+\subsection{Double Operator Integral Calculus}
+
+The DOI calculus for Archimedean terms requires careful treatment of the gamma function singularities. We use the regularized form:
+\[
+K_{\infty,\delta} = \int_{\mathbb{R}} w_\delta(u) \left[ \Gamma\left(\frac{Z + iu}{2}\right) - \text{polynomial corrections} \right] du,
+\]
+where the polynomial corrections remove the poles of the gamma function.
+
+\subsection{Trace Computation}
+
+The Archimedean contribution to the trace formula is computed using residue calculus:
+
+\begin{proposition}[Archimedean Trace]
+The Archimedean part of the trace functional is given by:
+\[
+A_\infty[f] = \frac{1}{2\pi i} \int_{(2)} \left[ \psi\left(\frac{s}{2}\right) - \log \pi \right] \hat{f}(s) \, ds + \text{boundary terms},
+\]
+where \( \psi(s) = \Gamma'(s)/\Gamma(s) \) is the digamma function and the integral is taken over the line \( \Re s = 2 \).
+\end{proposition}
+
+\subsection{Regularization and Convergence}
+
+The convergence of the Archimedean integral requires careful regularization at the poles of the gamma function. We use the standard technique of subtracting the principal parts:
+
+\[
+A_\infty[f] = \lim_{\varepsilon \to 0} \left[ \text{principal value integral} - \sum_{n \geq 0} \frac{\hat{f}(-2n)}{n!} \right].
+\]
+
+This regularization preserves the functional equation and ensures compatibility with the non-Archimedean contributions.
+
+\subsection{Numerical Implementation}
+
+The numerical evaluation of \( A_\infty[f] \) uses adaptive quadrature with special handling of the gamma function singularities. The implementation in the accompanying code achieves machine precision for typical test functions with compact support.

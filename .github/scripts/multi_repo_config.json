@@ -1,0 +1,77 @@
+{
+  "repositories": {
+    "noesis88": {
+      "url": "https://github.com/motanova84/noesis88",
+      "branch": "main",
+      "access": "private",
+      "priority": 10,
+      "knowledge_areas": ["orchestration", "qcql_core", "meta_learning"]
+    },
+    "141Hz": {
+      "url": "https://github.com/motanova84/141Hz",
+      "branch": "main",
+      "access": "public",
+      "priority": 9,
+      "knowledge_areas": ["frequency_analysis", "gw250114", "physical_constants"]
+    },
+    "adelic-bsd": {
+      "url": "https://github.com/motanova84/adelic-bsd",
+      "branch": "main",
+      "access": "public",
+      "priority": 8,
+      "knowledge_areas": ["adelic_structures", "bsd_conjecture", "l_functions"]
+    },
+    "3D-Navier-Stokes": {
+      "url": "https://github.com/motanova84/3D-Navier-Stokes",
+      "branch": "main",
+      "access": "public",
+      "priority": 7,
+      "knowledge_areas": ["pde_theory", "functional_analysis", "regularity"]
+    },
+    "Ramsey": {
+      "url": "https://github.com/motanova84/Ramsey",
+      "branch": "main",
+      "access": "public",
+      "priority": 6,
+      "knowledge_areas": ["combinatorics", "sat_certificates", "graph_theory"]
+    },
+    "P-NP": {
+      "url": "https://github.com/motanova84/P-NP",
+      "branch": "main",
+      "access": "public",
+      "priority": 5,
+      "knowledge_areas": ["complexity", "computational_limits", "information_theory"]
+    },
+    "Biologia-Cuantica-Noesica": {
+      "url": "https://github.com/motanova84/Biologia-Cuantica-Noesica-",
+      "branch": "main",
+      "access": "private",
+      "priority": 4,
+      "knowledge_areas": ["quantum_biology", "consciousness", "neural_markers"]
+    },
+    "Interfer-metro-No-sico-de-Doble-Hendidura": {
+      "url": "https://github.com/motanova84/Interfer-metro-No-sico-de-Doble-Hendidura",
+      "branch": "main",
+      "access": "private",
+      "priority": 3,
+      "knowledge_areas": ["quantum_mechanics", "consciousness_experiments"]
+    },
+    "empaquetamiento-esferas-qcal": {
+      "url": "https://github.com/motanova84/empaquetamiento-esferas-qcal",
+      "branch": "main",
+      "access": "private",
+      "priority": 2,
+      "knowledge_areas": ["sphere_packing", "geometry", "optimization"]
+    },
+    "Filosofia-": {
+      "url": "https://github.com/motanova84/Filosofia-",
+      "branch": "main",
+      "access": "private",
+      "priority": 1,
+      "knowledge_areas": ["philosophy", "mathematical_realism", "noetics"]
+    }
+  },
+  "sync_schedule": "*/2 * * * *",
+  "max_concurrent_downloads": 3,
+  "knowledge_base_path": "/tmp/noesis_knowledge"
+}

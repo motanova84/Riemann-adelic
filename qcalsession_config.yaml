@@ -1,0 +1,69 @@
+# Configuración del Sistema QCAL ∞³
+system:
+  name: "QCAL ∞³ Auto-Orquestación"
+  version: "V5 Coronación"
+  frequency: 141.7001  # Hz
+  state: "Ψ = I × A_eff² × C^∞"
+
+# Directorios del proyecto
+directories:
+  project_root: "Riemann-adelic"
+  lean_dir: "formalization/lean"
+  python_dir: "."
+  docs_dir: "docs"
+  state_file: ".qcal_state.json"
+  logs_dir: "logs"
+
+# Límites de procesamiento
+limits:
+  max_session_time: 3600  # segundos (1 hora)
+  max_sorry_per_file: 3
+  retry_limit: 3
+  compilation_timeout: 300  # segundos
+
+# Estrategias de resolución
+strategies:
+  priority:
+    - "direct_proof"
+    - "break_into_lemmas"
+    - "use_mathlib_theorem"
+    - "simplify_assumptions"
+    - "type_correction"
+    - "add_imports"
+    - "construct_counterexample"
+    - "search_literature"
+
+# Archivos prioritarios
+files:
+  priority:
+    - "RH_Final.lean"
+    - "KernelAdelic.lean"
+    - "SpectralBijection.lean"
+    - "NoesisInfinity.lean"
+    - "GuinandWeil.lean"
+    - "CompactResolvent.lean"
+
+# Validación Axioma de Emisión
+axiom_emission:
+  required_elements:
+    - "f₀ = 141.7001"
+    - "Ψ = I × A_eff² × C^∞"
+    - "QCAL ∞³"
+    - "Noesis"
+  forbidden:
+    - "admitted"
+    - "sorry"  # Al final
+    - "axiom"  # Sin justificación
+
+# Integración con herramientas externas
+integration:
+  mathlib_search: true
+  literature_search: true
+  github_auto_commit: true
+  zenodo_auto_upload: false  # Activar al final
+
+# Logging y monitoreo
+logging:
+  level: "INFO"
+  file: "qcalsession.log"
+  format: "%(asctime)s - %(levelname)s - %(message)s"

@@ -1,0 +1,100 @@
+{
+  "mathematical_properties": {
+    "hyperbolicity": {
+      "is_anosov": true,
+      "lyapunov_gap": 1.0,
+      "expansion_rate": 1.0,
+      "contraction_rate": -1.0,
+      "decomposition_preserved": true,
+      "metric_emergent": true
+    },
+    "lyapunov": {
+      "unstable": 1.0,
+      "stable": -1.0,
+      "neutral": 0.0
+    },
+    "volume_preservation": {
+      "max_deviation": 2.220446049250313e-16,
+      "preserved": true
+    },
+    "decomposition": {
+      "E0_exists": true,
+      "E_unstable_exists": true,
+      "E_stable_exists": true
+    }
+  },
+  "closed_orbits": {
+    "total_orbits": 38,
+    "orbits_validated": true
+  },
+  "selberg_trace": {
+    "t_values": [
+      0.5,
+      1.0,
+      1.5,
+      2.0,
+      3.0,
+      5.0
+    ],
+    "trace_values": [
+      2.4224375388384045,
+      1.03356113443083,
+      0.511225315476388,
+      0.27879933356743364,
+      0.1000042843582733,
+      0.018559594924977368
+    ],
+    "monotonic": true,
+    "positive": true
+  },
+  "zeta_connection": [
+    {
+      "s": "(0.5+14.134725j)",
+      "poisson_real": -0.026401197061886116,
+      "poisson_imag": -0.2137564702544039,
+      "poles": [
+        0.6931471805599453,
+        1.3862943611198906,
+        2.0794415416798357,
+        2.772588722239781,
+        3.4657359027997265
+      ]
+    },
+    {
+      "s": "(0.5+21.02204j)",
+      "poisson_real": -0.012359428092483605,
+      "poisson_imag": -0.14581288952270385,
+      "poles": [
+        0.6931471805599453,
+        1.3862943611198906,
+        2.0794415416798357,
+        2.772588722239781,
+        3.4657359027997265
+      ]
+    },
+    {
+      "s": "(0.5+25.010858j)",
+      "poisson_real": -0.008810984583687722,
+      "poisson_imag": -0.12301322753308477,
+      "poles": [
+        0.6931471805599453,
+        1.3862943611198906,
+        2.0794415416798357,
+        2.772588722239781,
+        3.4657359027997265
+      ]
+    }
+  ],
+  "p_adic_norms": {
+    "p_adic_norms_validated": true
+  },
+  "archimedean_expansion": {
+    "archimedean_expansion_validated": true
+  },
+  "complete_validation": {
+    "is_anosov": true,
+    "metric_emergent": true,
+    "trace_formula_exact": true,
+    "poles_match_zeta": true
+  }
+}

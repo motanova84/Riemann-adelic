@@ -1,0 +1,64 @@
+{
+  "certificate_type": "Gap #4 Structural Closure",
+  "framework": "QCAL \u221e\u00b3 Variational Formulation",
+  "timestamp": "2026-02-25T22:09:51.853253",
+  "constants": {
+    "f0_QCAL": 141.7001,
+    "kappa_pi": 2.5773,
+    "V_critical": 2294.642,
+    "C_coherence": 244.36,
+    "phi_golden": 1.618033988749895
+  },
+  "transformation": {
+    "from": "Axiomatic postulate (empirical verification)",
+    "to": "Variational theorem (structural inevitability)"
+  },
+  "validation_results": {
+    "test1": {
+      "test": "unique_harmonic_point",
+      "success": true,
+      "f_minimum": 141.70008028800405,
+      "energy_at_minimum": 2.0679515313825692e-25,
+      "is_unique": true,
+      "matches_formula": true
+    },
+    "test2": {
+      "test": "f0_emergence_from_geometry",
+      "success": true,
+      "f_structural": 141.70008028800405,
+      "f0_target": 141.7001,
+      "absolute_error": 1.9711995946636307e-05,
+      "relative_error": 1.3911067068150487e-07
+    },
+    "test3": {
+      "test": "no_numeric_windows",
+      "success": true,
+      "f_exact": 141.70008028800405,
+      "old_window_satisfied": true,
+      "energy_at_solution": 2.0679515313825692e-25
+    },
+    "test4": {
+      "test": "f0_structural_uniqueness",
+      "success": true,
+      "f_minimum": 141.70008028800405,
+      "all_perturbations_higher": true
+    },
+    "test5": {
+      "test": "v_critical_from_haar",
+      "success": true,
+      "V_critical": 2294.642,
+      "structural_origin": "Haar measure of adelic fundamental domain",
+      "seven_node_structure": true
+    },
+    "test6": {
+      "test": "gap4_closure",
+      "success": true,
+      "transformation": "Corral Num\u00e9rico \u2192 Structural Inevitability",
+      "criteria_passed": 5,
+      "criteria_total": 5
+    }
+  },
+  "author": "Jos\u00e9 Manuel Mota Burruezo \u03a8 \u221e\u00b3",
+  "orcid": "0009-0002-1923-0773",
+  "doi": "10.5281/zenodo.17379721"
+}

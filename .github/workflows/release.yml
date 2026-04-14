@@ -1,0 +1,127 @@
+name: Release
+
+# Workflow para crear releases automáticos cuando se publica un tag v*.*.*
+on:
+  push:
+    tags:
+      - 'v*.*.*'  # Ejemplo: v1.0.0, v2.1.3, etc.
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-release:
+    name: Build and Create Release
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0  # Necesario para obtener todo el historial y tags
+    
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        pip install build wheel
+    
+    # Opcional: Ejecutar tests antes de crear release
+    - name: Run tests
+      run: |
+        pytest tests/ -v --tb=short
+    
+    # Crear artefactos de distribución
+    - name: Build distribution packages
+      run: |
+        # Si tienes setup.py o pyproject.toml, esto creará wheels y sdist
+        # python -m build
+        
+        # Por ahora, crear un archivo comprimido con el código
+        mkdir -p dist
+        tar -czf dist/riemann-adelic-${GITHUB_REF_NAME}.tar.gz \
+          --exclude='.git' \
+          --exclude='dist' \
+          --exclude='__pycache__' \
+          --exclude='*.pyc' \
+          .
+    
+    # Opcional: Generar notas de release desde commits
+    - name: Generate changelog
+      id: changelog
+      run: |
+        # Obtener el tag anterior
+        PREV_TAG=$(git describe --abbrev=0 --tags ${GITHUB_REF_NAME}^ 2>/dev/null || echo "")
+        
+        if [ -z "$PREV_TAG" ]; then
+          echo "CHANGELOG<<EOF" >> $GITHUB_OUTPUT
+          echo "Primera release" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+        else
+          echo "CHANGELOG<<EOF" >> $GITHUB_OUTPUT
+          git log ${PREV_TAG}..${GITHUB_REF_NAME} --pretty=format:"- %s (%h)" >> $GITHUB_OUTPUT
+          echo "" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+        fi
+    
+    - name: Create GitHub Release
+      uses: ncipollo/release-action@v1
+      with:
+        artifacts: "dist/*"
+        body: |
+          ## Release ${{ github.ref_name }}
+          
+          ${{ steps.changelog.outputs.CHANGELOG }}
+          
+          ### Instalación
+          
+          ```bash
+          # Descargar el archivo tar.gz
+          wget https://github.com/${{ github.repository }}/releases/download/${{ github.ref_name }}/riemann-adelic-${{ github.ref_name }}.tar.gz
+          
+          # Extraer
+          tar -xzf riemann-adelic-${{ github.ref_name }}.tar.gz
+          
+          # Instalar dependencias
+          pip install -r requirements.txt
+          ```
+          
+          ### Verificación
+          
+          Puedes verificar la integridad ejecutando los tests:
+          ```bash
+          pytest tests/ -v
+          ```
+        draft: false
+        prerelease: false
+        generateReleaseNotes: true
+    
+    # ============================================================
+    # INSTRUCCIONES PARA EL MANTENEDOR:
+    # 
+    # 1. Para crear una release, simplemente crea y pushea un tag:
+    #    git tag -a v1.0.0 -m "Release version 1.0.0"
+    #    git push origin v1.0.0
+    # 
+    # 2. Si usas setup.py o pyproject.toml, descomenta la línea
+    #    "python -m build" para crear paquetes de Python
+    # 
+    # 3. Considera añadir:
+    #    - Publicación a PyPI con twine
+    #    - Generación de documentación
+    #    - Checksums de artefactos
+    # 
+    # 4. Para PyPI, añade estos pasos:
+    #    - name: Publish to PyPI
+    #      env:
+    #        TWINE_USERNAME: __token__
+    #        TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
+    #      run: |
+    #        pip install twine
+    #        twine upload dist/*
+    # ============================================================

@@ -1,0 +1,32 @@
+{
+  "verification_passed": false,
+  "parameters": {
+    "f0_hz": 141.7001,
+    "tau0_s": 0.007057158040114298,
+    "block9_timestamp": 1231469744.0,
+    "block9_datetime": "2009-01-09T02:55:44Z",
+    "block9_hash": "0000000069e244f73c833322384c2f7fd72bec1dbe0b2f3b4f0a84d21f923f74"
+  },
+  "alignment_metrics": {
+    "N_ideal": 174499385871.77438,
+    "N_integer": 174499385872,
+    "T_ideal_s": 1231469744.0015922,
+    "delta_T_s": 0.0015921592712402344,
+    "delta_T_ms": 1.5921592712402344,
+    "coherence_percent": 77.43908720493316,
+    "phase": 0.774383544921875,
+    "phase_description": "OTRO"
+  },
+  "statistical_analysis": {
+    "window_s": 7200,
+    "epsilon_s": 0.01,
+    "p_value": 2.777777777777778e-06,
+    "bayes_factor": 360000.0,
+    "significance": "EXTREME"
+  },
+  "thresholds": {
+    "coherence_threshold_percent": 99.95,
+    "delta_t_threshold_s": 0.01,
+    "delta_t_threshold_ms": 10.0
+  }
+}

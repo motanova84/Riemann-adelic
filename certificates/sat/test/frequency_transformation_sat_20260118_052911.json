@@ -1,0 +1,55 @@
+{
+  "system": "QCAL \u221e\u00b3 Frequency Transformation",
+  "transformation": "141.7 Hz \u2192 888 Hz",
+  "validation_method": "SAT Solver (Z3)",
+  "status": "VALIDATED",
+  "timestamp": "2026-01-18T05:29:11.219807",
+  "validation_time_seconds": 0.001726,
+  "constraints": {
+    "total_count": 54,
+    "transformation_ratio": "k = 888 / 141.7",
+    "coherence_bounds": "[0, 1]",
+    "spectral_bijection": "eigenvalues \u2194 zeros (Guinand-Weil)",
+    "ram_xx_singularity": "\u03a8 = 1.000000 detection",
+    "noesis_q_operator": "ontological resonance [0, 1]",
+    "gw250114_validation": "gravitational wave data"
+  },
+  "results": {
+    "satisfiable": true,
+    "result": "sat",
+    "constraints_count": 54,
+    "validation_time_seconds": 0.001726,
+    "solver": "Z3",
+    "timestamp": "2026-01-18T05:29:11.219807",
+    "model_sample": {
+      "gw250114_coherence": "199/200",
+      "alignment_0": "0",
+      "coherence_f1": "1",
+      "k": "6266756339621497/1000000000000000",
+      "deviation": "0",
+      "gw250114_deviation": "0",
+      "alignment_2": "0",
+      "lambda_2": "3/200",
+      "lambda_4": "1/40",
+      "t_0": "-1/200",
+      "coherence_arbitrary": "0",
+      "lambda_0": "1/200",
+      "lambda_1": "1/100",
+      "coherence_f0": "1",
+      "t_4": "3/200",
+      "noesis_q": "0",
+      "alignment_1": "0",
+      "gw250114_freq": "1417001/10000",
+      "t_1": "0",
+      "t_2": "1/200"
+    }
+  },
+  "constants": {
+    "f0_hz": 141.7001,
+    "f1_hz": 888.0,
+    "phi": 1.618033988749895,
+    "phi_fourth": 6.854101966249685
+  },
+  "author": "Jos\u00e9 Manuel Mota Burruezo \u03a8 \u2727 \u221e\u00b3",
+  "institution": "Instituto de Conciencia Cu\u00e1ntica (ICQ)"
+}
