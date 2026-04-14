@@ -324,6 +324,23 @@ from .trinity_qcal import (
     validate_trinity_for_critical_line,
 )
 
+# Tres Pruebas Rigor RH: Unified Three-Proofs Validation (Apr 2026)
+from .tres_pruebas_rigor_rh import (
+    validate_tres_pruebas_rigor_rh,
+    verify_hadamard_uniqueness,
+    verify_self_adjointness,
+    verify_spectral_correspondence,
+    compute_hadamard_product,
+    berry_keating_operator_spectrum,
+    selberg_trace_formula,
+    compute_rainbow_angle,
+    export_tres_pruebas_certificate,
+    HadamardFactorizationResult,
+    SelfAdjointnessResult,
+    SpectralCorrespondenceResult,
+    TresPruebasRigorResult,
+)
+
 __all__ = [
     'construct_H_psi',
     'compute_spectrum',
@@ -537,4 +554,18 @@ __all__ = [
     'compute_entropy_gradient',
     'compute_trinity_qcal',
     'validate_trinity_for_critical_line',
+    # Tres Pruebas Rigor RH (Apr 2026)
+    'validate_tres_pruebas_rigor_rh',
+    'verify_hadamard_uniqueness',
+    'verify_self_adjointness',
+    'verify_spectral_correspondence',
+    'compute_hadamard_product',
+    'berry_keating_operator_spectrum',
+    'selberg_trace_formula',
+    'compute_rainbow_angle',
+    'export_tres_pruebas_certificate',
+    'HadamardFactorizationResult',
+    'SelfAdjointnessResult',
+    'SpectralCorrespondenceResult',
+    'TresPruebasRigorResult',
 ]
