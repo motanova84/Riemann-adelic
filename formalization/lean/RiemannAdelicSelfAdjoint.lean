@@ -45,6 +45,7 @@ theorem riemann_hypothesis_via_adelic_self_adjointness :
   have _hpole : ¬ IsPole zeta ρ := hρ.2
   -- Intentional placeholder: full non-circular closure is tracked in
   -- formalization/lean/RiemannAdelic/nodo_zero_adelic_selfadjoint.lean,
+  -- which exists in this repository (outside this PR's touched files),
   -- especially `H_is_self_adjoint`,
   -- `paley_wiener_conclusion_delta_equals_xi`, and
   -- `riemann_hypothesis_via_adelic_self_adjointness`.

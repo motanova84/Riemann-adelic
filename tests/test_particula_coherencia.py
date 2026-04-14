@@ -21,6 +21,14 @@ def test_navier_stokes_adelico_returns_stationary_flow() -> None:
     assert model.solve_flow(v=[1.0], p=[0.0]) == "Flujo Coherente Estacionario"
 
 
+def test_navier_stokes_adelico_rejects_invalid_inputs() -> None:
+    model = NavierStokesAdelico()
+    with pytest.raises(ValueError, match="non-empty"):
+        model.solve_flow(v=[], p=[])
+    with pytest.raises(ValueError, match="matching shapes"):
+        model.solve_flow(v=[1.0, 2.0], p=[1.0])
+
+
 def test_acoplamiento_higgs_reduccion_formula() -> None:
     higgs = AcoplamientoHiggsPC(kappa=0.053)
     assert higgs.calcular_reduccion(a_eff=141.7001, f0=141.7001) == pytest.approx(0.053)

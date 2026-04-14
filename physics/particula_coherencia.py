@@ -43,13 +43,18 @@ class NavierStokesAdelico:
         Evalúa el flujo adélico simplificado.
 
         Args:
-            v: Campo de velocidad.
-            p: Campo de presión.
+            v: Campo de velocidad (no vacío).
+            p: Campo de presión (no vacío y misma forma que ``v``).
 
         Returns:
             Estado estacionario de coherencia del flujo.
         """
-        _ = (v, p)
+        v_arr = np.asarray(v, dtype=float)
+        p_arr = np.asarray(p, dtype=float)
+        if v_arr.size == 0 or p_arr.size == 0:
+            raise ValueError("v and p must be non-empty")
+        if v_arr.shape != p_arr.shape:
+            raise ValueError("v and p must have matching shapes")
         return "Flujo Coherente Estacionario"
 
 
@@ -78,7 +83,12 @@ class FotonFaseCoherente:
     xi: float = 0.053
 
     def r_symb(self, f0: float) -> float:
-        """Calcula la tasa simbólica R_symb ≈ N · f0 · Ψ."""
+        """
+        Calcula la tasa simbólica R_symb ≈ N · f0 · Ψ.
+
+        Nota: ``f0`` negativo se interpreta como convención de fase firmada; en
+        uso físico estándar QCAL se espera ``f0 > 0``.
+        """
         return 7 * f0 * self.psi
 
 
