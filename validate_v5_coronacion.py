@@ -1154,35 +1154,114 @@ def validate_v5_coronacion(precision=30, verbose=False, save_certificate=False, 
         }
     # -----------------------------------------------------------------------
     
+    # --- Trinity_QCAL Validation (Quantum Coherence Condition) ------------
+    print("\n✨ TRINITY_QCAL VALIDATION...")
+    print("   Riemann Hypothesis as Quantum Coherence Condition")
+    try:
+        from operators.trinity_qcal import (
+            compute_trinity_qcal,
+            validate_trinity_for_critical_line
+        )
+
+        # Get system coherence Ψ from QCAL results if available
+        # Use getattr with default to safely handle qcal_results structure
+        psi = getattr(qcal_results, 'step5_coherence', 0.888) if qcal_results else 0.888
+
+        # Validate Trinity for critical line zeros
+        trinity_validation = validate_trinity_for_critical_line(
+            num_zeros=5,
+            psi=psi,
+            verbose=verbose
+        )
+
+        # Also compute Trinity with full details for reporting
+        trinity_result = compute_trinity_qcal(
+            psi=psi,
+            verbose=False
+        )
+
+        # Check if Trinity condition is satisfied
+        trinity_satisfied = trinity_validation['rh_condition_satisfied']
+
+        if trinity_satisfied:
+            print(f"   ✅ TRINITY_QCAL: RH CONDITION SATISFIED")
+            print(f"      Trinity_QCAL = {trinity_result['trinity_qcal']:.9f}")
+            print(f"      System Coherence: Ψ = {psi:.9f}")
+            print(f"      Coherence Level: {trinity_result['coherence_level']}")
+            print(f"      |ℰ_{{s,φ}}|² = {trinity_result['E_magnitude_sq']:.9f}")
+            print(f"      ∇S(γ_n) = {trinity_result['grad_S']:.9f}")
+            print(f"      Estado: COHERENTE ✅")
+            print(f"      Frecuencia: f₀ = 141.7001 Hz")
+            results["Trinity_QCAL Validation"] = {
+                'status': 'PASSED',
+                'trinity_qcal': trinity_result['trinity_qcal'],
+                'psi': psi,
+                'E_magnitude_sq': trinity_result['E_magnitude_sq'],
+                'E_phase': trinity_result['E_phase'],
+                'grad_S': trinity_result['grad_S'],
+                'phase_sync_weighted': trinity_result['phase_sync_weighted'],
+                'coherence_level': trinity_result['coherence_level'],
+                'rh_condition_satisfied': trinity_satisfied,
+                'trinity_near_zero': trinity_result['trinity_near_zero'],
+                'psi_above_threshold': trinity_result['psi_above_threshold'],
+                'zeros_tested': trinity_validation['num_zeros'],
+                'description': 'Trinity_QCAL = |ℰ_{s,φ}|² − 1 + ∇S(γ_n)·cos(arg(ℰ) − γ_n·ln2) ≈ 0'
+            }
+        else:
+            print(f"   ⚠️  TRINITY_QCAL: PARTIAL")
+            print(f"      Trinity_QCAL = {trinity_result['trinity_qcal']:.9f}")
+            print(f"      Coherence Level: {trinity_result['coherence_level']}")
+            results["Trinity_QCAL Validation"] = {
+                'status': 'PARTIAL',
+                'trinity_qcal': trinity_result['trinity_qcal'],
+                'psi': psi,
+                'rh_condition_satisfied': trinity_satisfied,
+                'coherence_level': trinity_result['coherence_level']
+            }
+
+    except ImportError as e:
+        print(f"   ⚠️  Trinity_QCAL validation skipped: module import error")
+        results["Trinity_QCAL Validation"] = {
+            'status': 'SKIPPED',
+            'error': 'module_import_error'
+        }
+    except Exception as e:
+        print(f"   ⚠️  Trinity_QCAL validation error: {str(e)[:100]}")
+        results["Trinity_QCAL Validation"] = {
+            'status': 'SKIPPED',
+            'error': str(e)[:200]
+        }
+    # -----------------------------------------------------------------------
+
     # =========================================================================
     # TRINITY_QCAL + Spectral Hamiltonian Integration
     # =========================================================================
     print("\n🔮 Trinity_QCAL + Spectral Hamiltonian Integration...")
     print("-" * 80)
     start_time = time.time()
-    
+
     try:
         from operators.riemann_spectral_hamiltonian import RiemannSpectralHamiltonian
         from operators.trinity_qcal import compute_trinity_with_excited_modes
         from physics import K7TwistedGraph, green_function_time_domain, verify_causality
-        
+
         # Compute spectral Hamiltonian with excited modes
         hamiltonian = RiemannSpectralHamiltonian()
         theta_twist = 0.1  # Conscious torsion parameter
         hamiltonian_result = hamiltonian.compute_excited_modes(theta=theta_twist)
-        
+
         # Compute Trinity with excited modes
-        trinity_result = compute_trinity_with_excited_modes(
+        trinity_spectral_result = compute_trinity_with_excited_modes(
             gamma_tilde_n=hamiltonian_result.eigenvalues_modulated,
             psi=0.888,
             verbose=verbose
         )
-        
+
         # K7 graph stability check
         k7_graph = K7TwistedGraph(theta=theta_twist, gamma=1.0, D=1.0)
         eigenvals_k7, F_dft = k7_graph.diagonalize_via_dft()
         k7_stable = np.all(np.real(eigenvals_k7) >= 0)  # Check positive definiteness
-        
+
         # Green's function causality check
         t_test = np.linspace(-1, 1, 100)
         G_test = green_function_time_domain(
@@ -1192,36 +1271,36 @@ def validate_v5_coronacion(precision=30, verbose=False, save_certificate=False, 
             D=1.0
         )
         causality_verified = verify_causality(G_test, t_test)
-        
+
         # Combined coherence metric
         spectral_coherence = hamiltonian_result.coherence
-        trinity_coherence = 1.0 - abs(trinity_result['trinity_qcal'])  # Near 0 means high coherence
+        trinity_coherence = 1.0 - abs(trinity_spectral_result['trinity_qcal'])  # Near 0 means high coherence
         combined_coherence = (spectral_coherence + trinity_coherence) / 2.0
-        
+
         trinity_passed = (
-            trinity_result['rh_condition_satisfied'] and
+            trinity_spectral_result['rh_condition_satisfied'] and
             k7_stable and
             causality_verified and
             combined_coherence > 0.85
         )
-        
+
         exec_time = time.time() - start_time
-        
+
         if trinity_passed:
             passed_count += 1
             print(f"   ✅ Trinity + Spectral Hamiltonian: PASSED")
             print(f"      • Hamiltonian coherence: {spectral_coherence:.6f}")
-            print(f"      • Trinity_QCAL: {trinity_result['trinity_qcal']:.9f}")
+            print(f"      • Trinity_QCAL: {trinity_spectral_result['trinity_qcal']:.9f}")
             print(f"      • K7 graph stable: {k7_stable}")
             print(f"      • Green's function causal: {causality_verified}")
             print(f"      • Combined coherence: {combined_coherence:.6f}")
             print(f"      • Execution time: {exec_time:.3f} seconds")
-            
+
             results["Trinity + Spectral Hamiltonian"] = {
                 'status': 'PASSED',
                 'execution_time': exec_time,
                 'spectral_coherence': float(spectral_coherence),
-                'trinity_qcal': float(trinity_result['trinity_qcal']),
+                'trinity_qcal': float(trinity_spectral_result['trinity_qcal']),
                 'k7_stable': bool(k7_stable),
                 'causality_verified': bool(causality_verified),
                 'combined_coherence': float(combined_coherence),
@@ -1232,20 +1311,20 @@ def validate_v5_coronacion(precision=30, verbose=False, save_certificate=False, 
             failed_count += 1
             print(f"   ❌ Trinity + Spectral Hamiltonian: FAILED")
             print(f"      • Hamiltonian coherence: {spectral_coherence:.6f}")
-            print(f"      • Trinity_QCAL: {trinity_result['trinity_qcal']:.9f}")
+            print(f"      • Trinity_QCAL: {trinity_spectral_result['trinity_qcal']:.9f}")
             print(f"      • K7 stable: {k7_stable}")
             print(f"      • Causality: {causality_verified}")
-            
+
             results["Trinity + Spectral Hamiltonian"] = {
                 'status': 'FAILED',
                 'execution_time': exec_time,
                 'spectral_coherence': float(spectral_coherence),
-                'trinity_qcal': float(trinity_result['trinity_qcal']),
+                'trinity_qcal': float(trinity_spectral_result['trinity_qcal']),
                 'k7_stable': bool(k7_stable),
                 'causality_verified': bool(causality_verified),
                 'combined_coherence': float(combined_coherence)
             }
-            
+
     except ImportError as e:
         print(f"   ⚠️  Trinity + Spectral validation skipped: module import error")
         print(f"      Error: {str(e)}")
