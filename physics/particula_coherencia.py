@@ -9,7 +9,7 @@ from __future__ import annotations
 
 import hashlib
 from dataclasses import dataclass, field
-from typing import Any
+from typing import Any, Sequence
 
 import numpy as np
 
@@ -38,7 +38,7 @@ class NavierStokesAdelico:
     c7: int = 7
     f_ramsey: float = 1.0
 
-    def solve_flow(self, v: Any, p: Any) -> str:
+    def solve_flow(self, v: Sequence[float] | np.ndarray, p: Sequence[float] | np.ndarray) -> str:
         """
         Evalúa el flujo adélico simplificado.
 
@@ -65,6 +65,8 @@ class AcoplamientoHiggsPC:
 
         Factor = κ_Π * A_eff² / f0²
         """
+        if f0 == 0:
+            raise ValueError("f0 must be non-zero for mass reduction calculation")
         return self.kappa * (a_eff**2 / f0**2)
 
 

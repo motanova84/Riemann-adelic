@@ -26,6 +26,25 @@ def test_acoplamiento_higgs_reduccion_formula() -> None:
     assert higgs.calcular_reduccion(a_eff=141.7001, f0=141.7001) == pytest.approx(0.053)
 
 
+@pytest.mark.parametrize(
+    ("a_eff", "f0", "expected"),
+    [
+        (0.0, 1.0, 0.0),
+        (-2.0, 2.0, 0.053),
+        (1.0e6, 1.0e3, 53000.0),
+    ],
+)
+def test_acoplamiento_higgs_boundary_cases(a_eff: float, f0: float, expected: float) -> None:
+    higgs = AcoplamientoHiggsPC(kappa=0.053)
+    assert higgs.calcular_reduccion(a_eff=a_eff, f0=f0) == pytest.approx(expected)
+
+
+def test_acoplamiento_higgs_reduccion_rejects_zero_f0() -> None:
+    higgs = AcoplamientoHiggsPC()
+    with pytest.raises(ValueError, match="f0 must be non-zero"):
+        higgs.calcular_reduccion(a_eff=1.0, f0=0.0)
+
+
 def test_foton_r_symb_matches_expected_scale() -> None:
     foton = FotonFaseCoherente(psi=0.999999)
     assert foton.r_symb(141.7001) == pytest.approx(991.8997092993)
