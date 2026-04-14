@@ -1,5 +1,36 @@
 # QCAL Build Verification - Implementation Summary
 
+## 🟢 PARTÍCULA DE COHERENCIA (PC) — Marco de Sustrato Cuántico Integrado (April 2026)
+
+**Status**: ✅ IMPLEMENTED
+
+- **Python Module**: `particula_coherencia.py`
+- **Test Suite**: `tests/test_particula_coherencia.py` (143 pruebas)
+- **Lean Formalization**: `formalization/lean/Riemann/RiemannAdelicSelfAdjoint.lean`
+- **Public Function**: `ejecutar_sustrato(verbose=True)`
+
+### Componentes implementados (8 clases)
+
+1. `VacioSuperfluo` — superfluido BEC, ν→0, unitaridad de Haar `U†U=I`, η/s=1/(4π)
+2. `ParticulaCoherencia` — PC al 95%, fase de Berry `Φ=π/8`, salto de nodo `C₇`
+3. `NavierStokesAdelico` — ecuación adélica con término `F_Ramsey` y Hamiltoniano hermitiano C₇
+4. `AcoplamientoHiggsPc` — Destello de Masa con `Δm/m = 0.053`
+5. `FotonFaseCoherente` — transmisión de fase y `R_symb ≈ 991.9 kpps` para `Ψ=1`
+6. `FirmaEspectral` — bandas laterales `m_H ± n·ℏω₀` y `Δσ/σ = 0.053`
+7. `SustratoCuantico` — integración global con `Ψ_global = (Ψ₁⋯Ψ₆)^(1/6)`
+8. `ResultadoSustrato` — resultado sellado con integridad SHA-256
+
+### Resultado esperado del pipeline
+
+```python
+from particula_coherencia import ejecutar_sustrato
+
+r = ejecutar_sustrato(verbose=True)
+# Ψ_global, sustrato_activo, destello_masa.reduccion_masa ≈ 0.053
+# foton.r_symb_kpps ≈ 991.9 (at Ψ=1)
+# firma_espectral.delta_seccion_eficaz == 0.053
+```
+
 ## 🟢 OPERADOR AUTOADJUNTO H — Generador del Flujo de Escala Adélico (March 2026)
 
 **Status**: ✅ IMPLEMENTED
