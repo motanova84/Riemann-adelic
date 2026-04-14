@@ -37,6 +37,9 @@ axiom self_adjoint_adelic : IsSelfAdjoint D_adelic
 /--
 Main theorem (formal sketch):
 self-adjoint adelic dynamics force non-trivial zeta zeros onto the critical line.
+
+Note: "non-trivial" zeros are represented here abstractly by the hypotheses
+`zeta ρ = 0` together with `¬ IsPole zeta ρ`; this is a schematic placeholder.
 -/
 theorem riemann_hypothesis_via_adelic_self_adjointness :
     ∀ ρ : ℂ, zeta ρ = 0 ∧ ¬ IsPole zeta ρ → ρ.re = (1 / 2 : ℝ) := by

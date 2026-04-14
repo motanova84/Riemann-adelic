@@ -8,6 +8,7 @@ por acoplamiento con la frecuencia base f₀ = 141.7001 Hz.
 from __future__ import annotations
 
 import hashlib
+import math
 from dataclasses import dataclass, field
 from typing import Any, Sequence
 
@@ -70,7 +71,7 @@ class AcoplamientoHiggsPC:
 
         Factor = κ_Π * A_eff² / f0²
         """
-        if f0 == 0:
+        if math.isclose(f0, 0.0, rel_tol=0.0, abs_tol=1e-12):
             raise ValueError("f0 must be non-zero for mass reduction calculation")
         return self.kappa * (a_eff**2 / f0**2)
 
