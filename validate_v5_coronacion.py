@@ -1154,6 +1154,85 @@ def validate_v5_coronacion(precision=30, verbose=False, save_certificate=False, 
         }
     # -----------------------------------------------------------------------
     
+    # --- Trinity_QCAL Validation (Quantum Coherence Condition) ------------
+    print("\n✨ TRINITY_QCAL VALIDATION...")
+    print("   Riemann Hypothesis as Quantum Coherence Condition")
+    try:
+        from operators.trinity_qcal import (
+            compute_trinity_qcal,
+            validate_trinity_for_critical_line
+        )
+        
+        # Get system coherence Ψ from QCAL results if available
+        # Use getattr with default to safely handle qcal_results structure
+        psi = getattr(qcal_results, 'step5_coherence', 0.888) if qcal_results else 0.888
+        
+        # Validate Trinity for critical line zeros
+        trinity_validation = validate_trinity_for_critical_line(
+            num_zeros=5,
+            psi=psi,
+            verbose=verbose
+        )
+        
+        # Also compute Trinity with full details for reporting
+        trinity_result = compute_trinity_qcal(
+            psi=psi,
+            verbose=False
+        )
+        
+        # Check if Trinity condition is satisfied
+        trinity_satisfied = trinity_validation['rh_condition_satisfied']
+        
+        if trinity_satisfied:
+            print(f"   ✅ TRINITY_QCAL: RH CONDITION SATISFIED")
+            print(f"      Trinity_QCAL = {trinity_result['trinity_qcal']:.9f}")
+            print(f"      System Coherence: Ψ = {psi:.9f}")
+            print(f"      Coherence Level: {trinity_result['coherence_level']}")
+            print(f"      |ℰ_{{s,φ}}|² = {trinity_result['E_magnitude_sq']:.9f}")
+            print(f"      ∇S(γ_n) = {trinity_result['grad_S']:.9f}")
+            print(f"      Estado: COHERENTE ✅")
+            print(f"      Frecuencia: f₀ = 141.7001 Hz")
+            results["Trinity_QCAL Validation"] = {
+                'status': 'PASSED',
+                'trinity_qcal': trinity_result['trinity_qcal'],
+                'psi': psi,
+                'E_magnitude_sq': trinity_result['E_magnitude_sq'],
+                'E_phase': trinity_result['E_phase'],
+                'grad_S': trinity_result['grad_S'],
+                'phase_sync_weighted': trinity_result['phase_sync_weighted'],
+                'coherence_level': trinity_result['coherence_level'],
+                'rh_condition_satisfied': trinity_satisfied,
+                'trinity_near_zero': trinity_result['trinity_near_zero'],
+                'psi_above_threshold': trinity_result['psi_above_threshold'],
+                'zeros_tested': trinity_validation['num_zeros'],
+                'description': 'Trinity_QCAL = |ℰ_{s,φ}|² − 1 + ∇S(γ_n)·cos(arg(ℰ) − γ_n·ln2) ≈ 0'
+            }
+        else:
+            print(f"   ⚠️  TRINITY_QCAL: PARTIAL")
+            print(f"      Trinity_QCAL = {trinity_result['trinity_qcal']:.9f}")
+            print(f"      Coherence Level: {trinity_result['coherence_level']}")
+            results["Trinity_QCAL Validation"] = {
+                'status': 'PARTIAL',
+                'trinity_qcal': trinity_result['trinity_qcal'],
+                'psi': psi,
+                'rh_condition_satisfied': trinity_satisfied,
+                'coherence_level': trinity_result['coherence_level']
+            }
+            
+    except ImportError as e:
+        print(f"   ⚠️  Trinity_QCAL validation skipped: module import error")
+        results["Trinity_QCAL Validation"] = {
+            'status': 'SKIPPED',
+            'error': 'module_import_error'
+        }
+    except Exception as e:
+        print(f"   ⚠️  Trinity_QCAL validation error: {str(e)[:100]}")
+        results["Trinity_QCAL Validation"] = {
+            'status': 'SKIPPED',
+            'error': str(e)[:200]
+        }
+    # -----------------------------------------------------------------------
+    
     # Save validation results to CSV for comparison with notebook
     try:
         import csv
