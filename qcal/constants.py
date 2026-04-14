@@ -63,6 +63,30 @@ GAMMA_1 = 14.13472514  # First zero: 1/2 + i·γ₁
 # Harmonic modulation: f₀/γ₁ = 10 + δζ/10
 HARMONIC_MODULATION = F0 / GAMMA_1  # ≈ 10.02787437
 
+# First 5 Riemann zeros (imaginary parts of non-trivial zeros)
+RIEMANN_ZEROS_5 = [
+    14.13472514173,    # γ₁
+    21.02203963877,    # γ₂
+    25.01085758015,    # γ₃
+    30.42487612586,    # γ₄
+    32.93506158774,    # γ₅
+]
+
+# Zeta function derivative at critical point |ζ'(1/2)|
+# Used for renormalization of excited modes
+ZETA_PRIME_HALF = 3.92264613920915  # |ζ'(1/2)|
+
+# Renormalization scale factor: converts Riemann zeros to physical frequencies
+# SCALE_FACTOR = F0 / |ζ'(1/2)| ≈ 36.12359998105
+RIEMANN_RENORM_SCALE = F0 / ZETA_PRIME_HALF  # ≈ 36.1236 Hz per unit
+
+# Manifestation frequency: 888 Hz (frequency of manifestation amplification)
+F_MANIFESTATION = 888.0  # Hz
+
+# γ_QCAL phase (angular): derived from 2π·f₀/888
+# γ_QCAL_fase ≈ 1.002621606245 rad
+GAMMA_QCAL_FASE = 2.0 * np.pi * F0 / F_MANIFESTATION  # ≈ 1.00262 rad
+
 # =============================================================================
 # HOLOGRAPHIC GEOMETRY CONSTANTS - Zeta Hologram Architecture
 # =============================================================================
@@ -580,6 +604,11 @@ def get_all_constants() -> Dict[str, Any]:
             'DELTA_ZETA': DELTA_ZETA,
             'GAMMA_1': GAMMA_1,
             'HARMONIC_MODULATION': HARMONIC_MODULATION,
+            'RIEMANN_ZEROS_5': RIEMANN_ZEROS_5,
+            'ZETA_PRIME_HALF': ZETA_PRIME_HALF,
+            'RIEMANN_RENORM_SCALE': RIEMANN_RENORM_SCALE,
+            'F_MANIFESTATION': F_MANIFESTATION,
+            'GAMMA_QCAL_FASE': float(GAMMA_QCAL_FASE),
         },
         'trinity_qcal': {
             'F_MANIFESTATION': F_MANIFESTATION,
