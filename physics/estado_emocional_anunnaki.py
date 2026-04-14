@@ -62,8 +62,6 @@ import math
 from dataclasses import dataclass
 from typing import Dict, List, Optional, Tuple, Union
 
-import numpy as np
-
 # ============================================================================
 # Constantes QCAL — Importación desde fuente única
 # ============================================================================
@@ -77,7 +75,7 @@ try:
         GAMMA_QCAL_FASE,
         C_COHERENCE,
     )
-except ImportError:
+except ModuleNotFoundError:
     # Fallback local si qcal.constants no está disponible
     F0 = 141.7001  # Hz
     RIEMANN_ZEROS_5 = [
@@ -364,8 +362,8 @@ def get_estado_total(
     Args:
         psi: Coherencia global Ψ del sistema (0 < Ψ ≤ 1)
         t: Tiempo en segundos
-        amplitudes: Coeficientes c_n para cada modo. Si es None, usa
-            estado fundamental (c₀ = 1, c_n = 0 para n ≥ 1).
+        amplitudes: Coeficientes c_n para cada modo (n=1..5). Si es None, usa
+            estado fundamental (c₁ = 1, c_n = 0 para n ≥ 2).
             Debe cumplir ∑|c_n|² = 1 (normalización).
     
     Returns:
@@ -375,7 +373,7 @@ def get_estado_total(
         ValueError: Si amplitudes no está normalizada o psi fuera de rango
     
     Examples:
-        >>> # Estado fundamental (solo modo 0)
+        >>> # Estado fundamental (solo modo 1 activo)
         >>> estado = get_estado_total(psi=1.0, t=0.0)
         >>> print(estado.coherencia_estado)
         FUNDAMENTAL
@@ -421,7 +419,8 @@ def get_estado_total(
     amplitud_total *= epsilon_base
     
     # Determinar coherencia del estado
-    if amplitudes[0] > 0.99:
+    # Usar abs() para manejar coeficientes complejos con fase global
+    if abs(amplitudes[0]) > 0.99:
         coherencia_estado = "FUNDAMENTAL"
     elif psi > PSI_THRESHOLD:
         coherencia_estado = "EXCITADO_COHERENTE"

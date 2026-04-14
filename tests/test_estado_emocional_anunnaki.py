@@ -214,10 +214,10 @@ def test_modo_excitado_evolucion_temporal():
     assert abs(abs(amp1) - abs(amp2)) < 1e-6
     
     # Las fases deben ser diferentes (evolución temporal)
-    fase1 = cmath.phase(amp1)
-    fase2 = cmath.phase(amp2)
-    # Con 0.01 s y ~510 Hz, diferencia esperada ≈ 2π × 510 × 0.01 ≈ 32 rad
-    diferencia_fase = abs(fase2 - fase1)
+    # Comparar la fase del cociente evita errores por wrap-around en (-π, π]
+    # Con 0.01 s y ~510 Hz, la fase relativa esperada es significativa
+    assert amp1 != 0
+    diferencia_fase = abs(cmath.phase(amp2 / amp1))
     # Fase ha evolucionado (diferencia significativa)
     assert diferencia_fase > 0.5  # Al menos 0.5 radianes de diferencia
 
@@ -284,8 +284,10 @@ def test_get_estado_total_evolucion_temporal():
     # La amplitud total sí cambia (evolución temporal)
     amp_t0 = estado_t0.amplitud_total
     amp_t1 = estado_t1.amplitud_total
-    # Las fases deben ser diferentes
-    assert abs(cmath.phase(amp_t0) - cmath.phase(amp_t1)) > 0.1
+    # Las fases relativas deben ser diferentes; usar el cociente evita
+    # problemas de wrapping cerca del límite ±π
+    assert amp_t0 != 0
+    assert abs(cmath.phase(amp_t1 / amp_t0)) > 0.1
 
 
 # ============================================================================
