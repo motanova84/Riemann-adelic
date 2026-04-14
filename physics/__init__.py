@@ -251,6 +251,17 @@ from .interaccion_schrodinger_riemann import (
     interaccion_schrodinger_riemann_activar,
 )
 
+from .k7_twisted_graph import (
+    K7TwistedGraph,
+    compute_green_function_k7,
+)
+
+from .green_function_qcal import (
+    green_function_time_domain,
+    green_function_frequency_domain,
+    verify_causality,
+)
+
 __all__ = [
     'PrimitivaPotencialOscilatorio',
     'EstimacionCuadraticaMedia',
@@ -417,4 +428,11 @@ __all__ = [
     'ResultadoInteraccion',
     'SistemaInteraccionSR',
     'interaccion_schrodinger_riemann_activar',
+    # K7 Twisted Graph — Dinámica grafo completo con geometría torcida
+    'K7TwistedGraph',
+    'compute_green_function_k7',
+    # Green's Function QCAL — Propagador causal con polos lorentzianos
+    'green_function_time_domain',
+    'green_function_frequency_domain',
+    'verify_causality',
 ]
