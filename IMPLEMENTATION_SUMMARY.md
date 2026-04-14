@@ -1904,3 +1904,34 @@ and matches the V5 Coronación framework.
 **Implementation Complete** ✅  
 All required theorems formalized and documented.  
 Build system ready for execution with Lean 4.
+
+---
+
+## 🟢 SUSTRATO CUÁNTICO — Partícula de Coherencia (April 2026)
+
+**Status**: ✅ IMPLEMENTED
+
+- **Python Module**: `physics/particula_coherencia.py`
+- **Test Suite**: `tests/test_particula_coherencia.py`
+- **Lean Sketch**: `formalization/lean/RiemannAdelicSelfAdjoint.lean`
+
+### Scope
+
+- Implementa la transición Vacío Bare → Sustrato Activo.
+- Modela el acoplamiento Higgs-PC y el destello de masa (κ = 0.053).
+- Conserva la frecuencia base `f₀ = 141.7001 Hz` y la fase de Berry `π/8`.
+- Devuelve un resultado sellado por `SHA-256` mediante `ResultadoSustrato`.
+
+### API Principal
+
+- `ejecutar_sustrato(verbose=True)` — ejecuta el pipeline y retorna `ResultadoSustrato`.
+- `FotonFaseCoherente.r_symb(f0)` — computa `R_symb = 7 * f0 * Ψ`.
+- `AcoplamientoHiggsPC.calcular_reduccion(a_eff, f0)` — aplica la reducción efectiva.
+
+### Formalización Lean
+
+El archivo `RiemannAdelicSelfAdjoint.lean` añade un cierre formal esquemático:
+
+- Axioma de autoadjuntividad adélica (`self_adjoint_adelic`).
+- Teorema principal `riemann_hypothesis_via_adelic_self_adjointness`.
+- Consistencia de resonancia en `f₀ = 141.7001`.

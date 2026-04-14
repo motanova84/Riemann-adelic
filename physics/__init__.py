@@ -251,6 +251,18 @@ from .interaccion_schrodinger_riemann import (
     interaccion_schrodinger_riemann_activar,
 )
 
+from .particula_coherencia import (
+    VacioSuperfluo,
+    ParticulaCoherencia,
+    NavierStokesAdelico,
+    AcoplamientoHiggsPC,
+    FotonFaseCoherente,
+    FirmaEspectral,
+    SustratoCuantico,
+    ResultadoSustrato,
+    ejecutar_sustrato,
+)
+
 __all__ = [
     'PrimitivaPotencialOscilatorio',
     'EstimacionCuadraticaMedia',
@@ -417,4 +429,14 @@ __all__ = [
     'ResultadoInteraccion',
     'SistemaInteraccionSR',
     'interaccion_schrodinger_riemann_activar',
+    # Partícula de Coherencia — Sustrato Cuántico
+    'VacioSuperfluo',
+    'ParticulaCoherencia',
+    'NavierStokesAdelico',
+    'AcoplamientoHiggsPC',
+    'FotonFaseCoherente',
+    'FirmaEspectral',
+    'SustratoCuantico',
+    'ResultadoSustrato',
+    'ejecutar_sustrato',
 ]
