@@ -27,10 +27,9 @@ from typing import Any, Dict, List
 import numpy as np
 
 try:
-    from qcal.constants import F0 as QCAL_F0, C_COHERENCE
+    from qcal.constants import F0 as QCAL_F0
 except ImportError:  # pragma: no cover
     QCAL_F0 = 141.7001
-    C_COHERENCE = 244.36
 
 F0: float = float(QCAL_F0)
 ETA_OVER_S_KSS: float = 1.0 / (4.0 * np.pi)
@@ -257,7 +256,9 @@ class ResultadoSustrato:
         """Verifica que el sello actual corresponde al estado del resultado."""
         if not self.sello_sha256:
             return False
-        actual = self.sellar()
+        payload = self.payload_integridad()
+        bruto = json.dumps(payload, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
+        actual = hashlib.sha256(bruto.encode("utf-8")).hexdigest()
         return bool(actual == self.sello_sha256)
 
 
@@ -319,6 +320,8 @@ def ejecutar_sustrato(verbose: bool = False) -> ResultadoSustrato:
 __all__ = [
     "F0",
     "COHERENCIA_UMBRAL",
+    "ETA_OVER_S_KSS",
+    "A_EFF_DEFAULT",
     "VacioSuperfluo",
     "ParticulaCoherencia",
     "NavierStokesAdelico",

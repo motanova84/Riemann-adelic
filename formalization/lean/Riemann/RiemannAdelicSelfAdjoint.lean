@@ -34,6 +34,8 @@ constant zeros_on_critical_line : AdelicHamiltonian → Prop
 
 /-- Determinante espectral adélico D_adelic asociado a H. -/
 def D_adelic (H : AdelicHamiltonian) : ℂ → ℂ :=
+  -- Skeleton placeholder: la implementación analítica completa de Δ(s)=ξ(s)
+  -- se conecta mediante los teoremas con `admit` en este archivo.
   fun _s => 0
 
 /-- Enunciado empaquetado: los ceros de D_adelic están en la línea crítica. -/

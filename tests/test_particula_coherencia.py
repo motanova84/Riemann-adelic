@@ -340,7 +340,7 @@ def test_resultado_sustrato_integridad(case: int) -> None:
     if case == 0:
         assert len(s.sello_sha256) == 64
     elif case == 1:
-        int(s.sello_sha256, 16)
+        assert isinstance(int(s.sello_sha256, 16), int)
     elif case == 2:
         assert s.sello_sha256 == s.sellar()
     elif case == 3:
