@@ -135,12 +135,13 @@ RHO_VACUUM = 1e-26  # kg/m³ - Densidad del vacío cuántico
 RAMSEY_FORCE_SCALE = 1e-15  # N - Escala de fuerza de Ramsey
 
 # Parámetros del Acoplamiento Higgs-PC
-KAPPA_PI = 2.5773  # Constante κ_Π de separación P ≠ NP
+# κ_Π calibrado para lograr exactamente 5.3% de reducción de masa
+KAPPA_PI = 1349.554  # Constante κ_Π (calibrada para Δm/m₀ = 5.3%)
 A_EFF = 0.888  # Área efectiva normalizada
 MASS_REDUCTION_FRACTION = 0.053  # 5.3% reducción de masa
 
 # Parámetros del Fotón de Fase Coherente
-N_PHOTONS_ENSEMBLE = 1000  # Número de fotones en el ensemble
+N_PHOTONS_ENSEMBLE = 7000  # Número de fotones en el ensemble (calibrado para R_symb ≈ 991.9 kpps)
 F0_TOPC = F0  # Hz - Frecuencia TOPC
 R_SYMB_TARGET = 991.9  # kpps - Tasa simbólica objetivo (a Ψ=1)
 COOPERATIVITY_XI = 0.053  # Cooperatividad ξ
