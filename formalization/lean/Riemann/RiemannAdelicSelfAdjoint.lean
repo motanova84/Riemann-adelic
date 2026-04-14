@@ -34,8 +34,8 @@ constant zeros_on_critical_line : AdelicHamiltonian → Prop
 
 /-- Determinante espectral adélico D_adelic asociado a H. -/
 def D_adelic (H : AdelicHamiltonian) : ℂ → ℂ :=
-  -- Skeleton placeholder: la implementación analítica completa de Δ(s)=ξ(s)
-  -- se conecta mediante los teoremas con `admit` en este archivo.
+  -- TODO: Implementar el determinante espectral adélico Δ(s) = ξ(s)
+  -- vía producto regularizado sobre modos γₙ y normalización arquimediana.
   fun _s => 0
 
 /-- Enunciado empaquetado: los ceros de D_adelic están en la línea crítica. -/
@@ -51,10 +51,13 @@ theorem paley_wiener_conclusion_delta_equals_xi (H : AdelicHamiltonian) :
 theorem riemann_hypothesis_via_adelic_self_adjointness (H : AdelicHamiltonian)
     (h_self : isSelfAdjoint H) :
     D_adelic_zeros_on_critical_line H := by
+  -- Paso 1 (Teorema espectral): H autoadjunto => espectro real.
   have h_spec_real : spectrum_subset_real H := by
     admit
+  -- Paso 2 (correspondencia espectral): espectro real => γₙ reales.
   have h_gamma_real : gamma_n_real H := by
     admit
+  -- Paso 3 (Paley-Wiener / cierre adélico): γₙ reales => Re(ρₙ)=1/2.
   have h_rh : zeros_on_critical_line H := by
     admit
   exact h_rh

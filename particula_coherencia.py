@@ -20,6 +20,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import warnings
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from typing import Any, Dict, List
@@ -29,6 +30,7 @@ import numpy as np
 try:
     from qcal.constants import F0 as QCAL_F0
 except ImportError:  # pragma: no cover
+    warnings.warn("qcal.constants no disponible; usando fallback local para F0=141.7001 Hz", RuntimeWarning)
     QCAL_F0 = 141.7001
 
 F0: float = float(QCAL_F0)
@@ -37,8 +39,10 @@ COHERENCIA_UMBRAL: float = 0.888
 KAPPA_PI: float = 2.5773
 A_EFF_DEFAULT: float = F0 * np.sqrt(0.053 / KAPPA_PI)
 H_BAR: float = 1.054_571_817e-34
+HBAR_GEV_S: float = 6.582_119_569e-25
 M_H_GEV: float = 125.35
 N_CANALES_FOTONICOS: int = 7
+UNIDAD_R_SYMB: str = "kpps"
 
 
 class VacioSuperfluo:
@@ -51,6 +55,7 @@ class VacioSuperfluo:
             raise ValueError("viscosidad_kinematica no puede ser negativa")
         self.viscosidad_kinematica = float(viscosidad_kinematica)
         self.dimension = int(dimension)
+        # Matriz de corrimiento cíclico (simetría C₇) con estructura unitaria.
         self.U = np.roll(np.eye(self.dimension, dtype=np.complex128), 1, axis=0)
 
     def verificar_haar_unitario(self, tolerancia: float = 1e-12) -> bool:
@@ -143,7 +148,7 @@ class AcoplamientoHiggsPc:
 
     @property
     def reduccion_masa(self) -> float:
-        """Δm/m = κ_Π·A_eff²/f₀²."""
+        """Δm/m = κ_Π·A_eff²/f₀² (relación de Destello de Masa, DOI 10.5281/zenodo.17379721)."""
         ratio = self.kappa_pi * (self.a_eff ** 2) / (self.f0_hz ** 2)
         return float(np.clip(ratio, 0.0, 1.0))
 
@@ -172,7 +177,7 @@ class FotonFaseCoherente:
 
     @property
     def r_symb_kpps(self) -> float:
-        """R_symb = N·f₀_TOPC·Ψ (expresado en kpps según convención del marco)."""
+        """R_symb = N·f₀_TOPC·Ψ (expresado en `UNIDAD_R_SYMB`, convención kpps del marco)."""
         return float(self.n_canales * self.f0_topc * self.psi)
 
     def sincronizacion_dicke(self) -> float:
@@ -201,7 +206,8 @@ class FirmaEspectral:
 
     def bandas_laterales(self) -> List[Dict[str, float]]:
         """Genera bandas m_H ± n·ℏω₀."""
-        delta = H_BAR * self.omega_0
+        # Se usa ℏ en GeV·s para mantener consistencia dimensional con m_H en GeV.
+        delta = HBAR_GEV_S * self.omega_0
         bandas: List[Dict[str, float]] = []
         for n in range(1, self.n_bandas + 1):
             bandas.append({"n": float(n), "minus": float(self.m_h_gev - n * delta), "plus": float(self.m_h_gev + n * delta)})
