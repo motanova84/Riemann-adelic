@@ -31,6 +31,19 @@ def test_foton_r_symb_matches_expected_scale() -> None:
     assert foton.r_symb(141.7001) == pytest.approx(991.8997092993)
 
 
+@pytest.mark.parametrize(
+    ("f0", "expected"),
+    [
+        (0.0, 0.0),
+        (-10.0, -69.99993),
+        (1.0e6, 6999993.0),
+    ],
+)
+def test_foton_r_symb_boundary_cases(f0: float, expected: float) -> None:
+    foton = FotonFaseCoherente(psi=0.999999)
+    assert foton.r_symb(f0) == pytest.approx(expected)
+
+
 def test_ejecutar_sustrato_returns_sha256_sealed_payload(capsys: pytest.CaptureFixture[str]) -> None:
     result = ejecutar_sustrato(verbose=True)
     captured = capsys.readouterr().out

@@ -61,9 +61,9 @@ class AcoplamientoHiggsPC:
 
     def calcular_reduccion(self, a_eff: float, f0: float) -> float:
         """
-        Calcula la reducción efectiva de masa.
+        Calcula el factor de reducción adimensional de masa.
 
-        m* = m0 (1 - κ_Π * A_eff² / f0²)
+        Factor = κ_Π * A_eff² / f0²
         """
         return self.kappa * (a_eff**2 / f0**2)
 

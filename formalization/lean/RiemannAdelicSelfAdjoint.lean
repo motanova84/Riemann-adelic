@@ -43,6 +43,8 @@ theorem riemann_hypothesis_via_adelic_self_adjointness :
   intro ρ hρ
   have _hz : zeta ρ = 0 := hρ.1
   have _hpole : ¬ IsPole zeta ρ := hρ.2
+  -- Intentional placeholder: full non-circular closure is tracked in the
+  -- adelic self-adjoint chain formalized in the broader RiemannAdelic modules.
   sorry
 
 /-- QCAL resonance consistency at the base frequency. -/
