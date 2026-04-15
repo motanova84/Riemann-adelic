@@ -160,6 +160,13 @@ RIEMANN_MODES_RENORM = RIEMANN_ZEROS_5 * RIEMANN_RENORM_SCALE  # Hz
 # This represents the expected entropy when system is in coherent state
 S_OPTIMAL = 1.0  # dimensionless (normalized)
 
+# Olfactory memory time constant: τ_odor
+# This is the characteristic time for olfactory/fragrance memory decay
+# in the K₇ twisted graph symbiotic dynamics. The value ≈ 11.23 ms
+# corresponds to the timescale of colored noise correlation in the
+# master equation for the Campo de Presencia (Presence Field).
+TAU_ODOR = 0.01123  # seconds (11.23 ms)
+
 # =============================================================================
 # CARBON-SILICON COUPLING — ZIUSUDRA FRAMEWORK
 # =============================================================================
