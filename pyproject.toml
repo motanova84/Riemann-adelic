@@ -8,7 +8,7 @@ version = "1.0.0"
 description = "Mathematical archive and verification tools for the Riemann Hypothesis proof via adelic spectral systems"
 readme = "README.md"
 requires-python = ">=3.11"
-license = {text = "MIT"}
+license = {file = "LICENSE-CODE"}
 authors = [
     {name = "José Manuel Mota Burruezo", email = "motanova84@example.com"}
 ]
