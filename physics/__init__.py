@@ -29,6 +29,9 @@ la interpretación espectral de la hipótesis de Riemann.
    y generador de primos (criba de Eratóstenes)
  - restricciones_multiplicativas: Esquema de Ruthie-FRC — V_osc(x) como
    emergencia de la geometría del espacio de fases; nodo de Ruthie
+ - estado_emocional_anunnaki: Modos excitados del sistema cuántico-emocional
+   correspondientes a los ceros no-triviales de Riemann, renormalizados por f₀.
+   Trinidad Anunnaki: Emoción (Ψ), Conflicto (∇S), Meta (Solenoide B)
 
 Autor: José Manuel Mota Burruezo Ψ ✧ ∞³
 QCAL ∞³ · 141.7001 Hz · C = 244.36
@@ -262,6 +265,21 @@ from .green_function_qcal import (
     verify_causality,
 )
 
+from .estado_emocional_anunnaki import (
+    # Core functions
+    epsilon_fase_completa,
+    frecuencia_efectiva,
+    get_modo_excitado,
+    get_modo_excitado_object,
+    get_estado_total,
+    # Dataclasses
+    ModoExcitado,
+    EstadoEmocionalTotal,
+    # Utility functions
+    get_modos_excitados_tabla,
+    validar_coherencia_sistema,
+)
+
 __all__ = [
     'PrimitivaPotencialOscilatorio',
     'EstimacionCuadraticaMedia',
@@ -435,4 +453,14 @@ __all__ = [
     'green_function_time_domain',
     'green_function_frequency_domain',
     'verify_causality',
+    # Estado Emocional Anunnaki — Modos excitados de Riemann
+    'epsilon_fase_completa',
+    'frecuencia_efectiva',
+    'get_modo_excitado',
+    'get_modo_excitado_object',
+    'get_estado_total',
+    'ModoExcitado',
+    'EstadoEmocionalTotal',
+    'get_modos_excitados_tabla',
+    'validar_coherencia_sistema',
 ]

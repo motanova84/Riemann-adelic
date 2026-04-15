@@ -22,7 +22,6 @@ DOI: 10.5281/zenodo.17379721
 """
 
 import numpy as np
-from scipy.fft import fft, ifft
 from typing import Optional, Tuple, Dict, Any
 import warnings
 

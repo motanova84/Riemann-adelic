@@ -69,6 +69,8 @@ def green_function_frequency_domain(
 
 def verify_causality(G: np.ndarray, t: np.ndarray) -> bool:
     """Verify G(t<0) = 0."""
+    t = np.asarray(t)
+    G = np.asarray(G)
     negative_times = t < 0
     if np.any(negative_times):
         return np.allclose(G[negative_times], 0.0)

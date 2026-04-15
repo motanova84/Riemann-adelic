@@ -170,6 +170,7 @@ def compute_trinity_qcal(
     gamma_n: Optional[np.ndarray] = None,
     mode_amplitudes: Optional[np.ndarray] = None,
     gamma_qcal: Optional[float] = None,
+    renorm_scale: Optional[float] = None,
     verbose: bool = False
 ) -> Dict[str, Any]:
     """
@@ -191,6 +192,9 @@ def compute_trinity_qcal(
         gamma_n: Array of Riemann zeros (default: RIEMANN_ZEROS_5)
         mode_amplitudes: Mode amplitudes |c_n|² (default: uniform)
         gamma_qcal: Phase calibration (default: GAMMA_QCAL_FASE)
+        renorm_scale: Renormalization scale for entropy gradient (default: RIEMANN_RENORM_SCALE).
+            Pass 1.0 when gamma_n values are already in Hz (e.g. excited modes from
+            RiemannSpectralHamiltonian) to avoid double-renormalization.
         verbose: Print detailed calculation steps
         
     Returns:
@@ -220,7 +224,7 @@ def compute_trinity_qcal(
     E_phase = np.angle(E_amplitude)
     
     # Compute entropy gradient
-    grad_S = compute_entropy_gradient(gamma_n, mode_amplitudes)
+    grad_S = compute_entropy_gradient(gamma_n, mode_amplitudes, renorm_scale=renorm_scale)
     
     # For the Trinity formula, we need to balance the terms properly.
     # The theoretical framework suggests that when RH is true, the oscillatory
@@ -423,12 +427,14 @@ def compute_trinity_with_excited_modes(
     if gamma_qcal is None:
         gamma_qcal = GAMMA_QCAL_FASE
     
-    # Compute using excited modes directly
+    # Compute using excited modes directly, with renorm_scale=1.0 to avoid
+    # double-renormalization: gamma_tilde_n is already in Hz after renorm+torsion.
     result = compute_trinity_qcal(
         psi=psi,
         gamma_n=gamma_tilde_n,
         mode_amplitudes=mode_amplitudes,
         gamma_qcal=gamma_qcal,
+        renorm_scale=1.0,
         verbose=verbose
     )
     

@@ -1260,7 +1260,7 @@ def validate_v5_coronacion(precision=30, verbose=False, save_certificate=False, 
         # K7 graph stability check
         k7_graph = K7TwistedGraph(theta=theta_twist, gamma=1.0, D=1.0)
         eigenvals_k7, F_dft = k7_graph.diagonalize_via_dft()
-        k7_stable = np.all(np.real(eigenvals_k7) >= 0)  # Check positive definiteness
+        k7_stable = np.all(np.real(eigenvals_k7) >= -1e-9)  # Allow small negative from floating point
 
         # Green's function causality check
         t_test = np.linspace(-1, 1, 100)
