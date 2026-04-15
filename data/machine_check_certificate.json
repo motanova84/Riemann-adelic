@@ -1,7 +1,7 @@
 {
   "certificate_type": "QCAL \u221e\u00b3 Machine-Check Verification",
   "version": "V5 Coronaci\u00f3n",
-  "timestamp": "2026-04-15T00:12:20.245579",
+  "timestamp": "2026-04-15T13:53:47.715696",
   "author": "Jos\u00e9 Manuel Mota Burruezo \u03a8 \u2727 \u221e\u00b3",
   "institution": "Instituto de Conciencia Cu\u00e1ntica (ICQ)",
   "doi_reference": "10.5281/zenodo.17379721",
@@ -12,7 +12,7 @@
     "equation": "\u03a8 = I \u00d7 A_eff\u00b2 \u00d7 C^\u221e"
   },
   "verification_results": {
-    "timestamp": "2026-04-15T00:12:20.245562",
+    "timestamp": "2026-04-15T13:53:47.715680",
     "precision": 25,
     "qcal_config": {
       "base_frequency": 141.7001,
@@ -84,7 +84,7 @@
           },
           "Step 2: Archimedean Rigidity": {
             "status": "PASSED",
-            "execution_time": 0.00011229515075683594
+            "execution_time": 0.00013327598571777344
           },
           "Step 3: Paley-Wiener Uniqueness": {
             "status": "PASSED",
@@ -92,15 +92,15 @@
           },
           "Step 4A: de Branges Localization": {
             "status": "PASSED",
-            "execution_time": 0.0003228187561035156
+            "execution_time": 0.00033926963806152344
           },
           "Step 4B: Weil-Guinand Localization": {
             "status": "PASSED",
-            "execution_time": 1.430511474609375e-06
+            "execution_time": 1.1920928955078125e-06
           },
           "Step 5: Coronaci\u00f3n Integration": {
             "status": "PASSED",
-            "execution_time": 0.00015664100646972656
+            "execution_time": 0.00011491775512695312
           }
         },
         "total_passed": 6,
@@ -339,7 +339,7 @@
         "yolo_verified": true
       }
     },
-    "execution_time": 0.3658111095428467
+    "execution_time": 0.28400421142578125
   },
   "riemann_hypothesis_status": "PASSED",
   "certification_statement": "This certificate verifies that the Riemann Hypothesis proof via S-Finite Adelic Systems (V5 Coronaci\u00f3n) has been validated through comprehensive machine-check verification.",
