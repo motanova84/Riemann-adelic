@@ -532,11 +532,10 @@ def compute_trinity_qcal_harmonic(
         gamma_n, theta=theta, gamma_qcal=gamma_qcal
     )
 
-    # --- ∇S({γ̃_n}): entropy gradient over torsion-modulated modes ---------------
-    # Reuse compute_entropy_gradient with γ̃_n as the mode frequencies.
-    # Here we pass the tilde modes directly as the "gamma_n" argument so that
-    # the renorm step inside compute_entropy_gradient is bypassed via scale=1.
-    # Instead we compute manually to keep renorm_scale semantics consistent:
+    # ∇S({γ̃_n}): entropy gradient over torsion-modulated modes ---------------
+    # We compute ∇S manually instead of calling compute_entropy_gradient() because
+    # the tilde modes are already in Hz (renormalization already applied by
+    # compute_gamma_tilde_modes).  The formula is:
     #   ∇S = S_opt − ∑_n |c_n|² · (γ̃_n / f₀)
     grad_S_tilde = S_OPTIMAL - float(np.sum(weights * (gamma_tilde / F0)))
 
