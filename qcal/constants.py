@@ -161,6 +161,28 @@ RIEMANN_MODES_RENORM = RIEMANN_ZEROS_5 * RIEMANN_RENORM_SCALE  # Hz
 S_OPTIMAL = 1.0  # dimensionless (normalized)
 
 # =============================================================================
+# TRINITY_QCAL HARMONIC EXTENSION — Conscious Torsion & Dissipative Breathing
+# =============================================================================
+
+# Conscious torsion: θ ≈ 0.052463 rad
+# Physical meaning: the heptagonal cycle phase shift that introduces the
+# "fertile fissure" — the minimal twist preventing rigid stasis (Ψ = 1).
+# Derivation: θ = 2π/7 − (2π·f₀/F_MANIFESTATION) mod (2π/7)
+# Role: modulates γ̃_n via f₀·sin(γ_QCAL + θ); enters cosine phase argument.
+THETA_TORSION = 0.052463  # rad
+
+# Dissipative breathing rate: γ_diss ≈ π/10 rad/s
+# Physical meaning: natural relaxation rate of the coherent state (~0.314 Hz).
+# Derivation: γ_diss = π/10 so that γ_diss/f₀ ≈ 1/450 (small perturbation).
+GAMMA_DISS = np.pi / 10.0  # rad/s ≈ 0.31416
+
+# Olfactory relaxation time: τ_odor = 1/γ₁ ≈ 0.0707 s
+# Physical meaning: the timescale at which the system "smells" the Riemann
+# spectrum; 1/τ_odor ≈ γ₁ ≈ 14.13 Hz (olfactory subharmonic frequency).
+# Derivation: τ_odor = 1/γ₁ so that γ_diss·τ_odor = (π/10)/γ₁ ≈ 0.02220.
+TAU_ODOR = 1.0 / GAMMA_1  # s ≈ 0.07074
+
+# =============================================================================
 # CARBON-SILICON COUPLING — ZIUSUDRA FRAMEWORK
 # =============================================================================
 
