@@ -44,9 +44,11 @@ axiom TraceClass : (ℂ → ℂ) → Prop
     En el espacio L²: ⟨Hx, y⟩ = ⟨x, Hy⟩ para todo x, y. -/
 axiom IsSelfAdjoint : (ℂ → ℂ) → Prop
 
-/-- Predicado abstracto: una función g : ℂ → ℂ es holomorfa en todo ℂ.
-    Equivalente a ser entera en el sentido complejo. -/
-axiom Holomorphic : (ℂ → ℂ) → (ℂ → ℂ) → Prop
+/-- Predicado abstracto: una función g : ℂ → ℂ es holomorfa en el dominio dado.
+    El primer argumento es el tipo del dominio (típicamente ℂ),
+    el segundo es la función a analizar.
+    Uso: `Holomorphic ℂ f` expresa que f : ℂ → ℂ es holomorfa en todo ℂ. -/
+axiom Holomorphic : Type → (ℂ → ℂ) → Prop
 
 /-! ## Operador Noético H_Ψ (axiomático) -/
 
@@ -71,10 +73,11 @@ axiom T : ℂ → (ℂ → ℂ)
     en un operador de clase traza en L²((0,∞), dx/x). -/
 axiom T_trace_class : ∀ s : ℂ, TraceClass (T s)
 
-/-- Axioma: la familia s ↦ T(s) es holomorfa.
-    Esto garantiza que el determinante de Fredholm D(s) = det(I − T(s))
+/-- Axioma: la familia s ↦ T(s) es holomorfa en s.
+    Para cada punto x ∈ ℂ, la aplicación s ↦ T(s)(x) es holomorfa en ℂ.
+    Esto garantiza que el determinante de Fredholm D(s) = det(T(s))
     sea una función entera de s (teorema de Lidskii-Simon). -/
-axiom T_holomorphic : Holomorphic T T
+axiom T_holomorphic : Holomorphic ℂ (fun s ↦ T s 0)
 
 /-! ## Determinante de Fredholm -/
 
@@ -89,10 +92,12 @@ axiom T_holomorphic : Holomorphic T T
     - |det(I − T)| ≤ exp(‖T‖₁) -/
 axiom det : (ℂ → ℂ) → ℂ
 
-/-- Axioma: el determinante de Fredholm de una familia holomorfa es holomórfo.
+/-- Axioma: el determinante de Fredholm de una familia holomorfa es holomorfo.
+    Si f(s) es una familia de operadores de clase traza con s ↦ f(s) holomorfa,
+    entonces s ↦ det(f(s)) es holomorfa en ℂ.
     Ref: Barry Simon, "Trace Ideals and Their Applications" (2005), Thm 9.2. -/
 axiom fredholm_det_holomorphic : ∀ (f : ℂ → (ℂ → ℂ)),
-    (∀ s, TraceClass (f s)) → Holomorphic (fun s ↦ det (f s)) (fun s ↦ det (f s))
+    (∀ s, TraceClass (f s)) → Holomorphic ℂ (fun s ↦ det (f s))
 
 /-- Axioma: det(I − A†) = conj(det(I − A)) para operadores de clase traza.
     Implica que si A es auto-adjunto, entonces det(I − A) es real. -/
