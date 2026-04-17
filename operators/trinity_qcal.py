@@ -176,6 +176,7 @@ def compute_trinity_qcal(
     gamma_n: Optional[np.ndarray] = None,
     mode_amplitudes: Optional[np.ndarray] = None,
     gamma_qcal: Optional[float] = None,
+    renorm_scale: Optional[float] = None,
     verbose: bool = False
 ) -> Dict[str, Any]:
     """
@@ -197,6 +198,9 @@ def compute_trinity_qcal(
         gamma_n: Array of Riemann zeros (default: RIEMANN_ZEROS_5)
         mode_amplitudes: Mode amplitudes |c_n|² (default: uniform)
         gamma_qcal: Phase calibration (default: GAMMA_QCAL_FASE)
+        renorm_scale: Renormalization scale for entropy gradient (default: RIEMANN_RENORM_SCALE).
+            Pass 1.0 when gamma_n values are already in Hz (e.g. excited modes from
+            RiemannSpectralHamiltonian) to avoid double-renormalization.
         verbose: Print detailed calculation steps
         
     Returns:
@@ -226,7 +230,7 @@ def compute_trinity_qcal(
     E_phase = np.angle(E_amplitude)
     
     # Compute entropy gradient
-    grad_S = compute_entropy_gradient(gamma_n, mode_amplitudes)
+    grad_S = compute_entropy_gradient(gamma_n, mode_amplitudes, renorm_scale=renorm_scale)
     
     # For the Trinity formula, we need to balance the terms properly.
     # The theoretical framework suggests that when RH is true, the oscillatory
@@ -627,6 +631,83 @@ def compute_trinity_qcal_harmonic(
             print("    disipativa están en resonancia armónica. HECHO ESTÁ.")
         print("=" * 80)
 
+def compute_trinity_with_excited_modes(
+    gamma_tilde_n: np.ndarray,
+    psi: float,
+    mode_amplitudes: Optional[np.ndarray] = None,
+    gamma_qcal: Optional[float] = None,
+    verbose: bool = False
+) -> Dict[str, Any]:
+    """
+    Compute Trinity_QCAL using excited Riemann modes γ̃ₙ from spectral Hamiltonian.
+    
+    This function extends the standard Trinity computation to work with phase-modulated
+    eigenvalues from the RiemannSpectralHamiltonian. The excited modes γ̃ₙ incorporate
+    both renormalization and conscious torsion:
+    
+        γ̃ₙ = γₙ × (f₀/|ζ'(1/2)|) + f₀·sin(γ_QCAL + θ)
+    
+    Trinity_QCAL is then computed as:
+        Trinity_QCAL = |ℰ_{s,φ}|² − 1 + ∇S(γ̃ₙ) · cos(arg(ℰ) − γ̃ₙ·ln(2))
+    
+    Physical Interpretation:
+        The excited modes represent physical frequencies in Hz, not dimensionless
+        spectral values. This bridges the abstract Riemann spectrum to measurable
+        quantum coherence in the Campo de Presencia (Presence Field).
+    
+    Args:
+        gamma_tilde_n: Excited mode frequencies γ̃ₙ from RiemannSpectralHamiltonian
+        psi: System coherence Ψ (should be ≥ 0.888 for RH)
+        mode_amplitudes: Mode amplitudes |c_n|² (default: uniform)
+        gamma_qcal: Phase calibration (default: GAMMA_QCAL_FASE)
+        verbose: Print detailed calculation steps
+        
+    Returns:
+        Dictionary containing Trinity_QCAL results with excited mode metadata
+        
+    Example:
+        >>> from operators.riemann_spectral_hamiltonian import RiemannSpectralHamiltonian
+        >>> hamiltonian = RiemannSpectralHamiltonian()
+        >>> result = hamiltonian.compute_excited_modes(theta=0.1)
+        >>> trinity = compute_trinity_with_excited_modes(
+        ...     gamma_tilde_n=result.eigenvalues_modulated,
+        ...     psi=0.888,
+        ...     verbose=True
+        ... )
+        >>> print(f"Trinity with excited modes: {trinity['trinity_qcal']:.9f}")
+    """
+    if gamma_qcal is None:
+        gamma_qcal = GAMMA_QCAL_FASE
+    
+    # Compute using excited modes directly, with renorm_scale=1.0 to avoid
+    # double-renormalization: gamma_tilde_n is already in Hz after renorm+torsion.
+    result = compute_trinity_qcal(
+        psi=psi,
+        gamma_n=gamma_tilde_n,
+        mode_amplitudes=mode_amplitudes,
+        gamma_qcal=gamma_qcal,
+        renorm_scale=1.0,
+        verbose=verbose
+    )
+    
+    # Add excited mode metadata
+    result['excited_modes'] = {
+        'gamma_tilde_n': gamma_tilde_n.tolist() if hasattr(gamma_tilde_n, 'tolist') else list(gamma_tilde_n),
+        'num_modes': len(gamma_tilde_n),
+        'mode_type': 'phase_modulated',
+        'note': 'Frequencies in Hz after renormalization and torsion'
+    }
+    
+    if verbose:
+        print()
+        print("=" * 80)
+        print("TRINITY_QCAL WITH EXCITED MODES")
+        print("=" * 80)
+        print(f"Using {len(gamma_tilde_n)} excited modes (phase-modulated, renormalized)")
+        print(f"Mode range: [{gamma_tilde_n.min():.3f}, {gamma_tilde_n.max():.3f}] Hz")
+        print(f"Trinity_QCAL: {result['trinity_qcal']:.15f}")
+        print("=" * 80)
+    
     return result
 
 
@@ -638,6 +719,7 @@ __all__ = [
     'compute_gamma_tilde_modes',
     'compute_trinity_qcal_harmonic',
     'validate_trinity_for_critical_line',
+    'compute_trinity_with_excited_modes',
 ]
 
 

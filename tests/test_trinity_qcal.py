@@ -33,6 +33,7 @@ compute_trinity_qcal = trinity_module.compute_trinity_qcal
 compute_gamma_tilde_modes = trinity_module.compute_gamma_tilde_modes
 compute_trinity_qcal_harmonic = trinity_module.compute_trinity_qcal_harmonic
 validate_trinity_for_critical_line = trinity_module.validate_trinity_for_critical_line
+compute_trinity_with_excited_modes = trinity_module.compute_trinity_with_excited_modes
 
 # Import constants
 try:
@@ -550,6 +551,77 @@ class TestTrinityQCALHarmonic:
         """Default γ_diss matches GAMMA_DISS from qcal.constants."""
         result = compute_trinity_qcal_harmonic(psi=0.888)
         assert np.isclose(result['gamma_diss'], GAMMA_DISS)
+class TestTrinityWithExcitedModes:
+    """Tests for compute_trinity_with_excited_modes()."""
+
+    def _make_excited_modes(self, n: int = 5) -> np.ndarray:
+        """Simulate phase-modulated eigenvalues in Hz (as RiemannSpectralHamiltonian produces)."""
+        # Simplified γ̃ₙ = γₙ * renorm_scale + f0 * sin(gamma_qcal + theta)
+        gamma_n = RIEMANN_ZEROS_5[:n]
+        renorm = RIEMANN_RENORM_SCALE if CONSTANTS_AVAILABLE else 36.1236
+        f0 = F0 if CONSTANTS_AVAILABLE else 141.7001
+        return gamma_n * renorm + f0 * np.sin(GAMMA_QCAL_FASE + 0.1)
+
+    def test_returns_expected_keys(self):
+        """Result dict should contain the standard Trinity keys plus excited_modes metadata."""
+        gamma_tilde = self._make_excited_modes()
+        result = compute_trinity_with_excited_modes(gamma_tilde_n=gamma_tilde, psi=0.888)
+
+        for key in ('trinity_qcal', 'E_magnitude_sq', 'E_phase', 'grad_S',
+                    'rh_condition_satisfied', 'coherence_level', 'excited_modes'):
+            assert key in result, f"Missing key: {key}"
+
+    def test_excited_modes_metadata(self):
+        """Excited modes metadata should reflect the input array."""
+        gamma_tilde = self._make_excited_modes(n=3)
+        result = compute_trinity_with_excited_modes(gamma_tilde_n=gamma_tilde, psi=0.888)
+
+        assert result['excited_modes']['num_modes'] == 3
+        assert result['excited_modes']['mode_type'] == 'phase_modulated'
+
+    def test_no_double_renormalization(self):
+        """Entropy gradient should NOT re-renormalize when renorm_scale=1.0 is used."""
+        # With renorm_scale=1.0, grad_S uses the Hz values directly divided by F0.
+        gamma_tilde = self._make_excited_modes()
+        result = compute_trinity_with_excited_modes(gamma_tilde_n=gamma_tilde, psi=0.888)
+
+        # Manually compute expected grad_S (renorm_scale=1.0 → gamma_n_renorm = gamma_tilde)
+        f0 = F0 if CONSTANTS_AVAILABLE else 141.7001
+        s_opt = S_OPTIMAL if CONSTANTS_AVAILABLE else 1.0
+        N = len(gamma_tilde)
+        weights = np.ones(N) / N
+        expected_grad_S = s_opt - np.sum(weights * (gamma_tilde / f0))
+        assert np.isclose(result['grad_S'], expected_grad_S, rtol=1e-6)
+
+    def test_numerical_stability(self):
+        """Result should be finite for typical excited mode inputs."""
+        gamma_tilde = self._make_excited_modes()
+        result = compute_trinity_with_excited_modes(gamma_tilde_n=gamma_tilde, psi=0.888)
+
+        assert not np.isnan(result['trinity_qcal'])
+        assert not np.isinf(result['trinity_qcal'])
+
+    def test_with_riemann_spectral_hamiltonian(self):
+        """End-to-end test: integrate with RiemannSpectralHamiltonian if available."""
+        try:
+            ham_path = Path(__file__).parent.parent / 'operators' / 'riemann_spectral_hamiltonian.py'
+            spec = importlib.util.spec_from_file_location("riemann_spectral_hamiltonian", ham_path)
+            ham_module = importlib.util.module_from_spec(spec)
+            spec.loader.exec_module(ham_module)
+            RiemannSpectralHamiltonian = ham_module.RiemannSpectralHamiltonian
+        except Exception:
+            pytest.skip("RiemannSpectralHamiltonian not available")
+
+        hamiltonian = RiemannSpectralHamiltonian()
+        ham_result = hamiltonian.compute_excited_modes(theta=0.1)
+        result = compute_trinity_with_excited_modes(
+            gamma_tilde_n=ham_result.eigenvalues_modulated,
+            psi=0.888,
+        )
+
+        assert 'trinity_qcal' in result
+        assert not np.isnan(result['trinity_qcal'])
+        assert result['excited_modes']['num_modes'] == len(ham_result.eigenvalues_modulated)
 
 
 if __name__ == '__main__':
