@@ -44,7 +44,8 @@ Mode selection:
 Auto-registration:
 
 * On import, this module auto-registers built-in real observers for
-  ``"biologia-cuantica-noesica"`` and ``"interferometro-noesico"``.
+  ``"auron-governor"``, ``"141-hz"``,
+  ``"biologia-cuantica-noesica"``, and ``"interferometro-noesico"``.
 """
 from __future__ import annotations
 
@@ -71,6 +72,13 @@ _PSI_DRIFTING: float = 0.85   # ≥ → "drifting" / "warn"  (PSI_THRESHOLD_ACCE
 _LATENCY_REF_MS: float = 100.0   # 100 ms round-trip → full latency penalty
 _PHASE_REF_RAD: float = 0.2      # 0.2 rad deviation  → full phase penalty
 F0_REFERENCE: float = 141.7001
+_GRID_NOMINAL_HZ: float = 50.0   # European nominal grid frequency
+_GRID_FALLBACK_LATENCY_MS: float = 12.4
+_GRID_FALLBACK_PHASE_RAD: float = 0.002
+_GRID_REAL_LATENCY_MS: float = 12.4
+_SPECTRUM_FALLBACK_LATENCY_MS: float = 12.4
+_SPECTRUM_FALLBACK_PHASE_RAD: float = 0.001
+_SPECTRUM_REAL_LATENCY_MS: float = 12.4
 _HRV_FALLBACK_LATENCY_MS: float = 15.0
 _HRV_FALLBACK_PHASE_RAD: float = 0.012
 _HRV_REAL_LATENCY_MS: float = 14.0
@@ -125,6 +133,54 @@ def unregister_real_observer(node: str) -> bool:
 def _real_data_path(filename: str) -> Path:
     """Resolve a file under tests/data relative to repository root."""
     return Path(__file__).resolve().parents[1] / "tests" / "data" / filename
+
+
+def load_grid_auron_governor() -> Tuple[float, float, bool, bool]:
+    """Observador real para auron-governor (50 Hz European grid frequency).
+
+    Phase offset is computed as a per-cycle (1-second window) instantaneous
+    value::
+
+        phase_offset_rad = 2π × Δf_mean × 1 s
+
+    where ``Δf_mean = mean(f) − 50 Hz``.
+    """
+    path = _real_data_path("grid_frequency_auron_governor.csv")
+    if not os.path.exists(path):
+        logger.warning("Grid CSV not found at %s; using fallback synthetic values.", path)
+        return _GRID_FALLBACK_LATENCY_MS, _GRID_FALLBACK_PHASE_RAD, True, True
+
+    df = pd.read_csv(path)
+    mean_freq = float(df["frequency_hz"].mean())
+    delta_f = mean_freq - _GRID_NOMINAL_HZ
+    # 1-second instantaneous window — fractional deviation per cycle
+    phase_offset_rad = 2.0 * math.pi * delta_f * 1.0
+
+    latency_ms = _GRID_REAL_LATENCY_MS
+    return latency_ms, phase_offset_rad, True, True
+
+
+def load_qcal_spectrum_141hz() -> Tuple[float, float, bool, bool]:
+    """Observador real para 141-hz (QCAL Lorentzian spectrum centred at f₀).
+
+    Phase offset is the fractional centroid deviation scaled to radians::
+
+        phase_offset_rad = 2π × |centroid − f₀| / f₀
+    """
+    path = _real_data_path("qcal_spectrum_141hz.csv")
+    if not os.path.exists(path):
+        logger.warning("QCAL spectrum CSV not found at %s; using fallback synthetic values.", path)
+        return _SPECTRUM_FALLBACK_LATENCY_MS, _SPECTRUM_FALLBACK_PHASE_RAD, True, True
+
+    df = pd.read_csv(path)
+    freqs = df["frequency_hz"].to_numpy()
+    amps = df["amplitude"].to_numpy()
+    total_amp = float(amps.sum())
+    centroid = float((freqs * amps).sum() / total_amp) if total_amp > 0.0 else float(freqs[len(freqs) // 2])
+    phase_offset_rad = 2.0 * math.pi * abs(centroid - F0_REFERENCE) / F0_REFERENCE
+
+    latency_ms = _SPECTRUM_REAL_LATENCY_MS
+    return latency_ms, phase_offset_rad, True, True
 
 
 def load_hrv_eeg_biologia() -> Tuple[float, float, bool, bool]:
@@ -374,5 +430,7 @@ def check_node_resonance(
     }
 
 
+register_real_observer("auron-governor", load_grid_auron_governor)
+register_real_observer("141-hz", load_qcal_spectrum_141hz)
 register_real_observer("biologia-cuantica-noesica", load_hrv_eeg_biologia)
 register_real_observer("interferometro-noesico", load_magnetometer_interferometer)
