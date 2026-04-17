@@ -324,6 +324,13 @@ from .trinity_qcal import (
     validate_trinity_for_critical_line,
 )
 
+# Riemann Spectral Hamiltonian: Zeros as quantum eigenvalues (Apr 2026)
+from .riemann_spectral_hamiltonian import (
+    RiemannSpectralHamiltonian,
+    SpectralHamiltonianResult,
+    compute_hamiltonian_spectrum,
+)
+
 __all__ = [
     'construct_H_psi',
     'compute_spectrum',
@@ -537,4 +544,8 @@ __all__ = [
     'compute_entropy_gradient',
     'compute_trinity_qcal',
     'validate_trinity_for_critical_line',
+    # Riemann Spectral Hamiltonian
+    'RiemannSpectralHamiltonian',
+    'SpectralHamiltonianResult',
+    'compute_hamiltonian_spectrum',
 ]

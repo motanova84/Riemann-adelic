@@ -30,7 +30,10 @@ spec.loader.exec_module(trinity_module)
 compute_complex_amplitude = trinity_module.compute_complex_amplitude
 compute_entropy_gradient = trinity_module.compute_entropy_gradient
 compute_trinity_qcal = trinity_module.compute_trinity_qcal
+compute_gamma_tilde_modes = trinity_module.compute_gamma_tilde_modes
+compute_trinity_qcal_harmonic = trinity_module.compute_trinity_qcal_harmonic
 validate_trinity_for_critical_line = trinity_module.validate_trinity_for_critical_line
+compute_trinity_with_excited_modes = trinity_module.compute_trinity_with_excited_modes
 
 # Import constants
 try:
@@ -41,6 +44,9 @@ try:
         RIEMANN_ZEROS_5,
         RIEMANN_RENORM_SCALE,
         S_OPTIMAL,
+        THETA_TORSION,
+        GAMMA_DISS,
+        TAU_ODOR,
     )
     CONSTANTS_AVAILABLE = True
 except ImportError:
@@ -53,6 +59,9 @@ except ImportError:
                                   30.424876126, 32.935061588])
     RIEMANN_RENORM_SCALE = 36.1236
     S_OPTIMAL = 1.0
+    THETA_TORSION = 0.052463
+    GAMMA_DISS = np.pi / 10.0
+    TAU_ODOR = 1.0 / 14.134725142
 
 
 class TestComplexAmplitude:
@@ -364,6 +373,255 @@ class TestNumericalStability:
             gamma_n = RIEMANN_ZEROS_5[:n]
             result = compute_trinity_qcal(psi=0.888, gamma_n=gamma_n)
             assert not np.isnan(result['trinity_qcal'])
+
+
+class TestGammaTildeModes:
+    """Tests for torsion-modulated Riemann modes γ̃_n."""
+
+    def test_gamma_tilde_shape(self):
+        """Output array has same shape as input."""
+        gamma_tilde = compute_gamma_tilde_modes(RIEMANN_ZEROS_5)
+        assert gamma_tilde.shape == RIEMANN_ZEROS_5.shape
+
+    def test_gamma_tilde_larger_than_renorm(self):
+        """γ̃_n > γ_n_renorm because sin(γ_QCAL + θ) > 0 for default constants."""
+        gamma_tilde = compute_gamma_tilde_modes(RIEMANN_ZEROS_5)
+        gamma_renorm = RIEMANN_ZEROS_5 * RIEMANN_RENORM_SCALE
+        # sin(γ_QCAL + θ) with γ_QCAL ≈ 1.003 and θ ≈ 0.052 gives ~sin(1.055) > 0
+        assert np.all(gamma_tilde > gamma_renorm)
+
+    def test_gamma_tilde_torsion_shift_constant(self):
+        """The torsion shift f₀·sin(γ_QCAL + θ) is the same for all modes."""
+        gamma_tilde = compute_gamma_tilde_modes(RIEMANN_ZEROS_5)
+        gamma_renorm = RIEMANN_ZEROS_5 * RIEMANN_RENORM_SCALE
+        shifts = gamma_tilde - gamma_renorm
+        # All shifts should be identical
+        assert np.allclose(shifts, shifts[0])
+
+    def test_gamma_tilde_custom_theta(self):
+        """Custom θ changes the mode values."""
+        tilde_default = compute_gamma_tilde_modes(RIEMANN_ZEROS_5)
+        tilde_custom = compute_gamma_tilde_modes(RIEMANN_ZEROS_5, theta=0.1)
+        assert not np.allclose(tilde_default, tilde_custom)
+
+    def test_gamma_tilde_zero_torsion(self):
+        """θ = 0 reduces to the standard renormalization formula."""
+        gamma_tilde = compute_gamma_tilde_modes(
+            RIEMANN_ZEROS_5, theta=0.0, gamma_qcal=0.0
+        )
+        gamma_renorm = RIEMANN_ZEROS_5 * RIEMANN_RENORM_SCALE
+        # sin(0) = 0, so torsion shift vanishes
+        np.testing.assert_allclose(gamma_tilde, gamma_renorm, rtol=1e-10)
+
+    def test_gamma_tilde_finite_values(self):
+        """All γ̃_n must be finite and positive."""
+        gamma_tilde = compute_gamma_tilde_modes(RIEMANN_ZEROS_5)
+        assert np.all(np.isfinite(gamma_tilde))
+        assert np.all(gamma_tilde > 0.0)
+
+
+class TestTrinityQCALHarmonic:
+    """Tests for the harmonic Trinity_QCAL formula with θ, γ_diss, τ_odor."""
+
+    def test_harmonic_basic_computation(self):
+        """compute_trinity_qcal_harmonic runs without errors."""
+        result = compute_trinity_qcal_harmonic(psi=0.888)
+        assert 'trinity_harmonic' in result
+        assert isinstance(result['trinity_harmonic'], float)
+        assert not np.isnan(result['trinity_harmonic'])
+        assert not np.isinf(result['trinity_harmonic'])
+
+    def test_harmonic_returns_all_keys(self):
+        """Result contains all documented keys."""
+        result = compute_trinity_qcal_harmonic(psi=0.888)
+        required = [
+            'trinity_harmonic', 'term_amplitude_sq', 'term_entropy_phase',
+            'term_dissipation', 'gamma_tilde', 'phi_rho', 'grad_S_tilde',
+            'cos_terms', 'cos_weighted', 'psi', 'theta', 'gamma_qcal',
+            'gamma_diss', 'tau_odor', 'rh_harmonic_satisfied',
+            'coherence_level', 'trinity_near_zero', 'psi_above_threshold',
+        ]
+        for key in required:
+            assert key in result, f"Missing key: {key}"
+
+    def test_harmonic_three_terms_sum(self):
+        """trinity_harmonic == term1 + term2 - term3."""
+        result = compute_trinity_qcal_harmonic(psi=0.888)
+        expected = (
+            result['term_amplitude_sq']
+            + result['term_entropy_phase']
+            - result['term_dissipation']
+        )
+        assert np.isclose(result['trinity_harmonic'], expected, rtol=1e-12)
+
+    def test_harmonic_term1_formula(self):
+        """Term 1 = γ_QCAL² · Ψ²  (θ does not affect magnitude)."""
+        psi = 0.888
+        result = compute_trinity_qcal_harmonic(psi=psi)
+        expected = result['gamma_qcal'] ** 2 * psi ** 2
+        assert np.isclose(result['term_amplitude_sq'], expected, rtol=1e-12)
+
+    def test_harmonic_theta_affects_term2_not_term1(self):
+        """Changing θ alters Term 2 but not Term 1 (|e^{iθ}| = 1)."""
+        r1 = compute_trinity_qcal_harmonic(psi=0.888, theta=0.01)
+        r2 = compute_trinity_qcal_harmonic(psi=0.888, theta=0.5)
+        # Term 1 is identical
+        assert np.isclose(r1['term_amplitude_sq'], r2['term_amplitude_sq'])
+        # Term 2 should differ
+        assert not np.isclose(r1['term_entropy_phase'], r2['term_entropy_phase'])
+
+    def test_harmonic_dissipation_term(self):
+        """Term 3 = γ_diss · τ_odor (both default constants)."""
+        result = compute_trinity_qcal_harmonic(psi=0.888)
+        expected = GAMMA_DISS * TAU_ODOR
+        assert np.isclose(result['term_dissipation'], expected, rtol=1e-12)
+
+    def test_harmonic_phi_rho_arctan(self):
+        """φ_ρ_n = arctan(2·γ_n) for each Riemann zero."""
+        result = compute_trinity_qcal_harmonic(psi=0.888)
+        phi_rho = np.array(result['phi_rho'])
+        expected = np.arctan(2.0 * RIEMANN_ZEROS_5)
+        np.testing.assert_allclose(phi_rho, expected, rtol=1e-12)
+
+    def test_harmonic_cos_terms_bounded(self):
+        """All cosine terms must be in [-1, 1]."""
+        result = compute_trinity_qcal_harmonic(psi=0.888)
+        cos_t = np.array(result['cos_terms'])
+        assert np.all(cos_t >= -1.0)
+        assert np.all(cos_t <= 1.0)
+
+    def test_harmonic_gamma_tilde_matches_helper(self):
+        """gamma_tilde in result equals compute_gamma_tilde_modes output."""
+        result = compute_trinity_qcal_harmonic(psi=0.888)
+        expected = compute_gamma_tilde_modes(RIEMANN_ZEROS_5)
+        np.testing.assert_allclose(
+            np.array(result['gamma_tilde']), expected, rtol=1e-12
+        )
+
+    def test_harmonic_coherence_levels(self):
+        """Coherence level classification mirrors Ψ thresholds."""
+        cases = [
+            (0.999, 'EXCELLENT'),
+            (0.95,  'GOOD'),
+            (0.888, 'ACCEPTABLE'),
+            (0.5,   'POOR'),
+        ]
+        for psi, expected_level in cases:
+            result = compute_trinity_qcal_harmonic(psi=psi)
+            assert result['coherence_level'] == expected_level, (
+                f"psi={psi}: expected {expected_level}, got {result['coherence_level']}"
+            )
+
+    def test_harmonic_psi_threshold(self):
+        """psi_above_threshold is True iff Ψ ≥ PSI_THRESHOLD_ACCEPTABLE (0.85)."""
+        assert compute_trinity_qcal_harmonic(psi=0.85)['psi_above_threshold'] is True
+        assert compute_trinity_qcal_harmonic(psi=0.849)['psi_above_threshold'] is False
+
+    def test_harmonic_numerical_stability(self):
+        """compute_trinity_qcal_harmonic is stable for extreme Ψ values."""
+        for psi in [0.01, 0.1, 0.5, 0.99, 0.9999]:
+            result = compute_trinity_qcal_harmonic(psi=psi)
+            assert not np.isnan(result['trinity_harmonic'])
+            assert not np.isinf(result['trinity_harmonic'])
+
+    def test_harmonic_different_zero_counts(self):
+        """Function works with 1 to 5 Riemann zeros."""
+        for n in range(1, 6):
+            gamma_n = RIEMANN_ZEROS_5[:n]
+            result = compute_trinity_qcal_harmonic(psi=0.888, gamma_n=gamma_n)
+            assert len(result['gamma_tilde']) == n
+            assert len(result['cos_terms']) == n
+            assert not np.isnan(result['trinity_harmonic'])
+
+    def test_harmonic_custom_dissipation(self):
+        """Custom γ_diss and τ_odor change the dissipation term."""
+        r_default = compute_trinity_qcal_harmonic(psi=0.888)
+        r_custom = compute_trinity_qcal_harmonic(psi=0.888, gamma_diss=1.0, tau_odor=1.0)
+        assert r_custom['term_dissipation'] == 1.0
+        assert r_custom['term_dissipation'] != r_default['term_dissipation']
+
+    @pytest.mark.skipif(not CONSTANTS_AVAILABLE, reason="qcal.constants not available")
+    def test_harmonic_theta_torsion_constant(self):
+        """Default θ matches THETA_TORSION from qcal.constants."""
+        result = compute_trinity_qcal_harmonic(psi=0.888)
+        assert np.isclose(result['theta'], THETA_TORSION)
+
+    @pytest.mark.skipif(not CONSTANTS_AVAILABLE, reason="qcal.constants not available")
+    def test_harmonic_gamma_diss_constant(self):
+        """Default γ_diss matches GAMMA_DISS from qcal.constants."""
+        result = compute_trinity_qcal_harmonic(psi=0.888)
+        assert np.isclose(result['gamma_diss'], GAMMA_DISS)
+class TestTrinityWithExcitedModes:
+    """Tests for compute_trinity_with_excited_modes()."""
+
+    def _make_excited_modes(self, n: int = 5) -> np.ndarray:
+        """Simulate phase-modulated eigenvalues in Hz (as RiemannSpectralHamiltonian produces)."""
+        # Simplified γ̃ₙ = γₙ * renorm_scale + f0 * sin(gamma_qcal + theta)
+        gamma_n = RIEMANN_ZEROS_5[:n]
+        renorm = RIEMANN_RENORM_SCALE if CONSTANTS_AVAILABLE else 36.1236
+        f0 = F0 if CONSTANTS_AVAILABLE else 141.7001
+        return gamma_n * renorm + f0 * np.sin(GAMMA_QCAL_FASE + 0.1)
+
+    def test_returns_expected_keys(self):
+        """Result dict should contain the standard Trinity keys plus excited_modes metadata."""
+        gamma_tilde = self._make_excited_modes()
+        result = compute_trinity_with_excited_modes(gamma_tilde_n=gamma_tilde, psi=0.888)
+
+        for key in ('trinity_qcal', 'E_magnitude_sq', 'E_phase', 'grad_S',
+                    'rh_condition_satisfied', 'coherence_level', 'excited_modes'):
+            assert key in result, f"Missing key: {key}"
+
+    def test_excited_modes_metadata(self):
+        """Excited modes metadata should reflect the input array."""
+        gamma_tilde = self._make_excited_modes(n=3)
+        result = compute_trinity_with_excited_modes(gamma_tilde_n=gamma_tilde, psi=0.888)
+
+        assert result['excited_modes']['num_modes'] == 3
+        assert result['excited_modes']['mode_type'] == 'phase_modulated'
+
+    def test_no_double_renormalization(self):
+        """Entropy gradient should NOT re-renormalize when renorm_scale=1.0 is used."""
+        # With renorm_scale=1.0, grad_S uses the Hz values directly divided by F0.
+        gamma_tilde = self._make_excited_modes()
+        result = compute_trinity_with_excited_modes(gamma_tilde_n=gamma_tilde, psi=0.888)
+
+        # Manually compute expected grad_S (renorm_scale=1.0 → gamma_n_renorm = gamma_tilde)
+        f0 = F0 if CONSTANTS_AVAILABLE else 141.7001
+        s_opt = S_OPTIMAL if CONSTANTS_AVAILABLE else 1.0
+        N = len(gamma_tilde)
+        weights = np.ones(N) / N
+        expected_grad_S = s_opt - np.sum(weights * (gamma_tilde / f0))
+        assert np.isclose(result['grad_S'], expected_grad_S, rtol=1e-6)
+
+    def test_numerical_stability(self):
+        """Result should be finite for typical excited mode inputs."""
+        gamma_tilde = self._make_excited_modes()
+        result = compute_trinity_with_excited_modes(gamma_tilde_n=gamma_tilde, psi=0.888)
+
+        assert not np.isnan(result['trinity_qcal'])
+        assert not np.isinf(result['trinity_qcal'])
+
+    def test_with_riemann_spectral_hamiltonian(self):
+        """End-to-end test: integrate with RiemannSpectralHamiltonian if available."""
+        try:
+            ham_path = Path(__file__).parent.parent / 'operators' / 'riemann_spectral_hamiltonian.py'
+            spec = importlib.util.spec_from_file_location("riemann_spectral_hamiltonian", ham_path)
+            ham_module = importlib.util.module_from_spec(spec)
+            spec.loader.exec_module(ham_module)
+            RiemannSpectralHamiltonian = ham_module.RiemannSpectralHamiltonian
+        except Exception:
+            pytest.skip("RiemannSpectralHamiltonian not available")
+
+        hamiltonian = RiemannSpectralHamiltonian()
+        ham_result = hamiltonian.compute_excited_modes(theta=0.1)
+        result = compute_trinity_with_excited_modes(
+            gamma_tilde_n=ham_result.eigenvalues_modulated,
+            psi=0.888,
+        )
+
+        assert 'trinity_qcal' in result
+        assert not np.isnan(result['trinity_qcal'])
+        assert result['excited_modes']['num_modes'] == len(ham_result.eigenvalues_modulated)
 
 
 if __name__ == '__main__':

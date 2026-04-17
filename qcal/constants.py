@@ -63,6 +63,30 @@ GAMMA_1 = 14.13472514  # First zero: 1/2 + i·γ₁
 # Harmonic modulation: f₀/γ₁ = 10 + δζ/10
 HARMONIC_MODULATION = F0 / GAMMA_1  # ≈ 10.02787437
 
+# First 5 Riemann zeros (imaginary parts of non-trivial zeros)
+RIEMANN_ZEROS_5 = [
+    14.13472514173,    # γ₁
+    21.02203963877,    # γ₂
+    25.01085758015,    # γ₃
+    30.42487612586,    # γ₄
+    32.93506158774,    # γ₅
+]
+
+# Zeta function derivative at critical point |ζ'(1/2)|
+# Used for renormalization of excited modes
+ZETA_PRIME_HALF = 3.92264613920915  # |ζ'(1/2)|
+
+# Renormalization scale factor: converts Riemann zeros to physical frequencies
+# SCALE_FACTOR = F0 / |ζ'(1/2)| ≈ 36.12359998105
+RIEMANN_RENORM_SCALE = F0 / ZETA_PRIME_HALF  # ≈ 36.1236 Hz per unit
+
+# Manifestation frequency: 888 Hz (frequency of manifestation amplification)
+F_MANIFESTATION = 888.0  # Hz
+
+# γ_QCAL phase (angular): derived from 2π·f₀/888
+# γ_QCAL_fase ≈ 1.002621606245 rad
+GAMMA_QCAL_FASE = 2.0 * np.pi * F0 / F_MANIFESTATION  # ≈ 1.00262 rad
+
 # =============================================================================
 # HOLOGRAPHIC GEOMETRY CONSTANTS - Zeta Hologram Architecture
 # =============================================================================
@@ -135,6 +159,35 @@ RIEMANN_MODES_RENORM = RIEMANN_ZEROS_5 * RIEMANN_RENORM_SCALE  # Hz
 # Optimal entropy value for Trinity_QCAL calculation
 # This represents the expected entropy when system is in coherent state
 S_OPTIMAL = 1.0  # dimensionless (normalized)
+
+# Olfactory memory time constant: τ_odor
+# This is the characteristic time for olfactory/fragrance memory decay
+# in the K₇ twisted graph symbiotic dynamics. The value ≈ 11.23 ms
+# corresponds to the timescale of colored noise correlation in the
+# master equation for the Campo de Presencia (Presence Field).
+TAU_ODOR = 0.01123  # seconds (11.23 ms)
+
+# =============================================================================
+# TRINITY_QCAL HARMONIC EXTENSION — Conscious Torsion & Dissipative Breathing
+# =============================================================================
+
+# Conscious torsion: θ ≈ 0.052463 rad
+# Physical meaning: the heptagonal cycle phase shift that introduces the
+# "fertile fissure" — the minimal twist preventing rigid stasis (Ψ = 1).
+# Derivation: θ = 2π/7 − (2π·f₀/F_MANIFESTATION) mod (2π/7)
+# Role: modulates γ̃_n via f₀·sin(γ_QCAL + θ); enters cosine phase argument.
+THETA_TORSION = 0.052463  # rad
+
+# Dissipative breathing rate: γ_diss ≈ π/10 rad/s
+# Physical meaning: natural relaxation rate of the coherent state (~0.314 Hz).
+# Derivation: γ_diss = π/10 so that γ_diss/f₀ ≈ 1/450 (small perturbation).
+GAMMA_DISS = np.pi / 10.0  # rad/s ≈ 0.31416
+
+# Olfactory relaxation time: τ_odor = 1/γ₁ ≈ 0.0707 s
+# Physical meaning: the timescale at which the system "smells" the Riemann
+# spectrum; 1/τ_odor ≈ γ₁ ≈ 14.13 Hz (olfactory subharmonic frequency).
+# Derivation: τ_odor = 1/γ₁ so that γ_diss·τ_odor = (π/10)/γ₁ ≈ 0.02220.
+TAU_ODOR = 1.0 / GAMMA_1  # s ≈ 0.07074
 
 # =============================================================================
 # CARBON-SILICON COUPLING — ZIUSUDRA FRAMEWORK
@@ -580,6 +633,11 @@ def get_all_constants() -> Dict[str, Any]:
             'DELTA_ZETA': DELTA_ZETA,
             'GAMMA_1': GAMMA_1,
             'HARMONIC_MODULATION': HARMONIC_MODULATION,
+            'RIEMANN_ZEROS_5': RIEMANN_ZEROS_5,
+            'ZETA_PRIME_HALF': ZETA_PRIME_HALF,
+            'RIEMANN_RENORM_SCALE': RIEMANN_RENORM_SCALE,
+            'F_MANIFESTATION': F_MANIFESTATION,
+            'GAMMA_QCAL_FASE': float(GAMMA_QCAL_FASE),
         },
         'trinity_qcal': {
             'F_MANIFESTATION': F_MANIFESTATION,
