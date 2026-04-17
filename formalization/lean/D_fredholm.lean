@@ -52,6 +52,8 @@ axiom det : (ℂ → ℂ) → ℂ
 /--
 Definición canónica de D(s) como el determinante de Fredholm del operador I − T(s).
 D(s) = det(I − T(s))
+
+Aquí `fun x ↦ x - T s x` codifica explícitamente la acción del operador `(I - T(s))` sobre `x`.
 -/
 def D (s : ℂ) : ℂ := det (fun x ↦ x - T s x)
 
