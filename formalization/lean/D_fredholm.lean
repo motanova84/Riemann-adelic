@@ -65,10 +65,8 @@ def K_s (s : ℂ) : ℂ → ℂ := fun x ↦ H_psi x / (1 + s^2)
 
 /-! ## Axioma de Compacidad -/
 
-/-- Predicado axiomático para compacidad en este modelo simplificado.
-    Se reemplazará por la noción formal de operador compacto al extender
-    la formalización a espacios de Hilbert en Mathlib. -/
-def CompactOperatorAxiom (_T : ℂ → ℂ) : Prop := True
+/-- Predicado abstracto de compacidad para este nivel de formalización. -/
+axiom CompactOperatorAxiom : (ℂ → ℂ) → Prop
 
 /-- Axioma operativo: K(s) es compacto para todo s ∈ ℂ.
     
@@ -95,14 +93,10 @@ axiom K_compact : ∀ s : ℂ, CompactOperatorAxiom (K_s s)
     - D(s) = 0 ⟺ 1 es valor propio de K(s)
     - |D(s)| ≤ exp(‖K(s)‖₁) (cota por norma traza)
     
-    Esta definición formal captura la estructura del determinante
-    sin requerir la maquinaria completa de operadores en Hilbert. -/
-def D (s : ℂ) : ℂ :=
-  -- Placeholder simbólico para mantener tipado y compilación del módulo.
-  -- La validez matemática del cierre D(s) ≡ Ξ(s) no depende de esta forma,
-  -- sino del axioma D_eq_Xi y de validación espectral externa.
-  -- La implementación completa usará el determinante de Fredholm en Hilbert.
-  1 - (K_s s) 0  -- Aproximación de primer orden
+    En esta capa, D se mantiene como objeto axiomático abstracto:
+    las propiedades estructurales se fijan por axiomas posteriores
+    (identidad con Ξ, holomorfía y ecuación funcional). -/
+axiom D : ℂ → ℂ
 
 /-! ## Función Xi de Riemann -/
 
@@ -136,12 +130,13 @@ def Xi (s : ℂ) : ℂ :=
 axiom D_eq_Xi : ∀ s : ℂ, D s = Xi s
 axiom Xi_functional_equation : ∀ s : ℂ, Xi s = Xi (1 - s)
 axiom D_entire : ∀ s : ℂ, DifferentiableAt ℂ D s
-/-- Predicado axiomático para codificar la propiedad "entera de orden 1". -/
-def EntireOrderOneAxiom (_f : ℂ → ℂ) : Prop := True
+/-- Predicado abstracto para codificar "entera de orden 1". -/
+axiom EntireOrderOneAxiom : (ℂ → ℂ) → Prop
 axiom D_order_one : EntireOrderOneAxiom D
 /-- Residuo espectral de truncación finita del operador (huella empírica). -/
 axiom theta_residual : ℝ
 axiom theta_residual_value : theta_residual = 0.052463
+theorem theta_residual_known : theta_residual = 0.052463 := theta_residual_value
 
 /-! ## Propiedades Derivadas -/
 
@@ -152,8 +147,7 @@ axiom theta_residual_value : theta_residual = 0.052463
     - El determinante de Fredholm es continuo en la topología de operadores
     - La composición de funciones continuas es continua -/
 lemma D_cont : Continuous D := by
-  intro s
-  exact (D_entire s).continuousAt
+  exact continuous_iff_continuousAt.mpr (fun s ↦ (D_entire s).continuousAt)
 
 /-- Teorema: Los ceros de D coinciden con los ceros de Ξ.
     Consecuencia directa de D_eq_Xi. -/
@@ -163,13 +157,10 @@ theorem D_zeros_eq_Xi_zeros : ∀ s : ℂ, D s = 0 ↔ Xi s = 0 := by
 
 /-- Corolario: D satisface la ecuación funcional de Ξ.
     D(s) = D(1-s) (por herencia de Ξ) -/
-theorem D_functional_equation_basic : ∀ s : ℂ, D s = D (1 - s) := by
+theorem D_functional_equation : ∀ s : ℂ, D s = D (1 - s) := by
   intro s
   rw [D_eq_Xi s, D_eq_Xi (1 - s)]
   exact Xi_functional_equation s
-
-theorem D_functional_equation : ∀ s : ℂ, D s = D (1 - s) :=
-  D_functional_equation_basic
 
 /-! ## Verificación -/
 
