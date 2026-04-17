@@ -65,7 +65,9 @@ def K_s (s : ℂ) : ℂ → ℂ := fun x ↦ H_psi x / (1 + s^2)
 
 /-! ## Axioma de Compacidad -/
 
-/-- Predicado abstracto de compacidad para este nivel de formalización. -/
+/-- Predicado abstracto de compacidad para este nivel de formalización.
+    Intención matemática: el operador envía conjuntos acotados a conjuntos
+    relativamente compactos (noción clásica en análisis funcional). -/
 axiom CompactOperatorAxiom : (ℂ → ℂ) → Prop
 
 /-- Axioma operativo: K(s) es compacto para todo s ∈ ℂ.
@@ -101,7 +103,7 @@ axiom D : ℂ → ℂ
 /-! ## Función Xi de Riemann -/
 
 /-- La función Ξ(s) de Riemann completada.
-    Ξ(s) = s(s-1)π^(-s/2)Γ(s/2)ζ(s)
+    Ξ(s) = s(s-1)π^{-s/2}Γ(s/2)ζ(s)
     
     Propiedades:
     - Entera de orden 1
@@ -130,13 +132,14 @@ def Xi (s : ℂ) : ℂ :=
 axiom D_eq_Xi : ∀ s : ℂ, D s = Xi s
 axiom Xi_functional_equation : ∀ s : ℂ, Xi s = Xi (1 - s)
 axiom D_entire : ∀ s : ℂ, DifferentiableAt ℂ D s
-/-- Predicado abstracto para codificar "entera de orden 1". -/
+/-- Predicado abstracto para codificar "entera de orden 1".
+    En sentido de Hadamard: crecimiento asintótico de tipo exponencial lineal
+    (orden ρ = 1). -/
 axiom EntireOrderOneAxiom : (ℂ → ℂ) → Prop
 axiom D_order_one : EntireOrderOneAxiom D
 /-- Residuo espectral de truncación finita del operador (huella empírica). -/
 axiom theta_residual : ℝ
 axiom theta_residual_value : theta_residual = 0.052463
-theorem theta_residual_known : theta_residual = 0.052463 := theta_residual_value
 
 /-! ## Propiedades Derivadas -/
 
