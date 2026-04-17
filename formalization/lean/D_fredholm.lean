@@ -34,7 +34,7 @@ axiom H_psi : ℂ → ℂ
 
 /--
 T(s) es la modulación del operador noético por el factor de fase de la línea crítica.
-T(s) := H_psi / (1 + s²)
+Definición puntual: `(T s) x = H_psi x / (1 + s²)`.
 -/
 def T (s : ℂ) : ℂ → ℂ := fun x ↦ H_psi x / (1 + s^2)
 
@@ -49,20 +49,24 @@ axiom T_holomorphic : Holomorphic ℂ (fun s ↦ T s 0)
 /-- Axioma: Función determinante de Fredholm para operadores de clase traza en el espacio de Hilbert. -/
 axiom det : (ℂ → ℂ) → ℂ
 
+/-- Operador auxiliar: aplica la transformación `(I - A)` de forma puntual. -/
+def I_minus (A : ℂ → ℂ) : ℂ → ℂ := fun x ↦ x - A x
+
 /--
 Definición canónica de D(s) como el determinante de Fredholm del operador I − T(s).
 D(s) = det(I − T(s))
 
-Aquí `fun x ↦ x - T s x` codifica explícitamente la acción del operador `(I - T(s))` sobre `x`.
+Aquí `I_minus (T s)` codifica explícitamente la acción del operador `(I - T(s))` sobre `x`.
 -/
-def D (s : ℂ) : ℂ := det (fun x ↦ x - T s x)
+def D (s : ℂ) : ℂ := det (I_minus (T s))
 
 /--
 Axioma: Teorema de Lidskii-Simon simplificado.
 El determinante de Fredholm de una familia holomorfa es una función entera.
+Se asume la hipótesis estándar: `f s` de clase traza garantiza la validez de `det(I - f s)`.
 -/
 axiom fredholm_det_holomorphic : ∀ (f : ℂ → (ℂ → ℂ)),
-  (∀ s, TraceClass (f s)) → Holomorphic ℂ (fun s ↦ det (fun x ↦ x - f s x))
+  (∀ s, TraceClass (f s)) → Holomorphic ℂ (fun s ↦ det (I_minus (f s)))
 
 /-- Teorema: D(s) es una función entera (holomorfa en todo ℂ). -/
 theorem D_entire : Holomorphic ℂ D := by
