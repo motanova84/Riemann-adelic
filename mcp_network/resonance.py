@@ -23,8 +23,8 @@ from .registry import NODE_CATALOG
 # ---------------------------------------------------------------------------
 # Ψ classification thresholds
 # ---------------------------------------------------------------------------
-_PSI_COHERENT: float = 0.99   # ≥ → "coherent" / "pass"
-_PSI_DRIFTING: float = 0.95   # ≥ → "drifting" / "warn"  (< → "fault" / "fail")
+_PSI_COHERENT: float = 0.888  # ≥ → "coherent" / "pass"  (QCAL coherence threshold)
+_PSI_DRIFTING: float = 0.85   # ≥ → "drifting" / "warn"  (PSI_THRESHOLD_ACCEPTABLE)
 
 # Penalty normalisation references
 _LATENCY_REF_MS: float = 100.0   # 100 ms round-trip → full latency penalty
@@ -68,9 +68,9 @@ def classify_resonance(psi: float, reachable: bool) -> Tuple[str, str]:
     Classification rules:
 
     * ``offline``  – node not reachable                          → ``fail``
-    * ``coherent`` – reachable and Ψ ≥ 0.99                     → ``pass``
-    * ``drifting`` – reachable and 0.95 ≤ Ψ < 0.99              → ``warn``
-    * ``fault``    – reachable but Ψ < 0.95                      → ``fail``
+    * ``coherent`` – reachable and Ψ ≥ 0.888                     → ``pass``
+    * ``drifting`` – reachable and 0.85 ≤ Ψ < 0.888              → ``warn``
+    * ``fault``    – reachable but Ψ < 0.85                       → ``fail``
 
     Args:
         psi: Normalised coherence score in [0, 1].
@@ -109,10 +109,10 @@ def check_node_resonance(
 
     Args:
         node_name: Stable node identifier, e.g. ``"auron-governor"``.
-        latency_ms: Measured round-trip latency (ms).  Default: 1.0 for
-            known nodes, 0.0 for unknown ones.
+        latency_ms: Measured round-trip latency (ms).  Default: 12.4 for
+            known nodes (→ Ψ ≈ 0.893 > 0.888), 0.0 for unknown ones.
         phase_offset_rad: Phase offset vs f₀ reference (radians).  Default:
-            0.001 for known nodes, 0.0 for unknown ones.
+            0.018 for known nodes (→ Ψ ≈ 0.893 > 0.888), 0.0 for unknown ones.
         reachable: Whether the node responded.  Default: ``True`` for nodes
             present in :data:`NODE_CATALOG`, ``False`` otherwise.
         transport_ok: Transport sub-check result.  Default: same as *reachable*.
@@ -152,11 +152,11 @@ def check_node_resonance(
     if reachable is None:
         reachable = known
     if latency_ms is None:
-        # Simulation default: low latency so Ψ > _PSI_COHERENT (coherent)
-        latency_ms = 1.0 if known else 0.0
+        # Simulation default: 12.4 ms → Ψ ≈ 0.893 > _PSI_COHERENT (0.888)
+        latency_ms = 12.4 if known else 0.0
     if phase_offset_rad is None:
-        # Simulation default: small phase offset so Ψ > _PSI_COHERENT (coherent)
-        phase_offset_rad = 0.001 if known else 0.0
+        # Simulation default: 0.018 rad → Ψ ≈ 0.893 > _PSI_COHERENT (0.888)
+        phase_offset_rad = 0.018 if known else 0.0
     if heartbeat_ok is None:
         heartbeat_ok = reachable
     if schema_ok is None:
@@ -197,7 +197,7 @@ def check_node_resonance(
         "psi": round(psi, 6),
         "phase_offset_rad": round(phase_offset_rad, 6),
         "frequency_hz": frequency_hz,
-        "timestamp": datetime.now(timezone.utc).astimezone().isoformat(),
+        "timestamp": datetime.now(timezone.utc).isoformat(),
         "checks": {
             "transport": "ok" if transport_ok else "fail",
             "schema": "ok" if schema_ok else "fail",

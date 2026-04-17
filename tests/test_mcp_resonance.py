@@ -36,6 +36,13 @@ MCP_NODES = [
 # ===========================================================================
 
 class TestScorePsi:
+    def test_spec_simulation_defaults(self):
+        """12.4 ms + 0.018 rad → Ψ ≈ 0.893 which exceeds the 0.888 threshold."""
+        psi = score_psi(12.4, 0.018, True, True)
+        # Ψ = 1 − 0.5×(12.4/100) − 0.5×(0.018/0.2) = 1 − 0.062 − 0.045 = 0.893
+        assert psi == pytest.approx(0.893, abs=1e-6)
+        assert psi >= _PSI_COHERENT
+
     def test_perfect_conditions(self):
         """Zero latency and zero phase offset → Ψ = 1.0."""
         psi = score_psi(0.0, 0.0, True, True)
@@ -50,7 +57,6 @@ class TestScorePsi:
         """Zero latency, 0.2 rad phase offset → Ψ = 0.5."""
         psi = score_psi(0.0, 0.2, True, True)
         assert psi == pytest.approx(0.5)
-
     def test_both_max_penalties(self):
         """Max latency + max phase → Ψ = 0.0."""
         psi = score_psi(100.0, 0.2, True, True)
