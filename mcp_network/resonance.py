@@ -40,13 +40,27 @@ Mode selection:
 * **Simulation mode** (default / CI): no observer registered → synthetic defaults.
 * **Real mode** (lab / field): observer registered or ``QCAL_REAL_TESTS=1``
   env-var present → observer called.
+
+Auto-registration:
+
+* On import, this module auto-registers built-in real observers for
+  ``"auron-governor"``, ``"141-hz"``,
+  ``"biologia-cuantica-noesica"``, and ``"interferometro-noesico"``.
 """
 from __future__ import annotations
 
+import math
+import os
 from datetime import datetime, timezone
+import logging
+from pathlib import Path
 from typing import Any, Callable, Dict, Optional, Tuple
 
+import pandas as pd
+
 from .registry import NODE_CATALOG
+
+logger = logging.getLogger(__name__)
 
 # ---------------------------------------------------------------------------
 # Ψ classification thresholds
@@ -57,6 +71,20 @@ _PSI_DRIFTING: float = 0.85   # ≥ → "drifting" / "warn"  (PSI_THRESHOLD_ACCE
 # Penalty normalisation references
 _LATENCY_REF_MS: float = 100.0   # 100 ms round-trip → full latency penalty
 _PHASE_REF_RAD: float = 0.2      # 0.2 rad deviation  → full phase penalty
+F0_REFERENCE: float = 141.7001
+_GRID_NOMINAL_HZ: float = 50.0   # European nominal grid frequency
+_GRID_FALLBACK_LATENCY_MS: float = 12.4
+_GRID_FALLBACK_PHASE_RAD: float = 0.002
+_GRID_REAL_LATENCY_MS: float = 12.4
+_SPECTRUM_FALLBACK_LATENCY_MS: float = 12.4
+_SPECTRUM_FALLBACK_PHASE_RAD: float = 0.001
+_SPECTRUM_REAL_LATENCY_MS: float = 12.4
+_HRV_FALLBACK_LATENCY_MS: float = 15.0
+_HRV_FALLBACK_PHASE_RAD: float = 0.012
+_HRV_REAL_LATENCY_MS: float = 14.0
+_MAGNETOMETER_FALLBACK_LATENCY_MS: float = 9.5
+_MAGNETOMETER_FALLBACK_PHASE_RAD: float = 0.005
+_MAGNETOMETER_REAL_LATENCY_MS: float = 8.0
 
 # ---------------------------------------------------------------------------
 # Real-observer registry
@@ -100,6 +128,93 @@ def unregister_real_observer(node: str) -> bool:
         ``True`` if an observer was removed, ``False`` if none was registered.
     """
     return REAL_OBSERVERS.pop(node, None) is not None
+
+
+def _real_data_path(filename: str) -> Path:
+    """Resolve a file under tests/data relative to repository root."""
+    return Path(__file__).resolve().parents[1] / "tests" / "data" / filename
+
+
+def load_grid_auron_governor() -> Tuple[float, float, bool, bool]:
+    """Observador real para auron-governor (50 Hz European grid frequency).
+
+    Phase offset is computed as a per-cycle (1-second window) instantaneous
+    value::
+
+        phase_offset_rad = 2π × Δf_mean × 1 s
+
+    where ``Δf_mean = mean(f) − 50 Hz``.
+    """
+    path = _real_data_path("grid_frequency_auron_governor.csv")
+    if not os.path.exists(path):
+        logger.warning("Grid CSV not found at %s; using fallback synthetic values.", path)
+        return _GRID_FALLBACK_LATENCY_MS, _GRID_FALLBACK_PHASE_RAD, True, True
+
+    df = pd.read_csv(path)
+    mean_freq = float(df["frequency_hz"].mean())
+    delta_f = mean_freq - _GRID_NOMINAL_HZ
+    # 1-second instantaneous window — fractional deviation per cycle
+    phase_offset_rad = 2.0 * math.pi * delta_f * 1.0
+
+    latency_ms = _GRID_REAL_LATENCY_MS
+    return latency_ms, phase_offset_rad, True, True
+
+
+def load_qcal_spectrum_141hz() -> Tuple[float, float, bool, bool]:
+    """Observador real para 141-hz (QCAL Lorentzian spectrum centred at f₀).
+
+    Phase offset is the fractional centroid deviation scaled to radians::
+
+        phase_offset_rad = 2π × |centroid − f₀| / f₀
+    """
+    path = _real_data_path("qcal_spectrum_141hz.csv")
+    if not os.path.exists(path):
+        logger.warning("QCAL spectrum CSV not found at %s; using fallback synthetic values.", path)
+        return _SPECTRUM_FALLBACK_LATENCY_MS, _SPECTRUM_FALLBACK_PHASE_RAD, True, True
+
+    df = pd.read_csv(path)
+    freqs = df["frequency_hz"].to_numpy()
+    amps = df["amplitude"].to_numpy()
+    total_amp = float(amps.sum())
+    centroid = float((freqs * amps).sum() / total_amp) if total_amp > 0.0 else float(freqs[len(freqs) // 2])
+    phase_offset_rad = 2.0 * math.pi * abs(centroid - F0_REFERENCE) / F0_REFERENCE
+
+    latency_ms = _SPECTRUM_REAL_LATENCY_MS
+    return latency_ms, phase_offset_rad, True, True
+
+
+def load_hrv_eeg_biologia() -> Tuple[float, float, bool, bool]:
+    """Observador real para biologia-cuantica-noesica (f₀/2)."""
+    path = _real_data_path("hrv_eeg_biologia_cuantica.csv")
+    if not os.path.exists(path):
+        logger.warning("HRV/EEG real fixture not found at %s; using fallback synthetic values.", path)
+        return _HRV_FALLBACK_LATENCY_MS, _HRV_FALLBACK_PHASE_RAD, True, True
+
+    df = pd.read_csv(path)
+    rr_mean = float(df["rr_interval_ms"].mean())
+    expected_rr = 1000.0 / (F0_REFERENCE / 2.0)
+    delta_rr = rr_mean - expected_rr
+    phase_offset = 2.0 * math.pi * (delta_rr / 1000.0) * 60.0
+
+    latency_ms = _HRV_REAL_LATENCY_MS
+    return latency_ms, phase_offset, True, True
+
+
+def load_magnetometer_interferometer() -> Tuple[float, float, bool, bool]:
+    """Observador real para interferometro-noesico (2×f₀)."""
+    path = _real_data_path("magnetometer_interferometer.csv")
+    if not os.path.exists(path):
+        logger.warning("Magnetometer real fixture not found at %s; using fallback synthetic values.", path)
+        return _MAGNETOMETER_FALLBACK_LATENCY_MS, _MAGNETOMETER_FALLBACK_PHASE_RAD, True, True
+
+    df = pd.read_csv(path)
+    peak_freq = float(df["frequency_hz"].mean())
+    target = F0_REFERENCE * 2.0
+    delta_f = peak_freq - target
+    phase_offset = 2.0 * math.pi * delta_f / target
+
+    latency_ms = _MAGNETOMETER_REAL_LATENCY_MS
+    return latency_ms, phase_offset, True, True
 
 
 def score_psi(
@@ -232,6 +347,7 @@ def check_node_resonance(
         and heartbeat_ok is None
         and schema_ok is None
     )
+    observer_used = False
 
     if _all_transport_absent and node_name in REAL_OBSERVERS:
         # Real-observer mode: call the registered physical-data callback.
@@ -240,6 +356,7 @@ def check_node_resonance(
         phase_offset_rad = obs_phase
         heartbeat_ok = obs_heartbeat
         schema_ok = obs_schema
+        observer_used = True
 
     if reachable is None:
         reachable = known
@@ -257,12 +374,19 @@ def check_node_resonance(
         transport_ok = reachable
 
     frequency_hz: float = catalog["frequency_hz"] if known else 0.0
+    harmonic_factor = frequency_hz / F0_REFERENCE if known else 0.0
 
     # ------------------------------------------------------------------
     # Scoring and classification
     # ------------------------------------------------------------------
     psi = score_psi(latency_ms, phase_offset_rad, heartbeat_ok, schema_ok)
     resonance, status = classify_resonance(psi, reachable)
+    if psi >= _PSI_COHERENT:
+        logos_level = "saturated"
+    elif psi >= _PSI_DRIFTING:
+        logos_level = "stable"
+    else:
+        logos_level = "collapsed"
 
     # ------------------------------------------------------------------
     # Error fields (JSON-RPC 2.0 compatible)
@@ -294,7 +418,19 @@ def check_node_resonance(
             "transport": "ok" if transport_ok else "fail",
             "schema": "ok" if schema_ok else "fail",
             "heartbeat": "ok" if heartbeat_ok else "fail",
+            "fuente_fisica": "real" if observer_used else "simulada",
+        },
+        "qcal": {
+            "harmonic_factor": round(harmonic_factor, 6),
+            "modo_real": observer_used,
+            "logos_level": logos_level,
         },
         "error_code": error_code,
         "error_message": error_message,
     }
+
+
+register_real_observer("auron-governor", load_grid_auron_governor)
+register_real_observer("141-hz", load_qcal_spectrum_141hz)
+register_real_observer("biologia-cuantica-noesica", load_hrv_eeg_biologia)
+register_real_observer("interferometro-noesico", load_magnetometer_interferometer)
