@@ -1,26 +1,25 @@
 Test Name,Status,Execution Time (s),Error
-Step 1: Axioms → Lemmas,PASSED,4.76837158203125e-06,
-Step 2: Archimedean Rigidity,PASSED,0.00011730194091796875,
-Step 3: Paley-Wiener Uniqueness,PASSED,2.6226043701171875e-06,
-Step 4A: de Branges Localization,PASSED,0.00043129920959472656,
-Step 4B: Weil-Guinand Localization,PASSED,1.9073486328125e-06,
-Step 5: Coronación Integration,PASSED,0.00012731552124023438,
-Stress: Spectral Measure Perturbation,PASSED,3.8623809814453125e-05,
-Stress: Growth Bounds Validation,PASSED,4.291534423828125e-06,
-Stress: Zero Subsets Consistency,PASSED,6.961822509765625e-05,
-Stress: Proof Certificate Generation,PASSED,0.00011873245239257812,
-Integration: Explicit Formula Integration,PASSED,1.7617905139923096,
+Step 1: Axioms → Lemmas,PASSED,5.4836273193359375e-06,
+Step 2: Archimedean Rigidity,PASSED,0.00017452239990234375,
+Step 3: Paley-Wiener Uniqueness,PASSED,4.76837158203125e-06,
+Step 4A: de Branges Localization,PASSED,0.0004458427429199219,
+Step 4B: Weil-Guinand Localization,PASSED,2.86102294921875e-06,
+Step 5: Coronación Integration,PASSED,0.0011789798736572266,
+Stress: Spectral Measure Perturbation,PASSED,5.3882598876953125e-05,
+Stress: Growth Bounds Validation,PASSED,5.7220458984375e-06,
+Stress: Zero Subsets Consistency,PASSED,0.00010132789611816406,
+Stress: Proof Certificate Generation,PASSED,0.0001742839813232422,
+Integration: Explicit Formula Integration,SKIPPED,0.011804342269897461,Integration test requires full explicit formula setup: No module named 'sympy'
 YOLO Verification,PASSED,0.0,
-Riemann-Zeta Synchrony,PASSED,0.00024890899658203125,
+Riemann-Zeta Synchrony,PASSED,0.0010328292846679688,
 Arithmetic Fractal Verification,PASSED,0,
 Aritmology Verification,PASSED,0,
 Zeta Quantum Wave Verification,PASSED,0,
 Arpeth Bioinformatics Verification,PARTIAL,0,
-Discovery Hierarchy Validation,PASSED,0,
 Infinite Zeros Verification,PASSED,0,
 Spectral Identification Theorem,PARTIAL,0,
 SAT Certificates Verification,PARTIAL,0.0,
 QCAL-∞³-SPECTRAL Certificate,PASSED,0,
-RH_PROVED Framework,PASSED,0,
-Trinity_QCAL Validation,SKIPPED,0,unsupported operand type(s) for *: 'complex' and 'NoneType'
-Trinity + Spectral Hamiltonian,SKIPPED,0,"'(' was never closed (__init__.py, line 257)"
+RH_PROVED Framework,SKIPPED,0,cannot set 'dps' on 'mpmath'. Did you mean to set 'dps' on 'mpmath.mp'?
+Trinity_QCAL Validation,SKIPPED,0,module_import_error
+Trinity + Spectral Hamiltonian,SKIPPED,0,module_import_error
