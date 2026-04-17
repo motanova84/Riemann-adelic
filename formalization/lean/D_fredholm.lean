@@ -35,13 +35,15 @@ axiom H_psi : ℂ → ℂ
 /--
 T(s) es la modulación del operador noético por el factor de fase de la línea crítica.
 Definición puntual: `(T s) x = H_psi x / (1 + s²)`.
+El modelo asume explícitamente el régimen `1 + s² ≠ 0` (puntos regulares fuera de `s = ±i`).
 -/
 def T (s : ℂ) : ℂ → ℂ := fun x ↦ H_psi x / (1 + s^2)
 
 /-- Axioma: T(s) es de clase traza para todo s ∈ ℂ, permitiendo la definición del determinante. -/
 axiom T_trace_class : ∀ s : ℂ, TraceClass (T s)
 
-/-- Axioma: La familia de operadores T(s) varía de forma holomorfa con respecto a s. -/
+/-- Axioma: la familia de operadores T(s) varía de forma holomorfa con respecto a s.
+Aquí se usa una versión puntual de control holomorfo (`x = 0`) como abstracción del control de familia. -/
 axiom T_holomorphic : Holomorphic ℂ (fun s ↦ T s 0)
 
 -- ==================== DETERMINANTE DE FREDHOLM D(s) ====================
