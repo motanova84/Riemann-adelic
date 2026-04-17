@@ -5,9 +5,15 @@
 from __future__ import annotations
 
 import json
+import sys
 from http.server import BaseHTTPRequestHandler, HTTPServer
+from pathlib import Path
 
-from mcp_network.resonance import check_node_resonance
+REPO_ROOT = Path(__file__).resolve().parents[1]
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
+
+from mcp_network.resonance import check_node_resonance  # noqa: E402
 
 
 class MCPTestHandler(BaseHTTPRequestHandler):
@@ -56,7 +62,7 @@ class MCPTestHandler(BaseHTTPRequestHandler):
 
     def log_message(self, _format: str, *_args: object) -> None:
         """Silence HTTP request logs for cleaner local test output."""
-        return
+        pass
 
 
 if __name__ == "__main__":

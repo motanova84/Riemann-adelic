@@ -45,11 +45,9 @@ from typing import Tuple
 
 import pytest
 
-import mcp_network.resonance as resonance_module
 from mcp_network.resonance import (
     F0_REFERENCE,
     _PSI_COHERENT,
-    _PSI_DRIFTING,
     REAL_OBSERVERS,
     check_node_resonance,
     classify_resonance,
@@ -68,6 +66,7 @@ pytestmark = pytest.mark.skipif(
 )
 
 DATA_DIR = Path(__file__).parent / "data"
+# Snapshot assumed stable at import time; fixture restores this baseline.
 DEFAULT_REAL_OBSERVERS = dict(REAL_OBSERVERS)
 
 
@@ -492,18 +491,14 @@ class TestCheckNodeResonanceRealObservers:
 
         assert r_grid["frequency_hz"] == pytest.approx(50.0, rel=1e-6)
         assert r_spec["frequency_hz"] == pytest.approx(141.7001, rel=1e-9)
-        # The two nodes have independent Ψ values derived from different sources
-        assert r_grid["psi"] != r_spec["psi"] or True  # may coincide — just check both valid
         assert 0.0 <= r_grid["psi"] <= 1.0
         assert 0.0 <= r_spec["psi"] <= 1.0
 
-    def test_biologia_cuantica_psi_above_gate(self, monkeypatch):
-        monkeypatch.setattr(resonance_module.np.random, "normal", lambda *_args, **_kwargs: 0.0)
+    def test_biologia_cuantica_psi_above_gate(self):
         health = check_node_resonance("biologia-cuantica-noesica")
         assert health["psi"] >= _PSI_COHERENT
 
-    def test_biologia_cuantica_phase_calculation(self, monkeypatch):
-        monkeypatch.setattr(resonance_module.np.random, "normal", lambda *_args, **_kwargs: 0.0)
+    def test_biologia_cuantica_phase_calculation(self):
         path = DATA_DIR / "hrv_eeg_biologia_cuantica.csv"
         rr = _load_hrv_rr_csv(path)
         rr_mean = sum(rr) / len(rr)
@@ -512,39 +507,33 @@ class TestCheckNodeResonanceRealObservers:
         health = check_node_resonance("biologia-cuantica-noesica")
         assert health["phase_offset_rad"] == pytest.approx(expected_phase, abs=1e-6)
 
-    def test_biologia_cuantica_harmonic_factor(self, monkeypatch):
-        monkeypatch.setattr(resonance_module.np.random, "normal", lambda *_args, **_kwargs: 0.0)
+    def test_biologia_cuantica_harmonic_factor(self):
         health = check_node_resonance("biologia-cuantica-noesica")
         assert health["qcal"]["harmonic_factor"] == pytest.approx(0.5, abs=1e-9)
 
-    def test_biologia_cuantica_frequency_catalog(self, monkeypatch):
-        monkeypatch.setattr(resonance_module.np.random, "normal", lambda *_args, **_kwargs: 0.0)
+    def test_biologia_cuantica_frequency_catalog(self):
         health = check_node_resonance("biologia-cuantica-noesica")
         assert health["frequency_hz"] == pytest.approx(NODE_CATALOG["biologia-cuantica-noesica"]["frequency_hz"], rel=1e-9)
 
-    def test_biologia_cuantica_real_source_flag(self, monkeypatch):
-        monkeypatch.setattr(resonance_module.np.random, "normal", lambda *_args, **_kwargs: 0.0)
+    def test_biologia_cuantica_real_source_flag(self):
         health = check_node_resonance("biologia-cuantica-noesica")
         assert health["checks"]["fuente_fisica"] == "real"
         assert health["qcal"]["modo_real"] is True
 
     def test_biologia_cuantica_latency_range(self):
         health = check_node_resonance("biologia-cuantica-noesica")
-        assert 8.0 <= health["latency_ms"] <= 20.0
+        assert health["latency_ms"] == pytest.approx(14.0)
 
-    def test_biologia_cuantica_resonance_labels(self, monkeypatch):
-        monkeypatch.setattr(resonance_module.np.random, "normal", lambda *_args, **_kwargs: 0.0)
+    def test_biologia_cuantica_resonance_labels(self):
         health = check_node_resonance("biologia-cuantica-noesica")
         assert health["resonance"] == "coherent"
         assert health["status"] == "pass"
 
-    def test_interferometro_psi_above_gate(self, monkeypatch):
-        monkeypatch.setattr(resonance_module.np.random, "normal", lambda *_args, **_kwargs: 0.0)
+    def test_interferometro_psi_above_gate(self):
         health = check_node_resonance("interferometro-noesico")
         assert health["psi"] >= _PSI_COHERENT
 
-    def test_interferometro_phase_from_magnetometer(self, monkeypatch):
-        monkeypatch.setattr(resonance_module.np.random, "normal", lambda *_args, **_kwargs: 0.0)
+    def test_interferometro_phase_from_magnetometer(self):
         path = DATA_DIR / "magnetometer_interferometer.csv"
         freqs = _load_magnetometer_csv(path)
         peak = sum(freqs) / len(freqs)
@@ -553,28 +542,24 @@ class TestCheckNodeResonanceRealObservers:
         health = check_node_resonance("interferometro-noesico")
         assert health["phase_offset_rad"] == pytest.approx(expected_phase, abs=1e-6)
 
-    def test_interferometro_harmonic_factor(self, monkeypatch):
-        monkeypatch.setattr(resonance_module.np.random, "normal", lambda *_args, **_kwargs: 0.0)
+    def test_interferometro_harmonic_factor(self):
         health = check_node_resonance("interferometro-noesico")
         assert health["qcal"]["harmonic_factor"] == pytest.approx(2.0, abs=1e-9)
 
-    def test_interferometro_frequency_catalog(self, monkeypatch):
-        monkeypatch.setattr(resonance_module.np.random, "normal", lambda *_args, **_kwargs: 0.0)
+    def test_interferometro_frequency_catalog(self):
         health = check_node_resonance("interferometro-noesico")
         assert health["frequency_hz"] == pytest.approx(NODE_CATALOG["interferometro-noesico"]["frequency_hz"], rel=1e-9)
 
-    def test_interferometro_real_source_flag(self, monkeypatch):
-        monkeypatch.setattr(resonance_module.np.random, "normal", lambda *_args, **_kwargs: 0.0)
+    def test_interferometro_real_source_flag(self):
         health = check_node_resonance("interferometro-noesico")
         assert health["checks"]["fuente_fisica"] == "real"
         assert health["qcal"]["modo_real"] is True
 
     def test_interferometro_latency_range(self):
         health = check_node_resonance("interferometro-noesico")
-        assert 2.0 <= health["latency_ms"] <= 14.0
+        assert health["latency_ms"] == pytest.approx(8.0)
 
-    def test_interferometro_resonance_labels(self, monkeypatch):
-        monkeypatch.setattr(resonance_module.np.random, "normal", lambda *_args, **_kwargs: 0.0)
+    def test_interferometro_resonance_labels(self):
         health = check_node_resonance("interferometro-noesico")
         assert health["resonance"] == "coherent"
         assert health["status"] == "pass"

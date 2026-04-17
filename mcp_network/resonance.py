@@ -40,19 +40,26 @@ Mode selection:
 * **Simulation mode** (default / CI): no observer registered → synthetic defaults.
 * **Real mode** (lab / field): observer registered or ``QCAL_REAL_TESTS=1``
   env-var present → observer called.
+
+Auto-registration:
+
+* On import, this module auto-registers built-in real observers for
+  ``"biologia-cuantica-noesica"`` and ``"interferometro-noesico"``.
 """
 from __future__ import annotations
 
 import math
 import os
 from datetime import datetime, timezone
+import logging
 from pathlib import Path
 from typing import Any, Callable, Dict, Optional, Tuple
 
-import numpy as np
 import pandas as pd
 
 from .registry import NODE_CATALOG
+
+logger = logging.getLogger(__name__)
 
 # ---------------------------------------------------------------------------
 # Ψ classification thresholds
@@ -64,6 +71,12 @@ _PSI_DRIFTING: float = 0.85   # ≥ → "drifting" / "warn"  (PSI_THRESHOLD_ACCE
 _LATENCY_REF_MS: float = 100.0   # 100 ms round-trip → full latency penalty
 _PHASE_REF_RAD: float = 0.2      # 0.2 rad deviation  → full phase penalty
 F0_REFERENCE: float = 141.7001
+_HRV_FALLBACK_LATENCY_MS: float = 15.0
+_HRV_FALLBACK_PHASE_RAD: float = 0.012
+_HRV_REAL_LATENCY_MS: float = 14.0
+_MAGNETOMETER_FALLBACK_LATENCY_MS: float = 9.5
+_MAGNETOMETER_FALLBACK_PHASE_RAD: float = 0.005
+_MAGNETOMETER_REAL_LATENCY_MS: float = 8.0
 
 # ---------------------------------------------------------------------------
 # Real-observer registry
@@ -118,7 +131,8 @@ def load_hrv_eeg_biologia() -> Tuple[float, float, bool, bool]:
     """Observador real para biologia-cuantica-noesica (f₀/2)."""
     path = _real_data_path("hrv_eeg_biologia_cuantica.csv")
     if not os.path.exists(path):
-        return 15.0, 0.012, True, True
+        logger.warning("HRV/EEG real fixture not found at %s; using fallback synthetic values.", path)
+        return _HRV_FALLBACK_LATENCY_MS, _HRV_FALLBACK_PHASE_RAD, True, True
 
     df = pd.read_csv(path)
     rr_mean = float(df["rr_interval_ms"].mean())
@@ -126,7 +140,7 @@ def load_hrv_eeg_biologia() -> Tuple[float, float, bool, bool]:
     delta_rr = rr_mean - expected_rr
     phase_offset = 2.0 * math.pi * (delta_rr / 1000.0) * 60.0
 
-    latency_ms = float(np.clip(14.0 + np.random.normal(0, 2), 8.0, 20.0))
+    latency_ms = _HRV_REAL_LATENCY_MS
     return latency_ms, phase_offset, True, True
 
 
@@ -134,7 +148,8 @@ def load_magnetometer_interferometer() -> Tuple[float, float, bool, bool]:
     """Observador real para interferometro-noesico (2×f₀)."""
     path = _real_data_path("magnetometer_interferometer.csv")
     if not os.path.exists(path):
-        return 9.5, 0.005, True, True
+        logger.warning("Magnetometer real fixture not found at %s; using fallback synthetic values.", path)
+        return _MAGNETOMETER_FALLBACK_LATENCY_MS, _MAGNETOMETER_FALLBACK_PHASE_RAD, True, True
 
     df = pd.read_csv(path)
     peak_freq = float(df["frequency_hz"].mean())
@@ -142,7 +157,7 @@ def load_magnetometer_interferometer() -> Tuple[float, float, bool, bool]:
     delta_f = peak_freq - target
     phase_offset = 2.0 * math.pi * delta_f / target
 
-    latency_ms = float(8.0 + np.random.normal(0, 2))
+    latency_ms = _MAGNETOMETER_REAL_LATENCY_MS
     return latency_ms, phase_offset, True, True
 
 
@@ -310,6 +325,12 @@ def check_node_resonance(
     # ------------------------------------------------------------------
     psi = score_psi(latency_ms, phase_offset_rad, heartbeat_ok, schema_ok)
     resonance, status = classify_resonance(psi, reachable)
+    if psi >= _PSI_COHERENT:
+        logos_level = "saturated"
+    elif psi >= _PSI_DRIFTING:
+        logos_level = "stable"
+    else:
+        logos_level = "collapsed"
 
     # ------------------------------------------------------------------
     # Error fields (JSON-RPC 2.0 compatible)
@@ -346,7 +367,7 @@ def check_node_resonance(
         "qcal": {
             "harmonic_factor": round(harmonic_factor, 6),
             "modo_real": observer_used,
-            "logos_level": "saturated" if psi >= _PSI_COHERENT else ("stable" if psi >= _PSI_DRIFTING else "collapsed"),
+            "logos_level": logos_level,
         },
         "error_code": error_code,
         "error_message": error_message,
