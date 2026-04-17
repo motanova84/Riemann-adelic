@@ -65,6 +65,11 @@ def K_s (s : ℂ) : ℂ → ℂ := fun x ↦ H_psi x / (1 + s^2)
 
 /-! ## Axioma de Compacidad -/
 
+/-- Predicado placeholder para compacidad en este modelo simplificado.
+    Se reemplazará por la noción formal de operador compacto al extender
+    la formalización a espacios de Hilbert en Mathlib. -/
+def CompactOperatorPlaceholder (_T : ℂ → ℂ) : Prop := True
+
 /-- Axioma operativo: K(s) es compacto para todo s ∈ ℂ.
     
     Justificación matemática:
@@ -74,7 +79,7 @@ def K_s (s : ℂ) : ℂ → ℂ := fun x ↦ H_psi x / (1 + s^2)
     
     Este axioma se valida externamente mediante análisis funcional
     en el espacio L²((0,∞), dx/x). -/
-axiom K_compact : ∀ s : ℂ, True  -- CompactOperator requiere definición de espacio
+axiom K_compact : ∀ s : ℂ, CompactOperatorPlaceholder (K_s s)
 
 /-! ## Determinante de Fredholm Formal -/
 
@@ -93,8 +98,8 @@ axiom K_compact : ∀ s : ℂ, True  -- CompactOperator requiere definición de 
     Esta definición formal captura la estructura del determinante
     sin requerir la maquinaria completa de operadores en Hilbert. -/
 def D (s : ℂ) : ℂ :=
-  -- Representación formal: producto sobre valores propios
-  -- En implementación completa: FormalDet.det (1 - K_s s)
+  -- Placeholder algebraico de primer orden para mantener el entorno ejecutable.
+  -- La implementación completa usará el determinante de Fredholm en Hilbert.
   1 - (K_s s) 0  -- Aproximación de primer orden
 
 /-! ## Función Xi de Riemann -/
@@ -129,7 +134,9 @@ def Xi (s : ℂ) : ℂ :=
 axiom D_eq_Xi : ∀ s : ℂ, D s = Xi s
 axiom Xi_functional_equation : ∀ s : ℂ, Xi s = Xi (1 - s)
 axiom D_entire : ∀ s : ℂ, DifferentiableAt ℂ D s
-axiom D_order_one : True
+/-- Predicado placeholder para codificar la propiedad "entera de orden 1". -/
+def EntireOrderOnePlaceholder (_f : ℂ → ℂ) : Prop := True
+axiom D_order_one : EntireOrderOnePlaceholder D
 axiom theta_residual : ℝ
 axiom theta_residual_value : theta_residual = 0.052463
 
@@ -198,11 +205,9 @@ Este módulo completa la Parte 32/∞³ del marco QCAL, estableciendo
 la conexión rigurosa entre el análisis funcional profundo (operador H_Ψ,
 teoría de Fredholm) y la estructura de la función zeta regularizada.
 
-ACTUALIZACIÓN: Añadidas propiedades avanzadas de Fredholm con imports
-de Mathlib.Analysis.InnerProductSpace.Adjoint y 
-Mathlib.Analysis.FredholmAlternative, cerrando el último pendiente en
-D_functional_equation mediante axiomas que representan lemas de involución
-adélica y simetría del determinante.
+ACTUALIZACIÓN: Añadida clausura axiomática de la simetría funcional y de
+propiedades holomorfas de D(s), sin dependencias adicionales de Fredholm en
+Mathlib para este nivel de abstracción.
 
 ═══════════════════════════════════════════════════════════════
   Autor: José Manuel Mota Burruezo Ψ ∞³
