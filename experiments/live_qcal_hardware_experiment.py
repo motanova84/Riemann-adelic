@@ -9,7 +9,7 @@ import time
 import traceback
 import numpy as np
 from datetime import datetime, timezone
-from mcp_network.resonance import check_node_resonance
+from mcp_network.resonance import check_node_resonance, REAL_OBSERVERS
 
 # Forzar modo real + hardware
 os.environ["QCAL_REAL_TESTS"] = "1"
@@ -54,15 +54,18 @@ def run_live_experiment(duration_minutes: int = EXPERIMENT_DURATION_MIN):
                 }
 
                 # Determinar fuente del observador
-                observer_source = "hardware_real"
-                if not result.get("qcal", {}).get("modo_real", False):
-                    observer_source = "simulated"
-                elif "grid" in node:
-                    observer_source = "grid_fixture"
-                elif "biologia" in node:
-                    observer_source = "hrv_eeg_sim"   # cambiar a "openbci_usb" cuando conectes hardware
-                elif "interferometro" in node:
-                    observer_source = "magnetometer_sim"  # cambiar a "qmc5883l_i2c" cuando conectes
+                # Modo real si el nodo tiene un observador registrado
+                has_real_observer = node in REAL_OBSERVERS
+                observer_source = "hardware_real" if has_real_observer else "simulated"
+                
+                # Especificar tipo específico de hardware
+                if has_real_observer:
+                    if "grid" in node:
+                        observer_source = "grid_fixture"
+                    elif "biologia" in node:
+                        observer_source = "hrv_eeg_sim"   # cambiar a "openbci_usb" cuando conectes hardware
+                    elif "interferometro" in node:
+                        observer_source = "magnetometer_sim"  # cambiar a "qmc5883l_i2c" cuando conectes
 
                 row = [
                     timestamp_utc,
@@ -74,7 +77,7 @@ def run_live_experiment(duration_minutes: int = EXPERIMENT_DURATION_MIN):
                     result["latency_ms"],
                     result["phase_offset_rad"],
                     result["frequency_hz"],
-                    result.get("qcal", {}).get("modo_real", False),
+                    has_real_observer,
                     observer_source,
                     None,
                     str(conditions)
