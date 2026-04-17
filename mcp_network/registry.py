@@ -128,7 +128,7 @@ NODE_CATALOG: Dict[str, Dict[str, Any]] = {
     "bsd-mcp-server": {
         "name": "BSD MCP Server",
         "focus": "Servidor MCP BSD (alias MCP de adelic-bsd)",
-        "frequency_hz": 888.0,
+        "frequency_hz": 141.7001,
         "endpoint": "bsd-mcp-server.qcal.space",
         "layer": "mind",
         "role": "estructura aritmética",

@@ -31,13 +31,17 @@ from __future__ import annotations
 
 import argparse
 import csv
+import logging
 import sys
 import time
+import traceback
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
 
 from mcp_network.resonance import check_node_resonance
+
+_log = logging.getLogger(__name__)
 
 # ---------------------------------------------------------------------------
 # Ecosystem node roster
@@ -156,6 +160,7 @@ def check_instantaneous_resonance(
                     f"  →  {record['resonance']}"
                 )
         except Exception as exc:  # noqa: BLE001
+            _log.debug("Node %s raised an exception:\n%s", repo, traceback.format_exc())
             total_psi.append(0.0)
             node_status[repo] = {"psi": 0.0, "resonance": "error", "error": str(exc)}
             if verbose:
