@@ -31,7 +31,7 @@ from .base_server import MCPServer, ServerStatus
 from .registry import MCPRegistry, NODE_CATALOG
 from .observer import ObserverPattern, ObserverEvent
 from .torsion_field import TorsionFieldNetwork, TorsionTensor, FiberConnection
-from .resonance import score_psi, classify_resonance, check_node_resonance
+from .resonance import score_psi, classify_resonance, check_node_resonance, register_real_observer, unregister_real_observer, REAL_OBSERVERS
 
 __all__ = [
     "MCPServer",
@@ -49,4 +49,7 @@ __all__ = [
     "score_psi",
     "classify_resonance",
     "check_node_resonance",
+    "register_real_observer",
+    "unregister_real_observer",
+    "REAL_OBSERVERS",
 ]

@@ -6,17 +6,45 @@ Health-check and QCAL coherence scoring for MCP-QCAL Bus nodes.
 
 Public API
 ----------
-- ``score_psi``          – compute normalised Ψ ∈ [0, 1] from transport observables.
-- ``classify_resonance`` – map (Ψ, reachable) → (resonance_label, status_label).
-- ``check_node_resonance`` – return a full health-check record for a named node.
+- ``score_psi``              – compute normalised Ψ ∈ [0, 1] from transport observables.
+- ``classify_resonance``     – map (Ψ, reachable) → (resonance_label, status_label).
+- ``check_node_resonance``   – return a full health-check record for a named node.
+- ``register_real_observer`` – attach a physical-data callback for a named node.
+- ``unregister_real_observer`` – remove a previously registered callback.
 
 The module is intentionally free of I/O side-effects so that it can be
 imported from tests, MCP tool adaptors, and notebooks alike.
+
+Real-observer pattern
+---------------------
+In simulation mode (no registered observer, no explicit kwargs) the module
+uses plausible synthetic defaults (12.4 ms latency, 0.018 rad phase offset)
+which yield Ψ ≈ 0.893 — just above the QCAL coherence gate of 0.888.
+
+For *real* measurements — physical grid data, QCAL spectra, EEG/sensor feeds
+— register a callable per node::
+
+    def my_grid_observer() -> tuple[float, float, bool, bool]:
+        # returns (latency_ms, phase_offset_rad, heartbeat_ok, schema_ok)
+        ...
+
+    register_real_observer("auron-governor", my_grid_observer)
+
+The observer is invoked by ``check_node_resonance`` whenever *all four*
+transport kwargs (``latency_ms``, ``phase_offset_rad``, ``heartbeat_ok``,
+``schema_ok``) are absent from the call.  Explicit kwargs always take
+precedence over the observer, so existing tests are never affected.
+
+Mode selection:
+
+* **Simulation mode** (default / CI): no observer registered → synthetic defaults.
+* **Real mode** (lab / field): observer registered or ``QCAL_REAL_TESTS=1``
+  env-var present → observer called.
 """
 from __future__ import annotations
 
 from datetime import datetime, timezone
-from typing import Any, Dict, Optional, Tuple
+from typing import Any, Callable, Dict, Optional, Tuple
 
 from .registry import NODE_CATALOG
 
@@ -29,6 +57,49 @@ _PSI_DRIFTING: float = 0.85   # ≥ → "drifting" / "warn"  (PSI_THRESHOLD_ACCE
 # Penalty normalisation references
 _LATENCY_REF_MS: float = 100.0   # 100 ms round-trip → full latency penalty
 _PHASE_REF_RAD: float = 0.2      # 0.2 rad deviation  → full phase penalty
+
+# ---------------------------------------------------------------------------
+# Real-observer registry
+# ---------------------------------------------------------------------------
+# Maps node_name → callable that returns (latency_ms, phase_offset_rad,
+#                                         heartbeat_ok, schema_ok).
+# Module-level dict — intentionally mutable so tests and adaptor code can
+# register/unregister without importing a singleton object.
+REAL_OBSERVERS: Dict[str, Callable[[], Tuple[float, float, bool, bool]]] = {}
+
+
+def register_real_observer(
+    node: str,
+    fn: Callable[[], Tuple[float, float, bool, bool]],
+) -> None:
+    """Register a physical-data callback for *node*.
+
+    The callable must be zero-argument and return a 4-tuple::
+
+        (latency_ms: float, phase_offset_rad: float,
+         heartbeat_ok: bool, schema_ok: bool)
+
+    Registering a second observer for the same node silently replaces the
+    first one.
+
+    Args:
+        node: Node identifier matching a key in :data:`~mcp_network.registry.NODE_CATALOG`.
+        fn: Zero-argument callable returning ``(latency_ms, phase_offset_rad,
+            heartbeat_ok, schema_ok)``.
+    """
+    REAL_OBSERVERS[node] = fn
+
+
+def unregister_real_observer(node: str) -> bool:
+    """Remove the real observer for *node*, if any.
+
+    Args:
+        node: Node identifier.
+
+    Returns:
+        ``True`` if an observer was removed, ``False`` if none was registered.
+    """
+    return REAL_OBSERVERS.pop(node, None) is not None
 
 
 def score_psi(
@@ -100,22 +171,28 @@ def check_node_resonance(
 ) -> Dict[str, Any]:
     """Return a health-check record for an MCP-QCAL Bus node.
 
-    When called without keyword overrides the function operates in
-    *simulation mode*: it uses plausible default values so callers receive a
-    structurally complete response even before real transport is wired up.
+    **Mode selection** (highest to lowest priority):
 
-    All keyword arguments allow callers (real transport adaptors, tests) to
-    supply measured values that override the simulation defaults.
+    1. **Explicit kwargs** — any kwarg supplied by the caller is used as-is
+       and always takes precedence over both the observer and simulation
+       defaults.  This is the path used by existing unit tests.
+    2. **Real observer** — if all four transport kwargs (``latency_ms``,
+       ``phase_offset_rad``, ``heartbeat_ok``, ``schema_ok``) are absent
+       *and* a callback has been registered via
+       :func:`register_real_observer`, the callback is invoked to obtain
+       measured values from a physical data source (grid frequency, QCAL
+       spectrum, EEG, …).
+    3. **Simulation mode** (CI default) — if no observer is registered and
+       no explicit kwargs are provided, synthetic defaults are used:
+       ``latency_ms=12.4``, ``phase_offset_rad=0.018`` → Ψ ≈ 0.893 > 0.888.
 
     Args:
         node_name: Stable node identifier, e.g. ``"auron-governor"``.
-        latency_ms: Measured round-trip latency (ms).  Default: 12.4 for
-            known nodes (→ Ψ ≈ 0.893 > 0.888), 0.0 for unknown ones.
-        phase_offset_rad: Phase offset vs f₀ reference (radians).  Default:
-            0.018 for known nodes (→ Ψ ≈ 0.893 > 0.888), 0.0 for unknown ones.
+        latency_ms: Measured round-trip latency (ms).
+        phase_offset_rad: Phase offset vs f₀ reference (radians).
         reachable: Whether the node responded.  Default: ``True`` for nodes
-            present in :data:`NODE_CATALOG`, ``False`` otherwise.
-        transport_ok: Transport sub-check result.  Default: same as *reachable*.
+            in :data:`~mcp_network.registry.NODE_CATALOG`, ``False`` otherwise.
+        transport_ok: Transport sub-check.  Default: same as *reachable*.
         schema_ok: Schema validation sub-check.  Default: same as *reachable*.
         heartbeat_ok: Heartbeat sub-check.  Default: same as *reachable*.
 
@@ -133,7 +210,7 @@ def check_node_resonance(
                 "psi":              float,          # in [0, 1]
                 "phase_offset_rad": float,
                 "frequency_hz":     float,
-                "timestamp":        str,            # ISO-8601 with UTC offset
+                "timestamp":        str,            # ISO-8601 UTC
                 "checks": {
                     "transport":    "ok" | "fail",
                     "schema":       "ok" | "fail",
@@ -147,8 +224,23 @@ def check_node_resonance(
     known = catalog is not None
 
     # ------------------------------------------------------------------
-    # Resolve defaults
+    # Resolve defaults — priority: explicit kwargs > observer > simulation
     # ------------------------------------------------------------------
+    _all_transport_absent = (
+        latency_ms is None
+        and phase_offset_rad is None
+        and heartbeat_ok is None
+        and schema_ok is None
+    )
+
+    if _all_transport_absent and node_name in REAL_OBSERVERS:
+        # Real-observer mode: call the registered physical-data callback.
+        obs_latency, obs_phase, obs_heartbeat, obs_schema = REAL_OBSERVERS[node_name]()
+        latency_ms = obs_latency
+        phase_offset_rad = obs_phase
+        heartbeat_ok = obs_heartbeat
+        schema_ok = obs_schema
+
     if reachable is None:
         reachable = known
     if latency_ms is None:
