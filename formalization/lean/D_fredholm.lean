@@ -25,7 +25,7 @@ anclando la teoría de operadores al núcleo de la Hipótesis de Riemann.
 axiom TraceClass : (ℂ → ℂ) → Prop
 
 /-- Axioma: Una función es holomorfa (complejo-analítica) en todo el dominio ℂ. -/
-axiom Holomorphic : (ℂ → ℂ) → Prop
+axiom Holomorphic : Type → (ℂ → ℂ) → Prop
 
 -- ==================== EL OPERADOR NOÉTICO T(s) ====================
 
@@ -42,7 +42,7 @@ def T (s : ℂ) : ℂ → ℂ := fun x ↦ H_psi x / (1 + s^2)
 axiom T_trace_class : ∀ s : ℂ, TraceClass (T s)
 
 /-- Axioma: La familia de operadores T(s) varía de forma holomorfa con respecto a s. -/
-axiom T_holomorphic : Holomorphic (fun s ↦ T s 0)
+axiom T_holomorphic : Holomorphic ℂ (fun s ↦ T s 0)
 
 -- ==================== DETERMINANTE DE FREDHOLM D(s) ====================
 
@@ -50,20 +50,20 @@ axiom T_holomorphic : Holomorphic (fun s ↦ T s 0)
 axiom det : (ℂ → ℂ) → ℂ
 
 /--
-Definición canónica de D(s) como el determinante de Fredholm del operador T.
+Definición canónica de D(s) como el determinante de Fredholm del operador I − T(s).
 D(s) = det(I − T(s))
 -/
-def D (s : ℂ) : ℂ := det (T s)
+def D (s : ℂ) : ℂ := det (fun x ↦ x - T s x)
 
 /--
 Axioma: Teorema de Lidskii-Simon simplificado.
 El determinante de Fredholm de una familia holomorfa es una función entera.
 -/
 axiom fredholm_det_holomorphic : ∀ (f : ℂ → (ℂ → ℂ)),
-  (∀ s, TraceClass (f s)) → Holomorphic (fun s ↦ det (f s))
+  (∀ s, TraceClass (f s)) → Holomorphic ℂ (fun s ↦ det (fun x ↦ x - f s x))
 
 /-- Teorema: D(s) es una función entera (holomorfa en todo ℂ). -/
-theorem D_entire : Holomorphic D := by
+theorem D_entire : Holomorphic ℂ D := by
   unfold D
   exact fredholm_det_holomorphic T T_trace_class
 
