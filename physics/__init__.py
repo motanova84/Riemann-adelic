@@ -254,6 +254,16 @@ from .interaccion_schrodinger_riemann import (
     interaccion_schrodinger_riemann_activar,
 )
 
+from .particula_coherencia import (
+    VacioSuperfluo,
+    ParticulaCoherencia,
+    NavierStokesAdelico,
+    AcoplamientoHiggsPC,
+    FotonFaseCoherente,
+    FirmaEspectral,
+    SustratoCuantico,
+    ResultadoSustrato,
+    ejecutar_sustrato,
 from .k7_twisted_graph import (
     K7TwistedGraph,
     compute_green_function_k7,
@@ -446,6 +456,16 @@ __all__ = [
     'ResultadoInteraccion',
     'SistemaInteraccionSR',
     'interaccion_schrodinger_riemann_activar',
+    # Partícula de Coherencia — Sustrato Cuántico
+    'VacioSuperfluo',
+    'ParticulaCoherencia',
+    'NavierStokesAdelico',
+    'AcoplamientoHiggsPC',
+    'FotonFaseCoherente',
+    'FirmaEspectral',
+    'SustratoCuantico',
+    'ResultadoSustrato',
+    'ejecutar_sustrato',
     # K7 Twisted Graph — Dinámica grafo completo con geometría torcida
     'K7TwistedGraph',
     'compute_green_function_k7',

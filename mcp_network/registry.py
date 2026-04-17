@@ -13,6 +13,61 @@ from typing import Any, Dict, List, Optional
 
 from .base_server import MCPServer, ServerStatus
 
+# ---------------------------------------------------------------------------
+# Node catalog — single source of truth for MCP-QCAL Bus node metadata.
+#
+# Frequency assignments:
+#   - 141.7001 Hz  f₀ base (master reference, git-core, Navier-Stokes 3D)
+#   - 888.0    Hz  πCODE harmonic (narrative / dramaturgical nodes)
+#   - 283.4002 Hz  2 × f₀  (interferometric contrast / noetic reading)
+#   - 70.85005 Hz  0.5 × f₀  (bio/slow-coupling layer)
+#   - 50.0     Hz  governance / stability arbitration
+# ---------------------------------------------------------------------------
+NODE_CATALOG: Dict[str, Dict[str, Any]] = {
+    "dramaturgo": {
+        "name": "Dramaturgo",
+        "focus": "Narrativa cósmica / noésis dramatúrgica",
+        "frequency_hz": 888.0,
+        "endpoint": "dramaturgo.qcal.space",
+    },
+    "github-mcp-server": {
+        "name": "GitHub MCP Server",
+        "focus": "Núcleo git / ontológico",
+        "frequency_hz": 141.7001,
+        "endpoint": "github-mcp-server.qcal.space",
+    },
+    "auron-governor": {
+        "name": "Auron Governor",
+        "focus": "Gobernanza, control y arbitraje de estabilidad",
+        "frequency_hz": 50.0,
+        "endpoint": "auron-governor.qcal.space",
+    },
+    "141-hz": {
+        "name": "141 Hz Master Node",
+        "focus": "Nodo maestro de referencia f₀ = 141.7001 Hz",
+        "frequency_hz": 141.7001,
+        "endpoint": "141-hz.qcal.space",
+    },
+    "3d-navier-stokes": {
+        "name": "3D Navier-Stokes",
+        "focus": "Navier-Stokes 3D (regularidad global)",
+        "frequency_hz": 141.7001,
+        "endpoint": "3d-navier-stokes.qcal.space",
+    },
+    "interferometro-noesico": {
+        "name": "Interferómetro Noésico",
+        "focus": "Lectura interferométrica / contraste noético (2 × f₀)",
+        "frequency_hz": 283.4002,
+        "endpoint": "interferometro-noesico.qcal.space",
+    },
+    "biologia-cuantica-noesica": {
+        "name": "Biología Cuántica Noésica",
+        "focus": "Acoplamiento bio / capa lenta (0.5 × f₀)",
+        "frequency_hz": 70.85005,
+        "endpoint": "biologia-cuantica-noesica.qcal.space",
+    },
+}
+
 
 class MCPRegistry:
     """
