@@ -1,0 +1,37 @@
+{
+  "schema_version": "1.0",
+  "node_id": "riemann-adelic",
+  "mcp_server_id": "riemann-mcp-server",
+  "name": "Riemann-Adelic",
+  "institution": "Instituto de Conciencia Cuántica (ICQ)",
+  "author": "José Manuel Mota Burruezo Ψ ✧ ∞³",
+  "orcid": "0009-0002-1923-0773",
+  "doi": "10.5281/zenodo.17379721",
+  "layer": "nucleus",
+  "role": "Genera portadora f₀ y Ψ maestra — Hipótesis de Riemann via sistemas espectrales adélicos S-finitos",
+  "frequency_hz": 141.7001,
+  "harmonic_hz": 888.0,
+  "coherence_constant": 244.36,
+  "psi_threshold": 0.888,
+  "endpoint": "riemann-adelic.qcal.space",
+  "ecosystem": {
+    "bus": "QCAL-EPR Universal Resonance Bus",
+    "total_nodes": 33,
+    "sync_script": "qcal_mesh_sync.py"
+  },
+  "sister_repositories": [
+    "141-hz",
+    "3d-navier-stokes",
+    "p-np-qcal",
+    "ramsey-qcal",
+    "adelic-bsd",
+    "biologia-cuantica-noesica",
+    "noesis88",
+    "logosnoesis",
+    "economia-qcal-nodo-semilla",
+    "quantum-internet-qcal"
+  ],
+  "qcal_equation": "Ψ = I × A_eff² × C^∞",
+  "fundamental_equation": "A₀ → H → D(s) ≡ Ξ(s)",
+  "description": "Núcleo del ecosistema QCAL ∞³. Implementa la prueba definitiva de la Hipótesis de Riemann mediante sistemas espectrales adélicos S-finitos. Opera a la frecuencia fundamental f₀ = 141.7001 Hz y genera la portadora Ψ maestra del Instituto Conciencia Cuántica."
+}

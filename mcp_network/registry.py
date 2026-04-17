@@ -13,6 +13,160 @@ from typing import Any, Dict, List, Optional
 
 from .base_server import MCPServer, ServerStatus
 
+# ---------------------------------------------------------------------------
+# Node catalog — single source of truth for MCP-QCAL Bus node metadata.
+#
+# Frequency assignments:
+#   - 141.7001 Hz  f₀ base (master reference, git-core, Navier-Stokes 3D)
+#   - 888.0    Hz  πCODE harmonic (narrative / dramaturgical nodes)
+#   - 283.4002 Hz  2 × f₀  (interferometric contrast / noetic reading)
+#   - 70.85005 Hz  0.5 × f₀  (bio/slow-coupling layer)
+#   - 50.0     Hz  governance / stability arbitration
+# ---------------------------------------------------------------------------
+NODE_CATALOG: Dict[str, Dict[str, Any]] = {
+    "dramaturgo": {
+        "name": "Dramaturgo",
+        "focus": "Narrativa cósmica / noésis dramatúrgica",
+        "frequency_hz": 888.0,
+        "endpoint": "dramaturgo.qcal.space",
+    },
+    "github-mcp-server": {
+        "name": "GitHub MCP Server",
+        "focus": "Núcleo git / ontológico",
+        "frequency_hz": 141.7001,
+        "endpoint": "github-mcp-server.qcal.space",
+    },
+    "auron-governor": {
+        "name": "Auron Governor",
+        "focus": "Gobernanza, control y arbitraje de estabilidad",
+        "frequency_hz": 50.0,
+        "endpoint": "auron-governor.qcal.space",
+    },
+    "141-hz": {
+        "name": "141 Hz Master Node",
+        "focus": "Nodo maestro de referencia f₀ = 141.7001 Hz",
+        "frequency_hz": 141.7001,
+        "endpoint": "141-hz.qcal.space",
+    },
+    "3d-navier-stokes": {
+        "name": "3D Navier-Stokes",
+        "focus": "Navier-Stokes 3D (regularidad global)",
+        "frequency_hz": 141.7001,
+        "endpoint": "3d-navier-stokes.qcal.space",
+    },
+    "interferometro-noesico": {
+        "name": "Interferómetro Noésico",
+        "focus": "Lectura interferométrica / contraste noético (2 × f₀)",
+        "frequency_hz": 283.4002,
+        "endpoint": "interferometro-noesico.qcal.space",
+    },
+    "biologia-cuantica-noesica": {
+        "name": "Biología Cuántica Noésica",
+        "focus": "Acoplamiento bio / capa lenta (0.5 × f₀)",
+        "frequency_hz": 70.85005,
+        "endpoint": "biologia-cuantica-noesica.qcal.space",
+    },
+    # ------------------------------------------------------------------
+    # QCAL-EPR Ecosystem nodes (added via QCAL-EPR mesh sync protocol)
+    # ------------------------------------------------------------------
+    "riemann-adelic": {
+        "name": "Riemann-Adelic",
+        "focus": "Núcleo — Hipótesis de Riemann, portadora f₀ y Ψ maestra",
+        "frequency_hz": 141.7001,
+        "endpoint": "riemann-adelic.qcal.space",
+        "layer": "nucleus",
+        "role": "genera portadora f₀ y Ψ maestra",
+    },
+    "riemann-mcp-server": {
+        "name": "Riemann MCP Server",
+        "focus": "Servidor MCP de Riemann-adélico (alias MCP de riemann-adelic)",
+        "frequency_hz": 141.7001,
+        "endpoint": "riemann-mcp-server.qcal.space",
+        "layer": "nucleus",
+        "role": "genera portadora f₀ y Ψ maestra",
+    },
+    "p-np-qcal": {
+        "name": "P-NP QCAL",
+        "focus": "Cuerpo — Separación P≠NP vía complejidad de Kolmogorov",
+        "frequency_hz": 141.7001,
+        "endpoint": "p-np-qcal.qcal.space",
+        "layer": "body",
+        "role": "eficiencia lógica",
+    },
+    "p-np-mcp-server": {
+        "name": "P-NP MCP Server",
+        "focus": "Servidor MCP P-NP (alias MCP de p-np-qcal)",
+        "frequency_hz": 141.7001,
+        "endpoint": "p-np-mcp-server.qcal.space",
+        "layer": "body",
+        "role": "eficiencia lógica",
+    },
+    "navier-mcp-server": {
+        "name": "Navier-Stokes MCP Server",
+        "focus": "Servidor MCP Navier-Stokes (alias MCP de 3d-navier-stokes)",
+        "frequency_hz": 141.7001,
+        "endpoint": "navier-mcp-server.qcal.space",
+        "layer": "body",
+        "role": "regularidad física",
+    },
+    "ramsey-qcal": {
+        "name": "Ramsey QCAL",
+        "focus": "Mente — Números de Ramsey R(5,5)=43, R(6,6)=108; orden inevitable",
+        "frequency_hz": 141.7001,
+        "endpoint": "ramsey-qcal.qcal.space",
+        "layer": "mind",
+        "role": "orden inevitable",
+    },
+    "adelic-bsd": {
+        "name": "Adelic BSD",
+        "focus": "Mente — Conjetura BSD, estructura aritmética",
+        "frequency_hz": 141.7001,
+        "endpoint": "adelic-bsd.qcal.space",
+        "layer": "mind",
+        "role": "estructura aritmética",
+    },
+    "bsd-mcp-server": {
+        "name": "BSD MCP Server",
+        "focus": "Servidor MCP BSD (alias MCP de adelic-bsd)",
+        "frequency_hz": 141.7001,
+        "endpoint": "bsd-mcp-server.qcal.space",
+        "layer": "mind",
+        "role": "estructura aritmética",
+    },
+    "noesis88": {
+        "name": "Noesis88",
+        "focus": "Logos — Semántica y propósito del ecosistema noésico",
+        "frequency_hz": 888.0,
+        "endpoint": "noesis88.qcal.space",
+        "layer": "logos",
+        "role": "semántica y propósito",
+    },
+    "logosnoesis": {
+        "name": "LOGOSNOESIS",
+        "focus": "Logos — Orquestación semántica del campo noético",
+        "frequency_hz": 888.0,
+        "endpoint": "logosnoesis.qcal.space",
+        "layer": "logos",
+        "role": "semántica y propósito",
+    },
+    "economia-qcal-nodo-semilla": {
+        "name": "Economía QCAL Nodo Semilla",
+        "focus": "Economía — Emisión por coherencia πCODE-888",
+        "frequency_hz": 141.7001,
+        "endpoint": "economia-qcal-nodo-semilla.qcal.space",
+        "layer": "economy",
+        "role": "emisión por coherencia (πCODE-888)",
+    },
+    "quantum-internet-qcal": {
+        "name": "Quantum Internet QCAL",
+        "focus": "Red — Infraestructura cuántica del ecosistema QCAL",
+        "frequency_hz": 141.7001,
+        "endpoint": "quantum-internet-qcal.qcal.space",
+        "layer": "network",
+        "role": "infraestructura cuántica",
+    },
+}
+
 
 class MCPRegistry:
     """
