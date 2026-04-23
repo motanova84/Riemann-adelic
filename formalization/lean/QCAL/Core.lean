@@ -86,7 +86,11 @@ structure Node where
 structure Manta where
   /-- Fundamental frequency f₀ (Hz), default 141.7001 Hz -/
   f0       : Frequency := 141.7001
-  /-- Angular brecha (gap) between resonance modes, default 3.0 (≈ 0.052 rad) -/
+  /-- Angular brecha (gap) between resonance modes.
+      
+      Value: 3.0 **degrees** (≈ 0.052 rad = 3.0 × π / 180).
+      The inline comment in the original formulation refers to the
+      radian equivalent: 3.0° ≈ 0.052 rad. -/
   brecha   : Angle     := 3.0
   /-- Coherence target Ψ, default 0.999999 -/
   Ψ_target : Coherence := 0.999999
@@ -134,6 +138,13 @@ def H_RH (n : Node) : Energy :=
     Statement:
       ∀ n : Node, ∀ I : Intention, ∀ A_eff : PhaseArea,
         n.Ψ = I × A_eff² → n.state = Estacionario
+
+    **Note on C^∞**: The full fundamental equation of QCAL is Ψ = I × A_eff² × C^∞,
+    where C^∞ is the infinite coherence constant. In this theorem statement C^∞ is
+    omitted because it represents a normalisation factor absorbed into `I` at the
+    level of a single node snapshot (C^∞ = 1 after coherence normalisation). The
+    full multi-node form with explicit C^∞ is formalised in
+    `QCAL/QuantumCoherentField.lean`.
 
     The proof resides in the 4π resonance structure of the Riemann spectral
     lattice. The formal verification is recorded in `.qcal_beacon` and the
