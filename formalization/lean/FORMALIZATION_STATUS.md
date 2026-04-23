@@ -70,6 +70,12 @@ The formalization is synchronized with the following current data sources:
 | `scripts/` | Validation scripts | ✅ Automated verification |
 | `summable_power_complete.lean` | Power series convergence | ✅ Complete proofs for infinite products |
 
+### QCAL Operative Ontology (2026-04-23)
+
+| File | Purpose | Status |
+|------|---------|--------|
+| `QCAL/Core.lean` | Operative ontology: `Manta`, `H_RH`, `estabilidad_nodo` | 🔧 Skeleton (sorry pending full spectral chain) |
+
 ---
 
 ## What Is Formally Proven (V7.0 Coronación Final)
