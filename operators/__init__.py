@@ -32,6 +32,12 @@ Modules:
     - idele_class_selfadjoint_xi: H_id self-adjoint operator on idele class group
                          C_ℚ = 𝔸_ℚ*/ℚ* connected to ξ(s) via Mellin transform;
                          spectrum encodes Riemann zeros on the critical line
+    - pnp_treewidth_operator: 𝒯 treewidth-information operator for P ≠ NP
+                         Lower bounds via Kolmogorov complexity + Tseitin gadgets;
+                         κ_Π = √(2πe) ≈ 2.5773 spectral constant
+    - adelic_operator_commutativity: Commutativity verifier for all QCAL operators
+                         on the adelic Riemann-zero basis; master eigenvalue equation
+                         Ψ = I × A_eff² × C^∞
 """
 
 from .riemann_operator import (
