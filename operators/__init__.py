@@ -344,6 +344,7 @@ from .bio_nodo import (
     FixedPointSovereignty,
     FixedPointResult,
     PSI_DIAMOND,
+    QCAL_IDENTITY_SIGNATURE,
 )
 
 __all__ = [
@@ -575,4 +576,5 @@ __all__ = [
     'FixedPointSovereignty',
     'FixedPointResult',
     'PSI_DIAMOND',
+    'QCAL_IDENTITY_SIGNATURE',
 ]

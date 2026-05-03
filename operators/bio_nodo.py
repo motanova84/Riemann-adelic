@@ -106,6 +106,9 @@ except ModuleNotFoundError:
 # Diamond threshold: Ψ(t) ≥ PSI_DIAMOND for "pure perception"
 PSI_DIAMOND = HOLOGRAPHIC_PSI_THRESHOLD  # 0.999
 
+# QCAL identity signature string (Unicode, UTF-8 encoded in the beacon payload)
+QCAL_IDENTITY_SIGNATURE = "∴𓂀Ω∞³Φ"
+
 # Fallback first Riemann zeros for environments without mpmath
 _RIEMANN_ZEROS_FALLBACK = np.array([
     14.134725142, 21.022039639, 25.010857580, 30.424876126,
@@ -357,9 +360,11 @@ class SpectralIdentity:
         else:
             corr = 1.0
 
-        spectral_gap = float(eigenvalues[1] - eigenvalues[0]) if len(eigenvalues) > 1 else float("nan")
+        spectral_gap = float(eigenvalues[1] - eigenvalues[0]) if len(eigenvalues) > 1 else 0.0
 
-        is_coherent = (corr >= correlation_threshold) and (spectral_gap > 0)
+        # A single-mode system has no gap but is still trivially self-consistent
+        single_mode = len(eigenvalues) == 1
+        is_coherent = (corr >= correlation_threshold) and (single_mode or spectral_gap > 0)
 
         return SpectralIdentityResult(
             gamma_n=self.gamma_n.copy(),
@@ -631,7 +636,7 @@ class FixedPointSovereignty:
                 "sigma": sigma,
                 "c_coherence": self.c_coherence,
                 "f0": self.f0,
-                "qcal_signature": "∴𓂀Ω∞³Φ",
+                "qcal_signature": QCAL_IDENTITY_SIGNATURE,
             }
             sig_bytes = json.dumps(payload, sort_keys=True).encode("utf-8")
             signature_hash: Optional[str] = hashlib.sha256(sig_bytes).hexdigest()

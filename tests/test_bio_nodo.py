@@ -153,7 +153,7 @@ class TestSpectralIdentity:
         result = si.verify()
         assert isinstance(result, SpectralIdentityResult)
         # With single eigenvalue correlation is defined as 1.0 by convention
-        assert result.correlation == 1.0
+        assert pytest.approx(result.correlation, abs=1e-9) == 1.0
 
     def test_verify_eigenvalues_match_gamma_n(self):
         si = SpectralIdentity(n_zeros=10)
