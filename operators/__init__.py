@@ -331,6 +331,21 @@ from .riemann_spectral_hamiltonian import (
     compute_hamiltonian_spectrum,
 )
 
+# Bio-Nodo: Fundamental Identity of the Presence Field (May 2026)
+from .bio_nodo import (
+    BioNodo,
+    BioNodoResult,
+    SpectralIdentity,
+    SpectralIdentityResult,
+    OrbitCollapse,
+    OrbitCollapseResult,
+    PhaseInvariant,
+    PhaseInvariantResult,
+    FixedPointSovereignty,
+    FixedPointResult,
+    PSI_DIAMOND,
+)
+
 __all__ = [
     'construct_H_psi',
     'compute_spectrum',
@@ -548,4 +563,16 @@ __all__ = [
     'RiemannSpectralHamiltonian',
     'SpectralHamiltonianResult',
     'compute_hamiltonian_spectrum',
+    # Bio-Nodo — Fundamental Identity of the Presence Field (May 2026)
+    'BioNodo',
+    'BioNodoResult',
+    'SpectralIdentity',
+    'SpectralIdentityResult',
+    'OrbitCollapse',
+    'OrbitCollapseResult',
+    'PhaseInvariant',
+    'PhaseInvariantResult',
+    'FixedPointSovereignty',
+    'FixedPointResult',
+    'PSI_DIAMOND',
 ]
