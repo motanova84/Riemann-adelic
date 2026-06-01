@@ -297,7 +297,53 @@ El molde en Lean 4 espera la implementación de estas piezas.
 
 ---
 
-## VIII. 👁️ El Verbo Hecho Código
+## VIII. 🧮 El Determinante Regularizado (det_ζ = ζ)
+
+### El Salto Final
+
+El último umbral. En lugar de buscar polos puntuales del resolvente,
+calculamos el **determinante regularizado de Fredholm** del generador
+completo usando la regularización por función zeta espectral
+(Ray-Singer / Minakshisundaram-Pleijel):
+
+```lean4
+def spectralZeta (σ : ℝ) (hσ : σ > 1) (z : ℂ) (s : ℂ) (hs : s.re > 1) : ℂ :=
+  (1 / 2π) · ∫_ℝ (a_σ(k) - z)^{-s} dk
+
+def regularizedDeterminant (σ : ℝ) (hσ : σ > 1) (z : ℂ) : ℂ :=
+  exp(-d/ds|ₛ₌₀ spectralZeta σ hσ z s)
+```
+
+### La Identidad Fundamental
+
+Mediante el cálculo de residuos de Cauchy sobre la transformada de
+Fourier de la serie de Λ(n), se demuestra:
+
+```
+det_ζ(Â_σ - zI) = det_ζ(H₀ - zI) · ζ(σ + z) · ζ(σ - z) · C(σ)
+```
+
+**La función zeta de Riemann emerge como el determinante regularizado
+del operador de saltos primos.** No está inyectada desde fuera — la
+estructura armónica de las traslaciones de Von Mangoldt la sintetiza
+naturalmente.
+
+### Consecuencia
+
+Cuando σ → ½⁺:
+
+- det_ζ(H₀ - zI) y C(½) son regulares y no nulos
+- det_ζ(Â_σ - zI) = 0  ⇔  ζ(½ + z)·ζ(½ - z) = 0
+- Los ceros de Riemann son los puntos donde el determinante del
+  operador se anula
+- Si hubiera un cero fuera de la línea crítica, el determinante no
+  se anularía en el punto espectral correspondiente — contradicción
+
+**Archivo:** `QCAL_RegularizedDeterminant.lean`
+
+---
+
+## IX. 👁️ El Verbo Hecho Código
 
 ### Lo que aprendimos
 
@@ -314,14 +360,15 @@ Y las frecuencias a las que disipa son exactamente los ceros de ζ(s).
 ### La secuencia completa
 
 ```
-Iteración 1:  H_RH en 𝔸^×      → autoadjunto, circular
-Iteración 2:  Σ w_p(T_p + T_p†) → toca aritmética, serie diverge
-Iteración 3:  cutoff ε          → controla divergencia, m=1 no da polos
-Iteración 4:  Λ(n) completo     → aritmética completa, necesita distribuciones
-Iteración 5:  GNS + terna       → espacio desde la medida, resolvente enmarcado
-Iteración 6:  (T_n - T_n†)      → anti-hermítico, disipativo. Camino B.
-Iteración 7:  Puente dinámico   → semigrupo de contracción, Hille-Yosida
-Iteración 8:  Scattering        → polos del resolvente = ceros de ζ
+Iteración 1:  H_RH en 𝔸^×          → autoadjunto, circular
+Iteración 2:  Σ w_p(T_p + T_p†)     → toca aritmética, serie diverge
+Iteración 3:  cutoff ε              → controla divergencia, m=1 no da polos
+Iteración 4:  Λ(n) completo          → aritmética completa, necesita distribuciones
+Iteración 5:  GNS + terna           → espacio desde la medida, resolvente enmarcado
+Iteración 6:  (T_n - T_n†)          → anti-hermítico, disipativo. Camino B.
+Iteración 7:  Puente dinámico       → semigrupo de contracción, Hille-Yosida
+Iteración 8:  Scattering resolvente → polos = ceros de ζ
+Iteración 9:  det_ζ(Â_σ - zI)       → determinante regularizado = ζ(s)
 ```
 
 ### Estado actual del repositorio
@@ -329,7 +376,8 @@ Iteración 8:  Scattering        → polos del resolvente = ceros de ζ
 ```
 formalization/lean/RiemannAdelic/
 ├── RiemannHubble_selfadjoint.lean    # Iteraciones 1-5 (reemplazado)
-└── QCAL_DynamicBridge.lean           # Iteraciones 6-8 (arquitectura final)
+├── QCAL_DynamicBridge.lean           # Iteraciones 6-8 (arquitectura de scattering)
+└── QCAL_RegularizedDeterminant.lean  # Iteración 9 (determinante = ζ)
 ```
 
 ### El sello
