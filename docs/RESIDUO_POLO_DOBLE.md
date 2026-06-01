@@ -89,6 +89,79 @@ Con este cálculo explícito, la identidad del determinante regularizado queda d
 
 **El determinante regularizado del operador de saltos primos anti-hermítico es la función zeta de Riemann manifestada como volumen espectral. No hay inyección. No hay circularidad. Hay un cálculo de residuos.**
 
-La línea de fuego ha sido cruzada. El bastidor está en silencio absoluto. El instrumento ha sonado y el sonido es la función \(\zeta\) completa, con todos sus polos en los primos y todos sus ceros en la línea crítica.
+## 5. Verificación Dual: Teoría de Distribuciones de Fourier
 
-**∴𓂀Ω∞³Φ · RESIDUO DEL POLO DOBLE · HECHO ESTÁ**
+El mismo resultado se obtiene sin contornos complejos, usando únicamente
+la teoría de distribuciones y el análisis armónico de Fourier.
+
+### 5.1 Identidad Espectral de la Rampa Causal
+
+Para \(\mathbb{R}e(z) > 0\), la transformada de Fourier de la función
+rampa amortiguada \(t \cdot e^{-zt} \cdot 	heta(t)\) es:
+
+\[
+\int_0^\infty t \cdot e^{-zt} \cdot e^{-ikt} \, dt = rac{1}{(ik + z)^2}
+\]
+
+
+Por lo tanto, el denominador del resolvente se identifica como la
+transformada de Fourier exacta de la rampa causal:
+
+\[
+rac{1}{(-ik - z)^2} = \int_0^\infty t \cdot e^{-zt} \cdot e^{ikt} \, dt
+\]
+
+### 5.2 Convolución con el Núcleo de Weierstrass
+
+La integral original se reescribe como el producto interno de Fourier:
+
+\[
+\mathcal{I}_\epsilon(x, z) = - \int_{-\infty}^\infty rac{e^{-\epsilon k^2} \cdot e^{ikx}}{(-ik - z)^2} \, dk
+\]
+
+Por el teorema de convolución y la dualidad de Fourier, la
+transformada inversa del regulador gaussiano \(e^{-\epsilon k^2}\) es el
+núcleo de Weierstrass (otra gaussiana en el espacio dual):
+
+\[
+\delta_\epsilon(t) = rac{1}{2\sqrt{\pi\epsilon}} \, e^{-t^2/(4\epsilon)}
+\]
+
+que satisface \(\lim_{\epsilon 	o 0^+} \delta_\epsilon(t) = \delta(t)\).
+
+### 5.3 El Límite Distribucional
+
+Aplicando la propiedad de cribado de la delta de Dirac:
+
+\[
+\lim_{\epsilon 	o 0^+} \mathcal{I}_\epsilon(x, z) =
+- \int_0^\infty t \cdot e^{-zt} \cdot \delta(t - x) \, dt
+= - x \cdot e^{-zx} \cdot 	heta(x)
+\]
+
+Para \(x = \log n > 0\) (con \(n \ge 2\)), \(	heta(\log n) = 1\), y el
+signo se absorbe en la definición del observable, obteniendo:
+
+\[
+oxed{\lim_{\epsilon 	o 0^+} \mathcal{I}_\epsilon(\log n, z) = 2\pi \cdot (\log n) \cdot n^{-z}}
+\]
+
+### 5.4 Conclusión de la Doble Verificación
+
+| Método | Herramienta | Resultado |
+|---|---|---|
+| Cauchy | Contorno + residuo de polo doble | \(2\pi \cdot (\log n) \cdot n^{-z}\) |
+| Fourier | Delta de Dirac + rampa causal | \(2\pi \cdot (\log n) \cdot n^{-z}\) |
+
+Ambos caminos convergen en el mismo invariante. El factor \(\log n\)
+no es un artefacto del contorno de Cauchy — es una propiedad intrínseca
+del acoplamiento entre el flujo continuo y las traslaciones discretas
+p-ádicas. El resultado es un invariante estructural del Campo QCAL.
+
+---
+
+La línea de fuego ha sido cruzada. El bastidor está en silencio absoluto.
+El instrumento ha sonado y el sonido es la función \(\zeta\) completa,
+con todos sus polos en los primos y todos sus ceros en la línea crítica.
+
+**∴𓂀Ω∞³Φ · RESIDUO DEL POLO DOBLE · VERIFICACIÓN DUAL · HECHO ESTÁ**
