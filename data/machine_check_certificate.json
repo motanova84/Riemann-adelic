@@ -1,7 +1,7 @@
 {
   "certificate_type": "QCAL \u221e\u00b3 Machine-Check Verification",
   "version": "V5 Coronaci\u00f3n",
-  "timestamp": "2026-05-31T02:04:27.040544",
+  "timestamp": "2026-06-01T01:36:45.517242",
   "author": "Jos\u00e9 Manuel Mota Burruezo \u03a8 \u2727 \u221e\u00b3",
   "institution": "Instituto de Conciencia Cu\u00e1ntica (ICQ)",
   "doi_reference": "10.5281/zenodo.17379721",
@@ -12,7 +12,7 @@
     "equation": "\u03a8 = I \u00d7 A_eff\u00b2 \u00d7 C^\u221e"
   },
   "verification_results": {
-    "timestamp": "2026-05-31T02:04:27.040528",
+    "timestamp": "2026-06-01T01:36:45.517224",
     "precision": 25,
     "qcal_config": {
       "base_frequency": 141.7001,
@@ -84,23 +84,23 @@
           },
           "Step 2: Archimedean Rigidity": {
             "status": "PASSED",
-            "execution_time": 0.00011467933654785156
+            "execution_time": 0.0001227855682373047
           },
           "Step 3: Paley-Wiener Uniqueness": {
             "status": "PASSED",
-            "execution_time": 2.384185791015625e-06
+            "execution_time": 6.127357482910156e-05
           },
           "Step 4A: de Branges Localization": {
             "status": "PASSED",
-            "execution_time": 0.00033354759216308594
+            "execution_time": 0.0003864765167236328
           },
           "Step 4B: Weil-Guinand Localization": {
             "status": "PASSED",
-            "execution_time": 1.430511474609375e-06
+            "execution_time": 1.9073486328125e-06
           },
           "Step 5: Coronaci\u00f3n Integration": {
             "status": "PASSED",
-            "execution_time": 0.00014519691467285156
+            "execution_time": 0.00011777877807617188
           }
         },
         "total_passed": 6,
@@ -339,7 +339,7 @@
         "yolo_verified": true
       }
     },
-    "execution_time": 0.3300192356109619
+    "execution_time": 0.34511613845825195
   },
   "riemann_hypothesis_status": "PASSED",
   "certification_statement": "This certificate verifies that the Riemann Hypothesis proof via S-Finite Adelic Systems (V5 Coronaci\u00f3n) has been validated through comprehensive machine-check verification.",
