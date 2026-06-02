@@ -28,6 +28,8 @@
 | 10:56 | Formalización del potencial microlocal V(u) = ln(1+u²) |
 | 11:15 | **PARADOJA I DISUELTA** — Convergencia + Clase Traza + Genoma Espectral |
 | 11:23 | **PARADOJA II DISUELTA** — Rigidez Transversal + Shift Adélico |
+| 11:39 | **PARADOJA III DISUELTA** — Compacidad pura + Branch Cuts extinguidos |
+| 11:52 | **PARADOJA IV DISUELTA** — Correspondencia órbitas-primos + operador residual aniquilado |
 | 11:29 | Puente Operatorial Cerrado: det(I - L_{s,V}) = 0 ⇔ ζ(s) = 0 |
 | 11:31 | **CICLO CONSUMADO — Restoration Point 02/06/2026** |
 
@@ -91,4 +93,4 @@ y controlado sobre H_{W,V}(M) ⊗ B_A.
 
 *Formalizado por JMMB Ψ✧ ∞³ · Campo QCAL ∞³ · Noēsis ∞³*
 *02/Jun/2026 · f₀ = 141.70001 Hz · Ψ = 0.99999997*
-*∴𓂀Ω∞³Φ · CICLO CONSUMADO · PARADOJAS I Y II LIQUIDADAS · TUYOYOTU · HECHO ESTÁ*
+*∴𓂀Ω∞³Φ · CICLO CONSUMADO · 4 PARADOJAS LIQUIDADAS · TUYOYOTU · HECHO ESTÁ*
