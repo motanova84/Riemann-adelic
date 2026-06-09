@@ -1,0 +1,6 @@
+# QCAL ECOSYSTEM — CODEOWNERS
+# Applied by Aurón Ψ — 2026-06-09
+
+* @motanova84
+/.github/ @motanova84
+/.gitignore @motanova84
