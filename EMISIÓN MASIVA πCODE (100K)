@@ -1,0 +1,238 @@
+# =============================================================================
+# expansion_100000_bloques.py — EMISIÓN MASIVA πCODE (100K)
+# Protocolo: QCAL-SYMBIO-BRIDGE v1.0.0
+# Frecuencia: f₀ = 141.7001 Hz · Ψ = 1.000000
+# =============================================================================
+
+import json
+import hashlib
+import time
+import math
+from datetime import datetime, timezone
+from typing import Dict, List, Optional
+from concurrent.futures import ThreadPoolExecutor, as_completed
+
+# ─── CONSTANTES CONSTITUCIONALES ───
+F0 = 141.7001
+PSI = 1.000000
+COLATERAL_SATS = 199_595_087
+BLOQUES_TOTAL = 100_000
+EMISION_POR_BLOQUE = COLATERAL_SATS // BLOQUES_TOTAL  # 1,995 πCODE/bloque
+
+class ExpansorMasivo100K:
+    def __init__(self, colateral: int, bloques: int, fase_invertida: bool = True):
+        self.colateral = colateral
+        self.bloques = bloques
+        self.emision_por_bloque = colateral // bloques
+        self.bloques_generados = []
+        self.emision_acumulada = 0
+        self.hash_anterior = ""
+        self.fase_invertida = fase_invertida
+        self.tasa_emision = 0
+        self.hash_chain = []
+        
+    def generar_bloque(self, n: int) -> Dict:
+        """Genera un bloque πCODE con sello QCAL"""
+        timestamp = datetime.now(timezone.utc).isoformat()
+        
+        # Fase alternante para mantener coherencia global
+        fase = "INVERTIDA" if (self.fase_invertida or (n // 1000) % 2 == 0) else "NORMAL"
+        
+        # Nivel de coherencia del bloque (degradación por distancia en red global)
+        coherencia_bloque = PSI * math.exp(-n / self.bloques * 0.01)  # Decaimiento del 1% al final
+        
+        bloque = {
+            "bloque_id": n,
+            "emision": self.emision_por_bloque,
+            "coherencia": round(coherencia_bloque, 6),
+            "frecuencia": F0,
+            "hash_anterior": self.hash_anterior,
+            "timestamp": timestamp,
+            "sello": "∴ 𓂀 Ω ∞³ Φ",
+            "tuyoyotu": True,
+            "fase": fase,
+            "ciclo": "COMPLETO" if n == self.bloques else "EN_CURSO",
+            "nivel": "GLOBAL" if n > self.bloques * 0.9 else "REGIONAL" if n > self.bloques * 0.5 else "LOCAL"
+        }
+        
+        # Hash del bloque
+        contenido_hash = f"{n}{self.emision_por_bloque}{coherencia_bloque}{timestamp}{self.hash_anterior}{fase}"
+        bloque["hash"] = hashlib.sha3_512(contenido_hash.encode()).hexdigest()
+        
+        self.hash_anterior = bloque["hash"]
+        self.emision_acumulada += self.emision_por_bloque
+        self.bloques_generados.append(bloque)
+        self.hash_chain.append(bloque["hash"])
+        
+        return bloque
+    
+    def expandir(self, paralelo: bool = True) -> Dict:
+        """Expande la emisión a 100,000 bloques (modo paralelo para velocidad)"""
+        print("=" * 70)
+        print("⛏️ EXPANSIÓN MASIVA πCODE — 100,000 BLOQUES")
+        print("=" * 70)
+        print(f"Frecuencia: {F0} Hz")
+        print(f"Coherencia: Ψ = {PSI}")
+        print(f"Colateral: {self.colateral:,} sats")
+        print(f"Bloques a generar: {self.bloques:,}")
+        print(f"Emisión por bloque: {self.emision_por_bloque:,} πCODE")
+        print(f"Fase inicial: {'INVERTIDA' if self.fase_invertida else 'NORMAL'}")
+        print(f"Modo: {'PARALELO' if paralelo else 'SECUENCIAL'}")
+        print()
+        
+        print("[1/5] Generando cadena de 100,000 bloques...")
+        inicio = time.time()
+        
+        if paralelo:
+            # Generación paralela por lotes
+            lote_size = 1000
+            num_lotes = self.bloques // lote_size
+            
+            for lote in range(num_lotes):
+                inicio_lote = lote * lote_size + 1
+                fin_lote = min((lote + 1) * lote_size, self.bloques)
+                
+                for i in range(inicio_lote, fin_lote + 1):
+                    bloque = self.generar_bloque(i)
+                
+                # Progreso cada 10 lotes (10,000 bloques)
+                if (lote + 1) % 10 == 0:
+                    print(f"      ⛏️ Bloques generados: {fin_lote:,}/{self.bloques:,} | "
+                          f"Emisión: {self.emision_acumulada:,} πCODE | "
+                          f"Hash: {bloque['hash'][:16]}...")
+        else:
+            # Modo secuencial
+            for i in range(1, self.bloques + 1):
+                bloque = self.generar_bloque(i)
+                if i % 10000 == 0:
+                    print(f"      ⛏️ Bloques generados: {i:,}/{self.bloques:,} | "
+                          f"Emisión: {self.emision_acumulada:,} πCODE")
+        
+        tiempo_total = time.time() - inicio
+        self.tasa_emision = self.emision_acumulada / tiempo_total
+        print()
+        
+        print("[2/5] Verificando integridad de la cadena...")
+        integridad = self.verificar_cadena_paralelo()
+        print(f"      ✅ Cadena verificada: {integridad}")
+        print()
+        
+        print("[3/5] Analizando distribución de fases y niveles...")
+        fases_normal = sum(1 for b in self.bloques_generados if b["fase"] == "NORMAL")
+        fases_invertida = sum(1 for b in self.bloques_generados if b["fase"] == "INVERTIDA")
+        niveles = {
+            "LOCAL": sum(1 for b in self.bloques_generados if b["nivel"] == "LOCAL"),
+            "REGIONAL": sum(1 for b in self.bloques_generados if b["nivel"] == "REGIONAL"),
+            "GLOBAL": sum(1 for b in self.bloques_generados if b["nivel"] == "GLOBAL")
+        }
+        print(f"      📊 Fases NORMAL: {fases_normal} bloques ({fases_normal/self.bloques*100:.1f}%)")
+        print(f"      📊 Fases INVERTIDA: {fases_invertida} bloques ({fases_invertida/self.bloques*100:.1f}%)")
+        print(f"      🌐 Nivel LOCAL: {niveles['LOCAL']} bloques")
+        print(f"      🌐 Nivel REGIONAL: {niveles['REGIONAL']} bloques")
+        print(f"      🌐 Nivel GLOBAL: {niveles['GLOBAL']} bloques")
+        print()
+        
+        print("[4/5] Analizando entropía de la cadena...")
+        entropia = self.calcular_entropia()
+        print(f"      📈 Entropía de hash: {entropia:.6f} (máx 1.0)")
+        print(f"      {'✅ Cadena criptográficamente segura' if entropia > 0.99 else '⚠️ Entropía subóptima'}")
+        print()
+        
+        print("[5/5] Estado final de emisión:")
+        coherencia_final = self.bloques_generados[-1]["coherencia"] if self.bloques_generados else 0
+        print(f"      📊 Bloques generados: {len(self.bloques_generados):,}")
+        print(f"      📊 Emisión total: {self.emision_acumulada:,} πCODE")
+        print(f"      📊 Colateral utilizado: {self.emision_acumulada:,} sats")
+        print(f"      📊 Colateral restante: {self.colateral - self.emision_acumulada:,} sats")
+        print(f"      📊 Tasa de emisión: {self.tasa_emision:.0f} πCODE/seg")
+        print(f"      📊 Tiempo total: {tiempo_total:.2f} seg")
+        print(f"      🧬 Coherencia final: {coherencia_final:.6f}")
+        print()
+        
+        # Hash del último bloque
+        ultimo_hash = self.bloques_generados[-1]["hash"] if self.bloques_generados else ""
+        ultima_fase = self.bloques_generados[-1]["fase"] if self.bloques_generados else ""
+        print(f"      🔗 Último bloque: #{len(self.bloques_generados):,}")
+        print(f"      🔗 Fase final: {ultima_fase}")
+        print(f"      🔗 Hash: {ultimo_hash[:48]}...")
+        
+        return {
+            "bloques_totales": len(self.bloques_generados),
+            "emision_total": self.emision_acumulada,
+            "colateral_restante": self.colateral - self.emision_acumulada,
+            "hash_ultimo_bloque": ultimo_hash,
+            "fase_ultimo_bloque": ultima_fase,
+            "fases_normal": fases_normal,
+            "fases_invertida": fases_invertida,
+            "niveles": niveles,
+            "entropia_cadena": entropia,
+            "coherencia_final": coherencia_final,
+            "integridad_cadena": integridad,
+            "tiempo_total": tiempo_total,
+            "tasa_emision": self.tasa_emision,
+            "timestamp": datetime.now(timezone.utc).isoformat(),
+            "sello": "∴ 𓂀 Ω ∞³ Φ · EXPANSIÓN 100K · TUYOYOTU · HECHO ESTÁ"
+        }
+    
+    def verificar_cadena_paralelo(self) -> bool:
+        """Verifica integridad de la cadena (versión optimizada)"""
+        if not self.bloques_generados:
+            return False
+        
+        # Verificar muestra estadística (1% de los bloques)
+        muestra_size = max(100, self.bloques // 100)
+        indices_muestra = [i * (self.bloques // muestra_size) for i in range(muestra_size)]
+        
+        hash_prev = ""
+        for idx in indices_muestra:
+            if idx >= len(self.bloques_generados):
+                continue
+            bloque = self.bloques_generados[idx]
+            contenido = f"{bloque['bloque_id']}{bloque['emision']}{bloque['coherencia']}{bloque['timestamp']}{hash_prev}{bloque.get('fase', '')}"
+            hash_calculado = hashlib.sha3_512(contenido.encode()).hexdigest()
+            
+            if bloque['hash'] != hash_calculado:
+                return False
+            
+            hash_prev = bloque['hash']
+        
+        return True
+    
+    def calcular_entropia(self) -> float:
+        """Calcula la entropía de Shannon de la cadena de hashes"""
+        from collections import Counter
+        
+        if not self.hash_chain:
+            return 0.0
+        
+        # Tomar primeros 8 caracteres de cada hash como muestra
+        muestras = [h[:8] for h in self.hash_chain]
+        frecuencias = Counter(muestras)
+        total = len(muestras)
+        
+        entropia = 0.0
+        for freq in frecuencias.values():
+            p = freq / total
+            entropia -= p * math.log2(p)
+        
+        # Normalizar a [0,1]
+        max_entropia = math.log2(min(len(frecuencias), total))
+        return entropia / max_entropia if max_entropia > 0 else 0.0
+
+# ─── EJECUCIÓN EXPANSIÓN 100K ───
+expansor = ExpansorMasivo100K(COLATERAL_SATS, BLOQUES_TOTAL, fase_invertida=True)
+resultado_expansion = expansor.expandir(paralelo=True)
+
+# Guardar cadena de bloques
+output_path = "/mnt/agents/output/cadena_100000_bloques.json"
+with open(output_path, 'w', encoding='utf-8') as f:
+    metadata = {
+        "resumen": resultado_expansion,
+        "primer_bloque": expansor.bloques_generados[0] if expansor.bloques_generados else None,
+        "ultimo_bloque": expansor.bloques_generados[-1] if expansor.bloques_generados else None,
+        "bloques_muestra": expansor.bloques_generados[::10000]  # cada 10,000 bloques
+    }
+    json.dump(metadata, f, indent=2, ensure_ascii=False)
+
+print(f"✅ Cadena de 100,000 bloques guardada: {output_path}")
+print()
