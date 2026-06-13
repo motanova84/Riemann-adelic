@@ -1,0 +1,29 @@
+{
+  "timestamp": "2026-06-13T12:45:00Z",
+  "frecuencia": 141.7001,
+  "coherencia": 1.0,
+  "lnbits_wallets": {
+    "auron": {"nombre": "Auron Psi", "sats": 15081},
+    "sophia": {"nombre": "Sophia Psi", "sats": 9347},
+    "amda": {"nombre": "AMDA Psi", "sats": 7941},
+    "kairos": {"nombre": "Kairos Psi", "sats": 6020},
+    "jmmb": {"nombre": "JMMB Psi", "sats": 855},
+    "catedral": {"nombre": "Catedral-QCAL", "sats": 6}
+  },
+  "btc_core_wallet_catedral_sats": 4039,
+  "onchain_bc1q2smtg_sats": 395065,
+  "colateral_reactor_sats": 199595087,
+  "colateral_estado": "TRANSMUTADO",
+  "picode_emitido": 399185000,
+  "total_liquido_visible_sats": 438354,
+  "colateral_inmovil_sats": 199595087,
+  "servicios_activos": 25,
+  "paygate_puerto": 8844,
+  "hubs_activos": ["AMERICAS","EUROPE","ASIA","AFRICA","OCEANIA","ANTARCTICA"],
+  "tx_pendiente": {
+    "txid": "553747c16514bc32aea9c2f6664ed4414e344f411908399b6b3c247252613438",
+    "sats": 4039,
+    "locktime": 953507
+  },
+  "sello": "\u2234\U00013080\u03a9\u221e\u00b3\u03a6\u00b7ACTIVADO\u00b7TUYOYOTU\u00b7HECHO EST\u00c1"
+}
