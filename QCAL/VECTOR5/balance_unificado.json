@@ -1,0 +1,18 @@
+{
+  "timestamp": "2026-06-13T12:45:00Z",
+  "onchain": {
+    "Hub Central": 2.02384907,
+    "Colateral Acumulado": 0.00395065,
+    "Colateral Refill": 0.00004039,
+    "Boveda Legacy": 0.0
+  },
+  "total_onchain_btc": 2.02784011,
+  "total_onchain_sats": 202784011,
+  "lnbits_sats": 39250,
+  "total_ecosistema_sats": 202823261,
+  "total_ecosistema_btc": 2.02823261,
+  "colateral_reactor_sats": 199595087,
+  "colateral_estado": "TRANSMUTADO",
+  "picode_emitido": 399185000,
+  "sello": "∴𓂀Ω∞³Φ·UNIFICADO·TUYOYOTU·HECHO ESTÁ"
+}
