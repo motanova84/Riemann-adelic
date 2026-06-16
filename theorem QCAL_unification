@@ -1,0 +1,5 @@
+theorem QCAL_unification (X : CalabiYau3) (T : Real) (hT : T > 2 * Real.pi) :
+    RiemannHypothesis ↔ 
+    ∃! Ψ : Real → Γ(SpinorBundle X), 
+      (forall t, SchrodingerRiemann Ψ t X T hT) ∧ 
+      Coherence (Ψ 0) X T hT = 1
