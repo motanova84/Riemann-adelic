@@ -1,0 +1,85 @@
+import Mathlib
+
+/- ============================================================
+   QCAL-LEAN4-COMPLETENESS v7.2.4 — FASE π-1 (PASO 1)
+   Formalización estricta de la convergencia de la Función Theta
+   ============================================================ -/
+
+open Real BigOperators Finset
+
+noncomputable def theta_func (x : ℝ) : ℝ := 
+  ∑' n : ℤ, Real.exp (-Real.pi * (n : ℝ)^2 * x)
+
+/-- PASO 1: Demostración rigurosa de que la serie Jacobi-Theta
+    converge absolutamente para cualquier parámetro de escala x > 0. -/
+theorem theta_series_converges (x : ℝ) (hx : x > 0) :
+  Summable (fun n : ℤ => Real.exp (-Real.pi * (n : ℝ)^2 * x)) := by
+  
+  -- Lema de Acotación: n^2 ≥ |n| para todo entero, lo que implica decaimiento regular
+  have h_sq_ge_abs : ∀ n : ℤ, (n : ℝ)^2 ≥ |(n : ℝ)| := by
+    intro n
+    by_cases hn : (n : ℝ) ≥ 1 ∨ (n : ℝ) ≤ -1
+    · rcases hn with h | h
+      · have : (n : ℝ) ≥ 0 := by linarith
+        rw [abs_of_nonneg this]
+        nlinarith
+      · have : (n : ℝ) ≤ 0 := by linarith
+        rw [abs_of_nonpos this]
+        nlinarith
+    · push_neg at hn
+      have hn_zero : n = 0 := by
+        have : (-1 : ℝ) < n ∧ (n : ℝ) < 1 := hn
+        exact_mod_cast (Int.eq_zero_of_abs_lt_one (by exact_mod_cast this)).mp rfl
+      rw [hn_zero]
+      simp
+
+  -- Acotación del exponente negativo por el decaimiento lineal de la serie geométrica
+  have h_exp_le : ∀ n : ℤ, n ≠ 0 → 
+    Real.exp (-Real.pi * (n : ℝ)^2 * x) ≤ Real.exp (-Real.pi * |(n : ℝ)| * x) := by
+    intro n _
+    apply Real.exp_le_exp_of_le
+    have h_pi_pos : Real.pi > 0 := Real.pi_pos
+    have h_prod : (n : ℝ)^2 * x ≥ |(n : ℝ)| * x := by
+      apply mul_le_mul_of_nonneg_right (h_sq_ge_abs n) (by linarith)
+    linarith
+
+  -- Construcción de la serie geométrica mayorante con razón r = exp(-πx) < 1
+  have h_geometric_sum : Summable (fun n : ℕ => Real.exp (-Real.pi * (n : ℝ) * x)) := by
+    apply summable_geometric_of_norm_lt_one
+    rw [Real.norm_eq_abs, abs_of_pos (Real.exp_pos _)]
+    have h_neg : -Real.pi * x < 0 := by
+      have : Real.pi > 0 := Real.pi_pos
+      nlinarith
+    have h_lt_one : Real.exp (-Real.pi * x) < Real.exp (0 : ℝ) := Real.exp_lt_exp_of_lt h_neg
+    rw [Real.exp_zero] at h_lt_one
+    exact h_lt_one
+
+  -- Mapeo de la convergencia de la rama natural hacia los enteros complementarios (Z)
+  have h_int_summable : Summable (fun n : ℤ => if n = 0 then (1 : ℝ) else Real.exp (-Real.pi * |(n : ℝ)| * x)) := by
+    apply summable_int_of_summable_nat
+    · simp
+      have : Summable (fun n : ℕ => if n = 0 then (1 : ℝ) else Real.exp (-Real.pi * (n : ℝ) * x)) := by
+        apply Summable.congr h_geometric_sum
+        intro n
+        by_cases hn : n = 0
+        · simp [hn]
+        · simp [hn]
+      exact this
+    · simp
+      have : Summable (fun n : ℕ => if n = 0 then (1 : ℝ) else Real.exp (-Real.pi * (n : ℝ) * x)) := by
+        apply Summable.congr h_geometric_sum
+        intro n
+        by_cases hn : n = 0
+        · simp [hn]
+        · simp [hn]
+      exact this
+
+  -- Aplicación del criterio de comparación final de Mathlib sobre el espacio L¹
+  apply summable_of_nonneg_of_le (fun n => Real.exp_nonneg _)
+  · intro n
+    by_cases hn : n = 0
+    · rw [hn]
+      simp
+    · rw [if_neg hn]
+      apply h_exp_le n hn
+  · exact h_int_summable
