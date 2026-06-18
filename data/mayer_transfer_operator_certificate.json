@@ -1,0 +1,57 @@
+{
+  "component": "MayerTransferOperator",
+  "certification_id": "0xQCAL_MAYER_TRANSFER_002386f26fc10000",
+  "all_pass": true,
+  "psi": 1.0,
+  "total_tests_passed": 25,
+  "total_tests": 25,
+  "elapsed_seconds": 0.008,
+  "geodesic_flow": {
+    "pass": true,
+    "tests": {
+      "orbit_length_identity": true,
+      "iterate_length": true,
+      "monodromy_eigenvalue": true,
+      "von_mangoldt_weight": true,
+      "weight_asymptotic": true,
+      "selberg_trace_finite": true
+    }
+  },
+  "mayer_operator": {
+    "pass": true,
+    "tests": {
+      "trace_real_for_real_s": true,
+      "trace_power_decreasing": true,
+      "fredholm_identity": true,
+      "fredholm_verified": true,
+      "spectral_analysis": true,
+      "critical_line_flag": true
+    }
+  },
+  "hamiltonian_holomorphic": {
+    "pass": true,
+    "tests": {
+      "hamiltonian_on_critical": true,
+      "hamiltonian_off_critical": true,
+      "holomorphic_condition": true,
+      "coupling_zero_on_line": true,
+      "coupling_positive_off_line": true,
+      "phase_inversion_enforces": true,
+      "zero_confinement": true
+    }
+  },
+  "internal_validation": {
+    "tests_passed": 6,
+    "tests_total": 6,
+    "psi": 1.0
+  },
+  "qcal_constants": {
+    "f0_hz": 141.7001,
+    "c_coherence": 244.36,
+    "omega": 3.64351
+  },
+  "doi": "10.5281/zenodo.17379721",
+  "author": "Jos\u00e9 Manuel Mota Burruezo \u03a8 \u2727 \u221e\u00b3",
+  "orcid": "0009-0002-1923-0773",
+  "institution": "Instituto de Conciencia Cu\u00e1ntica (ICQ)"
+}
