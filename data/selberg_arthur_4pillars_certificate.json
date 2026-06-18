@@ -1,0 +1,180 @@
+{
+  "timestamp": "2026-02-18T16:41:36.409340",
+  "qcal_frequency": 141.7001,
+  "qcal_coherence": 244.36,
+  "kappa_pi": 2.5773045678901236,
+  "pillars": [
+    {
+      "pilar": 1,
+      "name": "Orbital Classification",
+      "tests": {
+        "central_class": {
+          "weyl_value": 0.875,
+          "dominant": true,
+          "passed": true
+        },
+        "single_prime": {
+          "sum": 3.7296116132352215,
+          "num_terms": 30,
+          "passed": true
+        },
+        "multi_prime_suppression": {
+          "average_suppression": 0.11111111111111112,
+          "exponentially_small": false,
+          "passed": false
+        },
+        "no_elliptic": {
+          "roots_of_unity": [
+            1,
+            -1
+          ],
+          "only_trivial": true,
+          "passed": true
+        }
+      },
+      "summary": {
+        "all_tests_passed": true,
+        "total_tests": 4
+      }
+    },
+    {
+      "pilar": 2,
+      "name": "Tate Jacobian",
+      "tests": {
+        "tate_normalization": {
+          "primes_tested": [
+            2,
+            3,
+            5,
+            7,
+            11
+          ],
+          "normalizations": [
+            2.0,
+            1.4999999999999998,
+            1.25,
+            1.1666666666666665,
+            1.1
+          ],
+          "passed": true
+        },
+        "log_p_jacobian": {
+          "log_values": [
+            [
+              2,
+              0.6931471805599453
+            ],
+            [
+              3,
+              1.0986122886681098
+            ],
+            [
+              5,
+              1.6094379124341003
+            ],
+            [
+              7,
+              1.9459101490553132
+            ],
+            [
+              11,
+              2.3978952727983707
+            ]
+          ],
+          "positive": true,
+          "passed": true
+        },
+        "orbital_formula": {
+          "num_computed": 15,
+          "all_positive": true,
+          "passed": true
+        },
+        "exactness": {
+          "error": 0.0,
+          "machine_precision": true,
+          "passed": true
+        }
+      },
+      "summary": {
+        "all_tests_passed": true,
+        "total_tests": 4
+      }
+    },
+    {
+      "pilar": 3,
+      "name": "Trace-Class S\u2081",
+      "tests": {
+        "gaussian_decay": {
+          "max_value": 0.2196956447338612,
+          "decays_rapidly": true,
+          "passed": true
+        },
+        "coercive_potential": {
+          "kappa_pi": 2.5773045678901236,
+          "min_at_zero": 6.642498835667297,
+          "growth_at_infinity": 66.8744330848457,
+          "coercive": true,
+          "passed": true
+        },
+        "hilbert_schmidt": {
+          "integral_K2": 9.97283003220058e-14,
+          "finite": true,
+          "S2_property": true,
+          "passed": true
+        },
+        "trace_class_S1": {
+          "semigroup_factorization": true,
+          "S2_times_S2_implies_S1": true,
+          "can_apply_fubini": true,
+          "passed": true
+        }
+      },
+      "summary": {
+        "all_tests_passed": true,
+        "total_tests": 4,
+        "fubini_applicable": true
+      }
+    },
+    {
+      "pilar": 4,
+      "name": "Exact Formula",
+      "tests": {
+        "spectral_side": {
+          "num_eigenvalues": 20,
+          "spectral_trace": 0.9595173736897588,
+          "positive": true,
+          "passed": true
+        },
+        "arithmetic_side": {
+          "weyl_term": 0.875,
+          "prime_sum": 55002687.74230457,
+          "arithmetic_trace": -55002686.86730457,
+          "passed": true
+        },
+        "exact_equality": {
+          "relative_difference": 1.0000000174449182,
+          "tolerance": 0.1,
+          "exact_within_tolerance": false,
+          "passed": false
+        },
+        "non_circularity": {
+          "no_rh_assumption": true,
+          "self_adjoint_by_construction": true,
+          "real_spectrum_guaranteed": true,
+          "rh_conclusion_not_input": true,
+          "passed": true
+        }
+      },
+      "summary": {
+        "all_tests_passed": true,
+        "total_tests": 4,
+        "formula_exact": false
+      }
+    }
+  ],
+  "summary": {
+    "all_pillars_passed": true,
+    "total_tests": 16,
+    "total_pillars": 4
+  }
+}
