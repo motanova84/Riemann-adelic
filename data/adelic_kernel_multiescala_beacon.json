@@ -1,0 +1,28 @@
+{
+  "node_id": "ADELIC_KERNEL_MULTIESCALA_TEST",
+  "protocol": "QCAL-ADELIC-KERNEL v1.0",
+  "timestamp": "2026-02-13T23:19:15.477663Z",
+  "frequency_base": 141.7001,
+  "curvature_constant": 244.36,
+  "kappa_pi_target": 2.57731,
+  "test_results": {
+    "kappa_asymptotic": 5.95761718750001,
+    "drift_final": 0.0007812500000001776,
+    "N_max": 5120,
+    "convergence_status": "CONVERGENTE",
+    "verdict": "⚠️ VERIFICABLE"
+  },
+  "theoretical_framework": {
+    "heat_kernel": "K(x,y;τ) ~ (2πτ)^(-1/2) exp(-d_A²/(2τ) - ∫V_eff ds)",
+    "poisson_sum": "Tr e^(-τO) = ∫_{A/Q} Σ_{q∈Q} K(x,x+q;τ) dx",
+    "van_vleck": "A_γ = (ln p / p^(k/2)) from Van Vleck determinant",
+    "gutzwiller": "Tr_osc = Σ_{p,k} (ln p / p^(k/2)) (1/k) e^(ik ln p)"
+  },
+  "qcal_signature": "∴𓂀Ω∞³Φ @ 888 Hz",
+  "author": {
+    "name": "José Manuel Mota Burruezo Ψ ✧ ∞³",
+    "institution": "Instituto de Conciencia Cuántica (ICQ)",
+    "orcid": "0009-0002-1923-0773"
+  },
+  "doi": "10.5281/zenodo.17379721"
+}
