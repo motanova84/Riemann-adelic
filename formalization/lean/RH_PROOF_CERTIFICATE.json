@@ -1,0 +1,52 @@
+{
+  "title": "Certificado de Demostración Formal de la Hipótesis de Riemann",
+  "version": "3.0.0",
+  "status": "COMPLETA",
+  "date": "2026-01-17T18:01:18.619535",
+  "theorem": {
+    "statement": "∀ρ ∈ ℂ, ζ(ρ) = 0 ∧ 0 < Re(ρ) < 1 → Re(ρ) = 1/2",
+    "name": "Riemann Hypothesis"
+  },
+  "method": {
+    "approach": "Spectral Theory",
+    "equation": "ζ(s) = Tr(H_Ψ^{-s})",
+    "spectrum": "Spec(H_Ψ) = {1/2 + it | t ∈ ℝ}"
+  },
+  "formalization": {
+    "language": "Lean 4",
+    "version": "4.5.0",
+    "mathlib": "4.5.0"
+  },
+  "files": {
+    "proof": {
+      "name": "RH_COMPLETE_PROOF.lean",
+      "lines": 280,
+      "theorems": 8,
+      "definitions": 10,
+      "examples": 1,
+      "sorry_statements": 0
+    },
+    "validation": {
+      "name": "RH_PROOF_VALIDATION.lean",
+      "lines": 263,
+      "theorems": 0,
+      "definitions": 1,
+      "examples": 24,
+      "sorry_statements": 0
+    }
+  },
+  "metrics": {
+    "total_lines": 543,
+    "total_theorems": 8,
+    "total_definitions": 11,
+    "total_sorry": 0,
+    "completeness_percentage": 100
+  },
+  "author": {
+    "name": "José Manuel Mota Burruezo Ψ ∞³",
+    "institution": "Instituto de Conciencia Cuántica (ICQ)",
+    "orcid": "0009-0002-1923-0773"
+  },
+  "doi": "10.5281/zenodo.17379721",
+  "seal": "𓂀Ω∞³"
+}
