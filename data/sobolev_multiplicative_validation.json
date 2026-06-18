@@ -1,0 +1,100 @@
+{
+  "pilar": 1,
+  "name": "Multiplicative Sobolev Domain (El Cimiento)",
+  "tests": {
+    "domain_membership": {
+      "passed": true,
+      "results": [
+        {
+          "name": "Gaussian in t",
+          "in_domain": true,
+          "norms": {
+            "L2": 1.3313353638003897,
+            "H1": 1.6304420261167683,
+            "H2": 1.9964930858281993
+          }
+        },
+        {
+          "name": "Exponential decay",
+          "in_domain": true,
+          "norms": {
+            "L2": 1.4134836834440165,
+            "H1": 1.5770747376353218,
+            "H2": 3.661387143362006
+          }
+        },
+        {
+          "name": "Polynomial with cutoff",
+          "in_domain": true,
+          "norms": {
+            "L2": 0.4847642733810489,
+            "H1": 0.8844103614861165,
+            "H2": 2.2855547704355432
+          }
+        },
+        {
+          "name": "Compact support",
+          "in_domain": true,
+          "norms": {
+            "L2": 0.5159188324630036,
+            "H1": 0.6860191681829068,
+            "H2": 1.3332476610610549
+          }
+        }
+      ]
+    },
+    "operator_symmetry": {
+      "passed": true,
+      "results": [
+        {
+          "pair": "gaussian \u00d7 gaussian",
+          "error": 0.0,
+          "is_symmetric": true
+        },
+        {
+          "pair": "gaussian \u00d7 exponential",
+          "error": 2.280370719804215e-15,
+          "is_symmetric": true
+        },
+        {
+          "pair": "exponential \u00d7 polynomial",
+          "error": 2.1431385412198462e-16,
+          "is_symmetric": true
+        },
+        {
+          "pair": "compact \u00d7 compact",
+          "error": 0.0,
+          "is_symmetric": true
+        }
+      ]
+    },
+    "domain_density": {
+      "passed": true,
+      "results": [
+        {
+          "function": "Gaussian",
+          "error": 0.03688197241936012,
+          "is_dense": true
+        },
+        {
+          "function": "Exponential",
+          "error": 0.11273404638294215,
+          "is_dense": true
+        },
+        {
+          "function": "Polynomial",
+          "error": 0.1356008772140671,
+          "is_dense": true
+        }
+      ]
+    }
+  },
+  "overall": {
+    "all_tests_passed": true,
+    "verification_complete": true
+  },
+  "qcal": {
+    "f0": 141.7001,
+    "C": 244.36
+  }
+}
