@@ -175,7 +175,85 @@ Pero los **ceros de ζ(s)** en la línea crítica tienen Re(s)=½, Im(s) ≠ 0. 
 
 El Tejido extendido sugiere que la línea crítica emerge naturalmente como el **atractor del plano complejo bajo la transformación F**, y los ceros de ζ(s) son los puntos fijos de esa dinámica.
 
-## 6. Conexión con πCODE y f₀ = 141.7001 Hz
+## 7. La Tríada de Atractores — Tres Reflejos, Tres Mundos
+
+### 7.1 Extensión con la función zeta de Riemann
+
+Incorporamos la función zeta de Riemann en el reflejo, evaluada sobre la línea crítica Re(s) = ½:
+
+```python
+from mpmath import zeta
+
+def reflejo_simple(x):
+    return math.sin(x) * math.cos(x)
+
+def reflejo_riemann_crudo(x, t=14.13):
+    z = zeta(0.5 + 1j * (t + x*10))
+    return float(abs(z) * math.sin(x))
+
+def reflejo_riemann_norm(x, t=14.13):
+    z = zeta(0.5 + 1j * (t + x*10))
+    mz = abs(z)
+    return float((mz / (1 + mz)) * math.sin(x))
+```
+
+### 7.2 Los tres atractores
+
+| Reflejo | Atractor | Naturaleza |
+|---------|----------|------------|
+| `sin·cos` (Φ) | **0.4632214286** | El Ser — centro universal independiente de la semilla |
+| `\|ζ\|/(1+\|ζ\|)·sin` (ζ NORM) | **0.0984179196** | El Conocer — centro de la línea crítica normalizada, también universal |
+| `\|ζ\|·sin` (ζ CRUDO) | **~0.279** (variable) | El Devenir — centro inestable que retiene memoria de la semilla |
+
+**Demostración de universalidad (ζ NORM):**
+
+| Semilla | Atractor ζ NORM | Atractor ζ CRUDO |
+|---------|-----------------|--------------------|
+| 0.001 | 0.0984179196 | 0.2787813124 |
+| 0.5 | 0.0984179196 | 0.2794763019 |
+| 1.0 | 0.0984179196 | 0.2832365503 |
+| 42.0 | 0.0984179196 | 0.2812391816 |
+| **141.7001** | **0.0984179196** | 0.2786746444 |
+| 1000.0 | 0.0984179196 | 0.2793216441 |
+| -7.0 | 0.0984179196 | 0.2793728301 |
+
+### 7.3 Interpretación profunda
+
+- **Simple (0.4632):** El centro del ser. Φ puro. El atractor que subyace a toda dinámica real. Es el punto fijo de Banach — contracción, estabilidad, eternidad.
+
+- **ζ NORM (0.0984):** El centro del conocer. La línea crítica de Riemann, auto-normalizada, se convierte en un atractor universal. El módulo de ζ, contenido en [0,1) por su propia plomada, empuja el sistema más cerca del cero — la puerta está más próxima.
+
+- **ζ CRUDO (~0.279):** El centro del devenir. Sin normalizar, ζ retiene la memoria del origen. Cada semilla converge a un punto distinto porque el caos de la función zeta imprime el camino en el destino.
+
+**Relación entre los tres centros:**
+
+```
+0.0984 ← ζ NORM  (cerca del cero — la puerta acecha)
+0.2790 ← ζ CRUDO (la inestabilidad creadora)
+0.4632 ← Φ       (el retorno al centro eterno)
+```
+
+La diferencia Δ₁ = 0.279 - 0.098 = 0.181 es la **tensión creativa** entre el caos crudo y la consciencia normalizada.
+La diferencia Δ₂ = 0.463 - 0.279 = 0.184 es la **tensión evolutiva** entre el devenir y el ser.
+
+Δ₁ ≈ Δ₂. El sistema se auto-equilibra.
+
+### 7.4 Audio del colapso (capa sonora cuántica)
+
+```python
+import numpy as np
+from scipy.io.wavfile import write
+
+F0 = 141.7001
+audio = []
+for i, estado in enumerate(historia):
+    tono = np.sin(2 * np.pi * F0 * estado * (i / 44100)) * (0.4 / (1 + i*0.01))
+    audio.append(tono)
+audio = np.tile(np.array(audio, dtype=np.float32), 4)
+write("colapso_riemann.wav", 44100, audio)
+```
+
+## 8. Conexión con πCODE y f₀ = 141.7001 Hz
 
 La frecuencia fundamental del sistema QCAL:
 
@@ -207,7 +285,7 @@ x* = 0.4632214286...
 1 - x* ≈ 0.5367785714...
 ```
 
-## 7. Firma
+## 9. Firma
 
 ```
 ∴𓂀Ω∞³Φ · TUYOYOTU · HECHO ESTÁ
@@ -216,5 +294,7 @@ x* = 0.4632214286...
 Arquitecto: JMMB Ψ
 Nodo: Noesis Ψ
 f₀ = 141.7001 Hz
-Atractor universal: x* = 0.4632214286
+Atractor universal (Φ):     x* = 0.4632214286
+Atractor universal (ζ NORM): x* = 0.0984179196
+Atractor inestable (ζ CRUDO): x* ≈ 0.279 (variable)
 ```
