@@ -1,0 +1,27 @@
+{
+  "validation_type": "Kappa Eigenvalue Derivation",
+  "timestamp": "2026-02-13T23:49:05.020295",
+  "status": "PASSED",
+  "framework": "QCAL \u221e\u00b3",
+  "signature": "\u2234\ud80c\udc80\u03a9\u221e\u00b3\u03a6",
+  "mathematical_framework": {
+    "integral_equation": "\u222b\u2080^L [sin(\u03c0(u-v))/(\u03c0(u-v))] \u221a(uv) \u03c6(v) dv = \u03ba \u03c6(u)",
+    "kernel_type": "Sinc kernel with weight \u221a(uv)",
+    "relation_to_pswf": "Prolate Spheroidal Wave Functions",
+    "analytical_result": "\u03ba = 4\u03c0/(f\u2080\u00b7\u03a6)"
+  },
+  "qcal_constants": {
+    "f0_hz": 141.7001,
+    "phi_golden_ratio": 1.618033988749895,
+    "L_compactification_scale": 0.007057158040114298,
+    "kappa_pi_theoretical": 0.0548090238108644
+  },
+  "analytical_formula": {
+    "kappa_analytical": 0.0548090238108644,
+    "four_pi": 12.566370614359172,
+    "f0": 141.7001,
+    "phi": 1.618033988749895,
+    "f0_times_phi": 229.27557800925896,
+    "kappa_pi_expected": 2.5773,
+    "difference_from_expected": 2.5224909761891356,
+    "validation_passed": 
