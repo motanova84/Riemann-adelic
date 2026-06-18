@@ -37,6 +37,12 @@ jobs:
           python3 validate_v5_coronacion.py --precision 25 --verbose
         continue-on-error: false
 
+      - name: Run experimental convergence validation
+        run: |
+          echo "🌟 Running experimental convergence validation (9.2σ/8.7σ)..."
+          python3 validate_experimental_convergence.py --verbose --save-report data/experimental_convergence_validation_report.json
+        continue-on-error: false
+
       - name: Run strengthened proof validation
         run: |
           echo "Running strengthened RH proof validation..."
@@ -129,6 +135,10 @@ jobs:
           echo "================================================" >> evolution_summary.txt
           echo "" >> evolution_summary.txt
           echo "✅ V5 Coronación validation completed" >> evolution_summary.txt
+          if [ -f data/experimental_convergence_validation_report.json ]; then
+            echo "✅ Experimental convergence validation completed (9.2σ/8.7σ)" >> evolution_summary.txt
+            python3 -c "import json; data=json.load(open('data/experimental_convergence_validation_report.json')); print(f\"  - Microtubule: {data['summary']['microtubule_significance']}\"); print(f\"  - Magnetoreception: {data['summary']['magnetoreception_significance']}\")" >> evolution_summary.txt 2>/dev/null || echo "  - Validation metrics: See report" >> evolution_summary.txt
+          fi
           if [ -f data/strengthened_proof_certificate.json ]; then
             echo "✅ Strengthened proof validation completed" >> evolution_summary.txt
           fi
