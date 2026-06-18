@@ -1,0 +1,30 @@
+{
+  "module": "f0_structural_emergence.lean",
+  "approach": "Ruta B (Elegante) - Structural Identity",
+  "timestamp": "2026-02-25T22:08:36.447559",
+  "author": "Jos\u00e9 Manuel Mota Burruezo \u03a8 \u221e\u00b3",
+  "orcid": "0009-0002-1923-0773",
+  "doi": "10.5281/zenodo.17379721",
+  "constants": {
+    "phi": 1.618033988749895,
+    "kappa": 2.5773,
+    "V_critical": 2294.642,
+    "f0_target": 141.7001,
+    "f0_computed": 141.70008028800405
+  },
+  "tests": {
+    "energy_rewrite": true,
+    "quadratic_unique_minimum": true,
+    "v_critical_properties": true,
+    "f0_structural_identity": true,
+    "f0_minimizes_energy": true,
+    "gap4_closure": true
+  },
+  "gap4_status": "CLOSED",
+  "certainty_level": "100%",
+  "summary": {
+    "total_tests": 6,
+    "passed": 6,
+    "failed": 0
+  }
+}
