@@ -55,6 +55,29 @@ from scipy.sparse import diags
 from typing import Tuple, Dict, Any, Optional, List
 import warnings
 
+# Import symbol calculus (optional, for integration)
+try:
+    from atlas3_symbol_calculus import (
+        PseudodifferentialSymbol,
+        WeylLawCalculator,
+        HamiltonianFlow,
+        TraceFormulaCalculator,
+        KappaDerivation
+    )
+    SYMBOL_CALCULUS_AVAILABLE = True
+except ImportError:
+    try:
+        from .atlas3_symbol_calculus import (
+            PseudodifferentialSymbol,
+            WeylLawCalculator,
+            HamiltonianFlow,
+            TraceFormulaCalculator,
+            KappaDerivation
+        )
+        SYMBOL_CALCULUS_AVAILABLE = True
+    except ImportError:
+        SYMBOL_CALCULUS_AVAILABLE = False
+
 # QCAL Constants
 F0 = 141.7001  # Hz - fundamental frequency
 C_QCAL = 244.36  # QCAL coherence constant
@@ -302,6 +325,187 @@ class Atlas3Operator:
             normalized = eigenvalues - mean_real + 0.5
             
         return normalized
+    
+    def get_symbol_calculus(self) -> Optional[Dict[str, Any]]:
+        """
+        Get pseudodifferential symbol calculus framework for this operator.
+        
+        Returns symbol, Weyl law calculator, Hamiltonian flow, trace calculator,
+        and κ derivation for the current operator parameters.
+        
+        Returns:
+            Dictionary with symbol calculus objects, or None if not available
+        """
+        if not SYMBOL_CALCULUS_AVAILABLE:
+            warnings.warn("Symbol calculus module not available")
+            return None
+        
+        # Create symbol matching operator parameters
+        symbol = PseudodifferentialSymbol(
+            V_amp=self.V_amp,
+            beta_0=self.beta_0,
+            use_principal=False
+        )
+        
+        # Create calculators
+        weyl_calc = WeylLawCalculator(symbol)
+        flow = HamiltonianFlow()
+        trace_calc = TraceFormulaCalculator()
+        kappa_deriv = KappaDerivation(symbol)
+        
+        return {
+            'symbol': symbol,
+            'weyl_calculator': weyl_calc,
+            'hamiltonian_flow': flow,
+            'trace_calculator': trace_calc,
+            'kappa_derivation': kappa_deriv
+        }
+    
+    def validate_weyl_law_from_symbol(self, eigenvalues: np.ndarray) -> Dict[str, Any]:
+        """
+        Validate Weyl law using symbol calculus framework.
+        
+        Compares spectral counting function with Weyl law derived from
+        the pseudodifferential symbol.
+        
+        Args:
+            eigenvalues: Computed eigenvalues
+            
+        Returns:
+            Dictionary with Weyl law validation results
+        """
+        if not SYMBOL_CALCULUS_AVAILABLE:
+            return {'error': 'Symbol calculus not available'}
+        
+        symbol_calc = self.get_symbol_calculus()
+        weyl_calc = symbol_calc['weyl_calculator']
+        
+        # Use real parts of eigenvalues
+        eigs_real = np.sort(eigenvalues.real)
+        
+        # Maximum energy
+        E_max = eigs_real[-1]
+        
+        # Spectral counting: number of eigenvalues
+        N_spectral = len(eigs_real)
+        
+        # Weyl law from symbol
+        N_weyl_exact = weyl_calc.counting_function(E_max)
+        N_weyl_asymp = weyl_calc.weyl_asymptotic(E_max)
+        N_riemann = weyl_calc.riemann_von_mangoldt(E_max)
+        
+        # Errors
+        error_exact = abs(N_spectral - N_weyl_exact)
+        error_asymp = abs(N_spectral - N_weyl_asymp)
+        error_riemann = abs(N_spectral - N_riemann)
+        
+        return {
+            'E_max': E_max,
+            'N_spectral': N_spectral,
+            'N_weyl_exact': N_weyl_exact,
+            'N_weyl_asymptotic': N_weyl_asymp,
+            'N_riemann_von_mangoldt': N_riemann,
+            'error_exact': error_exact,
+            'error_asymptotic': error_asymp,
+            'error_riemann': error_riemann,
+            'relative_error_exact': error_exact / N_spectral if N_spectral > 0 else 0,
+            'relative_error_asymp': error_asymp / N_spectral if N_spectral > 0 else 0,
+            'weyl_law_satisfied': error_exact < 0.1 * N_spectral
+        }
+    
+    def compute_trace_from_symbol(self, tau: float = 0.5, 
+                                  primes: Optional[List[int]] = None,
+                                  k_max: int = 10) -> Dict[str, Any]:
+        """
+        Compute trace Tr(e^(-τH)) from symbol calculus fixed points.
+        
+        Uses prime orbit contributions from the Hamiltonian flow.
+        
+        Args:
+            tau: Imaginary time parameter
+            primes: List of primes to include (default: [2,3,5,7,11])
+            k_max: Maximum power for each prime
+            
+        Returns:
+            Dictionary with trace computation results
+        """
+        if not SYMBOL_CALCULUS_AVAILABLE:
+            return {'error': 'Symbol calculus not available'}
+        
+        if primes is None:
+            primes = [2, 3, 5, 7, 11]
+        
+        symbol_calc = self.get_symbol_calculus()
+        trace_calc = symbol_calc['trace_calculator']
+        flow = symbol_calc['hamiltonian_flow']
+        
+        # Compute trace from prime orbits
+        trace_value = trace_calc.trace_approximation(tau, primes, k_max)
+        
+        # Get individual prime contributions
+        prime_contributions = {}
+        for p in primes:
+            contrib = sum([
+                trace_calc.prime_orbit_contribution(p, k, tau)
+                for k in range(1, k_max + 1)
+            ])
+            prime_contributions[p] = contrib
+        
+        # Get orbit times
+        orbit_times = {}
+        for p in primes:
+            orbit_times[p] = flow.prime_orbit_times(p, k_max=5)
+        
+        return {
+            'tau': tau,
+            'trace_value': trace_value,
+            'trace_real': trace_value.real,
+            'trace_imag': trace_value.imag,
+            'trace_magnitude': abs(trace_value),
+            'prime_contributions': prime_contributions,
+            'orbit_times': orbit_times,
+            'primes_used': primes,
+            'k_max': k_max
+        }
+    
+    def derive_kappa_from_symbol(self) -> Dict[str, Any]:
+        """
+        Derive coupling constant κ from symbol expansion.
+        
+        Returns κ from:
+            1. Hermiticity condition (PT symmetry breaking)
+            2. Maslov index (topological correction)
+            3. PT compensation parameter (scaling with V_amp)
+        
+        Returns:
+            Dictionary with κ derivation results
+        """
+        if not SYMBOL_CALCULUS_AVAILABLE:
+            return {'error': 'Symbol calculus not available'}
+        
+        symbol_calc = self.get_symbol_calculus()
+        kappa_deriv = symbol_calc['kappa_derivation']
+        
+        # Derive κ from different approaches
+        kappa_hermit = kappa_deriv.hermiticity_condition(self.beta_0)
+        kappa_maslov = kappa_deriv.maslov_index_correction()
+        kappa_pt = kappa_deriv.pt_compensation_parameter(self.V_amp)
+        
+        # Compare with experimental κ_Π
+        error_hermit = abs(kappa_hermit - KAPPA_PI)
+        error_pt = abs(kappa_pt - KAPPA_PI)
+        
+        return {
+            'kappa_hermiticity': kappa_hermit,
+            'kappa_maslov_index': kappa_maslov,
+            'kappa_pt_compensation': kappa_pt,
+            'kappa_experimental': KAPPA_PI,
+            'error_hermiticity': error_hermit,
+            'error_pt_compensation': error_pt,
+            'beta_0': self.beta_0,
+            'V_amp': self.V_amp,
+            'derivation_consistent': error_hermit < 0.01 and error_pt < 0.01
+        }
 
 
 def analyze_gue_statistics(eigenvalues: np.ndarray, 
