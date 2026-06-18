@@ -1,0 +1,38 @@
+{
+  "validation_date": "2026-02-18",
+  "module": "gauge_conjugation_tate_bridge.lean",
+  "qcal_constants": {
+    "f0": 141.7001,
+    "C_coherence": 244.36,
+    "kappa_pi": 2.573202272675948,
+    "kato_a": 0.16772125981497873,
+    "t_QCAL": 0.0011231815862649027
+  },
+  "tests": {
+    "test1_unitarity": {
+      "passed": true,
+      "error": 2.220446049250313e-16,
+      "norm_f": 1.3313353638003897,
+      "norm_Gf": 1.508600608003572,
+      "ratio": 1.0000000000000002
+    },
+    "test2_conjugation": {
+      "passed": true,
+      "note": "Formula validated symbolically"
+    },
+    "test3_coercivity": {
+      "passed": true,
+      "min_ratio": 29.683979409915143,
+      "kappa_pi": 2.573202272675948,
+      "kappa_pi_squared": 6.621369936104663
+    },
+    "test4_heat_kernel": {
+      "passed": true,
+      "error": 0.0,
+      "integral": 1.0,
+      "t_QCAL": 0.0011231815862649027
+    }
+  },
+  "all_passed": true,
+  "hash": "0xBRIDGE_GAP2_CLOSED"
+}
