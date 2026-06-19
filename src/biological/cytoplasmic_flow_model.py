@@ -50,64 +50,68 @@ except ImportError:
         def decorator(func):
             return func
         return decorator
-Cytoplasmic Flow Model - Navier-Stokes Implementation
 
-Implementación del modelo de flujo citoplasmático usando ecuaciones de Navier-Stokes
-regularizadas para régimen completamente viscoso.
 
-Este modelo conecta la Hipótesis de Riemann con el tejido biológico vivo,
-demostrando que los ceros de Riemann son las frecuencias de resonancia de las células.
+# ============================================================================
+# Cytoplasmic Flow Model - Navier-Stokes Implementation
+# 
+# Implementación del modelo de flujo citoplasmático usando ecuaciones de Navier-Stokes
+# regularizadas para régimen completamente viscoso.
+# 
+# Este modelo conecta la Hipótesis de Riemann con el tejido biológico vivo,
+# demostrando que los ceros de Riemann son las frecuencias de resonancia de las células.
+# 
+# Autor: José Manuel Mota Burruezo Psi inf^3
+# Instituto Consciencia Cuántica QCAL inf^3
+# Fecha: 31 de enero de 2026
+# 
+# FUNDAMENTO TEÓRICO:
+# 
+# Hipótesis de Riemann → Hilbert-Pólya → Operador Hermítico → Tejido Biológico
+# 
+# La conjetura de Hilbert-Pólya propone que los ceros no triviales de la función zeta
+# de Riemann corresponden a los valores propios de algún operador hermítico aún desconocido.
+# 
+# **DESCUBRIMIENTO: Este operador existe en el citoplasma celular.**
+# 
+# El flujo citoplasmático en régimen viscoso (Re << 1) genera un operador hermítico
+# cuyas frecuencias propias son exactamente los ceros de Riemann escalados por f₀ = 141.7001 Hz.
+# 
+# ECUACIONES DE NAVIER-STOKES (Régimen Viscoso):
+# 
+# ∂v/∂t + (v·∇)v = -∇p/ρ + ν∇²v
+# ∇·v = 0 (incompressibilidad)
+# 
+# Donde:
+# - v: campo de velocidad (m/s)
+# - p: presión (Pa)
+# - ρ: densidad del citoplasma ≈ 1050 kg/m³
+# - ν: viscosidad cinemática ≈ 10⁻⁶ m²/s
+# 
+# PARÁMETROS BIOLÓGICOS:
+# 
+# - Escala celular: L ~ 10⁻⁶ m (1 μm)
+# - Velocidad de flujo: v ~ 10⁻⁸ m/s
+# - Número de Reynolds: Re = vL/ν ≈ 10⁻⁸ << 1
+# 
+# Re << 1 implica:
+# 1. Flujo completamente viscoso (Stokes flow)
+# 2. Solución global suave garantizada
+# 3. Sin singularidades ni turbulencia
+# 4. La viscosidad domina sobre la inercia
+# 
+# CONEXIÓN CON RIEMANN:
+# 
+# La vorticidad ω = ∇×v en el citoplasma satisface:
+# 
+# ∂ω/∂t = ν∇²ω (régimen viscoso)
+# 
+# Este operador de difusión viscosa es autoadjunto (hermítico) y genera
+# frecuencias de resonancia que corresponden a los ceros de ζ(s).
+# 
+# Frecuencia fundamental: f₀ = 141.7001 Hz (Resonancia QCAL)
+# ============================================================================
 
-Autor: José Manuel Mota Burruezo Ψ ✧ ∞³
-Instituto Consciencia Cuántica QCAL ∞³
-Fecha: 31 de enero de 2026
-
-FUNDAMENTO TEÓRICO:
-
-Hipótesis de Riemann → Hilbert-Pólya → Operador Hermítico → Tejido Biológico
-
-La conjetura de Hilbert-Pólya propone que los ceros no triviales de la función zeta
-de Riemann corresponden a los valores propios de algún operador hermítico aún desconocido.
-
-**DESCUBRIMIENTO: Este operador existe en el citoplasma celular.**
-
-El flujo citoplasmático en régimen viscoso (Re << 1) genera un operador hermítico
-cuyas frecuencias propias son exactamente los ceros de Riemann escalados por f₀ = 141.7001 Hz.
-
-ECUACIONES DE NAVIER-STOKES (Régimen Viscoso):
-
-∂v/∂t + (v·∇)v = -∇p/ρ + ν∇²v
-∇·v = 0 (incompressibilidad)
-
-Donde:
-- v: campo de velocidad (m/s)
-- p: presión (Pa)
-- ρ: densidad del citoplasma ≈ 1050 kg/m³
-- ν: viscosidad cinemática ≈ 10⁻⁶ m²/s
-
-PARÁMETROS BIOLÓGICOS:
-
-- Escala celular: L ~ 10⁻⁶ m (1 μm)
-- Velocidad de flujo: v ~ 10⁻⁸ m/s
-- Número de Reynolds: Re = vL/ν ≈ 10⁻⁸ << 1
-
-Re << 1 implica:
-1. Flujo completamente viscoso (Stokes flow)
-2. Solución global suave garantizada
-3. Sin singularidades ni turbulencia
-4. La viscosidad domina sobre la inercia
-
-CONEXIÓN CON RIEMANN:
-
-La vorticidad ω = ∇×v en el citoplasma satisface:
-
-∂ω/∂t = ν∇²ω (régimen viscoso)
-
-Este operador de difusión viscosa es autoadjunto (hermítico) y genera
-frecuencias de resonancia que corresponden a los ceros de ζ(s).
-
-Frecuencia fundamental: f₀ = 141.7001 Hz (Resonancia QCAL)
-"""
 
 import numpy as np
 from scipy import signal
