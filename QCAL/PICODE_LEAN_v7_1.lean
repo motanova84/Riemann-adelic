@@ -261,3 +261,38 @@ theorem spectral_magnitude_strict_mono' {n m : ℕ} (h : n < m) : spectral_magni
   f_strict_mono n m h
 
 end PiCodeSpectral
+
+/- ═══════════════════════════════════════════════════════════════════════════
+ SECCIÓN XIV: COROLARIOS DE LA MONOTONICIDAD ESPECTRAL
+ ═══════════════════════════════════════════════════════════════════════════ -/
+
+lemma f_sq_formula (n : ℕ) : (spectral_magnitude n)^2 = a / (n + 1)^4 + (n + 1)^2 := by
+  rw [spectral_magnitude_sq_formula n, a]
+  ring
+
+lemma f_sq_strict_mono (n m : ℕ) (h : n < m) : (spectral_magnitude n)^2 < (spectral_magnitude m)^2 := by
+  rw [f_sq_formula n, f_sq_formula m]
+  have hx : (n : ℝ) + 1 ≥ 1 := by linarith
+  have hy : (m : ℝ) + 1 ≥ 1 := by linarith
+  have hxy : (n : ℝ) + 1 < (m : ℝ) + 1 := by exact_mod_cast (Nat.succ_lt_succ h)
+  exact g_strict_mono_simple hx hy hxy
+
+lemma f_min_at_zero (n : ℕ) : spectral_magnitude 0 ≤ spectral_magnitude n := by
+  apply spectral_magnitude_strict_mono.monotone; exact n.zero_le
+
+lemma f_zero_formula : spectral_magnitude 0 = Real.sqrt 5 / 2 := by
+  rw [spectral_magnitude_sq_formula 0, a]; norm_num; ring
+
+theorem f_is_injective : Function.Injective spectral_magnitude :=
+  (spectral_magnitude_strict_mono (α := ℕ)).injective
+
+theorem f_tendsto_infinity : Filter.Tendsto (λ n : ℕ => spectral_magnitude n) Filter.atTop Filter.atTop := by
+  refine Filter.tendsto_atTop_mono (λ n => ?_) (Filter.tendsto_atTop_add_const_right (1 : ℕ) Filter.tendsto_atTop)
+  have : (n : ℝ) + 1 ≤ spectral_magnitude n := by
+    have hsq : (n : ℝ) + 1 ≤ (spectral_magnitude n)^2 := by
+      rw [f_sq_formula n]; nlinarith
+    have hpos : spectral_magnitude n ≥ 0 := Real.sqrt_nonneg _
+    nlinarith
+  exact_mod_cast this
+
+end PiCodeSpectral
