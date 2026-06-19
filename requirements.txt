@@ -8,7 +8,7 @@ matplotlib>=3.10.1
 
 # Jupyter and notebook execution
 jupyter>=1.0.0
-nbconvert==7.16.4
+nbconvert==7.17.0
 mistune==2.0.5
 
 # HTTP requests for data fetching
