@@ -215,3 +215,49 @@ theorem economic_map_injective : Function.Injective economic_return_rate := by
   · have : economic_return_rate m < economic_return_rate n := economic_order_preservation h; linarith
 
 end PiCodeSpectral
+
+/- ═══════════════════════════════════════════════════════════════════════════
+ SECCIÓN XIII: DEMOSTRACIÓN DE MONOTONICIDAD ESPECTRAL
+ f(n) = |E_n| = √(a/(n+1)⁴ + (n+1)²) es estrictamente creciente
+ donde a = 1/4 es la constante del sistema QCAL
+ ═══════════════════════════════════════════════════════════════════════════ -/
+
+/-- Constante espectral a = 1/4 -/
+def a : ℝ := 1/4
+
+/-- Función auxiliar g(x) = a/x⁴ + x² para x ≥ 1 -/
+noncomputable def g (x : ℝ) : ℝ := a / x^4 + x^2
+
+lemma g_strict_mono_simple {x y : ℝ} (hx : x ≥ 1) (hy : y ≥ 1) (hxy : x < y) : g x < g y := by
+  have hsq : x^2 < y^2 := by nlinarith
+  have hquad : x^4 < y^4 := by nlinarith
+  have hdiv : 1 / x^4 > 1 / y^4 :=
+    (one_div_lt_one_div_of_lt (by positivity) (by positivity)).mpr hquad
+  have hdiv_a : a / x^4 > a / y^4 := by
+    have ha_pos : a > 0 := by simp [a]
+    exact (mul_lt_mul_right ha_pos).mpr hdiv
+  dsimp [g]; nlinarith
+
+lemma f_strict_mono (n m : ℕ) (h : n < m) : spectral_magnitude n < spectral_magnitude m := by
+  have hx : (n : ℝ) + 1 ≥ 1 := by linarith
+  have hy : (m : ℝ) + 1 ≥ 1 := by linarith
+  have hxy : (n : ℝ) + 1 < (m : ℝ) + 1 := by exact_mod_cast (Nat.succ_lt_succ h)
+  have hg : g ((n : ℝ) + 1) < g ((m : ℝ) + 1) := g_strict_mono_simple hx hy hxy
+  have hpos_n : g ((n : ℝ) + 1) > 0 := by
+    dsimp [g, a]; positivity
+  have hpos_m : g ((m : ℝ) + 1) > 0 := by
+    dsimp [g, a]; positivity
+  have hspec : spectral_magnitude n = Real.sqrt (g ((n : ℝ) + 1)) := by
+    rw [spectral_magnitude_sq_formula n, g, a]
+    ring
+  have hspec_m : spectral_magnitude m = Real.sqrt (g ((m : ℝ) + 1)) := by
+    rw [spectral_magnitude_sq_formula m, g, a]
+    ring
+  rw [hspec, hspec_m]
+  exact Real.sqrt_lt_sqrt (by positivity) hg
+
+/-- T1 (refinado): Monotonicidad estricta del espectro -/
+theorem spectral_magnitude_strict_mono' {n m : ℕ} (h : n < m) : spectral_magnitude n < spectral_magnitude m :=
+  f_strict_mono n m h
+
+end PiCodeSpectral
