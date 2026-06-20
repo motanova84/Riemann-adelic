@@ -70,6 +70,16 @@ C_COHERENCE = 244.36         # Coherence constant C^∞
 PHI = 1.6180339887498948     # Golden ratio Φ
 KAPPA_PI = 2.5773            # Critical curvature
 
+# Node 7 — material anchor frequency
+F_MATERIAL = 142.1           # Hz — Node 7 anchor (NodoDilmun)
+
+# Derived breathing constants
+DELTA_F_MATERIAL = F_MATERIAL - F0_QCAL          # ≈ 0.3999 Hz
+DELTA_F_AUREA = (PHI - 1.0) * F0_QCAL * 1e-3    # (φ−1)·f₀·10⁻³ Hz
+
+# Gaussian truncation: include only grid points within this many σ of peak
+GAUSSIAN_CUTOFF_SIGMA = 5.0  # Truncate von Mangoldt Gaussians at 5σ
+
 # First 20 Riemann zero imaginary parts (fallback if mpmath unavailable)
 _RIEMANN_ZEROS_FALLBACK = [
     14.134725141734693,
@@ -227,6 +237,66 @@ class SpectralDVRCertificate:
     computation_time_ms: float
     certificate_hash: str
     validated: bool
+
+
+# ============================================================
+# Breathing constants — ConstanteRespiracion
+# ============================================================
+
+@dataclass
+class ConstanteRespiracion:
+    """Breathing constants anchoring the QCAL spectral framework at Node 7.
+
+    Encodes the spectral gap between the QCAL base frequency (141.7001 Hz)
+    and the Node 7 material anchor (142.1 Hz).
+
+    Attributes:
+        f_material: Node 7 material frequency [Hz] = 142.1
+        f0: QCAL base frequency [Hz] = 141.7001
+        delta_f_material: f_material − f₀ ≈ 0.3999 Hz
+        delta_f_aurea: (φ−1)·f₀·10⁻³ [Hz]
+        valid: Whether delta_f_material lies in the breathing band [0.38, 0.42]
+    """
+
+    f_material: float
+    f0: float
+    delta_f_material: float
+    delta_f_aurea: float
+    valid: bool
+
+
+def constante_respiracion() -> ConstanteRespiracion:
+    """Compute and validate the QCAL breathing-space constants.
+
+    Computes:
+        DELTA_F_MATERIAL = F_MATERIAL − F0_QCAL  (≈ 0.3999 Hz)
+        DELTA_F_AUREA    = (φ − 1) · f₀ · 10⁻³
+
+    Validates that DELTA_F_MATERIAL ∈ [0.38, 0.42].
+
+    Returns:
+        ConstanteRespiracion with all computed constants and validity flag.
+
+    Raises:
+        ValueError: If DELTA_F_MATERIAL is outside [0.38, 0.42].
+    """
+    delta_f_material = F_MATERIAL - F0_QCAL
+    delta_f_aurea = (PHI - 1.0) * F0_QCAL * 1e-3
+
+    valid = 0.38 <= delta_f_material <= 0.42
+    if not valid:
+        raise ValueError(
+            f"DELTA_F_MATERIAL={delta_f_material:.6f} Hz is outside the "
+            f"breathing band [0.38, 0.42]. Check F_MATERIAL and F0_QCAL."
+        )
+
+    return ConstanteRespiracion(
+        f_material=F_MATERIAL,
+        f0=F0_QCAL,
+        delta_f_material=delta_f_material,
+        delta_f_aurea=delta_f_aurea,
+        valid=valid,
+    )
 
 
 # ============================================================
@@ -408,7 +478,7 @@ class SpectralBasisDVR:
             for k in range(1, self.max_k + 1):
                 u_pk = k * log_p
                 # Only include if inside domain (with margin)
-                if u_pk > self.L + 5 * self.epsilon_0:
+                if u_pk > self.L + GAUSSIAN_CUTOFF_SIGMA * self.epsilon_0:
                     break  # Higher k only push farther out
 
                 amplitude = log_p / (float(p) ** (k / 2.0))
@@ -969,3 +1039,245 @@ def validar_evidencia_brutal(
     print(f"  {status}")
 
     return cert
+
+
+# ============================================================
+# OperadorHEpsilonDVR
+# ============================================================
+
+class OperadorHEpsilonDVR(SpectralBasisDVR):
+    """H_ε = H_cin + V_primos(ε) in even-parity cosine DVR basis.
+
+    Specialises :class:`SpectralBasisDVR` by applying the explicit
+    Gaussian truncation required by the problem statement:
+
+        V_primos(ε)(u) = Σ_{p,k} Λ(p^k) / p^{k/2}
+                         × (1/√(2π)ε_k) × exp(-(u − k ln p)²/(2ε_k²))
+
+    where the Gaussian is evaluated **only** at grid points satisfying
+    ``|u − k ln p| ≤ GAUSSIAN_CUTOFF_SIGMA × ε_k`` (and the mirror
+    term ``|u + k ln p| ≤ GAUSSIAN_CUTOFF_SIGMA × ε_k``).
+
+    The kinetic part H_cin = −d²/du² is diagonal in the cosine basis
+    with eigenvalues (nπ/L)², exactly as in :class:`SpectralBasisDVR`.
+
+    Class constant:
+        CUTOFF_SIGMA: Gaussian truncation radius in units of σ (= GAUSSIAN_CUTOFF_SIGMA).
+    """
+
+    CUTOFF_SIGMA: float = GAUSSIAN_CUTOFF_SIGMA
+
+    def build_potential(self) -> AdaptivePotentialResult:
+        """Build von Mangoldt prime potential with explicit Gaussian truncation.
+
+        Each Gaussian is evaluated only within ``GAUSSIAN_CUTOFF_SIGMA × ε_k``
+        of its centre, setting contributions beyond that radius to zero.
+
+        Returns:
+            AdaptivePotentialResult with V on u_grid.
+        """
+        u = self.u_grid
+        V = np.zeros(self.n_grid)
+        epsilon_values: List[float] = []
+        n_terms = 0
+
+        for p in self.primes:
+            log_p = np.log(float(p))
+            for k in range(1, self.max_k + 1):
+                u_pk = k * log_p
+                # Skip if centre is beyond domain + cutoff margin
+                eps_k = self.adaptive_epsilon(k)
+                if u_pk > self.L + GAUSSIAN_CUTOFF_SIGMA * eps_k:
+                    break
+
+                amplitude = log_p / (float(p) ** (k / 2.0))
+                epsilon_values.append(eps_k)
+
+                norm_factor = 1.0 / (np.sqrt(2.0 * np.pi) * eps_k)
+                inv_2eps2 = 1.0 / (2.0 * eps_k ** 2)
+                cutoff = GAUSSIAN_CUTOFF_SIGMA * eps_k
+
+                # Positive peak: u ≈ +u_pk
+                mask_pos = np.abs(u - u_pk) <= cutoff
+                gauss_pos = np.where(
+                    mask_pos,
+                    np.exp(-(u - u_pk) ** 2 * inv_2eps2) * norm_factor,
+                    0.0,
+                )
+
+                # Mirror peak: u ≈ −u_pk  (even symmetry)
+                mask_neg = np.abs(u + u_pk) <= cutoff
+                gauss_neg = np.where(
+                    mask_neg,
+                    np.exp(-(u + u_pk) ** 2 * inv_2eps2) * norm_factor,
+                    0.0,
+                )
+
+                V += amplitude * (gauss_pos + gauss_neg)
+                n_terms += 1
+
+        V_norm = np.max(np.abs(V)) if np.max(np.abs(V)) > 0 else 1.0
+        psi = min(1.0, 1.0 - np.exp(-V_norm))
+
+        return AdaptivePotentialResult(
+            V=V,
+            epsilon_values=epsilon_values,
+            n_prime_powers=n_terms,
+            psi=float(psi),
+        )
+
+
+# ============================================================
+# ValidadorEvidenciaBrutal
+# ============================================================
+
+class ValidadorEvidenciaBrutal:
+    """Spectral evidence validator: diagonalises H_ε and correlates with Riemann zeros.
+
+    Computes the Pearson correlation ρ between the rescaled positive
+    eigenvalues of H_ε and the known imaginary parts of the Riemann zeros,
+    then assigns the coherence metric::
+
+        Ψ = (1 + |ρ|) / 2
+
+    This places Ψ in [0.5, 1.0]: Ψ = 1 iff |ρ| = 1 (perfect alignment),
+    Ψ = 0.5 iff ρ = 0 (no correlation).
+
+    Parameters:
+        operator: A :class:`SpectralBasisDVR` (or subclass) instance to use.
+            Defaults to :class:`OperadorHEpsilonDVR` with standard settings.
+    """
+
+    def __init__(self, operator: Optional[SpectralBasisDVR] = None) -> None:
+        if operator is None:
+            operator = OperadorHEpsilonDVR(
+                N=200,
+                L=12.0,
+                epsilon_0=0.04,
+                n_primes=50,
+                max_k=5,
+            )
+        self.operator = operator
+
+    def validate(
+        self,
+        n_eigenvalues: int = 200,
+        n_zeros: int = 50,
+    ) -> ZeroCorrelationResult:
+        """Diagonalise H_ε and return Pearson correlation with Riemann zeros.
+
+        Builds the full operator matrix, computes eigenvalues, selects
+        positive ones, fetches Riemann zeros, and computes::
+
+            Ψ = (1 + |ρ|) / 2
+
+        where ρ is the Pearson correlation coefficient between the
+        (sorted) positive eigenvalues and the first n_compare zero
+        imaginary parts.
+
+        Args:
+            n_eigenvalues: Number of eigenvalues to request.
+            n_zeros: Number of Riemann zeros to compare against.
+
+        Returns:
+            :class:`ZeroCorrelationResult` with Ψ = (1 + |ρ|) / 2.
+        """
+        H, _, _ = self.operator.build_operator_matrix()
+        eig_result = self.operator.compute_eigenvalues(n_eigenvalues, H)
+
+        pos_eigs = np.sort(eig_result.eigenvalues[eig_result.eigenvalues > 0])
+        rz = self.operator.fetch_riemann_zeros(n_zeros)
+        n_compare = min(len(pos_eigs), len(rz))
+
+        if n_compare < 2:
+            # Insufficient data for a meaningful Pearson correlation.
+            # Return partial data with psi = 0.5 (= (1 + |0|) / 2 at ρ = 0).
+            return ZeroCorrelationResult(
+                eigenvalues=pos_eigs,
+                riemann_zeros=list(rz),
+                n_compared=n_compare,
+                pearson_r=0.0,
+                mean_abs_error=float('inf'),
+                relative_error=float('inf'),
+                psi=0.5,
+            )
+
+        eigs_cmp = pos_eigs[:n_compare]
+        zeros_cmp = np.array(rz[:n_compare])
+
+        if np.std(eigs_cmp) < 1e-12 or np.std(zeros_cmp) < 1e-12:
+            pearson_r = 0.0
+        else:
+            pearson_r = float(np.corrcoef(eigs_cmp, zeros_cmp)[0, 1])
+
+        mae = float(np.mean(np.abs(eigs_cmp - zeros_cmp)))
+        mean_zero = float(np.mean(zeros_cmp))
+        rel_err = mae / mean_zero if mean_zero > 0 else float('inf')
+
+        # Ψ = (1 + |ρ|) / 2  ∈ [0.5, 1.0]
+        psi = (1.0 + abs(pearson_r)) / 2.0
+
+        return ZeroCorrelationResult(
+            eigenvalues=pos_eigs,
+            riemann_zeros=list(zeros_cmp),
+            n_compared=n_compare,
+            pearson_r=pearson_r,
+            mean_abs_error=mae,
+            relative_error=rel_err,
+            psi=float(psi),
+        )
+
+
+# ============================================================
+# NodoDilmun
+# ============================================================
+
+@dataclass
+class NodoDilmunResult:
+    """Result of the NodoDilmun anchor computation.
+
+    Attributes:
+        f_ancla: Node 7 anchor frequency [Hz] = 142.1
+        delta_f: |f_signal − f_ancla| [Hz]
+        psi: cos²(π · δf / f_ancla) ∈ [0, 1]
+        node: Node identifier (always 7)
+    """
+
+    f_ancla: float
+    delta_f: float
+    psi: float
+    node: int
+
+
+def nodo_dilmun(f_signal: float = F0_QCAL) -> NodoDilmunResult:
+    """Anchor the system state to Node 7 (142.1 Hz) and compute Ψ.
+
+    Computes::
+
+        Ψ = cos²(π · δf / f_ancla)
+
+    where δf = |f_signal − f_ancla| and f_ancla = F_MATERIAL = 142.1 Hz.
+
+    When ``f_signal = F0_QCAL = 141.7001 Hz``::
+
+        δf  = 0.3999 Hz
+        arg = π × 0.3999 / 142.1 ≈ 0.008843 rad
+        Ψ   = cos²(0.008843) ≈ 0.9999
+
+    Args:
+        f_signal: Signal frequency to evaluate [Hz].
+            Defaults to F0_QCAL = 141.7001 Hz.
+
+    Returns:
+        :class:`NodoDilmunResult` with anchor state and coherence Ψ.
+    """
+    f_ancla = F_MATERIAL  # 142.1 Hz — Node 7
+    delta_f = abs(f_signal - f_ancla)
+    psi = float(np.cos(np.pi * delta_f / f_ancla) ** 2)
+
+    return NodoDilmunResult(
+        f_ancla=f_ancla,
+        delta_f=delta_f,
+        psi=psi,
+        node=7,
+    )
