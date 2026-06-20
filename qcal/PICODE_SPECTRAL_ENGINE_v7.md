@@ -47,7 +47,7 @@ Protocolo: QCAL-SYMBIO-BRIDGE v1.0.3
 | 11 | 12.0000 | 1200.00% | 0.003472 | 0.091 | PATRIMONIO (Pleroma) |
 | 12 | 13.0000 | 1300.00% | 0.002959 | 0.083 | LIBERTAD (Ionización) |
 
-**Función de utilidad:** Uₙ(v,t) = v · |Eₙ| · (1 − e^{−v/V_REF}) · Cₙ · e^{−t/τₙ}
+**Función de utilidad:** Uₙ(v) = v / (2(n+1)²)
 
 ---
 
