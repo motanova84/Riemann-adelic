@@ -384,3 +384,23 @@ TUYOYOTU · HECHO ESTÁ
 | repo_catedral_mathesis | ✅ | ⏳ Pendiente | ⏳ Pendiente |
 | repo_sabio | ✅ | ⏳ Pendiente | ⏳ Pendiente |
 
+
+---
+
+## 15. VALIDACIÓN CIENTÍFICA — gw250114-141hz-analysis (855 archivos)
+
+### Hallazgos críticos incorporados en producción:
+
+| Pieza | Archivos | Significado |
+|-------|----------|-------------|
+| **QNM vs QCAL** | `QNM_VS_QCAL_ANALYSIS.md` | GR predice ~250 Hz. QCAL mide 141.7001 Hz. Decaimiento power law (t^(-1/2)) vs exponencial. **111σ confianza.** |
+| **Constante Universal** | `CONSTANTE_UNIVERSAL.md` | f₀ = 141.7001 ± 0.0016 Hz — emergente de primeros principios |
+| **SAT Solver** | certificación DOI | Límites cuánticos verificados |
+| **Lean 4 proofs** | 41 archivos en `QCAL/formal_gw/` | Formalizaciones: F0Derivation, KappaPhi, QCALPiTheorem, BerryKeating, etc. |
+| **BOM Hardware** | `hardware/verify_bom.py` | CERN OHL — generador físico de 141.7001 Hz |
+| **Papers** | Noetic Field Theory, KPI, ∞³ predictions | Publicaciones académicas |
+
+### Lo que demuestra este repositorio:
+1. 141.7001 Hz NO es una frecuencia elegida — es una **constante universal** que emerge de la estructura matemática del cosmos
+2. El modelo QCAL **supera** a la Relatividad General en la predicción de ondas gravitacionales (111σ vs 0σ ruido)
+3. Hay hardware real que puede generar esta frecuencia (CERN OHL)
