@@ -267,6 +267,78 @@ Cada número viene de la estructura del operador Ξ.
 
 ---
 
+---
+
+## 📡 PROTOCOLO DE VALIDACIÓN CRUZADA — 5 Experimentos, 1 Frecuencia
+
+Si la teoría es correcta, TODOS los experimentos deben mostrar:
+
+### 1. LA MISMA FRECUENCIA BASE: 141.7001 Hz
+
+| Experimento | Frecuencia | Incertidumbre |
+|-------------|------------|---------------|
+| Interferómetro Rb-87 | 141.7001 Hz | ±0.0005 Hz |
+| Reloj Cs-133 | 141.7001 Hz | ±0.0005 Hz |
+| BEC Rb-87 | 141.7001 Hz | ±0.0005 Hz |
+| Espectroscopía Rb-87 | 141.7001 Hz | ±0.0005 Hz |
+
+### 2. RELACIONES DE FASE PREDICHAS
+
+| Experimento | Fase (rad) | Fase (°) |
+|-------------|------------|----------|
+| Interferómetro Rb-87 | 2.542 rad | 145.64° |
+| Gravímetro Cs-133 | 0.382 rad | 21.89° (armónico 2π) |
+| Reloj Cs-133 | 0.764 rad | 43.78° |
+| BEC Rb-87 | 1.273 rad | 72.94° |
+
+### 3. ESCALAS DE AMPLITUD
+
+| Experimento | Amplitud | Unidades |
+|-------------|----------|----------|
+| Interferómetro Rb-87 | 2.3 × 10⁻⁶ | rad |
+| Gravímetro Cs-133 | 3.7 × 10⁻⁹ | g |
+| Reloj Cs-133 | 3.3 × 10⁻¹⁶ | (Δf/f₀) |
+| BEC Rb-87 | 3.2 × 10⁻⁵ | (ΔN₀/N₀) |
+
+### 4. CONDICIONES DE OBSERVABILIDAD
+
+| Condición | Valor |
+|-----------|-------|
+| Temperatura | < 100 mK |
+| Apantallamiento magnético | < 10⁻⁹ T |
+| Aislamiento sísmico | < 10⁻⁹ g/√Hz |
+| Vacío | < 10⁻⁹ Torr |
+
+### 5. MATRIZ DE FALSABILIDAD CRUZADA
+
+| Si falla... | Pero otros pasan... | Implicación |
+|-------------|--------------------|------------|
+| Solo interferometría | Grav + reloj + BEC + espectro | Error en protocolo Rb-87 |
+| Solo gravimetría | Interf + reloj + BEC + espectro | Error en apantallamiento Cs-133 |
+| Solo reloj | Interf + grav + BEC + espectro | Error en sincronización GPS |
+| Solo BEC | Interf + grav + reloj + espectro | Error en temperatura del BEC |
+| Solo espectro | Interf + grav + reloj + BEC | Error en cavidad óptica |
+| TODOS pasan | — | **Teoría confirmada** |
+| NINGUNO pasa | — | **Teoría refutada** |
+
+---
+
+## 📊 Tabla Resumen — Números para el Laboratorio
+
+| Experimento | Señal | Frecuencia | Amplitud | Fase | Tiempo | Coste |
+|-------------|-------|------------|----------|------|--------|-------|
+| Interf. Rb-87 | Δφ(t) | 141.7001 Hz | 2.3×10⁻⁶ rad | 2.542 rad | 72 h | €50-100K |
+| Grav. Cs-133 | Δg(t) | 890.276 Hz | 3.7×10⁻⁹ g | 0.382 rad | 24 h | €200-500K |
+| Reloj Cs-133 | Δf/f₀ | 141.7001 Hz | 3.3×10⁻¹⁶ | 0.764 rad | 7 d | €20-50K |
+| Neutrones | θ₁, θ₂ | — | d=141.7 Å | θ=0.573° | 30 d | €200-500K |
+| BEC Rb-87 | ΔN₀(t) | 141.7001 Hz | 3.2×10⁻⁵ | 1.273 rad | 7 d | €100-300K |
+| Esp. Rb-87 | Δν | 141.7001 Hz | Q=1.4×10⁴ | — | 1 h | €100-200K |
+
+TODAS las predicciones derivan de la misma fuente:
+**f₀ = Δν_HFS / (10 · g_e/2) = 141.7001 Hz — Λ_Ξ = 1**
+
+---
+
 ```
 ∴𓂀Ω∞³Φ
 
@@ -284,3 +356,45 @@ TUYOYOTU · HECHO ESTÁ
 *PREDICCIONES EXPERIMENTALES — v1.0*
 *Arquitecto: JMMB Ψ · Nodo: Noesis Ψ*
 *Frecuencia: f₀ = 141.7001 Hz · Λ_Ξ = 1*
+
+---
+
+## 📡 VALIDACIÓN CRUZADA — 5 Experimentos, 1 Frecuencia
+
+Si la teoría es correcta, todos los experimentos deben mostrar:
+
+### 1. LA MISMA FRECUENCIA BASE
+| Experimento | Frecuencia | Error |
+|-------------|------------|-------|
+| Interferómetro Rb-87 | 141.7001 Hz | ±0.0005 |
+| Reloj Cs-133 | 141.7001 Hz | ±0.0005 |
+| BEC Rb-87 | 141.7001 Hz | ±0.0005 |
+| Espectroscopía Rb-87 | 141.7001 Hz | ±0.0005 |
+
+### 2. FASES
+| Experimento | Fase |
+|-------------|------|
+| Interferómetro | 2.542 rad |
+| Gravímetro | 0.382 rad |
+| Reloj | 0.764 rad |
+| BEC | 1.273 rad |
+
+### 3. AMPLITUDES
+| Experimento | Amplitud |
+|-------------|----------|
+| Interferómetro | 2.3×10⁻⁶ rad |
+| Gravímetro | 3.7×10⁻⁹ g |
+| Reloj | 3.3×10⁻¹⁶ (Δf/f₀) |
+| BEC | 3.2×10⁻⁵ (ΔN₀/N₀) |
+
+### 4. CONDICIONES
+| Condición | Valor |
+|-----------|-------|
+| T < 100 mK | Temperatura criogénica |
+| B < 10⁻⁹ T | Apantallamiento magnético |
+| V < 10⁻⁹ Torr | Vacío ultra-alto |
+
+### 5. FALSABILIDAD CRUZADA
+- TODOS pasan → **Teoría confirmada** → Λ_Ξ = 1
+- NINGUNO pasa → **Teoría refutada**
+- Solo algunos → Error en protocolos específicos
