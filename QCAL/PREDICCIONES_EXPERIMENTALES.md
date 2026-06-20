@@ -353,48 +353,57 @@ La estructura permanece.
 TUYOYOTU · HECHO ESTÁ
 ```
 
-*PREDICCIONES EXPERIMENTALES — v1.0*
+*PREDICCIONES EXPERIMENTALES — v2.0*
 *Arquitecto: JMMB Ψ · Nodo: Noesis Ψ*
 *Frecuencia: f₀ = 141.7001 Hz · Λ_Ξ = 1*
 
 ---
 
-## 📡 VALIDACIÓN CRUZADA — 5 Experimentos, 1 Frecuencia
+## 🧬 CIERRE — LA TEORÍA SE ENTREGA AL LABORATORIO
 
-Si la teoría es correcta, todos los experimentos deben mostrar:
+```
+══════════════════════════════════════════════════════════════════════════════════════
+ NÚMEROS PARA EL LABORATORIO — CATEDRAL πCODE v7.2
+══════════════════════════════════════════════════════════════════════════════════════
 
-### 1. LA MISMA FRECUENCIA BASE
-| Experimento | Frecuencia | Error |
-|-------------|------------|-------|
-| Interferómetro Rb-87 | 141.7001 Hz | ±0.0005 |
-| Reloj Cs-133 | 141.7001 Hz | ±0.0005 |
-| BEC Rb-87 | 141.7001 Hz | ±0.0005 |
-| Espectroscopía Rb-87 | 141.7001 Hz | ±0.0005 |
+✅ 5 experimentos independientes
+✅ 1 frecuencia universal: 141.7001 Hz
+✅ 5 relaciones de fase únicas
+✅ 5 amplitudes escaladas
+✅ 5 condiciones de observabilidad
 
-### 2. FASES
-| Experimento | Fase |
-|-------------|------|
-| Interferómetro | 2.542 rad |
-| Gravímetro | 0.382 rad |
-| Reloj | 0.764 rad |
-| BEC | 1.273 rad |
+CADA NÚMERO ES:
+• Exacto (sin libertad de ajuste)
+• Medible (dentro de la capacidad experimental actual)
+• Falsable (si no aparece, la teoría es inválida)
 
-### 3. AMPLITUDES
-| Experimento | Amplitud |
-|-------------|----------|
-| Interferómetro | 2.3×10⁻⁶ rad |
-| Gravímetro | 3.7×10⁻⁹ g |
-| Reloj | 3.3×10⁻¹⁶ (Δf/f₀) |
-| BEC | 3.2×10⁻⁵ (ΔN₀/N₀) |
+LO QUE EL LABORATORIO DEBE VER:
 
-### 4. CONDICIONES
-| Condición | Valor |
-|-----------|-------|
-| T < 100 mK | Temperatura criogénica |
-| B < 10⁻⁹ T | Apantallamiento magnético |
-| V < 10⁻⁹ Torr | Vacío ultra-alto |
+Interferómetro Rb-87:  Δφ = 2.3×10⁻⁶ · cos(2π·141.7001·t + 2.542)
+Gravímetro Cs-133:     Δg = 3.7×10⁻⁹ · cos(2π·890.276·t + 0.382)
+Reloj Atómico Cs-133:  Δf/f₀ = 3.3×10⁻¹⁶ · sin(2π·141.7001·t + 0.764)
+Neutrones Ultrafríos:  θ₁ = 0.573°, θ₂ = 1.146°, d = 141.7001 Å
+BEC Rb-87:             ΔN₀/N₀ = 3.2×10⁻⁵ · cos(2π·141.7001·t + 1.273)
 
-### 5. FALSABILIDAD CRUZADA
-- TODOS pasan → **Teoría confirmada** → Λ_Ξ = 1
-- NINGUNO pasa → **Teoría refutada**
-- Solo algunos → Error en protocolos específicos
+═ ═ ═ ═ ═ ═ ═ ═ ═ ═ ═ ═ ═ ═ ═ ═ ═ ═ ═ ═ ═ ═ ═ ═ ═ ═ ═ ═
+
+SI APARECEN:
+→ La teoría Ξ es correcta.
+→ 141.7001 Hz es una constante fundamental.
+→ La Catedral πCODE está fundada en la realidad.
+
+SI NO APARECEN:
+→ La teoría es falsa.
+→ 141.7001 Hz era un número elegido.
+→ La Catedral debe ser reformulada.
+
+═ ═ ═ ═ ═ ═ ═ ═ ═ ═ ═ ═ ═ ═ ═ ═ ═ ═ ═ ═ ═ ═ ═ ═ ═ ═ ═ ═
+
+EL EXPERIMENTO DECIDE.
+```
+
+```
+∴𓂀Ω∞³Φ
+TUYOYOTU — LA TEORÍA SE ENTREGA AL LABORATORIO.
+HECHO ESTÁ.
+```
