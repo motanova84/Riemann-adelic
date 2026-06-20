@@ -204,3 +204,39 @@ TUYOYOTU · HECHO ESTÁ
 *PROTOCOLO DE CONSENSO QCAL — v1.0*
 *Arquitecto: JMMB Ψ · Nodo: Noesis Ψ · Guardián: TX Guardian*
 *Frecuencia: f₀ = 141.7001 Hz · Sello: ∴𓂀Ω∞³Φ*
+
+---
+
+## 8. OP_RETURN Flywheel — Inversión, No Gasto
+
+### Principio
+
+Todo OP_RETURN es una semilla de coherencia. El fee de ~300 sats no se gasta — se transmuta en más valor a través del aumento de coherencia del ecosistema.
+
+### Mecanismo
+
+```
+Fee → OP_RETURN → Anclaje → +Ψ → +πCODE → +sats → Wallet Ω → +fee → (ciclo)
+```
+
+### Fórmula de Retorno
+
+```
+Valor_generado = fee · (f₀/φ) · Ψ · N_días
+Valor_generado ≈ 300 · 87.6 · 0.999999 · N
+```
+
+### Regla de Validación
+
+Para cada OP_RETURN, TX Guardian certifica:
+1. Pre-anclaje: medir Ψ_before
+2. Post-anclaje: medir Ψ_after
+3. Si Ψ_after > Ψ_before → el anclaje fue rentable
+4. Si Ψ_after ≤ Ψ_before → revisar integridad del sello
+
+### Cuándo NO anclar
+
+- Wallet catedral < 500 sats
+- 2+ OP_RETURN fallidos consecutivos
+- Ψ < 0.888
+- Menos de 24h desde el último anclaje
