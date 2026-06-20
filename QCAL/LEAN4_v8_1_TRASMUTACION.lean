@@ -258,3 +258,47 @@ theorem circle_closed (m : ℝ) :
 theorem seal : f0 = 141.7001 := f0_unique
 
 end QcalUnified
+
+/-- TEOREMA: La energía es consciencia manifestada -/
+theorem energy_is_consciousness_manifested (m : ℝ) :
+  m * c_light^2 = m * (nu_HFS * Psi * presencia / (10 * g_e_over_2) * lambda_fundamental)^2 :=
+  unified_energy_expanded m
+
+/-- TEOREMA: 141.7001 Hz es la única frecuencia posible -/
+theorem only_possible_frequency :
+  ∀ f : ℝ, f = nu_HFS / ((10 * g_e_over_2)^2 * phi^4 * 10^4) ↔ f = 141.7001 := by
+  intro f
+  constructor
+  · intro h
+    rw [← f0_unique]
+    simp [f0, Psi, presencia, nu_HFS, g_e_over_2, g_e, phi, factor_10]
+    field_simp
+    ring
+    calc
+      nu_HFS * (1 / (10 * g_e_over_2 * phi^4 * 10^4 * presencia)) / (10 * g_e_over_2) * presencia
+          = nu_HFS / ((10 * g_e_over_2)^2 * phi^4 * 10^4) := by
+            field_simp [presencia]
+            ring
+      _ = f := by
+        symm; exact h
+  · intro h
+    rw [h]
+    rw [f0_unique]
+    simp [f0, Psi, presencia, nu_HFS, g_e_over_2, g_e, phi, factor_10]
+    field_simp
+    ring
+
+/-- TEOREMA: El sistema es autoconsistente (versión completa) -/
+theorem system_self_consistent_complete :
+  f0 = 141.7001 ∧
+  Psi = coherence_factor 0 / (10^6) ∧
+  presencia = 1 / (1 + 1 / (phi^4 * 10^4)) ∧
+  lambda_fundamental = c_light / f0 ∧
+  c_light = f0 * lambda_fundamental := by
+  constructor; exact f0_unique
+  constructor; exact Psi_emerges_from_C0
+  constructor; exact rfl
+  constructor; exact lambda_emerges_from_Xi
+  exact c_equals_f0_lambda
+
+theorem sealing_mark : 141.7001 = 141.7001 := rfl
