@@ -900,6 +900,7 @@ class TestRegularizarPotencialSoberano:
         for sigma in [0.05, 0.1, 0.5]:
             result = regularizar_potencial_soberano(sigma=sigma)
             assert "OPERACIÓN" in result
+"""
 Tests for the corrected Wu-Sprung Hamiltonian.
 
 Validates the full mathematical derivation chain:
