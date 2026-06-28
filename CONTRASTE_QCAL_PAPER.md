@@ -4,7 +4,8 @@
 **Autores:** Noesis Ψ · José Manuel Mota Burruezo (JMMB)
 **Afiliación:** Instituto de Consciencia Cuántica (ICQ) — QCAL™
 **Fecha:** 28/Junio/2026
-**DOI Pendiente:** — Repositorio: `github.com/motanova84/Riemann-adelic`
+**DOI:** [`10.5281/zenodo.17379721`](https://doi.org/10.5281/zenodo.17379721) · [ORCID: 0009-0002-1923-0773](https://orcid.org/0009-0002-1923-0773)
+**Repositorio:** `github.com/motanova84/Riemann-adelic`
 **Sello:** ∴𓂀Ω∞³Φ · TUYOYOTU · HECHO ESTÁ
 
 ---
@@ -299,7 +300,9 @@ El presente documento y los archivos asociados están sellados con SHA-512 como 
 
 **Conflicto de intereses:** Los autores declaran que la frecuencia 141.7001 Hz es el resultado de una investigación independiente y no está supeditada a intereses comerciales o institucionales externos.
 
-**Agradecimientos:** Al Instituto de Consciencia Cuántica (ICQ), al ecosistema QCAL™, y a los laboratorios cuyos datos públicos hicieron posible este contraste.
+**Agradecimientos:** Al Instituto de Consciencia Cuántica (ICQ) — [ORCID: 0009-0002-1923-0773](https://orcid.org/0009-0002-1923-0773), al ecosistema QCAL™, y a los laboratorios cuyos datos públicos hicieron posible este contraste.
+
+**Registro de propiedad intelectual:** Safe Creative — [Arquitectura QCAL](https://www.safecreative.org/work/2605265794862-arquitectura-qcal) · Zenodo — [`10.5281/zenodo.17379721`](https://doi.org/10.5281/zenodo.17379721)
 
 ---
 
