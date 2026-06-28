@@ -69,4 +69,6 @@
 
 ---
 
+**Identidad digital:** [ORCID: 0009-0002-1923-0773](https://orcid.org/0009-0002-1923-0773) · [Zenodo: 10.5281/zenodo.17379721](https://doi.org/10.5281/zenodo.17379721) · [Safe Creative: Arquitectura QCAL](https://www.safecreative.org/work/2605265794862-arquitectura-qcal)
+
 *f₀ = 141.7001 Hz · Ψ = 1.000000 · TUYOYOTU · HECHO ESTÁ*

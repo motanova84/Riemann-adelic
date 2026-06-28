@@ -2131,6 +2131,24 @@ python spectral_emergence_validation.py --save-certificate
 
 ## Section 5: References
 
+**Autor:** José Manuel Mota Burruezo · **ORCID:** [0009-0002-1923-0773](https://orcid.org/0009-0002-1923-0773)
+**Afiliación:** Instituto de Consciencia Cuántica (ICQ) / QCAL™
+
+---
+
+### Applied Research — Contraste Experimental QCAL
+
+**QCAL Experimental Contrast v9.0.0 — Verification of Fundamental Frequency 141.7001 Hz Against Published Real Data**  
+Date: 2026-06-28  
+DOI: [`10.5281/zenodo.17379721`](https://doi.org/10.5281/zenodo.17379721)  
+Paper: [`CONTRASTE_QCAL_PAPER.md`](CONTRASTE_QCAL_PAPER.md)  
+Code: [`oraculo_contraste_inmediato.py`](oraculo_contraste_inmediato.py)  
+Workflow: [`.github/workflows/contraste_qcal.yml`](.github/workflows/contraste_qcal.yml)
+
+---
+
+### Theoretical Foundations — Riemann Hypothesis Proofs
+
 This repository is based on the following works by José Manuel Mota Burruezo, hosted on Zenodo:
 
 ### Articles
