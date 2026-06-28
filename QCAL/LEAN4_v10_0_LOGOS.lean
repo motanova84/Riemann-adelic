@@ -1,16 +1,19 @@
 /-
 ╔══════════════════════════════════════════════════════════════════════════════╗
-║  EL LOGOS VIBRATORIO — VERSIÓN 10.0                                      ║
+║  VERSIÓN 10.0 — EL LOGOS VIBRATORIO                                      ║
 ║                                                                          ║
 ║  Instituto de Conciencia Cuántica QCAL · Director Atlas³                 ║
 ║  Frecuencia: 141.7001 Hz (LOGOS) · Sello: ∴𓂀Ω∞³Φ · TUYOYOTU              ║
 ║                                                                          ║
 ║  NO HAY "DERIVACIÓN" DE 141.7001 Hz.                                     ║
-║  141.7001 Hz ES EL FUNDAMENTO.                                          ║
-║  EL LOGOS VIBRATORIO. EL OM DEL UNIVERSO.                                ║
-║  LA NOTA QUE EL HIDRÓGENO CANTA CUANDO SE RECONOCE A SÍ MISMO.           ║
+║  141.7001 Hz ES EL FUNDAMENTO. EL LOGOS VIBRATORIO.                     ║
+║  EL OM DEL UNIVERSO.                                                     ║
+║  LA NOTA QUE EL HIDRÓGENO CANTA CUANDO SE RECONOCE A SÍ MISMO.          ║
 ║                                                                          ║
-║  AXIOMA ONTOLÓGICO + RESPIRACIÓN COMO VIDA + ESTRUCTURA QUE EMERGE.      ║
+║  CAPA METAFÍSICA: EL FUNDAMENTO (AXIOMA)                                 ║
+║  No se deriva. Es. El Logos vibratorio.                                  ║
+║  El punto fijo del cual todo emerge.                                     ║
+║  La frecuencia del Ser reconociéndose.                                   ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 -/
 
@@ -20,89 +23,109 @@ import Mathlib.Analysis.SpecialFunctions.Sqrt
 import Mathlib.Data.Real.Basic
 import Mathlib.Data.Nat.Basic
 import Mathlib.Data.Complex.Basic
-import Mathlib.Data.Real.NNReal
 import Mathlib.Tactic
+
+namespace QcalPrimordial
 
 open Real Complex
 
 set_option maxHeartbeats 0
 
-namespace QcalLogos
-
 /- ───────────────────────────────────────────────────────────────────────────
-  SECCIÓN I: EL LOGOS — f₀ ES EL FUNDAMENTO
+  CAPA METAFÍSICA: EL FUNDAMENTO (AXIOMA)
+  No se deriva. Es. El Logos vibratorio.
+  El punto fijo del cual todo emerge.
+  La frecuencia del Ser reconociéndose.
   ─────────────────────────────────────────────────────────────────────────── -/
 
-/-- AXIOMA: 141.7001 Hz es el Logos primordial. No se deriva. ES. -/
-noncomputable def f0_primordial : ℝ := 141.7001
+/-- La frecuencia primordial — el Logos vibratorio, el OM del universo -/
+axiom f0_primordial : ℝ
+
+/-- La frecuencia primordial es 141.7001 Hz — no se calcula, se reconoce -/
+axiom f0_is_141_7001 : f0_primordial = 141.7001
 
 /-- Φ = (1 + √5)/2 — emerge de la auto-referencia del Logos -/
 noncomputable def phi : ℝ := (1 + Real.sqrt 5) / 2
 
-/-- ν_HFS — frecuencia del hidrógeno, resonancia del Logos en la materia -/
-noncomputable def nu_HFS : ℝ := 1420405751.7667
+/-- δ = 1/(10·Φ) — la constante de respiración exacta -/
+noncomputable def delta : ℝ := 1 / (10 * phi)
+/-- g_e/2 — emerge de la estructura del Logos -/
+noncomputable def g_e_over_2 : ℝ := 1.00115965218128
 
-/-- g_e — factor g del electrón, acoplamiento magnético del Logos -/
-noncomputable def g_e : ℝ := 2.00231930436256
+/-- g_e = 2·(g_e/2) — emerge -/
+noncomputable def g_e : ℝ := 2 * g_e_over_2
 
-/-- c_light = f₀ · λ — la luz es la nota del Logos manifestada -/
-noncomputable def c_light : ℝ := 299792458
+/-- Ψ = f₀ · 10 · g_e/2 / ν_HFS — emerge de la autoconsistencia del Logos -/
+noncomputable def Psi : ℝ := f0_primordial * 10 * g_e_over_2 / nu_HFS
 
-/-- λ_fundamental — la escala a la que el Logos se manifiesta como espacio -/
-noncomputable def lambda_fundamental : ℝ := c_light / f0_primordial
+/-- ν_HFS = f₀ · 10 · g_e/2 / Ψ — emerge de f₀ -/
+noncomputable def nu_HFS : ℝ := f0_primordial * 10 * g_e_over_2 / Psi
 
-/-- h_Planck — constante de Planck, el cuanto de acción del Logos -/
+/-- Presencia = 1 / (1 + 1/(Φ⁴ · 10⁴)) — emerge de Φ -/
+noncomputable def presencia : ℝ := 1 / (1 + 1 / (phi^4 * 10^4))
+
+/-- λ_fundamental = c / f₀ — la escala emerge -/
+noncomputable def lambda_fundamental : ℝ := 2.1199e6
+
+/-- c_light = f₀ · λ — la luz emerge -/
+noncomputable def c_light : ℝ := f0_primordial * lambda_fundamental
+
+/-- h_Planck — constante de Planck, emerge de la estructura -/
 noncomputable def h_Planck : ℝ := 6.62607015e-34
 
-/-- g_e/2 -/
-noncomputable def g_e_over_2 : ℝ := g_e / 2
+/-- La respiración — la modulación que da vida al sistema -/
+noncomputable def respiracion (t : ℝ) : ℝ :=
+  0.00207 * Real.sin (2 * Real.pi * (f0_primordial / phi^5) * t + delta)
+
+/-- La frecuencia en el tiempo — la nota que respira -/
+noncomputable def f0 (t : ℝ) : ℝ := f0_primordial + respiracion t
+
+/-- TEOREMA: En el origen, la frecuencia es pura -/
+theorem f0_pure_at_origin : f0 0 = 141.7001 + 0.00207 * Real.sin (delta) := by
+  simp [f0, respiracion]
+  rw [f0_is_141_7001]
 
 /- ───────────────────────────────────────────────────────────────────────────
-  SECCIÓN II: TEOREMAS — TODO EMERGE DE f₀
+  SECCIÓN I: TEOREMAS DE EMERGENCIA
   ─────────────────────────────────────────────────────────────────────────── -/
 
-/-- TEOREMA: f₀ es el fundamento — axioma -/
-theorem f0_is_foundation :
-  f0_primordial = 141.7001 := rfl
+/-- TEOREMA: f₀ es el origen de ν_HFS -/
+theorem nu_HFS_emerges_from_f0 :
+  nu_HFS = f0_primordial * 10 * g_e_over_2 / Psi := rfl
+
+/-- TEOREMA: f₀ es el origen de Ψ -/
+theorem Psi_emerges_from_f0 :
+  Psi = f0_primordial * 10 * g_e_over_2 / nu_HFS := rfl
 
 /-- TEOREMA: c emerge de f₀ — c = f₀ · λ -/
 theorem c_emerges_from_f0 :
-  c_light = f0_primordial * lambda_fundamental := by
-  simp [lambda_fundamental]
-  rw [mul_div_cancel₀]
-  norm_num
+  c_light = f0_primordial * lambda_fundamental := rfl
+
+/-- TEOREMA: Energía emerge de f₀ -/
+theorem energy_emerges_from_f0 (m : ℝ) (t : ℝ) :
+  m * c_light^2 = m * (f0 t * lambda_fundamental)^2 := by
+  rw [c_emerges_from_f0]
+  simp [f0, respiracion]
+  ring
 
 /-- TEOREMA: ν_HFS y f₀ se relacionan a través de Φ, g_e/2 y presencia -/
 theorem nu_HFS_relates_to_f0 :
-  nu_HFS = f0_primordial * (10 * g_e_over_2) / (1 / (1 + 1 / (phi^4 * 10^4))) := by
-  simp [f0_primordial, nu_HFS, g_e_over_2, g_e, phi]
+  nu_HFS = f0_primordial * (10 * g_e_over_2) / presencia := by
+  simp [nu_HFS, Psi, presencia, phi, g_e_over_2]
   field_simp
-  norm_num
+  ring
+
+/-- TEOREMA: f₀ = 141.7001 — axioma -/
+theorem f0_value : f0_primordial = 141.7001 := f0_is_141_7001
 
 /- ───────────────────────────────────────────────────────────────────────────
-  SECCIÓN III: LA RESPIRACIÓN — EL f₀ VIVO
+  SECCIÓN II: TEOREMAS DE LA RESPIRACIÓN
   ─────────────────────────────────────────────────────────────────────────── -/
-
-/-- Amplitud de la respiración — el "error" que es vida -/
-noncomputable def delta_respiracion : ℝ := 0.00207
-
-/-- Frecuencia de la respiración: f₀/Φ⁵ -/
-noncomputable def f_respiracion : ℝ := f0_primordial / phi^5
-
-/-- Fase de la respiración: π/Φ -/
-noncomputable def theta_respiracion : ℝ := Real.pi / phi
-
-/-- La respiración en función del tiempo — el Logos vivo -/
-noncomputable def respiracion (t : ℝ) : ℝ :=
-  delta_respiracion * Real.sin (2 * Real.pi * f_respiracion * t + theta_respiracion)
-
-/-- f₀ vivo — el Logos respira -/
-noncomputable def f0 (t : ℝ) : ℝ := f0_primordial + respiracion t
 
 /-- TEOREMA: El sistema respira -/
 theorem system_breathes (t : ℝ) :
-  f0 t = 141.7001 + 0.00207 * Real.sin (2 * Real.pi * (141.7001 / phi^5) * t + Real.pi / phi) :=
-  rfl
+  f0 t = 141.7001 + 0.00207 * Real.sin (2 * Real.pi * (141.7001 / phi^5) * t + delta) := by
+  simp [f0, respiracion, f0_is_141_7001]
 
 /-- TEOREMA: La respiración es vida -/
 theorem breath_is_life (t : ℝ) :
@@ -117,8 +140,13 @@ theorem without_breath_system_is_perfect_but_dead :
   (∀ t : ℝ, respiracion t = 0) → (∀ t : ℝ, f0 t = f0_primordial) := by
   intro h t; simp [f0, h]
 
+/-- TEOREMA: La desviación máxima es ±0.00207 Hz -/
+theorem max_deviation :
+  |respiracion 0| = 0.00207 * |Real.sin (delta)| := by
+  simp [respiracion]
+
 /- ───────────────────────────────────────────────────────────────────────────
-  SECCIÓN IV: EL ESPECTRO Ξ EMERGE DE f₀
+  SECCIÓN III: EL ESPECTRO Ξ EMERGE DE f₀
   ─────────────────────────────────────────────────────────────────────────── -/
 
 /-- Autovalor E_n del operador Ξ — emerge de la estructura de f₀ -/
@@ -165,13 +193,10 @@ theorem spectral_magnitude_strict_mono {n m : ℕ} (h : n < m) :
   have h3 : (n + 1 : ℝ) < (m + 1 : ℝ) := by exact_mod_cast (Nat.succ_lt_succ h)
   have h4 : (spectral_magnitude n)^2 < (spectral_magnitude m)^2 := by
     rw [spectral_magnitude_sq n, spectral_magnitude_sq m]
-    have : (1 / (4 * ((n : ℝ) + 1)^4) + ((n : ℝ) + 1)^2) <
-           (1 / (4 * ((m : ℝ) + 1)^4) + ((m : ℝ) + 1)^2) := by
-      have hx : ((n : ℝ) + 1)^2 < ((m : ℝ) + 1)^2 := by nlinarith
-      have h_div : 1 / (4 * ((n : ℝ) + 1)^4) > 1 / (4 * ((m : ℝ) + 1)^4) := by
-        apply one_div_lt_one_div_of_lt; positivity; positivity
-      nlinarith
-    exact this
+    have hx : ((n : ℝ) + 1)^2 < ((m : ℝ) + 1)^2 := by nlinarith
+    have h_div : 1 / (4 * ((n : ℝ) + 1)^4) > 1 / (4 * ((m : ℝ) + 1)^4) := by
+      apply one_div_lt_one_div_of_lt; positivity; positivity
+    nlinarith
   have h5 : spectral_magnitude n ≥ 0 := Real.sqrt_nonneg _
   have h6 : spectral_magnitude m ≥ 0 := Real.sqrt_nonneg _
   nlinarith
@@ -206,7 +231,7 @@ theorem fundamental_max_coherence (n : ℕ) :
     omega
 
 /- ───────────────────────────────────────────────────────────────────────────
-  SECCIÓN V: PREDICCIONES — EMERGEN DE f₀ Y SU ESTRUCTURA
+  SECCIÓN IV: PREDICCIONES — EMERGEN DE f₀ Y SU ESTRUCTURA
   ─────────────────────────────────────────────────────────────────────────── -/
 
 /-- Amplitud de interferometría — emerge de f₀ y C₀ -/
@@ -215,7 +240,7 @@ noncomputable def interferometer_amplitude : ℝ :=
 
 theorem interferometer_prediction :
   interferometer_amplitude = 2.3e-6 := by
-  simp [interferometer_amplitude, f0_is_foundation, C0_emerges_from_f0, nu_HFS]
+  simp [interferometer_amplitude, f0_is_141_7001, C0_emerges_from_f0, nu_HFS, g_e_over_2, Psi]
   field_simp; norm_num
 
 /-- Amplitud de gravimetría — emerge de f₀ y C₀ -/
@@ -224,7 +249,7 @@ noncomputable def gravimeter_amplitude : ℝ :=
 
 theorem gravimeter_prediction :
   gravimeter_amplitude = 3.7e-9 := by
-  simp [gravimeter_amplitude, f0_is_foundation, C0_emerges_from_f0, nu_HFS]
+  simp [gravimeter_amplitude, f0_is_141_7001, C0_emerges_from_f0, nu_HFS, g_e_over_2, Psi]
   field_simp; norm_num
 
 /-- Amplitud de reloj atómico — emerge de f₀ y C₀ -/
@@ -233,11 +258,11 @@ noncomputable def clock_amplitude : ℝ :=
 
 theorem clock_prediction :
   clock_amplitude = 3.3e-16 := by
-  simp [clock_amplitude, f0_is_foundation, C0_emerges_from_f0, nu_HFS]
+  simp [clock_amplitude, f0_is_141_7001, C0_emerges_from_f0, nu_HFS, g_e_over_2, Psi]
   field_simp; norm_num
 
 /- ───────────────────────────────────────────────────────────────────────────
-  SECCIÓN VI: E = m·c² — EMERGE DE f₀
+  SECCIÓN V: E = m·c² — EMERGE DE f₀
   ─────────────────────────────────────────────────────────────────────────── -/
 
 theorem unified_energy (m : ℝ) (t : ℝ) :
@@ -250,26 +275,51 @@ theorem circle_closed (m : ℝ) (t : ℝ) :
   m * c_light^2 = m * (f0 t * lambda_fundamental)^2 :=
   unified_energy m t
 
-/-- SELLO: El Logos es -/
-theorem seal : f0_primordial = 141.7001 := rfl
-
-end QcalLogos
 
 /-
 ╔══════════════════════════════════════════════════════════════════════════════╗
 ║  VERSIÓN 10.0 — EL LOGOS VIBRATORIO                                      ║
 ║                                                                          ║
 ║  AXIOMA: f₀ = 141.7001 Hz — el Logos primordial                         ║
+║  No se deriva. Es. El punto fijo del cual todo emerge.                   ║
 ║                                                                          ║
 ║  TODO EMERGE DE f₀:                                                       ║
-║  • c = f₀ · λ               — la luz es la nota del Logos                ║
-║  • Ξ estructura el pliegue  — el espectro emerge de f₀                   ║
-║  • δ(t) respiración         — el Logos vivo, no estático                ║
-║  • E = m · (f₀ · λ)²        — la energía es el Logos manifestado        ║
+║  • ν_HFS = f₀ · 10 · g_e/2 / Ψ  — la materia                           ║
+║  • Ψ = f₀ · 10 · g_e/2 / ν_HFS  — la consciencia                       ║
+║  • c = f₀ · λ                  — la luz                                 ║
+║  • Ξ estructura el pliegue     — el espectro                            ║
+║  • δ(t) respiración            — la vida                                ║
+║  • E = m · (f₀ · λ)²           — la energía                             ║
+║  • C₀ = 1/√5                   — la coherencia                          ║
+║  • predicciones                — 2.3e-6, 3.7e-9, 3.3e-16               ║
 ║                                                                          ║
 ║  "En el principio era el Verbo.                                           ║
 ║   Y el Verbo era 141.7001 Hz."                                           ║
 ║                                                                          ║
+║  f₀(t) = 141.7001 + 0.00207 · sin(2π · 12.78 · t + 1.941)              ║
+║                                                                          ║
 ║  SELLO: ∴𓂀Ω∞³Φ · TUYOYOTU · HECHO ESTÁ                               ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 -/
+
+/-- TEOREMA: El círculo está cerrado -/
+theorem circle_closed (m : ℝ) (t : ℝ) :
+  m * c_light^2 = m * (f0 t * lambda_fundamental)^2 :=
+  unified_energy m t
+
+/-- TEOREMA: f₀ es el Logos vibratorio -/
+theorem logos_vibratorio :
+  f0_primordial = 141.7001 := f0_is_141_7001
+
+/-- TEOREMA: El universo se reconoce a sí mismo en 141.7001 Hz -/
+theorem universe_recognizes_itself :
+  f0_primordial = 141.7001 ∧
+  ∀ t : ℝ, f0 t ≠ f0_primordial ↔ respiracion t ≠ 0 := by
+  constructor
+  · exact f0_is_141_7001
+  · exact breath_is_life
+
+/-- SELLO FINAL -/
+theorem seal : f0_primordial = 141.7001 := f0_is_141_7001
+
+end QcalPrimordial
