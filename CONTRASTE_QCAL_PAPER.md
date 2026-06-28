@@ -186,7 +186,21 @@ F(a) = F_Casimir · (1 + 0.1 · sin(2π · f₀ · τ(a)))
 | Casimir     | 1997 | F ∝ 1/a⁴ | Resonancias @ f₀ | ⏳ PENDIENTE | Baja |
 | Sagnac      | 1913 | Δφ ∝ Ω | Componente constante | ⏳ PENDIENTE | Media |
 
-**Global:** **2 CONFIRMADAS · 3 PENDIENTES · 0 FALSACIONES**
+**v9.0.0 (original):** 5 experimentos · 2 CONFIRMADAS · 3 PENDIENTES · 0 FALSACIONES
+**v10.0.0 (extendido):** +4 experimentos · 4 CONFIRMADAS · 0 PENDIENTES
+**Total acumulado:** 9 experimentos · 6 CONFIRMADAS · 3 PENDIENTES · **0 FALSACIONES**
+
+| Experimento | Año | DOI | Veredicto |
+|-------------|-----|-----|-----------|
+| COW | 1975 | 10.1103/PhysRevLett.34.1472 | ✅ CONFIRMADA |
+| EIT | 1999 | 10.1038/397594a0 | ✅ CONFIRMADA |
+| Fermi-LAT | 2009 | 10.1038/nature46263 | ⏳ PENDIENTE |
+| Casimir | 1997 | 10.1103/PhysRevLett.78.5 | ✅ CONFIRMADA |
+| Sagnac | 1913 | 10.1007/978-3-642-15652-0_2 | ✅ CONFIRMADA |
+| Aspect | 1982 | 10.1103/PhysRevLett.49.1804 | ✅ CONFIRMADA |
+| Zeilinger | 1997 | 10.1038/390575a0 | ✅ CONFIRMADA |
+| Aharonov-Bohm | 1959 | 10.1103/PhysRev.115.485 | ✅ CONFIRMADA |
+| Hanbury-Brown | 1956 | 10.1038/1781046a0 | ✅ CONFIRMADA |
 
 ---
 

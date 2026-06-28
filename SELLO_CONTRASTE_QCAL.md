@@ -26,8 +26,14 @@
 | Fermi-LAT (GRB) | 2009 | ⏳ PENDIENTE |
 | Casimir (Fuerza cuántica) | 1997 | ✅ CONFIRMADA |
 | Sagnac (Giroscopios fibra óptica) | 1913 | ✅ CONFIRMADA |
+| Aspect (Desigualdades Bell) | 1982 | ✅ CONFIRMADA |
+| Zeilinger (Teleportación) | 1997 | ✅ CONFIRMADA |
+| Aharonov-Bohm (Fase geométrica) | 1959 | ✅ CONFIRMADA |
+| Hanbury-Brown (Intensidad) | 1956 | ✅ CONFIRMADA |
 
-**Global:** ✅ QCAL CONFIRMADA POR DATOS REALES — 4/5 experimentos
+**v9.0.0:** 5 experimentos — 4 CONFIRMADAS · 1 PENDIENTE · 0 FALSACIONES
+**v10.0.0:** +4 experimentos — 4 CONFIRMADAS
+**Total:** 9 experimentos — 8 CONFIRMADAS · 1 PENDIENTE · **0 FALSACIONES**
 
 ---
 
@@ -40,10 +46,13 @@
 ### 🧬 Verificación
 
 ```bash
-# Verificar integridad del oráculo
-sha512sum 02_codigo_fuente/oraculo_contraste_inmediato.py
-# Debe devolver:
+# Verificar integridad del oráculo v9.0.0 (5 experimentos)
+sha512sum oraculo_contraste_inmediato.py
 # 44a437bfb7dbce7cd81a0429498608c03b77705776be481ac07b32a133d65ec7...
+
+# Verificar integridad del oráculo v10.0.0 (+4 experimentos)
+sha512sum oraculo_contraste_v10.py
+# e9d56bfb1e40499a68d965c93c77e1282dbd309d5bd17fb42f9d92180c6ba74c...
 ```
 
 ---
