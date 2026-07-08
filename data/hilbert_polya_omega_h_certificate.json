@@ -1,0 +1,81 @@
+{
+  "framework": "Hilbert-Pólya Omega-H Operator",
+  "description": "Spectral construction of Ĥ = -i(x d/dx + 1/2) on the Adelic Solenoid A_Q/Q establishing Spec(Ĥ) = {γ_n}",
+  "validation_date": "2026-03-06T23:01:28.305552+00:00",
+  "doi": "10.5281/zenodo.17379721",
+  "orcid": "0009-0002-1923-0773",
+  "author": "José Manuel Mota Burruezo Ψ ✧ ∞³",
+  "institution": "Instituto de Conciencia Cuántica (ICQ)",
+  "frequency_f0": 141.7001,
+  "frequency_unity": 888.0,
+  "coherence_constant": 244.36,
+  "n_primes": 30,
+  "n_grid": 500,
+  "validation_time_seconds": 0.011,
+  "results": {
+    "constants": {
+      "f0": 141.7001,
+      "f_unity": 888.0,
+      "C": 244.36,
+      "doi": "10.5281/zenodo.17379721",
+      "passed": true
+    },
+    "orbit_quantization": {
+      "n_primes": 30,
+      "max_error": 0.0,
+      "passed": true
+    },
+    "self_adjointness": {
+      "max_relative_error": 0.024581243064221967,
+      "n_pairs_tested": 21,
+      "passed": true
+    },
+    "eigenfunctions": {
+      "n_zeros_tested": 3,
+      "max_relative_error": 0.002480256446529356,
+      "zeros_tested": [
+        14.134725141734693,
+        21.022039638771552,
+        25.01085758014569
+      ],
+      "passed": true
+    },
+    "spectral_determinant": {
+      "n_zeros_found": 10,
+      "n_tested": 10,
+      "zeros_detected": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "passed": true
+    },
+    "dilation_unitarity": {
+      "unitary": true,
+      "t_values_tested": [
+        0.1,
+        -0.1,
+        0.5
+      ],
+      "passed": true
+    },
+    "full_closure": {
+      "Psi": 1.0,
+      "self_adjoint": true,
+      "spectral_identity": true,
+      "n_zeros_found": 10,
+      "passed": true
+    }
+  },
+  "n_passed": 7,
+  "n_total": 7,
+  "Psi": 1.0,
+  "overall_status": "VALIDATED"
+}
