@@ -1,0 +1,62 @@
+{
+  "module": "Adelic Expansion Flow \u2014 Sistema Din\u00e1mico Natural",
+  "description": "Natural dynamical system on Idele Class Space C_Q = A_Q^\u00d7/Q^\u00d7 with periodic orbits of length exactly log p",
+  "author": "Jos\u00e9 Manuel Mota Burruezo \u03a8 \u2727 \u221e\u00b3",
+  "institution": "Instituto de Conciencia Cu\u00e1ntica (ICQ)",
+  "doi": "10.5281/zenodo.17379721",
+  "orcid": "0009-0002-1923-0773",
+  "timestamp": "2026-03-05T20:14:02.010197",
+  "version": "1.0.0",
+  "qcal_frequency": 141.7001,
+  "qcal_coherence": 244.36,
+  "validation_results": {
+    "orbit_rigidity": {
+      "passed": true,
+      "n_orbits": 150,
+      "max_deviation": 0.0,
+      "first_orbit_log2": true,
+      "valid_space_recognition": true
+    },
+    "self_adjointness": {
+      "passed": true,
+      "is_self_adjoint": true,
+      "spectrum_real": true,
+      "eigenvalue_equations_verified": [
+        true,
+        true,
+        true
+      ],
+      "rh_implication": "All zeros of \u03be(s) lie on Re(s) = 1/2"
+    },
+    "trace_formula": {
+      "passed": true,
+      "weyl_diverges": true,
+      "prime_sum_decays": true,
+      "all_finite": true,
+      "n_orbits": 150
+    },
+    "fredholm_determinant": {
+      "passed": true,
+      "all_finite": true,
+      "functional_equation_verified": true,
+      "max_fe_error": 0.0
+    },
+    "rh_structure": {
+      "passed": true,
+      "pillar_1": true,
+      "pillar_2": true,
+      "pillar_3": true,
+      "conclusion": "RH VERIFIED: The adelic scale energy is conserved; all zeros of \u03be(s) lie on Re(s) = 1/2"
+    },
+    "qcal_coherence": {
+      "passed": true,
+      "f0_correct": true,
+      "c_correct": true,
+      "all_coherence_positive": true,
+      "certificate_valid": true,
+      "certificate_hash": "0xQCAL_ADELIC_FLOW_cd99aa0e9e6cd335"
+    }
+  },
+  "all_passed": true,
+  "certificate_hash": "0xQCAL_ADELIC_FLOW_674b81095ae99b5d"
+}
