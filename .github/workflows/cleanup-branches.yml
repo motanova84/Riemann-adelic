@@ -1,0 +1,186 @@
+name: 🧹 Cleanup Obsolete Branches
+
+on:
+  pull_request:
+    types: [closed]
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Dry run (list branches without deleting)'
+        required: false
+        default: false
+        type: boolean
+      delete_merged_only:
+        description: 'Delete only merged branches (false = delete all non-protected bot branches)'
+        required: false
+        default: false
+        type: boolean
+
+permissions:
+  contents: write
+
+jobs:
+  # Delete the head branch automatically when a PR is merged or closed
+  delete-pr-branch:
+    name: Delete PR head branch
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
+    steps:
+      - name: Delete head branch
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const branch = context.payload.pull_request.head.ref;
+            const protected_branches = ['main', 'master', 'develop', 'staging', 'production'];
+            if (protected_branches.includes(branch)) {
+              console.log(`Skipping protected branch: ${branch}`);
+              return;
+            }
+            try {
+              await github.rest.git.deleteRef({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                ref: `heads/${branch}`,
+              });
+              console.log(`Deleted branch: ${branch}`);
+            } catch (error) {
+              console.log(`Could not delete branch ${branch}: ${error.message}`);
+            }
+
+  # Bulk cleanup of obsolete branches on manual trigger
+  bulk-cleanup:
+    name: Bulk cleanup obsolete branches
+    runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_dispatch'
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Cleanup obsolete branches
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const dryRun = '${{ inputs.dry_run }}' === 'true';
+            const mergedOnly = '${{ inputs.delete_merged_only }}' === 'true';
+
+            // Branches that must never be deleted
+            const PROTECTED = new Set([
+              'main', 'master', 'develop', 'staging', 'production',
+              'gh-pages', 'release', 'hotfix',
+            ]);
+
+            // Prefixes of bot-generated / auto-created branches considered obsolete
+            const BOT_PREFIXES = [
+              'copilot/',
+              'integration/',
+              'auto-seal/',
+              'codex/',
+              'infra/',
+              'dependabot/',
+              'revert-',
+            ];
+
+            console.log(`Mode: ${dryRun ? 'DRY RUN' : 'DELETE'}, merged-only: ${mergedOnly}`);
+
+            // Fetch all branches (paginated)
+            let branches = [];
+            let page = 1;
+            while (true) {
+              const resp = await github.rest.repos.listBranches({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                per_page: 100,
+                page,
+              });
+              if (resp.data.length === 0) break;
+              branches = branches.concat(resp.data);
+              page++;
+              if (resp.data.length < 100) break;
+            }
+
+            console.log(`Total branches found: ${branches.length}`);
+
+            // Get main branch SHA for merge check
+            const mainRef = await github.rest.git.getRef({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              ref: 'heads/main',
+            });
+            const mainSha = mainRef.data.object.sha;
+
+            let deleted = 0;
+            let skipped = 0;
+            let errors = 0;
+
+            for (const branch of branches) {
+              const name = branch.name;
+
+              // Always protect certain branches
+              if (PROTECTED.has(name)) {
+                skipped++;
+                continue;
+              }
+
+              // Check if this branch is bot-generated
+              const isBot = BOT_PREFIXES.some(prefix => name.startsWith(prefix));
+
+              // If mergedOnly mode, check whether branch tip is ancestor of main
+              let isMerged = false;
+              if (mergedOnly || !isBot) {
+                try {
+                  const compare = await github.rest.repos.compareCommits({
+                    owner: context.repo.owner,
+                    repo: context.repo.repo,
+                    base: mainSha,
+                    head: branch.commit.sha,
+                  });
+                  // 'behind' or 'identical' means branch is fully merged into main
+                  isMerged = compare.data.status === 'behind' || compare.data.status === 'identical';
+                } catch (_) {
+                  isMerged = false;
+                }
+              }
+
+              const shouldDelete = mergedOnly ? isMerged : (isBot || isMerged);
+
+              if (!shouldDelete) {
+                skipped++;
+                continue;
+              }
+
+              if (dryRun) {
+                console.log(`[DRY RUN] Would delete: ${name} (merged=${isMerged}, bot=${isBot})`);
+                deleted++;
+                continue;
+              }
+
+              try {
+                await github.rest.git.deleteRef({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  ref: `heads/${name}`,
+                });
+                console.log(`Deleted: ${name}`);
+                deleted++;
+              } catch (error) {
+                console.log(`Error deleting ${name}: ${error.message}`);
+                errors++;
+              }
+            }
+
+            console.log(`\nSummary: deleted=${deleted}, skipped=${skipped}, errors=${errors}`);
+
+            // Set output summary
+            await core.summary
+              .addHeading('Branch Cleanup Summary')
+              .addTable([
+                [{data: 'Metric', header: true}, {data: 'Count', header: true}],
+                ['Branches deleted', String(deleted)],
+                ['Branches skipped', String(skipped)],
+                ['Errors', String(errors)],
+              ])
+              .write();
