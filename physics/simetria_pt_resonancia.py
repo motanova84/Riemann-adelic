@@ -110,8 +110,6 @@ _EPSILON_STABILITY: float = 1e-12
 class ConstantesPT:
     """
     Constantes canónicas del sistema PT-simétrico QCAL-SYMBIO-1.
-class ConstantesPT:
-    """
     Constantes canónicas para la simetría PT biológica QCAL.
 
     Atributos
@@ -140,7 +138,12 @@ class ConstantesPT:
 
 
 CONST = ConstantesPT()
-        Frecuencia base QCAL f₀ = 141.7001 Hz, ancla el agua EZ.
+
+
+@dataclass(frozen=True)
+class ConstantesPT2:
+    """
+    Frecuencia base QCAL f₀ = 141.7001 Hz, ancla el agua EZ.
     ZEROS_RIEMANN : list[float]
         Primeras 10 partes imaginarias de los ceros no triviales de Riemann.
     UMBRAL_PT : float

@@ -721,27 +721,6 @@ class TestEdgeCases:
         result = op.compute()
         assert isinstance(result, ZetaSpectrumResult)
         assert len(result.zeros) == 5
-    ScaleIdentityOperator,
-    SymbioticHamiltonianOperator,
-    RiemannZetaSpectrum,
-    QuintoPostuladoConvergencia,
-    PadicHaarResult,
-    ScaleIdentityResult,
-    BerryKeatingResult,
-    GUESpectrumResult,
-    MoscoConvergenceResult,
-    QuintoPostuladoResult,
-    demonstrate_quinto_postulado,
-    F0_QCAL,
-    C_COHERENCE,
-    PHI,
-    KAPPA_PI,
-    PSI_SCALE_TARGET,
-    PSI_SYMBIO_TARGET,
-    PSI_GUE_TARGET,
-    PSI_GLOBAL_TARGET,
-    QUINTO_SHA256_PREFIX,
-)
 from riemann_quinto_postulado import (
     SymbioticHamiltonianResult,
     RiemannZetaSpectrumResult,
@@ -1679,19 +1658,6 @@ class TestIntegration:
         assert abs(result.psi_global - PSI_GLOBAL_TARGET) < 0.15, \
             f"Ψ_global = {result.psi_global}, expected near {PSI_GLOBAL_TARGET}"
         print("✅ test_psi_global_near_target PASSED")
-    ScaleIdentityResult,
-    SymbioticHamiltonianResult,
-    RiemannZetaSpectrumResult,
-    QuintoPostuladoReport,
-    QuintoPostuladoAdelico,
-    QuintoPostuladoAdelicoReport,
-    verificar_geometria,
-    activar_quinto_postulado,
-    F0_QCAL,
-    C_COHERENCE,
-    PHI,
-    THRESHOLD_PSI
-)
 
 
 # =============================================================================

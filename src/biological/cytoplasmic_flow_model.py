@@ -50,6 +50,7 @@ except ImportError:
         def decorator(func):
             return func
         return decorator
+"""
 Cytoplasmic Flow Model - Navier-Stokes Implementation
 
 Implementación del modelo de flujo citoplasmático usando ecuaciones de Navier-Stokes
@@ -576,8 +577,13 @@ if __name__ == '__main__':
     print("\n" + "=" * 70)
     print("✓ Demonstration complete")
     print("=" * 70)
+
+
+@dataclass
+class FlowParameters:
+    """
     Parámetros físicos del flujo citoplasmático.
-    
+
     Attributes:
         density: ρ - Densidad del citoplasma (kg/m³)
         kinematic_viscosity: ν - Viscosidad cinemática (m²/s)
