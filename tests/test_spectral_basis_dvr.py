@@ -35,6 +35,17 @@ from operators.spectral_basis_dvr import (
     SpectralDVRCertificate,
     F0_QCAL,
     C_COHERENCE,
+    # new components
+    GAUSSIAN_CUTOFF_SIGMA,
+    F_MATERIAL,
+    DELTA_F_MATERIAL,
+    DELTA_F_AUREA,
+    ConstanteRespiracion,
+    constante_respiracion,
+    OperadorHEpsilonDVR,
+    ValidadorEvidenciaBrutal,
+    NodoDilmunResult,
+    nodo_dilmun,
 )
 
 
@@ -525,3 +536,247 @@ class TestConstants:
 
     def test_c_coherence(self):
         assert C_COHERENCE == pytest.approx(244.36, abs=1e-2)
+
+
+# ============================================================
+# ConstanteRespiracion tests
+# ============================================================
+
+class TestConstanteRespiracion:
+    """Test breathing-space constants."""
+
+    def test_module_constants_defined(self):
+        assert GAUSSIAN_CUTOFF_SIGMA == pytest.approx(5.0, abs=1e-12)
+        assert F_MATERIAL == pytest.approx(142.1, abs=1e-4)
+
+    def test_delta_f_material_value(self):
+        """DELTA_F_MATERIAL = F_MATERIAL − F0_QCAL ≈ 0.3999."""
+        assert DELTA_F_MATERIAL == pytest.approx(142.1 - 141.7001, abs=1e-6)
+
+    def test_delta_f_material_in_band(self):
+        """DELTA_F_MATERIAL must be in [0.38, 0.42]."""
+        assert 0.38 <= DELTA_F_MATERIAL <= 0.42
+
+    def test_delta_f_aurea_formula(self):
+        """DELTA_F_AUREA = (φ−1)·f₀·10⁻³."""
+        phi = 1.6180339887498948
+        expected = (phi - 1.0) * 141.7001 * 1e-3
+        assert DELTA_F_AUREA == pytest.approx(expected, rel=1e-6)
+
+    def test_constante_respiracion_returns_dataclass(self):
+        cr = constante_respiracion()
+        assert isinstance(cr, ConstanteRespiracion)
+
+    def test_constante_respiracion_valid(self):
+        cr = constante_respiracion()
+        assert cr.valid is True
+
+    def test_constante_respiracion_f_material(self):
+        cr = constante_respiracion()
+        assert cr.f_material == pytest.approx(142.1, abs=1e-6)
+
+    def test_constante_respiracion_f0(self):
+        cr = constante_respiracion()
+        assert cr.f0 == pytest.approx(141.7001, abs=1e-6)
+
+    def test_constante_respiracion_delta_material(self):
+        cr = constante_respiracion()
+        assert 0.38 <= cr.delta_f_material <= 0.42
+
+    def test_constante_respiracion_delta_aurea_positive(self):
+        cr = constante_respiracion()
+        assert cr.delta_f_aurea > 0.0
+
+
+# ============================================================
+# OperadorHEpsilonDVR tests
+# ============================================================
+
+class TestOperadorHEpsilonDVR:
+    """Test OperadorHEpsilonDVR — H_ε with explicit Gaussian cutoff."""
+
+    @pytest.fixture
+    def small_op(self):
+        return OperadorHEpsilonDVR(N=30, L=8.0, epsilon_0=0.1,
+                                   n_primes=10, max_k=3, n_grid=400)
+
+    def test_is_subclass(self):
+        assert issubclass(OperadorHEpsilonDVR, SpectralBasisDVR)
+
+    def test_gaussian_cutoff_sigma_attribute(self):
+        assert OperadorHEpsilonDVR.CUTOFF_SIGMA == pytest.approx(5.0, abs=1e-12)
+
+    def test_potential_shape(self, small_op):
+        result = small_op.build_potential()
+        assert result.V.shape == (small_op.n_grid,)
+
+    def test_potential_non_negative(self, small_op):
+        """Gaussian-convolved potential should be non-negative."""
+        result = small_op.build_potential()
+        assert np.all(result.V >= 0)
+
+    def test_potential_finite(self, small_op):
+        result = small_op.build_potential()
+        assert np.all(np.isfinite(result.V))
+
+    def test_potential_even_symmetry(self, small_op):
+        """Potential should satisfy V(u) = V(−u)."""
+        result = small_op.build_potential()
+        np.testing.assert_allclose(result.V, result.V[::-1], atol=1e-8)
+
+    def test_potential_zero_outside_cutoff(self, small_op):
+        """Grid points beyond 5σ of every peak should contribute zero."""
+        result = small_op.build_potential()
+        u = small_op.u_grid
+        primes = small_op.primes
+        # Collect all peak positions
+        peaks = []
+        for p in primes:
+            for k in range(1, small_op.max_k + 1):
+                u_pk = k * np.log(float(p))
+                if u_pk <= small_op.L + GAUSSIAN_CUTOFF_SIGMA * small_op.epsilon_0:
+                    peaks.append(u_pk)
+                    peaks.append(-u_pk)
+        # For each grid point, verify it is within 5σ of some peak or V ≈ 0
+        eps_1 = small_op.adaptive_epsilon(1)
+        cutoff = GAUSSIAN_CUTOFF_SIGMA * eps_1
+        for i, u_i in enumerate(u):
+            near_peak = any(abs(u_i - pk) <= cutoff for pk in peaks)
+            if not near_peak:
+                assert result.V[i] == pytest.approx(0.0, abs=1e-30), (
+                    f"V[{i}] = {result.V[i]} at u={u_i:.4f} is nonzero "
+                    f"but no peak within {cutoff:.4f}"
+                )
+
+    def test_operator_symmetric(self, small_op):
+        """H_ε matrix should be real symmetric."""
+        H, _, _ = small_op.build_operator_matrix()
+        diff = np.max(np.abs(H - H.T))
+        assert diff < 1e-12
+
+    def test_eigenvalues_real(self, small_op):
+        result = small_op.compute_eigenvalues(n_eigenvalues=15)
+        assert np.all(np.isfinite(result.eigenvalues))
+
+    def test_psi_range(self, small_op):
+        result = small_op.build_potential()
+        assert 0.0 <= result.psi <= 1.0
+
+
+# ============================================================
+# ValidadorEvidenciaBrutal tests
+# ============================================================
+
+class TestValidadorEvidenciaBrutal:
+    """Test ValidadorEvidenciaBrutal — Ψ = (1 + |ρ|) / 2."""
+
+    @pytest.fixture
+    def small_validator(self):
+        op = OperadorHEpsilonDVR(N=40, L=8.0, epsilon_0=0.1,
+                                 n_primes=10, max_k=2, n_grid=400)
+        return ValidadorEvidenciaBrutal(operator=op)
+
+    def test_default_construction(self):
+        """Should construct with default OperadorHEpsilonDVR."""
+        v = ValidadorEvidenciaBrutal()
+        assert isinstance(v.operator, OperadorHEpsilonDVR)
+
+    def test_custom_operator(self, small_validator):
+        assert isinstance(small_validator.operator, OperadorHEpsilonDVR)
+
+    def test_validate_returns_zero_correlation_result(self, small_validator):
+        result = small_validator.validate(n_eigenvalues=20, n_zeros=5)
+        assert isinstance(result, ZeroCorrelationResult)
+
+    def test_psi_formula(self, small_validator):
+        """Ψ must equal (1 + |ρ|) / 2."""
+        result = small_validator.validate(n_eigenvalues=20, n_zeros=5)
+        expected_psi = (1.0 + abs(result.pearson_r)) / 2.0
+        assert result.psi == pytest.approx(expected_psi, abs=1e-10)
+
+    def test_psi_in_valid_range(self, small_validator):
+        """Ψ must be in [0.5, 1.0] (since |ρ| ∈ [0, 1])."""
+        result = small_validator.validate(n_eigenvalues=20, n_zeros=5)
+        assert 0.5 <= result.psi <= 1.0
+
+    def test_pearson_r_in_range(self, small_validator):
+        result = small_validator.validate(n_eigenvalues=20, n_zeros=5)
+        assert -1.0 <= result.pearson_r <= 1.0
+
+    def test_n_compared_positive(self, small_validator):
+        result = small_validator.validate(n_eigenvalues=20, n_zeros=5)
+        assert result.n_compared >= 1
+
+    def test_mae_non_negative(self, small_validator):
+        result = small_validator.validate(n_eigenvalues=20, n_zeros=5)
+        assert result.mean_abs_error >= 0.0
+
+    def test_psi_minimum_is_half(self):
+        """When ρ = 0, Ψ = 0.5 (not 0)."""
+        # Construct a validator where eigenvalues won't correlate:
+        # tiny basis so positive eigenvalues are limited
+        op = OperadorHEpsilonDVR(N=10, L=3.0, epsilon_0=0.5,
+                                 n_primes=2, max_k=1, n_grid=100)
+        v = ValidadorEvidenciaBrutal(operator=op)
+        result = v.validate(n_eigenvalues=5, n_zeros=20)
+        assert result.psi >= 0.5
+
+
+# ============================================================
+# NodoDilmun tests
+# ============================================================
+
+class TestNodoDilmun:
+    """Test NodoDilmun — anchor at 142.1 Hz, Ψ = cos²(π·δf/f_ancla)."""
+
+    def test_returns_dataclass(self):
+        result = nodo_dilmun()
+        assert isinstance(result, NodoDilmunResult)
+
+    def test_node_is_7(self):
+        result = nodo_dilmun()
+        assert result.node == 7
+
+    def test_f_ancla_is_142_1(self):
+        result = nodo_dilmun()
+        assert result.f_ancla == pytest.approx(142.1, abs=1e-6)
+
+    def test_default_signal_is_f0(self):
+        """Default f_signal = F0_QCAL = 141.7001 Hz."""
+        result = nodo_dilmun(F0_QCAL)
+        assert result.delta_f == pytest.approx(abs(F0_QCAL - 142.1), abs=1e-6)
+
+    def test_psi_near_unity_at_f0(self):
+        """Ψ must be ≈ 0.9999 when f_signal = F0_QCAL."""
+        result = nodo_dilmun(F0_QCAL)
+        assert result.psi == pytest.approx(1.0, abs=1e-3)
+
+    def test_psi_is_1_at_anchor(self):
+        """Ψ = 1 exactly when f_signal = f_ancla."""
+        result = nodo_dilmun(142.1)
+        assert result.psi == pytest.approx(1.0, abs=1e-12)
+        assert result.delta_f == pytest.approx(0.0, abs=1e-12)
+
+    def test_psi_decreases_away_from_anchor(self):
+        """Ψ decreases as f_signal moves away from 142.1 Hz."""
+        psi_close = nodo_dilmun(142.0).psi
+        psi_far = nodo_dilmun(141.0).psi
+        assert psi_close > psi_far
+
+    def test_psi_in_range(self):
+        for f in [130.0, 140.0, 141.7001, 142.0, 142.1, 143.0, 150.0]:
+            result = nodo_dilmun(f)
+            assert 0.0 <= result.psi <= 1.0, f"Ψ out of range for f={f}"
+
+    def test_psi_formula(self):
+        """Verify Ψ = cos²(π·δf/f_ancla) analytically."""
+        f_signal = 141.5
+        result = nodo_dilmun(f_signal)
+        expected = np.cos(np.pi * abs(f_signal - 142.1) / 142.1) ** 2
+        assert result.psi == pytest.approx(expected, abs=1e-12)
+
+    def test_delta_f_is_absolute(self):
+        """δf is always non-negative."""
+        for f in [100.0, 142.1, 200.0]:
+            result = nodo_dilmun(f)
+            assert result.delta_f >= 0.0
