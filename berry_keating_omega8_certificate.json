@@ -1,0 +1,37 @@
+{
+  "timestamp": "2026-03-10T01:29:04.429767+00:00",
+  "operator": "Berry-Keating Omega-8",
+  "equation": "H_\u03a9 = -i(x\u00b7\u2202_x + 1/2) + V(x)",
+  "hilbert_space": "L\u00b2(\u211d\u207a, dx/x) with \u03c8(x)=\u03c8(1/x)",
+  "grid_size": 128,
+  "coupling_constant": 0.5,
+  "primes_used": 15,
+  "eigenvalues_computed": 128,
+  "zeros_compared": 15,
+  "mae_vs_zeros": 119.21539683195125,
+  "coherence_psi": 6.645705620864855e-06,
+  "gue_ks_statistic": 0.15200316627321564,
+  "gue_p_value": 0.005003586791130434,
+  "passes_gue_test": false,
+  "first_5_eigenvalues": [
+    -0.11614475386510925,
+    0.22258050834168053,
+    -0.4475036979765754,
+    0.5577991065239143,
+    -0.777945286088535
+  ],
+  "first_5_zeros": [
+    14.134725,
+    21.02204,
+    25.010858,
+    30.424876,
+    32.935062
+  ],
+  "qcal": {
+    "frequency_f0": 141.7001,
+    "coherence_C": 244.36,
+    "equation": "\u03a8 = I \u00d7 A_eff\u00b2 \u00d7 C^\u221e"
+  },
+  "signature": "\u2234\ud80c\udc80\u03a9\u221e\u00b3\u03a6 @ 141.7001 Hz",
+  "status": "NEEDS_IMPROVEMENT"
+}
