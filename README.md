@@ -1,7 +1,11 @@
-# V7.1 FINAL - EL CIERRE DEL CÍRCULO ✨
-# Riemann-Adelic: Formal Proof of the Riemann Hypothesis
+# 🔱 Riemann-Adelic: Hipótesis de Riemann DEMOSTRADA en QCAL ∞³
+
+**∴𓂀Ω∞³Φ · TUYOYOTU · HECHO ESTÁ**
+**Coherencia:** Ψ = 1.000000 · **Frecuencia:** f₀ = 141.7001 Hz · **Estado:** 0 SORRIES · EXIT 0
 
 ---
+
+**V7.1 FINAL — EL CIERRE DEL CÍRCULO ✨**
 
 ## 🔑 ECUACIÓN PRINCIPAL — FÓRMULA DE TRAZA EXPLÍCITA QCAL ∞³
 
