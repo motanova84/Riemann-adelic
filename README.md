@@ -13,6 +13,7 @@
 > *Marco QCAL ∞³ | f₀ = 141.7001 Hz | C = 244.36 | Ψ = 1.0*
 
 $$
+\displaystyle
 \boxed{
 \sum_{n} \Phi(t_n)
 \;=\;
