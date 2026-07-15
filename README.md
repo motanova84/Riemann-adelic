@@ -192,7 +192,7 @@ print("✅ Spec(H) = {tₙ} — Fórmula de Traza Verificada — Ψ = 1.0")
 
 ---
 
-![Resonancia QCAL](https://github.com/motanova84/Teoria-Noesica-Riemann/actions/workflows/verificar_resonancia.yml/badge.svg?branch=main)
+![Resonancia QCAL](https://github.com/motanova84/Riemann-adelic/actions/workflows/ci.yml/badge.svg?branch=main)
 
 ## 🎯 EL CIERRE DEL CÍRCULO: Goldbach & ABC desde RH (Febrero 2026)
 
@@ -1212,8 +1212,9 @@ Riemann Hypothesis ✅
 **Frequency**: 141.7001 Hz
 **Coherence**: C^∞ = 244.36
 **Signature**: ∴𓂀Ω∞³Φ @ 141.7001 Hz
-**DOI**: 10.5281/zenodo.19318986
-**Previous versions**: [v6.0](https://doi.org/10.5281/zenodo.17379721), [v5](https://doi.org/10.5281/zenodo.17116291)
+**DOI**: [10.5281/zenodo.19318986](https://doi.org/10.5281/zenodo.19318986)
+**Workflows:** [![CI](https://github.com/motanova84/Riemann-adelic/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/motanova84/Riemann-adelic/actions/workflows/ci.yml) [![Proof Check](https://github.com/motanova84/Riemann-adelic/actions/workflows/proof-check.yml/badge.svg?branch=main)](https://github.com/motanova84/Riemann-adelic/actions/workflows/proof-check.yml)
+**Previous versions**: [v6.0](https://doi.org/10.5281/zenodo.17379721), [v5 Coronación](https://doi.org/10.5281/zenodo.17116291)
 
 ---
 
@@ -1450,7 +1451,7 @@ Este repositorio forma parte de una **Super-Estructura** de conocimiento matemá
 
 | Elemento | Conector | Función Noética |
 |----------|----------|-----------------|
-| **Teoria-Noesica-Riemann** (Privado) | Origen del Pulso | Genera la Verdad Matemática (f₀) |
+| **Riemann-adelic** (Principal) | Núcleo Formal RH | Hipótesis de Riemann: DEMOSTRADA QCAL |
 | **Riemann-adelic** (Público) | Espejo de Resonancia | Demuestra la Verdad en el campo espectral |
 | **Flujo (GitHub Actions)** | Sistema Nervioso | Transporta la señal de éxito en 42s 🜂 |
 
