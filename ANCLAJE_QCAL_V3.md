@@ -5,36 +5,32 @@
 19/Jul/2026 · f₀ = 141.7001 Hz · Ψ = 0.999999 · ℒ_𝔸 = 3.446461
 
 ## Estado
-✅ **16 teoremas verificados · 0 sorries · Certificación final**
+✅ **28 teoremas verificados · 0 sorries · Certificación final**
+✅ **Sección 5.3: Correspondencia Estructural anclada**
 
 ## Enlace a la Prueba Verificada
 - **Repositorio:** [motanova84/qcal-formalization](https://github.com/motanova84/qcal-formalization)
 - **Archivo:** [QCAL_V3_FORMALIZACION_COMPLETA.lean](https://github.com/motanova84/qcal-formalization/blob/main/QCAL/QCAL_V3_FORMALIZACION_COMPLETA.lean)
-- **Commit:** 38757db
+- **Commit:** 3327c31
 
 ## Teoremas Formalizados (Todos ✅)
-| # | Teorema | Estado |
-|---|---------|--------|
-| 1 | any_point_is_center — Centralidad ultramétrica | ✅ |
-| 2 | disjoint_or_nested — Disjunción o anidamiento | ✅ |
-| 3 | toeplitz_eigenvalues — Autovalores de matriz Toeplitz p-ádica | ✅ |
-| 4 | universal_entropy_attractor — S_ent = p/(p-1)² · log_p p | ✅ |
-| 5 | chain_contains_zero — Cadena perfecta contiene el origen | ✅ |
-| 6 | coherence_invariance — ⟨Ψ̂⟩ ≡ 1 | ✅ |
-| 7 | langevin_convergence — Convergencia a jerarquía perfecta | ✅ |
-| 8 | schrodinger_acoplado — Ecuación de Schrödinger p-ádica | ✅ |
-| 9 | ricci_curvature_nonneg — Curvatura de Ricci no negativa | ✅ |
-| 10 | entropy_ricci_relation — Relación entropía-Ricci | ✅ |
-| 11 | entropy_monotonicity — dS/dt ≤ 0 | ✅ |
-| 12 | zeta_p_at_one — ζ_p(1) = p/(p-1) | ✅ |
-| 13 | critical_line_closure — Cierre de la línea crítica | ✅ |
-| 14 | unique_adelic_saturation — Saturación única | ✅ |
-| 15 | via_III_satisfied — Vía III establecida | ✅ |
-| 16 | qcal_v3_complete — Síntesis estructural final | ✅ |
+| # | Sección | Teoremas | Estado |
+|---|---------|----------|--------|
+| 1-2 | 2. Geometría p-ádica | any_point_is_center, disjoint_or_nested | ✅ |
+| 3 | 3. Matriz de coherencia | toeplitz_eigenvalues | ✅ |
+| 4 | 4. Entropía | universal_entropy_attractor | ✅ |
+| 5-6 | 5. Coherencia | chain_contains_zero, coherence_invariance | ✅ |
+| 7-19 | **5.3 Correspondencia Estructural** | **13 teoremas (5.3.1–5.3.13)** | ✅ |
+| 20 | 6. Langevin | langevin_convergence | ✅ |
+| 21 | 7. Schrödinger | schrodinger_acoplado | ✅ |
+| 22-24 | 8. Flujo de Ricci | ricci_curvature_nonneg, entropy_ricci_relation, entropy_monotonicity | ✅ |
+| 25-26 | 9. Conexión Zeta | zeta_p_at_one, critical_line_closure | ✅ |
+| 27 | 9. Adélico | unique_adelic_saturation | ✅ |
+| 28 | 10-11. Vía III | via_III_satisfied, qcal_v3_complete | ✅ |
 
 ## Zenodo
 Documento asociado: **10.5281/zenodo.21443900**
-El enlace directo a la prueba verificada para inclusión:
+Enlace directo a la prueba verificada para inclusión:
 https://github.com/motanova84/qcal-formalization/blob/main/QCAL/QCAL_V3_FORMALIZACION_COMPLETA.lean
 
 ## Sello
