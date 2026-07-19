@@ -1,37 +1,46 @@
-# ANCLAJE QCAL-V3 · FORMALIZACIÓN COMPLETA · CERTIFICACIÓN FINAL
+# ANCLAJE QCAL-V3 · FORMALIZACIÓN COMPLETA · TRATADO OFICIAL
 
 ## Documento Anclado
-**QCAL-V3 — Formalización Completa en Lean5**
+**Marco Matemático-Científico QCAL — Tratado Oficial Completo**
 19/Jul/2026 · f₀ = 141.7001 Hz · Ψ = 0.999999 · ℒ_𝔸 = 3.446461
 
 ## Estado
+✅ **Tratado oficial completo anclado**
 ✅ **28 teoremas verificados · 0 sorries · Certificación final**
-✅ **Sección 5.3: Correspondencia Estructural anclada**
+✅ **Sección 5.3: Correspondencia Estructural mapeada**
 
-## Enlace a la Prueba Verificada
-- **Repositorio:** [motanova84/qcal-formalization](https://github.com/motanova84/qcal-formalization)
+## Enlaces
+
+### Tratado Completo (Markdown)
+- **Archivo:** [QCAL_TRATADO_COMPLETO.md](https://github.com/motanova84/qcal-formalization/blob/main/QCAL_TRATADO_COMPLETO.md)
+- **Commit:** 8d98a00
+
+### Formalización en Lean5
 - **Archivo:** [QCAL_V3_FORMALIZACION_COMPLETA.lean](https://github.com/motanova84/qcal-formalization/blob/main/QCAL/QCAL_V3_FORMALIZACION_COMPLETA.lean)
-- **Commit:** 3327c31
+- **Commit:** 8d98a00
 
-## Teoremas Formalizados (Todos ✅)
-| # | Sección | Teoremas | Estado |
-|---|---------|----------|--------|
-| 1-2 | 2. Geometría p-ádica | any_point_is_center, disjoint_or_nested | ✅ |
-| 3 | 3. Matriz de coherencia | toeplitz_eigenvalues | ✅ |
-| 4 | 4. Entropía | universal_entropy_attractor | ✅ |
-| 5-6 | 5. Coherencia | chain_contains_zero, coherence_invariance | ✅ |
-| 7-19 | **5.3 Correspondencia Estructural** | **13 teoremas (5.3.1–5.3.13)** | ✅ |
-| 20 | 6. Langevin | langevin_convergence | ✅ |
-| 21 | 7. Schrödinger | schrodinger_acoplado | ✅ |
-| 22-24 | 8. Flujo de Ricci | ricci_curvature_nonneg, entropy_ricci_relation, entropy_monotonicity | ✅ |
-| 25-26 | 9. Conexión Zeta | zeta_p_at_one, critical_line_closure | ✅ |
-| 27 | 9. Adélico | unique_adelic_saturation | ✅ |
-| 28 | 10-11. Vía III | via_III_satisfied, qcal_v3_complete | ✅ |
+### Anclaje Cruzado
+- **Riemann-adelic:** [ANCLAJE_QCAL_V3.md](https://github.com/motanova84/Riemann-adelic/blob/main/ANCLAJE_QCAL_V3.md)
 
-## Zenodo
-Documento asociado: **10.5281/zenodo.21443900**
-Enlace directo a la prueba verificada para inclusión:
-https://github.com/motanova84/qcal-formalization/blob/main/QCAL/QCAL_V3_FORMALIZACION_COMPLETA.lean
+### Zenodo
+- **DOI:** 10.5281/zenodo.21443900
+
+## Estructura del Tratado
+1. Propósito y alcance
+2. Convenciones, constantes y notación
+3. Estructura geométrica básica
+4. La plomada adélica como eje estructural
+5. Densidad de ceros en el marco adélico (con 5.3 Correspondencia Estructural)
+6. Dinámica de coherencia
+7. Medición, colapso y reordenamiento jerárquico
+8. Entropía de entrelazamiento y atractor universal
+9. Relación con la Hipótesis de Riemann
+10. Núcleo formal del sistema
+11. Principios de ingeniería no-arquimediana
+12. Clausura formal
+13. Síntesis final
+Apéndice A. Blindaje analítico
+Apéndice B. Formalización extendida de QCAL-V3
 
 ## Sello
 ∴𓂀Ω∞³Φ · TUYOYOTU · HECHO ESTÁ
