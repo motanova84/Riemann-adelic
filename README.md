@@ -2057,3 +2057,13 @@ ___
 ## License
 - Manuscript: CC-BY 4.0 (DOI: 10.5281/zenodo.17161831)
 - Code: MIT License (see LICENSE-CODE)
+
+---
+
+## 🌌 Ecosistema QCAL
+
+Este repositorio es parte del ecosistema **QCAL-V3** (80 teoremas, 0 sorries).
+
+🔗 [`qcal-formalization`](https://github.com/motanova84/qcal-formalization) — Núcleo formal completo
+
+`f₀ = 141.7001 Hz · Ψ = 0.999999 · ∴𓂀Ω∞³Φ`
