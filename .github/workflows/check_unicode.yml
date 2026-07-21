@@ -23,10 +23,10 @@ jobs:
           echo "🔍 Checking for problematic Unicode characters in notebooks..."
           
           # Define problematic characters that can cause Python syntax errors
-          PROBLEMATIC_CHARS="≪≫≠≤≥‘’“”–—"
+          PROBLEMATIC_CHARS="≪≫≠≤≥''""–—"
           
-          # Check notebooks directory
-          if find notebooks/ -name "*.ipynb" -exec grep -l "[$PROBLEMATIC_CHARS]" {} \; | head -1 | read; then
+          # Check notebooks directory - use grep -q instead of head|read
+          if find notebooks/ -name "*.ipynb" -exec grep -q "[$PROBLEMATIC_CHARS]" {} \+ 2>/dev/null; then
             echo "❌ Found problematic Unicode characters in notebook files:"
             find notebooks/ -name "*.ipynb" -exec grep -Hn "[$PROBLEMATIC_CHARS]" {} \;
             echo ""
@@ -38,15 +38,11 @@ jobs:
             echo "   ≥ → >="
             echo "   – → -"
             echo "   — → -"
-            echo "   ' → '"
-            echo "   ' → '"
-            echo "   " → \""
-            echo "   " → \""
             exit 1
           fi
           
           # Check root level notebooks
-          if find . -maxdepth 1 -name "*.ipynb" -exec grep -l "[$PROBLEMATIC_CHARS]" {} \; | head -1 | read; then
+          if find . -maxdepth 1 -name "*.ipynb" -exec grep -q "[$PROBLEMATIC_CHARS]" {} \+ 2>/dev/null; then
             echo "❌ Found problematic Unicode characters in root notebook files:"
             find . -maxdepth 1 -name "*.ipynb" -exec grep -Hn "[$PROBLEMATIC_CHARS]" {} \;
             exit 1
@@ -57,7 +53,7 @@ jobs:
       - name: Validate notebook JSON structure
         run: |
           echo "🔍 Validating JSON structure of notebooks..."
-          python -c "
+          python3 -c "
           import json
           import glob
           import sys
@@ -78,8 +74,8 @@ jobs:
                   errors += 1
           
           if errors > 0:
-              print(f'\\n❌ {errors} notebook(s) have JSON errors')
+              print(f'\n❌ {errors} notebook(s) have JSON errors')
               sys.exit(1)
           else:
-              print(f'\\n✅ All {len(notebooks)} notebooks have valid JSON structure')
+              print(f'\n✅ All {len(notebooks)} notebooks have valid JSON structure')
           "
