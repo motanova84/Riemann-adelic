@@ -14,7 +14,7 @@ Incluye:
 - Envío de alertas
 - Registro universal
 
-Author: José Manuel Mota Burruezo Ψ ✧ ∞³
+Author: José Manuel Mota Burruezo \u03A8 \u2727 ∞³
 Institution: Instituto de Conciencia Cuántica (ICQ)
 License: Creative Commons BY-NC-SA 4.0
 """
@@ -339,7 +339,7 @@ Usage:
     guardian = GuardianCore()
     report = guardian.run_all_hooks()
 
-Author: José Manuel Mota Burruezo Ψ ✧ ∞³
+Author: José Manuel Mota Burruezo \u03A8 \u2727 ∞³
 Instituto de Conciencia Cuántica (ICQ)
 ORCID: 0009-0002-1923-0773
 DOI: 10.5281/zenodo.17379721

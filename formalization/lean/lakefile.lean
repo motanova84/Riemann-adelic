@@ -40,8 +40,5 @@ lean_exe «riemann-adelic-lean» where
 require mathlib from git
   "https://github.com/leanprover-community/mathlib4" @ "v4.5.0"
 
-require aesop from git
-  "https://github.com/leanprover-community/aesop" @ "main"
-
-require proofwidgets from git
-  "https://github.com/leanprover-community/proofwidgets4" @ "main"
+-- aesop y proofwidgets no son necesarios para riemann_hypothesis_final.lean
+-- (eliminados porque aesop migró a lakefile.toml, incompatible con Lean 4.5.0)

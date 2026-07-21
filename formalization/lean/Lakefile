@@ -1,0 +1,4 @@
+package RiemannAdelic {
+  default := "RiemannAdelic"
+  lean_lib := RiemannAdelic
+}
