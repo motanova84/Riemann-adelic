@@ -1,0 +1,39 @@
+{
+  "status": "PASSED",
+  "file_exists": true,
+  "file_path": "formalization/lean/RH_final.lean",
+  "line_count": 137,
+  "sorry_statements": {
+    "count": 0,
+    "lines": []
+  },
+  "axioms": {
+    "count": 4,
+    "names": [
+      "paley_wiener_uniqueness",
+      "deBranges_critical_line",
+      "riemannZeta",
+      "xi_zero_iff_zeta_zero"
+    ]
+  },
+  "theorems": {
+    "count": 3,
+    "names": [
+      "D_entire_order_one",
+      "D_in_deBranges",
+      "riemann_hypothesis"
+    ]
+  },
+  "definitions": {
+    "count": 2,
+    "names": [
+      "D",
+      "\u039e"
+    ]
+  },
+  "riemann_hypothesis": {
+    "exists": true,
+    "has_sorry": false,
+    "complete": true
+  }
+}
