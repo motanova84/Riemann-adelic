@@ -1,0 +1,8 @@
+{
+  "qcal_constants": {
+    "f0": 141.7001,
+    "C": 244.36,
+    "kappa_pi": 2.5773
+  },
+  "coercivity": {
+    "coercive": 
