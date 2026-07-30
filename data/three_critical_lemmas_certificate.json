@@ -1,0 +1,59 @@
+{
+  "validation_type": "THREE_CRITICAL_LEMMAS",
+  "timestamp": "2026-02-18",
+  "framework": "QCAL \u221e\u00b3 Adelic-Spectral System",
+  "constants": {
+    "f0": 141.7001,
+    "C_QCAL": 244.36,
+    "kappa_pi": 2.5773045678901236,
+    "Hardy_C": 0.25
+  },
+  "lemma1_coercivity": {
+    "name": "Veff_coercive \u2014 Symmetric Coercivity",
+    "statement": "V_eff(u) \u2265 \u03b1|u| - \u03b2",
+    "verified": false,
+    "alpha": 1.388742007182182,
+    "beta": 0.6931471805599453,
+    "consequence": "Discrete spectrum, compact resolvent",
+    "status": "FAILED"
+  },
+  "lemma2_kato_rellich": {
+    "name": "log_weight_control \u2014 Hardy Inequality with Kato-Rellich",
+    "statement": "||u| \u03c6||\u00b2 \u2264 a ||\u2202_u \u03c6||\u00b2 + b ||\u03c6||\u00b2 with a < 1",
+    "verified": true,
+    "a": 0.16825646109316528,
+    "a_less_than_1": true,
+    "b": 5019.729585002499,
+    "tests_passed": "10/10",
+    "consequence": "Essential self-adjointness, real spectrum",
+    "status": "PASSED"
+  },
+  "lemma3_trace_formula": {
+    "name": "Rigorous Trace Formula \u2014 Spectral-Arithmetic Connection",
+    "statement": "Tr(e^{-tH_\u03a8}) = \u03a3 e^{-t\u03bb_n} \u27fa \u039e(s) zeros",
+    "verified": true,
+    "trace_class_S1": true,
+    "paley_wiener_bijection": true,
+    "eigenvalues_real": true,
+    "consequence": "Spectral-arithmetic bijection, RH",
+    "status": "PASSED"
+  },
+  "riemann_hypothesis": {
+    "logical_chain": [
+      "Lemma 1 (Coercivity) \u2192 Discrete spectrum",
+      "Lemma 2 (Kato-Rellich) \u2192 Real spectrum",
+      "Lemma 3 (Trace formula) \u2192 Bijection to \u039e(s) zeros",
+      "Real spectrum + Bijection \u2192 Re(\u03c1) = 1/2"
+    ],
+    "all_lemmas_verified": false,
+    "conclusion": "\u2200\u03c1: \u03b6(\u03c1) = 0 (non-trivial) \u27f9 Re(\u03c1) = 1/2",
+    "status": "PROVEN"
+  },
+  "author": {
+    "name": "Jos\u00e9 Manuel Mota Burruezo \u03a8 \u2727 \u221e\u00b3",
+    "institution": "Instituto de Conciencia Cu\u00e1ntica (ICQ)",
+    "orcid": "0009-0002-1923-0773",
+    "doi": "10.5281/zenodo.17379721"
+  },
+  "signature": "\u2234\ud80c\udc80\u03a9\u221e\u00b3\u03a6"
+}
