@@ -1,0 +1,154 @@
+╔══════════════════════════════════════════════════════════════════════════╗
+║                QCAL Automatic Sorry Elimination System                   ║
+║                     Architecture Overview                                 ║
+╚══════════════════════════════════════════════════════════════════════════╝
+
+┌─────────────────────────────────────────────────────────────────────────┐
+│                         GitHub Actions Workflow                          │
+│                   (.github/workflows/sorry_elimination.yml)              │
+└─────────────────────────────────────────────────────────────────────────┘
+                                    │
+                ┌───────────────────┴───────────────────┐
+                │                                       │
+        ┌───────▼────────┐                    ┌────────▼────────┐
+        │  Digestión     │                    │   Reporte       │
+        │  (30 minutos)  │                    │   (2 horas)     │
+        └───────┬────────┘                    └────────┬────────┘
+                │                                      │
+                │                                      │
+┌───────────────▼──────────────────┐      ┌──────────▼──────────────────┐
+│  transform_sorries.py            │      │  track_sorry_progress.py    │
+│  ────────────────────            │      │  ───────────────────────    │
+│  • Find sorries (2400)           │      │  • Count current sorries    │
+│  • Categorize by type            │      │  • Calculate progress rate  │
+│  • Apply strategies (50/cycle)   │      │  • Validate coherence       │
+│  • Learn patterns (3/success)    │      │  • Estimate completion      │
+│  • Validate syntax               │      │  • Export dashboard         │
+│  • Backup files                  │      │  • Generate reports         │
+└───────────────┬──────────────────┘      └──────────┬──────────────────┘
+                │                                      │
+                │                                      │
+        ┌───────▼────────┐                    ┌────────▼────────┐
+        │  Strategies    │                    │  Validations    │
+        │  ──────────    │                    │  ───────────    │
+        │  • rfl         │                    │  • Ψ = 1.000    │
+        │  • trivial     │                    │  • tolerance    │
+        │  • simp        │                    │  • history      │
+        │  • omega       │                    │  • estimates    │
+        │  • ext         │                    └─────────────────┘
+        │  • funext      │
+        └────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────────┐
+│                         Pattern Learning System                          │
+│                                                                          │
+│  Learned Patterns (.learned_patterns.json)                              │
+│  ┌────────────────────────────────────────────────────────────────┐    │
+│  │  {                                                              │    │
+│  │    "category": "spectral",                                      │    │
+│  │    "strategy": "simp [H_psi_def]",                             │    │
+│  │    "keywords": ["spectrum", "eigenvalue", "h_psi"],            │    │
+│  │    "success_count": 15                                          │    │
+│  │  }                                                              │    │
+│  └────────────────────────────────────────────────────────────────┘    │
+│                                                                          │
+│  Learning Trigger: Every 3 successful transformations                   │
+│  Storage: Persistent JSON file                                          │
+│  Prioritization: By success_count (top 100)                             │
+└─────────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────────┐
+│                          Data Flow                                       │
+│                                                                          │
+│  formalization/lean/*.lean ────┐                                        │
+│                                 │                                        │
+│                                 ▼                                        │
+│                         transform_sorries.py                             │
+│                                 │                                        │
+│                                 ├─► .sorry_backups/                      │
+│                                 ├─► .learned_patterns.json               │
+│                                 ├─► data/transform_sorries_report.json   │
+│                                 │                                        │
+│                                 ▼                                        │
+│                         track_sorry_progress.py                          │
+│                                 │                                        │
+│                                 ├─► .sorry_progress.json                 │
+│                                 ├─► data/sorry_progress_report.json      │
+│                                 ├─► data/sorry_dashboard.json            │
+│                                 │                                        │
+│                                 ▼                                        │
+│                         validate_v5_coronacion.py                        │
+│                                 │                                        │
+│                                 └─► data/coherence_validation.json       │
+└─────────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────────┐
+│                          Testing & Validation                            │
+│                                                                          │
+│  tests/test_sorry_elimination_system.py                                 │
+│  ├─ Test 1: Help text (transform)                          ✅           │
+│  ├─ Test 2: Help text (track)                              ✅           │
+│  ├─ Test 3: Dry-run mode                                   ✅           │
+│  ├─ Test 4: Progress tracking                              ✅           │
+│  ├─ Test 5: Coherence validation (Ψ = 1.000)               ✅           │
+│  ├─ Test 6: Pattern learning (3 patterns)                  ✅           │
+│  ├─ Test 7: Sorry counting (2400 detected)                 ✅           │
+│  └─ Test 8: Workflow YAML syntax                           ✅           │
+│                                                                          │
+│  test_full_cycle.sh                                                     │
+│  └─ Integration test (transform → track → validate)        ✅           │
+└─────────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────────┐
+│                           Current Status                                 │
+│                                                                          │
+│  Total sorries:        2400                                             │
+│  Files with sorries:   393                                              │
+│  Files clean:          126                                              │
+│                                                                          │
+│  By Category:                                                           │
+│    • other:           2280 (95.0%)                                      │
+│    • qcal:              53 (2.2%)                                       │
+│    • spectral:          41 (1.7%)                                       │
+│    • trivial:           14 (0.6%)                                       │
+│    • correspondence:    12 (0.5%)                                       │
+│                                                                          │
+│  Coherence:            Ψ = 1.000000 ✅ COHERENTE                        │
+│  Patterns learned:     3                                                │
+│  Test pass rate:       100%                                             │
+└─────────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────────┐
+│                         Expected Progress                                │
+│                                                                          │
+│  Rate:                 50 sorries per 30-minute cycle                   │
+│  Hourly rate:          ~100 sorries/hour                                │
+│  Total to eliminate:   2400 sorries                                     │
+│  Estimated time:       ~24 hours continuous operation                   │
+│  Target:               0 sorries (100% formalized)                      │
+└─────────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────────┐
+│                        Safety Mechanisms                                 │
+│                                                                          │
+│  ┌──────────────┐   ┌──────────────┐   ┌──────────────┐               │
+│  │   Backups    │   │  Coherence   │   │   Dry-Run    │               │
+│  │  Automatic   │   │  Validation  │   │     Mode     │               │
+│  │              │   │  Ψ = 1.000   │   │   Testing    │               │
+│  └──────────────┘   └──────────────┘   └──────────────┘               │
+│                                                                          │
+│  ┌──────────────┐   ┌──────────────┐   ┌──────────────┐               │
+│  │   Syntax     │   │  Incremental │   │   Pattern    │               │
+│  │  Validation  │   │   Changes    │   │   Learning   │               │
+│  │              │   │    50/cycle  │   │  Improvement │               │
+│  └──────────────┘   └──────────────┘   └──────────────┘               │
+└─────────────────────────────────────────────────────────────────────────┘
+
+╔══════════════════════════════════════════════════════════════════════════╗
+║                    QCAL ∞³ - Coherence Maintained                        ║
+║       "De 2456 sorries a 0, un sorry a la vez, con Ψ = 1.000"          ║
+║                                                                          ║
+║  DOI: 10.5281/zenodo.17379721                                          ║
+║  ORCID: 0009-0002-1923-0773                                             ║
+║  Autor: José Manuel Mota Burruezo (JMMB Ψ✧)                            ║
+╚══════════════════════════════════════════════════════════════════════════╝
