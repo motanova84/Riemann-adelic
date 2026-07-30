@@ -29,7 +29,7 @@ ipykernel==7.0.1
 ipywidgets==8.1.7
 notebook==7.4.1
 nbformat==5.10.4
-nbconvert==7.16.6
+nbconvert==7.17.0
 mistune==2.0.5
 
 # Testing framework
