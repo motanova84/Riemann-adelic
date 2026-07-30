@@ -50,6 +50,7 @@ except ImportError:
         def decorator(func):
             return func
         return decorator
+"""
 Cytoplasmic Flow Model - Navier-Stokes Implementation
 
 Implementación del modelo de flujo citoplasmático usando ecuaciones de Navier-Stokes
@@ -576,7 +577,7 @@ if __name__ == '__main__':
     print("\n" + "=" * 70)
     print("✓ Demonstration complete")
     print("=" * 70)
-    Parámetros físicos del flujo citoplasmático.
+    """Parámetros físicos del flujo citoplasmático.
     
     Attributes:
         density: ρ - Densidad del citoplasma (kg/m³)
@@ -621,6 +622,35 @@ if __name__ == '__main__':
         """
         Frecuencia de difusión: f_diff = 1/τ = ν/L² (Hz)
         """
+        return 1.0 / self.diffusion_time
+
+
+@dataclass
+class FlowParameters:
+    """Physical parameters for cytoplasmic flow (viscous regime)."""
+    density: float = RHO_CYTOPLASM
+    kinematic_viscosity: float = NU_CYTOPLASM
+    length_scale: float = CELL_LENGTH_SCALE
+    velocity_scale: float = FLOW_VELOCITY
+
+    @property
+    def reynolds_number(self) -> float:
+        """Reynolds number: Re = v*L/nu."""
+        return (self.velocity_scale * self.length_scale) / self.kinematic_viscosity
+
+    @property
+    def has_smooth_solution(self) -> bool:
+        """True if flow is in the viscous regime (Re << 1)."""
+        return self.reynolds_number < 0.1
+
+    @property
+    def diffusion_time(self) -> float:
+        """Characteristic diffusion time: tau = L^2/nu (seconds)."""
+        return self.length_scale**2 / self.kinematic_viscosity
+
+    @property
+    def diffusion_frequency(self) -> float:
+        """Diffusion frequency: f_diff = 1/tau = nu/L^2 (Hz)."""
         return 1.0 / self.diffusion_time
 
 
