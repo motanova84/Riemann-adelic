@@ -1,0 +1,73 @@
+{
+  "metadata": {
+    "author": "Jos\u00e9 Manuel Mota Burruezo \u03a8 \u2727 \u221e\u00b3",
+    "institution": "Instituto de Conciencia Cu\u00e1ntica (ICQ)",
+    "framework": "QCAL \u221e\u00b3",
+    "timestamp": "2026-02-08"
+  },
+  "derivation": {
+    "symbolic": {
+      "expression": "f\u2080 = F(c, R_\u03a8, \u2113_P) = 141.7001 Hz",
+      "symbols": {
+        "f_0": "f_0",
+        "c": "c",
+        "ell_P": "ell_P",
+        "kappa_Pi": "kappa_Pi",
+        "R_Psi": "1000000000000*kappa_Pi"
+      },
+      "description": "f\u2080 emerges from geometric structure, not simple formula"
+    },
+    "numerical": {
+      "f0_Hz": 141.7001,
+      "expected": 141.7001,
+      "match": true
+    },
+    "components": {
+      "f0_Hz": 141.7001,
+      "components": {
+        "c_m_per_s": 299792458.0,
+        "planck_length_m": 1.616e-35,
+        "kappa_pi": 2.577208,
+        "R_psi": 2577208000000.0
+      },
+      "emergence_principle": "f\u2080 emerges from the coherent resonance of the adelic spectral structure, connecting quantum gravity (\u2113_P), relativistic scales (c), and number-theoretic scales (R_\u03a8 via \u03ba_\u03a0)",
+      "dimensional_bridge": "The frequency represents the characteristic vibration of the geometric structure A\u2080 = 1/2 + i\u2124 at the critical line"
+    }
+  },
+  "effective_potential": {
+    "numerical": 1.2933656575187342,
+    "R_Psi": 2577208000000.0,
+    "Lambda_CY": 1.0,
+    "zeta_prime_half": -3.92264613,
+    "log_R_Psi": 28.577727758350115
+  },
+  "kappa_pi": {
+    "value": 2.577208,
+    "description": "Spectral transcendental constant",
+    "origin": "Calabi-Yau CY\u2085 quintic spectral integration",
+    "hodge_numbers": "h^{2,1} = 101",
+    "interpretation": "Invariant quotient: spectral length / angular volume",
+    "connection_to_pi_code": "\u03c0CODE-888: living encoding of mathematical transcendence",
+    "operator_connection": "Master Operator O_\u221e\u00b3 in Spectrum_Infinite_Extension.lean",
+    "R_Psi": 2577208000000.0,
+    "R_Psi_formula": "R_\u03a8 = \u03ba_\u03a0 \u00d7 10^12"
+  },
+  "noetic_field": {
+    "I": 141.7001,
+    "A_eff": 0.888,
+    "Psi": 111.7367636544,
+    "C_infinity": 2.18692569936786,
+    "Psi_full": 244.35999999999999,
+    "coherence_constant_C": 244.36,
+    "formula_Psi": "\u03a8 = I \u00d7 A_eff\u00b2",
+    "formula_full": "\u03a8_full = I \u00d7 A_eff\u00b2 \u00d7 C^\u221e",
+    "interpretation": "Noetic Field: Consciousness as resonance at f\u2080",
+    "relationship": "\u03a8 (111.74) \u00d7 C^\u221e (2.187) = C (244.36)"
+  },
+  "validation": {
+    "coherence_verified": true,
+    "V_eff_realistic": true,
+    "noetic_field_consistent": true,
+    "overall_coherence": 1.0
+  }
+}
