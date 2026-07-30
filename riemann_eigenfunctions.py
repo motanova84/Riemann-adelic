@@ -29,12 +29,12 @@ QCAL Integration:
     - Fundamental equation: Ψ = I × A_eff² × C^∞
 """
 
-import numpy as np
-from scipy.linalg import eigh
-from scipy.integrate import simpson
-from typing import Dict, Any, Tuple, Optional
 import warnings
+from typing import Any, Dict, Optional, Tuple
 
+import numpy as np
+from scipy.integrate import simpson
+from scipy.linalg import eigh
 
 # QCAL Constants
 QCAL_BASE_FREQUENCY = 141.7001  # Hz
@@ -42,38 +42,40 @@ QCAL_COHERENCE = 244.36
 
 # First 30 Riemann zeros (imaginary parts γ_n)
 # From Odlyzko's high-precision computations
-RIEMANN_ZEROS = np.array([
-    14.134725141734693,
-    21.022039638771555,
-    25.010857580145688,
-    30.424876125859513,
-    32.935061587739189,
-    37.586178158825671,
-    40.918719012147495,
-    43.327073280914999,
-    48.005150881167159,
-    49.773832477672302,
-    52.970321477714460,
-    56.446247697063394,
-    59.347044002602353,
-    60.831778524609809,
-    65.112544048081606,
-    67.079810529494173,
-    69.546401711173979,
-    72.067157674481907,
-    75.704690699083933,
-    77.144840068874805,
-    79.337375020249367,
-    82.910380854086030,
-    84.735492981329489,
-    87.425274613125229,
-    88.809111208350392,
-    92.491899270558484,
-    94.651344040519781,
-    95.870634228245309,
-    98.831194218193692,
-    101.31785100573139
-])
+RIEMANN_ZEROS = np.array(
+    [
+        14.134725141734693,
+        21.022039638771555,
+        25.010857580145688,
+        30.424876125859513,
+        32.935061587739189,
+        37.586178158825671,
+        40.918719012147495,
+        43.327073280914999,
+        48.005150881167159,
+        49.773832477672302,
+        52.970321477714460,
+        56.446247697063394,
+        59.347044002602353,
+        60.831778524609809,
+        65.112544048081606,
+        67.079810529494173,
+        69.546401711173979,
+        72.067157674481907,
+        75.704690699083933,
+        77.144840068874805,
+        79.337375020249367,
+        82.910380854086030,
+        84.735492981329489,
+        87.425274613125229,
+        88.809111208350392,
+        92.491899270558484,
+        94.651344040519781,
+        95.870634228245309,
+        98.831194218193692,
+        101.31785100573139,
+    ]
+)
 
 
 def get_riemann_zeros(n: int = 30) -> np.ndarray:
@@ -86,19 +88,16 @@ def get_riemann_zeros(n: int = 30) -> np.ndarray:
     Returns:
         np.ndarray: Array of first n Riemann zeros γ_n
     """
-    return RIEMANN_ZEROS[:min(n, len(RIEMANN_ZEROS))]
+    return RIEMANN_ZEROS[: min(n, len(RIEMANN_ZEROS))]
+
 
 # Marchenko reconstruction constants
 # These parameters tune the inverse scattering potential construction
 MARCHENKO_WIDTH_SCALE = 0.01  # Controls width decay with γ_n
-MARCHENKO_SHIFT_SCALE = 0.1   # Controls position offset of perturbations
+MARCHENKO_SHIFT_SCALE = 0.1  # Controls position offset of perturbations
 
 
-def build_potential_from_zeros(
-    x: np.ndarray,
-    gamma: np.ndarray,
-    lambda_param: float = 0.1
-) -> np.ndarray:
+def build_potential_from_zeros(x: np.ndarray, gamma: np.ndarray, lambda_param: float = 0.1) -> np.ndarray:
     """
     Construct the potential V(x) that yields eigenvalues E_n = -γ_n².
 
@@ -142,15 +141,13 @@ def build_potential_from_zeros(
         # Pöschl-Teller-like term centered appropriately
         # Shift provides spatial separation for higher modes
         shift = 0.5 * np.log(gamma_n) if gamma_n > 1 else 0
-        V_marchenko -= depth / (np.cosh((x - shift * MARCHENKO_SHIFT_SCALE) / width)**2 + 1)
+        V_marchenko -= depth / (np.cosh((x - shift * MARCHENKO_SHIFT_SCALE) / width) ** 2 + 1)
 
     return V_confine + V_marchenko
 
 
 def build_hamiltonian_from_zeros(
-    N: int = 500,
-    L: float = 25.0,
-    n_zeros: int = 30
+    N: int = 500, L: float = 25.0, n_zeros: int = 30
 ) -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
     """
     Build Hamiltonian H = -d²/dx² + V(x) targeting Riemann zero eigenvalues.
@@ -180,7 +177,7 @@ def build_hamiltonian_from_zeros(
     gamma = get_riemann_zeros(n_zeros)
 
     # Target eigenvalues: E_n = -γ_n²
-    target_energies = -gamma**2
+    target_energies = -(gamma**2)
 
     # Build kinetic term: -d²/dx² with centered finite differences
     kinetic_diag = np.full(N, 2.0 / dx**2)
@@ -215,9 +212,7 @@ def build_hamiltonian_from_zeros(
 
 
 def compute_eigenfunctions(
-    N: int = 500,
-    L: float = 25.0,
-    n_states: int = 10
+    N: int = 500, L: float = 25.0, n_states: int = 10
 ) -> Tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
     """
     Compute the first n_states eigenfunctions ψ_n(x) and eigenvalues.
@@ -261,10 +256,7 @@ def compute_eigenfunctions(
 
 
 def verify_orthonormality(
-    eigenfunctions: np.ndarray,
-    x: np.ndarray,
-    n_check: int = 8,
-    tolerance: float = 1e-10
+    eigenfunctions: np.ndarray, x: np.ndarray, n_check: int = 8, tolerance: float = 1e-10
 ) -> Dict[str, Any]:
     """
     Verify orthonormality of eigenfunctions: ∫ψ_n(x)ψ_m(x)dx = δ_{nm}.
@@ -302,15 +294,12 @@ def verify_orthonormality(
         "overlap_matrix": overlap_matrix,
         "max_error": max_error,
         "mean_error": mean_error,
-        "n_states_checked": n_states
+        "n_states_checked": n_states,
     }
 
 
 def verify_localization(
-    eigenfunctions: np.ndarray,
-    x: np.ndarray,
-    L: float = 25.0,
-    threshold: float = 0.05
+    eigenfunctions: np.ndarray, x: np.ndarray, L: float = 25.0, threshold: float = 0.05
 ) -> Dict[str, Any]:
     """
     Verify bound state localization: ψ_n(x) → 0 exponentially for |x| → ∞.
@@ -344,15 +333,11 @@ def verify_localization(
         "max_tail_values": np.array(max_tail_values),
         "threshold": threshold,
         "n_states_checked": n_states,
-        "is_localized_per_state": is_localized
+        "is_localized_per_state": is_localized,
     }
 
 
-def count_nodes(
-    psi: np.ndarray,
-    x: np.ndarray,
-    interior_fraction: float = 0.9
-) -> int:
+def count_nodes(psi: np.ndarray, x: np.ndarray, interior_fraction: float = 0.9) -> int:
     """
     Count the number of nodes (zero crossings) in an eigenfunction.
 
@@ -380,11 +365,7 @@ def count_nodes(
     return nodes
 
 
-def verify_nodal_counting(
-    eigenfunctions: np.ndarray,
-    x: np.ndarray,
-    n_check: int = 10
-) -> Dict[str, Any]:
+def verify_nodal_counting(eigenfunctions: np.ndarray, x: np.ndarray, n_check: int = 10) -> Dict[str, Any]:
     """
     Verify Sturm-Liouville nodal theorem: ψ_n has exactly n nodes.
 
@@ -416,14 +397,11 @@ def verify_nodal_counting(
         "node_counts": node_counts,
         "expected_counts": expected_counts,
         "matches": matches,
-        "n_states_checked": n_states
+        "n_states_checked": n_states,
     }
 
 
-def verify_eigenvalues(
-    eigenvalues: np.ndarray,
-    n_check: int = 10
-) -> Dict[str, Any]:
+def verify_eigenvalues(eigenvalues: np.ndarray, n_check: int = 10) -> Dict[str, Any]:
     """
     Verify that eigenvalues match target -γ_n² from Riemann zeros.
 
@@ -435,7 +413,7 @@ def verify_eigenvalues(
         dict: Eigenvalue verification results
     """
     gamma = get_riemann_zeros(n_check)
-    target_eigenvalues = -gamma**2
+    target_eigenvalues = -(gamma**2)
 
     n_compare = min(len(eigenvalues), len(target_eigenvalues), n_check)
     computed = eigenvalues[:n_compare]
@@ -456,15 +434,12 @@ def verify_eigenvalues(
         "max_relative_error": max_relative_error,
         "mean_relative_error": mean_relative_error,
         "l2_deviation": l2_deviation,
-        "n_compared": n_compare
+        "n_compared": n_compare,
     }
 
 
 def compute_spectral_expansion(
-    f: np.ndarray,
-    eigenfunctions: np.ndarray,
-    x: np.ndarray,
-    n_terms: int = 10
+    f: np.ndarray, eigenfunctions: np.ndarray, x: np.ndarray, n_terms: int = 10
 ) -> Tuple[np.ndarray, np.ndarray]:
     """
     Compute the spectral expansion of a function f(x) in the eigenfunction basis.
@@ -505,10 +480,7 @@ DELTA_GAUSSIAN_WIDTH = 0.5  # Standard deviation of the Gaussian approximation
 
 
 def verify_spectral_expansion(
-    eigenfunctions: np.ndarray,
-    x: np.ndarray,
-    n_terms: int = 10,
-    sigma: float = DELTA_GAUSSIAN_WIDTH
+    eigenfunctions: np.ndarray, x: np.ndarray, n_terms: int = 10, sigma: float = DELTA_GAUSSIAN_WIDTH
 ) -> Dict[str, Any]:
     """
     Verify spectral expansion capability using a δ(x=0) mimetic function.
@@ -527,15 +499,13 @@ def verify_spectral_expansion(
         dict: Spectral expansion verification results
     """
     # Create δ(x=0) mimetic function (narrow Gaussian)
-    delta_approx = np.exp(-x**2 / (2 * sigma**2)) / np.sqrt(2 * np.pi * sigma**2)
+    delta_approx = np.exp(-(x**2) / (2 * sigma**2)) / np.sqrt(2 * np.pi * sigma**2)
 
     # Compute spectral expansion
-    coefficients, reconstruction = compute_spectral_expansion(
-        delta_approx, eigenfunctions, x, n_terms
-    )
+    coefficients, reconstruction = compute_spectral_expansion(delta_approx, eigenfunctions, x, n_terms)
 
     # Compute reconstruction error
-    error = np.sqrt(simpson((delta_approx - reconstruction)**2, x=x))
+    error = np.sqrt(simpson((delta_approx - reconstruction) ** 2, x=x))
     original_norm = np.sqrt(simpson(delta_approx**2, x=x))
     relative_error = error / original_norm
 
@@ -548,16 +518,11 @@ def verify_spectral_expansion(
         "reconstruction_error": error,
         "relative_error": relative_error,
         "converges_rapidly": coeff_magnitudes[-1] < coeff_magnitudes[0] / 10,
-        "n_terms": n_terms
+        "n_terms": n_terms,
     }
 
 
-def run_full_validation(
-    N: int = 500,
-    L: float = 25.0,
-    n_states: int = 10,
-    verbose: bool = True
-) -> Dict[str, Any]:
+def run_full_validation(N: int = 500, L: float = 25.0, n_states: int = 10, verbose: bool = True) -> Dict[str, Any]:
     """
     Run complete validation of quantum eigenfunctions from Riemann zeros.
 
@@ -582,7 +547,7 @@ def run_full_validation(
         "L": L,
         "n_states": n_states,
         "qcal_base_frequency": QCAL_BASE_FREQUENCY,
-        "qcal_coherence": QCAL_COHERENCE
+        "qcal_coherence": QCAL_COHERENCE,
     }
 
     if verbose:
@@ -616,7 +581,7 @@ def run_full_validation(
     results["orthonormality"] = {
         "is_orthonormal": ortho_results["is_orthonormal"],
         "max_error": float(ortho_results["max_error"]),
-        "mean_error": float(ortho_results["mean_error"])
+        "mean_error": float(ortho_results["mean_error"]),
     }
 
     if verbose:
@@ -633,7 +598,7 @@ def run_full_validation(
     results["localization"] = {
         "all_localized": loc_results["all_localized"],
         "max_tail_values": loc_results["max_tail_values"].tolist(),
-        "threshold": loc_results["threshold"]
+        "threshold": loc_results["threshold"],
     }
 
     if verbose:
@@ -650,7 +615,7 @@ def run_full_validation(
     results["nodal_counting"] = {
         "all_correct": nodal_results["all_correct"],
         "node_counts": nodal_results["node_counts"],
-        "expected_counts": nodal_results["expected_counts"]
+        "expected_counts": nodal_results["expected_counts"],
     }
 
     if verbose:
@@ -670,7 +635,7 @@ def run_full_validation(
         "computed": eig_results["eigenvalues_computed"].tolist(),
         "target": eig_results["eigenvalues_target"].tolist(),
         "l2_deviation": float(eig_results["l2_deviation"]),
-        "max_relative_error": float(eig_results["max_relative_error"])
+        "max_relative_error": float(eig_results["max_relative_error"]),
     }
 
     if verbose:
@@ -678,9 +643,11 @@ def run_full_validation(
         print("   n |   Computed   |   Target (-γ_n²)   | Rel. Error")
         print("   " + "-" * 55)
         for n in range(min(5, n_states)):
-            print(f"   {n} | {eig_results['eigenvalues_computed'][n]:12.4f} | "
-                  f"{eig_results['eigenvalues_target'][n]:18.4f} | "
-                  f"{eig_results['relative_errors'][n]:.2e}")
+            print(
+                f"   {n} | {eig_results['eigenvalues_computed'][n]:12.4f} | "
+                f"{eig_results['eigenvalues_target'][n]:18.4f} | "
+                f"{eig_results['relative_errors'][n]:.2e}"
+            )
         print()
 
     # Step 6: Verify spectral expansion
@@ -691,7 +658,7 @@ def run_full_validation(
     results["spectral_expansion"] = {
         "converges_rapidly": spectral_results["converges_rapidly"],
         "relative_error": float(spectral_results["relative_error"]),
-        "coefficients": spectral_results["coefficients"].tolist()
+        "coefficients": spectral_results["coefficients"].tolist(),
     }
 
     if verbose:
@@ -705,9 +672,7 @@ def run_full_validation(
 
     # Overall success
     results["success"] = (
-        ortho_results["is_orthonormal"] and
-        loc_results["all_localized"] and
-        nodal_results["all_correct"]
+        ortho_results["is_orthonormal"] and loc_results["all_localized"] and nodal_results["all_correct"]
     )
 
     if verbose:
@@ -757,7 +722,7 @@ def generate_eigenfunction_plot(
     x: np.ndarray,
     eigenvalues: np.ndarray,
     n_plot: int = 10,
-    save_path: Optional[str] = None
+    save_path: Optional[str] = None,
 ) -> None:
     """
     Generate visualization of the first n eigenfunctions.
@@ -788,22 +753,20 @@ def generate_eigenfunction_plot(
         psi_normalized = psi / np.max(np.abs(psi))
         # Offset for clarity
         offset = n * 0.3
-        ax.plot(x, psi_normalized + offset, color=colors[n],
-                linewidth=1.5, label=f'ψ_{n} (E={eigenvalues[n]:.2f})')
-        ax.axhline(y=offset, color='gray', linestyle='--', alpha=0.3, linewidth=0.5)
+        ax.plot(x, psi_normalized + offset, color=colors[n], linewidth=1.5, label=f"ψ_{n} (E={eigenvalues[n]:.2f})")
+        ax.axhline(y=offset, color="gray", linestyle="--", alpha=0.3, linewidth=0.5)
 
-    ax.set_xlabel('x', fontsize=12)
-    ax.set_ylabel('ψ_n(x) (offset for clarity)', fontsize=12)
-    ax.set_title('Eigenfunctions ψ_n(x) from Riemann Zeros γ_n\n'
-                 'H = -d²/dx² + V(x), E_n ≈ -γ_n²', fontsize=14)
-    ax.legend(loc='upper right', fontsize=9)
+    ax.set_xlabel("x", fontsize=12)
+    ax.set_ylabel("ψ_n(x) (offset for clarity)", fontsize=12)
+    ax.set_title("Eigenfunctions ψ_n(x) from Riemann Zeros γ_n\n" "H = -d²/dx² + V(x), E_n ≈ -γ_n²", fontsize=14)
+    ax.legend(loc="upper right", fontsize=9)
     ax.grid(True, alpha=0.3)
     ax.set_xlim([-20, 20])
 
     plt.tight_layout()
 
     if save_path:
-        plt.savefig(save_path, dpi=150, bbox_inches='tight')
+        plt.savefig(save_path, dpi=150, bbox_inches="tight")
         print(f"Figure saved to: {save_path}")
 
     plt.close()
@@ -822,11 +785,7 @@ def main():
 
     # Generate visualization
     eigenvalues, eigenfunctions, x, V = compute_eigenfunctions(N=500, L=25.0, n_states=10)
-    generate_eigenfunction_plot(
-        eigenfunctions, x, eigenvalues,
-        n_plot=10,
-        save_path='psi_plot.png'
-    )
+    generate_eigenfunction_plot(eigenfunctions, x, eigenvalues, n_plot=10, save_path="psi_plot.png")
 
     return 0 if results["success"] else 1
 
