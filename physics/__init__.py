@@ -29,6 +29,9 @@ la interpretación espectral de la hipótesis de Riemann.
    y generador de primos (criba de Eratóstenes)
  - restricciones_multiplicativas: Esquema de Ruthie-FRC — V_osc(x) como
    emergencia de la geometría del espacio de fases; nodo de Ruthie
+ - estado_emocional_anunnaki: Modos excitados del sistema cuántico-emocional
+   correspondientes a los ceros no-triviales de Riemann, renormalizados por f₀.
+   Trinidad Anunnaki: Emoción (Ψ), Conflicto (∇S), Meta (Solenoide B)
 
 Autor: José Manuel Mota Burruezo Ψ ✧ ∞³
 QCAL ∞³ · 141.7001 Hz · C = 244.36
@@ -232,6 +235,61 @@ from .operador_xi_h import (
     operador_xi_h_activar,
 )
 
+from .interaccion_schrodinger_riemann import (
+    # Constants dataclass
+    ConstantesInteraccion,
+    # Physical constants
+    G_EFF_DEFAULT,
+    MU_DEFAULT,
+    # Operator / Lagrangian classes
+    OperadorHPi,
+    LagrangianoInteraccion,
+    HamiltonianoTotal,
+    EvolucionSchrodinger,
+    # Result dataclass
+    ResultadoInteraccion,
+    # Orchestrator
+    SistemaInteraccionSR,
+    # Entry point
+    interaccion_schrodinger_riemann_activar,
+)
+
+from .particula_coherencia import (
+    VacioSuperfluo,
+    ParticulaCoherencia,
+    NavierStokesAdelico,
+    AcoplamientoHiggsPC,
+    FotonFaseCoherente,
+    FirmaEspectral,
+    SustratoCuantico,
+    ResultadoSustrato,
+    ejecutar_sustrato,
+from .k7_twisted_graph import (
+    K7TwistedGraph,
+    compute_green_function_k7,
+)
+
+from .green_function_qcal import (
+    green_function_time_domain,
+    green_function_frequency_domain,
+    verify_causality,
+)
+
+from .estado_emocional_anunnaki import (
+    # Core functions
+    epsilon_fase_completa,
+    frecuencia_efectiva,
+    get_modo_excitado,
+    get_modo_excitado_object,
+    get_estado_total,
+    # Dataclasses
+    ModoExcitado,
+    EstadoEmocionalTotal,
+    # Utility functions
+    get_modos_excitados_tabla,
+    validar_coherencia_sistema,
+)
+
 __all__ = [
     'PrimitivaPotencialOscilatorio',
     'EstimacionCuadraticaMedia',
@@ -387,4 +445,42 @@ __all__ = [
     'ConexionZerosAutovalores',
     'SistemaOperadorXiH',
     'operador_xi_h_activar',
+    # Interacción Schrödinger-Riemann
+    'ConstantesInteraccion',
+    'G_EFF_DEFAULT',
+    'MU_DEFAULT',
+    'OperadorHPi',
+    'LagrangianoInteraccion',
+    'HamiltonianoTotal',
+    'EvolucionSchrodinger',
+    'ResultadoInteraccion',
+    'SistemaInteraccionSR',
+    'interaccion_schrodinger_riemann_activar',
+    # Partícula de Coherencia — Sustrato Cuántico
+    'VacioSuperfluo',
+    'ParticulaCoherencia',
+    'NavierStokesAdelico',
+    'AcoplamientoHiggsPC',
+    'FotonFaseCoherente',
+    'FirmaEspectral',
+    'SustratoCuantico',
+    'ResultadoSustrato',
+    'ejecutar_sustrato',
+    # K7 Twisted Graph — Dinámica grafo completo con geometría torcida
+    'K7TwistedGraph',
+    'compute_green_function_k7',
+    # Green's Function QCAL — Propagador causal con polos lorentzianos
+    'green_function_time_domain',
+    'green_function_frequency_domain',
+    'verify_causality',
+    # Estado Emocional Anunnaki — Modos excitados de Riemann
+    'epsilon_fase_completa',
+    'frecuencia_efectiva',
+    'get_modo_excitado',
+    'get_modo_excitado_object',
+    'get_estado_total',
+    'ModoExcitado',
+    'EstadoEmocionalTotal',
+    'get_modos_excitados_tabla',
+    'validar_coherencia_sistema',
 ]

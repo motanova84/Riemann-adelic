@@ -18,6 +18,8 @@ import RiemannAdelic.Zeros
 import RiemannAdelic.D_explicit
 import RiemannAdelic.functional_eq
 import RiemannAdelic.SpectralStructure
+import RiemannAdelic.critical_line_proof
+import RiemannAdelic.hadamard_uniqueness
 import Mathlib.Analysis.SpecialFunctions.ZetaFunction
 import Mathlib.Analysis.InnerProductSpace.Spectrum
 

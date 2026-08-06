@@ -280,6 +280,56 @@ from .idele_class_selfadjoint_xi import (
     verify_idele_class_selfadjoint_xi,
     RIEMANN_ZEROS_IMAGINARY,
 )
+# Spectral Projection Operator P_Ω (Mar 2026)
+from .spectral_projection_operator import (
+    SpectralProjectionOperator,
+    ProjectionResult,
+    ResolutionOfIdentityResult,
+    SpectralSubspaceResult,
+    build_spectral_projection,
+    generate_projection_certificate,
+)
+
+# Ruelle-Selberg Transfer Operator and Gesto Final de Mathesis (Mar 2026)
+from .ruelle_selberg_transfer_operator import (
+    RuelleSelbergTransferOperator,
+    NuclearTraceResult,
+    TransverseJacobian,
+    PoincareDeterminantResult,
+    ArchimedeanWeylTerm,
+    ArchimedeanResult,
+    MathesisFredholmXi,
+    FredholmDeterminantResult,
+    MathesisGestoResult,
+    gesto_final_mathesis,
+)
+
+# Resolvent Diagonal Kernel and Regularized Trace: Tr_reg(R_s) = ξ'(s)/ξ(s) (Apr 2026)
+from .resolvent_diagonal_trace import (
+    DiagonalKernelResolver,
+    DiagonalKernelResult,
+    DirichletSeriesDecomposition,
+    ArchimedeanContributionComputer,
+    XiLogarithmicDerivative,
+    RegularizedTraceResolver,
+    TraceDecompositionResult,
+    verify_resolvent_trace_identity,
+)
+
+# Trinity_QCAL: Riemann Hypothesis as Quantum Coherence Condition (Apr 2026)
+from .trinity_qcal import (
+    compute_complex_amplitude,
+    compute_entropy_gradient,
+    compute_trinity_qcal,
+    validate_trinity_for_critical_line,
+)
+
+# Riemann Spectral Hamiltonian: Zeros as quantum eigenvalues (Apr 2026)
+from .riemann_spectral_hamiltonian import (
+    RiemannSpectralHamiltonian,
+    SpectralHamiltonianResult,
+    compute_hamiltonian_spectrum,
+)
 
 __all__ = [
     'construct_H_psi',
@@ -462,4 +512,40 @@ __all__ = [
     'IdeleClassValidationCertificate',
     'verify_idele_class_selfadjoint_xi',
     'RIEMANN_ZEROS_IMAGINARY',
+    # Spectral Projection Operator P_Ω (Mar 2026)
+    'SpectralProjectionOperator',
+    'ProjectionResult',
+    'ResolutionOfIdentityResult',
+    'SpectralSubspaceResult',
+    'build_spectral_projection',
+    'generate_projection_certificate',
+    # Ruelle-Selberg Transfer Operator and Gesto Final de Mathesis (Mar 2026)
+    'RuelleSelbergTransferOperator',
+    'NuclearTraceResult',
+    'TransverseJacobian',
+    'PoincareDeterminantResult',
+    'ArchimedeanWeylTerm',
+    'ArchimedeanResult',
+    'MathesisFredholmXi',
+    'FredholmDeterminantResult',
+    'MathesisGestoResult',
+    'gesto_final_mathesis',
+    # Resolvent Diagonal Kernel and Regularized Trace (Apr 2026)
+    'DiagonalKernelResolver',
+    'DiagonalKernelResult',
+    'DirichletSeriesDecomposition',
+    'ArchimedeanContributionComputer',
+    'XiLogarithmicDerivative',
+    'RegularizedTraceResolver',
+    'TraceDecompositionResult',
+    'verify_resolvent_trace_identity',
+    # Trinity_QCAL
+    'compute_complex_amplitude',
+    'compute_entropy_gradient',
+    'compute_trinity_qcal',
+    'validate_trinity_for_critical_line',
+    # Riemann Spectral Hamiltonian
+    'RiemannSpectralHamiltonian',
+    'SpectralHamiltonianResult',
+    'compute_hamiltonian_spectrum',
 ]

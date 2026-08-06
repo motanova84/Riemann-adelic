@@ -6,9 +6,9 @@ authors:
     given-names: "José Manuel"
     affiliation: "Instituto de Conciencia Cuántica"
     orcid: "https://orcid.org/0009-0002-1923-0773"
-date-released: "2025-11-21"
-version: "v6.0"
-doi: "10.5281/zenodo.17379721"
+date-released: "2026-03-29"
+version: "v7.1"
+doi: "10.5281/zenodo.19318986"
 license: "MIT"
 repository-code: "https://github.com/motanova84/Riemann-adelic"
 url: "https://github.com/motanova84/Riemann-adelic"
@@ -23,7 +23,8 @@ keywords:
 abstract: |
   Complete formal verification framework for the Riemann Hypothesis using
   the QCAL (Quantum Coherence Adelic Lattice) approach. Implements 5-step
-  validation: Axioms → Lemmas → Archimedean rigidity → Paley-Wiener 
+  validation: Axioms → Lemmas → Archimedean rigidity → Paley-Wiener
   uniqueness → Zero localization → Coronación. Includes Python validation
-  scripts and Lean 4 formal proofs.
+  scripts and Lean 4 formal proofs. Version 7.1 represents the latest
+  iteration with enhanced documentation and verification.
 

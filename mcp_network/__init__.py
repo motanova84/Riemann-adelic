@@ -28,14 +28,16 @@ F0_HARMONIC = 888.0  # Hz - πCODE harmonic resonance
 COHERENCE_C = 244.36
 
 from .base_server import MCPServer, ServerStatus
-from .registry import MCPRegistry
+from .registry import MCPRegistry, NODE_CATALOG
 from .observer import ObserverPattern, ObserverEvent
 from .torsion_field import TorsionFieldNetwork, TorsionTensor, FiberConnection
+from .resonance import score_psi, classify_resonance, check_node_resonance, register_real_observer, unregister_real_observer, REAL_OBSERVERS
 
 __all__ = [
     "MCPServer",
     "ServerStatus",
     "MCPRegistry",
+    "NODE_CATALOG",
     "ObserverPattern",
     "ObserverEvent",
     "TorsionFieldNetwork",
@@ -44,4 +46,10 @@ __all__ = [
     "F0_BASE",
     "F0_HARMONIC",
     "COHERENCE_C",
+    "score_psi",
+    "classify_resonance",
+    "check_node_resonance",
+    "register_real_observer",
+    "unregister_real_observer",
+    "REAL_OBSERVERS",
 ]

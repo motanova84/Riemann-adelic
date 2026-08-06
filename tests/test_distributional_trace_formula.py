@@ -35,6 +35,8 @@ from distributional_trace_formula import (
     F0_QCAL,
     C_QCAL,
     DOI,
+    NormalTransverseSpace,
+    ArchimedeanContribution,
 )
 
 
@@ -485,3 +487,189 @@ class TestTraceFormulaIntegration:
         integral = float(np.sum(K) * dt)
         # Integral of Σ_pk amp * Gaussian ≈ Σ_pk amp (each Gaussian ≈1 if window wide)
         assert abs(integral - total_weight) / (total_weight + 1e-30) < 0.05
+
+
+# ---------------------------------------------------------------------------
+# NormalTransverseSpace
+# ---------------------------------------------------------------------------
+
+class TestNormalTransverseSpace:
+    """Tests for NormalTransverseSpace."""
+
+    def setup_method(self):
+        self.nts = NormalTransverseSpace(k_max=3)
+
+    def test_initialization_defaults(self):
+        nts = NormalTransverseSpace()
+        assert len(nts.primes) == 10
+        assert nts.k_max == 5
+
+    def test_initialization_custom(self):
+        nts = NormalTransverseSpace(k_max=2)
+        assert nts.k_max == 2
+
+    def test_check_norm_constraint_satisfied(self):
+        """A vector summing to 0 passes the norm constraint."""
+        log_abs = np.array([math.log(2.0), -math.log(2.0), 0.0, 0.0])
+        assert self.nts.check_norm_constraint(log_abs) is True
+
+    def test_check_norm_constraint_violated(self):
+        """A vector not summing to 0 fails the constraint."""
+        log_abs = np.array([1.0, 0.5, 0.0])
+        assert self.nts.check_norm_constraint(log_abs) is False
+
+    def test_check_norm_constraint_zero_vector(self):
+        """The zero vector satisfies the constraint trivially."""
+        assert self.nts.check_norm_constraint(np.zeros(5)) is True
+
+    def test_build_constrained_sample_norm(self):
+        """build_constrained_sample produces a vector summing to 0."""
+        for p in [2.0, 3.0, 5.0]:
+            for k in [1, 2, 3]:
+                sample = self.nts.build_constrained_sample(p, k)
+                assert self.nts.check_norm_constraint(sample), (
+                    f"Norm constraint violated for p={p}, k={k}"
+                )
+
+    def test_build_constrained_sample_real_place(self):
+        """Real-place entry equals k log p."""
+        p, k = 3.0, 2
+        sample = self.nts.build_constrained_sample(p, k)
+        assert abs(sample[0] - k * math.log(p)) < 1e-12
+
+    def test_build_constrained_sample_padic_compensation(self):
+        """p-adic entry equals −k log p."""
+        # Use p=2 which is the first prime; its index is 0 in self.primes
+        nts = NormalTransverseSpace(primes=_sieve_primes(5), k_max=2)
+        sample = nts.build_constrained_sample(2.0, 1)
+        # Real place: log 2; p-adic (index 1 in sample) : -log 2
+        assert abs(sample[0] - math.log(2.0)) < 1e-12
+        assert abs(sample[1] + math.log(2.0)) < 1e-12
+
+    def test_build_constrained_sample_raises_for_unknown_prime(self):
+        """ValueError raised when p is not in self.primes."""
+        nts = NormalTransverseSpace(primes=_sieve_primes(3), k_max=2)  # primes: 2,3,5
+        with pytest.raises(ValueError, match="not in self.primes"):
+            nts.build_constrained_sample(7.0, 1)  # 7 is not in [2,3,5]
+
+    def test_verify_norm_constraint_for_orbits(self):
+        """Norm constraint holds for all configured (p, k) orbits."""
+        assert self.nts.verify_norm_constraint_for_orbits() is True
+
+    def test_transversal_dimension(self):
+        """Transversal dimension = n_primes − 1."""
+        for n in [5, 10, 20]:
+            nts = NormalTransverseSpace(primes=_sieve_primes(n))
+            assert nts.transversal_dimension() == n - 1
+
+    def test_summary_keys(self):
+        """summary() returns all expected keys."""
+        s = self.nts.summary()
+        for key in ("definition", "compact", "norm_constraint_ok",
+                    "transversal_dimension", "n_primes"):
+            assert key in s
+
+    def test_summary_compact(self):
+        """Σ is compact — always True."""
+        assert self.nts.summary()["compact"] is True
+
+    def test_summary_norm_constraint_ok(self):
+        assert self.nts.summary()["norm_constraint_ok"] is True
+
+    def test_summary_definition_contains_kernel(self):
+        """Definition string references the norm kernel."""
+        defn = self.nts.summary()["definition"]
+        assert "log" in defn and "0" in defn
+
+
+# ---------------------------------------------------------------------------
+# ArchimedeanContribution (Block C)
+# ---------------------------------------------------------------------------
+
+class TestArchimedeanContribution:
+    """Tests for ArchimedeanContribution."""
+
+    def setup_method(self):
+        self.arch = ArchimedeanContribution(precision=25)
+
+    def test_initialization(self):
+        arch = ArchimedeanContribution(precision=30)
+        assert arch.precision == 30
+
+    def test_mellin_gamma_factor_positive_real_axis(self):
+        """W_∞(σ) = π^{−σ/2} Γ(σ/2) is real and positive for real σ > 0."""
+        for sigma in [0.5, 1.0, 1.5, 2.0, 3.0]:
+            gf = self.arch.mellin_gamma_factor(complex(sigma, 0.0))
+            assert abs(gf.imag) < 1e-10, f"Im(W_∞({sigma})) ≠ 0"
+            assert gf.real > 0.0, f"W_∞({sigma}) ≤ 0"
+
+    def test_mellin_gamma_factor_known_value(self):
+        """W_∞(2) = π^{−1} Γ(1) = 1/π."""
+        gf = self.arch.mellin_gamma_factor(complex(2.0, 0.0))
+        expected = 1.0 / math.pi
+        assert abs(gf.real - expected) < 1e-10
+
+    def test_mellin_gamma_factor_finite_on_critical_line(self):
+        """W_∞(1/2 + it) is finite and nonzero on the critical line."""
+        for t in [1.0, 5.0, 14.0, 21.0]:
+            gf = self.arch.mellin_gamma_factor(complex(0.5, t))
+            assert np.isfinite(abs(gf))
+            assert abs(gf) > 0.0
+
+    def test_nodo_zero_factor_at_critical_line(self):
+        """½ s(s−1) at s = 1/2 + it is complex for t ≠ 0."""
+        s = complex(0.5, 14.0)
+        z0 = self.arch.nodo_zero_factor(s)
+        expected = 0.5 * s * (s - 1.0)
+        assert abs(z0 - expected) < 1e-12
+
+    def test_nodo_zero_factor_at_s_half_real(self):
+        """½ × (1/2) × (−1/2) = −1/8."""
+        z0 = self.arch.nodo_zero_factor(complex(0.5, 0.0))
+        assert abs(z0.real - (-1.0 / 8.0)) < 1e-12
+        assert abs(z0.imag) < 1e-12
+
+    def test_nodo_zero_factor_at_s_0_and_1(self):
+        """½ s(s−1) vanishes at s = 0 and s = 1."""
+        assert abs(self.arch.nodo_zero_factor(complex(0.0, 0.0))) < 1e-12
+        assert abs(self.arch.nodo_zero_factor(complex(1.0, 0.0))) < 1e-12
+
+    def test_full_archimedean_factor_equals_product(self):
+        """Δ_∞(s) = nodo_zero × mellin_gamma."""
+        for s in [complex(0.5, 5.0), complex(2.0, 0.0), complex(0.3, 10.0)]:
+            delta = self.arch.full_archimedean_factor(s)
+            expected = (
+                self.arch.nodo_zero_factor(s)
+                * self.arch.mellin_gamma_factor(s)
+            )
+            assert abs(delta - expected) < 1e-10
+
+    def test_verify_gamma_factor_real_on_critical_line(self):
+        """W_∞ is finite and positive on the critical line."""
+        assert self.arch.verify_gamma_factor_real_on_critical_line() is True
+
+    def test_verify_functional_equation_symmetry(self):
+        """Δ_∞ functional symmetry check passes."""
+        assert self.arch.verify_functional_equation_symmetry() is True
+
+    def test_summary_keys(self):
+        """summary() returns all expected keys."""
+        s = self.arch.summary()
+        for key in ("gamma_factor_ok", "functional_symmetry_ok",
+                    "nodo_zero_at_s_half", "delta_inf_at_s_2"):
+            assert key in s
+
+    def test_summary_checks_pass(self):
+        s = self.arch.summary()
+        assert s["gamma_factor_ok"] is True
+        assert s["functional_symmetry_ok"] is True
+
+    def test_mellin_gamma_factor_consistency_with_spectral_id(self):
+        """W_∞(s) agrees with SpectralIdentification.gamma_factor(s)."""
+        si = SpectralIdentification(n_primes=5, k_max=2)
+        for s in [complex(0.5, 0.0), complex(1.0, 0.0), complex(2.0, 0.0)]:
+            w_inf = self.arch.mellin_gamma_factor(s)
+            gf_si = si.gamma_factor(s)
+            assert abs(w_inf - gf_si) < 1e-8, (
+                f"W_∞({s}) = {w_inf}, gamma_factor({s}) = {gf_si}"
+            )

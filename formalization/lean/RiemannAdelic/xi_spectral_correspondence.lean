@@ -19,6 +19,8 @@ import Mathlib.Analysis.InnerProductSpace.Spectrum
 import Mathlib.Topology.Algebra.InfiniteSum.Basic
 import Mathlib.Analysis.NormedSpace.OperatorNorm
 import Mathlib.Analysis.Complex.Basic
+import RiemannAdelic.critical_line_proof
+import RiemannAdelic.hadamard_uniqueness
 
 noncomputable section
 open Complex Set Filter Topology
