@@ -1,0 +1,5 @@
+Notebook Validation Results
+Arithmetic: 2.500000
+Zero side:  -0.025121
+Error:      2.53e+00
+Time:       0.4s
