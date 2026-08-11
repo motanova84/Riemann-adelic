@@ -601,17 +601,7 @@ class TransferMatrix:
         T = np.zeros((n_primes, n_primes))
         for r, c, v in zip(rows, cols, data):
             T[r, c] = v
-                p_i = primes[i]
-                p_j = primes[j]
-                
-                if i == j:
-                    # Diagonal: self-interaction
-                    T[i, i] = np.log(p_i) / np.sqrt(p_i)
-                else:
-                    # Off-diagonal: coupling between primes
-                    distance_factor = 1.0 / (1.0 + abs(i - j))
-                    T[i, j] = distance_factor * np.log(p_i) / np.sqrt(p_i * p_j)
-        
+
         return T
     
     def determinant_at_lambda(self, lambda_val: float, n_dim: int = 20) -> float:

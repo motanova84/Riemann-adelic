@@ -41,6 +41,7 @@ import pytest
 from physics.simetria_pt_resonancia import (
     ConstantesPT,
     CONST,
+)
 import math
 import pytest
 import numpy as np
@@ -57,12 +58,6 @@ from physics.simetria_pt_resonancia import (
     simetria_pt_resonancia_activar,
 )
 
-    DiagnosticoPT,
-    EstabilizadorPT,
-    SistemaResonanciaPT,
-    simetria_pt_resonancia_activar,
-    simular_resonancia_pt,
-)
 
 # ---------------------------------------------------------------------------
 # Module-level constants used across multiple tests
