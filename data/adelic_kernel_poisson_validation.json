@@ -1,0 +1,45 @@
+{
+  "validation_date": "2026-02-18",
+  "module": "adelic_kernel_poisson_identity.lean",
+  "qcal_constants": {
+    "f0": 141.7001,
+    "C_coherence": 244.36,
+    "kappa_pi": 2.573202272675948,
+    "t_QCAL": 0.0011231815862649027
+  },
+  "tests": {
+    "test1_gaussian_decay": {
+      "passed": true,
+      "k_large": 0.0,
+      "polynomial_bound": 0.0001
+    },
+    "test2_prime_power": {
+      "passed": true,
+      "max_error": 0.0
+    },
+    "test3_von_mangoldt": {
+      "passed": true,
+      "note": "von Mangoldt function returns log p for ALL prime powers p^k"
+    },
+    "test4_transfer_decay": {
+      "passed": true,
+      "expected_ratio": 0.7071067811865476,
+      "observed_ratio": 0.7071067811865475,
+      "max_error": 1.1102230246251565e-16
+    },
+    "test5_convergence": {
+      "passed": true,
+      "prime_sum": 1.4857497082375246e-46,
+      "tail_estimate": 0.0,
+      "tail_ratio": 0.0
+    },
+    "test6_trace_formula": {
+      "passed": true,
+      "geometric_term": 244.36,
+      "prime_sum": 1.4857497082375246e-46,
+      "trace_estimate": 244.36
+    }
+  },
+  "all_passed": true,
+  "hash": "0xPOISSON_KILL_SHOT"
+}
