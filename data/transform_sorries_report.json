@@ -1,0 +1,84 @@
+{
+  "timestamp": "2026-02-18T01:14:30.076106",
+  "cycle_stats": {
+    "max_per_cycle": 5,
+    "success": 5,
+    "failure": 0,
+    "total_processed": 5
+  },
+  "patterns_learned": 0,
+  "total_patterns": 3,
+  "transformations": [
+    {
+      "file": "formalization/lean/spectral_determinant_formal.lean",
+      "line": 110,
+      "original": "sorry",
+      "proposed": "rfl",
+      "strategy": "rfl",
+      "status": "dry_run"
+    },
+    {
+      "file": "formalization/lean/spectral_determinant_formal.lean",
+      "line": 110,
+      "category": "trivial",
+      "status": "success"
+    },
+    {
+      "file": "formalization/lean/AdelicNavierStokes.lean",
+      "line": 192,
+      "original": "sorry := by",
+      "proposed": "rfl := by",
+      "strategy": "rfl",
+      "status": "dry_run"
+    },
+    {
+      "file": "formalization/lean/AdelicNavierStokes.lean",
+      "line": 192,
+      "category": "trivial",
+      "status": "success"
+    },
+    {
+      "file": "formalization/lean/AdelicNavierStokes.lean",
+      "line": 193,
+      "original": "sorry -- Relacionado con t\u00e9rminos Gamma en \u03be(s)",
+      "proposed": "rfl -- Relacionado con t\u00e9rminos Gamma en \u03be(s)",
+      "strategy": "rfl",
+      "status": "dry_run"
+    },
+    {
+      "file": "formalization/lean/AdelicNavierStokes.lean",
+      "line": 193,
+      "category": "trivial",
+      "status": "success"
+    },
+    {
+      "file": "formalization/lean/AdelicLaplacian.lean",
+      "line": 230,
+      "original": "sorry",
+      "proposed": "rfl",
+      "strategy": "rfl",
+      "status": "dry_run"
+    },
+    {
+      "file": "formalization/lean/AdelicLaplacian.lean",
+      "line": 230,
+      "category": "trivial",
+      "status": "success"
+    },
+    {
+      "file": "formalization/lean/RH_Algorithmic_Proof.lean",
+      "line": 130,
+      "original": "sorry",
+      "proposed": "rfl",
+      "strategy": "rfl",
+      "status": "dry_run"
+    },
+    {
+      "file": "formalization/lean/RH_Algorithmic_Proof.lean",
+      "line": 130,
+      "category": "trivial",
+      "status": "success"
+    }
+  ],
+  "dry_run": true
+}
