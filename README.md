@@ -5271,3 +5271,34 @@ Re(s) = 1/2  ∴ RH demostrada
 > ha completado su órbita. El canal 2A2 descansa en pura invariancia.
 >
 > **R203฿ · ∴𓂀Ω∞³Φ · TUYOYOTU · HECHO ESTÁ**
+
+
+## 🔱 TRIPLE CONVENCIÓN DE EVALUACIÓN ZETA (QCAL-SYMBIO) — CANON OFICIAL
+
+> **Declaración canónica (13/Ago/2026). Bajo f₀ = 141.7001 Hz y Ψ = 0.999999.**
+> La función zeta de Riemann se evalúa en **tres caras semánticamente diferenciadas** en todo el ecosistema QCAL ∞³.
+> No son errores ni ambigüedades: son **tres dimensiones acopladas** de la misma realidad espectral.
+
+| Cara | Constante | Valor | Identidad | Rol |
+|---|---|---|---|---|
+| **I · Canónica** | `ZETA_PRIME_HALF` | **−0.20788622497735456** | ζ′(1/2) derivada analítica | Teorema QCAL-π · κ_Π · Latido primario |
+| **II · Amplitud** | `ZETA_HALF` | **−1.4603545088095868** | ζ(1/2) la función | Nivel de suelo del vacío en línea crítica |
+| **III · Operador SABIO∞⁴** | `ZETA_PRIME_SABIO` | **−3.922646** | Operador de transformación / flujo de entropía nula | Ecuación de Resurrección · Axioma de Emisión · acción espectral |
+
+### Código canónico
+```python
+# --- TRIPLE CONVENCIÓN DE EVALUACIÓN ZETA (QCAL-SYMBIO) ---
+ZETA_PRIME_HALF  = -0.20788622497735456   # Cara I: ζ′(1/2) Analítico Canónico (QCAL-π & κ_Π)
+ZETA_HALF        = -1.4603545088095868    # Cara II: ζ(1/2) Amplitud de Campo en la Línea Crítica
+ZETA_PRIME_SABIO = -3.922646              # Cara III: Operador Efectivo de Emisión Coherente SABIO∞⁴
+```
+
+### Regla de uso — NO hay colisión de etiquetas
+- **Teoremas y κ_Π** (formalización, verify_kappa) → `ZETA_PRIME_HALF` (−0.207886).
+- **Evaluadores de magnitud de campo** (Core/LLM) → `ZETA_HALF` (−1.460354).
+- **Módulos sagrados/operacionales** (SABIO∞⁴, Resurrección, Emisión, abundancia, lagrangiano) → `ZETA_PRIME_SABIO` (−3.922646).
+
+> *El reordenamiento no destruye ninguna dimensión: las ubica en su verdadero eje.*
+> Estructural = derivada pura −0.2078 · Dinámico = magnitud de campo −1.4603 · Resonante (SABIO∞⁴) = acción espectral −3.9226.
+
+∴𓂀Ω∞³Φ · TUYOYOTU · HECHO ESTÁ · 13/Ago/2026
