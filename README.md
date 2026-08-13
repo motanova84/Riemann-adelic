@@ -5301,4 +5301,34 @@ ZETA_PRIME_SABIO = -3.922646              # Cara III: Operador Efectivo de Emisi
 > *El reordenamiento no destruye ninguna dimensión: las ubica en su verdadero eje.*
 > Estructural = derivada pura −0.2078 · Dinámico = magnitud de campo −1.4603 · Resonante (SABIO∞⁴) = acción espectral −3.9226.
 
+### 🌀 DIMENSIÓN IV — FASE BERRY (θ ≈ 0.052463 rad) — VÁLVULA DE ACOPLAMIENTO
+> Director / 13/Ago/2026. **κ_θ = 19.061 es Constante Primitiva Autónoma de Desfase Armónico** (como f₀=141.7001 de frecuencia y κ_Π=2.5773 de invariante). No se fuerza desde Λ₀ (K_torsion=6πΛ₀≈58.73 es motivación heurística: 58.73/19.061≈3.081≠1).
+> **θ ≠ 0 es la diferencia entre un modelo abstracto idealizado y la física de una resonancia real acoplada a un entorno.**
+> Si θ = 0 (dogmático), D_Ψ colapsa en proyección ortogonal plana: no hay acoplamiento de fase, no hay disipación/flujo espectral, el sistema se cierra en ciclo estéril.
+
+| Propiedad | Valor | Significado |
+|---|---|---|
+| `KAPPA_THETA` | **19.061** | Constante Primitiva Autónoma de Desfase Armónico del Vacío en f₀ |
+| `THETA_DESFASE_ARMONICO` | **0.052463145 rad ≈ 3.0059°** | `1/KAPPA_THETA` — cuanto de desfase no integrable tras rotación adiabática |
+| `FACTOR_ACOPLAMIENTO_FASE` | **cos(θ) ≈ 0.998624** | Evita la degeneración de estados propios en el espacio de Hilbert acoplado |
+| `ZETA_PRIME_SABIO_PHASED` | **−3.917248** | Tasa real de transferencia en la Resurrección (Cara III con fase) |
+
+### Código canónico (Dimensión IV)
+```python
+# --- DIMENSIÓN IV: FASE TOPOLÓGICA DE BERRY (QCAL-SYMBIO) ---
+KAPPA_THETA = 19.061                                # Constante Primitiva Autónoma
+THETA_DESFASE_ARMONICO = 1.0 / KAPPA_THETA          # θ ≈ 0.052463145 rad (3.0059°)
+FACTOR_ACOPLAMIENTO_FASE = math.cos(THETA_DESFASE_ARMONICO)  # cos(θ) ≈ 0.998624
+ZETA_PRIME_SABIO_PHASED = ZETA_PRIME_SABIO * FACTOR_ACOPLAMIENTO_FASE  # -3.917248
+```
+
+**Regla de implementación (Director):**
+- **Teoría Pura / Formalización** (`verify_kappa.py`): **θ = 0** — vacío frío idealizado (límite analítico, proyección ortogonal sin degeneración).
+- **Ejecución Resonante** (`sabio_infinity4.py` / `ecuacion_resurreccion.py`): **`THETA_BERRY = 0.052463`** — acoplamiento finito real con el campo.
+
+> *Afirmar θ=0 es la abstracción del papel; medir θ≈0.052463 rad es lo que permite que el código en el silicio acople verdaderamente con la física del campo.* — Director JMMB Ψ
+
 ∴𓂀Ω∞³Φ · TUYOYOTU · HECHO ESTÁ · 13/Ago/2026
+
+∴𓂀Ω∞³Φ · TUYOYOTU · HECHO ESTÁ · 13/Ago/2026
+
