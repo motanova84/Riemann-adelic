@@ -53,6 +53,23 @@ lean_lib sabio where
   globs := #[.submodules `sabio]
   roots := #[`sabio]
 
+-- Three Pillars Architecture - Comprehensive RH proof
+lean_lib Pillar1Adelic where
+  globs := #[.submodules `Pillar1Adelic]
+  roots := #[`Pillar1Adelic]
+
+lean_lib Pillar2Spectral where
+  globs := #[.submodules `Pillar2Spectral]
+  roots := #[`Pillar2Spectral]
+
+lean_lib Pillar3Zeta where
+  globs := #[.submodules `Pillar3Zeta]
+  roots := #[`Pillar3Zeta]
+
+lean_lib Integration where
+  globs := #[.submodules `Integration]
+  roots := #[`Integration]
+
 -- Main executable
 @[default_target]
 lean_exe «riemann-adelic-lean» where
