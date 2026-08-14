@@ -1,0 +1,173 @@
+name: Comprehensive RH Validation Pipeline
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch:
+    inputs:
+      validation_params:
+        description: 'Validation parameters (P:K:sigma0:T - e.g., 1000:50:2.0:50)'
+        required: false
+        default: '1000:50:2.0:50'
+      test_functions:
+        description: 'Test functions to validate'
+        required: false
+        default: 'f1 f2 f3'
+  schedule:
+    # Run daily at 2 AM UTC for continuous validation
+    - cron: '0 2 * * *'
+
+jobs:
+  setup-and-validate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install -r requirements.txt
+          
+      - name: Parse validation parameters
+        id: parse_params
+        run: |
+          PARAMS="${{ github.event.inputs.validation_params || '1000:50:2.0:50' }}"
+          IFS=':' read -r P K SIGMA0 T <<< "$PARAMS"
+          echo "P=$P" >> $GITHUB_OUTPUT
+          echo "K=$K" >> $GITHUB_OUTPUT
+          echo "SIGMA0=$SIGMA0" >> $GITHUB_OUTPUT
+          echo "T=$T" >> $GITHUB_OUTPUT
+          
+      - name: Create output directories
+        run: |
+          mkdir -p data/ logs/ docs/
+          
+      - name: Ensure Odlyzko zeros are available
+        run: |
+          echo "🔍 Checking for Riemann zeros data..."
+          python -c "
+          from utils.fetch_odlyzko import ensure_zeros_available
+          import sys
+          if not ensure_zeros_available():
+              print('❌ Failed to ensure zeros availability')
+              sys.exit(1)
+          else:
+              print('✅ Zeros data is ready')
+          "
+          
+      - name: Run mathematical consistency tests
+        run: |
+          echo "🧪 Running pytest tests for mathematical consistency..."
+          python -m pytest tests/ -v --tb=short --junitxml=data/test_results.xml
+          
+      - name: Execute validation script
+        run: |
+          echo "🔬 Running Riemann Hypothesis validation..."
+          TIMESTAMP=$(date +%Y%m%d_%H%M%S)
+          python validate_explicit_formula.py \
+            --P ${{ steps.parse_params.outputs.P }} \
+            --K ${{ steps.parse_params.outputs.K }} \
+            --sigma0 ${{ steps.parse_params.outputs.SIGMA0 }} \
+            --T ${{ steps.parse_params.outputs.T }} \
+            --max_zeros 2000 \
+            --test_functions ${{ github.event.inputs.test_functions || 'f1 f2 f3' }} \
+            --output_csv data/validation_results_${TIMESTAMP}.csv \
+            --zeros_file zeros/zeros_t1e8.txt
+            
+      - name: Execute Jupyter notebook validation
+        run: |
+          echo "📓 Executing validation notebook..."
+          TIMESTAMP=$(date +%Y%m%d_%H%M%S)
+          jupyter nbconvert \
+            --to html \
+            --execute \
+            --allow-errors \
+            --ExecutePreprocessor.timeout=900 \
+            notebooks/validation.ipynb \
+            --output-dir docs/ \
+            --output notebook_validation_${TIMESTAMP}.html || {
+              echo "⚠️ Notebook execution had issues, generating static version..."
+              jupyter nbconvert --to html notebooks/validation.ipynb \
+                --output-dir docs/ --output notebook_static_${TIMESTAMP}.html
+            }
+            
+      - name: Generate validation summary
+        run: |
+          echo "📊 Generating validation summary..."
+          python -c "
+          import csv
+          import glob
+          import os
+          import sys
+          from datetime import datetime
+          
+          # Find the latest CSV file
+          csv_files = glob.glob('data/validation_results_*.csv')
+          if not csv_files:
+              print('No validation results found')
+              sys.exit(0)
+          
+          latest_csv = max(csv_files, key=os.path.getctime)
+          print(f'Latest results: {latest_csv}')
+          
+          # Read and summarize results
+          with open(latest_csv, 'r') as f:
+              reader = csv.DictReader(f)
+              results = list(reader)
+          
+          summary_file = 'data/validation_summary.md'
+          with open(summary_file, 'w') as f:
+              f.write('# Riemann Hypothesis Validation Summary\n\n')
+              f.write(f'**Generated:** {datetime.now().isoformat()}\n\n')
+              f.write(f'**Parameters:** P={results[0][\"P\"]}, K={results[0][\"K\"]}, σ₀={results[0][\"sigma0\"]}, T={results[0][\"T\"]}\n\n')
+              f.write('## Results\n\n')
+              f.write('| Function | Arithmetic Side | Zero Side | Absolute Error | Relative Error |\n')
+              f.write('|----------|-----------------|-----------|----------------|----------------|\n')
+              
+              for row in results:
+                  f.write(f'| {row[\"test_function\"]} | {float(row[\"arithmetic_total\"]):.6f} | ')
+                  f.write(f'{float(row[\"zero_sum\"]):.6f} | {float(row[\"absolute_error\"]):.2e} | ')
+                  f.write(f'{float(row[\"relative_error\"]):.2e} |\n')
+          
+          print(f'Summary generated: {summary_file}')
+          "
+          
+      - name: Check validation results
+        run: |
+          echo "✅ Validation pipeline completed"
+          echo "📁 Generated files:"
+          find data/ logs/ docs/ -type f \( -name "*.csv" -o -name "*.log" -o -name "*.html" -o -name "*.md" \) | sort
+          
+          echo ""
+          echo "📊 Latest validation summary:"
+          if [ -f "data/validation_summary.md" ]; then
+            cat data/validation_summary.md
+          fi
+          
+      - name: Upload comprehensive results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: comprehensive-validation-results-${{ github.run_number }}
+          path: |
+            data/
+            logs/
+            docs/
+          retention-days: 90
+
+      - name: Update latest results (on main branch)
+        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+        run: |
+          # Keep the latest comprehensive results
+          cp data/validation_results_*.csv data/latest_validation.csv 2>/dev/null || echo "No CSV to copy"
+          cp data/validation_summary.md data/latest_summary.md 2>/dev/null || echo "No summary to copy"
