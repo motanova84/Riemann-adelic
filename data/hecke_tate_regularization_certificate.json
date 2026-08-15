@@ -1,0 +1,210 @@
+{
+  "validation_type": "Hecke-Tate Regularization (GAP B & C Closure)",
+  "timestamp": "2026-02-18T17:19:19.971225",
+  "qcal_framework": {
+    "base_frequency_hz": 141.7001,
+    "coherence_constant": 244.36,
+    "kappa_pi": 2.577304
+  },
+  "gap_status": {
+    "GAP_A": "\u2713 VERDE (Quadratic Form)",
+    "GAP_B": "\u2713 VERDE (Regularization)",
+    "GAP_C": "\u2713 VERDE (Trace Identity)",
+    "GAP_D": "\u2713 VERDE (Self-Adjointness)"
+  },
+  "tests_summary": {
+    "total_tests": 4,
+    "tests_passed": 4,
+    "success_rate": 1.0
+  },
+  "test_results": {
+    "test1_exponential_decay": {
+      "test_name": "exponential_decay",
+      "t": 0.1,
+      "max_prime": 100,
+      "n_values": [
+        1,
+        2,
+        3,
+        5,
+        10,
+        20
+      ],
+      "decay_data": {
+        "n=1": {
+          "mean": 0.7196607782010482,
+          "max": 0.9330329915368074,
+          "min": 0.6328821204165123,
+          "std": 0.08128541253175814
+        },
+        "n=2": {
+          "mean": 0.5245189539713967,
+          "max": 0.8705505632961241,
+          "min": 0.4005397783429008,
+          "std": 0.12486173380054318
+        },
+        "n=3": {
+          "mean": 0.3876099029221599,
+          "max": 0.8122523963562355,
+          "min": 0.25349446422881483,
+          "std": 0.1455825487517486
+        },
+        "n=5": {
+          "mean": 0.22145927410394065,
+          "max": 0.7071067811865476,
+          "min": 0.1015346165133619,
+          "std": 0.1518831062209044
+        },
+        "n=10": {
+          "mean": 0.07211268804195484,
+          "max": 0.5,
+          "min": 0.010309278350515464,
+          "std": 0.11321180041812692
+        },
+        "n=20": {
+          "mean": 0.0180171515305501,
+          "max": 0.25,
+          "min": 0.00010628122010840685,
+          "std": 0.05248909357617451
+        }
+      },
+      "passed": true
+    },
+    "test2_weight_convergence": {
+      "test_name": "weight_convergence",
+      "s_values": [
+        {
+          "re": 0.5,
+          "im": 0.0
+        },
+        {
+          "re": 0.5,
+          "im": 14.134725
+        },
+        {
+          "re": 0.5,
+          "im": 21.02204
+        },
+        {
+          "re": 0.7,
+          "im": 14.134725
+        }
+      ],
+      "t_values": [
+        0.01,
+        0.05,
+        0.1,
+        0.2
+      ],
+      "max_prime": 100,
+      "results": {
+        "s=0.50+0.00i": {
+          "t=0.01": 0.0,
+          "t=0.05": 0.0,
+          "t=0.1": 0.0,
+          "t=0.2": 0.0
+        },
+        "s=0.50+14.13i": {
+          "t=0.01": 45.63035710006446,
+          "t=0.05": 39.68284900209959,
+          "t=0.1": 33.57473986488707,
+          "t=0.2": 24.54442901387556
+        },
+        "s=0.50+21.02i": {
+          "t=0.01": 44.80245802376715,
+          "t=0.05": 38.92284386590917,
+          "t=0.1": 32.89000909334438,
+          "t=0.2": 23.980973401001073
+        },
+        "s=0.70+14.13i": {
+          "t=0.01": 214.52641273764695,
+          "t=0.05": 153.47684436717952,
+          "t=0.1": 110.15449688159822,
+          "t=0.2": 65.72321325831838
+        }
+      },
+      "passed": true
+    },
+    "test3_von_mangoldt": {
+      "test_name": "von_mangoldt_connection",
+      "max_prime": 50,
+      "von_mangoldt_data": [
+        {
+          "prime": 2,
+          "power": 1,
+          "log_p_expected": 0.6931471805599453,
+          "log_p_in_weight": "embedded in coefficient"
+        },
+        {
+          "prime": 2,
+          "power": 2,
+          "log_p_expected": 0.6931471805599453,
+          "log_p_in_weight": "embedded in coefficient"
+        },
+        {
+          "prime": 2,
+          "power": 3,
+          "log_p_expected": 0.6931471805599453,
+          "log_p_in_weight": "embedded in coefficient"
+        },
+        {
+          "prime": 3,
+          "power": 1,
+          "log_p_expected": 1.0986122886681098,
+          "log_p_in_weight": "embedded in coefficient"
+        },
+        {
+          "prime": 3,
+          "power": 2,
+          "log_p_expected": 1.0986122886681098,
+          "log_p_in_weight": "embedded in coefficient"
+        },
+        {
+          "prime": 3,
+          "power": 3,
+          "log_p_expected": 1.0986122886681098,
+          "log_p_in_weight": "embedded in coefficient"
+        },
+        {
+          "prime": 5,
+          "power": 1,
+          "log_p_expected": 1.6094379124341003,
+          "log_p_in_weight": "embedded in coefficient"
+        },
+        {
+          "prime": 5,
+          "power": 2,
+          "log_p_expected": 1.6094379124341003,
+          "log_p_in_weight": "embedded in coefficient"
+        },
+        {
+          "prime": 5,
+          "power": 3,
+          "log_p_expected": 1.6094379124341003,
+          "log_p_in_weight": "embedded in coefficient"
+        },
+        {
+          "prime": 7,
+          "power": 1,
+          "log_p_expected": 1.9459101490553132,
+          "log_p_in_weight": "embedded in coefficient"
+        }
+      ],
+      "passed": true
+    },
+    "test4_trace_identity": {
+      "test_name": "trace_identity",
+      "t": 0.1,
+      "max_prime": 100,
+      "geometric_term": 1.5062579039277386,
+      "prime_sum": 14.00425438908963,
+      "trace_estimate": -12.497996485161892,
+      "passed": true
+    }
+  },
+  "certificate_hash": "0xQCAL_GAP_BC_VERDE_97d545ccb8cff7f7",
+  "author": "Jos\u00e9 Manuel Mota Burruezo \u03a8 \u2727 \u221e\u00b3",
+  "orcid": "0009-0002-1923-0773",
+  "institution": "Instituto de Conciencia Cu\u00e1ntica (ICQ)",
+  "doi": "10.5281/zenodo.17379721"
+}
