@@ -43,7 +43,7 @@ Signature: ∴𓂀Ω∞³Φ @ 141.7001 Hz
 """
 
 import numpy as np
-from scipy.linalg import eigh, norm
+from scipy.linalg import eigh, eigvalsh, norm
 from typing import Dict, List, Optional, Tuple, Any
 from dataclasses import dataclass, field
 
@@ -445,3 +445,123 @@ def certify_qcal_spectral_operator(
         print("=" * 60)
 
     return result
+
+
+# ---------------------------------------------------------------------------
+# QCALSpectralEngine — Mellin-space DVR spectral engine
+# ---------------------------------------------------------------------------
+
+class QCALSpectralEngine:
+    """Mellin-space spectral engine for QCAL Riemann-sequence validation.
+
+    Implements the Berry-Keating operator  H = −i ∂_u  in the logarithmic
+    Mellin variable  u = ln x  on a uniform discrete grid.  In this space:
+
+    * The dilation operator  x ∂_x  becomes the translation operator  ∂_u.
+    * H = −i ∂_u  is self-adjoint on L²(ℝ, du).
+    * The finite-difference matrix is anti-symmetric and Hermitian after the
+      factor −i, guaranteeing a real spectrum.
+
+    The spectrum is extracted via :func:`scipy.linalg.eigvalsh` applied to
+    the complex Hermitian matrix H.  Only positive eigenvalues are retained
+    (corresponding to positive-frequency Mellin modes) and scaled by
+    *scale_factor* before being returned.
+
+    Parameters
+    ----------
+    N : int
+        Number of grid points for the Mellin discretisation.  Larger N
+        gives a finer grid and more spectral resolution.
+    u_min : float
+        Lower bound of the Mellin variable u = ln x.  Default −5.
+    u_max : float
+        Upper bound of the Mellin variable u = ln x.  Default +5.
+
+    Notes
+    -----
+    The discretisation uses central finite differences::
+
+        D[i, i+1] = +1 / (2 Δu)
+        D[i, i-1] = −1 / (2 Δu)
+
+    so that  H = −i D  is the Hermitian finite-difference approximation of
+    −i ∂/∂u.  The symmetrisation  H ← (H + H†) / 2  enforces exact
+    Hermiticity after floating-point rounding.
+    """
+
+    def __init__(
+        self,
+        N: int = 512,
+        u_min: float = -5.0,
+        u_max: float = 5.0,
+    ) -> None:
+        if N < 2:
+            raise ValueError(f"N must be at least 2, got {N}")
+        self.N = N
+        self.u = np.linspace(u_min, u_max, N)
+        self.du = self.u[1] - self.u[0]
+
+    def generate_operator(self) -> np.ndarray:
+        """Build the Hermitian Mellin-space Hamiltonian H = −i ∂_u (N×N).
+
+        Returns
+        -------
+        np.ndarray, shape (N, N), dtype complex128
+            Hermitian matrix satisfying H = H†.
+        """
+        # Central finite-difference derivative operator
+        D = (
+            np.diag(np.ones(self.N - 1), 1)
+            - np.diag(np.ones(self.N - 1), -1)
+        ) / (2.0 * self.du)
+
+        # H = −i ∂_u  (Hermitian because D is real antisymmetric)
+        H = -1j * D
+
+        # Enforce exact Hermiticity after floating-point operations
+        H_hermitian = 0.5 * (H + H.conj().T)
+        return H_hermitian
+
+    def compute_spectrum(self, scale_factor: float = 1.0) -> np.ndarray:
+        """Compute the positive eigenvalues of H.
+
+        Uses :func:`scipy.linalg.eigvalsh` to exploit the Hermitian
+        structure of H, then filters to the positive half-spectrum.
+
+        Parameters
+        ----------
+        scale_factor : float
+            Multiplicative scaling applied to all returned eigenvalues.
+            Default 1.0 (no scaling).
+
+        Returns
+        -------
+        np.ndarray, shape (K,)
+            Sorted positive eigenvalues  λ_1 ≤ λ_2 ≤ … ≤ λ_K, scaled by
+            *scale_factor*.
+        """
+        H = self.generate_operator()
+
+        # eigvalsh accepts complex Hermitian matrices directly
+        raw_eigenvalues = eigvalsh(H)
+
+        # Retain only positive-frequency Mellin modes
+        positive_eigenvalues = raw_eigenvalues[raw_eigenvalues > 0]
+        return positive_eigenvalues * scale_factor
+
+    def verify_hermiticity(self) -> Dict[str, Any]:
+        """Verify that the generated operator is Hermitian.
+
+        Returns
+        -------
+        dict with keys:
+            hermiticity_error : float  — ‖H − H†‖_F / ‖H‖_F
+            is_hermitian      : bool
+        """
+        H = self.generate_operator()
+        h_norm = float(norm(H)) + 1e-30
+        hermiticity_error = float(norm(H - H.conj().T) / h_norm)
+        return {
+            "hermiticity_error": hermiticity_error,
+            "is_hermitian": hermiticity_error < 1e-10,
+        }
