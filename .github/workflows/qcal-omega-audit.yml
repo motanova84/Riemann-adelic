@@ -1,0 +1,22 @@
+name: QCAL Ω Audit
+on:
+  push:
+    paths: ['ledger/**','scripts/validate_omega_ledger.py','**/*.lean']
+  pull_request:
+    paths: ['ledger/**','scripts/validate_omega_ledger.py','**/*.lean']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate evidence ledger and inheritance
+        run: python3 scripts/validate_omega_ledger.py ledger/omega.json
+      - name: Install Lean toolchain
+        uses: leanprover/lean4-action@v1
+        with:
+          lake-package-directory: .
+      - name: Build Lean project
+        run: lake build
