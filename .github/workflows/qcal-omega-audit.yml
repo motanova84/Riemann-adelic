@@ -1,9 +1,9 @@
 name: QCAL Ω Audit
 on:
   push:
-    paths: ['ledger/**','scripts/validate_omega_ledger.py','**/*.lean']
+    paths: ['ledger/**','scripts/validate_omega_ledger.py','.github/workflows/qcal-omega-audit.yml','**/*.lean']
   pull_request:
-    paths: ['ledger/**','scripts/validate_omega_ledger.py','**/*.lean']
+    paths: ['ledger/**','scripts/validate_omega_ledger.py','.github/workflows/qcal-omega-audit.yml','**/*.lean']
   workflow_dispatch:
 permissions:
   contents: read
