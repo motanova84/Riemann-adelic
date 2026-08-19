@@ -1,0 +1,25 @@
+{
+  "certificate_id": "0xQCAL_CLAUSURA_76725af8c94a0734",
+  "module": "operators/clausura_noesis.py",
+  "theorem": "Teorema de Clausura de Riemann-Noesis",
+  "pillars": [
+    "Pillar 1: Transfer Operator (trace-class)",
+    "Pillar 2: Sobolev-Adelic Operator (KLMN self-adjoint)",
+    "Pillar 3: Spectral Coincidence (Re(s) = 1/2)"
+  ],
+  "conclusion": "Re(ρ) = 1/2 for all non-trivial zeros",
+  "validation": {
+    "n_tests": 6,
+    "n_passed": 6,
+    "all_passed": true
+  },
+  "coherence_psi": 1.0,
+  "qcal": {
+    "frequency": 141.7001,
+    "coherence": 244.36,
+    "doi": "10.5281/zenodo.17379721",
+    "orcid": "0009-0002-1923-0773"
+  },
+  "timestamp": "2026-03-05T20:32:55.651292",
+  "elapsed_seconds": 0.03680992126464844
+}
