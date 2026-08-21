@@ -233,6 +233,13 @@ Integrates f₀ into the noetic operator Hψ := -Δ + ω₀².
 
 ### Script 21: Physical Validation (`casimir_ligo_frequency.lean`)
 Validates f₀ through Casimir effect and LIGO O4 observations.
+
+### Kernel Module: Spectral Proof (`kernel/RH_SPECTRAL_PROOF.lean`)
+Provides a spectral proof of the Riemann Hypothesis based on the operator H_ψ.
+This module formalizes the spectral approach showing that zeros of ζ(s) in the
+critical strip must lie on the critical line Re(s) = 1/2 through spectral symmetry
+of the self-adjoint operator H_ψ.
+
 ### Compatibility
 
 This module is compatible with all QCAL operators:
