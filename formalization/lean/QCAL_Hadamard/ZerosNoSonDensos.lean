@@ -7,9 +7,9 @@
   José Manuel Mota Burruezo · Noesis · QCAL
 -/
 
+import EntireEqZeroOnCriticalLine
 import Mathlib.Analysis.Analytic.IsolatedZeros
 import Mathlib.Analysis.Complex.Basic
-import Mathlib.NumberTheory.LSeries.RiemannZeta
 
 open Complex Set Filter
 open scoped Topology
@@ -65,12 +65,13 @@ lemma entire_eq_of_eqOn_criticalLine
     (hf : Differentiable ℂ f) (hg : Differentiable ℂ g)
     (hline : ∀ t : ℝ, f ((1 : ℂ) / 2 + I * t) = g ((1 : ℂ) / 2 + I * t)) :
     f = g := by
-  -- diferencia entera, se anula en un continuo, identidad
   have hdiff : Differentiable ℂ (f - g) := hf.sub hg
   have hz : ∀ t : ℝ, (f - g) ((1 : ℂ) / 2 + I * t) = 0 := by
-    intro t; simp [hline t]
-  -- ver EntireEqZeroOnCriticalLine.lean
-  sorry -- se cierra con AnalyticOnNhd.eqOn_zero_of_preconnected_of_frequently_eq_zero
+    intro t
+    simp [hline t]
+  have h0 := entire_eq_zero_of_eqOn_criticalLine hdiff hz
+  funext s
+  exact sub_eq_zero.mp (h0 s)
 
 /-- Esto NO es un teorema: no hay lema que suba ceros discretos a la línea. -/
 theorem cannot_upgrade_discrete_zeros
