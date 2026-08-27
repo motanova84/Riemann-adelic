@@ -1,5 +1,5 @@
 /-
-  GAP 4 v3.2.11 — order_atMostOne_of_quotient
+  GAP 4 v3.2.12 — order_atMostOne_of_quotient
 
   f = h * g, enteras, h nunca cero, g ≢ 0,
   OrderAtMostOne f, OrderAtMostOne g
@@ -19,15 +19,20 @@
     `exists_log_on_ball_ne_zero` (BranchLogRoot + upgrade),
     `min_norm_of_re_log_bound` (Borel–Carathéodory → min |u|).
 
+  Cerrado más:
+    `differentiableOn_of_continuous_log` — upgrade GAP1 (lattice 2πiℤ)
+      de ContinuousOn φ + exp∘φ=u a DifferentiableOn en la bola.
+
   Un sorry:
-    `exists_holomorphic_log_re_bound` — upgrade log continuo→holomorfo
-      + Re(log u) ≤ C(1+R^{1+ε}) + ‖φ0‖≤C(...) vía OrderAtMostOne g.
+    `exists_holomorphic_log_re_bound` — solo Re(log u) y ‖φ 0‖
+      vía OrderAtMostOne g + |g|/|P| + MMP (φ ya holomorfa).
 
   No lake-checked. No RH. No D ≡ Ξ.
 
   José Manuel Mota Burruezo · Noesis · QCAL ∞³
 -/
 
+import GAP1_log_holomorphic_of_entire_never_zero
 import Mathlib.Analysis.Analytic.IsolatedZeros
 import Mathlib.Analysis.Analytic.Order
 import Mathlib.Analysis.Calculus.DiffContOnCl
@@ -817,10 +822,74 @@ lemma min_norm_of_re_log_bound
   exact (Real.exp_le_exp.mpr (neg_le_neg hle)).trans <| by
     rw [hure]; exact Real.exp_le_exp.mpr (neg_norm_le_re _)
 
+/-- Upgrade GAP1: φ continuo, exp∘φ = u analítica nunca-cero en la bola
+    ⇒ φ holomorfa. Localmente φ = L∘u + 2πi n (lattice). -/
+lemma differentiableOn_of_continuous_log
+    {u φ : ℂ → ℂ} {S : ℝ} (_hS : 0 < S)
+    (hu : AnalyticOnNhd ℂ u (closedBall (0 : ℂ) S))
+    (hu0 : ∀ w : closedBall (0 : ℂ) S, u w ≠ 0)
+    (hφc : ContinuousOn φ (ball (0 : ℂ) S))
+    (hexp : ∀ z ∈ ball (0 : ℂ) S, exp (φ z) = u z) :
+    DifferentiableOn ℂ φ (ball (0 : ℂ) S) := by
+  intro z₀ hz₀
+  have hz₀cl : z₀ ∈ closedBall (0 : ℂ) S := ball_subset_closedBall hz₀
+  have hw : u z₀ ≠ 0 := hu0 ⟨z₀, hz₀cl⟩
+  let ρ : ℝ := ‖u z₀‖ / 2
+  have hρ : 0 < ρ := half_pos (norm_pos_iff.mpr hw)
+  have hρw : ρ < ‖u z₀‖ := half_lt_self (norm_pos_iff.mpr hw)
+  obtain ⟨L, hLd, hLexp⟩ := exists_holomorphic_log_on_ball hw hρ hρw
+  obtain ⟨δ, hδ, hδball⟩ :
+      ∃ δ > 0, ∀ z, dist z z₀ < δ → dist (u z) (u z₀) < ρ :=
+    (Metric.continuousAt_iff.mp (hu z₀ hz₀cl).continuousAt) ρ hρ
+  obtain ⟨δ', hδ', hδ'sub⟩ :
+      ∃ δ' > 0, ball z₀ δ' ⊆ ball (0 : ℂ) S :=
+    Metric.isOpen_iff.mp isOpen_ball z₀ hz₀
+  let δ0 : ℝ := min δ δ'
+  have hδ0 : 0 < δ0 := lt_min hδ hδ'
+  have hsub : ball z₀ δ0 ⊆ ball (0 : ℂ) S := by
+    intro z hz
+    exact hδ'sub (mem_ball.mpr
+      (lt_of_lt_of_le (mem_ball.mp hz) (min_le_right δ δ')))
+  have hhball : ∀ z ∈ ball z₀ δ0, u z ∈ ball (u z₀) ρ := fun z hz =>
+    hδball z (lt_of_lt_of_le (mem_ball.mp hz) (min_le_left δ δ'))
+  have hexp_eq : ∀ z ∈ ball z₀ δ0, exp (φ z) = exp (L (u z)) := by
+    intro z hz
+    rw [hexp z (hsub hz), hLexp (u z) (hhball z hz)]
+  let ψ : ℂ → ℂ := fun z => φ z - L (u z)
+  have hval : ∀ z ∈ ball z₀ δ0, ∃ n : ℤ, ψ z = (n : ℂ) * (2 * π * I) := by
+    intro z hz
+    obtain ⟨n, hn⟩ := exp_eq_exp_iff_exists_int.mp (hexp_eq z hz)
+    exact ⟨n, by simp [ψ, hn, sub_eq_iff_eq_add]⟩
+  have hψc' : ContinuousOn ψ (ball z₀ δ0) := by
+    have hφ' : ContinuousOn φ (ball z₀ δ0) := hφc.mono hsub
+    have hLc : ContinuousOn L (ball (u z₀) ρ) :=
+      fun w hw => (hLd w hw).continuousAt.continuousWithinAt
+    have huc : ContinuousOn u (ball z₀ δ0) := fun z hz =>
+      (hu z (ball_subset_closedBall (hsub hz))).continuousAt.continuousWithinAt
+    exact hφ'.sub (hLc.comp huc fun z hz => hhball z hz)
+  have hconn : IsConnected (ψ '' ball z₀ δ0) :=
+    (isConnected_ball hδ0).image hψc'
+  have hsing := connected_image_lattice_subsingleton hconn hval
+  have hz0mem : z₀ ∈ ball z₀ δ0 := mem_ball_self hδ0
+  obtain ⟨n, hn0⟩ := hval z₀ hz0mem
+  have hconst : ∀ z ∈ ball z₀ δ0, ψ z = (n : ℂ) * (2 * π * I) := by
+    intro z hz
+    exact (hsing ⟨z, hz, rfl⟩ ⟨z₀, hz0mem, rfl⟩).trans hn0
+  have hev : φ =ᶠ[𝓝 z₀] fun z => L (u z) + (n : ℂ) * (2 * π * I) :=
+    Filter.eventually_of_mem (isOpen_ball.mem_nhds hz0mem) fun z hz =>
+      eq_add_of_sub_eq (hconst z hz)
+  have hLdu : DifferentiableAt ℂ (fun z => L (u z)) z₀ :=
+    (hLd (u z₀) (mem_ball_self hρ)).comp z₀
+      (hu z₀ hz₀cl).differentiableAt
+  have hadd :
+      DifferentiableAt ℂ (fun z => L (u z) + (n : ℂ) * (2 * π * I)) z₀ :=
+    hLdu.add (differentiableAt_const _)
+  exact (hadd.congr_of_eventuallyEq hev.symm).differentiableWithinAt
+
 /--
-  Sorry nombrado: log holomorfo de u (upgrade ContinuousOn→DifferentiableOn)
-  + Re(log u) ≤ C(1+R^{1+ε}) + ‖φ 0‖ ≤ C(...)
-  vía OrderAtMostOne g, extract, |P|≥δ^N en círculo exterior.
+  Sorry nombrado: Re(log u) y ‖φ 0‖. φ ya es holomorfa
+  (`differentiableOn_of_continuous_log`). Cota vía OrderAtMostOne g,
+  |u|=|g|/|P| en círculo separado, MMP.
 -/
 theorem exists_holomorphic_log_re_bound
     (hg : Differentiable ℂ g) (hg_ord : OrderAtMostOne g)
@@ -839,6 +908,16 @@ theorem exists_holomorphic_log_re_bound
           (∀ w ∈ ball (0 : ℂ) (R + 2),
             (φ w).re ≤ C * (1 + (R + 2) ^ (1 + ε))) ∧
           ‖φ 0‖ ≤ C * (1 + (R + 2) ^ (1 + ε)) := by
+  obtain ⟨A, hA, hB⟩ := hg_ord ε hε
+  refine ⟨A + 1, by positivity, ?_⟩
+  intro R hR u hu hu0 heq
+  have hS : 0 < R + 2 := by linarith
+  obtain ⟨φ, hφc, hexp⟩ := exists_continuous_log_on_ball_ne_zero hS hu hu0
+  have hφd : DifferentiableOn ℂ φ (ball (0 : ℂ) (R + 2)) :=
+    differentiableOn_of_continuous_log hS hu hu0 hφc hexp
+  refine ⟨φ, hφd, hexp, ?_⟩
+  -- Resta: Re φ = log ‖u‖ ≤ C(1+(R+2)^{1+ε}) y ‖φ 0‖.
+  -- |u| ≤ |g|/|P| en círculo R' ∈ [R+1,R+2] + MMP.
   sorry
 
 /-- Min |u| en el círculo. Glue: log+Re bound (sorry) + Borel (cerrado). -/
