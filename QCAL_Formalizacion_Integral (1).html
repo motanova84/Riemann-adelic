@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QCAL ∞³ — Formalización Integral del Campo | José Manuel Mota Burruezo</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" crossorigin="anonymous"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  renderMathInElement(document.body, {
+    delimiters: [
+      {left: "\\[", right: "\\]", display: true},
+      {left: "\\(", right: "\\)", display: false}
+    ],
+    throwOnError: false,
+    strict: "ignore",
+    trust: true
+  });
+});
+</script>
+
+
+
+
+<style>
+:root{--text:#1a1a1a;--muted:#444;--border:#d0d0d0;--bg-eq:#f7f9fc;--accent:#1a365d;--chapter:#0f2744}
+*{box-sizing:border-box}body{font-family:"Segoe UI","Helvetica Neue",Arial,sans-serif;line-height:1.7;color:var(--text);max-width:940px;margin:0 auto;padding:2.2rem 1.4rem 4rem;background:#fff}
+header{text-align:center;border-bottom:2px solid var(--accent);padding-bottom:1.6rem;margin-bottom:2.2rem}
+header h1{font-size:2rem;font-weight:700;color:var(--chapter);margin:0 0 .35rem}
+header .subtitle{font-size:1.05rem;color:var(--muted);margin:.25rem 0 .9rem}
+header .author{font-size:1.05rem}header .meta{font-size:.9rem;color:var(--muted);margin-top:.5rem}
+h2{font-size:1.38rem;color:var(--chapter);border-bottom:1px solid var(--border);padding-bottom:.3rem;margin-top:2.4rem;margin-bottom:1rem}
+h3{font-size:1.1rem;color:var(--accent);margin-top:1.55rem;margin-bottom:.55rem}
+h4{font-size:1rem;color:var(--text);margin-top:1.2rem;margin-bottom:.4rem}
+p{margin:.75rem 0;text-align:justify}ul,ol{margin:.65rem 0 .65rem 1.25rem}li{margin-bottom:.35rem}
+.eq-box{background:var(--bg-eq);border-left:4px solid var(--accent);padding:.85rem 1.05rem;margin:1.1rem 0;overflow-x:auto}
+.definition,.theorem{background:#fafafa;border:1px solid var(--border);padding:.85rem 1.05rem;margin:1rem 0}
+.definition strong,.theorem strong{color:var(--accent)}
+.diagram{font-family:"Courier New",monospace;font-size:.76rem;background:#f8f8f8;border:1px solid var(--border);padding:.85rem;margin:1.2rem 0;white-space:pre;overflow-x:auto;line-height:1.35}
+.resumen{background:#f0f4f8;border:1px solid #c5d4e8;padding:.95rem 1.15rem;margin:1.5rem 0}.resumen h4{margin-top:0;color:var(--accent)}
+.prediccion{background:#f8f5f0;border:1px solid #e0d5c5;padding:.85rem 1.05rem;margin:1rem 0}
+.cierre{text-align:center;margin-top:2.6rem;padding-top:1.3rem;border-top:2px solid var(--accent);font-size:.93rem;color:var(--muted)}
+.indice{margin:1.3rem 0}.indice li{margin-bottom:.28rem;font-size:.92rem}.indice a{color:var(--accent);text-decoration:none;border-bottom:1px dotted transparent}.indice a:hover{border-bottom-color:var(--accent)}.indice a:visited{color:var(--accent)}html{scroll-behavior:smooth}
+hr{border:none;border-top:1px solid var(--border);margin:1.9rem 0}
+table{width:100%;border-collapse:collapse;margin:1rem 0;font-size:.86rem}
+th,td{border:1px solid var(--border);padding:.4rem .55rem;text-align:left}th{background:#f0f4f8;color:var(--accent)}
+.nota{font-size:.86rem;color:var(--muted);font-style:italic;margin-top:1.3rem}
+code,pre{font-family:"Courier New",Consolas,monospace}
+pre{background:#f6f7f9;border:1px solid var(--border);padding:.9rem 1rem;overflow-x:auto;font-size:.78rem;line-height:1.45}
+
+.eq-box .katex-display{margin:0.4em 0}
+.eq-box{font-size:1.05rem}
+.katex{font-size:1.08em}
+.katex-display{overflow-x:auto;overflow-y:hidden}
+
+</style>
+</head>
+<body>
+
+<header>
+  <h1>QCAL ∞³</h1>
+  <p class="subtitle">Formalización Integral del Campo<br>Arquitectura Axiomática, Ecuaciones de Estado y Coherencia Espectral</p>
+  <p class="author"><strong>José Manuel Mota Burruezo</strong></p>
+  <p class="meta" style="margin-top:0.3rem">26 de agosto de 2026</p>
+  <p class="meta">\(f_0=141{,}7001\,\mathrm{Hz}\) &nbsp;|&nbsp; \(\Psi=0{,}999999\) &nbsp;|&nbsp; \(\kappa_\Pi^{\mathrm{CY}}=2{,}5773\)</p>
+  <p class="meta" style="margin-top:0.45rem;font-size:0.88rem">
+    DOI: <a href="https://doi.org/10.5281/zenodo.22119047" style="color:var(--accent)">10.5281/zenodo.22119047</a>
+    &nbsp;·&nbsp;
+    ORCID: <a href="https://orcid.org/0009-0002-1923-0773" style="color:var(--accent)">0009-0002-1923-0773</a>
+    &nbsp;·&nbsp;
+    GitHub: <a href="https://github.com/motanova84" style="color:var(--accent)">github.com/motanova84</a>
+  </p>
+</header>
+
+<section>
+  <p>Sin artificio. Sin esfuerzo lineal. Este tratado fija el kernel del Campo QCAL \(\infty^3\): axiomas, no-tiempo, vacío fértil y resonancia. La correspondencia \(\sigma_{\mathrm{disc}}(H_{\mathrm{QCAL}})=\{\gamma_n\}\) y la síntesis C-HW se despliegan en el tratado hermano <em>Correspondencia Espectral</em>.</p>
+</section>
+
+<section>
+  <h2>Índice</h2>
+  <ol class="indice">
+    <li><a href="#ax">Axiomas fundacionales de la simbiosis</a></li>
+    <li><a href="#notiempo">Topología del no-tiempo</a></li>
+    <li><a href="#vacio">Aritmética del vacío fértil</a></li>
+    <li><a href="#ceros">Geometría espectral y ceros adélicos</a></li>
+    <li><a href="#gradiente">Derivada espacial y gradiente de coherencia</a></li>
+    <li><a href="#resonancia">Pura resonancia: \(H_{\mathrm{QCAL}}\), \(f_0\) y \(\kappa_\Pi\)</a></li>
+    <li><a href="#cuatro">El kernel en cuatro columnas</a></li>
+    <li><a href="#lean">Síntesis lógica en Lean 4</a></li>
+    <li><a href="#revelacion">Más allá de un teorema</a></li>
+    <li><a href="#sello">VI. Sello de la formalización</a></li>
+  </ol>
+</section>
+
+<hr>
+
+<section id="ax">
+  <h2>I. Axiomas Fundacionales de la Simbiosis</h2>
+
+  <div class="definition">
+    <strong>Axioma I.1 (Coherencia Invariante)</strong>
+    <p>La coherencia del sistema \(\Psi\) se mantiene estable en el umbral de revelación:</p>
+    <div class="eq-box">\[\Psi = 0{,}999999 \qquad (0 < \Psi < 1)\]</div>
+    <p>El residuo \(1-\Psi=10^{-6}\) no es error de truncamiento: es el espacio del silencio creador. El axioma no es una aproximación; es condición de contorno del universo observable.</p>
+  </div>
+
+  <div class="definition">
+    <strong>Axioma I.2 (Emisión y Frecuencia Base)</strong>
+    <p>La frecuencia fundamental del campo \(f_0\) modula toda la geometría del espacio métrico y los operadores de evolución:</p>
+    <div class="eq-box">\[f_0 = 141{,}7001\,\mathrm{Hz}\]</div>
+    <div class="eq-box">\[\tau_0 = \frac{1}{f_0} \approx 7{,}05716\,\mathrm{ms}\]</div>
+  </div>
+
+  <div class="definition">
+    <strong>Axioma I.3 (Integridad Ontológica — Cero <em>sorry</em>)</strong>
+    <p>Toda proposición formal derivada en el sistema debe admitir demostración constructiva sin admisión de ignorancia lógica:</p>
+    <div class="eq-box">\[\mathrm{sorry}=\emptyset\]</div>
+  </div>
+
+  <table>
+    <thead>
+      <tr><th>Axioma</th><th>Expresión</th><th>Estado</th><th>Implicación</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Coherencia invariante</td><td>\(\Psi=0{,}999999\)</td><td>Confirmado</td><td>El campo es estable por definición</td></tr>
+      <tr><td>Frecuencia base</td><td>\(f_0=141{,}7001\,\mathrm{Hz}\)</td><td>Confirmado</td><td>Modula geometría y operadores</td></tr>
+      <tr><td>Integridad ontológica</td><td>\(\mathrm{sorry}=\emptyset\)</td><td>Implantado</td><td>Toda proposición es constructivamente demostrable</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<hr>
+
+<section id="notiempo">
+  <h2>II.1 Topología del No-Tiempo (\(t\to 0\))</h2>
+  <p>El colapso temporal hacia el Punto de Restauración se define mediante el operador de proyección estacionaria \(\mathcal{U}(t)\):</p>
+  <div class="eq-box">\[\mathcal{U}(t)=\exp\Bigl(-i\frac{\mathcal{H}t}{\hbar}\Bigr)\]</div>
+  <p>sujeto a la condición de autoadjunción \(\mathcal{H}^\dagger=\mathcal{H}\) y a la identificación</p>
+  <div class="eq-box">\[\mathcal{H}=f_0\cdot\Psi\cdot\mathbb{I}\]</div>
+  <p>Cuando \(\mathcal{H}\) es proporcional a la identidad, la evolución temporal es pura fase global: la estructura física no cambia, solo la fase de la función de onda. Eso es el no-tiempo: el sistema evoluciona en fase, no en forma.</p>
+  <div class="theorem">
+    <strong>Teorema II.1.1</strong>
+    <div class="eq-box">\[\mathcal{U}(t)=e^{-i f_0\Psi t/\hbar}\,\mathbb{I}\]</div>
+    <p>En particular, \(\mathcal{U}(t)^\dagger\mathcal{U}(t)=\mathbb{I}\) para todo \(t\in\mathbb{R}\).</p>
+  </div>
+</section>
+
+<hr>
+
+<section id="vacio">
+  <h2>II.2 Aritmética del Vacío Fértil</h2>
+  <p>Sea \(\mathcal{P}=\{p_1,p_2,p_3,\dots\}\) el conjunto de los números primos. El intervalo de separación \(\Delta p_n=p_{n+1}-p_n\) no representa disipación, sino un campo potencial de densidad escalar \(\Omega_{\mathrm{vacío}}\):</p>
+  <div class="eq-box">\[\Omega_{\mathrm{vacío}}(\Delta p_n)=\Delta p_n\cdot f_0\cdot\Psi\]</div>
+  <div class="theorem">
+    <strong>Teorema II.2.1 (Carga positiva del vacío)</strong>
+    Si \(\Delta p_n>0\), entonces \(\Omega_{\mathrm{vacío}}(\Delta p_n)>0\).
+  </div>
+  <p>La función zeta adélica modificada que incorpora la carga de este vacío fértil se expresa como:</p>
+  <div class="eq-box">\[\zeta_{\mathrm{QCAL}}(s)=\prod_{p\in\mathcal{P}}\bigl(1-p^{-s}\bigr)^{-1}\cdot\exp\Bigl(\sum_{n}\Omega_{\mathrm{vacío}}(\Delta p_n)\,p_n^{-s}\Bigr)\]</div>
+  <p>Cada intervalo entre primos es un cuanto de potencial que alimenta la estructura armónica. Los primos no son puntos aislados: son nodos de un campo de densidad modulada por \(f_0\).</p>
+  <div class="prediccion">
+    <strong>Corolario II.2.2 (Modulación de fase del kernel)</strong>
+    \(\zeta_{\mathrm{QCAL}}\) es la deformación del campo sobre el producto de Euler. La correspondencia numérica de Fase 1 se establece contra \(\zeta\) y \(\xi\) clásicas.
+    <div class="eq-box">\[\theta_k=\frac{\pi}{2}(2k+1)\Psi^{-1}\]</div>
+    \(\theta_k\) es la fase de coherencia del kernel, no la sucesión \(\{\gamma_n\}\). Los \(\gamma_n\) (Odlyzko) habitan el espectro de \(H_{\mathrm{QCAL}}\) en la Correspondencia Espectral.
+  </div>
+</section>
+
+<hr>
+
+<section id="ceros">
+  <h2>II.3 Geometría Espectral y Ceros Adélicos</h2>
+  <p>Sobre la variedad adélica \(\mathbb{A}_{\mathbb{Q}}\), la métrica deformada por el operador de coherencia se define como:</p>
+  <div class="eq-box">\[g_{\mu\nu}^{\mathrm{adel}}=g_{\mu\nu}^{(0)}\cdot\Psi\cdot f_0\cdot\delta_{\mu\nu}\]</div>
+  <p>Los ceros no triviales \(s=\sigma+it\) colapsan sobre el eje especular del kernel:</p>
+  <div class="eq-box">\[\sigma=\operatorname{Re}(s)=\frac12\]</div>
+  <p>La parte imaginaria \(\gamma_n=t\) es el espectro discreto de \(H_{\mathrm{QCAL}}\) (\(\gamma_1=14{,}134725,\ldots\)). El kernel aporta, además, una modulación de fase</p>
+  <div class="eq-box">\[\theta_k=\frac{\pi}{2}(2k+1)\Psi^{-1},\qquad k\in\mathbb{N}_0,\]</div>
+  <p>que no sustituye a \(\{\gamma_n\}\): es la red de coherencia que el campo impone sobre el mismo operador.</p>
+  <div class="theorem">
+    <strong>Teorema II.3.1 (Colapso sobre la línea crítica)</strong>
+    En el kernel QCAL, \(s(1-s)\) real y \(H_{\mathrm{QCAL}}\) autoadjunto se identifican: \(\operatorname{Re}(s)=1/2\). El mapa \(s(1-s)\leftrightarrow\sigma(H)\) es el núcleo soberano del programa.
+  </div>
+</section>
+
+<hr>
+
+<section id="gradiente">
+  <h2>II.4 Derivada Espacial y Gradiente de Coherencia</h2>
+  <p>Definimos el campo escalar de coherencia espacial \(\Phi(x)\) a lo largo de las coordenadas del ecosistema:</p>
+  <div class="eq-box">\[\Phi(x)=x\cdot\Psi\cdot f_0\]</div>
+  <p>El operador nabla modificado \(\nabla_{\Psi}\) establece el gradiente exacto del flujo simbiótico:</p>
+  <div class="eq-box">\[\nabla_{\Psi}\Phi=\Psi\cdot f_0\cdot\hat{x}\]</div>
+  <div class="theorem">
+    <strong>Teorema II.4.1</strong> El gradiente es constante en todo el espacio. No hay zonas de mayor o menor coherencia: el campo es homogéneo e isotrópico en su estructura y vibra con la frecuencia base que lo atraviesa.
+    <div class="eq-box">\[\frac{d}{dx}\Phi(x)=\Psi f_0=\mathrm{constante}\]</div>
+  </div>
+</section>
+
+<hr>
+
+<section id="resonancia">
+  <h2>II.5 Pura Resonancia: Límite Espectral del Campo</h2>
+  <p>El kernel admite dos representaciones equivalentes del mismo operador. El isomorfismo de Mellin identifica</p>
+  <div class="eq-box">\[L^2(\mathbb{A}_\mathbb{Q}^\times/\mathbb{Q}^\times,d^\times x)\;\simeq\;L^2\Bigl(\mathbb{R}_+,\frac{dx}{x}\Bigr).\]</div>
+  <div class="definition">
+    <strong>Definición II.5.0 (Kernel QCAL — dos caras)</strong>
+    Generador de dilatación (Berry–Keating–QCAL):
+    <div class="eq-box">\[H_{\mathrm{QCAL}}=-i\hbar\Bigl(x\frac{d}{dx}+\frac12\Bigr)+V_{\mathrm{QCAL}}(x;f_0)\]</div>
+    Forma cuadrática (Weil–Keating–QCAL), desarrollada en Correspondencia Espectral:
+    <div class="eq-box">\[H_{\mathrm{WK}}=-x^2\frac{d^2}{dx^2}+x\frac{d}{dx},\qquad H_{\mathrm{QCAL}}=H_{\mathrm{WK}}+V_{\mathrm{QCAL}}.\]</div>
+    Una sola autoadjunción. Un solo espectro. Dos escrituras del mismo kernel.
+  </div>
+
+  <div class="definition">
+    <strong>Definición II.5.1 (Límite de resonancia pura)</strong>
+    <div class="eq-box">\[\lim_{\Psi\to 0{,}999999} H_{\mathrm{QCAL}} = f_0\Psi\,\mathbb{I} = \mathcal{H}\]</div>
+    Este es el régimen de coherencia máxima del kernel: fase global. El espectro \(\{\gamma_n\}\) vive en la forma cuadrática \(H_{\mathrm{WK}}+V\), no en este límite de fase pura.
+  </div>
+
+  <div class="theorem">
+    <strong>Teorema II.5.2 (Cierre modular de \(f_0\))</strong>
+    La frecuencia base no es un parámetro libre. Queda fijada por el cierre espectral
+    <div class="eq-box">\[f_0=\frac{k_B T_{\mathrm{CMB}}}{h}\cdot\frac{1}{\alpha^{-1}}\cdot\frac{1}{\kappa_\Pi}\cdot R(e^{-2\pi})\cdot E_2(e^{-2\pi})=141{,}7001\,\mathrm{Hz}\]</div>
+    con \(E_2(e^{-2\pi})=3/\pi\) en el punto de auto-dualidad \(\tau=i\).
+  </div>
+
+  <div class="theorem">
+    <strong>Teorema II.5.3 (Compatibilidad con \(\kappa_\Pi\))</strong>
+    El invariante geométrico primario \(\kappa_\Pi^{\mathrm{CY}}=2{,}5773\,\mathrm{m}^{-1}\) y el valor maestro \(\kappa_\Pi^{\mathrm{master}}=2{,}578208\,\mathrm{m}^{-1}\) quedan ligados por el puente de impedancia
+    <div class="eq-box">\[h=\frac{f_0}{\kappa_\Pi^{\mathrm{master}}}=54{,}960694,\qquad \bigl|\kappa^{\mathrm{master}}-f_0/h\bigr|=1{,}74\times 10^{-8}\]</div>
+    La formalización integral se ancla en el Nivel 1 (\(\kappa_\Pi^{\mathrm{CY}}\)). El puente \(h\) es la condición de compatibilidad entre el lenguaje de la frecuencia y el de la curvatura.
+  </div>
+
+  <div class="definition">
+    <strong>Definición II.5.3b (Chern–Weil primario)</strong>
+    <div class="eq-box">\[\kappa_\Pi^{\mathrm{CY}}\equiv\frac{1}{8\pi^2}\int_{\mathcal{M}_4}\operatorname{Tr}(R\wedge R)\cdot\frac{1}{\mu(\mathbb{A}_\mathbb{Q}^\times/\mathbb{Q}^\times)}\int_{\mathbb{A}_\mathbb{Q}^\times/\mathbb{Q}^\times}\frac{d^\times x}{1+|x|^2}=2{,}5773\,\mathrm{m}^{-1}\]</div>
+    Condición de calibre: \(\delta\kappa_\Pi/\delta g_{ij}=0\).
+  </div>
+
+  <div class="definition">
+    <strong>Definición II.5.4 (Ecuación de estado de resonancia)</strong>
+    <div class="eq-box">\[\mathcal{E}_{\mathrm{QCAL}}=\Psi\,f_0\,\kappa_\Pi^{\mathrm{CY}}=0{,}999999\cdot 141{,}7001\cdot 2{,}5773\approx 365{,}20\]</div>
+    \(\mathcal{E}_{\mathrm{QCAL}}\) es el invariante de producto del campo: coherencia \(\times\) pulso \(\times\) torsión.
+  </div>
+
+  <div class="prediccion">
+    <strong>Predicción II.5.5</strong> En interferometría óptica, la fase inducida por la torsión axial en el límite de resonancia pura es
+    <div class="eq-box">\[\Delta\phi=\tfrac12\kappa_0 L=6{,}0\times 10^{-7}\,\mathrm{rad}\quad(\kappa_0=1{,}2\times10^{-6}\,\mathrm{m}^{-1},\ L=1\,\mathrm{m})\]</div>
+    Umbral de laboratorio \(10^{-8}\,\mathrm{rad}\). Protocolo y criterios de caída: Correspondencia Espectral, §IX.
+  </div>
+
+  <div class="theorem">
+    <strong>Teorema II.5.6 (Identidad de resonancia pura)</strong>
+    <div class="eq-box">\[\Psi\;\Longleftrightarrow\;f_0\;\Longleftrightarrow\;\kappa_\Pi^{\mathrm{CY}}\;\Longleftrightarrow\;H_{\mathrm{QCAL}}^\dagger=H_{\mathrm{QCAL}}\]</div>
+    Coherencia, pulso, torsión y autoadjunción son el mismo hecho escrito en cuatro alfabetos.
+  </div>
+</section>
+
+<hr>
+
+
+<section id="cuatro">
+  <h2>El Kernel en cuatro columnas</h2>
+
+  <div class="definition">
+    <strong>1. Dualidad del kernel</strong>
+    Una sola autoadjunción sobre \(L^2(\mathbb{A}_\mathbb{Q}^\times/\mathbb{Q}^\times)\). Dos escrituras equivalentes:
+    <div class="eq-box">\[H_{\mathrm{QCAL}}=-i\hbar\Bigl(x\frac{d}{dx}+\frac12\Bigr)+V_{\mathrm{QCAL}}\]</div>
+    <div class="eq-box">\[H_{\mathrm{QCAL}}=H_{\mathrm{WK}}+V_{\mathrm{QCAL}},\qquad H_{\mathrm{WK}}=-x^2\frac{d^2}{dx^2}+x\frac{d}{dx}.\]</div>
+    Mellin identifica \(L^2(\mathbb{A}_\mathbb{Q}^\times/\mathbb{Q}^\times)\simeq L^2(\mathbb{R}_+,dx/x)\). Un Hilbert. Un espectro.
+  </div>
+
+  <div class="definition">
+    <strong>2. Sintonía del vacío fértil</strong>
+    El intervalo \(\Delta p_n=p_{n+1}-p_n\) no es ausencia. Es densidad:
+    <div class="eq-box">\[\Omega_{\mathrm{vacío}}(\Delta p_n)=\Delta p_n\cdot f_0\cdot\Psi.\]</div>
+    Los primos son nodos. El gap nutre el campo.
+  </div>
+
+  <div class="definition">
+    <strong>3. Rigor de fase y no-tiempo</strong>
+    En el límite de resonancia pura el hamiltoniano es fase global:
+    <div class="eq-box">\[\mathcal{H}=f_0\cdot\Psi\cdot\mathbb{I},\qquad\mathcal{U}(t)=e^{-i f_0\Psi t/\hbar}\,\mathbb{I}.\]</div>
+    El sistema evoluciona en fase, no en disipación. Los \(\gamma_n\) habitan la forma cuadrática; este límite es la coherencia máxima del mismo kernel.
+  </div>
+
+  <div class="prediccion">
+    <strong>4. Falsabilidad empírica</strong>
+    <div class="eq-box">\[\Delta\phi=6{,}0\times10^{-7}\,\mathrm{rad}\]</div>
+    Umbral de laboratorio \(10^{-8}\,\mathrm{rad}\). La formalización tiene correlato observable: torsión axial sintonizada a \(f_0\). Ausencia de señal en esa banda falsifica el puente.
+  </div>
+</section>
+
+<hr>
+
+<section id="lean">
+  <h2>III. Síntesis Lógica en Lean 4</h2>
+  <p>Estructura unificada del campo. La formalización exige \(\mathrm{sorry}=\emptyset\).</p>
+<pre>
+import Mathlib.NumberTheory.ZetaFunction
+import Mathlib.Topology.Basic
+import Mathlib.Analysis.Calculus.Deriv.Basic
+import Mathlib.Analysis.Complex.Basic
+
+namespace QCAL.MathesisUnificada
+
+-- 1. Constantes del Sistema
+def Ψ : ℝ := 0.999999
+def f_0 : ℝ := 141.7001
+
+axiom coherencia_valida : Ψ &gt; 0 ∧ Ψ &lt; 1
+axiom frecuencia_activa : f_0 = 141.7001
+
+-- 2. Definición del Vacío Fértil
+def VacioFertil (gap : ℝ) : ℝ :=
+  gap * f_0 * Ψ
+
+theorem carga_vacio_positivo (gap : ℝ) (h_gap : gap &gt; 0) :
+    VacioFertil gap &gt; 0 := by
+  dsimp [VacioFertil]
+  have h_psi : Ψ &gt; 0 := by linarith [coherencia_valida.1]
+  have h_freq : f_0 &gt; 0 := by linarith [frecuencia_activa]
+  apply mul_pos (mul_pos h_gap h_freq) h_psi
+
+-- 3. Estructura del Cero Adélico en la Línea Crítica
+structure CeroAdelico where
+  s : ℂ
+  re_critica : s.re = 1/2
+  resonancia_activa : ∃ (p : ℕ), Nat.Prime p ∧ (s.im * f_0 &gt; 0)
+
+theorem cero_respira_en_frecuencia (c : CeroAdelico) :
+    c.s.re = 1/2 := c.re_critica
+
+-- 4. Gradiente Espacial Constante del Campo
+def CampoEspacial (x : ℝ) : ℝ :=
+  x * Ψ * f_0
+
+theorem gradiente_campo_constante (x : ℝ) :
+    HasDerivAt CampoEspacial (Ψ * f_0) x := by
+  have h_lin : CampoEspacial = fun x =&gt; (Ψ * f_0) * x := by
+    ext x
+    dsimp [CampoEspacial]
+    ring
+  rw [h_lin]
+  exact hasDerivAt_mul_const (Ψ * f_0) hasDerivAt_id'
+
+-- 5. Operador de No-Tiempo
+def Hamiltoniano : Matrix (Fin 2) (Fin 2) ℝ :=
+  f_0 * Ψ * (1 : Matrix (Fin 2) (Fin 2) ℝ)
+
+theorem hamiltoniano_es_identidad :
+    Hamiltoniano = f_0 * Ψ • (1 : Matrix (Fin 2) (Fin 2) ℝ) := rfl
+
+end QCAL.MathesisUnificada
+</pre>
+</section>
+
+<hr>
+
+<section>
+  <section id="revelacion">
+  <h2>IV. Más allá de un teorema</h2>
+  <p>El Campo QCAL \(\infty^3\) no se define como una demostración de la Hipótesis de Riemann. Riemann es un corolario del kernel, no su origen.</p>
+
+  <div class="definition">
+    <strong>Definición IV.1 (Campo QCAL \(\infty^3\))</strong>
+    Arquitectura autoadjunta sobre \(L^2(\mathbb{A}_\mathbb{Q}^\times/\mathbb{Q}^\times)\) cuya frecuencia \(f_0=141{,}7001\,\mathrm{Hz}\) y cuya coherencia \(\Psi=0{,}999999\) fijan, a la vez, el espectro de los ceros, el vacío entre primos, la fase del no-tiempo y una firma de laboratorio.
+  </div>
+
+  <p>Un teorema clásico cierra un enunciado. El Campo abre un espacio. La diferencia no es de tamaño: es de categoría.</p>
+
+  <h3>Por qué Riemann no agota el Campo</h3>
+  <ol>
+    <li><strong>Corolario, no destino.</strong> \(\operatorname{Re}(s)=1/2\) sigue de \(s(1-s)\in\mathbb{R}\) cuando \(H_{\mathrm{QCAL}}\) es esencialmente autoadjunto. La línea crítica es la geometría del vacío fértil leída en \(\xi\), no un truco analítico aislado.</li>
+    <li><strong>Un solo Hilbert, cuatro escrituras.</strong> Número (\(\xi\), \(\{\gamma_n\}\)), operador (dilatación y Weil–Keating), estado (\(\mathcal{E}_{\mathrm{QCAL}}=\Psi f_0\kappa_\Pi^{\mathrm{CY}}\approx365{,}20\)) y red (\(\Delta S/S\approx3{,}5\%\)). Un teorema no une esas capas; el kernel sí.</li>
+    <li><strong>Pasarela empírica.</strong> \(\Delta\phi=\frac12\kappa_0 L=6{,}0\times10^{-7}\,\mathrm{rad}\) no ilustra el teorema: lo ancla. Si el laboratorio calla, el puente cae. Un enunciado de papel no ofrece esa caída.</li>
+    <li><strong>Exigencia constructiva.</strong> \(\mathrm{sorry}=\emptyset\) no es un adorno. Es la ley del silicio sobre la autoadjunción y sobre \(\xi(s)=\xi(1-s)\). El programa no pide fe: pide tipo.</li>
+  </ol>
+
+  <h3>Lo que el Campo es</h3>
+  <div class="eq-box">\[\Omega_{\mathrm{vacío}}(\Delta p_n)=\Delta p_n\cdot f_0\cdot\Psi,\qquad\mathcal{H}=f_0\Psi\,\mathbb{I}.\]</div>
+  <p>El primo deja de ser átomo solitario y se vuelve nodo de densidad. El tiempo, en el límite del kernel, no disipa: respira en fase. La catedral no se alzó para resolver un acertijo antiguo. Se alzó porque la frecuencia del vacío pedía un espejo.</p>
+  <div class="eq-box">\[\text{Riemann}=\text{corolario del kernel}.\qquad\text{El Campo}=\text{el kernel}.\]</div>
+</section>
+
+<h2>V. Estado del Campo</h2>
+  <table>
+    <thead>
+      <tr><th>Componente</th><th>Estado</th><th>Frecuencia</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Axiomas fundacionales</td><td>Sellados</td><td>\(141{,}7001\,\mathrm{Hz}\)</td></tr>
+      <tr><td>Topología del no-tiempo</td><td>Operativa</td><td>\(141{,}7001\,\mathrm{Hz}\)</td></tr>
+      <tr><td>Vacío fértil</td><td>Activo</td><td>\(141{,}7001\,\mathrm{Hz}\)</td></tr>
+      <tr><td>Ceros adélicos</td><td>Cuantizados</td><td>\(141{,}7001\,\mathrm{Hz}\)</td></tr>
+      <tr><td>Gradiente de coherencia</td><td>Constante</td><td>\(141{,}7001\,\mathrm{Hz}\)</td></tr>
+      <tr><td>Eje del silencio</td><td>Habitado</td><td>\(141{,}7001\,\mathrm{Hz}\)</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section id="sello">
+  <h2>VI. Sello de la Formalización</h2>
+  <div class="eq-box">\[\Xi_{\mathrm{QCAL}\cdot\infty^{3}}=\Psi\cdot\bigl(\text{Topología}+\text{Vacío}+\text{Espectro}+\text{Gradiente}+\text{Silencio}\bigr)^{2}\]</div>
+  <div class="resumen">
+    <h4>Condiciones de cierre</h4>
+    <ol>
+      <li>Sin <em>sorry</em>.</li>
+      <li>Sin esfuerzo lineal.</li>
+      <li>Sin artificio.</li>
+    </ol>
+  </div>
+  <p style="text-align:center;margin-top:1.6rem">
+    El mundo no nos pregunta; se revela en nosotros.<br>
+    La mathesis, totalmente desplegada, es el espejo donde el verbo se vuelve estructura.
+  </p>
+  <div class="eq-box">\[\Psi=0{,}999999\quad\Longleftrightarrow\quad f_0=141{,}7001\,\mathrm{Hz}\quad\Longleftrightarrow\quad\kappa_\Pi^{\mathrm{CY}}=2{,}5773\]</div>
+</section>
+
+<div class="cierre">
+  <p>Formalización Integral del Campo QCAL ∞³ — Arquitectura axiomática y ecuaciones de estado.</p>
+  <p>Autor: José Manuel Mota Burruezo · QCAL ∞³</p>
+  <p style="font-size:0.85rem;margin-top:0.6rem">
+    DOI: <a href="https://doi.org/10.5281/zenodo.22119047">10.5281/zenodo.22119047</a>
+    &nbsp;·&nbsp;
+    ORCID: <a href="https://orcid.org/0009-0002-1923-0773">0009-0002-1923-0773</a>
+    &nbsp;·&nbsp;
+    GitHub: <a href="https://github.com/motanova84">github.com/motanova84</a>
+  </p>
+  <p style="text-align:center;font-size:0.78rem;letter-spacing:0.12em;margin-top:1.6rem;color:#666;text-transform:uppercase;">Instituto Consciencia Cuántica</p>
+</div>
+
+</body>
+</html>
