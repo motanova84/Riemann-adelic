@@ -1,5 +1,5 @@
 /-
-  GAP 4 v3.2.14 — order_atMostOne_of_quotient
+  GAP 4 v3.2.15 — order_atMostOne_of_quotient
 
   f = h * g, enteras, h nunca cero, g ≢ 0,
   OrderAtMostOne f, OrderAtMostOne g
@@ -24,11 +24,14 @@
     `log_norm_u_le_on_sep_circle` — ∀z en círculo sep (C uniforme).
     `accPt_closedBall_of_mem` — AccPt en el borde.
     `analyticOnNhd_norm_le_of_sphere` — MMP AnalyticOnNhd.
-    Re-bound: ball 0 (R+3/2), gap Borel = 1/2.
+    Cerrado más:
+    `exists_grid_away_len`, `exists_radius_sep_ge_three_halves`,
+    `absorb_N_log_delta_four`, `log_norm_u_le_on_sep_circle_four`,
+    Re en ball 0 (R+3/2) (sep≥3/2 + MMP).
 
   Un sorry:
-    `exists_holomorphic_log_re_bound` — Re en ball 0 (R+3/2) ∧ ‖φ 0‖
-      (círculo sep + MMP + rama Im + |u0|).
+    `exists_holomorphic_log_re_bound` — solo ‖φ 0‖
+      (rama Im ∈ (-π,π] + cota inferior |u 0|).
 
   No lake-checked. No RH. No D ≡ Ξ.
 
@@ -480,6 +483,168 @@ theorem exists_radius_sep
       simpa using this
     simpa [n, hsum] using hle
 
+/-- Palomar en intervalo de longitud L>0. -/
+lemma exists_grid_away_len {s : Finset ℝ} {R L : ℝ}
+    (hL : 0 < L) (_hR : 0 ≤ R) :
+    ∃ R' ∈ Icc R (R + L),
+      ∀ x ∈ s, (L / (2 * (s.card + 1) : ℝ)) ≤ |R' - x| := by
+  classical
+  let n := s.card
+  let δ : ℝ := L / (2 * (n + 1 : ℝ))
+  let t : ℕ → ℝ := fun k => R + (k : ℝ) * L / (n + 1 : ℝ)
+  have hnpos : (0 : ℝ) < n + 1 := by positivity
+  have htI : ∀ k, k ≤ n → t k ∈ Icc R (R + L) := by
+    intro k hk
+    constructor
+    · have : 0 ≤ (k : ℝ) * L / (n + 1 : ℝ) := by positivity
+      simp [t]; linarith
+    · have : (k : ℝ) / (n + 1 : ℝ) ≤ 1 := by
+        rw [div_le_one hnpos]
+        exact_mod_cast (le_trans hk (Nat.le_succ n))
+      have : (k : ℝ) * L / (n + 1 : ℝ) ≤ L := by
+        calc
+          (k : ℝ) * L / (n + 1 : ℝ) = L * ((k : ℝ) / (n + 1 : ℝ)) := by ring
+          _ ≤ L * 1 := mul_le_mul_of_nonneg_left this hL.le
+          _ = L := mul_one _
+      simp [t]; linarith
+  have htdiff : ∀ i j, t i - t j = ((i : ℝ) - j) * L / (n + 1 : ℝ) := by
+    intro i j; simp [t]; field_simp; ring
+  have : ∃ k, k ≤ n ∧ ∀ x ∈ s, δ ≤ |t k - x| := by
+    by_contra hnone
+    push_neg at hnone
+    have hclose : ∀ k ∈ Finset.range (n + 1), ∃ x ∈ s, |t k - x| < δ := by
+      intro k hk
+      exact hnone k (Nat.lt_succ_iff.mp (Finset.mem_range.mp hk))
+    have huniq : ∀ x ∈ s,
+        ((Finset.range (n + 1)).filter (fun k => |t k - x| < δ)).card ≤ 1 := by
+      intro x hx
+      refine Finset.card_le_one.2 ?_
+      intro i hi j hj
+      simp only [Finset.mem_filter, Finset.mem_range] at hi hj
+      have habs : |t i - t j| < L / (n + 1 : ℝ) := by
+        have h2 : 2 * δ = L / (n + 1 : ℝ) := by
+          simp [δ]; field_simp; ring
+        have := abs_sub_le (t i) x (t j)
+        have : |t j - x| = |x - t j| := abs_sub_comm _ _
+        linarith [this, abs_sub_comm x (t j)]
+      have : |((i : ℝ) - j) * L / (n + 1 : ℝ)| < L / (n + 1 : ℝ) := by
+        rwa [htdiff i j] at habs
+      have : |(i : ℝ) - j| < 1 := by
+        have hLpos := hL
+        rw [abs_mul, abs_div, abs_of_pos hnpos, abs_of_pos hLpos] at this
+        have := (div_lt_iff₀ hnpos).mp this
+        exact (mul_lt_iff_lt_one_left hLpos).mp (by linarith)
+      have : i = j := by
+        have hij : |(i : ℤ) - (j : ℤ)| < 1 := by simpa using this
+        exact Int.cast_injective (eq_of_sub_eq_zero (Int.abs_lt_one_iff.mp (by
+          simpa [Int.cast_sub] using hij)))
+      exact this
+    have hsub : Finset.range (n + 1) ⊆
+        s.biUnion (fun x => (Finset.range (n + 1)).filter (fun k => |t k - x| < δ)) := by
+      intro k hk
+      obtain ⟨x, hx, hlt⟩ := hclose k hk
+      exact Finset.mem_biUnion.2 ⟨x, hx, by simp [hk, hlt]⟩
+    have hcard : (Finset.range (n + 1)).card ≤ s.card := by
+      refine (Finset.card_le_card hsub).trans ?_
+      refine (Finset.card_biUnion_le).trans ?_
+      refine (Finset.sum_le_sum (fun x hx => huniq x hx)).trans ?_
+      simp
+    simpa [Finset.card_range] using (by linarith : ¬ (n + 1 ≤ n)) hcard
+  obtain ⟨k, hk, haway⟩ := this
+  exact ⟨t k, htI k hk, haway⟩
+
+/-- Radio R' ∈ [R+3/2, R+2] sin ceros, δ = 1/(4(n+1)), n ≤ ∑ D.
+    Disco de ceros: closedBall 0 (R+2). -/
+theorem exists_radius_sep_ge_three_halves
+    (hg : Differentiable ℂ g) (hg0 : ¬ ∀ z, g z = 0)
+    {R : ℝ} (hR : 0 ≤ R) :
+    ∃ (R' : ℝ) (n : ℕ), R' ∈ Icc (R + 3 / 2) (R + 2) ∧
+      (∀ z, ‖z‖ = R' → g z ≠ 0) ∧
+      (∀ a, a ∈ closedBall (0 : ℂ) (R + 2) → g a = 0 →
+        (1 / (4 * (n + 1) : ℝ)) ≤ |R' - ‖a‖|) ∧
+      (n : ℝ) ≤ ∑ᶠ a, (MeromorphicOn.divisor g (closedBall (0 : ℂ) (R + 2)) a : ℝ) := by
+  have hfin := zeros_finite_closedBall hg hg0 (R := R + 2) (by linarith)
+  let F := hfin.toFinset
+  let n := F.card
+  let s : Finset ℝ := F.image (fun z : ℂ => ‖z‖)
+  have hL : (0 : ℝ) < 1 / 2 := by norm_num
+  obtain ⟨R', hR'I, haway⟩ :=
+    exists_grid_away_len (s := s) (R := R + 3 / 2) (L := 1 / 2) hL (by linarith)
+  have hR'I' : R' ∈ Icc (R + 3 / 2) (R + 2) := by
+    refine ⟨hR'I.1, ?_⟩
+    have : R + 3 / 2 + 1 / 2 = R + 2 := by ring
+    rwa [← this]
+  refine ⟨R', n, hR'I', ?_, ?_, ?_⟩
+  · intro z hz hg0z
+    have hzZ : z ∈ ({w : ℂ | w ∈ closedBall (0 : ℂ) (R + 2) ∧ g w = 0}) := by
+      refine ⟨?_, hg0z⟩
+      rw [mem_closedBall, dist_zero_right]
+      linarith [hR'I'.2, le_of_eq hz]
+    have hzF : z ∈ F := by simpa [F, Set.Finite.mem_toFinset] using hzZ
+    have hnorm : ‖z‖ ∈ s := Finset.mem_image.2 ⟨z, hzF, rfl⟩
+    have hδ : ((1 : ℝ) / 2) / (2 * (s.card + 1)) ≤ |R' - ‖z‖| := haway _ hnorm
+    have : 0 < |R' - ‖z‖| := lt_of_lt_of_le (by positivity) hδ
+    have : R' ≠ ‖z‖ := fun h => by rw [h, sub_self, abs_zero] at this; linarith
+    exact this hz.symm
+  · intro a ha ha0
+    have haZ : a ∈ ({w : ℂ | w ∈ closedBall (0 : ℂ) (R + 2) ∧ g w = 0}) := ⟨ha, ha0⟩
+    have haF : a ∈ F := by simpa [F, Set.Finite.mem_toFinset] using haZ
+    have : ‖a‖ ∈ s := Finset.mem_image.2 ⟨a, haF, rfl⟩
+    have hδ := haway _ this
+    have hcard : s.card ≤ n := Finset.card_image_le
+    have : (1 : ℝ) / (4 * (n + 1)) ≤ ((1 : ℝ) / 2) / (2 * (s.card + 1)) := by
+      have : ((1 : ℝ) / 2) / (2 * (s.card + 1)) = 1 / (4 * (s.card + 1)) := by field_simp; ring
+      rw [this]
+      apply div_le_div_of_nonneg_left (by norm_num : (0 : ℝ) ≤ 1) (by positivity)
+      nlinarith [Nat.cast_le.mpr hcard]
+    exact this.trans hδ
+  · -- same n ≤ ∑ D as exists_radius_sep
+    let U := closedBall (0 : ℂ) (R + 2)
+    let D : ℂ → ℤ := fun a => MeromorphicOn.divisor g U a
+    have hDnn : ∀ a, 0 ≤ D a := fun a =>
+      (analyticOnNhd_of_differentiable hg U).divisor_nonneg a
+    have h1 : ∀ a ∈ F, (1 : ℝ) ≤ (D a : ℝ) := by
+      intro a ha
+      have haZ : a ∈ ({w : ℂ | w ∈ U ∧ g w = 0}) := by
+        simpa [F, Set.Finite.mem_toFinset] using ha
+      have hmem : a ∈ U := haZ.1
+      have hg0a : g a = 0 := haZ.2
+      have hgA : AnalyticAt ℂ g a := (hg a).analyticAt
+      have hord_ne : analyticOrderAt g a ≠ 0 := by
+        intro h0
+        exact (hgA.analyticOrderAt_eq_zero).1 h0 hg0a
+      have hDz : D a ≠ 0 := by
+        intro h0
+        have : meromorphicOrderAt g a = 0 := by
+          simpa [D, MeromorphicOn.divisor, hmem] using h0
+        apply hord_ne
+        rwa [hgA.meromorphicOrderAt_eq, ENat.map_eq_zero_iff] at this
+      have : (1 : ℤ) ≤ D a :=
+        Int.add_one_le_of_lt (lt_of_le_of_ne (hDnn a) (Ne.symm hDz))
+      exact_mod_cast this
+    have hsum : ∑ᶠ a, (D a : ℝ) = ∑ a ∈ F, (D a : ℝ) := by
+      refine finsum_eq_sum_of_support_subset (s := F) _ ?_
+      intro a ha
+      have hne : D a ≠ 0 := by simpa [Function.mem_support] using ha
+      have hmem : a ∈ U := by
+        by_contra hnot
+        have : D a = 0 := by simp [D, MeromorphicOn.divisor, hnot]
+        exact hne this
+      have hg0a : g a = 0 := by
+        have hgA : AnalyticAt ℂ g a := (hg a).analyticAt
+        by_contra hgne
+        have : meromorphicOrderAt g a = 0 := by
+          have : analyticOrderAt g a = 0 := (hgA.analyticOrderAt_eq_zero).2 hgne
+          rwa [hgA.meromorphicOrderAt_eq, ENat.map_eq_zero_iff]
+        have : D a = 0 := by simp [D, MeromorphicOn.divisor, hmem, this]
+        exact hne this
+      exact (by simpa [F, Set.Finite.mem_toFinset] using And.intro hmem hg0a)
+    have hle : (F.card : ℝ) ≤ ∑ a ∈ F, (D a : ℝ) := by
+      have : ∑ a ∈ F, (1 : ℝ) ≤ ∑ a ∈ F, (D a : ℝ) := Finset.sum_le_sum h1
+      simpa using this
+    simpa [n, hsum] using hle
+
+
 /-- Orden analítico ≠ ⊤ si g ≢ 0. -/
 lemma analyticOrderAt_ne_top_of_not_eq_zero
     (hg : Differentiable ℂ g) (hg0 : ¬ ∀ z, g z = 0) (z : ℂ) :
@@ -869,6 +1034,30 @@ lemma analyticOnNhd_norm_le_of_sphere
     exact mem_closedBall.2 hz
   exact norm_le_of_forall_mem_frontier_norm_le hU hd hfront hzcl
 
+
+/-- Igual que absorb con 1/δ ≤ 4(N+1): reducir a absorb (δ/2). -/
+lemma absorb_N_log_delta_four {K N R' ε δ r : ℝ}
+    (hK : 0 < K) (hε : 0 < ε) (hεle : ε ≤ 2) (hNnn : 0 ≤ N)
+    (hN : N ≤ K * r ^ (1 + ε / 2))
+    (hr1 : 1 ≤ r) (hrR : r ≤ 2 * (1 + R'))
+    (hR' : 0 ≤ R') (hδpos : 0 < δ)
+    (hδinv : 1 / δ ≤ 4 * (N + 1)) :
+    N * Real.log (1 / δ) ≤
+      (K * (2 : ℝ) ^ (1 + ε) + 4 / ε) * (1 + R' ^ (1 + ε)) +
+        N * Real.log 2 := by
+  have hδ2 : 0 < δ / 2 := half_pos hδpos
+  have hinv2 : 1 / (δ / 2) ≤ 2 * (N + 1) := by
+    have : 1 / (δ / 2) = 2 / δ := by field_simp
+    rw [this]
+    nlinarith [hδinv]
+  have habs := absorb_N_log_delta hK hε hεle hNnn hN hr1 hrR hR' hδ2 hinv2
+  -- log(1/δ) = log(2/(δ)) - log 2 = log(1/(δ/2)) - log 2
+  have hlog : Real.log (1 / δ) = Real.log (1 / (δ / 2)) - Real.log 2 := by
+    have : 1 / δ = (1 / (δ / 2)) / 2 := by field_simp; ring
+    rw [this, Real.log_div (by positivity) (by norm_num : (2 : ℝ) ≠ 0)]
+  rw [hlog, mul_sub]
+  linarith [habs, mul_nonneg hNnn (Real.log_nonneg (by norm_num : (1 : ℝ) ≤ 2))]
+
 /-- Cota superior uniforme en círculo separado:
     ∃ C, ∀ z en el círculo, log‖u z‖ ≤ C(1+R'^{1+ε}).
     |u|=|g|/|P|, ‖P‖≥δ^N, absorb N log(1/δ). C de A,K,c,ε. -/
@@ -1025,6 +1214,180 @@ lemma log_norm_u_le_on_sep_circle
     rwa [hlogrhs] at hlog
   exact hlogu.trans hsum
 
+/-- Como `log_norm_u_le_on_sep_circle` con δ = 1/(4(n+1)) (intervalo de longitud 1/2). -/
+lemma log_norm_u_le_on_sep_circle_four
+    (hg : Differentiable ℂ g)
+    {u : ℂ → ℂ} {R R' : ℝ} {n : ℕ} {ε : ℝ} {c : ℂ} {K A : ℝ}
+    (hc0 : g c ≠ 0) (hK : 0 < K) (hA : 0 < A)
+    (hB : ∀ z : ℂ, ‖g z‖ ≤ A * Real.exp (‖z‖ ^ (1 + ε)))
+    (hN : ∀ r : ℝ, 1 ≤ r →
+      ∑ᶠ a, (MeromorphicOn.divisor g (closedBall c (r + 1)) a : ℝ)
+        ≤ K * r ^ (1 + ε / 2))
+    (hnN0 : (n : ℝ) ≤ ∑ᶠ a, (MeromorphicOn.divisor g
+      (closedBall (0 : ℂ) (R + 2)) a : ℝ))
+    (hε : 0 < ε) (hεle : ε ≤ 2) (hR : 1 ≤ R)
+    (hR' : R' ∈ Icc (R + 3 / 2) (R + 2))
+    (hfree : ∀ w, ‖w‖ = R' → g w ≠ 0)
+    (hsep : ∀ a, a ∈ closedBall (0 : ℂ) (R + 2) → g a = 0 →
+      (1 / (4 * (n + 1) : ℝ)) ≤ |R' - ‖a‖|)
+    (hu : AnalyticOnNhd ℂ u (closedBall (0 : ℂ) (R + 2)))
+    (hu0 : ∀ w : closedBall (0 : ℂ) (R + 2), u w ≠ 0)
+    (heq : g =ᶠ[codiscreteWithin (closedBall (0 : ℂ) (R + 2))]
+      (∏ᶠ a, (· - a) ^ MeromorphicOn.divisor g (closedBall (0 : ℂ) (R + 2)) a) • u)
+    {z : ℂ} (hz : ‖z‖ = R') :
+    Real.log ‖u z‖ ≤
+      (|Real.log A| +
+        K * (2 + ‖c‖) ^ (1 + ε / 2) * ((2 : ℝ) ^ (1 + ε) + 2) + 4 / ε + 1) *
+        (1 + R' ^ (1 + ε)) := by
+  let U := closedBall (0 : ℂ) (R + 2)
+  let D : ℂ → ℤ := fun a => MeromorphicOn.divisor g U a
+  let δ : ℝ := 1 / (4 * (n + 1) : ℝ)
+  have hδpos : 0 < δ := by positivity
+  have hS : 0 ≤ R + 2 := by linarith
+  have hfin : (Function.support D).Finite :=
+    (MeromorphicOn.divisor g U).finiteSupport (isCompact_closedBall _ _)
+  have hDnn : ∀ a, 0 ≤ D a := fun a => divisor_nonneg_entire hg U a
+  let N : ℝ := ∑ᶠ a, (D a : ℝ)
+  have hNnn : 0 ≤ N := finsum_nonneg fun _ => Int.cast_nonneg.mpr (hDnn _)
+  let r0 : ℝ := max 1 (R + 2 + ‖c‖)
+  have hr0 : 1 ≤ r0 := le_max_left _ _
+  have hN0 := hN r0 hr0
+  have hNle : N ≤ K * r0 ^ (1 + ε / 2) := by
+    refine le_trans ?_ hN0
+    refine finsum_le_finsum
+      (fun a => Int.cast_nonneg.mpr (hDnn a))
+      (fun a => Int.cast_nonneg.mpr
+        ((analyticOnNhd_of_differentiable hg _).divisor_nonneg a)) ?_
+    intro a
+    by_cases hmem : a ∈ U
+    · have hmemc : a ∈ closedBall c (r0 + 1) := by
+        rw [mem_closedBall]
+        have hale : ‖a‖ ≤ R + 2 := by
+          simpa [U, mem_closedBall, dist_zero_right] using hmem
+        have htri : ‖a - c‖ ≤ ‖a‖ + ‖c‖ := by
+          simpa [sub_eq_add_neg] using
+            (norm_add_le a (-c)).trans_eq (by simp [norm_neg])
+        have : R + 2 + ‖c‖ ≤ r0 := le_max_right _ _
+        linarith
+      have : MeromorphicOn.divisor g U a =
+          MeromorphicOn.divisor g (closedBall c (r0 + 1)) a := by
+        simp [MeromorphicOn.divisor, hmem, hmemc]
+      exact le_of_eq (by simp [D, this])
+    · have : D a = 0 := by simp [D, MeromorphicOn.divisor, hmem]
+      simp [this]
+  have hnN : (n : ℝ) ≤ N := by simpa [N, D, U] using hnN0
+  have hδinv : 1 / δ ≤ 4 * (N + 1) := by
+    simp only [δ, one_div_div]
+    nlinarith [hnN]
+  have hR'nn : 0 ≤ R' := le_trans (by linarith : (0 : ℝ) ≤ 1) (le_trans hR (by linarith [hR'.1] : 1 ≤ R + 3 / 2))
+  have hr0R : r0 ≤ (2 + ‖c‖) * (1 + R') := by
+    apply max_le
+    · nlinarith [norm_nonneg c, hR'nn]
+    · nlinarith [hR'.1, norm_nonneg c]
+  have hK' : 0 < K * (2 + ‖c‖) ^ (1 + ε / 2) := by positivity
+  have hN' : N ≤ (K * (2 + ‖c‖) ^ (1 + ε / 2)) * (1 + R') ^ (1 + ε / 2) := by
+    have : r0 ^ (1 + ε / 2) ≤ ((2 + ‖c‖) * (1 + R')) ^ (1 + ε / 2) :=
+      Real.rpow_le_rpow (by linarith) hr0R (by linarith)
+    have hmul := Real.mul_rpow (by positivity) (by linarith : 0 ≤ 1 + R')
+    rw [hmul] at this
+    nlinarith [hNle, Real.rpow_nonneg (by linarith : 0 ≤ r0) (1 + ε / 2)]
+  have habs0 := absorb_N_log_delta_four hK' hε hεle hNnn hN'
+    (by linarith [hR'nn] : 1 ≤ 1 + R')
+    (by linarith : 1 + R' ≤ 2 * (1 + R')) hR'nn hδpos hδinv
+  -- absorb_four gives ≤ (K' 2^{1+ε} + 4/ε)(1+R'^{1+ε}) + N log 2
+  -- absorb N log 2 ≤ N * (2/ε) * 2^{ε/2} crudely into C
+  let C : ℝ :=
+    |Real.log A| +
+      K * (2 + ‖c‖) ^ (1 + ε / 2) * ((2 : ℝ) ^ (1 + ε) + 2) + 4 / ε + 1
+  have hC : 0 < C := by positivity
+  have hzU : z ∈ U := by
+    rw [mem_closedBall, dist_zero_right, hz]
+    linarith [hR'.2]
+  have hacc : AccPt z (𝓟 U) :=
+    accPt_closedBall_of_mem (by linarith : 0 < R + 2) hzU
+  have heq_pt : g z = (∏ᶠ a, (z - a) ^ D a) * u z := by
+    simpa [D, U] using
+      extract_eq_at_nonzero hg hS hu hu0 heq hzU (hfree z hz) hacc
+  have hsepD : ∀ a, a ∈ Function.support D → δ ≤ |R' - ‖a‖| := by
+    intro a ha
+    have hmem : a ∈ U := by
+      by_contra hnot
+      have : D a = 0 := by simp [D, MeromorphicOn.divisor, hnot]
+      exact absurd this (by simpa [Function.mem_support] using ha)
+    have hg0a : g a = 0 := by
+      have hne : D a ≠ 0 := by simpa [Function.mem_support] using ha
+      by_contra hgne
+      have hgA : AnalyticAt ℂ g a := (hg a).analyticAt
+      have hord : meromorphicOrderAt g a = 0 := by
+        have : analyticOrderAt g a = 0 := (hgA.analyticOrderAt_eq_zero).2 hgne
+        rwa [hgA.meromorphicOrderAt_eq, ENat.map_eq_zero_iff]
+      have : D a = 0 := by simp [D, MeromorphicOn.divisor, hmem, hord]
+      exact hne this
+    exact hsep a hmem hg0a
+  have hP : δ ^ (∑ᶠ a, (D a : ℝ)) ≤ ‖(∏ᶠ a, (· - a) ^ D a) z‖ :=
+    factor_norm_ge hfin hDnn hz hδpos hsepD
+  have hgnorm : ‖g z‖ = ‖(∏ᶠ a, (· - a) ^ D a) z‖ * ‖u z‖ := by
+    have hfe : (∏ᶠ a, (· - a) ^ D a) z = ∏ᶠ a, (z - a) ^ D a :=
+      congrFun (Function.FactorizedRational.finprod_eq_fun ⟨hfin⟩) z
+    rw [heq_pt, ← hfe, norm_mul]
+  have hu_pos : 0 < ‖u z‖ := norm_pos_iff.mpr (hu0 ⟨z, hzU⟩)
+  have hu_le : ‖u z‖ ≤ ‖g z‖ / δ ^ N := by
+    have hδNpos : 0 < δ ^ N := Real.rpow_pos_of_pos hδpos _
+    rw [le_div_iff₀ hδNpos, mul_comm, hgnorm]
+    simpa [N] using (mul_le_mul_of_nonneg_left hP hu_pos.le)
+  have hg_le : ‖g z‖ ≤ A * Real.exp (R' ^ (1 + ε)) := by
+    simpa [hz] using hB z
+  have hlogu :
+      Real.log ‖u z‖ ≤ Real.log A + R' ^ (1 + ε) + N * Real.log (1 / δ) := by
+    have hδNpos : 0 < δ ^ N := Real.rpow_pos_of_pos hδpos _
+    have h1 : ‖u z‖ ≤ (A * Real.exp (R' ^ (1 + ε))) / δ ^ N :=
+      hu_le.trans (div_le_div_of_nonneg_right hg_le hδNpos.le)
+    have hlog := Real.log_le_log hu_pos h1
+    have hlogrhs :
+        Real.log ((A * Real.exp (R' ^ (1 + ε))) / δ ^ N) =
+          Real.log A + R' ^ (1 + ε) + N * Real.log (1 / δ) := by
+      have hδN : δ ^ N = Real.exp (N * Real.log δ) :=
+        Real.rpow_def_of_pos hδpos N
+      rw [Real.log_div (by positivity) (ne_of_gt hδNpos),
+        Real.log_mul (ne_of_gt hA) (Real.exp_ne_zero _), Real.log_exp, hδN,
+        Real.log_exp]
+      have : Real.log δ = -Real.log (1 / δ) := by
+        rw [Real.log_div Real.one_ne_zero (ne_of_gt hδpos), Real.log_one,
+          zero_sub]
+      rw [this]; ring
+    rwa [hlogrhs] at hlog
+  have hRpow : R' ^ (1 + ε) ≤ 1 + R' ^ (1 + ε) :=
+    le_add_of_nonneg_left (by norm_num : (0 : ℝ) ≤ 1)
+  have hlogA : Real.log A ≤ |Real.log A| := le_abs_self _
+  -- N log(1/δ) ≤ (K'2^{1+ε}+4/ε)(1+R'^{1+ε}) + N log 2
+  -- N log 2 ≤ K' * r0^{...} * log 2 ≤ K'(2+‖c‖)^{...} * (1+R')^{...} * 1
+  --          ≤ K'(2+‖c‖)^{...} * 2 * (1+R'^{1+ε}) for crude
+  have hNlog2 : N * Real.log 2 ≤
+      (K * (2 + ‖c‖) ^ (1 + ε / 2) * 2) * (1 + R' ^ (1 + ε)) := by
+    have : N ≤ K * (2 + ‖c‖) ^ (1 + ε / 2) * (1 + R') ^ (1 + ε / 2) := hN'
+    have hlog2 : Real.log 2 ≤ 1 :=
+      (Real.log_le_sub_one_of_pos (by norm_num : (0 : ℝ) < 2)).trans (by norm_num)
+    have hpow : (1 + R') ^ (1 + ε / 2) ≤ 2 * (1 + R' ^ (1 + ε)) := by
+      -- crude
+      have : 1 + R' ≤ 2 * (1 + R') := by linarith
+      nlinarith [Real.rpow_nonneg (by linarith : 0 ≤ 1 + R') (1 + ε / 2),
+        Real.rpow_nonneg hR'nn (1 + ε), Real.one_le_rpow (by linarith : 1 ≤ 1 + R') (by linarith)]
+    nlinarith [this, hlog2, Real.rpow_nonneg (by positivity : 0 ≤ 2 + ‖c‖) (1 + ε / 2),
+      Real.rpow_nonneg (by linarith : 0 ≤ 1 + R') (1 + ε / 2), hR'nn]
+  have hsum :
+      Real.log A + R' ^ (1 + ε) + N * Real.log (1 / δ) ≤
+        C * (1 + R' ^ (1 + ε)) := by
+    have hnn : 0 ≤ 1 + R' ^ (1 + ε) := by
+      linarith [Real.rpow_nonneg hR'nn (1 + ε)]
+    have habs' :
+        N * Real.log (1 / δ) ≤
+          (K * (2 + ‖c‖) ^ (1 + ε / 2) * (2 : ℝ) ^ (1 + ε) + 4 / ε) *
+            (1 + R' ^ (1 + ε)) + N * Real.log 2 := by
+      convert habs0 using 2
+      ring
+    nlinarith [hlogA, hRpow, habs', hNlog2, abs_nonneg (Real.log A)]
+  exact hlogu.trans hsum
+
 /-- Upgrade GAP1: φ continuo, exp∘φ = u analítica nunca-cero en la bola
     ⇒ φ holomorfa. Localmente φ = L∘u + 2πi n (lattice). -/
 lemma differentiableOn_of_continuous_log
@@ -1090,9 +1453,8 @@ lemma differentiableOn_of_continuous_log
   exact (hadd.congr_of_eventuallyEq hev.symm).differentiableWithinAt
 
 /--
-  Re(log u) en ball 0 (R+3/2) y ‖φ 0‖.
-  S = R+3/2 fija (gap 1/2 para Borel).
-  Sorry: MMP desde círculo sep ≥ R+3/2 + rama Im + cota inf |u0|.
+  Re(log u) en ball 0 (R+3/2) vía sep≥3/2 + MMP (cerrado en fuente).
+  Sorry: ‖φ 0‖ (rama Im ∈ (-π,π] + cota inferior |u 0|).
 -/
 theorem exists_holomorphic_log_re_bound
     (hg : Differentiable ℂ g) (hg_ord : OrderAtMostOne g)
@@ -1116,10 +1478,12 @@ theorem exists_holomorphic_log_re_bound
   have hε0 : 0 < ε0 := lt_min hε (by norm_num)
   have hε0le : ε0 ≤ 2 := (min_le_right ε 1).trans (by norm_num)
   obtain ⟨K0, hK0, hN0⟩ := divisor_sum_le_jensen hg hg_ord hc0 (half_pos hε0)
-  obtain ⟨A, hA, _⟩ := hg_ord ε0 hε0
-  let C : ℝ :=
-    (|Real.log A| + K0 * (2 + ‖c‖) ^ (1 + ε0 / 2) * (2 : ℝ) ^ (1 + ε0) +
-      4 / ε0 + 1) * (2 : ℝ) ^ (1 + ε) * 3 ^ (1 + ε) + Real.pi + 1
+  obtain ⟨A, hA, hB0⟩ := hg_ord ε0 hε0
+  let Block0 : ℝ :=
+    |Real.log A| +
+      K0 * (2 + ‖c‖) ^ (1 + ε0 / 2) * ((2 : ℝ) ^ (1 + ε0) + 2) + 4 / ε0 + 1
+  have hBlock0 : 0 < Block0 := by positivity
+  let C : ℝ := Block0 * (2 : ℝ) ^ (1 + ε) * 3 ^ (1 + ε) + Real.pi + 1
   have hC : 0 < C := by positivity
   refine ⟨C, hC, ?_⟩
   intro R hR u hu hu0 heq
@@ -1127,10 +1491,63 @@ theorem exists_holomorphic_log_re_bound
   obtain ⟨φ, hφc, hexp⟩ := exists_continuous_log_on_ball_ne_zero hBall hu hu0
   have hφd : DifferentiableOn ℂ φ (ball (0 : ℂ) (R + 2)) :=
     differentiableOn_of_continuous_log hBall hu hu0 hφc hexp
-  refine ⟨φ, hφd, hexp, ?_⟩
-  -- Re en ball 0 (R+3/2) ∧ ‖φ 0‖.
-  -- Camino: exists_radius_sep en [R+1/2, R+3/2] o [R+1,R+2] + MMP + rama Im.
-  sorry
+  obtain ⟨R1, n, hR1I, hfree, hsep, hnN⟩ :=
+    exists_radius_sep_ge_three_halves hg hg0 (by linarith : (0 : ℝ) ≤ R)
+  have hR1pos : 0 < R1 :=
+    lt_of_lt_of_le (by linarith : (0 : ℝ) < 1) (by linarith [hR, hR1I.1])
+  have hR1nn : (0 : ℝ) ≤ R1 := hR1pos.le
+  have hcircle : ∀ z, ‖z‖ = R1 →
+      Real.log ‖u z‖ ≤ Block0 * (1 + R1 ^ (1 + ε0)) := fun z hz => by
+    simpa [Block0] using
+      log_norm_u_le_on_sep_circle_four hg hc0 hK0 hA hB0 hN0 hnN hε0 hε0le hR
+        hR1I hfree hsep hu hu0 heq hz
+  have hnorm_circle : ∀ z ∈ sphere (0 : ℂ) R1,
+      ‖u z‖ ≤ Real.exp (Block0 * (1 + R1 ^ (1 + ε0))) := by
+    intro z hz
+    have hzR : ‖z‖ = R1 := by simpa [mem_sphere_iff_norm] using hz
+    have hzU : z ∈ closedBall (0 : ℂ) (R + 2) := by
+      rw [mem_closedBall, dist_zero_right, hzR]; linarith [hR1I.2]
+    exact (Real.le_exp_iff_log_le
+      (norm_pos_iff.mpr (hu0 ⟨z, hzU⟩))).mp (hcircle z hzR)
+  have hnorm_disk : ∀ z, ‖z‖ ≤ R1 →
+      ‖u z‖ ≤ Real.exp (Block0 * (1 + R1 ^ (1 + ε0))) := fun z hz =>
+    analyticOnNhd_norm_le_of_sphere hR1pos hR1I.2 hu hnorm_circle hz
+  refine ⟨φ, hφd, hexp, ?re, ?phi0⟩
+  · intro w hw
+    have hwB : w ∈ ball (0 : ℂ) (R + 2) :=
+      Metric.ball_subset_ball (by linarith : (R + 3 / 2 : ℝ) ≤ R + 2) hw
+    have hu_pos : 0 < ‖u w‖ :=
+      norm_pos_iff.mpr (hu0 ⟨w, ball_subset_closedBall hwB⟩)
+    have hure : (φ w).re = Real.log ‖u w‖ := by
+      have : ‖u w‖ = Real.exp (φ w).re := by
+        rw [← hexp w hwB, Complex.norm_exp]
+      rw [this, Real.log_exp]
+    have hwle : ‖w‖ ≤ R1 := by
+      have : ‖w‖ < R + 3 / 2 := mem_ball_zero_iff.mp hw
+      exact this.le.trans hR1I.1
+    have hlog : Real.log ‖u w‖ ≤ Block0 * (1 + R1 ^ (1 + ε0)) :=
+      (Real.log_le_log hu_pos (hnorm_disk w hwle)).trans_eq (Real.log_exp _)
+    have hlift :
+        Block0 * (1 + R1 ^ (1 + ε0)) ≤ C * (1 + (R + 2) ^ (1 + ε)) := by
+      have hpow : 1 + R1 ^ (1 + ε0) ≤ 1 + (R + 2) ^ (1 + ε) := by
+        have h1 : R1 ^ (1 + ε0) ≤ (R + 2) ^ (1 + ε0) :=
+          Real.rpow_le_rpow hR1nn hR1I.2 (by linarith)
+        have h2 : (R + 2) ^ (1 + ε0) ≤ (R + 2) ^ (1 + ε) :=
+          Real.rpow_le_rpow_of_exponent_le (by linarith [hR] : 1 ≤ R + 2)
+            (min_le_left ε 1)
+        linarith
+      have hBoleC : Block0 ≤ C := by
+        have hmul : 1 ≤ (2 : ℝ) ^ (1 + ε) * 3 ^ (1 + ε) :=
+          one_le_mul_of_one_le_of_one_le
+            (Real.one_le_rpow (by norm_num : (1 : ℝ) ≤ 2) (by linarith))
+            (Real.one_le_rpow (by norm_num : (1 : ℝ) ≤ 3) (by linarith))
+        have : Block0 ≤ Block0 * ((2 : ℝ) ^ (1 + ε) * 3 ^ (1 + ε)) := by
+          nlinarith [hBlock0.le, hmul]
+        simp only [C]; linarith [Real.pi_pos.le]
+      exact mul_le_mul hBoleC hpow (by positivity) hC.le
+    rw [hure]; exact hlog.trans hlift
+  · -- ‖φ 0‖: rama Im ∈ (-π,π] + cota |log ‖u 0‖|
+    sorry
 
 /-- Min |u| en el círculo. Glue: log+Re bound (sorry) + Borel (cerrado). -/
 theorem min_norm_never_zero_analytic
