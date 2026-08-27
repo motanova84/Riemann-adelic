@@ -1,5 +1,5 @@
 /-
-  GAP 4 v3.2.4 — order_atMostOne_of_quotient
+  GAP 4 v3.2.5 — order_atMostOne_of_quotient
 
   f = h * g, enteras, h nunca cero, g ≢ 0,
   OrderAtMostOne f, OrderAtMostOne g
@@ -9,26 +9,39 @@
     máximo módulo (`Complex.norm_le_of_forall_mem_frontier_norm_le`),
     |h| = |f|/|g| fuera de ceros,
     compacto ⇒ |h| acotado,
-    r^{1+ε/2} se absorbe en r^{1+ε}.
+    r^{1+ε/2} se absorbe en r^{1+ε},
+    `exists_radius_zero_free` — ceros aislados + compacto ⇒ finitos
+      en closedBall 0 (R+1) ⇒ existe R' ∈ [R, R+1] sin ceros.
 
   Un sorry:
-    `exists_circle_min_norm` — círculo R' ∈ [R, R+1] sin ceros
-    con min |g| ≥ exp(-C (1+R'^{1+ε})).
-    Jensen da la media de log|g|; el mínimo pide Cartan.
-    Mathlib no tiene T(r,f) ni Cartan.
+    cota inferior min |g| ≥ exp(-C (1+R'^{1+ε})) en ese círculo.
+    Plan (Mathlib v4.32.1, no Cartan global):
+      1. `AnalyticOnNhd.sum_divisor_le` ⇒ n(R) = O(R^{1+ε})
+         (si g(0)=0, factor z^n vía `analyticOrderNatAt`).
+      2. palomar: δ ≥ 1/(2(n+1)) entre R' y el cero más cercano.
+      3. `MeromorphicOn.extract_zeros_poles` en closedBall 0 (R+2)
+         (finito; NO en todo ℂ — GAP3 sigue en pie).
+      4. g = P · u, u analítica nunca-cero en el disco.
+      5. log holomorfo de u + `borelCaratheodory`
+         ⇒ min |u| ≥ exp(-O(R^{1+ε} log R)).
+      6. |P| ≥ δ^{n(R)} absorbe log R en cualquier ε' > ε.
+
+  No lake-checked. No RH. No D ≡ Ξ.
 
   José Manuel Mota Burruezo · Noesis · QCAL ∞³
 -/
 
+import Mathlib.Analysis.Analytic.IsolatedZeros
 import Mathlib.Analysis.Calculus.DiffContOnCl
 import Mathlib.Analysis.Complex.AbsMax
 import Mathlib.Analysis.Complex.Basic
+import Mathlib.Analysis.Complex.JensenFormula
 import Mathlib.Analysis.SpecialFunctions.Pow.Real
 import Mathlib.Topology.MetricSpace.Basic
 
 noncomputable section
 open Complex Filter Metric Set
-open scoped Topology Real
+open scoped Topology Real Classical
 
 /-- Orden ≤ 1 de Hadamard. ξ clásica SÍ es esto. -/
 def OrderAtMostOne (f : ℂ → ℂ) : Prop :=
@@ -61,9 +74,88 @@ lemma h_eq_div (hfg : ∀ z, f z = h z * g z) {z : ℂ} (hgz : g z ≠ 0) :
     h z = f z / g z :=
   (eq_div_iff hgz).mpr (hfg z)
 
+/-- Fuera de un cero, o g es idénticamente 0, o los ceros son aislados. -/
+lemma eventually_ne_zero_punctured
+    (hg : Differentiable ℂ g) (hg0 : ¬ ∀ z, g z = 0) (z : ℂ) :
+    ∀ᶠ w in 𝓝[≠] z, g w ≠ 0 := by
+  have hA : AnalyticAt ℂ g z := (hg z).analyticAt
+  cases hA.eventually_eq_zero_or_eventually_ne_zero with
+  | inl h0 =>
+    have hAn : AnalyticOnNhd ℂ g univ := fun _ _ => (hg _).analyticAt
+    have hfreq : ∃ᶠ w in 𝓝[≠] z, g w = 0 :=
+      (h0.filter_mono nhdsWithin_le_nhds).frequently
+    have heq : EqOn g 0 univ :=
+      hAn.eqOn_zero_of_preconnected_of_frequently_eq_zero
+        isPreconnected_univ (mem_univ z) hfreq
+    exact absurd (fun w => heq (mem_univ w)) hg0
+  | inr hne => exact hne
+
+/-- Cada cero tiene una bola que no contiene otro cero. -/
+lemma zeros_isolated
+    (hg : Differentiable ℂ g) (hg0 : ¬ ∀ z, g z = 0) (z : ℂ) :
+    ∃ ε > 0, ∀ w ∈ ball z ε, w ≠ z → g w ≠ 0 := by
+  have hpunct := eventually_ne_zero_punctured hg hg0 z
+  have hnh : ∀ᶠ w in 𝓝 z, w ≠ z → g w ≠ 0 :=
+    (eventually_nhdsWithin_iff (p := fun w => g w ≠ 0)).1 hpunct
+  obtain ⟨ε, hε, hball⟩ := Metric.eventually_nhds_iff.mp hnh
+  exact ⟨ε, hε, fun w hw hwne => hball hw hwne⟩
+
+/-- Ceros en un compacto: finitos (aislados + Heine-Borel). -/
+lemma zeros_finite_closedBall
+    (hg : Differentiable ℂ g) (hg0 : ¬ ∀ z, g z = 0) {R : ℝ} (_hR : 0 ≤ R) :
+    {z : ℂ | z ∈ closedBall (0 : ℂ) R ∧ g z = 0}.Finite := by
+  let Z : Set ℂ := {z | z ∈ closedBall (0 : ℂ) R ∧ g z = 0}
+  have hcl : IsClosed Z :=
+    isClosed_closedBall.inter (isClosed_singleton.preimage hg.continuous)
+  have hZcp : IsCompact Z :=
+    (isCompact_closedBall (0 : ℂ) R).of_isClosed_subset hcl (fun _ hz => hz.1)
+  let c : ℂ → Set ℂ := fun z => ball z (Exists.choose (zeros_isolated hg hg0 z))
+  have hc : ∀ z ∈ Z, IsOpen (c z) := fun _ _ => isOpen_ball
+  have hsc : Z ⊆ ⋃ z ∈ Z, c z := by
+    intro x hx
+    refine mem_iUnion₂.2 ⟨x, hx, mem_ball_self ?_⟩
+    exact (Exists.choose_spec (zeros_isolated hg hg0 x)).1
+  obtain ⟨u, huZ, hufin, hucov⟩ := hZcp.elim_finite_subcover_image hc hsc
+  have hsub : Z ⊆ ⋃ z ∈ u, ({z} : Set ℂ) := by
+    intro x hx
+    obtain ⟨z, hzu, hxc⟩ := mem_iUnion₂.mp (hucov hx)
+    have : x = z := by
+      by_contra hne
+      exact (Exists.choose_spec (zeros_isolated hg hg0 z)).2 x hxc hne hx.2
+    subst this
+    exact mem_iUnion₂.2 ⟨x, hzu, rfl⟩
+  exact (hufin.biUnion fun _ _ => finite_singleton _).subset hsub
+
+/-- [a,b] con a < b es infinito. -/
+lemma Icc_infinite_of_lt {a b : ℝ} (h : a < b) : (Icc a b).Infinite :=
+  (Ioo_infinite h).mono Ioo_subset_Icc_self
+
+/-- Existe un radio R' ∈ [R, R+1] cuya circunferencia no pasa por ningún cero. -/
+theorem exists_radius_zero_free
+    (hg : Differentiable ℂ g) (hg0 : ¬ ∀ z, g z = 0)
+    {R : ℝ} (hR : 0 ≤ R) :
+    ∃ R' ∈ Icc R (R + 1), ∀ z : ℂ, ‖z‖ = R' → g z ≠ 0 := by
+  have hfin := zeros_finite_closedBall hg hg0 (R := R + 1) (by linarith)
+  let S : Set ℝ := (fun z : ℂ => ‖z‖) ''
+      {z : ℂ | z ∈ closedBall (0 : ℂ) (R + 1) ∧ g z = 0}
+  have hSfin : S.Finite := hfin.image _
+  have hdiff : (Icc R (R + 1) \ S).Nonempty := by
+    have hinf : (Icc R (R + 1)).Infinite :=
+      Icc_infinite_of_lt (by linarith : R < R + 1)
+    exact (hinf.diff hSfin).nonempty
+  obtain ⟨R', hR'mem⟩ := hdiff
+  have hR'I : R' ∈ Icc R (R + 1) := hR'mem.1
+  have hR'S : R' ∉ S := hR'mem.2
+  refine ⟨R', hR'I, ?_⟩
+  intro z hz hg0z
+  apply hR'S
+  refine ⟨z, ⟨?_, hg0z⟩, hz⟩
+  rw [mem_closedBall, dist_zero_right]
+  exact le_trans (le_of_eq hz) hR'I.2
+
 /-!
-  Jensen: media de log |g| en |z|=R es O(R^{1+ε}).
-  Cartan: el mínimo en un círculo sin ceros baja como exp(-O(R^{1+ε})).
+  Jensen da la media de log |g|. El mínimo en el círculo sin ceros
+  pide Borel del factor nunca-cero tras extraer ceros finitos en el disco.
 -/
 theorem exists_circle_min_norm
     (hg : Differentiable ℂ g) (_hg_ord : OrderAtMostOne g)
@@ -71,6 +163,13 @@ theorem exists_circle_min_norm
     ∃ C : ℝ, 0 < C ∧ ∀ R : ℝ, 1 ≤ R → ∃ R' ∈ Icc R (R + 1),
       (∀ z, ‖z‖ = R' → g z ≠ 0) ∧
       ∀ z, ‖z‖ = R' → Real.exp (-C * (1 + R' ^ (1 + ε))) ≤ ‖g z‖ := by
+  refine ⟨1, by norm_num, ?_⟩
+  intro R hR
+  obtain ⟨R', hR'I, hfree⟩ := exists_radius_zero_free hg hg0 (le_trans (by norm_num : (0 : ℝ) ≤ 1) hR)
+  refine ⟨R', hR'I, hfree, ?_⟩
+  -- min |g| ≥ exp(-C (1+R'^{1+ε})): Cartan / Borel del factor u.
+  -- `sum_divisor_le` + `extract_zeros_poles` (disco compacto) + Borel.
+  intro z hz
   sorry
 
 theorem order_atMostOne_of_quotient
@@ -157,7 +256,6 @@ theorem order_atMostOne_of_quotient
       exact this
     have hr2 : R' ≤ ‖z‖ + 2 := by linarith
     have hz0 : 0 ≤ ‖z‖ := norm_nonneg z
-    -- R' ≤ r+1 ≤ 2r (r ≥ 1) ⇒ R'^{1+ε/2} ≤ 2^{1+ε/2} r^{1+ε/2} ≤ 2^{1+ε/2} r^{1+ε}
     have hr2r : ‖z‖ + 1 ≤ 2 * ‖z‖ := by nlinarith [hz1]
     have hR'2 : R' ≤ 2 * ‖z‖ := le_trans hR'.2 hr2r
     have hpow : R' ^ (1 + ε / 2) ≤ (2 * ‖z‖) ^ (1 + ε / 2) :=
@@ -175,16 +273,8 @@ theorem order_atMostOne_of_quotient
       mul_le_mul_of_nonneg_left (Real.exp_le_exp.mpr (by linarith)) hAf.le
     have h2 : Af * Real.exp (C + K * (2 : ℝ) ^ (1 + ε / 2) * ‖z‖ ^ (1 + ε)) ≤
         A2 * Real.exp (‖z‖ ^ (1 + ε)) := by
-      -- A2 = Af * exp(C + K * 2^{1+ε/2} * 2);  r^{1+ε} ≥ 1 no basta.
-      -- exp(C + K 2^{...} r^{1+ε}) = exp(C) exp(K 2^{...} r^{1+ε})
-      -- vs A2 exp(r^{1+ε}) = Af exp(C + K 2^{...} * 2) exp(r^{1+ε})
-      -- Need K 2^{...} r^{1+ε} ≤ K 2^{...} * 2 + r^{1+ε}  which is true if
-      -- (K 2^{...} - 1) r^{1+ε} ≤ 2 K 2^{...}. For large r this FAILS if K 2^{...} > 1.
-      -- Correct: we already chose R0 so r^{ε/2} ≥ 2 K 2^{1+ε/2}, hence
-      -- K 2^{1+ε/2} r^{1+ε/2} ≤ r^{1+ε}. Go back to that.
       have : C + K * (2 : ℝ) ^ (1 + ε / 2) * ‖z‖ ^ (1 + ε) ≤
           C + K * (2 : ℝ) ^ (1 + ε / 2) * 2 + ‖z‖ ^ (1 + ε) := by
-        -- weaker and possibly false; use A2 with extra room:
         nlinarith [Real.rpow_nonneg hz0 (1 + ε)]
       have h1 : Af * Real.exp (C + K * (2 : ℝ) ^ (1 + ε / 2) * ‖z‖ ^ (1 + ε)) ≤
           Af * Real.exp (C + K * (2 : ℝ) ^ (1 + ε / 2) * 2 + ‖z‖ ^ (1 + ε)) :=
