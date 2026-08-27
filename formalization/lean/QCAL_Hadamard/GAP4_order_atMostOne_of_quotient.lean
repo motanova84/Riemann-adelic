@@ -1,5 +1,5 @@
 /-
-  GAP 4 v3.2.17 — order_atMostOne_of_quotient
+  GAP 4 v3.2.18 — order_atMostOne_of_quotient
 
   f = h * g, enteras, h nunca cero, g ≢ 0,
   OrderAtMostOne f, OrderAtMostOne g
@@ -29,8 +29,8 @@
     `absorb_N_log_delta_four`, `log_norm_u_le_on_sep_circle_four`,
     Re en ball 0 (R+3/2) (sep≥3/2 + MMP).
 
-  Un sorry: ninguno en exists_holomorphic_log_re_bound (fuente).
-    ‖φ 0‖ vía rama log + trailing / (R+2)^N.
+  0 tactic sorry en este archivo (fuente, no lake).
+    exists_circle_min_norm y order_atMostOne_of_quotient pegados.
 
   No lake-checked. No RH. No D ≡ Ξ.
 
