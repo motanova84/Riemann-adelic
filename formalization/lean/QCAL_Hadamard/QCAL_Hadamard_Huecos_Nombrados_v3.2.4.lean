@@ -1,12 +1,13 @@
 /-
-  Hadamard uniqueness v3.2.4 — ensamblaje.
+  Hadamard uniqueness v3.2.5 — ensamblaje.
 
   GAP1–4 importados. Este archivo: 0 sorry en fuente, no lake-checked.
   B=0 escrito. C=1 por f(1/2)=g(1/2)≠0.
   h(1-s)=h s por identidad en {g ≠ 0} (abierto denso).
   Re φ = log ‖h‖ a partir de OrderAtMostOne h.
 
-  GAP4 (archivo aparte): un sorry, min |g| en círculo sin ceros.
+  GAP4 (archivo aparte, v3.2.18): 0 tactic sorry en fuente.
+  exists_circle_min_norm y order_atMostOne_of_quotient pegados.
   No RH. No D ≡ Ξ.
 
   José Manuel Mota Burruezo · Noesis · QCAL ∞³
@@ -137,7 +138,7 @@ lemma entire_eq_zero_of_eqOn_ball {f : ℂ → ℂ} {c : ℂ} {ε : ℝ}
   intro z
   exact hEq (mem_univ z)
 
-/-! ## GAP 4 importado (`exists_circle_min_norm` es el sorry). -/
+/-! ## GAP 4 importado (`exists_circle_min_norm`, 0 sorry en fuente). -/
 
 /-! ## Ensamblaje -/
 
@@ -234,7 +235,7 @@ theorem hadamard_uniqueness
   simp [hfg s, hC s, hC1]
 
 /-!
-  Mapa v3.2.4 — 27 ago 2026
+  Mapa v3.2.5 — 27 ago 2026
 
   Enunciado: enteras de orden ≤ 1, mismos ceros con multiplicidad,
   f(1-s)=f(s), g(1-s)=g(s), f(1/2)=g(1/2)≠0 ⇒ f=g.
@@ -244,16 +245,18 @@ theorem hadamard_uniqueness
   GAP1 log holomorfo (import).
   GAP2 Borel + Cauchy n=2 + afín (import).
   GAP3 Riemann extraíble (import).
+  GAP4 min |g| en círculo separado + OrderAtMostOne del cociente (import).
   B=0. C=1. h simétrica por identidad.
   Re φ = log ‖h‖.
+  hadamard_uniqueness ensamblado.
 
   Hueco que queda
   ---------------
-  GAP4 exists_circle_min_norm (Jensen/Cartan, un sorry, archivo GAP4).
+  lake-checked. No hay tactic sorry en GAP1–4 ni en este ensamblaje.
 
   No se afirma
   ------------
-  RH. D ≡ Ξ. lake-checked. Paley–Wiener para ξ. 0 sorry en el ensamblaje.
+  RH. D ≡ Ξ. Paley–Wiener para ξ. Unicidad de Hadamard no es RH.
 -/
 
 end
