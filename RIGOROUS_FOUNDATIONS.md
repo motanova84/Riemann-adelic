@@ -10,7 +10,7 @@ las **definiciones exactas**, **proposiciones**, **demostraciones lógicas paso 
 y **verificación independiente** que sostienen la ecuación principal del proyecto:
 
 $$
-\operatorname{Spec}(H) = \{\,t_n \in \mathbb{R} : \zeta(\tfrac{1}{2} + i t_n) = 0\,\}
+\mathrm{Spec}(H) = \{\,t_n \in \mathbb{R} : \zeta(\tfrac{1}{2} + i t_n) = 0\,\}
 $$
 
 y la fórmula de traza explícita que la conecta con la distribución de los primos.
@@ -73,7 +73,7 @@ que es el operador momentum de la mecánica cuántica en $L^2(\mathbb{R}, du)$.
 El dominio natural (como operador no acotado) es:
 
 $$
-\operatorname{Dom}(H) \;:=\; \bigl\{\, \psi \in \mathcal{H}
+\mathrm{Dom}(H) \;:=\; \bigl\{\, \psi \in \mathcal{H}
   : x\psi'(x) \in \mathcal{H} \bigr\}
 $$
 
@@ -95,14 +95,14 @@ Para un operador autoadjunto $H$ en un espacio de Hilbert $\mathcal{H}$, el
 **espectro** es:
 
 $$
-\operatorname{Spec}(H) \;:=\;
+\mathrm{Spec}(H) \;:=\;
 \bigl\{\, \lambda \in \mathbb{C} :
   (H - \lambda I) \text{ no tiene inversa acotada en } \mathcal{H} \bigr\}
 $$
 
-Para operadores autoadjuntos, $\operatorname{Spec}(H) \subseteq \mathbb{R}$ siempre.
+Para operadores autoadjuntos, $\mathrm{Spec}(H) \subseteq \mathbb{R}$ siempre.
 Los **valores propios** son los $t_n \in \mathbb{R}$ tales que $H\psi_n = t_n \psi_n$
-para algún $\psi_n \in \operatorname{Dom}(H)$, $\psi_n \neq 0$.
+para algún $\psi_n \in \mathrm{Dom}(H)$, $\psi_n \neq 0$.
 
 ---
 
@@ -113,11 +113,11 @@ analíticamente a $\mathbb{C} \setminus \{1\}$) tiene **ceros no triviales**:
 
 $$
 \mathcal{Z} \;:=\; \bigl\{\, \rho \in \mathbb{C} : \zeta(\rho) = 0,\;
-  0 < \operatorname{Re}(\rho) < 1 \bigr\}
+  0 < \mathrm{Re}(\rho) < 1 \bigr\}
 $$
 
 La **Hipótesis de Riemann** afirma que todos los $\rho \in \mathcal{Z}$ satisfacen
-$\operatorname{Re}(\rho) = \tfrac{1}{2}$.
+$\mathrm{Re}(\rho) = \tfrac{1}{2}$.
 
 Escribimos $\rho_n = \tfrac{1}{2} + i t_n$ con $t_n \in \mathbb{R}$ bajo HR,
 ordenados $0 < t_1 \leq t_2 \leq \cdots$ (parte imaginaria positiva).
@@ -142,12 +142,12 @@ La medida espectral continua en la fórmula de traza es:
 
 $$
 \mu(r) \;:=\; \frac{1}{2\pi}
-\operatorname{Re}\!\left[
+\mathrm{Re}\!\left[
   \frac{\zeta'}{\zeta}\!\left(\tfrac{1}{2} + ir\right)
   + \frac{\zeta'}{\zeta}\!\left(\tfrac{1}{2} - ir\right)
 \right]
 - \frac{1}{4\pi}\log\pi
-+ \frac{1}{2\pi}\operatorname{Re}\frac{\Gamma'}{\Gamma}\!\!\left(\tfrac{1}{4} + \tfrac{ir}{2}\right)
++ \frac{1}{2\pi}\mathrm{Re}\frac{\Gamma'}{\Gamma}\!\!\left(\tfrac{1}{4} + \tfrac{ir}{2}\right)
 $$
 
 Esta medida satisface $\int \mu(r)\, \Phi(r)\, dr = \hat{\Phi}(0)\log\pi^{-1/2}
@@ -156,19 +156,19 @@ arquimediano; ver §4 más abajo).
 
 ---
 
-### D8 — Traza renormalizada $\operatorname{Tr}_{\rm ren}$
+### D8 — Traza renormalizada $\mathrm{Tr}_{\mathrm{ren}}$
 
 Dado que $H$ tiene espectro continuo, la traza del semigrupo de calor
 $e^{-tH^2}$ diverge. La **traza renormalizada** (parte finita de Hadamard) es:
 
 $$
-\operatorname{Tr}_{\rm ren}\!\left(e^{-tH^2}\right)
+\mathrm{Tr}_{\mathrm{ren}}\!\left(e^{-tH^2}\right)
 \;:=\;
-\operatorname{FP}_{\varepsilon\to 0}
+\mathrm{FP}_{\varepsilon\to 0}
 \int_\varepsilon^{1/\varepsilon} K_t(x,x)\, \frac{dx}{x}
 $$
 
-donde $\operatorname{FP}$ denota la parte finita (regularización de Hadamard) y
+donde $\mathrm{FP}$ denota la parte finita (regularización de Hadamard) y
 $K_t(x,y)$ es el núcleo de calor de $e^{-tH^2}$ en $\mathcal{H}$.
 
 > **Implementación:** `operators/renormalized_trace.py` — método
@@ -210,7 +210,7 @@ $$
 
 admite una expansión asintótica cuando $\varepsilon \to 0$ de la forma
 $A(t)\log(1/\varepsilon) + B(t) + O(\varepsilon)$, y su **parte finita**
-$\operatorname{Tr}_{\rm ren}(e^{-tH^2}) := B(t)$ es bien definida y finita.
+$\mathrm{Tr}_{\mathrm{ren}}(e^{-tH^2}) := B(t)$ es bien definida y finita.
 
 ---
 
@@ -246,20 +246,20 @@ converge absolutamente para todo $t > 0$.
 
 ## 3. Teoremas Principales
 
-### T1 — $\operatorname{Spec}(H) = \{t_n\}$ (Hipótesis de Hilbert-Pólya)
+### T1 — $\mathrm{Spec}(H) = \{t_n\}$ (Hipótesis de Hilbert-Pólya)
 
 **Enunciado:** Si la Hipótesis de Riemann es verdadera, el operador de
 dilatación $H = -i(x\partial_x + \tfrac{1}{2})$ autoadjunto en
 $L^2(\mathbb{R}_+, dx)$ tiene espectro discreto
 
 $$
-\boxed{\operatorname{Spec}(H) \;=\; \{\,t_n \in \mathbb{R} : \zeta(\tfrac{1}{2} + it_n) = 0\,\}}
+\boxed{\mathrm{Spec}(H) \;=\; \{\,t_n \in \mathbb{R} : \zeta(\tfrac{1}{2} + it_n) = 0\,\}}
 $$
 
 donde los $t_n$ son las partes imaginarias de los ceros no triviales de $\zeta$.
 
-**Recíproco:** Si $H$ es autoadjunto y $\operatorname{Spec}(H) \subseteq \mathbb{R}$,
-entonces todos los ceros de $\zeta$ tienen $\operatorname{Re}(\rho) = \tfrac{1}{2}$,
+**Recíproco:** Si $H$ es autoadjunto y $\mathrm{Spec}(H) \subseteq \mathbb{R}$,
+entonces todos los ceros de $\zeta$ tienen $\mathrm{Re}(\rho) = \tfrac{1}{2}$,
 i.e., la HR es verdadera.
 
 ---
@@ -399,7 +399,7 @@ la multiplicación por $e^\ell = p^k$ en las coordenadas complementarias.
 identidad más la derivada del flujo:
 
 $$
-d\varphi_\ell\big|_\perp = p^k \cdot \operatorname{Id}_\perp.
+d\varphi_\ell\big|_\perp = p^k \cdot \mathrm{Id}_\perp.
 $$
 
 Por tanto:
@@ -413,7 +413,7 @@ Selberg-Connes para el flujo unidimensional, la contribución de $\gamma_{p,k}$
 al semigrupo $e^{-tH^2}$ viene dada por:
 
 $$
-\operatorname{Contribution}(\gamma_{p,k})
+\mathrm{Contribution}(\gamma_{p,k})
 = \frac{\ell_\gamma}{\sqrt{\left|\det(I - d\varphi_\ell)\right|}}
 \cdot e^{-t\ell_\gamma^2 / 4}
 = \frac{k\log p}{\sqrt{p^k - 1}} \cdot e^{-tk^2(\log p)^2/4}.
@@ -445,14 +445,14 @@ Por el **Teorema Espectral** para operadores autoadjuntos, dado que $H$ es
 autoadjunto con medida espectral $dE_\lambda$,
 
 $$
-\operatorname{Tr}_{\rm ren}(e^{-tH^2})
-= \int_{\operatorname{Spec}(H)} e^{-t\lambda^2}\, d(\operatorname{medida espectral})(\lambda).
+\mathrm{Tr}_{\mathrm{ren}}(e^{-tH^2})
+= \int_{\mathrm{Spec}(H)} e^{-t\lambda^2}\, d(\operatorname{medida espectral})(\lambda).
 $$
 
 Si los autovalores son exactamente $\{t_n\}$ (discretos, con multiplicidad 1),
 
 $$
-\operatorname{Tr}_{\rm ren}(e^{-tH^2}) = \sum_n e^{-t t_n^2}.
+\mathrm{Tr}_{\mathrm{ren}}(e^{-tH^2}) = \sum_n e^{-t t_n^2}.
 $$
 
 Aplicando la transformada de Laplace inversa a $\Phi \in \mathcal{S}$:
@@ -461,7 +461,7 @@ $$
 \sum_n \Phi(t_n)
 = \int_{\mathbb{R}} \hat\Phi(\xi)\, e^{i\xi t_n}\, d\xi
 \;\xrightarrow{\text{sumando}}\;
-\operatorname{Tr}_{\rm ren}\!\left[\Phi(H)\right].
+\mathrm{Tr}_{\mathrm{ren}}\!\left[\Phi(H)\right].
 $$
 
 #### Etapa B — Cálculo Explícito del Kernel de Calor
@@ -481,8 +481,8 @@ La parte finita (tras restar la divergencia logarítmica) incluye:
 - **Término de Weyl** (contribución del espectro continuo y del polo $s=1$):
 
 $$
-\operatorname{Tr}^{\rm Weyl}(t)
-= \frac{1}{2\sqrt{\pi t}}\log(1/t) - C_{\rm Weyl}
+\mathrm{Tr}^{\rm Weyl}(t)
+= \frac{1}{2\sqrt{\pi t}}\log(1/t) - C_{\mathrm{Weyl}}
 $$
 
 #### Etapa C — Suma sobre Órbitas Primas (Fórmula de Selberg-Connes)
@@ -492,7 +492,7 @@ $\mathcal{X} = \mathbb{A}_\mathbb{Q}^\times/\mathbb{Q}^\times$, las órbitas
 periódicas $\gamma_{p,k}$ (longitud $\ell_\gamma = k\log p$) contribuyen:
 
 $$
-\operatorname{Tr}^{\rm primas}(t) = \sum_{p,k} \frac{\log p}{p^{k/2}} e^{-k t \log p}
+\mathrm{Tr}^{\rm primas}(t) = \sum_{p,k} \frac{\log p}{p^{k/2}} e^{-k t \log p}
 $$
 
 donde hemos usado P4 para el factor jacobiano y la identidad de Mellin
@@ -516,11 +516,11 @@ Reorganizando y usando $\rho = 1/2 + it_n$ bajo HR, se obtiene exactamente T2. $
 
 ---
 
-### 4.5 Demostración de T1: $\operatorname{Spec}(H) = \{t_n\}$
+### 4.5 Demostración de T1: $\mathrm{Spec}(H) = \{t_n\}$
 
 La demostración se divide en dos implicaciones:
 
-#### ($\Rightarrow$) Si HR es verdadera, entonces $\operatorname{Spec}(H) = \{t_n\}$
+#### ($\Rightarrow$) Si HR es verdadera, entonces $\mathrm{Spec}(H) = \{t_n\}$
 
 **Paso 1.** Por HR, todos los ceros no triviales de $\zeta$ son de la forma
 $\rho_n = 1/2 + it_n$ con $t_n \in \mathbb{R}$.
@@ -542,16 +542,16 @@ $\mathbb{Q}^\times$ selecciona exactamente los $t_n$ con $\zeta(1/2+it_n)=0$.
 establece la **coincidencia espectral**:
 
 $$
-\operatorname{Spec}(H) \cap \text{(autovalores)} \;=\; \{t_n : \zeta(1/2+it_n) = 0\}
+\mathrm{Spec}(H) \cap \text{(autovalores)} \;=\; \{t_n : \zeta(1/2+it_n) = 0\}
 $$
 
-mediante el operador de Sobolev adélico $H_{\rm Sobolev}$ con forma de sesquilineal
+mediante el operador de Sobolev adélico $H_{\mathrm{Sobolev}}$ con forma de sesquilineal
 y dominio $W^{1,2}(\mathcal{X}, d^*x)$. El certificado de validación
 (`data/clausura_noesis_certificate.json`) confirma Ψ = 1.0.
 
-#### ($\Leftarrow$) Si $\operatorname{Spec}(H) \subseteq \mathbb{R}$, entonces HR
+#### ($\Leftarrow$) Si $\mathrm{Spec}(H) \subseteq \mathbb{R}$, entonces HR
 
-**Paso 1.** $H$ es autoadjunto ⟹ $\operatorname{Spec}(H) \subseteq \mathbb{R}$
+**Paso 1.** $H$ es autoadjunto ⟹ $\mathrm{Spec}(H) \subseteq \mathbb{R}$
 automáticamente (propiedad fundamental de operadores autoadjuntos).
 
 **Paso 2.** La fórmula de traza T2 es una identidad analítica que relaciona
@@ -559,7 +559,7 @@ los puntos espectrales $\{t_n\}$ (reales por autoadjuntez de $H$) con los
 ceros de $\zeta$.
 
 **Paso 3.** Si $\{t_n\} \subset \mathbb{R}$, entonces $\rho_n = 1/2 + it_n$
-tiene $\operatorname{Re}(\rho_n) = 1/2$, i.e., la HR es verdadera. $\square$
+tiene $\mathrm{Re}(\rho_n) = 1/2$, i.e., la HR es verdadera. $\square$
 
 ---
 

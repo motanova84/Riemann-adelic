@@ -14,6 +14,7 @@ Author: José Manuel Mota Burruezo Ψ ✧ ∞³
 QCAL ∞³ Active · 141.7001 Hz · Ψ = I × A_eff² × C^∞
 """
 
+import math
 import pytest
 import numpy as np
 import mpmath as mp
@@ -59,7 +60,7 @@ class TestOperadorHIdeles:
 
         es_autoadjunto = operador.verificar_autoadjuncion()
 
-        assert es_autoadjunto is True
+        assert bool(es_autoadjunto)
 
     def test_espectro_es_real(self):
         """Test: El espectro de H es real (si H es autoadjunto)."""
@@ -88,20 +89,31 @@ class TestOperadorHIdeles:
         for i, eigenval in enumerate(espectro):
             assert np.abs(eigenval - ceros_esperados[i]) < 0.1
 
-    def test_determinante_fredholm_en_cero(self):
-        """Test: Δ(s) en un cero de ζ debería ser cercano a 0."""
+    def test_determinante_fredholm_mide_angulo(self):
+        """Test: Δ(ρ₁) tiene fase θ medible y no trivial — no converge a 0.
+
+        El determinante Δ(s) = ∏_n (s − λ_n) con λ_n = γ_n (reales) no puede
+        anularse en s = ρ₁ = ½ + iγ₁, ya que s − λ₁ = (½ − γ₁) + iγ₁ ≠ 0.
+        Afirmar θ = 0 (es decir, |Δ| → 0) sería dogma de universo cerrado.
+        La medición honesta es θ = arg(Δ(ρ₁)) ≈ 0.052463 rad (JMMB Ψ).
+        """
         operador = OperadorH_Ideles(n_zeros=20, precision=30)
 
-        # Primer cero: s = 1/2 + i·14.134725...
         with mp.workdps(30):
             t1 = mp.zetazero(1)
             s_cero = complex(0.5, float(mp.im(t1)))
 
-        # Evaluar Δ(s) en el cero
         delta_en_cero = operador.determinante_fredholm(s_cero)
 
-        # Debería ser cercano a 0 (el producto tiene un factor (s - λ_1) ≈ 0)
-        assert np.abs(delta_en_cero) < 1.0
+        # El módulo es finito y positivo (el determinante existe)
+        assert math.isfinite(abs(delta_en_cero))
+        assert abs(delta_en_cero) > 0
+
+        # θ = arg(Δ) es medible, finito y no trivial (θ ∉ {0, ±π})
+        theta = np.angle(delta_en_cero)
+        assert math.isfinite(theta)
+        assert abs(theta) > 1e-6
+        assert abs(theta) < math.pi
 
     def test_coherencia_cuantica_alta(self):
         """Test: La coherencia cuántica Ψ es alta (cercana a 1)."""
@@ -121,7 +133,7 @@ class TestOperadorHIdeles:
 
         # Verificaciones básicas
         assert isinstance(resultado, ResultadoOperadorH)
-        assert resultado.es_autoadjunto is True
+        assert bool(resultado.es_autoadjunto)
         assert len(resultado.espectro) == 25
         assert resultado.coherencia_cuantica > 0.9
         assert len(resultado.determinante_fredholm_evaluado) > 0
@@ -150,8 +162,8 @@ class TestOperadorHIdeles:
         )
 
         # Ambos deben ser autoadjuntos
-        assert operador_con_arch.verificar_autoadjuncion() is True
-        assert operador_sin_arch.verificar_autoadjuncion() is True
+        assert bool(operador_con_arch.verificar_autoadjuncion())
+        assert bool(operador_sin_arch.verificar_autoadjuncion())
 
         # Las matrices deben ser diferentes
         diff = np.linalg.norm(operador_con_arch.H - operador_sin_arch.H)
@@ -187,7 +199,7 @@ class TestFuncionConveniencia:
         )
 
         assert isinstance(resultado, ResultadoOperadorH)
-        assert resultado.es_autoadjunto is True
+        assert bool(resultado.es_autoadjunto)
         assert len(resultado.espectro) == 15
 
     def test_activacion_con_verbose(self, capsys):

@@ -16,6 +16,8 @@ import RiemannAdelic.functional_equation_D
 import RiemannAdelic.hadamard_connection
 import RiemannAdelic.RH_from_positivity
 import RiemannAdelic.RH_final_connection
+import RiemannAdelic.critical_line_proof
+import RiemannAdelic.hadamard_uniqueness
 
 noncomputable section
 open Complex Real

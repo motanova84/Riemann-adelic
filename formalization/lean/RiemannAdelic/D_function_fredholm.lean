@@ -16,6 +16,8 @@ import Mathlib.Analysis.Complex.Basic
 import Mathlib.Analysis.SpecialFunctions.Complex.LogDeriv
 import Mathlib.Topology.MetricSpace.Basic
 import RiemannAdelic.H_epsilon_hermitian
+import RiemannAdelic.critical_line_proof
+import RiemannAdelic.hadamard_uniqueness
 
 noncomputable section
 open Complex Real

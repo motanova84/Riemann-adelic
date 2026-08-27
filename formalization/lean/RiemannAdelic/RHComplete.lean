@@ -53,6 +53,8 @@ import RiemannAdelic.SpectrumZeta
 import RiemannAdelic.RiemannSiegel
 import RiemannAdelic.NoExtraneousEigenvalues
 import RiemannAdelic.DeterminantFredholm
+import RiemannAdelic.critical_line_proof
+import RiemannAdelic.hadamard_uniqueness
 import Mathlib.Analysis.Complex.Basic
 import Mathlib.Analysis.InnerProductSpace.Spectrum
 import Mathlib.NumberTheory.LSeries.RiemannZeta

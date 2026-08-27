@@ -1,0 +1,45 @@
+lemma local_factorization_equal_order
+    {f g : ℂ → ℂ} (hf : DifferentiableAt ℂ f z₀) (hg : DifferentiableAt ℂ g z₀)
+    (h_zero_f : f z₀ = 0) (h_zero_g : g z₀ = 0)
+    (h_mult : orderOfZero f z₀ = orderOfZero g z₀)
+    (h_g_nonzero : g ≢ 0) :
+    ∃ u v : ℂ → ℂ, DifferentiableAt ℂ u z₀ ∧ DifferentiableAt ℂ v z₀ ∧
+      u z₀ ≠ 0 ∧ v z₀ ≠ 0 ∧
+      ∀ᶠ z in 𝓝[≠] z₀, f z = (z - z₀) ^ n * u z ∧ g z = (z - z₀) ^ n * v z := by
+  -- Obtenemos el orden de cero n
+  let n := orderOfZero f z₀
+  -- Factorización de f: f(z) = (z-z₀)^n * u(z) con u(z₀) ≠ 0
+  have h_factor_f : ∃ u : ℂ → ℂ, DifferentiableAt ℂ u z₀ ∧ u z₀ ≠ 0 ∧
+      ∀ᶠ z in 𝓝 z₀, f z = (z - z₀)^n * u z := by
+    -- Mathlib tiene: exists_analytic_factor_of_order_zero
+    exact exists_analytic_factor_of_order_zero hf h_zero_f
+  -- Factorización de g: g(z) = (z-z₀)^n * v(z) con v(z₀) ≠ 0
+  have h_factor_g : ∃ v : ℂ → ℂ, DifferentiableAt ℂ v z₀ ∧ v z₀ ≠ 0 ∧
+      ∀ᶠ z in 𝓝 z₀, g z = (z - z₀)^n * v z := by
+    exact exists_analytic_factor_of_order_zero hg h_zero_g
+  obtain ⟨u, hu, hu₀, h_f⟩ := h_factor_f
+  obtain ⟨v, hv, hv₀, h_g⟩ := h_factor_g
+  -- Mostramos que las factorizaciones coinciden en el entorno perforado
+  have h_f_eq : ∀ᶠ z in 𝓝[≠] z₀, f z = (z - z₀)^n * u z := by
+    filter_upwards [h_f]
+    intro z hz
+    exact hz
+  have h_g_eq : ∀ᶠ z in 𝓝[≠] z₀, g z = (z - z₀)^n * v z := by
+    filter_upwards [h_g]
+    intro z hz
+    exact hz
+  -- Empaquetamos
+  use u, v
+  constructor
+  · exact hu
+  · constructor
+    · exact hv
+    · constructor
+      · exact hu₀
+      · constructor
+        · exact hv₀
+        · filter_upwards [h_f_eq, h_g_eq]
+          intro z hz hgz
+          constructor
+          · exact hz
+          · exact hgz

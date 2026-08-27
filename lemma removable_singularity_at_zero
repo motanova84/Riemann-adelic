@@ -1,0 +1,47 @@
+lemma removable_singularity_at_zero
+    {f g : ℂ → ℂ} (hf : Differentiable ℂ f) (hg : Differentiable ℂ g)
+    (h_zeros : ∀ z, f z = 0 ↔ g z = 0)
+    (h_mult : ∀ z, orderOfZero f z = orderOfZero g z)
+    (z₀ : ℂ) (h_g_zero : g z₀ = 0) :
+    ∃ h_ext : ℂ → ℂ, DifferentiableAt ℂ h_ext z₀ ∧
+      ∀ᶠ z in 𝓝[≠] z₀, f z / g z = h_ext z := by
+  -- Paso 1: g(z₀) = 0 ⇒ f(z₀) = 0 por h_zeros.
+  have h_f_zero : f z₀ = 0 := (h_zeros z₀).mpr h_g_zero
+  -- Paso 2: Factorización local con igual orden n.
+  have h_factor := local_factorization_equal_order
+    (hf.differentiableAt z₀) (hg.differentiableAt z₀)
+    h_f_zero h_g_zero (h_mult z₀)
+    (fun h => h_g_nonzero h)
+  obtain ⟨u, v, hu, hv, hu₀, hv₀, h_eq⟩ := h_factor
+  -- Paso 3: En el entorno perforado, f/g = u/v.
+  have h_quotient : ∀ᶠ z in 𝓝[≠] z₀, f z / g z = u z / v z := by
+    filter_upwards [h_eq]
+    intro z hz
+    have h1 := hz.1
+    have h2 := hz.2
+    -- z ≠ z₀ por estar en el filtro perforado
+    have h_ne : z ≠ z₀ := by
+      intro hz_eq
+      rw [hz_eq] at h1
+      have h_pow_zero : (z₀ - z₀)^n = 0 := by
+        by_cases hn : n = 0
+        · rw [hn, pow_zero]
+          exact one_ne_zero
+        · rw [sub_self, zero_pow hn]
+      rw [h_pow_zero] at h1
+      simp at h1
+      contradiction
+    -- Simplificamos el cociente
+    field_simp [h1, h2, h_ne]
+    ring
+  -- Paso 4: u/v es holomorfa en z₀ (pues v(z₀) ≠ 0).
+  let h_ext := fun z => u z / v z
+  use h_ext
+  constructor
+  · -- Diferenciable en z₀: cociente de diferenciables, denominador ≠ 0.
+    apply DifferentiableAt.div
+    · exact hu
+    · exact hv
+    · exact hv₀
+  · -- Coincide con f/g en el entorno perforado.
+    exact h_quotient
