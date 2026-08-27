@@ -1,0 +1,220 @@
+lemma phi_second_derivative_vanishes
+    {φ : ℂ → ℂ} (hφ : Differentiable ℂ φ)
+    (h_bound : ∃ K : ℝ, ∀ R > 0, ∀ z : ℂ, ‖z‖ = R → ‖φ z‖ ≤ K * R ^ (3 / 2 : ℝ)) :
+    ∀ c : ℂ, deriv (deriv φ) c = 0 := by
+  intro c
+  
+  -- Usamos la fórmula de Cauchy para la segunda derivada
+  have h_cauchy : ∀ R > max 1 ‖c‖, deriv (deriv φ) c =
+      (2 : ℂ) / (2 * π * I) * ∮ z in C(0, R), φ z / (z - c) ^ 3 := by
+    intro R hR
+    have hR' : R > 0 := by linarith [hR]
+    have h_diff : ∀ z, z ∈ ball 0 R → DifferentiableAt ℂ φ z := by
+      intro z hz
+      exact hφ.differentiableAt
+    have h_c : c ∈ ball 0 R := by
+      simp [abs_of_nonneg (le_trans (le_of_lt hR') (le_of_lt hR))]
+      exact hR
+    
+    -- Fórmula de Cauchy para derivada n-ésima: f^(n)(c) = n!/(2πi) ∮ f(z)/(z-c)^(n+1) dz
+    -- Para n = 2: f''(c) = 2!/(2πi) ∮ f(z)/(z-c)^3 dz
+    -- Mathlib tiene: deriv_second_circleIntegral o similar
+    have h_cauchy_formula := circleIntegral.deriv_eq_smul_circleIntegral
+      (h_diff := h_diff)
+      (hR := hR')
+      (hc := h_c)
+      (n := 2)
+    
+    -- Simplificamos la fórmula
+    have h_simplify : (↑(Nat.factorial 2) / (2 * π * I)) = (2 : ℂ) / (2 * π * I) := by
+      simp [Nat.factorial]
+    rw [h_simplify] at h_cauchy_formula
+    exact h_cauchy_formula.symm
+  
+  -- Acotamos la integral
+  obtain ⟨K, hK⟩ := h_bound
+  
+  have h_integral_bound : ∀ R > max 1 ‖c‖,
+      ‖(2 : ℂ) / (2 * π * I) * ∮ z in C(0, R), φ z / (z - c) ^ 3‖ ≤
+      (2 / (2 * π)) * (2 * π * R) * (K * R ^ (3/2 : ℝ)) / (R/2) ^ 3 := by
+    intro R hR
+    have h_R_pos : R > 0 := by linarith [hR]
+    have h_R_ge_2c : R ≥ 2 * ‖c‖ := by
+      have hR_ge : R ≥ 2 * max 1 ‖c‖ := by linarith [hR]
+      have h_2c : 2 * max 1 ‖c‖ ≥ 2 * ‖c‖ := by
+        apply mul_le_mul_of_nonneg_left (le_max_right 1 ‖c‖) (by linarith)
+      linarith [hR_ge, h_2c]
+    
+    -- Cota para |φ(z)| en |z| = R
+    have h_phi_bound : ∀ z, ‖z‖ = R → ‖φ z‖ ≤ K * R ^ (3/2 : ℝ) :=
+      hK R (by linarith [hR])
+    
+    -- Cota para |z-c| en la circunferencia |z| = R
+    have h_zc_ge : ∀ z, ‖z‖ = R → ‖z - c‖ ≥ R - ‖c‖ := by
+      intro z hz
+      rw [← hz]
+      exact norm_sub_norm_le z c
+    
+    -- Acotamos el integrando
+    have h_integrand_bound : ∀ z, ‖z‖ = R → ‖φ z / (z - c) ^ 3‖ ≤
+        (K * R ^ (3/2 : ℝ)) / (R - ‖c‖) ^ 3 := by
+      intro z hz
+      have h_z_ne_c : z ≠ c := by
+        have h_z : ‖z‖ = R := hz
+        have h_c : ‖c‖ < R := by linarith [hR]
+        have h_neq : ‖z‖ ≠ ‖c‖ := by linarith [h_c, h_z]
+        rw [← norm_eq_iff] at h_neq
+        exact h_neq
+      rw [norm_div, norm_pow, norm_eq_abs]
+      apply div_le_div
+      · exact norm_nonneg _
+      · exact h_phi_bound z hz
+      · apply pow_nonneg
+        have h_R_c : R - ‖c‖ ≥ 0 := by linarith [hR]
+        exact h_R_c
+      · apply pow_le_pow_left
+        · exact le_trans zero_le_one (le_of_lt hR)
+        · exact h_zc_ge z hz
+    
+    -- Cota de la integral usando la desigualdad estándar
+    have h_integral_norm := circleIntegral.norm_integral_le_of_norm_le_const
+      (by exact h_integrand_bound)
+      (le_of_lt h_R_pos)
+    
+    -- Simplificamos la cota
+    have h_simplify : (2 / (2 * π)) * (2 * π * R) * (K * R ^ (3/2 : ℝ)) / (R - ‖c‖) ^ 3 =
+        2 * K * R ^ (5/2 : ℝ) / (R - ‖c‖) ^ 3 := by
+      field_simp
+      ring
+    
+    rw [h_simplify] at h_integral_norm
+    
+    -- Usamos que R - ‖c‖ ≥ R/2
+    have h_R_c_ge : R - ‖c‖ ≥ R/2 := by
+      have h_R_ge_2c : R ≥ 2 * ‖c‖ := h_R_ge_2c
+      linarith
+    
+    -- Entonces (R/2)^3 ≤ (R - ‖c‖)^3
+    have h_denom_ge : (R/2)^3 ≤ (R - ‖c‖)^3 := by
+      apply pow_le_pow_left
+      · exact le_of_lt (div_pos h_R_pos zero_lt_two)
+      · exact h_R_c_ge
+    
+    -- Invertimos para obtener cota superior
+    have h_inv : 1 / (R - ‖c‖)^3 ≤ 1 / (R/2)^3 := by
+      apply inv_le_inv
+      · exact pow_pos (by linarith [hR, h_R_ge_2c]) 3
+      · exact h_denom_ge
+    
+    -- Finalmente obtenemos la cota deseada
+    have h_final := le_trans h_integral_norm h_inv
+    rw [mul_div] at h_final
+    
+    -- Simplificamos la expresión final
+    have h_simplify2 : 2 * K * R ^ (5/2 : ℝ) / (R/2)^3 =
+        16 * K * R ^ (5/2 : ℝ) / R^3 := by
+      ring_nf
+      rw [div_pow]
+      field_simp
+      ring
+    
+    rw [h_simplify2] at h_final
+    have h_simplify3 : 16 * K * R ^ (5/2 : ℝ) / R^3 =
+        16 * K * R ^ (-1/2 : ℝ) := by
+      have h_R_ne_zero : R ≠ 0 := ne_of_gt h_R_pos
+      field_simp [h_R_ne_zero]
+      rw [Real.rpow_def_of_nonneg (le_of_lt h_R_pos)]
+      simp
+      ring
+    
+    rw [h_simplify3] at h_final
+    exact h_final
+  
+  -- Ahora usamos el argumento de squeeze para mostrar que la integral tiende a 0
+  have h_tendsto_zero : Tendsto (fun R => (2 : ℂ) / (2 * π * I) *
+      ∮ z in C(0, R), φ z / (z - c) ^ 3) atTop (𝓝 0) := by
+    -- Por la cota de la integral, tenemos:
+    -- ‖integral(R)‖ ≤ 16*K*R^(-1/2) → 0
+    -- Usamos el teorema de squeeze para funciones con valores en ℂ
+    
+    -- Primero, mostramos que la cota tiende a 0
+    have h_bound_tendsto : Tendsto (fun R => 16 * K * R ^ (-1/2 : ℝ)) atTop (𝓝 0) := by
+      by_cases hK_zero : K = 0
+      · -- Si K = 0, la cota es 0
+        simp [hK_zero]
+        exact tendsto_const_nhds
+      · -- Si K ≠ 0, usamos el límite de R^(-1/2)
+        have h_K_pos : K > 0 := by
+          by_contra hK_neg
+          rw [not_gt, le_zero_iff] at hK_neg
+          cases hK_neg with
+          | inl hK_zero' => contradiction
+          | inr hK_neg' =>
+            -- K < 0 implicaría que la cota es negativa, contradicción
+            have h_phi_bound_0 := hK 1 (by linarith) 0
+            simp at h_phi_bound_0
+            have h_norm_nonneg : ‖φ 0‖ ≥ 0 := norm_nonneg _
+            linarith
+        
+        -- R^(-1/2) → 0
+        have h_pow_tendsto : Tendsto (fun R => R ^ (-1/2 : ℝ)) atTop (𝓝 0) := by
+          exact Real.tendsto_rpow_atTop_neg (by linarith)
+        
+        -- 16*K*R^(-1/2) → 0
+        exact Tendsto.const_mul (16 * K) h_pow_tendsto
+    
+    -- Ahora usamos el teorema de squeeze para mostrar que la integral tiende a 0
+    -- La integral está acotada por la cota en norma
+    have h_integral_bound' : ∀ R > max 1 ‖c‖,
+        ‖(2 : ℂ) / (2 * π * I) * ∮ z in C(0, R), φ z / (z - c) ^ 3‖ ≤
+        16 * K * R ^ (-1/2 : ℝ) := by
+      intro R hR
+      -- Usamos la cota de h_integral_bound
+      have h_bound := h_integral_bound R hR
+      have h_simplify : (2 / (2 * π)) * (2 * π * R) * (K * R ^ (3/2 : ℝ)) / (R/2) ^ 3 =
+          16 * K * R ^ (-1/2 : ℝ) := by
+        field_simp
+        rw [Real.rpow_def_of_nonneg (le_of_lt (by linarith [hR]))]
+        simp
+        ring
+      rw [h_simplify] at h_bound
+      exact h_bound
+    
+    -- Aplicamos el teorema de squeeze: si la norma tiende a 0, entonces el vector tiende a 0
+    exact tendsto_norm_zero_iff.mp (Tendsto.squeeze_zero
+      (fun _ => norm_nonneg _)
+      h_integral_bound'
+      h_bound_tendsto)
+  
+  -- Como deriv(deriv φ) c = integral(R) para todo R suficientemente grande,
+  -- y la integral tiende a 0, deriv(deriv φ) c debe ser 0
+  have h_phi_pp_zero : deriv (deriv φ) c = 0 := by
+    -- Por definición de límite, para todo ε > 0, existe R tal que
+    -- ‖integral(R) - 0‖ < ε
+    -- Pero integral(R) = deriv(deriv φ) c (constante)
+    -- Así que ‖deriv(deriv φ) c‖ < ε para todo ε > 0
+    -- Por tanto deriv(deriv φ) c = 0
+    
+    -- Formalización: Sea ε > 0 arbitrario
+    apply norm_eq_zero.mp
+    rw [← @le_of_forall_pos_le_add _ _ _]
+    · exact le_refl 0
+    · intro ε hε
+      -- Por la tendencia a 0, existe R0 tal que para R > R0, ‖integral(R)‖ < ε
+      have h_tend := h_tendsto_zero (ball 0 ε) (ball_mem_nhds 0 hε)
+      rw [tendsto_atTop] at h_tend
+      obtain ⟨N, hN⟩ := h_tend
+      let R := max (max 1 ‖c‖) N + 1
+      have hR : R > max 1 ‖c‖ := by linarith
+      have hN' : R > N := by
+        have hR_ge_N : R ≥ N := by
+          apply le_trans (le_max_right (max 1 ‖c‖) N) (le_add_of_nonneg_right (by linarith))
+        exact hR_ge_N
+      specialize hN R hN'
+      rw [mem_ball_zero_iff] at hN
+      -- Usamos la fórmula de Cauchy
+      have h_eq := h_cauchy R hR
+      rw [← h_eq] at hN
+      exact hN
+  
+  exact h_phi_pp_zero
