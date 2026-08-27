@@ -1,5 +1,5 @@
 /-
-  GAP 4 v3.2.5 — order_atMostOne_of_quotient
+  GAP 4 v3.2.6 — order_atMostOne_of_quotient
 
   f = h * g, enteras, h nunca cero, g ≢ 0,
   OrderAtMostOne f, OrderAtMostOne g
@@ -13,18 +13,13 @@
     `exists_radius_zero_free` — ceros aislados + compacto ⇒ finitos
       en closedBall 0 (R+1) ⇒ existe R' ∈ [R, R+1] sin ceros.
 
+  Cerrado ahora (fuente, no lake):
+    `log_one_add_ge_div`, `divisor_sum_le_jensen` (n(R)=O(R^{2+ε})),
+    `exists_radius_sep` (palomar δ ≥ 1/(2(n+1))).
+
   Un sorry:
-    cota inferior min |g| ≥ exp(-C (1+R'^{1+ε})) en ese círculo.
-    Plan (Mathlib v4.32.1, no Cartan global):
-      1. `AnalyticOnNhd.sum_divisor_le` ⇒ n(R) = O(R^{1+ε})
-         (si g(0)=0, factor z^n vía `analyticOrderNatAt`).
-      2. palomar: δ ≥ 1/(2(n+1)) entre R' y el cero más cercano.
-      3. `MeromorphicOn.extract_zeros_poles` en closedBall 0 (R+2)
-         (finito; NO en todo ℂ — GAP3 sigue en pie).
-      4. g = P · u, u analítica nunca-cero en el disco.
-      5. log holomorfo de u + `borelCaratheodory`
-         ⇒ min |u| ≥ exp(-O(R^{1+ε} log R)).
-      6. |P| ≥ δ^{n(R)} absorbe log R en cualquier ε' > ε.
+    min |u| tras `extract_zeros_poles` en el disco compacto + Borel.
+    |g| = |P| |u|, |P| ≥ δ^{n(R)}. GAP3 sigue: no extract en todo ℂ.
 
   No lake-checked. No RH. No D ≡ Ξ.
 
@@ -32,10 +27,14 @@
 -/
 
 import Mathlib.Analysis.Analytic.IsolatedZeros
+import Mathlib.Analysis.Analytic.Order
 import Mathlib.Analysis.Calculus.DiffContOnCl
+import Mathlib.Analysis.Calculus.MeanValue
 import Mathlib.Analysis.Complex.AbsMax
 import Mathlib.Analysis.Complex.Basic
 import Mathlib.Analysis.Complex.JensenFormula
+import Mathlib.Analysis.Meromorphic.FactorizedRational
+import Mathlib.Analysis.SpecialFunctions.Log.Basic
 import Mathlib.Analysis.SpecialFunctions.Pow.Real
 import Mathlib.Topology.MetricSpace.Basic
 
@@ -153,23 +152,324 @@ theorem exists_radius_zero_free
   rw [mem_closedBall, dist_zero_right]
   exact le_trans (le_of_eq hz) hR'I.2
 
+/-- log(1+t) ≥ t/(1+t) para t>0. MVT: log' = 1/ξ ≥ 1/(1+t). -/
+lemma log_one_add_ge_div {t : ℝ} (ht : 0 < t) :
+    t / (1 + t) ≤ Real.log (1 + t) := by
+  have hlt : (1 : ℝ) < 1 + t := by linarith
+  have hcont : ContinuousOn Real.log (Icc 1 (1 + t)) := by
+    intro x hx
+    exact (continuousAt_log (ne_of_gt (lt_of_lt_of_le (by norm_num : (0 : ℝ) < 1) hx.1))).continuousWithinAt
+  have hdiff : DifferentiableOn ℝ Real.log (Ioo 1 (1 + t)) := by
+    intro x hx
+    exact (Real.differentiableAt_log (ne_of_gt (lt_trans (by norm_num : (0 : ℝ) < 1) hx.1))).differentiableWithinAt
+  obtain ⟨ξ, hξ, hξeq⟩ := exists_deriv_eq_slope Real.log hlt hcont hdiff
+  have hξIoo : ξ ∈ Ioo (1 : ℝ) (1 + t) := hξ
+  have hξpos : 0 < ξ := lt_of_lt_of_le (by norm_num : (0 : ℝ) < 1) hξIoo.1.le
+  have hder : deriv Real.log ξ = ξ⁻¹ := Real.deriv_log ξ
+  rw [hder] at hξeq
+  have ht0 : t ≠ 0 := ne_of_gt ht
+  have hslope : (Real.log (1 + t) - Real.log 1) / t = ξ⁻¹ := by
+    simpa [slope_def_field, sub_add, add_comm] using hξeq
+  have hlog : Real.log (1 + t) = t / ξ := by
+    have : Real.log (1 + t) / t = ξ⁻¹ := by
+      simpa [Real.log_one, sub_zero] using hslope
+    field_simp [ht0] at this
+    linarith
+  have hξle : ξ ≤ 1 + t := le_of_lt hξIoo.2
+  have : t / (1 + t) ≤ t / ξ :=
+    div_le_div_of_nonneg_left ht.le hξpos hξle
+  linarith
+
+lemma log_outer_inner_ge {r : ℝ} (hr : 1 ≤ r) :
+    (1 : ℝ) / (r + 2) ≤ Real.log ((r + 2) / (r + 1)) := by
+  have ht : 0 < (1 : ℝ) / (r + 1) := by positivity
+  have heq : (r + 2) / (r + 1) = 1 + 1 / (r + 1) := by field_simp
+  rw [heq]
+  have hlog := log_one_add_ge_div ht
+  have hsimp : (1 / (r + 1)) / (1 + 1 / (r + 1)) = (1 : ℝ) / (r + 2) := by
+    field_simp; ring
+  rwa [hsimp] at hlog
+
+lemma exists_ne_zero (hg0 : ¬ ∀ z, g z = 0) : ∃ c : ℂ, g c ≠ 0 := by
+  simpa [not_forall] using hg0
+
+lemma analyticOnNhd_of_differentiable (hg : Differentiable ℂ g) (s : Set ℂ) :
+    AnalyticOnNhd ℂ g s :=
+  fun _ _ => (hg _).analyticAt
+
+/-- n(r) ≤ O(r^{2+ε}) vía Jensen `sum_divisor_le`. Centro c con g c ≠ 0. -/
+lemma divisor_sum_le_jensen
+    (hg : Differentiable ℂ g) (hg_ord : OrderAtMostOne g)
+    {c : ℂ} (hc0 : g c ≠ 0) {ε : ℝ} (hε : 0 < ε) :
+    ∃ K : ℝ, 0 < K ∧ ∀ r : ℝ, 1 ≤ r →
+      ∑ᶠ u, (MeromorphicOn.divisor g (closedBall c (r + 1)) u : ℝ)
+        ≤ K * r ^ (2 + ε) := by
+  obtain ⟨A, hA, hB⟩ := hg_ord ε hε
+  have hgc : 0 < ‖g c‖ := norm_pos_iff.mpr hc0
+  let Xc : ℝ := (‖c‖ + 4) ^ (1 + ε)
+  let C0 : ℝ := |Real.log (A + 1)| + |Real.log ‖g c‖| + 2
+  let K : ℝ := 4 * (C0 + Xc + 1) + 1
+  have hK : 0 < K := by positivity
+  refine ⟨K, hK, ?_⟩
+  intro r hr
+  let r_in : ℝ := r + 1
+  let R_out : ℝ := r + 2
+  have hr_in_pos : 0 < r_in := by linarith
+  have hR_out_pos : 0 < R_out := by linarith
+  have hr_pos : 0 < |r_in| := by simpa [abs_of_pos hr_in_pos]
+  have hrR : |r_in| < |R_out| := by
+    simp [abs_of_pos hr_in_pos, abs_of_pos hR_out_pos]; linarith
+  let X : ℝ := (‖c‖ + R_out) ^ (1 + ε)
+  let M : ℝ := max 1 (A * Real.exp X)
+  have hM : 1 ≤ M := le_max_left _ _
+  have hAn : AnalyticOnNhd ℂ g (closedBall c |R_out|) :=
+    analyticOnNhd_of_differentiable hg _
+  have f_bound : ∀ z ∈ sphere c |R_out|, ‖g z‖ ≤ M := by
+    intro z hz
+    have hzc : ‖z - c‖ = |R_out| := mem_sphere_iff_norm.mp hz
+    have hzn : ‖z‖ ≤ ‖c‖ + |R_out| := by
+      calc
+        ‖z‖ = ‖(z - c) + c‖ := by ring_nf
+        _ ≤ ‖z - c‖ + ‖c‖ := norm_add_le _ _
+        _ = |R_out| + ‖c‖ := by rw [hzc]
+        _ = ‖c‖ + |R_out| := add_comm _ _
+    have hgz : ‖g z‖ ≤ A * Real.exp (‖z‖ ^ (1 + ε)) := hB z
+    have hpow : ‖z‖ ^ (1 + ε) ≤ (‖c‖ + |R_out|) ^ (1 + ε) :=
+      Real.rpow_le_rpow (norm_nonneg z) hzn (by linarith)
+    have : ‖g z‖ ≤ A * Real.exp ((‖c‖ + |R_out|) ^ (1 + ε)) :=
+      hgz.trans (mul_le_mul_of_nonneg_left (Real.exp_le_exp.mpr hpow) hA.le)
+    simp [abs_of_pos hR_out_pos] at this ⊢
+    exact this.trans (le_max_right _ _)
+  have hle :=
+    AnalyticOnNhd.sum_divisor_le (f := g) (c := c) (r := r_in) (R := R_out) (M := M)
+      hr_pos hrR hM hAn hc0 f_bound
+  have : closedBall c |r_in| = closedBall c (r + 1) := by
+    simp [abs_of_pos hr_in_pos, r_in]
+  rw [this] at hle
+  have hden : (1 : ℝ) / (r + 2) ≤ Real.log (R_out / r_in) :=
+    log_outer_inner_ge hr
+  have hdenpos : 0 < Real.log (R_out / r_in) :=
+    lt_of_lt_of_le (div_pos one_pos (by linarith) : (0 : ℝ) < 1 / (r + 2)) hden
+  have hsum0 :
+      0 ≤ ∑ᶠ u, (MeromorphicOn.divisor g (closedBall c (r + 1)) u : ℝ) :=
+    finsum_nonneg fun _ =>
+      Int.cast_nonneg.mpr
+        ((analyticOnNhd_of_differentiable hg (closedBall c (r + 1))).divisor_nonneg _)
+  by_cases hlog : Real.log (M / ‖g c‖) ≤ 0
+  · have : Real.log (M / ‖g c‖) / Real.log (R_out / r_in) ≤ 0 :=
+      div_nonpos_of_nonpos_of_nonneg hlog hdenpos.le
+    have hle0 := hle.trans this
+    have hzero := le_antisymm hle0 hsum0
+    rw [hzero]
+    exact mul_nonneg hK.le (Real.rpow_nonneg (by linarith) _)
+  · have hlogpos : 0 < Real.log (M / ‖g c‖) := lt_of_not_ge hlog
+    have hinv : (Real.log (R_out / r_in))⁻¹ ≤ r + 2 := by
+      rw [inv_le_iff_one_le_mul₀ hdenpos]
+      have : 1 ≤ Real.log (R_out / r_in) * (r + 2) := by nlinarith [hden]
+      exact this
+    have hle2 :
+        ∑ᶠ u, (MeromorphicOn.divisor g (closedBall c (r + 1)) u : ℝ)
+          ≤ Real.log (M / ‖g c‖) * (r + 2) := by
+      have : Real.log (M / ‖g c‖) / Real.log (R_out / r_in)
+          ≤ Real.log (M / ‖g c‖) * (r + 2) := by
+        rw [div_eq_mul_inv]
+        exact mul_le_mul_of_nonneg_left hinv hlogpos.le
+      exact hle.trans this
+    have hMle : M ≤ (A + 1) * Real.exp X := by
+      apply max_le
+      · have h1 : 1 ≤ Real.exp X :=
+          Real.one_le_exp (Real.rpow_nonneg (by positivity) _)
+        nlinarith [hA.le, h1]
+      · nlinarith [hA.le, Real.exp_pos X]
+    have hlogM : Real.log M ≤ Real.log (A + 1) + X := by
+      have hpos : 0 < (A + 1) * Real.exp X := by positivity
+      have : Real.log M ≤ Real.log ((A + 1) * Real.exp X) :=
+        Real.log_le_log (lt_of_lt_of_le zero_lt_one hM) hMle
+      rwa [Real.log_mul (by linarith) (Real.exp_ne_zero _), Real.log_exp] at this
+    have hlogMg :
+        Real.log (M / ‖g c‖) ≤ C0 + X := by
+      rw [Real.log_div (by
+          exact (lt_of_lt_of_le zero_lt_one hM).ne') (ne_of_gt hgc)]
+      have : Real.log M - Real.log ‖g c‖ ≤ |Real.log (A + 1)| + X + |Real.log ‖g c‖| + 2 := by
+        have h1 : Real.log M ≤ |Real.log (A + 1)| + X :=
+          hlogM.trans (add_le_add_right (le_abs_self _) _)
+        nlinarith [le_abs_self (Real.log ‖g c‖), abs_nonneg (Real.log ‖g c‖)]
+      have : C0 + X = |Real.log (A + 1)| + |Real.log ‖g c‖| + 2 + X := by
+        simp [C0]; ring
+      linarith
+    have hXle : X ≤ Xc * r ^ (1 + ε) := by
+      have hlin : ‖c‖ + R_out ≤ (‖c‖ + 4) * r := by
+        have : R_out = r + 2 := rfl
+        nlinarith [norm_nonneg c, hr]
+      have hnn : 0 ≤ ‖c‖ + R_out := by positivity
+      have hp := Real.rpow_le_rpow hnn hlin (by linarith : 0 ≤ 1 + ε)
+      have hrpow : ((‖c‖ + 4) * r) ^ (1 + ε) =
+          (‖c‖ + 4) ^ (1 + ε) * r ^ (1 + ε) :=
+        Real.mul_rpow (by positivity) (by linarith : 0 ≤ r)
+      have : X = (‖c‖ + R_out) ^ (1 + ε) := rfl
+      rw [this, hrpow] at hp
+      simpa [Xc] using hp
+    have hr2 : r + 2 ≤ 3 * r := by nlinarith [hr]
+    have hpow1 : (1 : ℝ) ≤ r ^ (2 + ε) := by
+      have : (1 : ℝ) ≤ r := hr
+      exact Real.one_le_rpow this (by linarith)
+    have hpowr : r ≤ r ^ (2 + ε) := by
+      have : r ^ (1 : ℝ) ≤ r ^ (2 + ε) :=
+        Real.rpow_le_rpow_of_exponent_le hr (by linarith)
+      simpa using this
+    have hpowX : r ^ (1 + ε) ≤ r ^ (2 + ε) :=
+      Real.rpow_le_rpow_of_exponent_le hr (by linarith)
+    have : Real.log (M / ‖g c‖) * (r + 2) ≤ K * r ^ (2 + ε) := by
+      have h1 : Real.log (M / ‖g c‖) * (r + 2) ≤ (C0 + X) * (3 * r) :=
+        mul_le_mul hlogMg hr2 (by linarith) (by
+          have : 0 ≤ C0 + X := by positivity
+          linarith [hlogMg, hlogpos.le])
+      have h2 : (C0 + X) * (3 * r) ≤ (C0 + Xc * r ^ (1 + ε)) * (3 * r) := by
+        apply mul_le_mul_of_nonneg_right
+        · linarith [hXle, Real.rpow_nonneg (by linarith : (0 : ℝ) ≤ r) (1 + ε)]
+        · nlinarith [hr]
+      have h3 : (C0 + Xc * r ^ (1 + ε)) * (3 * r)
+          ≤ 3 * C0 * r ^ (2 + ε) + 3 * Xc * r ^ (2 + ε) := by
+        have : (C0 + Xc * r ^ (1 + ε)) * (3 * r) =
+            3 * C0 * r + 3 * Xc * (r ^ (1 + ε) * r) := by ring
+        rw [this]
+        have hrpow' : r ^ (1 + ε) * r = r ^ (2 + ε) := by
+          rw [← Real.rpow_add_one (by linarith : (0 : ℝ) ≤ r)]
+          ring_nf
+        rw [hrpow']
+        nlinarith [hpowr, Real.rpow_nonneg (by linarith : (0 : ℝ) ≤ r) (2 + ε),
+          abs_nonneg (Real.log (A + 1)), abs_nonneg (Real.log ‖g c‖)]
+      have hKbound : 3 * C0 + 3 * Xc ≤ K := by
+        simp [K]; nlinarith [abs_nonneg (Real.log (A + 1)),
+          abs_nonneg (Real.log ‖g c‖), Real.rpow_nonneg (by positivity : 0 ≤ ‖c‖ + 4) (1 + ε)]
+      nlinarith [Real.rpow_nonneg (by linarith : (0 : ℝ) ≤ r) (2 + ε)]
+    exact hle2.trans this
+
+/-- Palomar: n+1 puntos de malla, n centros. Spacing 2δ, intervalo abierto 2δ. -/
+lemma exists_grid_away {s : Finset ℝ} {R : ℝ} (_hR : 0 ≤ R) :
+    ∃ R' ∈ Icc R (R + 1),
+      ∀ x ∈ s, (1 / (2 * (s.card + 1) : ℝ)) ≤ |R' - x| := by
+  classical
+  let n := s.card
+  let δ : ℝ := 1 / (2 * (n + 1 : ℝ))
+  let t : ℕ → ℝ := fun k => R + (k : ℝ) / (n + 1 : ℝ)
+  have hnpos : (0 : ℝ) < n + 1 := by positivity
+  have htI : ∀ k, k ≤ n → t k ∈ Icc R (R + 1) := by
+    intro k hk
+    constructor
+    · have : 0 ≤ (k : ℝ) / (n + 1 : ℝ) := div_nonneg (Nat.cast_nonneg _) hnpos.le
+      simp [t]; linarith
+    · have : (k : ℝ) / (n + 1 : ℝ) ≤ 1 := by
+        rw [div_le_one hnpos]
+        exact_mod_cast (le_trans hk (Nat.le_succ n))
+      simp [t]; linarith
+  have htdiff : ∀ i j, t i - t j = ((i : ℝ) - j) / (n + 1 : ℝ) := by
+    intro i j; simp [t]; field_simp; ring
+  have : ∃ k, k ≤ n ∧ ∀ x ∈ s, δ ≤ |t k - x| := by
+    by_contra hnone
+    push_neg at hnone
+    have hclose : ∀ k ∈ Finset.range (n + 1), ∃ x ∈ s, |t k - x| < δ := by
+      intro k hk
+      exact hnone k (Nat.lt_succ_iff.mp (Finset.mem_range.mp hk))
+    have huniq : ∀ x ∈ s,
+        ((Finset.range (n + 1)).filter (fun k => |t k - x| < δ)).card ≤ 1 := by
+      intro x hx
+      refine Finset.card_le_one.2 ?_
+      intro i hi j hj
+      simp only [Finset.mem_filter, Finset.mem_range] at hi hj
+      have hiδ := hi.2
+      have hjδ := hj.2
+      have habs : |t i - t j| < 1 / (n + 1 : ℝ) := by
+        have h2 : 2 * δ = 1 / (n + 1 : ℝ) := by
+          simp [δ]; field_simp; ring
+        have := abs_sub_le (t i) x (t j)
+        have : |t j - x| = |x - t j| := abs_sub_comm _ _
+        linarith [this, abs_sub_comm x (t j)]
+      have : |((i : ℝ) - j) / (n + 1 : ℝ)| < 1 / (n + 1 : ℝ) := by
+        rwa [htdiff i j] at habs
+      have : |(i : ℝ) - j| < 1 := by
+        rw [abs_div, abs_of_pos hnpos] at this
+        exact (div_lt_iff₀ hnpos).mp this
+      have : i = j := by
+        have hij : |(i : ℤ) - (j : ℤ)| < 1 := by
+          simpa using this
+        exact Int.cast_injective (eq_of_sub_eq_zero (Int.abs_lt_one_iff.mp (by
+          simpa [Int.cast_sub] using hij)))
+      exact this
+    have hsub : Finset.range (n + 1) ⊆
+        s.biUnion (fun x => (Finset.range (n + 1)).filter (fun k => |t k - x| < δ)) := by
+      intro k hk
+      obtain ⟨x, hx, hlt⟩ := hclose k hk
+      exact Finset.mem_biUnion.2 ⟨x, hx, by simp [hk, hlt]⟩
+    have hcard : (Finset.range (n + 1)).card ≤ s.card := by
+      refine (Finset.card_le_card hsub).trans ?_
+      refine (Finset.card_biUnion_le).trans ?_
+      refine (Finset.sum_le_sum (fun x hx => huniq x hx)).trans ?_
+      simp
+    simpa [Finset.card_range] using (by linarith : ¬ (n + 1 ≤ n)) hcard
+  obtain ⟨k, hk, haway⟩ := this
+  exact ⟨t k, htI k hk, haway⟩
+
+/-- Radio R' ∈ [R,R+1] sin ceros y separado de las normas de ceros en |z|≤R+2. -/
+theorem exists_radius_sep
+    (hg : Differentiable ℂ g) (hg0 : ¬ ∀ z, g z = 0)
+    {R : ℝ} (hR : 0 ≤ R) :
+    ∃ (R' : ℝ) (n : ℕ), R' ∈ Icc R (R + 1) ∧
+      (∀ z, ‖z‖ = R' → g z ≠ 0) ∧
+      ∀ a, a ∈ closedBall (0 : ℂ) (R + 2) → g a = 0 →
+        (1 / (2 * (n + 1) : ℝ)) ≤ |R' - ‖a‖| := by
+  have hfin := zeros_finite_closedBall hg hg0 (R := R + 2) (by linarith)
+  let F := hfin.toFinset
+  let n := F.card
+  let s : Finset ℝ := F.image (fun z : ℂ => ‖z‖)
+  obtain ⟨R', hR'I, haway⟩ := exists_grid_away (s := s) hR
+  refine ⟨R', n, hR'I, ?_, ?_⟩
+  · intro z hz hg0z
+    have hzZ : z ∈ ({w : ℂ | w ∈ closedBall (0 : ℂ) (R + 2) ∧ g w = 0}) := by
+      refine ⟨?_, hg0z⟩
+      rw [mem_closedBall, dist_zero_right]
+      linarith [hR'I.2, le_of_eq hz]
+    have hzF : z ∈ F := by simpa [F, Set.Finite.mem_toFinset] using hzZ
+    have hnorm : ‖z‖ ∈ s := Finset.mem_image.2 ⟨z, hzF, rfl⟩
+    have hδ : (1 / (2 * (s.card + 1) : ℝ)) ≤ |R' - ‖z‖| := haway _ hnorm
+    have : 0 < |R' - ‖z‖| := lt_of_lt_of_le (by positivity) hδ
+    have : R' ≠ ‖z‖ := fun h => by rw [h, sub_self, abs_zero] at this; linarith
+    exact this hz.symm
+  · intro a ha ha0
+    have haZ : a ∈ ({w : ℂ | w ∈ closedBall (0 : ℂ) (R + 2) ∧ g w = 0}) := ⟨ha, ha0⟩
+    have haF : a ∈ F := by simpa [F, Set.Finite.mem_toFinset] using haZ
+    have : ‖a‖ ∈ s := Finset.mem_image.2 ⟨a, haF, rfl⟩
+    have hδ := haway _ this
+    have hcard : s.card ≤ n := Finset.card_image_le
+    have : 1 / (2 * (n + 1) : ℝ) ≤ 1 / (2 * (s.card + 1) : ℝ) := by
+      apply div_le_div_of_nonneg_left (by norm_num : (0 : ℝ) ≤ 1) (by positivity)
+      nlinarith [Nat.cast_le.mpr hcard]
+    exact this.trans hδ
+
 /-!
-  Jensen da la media de log |g|. El mínimo en el círculo sin ceros
-  pide Borel del factor nunca-cero tras extraer ceros finitos en el disco.
+  Jensen da n(R). Palomar da δ. El mínimo pide Borel de u
+  tras extract_zeros_poles en el disco compacto.
 -/
 theorem exists_circle_min_norm
-    (hg : Differentiable ℂ g) (_hg_ord : OrderAtMostOne g)
-    (hg0 : ¬ ∀ z, g z = 0) {ε : ℝ} (_hε : 0 < ε) :
+    (hg : Differentiable ℂ g) (hg_ord : OrderAtMostOne g)
+    (hg0 : ¬ ∀ z, g z = 0) {ε : ℝ} (hε : 0 < ε) :
     ∃ C : ℝ, 0 < C ∧ ∀ R : ℝ, 1 ≤ R → ∃ R' ∈ Icc R (R + 1),
       (∀ z, ‖z‖ = R' → g z ≠ 0) ∧
       ∀ z, ‖z‖ = R' → Real.exp (-C * (1 + R' ^ (1 + ε))) ≤ ‖g z‖ := by
-  refine ⟨1, by norm_num, ?_⟩
+  obtain ⟨c, hc0⟩ := exists_ne_zero hg0
+  obtain ⟨K, hK, hN⟩ := divisor_sum_le_jensen hg hg_ord hc0 hε
+  refine ⟨K + 1, by linarith, ?_⟩
   intro R hR
-  obtain ⟨R', hR'I, hfree⟩ := exists_radius_zero_free hg hg0 (le_trans (by norm_num : (0 : ℝ) ≤ 1) hR)
+  obtain ⟨R', n, hR'I, hfree, hsep⟩ :=
+    exists_radius_sep hg hg0 (le_trans (by norm_num : (0 : ℝ) ≤ 1) hR)
   refine ⟨R', hR'I, hfree, ?_⟩
-  -- min |g| ≥ exp(-C (1+R'^{1+ε})): Cartan / Borel del factor u.
-  -- `sum_divisor_le` + `extract_zeros_poles` (disco compacto) + Borel.
   intro z hz
+  -- extract_zeros_poles en closedBall 0 (R+2): g = P • u, u nunca cero.
+  -- |P z| ≥ δ^{n(R)} con δ = 1/(2(n+1)), n(R) = O(R^{2+ε}) por Jensen.
+  -- min |u| por Borel del log holomorfo en el disco. No lake-checked.
+  have _ := hN (R + 1) (by linarith)
+  have _ := hsep
+  have _ := hz
   sorry
 
 theorem order_atMostOne_of_quotient
