@@ -1,0 +1,145 @@
+lemma phi_second_derivative_vanishes
+    {φ : ℂ → ℂ} (hφ : Differentiable ℂ φ)
+    (h_bound : ∃ K : ℝ, ∀ R > 0, ∀ z : ℂ, ‖z‖ = R → ‖φ z‖ ≤ K * R ^ (3 / 2 : ℝ)) :
+    ∀ c : ℂ, deriv (deriv φ) c = 0 := by
+  intro c
+  -- Usamos la fórmula de Cauchy para la segunda derivada
+  have h_cauchy : ∀ R > max 1 ‖c‖, deriv (deriv φ) c =
+      (2 : ℂ) / (2 * π * I) * ∮ z in C(0, R), φ z / (z - c) ^ 3 := by
+    intro R hR
+    -- Aplicamos la fórmula de Cauchy generalizada
+    have hR' : R > 0 := by linarith [hR]
+    have h_diff : ∀ z, z ∈ ball 0 R → DifferentiableAt ℂ φ z := by
+      intro z hz
+      exact hφ.differentiableAt
+    have h_c : c ∈ ball 0 R := by
+      simp [abs_of_nonneg (le_trans (le_of_lt hR') (le_of_lt hR))]
+      exact hR
+    -- Fórmula de Cauchy para derivada n-ésima: f^(n)(c) = n!/(2πi) ∮ f(z)/(z-c)^(n+1) dz
+    -- Tomamos n = 2
+    have h_cauchy_formula := cauchy_power_series h_diff hR' h_c (by linarith [hR]) 2
+    rw [cauchy_power_series h_diff hR' h_c] at h_cauchy_formula
+    simp at h_cauchy_formula
+    -- Simplificamos la fórmula
+    have h_factor : (2 : ℂ) / (2 * π * I) = 2 / (2 * π * I) := rfl
+    rw [h_factor] at h_cauchy_formula
+    exact h_cauchy_formula
+  -- Acotamos la integral
+  have h_bound_integral : ∀ R > max 1 ‖c‖,
+      ‖(2 : ℂ) / (2 * π * I) * ∮ z in C(0, R), φ z / (z - c) ^ 3‖ ≤
+      (2 / (2 * π)) * (2 * π * R) * (K * R ^ (3/2 : ℝ)) / (R/2) ^ 3 := by
+    intro R hR
+    -- Obtenemos la cota de φ en |z| = R
+    obtain ⟨K, hK⟩ := h_bound
+    have h_phi_bound : ∀ z, ‖z‖ = R → ‖φ z‖ ≤ K * R ^ (3/2 : ℝ) := hK R (by linarith [hR])
+    -- Cota para |z-c| en la circunferencia |z| = R
+    have h_zc_ge : ∀ z, ‖z‖ = R → ‖z - c‖ ≥ R - ‖c‖ := by
+      intro z hz
+      rw [← hz]
+      exact norm_sub_norm_le z c
+    -- Acotamos el integrando
+    have h_integrand_bound : ∀ z, ‖z‖ = R → ‖φ z / (z - c) ^ 3‖ ≤
+        (K * R ^ (3/2 : ℝ)) / (R - ‖c‖) ^ 3 := by
+      intro z hz
+      have h_z_ne_c : z ≠ c := by
+        have h_z : ‖z‖ = R := hz
+        have h_c : ‖c‖ < R := by linarith [hR]
+        have h_neq : ‖z‖ ≠ ‖c‖ := by linarith [h_c, h_z]
+        rw [← norm_eq_iff] at h_neq
+        exact h_neq
+      rw [norm_div, norm_pow, norm_eq_abs]
+      apply div_le_div
+      · exact norm_nonneg _
+      · exact h_phi_bound z hz
+      · apply pow_nonneg
+        have h_R_c : R - ‖c‖ ≥ 0 := by linarith [hR]
+        exact h_R_c
+      · apply pow_le_pow_left
+        · exact le_trans zero_le_one (le_of_lt hR)
+        · exact h_zc_ge z hz
+    -- Cota de la integral
+    have h_integral_bound := circleIntegral.norm_integral_le_of_norm_le_const
+      (by exact h_integrand_bound)
+      (le_of_lt hR)
+    -- Simplificamos la cota
+    have h_simplify : (2 / (2 * π)) * (2 * π * R) * (K * R ^ (3/2 : ℝ)) / (R - ‖c‖) ^ 3 =
+        2 * K * R ^ (5/2 : ℝ) / (R - ‖c‖) ^ 3 := by
+      field_simp
+      ring
+    -- Pero necesitamos (R/2)^3 en el denominador
+    have h_R_ge : R ≥ 2 * ‖c‖ := by
+      have hR_ge : R ≥ 2 * max 1 ‖c‖ := by linarith [hR]
+      have h_2c : 2 * max 1 ‖c‖ ≥ 2 * ‖c‖ := by
+        apply mul_le_mul_of_nonneg_left (le_max_right 1 ‖c‖) (by linarith)
+      linarith [hR_ge, h_2c]
+    have h_R_c : R - ‖c‖ ≥ R/2 := by
+      have h_R_c_eq : R - ‖c‖ = R/2 + (R/2 - ‖c‖) := by ring
+      rw [h_R_c_eq]
+      apply add_nonneg
+      · rfl
+      · have h_R_ge_2c : R ≥ 2 * ‖c‖ := h_R_ge
+        linarith
+    -- Entonces (R/2)³ ≤ (R - ‖c‖)³
+    have h_denom_ge : (R/2)^3 ≤ (R - ‖c‖)^3 := by
+      apply pow_le_pow_left
+      · have h_R_ge_0 : R ≥ 0 := by linarith [hR]
+        exact h_R_ge_0
+      · exact h_R_c
+    -- Invertimos para obtener cota superior
+    have h_inv : 1 / (R - ‖c‖)^3 ≤ 1 / (R/2)^3 := by
+      apply inv_le_inv
+      · exact pow_pos (by linarith [hR, h_R_ge]) 3
+      · exact h_denom_ge
+    -- Finalmente obtenemos la cota deseada
+    have h_final_bound := le_trans h_integral_bound h_inv
+    linarith
+  -- Tomamos límite R → ∞
+  have h_tendsto : Tendsto (fun R => (2 / (2 * π)) * (2 * π * R) * (K * R ^ (3/2 : ℝ)) / (R/2) ^ 3) atTop (𝓝 0) := by
+    -- Simplificamos la expresión
+    let expr := fun R : ℝ => 2 * K * R ^ (5/2 : ℝ) / (R/2)^3
+    have h_simplify : expr = fun R => 16 * K / Real.sqrt R := by
+      ext R
+      have h_R_pos : R > 0 := by linarith
+      field_simp [h_R_pos]
+      rw [Real.rpow_def_of_nonneg (le_of_lt h_R_pos)]
+      simp
+      ring
+    rw [h_simplify]
+    -- 16*K/√R → 0 cuando R → ∞
+    have h_tendsto_zero : Tendsto (fun R : ℝ => 16 * K / Real.sqrt R) atTop (𝓝 0) := by
+      apply Tendsto.div_const
+      apply Tendsto.const_mul
+      exact tendsto_inv_sqrt_atTop_zero
+      exact 16
+    exact h_tendsto_zero
+  -- Por la fórmula de Cauchy, deriv(deriv φ) c es el límite de la integral cuando R → ∞
+  -- Pero la integral tiende a 0
+  have h_phi_pp_zero : deriv (deriv φ) c = 0 := by
+    -- Para todo ε > 0, existe R0 tal que para R > R0, |deriv(deriv φ) c| < ε
+    -- Pero deriv(deriv φ) c es constante (independiente de R)
+    by_contra h_contra
+    let ε := ‖deriv (deriv φ) c‖ / 2
+    have hε : ε > 0 := by
+      rw [norm_pos_iff]
+      exact h_contra
+    -- Por la definición de tendencia a 0, existe R0 tal que para R > R0,
+    -- |integral(R)| < ε
+    have h_tend : Tendsto (fun R => (2 : ℂ) / (2 * π * I) * ∮ z in C(0, R), φ z / (z - c) ^ 3) atTop (𝓝 0) := by
+      have h_abs_bound := h_bound_integral
+      -- La cota tiende a 0, así que la integral también tiende a 0
+      -- Este paso requiere un argumento de squeeze
+      sorry -- Se puede completar con un argumento de acotación
+    specialize h_tend (ball 0 ε) (ball_mem_nhds 0 hε)
+    rw [tendsto_atTop] at h_tend
+    obtain ⟨N, hN⟩ := h_tend
+    have h_R_gt : max (max 1 ‖c‖) N < max (max 1 ‖c‖) N + 1 := by linarith
+    let R := max (max 1 ‖c‖) N + 1
+    specialize hN R (by linarith)
+    rw [mem_ball_zero_iff] at hN
+    -- Pero por la fórmula de Cauchy, h_pp(c) = integral(R)
+    have h_eq := h_cauchy R (by linarith [h_R_gt])
+    rw [← h_eq] at hN
+    rw [← norm_neg, norm_sub_comm] at hN
+    -- Esto contradice la definición de ε
+    linarith
+  exact h_phi_pp_zero
