@@ -1,5 +1,5 @@
 /-
-  GAP 4 v3.2.6 — order_atMostOne_of_quotient
+  GAP 4 v3.2.7 — order_atMostOne_of_quotient
 
   f = h * g, enteras, h nunca cero, g ≢ 0,
   OrderAtMostOne f, OrderAtMostOne g
@@ -15,11 +15,12 @@
 
   Cerrado ahora (fuente, no lake):
     `log_one_add_ge_div`, `divisor_sum_le_jensen` (n(R)=O(R^{2+ε})),
-    `exists_radius_sep` (palomar δ ≥ 1/(2(n+1))).
+    `exists_radius_sep` (palomar δ ≥ 1/(2(n+1))),
+    `extract_on_closedBall` (`extract_zeros_poles` en disco compacto;
+     GAP3 sigue: no extract en todo ℂ).
 
   Un sorry:
-    min |u| tras `extract_zeros_poles` en el disco compacto + Borel.
-    |g| = |P| |u|, |P| ≥ δ^{n(R)}. GAP3 sigue: no extract en todo ℂ.
+    |g| = |P| |u| en el círculo, |P| ≥ δ^{n(R)}, min |u| por Borel.
 
   No lake-checked. No RH. No D ≡ Ξ.
 
@@ -34,6 +35,7 @@ import Mathlib.Analysis.Complex.AbsMax
 import Mathlib.Analysis.Complex.Basic
 import Mathlib.Analysis.Complex.JensenFormula
 import Mathlib.Analysis.Meromorphic.FactorizedRational
+import Mathlib.Analysis.Meromorphic.Order
 import Mathlib.Analysis.SpecialFunctions.Log.Basic
 import Mathlib.Analysis.SpecialFunctions.Pow.Real
 import Mathlib.Topology.MetricSpace.Basic
@@ -446,9 +448,45 @@ theorem exists_radius_sep
       nlinarith [Nat.cast_le.mpr hcard]
     exact this.trans hδ
 
+/-- Orden analítico ≠ ⊤ si g ≢ 0. -/
+lemma analyticOrderAt_ne_top_of_not_eq_zero
+    (hg : Differentiable ℂ g) (hg0 : ¬ ∀ z, g z = 0) (z : ℂ) :
+    analyticOrderAt g z ≠ ⊤ := by
+  intro htop
+  have hA : ∀ z₀, AnalyticAt ℂ g z₀ := fun z₀ => (hg z₀).analyticAt
+  have : g = 0 :=
+    (AnalyticOnNhd.analyticOrderAt_eq_top_iff_eq_zero z hA).mp htop
+  exact hg0 (fun w => congrFun this w)
+
+/-- Compatibilidad analítico/meromorfo: `AnalyticAt.meromorphicOrderAt_eq`. -/
+lemma meromorphicOrderAt_ne_top_entire
+    (hg : Differentiable ℂ g) (hg0 : ¬ ∀ z, g z = 0) (z : ℂ) :
+    meromorphicOrderAt g z ≠ ⊤ := by
+  have han : analyticOrderAt g z ≠ ⊤ :=
+    analyticOrderAt_ne_top_of_not_eq_zero hg hg0 z
+  rw [(hg z).analyticAt.meromorphicOrderAt_eq, ENat.map_eq_top_iff]
+  exact han
+
+/-- Ceros finitos en un disco compacto: `extract_zeros_poles`. No en todo ℂ. -/
+lemma extract_on_closedBall
+    (hg : Differentiable ℂ g) (hg0 : ¬ ∀ z, g z = 0) {S : ℝ} (_hS : 0 ≤ S) :
+    ∃ u : ℂ → ℂ,
+      AnalyticOnNhd ℂ u (closedBall (0 : ℂ) S) ∧
+      (∀ z : closedBall (0 : ℂ) S, u z ≠ 0) ∧
+      g =ᶠ[codiscreteWithin (closedBall (0 : ℂ) S)]
+        (∏ᶠ a, (· - a) ^ MeromorphicOn.divisor g (closedBall (0 : ℂ) S) a) • u := by
+  let U := closedBall (0 : ℂ) S
+  have hA : AnalyticOnNhd ℂ g U := analyticOnNhd_of_differentiable hg _
+  have hM : MeromorphicOn g U := hA.meromorphicOn
+  have h₂ : ∀ z : U, meromorphicOrderAt g z ≠ ⊤ :=
+    fun z => meromorphicOrderAt_ne_top_entire hg hg0 z
+  have h₃ : (MeromorphicOn.divisor g U).support.Finite :=
+    (MeromorphicOn.divisor g U).finiteSupport (isCompact_closedBall _ _)
+  exact hM.extract_zeros_poles h₂ h₃
+
 /-!
-  Jensen da n(R). Palomar da δ. El mínimo pide Borel de u
-  tras extract_zeros_poles en el disco compacto.
+  Jensen da n(R). Palomar da δ. Extract da g = P · u en el disco.
+  El mínimo pide |P| ≥ δ^{n} y Borel de u.
 -/
 theorem exists_circle_min_norm
     (hg : Differentiable ℂ g) (hg_ord : OrderAtMostOne g)
@@ -464,12 +502,18 @@ theorem exists_circle_min_norm
     exists_radius_sep hg hg0 (le_trans (by norm_num : (0 : ℝ) ≤ 1) hR)
   refine ⟨R', hR'I, hfree, ?_⟩
   intro z hz
-  -- extract_zeros_poles en closedBall 0 (R+2): g = P • u, u nunca cero.
-  -- |P z| ≥ δ^{n(R)} con δ = 1/(2(n+1)), n(R) = O(R^{2+ε}) por Jensen.
-  -- min |u| por Borel del log holomorfo en el disco. No lake-checked.
+  obtain ⟨u, huA, hu0, heq⟩ :=
+    extract_on_closedBall hg hg0 (S := R + 2) (by linarith)
+  -- g = P • u en el disco (identidad: coinciden en codiscreto ⇒ en el círculo).
+  -- |P z| ≥ δ^N, δ = 1/(2(n+1)), N = O(R^{2+ε}) por Jensen (mejorable a 2r).
+  -- min |u| por Borel del log holomorfo. No lake-checked.
   have _ := hN (R + 1) (by linarith)
   have _ := hsep
   have _ := hz
+  have _ := huA
+  have _ := hu0
+  have _ := heq
+  have _ := hfree z hz
   sorry
 
 theorem order_atMostOne_of_quotient
