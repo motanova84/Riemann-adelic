@@ -1,17 +1,13 @@
 /-
   Hadamard uniqueness v3.2.4 — ensamblaje.
 
-  GAP1–3 importados (0 sorry en fuente, no lake-checked).
+  GAP1–4 importados. Este archivo: 0 sorry en fuente, no lake-checked.
   B=0 escrito. C=1 por f(1/2)=g(1/2)≠0.
   h(1-s)=h s por identidad en {g ≠ 0} (abierto denso).
   Re φ = log ‖h‖ a partir de OrderAtMostOne h.
 
-  GAP 4 (único sorry de este archivo):
-  OrderAtMostOne f, OrderAtMostOne g, f = h*g, h entera nunca cero
-  ⇏ automáticamente OrderAtMostOne h en Mathlib.
-  Hace falta Jensen / Cartan: min |g| ≥ exp(-O(R^{1+ε}))
-  fuera de discos excepcionales. No hay T(r,f) en Mathlib.
-  No se cierra con teatro. No RH. No D ≡ Ξ.
+  GAP4 (archivo aparte): un sorry, min |g| en círculo sin ceros.
+  No RH. No D ≡ Ξ.
 
   José Manuel Mota Burruezo · Noesis · QCAL ∞³
 -/
@@ -19,6 +15,7 @@
 import GAP1_log_holomorphic_of_entire_never_zero
 import GAP2_affine_log_of_order_one
 import GAP3_quotient_entire_never_zero
+import GAP4_order_atMostOne_of_quotient
 import Mathlib.Analysis.Analytic.IsolatedZeros
 import Mathlib.Analysis.Calculus.Deriv.Basic
 import Mathlib.Analysis.Complex.Basic
@@ -29,15 +26,7 @@ noncomputable section
 open Complex Filter Metric Set
 open scoped Topology Real
 
-/-! ## Crecimiento -/
-
-/-- Tipo exponencial (Paley–Wiener). ξ clásica NO es esto. -/
-def OrderLEOne (f : ℂ → ℂ) : Prop :=
-  ∃ A B : ℝ, 0 < A ∧ 0 ≤ B ∧ ∀ z : ℂ, ‖f z‖ ≤ A * Real.exp (B * ‖z‖)
-
-/-- Orden ≤ 1 de Hadamard. ξ clásica SÍ es esto. -/
-def OrderAtMostOne (f : ℂ → ℂ) : Prop :=
-  ∀ ε : ℝ, 0 < ε → ∃ A : ℝ, 0 < A ∧ ∀ z : ℂ, ‖f z‖ ≤ A * Real.exp (‖z‖ ^ (1 + ε))
+/-! ## Crecimiento: `OrderAtMostOne` / `OrderLEOne` viven en GAP4. -/
 
 /-! ## B = 0, por derivada. Argumento cerrado. -/
 
@@ -148,17 +137,7 @@ lemma entire_eq_zero_of_eqOn_ball {f : ℂ → ℂ} {c : ℂ} {ε : ℝ}
   intro z
   exact hEq (mem_univ z)
 
-/-! ## GAP 4 — orden del cociente. Nombrado, no cerrado. -/
-
-/-- Jensen/Cartan: T(r, h) ≤ T(r, f) + T(r, g). Mathlib no tiene T(r,·). -/
-theorem order_atMostOne_of_quotient
-    {f g h : ℂ → ℂ}
-    (_hf : Differentiable ℂ f) (_hg : Differentiable ℂ g) (_hh : Differentiable ℂ h)
-    (_hf_ord : OrderAtMostOne f) (_hg_ord : OrderAtMostOne g)
-    (_hne : ∀ z, h z ≠ 0)
-    (_hfg : ∀ z, f z = h z * g z) :
-    OrderAtMostOne h := by
-  sorry
+/-! ## GAP 4 importado (`exists_circle_min_norm` es el sorry). -/
 
 /-! ## Ensamblaje -/
 
@@ -243,7 +222,7 @@ theorem hadamard_uniqueness
   have hg_ne : ¬ ∀ z, g z = 0 := fun hall => hhalf (hall _)
   obtain ⟨h, hh, hne, hfg⟩ := quotient_entire_never_zero hf hg hzeros hg_ne
   have hord : OrderAtMostOne h :=
-    order_atMostOne_of_quotient hf hg hh hf_ord hg_ord hne hfg
+    order_atMostOne_of_quotient hf hg hh hf_ord hg_ord hne hg_ne hfg
   have hsym : ∀ s, h (1 - s) = h s :=
     quotient_symmetric hg hh hf_sym hg_sym hfg hg_ne
   obtain ⟨C, _, hC⟩ := constant_of_sym_and_order hh hne hord hsym
@@ -270,7 +249,7 @@ theorem hadamard_uniqueness
 
   Hueco que queda
   ---------------
-  GAP4 order_atMostOne_of_quotient (Jensen/Cartan, un sorry).
+  GAP4 exists_circle_min_norm (Jensen/Cartan, un sorry, archivo GAP4).
 
   No se afirma
   ------------
