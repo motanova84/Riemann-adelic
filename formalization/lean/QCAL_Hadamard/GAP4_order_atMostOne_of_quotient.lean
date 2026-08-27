@@ -1,5 +1,5 @@
 /-
-  GAP 4 v3.2.12 — order_atMostOne_of_quotient
+  GAP 4 v3.2.13 — order_atMostOne_of_quotient
 
   f = h * g, enteras, h nunca cero, g ≢ 0,
   OrderAtMostOne f, OrderAtMostOne g
@@ -20,12 +20,13 @@
     `min_norm_of_re_log_bound` (Borel–Carathéodory → min |u|).
 
   Cerrado más:
-    `differentiableOn_of_continuous_log` — upgrade GAP1 (lattice 2πiℤ)
-      de ContinuousOn φ + exp∘φ=u a DifferentiableOn en la bola.
+    `differentiableOn_of_continuous_log` — upgrade GAP1 (lattice 2πiℤ).
+    `log_norm_u_le_on_sep_circle` — log|u| ≤ C(1+R'^{1+ε}) en círculo
+      separado (|u|=|g|/|P| + absorb N log(1/δ)).
 
   Un sorry:
-    `exists_holomorphic_log_re_bound` — solo Re(log u) y ‖φ 0‖
-      vía OrderAtMostOne g + |g|/|P| + MMP (φ ya holomorfa).
+    `exists_holomorphic_log_re_bound` — Re en ball 0 (R+2) y ‖φ 0‖
+      (MMP desde el círculo + rama Im∈(-π,π]).
 
   No lake-checked. No RH. No D ≡ Ξ.
 
@@ -821,6 +822,164 @@ lemma min_norm_of_re_log_bound
   have hure : ‖u z‖ = Real.exp (φ z).re := by rw [← hexp z hzB, Complex.norm_exp]
   exact (Real.exp_le_exp.mpr (neg_le_neg hle)).trans <| by
     rw [hure]; exact Real.exp_le_exp.mpr (neg_norm_le_re _)
+
+/-- Cota superior en círculo separado: log‖u z‖ ≤ C(1+R'^{1+ε}).
+    |u|=|g|/|P|, ‖P‖≥δ^N, ‖g‖≤A exp(R'^{1+ε}), absorb N log(1/δ).
+    C depende de A,K,c,ε — no de R ni de u. -/
+lemma log_norm_u_le_on_sep_circle
+    (hg : Differentiable ℂ g) (hg_ord : OrderAtMostOne g)
+    {u : ℂ → ℂ} {R R' : ℝ} {n : ℕ} {ε : ℝ} {z : ℂ} {c : ℂ} {K : ℝ}
+    (hc0 : g c ≠ 0) (hK : 0 < K)
+    (hN : ∀ r : ℝ, 1 ≤ r →
+      ∑ᶠ a, (MeromorphicOn.divisor g (closedBall c (r + 1)) a : ℝ)
+        ≤ K * r ^ (1 + ε / 2))
+    (hnN0 : (n : ℝ) ≤ ∑ᶠ a, (MeromorphicOn.divisor g
+      (closedBall (0 : ℂ) (R + 2)) a : ℝ))
+    (hε : 0 < ε) (hεle : ε ≤ 2) (hR : 1 ≤ R)
+    (hR' : R' ∈ Icc R (R + 1))
+    (hfree : ∀ w, ‖w‖ = R' → g w ≠ 0)
+    (hsep : ∀ a, a ∈ closedBall (0 : ℂ) (R + 2) → g a = 0 →
+      (1 / (2 * (n + 1) : ℝ)) ≤ |R' - ‖a‖|)
+    (hu : AnalyticOnNhd ℂ u (closedBall (0 : ℂ) (R + 2)))
+    (hu0 : ∀ w : closedBall (0 : ℂ) (R + 2), u w ≠ 0)
+    (heq : g =ᶠ[codiscreteWithin (closedBall (0 : ℂ) (R + 2))]
+      (∏ᶠ a, (· - a) ^ MeromorphicOn.divisor g (closedBall (0 : ℂ) (R + 2)) a) • u)
+    (hz : ‖z‖ = R') :
+    ∃ C : ℝ, 0 < C ∧ Real.log ‖u z‖ ≤ C * (1 + R' ^ (1 + ε)) := by
+  obtain ⟨A, hA, hB⟩ := hg_ord ε hε
+  let U := closedBall (0 : ℂ) (R + 2)
+  let D : ℂ → ℤ := fun a => MeromorphicOn.divisor g U a
+  let δ : ℝ := 1 / (2 * (n + 1) : ℝ)
+  have hδpos : 0 < δ := by positivity
+  have hS : 0 ≤ R + 2 := by linarith
+  have hzU : z ∈ U := by
+    rw [mem_closedBall, dist_zero_right, hz]
+    linarith [hR'.2]
+  have hacc : AccPt z (𝓟 U) :=
+    accPt_closedBall_of_lt (by rw [hz]; linarith [hR'.2] : ‖z‖ < R + 2)
+  have heq_pt : g z = (∏ᶠ a, (z - a) ^ D a) * u z := by
+    simpa [D, U] using
+      extract_eq_at_nonzero hg hS hu hu0 heq hzU (hfree z hz) hacc
+  have hfin : (Function.support D).Finite :=
+    (MeromorphicOn.divisor g U).finiteSupport (isCompact_closedBall _ _)
+  have hDnn : ∀ a, 0 ≤ D a := fun a => divisor_nonneg_entire hg U a
+  have hsepD : ∀ a, a ∈ Function.support D → δ ≤ |R' - ‖a‖| := by
+    intro a ha
+    have hmem : a ∈ U := by
+      by_contra hnot
+      have : D a = 0 := by simp [D, MeromorphicOn.divisor, hnot]
+      exact absurd this (by simpa [Function.mem_support] using ha)
+    have hg0a : g a = 0 := by
+      have hne : D a ≠ 0 := by simpa [Function.mem_support] using ha
+      by_contra hgne
+      have hgA : AnalyticAt ℂ g a := (hg a).analyticAt
+      have hord : meromorphicOrderAt g a = 0 := by
+        have : analyticOrderAt g a = 0 := (hgA.analyticOrderAt_eq_zero).2 hgne
+        rwa [hgA.meromorphicOrderAt_eq, ENat.map_eq_zero_iff]
+      have : D a = 0 := by simp [D, MeromorphicOn.divisor, hmem, hord]
+      exact hne this
+    exact hsep a hmem hg0a
+  have hP : δ ^ (∑ᶠ a, (D a : ℝ)) ≤ ‖(∏ᶠ a, (· - a) ^ D a) z‖ :=
+    factor_norm_ge hfin hDnn hz hδpos hsepD
+  have hgnorm : ‖g z‖ = ‖(∏ᶠ a, (· - a) ^ D a) z‖ * ‖u z‖ := by
+    have hfe : (∏ᶠ a, (· - a) ^ D a) z = ∏ᶠ a, (z - a) ^ D a :=
+      congrFun (Function.FactorizedRational.finprod_eq_fun ⟨hfin⟩) z
+    rw [heq_pt, ← hfe, norm_mul]
+  have hu_pos : 0 < ‖u z‖ := norm_pos_iff.mpr (hu0 ⟨z, hzU⟩)
+  have hPpos : 0 < ‖(∏ᶠ a, (· - a) ^ D a) z‖ :=
+    lt_of_lt_of_le (Real.rpow_pos_of_pos hδpos _) hP
+  let N : ℝ := ∑ᶠ a, (D a : ℝ)
+  have hu_le : ‖u z‖ ≤ ‖g z‖ / δ ^ N := by
+    have hδNpos : 0 < δ ^ N := Real.rpow_pos_of_pos hδpos _
+    rw [le_div_iff₀ hδNpos, mul_comm, hgnorm]
+    simpa [N] using (mul_le_mul_of_nonneg_left hP hu_pos.le)
+  have hNnn : 0 ≤ N := finsum_nonneg fun _ => Int.cast_nonneg.mpr (hDnn _)
+  have hg_le : ‖g z‖ ≤ A * Real.exp (R' ^ (1 + ε)) := by
+    simpa [hz] using hB z
+  have hlogu :
+      Real.log ‖u z‖ ≤ Real.log A + R' ^ (1 + ε) + N * Real.log (1 / δ) := by
+    have hδNpos : 0 < δ ^ N := Real.rpow_pos_of_pos hδpos _
+    have h1 : ‖u z‖ ≤ (A * Real.exp (R' ^ (1 + ε))) / δ ^ N :=
+      hu_le.trans (div_le_div_of_nonneg_right hg_le hδNpos.le)
+    have hlog := Real.log_le_log hu_pos h1
+    have hlogrhs :
+        Real.log ((A * Real.exp (R' ^ (1 + ε))) / δ ^ N) =
+          Real.log A + R' ^ (1 + ε) + N * Real.log (1 / δ) := by
+      have hδN : δ ^ N = Real.exp (N * Real.log δ) :=
+        Real.rpow_def_of_pos hδpos N
+      rw [Real.log_div (by positivity) (ne_of_gt hδNpos),
+        Real.log_mul (ne_of_gt hA) (Real.exp_ne_zero _), Real.log_exp, hδN,
+        Real.log_exp]
+      have : Real.log δ = -Real.log (1 / δ) := by
+        rw [Real.log_div Real.one_ne_zero (ne_of_gt hδpos), Real.log_one,
+          zero_sub]
+      rw [this]; ring
+    rwa [hlogrhs] at hlog
+  let r0 : ℝ := max 1 (R + 2 + ‖c‖)
+  have hr0 : 1 ≤ r0 := le_max_left _ _
+  have hN0 := hN r0 hr0
+  have hNle : N ≤ K * r0 ^ (1 + ε / 2) := by
+    refine le_trans ?_ hN0
+    refine finsum_le_finsum
+      (fun a => Int.cast_nonneg.mpr (hDnn a))
+      (fun a => Int.cast_nonneg.mpr
+        ((analyticOnNhd_of_differentiable hg _).divisor_nonneg a)) ?_
+    intro a
+    by_cases hmem : a ∈ U
+    · have hmemc : a ∈ closedBall c (r0 + 1) := by
+        rw [mem_closedBall]
+        have hale : ‖a‖ ≤ R + 2 := by
+          simpa [U, mem_closedBall, dist_zero_right] using hmem
+        have htri : ‖a - c‖ ≤ ‖a‖ + ‖c‖ := by
+          simpa [sub_eq_add_neg] using
+            (norm_add_le a (-c)).trans_eq (by simp [norm_neg])
+        have : R + 2 + ‖c‖ ≤ r0 := le_max_right _ _
+        linarith
+      have : MeromorphicOn.divisor g U a =
+          MeromorphicOn.divisor g (closedBall c (r0 + 1)) a := by
+        simp [MeromorphicOn.divisor, hmem, hmemc]
+      exact le_of_eq (by simp [D, this])
+    · have : D a = 0 := by simp [D, MeromorphicOn.divisor, hmem]
+      simp [this]
+  have hnN : (n : ℝ) ≤ N := by simpa [N, D, U] using hnN0
+  have hδinv : 1 / δ ≤ 2 * (N + 1) := by
+    simp only [δ, one_div_div]
+    nlinarith [hnN]
+  have hR'nn : 0 ≤ R' := le_trans (by linarith : (0 : ℝ) ≤ 1) (le_trans hR hR'.1)
+  have hr0R : r0 ≤ (2 + ‖c‖) * (1 + R') := by
+    apply max_le
+    · nlinarith [norm_nonneg c, hR'nn]
+    · nlinarith [hR'.1, norm_nonneg c]
+  have hK' : 0 < K * (2 + ‖c‖) ^ (1 + ε / 2) := by positivity
+  have hN' : N ≤ (K * (2 + ‖c‖) ^ (1 + ε / 2)) * (1 + R') ^ (1 + ε / 2) := by
+    have : r0 ^ (1 + ε / 2) ≤ ((2 + ‖c‖) * (1 + R')) ^ (1 + ε / 2) :=
+      Real.rpow_le_rpow (by linarith) hr0R (by linarith)
+    have hmul := Real.mul_rpow (by positivity) (by linarith : 0 ≤ 1 + R')
+    rw [hmul] at this
+    nlinarith [hNle, Real.rpow_nonneg (by linarith : 0 ≤ r0) (1 + ε / 2)]
+  have habs : N * Real.log (1 / δ) ≤
+      (K * (2 + ‖c‖) ^ (1 + ε / 2) * (2 : ℝ) ^ (1 + ε) + 4 / ε) *
+        (1 + R' ^ (1 + ε)) := by
+    have := absorb_N_log_delta hK' hε hεle hNnn hN'
+      (by linarith [hR'nn] : 1 ≤ 1 + R')
+      (by linarith : 1 + R' ≤ 2 * (1 + R')) hR'nn hδpos hδinv
+    convert this using 2
+    ring
+  let C : ℝ :=
+    |Real.log A| + K * (2 + ‖c‖) ^ (1 + ε / 2) * (2 : ℝ) ^ (1 + ε) + 4 / ε + 1
+  have hC : 0 < C := by positivity
+  refine ⟨C, hC, ?_⟩
+  have hRpow : R' ^ (1 + ε) ≤ 1 + R' ^ (1 + ε) :=
+    le_add_of_nonneg_left (by norm_num : (0 : ℝ) ≤ 1)
+  have hlogA : Real.log A ≤ |Real.log A| := le_abs_self _
+  have hsum :
+      Real.log A + R' ^ (1 + ε) + N * Real.log (1 / δ) ≤
+        C * (1 + R' ^ (1 + ε)) := by
+    have hnn : 0 ≤ 1 + R' ^ (1 + ε) := by
+      linarith [Real.rpow_nonneg hR'nn (1 + ε)]
+    nlinarith [hlogA, hRpow, habs, abs_nonneg (Real.log A)]
+  exact hlogu.trans hsum
+
 
 /-- Upgrade GAP1: φ continuo, exp∘φ = u analítica nunca-cero en la bola
     ⇒ φ holomorfa. Localmente φ = L∘u + 2πi n (lattice). -/
