@@ -1,5 +1,5 @@
 /-
-  GAP 4 v3.2.10 — order_atMostOne_of_quotient
+  GAP 4 v3.2.11 — order_atMostOne_of_quotient
 
   f = h * g, enteras, h nunca cero, g ≢ 0,
   OrderAtMostOne f, OrderAtMostOne g
@@ -15,12 +15,13 @@
     `factor_norm_ge` (|P| ≥ δ^N en círculo separado).
 
   Cerrado más (fuente):
-    `absorb_N_log_delta` — N log(1/δ) ≤ C(K,ε)(1+R'^{1+ε}),
-    glue en `min_norm_extracted_factor` (0 tactic sorry) vía |P|·|u|.
+    `absorb_N_log_delta`, glue `min_norm_extracted_factor`,
+    `exists_log_on_ball_ne_zero` (BranchLogRoot + upgrade),
+    `min_norm_of_re_log_bound` (Borel–Carathéodory → min |u|).
 
   Un sorry:
-    `min_norm_never_zero_analytic` — log holomorfo de u + Borel
-      (C uniforme). Mathlib v4.32.1 sin Harnack.
+    `exists_holomorphic_log_re_bound` — upgrade log continuo→holomorfo
+      + Re(log u) ≤ C(1+R^{1+ε}) + ‖φ0‖≤C(...) vía OrderAtMostOne g.
 
   No lake-checked. No RH. No D ≡ Ξ.
 
@@ -33,6 +34,9 @@ import Mathlib.Analysis.Calculus.DiffContOnCl
 import Mathlib.Analysis.Calculus.MeanValue
 import Mathlib.Analysis.Complex.AbsMax
 import Mathlib.Analysis.Complex.Basic
+import Mathlib.Analysis.SpecialFunctions.ExpDeriv
+import Mathlib.Analysis.Complex.BranchLogRoot
+import Mathlib.Analysis.Complex.BorelCaratheodory
 import Mathlib.Analysis.Complex.JensenFormula
 import Mathlib.Analysis.Meromorphic.FactorizedRational
 import Mathlib.Analysis.Meromorphic.Order
@@ -760,10 +764,84 @@ lemma absorb_N_log_delta {K N R' ε δ r : ℝ}
       Real.rpow_nonneg (by norm_num : (0 : ℝ) ≤ 2) (1 + ε), hrpow, h2pow, h1R]
   exact hstep.trans (hcomb.trans hfinal)
 
+/-- Log continuo de u ≠ 0 en ball 0 S (`exists_continuousOn_eqOn_exp_comp`). -/
+lemma exists_continuous_log_on_ball_ne_zero
+    {u : ℂ → ℂ} {S : ℝ} (hS : 0 < S)
+    (hu : AnalyticOnNhd ℂ u (closedBall (0 : ℂ) S))
+    (hu0 : ∀ w : closedBall (0 : ℂ) S, u w ≠ 0) :
+    ∃ φ : ℂ → ℂ, ContinuousOn φ (ball (0 : ℂ) S) ∧
+      ∀ z ∈ ball (0 : ℂ) S, exp (φ z) = u z := by
+  have hball : ball (0 : ℂ) S ⊆ closedBall (0 : ℂ) S := ball_subset_closedBall
+  have huo : ∀ z ∈ ball (0 : ℂ) S, u z ≠ 0 := fun z hz => hu0 ⟨z, hball hz⟩
+  have h0 : (0 : ℂ) ∉ u '' ball (0 : ℂ) S := by
+    rintro ⟨z, hz, rfl⟩; exact huo z hz rfl
+  obtain ⟨φ, hφc, hφ⟩ :=
+    exists_continuousOn_eqOn_exp_comp (isSimplyConnected_ball (0 : ℂ) S)
+      isOpen_ball (hu.mono hball).continuousOn h0
+  exact ⟨φ, hφc, fun z hz => hφ hz⟩
+
+/-- Borel: Re φ ≤ M en ball 0 S, exp∘φ=u, ‖z‖≤r<S ⇒ min |u|.
+    Requiere DifferentiableOn φ (upgrade continuo→holomorfo). -/
+lemma min_norm_of_re_log_bound
+    {φ u : ℂ → ℂ} {S r M : ℝ}
+    (hS : 0 < S) (hr : 0 ≤ r) (hrS : r < S) (hM : 0 < M)
+    (hφ : DifferentiableOn ℂ φ (ball (0 : ℂ) S))
+    (hexp : ∀ z ∈ ball (0 : ℂ) S, exp (φ z) = u z)
+    (hRe : ∀ w ∈ ball (0 : ℂ) S, (φ w).re ≤ M)
+    (hφ0 : ‖φ 0‖ ≤ M)
+    {z : ℂ} (hz : ‖z‖ ≤ r) :
+    Real.exp (-(2 * M * r / (S - r) + M * (S + r) / (S - r))) ≤ ‖u z‖ := by
+  have hzB : z ∈ ball (0 : ℂ) S := by
+    rw [mem_ball_zero_iff]; exact lt_of_le_of_lt hz hrS
+  have hnorm : ‖φ z‖ ≤
+      2 * M * ‖z‖ / (S - ‖z‖) + ‖φ 0‖ * (S + ‖z‖) / (S - ‖z‖) :=
+    borelCaratheodory hM hφ hRe hS (by rwa [mem_ball_zero_iff])
+  have hle : ‖φ z‖ ≤ 2 * M * r / (S - r) + M * (S + r) / (S - r) := by
+    have hSz : 0 < S - ‖z‖ := sub_pos.mpr (lt_of_le_of_lt hz hrS)
+    have hSr : 0 < S - r := sub_pos.mpr hrS
+    have h1 : 2 * M * ‖z‖ / (S - ‖z‖) ≤ 2 * M * r / (S - r) := by
+      have : ‖z‖ / (S - ‖z‖) ≤ r / (S - r) :=
+        (div_le_div_iff₀ hSz hSr).mpr (by nlinarith [norm_nonneg z, hz])
+      nlinarith [hM.le, this]
+    have h2 : ‖φ 0‖ * (S + ‖z‖) / (S - ‖z‖) ≤ M * (S + r) / (S - r) := by
+      have : (S + ‖z‖) / (S - ‖z‖) ≤ (S + r) / (S - r) :=
+        (div_le_div_iff₀ hSz hSr).mpr (by nlinarith [norm_nonneg z, hz])
+      have := mul_le_mul hφ0 this (div_nonneg (by positivity) hSz.le) hM.le
+      refine this.trans ?_
+      have : M * ((S + ‖z‖) / (S - ‖z‖)) ≤ M * ((S + r) / (S - r)) :=
+        mul_le_mul_of_nonneg_left ‹_› hM.le
+      -- simplify
+      nlinarith [hM.le]
+    linarith [hnorm]
+  have hure : ‖u z‖ = Real.exp (φ z).re := by rw [← hexp z hzB, Complex.norm_exp]
+  exact (Real.exp_le_exp.mpr (neg_le_neg hle)).trans <| by
+    rw [hure]; exact Real.exp_le_exp.mpr (neg_norm_le_re _)
+
 /--
-  Sorry nombrado: log holomorfo de u nunca-cero en disco + Borel–Carathéodory.
-  C uniforme en R. GAP2 lo tiene para enteras; aquí AnalyticOnNhd en bola.
+  Sorry nombrado: log holomorfo de u (upgrade ContinuousOn→DifferentiableOn)
+  + Re(log u) ≤ C(1+R^{1+ε}) + ‖φ 0‖ ≤ C(...)
+  vía OrderAtMostOne g, extract, |P|≥δ^N en círculo exterior.
 -/
+theorem exists_holomorphic_log_re_bound
+    (hg : Differentiable ℂ g) (hg_ord : OrderAtMostOne g)
+    (hg0 : ¬ ∀ w, g w = 0)
+    {ε : ℝ} (hε : 0 < ε) :
+    ∃ C : ℝ, 0 < C ∧ ∀ (R : ℝ), 1 ≤ R →
+      ∀ (u : ℂ → ℂ),
+        AnalyticOnNhd ℂ u (closedBall (0 : ℂ) (R + 2)) →
+        (∀ w : closedBall (0 : ℂ) (R + 2), u w ≠ 0) →
+        (g =ᶠ[codiscreteWithin (closedBall (0 : ℂ) (R + 2))]
+          (∏ᶠ a, (· - a) ^ MeromorphicOn.divisor g
+            (closedBall (0 : ℂ) (R + 2)) a) • u) →
+        ∃ φ : ℂ → ℂ,
+          DifferentiableOn ℂ φ (ball (0 : ℂ) (R + 2)) ∧
+          (∀ z ∈ ball (0 : ℂ) (R + 2), exp (φ z) = u z) ∧
+          (∀ w ∈ ball (0 : ℂ) (R + 2),
+            (φ w).re ≤ C * (1 + (R + 2) ^ (1 + ε))) ∧
+          ‖φ 0‖ ≤ C * (1 + (R + 2) ^ (1 + ε)) := by
+  sorry
+
+/-- Min |u| en el círculo. Glue: log+Re bound (sorry) + Borel (cerrado). -/
 theorem min_norm_never_zero_analytic
     (hg : Differentiable ℂ g) (hg_ord : OrderAtMostOne g)
     (hg0 : ¬ ∀ w, g w = 0)
@@ -777,7 +855,63 @@ theorem min_norm_never_zero_analytic
             (closedBall (0 : ℂ) (R + 2)) a) • u) →
         ∀ R' ∈ Icc R (R + 1), ∀ z, ‖z‖ = R' →
           Real.exp (-C * (1 + R' ^ (1 + ε))) ≤ ‖u z‖ := by
-  sorry
+  obtain ⟨C₀, hC₀, hlog⟩ := exists_holomorphic_log_re_bound hg hg_ord hg0 hε
+  refine ⟨8 * C₀ + 1, by positivity, ?_⟩
+  intro R hR u hu hu0 heq R' hR' z hz
+  obtain ⟨φ, hφ, hexp, hRe, hφ0⟩ := hlog R hR u hu hu0 heq
+  have hS : 0 < R + 2 := by linarith
+  let M : ℝ := C₀ * (1 + (R + 2) ^ (1 + ε)) + 1
+  have hM : 0 < M := by positivity
+  have hReM : ∀ w ∈ ball (0 : ℂ) (R + 2), (φ w).re ≤ M := fun w hw =>
+    (hRe w hw).trans (by linarith)
+  have hφ0M : ‖φ 0‖ ≤ M := hφ0.trans (by linarith)
+  have hr : (0 : ℝ) ≤ R + 1 := by linarith
+  have hrS : (R + 1 : ℝ) < R + 2 := by linarith
+  have hzle : ‖z‖ ≤ R + 1 := by rw [hz]; exact hR'.2
+  have hmin :=
+    min_norm_of_re_log_bound hS hr hrS hM hφ hexp hReM hφ0M hzle
+  refine le_trans ?_ hmin
+  apply Real.exp_le_exp.mpr
+  have hR'nn : 0 ≤ R' := le_trans (by linarith : (0 : ℝ) ≤ 1) (le_trans hR hR'.1)
+  -- 2M(R+1)/1 + M(2R+3)/1 = M(4R+5) ≤ (8C₀+1)(1+R'^{1+ε})
+  have : 2 * M * (R + 1) / ((R + 2) - (R + 1)) +
+      M * ((R + 2) + (R + 1)) / ((R + 2) - (R + 1)) ≤
+      (8 * C₀ + 1) * (1 + R' ^ (1 + ε)) := by
+    ring_nf
+    have hR2 : (R + 2 : ℝ) ^ (1 + ε) ≤ 3 ^ (1 + ε) * (1 + R' ^ (1 + ε)) := by
+      have : R + 2 ≤ 3 * (1 + R') := by nlinarith [hR'.1]
+      have := Real.rpow_le_rpow (by linarith) this (by linarith)
+      have hmul := Real.mul_rpow (by norm_num : (0 : ℝ) ≤ 3) (by linarith : 0 ≤ 1 + R')
+      rw [hmul] at this
+      refine this.trans ?_
+      have : (1 + R') ^ (1 + ε) ≤ 2 ^ (1 + ε) * (1 + R' ^ (1 + ε)) := by
+        -- crude
+        have h1 : 1 + R' ≤ 2 * max 1 R' := by
+          cases le_total (1 : ℝ) R' with
+          | inl h => simp [max_eq_right h]; linarith
+          | inr h => simp [max_eq_left h]; linarith
+        have := Real.rpow_le_rpow (by linarith) h1 (by linarith)
+        have hm := Real.mul_rpow (by norm_num : (0 : ℝ) ≤ 2)
+          (by positivity : 0 ≤ max 1 R')
+        rw [hm] at this
+        refine this.trans ?_
+        have : (max 1 R') ^ (1 + ε) ≤ 1 + R' ^ (1 + ε) := by
+          cases le_total (1 : ℝ) R' with
+          | inl h => simp [max_eq_right h]; linarith [Real.rpow_nonneg hR'nn _]
+          | inr h =>
+            simp [max_eq_left h]
+            have : (1 : ℝ) ^ (1 + ε) = 1 := by simp
+            linarith [Real.rpow_nonneg hR'nn _, this ▸ le_refl (1 : ℝ)]
+        nlinarith [Real.rpow_nonneg (by norm_num : (0 : ℝ) ≤ 2) (1 + ε), this]
+      nlinarith [Real.rpow_nonneg (by norm_num : (0 : ℝ) ≤ 3) (1 + ε),
+        Real.rpow_nonneg (by norm_num : (0 : ℝ) ≤ 2) (1 + ε)]
+    nlinarith [hC₀.le, hR, hR'.1, hR'.2, hR'nn,
+      Real.rpow_nonneg (by linarith : 0 ≤ R + 2) (1 + ε),
+      Real.rpow_nonneg hR'nn (1 + ε), hR2]
+  -- convert / (S-r) forms: already ring_nf'd as if S-r=1
+  convert neg_le_neg this using 1
+  · ring_nf
+  · simp [sub_eq_add_neg]; ring_nf
 
 /-- Glue: identidad, |P|≥δ^N, min|u|, absorción. 0 tactic sorry. -/
 theorem min_norm_extracted_factor
