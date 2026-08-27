@@ -1,27 +1,23 @@
 /-
-  GAP 4 v3.2.8 — order_atMostOne_of_quotient
+  GAP 4 v3.2.9 — order_atMostOne_of_quotient
 
   f = h * g, enteras, h nunca cero, g ≢ 0,
   OrderAtMostOne f, OrderAtMostOne g
     → OrderAtMostOne h.
 
-  Cerrado aquí:
-    máximo módulo (`Complex.norm_le_of_forall_mem_frontier_norm_le`),
-    |h| = |f|/|g| fuera de ceros,
-    compacto ⇒ |h| acotado,
-    r^{1+ε/2} se absorbe en r^{1+ε},
-    `exists_radius_zero_free` — ceros aislados + compacto ⇒ finitos
-      en closedBall 0 (R+1) ⇒ existe R' ∈ [R, R+1] sin ceros.
-
-  Cerrado ahora (fuente, no lake):
-    `log_one_add_ge_div`,
-    `divisor_sum_le_jensen` (radio exterior 2(r+1), n(R)=O(R^{1+ε})),
-    `exists_radius_sep` (palomar δ ≥ 1/(2(n+1))),
-    `extract_on_closedBall` (`extract_zeros_poles` en disco compacto;
-     GAP3 sigue: no extract en todo ℂ).
+  Cerrado aquí (fuente, no lake):
+    máximo módulo, |h|=|f|/|g|, compacto, absorción r^{1+ε/2},
+    `exists_radius_zero_free`, `log_one_add_ge_div`,
+    `divisor_sum_le_jensen` (outer 2(r+1)),
+    `exists_radius_sep`, `extract_on_closedBall`,
+    `log_le_mul_rpow`, `accPt_closedBall_of_lt`,
+    `extract_eq_at_nonzero` (trailing + D z = 0),
+    `factor_norm_ge` (|P| ≥ δ^N en círculo separado).
 
   Un sorry:
-    `min_norm_extracted_factor` — |P| |u| en el círculo + Borel de u.
+    `min_norm_extracted_factor` — Borel de log u + absorción
+      N log(1/δ) en R^{1+ε} (Jensen a ε/2 en exists_circle_min_norm).
+      Identidad g=Pu y |P|≥δ^N ya están arriba, 0 sorry.
 
   No lake-checked. No RH. No D ≡ Ξ.
 
@@ -37,6 +33,7 @@ import Mathlib.Analysis.Complex.Basic
 import Mathlib.Analysis.Complex.JensenFormula
 import Mathlib.Analysis.Meromorphic.FactorizedRational
 import Mathlib.Analysis.Meromorphic.Order
+import Mathlib.Analysis.Meromorphic.TrailingCoefficient
 import Mathlib.Analysis.SpecialFunctions.Log.Basic
 import Mathlib.Analysis.SpecialFunctions.Pow.Real
 import Mathlib.Topology.MetricSpace.Basic
@@ -459,32 +456,198 @@ lemma extract_on_closedBall
     (MeromorphicOn.divisor g U).finiteSupport (isCompact_closedBall _ _)
   exact hM.extract_zeros_poles h₂ h₃
 
+/-- log r ≤ (2/ε) r^{ε/2} para r ≥ 1, ε > 0. -/
+lemma log_le_mul_rpow {ε r : ℝ} (hε : 0 < ε) (hr : 1 ≤ r) :
+    Real.log r ≤ (2 / ε) * r ^ (ε / 2) := by
+  have hr0 : 0 < r := lt_of_lt_of_le zero_lt_one hr
+  have hε2 : 0 < ε / 2 := half_pos hε
+  have ht : 1 ≤ r ^ (ε / 2) := Real.one_le_rpow hr hε2.le
+  have ht0 : 0 < r ^ (ε / 2) := lt_of_lt_of_le zero_lt_one ht
+  have hlog : Real.log r = (2 / ε) * Real.log (r ^ (ε / 2)) := by
+    have : Real.log (r ^ (ε / 2)) = (ε / 2) * Real.log r :=
+      Real.log_rpow hr0 (ε / 2)
+    field_simp [this, ne_of_gt hε]
+    ring
+  have hle : Real.log (r ^ (ε / 2)) ≤ r ^ (ε / 2) :=
+    (Real.log_le_sub_one_of_pos ht0).trans (by linarith)
+  calc
+    Real.log r = (2 / ε) * Real.log (r ^ (ε / 2)) := hlog
+    _ ≤ (2 / ε) * r ^ (ε / 2) :=
+      mul_le_mul_of_nonneg_left hle (div_nonneg (by norm_num : (0 : ℝ) ≤ 2) hε.le)
+
+/-- ‖z‖ < S ⇒ AccPt de closedBall 0 S. -/
+lemma accPt_closedBall_of_lt {z : ℂ} {S : ℝ} (h : ‖z‖ < S) :
+    AccPt z (𝓟 (closedBall (0 : ℂ) S)) := by
+  have hzB : z ∈ ball (0 : ℂ) S := mem_ball_zero_iff.mpr h
+  have hcl : ClusterPt z (𝓟 (ball (0 : ℂ) S)) :=
+    isOpen_ball.clusterPt_principal_iff_mem.mpr hzB
+  exact hcl.mono (principal_mono.mpr ball_subset_closedBall)
+
+lemma divisor_nonneg_entire (hg : Differentiable ℂ g) (U : Set ℂ) (a : ℂ) :
+    0 ≤ MeromorphicOn.divisor g U a :=
+  (analyticOnNhd_of_differentiable hg U).divisor_nonneg a
+
+/-- En un no-cero interior: g z = P z * u z vía trailing coeff. -/
+lemma extract_eq_at_nonzero
+    (hg : Differentiable ℂ g)
+    {S : ℝ} (_hS : 0 ≤ S) {u : ℂ → ℂ}
+    (hu : AnalyticOnNhd ℂ u (closedBall (0 : ℂ) S))
+    (hu0 : ∀ w : closedBall (0 : ℂ) S, u w ≠ 0)
+    (heq : g =ᶠ[codiscreteWithin (closedBall (0 : ℂ) S)]
+      (∏ᶠ a, (· - a) ^ MeromorphicOn.divisor g (closedBall (0 : ℂ) S) a) • u)
+    {z : ℂ} (hz : z ∈ closedBall (0 : ℂ) S) (hgze : g z ≠ 0)
+    (hacc : AccPt z (𝓟 (closedBall (0 : ℂ) S))) :
+    g z =
+      (∏ᶠ a, (z - a) ^ MeromorphicOn.divisor g (closedBall (0 : ℂ) S) a) * u z := by
+  let U := closedBall (0 : ℂ) S
+  let D : ℂ → ℤ := fun a => MeromorphicOn.divisor g U a
+  have hfin : (Function.support D).Finite :=
+    (MeromorphicOn.divisor g U).finiteSupport (isCompact_closedBall _ _)
+  have hDfin : Function.HasFiniteSupport D := ⟨hfin⟩
+  have hgA : AnalyticAt ℂ g z := (hg z).analyticAt
+  have htrail : meromorphicTrailingCoeffAt g z = g z :=
+    hgA.meromorphicTrailingCoeffAt_of_ne_zero hgze
+  have hord0 : meromorphicOrderAt g z = 0 := by
+    have : analyticOrderAt g z = 0 := (hgA.analyticOrderAt_eq_zero).2 hgze
+    rwa [hgA.meromorphicOrderAt_eq, ENat.map_eq_zero_iff]
+  have hDz : D z = 0 := by
+    simp [D, MeromorphicOn.divisor, hz, hord0]
+  have htc := MeromorphicOn.meromorphicTrailingCoeffAt_extract_zeros_poles
+    (f := g) (g := u) (D := D) (U := U) hDfin hz hacc hgA.meromorphicAt
+    (hu z hz) (hu0 ⟨z, hz⟩) heq
+  have hupd :
+      (∏ᶠ a, (z - a) ^ Function.update D z 0 a) = (∏ᶠ a, (z - a) ^ D a) := by
+    apply finprod_congr
+    intro a
+    by_cases ha : a = z
+    · subst ha; simp [hDz]
+    · rw [Function.update_of_ne ha]
+  have : meromorphicTrailingCoeffAt g z = (∏ᶠ a, (z - a) ^ D a) * u z := by
+    rw [htc, smul_eq_mul, hupd]
+  rwa [htrail] at this
+
+/-- ‖P z‖ ≥ δ^{∑ D} si cada a ∈ support D cumple δ ≤ |R' − ‖a‖|. -/
+lemma factor_norm_ge {D : ℂ → ℤ} {R' δ : ℝ} {z : ℂ}
+    (hfin : (Function.support D).Finite)
+    (hDnn : ∀ a, 0 ≤ D a)
+    (hz : ‖z‖ = R')
+    (hδpos : 0 < δ)
+    (hsep : ∀ a, a ∈ Function.support D → δ ≤ |R' - ‖a‖|) :
+    δ ^ (∑ᶠ a, (D a : ℝ)) ≤ ‖(∏ᶠ a, (· - a) ^ D a) z‖ := by
+  classical
+  have hHas : Function.HasFiniteSupport D := ⟨hfin⟩
+  rw [Function.FactorizedRational.finprod_eq_fun hHas]
+  let s := hfin.toFinset
+  have hmul : (fun a : ℂ => (z - a) ^ D a).mulSupport ⊆ s := by
+    intro a ha
+    refine Finite.mem_toFinset.mpr ?_
+    intro h0
+    exact ha (by simp [h0])
+  rw [finprod_eq_prod_of_mulSupport_subset _ hmul, norm_prod]
+  have hsum : ∑ᶠ a, (D a : ℝ) = ∑ a ∈ s, (D a : ℝ) :=
+    finsum_eq_sum_of_support_subset (s := s) _ (fun a ha => by
+      refine Finite.mem_toFinset.mpr ?_
+      intro h0; exact ha (by simp [h0]))
+  have hterm : ∀ a ∈ s, δ ^ (Int.toNat (D a)) ≤ ‖(z - a) ^ D a‖ := by
+    intro a _
+    have hDa0 : 0 ≤ D a := hDnn a
+    rw [show (z - a) ^ D a = (z - a) ^ Int.toNat (D a) from
+      (Int.toNat_of_nonneg hDa0) ▸ (zpow_natCast _ _).symm,
+      norm_pow]
+    by_cases hsup : a ∈ Function.support D
+    · have hge : δ ≤ ‖z - a‖ :=
+        (hsep a hsup).trans <| by
+          simpa [hz] using abs_norm_sub_norm_le z a
+      exact pow_le_pow_left hδpos.le hge _
+    · have hDz : D a = 0 := by simpa [Function.mem_support] using hsup
+      simp [hDz]
+  have hprod :
+      ∏ a ∈ s, δ ^ Int.toNat (D a) = δ ^ ∑ a ∈ s, Int.toNat (D a) :=
+    Finset.prod_pow_eq_pow_sum _ _ _
+  have hge :
+      δ ^ ∑ a ∈ s, Int.toNat (D a) ≤ ∏ a ∈ s, ‖(z - a) ^ D a‖ := by
+    rw [← hprod]
+    exact Finset.prod_le_prod (fun _ _ => pow_nonneg hδpos.le _) hterm
+  have hcast : (∑ a ∈ s, Int.toNat (D a) : ℝ) = ∑ a ∈ s, (D a : ℝ) := by
+    push_cast
+    refine Finset.sum_congr rfl ?_
+    intro a _; simp [Int.toNat_of_nonneg (hDnn a)]
+  have hnat : δ ^ ∑ a ∈ s, Int.toNat (D a) = δ ^ (∑ a ∈ s, (D a : ℝ)) := by
+    rw [← Real.rpow_natCast hδpos.le, hcast]
+  rw [hsum, ← hnat]
+  exact hge
+
 /--
-  Sorry nombrado: identidad g = P u en el círculo, |P| ≥ δ^N, Borel de log u.
-  Jensen ya da N = O(R^{1+ε}); palomar da δ; extract da u.
+  Sorry nombrado: Borel de log u + absorción N log(1/δ) → R^{1+ε}.
+  Ya cerrados arriba (0 sorry): `extract_eq_at_nonzero`, `factor_norm_ge`,
+  `log_le_mul_rpow`. Jensen a ε/2 en el caller.
 -/
 theorem min_norm_extracted_factor
     (hg : Differentiable ℂ g) (hg_ord : OrderAtMostOne g)
     {u : ℂ → ℂ} {R R' : ℝ} {n : ℕ} {ε : ℝ} {z : ℂ} {c : ℂ} {K : ℝ}
     (_hc0 : g c ≠ 0) (_hK : 0 < K)
     (_hN : ∀ r : ℝ, 1 ≤ r →
-      ∑ᶠ a, (MeromorphicOn.divisor g (closedBall c (r + 1)) a : ℝ) ≤ K * r ^ (1 + ε))
+      ∑ᶠ a, (MeromorphicOn.divisor g (closedBall c (r + 1)) a : ℝ)
+        ≤ K * r ^ (1 + ε / 2))
     (_hε : 0 < ε) (_hR : 1 ≤ R)
     (hR' : R' ∈ Icc R (R + 1))
-    (_hfree : ∀ w, ‖w‖ = R' → g w ≠ 0)
-    (_hsep : ∀ a, a ∈ closedBall (0 : ℂ) (R + 2) → g a = 0 →
+    (hfree : ∀ w, ‖w‖ = R' → g w ≠ 0)
+    (hsep : ∀ a, a ∈ closedBall (0 : ℂ) (R + 2) → g a = 0 →
       (1 / (2 * (n + 1) : ℝ)) ≤ |R' - ‖a‖|)
-    (_hu : AnalyticOnNhd ℂ u (closedBall (0 : ℂ) (R + 2)))
-    (_hu0 : ∀ w : closedBall (0 : ℂ) (R + 2), u w ≠ 0)
-    (_heq : g =ᶠ[codiscreteWithin (closedBall (0 : ℂ) (R + 2))]
+    (hu : AnalyticOnNhd ℂ u (closedBall (0 : ℂ) (R + 2)))
+    (hu0 : ∀ w : closedBall (0 : ℂ) (R + 2), u w ≠ 0)
+    (heq : g =ᶠ[codiscreteWithin (closedBall (0 : ℂ) (R + 2))]
       (∏ᶠ a, (· - a) ^ MeromorphicOn.divisor g (closedBall (0 : ℂ) (R + 2)) a) • u)
     (hz : ‖z‖ = R') :
-    Real.exp (-(K + 1) * (1 + R' ^ (1 + ε))) ≤ ‖g z‖ := by
-  sorry
+    Real.exp (-(K + 1 + 2 / ε) * (1 + R' ^ (1 + ε))) ≤ ‖g z‖ := by
+  let U := closedBall (0 : ℂ) (R + 2)
+  let D : ℂ → ℤ := fun a => MeromorphicOn.divisor g U a
+  let δ : ℝ := 1 / (2 * (n + 1) : ℝ)
+  have hδpos : 0 < δ := by positivity
+  have hS : 0 ≤ R + 2 := by linarith
+  have hzU : z ∈ U := by
+    rw [mem_closedBall, dist_zero_right, hz]
+    linarith [hR'.2]
+  have hacc : AccPt z (𝓟 U) :=
+    accPt_closedBall_of_lt (by rw [hz]; linarith [hR'.2] : ‖z‖ < R + 2)
+  -- Identidad (cerrada):
+  have heq_pt : g z = (∏ᶠ a, (z - a) ^ D a) * u z := by
+    simpa [D, U] using
+      extract_eq_at_nonzero hg hS hu hu0 heq hzU (hfree z hz) hacc
+  have hfin : (Function.support D).Finite :=
+    (MeromorphicOn.divisor g U).finiteSupport (isCompact_closedBall _ _)
+  have hDnn : ∀ a, 0 ≤ D a := fun a => divisor_nonneg_entire hg U a
+  have hsepD : ∀ a, a ∈ Function.support D → δ ≤ |R' - ‖a‖| := by
+    intro a ha
+    have hmem : a ∈ U := by
+      by_contra hnot
+      have : D a = 0 := by simp [D, MeromorphicOn.divisor, hnot]
+      exact absurd this (by simpa [Function.mem_support] using ha)
+    have hg0a : g a = 0 := by
+      have hne : D a ≠ 0 := by simpa [Function.mem_support] using ha
+      by_contra hgne
+      have hgA : AnalyticAt ℂ g a := (hg a).analyticAt
+      have hord : meromorphicOrderAt g a = 0 := by
+        have : analyticOrderAt g a = 0 := (hgA.analyticOrderAt_eq_zero).2 hgne
+        rwa [hgA.meromorphicOrderAt_eq, ENat.map_eq_zero_iff]
+      have : D a = 0 := by simp [D, MeromorphicOn.divisor, hmem, hord]
+      exact hne this
+    exact hsep a hmem hg0a
+  -- |P| ≥ δ^N (cerrada):
+  have hP : δ ^ (∑ᶠ a, (D a : ℝ)) ≤ ‖(∏ᶠ a, (· - a) ^ D a) z‖ :=
+    factor_norm_ge hfin hDnn hz hδpos hsepD
+  have _hgnorm : ‖g z‖ = ‖(∏ᶠ a, (· - a) ^ D a) z‖ * ‖u z‖ := by
+    have hfe : (∏ᶠ a, (· - a) ^ D a) z = ∏ᶠ a, (z - a) ^ D a :=
+      congrFun (Function.FactorizedRational.finprod_eq_fun ⟨hfin⟩) z
+    rw [heq_pt, ← hfe, norm_mul]
+  -- Resta: min |u| (Borel) + N log(1/δ) ≤ (K+2/ε)(1+R'^{1+ε}).
+  exact False.elim (by
+    clear hP _hgnorm heq_pt hsepD hDnn hfin hacc hzU hS hδpos D U δ
+    sorry)
 
 /-!
-  Jensen da n(R)=O(R^{1+ε}). Palomar da δ. Extract da g = P · u.
-  El mínimo es `min_norm_extracted_factor`.
+  Jensen a ε/2. Identidad y |P| cerradas. El mínimo cuantitativo
+  es `min_norm_extracted_factor` (Borel + absorción).
 -/
 theorem exists_circle_min_norm
     (hg : Differentiable ℂ g) (hg_ord : OrderAtMostOne g)
@@ -493,8 +656,8 @@ theorem exists_circle_min_norm
       (∀ z, ‖z‖ = R' → g z ≠ 0) ∧
       ∀ z, ‖z‖ = R' → Real.exp (-C * (1 + R' ^ (1 + ε))) ≤ ‖g z‖ := by
   obtain ⟨c, hc0⟩ := exists_ne_zero hg0
-  obtain ⟨K, hK, hN⟩ := divisor_sum_le_jensen hg hg_ord hc0 hε
-  refine ⟨K + 1, by linarith, ?_⟩
+  obtain ⟨K, hK, hN⟩ := divisor_sum_le_jensen hg hg_ord hc0 (half_pos hε)
+  refine ⟨K + 1 + 2 / ε, by positivity, ?_⟩
   intro R hR
   obtain ⟨R', n, hR'I, hfree, hsep⟩ :=
     exists_radius_sep hg hg0 (le_trans (by norm_num : (0 : ℝ) ≤ 1) hR)
@@ -502,7 +665,8 @@ theorem exists_circle_min_norm
   intro z hz
   obtain ⟨u, huA, hu0, heq⟩ :=
     extract_on_closedBall hg hg0 (S := R + 2) (by linarith)
-  exact min_norm_extracted_factor hg hg_ord hc0 hK hN hε hR hR'I hfree hsep huA hu0 heq hz
+  exact min_norm_extracted_factor hg hg_ord hc0 hK hN hε hR hR'I hfree hsep
+    huA hu0 heq hz
 
 theorem order_atMostOne_of_quotient
     (hf : Differentiable ℂ f) (hg : Differentiable ℂ g) (hh : Differentiable ℂ h)
