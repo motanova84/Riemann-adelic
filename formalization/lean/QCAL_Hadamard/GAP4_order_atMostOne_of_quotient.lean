@@ -1,5 +1,5 @@
 /-
-  GAP 4 v3.2.7 — order_atMostOne_of_quotient
+  GAP 4 v3.2.8 — order_atMostOne_of_quotient
 
   f = h * g, enteras, h nunca cero, g ≢ 0,
   OrderAtMostOne f, OrderAtMostOne g
@@ -14,13 +14,14 @@
       en closedBall 0 (R+1) ⇒ existe R' ∈ [R, R+1] sin ceros.
 
   Cerrado ahora (fuente, no lake):
-    `log_one_add_ge_div`, `divisor_sum_le_jensen` (n(R)=O(R^{2+ε})),
+    `log_one_add_ge_div`,
+    `divisor_sum_le_jensen` (radio exterior 2(r+1), n(R)=O(R^{1+ε})),
     `exists_radius_sep` (palomar δ ≥ 1/(2(n+1))),
     `extract_on_closedBall` (`extract_zeros_poles` en disco compacto;
      GAP3 sigue: no extract en todo ℂ).
 
   Un sorry:
-    |g| = |P| |u| en el círculo, |P| ≥ δ^{n(R)}, min |u| por Borel.
+    `min_norm_extracted_factor` — |P| |u| en el círculo + Borel de u.
 
   No lake-checked. No RH. No D ≡ Ξ.
 
@@ -199,28 +200,30 @@ lemma analyticOnNhd_of_differentiable (hg : Differentiable ℂ g) (s : Set ℂ) 
     AnalyticOnNhd ℂ g s :=
   fun _ _ => (hg _).analyticAt
 
-/-- n(r) ≤ O(r^{2+ε}) vía Jensen `sum_divisor_le`. Centro c con g c ≠ 0. -/
+/-- n(r) ≤ O(r^{1+ε}) vía Jensen con radio exterior 2(r+1). -/
 lemma divisor_sum_le_jensen
     (hg : Differentiable ℂ g) (hg_ord : OrderAtMostOne g)
     {c : ℂ} (hc0 : g c ≠ 0) {ε : ℝ} (hε : 0 < ε) :
     ∃ K : ℝ, 0 < K ∧ ∀ r : ℝ, 1 ≤ r →
       ∑ᶠ u, (MeromorphicOn.divisor g (closedBall c (r + 1)) u : ℝ)
-        ≤ K * r ^ (2 + ε) := by
+        ≤ K * r ^ (1 + ε) := by
   obtain ⟨A, hA, hB⟩ := hg_ord ε hε
   have hgc : 0 < ‖g c‖ := norm_pos_iff.mpr hc0
+  have hlog2 : 0 < Real.log 2 := Real.log_pos (by norm_num : (1 : ℝ) < 2)
   let Xc : ℝ := (‖c‖ + 4) ^ (1 + ε)
   let C0 : ℝ := |Real.log (A + 1)| + |Real.log ‖g c‖| + 2
-  let K : ℝ := 4 * (C0 + Xc + 1) + 1
+  let K : ℝ := (C0 + Xc) / Real.log 2 + 1
   have hK : 0 < K := by positivity
   refine ⟨K, hK, ?_⟩
   intro r hr
   let r_in : ℝ := r + 1
-  let R_out : ℝ := r + 2
+  let R_out : ℝ := 2 * r_in
   have hr_in_pos : 0 < r_in := by linarith
   have hR_out_pos : 0 < R_out := by linarith
   have hr_pos : 0 < |r_in| := by simpa [abs_of_pos hr_in_pos]
   have hrR : |r_in| < |R_out| := by
     simp [abs_of_pos hr_in_pos, abs_of_pos hR_out_pos]; linarith
+  have hratio : R_out / r_in = 2 := by field_simp [R_out, r_in]
   let X : ℝ := (‖c‖ + R_out) ^ (1 + ε)
   let M : ℝ := max 1 (A * Real.exp X)
   have hM : 1 ≤ M := le_max_left _ _
@@ -248,10 +251,8 @@ lemma divisor_sum_le_jensen
   have : closedBall c |r_in| = closedBall c (r + 1) := by
     simp [abs_of_pos hr_in_pos, r_in]
   rw [this] at hle
-  have hden : (1 : ℝ) / (r + 2) ≤ Real.log (R_out / r_in) :=
-    log_outer_inner_ge hr
-  have hdenpos : 0 < Real.log (R_out / r_in) :=
-    lt_of_lt_of_le (div_pos one_pos (by linarith) : (0 : ℝ) < 1 / (r + 2)) hden
+  have hdenpos : 0 < Real.log (R_out / r_in) := by
+    rw [hratio]; exact hlog2
   have hsum0 :
       0 ≤ ∑ᶠ u, (MeromorphicOn.divisor g (closedBall c (r + 1)) u : ℝ) :=
     finsum_nonneg fun _ =>
@@ -265,18 +266,11 @@ lemma divisor_sum_le_jensen
     rw [hzero]
     exact mul_nonneg hK.le (Real.rpow_nonneg (by linarith) _)
   · have hlogpos : 0 < Real.log (M / ‖g c‖) := lt_of_not_ge hlog
-    have hinv : (Real.log (R_out / r_in))⁻¹ ≤ r + 2 := by
-      rw [inv_le_iff_one_le_mul₀ hdenpos]
-      have : 1 ≤ Real.log (R_out / r_in) * (r + 2) := by nlinarith [hden]
-      exact this
     have hle2 :
         ∑ᶠ u, (MeromorphicOn.divisor g (closedBall c (r + 1)) u : ℝ)
-          ≤ Real.log (M / ‖g c‖) * (r + 2) := by
-      have : Real.log (M / ‖g c‖) / Real.log (R_out / r_in)
-          ≤ Real.log (M / ‖g c‖) * (r + 2) := by
-        rw [div_eq_mul_inv]
-        exact mul_le_mul_of_nonneg_left hinv hlogpos.le
-      exact hle.trans this
+          ≤ Real.log (M / ‖g c‖) / Real.log 2 := by
+      have : Real.log (R_out / r_in) = Real.log 2 := by rw [hratio]
+      rwa [this] at hle
     have hMle : M ≤ (A + 1) * Real.exp X := by
       apply max_le
       · have h1 : 1 ≤ Real.exp X :=
@@ -284,67 +278,48 @@ lemma divisor_sum_le_jensen
         nlinarith [hA.le, h1]
       · nlinarith [hA.le, Real.exp_pos X]
     have hlogM : Real.log M ≤ Real.log (A + 1) + X := by
-      have hpos : 0 < (A + 1) * Real.exp X := by positivity
       have : Real.log M ≤ Real.log ((A + 1) * Real.exp X) :=
         Real.log_le_log (lt_of_lt_of_le zero_lt_one hM) hMle
       rwa [Real.log_mul (by linarith) (Real.exp_ne_zero _), Real.log_exp] at this
-    have hlogMg :
-        Real.log (M / ‖g c‖) ≤ C0 + X := by
-      rw [Real.log_div (by
-          exact (lt_of_lt_of_le zero_lt_one hM).ne') (ne_of_gt hgc)]
-      have : Real.log M - Real.log ‖g c‖ ≤ |Real.log (A + 1)| + X + |Real.log ‖g c‖| + 2 := by
-        have h1 : Real.log M ≤ |Real.log (A + 1)| + X :=
-          hlogM.trans (add_le_add_right (le_abs_self _) _)
-        nlinarith [le_abs_self (Real.log ‖g c‖), abs_nonneg (Real.log ‖g c‖)]
+    have hlogMg : Real.log (M / ‖g c‖) ≤ C0 + X := by
+      rw [Real.log_div (by exact (lt_of_lt_of_le zero_lt_one hM).ne') (ne_of_gt hgc)]
+      have h1 : Real.log M ≤ |Real.log (A + 1)| + X :=
+        hlogM.trans (add_le_add_right (le_abs_self _) _)
       have : C0 + X = |Real.log (A + 1)| + |Real.log ‖g c‖| + 2 + X := by
         simp [C0]; ring
-      linarith
+      nlinarith [le_abs_self (Real.log ‖g c‖), abs_nonneg (Real.log ‖g c‖)]
     have hXle : X ≤ Xc * r ^ (1 + ε) := by
       have hlin : ‖c‖ + R_out ≤ (‖c‖ + 4) * r := by
-        have : R_out = r + 2 := rfl
+        have : R_out = 2 * (r + 1) := by simp [R_out, r_in]
         nlinarith [norm_nonneg c, hr]
       have hnn : 0 ≤ ‖c‖ + R_out := by positivity
       have hp := Real.rpow_le_rpow hnn hlin (by linarith : 0 ≤ 1 + ε)
       have hrpow : ((‖c‖ + 4) * r) ^ (1 + ε) =
           (‖c‖ + 4) ^ (1 + ε) * r ^ (1 + ε) :=
         Real.mul_rpow (by positivity) (by linarith : 0 ≤ r)
-      have : X = (‖c‖ + R_out) ^ (1 + ε) := rfl
-      rw [this, hrpow] at hp
-      simpa [Xc] using hp
-    have hr2 : r + 2 ≤ 3 * r := by nlinarith [hr]
-    have hpow1 : (1 : ℝ) ≤ r ^ (2 + ε) := by
-      have : (1 : ℝ) ≤ r := hr
-      exact Real.one_le_rpow this (by linarith)
-    have hpowr : r ≤ r ^ (2 + ε) := by
-      have : r ^ (1 : ℝ) ≤ r ^ (2 + ε) :=
-        Real.rpow_le_rpow_of_exponent_le hr (by linarith)
-      simpa using this
-    have hpowX : r ^ (1 + ε) ≤ r ^ (2 + ε) :=
-      Real.rpow_le_rpow_of_exponent_le hr (by linarith)
-    have : Real.log (M / ‖g c‖) * (r + 2) ≤ K * r ^ (2 + ε) := by
-      have h1 : Real.log (M / ‖g c‖) * (r + 2) ≤ (C0 + X) * (3 * r) :=
-        mul_le_mul hlogMg hr2 (by linarith) (by
-          have : 0 ≤ C0 + X := by positivity
-          linarith [hlogMg, hlogpos.le])
-      have h2 : (C0 + X) * (3 * r) ≤ (C0 + Xc * r ^ (1 + ε)) * (3 * r) := by
-        apply mul_le_mul_of_nonneg_right
+      simpa [X, Xc, hrpow] using hp
+    have hpow1 : (1 : ℝ) ≤ r ^ (1 + ε) :=
+      Real.one_le_rpow hr (by linarith)
+    have : Real.log (M / ‖g c‖) / Real.log 2 ≤ K * r ^ (1 + ε) := by
+      have h1 : Real.log (M / ‖g c‖) / Real.log 2 ≤ (C0 + X) / Real.log 2 :=
+        div_le_div_of_nonneg_right hlogMg hlog2.le
+      have h2 : (C0 + X) / Real.log 2 ≤ (C0 + Xc * r ^ (1 + ε)) / Real.log 2 := by
+        apply div_le_div_of_nonneg_right
         · linarith [hXle, Real.rpow_nonneg (by linarith : (0 : ℝ) ≤ r) (1 + ε)]
-        · nlinarith [hr]
-      have h3 : (C0 + Xc * r ^ (1 + ε)) * (3 * r)
-          ≤ 3 * C0 * r ^ (2 + ε) + 3 * Xc * r ^ (2 + ε) := by
-        have : (C0 + Xc * r ^ (1 + ε)) * (3 * r) =
-            3 * C0 * r + 3 * Xc * (r ^ (1 + ε) * r) := by ring
-        rw [this]
-        have hrpow' : r ^ (1 + ε) * r = r ^ (2 + ε) := by
-          rw [← Real.rpow_add_one (by linarith : (0 : ℝ) ≤ r)]
-          ring_nf
-        rw [hrpow']
-        nlinarith [hpowr, Real.rpow_nonneg (by linarith : (0 : ℝ) ≤ r) (2 + ε),
-          abs_nonneg (Real.log (A + 1)), abs_nonneg (Real.log ‖g c‖)]
-      have hKbound : 3 * C0 + 3 * Xc ≤ K := by
-        simp [K]; nlinarith [abs_nonneg (Real.log (A + 1)),
-          abs_nonneg (Real.log ‖g c‖), Real.rpow_nonneg (by positivity : 0 ≤ ‖c‖ + 4) (1 + ε)]
-      nlinarith [Real.rpow_nonneg (by linarith : (0 : ℝ) ≤ r) (2 + ε)]
+        · exact hlog2.le
+      have h3 : (C0 + Xc * r ^ (1 + ε)) / Real.log 2
+          ≤ (C0 + Xc) / Real.log 2 * r ^ (1 + ε) := by
+        have : C0 + Xc * r ^ (1 + ε) ≤ (C0 + Xc) * r ^ (1 + ε) := by
+          nlinarith [hpow1, abs_nonneg (Real.log (A + 1)),
+            abs_nonneg (Real.log ‖g c‖),
+            Real.rpow_nonneg (by positivity : 0 ≤ ‖c‖ + 4) (1 + ε)]
+        have hpos : 0 < Real.log 2 := hlog2
+        exact (div_le_div_of_nonneg_right this hpos.le).trans_eq (by ring)
+      have : (C0 + Xc) / Real.log 2 * r ^ (1 + ε) ≤ K * r ^ (1 + ε) := by
+        apply mul_le_mul_of_nonneg_right
+        · simp [K]; linarith
+        · exact Real.rpow_nonneg (by linarith) _
+      linarith
     exact hle2.trans this
 
 /-- Palomar: n+1 puntos de malla, n centros. Spacing 2δ, intervalo abierto 2δ. -/
@@ -484,9 +459,32 @@ lemma extract_on_closedBall
     (MeromorphicOn.divisor g U).finiteSupport (isCompact_closedBall _ _)
   exact hM.extract_zeros_poles h₂ h₃
 
+/--
+  Sorry nombrado: identidad g = P u en el círculo, |P| ≥ δ^N, Borel de log u.
+  Jensen ya da N = O(R^{1+ε}); palomar da δ; extract da u.
+-/
+theorem min_norm_extracted_factor
+    (hg : Differentiable ℂ g) (hg_ord : OrderAtMostOne g)
+    {u : ℂ → ℂ} {R R' : ℝ} {n : ℕ} {ε : ℝ} {z : ℂ} {c : ℂ} {K : ℝ}
+    (_hc0 : g c ≠ 0) (_hK : 0 < K)
+    (_hN : ∀ r : ℝ, 1 ≤ r →
+      ∑ᶠ a, (MeromorphicOn.divisor g (closedBall c (r + 1)) a : ℝ) ≤ K * r ^ (1 + ε))
+    (_hε : 0 < ε) (_hR : 1 ≤ R)
+    (hR' : R' ∈ Icc R (R + 1))
+    (_hfree : ∀ w, ‖w‖ = R' → g w ≠ 0)
+    (_hsep : ∀ a, a ∈ closedBall (0 : ℂ) (R + 2) → g a = 0 →
+      (1 / (2 * (n + 1) : ℝ)) ≤ |R' - ‖a‖|)
+    (_hu : AnalyticOnNhd ℂ u (closedBall (0 : ℂ) (R + 2)))
+    (_hu0 : ∀ w : closedBall (0 : ℂ) (R + 2), u w ≠ 0)
+    (_heq : g =ᶠ[codiscreteWithin (closedBall (0 : ℂ) (R + 2))]
+      (∏ᶠ a, (· - a) ^ MeromorphicOn.divisor g (closedBall (0 : ℂ) (R + 2)) a) • u)
+    (hz : ‖z‖ = R') :
+    Real.exp (-(K + 1) * (1 + R' ^ (1 + ε))) ≤ ‖g z‖ := by
+  sorry
+
 /-!
-  Jensen da n(R). Palomar da δ. Extract da g = P · u en el disco.
-  El mínimo pide |P| ≥ δ^{n} y Borel de u.
+  Jensen da n(R)=O(R^{1+ε}). Palomar da δ. Extract da g = P · u.
+  El mínimo es `min_norm_extracted_factor`.
 -/
 theorem exists_circle_min_norm
     (hg : Differentiable ℂ g) (hg_ord : OrderAtMostOne g)
@@ -504,17 +502,7 @@ theorem exists_circle_min_norm
   intro z hz
   obtain ⟨u, huA, hu0, heq⟩ :=
     extract_on_closedBall hg hg0 (S := R + 2) (by linarith)
-  -- g = P • u en el disco (identidad: coinciden en codiscreto ⇒ en el círculo).
-  -- |P z| ≥ δ^N, δ = 1/(2(n+1)), N = O(R^{2+ε}) por Jensen (mejorable a 2r).
-  -- min |u| por Borel del log holomorfo. No lake-checked.
-  have _ := hN (R + 1) (by linarith)
-  have _ := hsep
-  have _ := hz
-  have _ := huA
-  have _ := hu0
-  have _ := heq
-  have _ := hfree z hz
-  sorry
+  exact min_norm_extracted_factor hg hg_ord hc0 hK hN hε hR hR'I hfree hsep huA hu0 heq hz
 
 theorem order_atMostOne_of_quotient
     (hf : Differentiable ℂ f) (hg : Differentiable ℂ g) (hh : Differentiable ℂ h)
