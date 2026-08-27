@@ -1,5 +1,5 @@
 /-
-  GAP 4 v3.2.16 — order_atMostOne_of_quotient
+  GAP 4 v3.2.17 — order_atMostOne_of_quotient
 
   f = h * g, enteras, h nunca cero, g ≢ 0,
   OrderAtMostOne f, OrderAtMostOne g
@@ -29,9 +29,8 @@
     `absorb_N_log_delta_four`, `log_norm_u_le_on_sep_circle_four`,
     Re en ball 0 (R+3/2) (sep≥3/2 + MMP).
 
-  Un sorry:
-    `exists_holomorphic_log_re_bound` — ‖φ 0‖ solo si |u 0| < 1
-      (trailing / (R+2)^N). Rama Im y |u 0| ≥ 1 cerrados en fuente.
+  Un sorry: ninguno en exists_holomorphic_log_re_bound (fuente).
+    ‖φ 0‖ vía rama log + trailing / (R+2)^N.
 
   No lake-checked. No RH. No D ≡ Ξ.
 
@@ -816,6 +815,75 @@ lemma factor_norm_ge {D : ℂ → ℤ} {R' δ : ℝ} {z : ℂ}
   rw [hsum, ← hnat]
   exact hge
 
+/-- En 0: ‖∏ (0-a)^{update D 0 0}‖ ≤ (R+2)^{∑ D}. -/
+lemma factor_norm_le_at_zero {D : ℂ → ℤ} {R S : ℝ}
+    (hfin : (Function.support D).Finite)
+    (hDnn : ∀ a, 0 ≤ D a)
+    (hRS : 1 ≤ R + 2)
+    (hsupp : ∀ a, a ∈ Function.support D → ‖a‖ ≤ S)
+    (hSR : S ≤ R + 2) :
+    ‖(∏ᶠ a, (· - a) ^ Function.update D 0 0 a) 0‖ ≤
+      (R + 2) ^ (∑ᶠ a, (D a : ℝ)) := by
+  classical
+  have hHas : Function.HasFiniteSupport (Function.update D 0 0) := ⟨
+    hfin.subset fun a ha => by
+      by_cases h0 : a = 0
+      · subst h0; simp [Function.mem_support, Function.update_same] at ha
+      · simpa [Function.mem_support, Function.update_of_ne h0] using ha⟩
+  rw [Function.FactorizedRational.finprod_eq_fun hHas]
+  let s := hfin.toFinset
+  have hsub : (fun a : ℂ => (0 - a) ^ Function.update D 0 0 a).mulSupport ⊆ s := by
+    intro a ha
+    by_cases h0 : a = 0
+    · subst h0
+      have : Function.update D 0 0 0 = 0 := Function.update_same _ _ _
+      exact absurd (by simp [this]) ha
+    · have hDa : D a ≠ 0 := by
+        have : Function.update D 0 0 a ≠ 0 := by
+          intro h; exact ha (by simp [h])
+        simpa [Function.update_of_ne h0] using this
+      exact Finite.mem_toFinset.mpr (by simpa [Function.mem_support] using hDa)
+  rw [finprod_eq_prod_of_mulSupport_subset _ hsub, norm_prod]
+  have hterm : ∀ a ∈ s, ‖(0 - a) ^ Function.update D 0 0 a‖ ≤
+      (R + 2) ^ Int.toNat (D a) := by
+    intro a ha
+    have hmem : a ∈ Function.support D := Finite.mem_toFinset.mp ha
+    have hale : ‖a‖ ≤ R + 2 := (hsupp a hmem).trans hSR
+    by_cases h0 : a = 0
+    · subst h0; simp [Function.update_same]
+    · have hupd : Function.update D 0 0 a = D a := Function.update_of_ne h0 _ _
+      rw [hupd]
+      have hDa0 : 0 ≤ D a := hDnn a
+      have : (0 - a) ^ D a = (-a) ^ Int.toNat (D a) := by
+        rw [show 0 - a = -a by ring]
+        exact (Int.toNat_of_nonneg hDa0) ▸ (zpow_natCast (-a) _).symm
+      rw [this, norm_pow, norm_neg]
+      exact pow_le_pow_left (by linarith) hale _
+  have hge :
+      ∏ a ∈ s, ‖(0 - a) ^ Function.update D 0 0 a‖ ≤
+        ∏ a ∈ s, (R + 2) ^ Int.toNat (D a) :=
+    Finset.prod_le_prod (fun _ _ => norm_nonneg _) hterm
+  have hpow :
+      ∏ a ∈ s, (R + 2) ^ Int.toNat (D a) =
+        (R + 2) ^ ∑ a ∈ s, Int.toNat (D a) :=
+    Finset.prod_pow_eq_pow_sum _ _ _
+  have hsum : ∑ᶠ a, (D a : ℝ) = ∑ a ∈ s, (D a : ℝ) :=
+    finsum_eq_sum_of_support_subset (s := s) _ (fun a ha => by
+      refine Finite.mem_toFinset.mpr ?_
+      intro h0; exact ha (by simp [h0]))
+  have hcast : (∑ a ∈ s, Int.toNat (D a) : ℝ) = ∑ a ∈ s, (D a : ℝ) := by
+    push_cast
+    refine Finset.sum_congr rfl ?_
+    intro a _; simp [Int.toNat_of_nonneg (hDnn a)]
+  have hnat : (R + 2) ^ ∑ a ∈ s, Int.toNat (D a) =
+      (R + 2) ^ (∑ a ∈ s, (D a : ℝ)) := by
+    rw [← Real.rpow_natCast (by linarith : 0 ≤ R + 2), hcast]
+  calc
+    ∏ a ∈ s, ‖(0 - a) ^ Function.update D 0 0 a‖ ≤
+        ∏ a ∈ s, (R + 2) ^ Int.toNat (D a) := hge
+    _ = (R + 2) ^ ∑ a ∈ s, Int.toNat (D a) := hpow
+    _ = (R + 2) ^ (∑ᶠ a, (D a : ℝ)) := by rw [hnat, hsum]
+
 /-- n ≤ ∑ D: cada cero aporta multiplicidad ≥ 1. -/
 lemma card_support_le_divisor_sum {D : ℂ → ℤ}
     (hfin : (Function.support D).Finite) (hDnn : ∀ a, 0 ≤ D a) :
@@ -1474,9 +1542,9 @@ lemma norm_log_le_abs_log_norm_add_pi {z : ℂ} (hz : z ≠ 0) :
   linarith
 
 /--
-  Re(log u) en ball 0 (R+3/2) vía sep≥3/2 + MMP (cerrado en fuente).
-  φ ajustada a Complex.log (u 0): Im ∈ (-π,π].
-  ‖φ 0‖ cerrado si |u 0| ≥ 1. Sorry: |u 0| < 1 (trailing).
+  Re(log u) en ball 0 (R+3/2) vía sep≥3/2 + MMP.
+  φ = rama con φ(0)=log(u 0). ‖φ 0‖ vía |log‖u 0‖|+π,
+  cota inferior |u 0| ≥ t/(R+2)^N (trailing).
 -/
 theorem exists_holomorphic_log_re_bound
     (hg : Differentiable ℂ g) (hg_ord : OrderAtMostOne g)
@@ -1505,7 +1573,19 @@ theorem exists_holomorphic_log_re_bound
     |Real.log A| +
       K0 * (2 + ‖c‖) ^ (1 + ε0 / 2) * ((2 : ℝ) ^ (1 + ε0) + 2) + 4 / ε0 + 1
   have hBlock0 : 0 < Block0 := by positivity
-  let C : ℝ := Block0 * (2 : ℝ) ^ (1 + ε) * 3 ^ (1 + ε) + Real.pi + 1
+  have hM0 : MeromorphicAt g (0 : ℂ) := (hg 0).analyticAt.meromorphicAt
+  have hord0 : meromorphicOrderAt g (0 : ℂ) ≠ ⊤ :=
+    meromorphicOrderAt_ne_top_entire hg hg0 0
+  have htrail_ne : meromorphicTrailingCoeffAt g (0 : ℂ) ≠ 0 :=
+    hM0.meromorphicTrailingCoeffAt_ne_zero hord0
+  let t : ℝ := ‖meromorphicTrailingCoeffAt g (0 : ℂ)‖
+  have ht : 0 < t := norm_pos_iff.mpr htrail_ne
+  let TrailBlock : ℝ :=
+    |Real.log t| +
+      K0 * (2 + ‖c‖) ^ (1 + ε0 / 2) * (2 / ε0) * ((2 : ℝ) ^ (1 + ε0)) + 1
+  have hTrailBlock : 0 < TrailBlock := by positivity
+  let C : ℝ :=
+    (Block0 + TrailBlock) * (2 : ℝ) ^ (1 + ε) * 3 ^ (1 + ε) + Real.pi + 1
   have hC : 0 < C := by positivity
   refine ⟨C, hC, ?_⟩
   intro R hR u hu hu0 heq
@@ -1565,8 +1645,8 @@ theorem exists_holomorphic_log_re_bound
         one_le_mul_of_one_le_of_one_le
           (Real.one_le_rpow (by norm_num : (1 : ℝ) ≤ 2) (by linarith))
           (Real.one_le_rpow (by norm_num : (1 : ℝ) ≤ 3) (by linarith))
-      have : Block0 ≤ Block0 * ((2 : ℝ) ^ (1 + ε) * 3 ^ (1 + ε)) := by
-        nlinarith [hBlock0.le, hmul]
+      have : Block0 ≤ (Block0 + TrailBlock) * ((2 : ℝ) ^ (1 + ε) * 3 ^ (1 + ε)) := by
+        nlinarith [hBlock0.le, hTrailBlock.le, hmul]
       simp only [C]; linarith [Real.pi_pos.le]
     exact mul_le_mul hBoleC hpow (by positivity) hC.le
   refine ⟨φ, hφd, hexp, ?re, ?phi0⟩
@@ -1605,17 +1685,210 @@ theorem exists_holomorphic_log_re_bound
               one_le_mul_of_one_le_of_one_le
                 (Real.one_le_rpow (by norm_num : (1 : ℝ) ≤ 2) (by linarith))
                 (Real.one_le_rpow (by norm_num : (1 : ℝ) ≤ 3) (by linarith))
-            nlinarith [hBlock0.le, Real.pi_pos.le, hmul]
+            nlinarith [hBlock0.le, hTrailBlock.le, Real.pi_pos.le, hmul]
           have hQ : (1 : ℝ) ≤ 1 + (R + 2) ^ (1 + ε) := by
             linarith [Real.rpow_nonneg (by linarith : (0 : ℝ) ≤ R + 2) (1 + ε)]
           nlinarith [hCdiff, hQ, Real.pi_pos.le]
         linarith [hlog0, hlift]
       rw [habs] at hsplit
       exact hsplit.trans hsum
-    · -- |u 0| < 1: cota inferior via trailing coeff / (R+2)^N
-      sorry
+    · -- |u 0| < 1: |u 0| ≥ t / (R+2)^N vía trailing
+      have habs : |Real.log ‖u 0‖| = -Real.log ‖u 0‖ :=
+        abs_of_neg (Real.log_neg hu0pos (lt_of_not_ge hge1))
+      let U := closedBall (0 : ℂ) (R + 2)
+      let D : ℂ → ℤ := fun a => MeromorphicOn.divisor g U a
+      have hfin : (Function.support D).Finite :=
+        (MeromorphicOn.divisor g U).finiteSupport (isCompact_closedBall _ _)
+      have hDfin : Function.HasFiniteSupport D := ⟨hfin⟩
+      have hDnn : ∀ a, 0 ≤ D a := fun a => divisor_nonneg_entire hg U a
+      let N : ℝ := ∑ᶠ a, (D a : ℝ)
+      have hNnn : 0 ≤ N := finsum_nonneg fun _ => Int.cast_nonneg.mpr (hDnn _)
+      have hacc : AccPt (0 : ℂ) (𝓟 U) :=
+        accPt_closedBall_of_mem hBall h0U
+      have hgA0 : AnalyticAt ℂ g 0 := (hg 0).analyticAt
+      have htc := MeromorphicOn.meromorphicTrailingCoeffAt_extract_zeros_poles
+        (f := g) (g := u) (D := D) (U := U) hDfin h0U hacc hgA0.meromorphicAt
+        (hu 0 h0U) hu0pt heq
+      have heq0 :
+          meromorphicTrailingCoeffAt g 0 =
+            (∏ᶠ a, (0 - a) ^ Function.update D 0 0 a) * u 0 := by
+        simpa [smul_eq_mul] using htc
+      have hP_le :
+          ‖(∏ᶠ a, (· - a) ^ Function.update D 0 0 a) 0‖ ≤ (R + 2) ^ N := by
+        have hsupp : ∀ a, a ∈ Function.support D → ‖a‖ ≤ R + 2 := by
+          intro a ha
+          have hmem : a ∈ U := by
+            by_contra hnot
+            have : D a = 0 := by simp [D, MeromorphicOn.divisor, hnot]
+            exact absurd this (by simpa [Function.mem_support] using ha)
+          simpa [U, mem_closedBall, dist_zero_right] using hmem
+        simpa [N] using
+          factor_norm_le_at_zero hfin hDnn (by linarith [hR] : 1 ≤ R + 2)
+            hsupp (le_rfl)
+      have hfe :
+          (∏ᶠ a, (· - a) ^ Function.update D 0 0 a) 0 =
+            ∏ᶠ a, (0 - a) ^ Function.update D 0 0 a :=
+        congrFun
+          (Function.FactorizedRational.finprod_eq_fun
+            ⟨hfin.subset fun a ha => by
+              by_cases h0 : a = 0
+              · subst h0; simp [Function.mem_support, Function.update_same] at ha
+              · simpa [Function.mem_support, Function.update_of_ne h0] using ha⟩) 0
+      have ht_eq : t =
+          ‖(∏ᶠ a, (· - a) ^ Function.update D 0 0 a) 0‖ * ‖u 0‖ := by
+        rw [show t = ‖meromorphicTrailingCoeffAt g 0‖ from rfl, heq0, norm_mul, ← hfe]
+      have hR2pos : 0 < R + 2 := hBall
+      have hR2Npos : 0 < (R + 2) ^ N := Real.rpow_pos_of_pos hR2pos _
+      have hu_ge : t / (R + 2) ^ N ≤ ‖u 0‖ := by
+        have : t ≤ (R + 2) ^ N * ‖u 0‖ := by
+          rw [ht_eq]
+          exact mul_le_mul_of_nonneg_right hP_le hu0pos.le
+        exact (div_le_iff₀ hR2Npos).mpr (by rwa [mul_comm] at this)
+      have hlog_le :
+          -Real.log ‖u 0‖ ≤ -Real.log t + N * Real.log (R + 2) := by
+        have h1 : Real.log (t / (R + 2) ^ N) ≤ Real.log ‖u 0‖ :=
+          Real.log_le_log (div_pos ht hR2Npos) hu_ge
+        have h2 : Real.log (t / (R + 2) ^ N) =
+            Real.log t - N * Real.log (R + 2) := by
+          have hpow : (R + 2) ^ N = Real.exp (N * Real.log (R + 2)) :=
+            Real.rpow_def_of_pos hR2pos N
+          rw [Real.log_div (ne_of_gt ht) (ne_of_gt hR2Npos), hpow, Real.log_exp]
+        linarith [h1, h2]
+      -- absorb N log(R+2) into TrailBlock * (1+(R+2)^{1+ε})
+      have hNle : N ≤ K0 * (max 1 (R + 2 + ‖c‖)) ^ (1 + ε0 / 2) := by
+        let r0 : ℝ := max 1 (R + 2 + ‖c‖)
+        have hr0 : 1 ≤ r0 := le_max_left _ _
+        have hN0 := hN0 r0 hr0
+        refine le_trans ?_ hN0
+        refine finsum_le_finsum
+          (fun a => Int.cast_nonneg.mpr (hDnn a))
+          (fun a => Int.cast_nonneg.mpr
+            ((analyticOnNhd_of_differentiable hg _).divisor_nonneg a)) ?_
+        intro a
+        by_cases hmem : a ∈ U
+        · have hmemc : a ∈ closedBall c (r0 + 1) := by
+            rw [mem_closedBall]
+            have hale : ‖a‖ ≤ R + 2 := by
+              simpa [U, mem_closedBall, dist_zero_right] using hmem
+            have htri : ‖a - c‖ ≤ ‖a‖ + ‖c‖ := by
+              simpa [sub_eq_add_neg] using
+                (norm_add_le a (-c)).trans_eq (by simp [norm_neg])
+            have : R + 2 + ‖c‖ ≤ r0 := le_max_right _ _
+            linarith
+          have : MeromorphicOn.divisor g U a =
+              MeromorphicOn.divisor g (closedBall c (r0 + 1)) a := by
+            simp [MeromorphicOn.divisor, hmem, hmemc]
+          exact le_of_eq (by simp [D, this])
+        · have : D a = 0 := by simp [D, MeromorphicOn.divisor, hmem]
+          simp [this]
+      have hNlog :
+          N * Real.log (R + 2) ≤
+            (K0 * (2 + ‖c‖) ^ (1 + ε0 / 2) * (2 / ε0) * ((2 : ℝ) ^ (1 + ε0))) *
+              (1 + (R + 2) ^ (1 + ε)) := by
+        let r0 : ℝ := max 1 (R + 2 + ‖c‖)
+        have hr0R : r0 ≤ (2 + ‖c‖) * (1 + (R + 2)) := by
+          apply max_le
+          · nlinarith [norm_nonneg c, hR]
+          · nlinarith [norm_nonneg c]
+        have hlog := log_le_mul_rpow hε0 (by linarith [hR] : 1 ≤ R + 2)
+        have hN' : N ≤ K0 * (2 + ‖c‖) ^ (1 + ε0 / 2) * (1 + (R + 2)) ^ (1 + ε0 / 2) := by
+          have : r0 ^ (1 + ε0 / 2) ≤ ((2 + ‖c‖) * (1 + (R + 2))) ^ (1 + ε0 / 2) :=
+            Real.rpow_le_rpow (by linarith) hr0R (by linarith)
+          have hmul := Real.mul_rpow (by positivity) (by linarith : 0 ≤ 1 + (R + 2))
+          rw [hmul] at this
+          nlinarith [hNle, Real.rpow_nonneg (by linarith : 0 ≤ r0) (1 + ε0 / 2)]
+        have h1 : (1 + (R + 2)) ^ (1 + ε0 / 2) * (R + 2) ^ (ε0 / 2) ≤
+            (1 + (R + 2)) ^ (1 + ε0) := by
+          have hle : (R + 2) ^ (ε0 / 2) ≤ (1 + (R + 2)) ^ (ε0 / 2) :=
+            Real.rpow_le_rpow (by linarith) (by linarith) (by linarith)
+          have hcomb :
+              (1 + (R + 2)) ^ (1 + ε0 / 2) * (1 + (R + 2)) ^ (ε0 / 2) =
+                (1 + (R + 2)) ^ (1 + ε0) := by
+            rw [← Real.rpow_add (by linarith : 0 < 1 + (R + 2))]; ring_nf
+          have hmul := mul_le_mul_of_nonneg_left hle
+            (Real.rpow_nonneg (by linarith : 0 ≤ 1 + (R + 2)) (1 + ε0 / 2))
+          rwa [hcomb] at hmul
+        have h2 : (1 + (R + 2)) ^ (1 + ε0) ≤
+            (2 : ℝ) ^ (1 + ε0) * (1 + (R + 2) ^ (1 + ε0)) := by
+          -- (1+S)^a ≤ 2^a (1 + S^a) for S = R+2 ≥ 1, a = 1+ε0 ≥ 1
+          have hS : (1 : ℝ) ≤ R + 2 := by linarith [hR]
+          have hle : 1 + (R + 2) ≤ 2 * (R + 2) := by nlinarith [hS]
+          have hr := Real.rpow_le_rpow (by linarith) hle (by linarith)
+          have hmul := Real.mul_rpow (by norm_num : (0 : ℝ) ≤ 2)
+            (by linarith : 0 ≤ R + 2)
+          rw [hmul] at hr
+          refine hr.trans ?_
+          have : (R + 2) ^ (1 + ε0) ≤ 1 + (R + 2) ^ (1 + ε0) :=
+            le_add_of_nonneg_left (by norm_num)
+          nlinarith [Real.rpow_nonneg (by norm_num : (0 : ℝ) ≤ 2) (1 + ε0), this]
+        have h3 : 1 + (R + 2) ^ (1 + ε0) ≤ 1 + (R + 2) ^ (1 + ε) := by
+          have := Real.rpow_le_rpow_of_exponent_le
+            (by linarith [hR] : 1 ≤ R + 2) (min_le_left ε 1)
+          linarith
+        have hpow :
+            (1 + (R + 2)) ^ (1 + ε0 / 2) * (R + 2) ^ (ε0 / 2) ≤
+              (2 : ℝ) ^ (1 + ε0) * (1 + (R + 2) ^ (1 + ε)) :=
+          h1.trans (h2.trans (by
+            nlinarith [h3, Real.rpow_nonneg (by norm_num : (0 : ℝ) ≤ 2) (1 + ε0)]))
+        -- N * log ≤ K' * (1+S)^{1+ε0/2} * (2/ε0) * S^{ε0/2}
+        have hprod :
+            N * Real.log (R + 2) ≤
+              K0 * (2 + ‖c‖) ^ (1 + ε0 / 2) * (2 / ε0) *
+                ((1 + (R + 2)) ^ (1 + ε0 / 2) * (R + 2) ^ (ε0 / 2)) := by
+          have := mul_le_mul hN' hlog (Real.log_nonneg (by linarith [hR] : 1 ≤ R + 2))
+            (by positivity)
+          convert this using 1 <;> ring
+        refine hprod.trans ?_
+        have := mul_le_mul_of_nonneg_left hpow (by positivity :
+          0 ≤ K0 * (2 + ‖c‖) ^ (1 + ε0 / 2) * (2 / ε0))
+        convert this using 1 <;> ring
+      have hsum :
+          -Real.log ‖u 0‖ + Real.pi ≤ C * (1 + (R + 2) ^ (1 + ε)) := by
+        have hmain :
+            -Real.log t + N * Real.log (R + 2) + Real.pi ≤
+              C * (1 + (R + 2) ^ (1 + ε)) := by
+          have h1 : -Real.log t ≤ |Real.log t| := neg_le_abs _
+          have h2 :
+              |Real.log t| + N * Real.log (R + 2) + Real.pi ≤
+                TrailBlock * (1 + (R + 2) ^ (1 + ε)) + Real.pi := by
+            have : N * Real.log (R + 2) ≤
+                (TrailBlock - |Real.log t| - 1) * (1 + (R + 2) ^ (1 + ε)) := by
+              have : TrailBlock - |Real.log t| - 1 =
+                  K0 * (2 + ‖c‖) ^ (1 + ε0 / 2) * (2 / ε0) * ((2 : ℝ) ^ (1 + ε0)) := by
+                simp only [TrailBlock]; ring
+              rw [this]; exact hNlog
+            have hQ : (1 : ℝ) ≤ 1 + (R + 2) ^ (1 + ε) := by
+              linarith [Real.rpow_nonneg (by linarith : (0 : ℝ) ≤ R + 2) (1 + ε)]
+            nlinarith [this, abs_nonneg (Real.log t), hQ]
+          have h3 : TrailBlock * (1 + (R + 2) ^ (1 + ε)) + Real.pi ≤
+              C * (1 + (R + 2) ^ (1 + ε)) := by
+            have hTB : TrailBlock ≤ C := by
+              have hmul : 1 ≤ (2 : ℝ) ^ (1 + ε) * 3 ^ (1 + ε) :=
+                one_le_mul_of_one_le_of_one_le
+                  (Real.one_le_rpow (by norm_num : (1 : ℝ) ≤ 2) (by linarith))
+                  (Real.one_le_rpow (by norm_num : (1 : ℝ) ≤ 3) (by linarith))
+              have : TrailBlock ≤
+                  (Block0 + TrailBlock) * ((2 : ℝ) ^ (1 + ε) * 3 ^ (1 + ε)) := by
+                nlinarith [hBlock0.le, hTrailBlock.le, hmul]
+              simp only [C]; linarith [Real.pi_pos.le]
+            have hpi : Real.pi ≤ (C - TrailBlock) * (1 + (R + 2) ^ (1 + ε)) := by
+              have hCdiff : Real.pi + 1 ≤ C - TrailBlock := by
+                simp only [C]
+                have hmul : 1 ≤ (2 : ℝ) ^ (1 + ε) * 3 ^ (1 + ε) :=
+                  one_le_mul_of_one_le_of_one_le
+                    (Real.one_le_rpow (by norm_num : (1 : ℝ) ≤ 2) (by linarith))
+                    (Real.one_le_rpow (by norm_num : (1 : ℝ) ≤ 3) (by linarith))
+                nlinarith [hBlock0.le, hTrailBlock.le, Real.pi_pos.le, hmul]
+              have hQ : (1 : ℝ) ≤ 1 + (R + 2) ^ (1 + ε) := by
+                linarith [Real.rpow_nonneg (by linarith : (0 : ℝ) ≤ R + 2) (1 + ε)]
+              nlinarith [hCdiff, hQ, Real.pi_pos.le]
+            nlinarith [hTB, hpi]
+          linarith [h1, h2, h3]
+        linarith [hlog_le, hmain]
+      rw [habs] at hsplit
+      exact hsplit.trans hsum
 
-/-- Min |u| en el círculo. Glue: log+Re (‖φ 0‖ sorry si |u 0|<1) + Borel (cerrado). -/
+/-- Min |u| en el círculo. Glue: log+Re (cerrado en fuente) + Borel (cerrado). -/
 theorem min_norm_never_zero_analytic
     (hg : Differentiable ℂ g) (hg_ord : OrderAtMostOne g)
     (hg0 : ¬ ∀ w, g w = 0)
