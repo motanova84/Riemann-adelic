@@ -1,5 +1,5 @@
 /-
-  GAP 4 v3.2.15 — order_atMostOne_of_quotient
+  GAP 4 v3.2.16 — order_atMostOne_of_quotient
 
   f = h * g, enteras, h nunca cero, g ≢ 0,
   OrderAtMostOne f, OrderAtMostOne g
@@ -30,8 +30,8 @@
     Re en ball 0 (R+3/2) (sep≥3/2 + MMP).
 
   Un sorry:
-    `exists_holomorphic_log_re_bound` — solo ‖φ 0‖
-      (rama Im ∈ (-π,π] + cota inferior |u 0|).
+    `exists_holomorphic_log_re_bound` — ‖φ 0‖ solo si |u 0| < 1
+      (trailing / (R+2)^N). Rama Im y |u 0| ≥ 1 cerrados en fuente.
 
   No lake-checked. No RH. No D ≡ Ξ.
 
@@ -52,6 +52,7 @@ import Mathlib.Analysis.Complex.JensenFormula
 import Mathlib.Analysis.Meromorphic.FactorizedRational
 import Mathlib.Analysis.Meromorphic.Order
 import Mathlib.Analysis.Meromorphic.TrailingCoefficient
+import Mathlib.Analysis.SpecialFunctions.Complex.Log
 import Mathlib.Analysis.SpecialFunctions.Log.Basic
 import Mathlib.Analysis.SpecialFunctions.Pow.Real
 import Mathlib.Topology.MetricSpace.Basic
@@ -1452,9 +1453,30 @@ lemma differentiableOn_of_continuous_log
     hLdu.add (differentiableAt_const _)
   exact (hadd.congr_of_eventuallyEq hev.symm).differentiableWithinAt
 
+
+/-- ‖z‖ ≤ |Re z| + |Im z|. -/
+lemma norm_le_abs_re_add_abs_im (z : ℂ) : ‖z‖ ≤ |z.re| + |z.im| := by
+  have hz : z = (z.re : ℂ) + z.im * I := (re_add_im z).symm
+  calc ‖z‖ = ‖(z.re : ℂ) + z.im * I‖ := by rw [hz]
+    _ ≤ ‖(z.re : ℂ)‖ + ‖z.im * I‖ := norm_add_le _ _
+    _ = |z.re| + |z.im| := by
+        simp [norm_mul, norm_I, Complex.norm_real]
+
+/-- Rama principal: ‖log z‖ ≤ |log ‖z‖| + π. -/
+lemma norm_log_le_abs_log_norm_add_pi {z : ℂ} (hz : z ≠ 0) :
+    ‖Complex.log z‖ ≤ |Real.log ‖z‖| + Real.pi := by
+  have hre : (Complex.log z).re = Real.log ‖z‖ := Complex.log_re hz
+  have him : |(Complex.log z).im| ≤ Real.pi := by
+    rw [Complex.log_im hz]
+    exact abs_arg_le_pi z
+  have := norm_le_abs_re_add_abs_im (Complex.log z)
+  rw [hre] at this
+  linarith
+
 /--
   Re(log u) en ball 0 (R+3/2) vía sep≥3/2 + MMP (cerrado en fuente).
-  Sorry: ‖φ 0‖ (rama Im ∈ (-π,π] + cota inferior |u 0|).
+  φ ajustada a Complex.log (u 0): Im ∈ (-π,π].
+  ‖φ 0‖ cerrado si |u 0| ≥ 1. Sorry: |u 0| < 1 (trailing).
 -/
 theorem exists_holomorphic_log_re_bound
     (hg : Differentiable ℂ g) (hg_ord : OrderAtMostOne g)
@@ -1488,9 +1510,26 @@ theorem exists_holomorphic_log_re_bound
   refine ⟨C, hC, ?_⟩
   intro R hR u hu hu0 heq
   have hBall : 0 < R + 2 := by linarith
-  obtain ⟨φ, hφc, hexp⟩ := exists_continuous_log_on_ball_ne_zero hBall hu hu0
+  obtain ⟨φ0, hφc, hexp0⟩ := exists_continuous_log_on_ball_ne_zero hBall hu hu0
+  have hφd0 : DifferentiableOn ℂ φ0 (ball (0 : ℂ) (R + 2)) :=
+    differentiableOn_of_continuous_log hBall hu hu0 hφc hexp0
+  have h0U : (0 : ℂ) ∈ closedBall (0 : ℂ) (R + 2) := by
+    rw [mem_closedBall, dist_zero_right]; simp; linarith
+  have hu0pt : u 0 ≠ 0 := hu0 ⟨0, h0U⟩
+  have h0B : (0 : ℂ) ∈ ball (0 : ℂ) (R + 2) := mem_ball_self hBall
+  let φ : ℂ → ℂ := fun z => φ0 z - (φ0 0 - Complex.log (u 0))
   have hφd : DifferentiableOn ℂ φ (ball (0 : ℂ) (R + 2)) :=
-    differentiableOn_of_continuous_log hBall hu hu0 hφc hexp
+    hφd0.sub (differentiableOn_const _)
+  have hexp : ∀ z ∈ ball (0 : ℂ) (R + 2), exp (φ z) = u z := by
+    intro z hz
+    have hconst : exp (φ0 0 - Complex.log (u 0)) = 1 := by
+      rw [exp_sub, hexp0 0 h0B, Complex.exp_log hu0pt, div_self hu0pt]
+    calc
+      exp (φ z)
+          = exp (φ0 z - (φ0 0 - Complex.log (u 0))) := rfl
+      _ = exp (φ0 z) / exp (φ0 0 - Complex.log (u 0)) := exp_sub _ _
+      _ = u z / 1 := by rw [hexp0 z hz, hconst]
+      _ = u z := by simp
   obtain ⟨R1, n, hR1I, hfree, hsep, hnN⟩ :=
     exists_radius_sep_ge_three_halves hg hg0 (by linarith : (0 : ℝ) ≤ R)
   have hR1pos : 0 < R1 :=
@@ -1512,6 +1551,24 @@ theorem exists_holomorphic_log_re_bound
   have hnorm_disk : ∀ z, ‖z‖ ≤ R1 →
       ‖u z‖ ≤ Real.exp (Block0 * (1 + R1 ^ (1 + ε0))) := fun z hz =>
     analyticOnNhd_norm_le_of_sphere hR1pos hR1I.2 hu hnorm_circle hz
+  have hlift :
+      Block0 * (1 + R1 ^ (1 + ε0)) ≤ C * (1 + (R + 2) ^ (1 + ε)) := by
+    have hpow : 1 + R1 ^ (1 + ε0) ≤ 1 + (R + 2) ^ (1 + ε) := by
+      have h1 : R1 ^ (1 + ε0) ≤ (R + 2) ^ (1 + ε0) :=
+        Real.rpow_le_rpow hR1nn hR1I.2 (by linarith)
+      have h2 : (R + 2) ^ (1 + ε0) ≤ (R + 2) ^ (1 + ε) :=
+        Real.rpow_le_rpow_of_exponent_le (by linarith [hR] : 1 ≤ R + 2)
+          (min_le_left ε 1)
+      linarith
+    have hBoleC : Block0 ≤ C := by
+      have hmul : 1 ≤ (2 : ℝ) ^ (1 + ε) * 3 ^ (1 + ε) :=
+        one_le_mul_of_one_le_of_one_le
+          (Real.one_le_rpow (by norm_num : (1 : ℝ) ≤ 2) (by linarith))
+          (Real.one_le_rpow (by norm_num : (1 : ℝ) ≤ 3) (by linarith))
+      have : Block0 ≤ Block0 * ((2 : ℝ) ^ (1 + ε) * 3 ^ (1 + ε)) := by
+        nlinarith [hBlock0.le, hmul]
+      simp only [C]; linarith [Real.pi_pos.le]
+    exact mul_le_mul hBoleC hpow (by positivity) hC.le
   refine ⟨φ, hφd, hexp, ?re, ?phi0⟩
   · intro w hw
     have hwB : w ∈ ball (0 : ℂ) (R + 2) :=
@@ -1527,29 +1584,38 @@ theorem exists_holomorphic_log_re_bound
       exact this.le.trans hR1I.1
     have hlog : Real.log ‖u w‖ ≤ Block0 * (1 + R1 ^ (1 + ε0)) :=
       (Real.log_le_log hu_pos (hnorm_disk w hwle)).trans_eq (Real.log_exp _)
-    have hlift :
-        Block0 * (1 + R1 ^ (1 + ε0)) ≤ C * (1 + (R + 2) ^ (1 + ε)) := by
-      have hpow : 1 + R1 ^ (1 + ε0) ≤ 1 + (R + 2) ^ (1 + ε) := by
-        have h1 : R1 ^ (1 + ε0) ≤ (R + 2) ^ (1 + ε0) :=
-          Real.rpow_le_rpow hR1nn hR1I.2 (by linarith)
-        have h2 : (R + 2) ^ (1 + ε0) ≤ (R + 2) ^ (1 + ε) :=
-          Real.rpow_le_rpow_of_exponent_le (by linarith [hR] : 1 ≤ R + 2)
-            (min_le_left ε 1)
-        linarith
-      have hBoleC : Block0 ≤ C := by
-        have hmul : 1 ≤ (2 : ℝ) ^ (1 + ε) * 3 ^ (1 + ε) :=
-          one_le_mul_of_one_le_of_one_le
-            (Real.one_le_rpow (by norm_num : (1 : ℝ) ≤ 2) (by linarith))
-            (Real.one_le_rpow (by norm_num : (1 : ℝ) ≤ 3) (by linarith))
-        have : Block0 ≤ Block0 * ((2 : ℝ) ^ (1 + ε) * 3 ^ (1 + ε)) := by
-          nlinarith [hBlock0.le, hmul]
-        simp only [C]; linarith [Real.pi_pos.le]
-      exact mul_le_mul hBoleC hpow (by positivity) hC.le
     rw [hure]; exact hlog.trans hlift
-  · -- ‖φ 0‖: rama Im ∈ (-π,π] + cota |log ‖u 0‖|
-    sorry
+  · -- ‖φ 0‖ = ‖log (u 0)‖ ≤ |log ‖u 0‖| + π
+    have hφ0log : φ 0 = Complex.log (u 0) := by
+      change φ0 0 - (φ0 0 - Complex.log (u 0)) = Complex.log (u 0); ring
+    rw [hφ0log]
+    have hsplit := norm_log_le_abs_log_norm_add_pi hu0pt
+    have hu0pos : 0 < ‖u 0‖ := norm_pos_iff.mpr hu0pt
+    have h0nn : ‖(0 : ℂ)‖ ≤ R1 := by simpa using hR1nn
+    have hlog0 : Real.log ‖u 0‖ ≤ Block0 * (1 + R1 ^ (1 + ε0)) :=
+      (Real.log_le_log hu0pos (hnorm_disk 0 h0nn)).trans_eq (Real.log_exp _)
+    by_cases hge1 : (1 : ℝ) ≤ ‖u 0‖
+    · have habs : |Real.log ‖u 0‖| = Real.log ‖u 0‖ :=
+        abs_of_nonneg (Real.log_nonneg hge1)
+      have hsum : Real.log ‖u 0‖ + Real.pi ≤ C * (1 + (R + 2) ^ (1 + ε)) := by
+        have hslack : Real.pi ≤ (C - Block0) * (1 + (R + 2) ^ (1 + ε)) := by
+          have hCdiff : Real.pi + 1 ≤ C - Block0 := by
+            simp only [C]
+            have hmul : 1 ≤ (2 : ℝ) ^ (1 + ε) * 3 ^ (1 + ε) :=
+              one_le_mul_of_one_le_of_one_le
+                (Real.one_le_rpow (by norm_num : (1 : ℝ) ≤ 2) (by linarith))
+                (Real.one_le_rpow (by norm_num : (1 : ℝ) ≤ 3) (by linarith))
+            nlinarith [hBlock0.le, Real.pi_pos.le, hmul]
+          have hQ : (1 : ℝ) ≤ 1 + (R + 2) ^ (1 + ε) := by
+            linarith [Real.rpow_nonneg (by linarith : (0 : ℝ) ≤ R + 2) (1 + ε)]
+          nlinarith [hCdiff, hQ, Real.pi_pos.le]
+        linarith [hlog0, hlift]
+      rw [habs] at hsplit
+      exact hsplit.trans hsum
+    · -- |u 0| < 1: cota inferior via trailing coeff / (R+2)^N
+      sorry
 
-/-- Min |u| en el círculo. Glue: log+Re bound (sorry) + Borel (cerrado). -/
+/-- Min |u| en el círculo. Glue: log+Re (‖φ 0‖ sorry si |u 0|<1) + Borel (cerrado). -/
 theorem min_norm_never_zero_analytic
     (hg : Differentiable ℂ g) (hg_ord : OrderAtMostOne g)
     (hg0 : ¬ ∀ w, g w = 0)
