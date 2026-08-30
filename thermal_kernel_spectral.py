@@ -38,6 +38,7 @@ def K_gauss(t, s, h):
         Kernel value K_h(t,s)
     """
     return np.exp(-h/4.0) * np.sqrt(np.pi / h) * np.exp(-(t - s)**2 / (4.0*h))
+"""
 - Builds operator H from thermal kernel K_t(x,y)
 - Uses parity operator J for functional equation symmetry
 - Diagonalizes H to extract Riemann zeros
@@ -549,10 +550,7 @@ if __name__ == "__main__":
     print("3. H is coercive and self-adjoint")
     print("4. Spectrum is geometric: {ω_k² + 1/4}")
     print("5. To get Riemann zeros, apply de Branges structure (§6-§8)")
-        print(f"  Thermal parameter t: {basis_info['t']}")
-        print(f"  Target γ values (first 5): {basis_info['gamma_estimates'][:5]}")
-        print()
-    
+
     # Verify positive definiteness (coercivity)
     min_eigenvalue = np.min(np.linalg.eigvalsh(H))
     if verbose:

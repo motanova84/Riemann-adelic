@@ -28,8 +28,8 @@ from src.biological.cytoplasmic_flow_model import (
     FlowParameters,
     SpectralMode,
     compute_reynolds_number,
-    is_cytoplasmic_regime
-from typing import Tuple
+    is_cytoplasmic_regime,
+)
 import sys
 from pathlib import Path
 
@@ -46,6 +46,7 @@ from biological.cytoplasmic_flow_model import (
     NU_CYTOPLASM,
     CELL_LENGTH_SCALE,
     FLOW_VELOCITY,
+)
 from utils.cytoplasmic_flow_model import (
     CytoplasmicFlowModel,
     FlowParameters,
@@ -573,6 +574,12 @@ class TestNumericalAccuracy:
 if __name__ == '__main__':
     """Run tests with pytest."""
     pytest.main([__file__, '-v', '--tb=short'])
+
+
+class TestFlowParametersExtended:
+    """Tests for the extended (Spanish-version) FlowParameters."""
+
+    def test_default_parameters(self):
         """Test default cytoplasmic parameters."""
         params = FlowParameters()
         

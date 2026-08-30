@@ -303,6 +303,7 @@ class TestIntegration:
         assert 'paley_wiener' in result.details
 
 
+"""
 Test Suite for Unconditional Spectral Equivalence Demonstration
 
 This test module validates the numerical demonstration of the spectral

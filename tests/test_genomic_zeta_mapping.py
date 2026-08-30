@@ -5,10 +5,6 @@ Tests for Genomic Zeta Mapping Module
 Tests the deterministic mapping of RNA/DNA codons to Riemann zeros
 and the construction of coherent wave functions.
 """
-Tests for Genomic Zeta Mapping Module
-
-Validates DNA/RNA codon fragmentation and mapping to Riemann zeros.
-#!/usr/bin/env python3
 """
 Unit tests for Genomic Zeta Mapping (Gen→Zeta Framework)
 
