@@ -1,0 +1,42 @@
+{
+  "timestamp": "2026-03-03T23:06:54.031204",
+  "module": "riemann_noesis_hamiltonian",
+  "version": "1.0.0",
+  "author": "Jos\u00e9 Manuel Mota Burruezo \u03a8 \u2727 \u221e\u00b3",
+  "orcid": "0009-0002-1923-0773",
+  "doi": "10.5281/zenodo.17379721",
+  "validation_status": "PASSED",
+  "parameters": {
+    "n_points": 1024,
+    "max_prime": 500,
+    "n_primes": 95
+  },
+  "lemma_1_discreteness": {
+    "verified": true,
+    "is_anti_hermitian": true,
+    "is_discrete": true,
+    "error": 0.0
+  },
+  "lemma_2_trace_identity": {
+    "verified": true,
+    "weyl_term": 0.875,
+    "prime_contribution": 1.4173254400264932,
+    "total_trace": 2.3291133841436378,
+    "orbit_count": 431
+  },
+  "lemma_3_determinant_uniqueness": {
+    "verified": true,
+    "max_ratio_error": 0.9906991672059032,
+    "determinant_order": 1.0
+  },
+  "qcal_constants": {
+    "f0_hz": 141.7001,
+    "coherence_c": 244.36,
+    "euler_characteristic": 0.875
+  },
+  "conservation_law": {
+    "all_lemmas_verified": true,
+    "rh_is_conservation_law": true
+  },
+  "certificate_hash": "0xQCAL_HRN_0a0035c9416015d5"
+}
