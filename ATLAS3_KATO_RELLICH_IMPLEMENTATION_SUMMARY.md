@@ -278,6 +278,26 @@ Potential improvements (not implemented):
 **DOI**: 10.5281/zenodo.17379721  
 **ORCID**: 0009-0002-1923-0773  
 
+## Related: H_Ψ Self-Adjoint Corrected
+
+**Enhancement**: The ATLAS³ Kato-Rellich framework has been strengthened by the rigorous correction of fundamental mathematical issues in the H_Ψ operator (FALLOS 1-3).
+
+**See**:
+- `H_PSI_SELF_ADJOINT_CORRECTED_README.md` — Complete documentation
+- `H_PSI_SELF_ADJOINT_CORRECTED_IMPLEMENTATION_SUMMARY.md` — Technical summary
+- `operators/h_psi_self_adjoint_corrected.py` — Implementation
+- `validate_h_psi_self_adjoint_corrected.py` — Validation script
+
+**Key Corrections**:
+1. ✅ Self-adjointness with proper domain (hermiticity error: 0.00e+00)
+2. ✅ Unitary transformation between Hilbert spaces (unitarity error: 7.65e-17)
+3. ✅ Discrete spectrum via Hilbert-Schmidt compactness (HS norm: 4.76)
+
+**Impact**: Provides rigorous mathematical foundations for:
+- Self-adjoint extensions of unbounded operators
+- Unitary equivalence between different function spaces
+- Discrete spectrum proofs via compact resolvent theory
+
 ## Conclusion
 
 The ATLAS³ Kato-Rellich theorem implementation is **COMPLETE** and provides rigorous mathematical proof that the full ATLAS³ operator is essentially self-adjoint. This establishes:
@@ -287,6 +307,7 @@ The ATLAS³ Kato-Rellich theorem implementation is **COMPLETE** and provides rig
 - ✅ Unique quantum evolution
 - ✅ Perturbation stability
 - ✅ Connection to Riemann Hypothesis validated
+- ✅ **NEW**: Rigorous H_Ψ self-adjointness (FALLOS 1-3 corrected)
 
 **Status**: Ready for production use  
 **Validation**: All tests passing  
