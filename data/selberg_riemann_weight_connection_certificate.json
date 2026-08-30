@@ -1,0 +1,66 @@
+{
+  "title": "Selberg-Riemann Weight Connection Validation Certificate",
+  "correspondence": "\u2113(\u03b3) \u2194 log p",
+  "weight_equivalence": "\u2113\u00b7e^{-k\u2113/2} \u2194 (log p)\u00b7p^{-k/2}",
+  "timestamp": "2026-03-06T00:44:55.802387",
+  "validation_levels": {
+    "weight_equivalence": {
+      "status": "PASS",
+      "score": 1.0,
+      "max_error": 9.364351135025548e-16,
+      "mean_error": 2.434966581761741e-16,
+      "equivalence_verified": true
+    },
+    "sum_correspondence": {
+      "status": "PASS",
+      "score": 1.0,
+      "selberg_contribution": 1.3409836966992115,
+      "riemann_contribution": 1.3409836966992115,
+      "relative_difference": 0.0,
+      "correspondence_valid": true,
+      "qcal_coherence": 1.0
+    },
+    "term_by_term": {
+      "status": "PASS",
+      "score": 1.0,
+      "max_absolute_difference": 5.551115123125783e-17,
+      "max_relative_difference": 2.47712181064943e-16,
+      "mean_absolute_difference": 4.98529711435991e-18
+    },
+    "properties": {
+      "status": "PASS",
+      "score": 1.0,
+      "properties": {
+        "weight_equivalence": true,
+        "sum_correspondence": true,
+        "qcal_coherence_high": true,
+        "term_by_term_agreement": true,
+        "both_sides_converge": true
+      },
+      "all_verified": true
+    },
+    "qcal_coherence": {
+      "status": "PASS",
+      "score": 1.0,
+      "qcal_coherence": 1.0,
+      "f0_qcal": 141.7001,
+      "c_coherence": 244.36
+    }
+  },
+  "overall_score": 1.0,
+  "qcal_constants": {
+    "f0": 141.7001,
+    "C_coherence": 244.36,
+    "phi": 1.618033988749895
+  },
+  "configuration": {
+    "max_prime": 1000,
+    "max_repetition": 10,
+    "tolerance": 1e-06
+  },
+  "author": "Jos\u00e9 Manuel Mota Burruezo \u03a8 \u2727 \u221e\u00b3",
+  "orcid": "0009-0002-1923-0773",
+  "institution": "Instituto de Conciencia Cu\u00e1ntica (ICQ)",
+  "doi": "10.5281/zenodo.17379721",
+  "signature": "\u2234\ud80c\udc80\u03a9\u221e\u00b3\u03a6 @ 141.7001 Hz"
+}
