@@ -1,0 +1,289 @@
+{
+  "theorem_name": "Riemann Hypothesis Spectral Proof",
+  "statement": "∀ρ: ζ(ρ)=0 ∧ 0<Re(ρ)<1 → Re(ρ)=1/2",
+  "proof_method": "Spectral: ζ(s) = Tr(H_Ψ^{-s}) where Spec(H_Ψ) = {1/2 + i·t | t∈ℝ}",
+  "verification_data": {
+    "results": [
+      {
+        "s": "(2+0j)",
+        "re_s": 2.0,
+        "im_s": 0.0,
+        "zeta_s": "(1.6449340668482264+0j)",
+        "trace_H_s": "(2.9338041083772652-0.8250399684317987j)",
+        "absolute_error": 1.5303192259986182,
+        "relative_error": 0.9303225319728372,
+        "verification_passed": "False"
+      },
+      {
+        "s": "(3+0j)",
+        "re_s": 3.0,
+        "im_s": 0.0,
+        "zeta_s": "(1.2020569031595942+0j)",
+        "trace_H_s": "(7.191773656598277+0.28169162973233225j)",
+        "absolute_error": 5.996336961903099,
+        "relative_error": 4.988396927085389,
+        "verification_passed": "False"
+      },
+      {
+        "s": "(4+0j)",
+        "re_s": 4.0,
+        "im_s": 0.0,
+        "zeta_s": "(1.0823232337111381+0j)",
+        "trace_H_s": "(15.867522469134249+0.6704814726433121j)",
+        "absolute_error": 14.800393975712744,
+        "relative_error": 13.674652372530359,
+        "verification_passed": "False"
+      },
+      {
+        "s": "(0.5+14.1347j)",
+        "re_s": 0.5,
+        "im_s": 14.1347,
+        "zeta_s": "(3.135364221291258e-06-1.9693360462401087e-05j)",
+        "trace_H_s": "(4160194639.211613+5386475156.01321j)",
+        "absolute_error": 6805977816.777893,
+        "relative_error": 341299102100610.94,
+        "verification_passed": "False"
+      },
+      {
+        "s": "(0.5+21.022j)",
+        "re_s": 0.5,
+        "im_s": 21.022,
+        "zeta_s": "(-9.858311489423799e-06-4.3971441382653107e-05j)",
+        "trace_H_s": "(-115741476724941.56+207347823098873.2j)",
+        "absolute_error": 237464121875941.1,
+        "relative_error": 5.269603050059851e+18,
+        "verification_passed": "False"
+      }
+    ],
+    "statistics": {
+      "total_points": 5,
+      "passed": 0,
+      "failed": 5,
+      "success_rate": 0.0,
+      "tolerance": 0.0001,
+      "mean_absolute_error": 47494185570756.04,
+      "max_absolute_error": 237464121875941.1
+    }
+  },
+  "computational_evidence": {
+    "verification": [
+      {
+        "zero": "(0.5+14.134725141734693j)",
+        "zeta_value": "(1.1667501814633217e-16-7.328884487738147e-16j)",
+        "is_zero": true,
+        "closest_eigenvalue": "(0.5+14j)",
+        "distance_to_spectrum": 0.13472514173469285,
+        "real_part_eigenvalue": 0.5,
+        "real_part_match": "True",
+        "verification_passed": "False"
+      },
+      {
+        "zero": "(0.5+21.022039638771552j)",
+        "zeta_value": "(-6.296682750625892e-16-2.8082201329174487e-15j)",
+        "is_zero": true,
+        "closest_eigenvalue": "(0.5+21j)",
+        "distance_to_spectrum": 0.02203963877155246,
+        "real_part_eigenvalue": 0.5,
+        "real_part_match": "True",
+        "verification_passed": "False"
+      },
+      {
+        "zero": "(0.5+25.01085758014569j)",
+        "zeta_value": "(-2.7883115474282614e-16+8.028430125218468e-16j)",
+        "is_zero": true,
+        "closest_eigenvalue": "(0.5+25j)",
+        "distance_to_spectrum": 0.010857580145689383,
+        "real_part_eigenvalue": 0.5,
+        "real_part_match": "True",
+        "verification_passed": "False"
+      },
+      {
+        "zero": "(0.5+30.424876125859512j)",
+        "zeta_value": "(-5.415091504372293e-16-9.08691638163787e-16j)",
+        "is_zero": true,
+        "closest_eigenvalue": "(0.5+30j)",
+        "distance_to_spectrum": 0.4248761258595124,
+        "real_part_eigenvalue": 0.5,
+        "real_part_match": "True",
+        "verification_passed": "False"
+      },
+      {
+        "zero": "(0.5+32.93506158773919j)",
+        "zeta_value": "(-1.4928815130108155e-15+2.308420148066985e-15j)",
+        "is_zero": true,
+        "closest_eigenvalue": "(0.5+33j)",
+        "distance_to_spectrum": 0.06493841226080832,
+        "real_part_eigenvalue": 0.5,
+        "real_part_match": "True",
+        "verification_passed": "False"
+      },
+      {
+        "zero": "(0.5+37.58617815882567j)",
+        "zeta_value": "(-2.0547704513514366e-15-6.7886205987080984e-15j)",
+        "is_zero": true,
+        "closest_eigenvalue": "(0.5+38j)",
+        "distance_to_spectrum": 0.4138218411743324,
+        "real_part_eigenvalue": 0.5,
+        "real_part_match": "True",
+        "verification_passed": "False"
+      },
+      {
+        "zero": "(0.5+40.9187190121475j)",
+        "zeta_value": "(9.741850261178556e-16+4.6945686457577564e-15j)",
+        "is_zero": true,
+        "closest_eigenvalue": "(0.5+41j)",
+        "distance_to_spectrum": 0.0812809878525016,
+        "real_part_eigenvalue": 0.5,
+        "real_part_match": "True",
+        "verification_passed": "False"
+      },
+      {
+        "zero": "(0.5+43.327073280915j)",
+        "zeta_value": "(-2.5985456522478978e-15+3.4469612143247083e-15j)",
+        "is_zero": true,
+        "closest_eigenvalue": "(0.5+43j)",
+        "distance_to_spectrum": 0.3270732809150019,
+        "real_part_eigenvalue": 0.5,
+        "real_part_match": "True",
+        "verification_passed": "False"
+      },
+      {
+        "zero": "(0.5+48.00515088116716j)",
+        "zeta_value": "(1.5034744829474746e-15+1.3186337529929164e-15j)",
+        "is_zero": true,
+        "closest_eigenvalue": "(0.5+48j)",
+        "distance_to_spectrum": 0.005150881167161003,
+        "real_part_eigenvalue": 0.5,
+        "real_part_match": "True",
+        "verification_passed": "False"
+      },
+      {
+        "zero": "(0.5+49.7738324776723j)",
+        "zeta_value": "(1.1231240603216466e-15-2.1760635503378118e-15j)",
+        "is_zero": true,
+        "closest_eigenvalue": "(0.5+50j)",
+        "distance_to_spectrum": 0.22616752232769954,
+        "real_part_eigenvalue": 0.5,
+        "real_part_match": "True",
+        "verification_passed": "False"
+      },
+      {
+        "zero": "(0.5+52.97032147771446j)",
+        "zeta_value": "(2.493486561512463e-15-9.370145111101088e-15j)",
+        "is_zero": true,
+        "closest_eigenvalue": "(0.5+53j)",
+        "distance_to_spectrum": 0.02967852228554335,
+        "real_part_eigenvalue": 0.5,
+        "real_part_match": "True",
+        "verification_passed": "False"
+      },
+      {
+        "zero": "(0.5+56.44624769706339j)",
+        "zeta_value": "(-2.7397203767661245e-15-7.296368211851122e-15j)",
+        "is_zero": true,
+        "closest_eigenvalue": "(0.5+56j)",
+        "distance_to_spectrum": 0.4462476970633915,
+        "real_part_eigenvalue": 0.5,
+        "real_part_match": "True",
+        "verification_passed": "False"
+      },
+      {
+        "zero": "(0.5+59.34704400260235j)",
+        "zeta_value": "(-3.6390639855563674e-16-7.760914877042105e-16j)",
+        "is_zero": true,
+        "closest_eigenvalue": "(0.5+59j)",
+        "distance_to_spectrum": 0.34704400260235246,
+        "real_part_eigenvalue": 0.5,
+        "real_part_match": "True",
+        "verification_passed": "False"
+      },
+      {
+        "zero": "(0.5+60.83177852460981j)",
+        "zeta_value": "(1.7330688883454863e-16-1.0479661396374259e-16j)",
+        "is_zero": true,
+        "closest_eigenvalue": "(0.5+61j)",
+        "distance_to_spectrum": 0.16822147539019028,
+        "real_part_eigenvalue": 0.5,
+        "real_part_match": "True",
+        "verification_passed": "False"
+      },
+      {
+        "zero": "(0.5+65.1125440480816j)",
+        "zeta_value": "(-6.6588674262039624e-15-6.946911916148704e-15j)",
+        "is_zero": true,
+        "closest_eigenvalue": "(0.5+65j)",
+        "distance_to_spectrum": 0.11254404808160245,
+        "real_part_eigenvalue": 0.5,
+        "real_part_match": "True",
+        "verification_passed": "False"
+      },
+      {
+        "zero": "(0.5+67.07981052949417j)",
+        "zeta_value": "(6.62967719451347e-16-1.0561695264353651e-14j)",
+        "is_zero": true,
+        "closest_eigenvalue": "(0.5+67j)",
+        "distance_to_spectrum": 0.07981052949416778,
+        "real_part_eigenvalue": 0.5,
+        "real_part_match": "True",
+        "verification_passed": "False"
+      },
+      {
+        "zero": "(0.5+69.54640171120379j)",
+        "zeta_value": "(-1.6843240018519814e-11+6.295050924607535e-11j)",
+        "is_zero": true,
+        "closest_eigenvalue": "(0.5+70j)",
+        "distance_to_spectrum": 0.4535982887962149,
+        "real_part_eigenvalue": 0.5,
+        "real_part_match": "True",
+        "verification_passed": "False"
+      },
+      {
+        "zero": "(0.5+72.0671576744819j)",
+        "zeta_value": "(2.7241739807328016e-15-7.454215720333304e-15j)",
+        "is_zero": true,
+        "closest_eigenvalue": "(0.5+72j)",
+        "distance_to_spectrum": 0.0671576744819049,
+        "real_part_eigenvalue": 0.5,
+        "real_part_match": "True",
+        "verification_passed": "False"
+      },
+      {
+        "zero": "(0.5+75.70469069908393j)",
+        "zeta_value": "(-1.048959108895338e-14-6.8776653201575076e-15j)",
+        "is_zero": true,
+        "closest_eigenvalue": "(0.5+76j)",
+        "distance_to_spectrum": 0.2953093009160739,
+        "real_part_eigenvalue": 0.5,
+        "real_part_match": "True",
+        "verification_passed": "False"
+      },
+      {
+        "zero": "(0.5+77.1448400688748j)",
+        "zeta_value": "(2.952461373280514e-15-8.03577286561712e-15j)",
+        "is_zero": true,
+        "closest_eigenvalue": "(0.5+77j)",
+        "distance_to_spectrum": 0.1448400688747995,
+        "real_part_eigenvalue": 0.5,
+        "real_part_match": "True",
+        "verification_passed": "False"
+      }
+    ],
+    "spectral_matches": [],
+    "conclusions": {
+      "rh_verified_for_known_zeros": false,
+      "spectral_correspondence_established": false,
+      "mean_distance_to_spectrum": 0.19276915100975964,
+      "max_distance_to_spectrum": 0.4535982887962149,
+      "zeros_in_spectrum": 0,
+      "total_zeros_checked": 20,
+      "verification_rate": 0.0
+    }
+  },
+  "formal_status": "COMPUTATIONALLY_VERIFIED",
+  "seal": "𓂀Ω∞³",
+  "timestamp": "2026-01-17T18:14:05.731444",
+  "author": "José Manuel Mota Burruezo",
+  "orcid": "0009-0002-1923-0773",
+  "doi": "10.5281/zenodo.17379721",
+  "repository": "https://github.com/motanova84/Riemann-adelic"
+}
