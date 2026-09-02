@@ -1,35 +1,33 @@
 /-
-  Hadamard uniqueness — cierre del puente D ≡ Ξ por ceros, no por densidad.
+  Hadamard uniqueness v3.2.5 — ensamblaje.
+
+  GAP1–4 importados. Este archivo: 0 sorry en fuente, no lake-checked.
+  B=0 escrito. C=1 por f(1/2)=g(1/2)≠0.
+  h(1-s)=h s por identidad en {g ≠ 0} (abierto denso).
+  Re φ = log ‖h‖ a partir de OrderAtMostOne h.
+
+  GAP4 (archivo aparte, v3.2.18): 0 tactic sorry en fuente.
+  exists_circle_min_norm y order_atMostOne_of_quotient pegados.
+  No RH. No D ≡ Ξ.
 
   José Manuel Mota Burruezo · Noesis · QCAL ∞³
 -/
 
+import GAP1_log_holomorphic_of_entire_never_zero
+import GAP2_affine_log_of_order_one
+import GAP3_quotient_entire_never_zero
+import GAP4_order_atMostOne_of_quotient
 import Mathlib.Analysis.Analytic.IsolatedZeros
 import Mathlib.Analysis.Calculus.Deriv.Basic
 import Mathlib.Analysis.Complex.Basic
-import Mathlib.Analysis.Complex.BorelCaratheodory
-import Mathlib.Analysis.Complex.BranchLogRoot
-import Mathlib.Analysis.Complex.Liouville
-import Mathlib.Analysis.Complex.RemovableSingularity
-import Mathlib.Analysis.SpecialFunctions.Complex.Log
 import Mathlib.Analysis.SpecialFunctions.ExpDeriv
+import Mathlib.Analysis.SpecialFunctions.Log.Basic
 
 noncomputable section
-open Complex Filter Set
-open scoped Topology
+open Complex Filter Metric Set
+open scoped Topology Real
 
-/-! ## Crecimiento -/
-
-/-- Tipo exponencial (Paley–Wiener). ξ clásica NO es esto. -/
-def OrderLEOne (f : ℂ → ℂ) : Prop :=
-  ∃ A B : ℝ, 0 < A ∧ 0 ≤ B ∧ ∀ z : ℂ, ‖f z‖ ≤ A * Real.exp (B * ‖z‖)
-
-/-- Orden ≤ 1 de Hadamard. ξ clásica SÍ es esto. -/
-def OrderAtMostOne (f : ℂ → ℂ) : Prop :=
-  ∀ ε : ℝ, 0 < ε → ∃ A : ℝ, 0 < A ∧ ∀ z : ℂ, ‖f z‖ ≤ A * Real.exp (‖z‖ ^ (1 + ε))
-
-def SameZeros (f g : ℂ → ℂ) : Prop :=
-  ∀ z : ℂ, analyticOrderAt f z = analyticOrderAt g z
+/-! ## Crecimiento: `OrderAtMostOne` / `OrderLEOne` viven en GAP4. -/
 
 /-! ## B = 0, por derivada. Argumento cerrado. -/
 
@@ -46,7 +44,6 @@ lemma exp_affine_of_functional_eq {A B : ℂ}
         _ = exp (A + B * (1 - s)) / exp (A + B * s) := exp_sub _ _
         _ = exp (A + B * s) / exp (A + B * s) := by rw [hs]
         _ = 1 := div_self (exp_ne_zero _)
-  -- F ≡ 1 ⇒ F'(0) = 0. Cadena: F'(0) = e^B · (-2B).
   have Fderiv0 : deriv (fun s : ℂ => exp (B * (1 - 2 * s))) 0 = 0 := by
     have : (fun s : ℂ => exp (B * (1 - 2 * s))) = fun _ => (1 : ℂ) := funext hF
     simpa [this] using deriv_const (0 : ℂ) (1 : ℂ)
@@ -55,101 +52,93 @@ lemma exp_affine_of_functional_eq {A B : ℂ}
       simpa using (hasDerivAt_const (0 : ℂ) (1 : ℂ)).sub
         ((hasDerivAt_id' (0 : ℂ)).const_mul (2 : ℂ))
     simpa using h1.const_mul B
-  have hcomp : HasDerivAt (fun s : ℂ => exp (B * (1 - 2 * s))) (exp B * (-2 * B)) 0 :=
-    (hasDerivAt_exp (B * (1 - 2 * (0 : ℂ)))).comp 0 hu |>.congr_fderiv (by simp)
-  -- `congr_fderiv` puede no existir; el valor u(0)=B.
-  sorry -- pegar HasDerivAt.comp: u(0)=B, F'(0)=exp(B)*(-2B)
-  -- Tras el glue: exp B * (-2 * B) = 0 ⇒ B = 0
-  -- exact (mul_eq_zero.mp this).elim (fun h => (exp_ne_zero B h).elim)
-  --   (fun h => (mul_eq_zero.mp h).resolve_left (by norm_num))
+  have hcomp : HasDerivAt (fun s : ℂ => exp (B * (1 - 2 * s)))
+      (exp (B * (1 - 2 * (0 : ℂ))) * (-2 * B)) 0 :=
+    (hasDerivAt_exp (B * (1 - 2 * (0 : ℂ)))).comp 0 hu
+  have hF' : deriv (fun s : ℂ => exp (B * (1 - 2 * s))) 0 = exp B * (-2 * B) := by
+    simpa using hcomp.deriv
+  have hmul : exp B * (-2 * B) = 0 := by
+    rw [← hF', Fderiv0]
+  rcases (mul_eq_zero.mp hmul) with he | h2B
+  · exact (exp_ne_zero B he).elim
+  · rcases (mul_eq_zero.mp h2B) with h2 | hB
+    · norm_num at h2
+    · exact hB
 
-/-!
-## Hueco 1 — log holomorfo
+/-! ## GAP 1–3 importados (nombres en raíz de cada módulo). -/
 
-`exists_continuousOn_eqOn_exp_comp` da φ continua, exp∘φ = h.
-Localmente exp es biholomorfa ⇒ φ = Log_local ∘ h + 2πi k, k constante
-en un disco ⇒ φ holomorfa.
--/
+/-! ## Re φ = log ‖h‖, a partir de OrderAtMostOne h. -/
 
-theorem exists_continuous_log_univ {h : ℂ → ℂ}
-    (hhc : Continuous h) (hne : ∀ z, h z ≠ 0) :
-    ∃ φ : ℂ → ℂ, Continuous φ ∧ ∀ z, exp (φ z) = h z := by
-  have h0 : (0 : ℂ) ∉ h '' (univ : Set ℂ) := by
-    rintro ⟨z, _, rfl⟩; exact hne z rfl
-  obtain ⟨φ, hφc, hφ⟩ :=
-    exists_continuousOn_eqOn_exp_comp isSimplyConnected_univ isOpen_univ
-      hhc.continuousOn h0
-  exact ⟨φ, hφc.continuous_of_continuousOn_univ, fun z => hφ (mem_univ z)⟩
+lemma re_le_of_exp_eq_order
+    {φ h : ℂ → ℂ}
+    (hexp : ∀ z, exp (φ z) = h z)
+    (hord : OrderAtMostOne h) :
+    ∀ ε > 0, ∃ C : ℝ, 0 < C ∧ ∀ z, (φ z).re ≤ C * (1 + ‖z‖ ^ (1 + ε)) := by
+  intro ε hε
+  obtain ⟨A, hA, hAb⟩ := hord ε hε
+  refine ⟨max (Real.log A) 1, lt_of_lt_of_le zero_lt_one (le_max_right _ _), ?_⟩
+  intro z
+  have hnorm : ‖h z‖ = Real.exp (φ z).re := by
+    rw [← hexp z, norm_exp]
+  have hle : ‖h z‖ ≤ A * Real.exp (‖z‖ ^ (1 + ε)) := hAb z
+  have hpos : 0 < ‖h z‖ := by
+    rw [hnorm]; exact Real.exp_pos _
+  have hlog : (φ z).re ≤ Real.log A + ‖z‖ ^ (1 + ε) := by
+    have hlogle := Real.log_le_log hpos hle
+    have hleft : Real.log ‖h z‖ = (φ z).re := by
+      rw [hnorm, Real.log_exp]
+    have hright : Real.log (A * Real.exp (‖z‖ ^ (1 + ε))) =
+        Real.log A + ‖z‖ ^ (1 + ε) := by
+      rw [Real.log_mul (ne_of_gt hA) (Real.exp_ne_zero _), Real.log_exp]
+    rw [hleft, hright] at hlogle
+    exact hlogle
+  have hC1 : Real.log A ≤ max (Real.log A) 1 := le_max_left _ _
+  have hC2 : (1 : ℝ) ≤ max (Real.log A) 1 := le_max_right _ _
+  have hr : 0 ≤ ‖z‖ ^ (1 + ε) := Real.rpow_nonneg (norm_nonneg z) (1 + ε)
+  nlinarith
 
-/-- Disco alrededor de w≠0 que no toca 0: radio ‖w‖/2. -/
-lemma ball_ne_zero (w : ℂ) (hw : w ≠ 0) {z : ℂ}
-    (hz : z ∈ ball w (‖w‖ / 2)) : z ≠ 0 := by
-  intro h
-  have : dist z w < ‖w‖ / 2 := hz
-  simp [h, dist_eq_norm, hw] at this
-  have : ‖w‖ < ‖w‖ / 2 := this
-  linarith [norm_pos_iff.mpr hw]
+/-! ## Identidad: se anula en un disco ⇒ 0. -/
 
-theorem differentiable_of_exp_comp {φ h : ℂ → ℂ}
-    (hh : Differentiable ℂ h) (hφ : Continuous φ)
-    (hexp : ∀ z, exp (φ z) = h z) :
-    Differentiable ℂ φ := by
-  intro z₀
-  -- En un disco donde h(z) vive en ball (h z₀) (‖h z₀‖/2), hay log holomorfo.
-  have h0 : h z₀ ≠ 0 := by
-    rw [← hexp z₀]; exact exp_ne_zero _
-  -- φ(z) - Log(h z) ∈ 2πiℤ, continuo ⇒ constante. Luego φ es holomorfa.
-  sorry -- Log holomorfo local (slitPlane / `expOpenPartialHomeomorph.symm`) + const 2πiℤ
+lemma entire_eq_zero_of_eqOn_ball {f : ℂ → ℂ} {c : ℂ} {ε : ℝ}
+    (hf : Differentiable ℂ f) (hε : 0 < ε)
+    (hball : ∀ z ∈ ball c ε, f z = 0) :
+    ∀ z, f z = 0 := by
+  have hfA : AnalyticOnNhd ℂ f univ := hf.analyticOnNhd
+  have hfreq : ∃ᶠ z in 𝓝[≠] c, f z = 0 := by
+    rw [frequently_nhdsWithin_iff]
+    intro U hU
+    obtain ⟨δ, hδ, hUball⟩ := Metric.mem_nhds_iff.mp hU
+    let t : ℝ := min (ε / 2) (δ / 2)
+    have htpos : 0 < t := by
+      have : 0 < ε / 2 := half_pos hε
+      have : 0 < δ / 2 := half_pos hδ
+      exact lt_min ‹_› ‹_›
+    have hne : (c + t : ℂ) ≠ c := by
+      intro h
+      have ht0 : (t : ℂ) = 0 := by
+        simpa using add_right_eq_self.mp h
+      have : t = 0 := by exact_mod_cast ht0
+      exact htpos.ne' this
+    refine ⟨c + t, ?_, hball (c + t) ?_⟩
+    · constructor
+      · apply hUball
+        simp [Complex.dist_eq, add_sub_cancel_left, abs_of_pos htpos]
+        have : t < δ := (min_le_right (ε / 2) (δ / 2)).trans_lt (half_lt_self hδ)
+        simpa [Complex.dist_eq, abs_of_pos htpos] using this
+      · exact hne
+    · have : dist (c + t) c < ε := by
+        simp [Complex.dist_eq, add_sub_cancel_left, abs_of_pos htpos]
+        have : t < ε := (min_le_left (ε / 2) (δ / 2)).trans_lt (half_lt_self hε)
+        simpa [abs_of_pos htpos] using this
+      exact this
+  have hz : c ∈ univ := mem_univ _
+  have hEq : EqOn f 0 univ :=
+    hfA.eqOn_zero_of_preconnected_of_frequently_eq_zero
+      isPreconnected_univ hz hfreq
+  intro z
+  exact hEq (mem_univ z)
 
-/-!
-## Hueco 2 — Borel–Carathéodory + Cauchy + Liouville
-
-Mathlib:
-- `borelCaratheodory`
-- Cauchy: `norm_deriv_le` / `Complex.deriv_eq_smul_circleIntegral` (Liouville.lean)
-- `Differentiable.apply_eq_apply_of_bounded`
--/
-
-theorem entire_of_realPart_order_le_one {φ : ℂ → ℂ}
-    (hφ : Differentiable ℂ φ)
-    (hRe : ∀ ε > 0, ∃ C : ℝ, 0 < C ∧ ∀ z, (φ z).re ≤ C * (1 + ‖z‖ ^ (1 + ε))) :
-    ∃ A B : ℂ, ∀ s, φ s = A + B * s := by
-  -- 1. Borel: |φ(z)| ≤ K_ε (1+|z|^{1+ε})
-  -- 2. Cauchy en círculo |w-z|=|z|+1: |φ'(z)| ≤ K (1+|z|^{1+ε}) / (|z|+1)
-  --    ⇒ |φ'(z)| = O(|z|^ε) para todo ε. En particular O(|z|^{1/2}).
-  -- 3. Cauchy otra vez: |φ''(z)| = O(R^{-1/2}) → 0 ⇒ φ'' ≡ 0 ⇒ φ' constante.
-  have hφ'' : deriv (deriv φ) = 0 := by
-    funext z
-    sorry -- |φ'' z| ≤ C / sqrt(R) para R arbitrario ⇒ = 0
-  have hlin : ∃ B : ℂ, deriv φ = fun _ => B := by
-    -- deriv φ tiene derivada 0 ⇒ constante
-    sorry
-  obtain ⟨B, hB⟩ := hlin
-  refine ⟨φ 0, B, ?_⟩
-  intro s
-  -- φ(s) - φ(0) = B * s  (FTC / hasDerivAt.eq_iff)
-  sorry
-
-/-!
-## Hueco 3 — cociente con infinitos ceros
-
-`g ≢ 0` entera ⇒ ceros aislados.
-`SameZeros` ⇒ f = (z-z₀)^n u, g = (z-z₀)^n v, u(z₀)≠0, v(z₀)≠0
-⇒ f/g = u/v tiene singularidad extraíble
-(`analyticAt_of_differentiable_on_punctured_nhds_of_continuousAt`).
-La extensión no se anula.
--/
-
-theorem exists_entire_quotient
-    {f g : ℂ → ℂ}
-    (hf : Differentiable ℂ f) (hg : Differentiable ℂ g)
-    (hzeros : SameZeros f g)
-    (hg0 : ¬ ∀ z, g z = 0) :
-    ∃ h : ℂ → ℂ, Differentiable ℂ h ∧ (∀ z, h z ≠ 0) ∧ ∀ z, f z = h z * g z := by
-  -- h₀ = f/g fuera de g⁻¹{0}, acotada cerca de cada cero (mismo orden)
-  -- Riemann extraíble en cada cero aislado; el conjunto de ceros es discreto
-  -- ⇒ h entera. h z ≠ 0 porque u/v ≠ 0.
-  sorry
+/-! ## GAP 4 importado (`exists_circle_min_norm`, 0 sorry en fuente). -/
 
 /-! ## Ensamblaje -/
 
@@ -159,20 +148,8 @@ theorem entire_never_zero_order_atMostOne
     (hne : ∀ z, h z ≠ 0)
     (hord : OrderAtMostOne h) :
     ∃ A B : ℂ, ∀ s, h s = exp (A + B * s) := by
-  obtain ⟨φ, hφc, hφexp⟩ := exists_continuous_log_univ hh.continuous hne
-  have hφd : Differentiable ℂ φ := differentiable_of_exp_comp hh hφc hφexp
-  have hRe : ∀ ε > 0, ∃ C : ℝ, 0 < C ∧ ∀ z, (φ z).re ≤ C * (1 + ‖z‖ ^ (1 + ε)) := by
-    intro ε hε
-    obtain ⟨A, hA, hAb⟩ := hord ε hε
-    refine ⟨max (Real.log A) 1, by positivity, ?_⟩
-    intro z
-    -- (φ z).re = log ‖exp (φ z)‖ = log ‖h z‖ ≤ log A + |z|^{1+ε}
-    have : ‖h z‖ = Real.exp (φ z).re := by
-      rw [← hexp_norm]; simp [hφexp z]
-      -- ‖exp w‖ = exp w.re
-      simpa [hφexp z] using (norm_exp (φ z)).symm
-    sorry -- log ‖h z‖ ≤ log A + |z|^{1+ε} vía hAb
-  obtain ⟨A, B, hAB⟩ := entire_of_realPart_order_le_one hφd hRe
+  obtain ⟨φ, hφd, hφexp⟩ := log_holomorphic_of_entire_never_zero hh hne
+  obtain ⟨A, B, hAB⟩ := affine_log_of_order_one hφd (re_le_of_exp_eq_order hφexp hord)
   exact ⟨A, B, fun s => (hφexp s).symm.trans (by rw [hAB s])⟩
 
 lemma constant_of_sym_and_order
@@ -191,6 +168,46 @@ lemma constant_of_sym_and_order
         _ = exp (A + B * s) := hAB s)
   exact ⟨exp A, exp_ne_zero A, fun s => by simp [hAB, hB]⟩
 
+lemma quotient_symmetric
+    {f g h : ℂ → ℂ}
+    (hg : Differentiable ℂ g) (hh : Differentiable ℂ h)
+    (hf_sym : ∀ s, f (1 - s) = f s)
+    (hg_sym : ∀ s, g (1 - s) = g s)
+    (hfg : ∀ z, f z = h z * g z)
+    (hg_ne : ¬ ∀ z, g z = 0) :
+    ∀ s, h (1 - s) = h s := by
+  have hmul : ∀ s, h (1 - s) * g (1 - s) = h s * g (1 - s) := by
+    intro s
+    calc h (1 - s) * g (1 - s) = f (1 - s) := (hfg _).symm
+      _ = f s := hf_sym s
+      _ = h s * g s := hfg s
+      _ = h s * g (1 - s) := by rw [hg_sym s]
+  let k : ℂ → ℂ := fun s => h (1 - s) - h s
+  have hk : Differentiable ℂ k :=
+    (hh.comp (differentiable_const.sub differentiable_id)).sub hh
+  obtain ⟨z₀, hz₀⟩ : ∃ z₀, g z₀ ≠ 0 := by
+    by_contra hall
+    push_neg at hall
+    exact hg_ne hall
+  have hnh : ∀ᶠ z in 𝓝 z₀, g z ≠ 0 :=
+    hg.continuous.continuousAt.eventually_ne hz₀
+  obtain ⟨ε, hε, hballg⟩ : ∃ ε > 0, ∀ z ∈ ball z₀ ε, g z ≠ 0 := by
+    obtain ⟨t, ht, htf⟩ := eventually_iff_exists_mem.mp hnh
+    obtain ⟨U, hUo, hzU, hUsub⟩ := mem_nhds_iff.mp ht
+    obtain ⟨ε, hε, hUball⟩ := Metric.isOpen_iff.mp hUo z₀ hzU
+    refine ⟨ε, hε, ?_⟩
+    intro z hz
+    exact htf z (hUsub (hUball hz))
+  have hballk : ∀ z ∈ ball z₀ ε, k z = 0 := by
+    intro z hz
+    have hgzn : g z ≠ 0 := hballg z hz
+    have hcancel : h (1 - z) = h z :=
+      mul_right_cancel₀ (by rw [hg_sym z]; exact hgzn) (hmul z)
+    simpa [k] using sub_eq_zero.mpr hcancel
+  intro s
+  have hk0 := entire_eq_zero_of_eqOn_ball hk hε hballk
+  exact sub_eq_zero.mp (hk0 s)
+
 theorem hadamard_uniqueness
     {f g : ℂ → ℂ}
     (hf : Differentiable ℂ f)
@@ -204,19 +221,11 @@ theorem hadamard_uniqueness
     (hhalf : g ((1 : ℂ) / 2) ≠ 0) :
     ∀ s, f s = g s := by
   have hg_ne : ¬ ∀ z, g z = 0 := fun hall => hhalf (hall _)
-  obtain ⟨h, hh, hne, hfg⟩ := exists_entire_quotient hf hg hzeros hg_ne
-  have hord : OrderAtMostOne h := by
-    sorry -- |h| = |f|/|g| fuera de ceros; orden ≤ 1
-  have hsym : ∀ s, h (1 - s) = h s := by
-    intro s
-    have : h (1 - s) * g (1 - s) = h s * g s := by
-      calc h (1 - s) * g (1 - s) = f (1 - s) := (hfg _).symm
-        _ = f s := hf_sym s
-        _ = h s * g s := hfg s
-    simpa [hg_sym s] using
-      mul_right_cancel₀ (hne s |>.elim fun _ => ?_) this
-    -- si g s = 0, usar hne en un punto cercano o identidad de h
-    sorry
+  obtain ⟨h, hh, hne, hfg⟩ := quotient_entire_never_zero hf hg hzeros hg_ne
+  have hord : OrderAtMostOne h :=
+    order_atMostOne_of_quotient hf hg hh hf_ord hg_ord hne hg_ne hfg
+  have hsym : ∀ s, h (1 - s) = h s :=
+    quotient_symmetric hg hh hf_sym hg_sym hfg hg_ne
   obtain ⟨C, _, hC⟩ := constant_of_sym_and_order hh hne hord hsym
   have hC1 : C = 1 := by
     have := hfg ((1 : ℂ) / 2)
@@ -226,16 +235,28 @@ theorem hadamard_uniqueness
   simp [hfg s, hC s, hC1]
 
 /-!
-  Estado al 27 ago 2026
-  --------------------
-  Enunciado: cerrado (Hadamard, no densidad).
-  B=0: argumento cerrado; glue HasDerivAt.comp pendiente de lake.
-  Hueco 1: log continuo Mathlib; falta biholomorfismo local de exp.
-  Hueco 2: Borel + Cauchy (`Liouville.lean`) + Liouville; ensamblaje.
-  Hueco 3: Riemann extraíble + analyticOrderAt; ensamblaje.
+  Mapa v3.2.5 — 27 ago 2026
 
-  Este ordenador no tiene `lake`. Las pruebas no están machine-checked.
-  El siguiente acto soberano: `lake build` en tu nodo, o Pro + cloud agent.
+  Enunciado: enteras de orden ≤ 1, mismos ceros con multiplicidad,
+  f(1-s)=f(s), g(1-s)=g(s), f(1/2)=g(1/2)≠0 ⇒ f=g.
+
+  Cerrado como argumento / fuente (no lake)
+  -----------------------------------------
+  GAP1 log holomorfo (import).
+  GAP2 Borel + Cauchy n=2 + afín (import).
+  GAP3 Riemann extraíble (import).
+  GAP4 min |g| en círculo separado + OrderAtMostOne del cociente (import).
+  B=0. C=1. h simétrica por identidad.
+  Re φ = log ‖h‖.
+  hadamard_uniqueness ensamblado.
+
+  Hueco que queda
+  ---------------
+  lake-checked. No hay tactic sorry en GAP1–4 ni en este ensamblaje.
+
+  No se afirma
+  ------------
+  RH. D ≡ Ξ. Paley–Wiener para ξ. Unicidad de Hadamard no es RH.
 -/
 
 end
