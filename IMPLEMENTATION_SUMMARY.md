@@ -1,5 +1,23 @@
 # QCAL Build Verification - Implementation Summary
 
+## 🟢 WEIL–SPECTRAL BRIDGE VALIDATOR (Python) — Auditoría analítico-numérica dedicada (September 2026)
+
+**Status**: ✅ IMPLEMENTED
+
+- **Python Module**: `core/validate_weil_spectral_bridge.py`
+- **Output Report**: `data/weil_spectral_bridge_report.json`
+- **Objetivo**:
+  - Validar el balance Guinand–Weil con par de Fourier simétrico `(h, g)`.
+  - Validar calibración modal espectral por ley de Weyl `λₙ = 1/4 + γₙ²`.
+- **Alcance**:
+  - Carga `N ≥ 1000` ceros desde `zeros/zeros_t1e8.txt` (con fallback a `mpmath.zetazero`).
+  - Suma sobre ceros `±γ` con suavizado gaussiano `exp(-γ²/(2σ²))`.
+  - Término arquimediano con digamma y suma de primos/potencias de primos.
+  - Criterio contractual:
+    - `Error Relativo ≤ 5%`
+    - `Match Espectral ≥ 90%`
+    - `Criterio Analítico-Numérico: PASSED/FAILED`
+
 ## 🟡 UNBOUNDED_HPSI (Lean 4 scaffold) — Derivación incondicional por módulos (September 2026)
 
 **Status**: 🟡 SCAFFOLD ADDED

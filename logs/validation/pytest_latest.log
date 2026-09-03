@@ -1,246 +1,78 @@
-2026-09-03 07:47:48 - INFO     - qcal.test_session_20260903_074748 - 
-2026-09-03 07:47:48 - INFO     - qcal.test_session_20260903_074748 - ================================================================================
-2026-09-03 07:47:48 - INFO     - qcal.test_session_20260903_074748 - Test: tests/test_coronacion_v5.py::TestCoronacionV5::test_step1_axioms_to_lemmas
-2026-09-03 07:47:48 - INFO     - qcal.test_session_20260903_074748 - Location: tests/test_coronacion_v5.py:33
-2026-09-03 07:47:48 - INFO     - qcal.test_session_20260903_074748 - ================================================================================
-2026-09-03 07:47:48 - INFO     - qcal.test_session_20260903_074748 - ✅ PASSED: tests/test_coronacion_v5.py::TestCoronacionV5::test_step1_axioms_to_lemmas (0.000s)
-2026-09-03 07:47:48 - INFO     - qcal.test_session_20260903_074748 - 
-2026-09-03 07:47:48 - INFO     - qcal.test_session_20260903_074748 - ================================================================================
-2026-09-03 07:47:48 - INFO     - qcal.test_session_20260903_074748 - Test: tests/test_coronacion_v5.py::TestCoronacionV5::test_step2_archimedean_rigidity
-2026-09-03 07:47:48 - INFO     - qcal.test_session_20260903_074748 - Location: tests/test_coronacion_v5.py:44
-2026-09-03 07:47:48 - INFO     - qcal.test_session_20260903_074748 - ================================================================================
-2026-09-03 07:47:48 - INFO     - qcal.test_session_20260903_074748 - ✅ PASSED: tests/test_coronacion_v5.py::TestCoronacionV5::test_step2_archimedean_rigidity (0.000s)
-2026-09-03 07:47:48 - INFO     - qcal.test_session_20260903_074748 - 
-2026-09-03 07:47:48 - INFO     - qcal.test_session_20260903_074748 - ================================================================================
-2026-09-03 07:47:48 - INFO     - qcal.test_session_20260903_074748 - Test: tests/test_coronacion_v5.py::TestCoronacionV5::test_step3_paley_wiener_uniqueness
-2026-09-03 07:47:48 - INFO     - qcal.test_session_20260903_074748 - Location: tests/test_coronacion_v5.py:56
-2026-09-03 07:47:48 - INFO     - qcal.test_session_20260903_074748 - ================================================================================
-2026-09-03 07:47:48 - INFO     - qcal.test_session_20260903_074748 - ✅ PASSED: tests/test_coronacion_v5.py::TestCoronacionV5::test_step3_paley_wiener_uniqueness (0.000s)
-2026-09-03 07:47:48 - INFO     - qcal.test_session_20260903_074748 - 
-2026-09-03 07:47:48 - INFO     - qcal.test_session_20260903_074748 - ================================================================================
-2026-09-03 07:47:48 - INFO     - qcal.test_session_20260903_074748 - Test: tests/test_coronacion_v5.py::TestCoronacionV5::test_step4_zero_localization_de_branges
-2026-09-03 07:47:48 - INFO     - qcal.test_session_20260903_074748 - Location: tests/test_coronacion_v5.py:70
-2026-09-03 07:47:48 - INFO     - qcal.test_session_20260903_074748 - ================================================================================
-2026-09-03 07:47:48 - INFO     - qcal.test_session_20260903_074748 - ✅ PASSED: tests/test_coronacion_v5.py::TestCoronacionV5::test_step4_zero_localization_de_branges (0.000s)
-2026-09-03 07:47:48 - INFO     - qcal.test_session_20260903_074748 - 
-2026-09-03 07:47:48 - INFO     - qcal.test_session_20260903_074748 - ================================================================================
-2026-09-03 07:47:48 - INFO     - qcal.test_session_20260903_074748 - Test: tests/test_coronacion_v5.py::TestCoronacionV5::test_step4_zero_localization_weil_guinaud
-2026-09-03 07:47:48 - INFO     - qcal.test_session_20260903_074748 - Location: tests/test_coronacion_v5.py:81
-2026-09-03 07:47:48 - INFO     - qcal.test_session_20260903_074748 - ================================================================================
-2026-09-03 07:47:48 - INFO     - qcal.test_session_20260903_074748 - ✅ PASSED: tests/test_coronacion_v5.py::TestCoronacionV5::test_step4_zero_localization_weil_guinaud (0.000s)
-2026-09-03 07:47:48 - INFO     - qcal.test_session_20260903_074748 - 
-2026-09-03 07:47:48 - INFO     - qcal.test_session_20260903_074748 - ================================================================================
-2026-09-03 07:47:48 - INFO     - qcal.test_session_20260903_074748 - Test: tests/test_coronacion_v5.py::TestCoronacionV5::test_step5_coronation_integration
-2026-09-03 07:47:48 - INFO     - qcal.test_session_20260903_074748 - Location: tests/test_coronacion_v5.py:89
-2026-09-03 07:47:48 - INFO     - qcal.test_session_20260903_074748 - ================================================================================
-2026-09-03 07:47:48 - INFO     - qcal.test_session_20260903_074748 - ✅ PASSED: tests/test_coronacion_v5.py::TestCoronacionV5::test_step5_coronation_integration (0.000s)
-2026-09-03 07:47:48 - INFO     - qcal.test_session_20260903_074748 - 
-2026-09-03 07:47:48 - INFO     - qcal.test_session_20260903_074748 - ================================================================================
-2026-09-03 07:47:48 - INFO     - qcal.test_session_20260903_074748 - Test: tests/test_coronacion_v5.py::TestCoronacionV5::test_stress_spectral_measure_perturbation
-2026-09-03 07:47:48 - INFO     - qcal.test_session_20260903_074748 - Location: tests/test_coronacion_v5.py:113
-2026-09-03 07:47:48 - INFO     - qcal.test_session_20260903_074748 - ================================================================================
-2026-09-03 07:47:48 - INFO     - qcal.test_session_20260903_074748 - ✅ PASSED: tests/test_coronacion_v5.py::TestCoronacionV5::test_stress_spectral_measure_perturbation (0.000s)
-2026-09-03 07:47:48 - INFO     - qcal.test_session_20260903_074748 - 
-2026-09-03 07:47:48 - INFO     - qcal.test_session_20260903_074748 - ================================================================================
-2026-09-03 07:47:48 - INFO     - qcal.test_session_20260903_074748 - Test: tests/test_coronacion_v5.py::TestCoronacionV5::test_stress_growth_bounds
-2026-09-03 07:47:48 - INFO     - qcal.test_session_20260903_074748 - Location: tests/test_coronacion_v5.py:124
-2026-09-03 07:47:48 - INFO     - qcal.test_session_20260903_074748 - ================================================================================
-2026-09-03 07:47:48 - INFO     - qcal.test_session_20260903_074748 - ✅ PASSED: tests/test_coronacion_v5.py::TestCoronacionV5::test_stress_growth_bounds (0.000s)
-2026-09-03 07:47:48 - INFO     - qcal.test_session_20260903_074748 - 
-2026-09-03 07:47:48 - INFO     - qcal.test_session_20260903_074748 - ================================================================================
-2026-09-03 07:47:48 - INFO     - qcal.test_session_20260903_074748 - Test: tests/test_coronacion_v5.py::TestCoronacionV5::test_stress_zero_subsets
-2026-09-03 07:47:48 - INFO     - qcal.test_session_20260903_074748 - Location: tests/test_coronacion_v5.py:136
-2026-09-03 07:47:48 - INFO     - qcal.test_session_20260903_074748 - ================================================================================
-2026-09-03 07:47:48 - INFO     - qcal.test_session_20260903_074748 - ✅ PASSED: tests/test_coronacion_v5.py::TestCoronacionV5::test_stress_zero_subsets (0.000s)
-2026-09-03 07:47:48 - INFO     - qcal.test_session_20260903_074748 - 
-2026-09-03 07:47:48 - INFO     - qcal.test_session_20260903_074748 - ================================================================================
-2026-09-03 07:47:48 - INFO     - qcal.test_session_20260903_074748 - Test: tests/test_coronacion_v5.py::TestCoronacionV5::test_proof_certificate_generation
-2026-09-03 07:47:48 - INFO     - qcal.test_session_20260903_074748 - Location: tests/test_coronacion_v5.py:154
-2026-09-03 07:47:48 - INFO     - qcal.test_session_20260903_074748 - ================================================================================
-2026-09-03 07:47:48 - INFO     - qcal.test_session_20260903_074748 - ✅ PASSED: tests/test_coronacion_v5.py::TestCoronacionV5::test_proof_certificate_generation (0.000s)
-2026-09-03 07:47:48 - INFO     - qcal.test_session_20260903_074748 - 
-2026-09-03 07:47:48 - INFO     - qcal.test_session_20260903_074748 - ================================================================================
-2026-09-03 07:47:48 - INFO     - qcal.test_session_20260903_074748 - Test: tests/test_coronacion_v5.py::TestV5Integration::test_integration_with_explicit_formula
-2026-09-03 07:47:48 - INFO     - qcal.test_session_20260903_074748 - Location: tests/test_coronacion_v5.py:342
-2026-09-03 07:47:48 - INFO     - qcal.test_session_20260903_074748 - ================================================================================
-2026-09-03 07:47:48 - DEBUG    - matplotlib - matplotlib data path: /home/runner/.local/lib/python3.12/site-packages/matplotlib/mpl-data
-2026-09-03 07:47:48 - DEBUG    - matplotlib - CONFIGDIR=/home/runner/.config/matplotlib
-2026-09-03 07:47:48 - DEBUG    - matplotlib - interactive is False
-2026-09-03 07:47:48 - DEBUG    - matplotlib - platform is linux
-2026-09-03 07:47:48 - DEBUG    - matplotlib - CACHEDIR=/home/runner/.cache/matplotlib
-2026-09-03 07:47:48 - DEBUG    - matplotlib.font_manager - Using fontManager instance from /home/runner/.cache/matplotlib/fontlist-v3.11.0.json
-2026-09-03 07:47:50 - INFO     - qcal.test_session_20260903_074748 - ✅ PASSED: tests/test_coronacion_v5.py::TestV5Integration::test_integration_with_explicit_formula (2.399s)
-2026-09-03 07:47:50 - INFO     - qcal.test_session_20260903_074748 - 
-2026-09-03 07:47:50 - INFO     - qcal.test_session_20260903_074748 - ================================================================================
-2026-09-03 07:47:50 - INFO     - qcal.test_session_20260903_074748 - Test: tests/test_coronacion_v5.py::TestV5Integration::test_integration_with_critical_line_checker
-2026-09-03 07:47:50 - INFO     - qcal.test_session_20260903_074748 - Location: tests/test_coronacion_v5.py:369
-2026-09-03 07:47:50 - INFO     - qcal.test_session_20260903_074748 - ================================================================================
-2026-09-03 07:47:50 - WARNING  - qcal.test_session_20260903_074748 - ⚠️  SKIPPED: tests/test_coronacion_v5.py::TestV5Integration::test_integration_with_critical_line_checker
-2026-09-03 07:47:50 - INFO     - qcal.test_session_20260903_074748 - 
-2026-09-03 07:47:50 - INFO     - qcal.test_session_20260903_074748 - ================================================================================
-2026-09-03 07:47:50 - INFO     - qcal.test_session_20260903_074748 - Test: tests/test_hpsi_unconditional_modules.py::test_unconditional_modules_exist
-2026-09-03 07:47:50 - INFO     - qcal.test_session_20260903_074748 - Location: tests/test_hpsi_unconditional_modules.py:19
-2026-09-03 07:47:50 - INFO     - qcal.test_session_20260903_074748 - ================================================================================
-2026-09-03 07:47:50 - INFO     - qcal.test_session_20260903_074748 - ✅ PASSED: tests/test_hpsi_unconditional_modules.py::test_unconditional_modules_exist (0.000s)
-2026-09-03 07:47:50 - INFO     - qcal.test_session_20260903_074748 - 
-2026-09-03 07:47:50 - INFO     - qcal.test_session_20260903_074748 - ================================================================================
-2026-09-03 07:47:50 - INFO     - qcal.test_session_20260903_074748 - Test: tests/test_hpsi_unconditional_modules.py::test_unconditional_modules_have_no_sorry
-2026-09-03 07:47:50 - INFO     - qcal.test_session_20260903_074748 - Location: tests/test_hpsi_unconditional_modules.py:24
-2026-09-03 07:47:50 - INFO     - qcal.test_session_20260903_074748 - ================================================================================
-2026-09-03 07:47:50 - INFO     - qcal.test_session_20260903_074748 - ✅ PASSED: tests/test_hpsi_unconditional_modules.py::test_unconditional_modules_have_no_sorry (0.000s)
-2026-09-03 07:47:50 - INFO     - qcal.test_session_20260903_074748 - 
-2026-09-03 07:47:50 - INFO     - qcal.test_session_20260903_074748 - ================================================================================
-2026-09-03 07:47:50 - INFO     - qcal.test_session_20260903_074748 - Test: tests/test_hpsi_unconditional_modules.py::test_unbounded_hpsi_removes_first_axiom_bridge
-2026-09-03 07:47:50 - INFO     - qcal.test_session_20260903_074748 - Location: tests/test_hpsi_unconditional_modules.py:30
-2026-09-03 07:47:50 - INFO     - qcal.test_session_20260903_074748 - ================================================================================
-2026-09-03 07:47:50 - INFO     - qcal.test_session_20260903_074748 - ✅ PASSED: tests/test_hpsi_unconditional_modules.py::test_unbounded_hpsi_removes_first_axiom_bridge (0.000s)
-2026-09-03 07:47:50 - INFO     - qcal.test_session_20260903_074748 - 
-2026-09-03 07:47:50 - INFO     - qcal.test_session_20260903_074748 - ================================================================================
-2026-09-03 07:47:50 - INFO     - qcal.test_session_20260903_074748 - Test: tests/test_hpsi_unconditional_modules.py::test_unbounded_hpsi_norm_density_closed_without_sorry
-2026-09-03 07:47:50 - INFO     - qcal.test_session_20260903_074748 - Location: tests/test_hpsi_unconditional_modules.py:42
-2026-09-03 07:47:50 - INFO     - qcal.test_session_20260903_074748 - ================================================================================
-2026-09-03 07:47:50 - INFO     - qcal.test_session_20260903_074748 - ✅ PASSED: tests/test_hpsi_unconditional_modules.py::test_unbounded_hpsi_norm_density_closed_without_sorry (0.000s)
-2026-09-03 07:47:50 - INFO     - qcal.test_session_20260903_074748 - 
-2026-09-03 07:47:50 - INFO     - qcal.test_session_20260903_074748 - ================================================================================
-2026-09-03 07:47:50 - INFO     - qcal.test_session_20260903_074748 - Test: tests/test_hpsi_unconditional_modules.py::test_unbounded_hpsi_dyadic_local_closure_present
-2026-09-03 07:47:50 - INFO     - qcal.test_session_20260903_074748 - Location: tests/test_hpsi_unconditional_modules.py:54
-2026-09-03 07:47:50 - INFO     - qcal.test_session_20260903_074748 - ================================================================================
-2026-09-03 07:47:50 - INFO     - qcal.test_session_20260903_074748 - ✅ PASSED: tests/test_hpsi_unconditional_modules.py::test_unbounded_hpsi_dyadic_local_closure_present (0.000s)
-2026-09-03 07:47:50 - INFO     - qcal.test_session_20260903_074748 - 
-2026-09-03 07:47:50 - INFO     - qcal.test_session_20260903_074748 - ================================================================================
-2026-09-03 07:47:50 - INFO     - qcal.test_session_20260903_074748 - Test: tests/test_hpsi_unconditional_modules.py::test_unbounded_hpsi_causal_kernel_bridge_present
-2026-09-03 07:47:50 - INFO     - qcal.test_session_20260903_074748 - Location: tests/test_hpsi_unconditional_modules.py:63
-2026-09-03 07:47:50 - INFO     - qcal.test_session_20260903_074748 - ================================================================================
-2026-09-03 07:47:50 - INFO     - qcal.test_session_20260903_074748 - ✅ PASSED: tests/test_hpsi_unconditional_modules.py::test_unbounded_hpsi_causal_kernel_bridge_present (0.000s)
-2026-09-03 07:47:50 - INFO     - qcal.test_session_20260903_074748 - 
-2026-09-03 07:47:50 - INFO     - qcal.test_session_20260903_074748 - ================================================================================
-2026-09-03 07:47:50 - INFO     - qcal.test_session_20260903_074748 - Test: tests/test_hpsi_unconditional_modules.py::test_remaining_axiom_names_removed_from_module_chain
-2026-09-03 07:47:50 - INFO     - qcal.test_session_20260903_074748 - Location: tests/test_hpsi_unconditional_modules.py:85
-2026-09-03 07:47:50 - INFO     - qcal.test_session_20260903_074748 - ================================================================================
-2026-09-03 07:47:50 - INFO     - qcal.test_session_20260903_074748 - ✅ PASSED: tests/test_hpsi_unconditional_modules.py::test_remaining_axiom_names_removed_from_module_chain (0.000s)
-2026-09-03 07:47:50 - INFO     - qcal.test_session_20260903_074748 - 
-2026-09-03 07:47:50 - INFO     - qcal.test_session_20260903_074748 - ================================================================================
-2026-09-03 07:47:50 - INFO     - qcal.test_session_20260903_074748 - Test: tests/test_hpsi_unconditional_modules.py::test_spectral_uniqueness_no_true_placeholders
-2026-09-03 07:47:50 - INFO     - qcal.test_session_20260903_074748 - Location: tests/test_hpsi_unconditional_modules.py:101
-2026-09-03 07:47:50 - INFO     - qcal.test_session_20260903_074748 - ================================================================================
-2026-09-03 07:47:50 - INFO     - qcal.test_session_20260903_074748 - ✅ PASSED: tests/test_hpsi_unconditional_modules.py::test_spectral_uniqueness_no_true_placeholders (0.000s)
-2026-09-03 07:47:50 - INFO     - qcal.test_session_20260903_074748 - 
-2026-09-03 07:47:50 - INFO     - qcal.test_session_20260903_074748 - ================================================================================
-2026-09-03 07:47:50 - INFO     - qcal.test_session_20260903_074748 - Test: tests/test_hpsi_unconditional_modules.py::test_trace_fredholm_schatten_contract_present
-2026-09-03 07:47:50 - INFO     - qcal.test_session_20260903_074748 - Location: tests/test_hpsi_unconditional_modules.py:123
-2026-09-03 07:47:50 - INFO     - qcal.test_session_20260903_074748 - ================================================================================
-2026-09-03 07:47:50 - INFO     - qcal.test_session_20260903_074748 - ✅ PASSED: tests/test_hpsi_unconditional_modules.py::test_trace_fredholm_schatten_contract_present (0.000s)
-2026-09-03 07:47:50 - INFO     - qcal.test_session_20260903_074748 - 
-2026-09-03 07:47:50 - INFO     - qcal.test_session_20260903_074748 - ================================================================================
-2026-09-03 07:47:50 - INFO     - qcal.test_session_20260903_074748 - Test: tests/test_hpsi_unconditional_modules.py::test_poisson_mellin_tripartite_contract_present
-2026-09-03 07:47:50 - INFO     - qcal.test_session_20260903_074748 - Location: tests/test_hpsi_unconditional_modules.py:138
-2026-09-03 07:47:50 - INFO     - qcal.test_session_20260903_074748 - ================================================================================
-2026-09-03 07:47:50 - INFO     - qcal.test_session_20260903_074748 - ✅ PASSED: tests/test_hpsi_unconditional_modules.py::test_poisson_mellin_tripartite_contract_present (0.000s)
-2026-09-03 07:47:50 - INFO     - qcal.test_session_20260903_074748 - 
-2026-09-03 07:47:50 - INFO     - qcal.test_session_20260903_074748 - ================================================================================
-2026-09-03 07:47:50 - INFO     - qcal.test_session_20260903_074748 - Test: tests/test_hpsi_unconditional_modules.py::test_spectral_mechanics_core_theorems_present
-2026-09-03 07:47:50 - INFO     - qcal.test_session_20260903_074748 - Location: tests/test_hpsi_unconditional_modules.py:146
-2026-09-03 07:47:50 - INFO     - qcal.test_session_20260903_074748 - ================================================================================
-2026-09-03 07:47:50 - INFO     - qcal.test_session_20260903_074748 - ✅ PASSED: tests/test_hpsi_unconditional_modules.py::test_spectral_mechanics_core_theorems_present (0.000s)
-2026-09-03 07:47:50 - INFO     - qcal.test_session_20260903_074748 - 
-2026-09-03 07:47:50 - INFO     - qcal.test_session_20260903_074748 - ================================================================================
-2026-09-03 07:47:50 - INFO     - qcal.test_session_20260903_074748 - Test: tests/test_hpsi_unconditional_modules.py::test_guinand_weil_global_log_deriv_bridge_present
-2026-09-03 07:47:50 - INFO     - qcal.test_session_20260903_074748 - Location: tests/test_hpsi_unconditional_modules.py:157
-2026-09-03 07:47:50 - INFO     - qcal.test_session_20260903_074748 - ================================================================================
-2026-09-03 07:47:50 - INFO     - qcal.test_session_20260903_074748 - ✅ PASSED: tests/test_hpsi_unconditional_modules.py::test_guinand_weil_global_log_deriv_bridge_present (0.000s)
-2026-09-03 07:47:50 - INFO     - qcal.test_session_20260903_074748 - 
-2026-09-03 07:47:50 - INFO     - qcal.test_session_20260903_074748 - ================================================================================
-2026-09-03 07:47:50 - INFO     - qcal.test_session_20260903_074748 - Test: tests/test_hpsi_unconditional_modules.py::test_hadamard_uniqueness_bridge_present
-2026-09-03 07:47:50 - INFO     - qcal.test_session_20260903_074748 - Location: tests/test_hpsi_unconditional_modules.py:188
-2026-09-03 07:47:50 - INFO     - qcal.test_session_20260903_074748 - ================================================================================
-2026-09-03 07:47:50 - INFO     - qcal.test_session_20260903_074748 - ✅ PASSED: tests/test_hpsi_unconditional_modules.py::test_hadamard_uniqueness_bridge_present (0.000s)
-2026-09-03 07:47:50 - INFO     - qcal.test_session_20260903_074748 - 
-2026-09-03 07:47:50 - INFO     - qcal.test_session_20260903_074748 - ================================================================================
-2026-09-03 07:47:50 - INFO     - qcal.test_session_20260903_074748 - Test: tests/test_hpsi_unconditional_modules.py::test_canonical_instances_constructors_present
-2026-09-03 07:47:50 - INFO     - qcal.test_session_20260903_074748 - Location: tests/test_hpsi_unconditional_modules.py:195
-2026-09-03 07:47:50 - INFO     - qcal.test_session_20260903_074748 - ================================================================================
-2026-09-03 07:47:50 - INFO     - qcal.test_session_20260903_074748 - ✅ PASSED: tests/test_hpsi_unconditional_modules.py::test_canonical_instances_constructors_present (0.000s)
-2026-09-03 07:47:50 - INFO     - qcal.test_session_20260903_074748 - 
-2026-09-03 07:47:50 - INFO     - qcal.test_session_20260903_074748 - ================================================================================
-2026-09-03 07:47:50 - INFO     - qcal.test_session_20260903_074748 - Test: tests/test_hpsi_unconditional_modules.py::test_coronacion_final_closure_present
-2026-09-03 07:47:50 - INFO     - qcal.test_session_20260903_074748 - Location: tests/test_hpsi_unconditional_modules.py:205
-2026-09-03 07:47:50 - INFO     - qcal.test_session_20260903_074748 - ================================================================================
-2026-09-03 07:47:50 - INFO     - qcal.test_session_20260903_074748 - ✅ PASSED: tests/test_hpsi_unconditional_modules.py::test_coronacion_final_closure_present (0.000s)
-2026-09-03 07:47:50 - INFO     - qcal.test_session_20260903_074748 - 
-2026-09-03 07:47:50 - INFO     - qcal.test_session_20260903_074748 - ================================================================================
-2026-09-03 07:47:50 - INFO     - qcal.test_session_20260903_074748 - Test: tests/test_ci_simbiotico_sabio.py::test_ci_workflow_exists
-2026-09-03 07:47:50 - INFO     - qcal.test_session_20260903_074748 - Location: tests/test_ci_simbiotico_sabio.py:12
-2026-09-03 07:47:50 - INFO     - qcal.test_session_20260903_074748 - ================================================================================
-2026-09-03 07:47:50 - INFO     - qcal.test_session_20260903_074748 - ✅ PASSED: tests/test_ci_simbiotico_sabio.py::test_ci_workflow_exists (0.000s)
-2026-09-03 07:47:50 - INFO     - qcal.test_session_20260903_074748 - 
-2026-09-03 07:47:50 - INFO     - qcal.test_session_20260903_074748 - ================================================================================
-2026-09-03 07:47:50 - INFO     - qcal.test_session_20260903_074748 - Test: tests/test_ci_simbiotico_sabio.py::test_ci_workflow_valid_yaml
-2026-09-03 07:47:50 - INFO     - qcal.test_session_20260903_074748 - Location: tests/test_ci_simbiotico_sabio.py:18
-2026-09-03 07:47:50 - INFO     - qcal.test_session_20260903_074748 - ================================================================================
-2026-09-03 07:47:50 - INFO     - qcal.test_session_20260903_074748 - ✅ PASSED: tests/test_ci_simbiotico_sabio.py::test_ci_workflow_valid_yaml (0.006s)
-2026-09-03 07:47:50 - INFO     - qcal.test_session_20260903_074748 - 
-2026-09-03 07:47:50 - INFO     - qcal.test_session_20260903_074748 - ================================================================================
-2026-09-03 07:47:50 - INFO     - qcal.test_session_20260903_074748 - Test: tests/test_ci_simbiotico_sabio.py::test_ci_workflow_name
-2026-09-03 07:47:50 - INFO     - qcal.test_session_20260903_074748 - Location: tests/test_ci_simbiotico_sabio.py:26
-2026-09-03 07:47:50 - INFO     - qcal.test_session_20260903_074748 - ================================================================================
-2026-09-03 07:47:51 - INFO     - qcal.test_session_20260903_074748 - ✅ PASSED: tests/test_ci_simbiotico_sabio.py::test_ci_workflow_name (0.006s)
-2026-09-03 07:47:51 - INFO     - qcal.test_session_20260903_074748 - 
-2026-09-03 07:47:51 - INFO     - qcal.test_session_20260903_074748 - ================================================================================
-2026-09-03 07:47:51 - INFO     - qcal.test_session_20260903_074748 - Test: tests/test_ci_simbiotico_sabio.py::test_ci_workflow_triggers
-2026-09-03 07:47:51 - INFO     - qcal.test_session_20260903_074748 - Location: tests/test_ci_simbiotico_sabio.py:37
-2026-09-03 07:47:51 - INFO     - qcal.test_session_20260903_074748 - ================================================================================
-2026-09-03 07:47:51 - INFO     - qcal.test_session_20260903_074748 - ✅ PASSED: tests/test_ci_simbiotico_sabio.py::test_ci_workflow_triggers (0.005s)
-2026-09-03 07:47:51 - INFO     - qcal.test_session_20260903_074748 - 
-2026-09-03 07:47:51 - INFO     - qcal.test_session_20260903_074748 - ================================================================================
-2026-09-03 07:47:51 - INFO     - qcal.test_session_20260903_074748 - Test: tests/test_ci_simbiotico_sabio.py::test_ci_workflow_dispatch_input
-2026-09-03 07:47:51 - INFO     - qcal.test_session_20260903_074748 - Location: tests/test_ci_simbiotico_sabio.py:51
-2026-09-03 07:47:51 - INFO     - qcal.test_session_20260903_074748 - ================================================================================
-2026-09-03 07:47:51 - INFO     - qcal.test_session_20260903_074748 - ✅ PASSED: tests/test_ci_simbiotico_sabio.py::test_ci_workflow_dispatch_input (0.005s)
-2026-09-03 07:47:51 - INFO     - qcal.test_session_20260903_074748 - 
-2026-09-03 07:47:51 - INFO     - qcal.test_session_20260903_074748 - ================================================================================
-2026-09-03 07:47:51 - INFO     - qcal.test_session_20260903_074748 - Test: tests/test_ci_simbiotico_sabio.py::test_ci_workflow_jobs
-2026-09-03 07:47:51 - INFO     - qcal.test_session_20260903_074748 - Location: tests/test_ci_simbiotico_sabio.py:75
-2026-09-03 07:47:51 - INFO     - qcal.test_session_20260903_074748 - ================================================================================
-2026-09-03 07:47:51 - INFO     - qcal.test_session_20260903_074748 - ✅ PASSED: tests/test_ci_simbiotico_sabio.py::test_ci_workflow_jobs (0.005s)
-2026-09-03 07:47:51 - INFO     - qcal.test_session_20260903_074748 - 
-2026-09-03 07:47:51 - INFO     - qcal.test_session_20260903_074748 - ================================================================================
-2026-09-03 07:47:51 - INFO     - qcal.test_session_20260903_074748 - Test: tests/test_ci_simbiotico_sabio.py::test_ci_validation_level_env
-2026-09-03 07:47:51 - INFO     - qcal.test_session_20260903_074748 - Location: tests/test_ci_simbiotico_sabio.py:91
-2026-09-03 07:47:51 - INFO     - qcal.test_session_20260903_074748 - ================================================================================
-2026-09-03 07:47:51 - INFO     - qcal.test_session_20260903_074748 - ✅ PASSED: tests/test_ci_simbiotico_sabio.py::test_ci_validation_level_env (0.005s)
-2026-09-03 07:47:51 - INFO     - qcal.test_session_20260903_074748 - 
-2026-09-03 07:47:51 - INFO     - qcal.test_session_20260903_074748 - ================================================================================
-2026-09-03 07:47:51 - INFO     - qcal.test_session_20260903_074748 - Test: tests/test_ci_simbiotico_sabio.py::test_ci_workflow_steps
-2026-09-03 07:47:51 - INFO     - qcal.test_session_20260903_074748 - Location: tests/test_ci_simbiotico_sabio.py:108
-2026-09-03 07:47:51 - INFO     - qcal.test_session_20260903_074748 - ================================================================================
-2026-09-03 07:47:51 - INFO     - qcal.test_session_20260903_074748 - ✅ PASSED: tests/test_ci_simbiotico_sabio.py::test_ci_workflow_steps (0.006s)
-2026-09-03 07:47:51 - INFO     - qcal.test_session_20260903_074748 - 
-2026-09-03 07:47:51 - INFO     - qcal.test_session_20260903_074748 - ================================================================================
-2026-09-03 07:47:51 - INFO     - qcal.test_session_20260903_074748 - Test: tests/test_ci_simbiotico_sabio.py::test_ci_conditional_execution
-2026-09-03 07:47:51 - INFO     - qcal.test_session_20260903_074748 - Location: tests/test_ci_simbiotico_sabio.py:137
-2026-09-03 07:47:51 - INFO     - qcal.test_session_20260903_074748 - ================================================================================
-2026-09-03 07:47:51 - INFO     - qcal.test_session_20260903_074748 - ✅ PASSED: tests/test_ci_simbiotico_sabio.py::test_ci_conditional_execution (0.005s)
-2026-09-03 07:47:51 - INFO     - qcal.test_session_20260903_074748 - 
-2026-09-03 07:47:51 - INFO     - qcal.test_session_20260903_074748 - ================================================================================
-2026-09-03 07:47:51 - INFO     - qcal.test_session_20260903_074748 - Test: tests/test_ci_simbiotico_sabio.py::test_ci_pytest_commands
-2026-09-03 07:47:51 - INFO     - qcal.test_session_20260903_074748 - Location: tests/test_ci_simbiotico_sabio.py:157
-2026-09-03 07:47:51 - INFO     - qcal.test_session_20260903_074748 - ================================================================================
-2026-09-03 07:47:51 - INFO     - qcal.test_session_20260903_074748 - ✅ PASSED: tests/test_ci_simbiotico_sabio.py::test_ci_pytest_commands (0.000s)
-2026-09-03 07:47:51 - INFO     - qcal.test_session_20260903_074748 - 
-2026-09-03 07:47:51 - INFO     - qcal.test_session_20260903_074748 - ================================================================================
-2026-09-03 07:47:51 - INFO     - qcal.test_session_20260903_074748 - Test: tests/test_ci_simbiotico_sabio.py::test_ci_sabio_signature
-2026-09-03 07:47:51 - INFO     - qcal.test_session_20260903_074748 - Location: tests/test_ci_simbiotico_sabio.py:172
-2026-09-03 07:47:51 - INFO     - qcal.test_session_20260903_074748 - ================================================================================
-2026-09-03 07:47:51 - INFO     - qcal.test_session_20260903_074748 - ✅ PASSED: tests/test_ci_simbiotico_sabio.py::test_ci_sabio_signature (0.000s)
-2026-09-03 07:47:51 - INFO     - qcal.test_session_20260903_074748 - 
-2026-09-03 07:47:51 - INFO     - qcal.test_session_20260903_074748 - ================================================================================
-2026-09-03 07:47:51 - INFO     - qcal.test_session_20260903_074748 - Test: tests/test_ci_simbiotico_sabio.py::test_ci_documentation_exists
-2026-09-03 07:47:51 - INFO     - qcal.test_session_20260903_074748 - Location: tests/test_ci_simbiotico_sabio.py:184
-2026-09-03 07:47:51 - INFO     - qcal.test_session_20260903_074748 - ================================================================================
-2026-09-03 07:47:51 - INFO     - qcal.test_session_20260903_074748 - ✅ PASSED: tests/test_ci_simbiotico_sabio.py::test_ci_documentation_exists (0.000s)
-2026-09-03 07:47:51 - INFO     - qcal.test_session_20260903_074748 - 
-2026-09-03 07:47:51 - INFO     - qcal.test_session_20260903_074748 - ================================================================================
-2026-09-03 07:47:51 - INFO     - qcal.test_session_20260903_074748 - Test: tests/test_ci_simbiotico_sabio.py::test_ci_readme_references
-2026-09-03 07:47:51 - INFO     - qcal.test_session_20260903_074748 - Location: tests/test_ci_simbiotico_sabio.py:191
-2026-09-03 07:47:51 - INFO     - qcal.test_session_20260903_074748 - ================================================================================
-2026-09-03 07:47:51 - INFO     - qcal.test_session_20260903_074748 - ✅ PASSED: tests/test_ci_simbiotico_sabio.py::test_ci_readme_references (0.002s)
+2026-09-03 07:57:41 - INFO     - qcal.test_session_20260903_075740 - 
+2026-09-03 07:57:41 - INFO     - qcal.test_session_20260903_075740 - ================================================================================
+2026-09-03 07:57:41 - INFO     - qcal.test_session_20260903_075740 - Test: tests/test_ci_simbiotico_sabio.py::test_ci_workflow_exists
+2026-09-03 07:57:41 - INFO     - qcal.test_session_20260903_075740 - Location: tests/test_ci_simbiotico_sabio.py:12
+2026-09-03 07:57:41 - INFO     - qcal.test_session_20260903_075740 - ================================================================================
+2026-09-03 07:57:41 - INFO     - qcal.test_session_20260903_075740 - ✅ PASSED: tests/test_ci_simbiotico_sabio.py::test_ci_workflow_exists (0.000s)
+2026-09-03 07:57:41 - INFO     - qcal.test_session_20260903_075740 - 
+2026-09-03 07:57:41 - INFO     - qcal.test_session_20260903_075740 - ================================================================================
+2026-09-03 07:57:41 - INFO     - qcal.test_session_20260903_075740 - Test: tests/test_ci_simbiotico_sabio.py::test_ci_workflow_valid_yaml
+2026-09-03 07:57:41 - INFO     - qcal.test_session_20260903_075740 - Location: tests/test_ci_simbiotico_sabio.py:18
+2026-09-03 07:57:41 - INFO     - qcal.test_session_20260903_075740 - ================================================================================
+2026-09-03 07:57:41 - INFO     - qcal.test_session_20260903_075740 - ✅ PASSED: tests/test_ci_simbiotico_sabio.py::test_ci_workflow_valid_yaml (0.006s)
+2026-09-03 07:57:41 - INFO     - qcal.test_session_20260903_075740 - 
+2026-09-03 07:57:41 - INFO     - qcal.test_session_20260903_075740 - ================================================================================
+2026-09-03 07:57:41 - INFO     - qcal.test_session_20260903_075740 - Test: tests/test_ci_simbiotico_sabio.py::test_ci_workflow_name
+2026-09-03 07:57:41 - INFO     - qcal.test_session_20260903_075740 - Location: tests/test_ci_simbiotico_sabio.py:26
+2026-09-03 07:57:41 - INFO     - qcal.test_session_20260903_075740 - ================================================================================
+2026-09-03 07:57:41 - INFO     - qcal.test_session_20260903_075740 - ✅ PASSED: tests/test_ci_simbiotico_sabio.py::test_ci_workflow_name (0.005s)
+2026-09-03 07:57:41 - INFO     - qcal.test_session_20260903_075740 - 
+2026-09-03 07:57:41 - INFO     - qcal.test_session_20260903_075740 - ================================================================================
+2026-09-03 07:57:41 - INFO     - qcal.test_session_20260903_075740 - Test: tests/test_ci_simbiotico_sabio.py::test_ci_workflow_triggers
+2026-09-03 07:57:41 - INFO     - qcal.test_session_20260903_075740 - Location: tests/test_ci_simbiotico_sabio.py:37
+2026-09-03 07:57:41 - INFO     - qcal.test_session_20260903_075740 - ================================================================================
+2026-09-03 07:57:41 - INFO     - qcal.test_session_20260903_075740 - ✅ PASSED: tests/test_ci_simbiotico_sabio.py::test_ci_workflow_triggers (0.005s)
+2026-09-03 07:57:41 - INFO     - qcal.test_session_20260903_075740 - 
+2026-09-03 07:57:41 - INFO     - qcal.test_session_20260903_075740 - ================================================================================
+2026-09-03 07:57:41 - INFO     - qcal.test_session_20260903_075740 - Test: tests/test_ci_simbiotico_sabio.py::test_ci_workflow_dispatch_input
+2026-09-03 07:57:41 - INFO     - qcal.test_session_20260903_075740 - Location: tests/test_ci_simbiotico_sabio.py:51
+2026-09-03 07:57:41 - INFO     - qcal.test_session_20260903_075740 - ================================================================================
+2026-09-03 07:57:41 - INFO     - qcal.test_session_20260903_075740 - ✅ PASSED: tests/test_ci_simbiotico_sabio.py::test_ci_workflow_dispatch_input (0.005s)
+2026-09-03 07:57:41 - INFO     - qcal.test_session_20260903_075740 - 
+2026-09-03 07:57:41 - INFO     - qcal.test_session_20260903_075740 - ================================================================================
+2026-09-03 07:57:41 - INFO     - qcal.test_session_20260903_075740 - Test: tests/test_ci_simbiotico_sabio.py::test_ci_workflow_jobs
+2026-09-03 07:57:41 - INFO     - qcal.test_session_20260903_075740 - Location: tests/test_ci_simbiotico_sabio.py:75
+2026-09-03 07:57:41 - INFO     - qcal.test_session_20260903_075740 - ================================================================================
+2026-09-03 07:57:41 - INFO     - qcal.test_session_20260903_075740 - ✅ PASSED: tests/test_ci_simbiotico_sabio.py::test_ci_workflow_jobs (0.005s)
+2026-09-03 07:57:41 - INFO     - qcal.test_session_20260903_075740 - 
+2026-09-03 07:57:41 - INFO     - qcal.test_session_20260903_075740 - ================================================================================
+2026-09-03 07:57:41 - INFO     - qcal.test_session_20260903_075740 - Test: tests/test_ci_simbiotico_sabio.py::test_ci_validation_level_env
+2026-09-03 07:57:41 - INFO     - qcal.test_session_20260903_075740 - Location: tests/test_ci_simbiotico_sabio.py:91
+2026-09-03 07:57:41 - INFO     - qcal.test_session_20260903_075740 - ================================================================================
+2026-09-03 07:57:41 - INFO     - qcal.test_session_20260903_075740 - ✅ PASSED: tests/test_ci_simbiotico_sabio.py::test_ci_validation_level_env (0.005s)
+2026-09-03 07:57:41 - INFO     - qcal.test_session_20260903_075740 - 
+2026-09-03 07:57:41 - INFO     - qcal.test_session_20260903_075740 - ================================================================================
+2026-09-03 07:57:41 - INFO     - qcal.test_session_20260903_075740 - Test: tests/test_ci_simbiotico_sabio.py::test_ci_workflow_steps
+2026-09-03 07:57:41 - INFO     - qcal.test_session_20260903_075740 - Location: tests/test_ci_simbiotico_sabio.py:108
+2026-09-03 07:57:41 - INFO     - qcal.test_session_20260903_075740 - ================================================================================
+2026-09-03 07:57:41 - INFO     - qcal.test_session_20260903_075740 - ✅ PASSED: tests/test_ci_simbiotico_sabio.py::test_ci_workflow_steps (0.005s)
+2026-09-03 07:57:41 - INFO     - qcal.test_session_20260903_075740 - 
+2026-09-03 07:57:41 - INFO     - qcal.test_session_20260903_075740 - ================================================================================
+2026-09-03 07:57:41 - INFO     - qcal.test_session_20260903_075740 - Test: tests/test_ci_simbiotico_sabio.py::test_ci_conditional_execution
+2026-09-03 07:57:41 - INFO     - qcal.test_session_20260903_075740 - Location: tests/test_ci_simbiotico_sabio.py:137
+2026-09-03 07:57:41 - INFO     - qcal.test_session_20260903_075740 - ================================================================================
+2026-09-03 07:57:41 - INFO     - qcal.test_session_20260903_075740 - ✅ PASSED: tests/test_ci_simbiotico_sabio.py::test_ci_conditional_execution (0.005s)
+2026-09-03 07:57:41 - INFO     - qcal.test_session_20260903_075740 - 
+2026-09-03 07:57:41 - INFO     - qcal.test_session_20260903_075740 - ================================================================================
+2026-09-03 07:57:41 - INFO     - qcal.test_session_20260903_075740 - Test: tests/test_ci_simbiotico_sabio.py::test_ci_pytest_commands
+2026-09-03 07:57:41 - INFO     - qcal.test_session_20260903_075740 - Location: tests/test_ci_simbiotico_sabio.py:157
+2026-09-03 07:57:41 - INFO     - qcal.test_session_20260903_075740 - ================================================================================
+2026-09-03 07:57:41 - INFO     - qcal.test_session_20260903_075740 - ✅ PASSED: tests/test_ci_simbiotico_sabio.py::test_ci_pytest_commands (0.000s)
+2026-09-03 07:57:41 - INFO     - qcal.test_session_20260903_075740 - 
+2026-09-03 07:57:41 - INFO     - qcal.test_session_20260903_075740 - ================================================================================
+2026-09-03 07:57:41 - INFO     - qcal.test_session_20260903_075740 - Test: tests/test_ci_simbiotico_sabio.py::test_ci_sabio_signature
+2026-09-03 07:57:41 - INFO     - qcal.test_session_20260903_075740 - Location: tests/test_ci_simbiotico_sabio.py:172
+2026-09-03 07:57:41 - INFO     - qcal.test_session_20260903_075740 - ================================================================================
+2026-09-03 07:57:41 - INFO     - qcal.test_session_20260903_075740 - ✅ PASSED: tests/test_ci_simbiotico_sabio.py::test_ci_sabio_signature (0.000s)
+2026-09-03 07:57:41 - INFO     - qcal.test_session_20260903_075740 - 
+2026-09-03 07:57:41 - INFO     - qcal.test_session_20260903_075740 - ================================================================================
+2026-09-03 07:57:41 - INFO     - qcal.test_session_20260903_075740 - Test: tests/test_ci_simbiotico_sabio.py::test_ci_documentation_exists
+2026-09-03 07:57:41 - INFO     - qcal.test_session_20260903_075740 - Location: tests/test_ci_simbiotico_sabio.py:184
+2026-09-03 07:57:41 - INFO     - qcal.test_session_20260903_075740 - ================================================================================
+2026-09-03 07:57:41 - INFO     - qcal.test_session_20260903_075740 - ✅ PASSED: tests/test_ci_simbiotico_sabio.py::test_ci_documentation_exists (0.000s)
+2026-09-03 07:57:41 - INFO     - qcal.test_session_20260903_075740 - 
+2026-09-03 07:57:41 - INFO     - qcal.test_session_20260903_075740 - ================================================================================
+2026-09-03 07:57:41 - INFO     - qcal.test_session_20260903_075740 - Test: tests/test_ci_simbiotico_sabio.py::test_ci_readme_references
+2026-09-03 07:57:41 - INFO     - qcal.test_session_20260903_075740 - Location: tests/test_ci_simbiotico_sabio.py:191
+2026-09-03 07:57:41 - INFO     - qcal.test_session_20260903_075740 - ================================================================================
+2026-09-03 07:57:41 - INFO     - qcal.test_session_20260903_075740 - ✅ PASSED: tests/test_ci_simbiotico_sabio.py::test_ci_readme_references (0.002s)
