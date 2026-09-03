@@ -229,7 +229,7 @@ class SATCertificateGenerator:
         """
         # Create propositional variables for theorem components
         variables = {
-            "theorem_exists": bool(theorem_info.get("content_extracted", False) or theorem_info.get("file_exists", False)),
+            "theorem_exists": bool(theorem_info.get("content_extracted", False)),
             "theorem_compiles": theorem_info.get("compilation", {}).get("compiles"),
             "file_valid": theorem_info.get("file_hash") != "FILE_NOT_FOUND",
             "dependencies_satisfied": True,  # Checked separately

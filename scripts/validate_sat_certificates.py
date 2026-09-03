@@ -46,7 +46,8 @@ class SATCertificateValidator:
         for cert_file in cert_files:
             try:
                 cert = self.load_certificate(cert_file)
-            except Exception:
+            except Exception as e:
+                print(f"⚠️  Skipping unreadable certificate {cert_file.name}: {e}", file=sys.stderr)
                 continue
             theorem = cert.get("theorem_name")
             if not theorem:

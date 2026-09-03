@@ -72,6 +72,9 @@ def main() -> int:
             failures.append("verification.compilation.error_message != null")
         if theorem_compiles is not True:
             failures.append("sat_formula.variables.theorem_compiles != true")
+        content_found = cert.get("verification", {}).get("theorem_content_found")
+        if content_found is not True:
+            failures.append("verification.theorem_content_found != true")
         if no_sorry is not True:
             failures.append("sat_formula.variables.no_sorry != true")
         if satisfied is not True:
