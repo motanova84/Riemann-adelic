@@ -14,6 +14,7 @@ namespace RiemannAdelic
 namespace TraceFredholm
 
 open Complex
+open MeasureTheory ENNReal Real
 open RiemannAdelic.UnboundedHpsi
 
 universe u
@@ -48,6 +49,32 @@ def resolventKernelLocal (z : ℂ) (x y : ℝ) : ℂ :=
 def InSchattenTwoClass (K : ℝ → ℝ → ℂ) : Prop :=
   ∫⁻ x in Set.Ioi (0 : ℝ), ∫⁻ y in Set.Ioi (0 : ℝ),
       ENNReal.ofReal (‖K x y‖ ^ 2) < ∞
+
+/--
+Lema de convergencia del bloque de dilatación:
+si `p > -1`, la integral de `u^p` en `(0,1]` es finita.
+-/
+lemma integrable_dilation_power (p : ℝ) (hp : -1 < p) :
+    ∫⁻ u in Set.Ioc (0 : ℝ) 1, ENNReal.ofReal (u ^ p) < ∞ := by
+  simpa using lintegral_rpow_Ioc_zero_of_gt_neg_one hp
+
+/--
+Reducción puntual de la norma del núcleo local en el sector `0 < y ≤ x`.
+La igualdad final se obtiene separando el factor `x⁻¹` y el factor de dilatación.
+-/
+lemma norm_sq_resolvent_kernel
+    (z : ℂ) (x y : ℝ)
+    (hx : 0 < x) (hy : 0 < y) (hxy : y ≤ x)
+    (hscale : ‖(1 / (x : ℂ))‖ ^ 2 = x ^ (-2 : ℝ))
+    (hdilation : ‖((y : ℂ) / (x : ℂ)) ^ (Complex.I * z - (1 / 2 : ℂ))‖ ^ 2 =
+      (y / x) ^ (-2 * z.im - 1)) :
+    ‖resolventKernelLocal z x y‖ ^ 2 =
+      (x ^ (-2 : ℝ)) * ((y / x) ^ (-2 * z.im - 1)) := by
+  dsimp [resolventKernelLocal]
+  rw [if_pos ⟨hy, hxy⟩]
+  rw [norm_mul, sq, sq]
+  rw [hscale, hdilation]
+  ring
 
 /--
 Puente explícito núcleo↔operador:

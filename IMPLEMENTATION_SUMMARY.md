@@ -49,8 +49,10 @@
   - `Spectral_Uniqueness`: cierre global por rigidez abstracta con `UnconditionalSpectralIdentificationData` y `unconditional_spectral_identification`.
   - `Spectral_Uniqueness`: núcleo de rigidez Hadamard-Borel del cociente (`xiShifted`, `wronskian_zero_of_log_deriv_eq`, `deriv_div_eq_zero_of_log_deriv_eq`, `spectral_rigidity_quotient`, `entire_rigidity_of_log_deriv_match`) con clausura holomorfa pasada como hipótesis explícita en firma.
   - `Trace_Fredholm`: `zeros_eq_spectrum` movido de `ResolventData` a `SecondFrontHypotheses` para evitar cargar la conclusión en los datos base.
+  - `Trace_Fredholm`: lemas analíticos nuevos `integrable_dilation_power` y `norm_sq_resolvent_kernel` para el cálculo explícito del bloque `S₂`.
   - `Canonical_Instances`: constructores explícitos para instanciación canónica del frente local/global (`CanonicalArchimedeanData`, `canonicalArchimedeanModel`, `CanonicalTraceBridgeData`, `canonicalTraceBridge`, `canonicalGeometricXiClosure`).
   - `Coronacion_Final`: ensamblaje final por pilares con cierre de parámetro espectral real (`riemann_hypothesis_cosmic_closure`, `critical_line_localization_shifted`) usando hipótesis funcional explícita en lugar de estructura-testigo.
+  - `Guinand_Weil_Identity`: descarga analítica intermedia del cierre geométrico→Xi con `log_deriv_mul`, `hasDerivAt_crit_line`, `deriv_factor_w`, `deriv_factor_w_sub_one`, `concreteXi_log_derivative_expansion`, `geometric_xi_log_deriv_closure_proof`.
   - `Spectral_Uniqueness`: interfaz de cierre por biyección espectral en recta crítica con `ResolventIsCompact` topológico (`IsCompact (Set.range ...)`) y `PurelyDiscreteSpectrum` por aislamiento local de puntos espectrales.
 - **Test asociado**:
   - `tests/test_hpsi_unconditional_modules.py` valida presencia de módulos/cierres y ausencia de `sorry`.

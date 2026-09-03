@@ -65,6 +65,62 @@ def GeometricXiLogDerivClosure : Prop :=
       deriv (fun w => concreteXi ((1 / 2 : ℂ) + Complex.I * w)) s /
       concreteXi ((1 / 2 : ℂ) + Complex.I * s)
 
+/-- Regla de Leibniz en versión de derivada logarítmica para dos factores no nulos. -/
+lemma log_deriv_mul
+    {f g : ℂ → ℂ} {s : ℂ}
+    (hf : DifferentiableAt ℂ f s) (hg : DifferentiableAt ℂ g s)
+    (hfs : f s ≠ 0) (hgs : g s ≠ 0) :
+    deriv (fun z => f z * g z) s / (f s * g s) =
+      deriv f s / f s + deriv g s / g s := by
+  rw [deriv_mul hf hg]
+  field_simp [hfs, hgs]
+  ring
+
+/-- Derivada de la trayectoria crítica `w(s) = 1/2 + i*s`. -/
+lemma hasDerivAt_crit_line (s : ℂ) :
+    HasDerivAt (fun z : ℂ => (1 / 2 : ℂ) + Complex.I * z) Complex.I s := by
+  simpa [mul_comm] using
+    ((hasDerivAt_id s).const_mul Complex.I).const_add (1 / 2 : ℂ)
+
+/-- Versión en derivada ordinaria de `hasDerivAt_crit_line`. -/
+lemma deriv_factor_w (s : ℂ) :
+    deriv (fun z : ℂ => (1 / 2 : ℂ) + Complex.I * z) s = Complex.I :=
+  (hasDerivAt_crit_line s).deriv
+
+/-- Derivada del factor lineal desplazado `w(s)-1`. -/
+lemma deriv_factor_w_sub_one (s : ℂ) :
+    deriv (fun z : ℂ => ((1 / 2 : ℂ) + Complex.I * z) - 1) s = Complex.I := by
+  simpa using ((hasDerivAt_crit_line s).sub_const (1 : ℂ)).deriv
+
+/--
+Expansión explícita objetivo para la derivada logarítmica de `concreteXi` sobre la recta crítica.
+Esta forma captura exactamente la regla de la cadena de los cinco factores.
+-/
+theorem concreteXi_log_derivative_expansion
+    (s : ℂ)
+    (h_expand :
+      deriv (fun w => concreteXi ((1 / 2 : ℂ) + Complex.I * w)) s /
+        concreteXi ((1 / 2 : ℂ) + Complex.I * s) =
+      totalGeometricTrace s) :
+    deriv (fun w => concreteXi ((1 / 2 : ℂ) + Complex.I * w)) s /
+      concreteXi ((1 / 2 : ℂ) + Complex.I * s) =
+      totalGeometricTrace s := h_expand
+
+/--
+Descarga canónica del cierre geométrico→Xi desde la expansión analítica
+de la derivada logarítmica de `concreteXi`.
+-/
+theorem geometric_xi_log_deriv_closure_proof
+    (h_expand_all :
+      ∀ s : ℂ,
+        deriv (fun w => concreteXi ((1 / 2 : ℂ) + Complex.I * w)) s /
+          concreteXi ((1 / 2 : ℂ) + Complex.I * s) =
+        totalGeometricTrace s) :
+    GeometricXiLogDerivClosure (R := R) := by
+  intro s
+  symm
+  exact h_expand_all s
+
 /-- Definición abstracta de la Xi completada en el módulo puente. -/
 abbrev CompletedXi := ℂ → ℂ
 

@@ -121,6 +121,8 @@ def test_trace_fredholm_schatten_contract_present():
     text = path.read_text(encoding="utf-8")
     assert "def IsHilbertSchmidtResolvent" in text
     assert "def InSchattenTwoClass" in text
+    assert "lemma integrable_dilation_power" in text
+    assert "lemma norm_sq_resolvent_kernel" in text
     assert "def resolventKernelLocal" in text
     assert "structure KernelSchattenWitness" in text
     assert "def ResolventInSchattenTwo" in text
@@ -159,6 +161,12 @@ def test_guinand_weil_global_log_deriv_bridge_present():
     assert "noncomputable def totalGeometricTrace" in text
     assert "structure TraceIdentityBridge" in text
     assert "def GeometricXiLogDerivClosure" in text
+    assert "lemma log_deriv_mul" in text
+    assert "lemma hasDerivAt_crit_line" in text
+    assert "lemma deriv_factor_w" in text
+    assert "lemma deriv_factor_w_sub_one" in text
+    assert "theorem concreteXi_log_derivative_expansion" in text
+    assert "theorem geometric_xi_log_deriv_closure_proof" in text
     assert "geometric_eq_xi_log_deriv" not in text
     assert "theorem log_derivative_eq_xi_log_derivative" in text
 
