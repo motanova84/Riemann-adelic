@@ -1647,6 +1647,10 @@ Examples:
 
     if args.update_manifest:
         print("\n🔄 SAT MANIFEST REFLASH...")
+        cert_dir = Path(__file__).parent / "certificates" / "sat"
+        cert_dir.mkdir(parents=True, exist_ok=True)
+        for stale_cert in cert_dir.glob("SAT_*.json"):
+            stale_cert.unlink()
         refresh_cmd = [sys.executable, "scripts/generate_sat_certificates.py", "--all"]
         refresh_result = subprocess.run(
             refresh_cmd,

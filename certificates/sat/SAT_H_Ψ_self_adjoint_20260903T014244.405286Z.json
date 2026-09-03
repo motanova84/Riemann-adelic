@@ -1,24 +1,26 @@
 {
-  "certificate_id": "SAT_operator_self_adjoint_20260903T012759.630434Z",
+  "certificate_id": "SAT_H_\u03a8_self_adjoint_20260903T014244.405286Z",
   "certificate_type": "SAT_THEOREM_CERTIFICATE",
-  "theorem_name": "operator_self_adjoint",
-  "description": "General operator self-adjoint property",
+  "theorem_name": "H_\u03a8_self_adjoint",
+  "description": "Berry-Keating operator self-adjointness",
   "theorem_type": "operator_property",
-  "timestamp": "2026-09-03T01:27:59.630434Z",
+  "timestamp": "2026-09-03T01:42:44.405286Z",
   "file_info": {
     "path": "formalization/lean/RH_final_v7.lean",
     "sha256": "aba34976b30dc958b435235d931822dd9b7367c43fa76cb8c9d085ff8ed97437",
     "exists": true
   },
-  "dependencies": [],
+  "dependencies": [
+    "operator_construction"
+  ],
   "verification": {
     "compilation": {
       "compiles": null,
       "error_message": "[Errno 2] No such file or directory: 'lean'",
       "check_time": null
     },
-    "theorem_content_found": true,
-    "content_length": 163
+    "theorem_content_found": false,
+    "content_length": 0
   },
   "sat_formula": {
     "variables": {
@@ -48,8 +50,8 @@
     "field_equation": "\u03a8 = I \u00d7 A_eff\u00b2 \u00d7 C^\u221e"
   },
   "cryptographic_proof": {
-    "certificate_hash": "07d07186d8ba75714226b480c31c74d0c4a895784a5b1c1d746a4a1e2360ca7c",
-    "validator_signature": "62fa2d248b7306c561928bd6586b80db"
+    "certificate_hash": "1cc32d5014770a15e0828f8a2bf040228777119fd9ac54351c766a8948e33254",
+    "validator_signature": "da741007e412da599484bfd408343978"
   },
   "metadata": {
     "generator": "SAT Certificate Generator v1.0",

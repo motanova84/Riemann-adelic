@@ -1,17 +1,17 @@
 {
-  "certificate_id": "SAT_spectrum_H\u03a8_eq_zeta_zeros_20260215T230206.323715Z",
+  "certificate_id": "SAT_fredholm_convergence_20260903T014244.405286Z",
   "certificate_type": "SAT_THEOREM_CERTIFICATE",
-  "theorem_name": "spectrum_H\u03a8_eq_zeta_zeros",
-  "description": "Spectrum identification: Spec(H\u03a8) = {zeta zeros}",
-  "theorem_type": "spectral_identification",
-  "timestamp": "2026-02-15T23:02:06.323715Z",
+  "theorem_name": "fredholm_convergence",
+  "description": "Fredholm determinant convergence",
+  "theorem_type": "convergence",
+  "timestamp": "2026-09-03T01:42:44.405286Z",
   "file_info": {
-    "path": "formalization/lean/RH_final_v6/NoExtraneousEigenvalues.lean",
-    "sha256": "a4062a8a64f9ca2f8d9f5459b67ccdce6acf613293203ab853170291e3455708",
+    "path": "formalization/lean/RH_final_v7.lean",
+    "sha256": "aba34976b30dc958b435235d931822dd9b7367c43fa76cb8c9d085ff8ed97437",
     "exists": true
   },
   "dependencies": [
-    "DeterminantFredholm"
+    "SpectralEigenvalues"
   ],
   "verification": {
     "compilation": {
@@ -19,8 +19,8 @@
       "error_message": "[Errno 2] No such file or directory: 'lean'",
       "check_time": null
     },
-    "theorem_content_found": true,
-    "content_length": 169
+    "theorem_content_found": false,
+    "content_length": 0
   },
   "sat_formula": {
     "variables": {
@@ -50,8 +50,8 @@
     "field_equation": "\u03a8 = I \u00d7 A_eff\u00b2 \u00d7 C^\u221e"
   },
   "cryptographic_proof": {
-    "certificate_hash": "649a812093f96d41ee80a2743ad29fda5eb503a217e5d938a515db7ba3ce2829",
-    "validator_signature": "783c6081fb6021f198d25c5f1c65fe70"
+    "certificate_hash": "18ecb4f122cc3050911219248869c31ed1ea804224189bbf473cd399fc197be5",
+    "validator_signature": "d6bb37f4fe41c26848f5e06d0eca7343"
   },
   "metadata": {
     "generator": "SAT Certificate Generator v1.0",

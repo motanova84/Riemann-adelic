@@ -1,10 +1,10 @@
 {
-  "certificate_id": "SAT_fredholm_convergence_20260108T220339.379223Z",
+  "certificate_id": "SAT_D_entire_20260903T014244.405286Z",
   "certificate_type": "SAT_THEOREM_CERTIFICATE",
-  "theorem_name": "fredholm_convergence",
-  "description": "Fredholm determinant convergence",
-  "theorem_type": "convergence",
-  "timestamp": "2026-01-08T22:03:39.379223Z",
+  "theorem_name": "D_entire",
+  "description": "D function is entire (holomorphic everywhere)",
+  "theorem_type": "analytic_property",
+  "timestamp": "2026-09-03T01:42:44.405286Z",
   "file_info": {
     "path": "formalization/lean/RH_final_v7.lean",
     "sha256": "aba34976b30dc958b435235d931822dd9b7367c43fa76cb8c9d085ff8ed97437",
@@ -50,8 +50,8 @@
     "field_equation": "\u03a8 = I \u00d7 A_eff\u00b2 \u00d7 C^\u221e"
   },
   "cryptographic_proof": {
-    "certificate_hash": "a33d3c6643cc13c03237b1ba135469e70534ed9dbd920f9edf135657bee55fd6",
-    "validator_signature": "68bbfdfe98e65858488cccdeaae5b320"
+    "certificate_hash": "9ce4e88ef73829c68ef93728dbcd844d0455cd7de4150d2cfa0e8af41dce202a",
+    "validator_signature": "b67fb64f323e80721f34860d688d4ef6"
   },
   "metadata": {
     "generator": "SAT Certificate Generator v1.0",

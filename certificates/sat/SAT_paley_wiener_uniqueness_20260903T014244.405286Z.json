@@ -1,13 +1,13 @@
 {
-  "certificate_id": "SAT_operator_self_adjoint_20260118T151748.192283Z",
+  "certificate_id": "SAT_paley_wiener_uniqueness_20260903T014244.405286Z",
   "certificate_type": "SAT_THEOREM_CERTIFICATE",
-  "theorem_name": "operator_self_adjoint",
-  "description": "General operator self-adjoint property",
-  "theorem_type": "operator_property",
-  "timestamp": "2026-01-18T15:17:48.192283Z",
+  "theorem_name": "paley_wiener_uniqueness",
+  "description": "Paley-Wiener uniqueness theorem",
+  "theorem_type": "uniqueness",
+  "timestamp": "2026-09-03T01:42:44.405286Z",
   "file_info": {
-    "path": "formalization/lean/RH_final_v7.lean",
-    "sha256": "aba34976b30dc958b435235d931822dd9b7367c43fa76cb8c9d085ff8ed97437",
+    "path": "formalization/lean/RH_final_v6/paley_wiener_uniqueness.lean",
+    "sha256": "3de9716af94dba774159ea6fa6f59b2b4e0511298b2017087a4a40b1ab9607ca",
     "exists": true
   },
   "dependencies": [],
@@ -18,7 +18,7 @@
       "check_time": null
     },
     "theorem_content_found": true,
-    "content_length": 163
+    "content_length": 345
   },
   "sat_formula": {
     "variables": {
@@ -48,8 +48,8 @@
     "field_equation": "\u03a8 = I \u00d7 A_eff\u00b2 \u00d7 C^\u221e"
   },
   "cryptographic_proof": {
-    "certificate_hash": "08151d0dc306aa107696344ea7c6cffc7b15bd88fb91b7417089560f14e34204",
-    "validator_signature": "8f26474bf16f1335db4032567a462707"
+    "certificate_hash": "f58c057fe9a8590dc9adbbd9df8abb3ca875d0bc2694f9f186c0ca1c1ccfd495",
+    "validator_signature": "f8bc733fe88b121ffd104a62938d4451"
   },
   "metadata": {
     "generator": "SAT Certificate Generator v1.0",

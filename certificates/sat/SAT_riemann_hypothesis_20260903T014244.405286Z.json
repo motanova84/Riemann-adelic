@@ -1,24 +1,28 @@
 {
-  "certificate_id": "SAT_functional_equation_20260118T151748.192283Z",
+  "certificate_id": "SAT_riemann_hypothesis_20260903T014244.405286Z",
   "certificate_type": "SAT_THEOREM_CERTIFICATE",
-  "theorem_name": "functional_equation",
-  "description": "Functional equation \u039e(s) = \u039e(1-s)",
-  "theorem_type": "symmetry",
-  "timestamp": "2026-01-18T15:17:48.192283Z",
+  "theorem_name": "riemann_hypothesis",
+  "description": "Main Riemann Hypothesis theorem - all non-trivial zeros on critical line",
+  "theorem_type": "main_theorem",
+  "timestamp": "2026-09-03T01:42:44.405286Z",
   "file_info": {
-    "path": "formalization/lean/RH_final_v7.lean",
-    "sha256": "aba34976b30dc958b435235d931822dd9b7367c43fa76cb8c9d085ff8ed97437",
+    "path": "formalization/lean/RH_final_v6/RHComplete.lean",
+    "sha256": "6f545976ff8e77417fe533f0bbe05febe43609174291088803e0ec6647944620",
     "exists": true
   },
-  "dependencies": [],
+  "dependencies": [
+    "NoExtraneousEigenvalues",
+    "DeterminantFredholm",
+    "RiemannSiegel"
+  ],
   "verification": {
     "compilation": {
       "compiles": null,
       "error_message": "[Errno 2] No such file or directory: 'lean'",
       "check_time": null
     },
-    "theorem_content_found": false,
-    "content_length": 0
+    "theorem_content_found": true,
+    "content_length": 463
   },
   "sat_formula": {
     "variables": {
@@ -48,8 +52,8 @@
     "field_equation": "\u03a8 = I \u00d7 A_eff\u00b2 \u00d7 C^\u221e"
   },
   "cryptographic_proof": {
-    "certificate_hash": "d56d1720b67731496f9edf3aad0201aa7070df3eb98b9e87d020cd80aa0fb875",
-    "validator_signature": "90cb0ab8c098dc60545f7a327358639f"
+    "certificate_hash": "1b479e30bc08d73ebe3f8a608e91a999927957381df9fe7be24864c724a79252",
+    "validator_signature": "e330854dc0a73f9371be3b71748ab354"
   },
   "metadata": {
     "generator": "SAT Certificate Generator v1.0",
