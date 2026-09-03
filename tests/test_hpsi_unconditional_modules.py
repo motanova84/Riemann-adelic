@@ -61,3 +61,11 @@ def test_remaining_axiom_names_removed_from_module_chain():
         text = path.read_text(encoding="utf-8")
         for token in forbidden:
             assert token not in text, f"Forbidden axiom bridge still present: {token}"
+
+
+def test_spectral_uniqueness_no_true_placeholders():
+    path = LEAN_DIR / "Spectral_Uniqueness.lean"
+    text = path.read_text(encoding="utf-8")
+    assert "def ResolventIsCompact : Prop := ∀ z : ℂ, True" not in text
+    assert "def PurelyDiscreteSpectrum : Prop := True" not in text
+    assert "IsCompact (Set.range (R.resolvent z))" in text

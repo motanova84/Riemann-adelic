@@ -26,10 +26,13 @@ variable {H : Type u} [NormedAddCommGroup H] [InnerProductSpace ℂ H]
 variable {M : CoreModel H} (R : ResolventData M) (B : BridgeData R)
 
 /-- Predicado abstracto: el resolvente es compacto en el punto espectral `z`. -/
-def ResolventIsCompact : Prop := ∀ z : ℂ, True
+def ResolventIsCompact : Prop :=
+  ∀ z : ℂ, IsCompact (Set.range (R.resolvent z))
 
 /-- Predicado abstracto de espectro discreto puro. -/
-def PurelyDiscreteSpectrum : Prop := True
+def PurelyDiscreteSpectrum : Prop :=
+  ∀ z : ℂ, R.isSpectralPoint z →
+    ∃ ε > 0, ∀ w : ℂ, R.isSpectralPoint w → ‖w - z‖ < ε → w = z
 
 /-- Predicado de correspondencia espectral con ceros de `Ξ` sobre la recta crítica. -/
 def SpectralIsomorphism : Prop :=

@@ -32,7 +32,7 @@
 - **Alcance actual**:
   - `Trace_Fredholm`: interfaz de resolvente, traza regularizada, ceros `D(s)` ↔ espectro y reemplazo de axioma por `SecondFrontHypotheses`.
   - `Guinand_Weil_Identity`: interfaz de fórmula de traza y puente `D(s)=Ξ(1/2+i s)`.
-  - `Spectral_Uniqueness`: interfaz de cierre por biyección espectral en recta crítica y reemplazo de axiomas por `FourthFrontHypotheses`.
+  - `Spectral_Uniqueness`: interfaz de cierre por biyección espectral en recta crítica con `ResolventIsCompact` topológico (`IsCompact (Set.range ...)`) y `PurelyDiscreteSpectrum` por aislamiento local de puntos espectrales.
 - **Test asociado**:
   - `tests/test_hpsi_unconditional_modules.py` valida existencia de los 4 módulos y ausencia de `sorry`.
 
