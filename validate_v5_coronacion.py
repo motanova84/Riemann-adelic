@@ -1626,6 +1626,7 @@ Examples:
   python validate_v5_coronacion.py --precision 50     # High precision
   python validate_v5_coronacion.py --verbose          # Detailed output
   python validate_v5_coronacion.py --save-certificate # Save proof certificate
+  python validate_v5_coronacion.py --update-manifest  # Refresh SAT file-hash manifest
         """
     )
     
@@ -1639,8 +1640,26 @@ Examples:
                         help='Maximum number of zeros to use in validation (default: 1000)')
     parser.add_argument('--max_primes', type=int, default=1000,
                         help='Maximum number of primes to use in validation (default: 1000)')
+    parser.add_argument('--update-manifest', action='store_true',
+                        help='Regenerate SAT certificates (refresh file_hash ledger) before validation')
     
     args = parser.parse_args()
+
+    if args.update_manifest:
+        print("\n🔄 SAT MANIFEST REFLASH...")
+        refresh_cmd = [sys.executable, "scripts/generate_sat_certificates.py", "--all"]
+        refresh_result = subprocess.run(
+            refresh_cmd,
+            capture_output=True,
+            text=True,
+            cwd=Path(__file__).parent
+        )
+        if refresh_result.returncode != 0:
+            print("❌ SAT manifest refresh failed")
+            if refresh_result.stderr:
+                print(refresh_result.stderr)
+            sys.exit(refresh_result.returncode)
+        print("✅ SAT manifest refreshed from current Lean file hashes")
     
     # Run validation
     start_time = time.time()
