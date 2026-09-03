@@ -52,7 +52,7 @@ jobs:
       - name: Run tests (basic)
         if: env.VALIDATION_LEVEL == '100'
         run: |
-          pytest tests/ --maxfail=3 --disable-warnings -k "not slow"
+          pytest tests/test_ci_simbiotico_sabio.py tests/test_sabio_validator.py --maxfail=3 --disable-warnings -k "not slow"
 
       - name: Run tests (full)
         if: env.VALIDATION_LEVEL == '500'
