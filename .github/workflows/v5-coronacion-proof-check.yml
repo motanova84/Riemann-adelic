@@ -22,6 +22,15 @@ jobs:
       uses: actions/setup-python@v4
       with:
         python-version: ${{ matrix.python-version }}
+
+    - name: Set up Lean 4 (elan)
+      run: |
+        curl -sSfL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh | sh -s -- -y
+        echo "$HOME/.elan/bin" >> $GITHUB_PATH
+        source "$HOME/.elan/env" || true
+        elan default leanprover/lean4:stable
+        lean --version
+        lake --version
         
     - name: Install dependencies
       run: |
@@ -165,6 +174,15 @@ jobs:
       uses: actions/setup-python@v4
       with:
         python-version: '3.11'
+
+    - name: Set up Lean 4 (elan)
+      run: |
+        curl -sSfL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh | sh -s -- -y
+        echo "$HOME/.elan/bin" >> $GITHUB_PATH
+        source "$HOME/.elan/env" || true
+        elan default leanprover/lean4:stable
+        lean --version
+        lake --version
         
     - name: Install dependencies
       run: |
