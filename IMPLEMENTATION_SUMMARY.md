@@ -1,5 +1,17 @@
 # QCAL Build Verification - Implementation Summary
 
+## 🟡 UNBOUNDED_HPSI (Lean 4 scaffold) — Derivación incondicional por módulos (September 2026)
+
+**Status**: 🟡 SCAFFOLD ADDED
+
+- **Lean Module**: `formalization/lean/RiemannAdelic/Unbounded_Hpsi.lean`
+- **Objetivo**: Definir interfaz no circular para `H_Ψ` (dominio denso, simetría, deficiencia `(0,0)`)
+- **Alcance actual**:
+  - Estructura `CoreModel` para el bloque no acotado
+  - Predicado abstracto de núcleo adjunto `inAdjointKernel`
+  - Teorema `deficiency_indices_zero` desde hipótesis estructurales
+  - Puente axiomático `essentiallySelfAdjoint_of_deficiency_zero` para fase analítica posterior
+
 ## 🟢 PARTÍCULA DE COHERENCIA (PC) — Marco de Sustrato Cuántico Integrado (April 2026)
 
 **Status**: ✅ IMPLEMENTED
