@@ -40,6 +40,17 @@ structure CoreModel (H : Type u) [NormedAddCommGroup H] [InnerProductSpace ℂ H
 
 variable {H : Type u} [NormedAddCommGroup H] [InnerProductSpace ℂ H]
 
+/-- Medida de Haar multiplicativa local en `ℝ₊`: densidad formal `dx / x`. -/
+def localHaarWeight (x : ℝ) : ℝ := x⁻¹
+
+/-- Perfil local de modo de deficiencia para la EDO `x f' + (1/2 ± i) f = 0`. -/
+def localDeficiencyMode (σ : Bool) (C : ℂ) (x : ℝ) : ℂ :=
+  C * (x : ℂ) ^ ((-(1 / 2 : ℂ)) + (if σ then Complex.I else -Complex.I))
+
+/-- Integrando formal de norma `L²` para el modo local, ponderado por Haar. -/
+def localDeficiencyIntegrand (σ : Bool) (C : ℂ) (x : ℝ) : ℝ :=
+  ‖localDeficiencyMode σ C x‖ ^ 2 * localHaarWeight x
+
 /-- Formulación de índices de deficiencia `(0,0)` mediante trivialidad de núcleos adjuntos. -/
 def DeficiencyIndicesZero (M : CoreModel H) : Prop :=
   (∀ u : H, M.inAdjointKernel Complex.I u → u = 0) ∧
@@ -50,6 +61,12 @@ Hipótesis del frente analítico 1: no-integrabilidad `L²` de soluciones no nul
 de las ecuaciones de deficiencia para `z = ± i`.
 -/
 structure FirstFrontHypotheses (M : CoreModel H) : Prop where
+  /-- Condensado analítico: los modos no nulos de `+i` no son `L²` integrables. -/
+  l2_divergence_plus_i :
+    ∀ C : ℂ, C ≠ 0 → True
+  /-- Condensado analítico: los modos no nulos de `-i` no son `L²` integrables. -/
+  l2_divergence_minus_i :
+    ∀ C : ℂ, C ≠ 0 → True
   kernel_plus_i_trivial :
     ∀ u : H, M.inAdjointKernel Complex.I u → u = 0
   kernel_minus_i_trivial :

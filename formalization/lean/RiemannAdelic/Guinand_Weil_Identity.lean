@@ -44,6 +44,9 @@ structure BridgeData where
   fredholm_eq_xi :
     ∀ s : ℂ, R.fredholmDeterminant s = xi ((1 / 2 : ℂ) + Complex.I * s)
 
+/-- Hipótesis explícitas del frente analítico 3 (Poisson-Mellin + identificación). -/
+abbrev ThirdFrontHypotheses := BridgeData R
+
 /-- Teorema interfaz: fórmula de traza Guinand–Weil. -/
 theorem guinand_weil_explicit_formula (B : BridgeData R) (z : ℂ) :
     B.spectralSide z = B.geometricSide z := by
@@ -56,4 +59,3 @@ theorem fredholm_determinant_eq_completed_xi (B : BridgeData R) (s : ℂ) :
 
 end GuinandWeilIdentity
 end RiemannAdelic
-

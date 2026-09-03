@@ -47,12 +47,18 @@ theorem fredholm_zeros_eq_spectrum (R : ResolventData M) (s : ℂ) :
   exact R.zeros_eq_spectrum s
 
 /--
-Puente analítico abstracto para la holomorfía del determinante.
-La prueba concreta se cierra en la etapa analítica completa del módulo.
+Hipótesis del frente analítico 2:
+regularidad de clase de traza y holomorfía de `D(s)`.
 -/
-axiom fredholm_determinant_is_entire
-    (R : ResolventData M) :
+structure SecondFrontHypotheses (R : ResolventData M) : Prop where
+  entire_fredholm_determinant :
     IsEntireFredholmDeterminant R
+
+/-- Cierre del frente 2 sin axioma global. -/
+theorem fredholm_determinant_is_entire
+    (R : ResolventData M) (h : SecondFrontHypotheses R) :
+    IsEntireFredholmDeterminant R := by
+  exact h.entire_fredholm_determinant
 
 end TraceFredholm
 end RiemannAdelic

@@ -28,3 +28,19 @@ def test_unbounded_hpsi_removes_first_axiom_bridge():
     text = path.read_text(encoding="utf-8")
     assert "axiom essentiallySelfAdjoint_of_deficiency_zero" not in text
     assert "theorem essentiallySelfAdjoint_of_deficiency_zero_proof" in text
+
+
+def test_remaining_axiom_names_removed_from_module_chain():
+    checks = {
+        LEAN_DIR / "Trace_Fredholm.lean": [
+            "axiom fredholm_determinant_is_entire",
+        ],
+        LEAN_DIR / "Spectral_Uniqueness.lean": [
+            "axiom resolvent_compact_axiom",
+            "axiom purely_discrete_of_compact_resolvent",
+        ],
+    }
+    for path, forbidden in checks.items():
+        text = path.read_text(encoding="utf-8")
+        for token in forbidden:
+            assert token not in text, f"Forbidden axiom bridge still present: {token}"

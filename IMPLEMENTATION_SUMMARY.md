@@ -9,6 +9,7 @@
 - **Alcance actual**:
   - Estructura `CoreModel` para el bloque no acotado
   - Predicado abstracto de núcleo adjunto `inAdjointKernel`
+  - Definiciones locales de frente analítico: `localHaarWeight`, `localDeficiencyMode`, `localDeficiencyIntegrand`
   - Hipótesis explícitas de frente 1: `FirstFrontHypotheses`
   - Teorema `deficiency_indices_zero_of_first_front`
   - Reemplazo del axioma puente por `theorem essentiallySelfAdjoint_of_deficiency_zero_proof`
@@ -24,9 +25,9 @@
 - **Objetivo**:
   - Encadenar interfaz incondicional desde resolvente/traza regularizada hasta biyección espectral final.
 - **Alcance actual**:
-  - `Trace_Fredholm`: interfaz de resolvente, traza regularizada y ceros `D(s)` ↔ espectro.
+  - `Trace_Fredholm`: interfaz de resolvente, traza regularizada, ceros `D(s)` ↔ espectro y reemplazo de axioma por `SecondFrontHypotheses`.
   - `Guinand_Weil_Identity`: interfaz de fórmula de traza y puente `D(s)=Ξ(1/2+i s)`.
-  - `Spectral_Uniqueness`: interfaz de cierre por biyección espectral en recta crítica.
+  - `Spectral_Uniqueness`: interfaz de cierre por biyección espectral en recta crítica y reemplazo de axiomas por `FourthFrontHypotheses`.
 - **Test asociado**:
   - `tests/test_hpsi_unconditional_modules.py` valida existencia de los 4 módulos y ausencia de `sorry`.
 

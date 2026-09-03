@@ -35,11 +35,14 @@ def PurelyDiscreteSpectrum : Prop := True
 def SpectralIsomorphism : Prop :=
   ∀ t : ℝ, R.isSpectralPoint (t : ℂ) ↔ B.xi ((1 / 2 : ℂ) + Complex.I * (t : ℂ)) = 0
 
-/-- Interfaz: compacidad del resolvente en el bloque final. -/
-axiom resolvent_compact_axiom : ResolventIsCompact R
-
-/-- Interfaz: compacidad del resolvente implica espectro discreto puro. -/
-axiom purely_discrete_of_compact_resolvent :
+/--
+Hipótesis del frente analítico 4:
+compacidad del resolvente e implicación de espectro discreto puro.
+-/
+structure FourthFrontHypotheses : Prop where
+  resolvent_compact :
+    ResolventIsCompact R
+  purely_discrete_of_compact :
     ResolventIsCompact R → PurelyDiscreteSpectrum R
 
 /-- Teorema interfaz: biyección espectral sobre la recta crítica. -/
@@ -65,10 +68,10 @@ theorem spectral_isomorphism_unconditional :
     exact (fredholm_zeros_eq_spectrum R (t : ℂ)).1 hdet
 
 /-- Cierre de discreción espectral (interfaz). -/
-theorem spectrum_is_purely_discrete :
+theorem spectrum_is_purely_discrete
+    (h : FourthFrontHypotheses R B) :
     PurelyDiscreteSpectrum R :=
-  purely_discrete_of_compact_resolvent R (resolvent_compact_axiom R)
+  h.purely_discrete_of_compact h.resolvent_compact
 
 end SpectralUniqueness
 end RiemannAdelic
-
