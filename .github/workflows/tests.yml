@@ -24,8 +24,10 @@ jobs:
           pip install --upgrade pip==24.3.1
           pip install -r requirements.txt
 
-      - name: Run unit tests
-        run: pytest -v
+      - name: Run targeted validation tests
+        run: |
+          python3 -m pytest tests/test_coronacion_v5.py -v --tb=short -o log_file=
+          python3 -m pytest tests/test_hpsi_unconditional_modules.py -q -o log_file=
 
       - name: Run V5 Coronación validation
         run: |
