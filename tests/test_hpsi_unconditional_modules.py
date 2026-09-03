@@ -9,6 +9,8 @@ MODULES = [
     LEAN_DIR / "Trace_Fredholm.lean",
     LEAN_DIR / "Guinand_Weil_Identity.lean",
     LEAN_DIR / "Poisson_Mellin.lean",
+    LEAN_DIR / "Spectral_Mechanics.lean",
+    LEAN_DIR / "Hadamard_Uniqueness.lean",
     LEAN_DIR / "Spectral_Uniqueness.lean",
 ]
 
@@ -86,3 +88,19 @@ def test_poisson_mellin_tripartite_contract_present():
     assert "structure PoissonMellinData" in text
     assert "theorem trace_formula_poisson_mellin_identity" in text
     assert "theorem fredholm_det_identically_equals_xi" in text
+
+
+def test_spectral_mechanics_core_theorems_present():
+    path = LEAN_DIR / "Spectral_Mechanics.lean"
+    text = path.read_text(encoding="utf-8")
+    assert "theorem log_deriv_fredholm_eq_resolvent_trace" in text
+    assert "theorem adelic_semigroup_trace_expansion" in text
+    assert "theorem mellin_prime_deltas_eq_zeta_log_deriv" in text
+    assert "theorem trace_match_derived" in text
+
+
+def test_hadamard_uniqueness_bridge_present():
+    path = LEAN_DIR / "Hadamard_Uniqueness.lean"
+    text = path.read_text(encoding="utf-8")
+    assert "theorem entire_eq_of_log_deriv_eq_and_eq_at_point" in text
+    assert "theorem spectral_determinant_identically_equals_xi" in text

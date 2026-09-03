@@ -27,12 +27,16 @@
   - `formalization/lean/RiemannAdelic/Trace_Fredholm.lean`
   - `formalization/lean/RiemannAdelic/Guinand_Weil_Identity.lean`
   - `formalization/lean/RiemannAdelic/Poisson_Mellin.lean`
+  - `formalization/lean/RiemannAdelic/Spectral_Mechanics.lean`
+  - `formalization/lean/RiemannAdelic/Hadamard_Uniqueness.lean`
   - `formalization/lean/RiemannAdelic/Spectral_Uniqueness.lean`
 - **Objetivo**:
   - Encadenar interfaz incondicional desde resolvente/traza regularizada hasta biyección espectral final.
 - **Alcance actual**:
   - `Trace_Fredholm`: interfaz de resolvente, traza regularizada, ceros `D(s)` ↔ espectro y contrato `S₂` explícito (`IsHilbertSchmidtResolvent`, `ResolventInSchattenTwo`).
   - `Poisson_Mellin`: testigo de identidad de derivadas logarítmicas y cierre Hadamard del puente `D(s)=Ξ(1/2+i s)`.
+  - `Spectral_Mechanics`: núcleo formal del mecanismo espectral (`log_deriv_fredholm_eq_resolvent_trace`, `adelic_semigroup_trace_expansion`, `mellin_prime_deltas_eq_zeta_log_deriv`, `trace_match_derived`).
+  - `Hadamard_Uniqueness`: cerrador de rigidez analítica (`entire_eq_of_log_deriv_eq_and_eq_at_point`) y cierre final `spectral_determinant_identically_equals_xi`.
   - `Guinand_Weil_Identity`: puente de fórmula de traza conectado a hipótesis de consistencia con `Poisson_Mellin`.
   - `Spectral_Uniqueness`: interfaz de cierre por biyección espectral en recta crítica con `ResolventIsCompact` topológico (`IsCompact (Set.range ...)`) y `PurelyDiscreteSpectrum` por aislamiento local de puntos espectrales.
 - **Test asociado**:
