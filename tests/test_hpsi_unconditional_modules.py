@@ -62,6 +62,13 @@ def test_unbounded_hpsi_dyadic_local_closure_present():
 def test_unbounded_hpsi_causal_kernel_bridge_present():
     path = LEAN_DIR / "Unbounded_Hpsi.lean"
     text = path.read_text(encoding="utf-8")
+    assert "def integratingExponent" in text
+    assert "def integratingFactor" in text
+    assert "def SatisfiesAdjointODE" in text
+    assert "structure DeficiencyODEUniquenessWitness" in text
+    assert "structure LocalDivergenceWitness" in text
+    assert "theorem deficiency_mode_unique" in text
+    assert "theorem local_mode_not_integrable_of_ne_zero" in text
     assert "deficiencyCoeff" in text
     assert "kernel_coeff_nonzero_implies_not_integrable" in text
     assert "kernel_coeff_integrable" in text
@@ -115,10 +122,19 @@ def test_poisson_mellin_tripartite_contract_present():
 def test_spectral_mechanics_core_theorems_present():
     path = LEAN_DIR / "Spectral_Mechanics.lean"
     text = path.read_text(encoding="utf-8")
+    assert "structure PoissonGlobalDecompositionData" in text
     assert "theorem log_deriv_fredholm_eq_resolvent_trace" in text
     assert "theorem adelic_semigroup_trace_expansion" in text
     assert "theorem mellin_prime_deltas_eq_zeta_log_deriv" in text
     assert "theorem trace_match_derived" in text
+    assert "theorem poisson_global_log_deriv_match" in text
+
+
+def test_guinand_weil_global_log_deriv_bridge_present():
+    path = LEAN_DIR / "Guinand_Weil_Identity.lean"
+    text = path.read_text(encoding="utf-8")
+    assert "poissonGlobal" in text
+    assert "theorem fredholm_log_derivative_eq_xi_log_derivative" in text
 
 
 def test_hadamard_uniqueness_bridge_present():
