@@ -54,15 +54,9 @@ theorem riemann_hypothesis_cosmic_closure
           R.fredholmDeterminant z /
             concreteXi ((1 / 2 : ℂ) + Complex.I * z))
         (regularDomain (fun w => concreteXi ((1 / 2 : ℂ) + Complex.I * w))))
-    (h_const_ratio :
+    (h_nonzero_on_domain :
       ∀ s ∈ regularDomain (fun w => concreteXi ((1 / 2 : ℂ) + Complex.I * w)),
-        R.fredholmDeterminant s / concreteXi ((1 / 2 : ℂ) + Complex.I * s) =
-          R.fredholmDeterminant 0 / concreteXi (1 / 2 : ℂ))
-    (h_extend :
-      ∀ s : ℂ,
-        (∀ z ∈ regularDomain (fun w => concreteXi ((1 / 2 : ℂ) + Complex.I * w)),
-          R.fredholmDeterminant z = concreteXi ((1 / 2 : ℂ) + Complex.I * z)) →
-        R.fredholmDeterminant s = concreteXi ((1 / 2 : ℂ) + Complex.I * s))
+        R.fredholmDeterminant s ≠ 0)
     (h_spec_real : EssSelfAdjoint M → ∀ s : ℂ, R.isSpectralPoint s → s.im = 0)
     (s : ℂ)
     (hs_zero : concreteXi ((1 / 2 : ℂ) + Complex.I * s) = 0) :
@@ -88,8 +82,7 @@ theorem riemann_hypothesis_cosmic_closure
       h_preconn
       h_dense
       h_diff
-      h_const_ratio
-      h_extend
+      h_nonzero_on_domain
   have hdet_zero : R.fredholmDeterminant s = 0 := by
     rw [h_ident s]
     exact hs_zero
@@ -120,15 +113,9 @@ theorem critical_line_localization_shifted
           R.fredholmDeterminant z /
             concreteXi ((1 / 2 : ℂ) + Complex.I * z))
         (regularDomain (fun w => concreteXi ((1 / 2 : ℂ) + Complex.I * w))))
-    (h_const_ratio :
+    (h_nonzero_on_domain :
       ∀ s ∈ regularDomain (fun w => concreteXi ((1 / 2 : ℂ) + Complex.I * w)),
-        R.fredholmDeterminant s / concreteXi ((1 / 2 : ℂ) + Complex.I * s) =
-          R.fredholmDeterminant 0 / concreteXi (1 / 2 : ℂ))
-    (h_extend :
-      ∀ s : ℂ,
-        (∀ z ∈ regularDomain (fun w => concreteXi ((1 / 2 : ℂ) + Complex.I * w)),
-          R.fredholmDeterminant z = concreteXi ((1 / 2 : ℂ) + Complex.I * z)) →
-        R.fredholmDeterminant s = concreteXi ((1 / 2 : ℂ) + Complex.I * s))
+        R.fredholmDeterminant s ≠ 0)
     (h_spec_real : EssSelfAdjoint M → ∀ s : ℂ, R.isSpectralPoint s → s.im = 0)
     (s : ℂ)
     (hs_zero : concreteXi ((1 / 2 : ℂ) + Complex.I * s) = 0) :
@@ -136,7 +123,7 @@ theorem critical_line_localization_shifted
   have hs_im_zero : s.im = 0 :=
     riemann_hypothesis_cosmic_closure
       M R h2 Adata Tdata hgeom hD_entire hXi_entire h_self_adjoint
-      h_norm_match h_xi_zero_ne h_preconn h_dense h_diff h_const_ratio h_extend
+      h_norm_match h_xi_zero_ne h_preconn h_dense h_diff h_nonzero_on_domain
       h_spec_real s hs_zero
   simp [hs_im_zero]
 

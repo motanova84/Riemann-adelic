@@ -77,16 +77,22 @@ la hipótesis `h_const_ratio` recoge la descarga de `is_const_of_deriv_eq_zero`.
 lemma quotient_constant_on_connected_domain
     {D Xi : ℂ → ℂ}
     (h_preconn : IsPreconnected (regularDomain Xi))
-    (h_deriv_zero : ∀ s ∈ regularDomain Xi, D s ≠ 0 → deriv (fun z => D z / Xi z) s = 0)
+    (h_open : IsOpen (regularDomain Xi))
+    (h_deriv_zero : (regularDomain Xi).EqOn (deriv (fun z => D z / Xi z)) 0)
     (h_diff : DifferentiableOn ℂ (fun z => D z / Xi z) (regularDomain Xi))
     (h_scale : D 0 = Xi 0)
-    (h_xi0 : Xi 0 ≠ 0)
-    (h_const_ratio : ∀ s ∈ regularDomain Xi, D s / Xi s = D 0 / Xi 0) :
+    (h_xi0 : Xi 0 ≠ 0) :
     ∀ s ∈ regularDomain Xi, D s / Xi s = 1 := by
   intro s hs
-  have h0 : D 0 / Xi 0 = 1 := by
-    rw [h_scale, div_self h_xi0]
-  rw [h_const_ratio s hs, h0]
+  have h0_in : (0 : ℂ) ∈ regularDomain Xi := by
+    simpa [regularDomain, zeroSet] using h_xi0
+  have hconst :
+      D s / Xi s = D 0 / Xi 0 := by
+    exact h_open.is_const_of_deriv_eq_zero
+      h_preconn h_diff h_deriv_zero hs h0_in
+  calc
+    D s / Xi s = D 0 / Xi 0 := hconst
+    _ = 1 := by rw [h_scale, div_self h_xi0]
 
 /--
 Extensión de igualdad desde un dominio denso:
@@ -97,11 +103,17 @@ lemma eq_on_univ_of_eq_on_dense
     (hD_cont : Continuous D)
     (hXi_cont : Continuous Xi)
     (h_dense : closure (regularDomain Xi) = univ)
-    (h_eq_on_domain : ∀ s ∈ regularDomain Xi, D s = Xi s)
-    (h_extend : ∀ s : ℂ, (∀ z ∈ regularDomain Xi, D z = Xi z) → D s = Xi s) :
+    (h_eq_on_domain : ∀ s ∈ regularDomain Xi, D s = Xi s) :
     ∀ s : ℂ, D s = Xi s := by
+  have hEq : Set.EqOn D Xi (regularDomain Xi) := by
+    intro z hz
+    exact h_eq_on_domain z hz
+  have hEqClosure : Set.EqOn D Xi (closure (regularDomain Xi)) :=
+    hEq.closure hD_cont hXi_cont
   intro s
-  exact h_extend s h_eq_on_domain
+  have hs : s ∈ closure (regularDomain Xi) := by
+    simpa [h_dense] using (show s ∈ (univ : Set ℂ) from trivial)
+  exact hEqClosure hs
 
 /--
 Rigidez espectral por cociente:
@@ -164,18 +176,23 @@ theorem entire_rigidity_unconditional
     (h_preconn : IsPreconnected (regularDomain Xi))
     (h_dense : closure (regularDomain Xi) = univ)
     (h_diff : DifferentiableOn ℂ (fun z => D z / Xi z) (regularDomain Xi))
-    (h_const_ratio : ∀ s ∈ regularDomain Xi, D s / Xi s = D 0 / Xi 0)
-    (h_extend : ∀ s : ℂ, (∀ z ∈ regularDomain Xi, D z = Xi z) → D s = Xi s) :
+    (h_nonzero_on_domain : ∀ s ∈ regularDomain Xi, D s ≠ 0) :
     ∀ s : ℂ, D s = Xi s := by
-  have h_quot_one : ∀ s ∈ regularDomain Xi, D s / Xi s = 1 := by
-    refine quotient_constant_on_connected_domain h_preconn ?_ h_diff h_scale_match h_xi_zero_ne h_const_ratio
-    intro s hs hDs
+  have h_open : IsOpen (regularDomain Xi) := by
+    simpa [regularDomain, zeroSet] using
+      (isClosed_singleton.preimage hXi_entire.continuous).isOpen_compl
+  have h_deriv_zero : (regularDomain Xi).EqOn (deriv (fun z => D z / Xi z)) 0 := by
+    intro s hs
     have hXi : Xi s ≠ 0 := by
       simpa [regularDomain, zeroSet] using hs
+    have hDs : D s ≠ 0 := h_nonzero_on_domain s hs
     exact deriv_div_eq_zero_of_log_deriv_eq
       (hD_entire.differentiableAt)
       (hXi_entire.differentiableAt)
       hDs hXi (h_log_deriv s hDs hXi)
+  have h_quot_one : ∀ s ∈ regularDomain Xi, D s / Xi s = 1 := by
+    exact quotient_constant_on_connected_domain
+      h_preconn h_open h_deriv_zero h_diff h_scale_match h_xi_zero_ne
   have h_eq_on_domain : ∀ s ∈ regularDomain Xi, D s = Xi s := by
     intro s hs
     have hXi : Xi s ≠ 0 := by
@@ -183,7 +200,7 @@ theorem entire_rigidity_unconditional
     have h1 : D s / Xi s = 1 := h_quot_one s hs
     exact (div_eq_iff hXi).mp (by simpa using h1)
   exact eq_on_univ_of_eq_on_dense
-    hD_entire.continuous hXi_entire.continuous h_dense h_eq_on_domain h_extend
+    hD_entire.continuous hXi_entire.continuous h_dense h_eq_on_domain
 
 /-- Predicado abstracto: el resolvente es compacto en el punto espectral `z`. -/
 def ResolventIsCompact : Prop :=
