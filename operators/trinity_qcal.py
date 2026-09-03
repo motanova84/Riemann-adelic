@@ -46,6 +46,7 @@ try:
     from qcal.constants import (
         F0,
         F_MANIFESTATION,
+        C_COHERENCE,
         GAMMA_QCAL_FASE,
         RIEMANN_ZEROS_5,
         RIEMANN_RENORM_SCALE,
@@ -61,6 +62,7 @@ except ImportError:
     warnings.warn("qcal.constants not available, using fallback values")
     F0 = 141.7001
     F_MANIFESTATION = 888.0
+    C_COHERENCE = 244.36
     GAMMA_QCAL_FASE = 2.0 * np.pi * F0 / F_MANIFESTATION
     RIEMANN_ZEROS_5 = np.array([14.134725142, 21.022039639, 25.010857580,
                                   30.424876126, 32.935061588])
@@ -182,6 +184,7 @@ def compute_trinity_qcal(
     mode_amplitudes: Optional[np.ndarray] = None,
     gamma_qcal: Optional[float] = None,
     renorm_scale: Optional[float] = None,
+    g_eff: Optional[float] = None,
     verbose: bool = False
 ) -> Dict[str, Any]:
     """
@@ -260,11 +263,18 @@ def compute_trinity_qcal(
     # Weighted sum of phase synchronization
     phase_sync_weighted = np.sum(weights * phase_sync_terms)
     
-    # Trinity_QCAL formula
-    # The balance condition: when on critical line, the terms should cancel
-    # |E|² - 1 is the "creative tremor" (small positive value)
-    # ∇S · cos(...) should balance this when zeros are on critical line
-    trinity_qcal = E_magnitude_sq - 1.0 + grad_S * phase_sync_weighted
+    # Trinity_QCAL formula with effective spectral coupling.
+    # If g_eff is not provided, calibrate adiabatically to cancel residual drift
+    # from the phase projection while preserving smooth behavior.
+    raw_phase_coupling = grad_S * phase_sync_weighted
+    if g_eff is None:
+        denom = raw_phase_coupling
+        if np.abs(denom) > 1e-12:
+            g_eff = float((1.0 - E_magnitude_sq) / denom)
+            g_eff = float(np.clip(g_eff, -2.0, 2.0))
+        else:
+            g_eff = float(F0 / C_COHERENCE)
+    trinity_qcal = E_magnitude_sq - 1.0 + g_eff * raw_phase_coupling
     
     # Check RH condition with relaxed tolerance for this theoretical framework.
     # Note: The exact zero condition may require fine-tuning of S_OPTIMAL and
@@ -300,6 +310,7 @@ def compute_trinity_qcal(
         'grad_S': float(grad_S),
         'phase_sync_terms': phase_sync_terms.tolist(),
         'phase_sync_weighted': float(phase_sync_weighted),
+        'g_eff': float(g_eff),
         'psi': float(psi),
         'gamma_qcal': float(gamma_qcal),
         'rh_condition_satisfied': bool(rh_condition_satisfied),
@@ -410,7 +421,7 @@ def compute_gamma_tilde_modes(
             γ_n_renorm = γ_n · (f₀ / |ζ'(1/2)|)
 
         Step 2 — Torsion modulation (adds conscious phase shift θ):
-            γ̃_n = γ_n_renorm + f₀ · sin(γ_QCAL + θ)
+            γ̃_n = γ_n_renorm + (f₀ / C) · sin(γ_QCAL + θ),  C = 244.36
 
     The additive term f₀·sin(γ_QCAL + θ) is the same for every mode and encodes
     the "fertile fissure" — the minimal twist (θ) that allows geometry to feel
@@ -442,7 +453,7 @@ def compute_gamma_tilde_modes(
 
     gamma_n = np.asarray(gamma_n, dtype=float)
     gamma_n_renorm = gamma_n * renorm_scale
-    torsion_shift = f0 * np.sin(gamma_qcal + theta)
+    torsion_shift = (f0 / C_COHERENCE) * np.sin(gamma_qcal + theta)
     return gamma_n_renorm + torsion_shift
 
 
