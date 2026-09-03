@@ -1660,6 +1660,21 @@ Examples:
                 print(refresh_result.stderr)
             sys.exit(refresh_result.returncode)
         print("✅ SAT manifest refreshed from current Lean file hashes")
+
+        print("🔍 SAT CERTIFICATES POST-REFRESH VALIDATION...")
+        sat_validate_cmd = [sys.executable, "scripts/validate_sat_certificates.py", "--all"]
+        sat_validate_result = subprocess.run(
+            sat_validate_cmd,
+            capture_output=True,
+            text=True,
+            cwd=Path(__file__).parent
+        )
+        if sat_validate_result.returncode != 0:
+            print("❌ SAT certificate validation failed after manifest refresh")
+            if sat_validate_result.stderr:
+                print(sat_validate_result.stderr)
+            sys.exit(sat_validate_result.returncode)
+        print("✅ SAT certificates validated after manifest refresh")
     
     # Run validation
     start_time = time.time()
