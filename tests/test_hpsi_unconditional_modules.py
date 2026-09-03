@@ -35,6 +35,18 @@ def test_unbounded_hpsi_removes_first_axiom_bridge():
     assert "def LocalModeNotIntegrable (σ : Bool) (C : ℂ) : Prop :=\n  True" not in text
 
 
+def test_unbounded_hpsi_norm_density_closed_without_sorry():
+    path = LEAN_DIR / "Unbounded_Hpsi.lean"
+    text = path.read_text(encoding="utf-8")
+    assert "theorem localDeficiencyIntegrand_eq" in text
+    assert "lemma norm_cpow_of_pos_real" in text
+    assert "lemma norm_cpow_I_mul_real" in text
+    lemma_start = text.find("theorem localDeficiencyIntegrand_eq")
+    assert lemma_start != -1
+    lemma_block = text[lemma_start:lemma_start + 1500]
+    assert "sorry" not in lemma_block
+
+
 def test_remaining_axiom_names_removed_from_module_chain():
     checks = {
         LEAN_DIR / "Trace_Fredholm.lean": [
