@@ -35,6 +35,8 @@
   - `formalization/lean/RiemannAdelic/Spectral_Mechanics.lean`
   - `formalization/lean/RiemannAdelic/Hadamard_Uniqueness.lean`
   - `formalization/lean/RiemannAdelic/Spectral_Uniqueness.lean`
+  - `formalization/lean/RiemannAdelic/Canonical_Instances.lean`
+  - `formalization/lean/RiemannAdelic/Coronacion_Final.lean`
 - **Objetivo**:
   - Encadenar interfaz incondicional desde resolvente/traza regularizada hasta biyección espectral final.
 - **Alcance actual**:
@@ -46,6 +48,8 @@
   - `Guinand_Weil_Identity`: descomposición explícita desacoplada (`concreteXi`, `archimedeanTraceTerm`, `primeTraceSum`, `totalGeometricTrace`, `TraceIdentityBridge`, `log_derivative_eq_xi_log_derivative`).
   - `Spectral_Uniqueness`: cierre global por rigidez abstracta con `UnconditionalSpectralIdentificationData` y `unconditional_spectral_identification`.
   - `Spectral_Uniqueness`: núcleo de rigidez Hadamard-Borel del cociente (`xiShifted`, `wronskian_zero_of_log_deriv_eq`, `deriv_div_eq_zero_of_log_deriv_eq`, `HolomorphicQuotientRigidityWitness`, `spectral_rigidity_quotient`, `entire_rigidity_of_log_deriv_match`).
+  - `Canonical_Instances`: constructores explícitos para instanciación canónica del frente local/global (`CanonicalArchimedeanData`, `canonicalArchimedeanModel`, `CanonicalTraceBridgeData`, `canonicalTraceBridge`).
+  - `Coronacion_Final`: ensamblaje final por pilares con cierre de parámetro espectral real (`EssentialSpectrumRealityWitness`, `riemann_hypothesis_cosmic_closure`, `critical_line_localization_shifted`).
   - `Spectral_Uniqueness`: interfaz de cierre por biyección espectral en recta crítica con `ResolventIsCompact` topológico (`IsCompact (Set.range ...)`) y `PurelyDiscreteSpectrum` por aislamiento local de puntos espectrales.
 - **Test asociado**:
   - `tests/test_hpsi_unconditional_modules.py` valida presencia de módulos/cierres y ausencia de `sorry`.

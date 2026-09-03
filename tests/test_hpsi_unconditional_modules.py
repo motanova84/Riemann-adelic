@@ -12,6 +12,8 @@ MODULES = [
     LEAN_DIR / "Spectral_Mechanics.lean",
     LEAN_DIR / "Hadamard_Uniqueness.lean",
     LEAN_DIR / "Spectral_Uniqueness.lean",
+    LEAN_DIR / "Canonical_Instances.lean",
+    LEAN_DIR / "Coronacion_Final.lean",
 ]
 
 
@@ -161,3 +163,20 @@ def test_hadamard_uniqueness_bridge_present():
     text = path.read_text(encoding="utf-8")
     assert "theorem entire_eq_of_log_deriv_eq_and_eq_at_point" in text
     assert "theorem spectral_determinant_identically_equals_xi" in text
+
+
+def test_canonical_instances_constructors_present():
+    path = LEAN_DIR / "Canonical_Instances.lean"
+    text = path.read_text(encoding="utf-8")
+    assert "structure CanonicalArchimedeanData" in text
+    assert "def canonicalArchimedeanModel" in text
+    assert "structure CanonicalTraceBridgeData" in text
+    assert "def canonicalTraceBridge" in text
+
+
+def test_coronacion_final_closure_present():
+    path = LEAN_DIR / "Coronacion_Final.lean"
+    text = path.read_text(encoding="utf-8")
+    assert "structure EssentialSpectrumRealityWitness" in text
+    assert "theorem riemann_hypothesis_cosmic_closure" in text
+    assert "theorem critical_line_localization_shifted" in text
