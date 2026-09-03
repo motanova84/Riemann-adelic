@@ -8,6 +8,7 @@ MODULES = [
     LEAN_DIR / "Unbounded_Hpsi.lean",
     LEAN_DIR / "Trace_Fredholm.lean",
     LEAN_DIR / "Guinand_Weil_Identity.lean",
+    LEAN_DIR / "Poisson_Mellin.lean",
     LEAN_DIR / "Spectral_Uniqueness.lean",
 ]
 
@@ -69,3 +70,19 @@ def test_spectral_uniqueness_no_true_placeholders():
     assert "def ResolventIsCompact : Prop := ∀ z : ℂ, True" not in text
     assert "def PurelyDiscreteSpectrum : Prop := True" not in text
     assert "IsCompact (Set.range (R.resolvent z))" in text
+
+
+def test_trace_fredholm_schatten_contract_present():
+    path = LEAN_DIR / "Trace_Fredholm.lean"
+    text = path.read_text(encoding="utf-8")
+    assert "def IsHilbertSchmidtResolvent" in text
+    assert "def ResolventInSchattenTwo" in text
+    assert "resolvent_schatten_two" in text
+
+
+def test_poisson_mellin_tripartite_contract_present():
+    path = LEAN_DIR / "Poisson_Mellin.lean"
+    text = path.read_text(encoding="utf-8")
+    assert "structure PoissonMellinData" in text
+    assert "theorem trace_formula_poisson_mellin_identity" in text
+    assert "theorem fredholm_det_identically_equals_xi" in text

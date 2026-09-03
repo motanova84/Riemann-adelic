@@ -26,12 +26,14 @@
 - **Lean Modules**:
   - `formalization/lean/RiemannAdelic/Trace_Fredholm.lean`
   - `formalization/lean/RiemannAdelic/Guinand_Weil_Identity.lean`
+  - `formalization/lean/RiemannAdelic/Poisson_Mellin.lean`
   - `formalization/lean/RiemannAdelic/Spectral_Uniqueness.lean`
 - **Objetivo**:
   - Encadenar interfaz incondicional desde resolvente/traza regularizada hasta biyección espectral final.
 - **Alcance actual**:
-  - `Trace_Fredholm`: interfaz de resolvente, traza regularizada, ceros `D(s)` ↔ espectro y reemplazo de axioma por `SecondFrontHypotheses`.
-  - `Guinand_Weil_Identity`: interfaz de fórmula de traza y puente `D(s)=Ξ(1/2+i s)`.
+  - `Trace_Fredholm`: interfaz de resolvente, traza regularizada, ceros `D(s)` ↔ espectro y contrato `S₂` explícito (`IsHilbertSchmidtResolvent`, `ResolventInSchattenTwo`).
+  - `Poisson_Mellin`: testigo de identidad de derivadas logarítmicas y cierre Hadamard del puente `D(s)=Ξ(1/2+i s)`.
+  - `Guinand_Weil_Identity`: puente de fórmula de traza conectado a hipótesis de consistencia con `Poisson_Mellin`.
   - `Spectral_Uniqueness`: interfaz de cierre por biyección espectral en recta crítica con `ResolventIsCompact` topológico (`IsCompact (Set.range ...)`) y `PurelyDiscreteSpectrum` por aislamiento local de puntos espectrales.
 - **Test asociado**:
   - `tests/test_hpsi_unconditional_modules.py` valida existencia de los 4 módulos y ausencia de `sorry`.

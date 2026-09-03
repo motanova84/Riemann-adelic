@@ -35,6 +35,14 @@ structure ResolventData (M : CoreModel H) where
   zeros_eq_spectrum :
     ∀ s : ℂ, fredholmDeterminant s = 0 ↔ isSpectralPoint s
 
+/-- Testigo abstracto de regularidad Schatten `S₂` para un resolvente en `z`. -/
+def IsHilbertSchmidtResolvent {M : CoreModel H} (R : ResolventData M) (z : ℂ) : Prop :=
+  ∃ ψ : ℕ → H, Summable (fun n => ‖R.resolvent z (ψ n)‖ ^ 2)
+
+/-- Predicado global: el resolvente regularizado pertenece a `S₂` fuera del eje real. -/
+def ResolventInSchattenTwo {M : CoreModel H} (R : ResolventData M) : Prop :=
+  ∀ z : ℂ, z.im ≠ 0 → IsHilbertSchmidtResolvent R z
+
 /-- Predicado interfaz: holomorfía compleja global del determinante de Fredholm. -/
 def IsEntireFredholmDeterminant {M : CoreModel H} (R : ResolventData M) : Prop :=
   Differentiable ℂ R.fredholmDeterminant
@@ -51,8 +59,16 @@ Hipótesis del frente analítico 2:
 regularidad de clase de traza y holomorfía de `D(s)`.
 -/
 structure SecondFrontHypotheses (R : ResolventData M) : Prop where
+  resolvent_schatten_two :
+    ResolventInSchattenTwo R
   entire_fredholm_determinant :
     IsEntireFredholmDeterminant R
+
+/-- Cierre interfaz: pertenencia `S₂` del resolvente regularizado. -/
+theorem resolvent_in_schatten_two
+    (R : ResolventData M) (h : SecondFrontHypotheses R) :
+    ResolventInSchattenTwo R := by
+  exact h.resolvent_schatten_two
 
 /-- Cierre del frente 2 sin axioma global. -/
 theorem fredholm_determinant_is_entire

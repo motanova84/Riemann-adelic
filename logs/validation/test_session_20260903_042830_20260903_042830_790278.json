@@ -1,0 +1,62 @@
+{
+  "start_time": "2026-09-03T04:28:30.790673",
+  "end_time": "2026-09-03T04:28:31.007507",
+  "tests": [
+    {
+      "nodeid": "tests/test_hpsi_unconditional_modules.py::test_unconditional_modules_exist",
+      "outcome": "passed",
+      "duration": 0.00011245700000017678,
+      "timestamp": "2026-09-03T04:28:31.001624"
+    },
+    {
+      "nodeid": "tests/test_hpsi_unconditional_modules.py::test_unconditional_modules_have_no_sorry",
+      "outcome": "passed",
+      "duration": 0.00021179400005166826,
+      "timestamp": "2026-09-03T04:28:31.002436"
+    },
+    {
+      "nodeid": "tests/test_hpsi_unconditional_modules.py::test_unbounded_hpsi_removes_first_axiom_bridge",
+      "outcome": "passed",
+      "duration": 0.00012595700002293597,
+      "timestamp": "2026-09-03T04:28:31.003253"
+    },
+    {
+      "nodeid": "tests/test_hpsi_unconditional_modules.py::test_unbounded_hpsi_norm_density_closed_without_sorry",
+      "outcome": "passed",
+      "duration": 0.0001050859999622844,
+      "timestamp": "2026-09-03T04:28:31.004003"
+    },
+    {
+      "nodeid": "tests/test_hpsi_unconditional_modules.py::test_remaining_axiom_names_removed_from_module_chain",
+      "outcome": "passed",
+      "duration": 0.00011495000001104927,
+      "timestamp": "2026-09-03T04:28:31.004662"
+    },
+    {
+      "nodeid": "tests/test_hpsi_unconditional_modules.py::test_spectral_uniqueness_no_true_placeholders",
+      "outcome": "passed",
+      "duration": 7.80350000013641e-05,
+      "timestamp": "2026-09-03T04:28:31.005249"
+    },
+    {
+      "nodeid": "tests/test_hpsi_unconditional_modules.py::test_trace_fredholm_schatten_contract_present",
+      "outcome": "passed",
+      "duration": 7.956800004649267e-05,
+      "timestamp": "2026-09-03T04:28:31.005880"
+    },
+    {
+      "nodeid": "tests/test_hpsi_unconditional_modules.py::test_poisson_mellin_tripartite_contract_present",
+      "outcome": "passed",
+      "duration": 9.143499994479498e-05,
+      "timestamp": "2026-09-03T04:28:31.006451"
+    }
+  ],
+  "summary": {
+    "passed": 8,
+    "failed": 0,
+    "skipped": 0,
+    "error": 0,
+    "total": 8
+  },
+  "end_timestamp": "2026-09-03T04:28:31.007630"
+}
