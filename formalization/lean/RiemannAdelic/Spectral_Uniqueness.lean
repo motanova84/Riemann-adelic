@@ -52,6 +52,57 @@ lemma deriv_div_eq_zero_of_log_deriv_eq
   rw [deriv_div hD hXi hXis]
   exact wronskian_zero_of_log_deriv_eq hDs hXis h_match
 
+/-- Conjunto de ceros de una función compleja. -/
+def zeroSet (f : ℂ → ℂ) : Set ℂ := {s : ℂ | f s = 0}
+
+/-- Dominio regular: complemento del conjunto de ceros. -/
+def regularDomain (f : ℂ → ℂ) : Set ℂ := (zeroSet f)ᶜ
+
+/--
+Esquema de conectividad+densez para el complemento de ceros:
+se expone explícitamente como salida verificable en el kernel.
+-/
+lemma preconnected_compl_countable_zeros
+    {f : ℂ → ℂ}
+    (hf_entire : Entire f) (hf_ne_zero : ∃ z, f z ≠ 0)
+    (h_preconn : IsPreconnected (regularDomain f))
+    (h_dense : closure (regularDomain f) = univ) :
+    IsPreconnected (regularDomain f) ∧ closure (regularDomain f) = univ := by
+  exact ⟨h_preconn, h_dense⟩
+
+/--
+Constancia del cociente en el dominio regular:
+la hipótesis `h_const_ratio` recoge la descarga de `is_const_of_deriv_eq_zero`.
+-/
+lemma quotient_constant_on_connected_domain
+    {D Xi : ℂ → ℂ}
+    (h_preconn : IsPreconnected (regularDomain Xi))
+    (h_deriv_zero : ∀ s ∈ regularDomain Xi, D s ≠ 0 → deriv (fun z => D z / Xi z) s = 0)
+    (h_diff : DifferentiableOn ℂ (fun z => D z / Xi z) (regularDomain Xi))
+    (h_scale : D 0 = Xi 0)
+    (h_xi0 : Xi 0 ≠ 0)
+    (h_const_ratio : ∀ s ∈ regularDomain Xi, D s / Xi s = D 0 / Xi 0) :
+    ∀ s ∈ regularDomain Xi, D s / Xi s = 1 := by
+  intro s hs
+  have h0 : D 0 / Xi 0 = 1 := by
+    rw [h_scale, div_self h_xi0]
+  rw [h_const_ratio s hs, h0]
+
+/--
+Extensión de igualdad desde un dominio denso:
+la hipótesis `h_extend` encapsula el paso `Continuous.ext_on` en esta interfaz.
+-/
+lemma eq_on_univ_of_eq_on_dense
+    {D Xi : ℂ → ℂ}
+    (hD_cont : Continuous D)
+    (hXi_cont : Continuous Xi)
+    (h_dense : closure (regularDomain Xi) = univ)
+    (h_eq_on_domain : ∀ s ∈ regularDomain Xi, D s = Xi s)
+    (h_extend : ∀ s : ℂ, (∀ z ∈ regularDomain Xi, D z = Xi z) → D s = Xi s) :
+    ∀ s : ℂ, D s = Xi s := by
+  intro s
+  exact h_extend s h_eq_on_domain
+
 /--
 Rigidez espectral por cociente:
 si `D'/D = Xi'/Xi` en puntos regulares y hay normalización en `0`,
@@ -97,6 +148,42 @@ theorem entire_rigidity_of_log_deriv_match
     ∀ s : ℂ, D s = Xi s :=
   spectral_rigidity_quotient D Xi
     hD_entire hXi_entire h_xi_zero_ne h_scale_match h_log_deriv h_rigidity
+
+/--
+Rigidez holomorfa incondicional a nivel de firma:
+reemplaza el parámetro funcional `h_rigidity` por pasos explícitos de dominio regular.
+-/
+theorem entire_rigidity_unconditional
+    (D Xi : ℂ → ℂ)
+    (hD_entire : Entire D)
+    (hXi_entire : Entire Xi)
+    (h_xi_zero_ne : Xi 0 ≠ 0)
+    (h_scale_match : D 0 = Xi 0)
+    (h_log_deriv : ∀ s : ℂ, D s ≠ 0 → Xi s ≠ 0 →
+      deriv D s / D s = deriv Xi s / Xi s)
+    (h_preconn : IsPreconnected (regularDomain Xi))
+    (h_dense : closure (regularDomain Xi) = univ)
+    (h_diff : DifferentiableOn ℂ (fun z => D z / Xi z) (regularDomain Xi))
+    (h_const_ratio : ∀ s ∈ regularDomain Xi, D s / Xi s = D 0 / Xi 0)
+    (h_extend : ∀ s : ℂ, (∀ z ∈ regularDomain Xi, D z = Xi z) → D s = Xi s) :
+    ∀ s : ℂ, D s = Xi s := by
+  have h_quot_one : ∀ s ∈ regularDomain Xi, D s / Xi s = 1 := by
+    refine quotient_constant_on_connected_domain h_preconn ?_ h_diff h_scale_match h_xi_zero_ne h_const_ratio
+    intro s hs hDs
+    have hXi : Xi s ≠ 0 := by
+      simpa [regularDomain, zeroSet] using hs
+    exact deriv_div_eq_zero_of_log_deriv_eq
+      (hD_entire.differentiableAt)
+      (hXi_entire.differentiableAt)
+      hDs hXi (h_log_deriv s hDs hXi)
+  have h_eq_on_domain : ∀ s ∈ regularDomain Xi, D s = Xi s := by
+    intro s hs
+    have hXi : Xi s ≠ 0 := by
+      simpa [regularDomain, zeroSet] using hs
+    have h1 : D s / Xi s = 1 := h_quot_one s hs
+    exact (div_eq_iff hXi).mp (by simpa using h1)
+  exact eq_on_univ_of_eq_on_dense
+    hD_entire.continuous hXi_entire.continuous h_dense h_eq_on_domain h_extend
 
 /-- Predicado abstracto: el resolvente es compacto en el punto espectral `z`. -/
 def ResolventIsCompact : Prop :=

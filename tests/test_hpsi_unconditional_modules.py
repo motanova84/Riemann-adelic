@@ -108,8 +108,13 @@ def test_spectral_uniqueness_no_true_placeholders():
     assert "def xiShifted" in text
     assert "lemma wronskian_zero_of_log_deriv_eq" in text
     assert "lemma deriv_div_eq_zero_of_log_deriv_eq" in text
+    assert "def zeroSet" in text
+    assert "def regularDomain" in text
+    assert "lemma preconnected_compl_countable_zeros" in text
+    assert "lemma quotient_constant_on_connected_domain" in text
+    assert "lemma eq_on_univ_of_eq_on_dense" in text
     assert "structure HolomorphicQuotientRigidityWitness" not in text
-    assert "(h_rigidity :" in text
+    assert "theorem entire_rigidity_unconditional" in text
     assert "theorem spectral_rigidity_quotient" in text
     assert "theorem entire_rigidity_of_log_deriv_match" in text
     assert "structure UnconditionalSpectralIdentificationData" in text
@@ -165,8 +170,18 @@ def test_guinand_weil_global_log_deriv_bridge_present():
     assert "lemma hasDerivAt_crit_line" in text
     assert "lemma deriv_factor_w" in text
     assert "lemma deriv_factor_w_sub_one" in text
+    assert "lemma hasDerivAt_crit_line_half" in text
+    assert "lemma deriv_crit_line_half" in text
+    assert "lemma deriv_factor_archimedean_pow" in text
+    assert "lemma log_deriv_archimedean_factor" in text
+    assert "lemma deriv_factor_gamma" in text
+    assert "lemma log_deriv_gamma_factor" in text
+    assert "lemma deriv_factor_zeta" in text
+    assert "lemma log_deriv_zeta_factor" in text
     assert "theorem concreteXi_log_derivative_expansion" in text
+    assert "theorem concreteXi_log_derivative_expansion_exact" in text
     assert "theorem geometric_xi_log_deriv_closure_proof" in text
+    assert "theorem geometric_xi_log_deriv_closure_unconditional" in text
     assert "geometric_eq_xi_log_deriv" not in text
     assert "theorem log_derivative_eq_xi_log_derivative" in text
 
@@ -193,6 +208,8 @@ def test_coronacion_final_closure_present():
     text = path.read_text(encoding="utf-8")
     assert "structure EssentialSpectrumRealityWitness" not in text
     assert "h_spec_real : EssSelfAdjoint M" in text
+    assert "(h_rigidity :" not in text
     assert "R.isSpectralPoint s → s.im = 0" in text
+    assert "entire_rigidity_unconditional" in text
     assert "theorem riemann_hypothesis_cosmic_closure" in text
     assert "theorem critical_line_localization_shifted" in text

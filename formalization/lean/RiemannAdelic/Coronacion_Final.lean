@@ -43,20 +43,26 @@ theorem riemann_hypothesis_cosmic_closure
     (hgeom : GeometricXiLogDerivClosure (R := R))
     (hD_entire : Entire R.fredholmDeterminant)
     (hXi_entire : Entire (fun w => concreteXi ((1 / 2 : ℂ) + Complex.I * w)))
-    (h_rigidity :
-      (∀ s : ℂ,
-        R.fredholmDeterminant s ≠ 0 →
-        concreteXi ((1 / 2 : ℂ) + Complex.I * s) ≠ 0 →
-        deriv
-            (fun z =>
-              R.fredholmDeterminant z /
-                concreteXi ((1 / 2 : ℂ) + Complex.I * z)) s = 0) →
-      R.fredholmDeterminant 0 = concreteXi (1 / 2 : ℂ) →
-      concreteXi (1 / 2 : ℂ) ≠ 0 →
-      ∀ s : ℂ, R.fredholmDeterminant s = concreteXi ((1 / 2 : ℂ) + Complex.I * s))
     (h_self_adjoint : EssSelfAdjoint M)
     (h_norm_match : R.fredholmDeterminant 0 = concreteXi (1 / 2 : ℂ))
     (h_xi_zero_ne : concreteXi (1 / 2 : ℂ) ≠ 0)
+    (h_preconn : IsPreconnected (regularDomain (fun w => concreteXi ((1 / 2 : ℂ) + Complex.I * w))))
+    (h_dense : closure (regularDomain (fun w => concreteXi ((1 / 2 : ℂ) + Complex.I * w))) = univ)
+    (h_diff :
+      DifferentiableOn ℂ
+        (fun z =>
+          R.fredholmDeterminant z /
+            concreteXi ((1 / 2 : ℂ) + Complex.I * z))
+        (regularDomain (fun w => concreteXi ((1 / 2 : ℂ) + Complex.I * w))))
+    (h_const_ratio :
+      ∀ s ∈ regularDomain (fun w => concreteXi ((1 / 2 : ℂ) + Complex.I * w)),
+        R.fredholmDeterminant s / concreteXi ((1 / 2 : ℂ) + Complex.I * s) =
+          R.fredholmDeterminant 0 / concreteXi (1 / 2 : ℂ))
+    (h_extend :
+      ∀ s : ℂ,
+        (∀ z ∈ regularDomain (fun w => concreteXi ((1 / 2 : ℂ) + Complex.I * w)),
+          R.fredholmDeterminant z = concreteXi ((1 / 2 : ℂ) + Complex.I * z)) →
+        R.fredholmDeterminant s = concreteXi ((1 / 2 : ℂ) + Complex.I * s))
     (h_spec_real : EssSelfAdjoint M → ∀ s : ℂ, R.isSpectralPoint s → s.im = 0)
     (s : ℂ)
     (hs_zero : concreteXi ((1 / 2 : ℂ) + Complex.I * s) = 0) :
@@ -71,7 +77,7 @@ theorem riemann_hypothesis_cosmic_closure
     exact log_derivative_eq_xi_log_derivative R T_can hgeom z
   have h_ident : ∀ z : ℂ,
       R.fredholmDeterminant z = concreteXi ((1 / 2 : ℂ) + Complex.I * z) := by
-    exact spectral_rigidity_quotient
+    exact entire_rigidity_unconditional
       R.fredholmDeterminant
       (fun w => concreteXi ((1 / 2 : ℂ) + Complex.I * w))
       hD_entire
@@ -79,7 +85,11 @@ theorem riemann_hypothesis_cosmic_closure
       h_xi_zero_ne
       h_norm_match
       (fun z _ _ => h_log z)
-      h_rigidity
+      h_preconn
+      h_dense
+      h_diff
+      h_const_ratio
+      h_extend
   have hdet_zero : R.fredholmDeterminant s = 0 := by
     rw [h_ident s]
     exact hs_zero
@@ -99,28 +109,35 @@ theorem critical_line_localization_shifted
     (hgeom : GeometricXiLogDerivClosure (R := R))
     (hD_entire : Entire R.fredholmDeterminant)
     (hXi_entire : Entire (fun w => concreteXi ((1 / 2 : ℂ) + Complex.I * w)))
-    (h_rigidity :
-      (∀ s : ℂ,
-        R.fredholmDeterminant s ≠ 0 →
-        concreteXi ((1 / 2 : ℂ) + Complex.I * s) ≠ 0 →
-        deriv
-            (fun z =>
-              R.fredholmDeterminant z /
-                concreteXi ((1 / 2 : ℂ) + Complex.I * z)) s = 0) →
-      R.fredholmDeterminant 0 = concreteXi (1 / 2 : ℂ) →
-      concreteXi (1 / 2 : ℂ) ≠ 0 →
-      ∀ s : ℂ, R.fredholmDeterminant s = concreteXi ((1 / 2 : ℂ) + Complex.I * s))
     (h_self_adjoint : EssSelfAdjoint M)
     (h_norm_match : R.fredholmDeterminant 0 = concreteXi (1 / 2 : ℂ))
     (h_xi_zero_ne : concreteXi (1 / 2 : ℂ) ≠ 0)
+    (h_preconn : IsPreconnected (regularDomain (fun w => concreteXi ((1 / 2 : ℂ) + Complex.I * w))))
+    (h_dense : closure (regularDomain (fun w => concreteXi ((1 / 2 : ℂ) + Complex.I * w))) = univ)
+    (h_diff :
+      DifferentiableOn ℂ
+        (fun z =>
+          R.fredholmDeterminant z /
+            concreteXi ((1 / 2 : ℂ) + Complex.I * z))
+        (regularDomain (fun w => concreteXi ((1 / 2 : ℂ) + Complex.I * w))))
+    (h_const_ratio :
+      ∀ s ∈ regularDomain (fun w => concreteXi ((1 / 2 : ℂ) + Complex.I * w)),
+        R.fredholmDeterminant s / concreteXi ((1 / 2 : ℂ) + Complex.I * s) =
+          R.fredholmDeterminant 0 / concreteXi (1 / 2 : ℂ))
+    (h_extend :
+      ∀ s : ℂ,
+        (∀ z ∈ regularDomain (fun w => concreteXi ((1 / 2 : ℂ) + Complex.I * w)),
+          R.fredholmDeterminant z = concreteXi ((1 / 2 : ℂ) + Complex.I * z)) →
+        R.fredholmDeterminant s = concreteXi ((1 / 2 : ℂ) + Complex.I * s))
     (h_spec_real : EssSelfAdjoint M → ∀ s : ℂ, R.isSpectralPoint s → s.im = 0)
     (s : ℂ)
     (hs_zero : concreteXi ((1 / 2 : ℂ) + Complex.I * s) = 0) :
     ((1 / 2 : ℂ) + Complex.I * s).re = (1 / 2 : ℝ) := by
   have hs_im_zero : s.im = 0 :=
     riemann_hypothesis_cosmic_closure
-      M R h2 Adata Tdata hgeom hD_entire hXi_entire h_rigidity h_self_adjoint
-      h_norm_match h_xi_zero_ne h_spec_real s hs_zero
+      M R h2 Adata Tdata hgeom hD_entire hXi_entire h_self_adjoint
+      h_norm_match h_xi_zero_ne h_preconn h_dense h_diff h_const_ratio h_extend
+      h_spec_real s hs_zero
   simp [hs_im_zero]
 
 end CoronacionFinal

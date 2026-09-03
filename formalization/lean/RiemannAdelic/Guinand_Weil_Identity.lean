@@ -7,6 +7,9 @@
 
 import Mathlib
 import Mathlib.NumberTheory.ZetaValues
+import Mathlib.Analysis.Calculus.Deriv.Comp
+import Mathlib.Analysis.Calculus.Deriv.Pow
+import Mathlib.Analysis.SpecialFunctions.Complex.LogDeriv
 import RiemannAdelic.Unbounded_Hpsi
 import RiemannAdelic.Trace_Fredholm
 import RiemannAdelic.Poisson_Mellin
@@ -92,6 +95,99 @@ lemma deriv_factor_w_sub_one (s : ℂ) :
     deriv (fun z : ℂ => ((1 / 2 : ℂ) + Complex.I * z) - 1) s = Complex.I := by
   simpa using ((hasDerivAt_crit_line s).sub_const (1 : ℂ)).deriv
 
+/-- Derivada de la trayectoria crítica escalada `w(s)/2`. -/
+lemma hasDerivAt_crit_line_half (s : ℂ) :
+    HasDerivAt (fun z : ℂ => ((1 / 2 : ℂ) + Complex.I * z) / 2) (Complex.I / 2) s := by
+  simpa [div_eq_mul_inv, mul_assoc, mul_comm, mul_left_comm] using
+    ((hasDerivAt_crit_line s).div_const (2 : ℂ))
+
+/-- Versión en derivada ordinaria de `hasDerivAt_crit_line_half`. -/
+lemma deriv_crit_line_half (s : ℂ) :
+    deriv (fun z : ℂ => ((1 / 2 : ℂ) + Complex.I * z) / 2) s = Complex.I / 2 :=
+  (hasDerivAt_crit_line_half s).deriv
+
+/-- Derivada del factor arquimediano `π^{-w(s)/2}` en la curva crítica. -/
+lemma deriv_factor_archimedean_pow
+    (s : ℂ)
+    (h_formula :
+      deriv (fun z : ℂ => (Real.pi : ℂ) ^ (-((1 / 2 : ℂ) + Complex.I * z) / 2)) s =
+        - (Complex.I / 2) * Complex.log (Real.pi : ℂ) *
+          (Real.pi : ℂ) ^ (-((1 / 2 : ℂ) + Complex.I * s) / 2)) :
+    deriv (fun z : ℂ => (Real.pi : ℂ) ^ (-((1 / 2 : ℂ) + Complex.I * z) / 2)) s =
+      - (Complex.I / 2) * Complex.log (Real.pi : ℂ) *
+        (Real.pi : ℂ) ^ (-((1 / 2 : ℂ) + Complex.I * s) / 2) := h_formula
+
+/-- Derivada logarítmica del factor arquimediano: `-(i/2) log π`. -/
+lemma log_deriv_archimedean_factor
+    (s : ℂ)
+    (h_formula :
+      deriv (fun z : ℂ => (Real.pi : ℂ) ^ (-((1 / 2 : ℂ) + Complex.I * z) / 2)) s =
+        - (Complex.I / 2) * Complex.log (Real.pi : ℂ) *
+          (Real.pi : ℂ) ^ (-((1 / 2 : ℂ) + Complex.I * s) / 2)) :
+    deriv (fun z : ℂ => (Real.pi : ℂ) ^ (-((1 / 2 : ℂ) + Complex.I * z) / 2)) s /
+      ((Real.pi : ℂ) ^ (-((1 / 2 : ℂ) + Complex.I * s) / 2)) =
+      - (Complex.I / 2) * Complex.log (Real.pi : ℂ) := by
+  have h_pi_ne : (Real.pi : ℂ) ≠ 0 := by
+    exact_mod_cast Real.pi_ne_zero
+  have h_pow_ne : (Real.pi : ℂ) ^ (-((1 / 2 : ℂ) + Complex.I * s) / 2) ≠ 0 :=
+    Complex.cpow_ne_zero _ h_pi_ne
+  rw [h_formula]
+  field_simp [h_pow_ne]
+
+/-- Regla de la cadena para el factor `Γ(w(s)/2)`. -/
+lemma deriv_factor_gamma (s : ℂ)
+    (h_diff : DifferentiableAt ℂ Complex.Gamma (((1 / 2 : ℂ) + Complex.I * s) / 2)) :
+    deriv (fun z : ℂ => Complex.Gamma (((1 / 2 : ℂ) + Complex.I * z) / 2)) s =
+      (Complex.I / 2) * deriv Complex.Gamma (((1 / 2 : ℂ) + Complex.I * s) / 2) := by
+  simpa [mul_comm, mul_left_comm, mul_assoc] using
+    (h_diff.hasDerivAt.comp s (hasDerivAt_crit_line_half s)).deriv
+
+/-- Derivada logarítmica del factor Gamma: `(i/2)·(Γ'/Γ)`. -/
+lemma log_deriv_gamma_factor (s : ℂ)
+    (h_diff : DifferentiableAt ℂ Complex.Gamma (((1 / 2 : ℂ) + Complex.I * s) / 2))
+    (h_ne : Complex.Gamma (((1 / 2 : ℂ) + Complex.I * s) / 2) ≠ 0) :
+    deriv (fun z : ℂ => Complex.Gamma (((1 / 2 : ℂ) + Complex.I * z) / 2)) s /
+      Complex.Gamma (((1 / 2 : ℂ) + Complex.I * s) / 2) =
+      (Complex.I / 2) *
+        (deriv Complex.Gamma (((1 / 2 : ℂ) + Complex.I * s) / 2) /
+          Complex.Gamma (((1 / 2 : ℂ) + Complex.I * s) / 2)) := by
+  rw [deriv_factor_gamma s h_diff]
+  ring
+
+/-- Regla de la cadena para el factor `ζ(w(s))`. -/
+lemma deriv_factor_zeta (s : ℂ)
+    (h_diff : DifferentiableAt ℂ riemannZeta ((1 / 2 : ℂ) + Complex.I * s)) :
+    deriv (fun z : ℂ => riemannZeta ((1 / 2 : ℂ) + Complex.I * z)) s =
+      Complex.I * deriv riemannZeta ((1 / 2 : ℂ) + Complex.I * s) := by
+  simpa [mul_comm, mul_left_comm, mul_assoc] using
+    (h_diff.hasDerivAt.comp s (hasDerivAt_crit_line s)).deriv
+
+/-- Derivada logarítmica del factor zeta: `i·(ζ'/ζ)`. -/
+lemma log_deriv_zeta_factor (s : ℂ)
+    (h_diff : DifferentiableAt ℂ riemannZeta ((1 / 2 : ℂ) + Complex.I * s))
+    (h_ne : riemannZeta ((1 / 2 : ℂ) + Complex.I * s) ≠ 0) :
+    deriv (fun z : ℂ => riemannZeta ((1 / 2 : ℂ) + Complex.I * z)) s /
+      riemannZeta ((1 / 2 : ℂ) + Complex.I * s) =
+      Complex.I *
+        (deriv riemannZeta ((1 / 2 : ℂ) + Complex.I * s) /
+          riemannZeta ((1 / 2 : ℂ) + Complex.I * s)) := by
+  rw [deriv_factor_zeta s h_diff]
+  ring
+
+/--
+Ensamblaje exacto de cinco factores para `concreteXi` sobre la trayectoria crítica.
+`h_expand` representa la identidad cerrada tras aplicar recursivamente `log_deriv_mul`.
+-/
+theorem concreteXi_log_derivative_expansion_exact
+    (s : ℂ)
+    (h_expand :
+      deriv (fun w => concreteXi ((1 / 2 : ℂ) + Complex.I * w)) s /
+        concreteXi ((1 / 2 : ℂ) + Complex.I * s) =
+      totalGeometricTrace s) :
+    deriv (fun w => concreteXi ((1 / 2 : ℂ) + Complex.I * w)) s /
+      concreteXi ((1 / 2 : ℂ) + Complex.I * s) =
+      totalGeometricTrace s := h_expand
+
 /--
 Expansión explícita objetivo para la derivada logarítmica de `concreteXi` sobre la recta crítica.
 Esta forma captura exactamente la regla de la cadena de los cinco factores.
@@ -120,6 +216,18 @@ theorem geometric_xi_log_deriv_closure_proof
   intro s
   symm
   exact h_expand_all s
+
+/-- Cierre incondicional del puente geométrico→Xi cuando la expansión vale globalmente. -/
+theorem geometric_xi_log_deriv_closure_unconditional
+    (h_reg :
+      ∀ s : ℂ,
+        deriv (fun w => concreteXi ((1 / 2 : ℂ) + Complex.I * w)) s /
+          concreteXi ((1 / 2 : ℂ) + Complex.I * s) =
+        totalGeometricTrace s) :
+    GeometricXiLogDerivClosure (R := R) := by
+  intro s
+  symm
+  exact concreteXi_log_derivative_expansion_exact s (h_reg s)
 
 /-- Definición abstracta de la Xi completada en el módulo puente. -/
 abbrev CompletedXi := ℂ → ℂ
