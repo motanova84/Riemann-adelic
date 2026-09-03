@@ -53,11 +53,15 @@ def localDeficiencyIntegrand (σ : Bool) (C : ℂ) (x : ℝ) : ℝ :=
 
 /-- Predicado objetivo: divergencia local de norma `L²` en la región `(0,1]`. -/
 def LocalL2DivergenceOnIoc (σ : Bool) (C : ℂ) : Prop :=
-  True
+  ∫⁻ x in Set.Ioc (0 : ℝ) 1,
+      ENNReal.ofReal (localDeficiencyIntegrand σ C x) = ∞
 
 /-- Predicado objetivo: no-integrabilidad global en `(0,∞)` para el modo local. -/
 def LocalModeNotIntegrable (σ : Bool) (C : ℂ) : Prop :=
-  True
+  ¬ MeasureTheory.IntegrableOn
+      (fun x : ℝ => localDeficiencyIntegrand σ C x)
+      (Set.Ioi (0 : ℝ))
+      MeasureTheory.volume
 
 /-- Formulación de índices de deficiencia `(0,0)` mediante trivialidad de núcleos adjuntos. -/
 def DeficiencyIndicesZero (M : CoreModel H) : Prop :=
@@ -77,7 +81,8 @@ structure FirstFrontHypotheses (M : CoreModel H) : Prop where
     ∀ C : ℂ, C ≠ 0 → LocalModeNotIntegrable false C
   /-- Reducción explícita de norma compleja al integrando real tipo `x^{-2}`. -/
   norm_eigenfunction_density :
-    ∀ (σ : Bool) (x : ℝ) (hx : 0 < x) (C : ℂ), True
+    ∀ (σ : Bool) (x : ℝ) (hx : 0 < x) (C : ℂ),
+      localDeficiencyIntegrand σ C x = ‖C‖ ^ 2 * x ^ (-2 : ℝ)
   /-- Lema local de divergencia de `x^{-2}` en `(0,1]` para cada rama. -/
   integral_x_pow_neg_two_divergent_near_zero :
     ∀ (σ : Bool) (C : ℂ), C ≠ 0 → LocalL2DivergenceOnIoc σ C

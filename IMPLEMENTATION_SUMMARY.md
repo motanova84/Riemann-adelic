@@ -10,7 +10,7 @@
   - Estructura `CoreModel` para el bloque no acotado
   - Predicado abstracto de núcleo adjunto `inAdjointKernel`
   - Definiciones locales de frente analítico: `localHaarWeight`, `localDeficiencyMode`, `localDeficiencyIntegrand`
-  - Predicados explícitos de frente L2: `LocalL2DivergenceOnIoc`, `LocalModeNotIntegrable`
+  - Predicados explícitos de frente L2 sobre `MeasureTheory`: `LocalL2DivergenceOnIoc`, `LocalModeNotIntegrable` (sin placeholder `:= True`)
   - Hipótesis explícitas de frente 1: `FirstFrontHypotheses`
   - Teorema `deficiency_indices_zero_of_first_front`
   - Reemplazo del axioma puente por `theorem essentiallySelfAdjoint_of_deficiency_zero_proof`

@@ -31,6 +31,8 @@ def test_unbounded_hpsi_removes_first_axiom_bridge():
     assert "theorem essentiallySelfAdjoint_from_kernel_triviality" in text
     assert "LocalL2DivergenceOnIoc" in text
     assert "LocalModeNotIntegrable" in text
+    assert "def LocalL2DivergenceOnIoc (σ : Bool) (C : ℂ) : Prop :=\n  True" not in text
+    assert "def LocalModeNotIntegrable (σ : Bool) (C : ℂ) : Prop :=\n  True" not in text
 
 
 def test_remaining_axiom_names_removed_from_module_chain():
