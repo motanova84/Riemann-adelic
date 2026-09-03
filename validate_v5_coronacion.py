@@ -1150,7 +1150,10 @@ def validate_v5_coronacion(precision=30, verbose=False, save_certificate=False, 
     try:
         from scripts.validate_sat_certificates import SATCertificateValidator
         
-        sat_validator = SATCertificateValidator(certificates_dir='certificates/sat')
+        sat_validator = SATCertificateValidator(
+            certificates_dir='certificates/sat',
+            latest_only=True
+        )
         cert_dir = Path('certificates/sat')
         
         if cert_dir.exists() and list(cert_dir.glob('SAT_*.json')):
@@ -1650,10 +1653,6 @@ Examples:
 
     if args.update_manifest:
         print("\n🔄 SAT MANIFEST REFLASH...")
-        cert_dir = Path(__file__).parent / "certificates" / "sat"
-        cert_dir.mkdir(parents=True, exist_ok=True)
-        for stale_cert in cert_dir.glob("SAT_*.json"):
-            stale_cert.unlink()
         refresh_cmd = [sys.executable, "scripts/generate_sat_certificates.py", "--all"]
         refresh_result = subprocess.run(
             refresh_cmd,
@@ -1669,7 +1668,12 @@ Examples:
         print("✅ SAT manifest refreshed from current Lean file hashes")
 
         print("🔍 SAT CERTIFICATES POST-REFRESH VALIDATION...")
-        sat_validate_cmd = [sys.executable, "scripts/validate_sat_certificates.py", "--all"]
+        sat_validate_cmd = [
+            sys.executable,
+            "scripts/validate_sat_certificates.py",
+            "--all",
+            "--latest-only",
+        ]
         sat_validate_result = subprocess.run(
             sat_validate_cmd,
             capture_output=True,
