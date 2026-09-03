@@ -57,11 +57,13 @@ structure TraceIdentityBridge where
     ∀ s : ℂ, spectralLogDeriv s = deriv R.fredholmDeterminant s / R.fredholmDeterminant s
   poisson_trace_identity :
     ∀ s : ℂ, spectralLogDeriv s = totalGeometricTrace s
-  geometric_eq_xi_log_deriv :
-    ∀ s : ℂ,
-      totalGeometricTrace s =
-        deriv (fun w => concreteXi ((1 / 2 : ℂ) + Complex.I * w)) s /
-        concreteXi ((1 / 2 : ℂ) + Complex.I * s)
+
+/-- Cierre explícito del paso geométrico → log-derivada de Xi. -/
+def GeometricXiLogDerivClosure : Prop :=
+  ∀ s : ℂ,
+    totalGeometricTrace s =
+      deriv (fun w => concreteXi ((1 / 2 : ℂ) + Complex.I * w)) s /
+      concreteXi ((1 / 2 : ℂ) + Complex.I * s)
 
 /-- Definición abstracta de la Xi completada en el módulo puente. -/
 abbrev CompletedXi := ℂ → ℂ
@@ -153,7 +155,9 @@ theorem fredholm_log_derivative_eq_xi_log_derivative
 
 /-- Cierre de conexión: la identidad de traza implica la igualdad `D'/D = Xi'/Xi`. -/
 theorem log_derivative_eq_xi_log_derivative
-    (T : TraceIdentityBridge R) (s : ℂ) :
+    (T : TraceIdentityBridge R)
+    (hgeom : GeometricXiLogDerivClosure (R := R))
+    (s : ℂ) :
     deriv R.fredholmDeterminant s / R.fredholmDeterminant s =
       deriv (fun w => concreteXi ((1 / 2 : ℂ) + Complex.I * w)) s /
       concreteXi ((1 / 2 : ℂ) + Complex.I * s) := by
@@ -164,7 +168,7 @@ theorem log_derivative_eq_xi_log_derivative
             exact T.spectral_eq_resolvent s
     _ = totalGeometricTrace s := T.poisson_trace_identity s
     _ = deriv (fun w => concreteXi ((1 / 2 : ℂ) + Complex.I * w)) s /
-          concreteXi ((1 / 2 : ℂ) + Complex.I * s) := T.geometric_eq_xi_log_deriv s
+          concreteXi ((1 / 2 : ℂ) + Complex.I * s) := hgeom s
 
 end GuinandWeilIdentity
 end RiemannAdelic

@@ -108,7 +108,8 @@ def test_spectral_uniqueness_no_true_placeholders():
     assert "def xiShifted" in text
     assert "lemma wronskian_zero_of_log_deriv_eq" in text
     assert "lemma deriv_div_eq_zero_of_log_deriv_eq" in text
-    assert "structure HolomorphicQuotientRigidityWitness" in text
+    assert "structure HolomorphicQuotientRigidityWitness" not in text
+    assert "(h_rigidity :" in text
     assert "theorem spectral_rigidity_quotient" in text
     assert "theorem entire_rigidity_of_log_deriv_match" in text
     assert "structure UnconditionalSpectralIdentificationData" in text
@@ -124,6 +125,8 @@ def test_trace_fredholm_schatten_contract_present():
     assert "structure KernelSchattenWitness" in text
     assert "def ResolventInSchattenTwo" in text
     assert "resolvent_schatten_two" in text
+    assert "structure ResolventData" in text
+    assert "zeros_eq_spectrum :" in text
 
 
 def test_poisson_mellin_tripartite_contract_present():
@@ -155,6 +158,8 @@ def test_guinand_weil_global_log_deriv_bridge_present():
     assert "noncomputable def primeTraceSum" in text
     assert "noncomputable def totalGeometricTrace" in text
     assert "structure TraceIdentityBridge" in text
+    assert "def GeometricXiLogDerivClosure" in text
+    assert "geometric_eq_xi_log_deriv" not in text
     assert "theorem log_derivative_eq_xi_log_derivative" in text
 
 
@@ -172,11 +177,14 @@ def test_canonical_instances_constructors_present():
     assert "def canonicalArchimedeanModel" in text
     assert "structure CanonicalTraceBridgeData" in text
     assert "def canonicalTraceBridge" in text
+    assert "def canonicalGeometricXiClosure" in text
 
 
 def test_coronacion_final_closure_present():
     path = LEAN_DIR / "Coronacion_Final.lean"
     text = path.read_text(encoding="utf-8")
-    assert "structure EssentialSpectrumRealityWitness" in text
+    assert "structure EssentialSpectrumRealityWitness" not in text
+    assert "h_spec_real : EssSelfAdjoint M" in text
+    assert "R.isSpectralPoint s → s.im = 0" in text
     assert "theorem riemann_hypothesis_cosmic_closure" in text
     assert "theorem critical_line_localization_shifted" in text

@@ -80,11 +80,6 @@ structure CanonicalTraceBridgeData (R : ResolventData M) : Prop where
     ∀ s : ℂ, deriv R.fredholmDeterminant s / R.fredholmDeterminant s = - R.regularizedTrace s
   h_poisson_adelic_sum :
     ∀ s : ℂ, - R.regularizedTrace s = totalGeometricTrace s
-  h_geometric_eq_xi_log_deriv :
-    ∀ s : ℂ,
-      totalGeometricTrace s =
-        deriv (fun w => concreteXi ((1 / 2 : ℂ) + Complex.I * w)) s /
-          concreteXi ((1 / 2 : ℂ) + Complex.I * s)
 
 /-- Constructor canónico de `TraceIdentityBridge` desde el bloque de traza explícito. -/
 def canonicalTraceBridge
@@ -98,8 +93,12 @@ def canonicalTraceBridge
   poisson_trace_identity := by
     intro s
     exact T.h_poisson_adelic_sum s
-  geometric_eq_xi_log_deriv := T.h_geometric_eq_xi_log_deriv
+
+/-- Cierre geométrico→Xi asociado a los datos canónicos del puente de traza. -/
+def canonicalGeometricXiClosure
+    (R : ResolventData M)
+    (hgeom : GeometricXiLogDerivClosure (R := R)) :
+    GeometricXiLogDerivClosure (R := R) := hgeom
 
 end CanonicalInstances
 end RiemannAdelic
-

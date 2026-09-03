@@ -45,11 +45,12 @@
   - `Spectral_Mechanics`: núcleo formal del mecanismo espectral (`log_deriv_fredholm_eq_resolvent_trace`, `adelic_semigroup_trace_expansion`, `mellin_prime_deltas_eq_zeta_log_deriv`, `trace_match_derived`) y cierre global de Poisson (`PoissonGlobalDecompositionData`, `poisson_global_log_deriv_match`).
   - `Hadamard_Uniqueness`: cerrador de rigidez analítica (`entire_eq_of_log_deriv_eq_and_eq_at_point`) y cierre final `spectral_determinant_identically_equals_xi`.
   - `Guinand_Weil_Identity`: puente de fórmula de traza conectado a hipótesis de consistencia con `Poisson_Mellin`, incluyendo `fredholm_log_derivative_eq_xi_log_derivative`.
-  - `Guinand_Weil_Identity`: descomposición explícita desacoplada (`concreteXi`, `archimedeanTraceTerm`, `primeTraceSum`, `totalGeometricTrace`, `TraceIdentityBridge`, `log_derivative_eq_xi_log_derivative`).
+  - `Guinand_Weil_Identity`: descomposición explícita desacoplada (`concreteXi`, `archimedeanTraceTerm`, `primeTraceSum`, `totalGeometricTrace`, `TraceIdentityBridge`, `GeometricXiLogDerivClosure`, `log_derivative_eq_xi_log_derivative`).
   - `Spectral_Uniqueness`: cierre global por rigidez abstracta con `UnconditionalSpectralIdentificationData` y `unconditional_spectral_identification`.
-  - `Spectral_Uniqueness`: núcleo de rigidez Hadamard-Borel del cociente (`xiShifted`, `wronskian_zero_of_log_deriv_eq`, `deriv_div_eq_zero_of_log_deriv_eq`, `HolomorphicQuotientRigidityWitness`, `spectral_rigidity_quotient`, `entire_rigidity_of_log_deriv_match`).
-  - `Canonical_Instances`: constructores explícitos para instanciación canónica del frente local/global (`CanonicalArchimedeanData`, `canonicalArchimedeanModel`, `CanonicalTraceBridgeData`, `canonicalTraceBridge`).
-  - `Coronacion_Final`: ensamblaje final por pilares con cierre de parámetro espectral real (`EssentialSpectrumRealityWitness`, `riemann_hypothesis_cosmic_closure`, `critical_line_localization_shifted`).
+  - `Spectral_Uniqueness`: núcleo de rigidez Hadamard-Borel del cociente (`xiShifted`, `wronskian_zero_of_log_deriv_eq`, `deriv_div_eq_zero_of_log_deriv_eq`, `spectral_rigidity_quotient`, `entire_rigidity_of_log_deriv_match`) con clausura holomorfa pasada como hipótesis explícita en firma.
+  - `Trace_Fredholm`: `zeros_eq_spectrum` movido de `ResolventData` a `SecondFrontHypotheses` para evitar cargar la conclusión en los datos base.
+  - `Canonical_Instances`: constructores explícitos para instanciación canónica del frente local/global (`CanonicalArchimedeanData`, `canonicalArchimedeanModel`, `CanonicalTraceBridgeData`, `canonicalTraceBridge`, `canonicalGeometricXiClosure`).
+  - `Coronacion_Final`: ensamblaje final por pilares con cierre de parámetro espectral real (`riemann_hypothesis_cosmic_closure`, `critical_line_localization_shifted`) usando hipótesis funcional explícita en lugar de estructura-testigo.
   - `Spectral_Uniqueness`: interfaz de cierre por biyección espectral en recta crítica con `ResolventIsCompact` topológico (`IsCompact (Set.range ...)`) y `PurelyDiscreteSpectrum` por aislamiento local de puntos espectrales.
 - **Test asociado**:
   - `tests/test_hpsi_unconditional_modules.py` valida presencia de módulos/cierres y ausencia de `sorry`.

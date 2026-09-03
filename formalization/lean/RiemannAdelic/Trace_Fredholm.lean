@@ -30,8 +30,6 @@ structure ResolventData (M : CoreModel H) where
   fredholmDeterminant : ℂ → ℂ
   /-- Ley puente (interfaz): ceros del determinante ↔ espectro de `M`. -/
   isSpectralPoint : ℂ → Prop
-  zeros_eq_spectrum :
-    ∀ s : ℂ, fredholmDeterminant s = 0 ↔ isSpectralPoint s
 
 /-- Testigo abstracto de regularidad Schatten `S₂` para un resolvente en `z`. -/
 def IsHilbertSchmidtResolvent {M : CoreModel H} (R : ResolventData M) (z : ℂ) : Prop :=
@@ -73,11 +71,6 @@ def IsEntireFredholmDeterminant {M : CoreModel H} (R : ResolventData M) : Prop :
 
 variable {M : CoreModel H}
 
-/-- Teorema interfaz: ceros del determinante de Fredholm y espectro coinciden. -/
-theorem fredholm_zeros_eq_spectrum (R : ResolventData M) (s : ℂ) :
-    R.fredholmDeterminant s = 0 ↔ R.isSpectralPoint s := by
-  exact R.zeros_eq_spectrum s
-
 /--
 Hipótesis del frente analítico 2:
 regularidad de clase de traza y holomorfía de `D(s)`.
@@ -89,6 +82,14 @@ structure SecondFrontHypotheses (R : ResolventData M) : Prop where
     ResolventInSchattenTwo R
   entire_fredholm_determinant :
     IsEntireFredholmDeterminant R
+  zeros_eq_spectrum :
+    ∀ s : ℂ, R.fredholmDeterminant s = 0 ↔ R.isSpectralPoint s
+
+/-- Teorema interfaz: ceros del determinante de Fredholm y espectro coinciden. -/
+theorem fredholm_zeros_eq_spectrum
+    (R : ResolventData M) (h : SecondFrontHypotheses R) (s : ℂ) :
+    R.fredholmDeterminant s = 0 ↔ R.isSpectralPoint s := by
+  exact h.zeros_eq_spectrum s
 
 /-- Cierre de interfaz: cota `S₂` del núcleo local en la franja `Im(z) ≠ 0`. -/
 theorem resolvent_kernel_in_schatten_two

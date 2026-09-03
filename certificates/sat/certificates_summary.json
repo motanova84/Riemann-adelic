@@ -1,6 +1,6 @@
 {
   "report_type": "SAT_CERTIFICATES_SUMMARY",
-  "timestamp": "2026-09-03T05:19:02.156878Z",
+  "timestamp": "2026-09-03T06:11:07.182067Z",
   "total_theorems": 10,
   "verified_theorems": 0,
   "theorems_by_type": {
@@ -38,61 +38,61 @@
       "theorem": "riemann_hypothesis",
       "type": "main_theorem",
       "verified": false,
-      "certificate_hash": "0bf5d8127b2fa5db7cadb6e48f3c720e97d35c789a3e7fa3bd37babbb351f362"
+      "certificate_hash": "ecf4d0371c1a8e8a1bf8edff631a924af58377e25c2d3c117276c1de2f552d20"
     },
     {
       "theorem": "H_\u03a8_self_adjoint",
       "type": "operator_property",
       "verified": false,
-      "certificate_hash": "e08423d60debcf0422026a8e6d04f9a444c9cc4f18204aa1277c67e462d6db9d"
+      "certificate_hash": "51d0bf7367cbd6845ae4651d6bd551f03b1591de145c040a304cef40a67b34c4"
     },
     {
       "theorem": "operator_self_adjoint",
       "type": "operator_property",
       "verified": false,
-      "certificate_hash": "deec405c140e35236b5a6d1fc814bca27b3e4efc0aaee0cb69f16fb92c2fc166"
+      "certificate_hash": "0c1e75e63bb9f80d2cb58e3350df60db5ea217fca80af9cad18ca258d2b5f9da"
     },
     {
       "theorem": "D_entire",
       "type": "analytic_property",
       "verified": false,
-      "certificate_hash": "a37a64bd4302da3384c26062ed941dea94d30a70dfe102b5ee391ed318b193a4"
+      "certificate_hash": "373a2168fbd1843f1a892298db22e3c3e59adec47c4ed0537d78c8f75c6c9ab1"
     },
     {
       "theorem": "functional_equation",
       "type": "symmetry",
       "verified": false,
-      "certificate_hash": "f2d7ca685d7537e624921c9284cb1d6bee8045c4f8bc2a68c43a937e5094ddf3"
+      "certificate_hash": "e54a4b31dc1ecd77ab8fd2a05b8a8709d1d1a18f187e8c1b18887affaa9b8cd5"
     },
     {
       "theorem": "fredholm_convergence",
       "type": "convergence",
       "verified": false,
-      "certificate_hash": "bcafa8ea03bae1beaa33b5508eeda77cb7490d44b2252d33064d176b4ec9c9d7"
+      "certificate_hash": "636dfc1bf7451eb4b6d4e62ec7841f94b0b2f499e2b43459d88fc4759d674ad8"
     },
     {
       "theorem": "hadamard_symmetry",
       "type": "zero_property",
       "verified": false,
-      "certificate_hash": "896b9e263a66c70b28a3659232f5b11822554d52ba2bc7f4ab3ad81c3f6267da"
+      "certificate_hash": "d9e3a8d9efca513125cc76ec14c3c5f593c98097999212271b78dbc413be5594"
     },
     {
       "theorem": "gamma_exclusion",
       "type": "zero_exclusion",
       "verified": false,
-      "certificate_hash": "cb858d9589472b25d8c9876865c0213e6b37ac93b69df2d8118d3786d5617fef"
+      "certificate_hash": "0c24147368dd403f766446be9f39217672d79afec61ea4160ecbd48b443a0e49"
     },
     {
       "theorem": "spectrum_H\u03a8_eq_zeta_zeros",
       "type": "spectral_identification",
       "verified": false,
-      "certificate_hash": "ce0fbb3cd0a4bd3a951dc39fbcf05175636c678c4a92f01c0247705db7d970e5"
+      "certificate_hash": "cfc60c1c3d93116cb923033aa74975577a2513bd2159684d4c8c63796ad57da0"
     },
     {
       "theorem": "paley_wiener_uniqueness",
       "type": "uniqueness",
       "verified": false,
-      "certificate_hash": "e8d27bf93ad1a49a79418b1cffc01c20676034a5a6b2fffbed0168f0f678f802"
+      "certificate_hash": "a436385005f86dbc52c46bf1fde403339503d7454a08a387f31adac84b9d72f3"
     }
   ]
 }

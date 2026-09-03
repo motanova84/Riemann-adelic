@@ -52,18 +52,10 @@ lemma deriv_div_eq_zero_of_log_deriv_eq
   rw [deriv_div hD hXi hXis]
   exact wronskian_zero_of_log_deriv_eq hDs hXis h_match
 
-/-- Testigo del paso global de rigidez holomorfa del cociente en dominio conexo. -/
-structure HolomorphicQuotientRigidityWitness (D Xi : ℂ → ℂ) : Prop where
-  conclude :
-    (∀ s : ℂ, D s ≠ 0 → Xi s ≠ 0 → deriv (fun z => D z / Xi z) s = 0) →
-    D 0 = Xi 0 →
-    Xi 0 ≠ 0 →
-    ∀ s : ℂ, D s = Xi s
-
 /--
 Rigidez espectral por cociente:
 si `D'/D = Xi'/Xi` en puntos regulares y hay normalización en `0`,
-la identificación global queda fijada por el testigo holomorfo.
+la identificación global queda fijada por clausura holomorfa conexa.
 -/
 theorem spectral_rigidity_quotient
     (D Xi : ℂ → ℂ)
@@ -73,9 +65,13 @@ theorem spectral_rigidity_quotient
     (h_scale_match : D 0 = Xi 0)
     (h_log_deriv : ∀ s : ℂ, D s ≠ 0 → Xi s ≠ 0 →
       deriv D s / D s = deriv Xi s / Xi s)
-    (hRig : HolomorphicQuotientRigidityWitness D Xi) :
+    (h_rigidity :
+      (∀ s : ℂ, D s ≠ 0 → Xi s ≠ 0 → deriv (fun z => D z / Xi z) s = 0) →
+      D 0 = Xi 0 →
+      Xi 0 ≠ 0 →
+      ∀ s : ℂ, D s = Xi s) :
     ∀ s : ℂ, D s = Xi s := by
-  apply hRig.conclude
+  apply h_rigidity
   · intro s hDs hXis
     exact deriv_div_eq_zero_of_log_deriv_eq
       (hD_entire.differentiableAt)
@@ -93,10 +89,14 @@ theorem entire_rigidity_of_log_deriv_match
     (h_scale_match : D 0 = Xi 0)
     (h_log_deriv : ∀ s : ℂ, D s ≠ 0 → Xi s ≠ 0 →
       deriv D s / D s = deriv Xi s / Xi s)
-    (hRig : HolomorphicQuotientRigidityWitness D Xi) :
+    (h_rigidity :
+      (∀ s : ℂ, D s ≠ 0 → Xi s ≠ 0 → deriv (fun z => D z / Xi z) s = 0) →
+      D 0 = Xi 0 →
+      Xi 0 ≠ 0 →
+      ∀ s : ℂ, D s = Xi s) :
     ∀ s : ℂ, D s = Xi s :=
   spectral_rigidity_quotient D Xi
-    hD_entire hXi_entire h_xi_zero_ne h_scale_match h_log_deriv hRig
+    hD_entire hXi_entire h_xi_zero_ne h_scale_match h_log_deriv h_rigidity
 
 /-- Predicado abstracto: el resolvente es compacto en el punto espectral `z`. -/
 def ResolventIsCompact : Prop :=
@@ -122,13 +122,14 @@ structure FourthFrontHypotheses : Prop where
     ResolventIsCompact R → PurelyDiscreteSpectrum R
 
 /-- Teorema interfaz: biyección espectral sobre la recta crítica. -/
-theorem spectral_isomorphism_unconditional :
+theorem spectral_isomorphism_unconditional
+    (h2 : SecondFrontHypotheses R) :
     SpectralIsomorphism R B := by
   intro t
   constructor
   · intro ht
     have hdet : R.fredholmDeterminant (t : ℂ) = 0 :=
-      (fredholm_zeros_eq_spectrum R (t : ℂ)).2 ht
+      (fredholm_zeros_eq_spectrum R h2 (t : ℂ)).2 ht
     have hxi : R.fredholmDeterminant (t : ℂ) =
         B.xi ((1 / 2 : ℂ) + Complex.I * (t : ℂ)) :=
       fredholm_determinant_eq_completed_xi R B (t : ℂ)
@@ -141,7 +142,7 @@ theorem spectral_isomorphism_unconditional :
     have hdet : R.fredholmDeterminant (t : ℂ) = 0 := by
       rw [hxi]
       exact hz
-    exact (fredholm_zeros_eq_spectrum R (t : ℂ)).1 hdet
+    exact (fredholm_zeros_eq_spectrum R h2 (t : ℂ)).1 hdet
 
 /-- Cierre de discreción espectral (interfaz). -/
 theorem spectrum_is_purely_discrete

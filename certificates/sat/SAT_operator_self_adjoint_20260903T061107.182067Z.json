@@ -1,0 +1,62 @@
+{
+  "certificate_id": "SAT_operator_self_adjoint_20260903T061107.182067Z",
+  "certificate_type": "SAT_THEOREM_CERTIFICATE",
+  "theorem_name": "operator_self_adjoint",
+  "description": "General operator self-adjoint property",
+  "theorem_type": "operator_property",
+  "timestamp": "2026-09-03T06:11:07.182067Z",
+  "file_info": {
+    "path": "formalization/lean/RH_final_v7.lean",
+    "sha256": "aba34976b30dc958b435235d931822dd9b7367c43fa76cb8c9d085ff8ed97437",
+    "exists": true
+  },
+  "dependencies": [],
+  "verification": {
+    "compilation": {
+      "compiles": null,
+      "error_message": "[Errno 2] No such file or directory: 'lean'",
+      "check_time": null,
+      "compiler_command": null
+    },
+    "theorem_content_found": true,
+    "content_length": 163
+  },
+  "sat_formula": {
+    "variables": {
+      "theorem_exists": true,
+      "theorem_compiles": null,
+      "file_valid": true,
+      "dependencies_satisfied": true,
+      "no_sorry": true
+    },
+    "formula": "AND(theorem_exists, theorem_compiles, file_valid, dependencies_satisfied, no_sorry)",
+    "satisfied": false,
+    "solver": "direct_evaluation"
+  },
+  "proof_status": {
+    "verified": false,
+    "sorry_count": 0,
+    "axioms_used": [
+      "propext",
+      "quot.sound",
+      "Classical.choice"
+    ],
+    "note": "sorry_count computed by token scan excluding single-line comments"
+  },
+  "qcal_signature": {
+    "base_frequency": "141.7001 Hz",
+    "coherence_constant": "C = 244.36",
+    "field_equation": "\u03a8 = I \u00d7 A_eff\u00b2 \u00d7 C^\u221e"
+  },
+  "cryptographic_proof": {
+    "certificate_hash": "0c1e75e63bb9f80d2cb58e3350df60db5ea217fca80af9cad18ca258d2b5f9da",
+    "validator_signature": "3e69f93302f9e2c7d41b78bfa552e6e6"
+  },
+  "metadata": {
+    "generator": "SAT Certificate Generator v1.0",
+    "author": "Jos\u00e9 Manuel Mota Burruezo (JMMB \u03a8\u2727)",
+    "institution": "Instituto de Conciencia Cu\u00e1ntica (ICQ)",
+    "doi": "10.5281/zenodo.17379721",
+    "license": "CC BY-NC-SA 4.0"
+  }
+}
