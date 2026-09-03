@@ -25,6 +25,79 @@ universe u
 variable {H : Type u} [NormedAddCommGroup H] [InnerProductSpace ℂ H]
 variable {M : CoreModel H} (R : ResolventData M) (B : BridgeData R)
 
+/-- Desplazamiento crítico `Ξ_crit(s) = Ξ(1/2 + i s)`. -/
+def xiShifted (Xi : ℂ → ℂ) (s : ℂ) : ℂ :=
+  Xi ((1 / 2 : ℂ) + Complex.I * s)
+
+/-- Anulación del wronskiano cruzado bajo igualdad de derivadas logarítmicas. -/
+lemma wronskian_zero_of_log_deriv_eq
+    {D Xi : ℂ → ℂ} {s : ℂ}
+    (hDs : D s ≠ 0) (hXis : Xi s ≠ 0)
+    (h_match : deriv D s / D s = deriv Xi s / Xi s) :
+    deriv D s * Xi s - D s * deriv Xi s = 0 := by
+  have h_factor :
+      deriv D s * Xi s - D s * deriv Xi s =
+        (D s * Xi s) * (deriv D s / D s - deriv Xi s / Xi s) := by
+    field_simp [hDs, hXis]
+    ring
+  rw [h_factor, h_match, sub_self, mul_zero]
+
+/-- Derivada del cociente nula en puntos regulares cuando coinciden log-derivadas. -/
+lemma deriv_div_eq_zero_of_log_deriv_eq
+    {D Xi : ℂ → ℂ} {s : ℂ}
+    (hD : DifferentiableAt ℂ D s) (hXi : DifferentiableAt ℂ Xi s)
+    (hDs : D s ≠ 0) (hXis : Xi s ≠ 0)
+    (h_match : deriv D s / D s = deriv Xi s / Xi s) :
+    deriv (fun z => D z / Xi z) s = 0 := by
+  rw [deriv_div hD hXi hXis]
+  exact wronskian_zero_of_log_deriv_eq hDs hXis h_match
+
+/-- Testigo del paso global de rigidez holomorfa del cociente en dominio conexo. -/
+structure HolomorphicQuotientRigidityWitness (D Xi : ℂ → ℂ) : Prop where
+  conclude :
+    (∀ s : ℂ, D s ≠ 0 → Xi s ≠ 0 → deriv (fun z => D z / Xi z) s = 0) →
+    D 0 = Xi 0 →
+    Xi 0 ≠ 0 →
+    ∀ s : ℂ, D s = Xi s
+
+/--
+Rigidez espectral por cociente:
+si `D'/D = Xi'/Xi` en puntos regulares y hay normalización en `0`,
+la identificación global queda fijada por el testigo holomorfo.
+-/
+theorem spectral_rigidity_quotient
+    (D Xi : ℂ → ℂ)
+    (hD_entire : Entire D)
+    (hXi_entire : Entire Xi)
+    (h_xi_zero_ne : Xi 0 ≠ 0)
+    (h_scale_match : D 0 = Xi 0)
+    (h_log_deriv : ∀ s : ℂ, D s ≠ 0 → Xi s ≠ 0 →
+      deriv D s / D s = deriv Xi s / Xi s)
+    (hRig : HolomorphicQuotientRigidityWitness D Xi) :
+    ∀ s : ℂ, D s = Xi s := by
+  apply hRig.conclude
+  · intro s hDs hXis
+    exact deriv_div_eq_zero_of_log_deriv_eq
+      (hD_entire.differentiableAt)
+      (hXi_entire.differentiableAt)
+      hDs hXis (h_log_deriv s hDs hXis)
+  · exact h_scale_match
+  · exact h_xi_zero_ne
+
+/-- Versión explícita del cierre de rigidez Hadamard-Borel en el plano complejo. -/
+theorem entire_rigidity_of_log_deriv_match
+    (D Xi : ℂ → ℂ)
+    (hD_entire : Entire D)
+    (hXi_entire : Entire Xi)
+    (h_xi_zero_ne : Xi 0 ≠ 0)
+    (h_scale_match : D 0 = Xi 0)
+    (h_log_deriv : ∀ s : ℂ, D s ≠ 0 → Xi s ≠ 0 →
+      deriv D s / D s = deriv Xi s / Xi s)
+    (hRig : HolomorphicQuotientRigidityWitness D Xi) :
+    ∀ s : ℂ, D s = Xi s :=
+  spectral_rigidity_quotient D Xi
+    hD_entire hXi_entire h_xi_zero_ne h_scale_match h_log_deriv hRig
+
 /-- Predicado abstracto: el resolvente es compacto en el punto espectral `z`. -/
 def ResolventIsCompact : Prop :=
   ∀ z : ℂ, IsCompact (Set.range (R.resolvent z))

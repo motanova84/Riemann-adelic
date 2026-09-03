@@ -103,6 +103,12 @@ def test_spectral_uniqueness_no_true_placeholders():
     assert "def ResolventIsCompact : Prop := ∀ z : ℂ, True" not in text
     assert "def PurelyDiscreteSpectrum : Prop := True" not in text
     assert "IsCompact (Set.range (R.resolvent z))" in text
+    assert "def xiShifted" in text
+    assert "lemma wronskian_zero_of_log_deriv_eq" in text
+    assert "lemma deriv_div_eq_zero_of_log_deriv_eq" in text
+    assert "structure HolomorphicQuotientRigidityWitness" in text
+    assert "theorem spectral_rigidity_quotient" in text
+    assert "theorem entire_rigidity_of_log_deriv_match" in text
     assert "structure UnconditionalSpectralIdentificationData" in text
     assert "theorem unconditional_spectral_identification" in text
 

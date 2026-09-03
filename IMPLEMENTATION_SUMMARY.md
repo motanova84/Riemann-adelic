@@ -45,6 +45,7 @@
   - `Guinand_Weil_Identity`: puente de fórmula de traza conectado a hipótesis de consistencia con `Poisson_Mellin`, incluyendo `fredholm_log_derivative_eq_xi_log_derivative`.
   - `Guinand_Weil_Identity`: descomposición explícita desacoplada (`concreteXi`, `archimedeanTraceTerm`, `primeTraceSum`, `totalGeometricTrace`, `TraceIdentityBridge`, `log_derivative_eq_xi_log_derivative`).
   - `Spectral_Uniqueness`: cierre global por rigidez abstracta con `UnconditionalSpectralIdentificationData` y `unconditional_spectral_identification`.
+  - `Spectral_Uniqueness`: núcleo de rigidez Hadamard-Borel del cociente (`xiShifted`, `wronskian_zero_of_log_deriv_eq`, `deriv_div_eq_zero_of_log_deriv_eq`, `HolomorphicQuotientRigidityWitness`, `spectral_rigidity_quotient`, `entire_rigidity_of_log_deriv_match`).
   - `Spectral_Uniqueness`: interfaz de cierre por biyección espectral en recta crítica con `ResolventIsCompact` topológico (`IsCompact (Set.range ...)`) y `PurelyDiscreteSpectrum` por aislamiento local de puntos espectrales.
 - **Test asociado**:
   - `tests/test_hpsi_unconditional_modules.py` valida presencia de módulos/cierres y ausencia de `sorry`.
