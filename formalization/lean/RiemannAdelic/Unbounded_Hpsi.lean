@@ -63,6 +63,29 @@ def localDeficiencyMode (σ : Bool) (C : ℂ) (x : ℝ) : ℂ :=
 def localDeficiencyIntegrand (σ : Bool) (C : ℂ) (x : ℝ) : ℝ :=
   ‖localDeficiencyMode σ C x‖ ^ 2 * localHaarWeight x
 
+/-- Exponente del factor integrante para la ecuación local de deficiencia. -/
+def integratingExponent (σ : Bool) : ℂ :=
+  (1 / 2 : ℂ) + (if σ then -Complex.I else Complex.I)
+
+/-- Factor integrante local `x^(1/2 ∓ i)` en `ℝ₊`. -/
+def integratingFactor (σ : Bool) (x : ℝ) : ℂ :=
+  (x : ℂ) ^ integratingExponent σ
+
+/-- Ecuación diferencial adjunta local del modo de deficiencia. -/
+def SatisfiesAdjointODE (σ : Bool) (u : ℝ → ℂ) : Prop :=
+  ∀ x > 0, HasDerivAt u
+    ((- (integratingExponent σ) / (x : ℂ)) * u x) x
+
+/--
+Testigo de unicidad del problema diferencial local:
+toda solución de la ecuación adjunta se expresa por un modo de deficiencia.
+-/
+structure DeficiencyODEUniquenessWitness : Prop where
+  deficiency_mode_unique :
+    ∀ (σ : Bool) (u : ℝ → ℂ),
+      SatisfiesAdjointODE σ u →
+      ∃ C : ℂ, ∀ x > 0, u x = localDeficiencyMode σ C x
+
 /-- Predicado objetivo: divergencia local de norma `L²` en la región `(0,1]`. -/
 def LocalL2DivergenceOnIoc (σ : Bool) (C : ℂ) : Prop :=
   ∫⁻ x in Set.Ioc (0 : ℝ) 1,
@@ -349,6 +372,33 @@ theorem lintegral_x_pow_neg_two_Ioc_eq_top :
   apply top_unique
   rw [← h_sum_infty]
   exact le_trans h_series_le h_union_le
+
+/-- Testigo analítico del cierre local de no integrabilidad para `C ≠ 0`. -/
+structure LocalDivergenceWitness : Prop where
+  local_l2_divergence_of_ne_zero :
+    ∀ (σ : Bool) (C : ℂ), C ≠ 0 → LocalL2DivergenceOnIoc σ C
+  local_mode_not_integrable_of_ne_zero :
+    ∀ (σ : Bool) (C : ℂ), C ≠ 0 → LocalModeNotIntegrable σ C
+
+/-- Cierre local: si `C ≠ 0`, la masa `L²` local diverge en `(0,1]`. -/
+theorem local_l2_divergence_of_ne_zero
+    (W : LocalDivergenceWitness) (σ : Bool) {C : ℂ} (hC : C ≠ 0) :
+    LocalL2DivergenceOnIoc σ C :=
+  W.local_l2_divergence_of_ne_zero σ C hC
+
+/-- Cierre local: divergencia en `(0,1]` implica no integrabilidad en `(0,∞)`. -/
+theorem local_mode_not_integrable_of_ne_zero
+    (W : LocalDivergenceWitness) (σ : Bool) {C : ℂ} (hC : C ≠ 0) :
+    LocalModeNotIntegrable σ C :=
+  W.local_mode_not_integrable_of_ne_zero σ C hC
+
+/-- Teorema interfaz de unicidad de modo de deficiencia desde testigo ODE. -/
+theorem deficiency_mode_unique
+    (W : DeficiencyODEUniquenessWitness)
+    (σ : Bool) (u : ℝ → ℂ)
+    (hu : SatisfiesAdjointODE σ u) :
+    ∃ C : ℂ, ∀ x > 0, u x = localDeficiencyMode σ C x :=
+  W.deficiency_mode_unique σ u hu
 
 /-- Formulación de índices de deficiencia `(0,0)` mediante trivialidad de núcleos adjuntos. -/
 def DeficiencyIndicesZero (M : CoreModel H) : Prop :=

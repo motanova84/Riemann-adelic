@@ -9,6 +9,7 @@ import Mathlib
 import RiemannAdelic.Unbounded_Hpsi
 import RiemannAdelic.Trace_Fredholm
 import RiemannAdelic.Poisson_Mellin
+import RiemannAdelic.Spectral_Mechanics
 
 noncomputable section
 
@@ -19,6 +20,7 @@ open Complex
 open RiemannAdelic.UnboundedHpsi
 open RiemannAdelic.TraceFredholm
 open RiemannAdelic.PoissonMellin
+open RiemannAdelic.SpectralMechanics
 
 universe u
 
@@ -50,6 +52,10 @@ structure BridgeData where
 structure ThirdFrontHypotheses : Prop where
   bridge : BridgeData R
   poissonMellin : PoissonMellinData R
+  poissonGlobal :
+    PoissonGlobalDecompositionData R
+      poissonMellin.traceData
+      poissonMellin.primeData
   /-- Coherencia explícita entre el lado espectral y el flujo Poisson–Mellin. -/
   spectral_flow_consistency :
     ∀ s : ℂ, bridge.spectralSide s = poissonMellin.traceFlow s
@@ -86,6 +92,28 @@ theorem fredholm_determinant_eq_completed_xi_from_poisson
     symm
     exact h3.xi_consistency ((1 / 2 : ℂ) + Complex.I * s)
   exact hpm.trans hXiEq
+
+/--
+Cierre global explícito del frente 3:
+la descomposición de Poisson produce `D'/D = d/ds log Ξ(1/2 + i s)`.
+-/
+theorem fredholm_log_derivative_eq_xi_log_derivative
+    (h3 : ThirdFrontHypotheses R) (s : ℂ) :
+    deriv R.fredholmDeterminant s / R.fredholmDeterminant s =
+      deriv (fun w => Complex.log (h3.bridge.xi ((1 / 2 : ℂ) + Complex.I * w))) s := by
+  have hpm :
+      deriv R.fredholmDeterminant s / R.fredholmDeterminant s =
+        deriv (fun w => Complex.log (h3.poissonMellin.xi ((1 / 2 : ℂ) + Complex.I * w))) s := by
+    exact poisson_global_log_deriv_match R
+      h3.poissonMellin.traceData
+      h3.poissonMellin.primeData
+      h3.poissonGlobal s
+  have hXiEq :
+      (fun w => Complex.log (h3.poissonMellin.xi ((1 / 2 : ℂ) + Complex.I * w))) =
+      (fun w => Complex.log (h3.bridge.xi ((1 / 2 : ℂ) + Complex.I * w))) := by
+    funext w
+    simp [h3.xi_consistency ((1 / 2 : ℂ) + Complex.I * w)]
+  simpa [hXiEq] using hpm
 
 end GuinandWeilIdentity
 end RiemannAdelic
