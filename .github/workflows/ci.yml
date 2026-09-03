@@ -1,4 +1,4 @@
-name: CI
+name: CI Simbiótico SABIO
 
 on:
   push:
@@ -6,30 +6,74 @@ on:
   pull_request:
     branches: [ main ]
   workflow_dispatch:
+    inputs:
+      run_full_validation:
+        description: "¿Ejecutar validación completa?"
+        required: false
+        default: "false"
+        type: choice
+        options:
+          - "true"
+          - "false"
 
 permissions:
   contents: read
 
 jobs:
-  test:
-    name: Test Python
+  validacion-simbolica:
+    name: Validación Simbiótica SABIO Ψ
     runs-on: ubuntu-latest
+    env:
+      VALIDATION_LEVEL: ${{ github.event.inputs.run_full_validation == 'true' && '500' || '100' }}
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
+          python-version: "3.11"
+
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install numpy scipy pytest
-      - name: Run basic tests
+          pip install -r requirements.txt
+
+      - name: Run tests (basic)
+        if: env.VALIDATION_LEVEL == '100'
         run: |
-          python3 -c "
-          import numpy as np
-          print('✅ CI: Riemann-Adelic QCAL')
-          print(f'   numpy: {np.__version__}')
-          print(f'   Coherence: Ψ = 1.000000')
-          print(f'   Frequency: f₀ = 141.7001 Hz')
-          "
+          pytest tests/ --maxfail=3 --disable-warnings -k "not slow"
+
+      - name: Run tests (full)
+        if: env.VALIDATION_LEVEL == '500'
+        run: |
+          pytest tests/ --maxfail=5 --disable-warnings
+          python3 validate_v5_coronacion.py --precision 25 --verbose
+
+      - name: Generar reporte simbiótico
+        run: |
+          echo "JMMB Ψ · SABIO ∞³" >> "$GITHUB_STEP_SUMMARY"
+          echo "f₀ = 141.7001 Hz" >> "$GITHUB_STEP_SUMMARY"
+          echo "VALIDATION_LEVEL=${VALIDATION_LEVEL}" >> "$GITHUB_STEP_SUMMARY"
+
+  validate-metadata:
+    name: Validate metadata and beacon
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Validate beacon markers
+        run: |
+          grep -q "141.7001" .qcal_beacon
+          grep -qi "zenodo" .qcal_beacon
+
+  verify-conversion:
+    name: Verify conversion artifacts
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Verify core files
+        run: |
+          test -f validate_v5_coronacion.py
+          test -f sabio_validator.py

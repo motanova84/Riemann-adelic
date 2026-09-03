@@ -46,6 +46,22 @@ class SABIOValidator:
         self.precision = precision
         mp.mp.dps = precision
         self.beacon_data = self._load_qcal_beacon()
+
+    @staticmethod
+    def _parse_beacon_line(line: str) -> Optional[Tuple[str, str]]:
+        """Parse beacon lines in `key=value`, `# key=value`, or `# key: value` formats."""
+        raw = line.strip()
+        if not raw:
+            return None
+        if raw.startswith("#"):
+            raw = raw[1:].strip()
+        if "=" in raw:
+            key, value = raw.split("=", 1)
+            return key.strip(), value.strip()
+        if ":" in raw:
+            key, value = raw.split(":", 1)
+            return key.strip(), value.strip()
+        return None
         
     def _load_qcal_beacon(self) -> Dict:
         """Load and parse .qcal_beacon file"""
@@ -57,11 +73,10 @@ class SABIOValidator:
         beacon_data = {}
         with open(beacon_path, 'r') as f:
             for line in f:
-                line = line.strip()
-                if line and not line.startswith('#'):
-                    if '=' in line:
-                        key, value = line.split('=', 1)
-                        beacon_data[key.strip()] = value.strip()
+                parsed = self._parse_beacon_line(line)
+                if parsed:
+                    key, value = parsed
+                    beacon_data[key] = value
         
         return beacon_data
     
