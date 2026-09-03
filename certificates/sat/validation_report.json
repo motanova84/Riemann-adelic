@@ -1,14 +1,14 @@
 {
   "validation_type": "SAT_CERTIFICATES_VALIDATION",
-  "timestamp": "2026-09-03T01:41:50.348780Z",
-  "total_certificates": 80,
-  "passed": 48,
+  "timestamp": "2026-09-03T01:42:21.810113Z",
+  "total_certificates": 90,
+  "passed": 58,
   "failed": 32,
   "results": [
     {
       "theorem": "gamma_exclusion",
       "certificate_id": "SAT_gamma_exclusion_20251207T035107.770470Z",
-      "validation_timestamp": "2026-09-03T01:41:50.348780Z",
+      "validation_timestamp": "2026-09-03T01:42:21.810113Z",
       "all_checks_passed": false,
       "checks": {
         "certificate_hash": {
@@ -35,8 +35,36 @@
     },
     {
       "theorem": "D_entire",
+      "certificate_id": "SAT_D_entire_20260903T014221.775508Z",
+      "validation_timestamp": "2026-09-03T01:42:21.810113Z",
+      "all_checks_passed": true,
+      "checks": {
+        "certificate_hash": {
+          "passed": true,
+          "message": "Hash verified successfully"
+        },
+        "file_hash": {
+          "passed": true,
+          "message": "File hash verified successfully"
+        },
+        "sat_formula": {
+          "passed": true,
+          "message": "SAT formula correctly evaluated: False"
+        },
+        "dependencies": {
+          "passed": true,
+          "message": "Dependencies structure valid: 1 items (deep validation not implemented)"
+        },
+        "qcal_signature": {
+          "passed": true,
+          "message": "QCAL signature verified"
+        }
+      }
+    },
+    {
+      "theorem": "D_entire",
       "certificate_id": "SAT_D_entire_20260108T220339.379223Z",
-      "validation_timestamp": "2026-09-03T01:41:50.348780Z",
+      "validation_timestamp": "2026-09-03T01:42:21.810113Z",
       "all_checks_passed": true,
       "checks": {
         "certificate_hash": {
@@ -64,7 +92,7 @@
     {
       "theorem": "D_entire",
       "certificate_id": "SAT_D_entire_20251229T141006.849123Z",
-      "validation_timestamp": "2026-09-03T01:41:50.348780Z",
+      "validation_timestamp": "2026-09-03T01:42:21.810113Z",
       "all_checks_passed": false,
       "checks": {
         "certificate_hash": {
@@ -92,7 +120,7 @@
     {
       "theorem": "hadamard_symmetry",
       "certificate_id": "SAT_hadamard_symmetry_20260215T230206.323715Z",
-      "validation_timestamp": "2026-09-03T01:41:50.348780Z",
+      "validation_timestamp": "2026-09-03T01:42:21.810113Z",
       "all_checks_passed": true,
       "checks": {
         "certificate_hash": {
@@ -120,7 +148,7 @@
     {
       "theorem": "spectrum_H\u03a8_eq_zeta_zeros",
       "certificate_id": "SAT_spectrum_H\u03a8_eq_zeta_zeros_20260903T012759.630434Z",
-      "validation_timestamp": "2026-09-03T01:41:50.348780Z",
+      "validation_timestamp": "2026-09-03T01:42:21.810113Z",
       "all_checks_passed": true,
       "checks": {
         "certificate_hash": {
@@ -148,7 +176,7 @@
     {
       "theorem": "H_\u03a8_self_adjoint",
       "certificate_id": "SAT_H_\u03a8_self_adjoint_20260118T151748.192283Z",
-      "validation_timestamp": "2026-09-03T01:41:50.348780Z",
+      "validation_timestamp": "2026-09-03T01:42:21.810113Z",
       "all_checks_passed": true,
       "checks": {
         "certificate_hash": {
@@ -176,7 +204,7 @@
     {
       "theorem": "hadamard_symmetry",
       "certificate_id": "SAT_hadamard_symmetry_20260108T220339.379223Z",
-      "validation_timestamp": "2026-09-03T01:41:50.348780Z",
+      "validation_timestamp": "2026-09-03T01:42:21.810113Z",
       "all_checks_passed": true,
       "checks": {
         "certificate_hash": {
@@ -204,7 +232,7 @@
     {
       "theorem": "operator_self_adjoint",
       "certificate_id": "SAT_operator_self_adjoint_20260215T230206.323715Z",
-      "validation_timestamp": "2026-09-03T01:41:50.348780Z",
+      "validation_timestamp": "2026-09-03T01:42:21.810113Z",
       "all_checks_passed": true,
       "checks": {
         "certificate_hash": {
@@ -232,7 +260,7 @@
     {
       "theorem": "functional_equation",
       "certificate_id": "SAT_functional_equation_20260903T014150.288278Z",
-      "validation_timestamp": "2026-09-03T01:41:50.348780Z",
+      "validation_timestamp": "2026-09-03T01:42:21.810113Z",
       "all_checks_passed": true,
       "checks": {
         "certificate_hash": {
@@ -260,7 +288,7 @@
     {
       "theorem": "paley_wiener_uniqueness",
       "certificate_id": "SAT_paley_wiener_uniqueness_20260118T151748.192283Z",
-      "validation_timestamp": "2026-09-03T01:41:50.348780Z",
+      "validation_timestamp": "2026-09-03T01:42:21.810113Z",
       "all_checks_passed": false,
       "checks": {
         "certificate_hash": {
@@ -288,7 +316,7 @@
     {
       "theorem": "gamma_exclusion",
       "certificate_id": "SAT_gamma_exclusion_20260118T151748.192283Z",
-      "validation_timestamp": "2026-09-03T01:41:50.348780Z",
+      "validation_timestamp": "2026-09-03T01:42:21.810113Z",
       "all_checks_passed": true,
       "checks": {
         "certificate_hash": {
@@ -316,7 +344,7 @@
     {
       "theorem": "functional_equation",
       "certificate_id": "SAT_functional_equation_20251229T141006.849123Z",
-      "validation_timestamp": "2026-09-03T01:41:50.348780Z",
+      "validation_timestamp": "2026-09-03T01:42:21.810113Z",
       "all_checks_passed": false,
       "checks": {
         "certificate_hash": {
@@ -344,7 +372,7 @@
     {
       "theorem": "gamma_exclusion",
       "certificate_id": "SAT_gamma_exclusion_20251229T141006.849123Z",
-      "validation_timestamp": "2026-09-03T01:41:50.348780Z",
+      "validation_timestamp": "2026-09-03T01:42:21.810113Z",
       "all_checks_passed": false,
       "checks": {
         "certificate_hash": {
@@ -372,7 +400,7 @@
     {
       "theorem": "fredholm_convergence",
       "certificate_id": "SAT_fredholm_convergence_20260903T014150.288278Z",
-      "validation_timestamp": "2026-09-03T01:41:50.348780Z",
+      "validation_timestamp": "2026-09-03T01:42:21.810113Z",
       "all_checks_passed": true,
       "checks": {
         "certificate_hash": {
@@ -400,7 +428,7 @@
     {
       "theorem": "functional_equation",
       "certificate_id": "SAT_functional_equation_20260118T151748.192283Z",
-      "validation_timestamp": "2026-09-03T01:41:50.348780Z",
+      "validation_timestamp": "2026-09-03T01:42:21.810113Z",
       "all_checks_passed": true,
       "checks": {
         "certificate_hash": {
@@ -428,7 +456,7 @@
     {
       "theorem": "H_\u03a8_self_adjoint",
       "certificate_id": "SAT_H_\u03a8_self_adjoint_20260903T012759.630434Z",
-      "validation_timestamp": "2026-09-03T01:41:50.348780Z",
+      "validation_timestamp": "2026-09-03T01:42:21.810113Z",
       "all_checks_passed": true,
       "checks": {
         "certificate_hash": {
@@ -456,7 +484,7 @@
     {
       "theorem": "operator_self_adjoint",
       "certificate_id": "SAT_operator_self_adjoint_20251207T035107.770470Z",
-      "validation_timestamp": "2026-09-03T01:41:50.348780Z",
+      "validation_timestamp": "2026-09-03T01:42:21.810113Z",
       "all_checks_passed": false,
       "checks": {
         "certificate_hash": {
@@ -484,7 +512,35 @@
     {
       "theorem": "functional_equation",
       "certificate_id": "SAT_functional_equation_20260215T230206.323715Z",
-      "validation_timestamp": "2026-09-03T01:41:50.348780Z",
+      "validation_timestamp": "2026-09-03T01:42:21.810113Z",
+      "all_checks_passed": true,
+      "checks": {
+        "certificate_hash": {
+          "passed": true,
+          "message": "Hash verified successfully"
+        },
+        "file_hash": {
+          "passed": true,
+          "message": "File hash verified successfully"
+        },
+        "sat_formula": {
+          "passed": true,
+          "message": "SAT formula correctly evaluated: False"
+        },
+        "dependencies": {
+          "passed": true,
+          "message": "Dependencies structure valid: 0 items (deep validation not implemented)"
+        },
+        "qcal_signature": {
+          "passed": true,
+          "message": "QCAL signature verified"
+        }
+      }
+    },
+    {
+      "theorem": "paley_wiener_uniqueness",
+      "certificate_id": "SAT_paley_wiener_uniqueness_20260903T014221.775508Z",
+      "validation_timestamp": "2026-09-03T01:42:21.810113Z",
       "all_checks_passed": true,
       "checks": {
         "certificate_hash": {
@@ -512,7 +568,35 @@
     {
       "theorem": "gamma_exclusion",
       "certificate_id": "SAT_gamma_exclusion_20260215T230206.323715Z",
-      "validation_timestamp": "2026-09-03T01:41:50.348780Z",
+      "validation_timestamp": "2026-09-03T01:42:21.810113Z",
+      "all_checks_passed": true,
+      "checks": {
+        "certificate_hash": {
+          "passed": true,
+          "message": "Hash verified successfully"
+        },
+        "file_hash": {
+          "passed": true,
+          "message": "File hash verified successfully"
+        },
+        "sat_formula": {
+          "passed": true,
+          "message": "SAT formula correctly evaluated: False"
+        },
+        "dependencies": {
+          "passed": true,
+          "message": "Dependencies structure valid: 0 items (deep validation not implemented)"
+        },
+        "qcal_signature": {
+          "passed": true,
+          "message": "QCAL signature verified"
+        }
+      }
+    },
+    {
+      "theorem": "hadamard_symmetry",
+      "certificate_id": "SAT_hadamard_symmetry_20260903T014221.775508Z",
+      "validation_timestamp": "2026-09-03T01:42:21.810113Z",
       "all_checks_passed": true,
       "checks": {
         "certificate_hash": {
@@ -540,7 +624,7 @@
     {
       "theorem": "operator_self_adjoint",
       "certificate_id": "SAT_operator_self_adjoint_20260903T014150.288278Z",
-      "validation_timestamp": "2026-09-03T01:41:50.348780Z",
+      "validation_timestamp": "2026-09-03T01:42:21.810113Z",
       "all_checks_passed": true,
       "checks": {
         "certificate_hash": {
@@ -568,7 +652,7 @@
     {
       "theorem": "gamma_exclusion",
       "certificate_id": "SAT_gamma_exclusion_20260107T214922.805016Z",
-      "validation_timestamp": "2026-09-03T01:41:50.348780Z",
+      "validation_timestamp": "2026-09-03T01:42:21.810113Z",
       "all_checks_passed": true,
       "checks": {
         "certificate_hash": {
@@ -596,7 +680,7 @@
     {
       "theorem": "D_entire",
       "certificate_id": "SAT_D_entire_20260107T214922.805016Z",
-      "validation_timestamp": "2026-09-03T01:41:50.348780Z",
+      "validation_timestamp": "2026-09-03T01:42:21.810113Z",
       "all_checks_passed": true,
       "checks": {
         "certificate_hash": {
@@ -624,7 +708,7 @@
     {
       "theorem": "D_entire",
       "certificate_id": "SAT_D_entire_20260118T151748.192283Z",
-      "validation_timestamp": "2026-09-03T01:41:50.348780Z",
+      "validation_timestamp": "2026-09-03T01:42:21.810113Z",
       "all_checks_passed": true,
       "checks": {
         "certificate_hash": {
@@ -652,7 +736,7 @@
     {
       "theorem": "fredholm_convergence",
       "certificate_id": "SAT_fredholm_convergence_20260107T214922.805016Z",
-      "validation_timestamp": "2026-09-03T01:41:50.348780Z",
+      "validation_timestamp": "2026-09-03T01:42:21.810113Z",
       "all_checks_passed": true,
       "checks": {
         "certificate_hash": {
@@ -680,7 +764,7 @@
     {
       "theorem": "paley_wiener_uniqueness",
       "certificate_id": "SAT_paley_wiener_uniqueness_20260903T012759.630434Z",
-      "validation_timestamp": "2026-09-03T01:41:50.348780Z",
+      "validation_timestamp": "2026-09-03T01:42:21.810113Z",
       "all_checks_passed": true,
       "checks": {
         "certificate_hash": {
@@ -708,7 +792,7 @@
     {
       "theorem": "fredholm_convergence",
       "certificate_id": "SAT_fredholm_convergence_20251207T035107.770470Z",
-      "validation_timestamp": "2026-09-03T01:41:50.348780Z",
+      "validation_timestamp": "2026-09-03T01:42:21.810113Z",
       "all_checks_passed": false,
       "checks": {
         "certificate_hash": {
@@ -736,7 +820,7 @@
     {
       "theorem": "riemann_hypothesis",
       "certificate_id": "SAT_riemann_hypothesis_20260118T151748.192283Z",
-      "validation_timestamp": "2026-09-03T01:41:50.348780Z",
+      "validation_timestamp": "2026-09-03T01:42:21.810113Z",
       "all_checks_passed": false,
       "checks": {
         "certificate_hash": {
@@ -764,7 +848,7 @@
     {
       "theorem": "riemann_hypothesis",
       "certificate_id": "SAT_riemann_hypothesis_20260903T014150.288278Z",
-      "validation_timestamp": "2026-09-03T01:41:50.348780Z",
+      "validation_timestamp": "2026-09-03T01:42:21.810113Z",
       "all_checks_passed": true,
       "checks": {
         "certificate_hash": {
@@ -792,7 +876,7 @@
     {
       "theorem": "hadamard_symmetry",
       "certificate_id": "SAT_hadamard_symmetry_20251229T141006.849123Z",
-      "validation_timestamp": "2026-09-03T01:41:50.348780Z",
+      "validation_timestamp": "2026-09-03T01:42:21.810113Z",
       "all_checks_passed": false,
       "checks": {
         "certificate_hash": {
@@ -820,7 +904,7 @@
     {
       "theorem": "paley_wiener_uniqueness",
       "certificate_id": "SAT_paley_wiener_uniqueness_20260903T014150.288278Z",
-      "validation_timestamp": "2026-09-03T01:41:50.348780Z",
+      "validation_timestamp": "2026-09-03T01:42:21.810113Z",
       "all_checks_passed": true,
       "checks": {
         "certificate_hash": {
@@ -848,7 +932,7 @@
     {
       "theorem": "spectrum_H\u03a8_eq_zeta_zeros",
       "certificate_id": "SAT_spectrum_H\u03a8_eq_zeta_zeros_20260215T230206.323715Z",
-      "validation_timestamp": "2026-09-03T01:41:50.348780Z",
+      "validation_timestamp": "2026-09-03T01:42:21.810113Z",
       "all_checks_passed": false,
       "checks": {
         "certificate_hash": {
@@ -876,7 +960,7 @@
     {
       "theorem": "riemann_hypothesis",
       "certificate_id": "SAT_riemann_hypothesis_20260108T220339.379223Z",
-      "validation_timestamp": "2026-09-03T01:41:50.348780Z",
+      "validation_timestamp": "2026-09-03T01:42:21.810113Z",
       "all_checks_passed": false,
       "checks": {
         "certificate_hash": {
@@ -904,7 +988,7 @@
     {
       "theorem": "paley_wiener_uniqueness",
       "certificate_id": "SAT_paley_wiener_uniqueness_20251207T035107.770470Z",
-      "validation_timestamp": "2026-09-03T01:41:50.348780Z",
+      "validation_timestamp": "2026-09-03T01:42:21.810113Z",
       "all_checks_passed": false,
       "checks": {
         "certificate_hash": {
@@ -932,7 +1016,7 @@
     {
       "theorem": "fredholm_convergence",
       "certificate_id": "SAT_fredholm_convergence_20260108T220339.379223Z",
-      "validation_timestamp": "2026-09-03T01:41:50.348780Z",
+      "validation_timestamp": "2026-09-03T01:42:21.810113Z",
       "all_checks_passed": true,
       "checks": {
         "certificate_hash": {
@@ -960,7 +1044,7 @@
     {
       "theorem": "operator_self_adjoint",
       "certificate_id": "SAT_operator_self_adjoint_20260107T214922.805016Z",
-      "validation_timestamp": "2026-09-03T01:41:50.348780Z",
+      "validation_timestamp": "2026-09-03T01:42:21.810113Z",
       "all_checks_passed": true,
       "checks": {
         "certificate_hash": {
@@ -988,7 +1072,7 @@
     {
       "theorem": "D_entire",
       "certificate_id": "SAT_D_entire_20260903T014150.288278Z",
-      "validation_timestamp": "2026-09-03T01:41:50.348780Z",
+      "validation_timestamp": "2026-09-03T01:42:21.810113Z",
       "all_checks_passed": true,
       "checks": {
         "certificate_hash": {
@@ -1016,7 +1100,7 @@
     {
       "theorem": "gamma_exclusion",
       "certificate_id": "SAT_gamma_exclusion_20260903T012759.630434Z",
-      "validation_timestamp": "2026-09-03T01:41:50.348780Z",
+      "validation_timestamp": "2026-09-03T01:42:21.810113Z",
       "all_checks_passed": true,
       "checks": {
         "certificate_hash": {
@@ -1044,7 +1128,7 @@
     {
       "theorem": "fredholm_convergence",
       "certificate_id": "SAT_fredholm_convergence_20260118T151748.192283Z",
-      "validation_timestamp": "2026-09-03T01:41:50.348780Z",
+      "validation_timestamp": "2026-09-03T01:42:21.810113Z",
       "all_checks_passed": true,
       "checks": {
         "certificate_hash": {
@@ -1072,7 +1156,7 @@
     {
       "theorem": "gamma_exclusion",
       "certificate_id": "SAT_gamma_exclusion_20260903T014150.288278Z",
-      "validation_timestamp": "2026-09-03T01:41:50.348780Z",
+      "validation_timestamp": "2026-09-03T01:42:21.810113Z",
       "all_checks_passed": true,
       "checks": {
         "certificate_hash": {
@@ -1100,7 +1184,35 @@
     {
       "theorem": "hadamard_symmetry",
       "certificate_id": "SAT_hadamard_symmetry_20260903T012759.630434Z",
-      "validation_timestamp": "2026-09-03T01:41:50.348780Z",
+      "validation_timestamp": "2026-09-03T01:42:21.810113Z",
+      "all_checks_passed": true,
+      "checks": {
+        "certificate_hash": {
+          "passed": true,
+          "message": "Hash verified successfully"
+        },
+        "file_hash": {
+          "passed": true,
+          "message": "File hash verified successfully"
+        },
+        "sat_formula": {
+          "passed": true,
+          "message": "SAT formula correctly evaluated: False"
+        },
+        "dependencies": {
+          "passed": true,
+          "message": "Dependencies structure valid: 0 items (deep validation not implemented)"
+        },
+        "qcal_signature": {
+          "passed": true,
+          "message": "QCAL signature verified"
+        }
+      }
+    },
+    {
+      "theorem": "gamma_exclusion",
+      "certificate_id": "SAT_gamma_exclusion_20260903T014221.775508Z",
+      "validation_timestamp": "2026-09-03T01:42:21.810113Z",
       "all_checks_passed": true,
       "checks": {
         "certificate_hash": {
@@ -1128,7 +1240,7 @@
     {
       "theorem": "functional_equation",
       "certificate_id": "SAT_functional_equation_20260107T214922.805016Z",
-      "validation_timestamp": "2026-09-03T01:41:50.348780Z",
+      "validation_timestamp": "2026-09-03T01:42:21.810113Z",
       "all_checks_passed": true,
       "checks": {
         "certificate_hash": {
@@ -1154,9 +1266,37 @@
       }
     },
     {
+      "theorem": "H_\u03a8_self_adjoint",
+      "certificate_id": "SAT_H_\u03a8_self_adjoint_20260903T014221.775508Z",
+      "validation_timestamp": "2026-09-03T01:42:21.810113Z",
+      "all_checks_passed": true,
+      "checks": {
+        "certificate_hash": {
+          "passed": true,
+          "message": "Hash verified successfully"
+        },
+        "file_hash": {
+          "passed": true,
+          "message": "File hash verified successfully"
+        },
+        "sat_formula": {
+          "passed": true,
+          "message": "SAT formula correctly evaluated: False"
+        },
+        "dependencies": {
+          "passed": true,
+          "message": "Dependencies structure valid: 1 items (deep validation not implemented)"
+        },
+        "qcal_signature": {
+          "passed": true,
+          "message": "QCAL signature verified"
+        }
+      }
+    },
+    {
       "theorem": "operator_self_adjoint",
       "certificate_id": "SAT_operator_self_adjoint_20260903T012759.630434Z",
-      "validation_timestamp": "2026-09-03T01:41:50.348780Z",
+      "validation_timestamp": "2026-09-03T01:42:21.810113Z",
       "all_checks_passed": true,
       "checks": {
         "certificate_hash": {
@@ -1184,7 +1324,7 @@
     {
       "theorem": "functional_equation",
       "certificate_id": "SAT_functional_equation_20260108T220339.379223Z",
-      "validation_timestamp": "2026-09-03T01:41:50.348780Z",
+      "validation_timestamp": "2026-09-03T01:42:21.810113Z",
       "all_checks_passed": true,
       "checks": {
         "certificate_hash": {
@@ -1212,7 +1352,7 @@
     {
       "theorem": "riemann_hypothesis",
       "certificate_id": "SAT_riemann_hypothesis_20251207T035107.770470Z",
-      "validation_timestamp": "2026-09-03T01:41:50.348780Z",
+      "validation_timestamp": "2026-09-03T01:42:21.810113Z",
       "all_checks_passed": false,
       "checks": {
         "certificate_hash": {
@@ -1240,7 +1380,7 @@
     {
       "theorem": "fredholm_convergence",
       "certificate_id": "SAT_fredholm_convergence_20260903T012759.630434Z",
-      "validation_timestamp": "2026-09-03T01:41:50.348780Z",
+      "validation_timestamp": "2026-09-03T01:42:21.810113Z",
       "all_checks_passed": true,
       "checks": {
         "certificate_hash": {
@@ -1268,7 +1408,7 @@
     {
       "theorem": "operator_self_adjoint",
       "certificate_id": "SAT_operator_self_adjoint_20260108T220339.379223Z",
-      "validation_timestamp": "2026-09-03T01:41:50.348780Z",
+      "validation_timestamp": "2026-09-03T01:42:21.810113Z",
       "all_checks_passed": true,
       "checks": {
         "certificate_hash": {
@@ -1296,7 +1436,7 @@
     {
       "theorem": "riemann_hypothesis",
       "certificate_id": "SAT_riemann_hypothesis_20260903T012759.630434Z",
-      "validation_timestamp": "2026-09-03T01:41:50.348780Z",
+      "validation_timestamp": "2026-09-03T01:42:21.810113Z",
       "all_checks_passed": true,
       "checks": {
         "certificate_hash": {
@@ -1322,9 +1462,37 @@
       }
     },
     {
+      "theorem": "spectrum_H\u03a8_eq_zeta_zeros",
+      "certificate_id": "SAT_spectrum_H\u03a8_eq_zeta_zeros_20260903T014221.775508Z",
+      "validation_timestamp": "2026-09-03T01:42:21.810113Z",
+      "all_checks_passed": true,
+      "checks": {
+        "certificate_hash": {
+          "passed": true,
+          "message": "Hash verified successfully"
+        },
+        "file_hash": {
+          "passed": true,
+          "message": "File hash verified successfully"
+        },
+        "sat_formula": {
+          "passed": true,
+          "message": "SAT formula correctly evaluated: False"
+        },
+        "dependencies": {
+          "passed": true,
+          "message": "Dependencies structure valid: 1 items (deep validation not implemented)"
+        },
+        "qcal_signature": {
+          "passed": true,
+          "message": "QCAL signature verified"
+        }
+      }
+    },
+    {
       "theorem": "paley_wiener_uniqueness",
       "certificate_id": "SAT_paley_wiener_uniqueness_20260215T230206.323715Z",
-      "validation_timestamp": "2026-09-03T01:41:50.348780Z",
+      "validation_timestamp": "2026-09-03T01:42:21.810113Z",
       "all_checks_passed": false,
       "checks": {
         "certificate_hash": {
@@ -1352,7 +1520,7 @@
     {
       "theorem": "fredholm_convergence",
       "certificate_id": "SAT_fredholm_convergence_20260215T230206.323715Z",
-      "validation_timestamp": "2026-09-03T01:41:50.348780Z",
+      "validation_timestamp": "2026-09-03T01:42:21.810113Z",
       "all_checks_passed": true,
       "checks": {
         "certificate_hash": {
@@ -1378,9 +1546,37 @@
       }
     },
     {
+      "theorem": "riemann_hypothesis",
+      "certificate_id": "SAT_riemann_hypothesis_20260903T014221.775508Z",
+      "validation_timestamp": "2026-09-03T01:42:21.810113Z",
+      "all_checks_passed": true,
+      "checks": {
+        "certificate_hash": {
+          "passed": true,
+          "message": "Hash verified successfully"
+        },
+        "file_hash": {
+          "passed": true,
+          "message": "File hash verified successfully"
+        },
+        "sat_formula": {
+          "passed": true,
+          "message": "SAT formula correctly evaluated: False"
+        },
+        "dependencies": {
+          "passed": true,
+          "message": "Dependencies structure valid: 3 items (deep validation not implemented)"
+        },
+        "qcal_signature": {
+          "passed": true,
+          "message": "QCAL signature verified"
+        }
+      }
+    },
+    {
       "theorem": "spectrum_H\u03a8_eq_zeta_zeros",
       "certificate_id": "SAT_spectrum_H\u03a8_eq_zeta_zeros_20251207T035107.770470Z",
-      "validation_timestamp": "2026-09-03T01:41:50.348780Z",
+      "validation_timestamp": "2026-09-03T01:42:21.810113Z",
       "all_checks_passed": false,
       "checks": {
         "certificate_hash": {
@@ -1408,7 +1604,7 @@
     {
       "theorem": "operator_self_adjoint",
       "certificate_id": "SAT_operator_self_adjoint_20251229T141006.849123Z",
-      "validation_timestamp": "2026-09-03T01:41:50.348780Z",
+      "validation_timestamp": "2026-09-03T01:42:21.810113Z",
       "all_checks_passed": false,
       "checks": {
         "certificate_hash": {
@@ -1436,7 +1632,7 @@
     {
       "theorem": "H_\u03a8_self_adjoint",
       "certificate_id": "SAT_H_\u03a8_self_adjoint_20251207T035107.770470Z",
-      "validation_timestamp": "2026-09-03T01:41:50.348780Z",
+      "validation_timestamp": "2026-09-03T01:42:21.810113Z",
       "all_checks_passed": false,
       "checks": {
         "certificate_hash": {
@@ -1464,7 +1660,7 @@
     {
       "theorem": "hadamard_symmetry",
       "certificate_id": "SAT_hadamard_symmetry_20260903T014150.288278Z",
-      "validation_timestamp": "2026-09-03T01:41:50.348780Z",
+      "validation_timestamp": "2026-09-03T01:42:21.810113Z",
       "all_checks_passed": true,
       "checks": {
         "certificate_hash": {
@@ -1492,7 +1688,7 @@
     {
       "theorem": "H_\u03a8_self_adjoint",
       "certificate_id": "SAT_H_\u03a8_self_adjoint_20260215T230206.323715Z",
-      "validation_timestamp": "2026-09-03T01:41:50.348780Z",
+      "validation_timestamp": "2026-09-03T01:42:21.810113Z",
       "all_checks_passed": true,
       "checks": {
         "certificate_hash": {
@@ -1520,7 +1716,7 @@
     {
       "theorem": "functional_equation",
       "certificate_id": "SAT_functional_equation_20260903T012759.630434Z",
-      "validation_timestamp": "2026-09-03T01:41:50.348780Z",
+      "validation_timestamp": "2026-09-03T01:42:21.810113Z",
       "all_checks_passed": true,
       "checks": {
         "certificate_hash": {
@@ -1548,7 +1744,7 @@
     {
       "theorem": "D_entire",
       "certificate_id": "SAT_D_entire_20260215T230206.323715Z",
-      "validation_timestamp": "2026-09-03T01:41:50.348780Z",
+      "validation_timestamp": "2026-09-03T01:42:21.810113Z",
       "all_checks_passed": true,
       "checks": {
         "certificate_hash": {
@@ -1576,7 +1772,7 @@
     {
       "theorem": "spectrum_H\u03a8_eq_zeta_zeros",
       "certificate_id": "SAT_spectrum_H\u03a8_eq_zeta_zeros_20251229T141006.849123Z",
-      "validation_timestamp": "2026-09-03T01:41:50.348780Z",
+      "validation_timestamp": "2026-09-03T01:42:21.810113Z",
       "all_checks_passed": false,
       "checks": {
         "certificate_hash": {
@@ -1604,7 +1800,7 @@
     {
       "theorem": "spectrum_H\u03a8_eq_zeta_zeros",
       "certificate_id": "SAT_spectrum_H\u03a8_eq_zeta_zeros_20260108T220339.379223Z",
-      "validation_timestamp": "2026-09-03T01:41:50.348780Z",
+      "validation_timestamp": "2026-09-03T01:42:21.810113Z",
       "all_checks_passed": false,
       "checks": {
         "certificate_hash": {
@@ -1630,9 +1826,37 @@
       }
     },
     {
+      "theorem": "operator_self_adjoint",
+      "certificate_id": "SAT_operator_self_adjoint_20260903T014221.775508Z",
+      "validation_timestamp": "2026-09-03T01:42:21.810113Z",
+      "all_checks_passed": true,
+      "checks": {
+        "certificate_hash": {
+          "passed": true,
+          "message": "Hash verified successfully"
+        },
+        "file_hash": {
+          "passed": true,
+          "message": "File hash verified successfully"
+        },
+        "sat_formula": {
+          "passed": true,
+          "message": "SAT formula correctly evaluated: False"
+        },
+        "dependencies": {
+          "passed": true,
+          "message": "Dependencies structure valid: 0 items (deep validation not implemented)"
+        },
+        "qcal_signature": {
+          "passed": true,
+          "message": "QCAL signature verified"
+        }
+      }
+    },
+    {
       "theorem": "hadamard_symmetry",
       "certificate_id": "SAT_hadamard_symmetry_20251207T035107.770470Z",
-      "validation_timestamp": "2026-09-03T01:41:50.348780Z",
+      "validation_timestamp": "2026-09-03T01:42:21.810113Z",
       "all_checks_passed": false,
       "checks": {
         "certificate_hash": {
@@ -1660,7 +1884,7 @@
     {
       "theorem": "spectrum_H\u03a8_eq_zeta_zeros",
       "certificate_id": "SAT_spectrum_H\u03a8_eq_zeta_zeros_20260118T151748.192283Z",
-      "validation_timestamp": "2026-09-03T01:41:50.348780Z",
+      "validation_timestamp": "2026-09-03T01:42:21.810113Z",
       "all_checks_passed": false,
       "checks": {
         "certificate_hash": {
@@ -1688,7 +1912,7 @@
     {
       "theorem": "fredholm_convergence",
       "certificate_id": "SAT_fredholm_convergence_20251229T141006.849123Z",
-      "validation_timestamp": "2026-09-03T01:41:50.348780Z",
+      "validation_timestamp": "2026-09-03T01:42:21.810113Z",
       "all_checks_passed": false,
       "checks": {
         "certificate_hash": {
@@ -1716,7 +1940,7 @@
     {
       "theorem": "riemann_hypothesis",
       "certificate_id": "SAT_riemann_hypothesis_20251229T141006.849123Z",
-      "validation_timestamp": "2026-09-03T01:41:50.348780Z",
+      "validation_timestamp": "2026-09-03T01:42:21.810113Z",
       "all_checks_passed": false,
       "checks": {
         "certificate_hash": {
@@ -1744,7 +1968,35 @@
     {
       "theorem": "H_\u03a8_self_adjoint",
       "certificate_id": "SAT_H_\u03a8_self_adjoint_20260903T014150.288278Z",
-      "validation_timestamp": "2026-09-03T01:41:50.348780Z",
+      "validation_timestamp": "2026-09-03T01:42:21.810113Z",
+      "all_checks_passed": true,
+      "checks": {
+        "certificate_hash": {
+          "passed": true,
+          "message": "Hash verified successfully"
+        },
+        "file_hash": {
+          "passed": true,
+          "message": "File hash verified successfully"
+        },
+        "sat_formula": {
+          "passed": true,
+          "message": "SAT formula correctly evaluated: False"
+        },
+        "dependencies": {
+          "passed": true,
+          "message": "Dependencies structure valid: 1 items (deep validation not implemented)"
+        },
+        "qcal_signature": {
+          "passed": true,
+          "message": "QCAL signature verified"
+        }
+      }
+    },
+    {
+      "theorem": "fredholm_convergence",
+      "certificate_id": "SAT_fredholm_convergence_20260903T014221.775508Z",
+      "validation_timestamp": "2026-09-03T01:42:21.810113Z",
       "all_checks_passed": true,
       "checks": {
         "certificate_hash": {
@@ -1772,7 +2024,7 @@
     {
       "theorem": "spectrum_H\u03a8_eq_zeta_zeros",
       "certificate_id": "SAT_spectrum_H\u03a8_eq_zeta_zeros_20260903T014150.288278Z",
-      "validation_timestamp": "2026-09-03T01:41:50.348780Z",
+      "validation_timestamp": "2026-09-03T01:42:21.810113Z",
       "all_checks_passed": true,
       "checks": {
         "certificate_hash": {
@@ -1800,7 +2052,7 @@
     {
       "theorem": "spectrum_H\u03a8_eq_zeta_zeros",
       "certificate_id": "SAT_spectrum_H\u03a8_eq_zeta_zeros_20260107T214922.805016Z",
-      "validation_timestamp": "2026-09-03T01:41:50.348780Z",
+      "validation_timestamp": "2026-09-03T01:42:21.810113Z",
       "all_checks_passed": false,
       "checks": {
         "certificate_hash": {
@@ -1828,7 +2080,7 @@
     {
       "theorem": "paley_wiener_uniqueness",
       "certificate_id": "SAT_paley_wiener_uniqueness_20260108T220339.379223Z",
-      "validation_timestamp": "2026-09-03T01:41:50.348780Z",
+      "validation_timestamp": "2026-09-03T01:42:21.810113Z",
       "all_checks_passed": false,
       "checks": {
         "certificate_hash": {
@@ -1856,7 +2108,7 @@
     {
       "theorem": "gamma_exclusion",
       "certificate_id": "SAT_gamma_exclusion_20260108T220339.379223Z",
-      "validation_timestamp": "2026-09-03T01:41:50.348780Z",
+      "validation_timestamp": "2026-09-03T01:42:21.810113Z",
       "all_checks_passed": true,
       "checks": {
         "certificate_hash": {
@@ -1884,7 +2136,7 @@
     {
       "theorem": "functional_equation",
       "certificate_id": "SAT_functional_equation_20251207T035107.770470Z",
-      "validation_timestamp": "2026-09-03T01:41:50.348780Z",
+      "validation_timestamp": "2026-09-03T01:42:21.810113Z",
       "all_checks_passed": false,
       "checks": {
         "certificate_hash": {
@@ -1912,7 +2164,7 @@
     {
       "theorem": "operator_self_adjoint",
       "certificate_id": "SAT_operator_self_adjoint_20260118T151748.192283Z",
-      "validation_timestamp": "2026-09-03T01:41:50.348780Z",
+      "validation_timestamp": "2026-09-03T01:42:21.810113Z",
       "all_checks_passed": true,
       "checks": {
         "certificate_hash": {
@@ -1940,7 +2192,7 @@
     {
       "theorem": "D_entire",
       "certificate_id": "SAT_D_entire_20251207T035107.770470Z",
-      "validation_timestamp": "2026-09-03T01:41:50.348780Z",
+      "validation_timestamp": "2026-09-03T01:42:21.810113Z",
       "all_checks_passed": false,
       "checks": {
         "certificate_hash": {
@@ -1968,7 +2220,7 @@
     {
       "theorem": "riemann_hypothesis",
       "certificate_id": "SAT_riemann_hypothesis_20260215T230206.323715Z",
-      "validation_timestamp": "2026-09-03T01:41:50.348780Z",
+      "validation_timestamp": "2026-09-03T01:42:21.810113Z",
       "all_checks_passed": false,
       "checks": {
         "certificate_hash": {
@@ -1996,7 +2248,7 @@
     {
       "theorem": "hadamard_symmetry",
       "certificate_id": "SAT_hadamard_symmetry_20260118T151748.192283Z",
-      "validation_timestamp": "2026-09-03T01:41:50.348780Z",
+      "validation_timestamp": "2026-09-03T01:42:21.810113Z",
       "all_checks_passed": true,
       "checks": {
         "certificate_hash": {
@@ -2024,7 +2276,7 @@
     {
       "theorem": "paley_wiener_uniqueness",
       "certificate_id": "SAT_paley_wiener_uniqueness_20251229T141006.849123Z",
-      "validation_timestamp": "2026-09-03T01:41:50.348780Z",
+      "validation_timestamp": "2026-09-03T01:42:21.810113Z",
       "all_checks_passed": false,
       "checks": {
         "certificate_hash": {
@@ -2052,7 +2304,7 @@
     {
       "theorem": "H_\u03a8_self_adjoint",
       "certificate_id": "SAT_H_\u03a8_self_adjoint_20260107T214922.805016Z",
-      "validation_timestamp": "2026-09-03T01:41:50.348780Z",
+      "validation_timestamp": "2026-09-03T01:42:21.810113Z",
       "all_checks_passed": true,
       "checks": {
         "certificate_hash": {
@@ -2080,7 +2332,7 @@
     {
       "theorem": "paley_wiener_uniqueness",
       "certificate_id": "SAT_paley_wiener_uniqueness_20260107T214922.805016Z",
-      "validation_timestamp": "2026-09-03T01:41:50.348780Z",
+      "validation_timestamp": "2026-09-03T01:42:21.810113Z",
       "all_checks_passed": false,
       "checks": {
         "certificate_hash": {
@@ -2108,7 +2360,7 @@
     {
       "theorem": "riemann_hypothesis",
       "certificate_id": "SAT_riemann_hypothesis_20260107T214922.805016Z",
-      "validation_timestamp": "2026-09-03T01:41:50.348780Z",
+      "validation_timestamp": "2026-09-03T01:42:21.810113Z",
       "all_checks_passed": false,
       "checks": {
         "certificate_hash": {
@@ -2136,7 +2388,7 @@
     {
       "theorem": "hadamard_symmetry",
       "certificate_id": "SAT_hadamard_symmetry_20260107T214922.805016Z",
-      "validation_timestamp": "2026-09-03T01:41:50.348780Z",
+      "validation_timestamp": "2026-09-03T01:42:21.810113Z",
       "all_checks_passed": true,
       "checks": {
         "certificate_hash": {
@@ -2164,7 +2416,7 @@
     {
       "theorem": "D_entire",
       "certificate_id": "SAT_D_entire_20260903T012759.630434Z",
-      "validation_timestamp": "2026-09-03T01:41:50.348780Z",
+      "validation_timestamp": "2026-09-03T01:42:21.810113Z",
       "all_checks_passed": true,
       "checks": {
         "certificate_hash": {
@@ -2192,7 +2444,7 @@
     {
       "theorem": "H_\u03a8_self_adjoint",
       "certificate_id": "SAT_H_\u03a8_self_adjoint_20251229T141006.849123Z",
-      "validation_timestamp": "2026-09-03T01:41:50.348780Z",
+      "validation_timestamp": "2026-09-03T01:42:21.810113Z",
       "all_checks_passed": false,
       "checks": {
         "certificate_hash": {
@@ -2220,7 +2472,7 @@
     {
       "theorem": "H_\u03a8_self_adjoint",
       "certificate_id": "SAT_H_\u03a8_self_adjoint_20260108T220339.379223Z",
-      "validation_timestamp": "2026-09-03T01:41:50.348780Z",
+      "validation_timestamp": "2026-09-03T01:42:21.810113Z",
       "all_checks_passed": true,
       "checks": {
         "certificate_hash": {
@@ -2238,6 +2490,34 @@
         "dependencies": {
           "passed": true,
           "message": "Dependencies structure valid: 1 items (deep validation not implemented)"
+        },
+        "qcal_signature": {
+          "passed": true,
+          "message": "QCAL signature verified"
+        }
+      }
+    },
+    {
+      "theorem": "functional_equation",
+      "certificate_id": "SAT_functional_equation_20260903T014221.775508Z",
+      "validation_timestamp": "2026-09-03T01:42:21.810113Z",
+      "all_checks_passed": true,
+      "checks": {
+        "certificate_hash": {
+          "passed": true,
+          "message": "Hash verified successfully"
+        },
+        "file_hash": {
+          "passed": true,
+          "message": "File hash verified successfully"
+        },
+        "sat_formula": {
+          "passed": true,
+          "message": "SAT formula correctly evaluated: False"
+        },
+        "dependencies": {
+          "passed": true,
+          "message": "Dependencies structure valid: 0 items (deep validation not implemented)"
         },
         "qcal_signature": {
           "passed": true,

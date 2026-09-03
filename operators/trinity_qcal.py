@@ -631,6 +631,8 @@ def compute_trinity_qcal_harmonic(
             print("    disipativa están en resonancia armónica. HECHO ESTÁ.")
         print("=" * 80)
 
+    return result
+
 def compute_trinity_with_excited_modes(
     gamma_tilde_n: np.ndarray,
     psi: float,

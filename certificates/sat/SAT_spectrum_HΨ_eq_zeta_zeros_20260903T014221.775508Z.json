@@ -1,0 +1,63 @@
+{
+  "certificate_id": "SAT_spectrum_H\u03a8_eq_zeta_zeros_20260903T014221.775508Z",
+  "certificate_type": "SAT_THEOREM_CERTIFICATE",
+  "theorem_name": "spectrum_H\u03a8_eq_zeta_zeros",
+  "description": "Spectrum identification: Spec(H\u03a8) = {zeta zeros}",
+  "theorem_type": "spectral_identification",
+  "timestamp": "2026-09-03T01:42:21.775508Z",
+  "file_info": {
+    "path": "formalization/lean/RH_final_v6/NoExtraneousEigenvalues.lean",
+    "sha256": "1cf50e9e4f4128f12d40fccbd4969692107e6bcd5cddc6e642212bf3a8a0dd19",
+    "exists": true
+  },
+  "dependencies": [
+    "DeterminantFredholm"
+  ],
+  "verification": {
+    "compilation": {
+      "compiles": null,
+      "error_message": "[Errno 2] No such file or directory: 'lean'",
+      "check_time": null
+    },
+    "theorem_content_found": true,
+    "content_length": 196
+  },
+  "sat_formula": {
+    "variables": {
+      "theorem_exists": true,
+      "theorem_compiles": null,
+      "file_valid": true,
+      "dependencies_satisfied": true,
+      "no_sorry": true
+    },
+    "formula": "AND(theorem_exists, theorem_compiles, file_valid, dependencies_satisfied, no_sorry)",
+    "satisfied": false,
+    "solver": "direct_evaluation"
+  },
+  "proof_status": {
+    "verified": false,
+    "sorry_count": "not_computed",
+    "axioms_used": [
+      "propext",
+      "quot.sound",
+      "Classical.choice"
+    ],
+    "note": "sorry_count requires Lean AST analysis"
+  },
+  "qcal_signature": {
+    "base_frequency": "141.7001 Hz",
+    "coherence_constant": "C = 244.36",
+    "field_equation": "\u03a8 = I \u00d7 A_eff\u00b2 \u00d7 C^\u221e"
+  },
+  "cryptographic_proof": {
+    "certificate_hash": "cbbfb25c7b322cdb81d4a54f0edeff902aeb26ade5253422bb9e2b2cae90f9e6",
+    "validator_signature": "fbf04fba00f74a2d4dee756b2099b39f"
+  },
+  "metadata": {
+    "generator": "SAT Certificate Generator v1.0",
+    "author": "Jos\u00e9 Manuel Mota Burruezo (JMMB \u03a8\u2727)",
+    "institution": "Instituto de Conciencia Cu\u00e1ntica (ICQ)",
+    "doi": "10.5281/zenodo.17379721",
+    "license": "CC BY-NC-SA 4.0"
+  }
+}

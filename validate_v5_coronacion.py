@@ -1671,6 +1671,8 @@ Examples:
         )
         if sat_validate_result.returncode != 0:
             print("❌ SAT certificate validation failed after manifest refresh")
+            if sat_validate_result.stdout:
+                print(sat_validate_result.stdout)
             if sat_validate_result.stderr:
                 print(sat_validate_result.stderr)
             sys.exit(sat_validate_result.returncode)
