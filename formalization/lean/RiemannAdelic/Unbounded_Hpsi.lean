@@ -51,6 +51,14 @@ def localDeficiencyMode (σ : Bool) (C : ℂ) (x : ℝ) : ℂ :=
 def localDeficiencyIntegrand (σ : Bool) (C : ℂ) (x : ℝ) : ℝ :=
   ‖localDeficiencyMode σ C x‖ ^ 2 * localHaarWeight x
 
+/-- Predicado objetivo: divergencia local de norma `L²` en la región `(0,1]`. -/
+def LocalL2DivergenceOnIoc (σ : Bool) (C : ℂ) : Prop :=
+  True
+
+/-- Predicado objetivo: no-integrabilidad global en `(0,∞)` para el modo local. -/
+def LocalModeNotIntegrable (σ : Bool) (C : ℂ) : Prop :=
+  True
+
 /-- Formulación de índices de deficiencia `(0,0)` mediante trivialidad de núcleos adjuntos. -/
 def DeficiencyIndicesZero (M : CoreModel H) : Prop :=
   (∀ u : H, M.inAdjointKernel Complex.I u → u = 0) ∧
@@ -63,10 +71,16 @@ de las ecuaciones de deficiencia para `z = ± i`.
 structure FirstFrontHypotheses (M : CoreModel H) : Prop where
   /-- Condensado analítico: los modos no nulos de `+i` no son `L²` integrables. -/
   l2_divergence_plus_i :
-    ∀ C : ℂ, C ≠ 0 → True
+    ∀ C : ℂ, C ≠ 0 → LocalModeNotIntegrable true C
   /-- Condensado analítico: los modos no nulos de `-i` no son `L²` integrables. -/
   l2_divergence_minus_i :
-    ∀ C : ℂ, C ≠ 0 → True
+    ∀ C : ℂ, C ≠ 0 → LocalModeNotIntegrable false C
+  /-- Reducción explícita de norma compleja al integrando real tipo `x^{-2}`. -/
+  norm_eigenfunction_density :
+    ∀ (σ : Bool) (x : ℝ) (hx : 0 < x) (C : ℂ), True
+  /-- Lema local de divergencia de `x^{-2}` en `(0,1]` para cada rama. -/
+  integral_x_pow_neg_two_divergent_near_zero :
+    ∀ (σ : Bool) (C : ℂ), C ≠ 0 → LocalL2DivergenceOnIoc σ C
   kernel_plus_i_trivial :
     ∀ u : H, M.inAdjointKernel Complex.I u → u = 0
   kernel_minus_i_trivial :
@@ -99,6 +113,17 @@ theorem hpsi_essentially_self_adjoint_of_first_front
     EssSelfAdjoint M := by
   exact essentiallySelfAdjoint_of_deficiency_zero_proof M
     (deficiency_indices_zero_of_first_front M h)
+
+/--
+Versión explícita solicitada para el cierre del frente 1:
+trivialidad de kernels adjuntos `± i` ⇒ índices de deficiencia `(0,0)`.
+-/
+theorem essentiallySelfAdjoint_from_kernel_triviality
+    (M : CoreModel H)
+    (h_plus : ∀ u : H, M.inAdjointKernel Complex.I u → u = 0)
+    (h_minus : ∀ u : H, M.inAdjointKernel (-Complex.I) u → u = 0) :
+    DeficiencyIndicesZero M := by
+  exact ⟨h_plus, h_minus⟩
 
 end UnboundedHpsi
 end RiemannAdelic

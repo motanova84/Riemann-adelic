@@ -28,6 +28,9 @@ def test_unbounded_hpsi_removes_first_axiom_bridge():
     text = path.read_text(encoding="utf-8")
     assert "axiom essentiallySelfAdjoint_of_deficiency_zero" not in text
     assert "theorem essentiallySelfAdjoint_of_deficiency_zero_proof" in text
+    assert "theorem essentiallySelfAdjoint_from_kernel_triviality" in text
+    assert "LocalL2DivergenceOnIoc" in text
+    assert "LocalModeNotIntegrable" in text
 
 
 def test_remaining_axiom_names_removed_from_module_chain():

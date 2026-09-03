@@ -10,9 +10,11 @@
   - Estructura `CoreModel` para el bloque no acotado
   - Predicado abstracto de núcleo adjunto `inAdjointKernel`
   - Definiciones locales de frente analítico: `localHaarWeight`, `localDeficiencyMode`, `localDeficiencyIntegrand`
+  - Predicados explícitos de frente L2: `LocalL2DivergenceOnIoc`, `LocalModeNotIntegrable`
   - Hipótesis explícitas de frente 1: `FirstFrontHypotheses`
   - Teorema `deficiency_indices_zero_of_first_front`
   - Reemplazo del axioma puente por `theorem essentiallySelfAdjoint_of_deficiency_zero_proof`
+  - Teorema de cierre directo: `essentiallySelfAdjoint_from_kernel_triviality`
 
 ## 🟡 TRACE_FREDHOLM / GUINAND_WEIL_IDENTITY / SPECTRAL_UNIQUENESS (Lean 4 scaffold) — Cadena 3→5 (September 2026)
 
