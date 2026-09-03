@@ -1,66 +1,72 @@
-2026-09-03 04:41:56 - INFO     - qcal.test_session_20260903_044156 - 
-2026-09-03 04:41:56 - INFO     - qcal.test_session_20260903_044156 - ================================================================================
-2026-09-03 04:41:56 - INFO     - qcal.test_session_20260903_044156 - Test: tests/test_hpsi_unconditional_modules.py::test_unconditional_modules_exist
-2026-09-03 04:41:56 - INFO     - qcal.test_session_20260903_044156 - Location: tests/test_hpsi_unconditional_modules.py:17
-2026-09-03 04:41:56 - INFO     - qcal.test_session_20260903_044156 - ================================================================================
-2026-09-03 04:41:56 - INFO     - qcal.test_session_20260903_044156 - ✅ PASSED: tests/test_hpsi_unconditional_modules.py::test_unconditional_modules_exist (0.000s)
-2026-09-03 04:41:56 - INFO     - qcal.test_session_20260903_044156 - 
-2026-09-03 04:41:56 - INFO     - qcal.test_session_20260903_044156 - ================================================================================
-2026-09-03 04:41:56 - INFO     - qcal.test_session_20260903_044156 - Test: tests/test_hpsi_unconditional_modules.py::test_unconditional_modules_have_no_sorry
-2026-09-03 04:41:56 - INFO     - qcal.test_session_20260903_044156 - Location: tests/test_hpsi_unconditional_modules.py:22
-2026-09-03 04:41:56 - INFO     - qcal.test_session_20260903_044156 - ================================================================================
-2026-09-03 04:41:56 - INFO     - qcal.test_session_20260903_044156 - ✅ PASSED: tests/test_hpsi_unconditional_modules.py::test_unconditional_modules_have_no_sorry (0.000s)
-2026-09-03 04:41:56 - INFO     - qcal.test_session_20260903_044156 - 
-2026-09-03 04:41:56 - INFO     - qcal.test_session_20260903_044156 - ================================================================================
-2026-09-03 04:41:56 - INFO     - qcal.test_session_20260903_044156 - Test: tests/test_hpsi_unconditional_modules.py::test_unbounded_hpsi_removes_first_axiom_bridge
-2026-09-03 04:41:56 - INFO     - qcal.test_session_20260903_044156 - Location: tests/test_hpsi_unconditional_modules.py:28
-2026-09-03 04:41:56 - INFO     - qcal.test_session_20260903_044156 - ================================================================================
-2026-09-03 04:41:56 - INFO     - qcal.test_session_20260903_044156 - ✅ PASSED: tests/test_hpsi_unconditional_modules.py::test_unbounded_hpsi_removes_first_axiom_bridge (0.000s)
-2026-09-03 04:41:56 - INFO     - qcal.test_session_20260903_044156 - 
-2026-09-03 04:41:56 - INFO     - qcal.test_session_20260903_044156 - ================================================================================
-2026-09-03 04:41:56 - INFO     - qcal.test_session_20260903_044156 - Test: tests/test_hpsi_unconditional_modules.py::test_unbounded_hpsi_norm_density_closed_without_sorry
-2026-09-03 04:41:56 - INFO     - qcal.test_session_20260903_044156 - Location: tests/test_hpsi_unconditional_modules.py:40
-2026-09-03 04:41:56 - INFO     - qcal.test_session_20260903_044156 - ================================================================================
-2026-09-03 04:41:56 - INFO     - qcal.test_session_20260903_044156 - ✅ PASSED: tests/test_hpsi_unconditional_modules.py::test_unbounded_hpsi_norm_density_closed_without_sorry (0.000s)
-2026-09-03 04:41:56 - INFO     - qcal.test_session_20260903_044156 - 
-2026-09-03 04:41:56 - INFO     - qcal.test_session_20260903_044156 - ================================================================================
-2026-09-03 04:41:56 - INFO     - qcal.test_session_20260903_044156 - Test: tests/test_hpsi_unconditional_modules.py::test_unbounded_hpsi_dyadic_local_closure_present
-2026-09-03 04:41:56 - INFO     - qcal.test_session_20260903_044156 - Location: tests/test_hpsi_unconditional_modules.py:52
-2026-09-03 04:41:56 - INFO     - qcal.test_session_20260903_044156 - ================================================================================
-2026-09-03 04:41:56 - INFO     - qcal.test_session_20260903_044156 - ✅ PASSED: tests/test_hpsi_unconditional_modules.py::test_unbounded_hpsi_dyadic_local_closure_present (0.000s)
-2026-09-03 04:41:56 - INFO     - qcal.test_session_20260903_044156 - 
-2026-09-03 04:41:56 - INFO     - qcal.test_session_20260903_044156 - ================================================================================
-2026-09-03 04:41:56 - INFO     - qcal.test_session_20260903_044156 - Test: tests/test_hpsi_unconditional_modules.py::test_remaining_axiom_names_removed_from_module_chain
-2026-09-03 04:41:56 - INFO     - qcal.test_session_20260903_044156 - Location: tests/test_hpsi_unconditional_modules.py:61
-2026-09-03 04:41:56 - INFO     - qcal.test_session_20260903_044156 - ================================================================================
-2026-09-03 04:41:56 - INFO     - qcal.test_session_20260903_044156 - ✅ PASSED: tests/test_hpsi_unconditional_modules.py::test_remaining_axiom_names_removed_from_module_chain (0.000s)
-2026-09-03 04:41:56 - INFO     - qcal.test_session_20260903_044156 - 
-2026-09-03 04:41:56 - INFO     - qcal.test_session_20260903_044156 - ================================================================================
-2026-09-03 04:41:56 - INFO     - qcal.test_session_20260903_044156 - Test: tests/test_hpsi_unconditional_modules.py::test_spectral_uniqueness_no_true_placeholders
-2026-09-03 04:41:56 - INFO     - qcal.test_session_20260903_044156 - Location: tests/test_hpsi_unconditional_modules.py:77
-2026-09-03 04:41:56 - INFO     - qcal.test_session_20260903_044156 - ================================================================================
-2026-09-03 04:41:56 - INFO     - qcal.test_session_20260903_044156 - ✅ PASSED: tests/test_hpsi_unconditional_modules.py::test_spectral_uniqueness_no_true_placeholders (0.000s)
-2026-09-03 04:41:56 - INFO     - qcal.test_session_20260903_044156 - 
-2026-09-03 04:41:56 - INFO     - qcal.test_session_20260903_044156 - ================================================================================
-2026-09-03 04:41:56 - INFO     - qcal.test_session_20260903_044156 - Test: tests/test_hpsi_unconditional_modules.py::test_trace_fredholm_schatten_contract_present
-2026-09-03 04:41:56 - INFO     - qcal.test_session_20260903_044156 - Location: tests/test_hpsi_unconditional_modules.py:85
-2026-09-03 04:41:56 - INFO     - qcal.test_session_20260903_044156 - ================================================================================
-2026-09-03 04:41:56 - INFO     - qcal.test_session_20260903_044156 - ✅ PASSED: tests/test_hpsi_unconditional_modules.py::test_trace_fredholm_schatten_contract_present (0.000s)
-2026-09-03 04:41:56 - INFO     - qcal.test_session_20260903_044156 - 
-2026-09-03 04:41:56 - INFO     - qcal.test_session_20260903_044156 - ================================================================================
-2026-09-03 04:41:56 - INFO     - qcal.test_session_20260903_044156 - Test: tests/test_hpsi_unconditional_modules.py::test_poisson_mellin_tripartite_contract_present
-2026-09-03 04:41:56 - INFO     - qcal.test_session_20260903_044156 - Location: tests/test_hpsi_unconditional_modules.py:93
-2026-09-03 04:41:56 - INFO     - qcal.test_session_20260903_044156 - ================================================================================
-2026-09-03 04:41:56 - INFO     - qcal.test_session_20260903_044156 - ✅ PASSED: tests/test_hpsi_unconditional_modules.py::test_poisson_mellin_tripartite_contract_present (0.000s)
-2026-09-03 04:41:56 - INFO     - qcal.test_session_20260903_044156 - 
-2026-09-03 04:41:56 - INFO     - qcal.test_session_20260903_044156 - ================================================================================
-2026-09-03 04:41:56 - INFO     - qcal.test_session_20260903_044156 - Test: tests/test_hpsi_unconditional_modules.py::test_spectral_mechanics_core_theorems_present
-2026-09-03 04:41:56 - INFO     - qcal.test_session_20260903_044156 - Location: tests/test_hpsi_unconditional_modules.py:101
-2026-09-03 04:41:56 - INFO     - qcal.test_session_20260903_044156 - ================================================================================
-2026-09-03 04:41:56 - INFO     - qcal.test_session_20260903_044156 - ✅ PASSED: tests/test_hpsi_unconditional_modules.py::test_spectral_mechanics_core_theorems_present (0.000s)
-2026-09-03 04:41:56 - INFO     - qcal.test_session_20260903_044156 - 
-2026-09-03 04:41:56 - INFO     - qcal.test_session_20260903_044156 - ================================================================================
-2026-09-03 04:41:56 - INFO     - qcal.test_session_20260903_044156 - Test: tests/test_hpsi_unconditional_modules.py::test_hadamard_uniqueness_bridge_present
-2026-09-03 04:41:56 - INFO     - qcal.test_session_20260903_044156 - Location: tests/test_hpsi_unconditional_modules.py:110
-2026-09-03 04:41:56 - INFO     - qcal.test_session_20260903_044156 - ================================================================================
-2026-09-03 04:41:56 - INFO     - qcal.test_session_20260903_044156 - ✅ PASSED: tests/test_hpsi_unconditional_modules.py::test_hadamard_uniqueness_bridge_present (0.000s)
+2026-09-03 04:49:02 - INFO     - qcal.test_session_20260903_044902 - 
+2026-09-03 04:49:02 - INFO     - qcal.test_session_20260903_044902 - ================================================================================
+2026-09-03 04:49:02 - INFO     - qcal.test_session_20260903_044902 - Test: tests/test_hpsi_unconditional_modules.py::test_unconditional_modules_exist
+2026-09-03 04:49:02 - INFO     - qcal.test_session_20260903_044902 - Location: tests/test_hpsi_unconditional_modules.py:17
+2026-09-03 04:49:02 - INFO     - qcal.test_session_20260903_044902 - ================================================================================
+2026-09-03 04:49:02 - INFO     - qcal.test_session_20260903_044902 - ✅ PASSED: tests/test_hpsi_unconditional_modules.py::test_unconditional_modules_exist (0.000s)
+2026-09-03 04:49:02 - INFO     - qcal.test_session_20260903_044902 - 
+2026-09-03 04:49:02 - INFO     - qcal.test_session_20260903_044902 - ================================================================================
+2026-09-03 04:49:02 - INFO     - qcal.test_session_20260903_044902 - Test: tests/test_hpsi_unconditional_modules.py::test_unconditional_modules_have_no_sorry
+2026-09-03 04:49:02 - INFO     - qcal.test_session_20260903_044902 - Location: tests/test_hpsi_unconditional_modules.py:22
+2026-09-03 04:49:02 - INFO     - qcal.test_session_20260903_044902 - ================================================================================
+2026-09-03 04:49:02 - INFO     - qcal.test_session_20260903_044902 - ✅ PASSED: tests/test_hpsi_unconditional_modules.py::test_unconditional_modules_have_no_sorry (0.000s)
+2026-09-03 04:49:02 - INFO     - qcal.test_session_20260903_044902 - 
+2026-09-03 04:49:02 - INFO     - qcal.test_session_20260903_044902 - ================================================================================
+2026-09-03 04:49:02 - INFO     - qcal.test_session_20260903_044902 - Test: tests/test_hpsi_unconditional_modules.py::test_unbounded_hpsi_removes_first_axiom_bridge
+2026-09-03 04:49:02 - INFO     - qcal.test_session_20260903_044902 - Location: tests/test_hpsi_unconditional_modules.py:28
+2026-09-03 04:49:02 - INFO     - qcal.test_session_20260903_044902 - ================================================================================
+2026-09-03 04:49:02 - INFO     - qcal.test_session_20260903_044902 - ✅ PASSED: tests/test_hpsi_unconditional_modules.py::test_unbounded_hpsi_removes_first_axiom_bridge (0.000s)
+2026-09-03 04:49:02 - INFO     - qcal.test_session_20260903_044902 - 
+2026-09-03 04:49:02 - INFO     - qcal.test_session_20260903_044902 - ================================================================================
+2026-09-03 04:49:02 - INFO     - qcal.test_session_20260903_044902 - Test: tests/test_hpsi_unconditional_modules.py::test_unbounded_hpsi_norm_density_closed_without_sorry
+2026-09-03 04:49:02 - INFO     - qcal.test_session_20260903_044902 - Location: tests/test_hpsi_unconditional_modules.py:40
+2026-09-03 04:49:02 - INFO     - qcal.test_session_20260903_044902 - ================================================================================
+2026-09-03 04:49:02 - INFO     - qcal.test_session_20260903_044902 - ✅ PASSED: tests/test_hpsi_unconditional_modules.py::test_unbounded_hpsi_norm_density_closed_without_sorry (0.000s)
+2026-09-03 04:49:02 - INFO     - qcal.test_session_20260903_044902 - 
+2026-09-03 04:49:02 - INFO     - qcal.test_session_20260903_044902 - ================================================================================
+2026-09-03 04:49:02 - INFO     - qcal.test_session_20260903_044902 - Test: tests/test_hpsi_unconditional_modules.py::test_unbounded_hpsi_dyadic_local_closure_present
+2026-09-03 04:49:02 - INFO     - qcal.test_session_20260903_044902 - Location: tests/test_hpsi_unconditional_modules.py:52
+2026-09-03 04:49:02 - INFO     - qcal.test_session_20260903_044902 - ================================================================================
+2026-09-03 04:49:02 - INFO     - qcal.test_session_20260903_044902 - ✅ PASSED: tests/test_hpsi_unconditional_modules.py::test_unbounded_hpsi_dyadic_local_closure_present (0.000s)
+2026-09-03 04:49:02 - INFO     - qcal.test_session_20260903_044902 - 
+2026-09-03 04:49:02 - INFO     - qcal.test_session_20260903_044902 - ================================================================================
+2026-09-03 04:49:02 - INFO     - qcal.test_session_20260903_044902 - Test: tests/test_hpsi_unconditional_modules.py::test_unbounded_hpsi_causal_kernel_bridge_present
+2026-09-03 04:49:02 - INFO     - qcal.test_session_20260903_044902 - Location: tests/test_hpsi_unconditional_modules.py:61
+2026-09-03 04:49:02 - INFO     - qcal.test_session_20260903_044902 - ================================================================================
+2026-09-03 04:49:02 - INFO     - qcal.test_session_20260903_044902 - ✅ PASSED: tests/test_hpsi_unconditional_modules.py::test_unbounded_hpsi_causal_kernel_bridge_present (0.000s)
+2026-09-03 04:49:02 - INFO     - qcal.test_session_20260903_044902 - 
+2026-09-03 04:49:02 - INFO     - qcal.test_session_20260903_044902 - ================================================================================
+2026-09-03 04:49:02 - INFO     - qcal.test_session_20260903_044902 - Test: tests/test_hpsi_unconditional_modules.py::test_remaining_axiom_names_removed_from_module_chain
+2026-09-03 04:49:02 - INFO     - qcal.test_session_20260903_044902 - Location: tests/test_hpsi_unconditional_modules.py:71
+2026-09-03 04:49:02 - INFO     - qcal.test_session_20260903_044902 - ================================================================================
+2026-09-03 04:49:02 - INFO     - qcal.test_session_20260903_044902 - ✅ PASSED: tests/test_hpsi_unconditional_modules.py::test_remaining_axiom_names_removed_from_module_chain (0.000s)
+2026-09-03 04:49:02 - INFO     - qcal.test_session_20260903_044902 - 
+2026-09-03 04:49:02 - INFO     - qcal.test_session_20260903_044902 - ================================================================================
+2026-09-03 04:49:02 - INFO     - qcal.test_session_20260903_044902 - Test: tests/test_hpsi_unconditional_modules.py::test_spectral_uniqueness_no_true_placeholders
+2026-09-03 04:49:02 - INFO     - qcal.test_session_20260903_044902 - Location: tests/test_hpsi_unconditional_modules.py:87
+2026-09-03 04:49:02 - INFO     - qcal.test_session_20260903_044902 - ================================================================================
+2026-09-03 04:49:02 - INFO     - qcal.test_session_20260903_044902 - ✅ PASSED: tests/test_hpsi_unconditional_modules.py::test_spectral_uniqueness_no_true_placeholders (0.000s)
+2026-09-03 04:49:02 - INFO     - qcal.test_session_20260903_044902 - 
+2026-09-03 04:49:02 - INFO     - qcal.test_session_20260903_044902 - ================================================================================
+2026-09-03 04:49:02 - INFO     - qcal.test_session_20260903_044902 - Test: tests/test_hpsi_unconditional_modules.py::test_trace_fredholm_schatten_contract_present
+2026-09-03 04:49:02 - INFO     - qcal.test_session_20260903_044902 - Location: tests/test_hpsi_unconditional_modules.py:95
+2026-09-03 04:49:02 - INFO     - qcal.test_session_20260903_044902 - ================================================================================
+2026-09-03 04:49:02 - INFO     - qcal.test_session_20260903_044902 - ✅ PASSED: tests/test_hpsi_unconditional_modules.py::test_trace_fredholm_schatten_contract_present (0.000s)
+2026-09-03 04:49:02 - INFO     - qcal.test_session_20260903_044902 - 
+2026-09-03 04:49:02 - INFO     - qcal.test_session_20260903_044902 - ================================================================================
+2026-09-03 04:49:02 - INFO     - qcal.test_session_20260903_044902 - Test: tests/test_hpsi_unconditional_modules.py::test_poisson_mellin_tripartite_contract_present
+2026-09-03 04:49:02 - INFO     - qcal.test_session_20260903_044902 - Location: tests/test_hpsi_unconditional_modules.py:106
+2026-09-03 04:49:02 - INFO     - qcal.test_session_20260903_044902 - ================================================================================
+2026-09-03 04:49:02 - INFO     - qcal.test_session_20260903_044902 - ✅ PASSED: tests/test_hpsi_unconditional_modules.py::test_poisson_mellin_tripartite_contract_present (0.000s)
+2026-09-03 04:49:02 - INFO     - qcal.test_session_20260903_044902 - 
+2026-09-03 04:49:02 - INFO     - qcal.test_session_20260903_044902 - ================================================================================
+2026-09-03 04:49:02 - INFO     - qcal.test_session_20260903_044902 - Test: tests/test_hpsi_unconditional_modules.py::test_spectral_mechanics_core_theorems_present
+2026-09-03 04:49:02 - INFO     - qcal.test_session_20260903_044902 - Location: tests/test_hpsi_unconditional_modules.py:114
+2026-09-03 04:49:02 - INFO     - qcal.test_session_20260903_044902 - ================================================================================
+2026-09-03 04:49:02 - INFO     - qcal.test_session_20260903_044902 - ✅ PASSED: tests/test_hpsi_unconditional_modules.py::test_spectral_mechanics_core_theorems_present (0.000s)
+2026-09-03 04:49:02 - INFO     - qcal.test_session_20260903_044902 - 
+2026-09-03 04:49:02 - INFO     - qcal.test_session_20260903_044902 - ================================================================================
+2026-09-03 04:49:02 - INFO     - qcal.test_session_20260903_044902 - Test: tests/test_hpsi_unconditional_modules.py::test_hadamard_uniqueness_bridge_present
+2026-09-03 04:49:02 - INFO     - qcal.test_session_20260903_044902 - Location: tests/test_hpsi_unconditional_modules.py:123
+2026-09-03 04:49:02 - INFO     - qcal.test_session_20260903_044902 - ================================================================================
+2026-09-03 04:49:02 - INFO     - qcal.test_session_20260903_044902 - ✅ PASSED: tests/test_hpsi_unconditional_modules.py::test_hadamard_uniqueness_bridge_present (0.000s)

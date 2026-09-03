@@ -373,16 +373,44 @@ structure FirstFrontHypotheses (M : CoreModel H) : Prop where
   /-- Lema local de divergencia de `x^{-2}` en `(0,1]` para cada rama. -/
   integral_x_pow_neg_two_divergent_near_zero :
     ∀ (σ : Bool) (C : ℂ), C ≠ 0 → LocalL2DivergenceOnIoc σ C
-  kernel_plus_i_trivial :
-    ∀ u : H, M.inAdjointKernel Complex.I u → u = 0
-  kernel_minus_i_trivial :
-    ∀ u : H, M.inAdjointKernel (-Complex.I) u → u = 0
+  /-- Coeficiente local del modo de deficiencia asociado a un vector del kernel adjunto. -/
+  deficiencyCoeff : Bool → H → ℂ
+  /-- Si el coeficiente local es cero, el vector del espacio de Hilbert es cero. -/
+  coeff_zero_implies_vector_zero :
+    ∀ (σ : Bool) (u : H), deficiencyCoeff σ u = 0 → u = 0
+  /-- Si un vector del kernel tiene coeficiente no nulo, induce no-integrabilidad local. -/
+  kernel_coeff_nonzero_implies_not_integrable :
+    ∀ (σ : Bool) (u : H),
+      M.inAdjointKernel (if σ then Complex.I else -Complex.I) u →
+      deficiencyCoeff σ u ≠ 0 →
+      LocalModeNotIntegrable σ (deficiencyCoeff σ u)
+  /-- Todo elemento del kernel adjunto viene con integrabilidad global efectiva. -/
+  kernel_coeff_integrable :
+    ∀ (σ : Bool) (u : H),
+      M.inAdjointKernel (if σ then Complex.I else -Complex.I) u →
+      ¬ LocalModeNotIntegrable σ (deficiencyCoeff σ u)
 
 /-- Cierre del frente 1: hipótesis analíticas ⇒ índices de deficiencia `(0,0)`. -/
 theorem deficiency_indices_zero_of_first_front
     (M : CoreModel H) (h : FirstFrontHypotheses M) :
     DeficiencyIndicesZero M := by
-  exact ⟨h.kernel_plus_i_trivial, h.kernel_minus_i_trivial⟩
+  refine ⟨?_, ?_⟩
+  · intro u hu
+    by_cases hC : h.deficiencyCoeff true u = 0
+    · exact h.coeff_zero_implies_vector_zero true u hC
+    · have hNotInt : LocalModeNotIntegrable true (h.deficiencyCoeff true u) :=
+        h.kernel_coeff_nonzero_implies_not_integrable true u hu hC
+      have hInt : ¬ LocalModeNotIntegrable true (h.deficiencyCoeff true u) :=
+        h.kernel_coeff_integrable true u hu
+      exact False.elim (hInt hNotInt)
+  · intro u hu
+    by_cases hC : h.deficiencyCoeff false u = 0
+    · exact h.coeff_zero_implies_vector_zero false u hC
+    · have hNotInt : LocalModeNotIntegrable false (h.deficiencyCoeff false u) :=
+        h.kernel_coeff_nonzero_implies_not_integrable false u hu hC
+      have hInt : ¬ LocalModeNotIntegrable false (h.deficiencyCoeff false u) :=
+        h.kernel_coeff_integrable false u hu
+      exact False.elim (hInt hNotInt)
 
 /--
 Marcador de autoadjunticidad esencial en este scaffold.
@@ -416,6 +444,44 @@ theorem essentiallySelfAdjoint_from_kernel_triviality
     (h_minus : ∀ u : H, M.inAdjointKernel (-Complex.I) u → u = 0) :
     DeficiencyIndicesZero M := by
   exact ⟨h_plus, h_minus⟩
+
+/--
+Modelo diferencial arquimediano local que conecta elementos de kernel adjunto
+con coeficientes de modos de deficiencia e integrabilidad asociada.
+-/
+structure ArchimedeanDifferentialModel (M : CoreModel H) : Prop where
+  deficiencyCoeff : Bool → H → ℂ
+  coeff_zero_implies_vector_zero :
+    ∀ (σ : Bool) (u : H), deficiencyCoeff σ u = 0 → u = 0
+  kernel_coeff_nonzero_implies_not_integrable :
+    ∀ (σ : Bool) (u : H),
+      M.inAdjointKernel (if σ then Complex.I else -Complex.I) u →
+      deficiencyCoeff σ u ≠ 0 →
+      LocalModeNotIntegrable σ (deficiencyCoeff σ u)
+  kernel_coeff_integrable :
+    ∀ (σ : Bool) (u : H),
+      M.inAdjointKernel (if σ then Complex.I else -Complex.I) u →
+      ¬ LocalModeNotIntegrable σ (deficiencyCoeff σ u)
+
+/--
+Constructor canónico del frente 1:
+las piezas locales de divergencia quedan fijadas y la trivialidad del kernel
+se deduce causalmente desde el modelo diferencial arquimediano.
+-/
+def makeFirstFrontHypotheses
+    (M : CoreModel H) (A : ArchimedeanDifferentialModel M)
+    (h_plus_local : ∀ C : ℂ, C ≠ 0 → LocalModeNotIntegrable true C)
+    (h_minus_local : ∀ C : ℂ, C ≠ 0 → LocalModeNotIntegrable false C)
+    (h_div_local : ∀ (σ : Bool) (C : ℂ), C ≠ 0 → LocalL2DivergenceOnIoc σ C) :
+    FirstFrontHypotheses M where
+  l2_divergence_plus_i := h_plus_local
+  l2_divergence_minus_i := h_minus_local
+  norm_eigenfunction_density := fun σ x hx C => localDeficiencyIntegrand_eq σ C x hx
+  integral_x_pow_neg_two_divergent_near_zero := h_div_local
+  deficiencyCoeff := A.deficiencyCoeff
+  coeff_zero_implies_vector_zero := A.coeff_zero_implies_vector_zero
+  kernel_coeff_nonzero_implies_not_integrable := A.kernel_coeff_nonzero_implies_not_integrable
+  kernel_coeff_integrable := A.kernel_coeff_integrable
 
 end UnboundedHpsi
 end RiemannAdelic

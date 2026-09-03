@@ -59,6 +59,16 @@ def test_unbounded_hpsi_dyadic_local_closure_present():
     assert "theorem lintegral_x_pow_neg_two_Ioc_eq_top" in text
 
 
+def test_unbounded_hpsi_causal_kernel_bridge_present():
+    path = LEAN_DIR / "Unbounded_Hpsi.lean"
+    text = path.read_text(encoding="utf-8")
+    assert "deficiencyCoeff" in text
+    assert "kernel_coeff_nonzero_implies_not_integrable" in text
+    assert "kernel_coeff_integrable" in text
+    assert "structure ArchimedeanDifferentialModel" in text
+    assert "def makeFirstFrontHypotheses" in text
+
+
 def test_remaining_axiom_names_removed_from_module_chain():
     checks = {
         LEAN_DIR / "Trace_Fredholm.lean": [
@@ -87,6 +97,9 @@ def test_trace_fredholm_schatten_contract_present():
     path = LEAN_DIR / "Trace_Fredholm.lean"
     text = path.read_text(encoding="utf-8")
     assert "def IsHilbertSchmidtResolvent" in text
+    assert "def InSchattenTwoClass" in text
+    assert "def resolventKernelLocal" in text
+    assert "structure KernelSchattenWitness" in text
     assert "def ResolventInSchattenTwo" in text
     assert "resolvent_schatten_two" in text
 
