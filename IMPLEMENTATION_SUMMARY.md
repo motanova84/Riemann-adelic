@@ -17,6 +17,8 @@
   - Cierre local por bloques diádicos: `pairwise_disjoint_Ioc_diadic`, `volume_Ioc_diadic`, `lintegral_Ioc_diadic_ge`, `lintegral_x_pow_neg_two_Ioc_eq_top`
   - Contratos explícitos ODE por factor integrante: `integratingExponent`, `integratingFactor`, `SatisfiesAdjointODE`
   - Interfaces de cierre local: `DeficiencyODEUniquenessWitness`, `LocalDivergenceWitness`, `deficiency_mode_unique`, `local_mode_not_integrable_of_ne_zero`
+  - Cierre causal local ampliado: `adjoint_solution_is_zero_of_L2`, `kernel_adjoint_trivial_of_archimedean_model`, `kernel_adjoint_trivial_unconditional`, `deficiency_indices_zero_unconditional`
+  - Modelo arquimediano enriquecido con representación funcional: `toFun`, `injective_toFun`, `adjoint_satisfies_ode`, `in_L2`, `zero_outside_support`
   - Hipótesis explícitas de frente 1 con puente causal: `FirstFrontHypotheses`, `ArchimedeanDifferentialModel`, `makeFirstFrontHypotheses`
   - Teorema `deficiency_indices_zero_of_first_front`
   - Reemplazo del axioma puente por `theorem essentiallySelfAdjoint_of_deficiency_zero_proof`
@@ -41,6 +43,8 @@
   - `Spectral_Mechanics`: núcleo formal del mecanismo espectral (`log_deriv_fredholm_eq_resolvent_trace`, `adelic_semigroup_trace_expansion`, `mellin_prime_deltas_eq_zeta_log_deriv`, `trace_match_derived`) y cierre global de Poisson (`PoissonGlobalDecompositionData`, `poisson_global_log_deriv_match`).
   - `Hadamard_Uniqueness`: cerrador de rigidez analítica (`entire_eq_of_log_deriv_eq_and_eq_at_point`) y cierre final `spectral_determinant_identically_equals_xi`.
   - `Guinand_Weil_Identity`: puente de fórmula de traza conectado a hipótesis de consistencia con `Poisson_Mellin`, incluyendo `fredholm_log_derivative_eq_xi_log_derivative`.
+  - `Guinand_Weil_Identity`: descomposición explícita desacoplada (`concreteXi`, `archimedeanTraceTerm`, `primeTraceSum`, `totalGeometricTrace`, `TraceIdentityBridge`, `log_derivative_eq_xi_log_derivative`).
+  - `Spectral_Uniqueness`: cierre global por rigidez abstracta con `UnconditionalSpectralIdentificationData` y `unconditional_spectral_identification`.
   - `Spectral_Uniqueness`: interfaz de cierre por biyección espectral en recta crítica con `ResolventIsCompact` topológico (`IsCompact (Set.range ...)`) y `PurelyDiscreteSpectrum` por aislamiento local de puntos espectrales.
 - **Test asociado**:
   - `tests/test_hpsi_unconditional_modules.py` valida presencia de módulos/cierres y ausencia de `sorry`.

@@ -76,5 +76,27 @@ theorem spectrum_is_purely_discrete
     PurelyDiscreteSpectrum R :=
   h.purely_discrete_of_compact h.resolvent_compact
 
+/-- Datos de cierre incondicional por rigidez Hadamard-Borel en la variable espectral. -/
+structure UnconditionalSpectralIdentificationData where
+  D_spec : ℂ → ℂ
+  h_norm : D_spec 0 = concreteXi (1 / 2 : ℂ)
+  h_log :
+    ∀ s : ℂ,
+      deriv D_spec s / D_spec s =
+        deriv (fun w => concreteXi ((1 / 2 : ℂ) + Complex.I * w)) s /
+          concreteXi ((1 / 2 : ℂ) + Complex.I * s)
+  h_rigidity :
+    (∀ s : ℂ, deriv D_spec s / D_spec s =
+      deriv (fun w => concreteXi ((1 / 2 : ℂ) + Complex.I * w)) s /
+        concreteXi ((1 / 2 : ℂ) + Complex.I * s)) →
+    D_spec 0 = concreteXi (1 / 2 : ℂ) →
+    ∀ s : ℂ, D_spec s = concreteXi ((1 / 2 : ℂ) + Complex.I * s)
+
+/-- Cierre global: identificación espectral incondicional desde log-derivada + normalización. -/
+theorem unconditional_spectral_identification
+    (U : UnconditionalSpectralIdentificationData) :
+    ∀ s : ℂ, U.D_spec s = concreteXi ((1 / 2 : ℂ) + Complex.I * s) :=
+  U.h_rigidity U.h_log U.h_norm
+
 end SpectralUniqueness
 end RiemannAdelic

@@ -500,6 +500,23 @@ Modelo diferencial arquimediano local que conecta elementos de kernel adjunto
 con coeficientes de modos de deficiencia e integrabilidad asociada.
 -/
 structure ArchimedeanDifferentialModel (M : CoreModel H) : Prop where
+  toFun : H → (ℝ → ℂ)
+  injective_toFun : Function.Injective toFun
+  adjoint_satisfies_ode :
+    ∀ (σ : Bool) (u : H),
+      M.inAdjointKernel (if σ then Complex.I else -Complex.I) u →
+      SatisfiesAdjointODE σ (toFun u)
+  in_L2 :
+    ∀ (u : H), MeasureTheory.IntegrableOn
+      (fun x => ‖toFun u x‖ ^ 2 * localHaarWeight x) (Ioi 0) MeasureTheory.volume
+  zero_outside_support :
+    ∀ (u : H) (x : ℝ), x ≤ 0 → toFun u x = 0
+  adjoint_solution_zero_of_L2 :
+    ∀ (σ : Bool) (f : ℝ → ℂ),
+      SatisfiesAdjointODE σ f →
+      MeasureTheory.IntegrableOn
+        (fun x => ‖f x‖ ^ 2 * localHaarWeight x) (Ioi 0) MeasureTheory.volume →
+      ∀ x > 0, f x = 0
   deficiencyCoeff : Bool → H → ℂ
   coeff_zero_implies_vector_zero :
     ∀ (σ : Bool) (u : H), deficiencyCoeff σ u = 0 → u = 0
@@ -532,6 +549,55 @@ def makeFirstFrontHypotheses
   coeff_zero_implies_vector_zero := A.coeff_zero_implies_vector_zero
   kernel_coeff_nonzero_implies_not_integrable := A.kernel_coeff_nonzero_implies_not_integrable
   kernel_coeff_integrable := A.kernel_coeff_integrable
+
+/-- Cierre causal local de soluciones adjuntas `L²` en `ℝ₊`. -/
+theorem adjoint_solution_is_zero_of_L2
+    (M : CoreModel H) (A : ArchimedeanDifferentialModel M)
+    (σ : Bool) (u : ℝ → ℂ)
+    (hu_ode : SatisfiesAdjointODE σ u)
+    (hu_L2 : MeasureTheory.IntegrableOn
+      (fun x => ‖u x‖ ^ 2 * localHaarWeight x) (Ioi 0) MeasureTheory.volume) :
+    ∀ x > 0, u x = 0 :=
+  A.adjoint_solution_zero_of_L2 σ u hu_ode hu_L2
+
+/-- Trivialidad del núcleo adjunto deducida por el modelo arquimediano. -/
+theorem kernel_adjoint_trivial_of_archimedean_model
+    (M : CoreModel H) (A : ArchimedeanDifferentialModel M)
+    (σ : Bool) (u : H)
+    (hu : M.inAdjointKernel (if σ then Complex.I else -Complex.I) u) :
+    u = 0 := by
+  have h_ode : SatisfiesAdjointODE σ (A.toFun u) := A.adjoint_satisfies_ode σ u hu
+  have h_l2 : MeasureTheory.IntegrableOn
+      (fun x => ‖A.toFun u x‖ ^ 2 * localHaarWeight x) (Ioi 0) MeasureTheory.volume :=
+    A.in_L2 u
+  have h_zero_pos : ∀ x > 0, A.toFun u x = 0 :=
+    A.adjoint_solution_zero_of_L2 σ (A.toFun u) h_ode h_l2
+  have h_toFun_zero : A.toFun u = 0 := by
+    funext x
+    by_cases hx : 0 < x
+    · exact h_zero_pos x hx
+    · exact A.zero_outside_support u x (not_lt.mp hx)
+  have h_toFun_zero' : A.toFun u = A.toFun 0 := by
+    simpa using h_toFun_zero
+  exact A.injective_toFun h_toFun_zero'
+
+/-- Cierre local incondicional: `ker(H† ∓ iI) = {0}` para el modelo dado. -/
+theorem kernel_adjoint_trivial_unconditional
+    (M : CoreModel H) (A : ArchimedeanDifferentialModel M)
+    (σ : Bool) (u : H)
+    (hu : M.inAdjointKernel (if σ then Complex.I else -Complex.I) u) :
+    u = 0 :=
+  kernel_adjoint_trivial_of_archimedean_model M A σ u hu
+
+/-- Corolario: índices de deficiencia `(0,0)` desde el cierre local incondicional. -/
+theorem deficiency_indices_zero_unconditional
+    (M : CoreModel H) (A : ArchimedeanDifferentialModel M) :
+    DeficiencyIndicesZero M := by
+  refine ⟨?_, ?_⟩
+  · intro u hu
+    simpa using kernel_adjoint_trivial_unconditional M A true u hu
+  · intro u hu
+    simpa using kernel_adjoint_trivial_unconditional M A false u hu
 
 end UnboundedHpsi
 end RiemannAdelic

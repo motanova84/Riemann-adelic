@@ -6,6 +6,7 @@
 -/
 
 import Mathlib
+import Mathlib.NumberTheory.ZetaValues
 import RiemannAdelic.Unbounded_Hpsi
 import RiemannAdelic.Trace_Fredholm
 import RiemannAdelic.Poisson_Mellin
@@ -26,6 +27,41 @@ universe u
 
 variable {H : Type u} [NormedAddCommGroup H] [InnerProductSpace ℂ H]
 variable {M : CoreModel H} (R : ResolventData M)
+
+/-- Construcción explícita de la función Xi completada de Riemann. -/
+noncomputable def concreteXi (s : ℂ) : ℂ :=
+  (1 / 2 : ℂ) * s * (s - 1) *
+    (Real.pi : ℂ) ^ (-s / 2) *
+    Complex.Gamma (s / 2) *
+    riemannZeta s
+
+/-- Componente arquimediana de traza (polos + contribución gamma/digamma). -/
+noncomputable def archimedeanTraceTerm (s : ℂ) : ℂ :=
+  let w := (1 / 2 : ℂ) + Complex.I * s
+  Complex.I * ((1 / w) + (1 / (w - 1)) - (1 / 2 : ℂ) * Real.log Real.pi +
+    (1 / 2 : ℂ) * (deriv Complex.Gamma (w / 2) / Complex.Gamma (w / 2)))
+
+/-- Componente aritmética de primos (derivada logarítmica de ζ). -/
+noncomputable def primeTraceSum (s : ℂ) : ℂ :=
+  let w := (1 / 2 : ℂ) + Complex.I * s
+  Complex.I * (deriv riemannZeta w / riemannZeta w)
+
+/-- Suma geométrica total de la traza adélica desacoplada. -/
+noncomputable def totalGeometricTrace (s : ℂ) : ℂ :=
+  archimedeanTraceTerm s + primeTraceSum s
+
+/-- Puente desacoplado: traza espectral ↔ suma geométrica ↔ log-derivada de Xi. -/
+structure TraceIdentityBridge where
+  spectralLogDeriv : ℂ → ℂ
+  spectral_eq_resolvent :
+    ∀ s : ℂ, spectralLogDeriv s = deriv R.fredholmDeterminant s / R.fredholmDeterminant s
+  poisson_trace_identity :
+    ∀ s : ℂ, spectralLogDeriv s = totalGeometricTrace s
+  geometric_eq_xi_log_deriv :
+    ∀ s : ℂ,
+      totalGeometricTrace s =
+        deriv (fun w => concreteXi ((1 / 2 : ℂ) + Complex.I * w)) s /
+        concreteXi ((1 / 2 : ℂ) + Complex.I * s)
 
 /-- Definición abstracta de la Xi completada en el módulo puente. -/
 abbrev CompletedXi := ℂ → ℂ
@@ -114,6 +150,21 @@ theorem fredholm_log_derivative_eq_xi_log_derivative
     funext w
     simp [h3.xi_consistency ((1 / 2 : ℂ) + Complex.I * w)]
   simpa [hXiEq] using hpm
+
+/-- Cierre de conexión: la identidad de traza implica la igualdad `D'/D = Xi'/Xi`. -/
+theorem log_derivative_eq_xi_log_derivative
+    (T : TraceIdentityBridge R) (s : ℂ) :
+    deriv R.fredholmDeterminant s / R.fredholmDeterminant s =
+      deriv (fun w => concreteXi ((1 / 2 : ℂ) + Complex.I * w)) s /
+      concreteXi ((1 / 2 : ℂ) + Complex.I * s) := by
+  calc
+    deriv R.fredholmDeterminant s / R.fredholmDeterminant s
+        = T.spectralLogDeriv s := by
+            symm
+            exact T.spectral_eq_resolvent s
+    _ = totalGeometricTrace s := T.poisson_trace_identity s
+    _ = deriv (fun w => concreteXi ((1 / 2 : ℂ) + Complex.I * w)) s /
+          concreteXi ((1 / 2 : ℂ) + Complex.I * s) := T.geometric_eq_xi_log_deriv s
 
 end GuinandWeilIdentity
 end RiemannAdelic

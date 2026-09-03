@@ -69,6 +69,11 @@ def test_unbounded_hpsi_causal_kernel_bridge_present():
     assert "structure LocalDivergenceWitness" in text
     assert "theorem deficiency_mode_unique" in text
     assert "theorem local_mode_not_integrable_of_ne_zero" in text
+    assert "theorem adjoint_solution_is_zero_of_L2" in text
+    assert "theorem kernel_adjoint_trivial_unconditional" in text
+    assert "theorem deficiency_indices_zero_unconditional" in text
+    assert "toFun : H → (ℝ → ℂ)" in text
+    assert "adjoint_solution_zero_of_L2" in text
     assert "deficiencyCoeff" in text
     assert "kernel_coeff_nonzero_implies_not_integrable" in text
     assert "kernel_coeff_integrable" in text
@@ -98,6 +103,8 @@ def test_spectral_uniqueness_no_true_placeholders():
     assert "def ResolventIsCompact : Prop := ∀ z : ℂ, True" not in text
     assert "def PurelyDiscreteSpectrum : Prop := True" not in text
     assert "IsCompact (Set.range (R.resolvent z))" in text
+    assert "structure UnconditionalSpectralIdentificationData" in text
+    assert "theorem unconditional_spectral_identification" in text
 
 
 def test_trace_fredholm_schatten_contract_present():
@@ -135,6 +142,12 @@ def test_guinand_weil_global_log_deriv_bridge_present():
     text = path.read_text(encoding="utf-8")
     assert "poissonGlobal" in text
     assert "theorem fredholm_log_derivative_eq_xi_log_derivative" in text
+    assert "noncomputable def concreteXi" in text
+    assert "noncomputable def archimedeanTraceTerm" in text
+    assert "noncomputable def primeTraceSum" in text
+    assert "noncomputable def totalGeometricTrace" in text
+    assert "structure TraceIdentityBridge" in text
+    assert "theorem log_derivative_eq_xi_log_derivative" in text
 
 
 def test_hadamard_uniqueness_bridge_present():
