@@ -1,19 +1,17 @@
 {
-  "certificate_id": "SAT_riemann_hypothesis_20260903T014244.405286Z",
+  "certificate_id": "SAT_D_entire_20260903T014908.345637Z",
   "certificate_type": "SAT_THEOREM_CERTIFICATE",
-  "theorem_name": "riemann_hypothesis",
-  "description": "Main Riemann Hypothesis theorem - all non-trivial zeros on critical line",
-  "theorem_type": "main_theorem",
-  "timestamp": "2026-09-03T01:42:44.405286Z",
+  "theorem_name": "D_entire",
+  "description": "D function is entire (holomorphic everywhere)",
+  "theorem_type": "analytic_property",
+  "timestamp": "2026-09-03T01:49:08.345637Z",
   "file_info": {
-    "path": "formalization/lean/RH_final_v6/RHComplete.lean",
-    "sha256": "6f545976ff8e77417fe533f0bbe05febe43609174291088803e0ec6647944620",
+    "path": "formalization/lean/RH_final_v7.lean",
+    "sha256": "aba34976b30dc958b435235d931822dd9b7367c43fa76cb8c9d085ff8ed97437",
     "exists": true
   },
   "dependencies": [
-    "NoExtraneousEigenvalues",
-    "DeterminantFredholm",
-    "RiemannSiegel"
+    "SpectralEigenvalues"
   ],
   "verification": {
     "compilation": {
@@ -21,8 +19,8 @@
       "error_message": "[Errno 2] No such file or directory: 'lean'",
       "check_time": null
     },
-    "theorem_content_found": true,
-    "content_length": 463
+    "theorem_content_found": false,
+    "content_length": 0
   },
   "sat_formula": {
     "variables": {
@@ -52,8 +50,8 @@
     "field_equation": "\u03a8 = I \u00d7 A_eff\u00b2 \u00d7 C^\u221e"
   },
   "cryptographic_proof": {
-    "certificate_hash": "1b479e30bc08d73ebe3f8a608e91a999927957381df9fe7be24864c724a79252",
-    "validator_signature": "e330854dc0a73f9371be3b71748ab354"
+    "certificate_hash": "7cfd216b2df769baa255bd96e2c32402e2aa75146cffa6b0f16facdeb21ce99d",
+    "validator_signature": "135adbdc619f49a38fb8ad8b6cda112a"
   },
   "metadata": {
     "generator": "SAT Certificate Generator v1.0",

@@ -1,16 +1,20 @@
 {
-  "certificate_id": "SAT_paley_wiener_uniqueness_20260903T014244.405286Z",
+  "certificate_id": "SAT_riemann_hypothesis_20260903T014908.345637Z",
   "certificate_type": "SAT_THEOREM_CERTIFICATE",
-  "theorem_name": "paley_wiener_uniqueness",
-  "description": "Paley-Wiener uniqueness theorem",
-  "theorem_type": "uniqueness",
-  "timestamp": "2026-09-03T01:42:44.405286Z",
+  "theorem_name": "riemann_hypothesis",
+  "description": "Main Riemann Hypothesis theorem - all non-trivial zeros on critical line",
+  "theorem_type": "main_theorem",
+  "timestamp": "2026-09-03T01:49:08.345637Z",
   "file_info": {
-    "path": "formalization/lean/RH_final_v6/paley_wiener_uniqueness.lean",
-    "sha256": "3de9716af94dba774159ea6fa6f59b2b4e0511298b2017087a4a40b1ab9607ca",
+    "path": "formalization/lean/RH_final_v6/RHComplete.lean",
+    "sha256": "6f545976ff8e77417fe533f0bbe05febe43609174291088803e0ec6647944620",
     "exists": true
   },
-  "dependencies": [],
+  "dependencies": [
+    "NoExtraneousEigenvalues",
+    "DeterminantFredholm",
+    "RiemannSiegel"
+  ],
   "verification": {
     "compilation": {
       "compiles": null,
@@ -18,7 +22,7 @@
       "check_time": null
     },
     "theorem_content_found": true,
-    "content_length": 345
+    "content_length": 463
   },
   "sat_formula": {
     "variables": {
@@ -48,8 +52,8 @@
     "field_equation": "\u03a8 = I \u00d7 A_eff\u00b2 \u00d7 C^\u221e"
   },
   "cryptographic_proof": {
-    "certificate_hash": "f58c057fe9a8590dc9adbbd9df8abb3ca875d0bc2694f9f186c0ca1c1ccfd495",
-    "validator_signature": "f8bc733fe88b121ffd104a62938d4451"
+    "certificate_hash": "49116e275ae27e0c35847c7d0455bd3f8ff4830db6821b01fd27727a1e05bbc3",
+    "validator_signature": "73870594a7641d0218a58b096b0aeb4a"
   },
   "metadata": {
     "generator": "SAT Certificate Generator v1.0",

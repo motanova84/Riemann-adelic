@@ -1,16 +1,18 @@
 {
-  "certificate_id": "SAT_operator_self_adjoint_20260903T014244.405286Z",
+  "certificate_id": "SAT_spectrum_H\u03a8_eq_zeta_zeros_20260903T014908.345637Z",
   "certificate_type": "SAT_THEOREM_CERTIFICATE",
-  "theorem_name": "operator_self_adjoint",
-  "description": "General operator self-adjoint property",
-  "theorem_type": "operator_property",
-  "timestamp": "2026-09-03T01:42:44.405286Z",
+  "theorem_name": "spectrum_H\u03a8_eq_zeta_zeros",
+  "description": "Spectrum identification: Spec(H\u03a8) = {zeta zeros}",
+  "theorem_type": "spectral_identification",
+  "timestamp": "2026-09-03T01:49:08.345637Z",
   "file_info": {
-    "path": "formalization/lean/RH_final_v7.lean",
-    "sha256": "aba34976b30dc958b435235d931822dd9b7367c43fa76cb8c9d085ff8ed97437",
+    "path": "formalization/lean/RH_final_v6/NoExtraneousEigenvalues.lean",
+    "sha256": "1cf50e9e4f4128f12d40fccbd4969692107e6bcd5cddc6e642212bf3a8a0dd19",
     "exists": true
   },
-  "dependencies": [],
+  "dependencies": [
+    "DeterminantFredholm"
+  ],
   "verification": {
     "compilation": {
       "compiles": null,
@@ -18,7 +20,7 @@
       "check_time": null
     },
     "theorem_content_found": true,
-    "content_length": 163
+    "content_length": 196
   },
   "sat_formula": {
     "variables": {
@@ -48,8 +50,8 @@
     "field_equation": "\u03a8 = I \u00d7 A_eff\u00b2 \u00d7 C^\u221e"
   },
   "cryptographic_proof": {
-    "certificate_hash": "2e50c3b6c5febe1e5d65c1139887fe16aefead85943b713d9487bebf658d6d81",
-    "validator_signature": "4c43f234b2e7dcec8faaedbf455d1971"
+    "certificate_hash": "c7b2a74bd04ae10f180a6f2291c3ca3fbdf530a595104fecdbba8f4e775236ca",
+    "validator_signature": "1afcbafcf5e4c3c31f9e2c91a02f4059"
   },
   "metadata": {
     "generator": "SAT Certificate Generator v1.0",

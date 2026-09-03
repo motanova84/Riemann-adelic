@@ -1,10 +1,10 @@
 {
-  "certificate_id": "SAT_gamma_exclusion_20260903T014244.405286Z",
+  "certificate_id": "SAT_functional_equation_20260903T014908.345637Z",
   "certificate_type": "SAT_THEOREM_CERTIFICATE",
-  "theorem_name": "gamma_exclusion",
-  "description": "Gamma factor exclusion of trivial zeros",
-  "theorem_type": "zero_exclusion",
-  "timestamp": "2026-09-03T01:42:44.405286Z",
+  "theorem_name": "functional_equation",
+  "description": "Functional equation \u039e(s) = \u039e(1-s)",
+  "theorem_type": "symmetry",
+  "timestamp": "2026-09-03T01:49:08.345637Z",
   "file_info": {
     "path": "formalization/lean/RH_final_v7.lean",
     "sha256": "aba34976b30dc958b435235d931822dd9b7367c43fa76cb8c9d085ff8ed97437",
@@ -48,8 +48,8 @@
     "field_equation": "\u03a8 = I \u00d7 A_eff\u00b2 \u00d7 C^\u221e"
   },
   "cryptographic_proof": {
-    "certificate_hash": "f6f9de69257db5d81f338a22c0b6272a1481ebc00494fc304169132aa1ddb773",
-    "validator_signature": "57b603893185a945a38c5484f69c81b9"
+    "certificate_hash": "3db2894e1cf927a4422cbfb88266b546e41621da4ea07c8406b9d04caa613439",
+    "validator_signature": "4c8e24c3c36f02a34148e5851e1d5cae"
   },
   "metadata": {
     "generator": "SAT Certificate Generator v1.0",

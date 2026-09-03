@@ -1,13 +1,13 @@
 {
-  "certificate_id": "SAT_hadamard_symmetry_20260903T014244.405286Z",
+  "certificate_id": "SAT_paley_wiener_uniqueness_20260903T014908.345637Z",
   "certificate_type": "SAT_THEOREM_CERTIFICATE",
-  "theorem_name": "hadamard_symmetry",
-  "description": "Hadamard product symmetry for zeros",
-  "theorem_type": "zero_property",
-  "timestamp": "2026-09-03T01:42:44.405286Z",
+  "theorem_name": "paley_wiener_uniqueness",
+  "description": "Paley-Wiener uniqueness theorem",
+  "theorem_type": "uniqueness",
+  "timestamp": "2026-09-03T01:49:08.345637Z",
   "file_info": {
-    "path": "formalization/lean/RH_final_v7.lean",
-    "sha256": "aba34976b30dc958b435235d931822dd9b7367c43fa76cb8c9d085ff8ed97437",
+    "path": "formalization/lean/RH_final_v6/paley_wiener_uniqueness.lean",
+    "sha256": "3de9716af94dba774159ea6fa6f59b2b4e0511298b2017087a4a40b1ab9607ca",
     "exists": true
   },
   "dependencies": [],
@@ -18,7 +18,7 @@
       "check_time": null
     },
     "theorem_content_found": true,
-    "content_length": 157
+    "content_length": 345
   },
   "sat_formula": {
     "variables": {
@@ -48,8 +48,8 @@
     "field_equation": "\u03a8 = I \u00d7 A_eff\u00b2 \u00d7 C^\u221e"
   },
   "cryptographic_proof": {
-    "certificate_hash": "1f8b783214423864859e698eb15c5c74332f4253ae14a0af33d9056555b213a2",
-    "validator_signature": "2fcc458222056518e29cd764434ba7c9"
+    "certificate_hash": "1c43059e25326719642b78cb82d42cec4ac8d903b6ef967d4d16bba39275c2c9",
+    "validator_signature": "e63988c6ed9c0eefa8052e1da7003bb2"
   },
   "metadata": {
     "generator": "SAT Certificate Generator v1.0",

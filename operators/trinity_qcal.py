@@ -99,6 +99,11 @@ def compute_complex_amplitude(
     """
     if gamma_qcal is None:
         gamma_qcal = GAMMA_QCAL_FASE
+    if gamma_qcal is None:
+        gamma_qcal = 2.0 * np.pi * F0 / F_MANIFESTATION
+
+    psi = 0.0 if psi is None else float(psi)
+    gamma_qcal = float(gamma_qcal)
     
     # ℰ_{s,φ} = γ_QCAL · exp(i · γ_QCAL) · Ψ
     amplitude = gamma_qcal * np.exp(1j * gamma_qcal) * psi
@@ -219,10 +224,14 @@ def compute_trinity_qcal(
         >>> print(f"Trinity_QCAL = {result['trinity_qcal']:.9f}")
         >>> print(f"RH Condition: {result['rh_condition_satisfied']}")
     """
+    psi = 0.0 if psi is None else float(psi)
+
     if gamma_n is None:
         gamma_n = RIEMANN_ZEROS_5
     if gamma_qcal is None:
         gamma_qcal = GAMMA_QCAL_FASE
+    if gamma_qcal is None:
+        gamma_qcal = 2.0 * np.pi * F0 / F_MANIFESTATION
     
     # Compute complex amplitude
     E_amplitude = compute_complex_amplitude(psi, gamma_qcal)
@@ -505,6 +514,8 @@ def compute_trinity_qcal_harmonic(
         >>> result = compute_trinity_qcal_harmonic(psi=0.888, verbose=True)
         >>> print(f"Trinity_QCAL_harmonic = {result['trinity_harmonic']:.9f}")
     """
+    psi = 0.0 if psi is None else float(psi)
+
     if gamma_n is None:
         gamma_n = RIEMANN_ZEROS_5
     if theta is None:
@@ -515,6 +526,12 @@ def compute_trinity_qcal_harmonic(
         tau_odor = TAU_ODOR
     if gamma_qcal is None:
         gamma_qcal = GAMMA_QCAL_FASE
+    if gamma_qcal is None:
+        gamma_qcal = 2.0 * np.pi * F0 / F_MANIFESTATION
+    if gamma_diss is None:
+        gamma_diss = 0.0
+    if tau_odor is None:
+        tau_odor = 0.0
 
     gamma_n = np.asarray(gamma_n, dtype=float)
     N = len(gamma_n)

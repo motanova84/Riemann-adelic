@@ -1,26 +1,24 @@
 {
-  "certificate_id": "SAT_fredholm_convergence_20260903T014244.405286Z",
+  "certificate_id": "SAT_operator_self_adjoint_20260903T014908.345637Z",
   "certificate_type": "SAT_THEOREM_CERTIFICATE",
-  "theorem_name": "fredholm_convergence",
-  "description": "Fredholm determinant convergence",
-  "theorem_type": "convergence",
-  "timestamp": "2026-09-03T01:42:44.405286Z",
+  "theorem_name": "operator_self_adjoint",
+  "description": "General operator self-adjoint property",
+  "theorem_type": "operator_property",
+  "timestamp": "2026-09-03T01:49:08.345637Z",
   "file_info": {
     "path": "formalization/lean/RH_final_v7.lean",
     "sha256": "aba34976b30dc958b435235d931822dd9b7367c43fa76cb8c9d085ff8ed97437",
     "exists": true
   },
-  "dependencies": [
-    "SpectralEigenvalues"
-  ],
+  "dependencies": [],
   "verification": {
     "compilation": {
       "compiles": null,
       "error_message": "[Errno 2] No such file or directory: 'lean'",
       "check_time": null
     },
-    "theorem_content_found": false,
-    "content_length": 0
+    "theorem_content_found": true,
+    "content_length": 163
   },
   "sat_formula": {
     "variables": {
@@ -50,8 +48,8 @@
     "field_equation": "\u03a8 = I \u00d7 A_eff\u00b2 \u00d7 C^\u221e"
   },
   "cryptographic_proof": {
-    "certificate_hash": "18ecb4f122cc3050911219248869c31ed1ea804224189bbf473cd399fc197be5",
-    "validator_signature": "d6bb37f4fe41c26848f5e06d0eca7343"
+    "certificate_hash": "0c0dd427764e04d15462ad81e69b9af5951d3c8328ae1c6b3e6f65c8f45422ae",
+    "validator_signature": "c998cb549ccbca2c43f7cfafb40ac262"
   },
   "metadata": {
     "generator": "SAT Certificate Generator v1.0",

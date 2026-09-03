@@ -1,18 +1,16 @@
 {
-  "certificate_id": "SAT_H_\u03a8_self_adjoint_20260903T014244.405286Z",
+  "certificate_id": "SAT_gamma_exclusion_20260903T014908.345637Z",
   "certificate_type": "SAT_THEOREM_CERTIFICATE",
-  "theorem_name": "H_\u03a8_self_adjoint",
-  "description": "Berry-Keating operator self-adjointness",
-  "theorem_type": "operator_property",
-  "timestamp": "2026-09-03T01:42:44.405286Z",
+  "theorem_name": "gamma_exclusion",
+  "description": "Gamma factor exclusion of trivial zeros",
+  "theorem_type": "zero_exclusion",
+  "timestamp": "2026-09-03T01:49:08.345637Z",
   "file_info": {
     "path": "formalization/lean/RH_final_v7.lean",
     "sha256": "aba34976b30dc958b435235d931822dd9b7367c43fa76cb8c9d085ff8ed97437",
     "exists": true
   },
-  "dependencies": [
-    "operator_construction"
-  ],
+  "dependencies": [],
   "verification": {
     "compilation": {
       "compiles": null,
@@ -50,8 +48,8 @@
     "field_equation": "\u03a8 = I \u00d7 A_eff\u00b2 \u00d7 C^\u221e"
   },
   "cryptographic_proof": {
-    "certificate_hash": "1cc32d5014770a15e0828f8a2bf040228777119fd9ac54351c766a8948e33254",
-    "validator_signature": "da741007e412da599484bfd408343978"
+    "certificate_hash": "bb9c744e017823f2a2d7533c02000b5169242b16518e74760bf9d9b36c1741ab",
+    "validator_signature": "c0f8a2f5f1cd83b0880188f6c710652e"
   },
   "metadata": {
     "generator": "SAT Certificate Generator v1.0",

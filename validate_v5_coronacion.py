@@ -102,6 +102,7 @@ import time
 from datetime import datetime
 
 import mpmath as mp
+import numpy as np
 
 # Add the current directory to Python path for imports
 sys.path.append('.')
@@ -257,7 +258,11 @@ def build_ab_operational_report(
     spectral_metrics = compute_141hz_reproducibility_metrics(
         repo_root / "tests" / "data" / "qcal_spectrum_141hz.csv"
     )
-    psi_value = getattr(qcal_results, "step5_coherence", 0.888) if qcal_results else 0.888
+    psi_value_raw = getattr(qcal_results, "step5_coherence", 0.888) if qcal_results else 0.888
+    try:
+        psi_value = float(psi_value_raw) if psi_value_raw is not None else 0.0
+    except (TypeError, ValueError):
+        psi_value = 0.0
     psi_threshold = 0.888
     psi_passed = psi_value >= psi_threshold
 
@@ -764,8 +769,6 @@ def validate_v5_coronacion(precision=30, verbose=False, save_certificate=False, 
         hds_module = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(hds_module)
         HDSConnection = hds_module.HDSConnection
-        
-        import numpy as np
         
         # Build a small operator for validation
         n_basis = 20

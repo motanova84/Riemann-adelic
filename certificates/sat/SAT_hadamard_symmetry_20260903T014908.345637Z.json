@@ -1,26 +1,24 @@
 {
-  "certificate_id": "SAT_D_entire_20260903T014244.405286Z",
+  "certificate_id": "SAT_hadamard_symmetry_20260903T014908.345637Z",
   "certificate_type": "SAT_THEOREM_CERTIFICATE",
-  "theorem_name": "D_entire",
-  "description": "D function is entire (holomorphic everywhere)",
-  "theorem_type": "analytic_property",
-  "timestamp": "2026-09-03T01:42:44.405286Z",
+  "theorem_name": "hadamard_symmetry",
+  "description": "Hadamard product symmetry for zeros",
+  "theorem_type": "zero_property",
+  "timestamp": "2026-09-03T01:49:08.345637Z",
   "file_info": {
     "path": "formalization/lean/RH_final_v7.lean",
     "sha256": "aba34976b30dc958b435235d931822dd9b7367c43fa76cb8c9d085ff8ed97437",
     "exists": true
   },
-  "dependencies": [
-    "SpectralEigenvalues"
-  ],
+  "dependencies": [],
   "verification": {
     "compilation": {
       "compiles": null,
       "error_message": "[Errno 2] No such file or directory: 'lean'",
       "check_time": null
     },
-    "theorem_content_found": false,
-    "content_length": 0
+    "theorem_content_found": true,
+    "content_length": 157
   },
   "sat_formula": {
     "variables": {
@@ -50,8 +48,8 @@
     "field_equation": "\u03a8 = I \u00d7 A_eff\u00b2 \u00d7 C^\u221e"
   },
   "cryptographic_proof": {
-    "certificate_hash": "9ce4e88ef73829c68ef93728dbcd844d0455cd7de4150d2cfa0e8af41dce202a",
-    "validator_signature": "b67fb64f323e80721f34860d688d4ef6"
+    "certificate_hash": "5734d1c2c7c56cae565057903bf1576d3dcc20cdc5a34ec0c2ec089c62b30a31",
+    "validator_signature": "8219ea19b343e4cf09a5d3d53a7de6b7"
   },
   "metadata": {
     "generator": "SAT Certificate Generator v1.0",

@@ -1,16 +1,18 @@
 {
-  "certificate_id": "SAT_functional_equation_20260903T014244.405286Z",
+  "certificate_id": "SAT_H_\u03a8_self_adjoint_20260903T014908.345637Z",
   "certificate_type": "SAT_THEOREM_CERTIFICATE",
-  "theorem_name": "functional_equation",
-  "description": "Functional equation \u039e(s) = \u039e(1-s)",
-  "theorem_type": "symmetry",
-  "timestamp": "2026-09-03T01:42:44.405286Z",
+  "theorem_name": "H_\u03a8_self_adjoint",
+  "description": "Berry-Keating operator self-adjointness",
+  "theorem_type": "operator_property",
+  "timestamp": "2026-09-03T01:49:08.345637Z",
   "file_info": {
     "path": "formalization/lean/RH_final_v7.lean",
     "sha256": "aba34976b30dc958b435235d931822dd9b7367c43fa76cb8c9d085ff8ed97437",
     "exists": true
   },
-  "dependencies": [],
+  "dependencies": [
+    "operator_construction"
+  ],
   "verification": {
     "compilation": {
       "compiles": null,
@@ -48,8 +50,8 @@
     "field_equation": "\u03a8 = I \u00d7 A_eff\u00b2 \u00d7 C^\u221e"
   },
   "cryptographic_proof": {
-    "certificate_hash": "3a46b8ba1fb64b22c1005f4ca03db8049cd60bd844b3eadc07dca4a96f927f7b",
-    "validator_signature": "8d5326a55e304d809c6c45444df4633c"
+    "certificate_hash": "89f854ffc9368397b94bada99b7836bc2013fd623b85036c4fae29f7b0daaf80",
+    "validator_signature": "14488079f40b0e6168268b6547377852"
   },
   "metadata": {
     "generator": "SAT Certificate Generator v1.0",
