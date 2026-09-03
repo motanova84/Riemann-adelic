@@ -1,0 +1,61 @@
+{
+  "certificate_id": "SAT_paley_wiener_uniqueness_20251207T035107.770470Z",
+  "certificate_type": "SAT_THEOREM_CERTIFICATE",
+  "theorem_name": "paley_wiener_uniqueness",
+  "description": "Paley-Wiener uniqueness theorem",
+  "theorem_type": "uniqueness",
+  "timestamp": "2025-12-07T03:51:07.770470Z",
+  "file_info": {
+    "path": "formalization/lean/RH_final_v6/paley_wiener_uniqueness.lean",
+    "sha256": "e26c3c64170d262d786f7aeab2c25e471ba0916af984b1873d4b0b5dc332ff72",
+    "exists": true
+  },
+  "dependencies": [],
+  "verification": {
+    "compilation": {
+      "compiles": null,
+      "error_message": "[Errno 2] No such file or directory: 'lean'",
+      "check_time": null
+    },
+    "theorem_content_found": true,
+    "content_length": 345
+  },
+  "sat_formula": {
+    "variables": {
+      "theorem_exists": true,
+      "theorem_compiles": null,
+      "file_valid": true,
+      "dependencies_satisfied": true,
+      "no_sorry": true
+    },
+    "formula": "AND(theorem_exists, theorem_compiles, file_valid, dependencies_satisfied, no_sorry)",
+    "satisfied": false,
+    "solver": "direct_evaluation"
+  },
+  "proof_status": {
+    "verified": false,
+    "sorry_count": "not_computed",
+    "axioms_used": [
+      "propext",
+      "quot.sound",
+      "Classical.choice"
+    ],
+    "note": "sorry_count requires Lean AST analysis"
+  },
+  "qcal_signature": {
+    "base_frequency": "141.7001 Hz",
+    "coherence_constant": "C = 244.36",
+    "field_equation": "\u03a8 = I \u00d7 A_eff\u00b2 \u00d7 C^\u221e"
+  },
+  "cryptographic_proof": {
+    "certificate_hash": "88323b3799ed9b49ee7d094c77d1d39c06ed7fc6e4fc56780b76c5d6d5872cd7",
+    "validator_signature": "c22553566dcca3926347383f80bd5e76"
+  },
+  "metadata": {
+    "generator": "SAT Certificate Generator v1.0",
+    "author": "Jos\u00e9 Manuel Mota Burruezo (JMMB \u03a8\u2727)",
+    "institution": "Instituto de Conciencia Cu\u00e1ntica (ICQ)",
+    "doi": "10.5281/zenodo.17379721",
+    "license": "CC BY-NC-SA 4.0"
+  }
+}
