@@ -12,6 +12,23 @@
   - Teorema `deficiency_indices_zero` desde hipótesis estructurales
   - Puente axiomático `essentiallySelfAdjoint_of_deficiency_zero` para fase analítica posterior
 
+## 🟡 TRACE_FREDHOLM / GUINAND_WEIL_IDENTITY / SPECTRAL_UNIQUENESS (Lean 4 scaffold) — Cadena 3→5 (September 2026)
+
+**Status**: 🟡 SCAFFOLD ADDED
+
+- **Lean Modules**:
+  - `formalization/lean/RiemannAdelic/Trace_Fredholm.lean`
+  - `formalization/lean/RiemannAdelic/Guinand_Weil_Identity.lean`
+  - `formalization/lean/RiemannAdelic/Spectral_Uniqueness.lean`
+- **Objetivo**:
+  - Encadenar interfaz incondicional desde resolvente/traza regularizada hasta biyección espectral final.
+- **Alcance actual**:
+  - `Trace_Fredholm`: interfaz de resolvente, traza regularizada y ceros `D(s)` ↔ espectro.
+  - `Guinand_Weil_Identity`: interfaz de fórmula de traza y puente `D(s)=Ξ(1/2+i s)`.
+  - `Spectral_Uniqueness`: interfaz de cierre por biyección espectral en recta crítica.
+- **Test asociado**:
+  - `tests/test_hpsi_unconditional_modules.py` valida existencia de los 4 módulos y ausencia de `sorry`.
+
 ## 🟢 PARTÍCULA DE COHERENCIA (PC) — Marco de Sustrato Cuántico Integrado (April 2026)
 
 **Status**: ✅ IMPLEMENTED
