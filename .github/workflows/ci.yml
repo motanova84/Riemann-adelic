@@ -36,10 +36,11 @@ jobs:
 
       - name: Set up Lean 4 (elan)
         run: |
-          curl -sSfL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh | sh -s -- -y
+          curl -sSfL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh | sh -s -- -y --default-toolchain none
           echo "$HOME/.elan/bin" >> $GITHUB_PATH
           source "$HOME/.elan/env" || true
-          elan default leanprover/lean4:stable
+          elan toolchain install "$(cat formalization/lean/lean-toolchain)"
+          elan default "$(cat formalization/lean/lean-toolchain)"
           lean --version
           lake --version
 
@@ -58,6 +59,28 @@ jobs:
         run: |
           pytest tests/ --maxfail=5 --disable-warnings
           python3 validate_v5_coronacion.py --precision 25 --verbose --update-manifest
+
+      - name: Lean build RiemannAdelic
+        if: env.VALIDATION_LEVEL == '500'
+        run: |
+          cd formalization/lean
+          source "$HOME/.elan/env" || true
+          lake exe cache get
+          lake build RiemannAdelic
+
+      - name: Lean axioms audit (final theorem)
+        if: env.VALIDATION_LEVEL == '500'
+        run: |
+          cd formalization/lean
+          source "$HOME/.elan/env" || true
+          cat > /tmp/axioms_audit.lean <<'EOF'
+          import RiemannAdelic.Coronacion_Final
+          #print axioms RiemannAdelic.CoronacionFinal.riemann_hypothesis_cosmic_closure
+          EOF
+          lake env lean /tmp/axioms_audit.lean | tee /tmp/axioms_output.txt
+          grep -F "propext" /tmp/axioms_output.txt
+          grep -F "Classical.choice" /tmp/axioms_output.txt
+          grep -F "Quot.sound" /tmp/axioms_output.txt
 
       - name: SAT latest-only validation
         if: env.VALIDATION_LEVEL == '500'
