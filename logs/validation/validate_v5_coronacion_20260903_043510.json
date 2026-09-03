@@ -1,0 +1,93 @@
+{
+  "script_name": "validate_v5_coronacion",
+  "start_time": "2026-09-03T04:35:10.411486",
+  "end_time": "2026-09-03T04:35:34.239196",
+  "status": "success",
+  "output": [
+    {
+      "timestamp": "2026-09-03 04:35:10",
+      "level": "INFO",
+      "message": "================================================================================"
+    },
+    {
+      "timestamp": "2026-09-03 04:35:10",
+      "level": "INFO",
+      "message": "Step 1: V5 Coronaci\u00f3n Validation"
+    },
+    {
+      "timestamp": "2026-09-03 04:35:10",
+      "level": "INFO",
+      "message": "================================================================================"
+    },
+    {
+      "timestamp": "2026-09-03 04:35:10",
+      "level": "INFO",
+      "message": "Precision: 30 decimal places"
+    },
+    {
+      "timestamp": "2026-09-03 04:35:10",
+      "level": "INFO",
+      "message": "Max zeros: 1000"
+    },
+    {
+      "timestamp": "2026-09-03 04:35:10",
+      "level": "INFO",
+      "message": "Max primes: 1000"
+    },
+    {
+      "timestamp": "2026-09-03 04:35:34",
+      "level": "METRIC",
+      "message": "Metric: total_tests = 27"
+    },
+    {
+      "timestamp": "2026-09-03 04:35:34",
+      "level": "METRIC",
+      "message": "Metric: passed_tests = 14"
+    },
+    {
+      "timestamp": "2026-09-03 04:35:34",
+      "level": "METRIC",
+      "message": "Metric: failed_tests = 0"
+    },
+    {
+      "timestamp": "2026-09-03 04:35:34",
+      "level": "METRIC",
+      "message": "Metric: skipped_tests = 0"
+    },
+    {
+      "timestamp": "2026-09-03 04:35:34",
+      "level": "SUCCESS",
+      "message": "\u2705 SUCCESS: V5 Coronaci\u00f3n validation completed successfully"
+    }
+  ],
+  "errors": [],
+  "metrics": {
+    "total_tests": {
+      "value": 27,
+      "unit": "",
+      "timestamp": "2026-09-03T04:35:34.239144"
+    },
+    "passed_tests": {
+      "value": 14,
+      "unit": "",
+      "timestamp": "2026-09-03T04:35:34.239160"
+    },
+    "failed_tests": {
+      "value": 0,
+      "unit": "",
+      "timestamp": "2026-09-03T04:35:34.239172"
+    },
+    "skipped_tests": {
+      "value": 0,
+      "unit": "",
+      "timestamp": "2026-09-03T04:35:34.239183"
+    }
+  },
+  "steps": [
+    {
+      "name": "V5 Coronaci\u00f3n Validation",
+      "number": 1,
+      "timestamp": "2026-09-03T04:35:10.411634"
+    }
+  ]
+}

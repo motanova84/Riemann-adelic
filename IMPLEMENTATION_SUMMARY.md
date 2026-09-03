@@ -1,5 +1,80 @@
 # QCAL Build Verification - Implementation Summary
 
+## 🟢 WEIL–SPECTRAL BRIDGE VALIDATOR (Python) — Auditoría analítico-numérica dedicada (September 2026)
+
+**Status**: ✅ IMPLEMENTED
+
+- **Python Module**: `core/validate_weil_spectral_bridge.py`
+- **Output Report**: `data/weil_spectral_bridge_report.json`
+- **Objetivo**:
+  - Validar el balance Guinand–Weil con par de Fourier simétrico `(h, g)`.
+  - Validar calibración modal espectral por ley de Weyl `λₙ = 1/4 + γₙ²`.
+- **Alcance**:
+  - Carga `N ≥ 1000` ceros desde `zeros/zeros_t1e8.txt` (con fallback a `mpmath.zetazero`).
+  - Suma sobre ceros `±γ` con suavizado gaussiano `exp(-γ²/(2σ²))`.
+  - Término arquimediano con digamma y suma de primos/potencias de primos.
+  - Criterio contractual:
+    - `Error Relativo ≤ 5%`
+    - `Match Espectral ≥ 90%`
+    - `Criterio Analítico-Numérico: PASSED/FAILED`
+
+## 🟡 UNBOUNDED_HPSI (Lean 4 scaffold) — Derivación incondicional por módulos (September 2026)
+
+**Status**: 🟡 SCAFFOLD ADDED
+
+- **Lean Module**: `formalization/lean/RiemannAdelic/Unbounded_Hpsi.lean`
+- **Objetivo**: Definir interfaz no circular para `H_Ψ` (dominio denso, simetría, deficiencia `(0,0)`)
+- **Alcance actual**:
+  - Estructura `CoreModel` para el bloque no acotado
+  - Predicado abstracto de núcleo adjunto `inAdjointKernel`
+  - Definiciones locales de frente analítico: `localHaarWeight`, `localDeficiencyMode`, `localDeficiencyIntegrand`
+  - Predicados explícitos de frente L2 sobre `MeasureTheory`: `LocalL2DivergenceOnIoc`, `LocalModeNotIntegrable` (sin placeholder `:= True`)
+  - Lemas analíticos añadidos: `norm_cpow_I_mul_real`, `norm_cpow_of_pos_real`
+  - Cierre de reducción de norma local: `theorem localDeficiencyIntegrand_eq`
+  - Lema de divergencia local añadido: `theorem integral_x_pow_neg_two_divergent_near_zero`
+  - Cierre local por bloques diádicos: `pairwise_disjoint_Ioc_diadic`, `volume_Ioc_diadic`, `lintegral_Ioc_diadic_ge`, `lintegral_x_pow_neg_two_Ioc_eq_top`
+  - Contratos explícitos ODE por factor integrante: `integratingExponent`, `integratingFactor`, `SatisfiesAdjointODE`
+  - Interfaces de cierre local: `DeficiencyODEUniquenessWitness`, `LocalDivergenceWitness`, `deficiency_mode_unique`, `local_mode_not_integrable_of_ne_zero`
+  - Cierre causal local ampliado: `adjoint_solution_is_zero_of_L2`, `kernel_adjoint_trivial_of_archimedean_model`, `kernel_adjoint_trivial_unconditional`, `deficiency_indices_zero_unconditional`
+  - Modelo arquimediano enriquecido con representación funcional: `toFun`, `injective_toFun`, `adjoint_satisfies_ode`, `in_L2`, `zero_outside_support`
+  - Hipótesis explícitas de frente 1 con puente causal: `FirstFrontHypotheses`, `ArchimedeanDifferentialModel`, `makeFirstFrontHypotheses`
+  - Teorema `deficiency_indices_zero_of_first_front`
+  - Reemplazo del axioma puente por `theorem essentiallySelfAdjoint_of_deficiency_zero_proof`
+  - Teorema de cierre directo: `essentiallySelfAdjoint_from_kernel_triviality`
+
+## 🟡 TRACE_FREDHOLM / GUINAND_WEIL_IDENTITY / SPECTRAL_UNIQUENESS (Lean 4 scaffold) — Cadena 3→5 (September 2026)
+
+**Status**: 🟡 SCAFFOLD ADDED
+
+- **Lean Modules**:
+  - `formalization/lean/RiemannAdelic/Trace_Fredholm.lean`
+  - `formalization/lean/RiemannAdelic/Guinand_Weil_Identity.lean`
+  - `formalization/lean/RiemannAdelic/Poisson_Mellin.lean`
+  - `formalization/lean/RiemannAdelic/Spectral_Mechanics.lean`
+  - `formalization/lean/RiemannAdelic/Hadamard_Uniqueness.lean`
+  - `formalization/lean/RiemannAdelic/Spectral_Uniqueness.lean`
+  - `formalization/lean/RiemannAdelic/Canonical_Instances.lean`
+  - `formalization/lean/RiemannAdelic/Coronacion_Final.lean`
+- **Objetivo**:
+  - Encadenar interfaz incondicional desde resolvente/traza regularizada hasta biyección espectral final.
+- **Alcance actual**:
+  - `Trace_Fredholm`: interfaz de resolvente, traza regularizada, ceros `D(s)` ↔ espectro y contrato `S₂` explícito (`resolventKernelLocal`, `InSchattenTwoClass`, `KernelSchattenWitness`, `IsHilbertSchmidtResolvent`, `ResolventInSchattenTwo`).
+  - `Poisson_Mellin`: testigo de identidad de derivadas logarítmicas y cierre Hadamard del puente `D(s)=Ξ(1/2+i s)`.
+  - `Spectral_Mechanics`: núcleo formal del mecanismo espectral (`log_deriv_fredholm_eq_resolvent_trace`, `adelic_semigroup_trace_expansion`, `mellin_prime_deltas_eq_zeta_log_deriv`, `trace_match_derived`) y cierre global de Poisson (`PoissonGlobalDecompositionData`, `poisson_global_log_deriv_match`).
+  - `Hadamard_Uniqueness`: cerrador de rigidez analítica (`entire_eq_of_log_deriv_eq_and_eq_at_point`) y cierre final `spectral_determinant_identically_equals_xi`.
+  - `Guinand_Weil_Identity`: puente de fórmula de traza conectado a hipótesis de consistencia con `Poisson_Mellin`, incluyendo `fredholm_log_derivative_eq_xi_log_derivative`.
+  - `Guinand_Weil_Identity`: descomposición explícita desacoplada (`concreteXi`, `archimedeanTraceTerm`, `primeTraceSum`, `totalGeometricTrace`, `TraceIdentityBridge`, `GeometricXiLogDerivClosure`, `log_derivative_eq_xi_log_derivative`).
+  - `Spectral_Uniqueness`: cierre global por rigidez abstracta con `UnconditionalSpectralIdentificationData` y `unconditional_spectral_identification`.
+  - `Spectral_Uniqueness`: núcleo de rigidez Hadamard-Borel del cociente (`xiShifted`, `wronskian_zero_of_log_deriv_eq`, `deriv_div_eq_zero_of_log_deriv_eq`, `spectral_rigidity_quotient`, `entire_rigidity_of_log_deriv_match`) con clausura holomorfa pasada como hipótesis explícita en firma.
+  - `Trace_Fredholm`: `zeros_eq_spectrum` movido de `ResolventData` a `SecondFrontHypotheses` para evitar cargar la conclusión en los datos base.
+  - `Trace_Fredholm`: lemas analíticos nuevos `integrable_dilation_power` y `norm_sq_resolvent_kernel` para el cálculo explícito del bloque `S₂`.
+  - `Canonical_Instances`: constructores explícitos para instanciación canónica del frente local/global (`CanonicalArchimedeanData`, `canonicalArchimedeanModel`, `CanonicalTraceBridgeData`, `canonicalTraceBridge`, `canonicalGeometricXiClosure`).
+  - `Coronacion_Final`: ensamblaje final por pilares con cierre de parámetro espectral real (`riemann_hypothesis_cosmic_closure`, `critical_line_localization_shifted`) usando hipótesis funcional explícita en lugar de estructura-testigo.
+  - `Guinand_Weil_Identity`: descarga analítica intermedia del cierre geométrico→Xi con `log_deriv_mul`, `hasDerivAt_crit_line`, `deriv_factor_w`, `deriv_factor_w_sub_one`, `concreteXi_log_derivative_expansion`, `geometric_xi_log_deriv_closure_proof`.
+  - `Spectral_Uniqueness`: interfaz de cierre por biyección espectral en recta crítica con `ResolventIsCompact` topológico (`IsCompact (Set.range ...)`) y `PurelyDiscreteSpectrum` por aislamiento local de puntos espectrales.
+- **Test asociado**:
+  - `tests/test_hpsi_unconditional_modules.py` valida presencia de módulos/cierres y ausencia de `sorry`.
+
 ## 🟢 PARTÍCULA DE COHERENCIA (PC) — Marco de Sustrato Cuántico Integrado (April 2026)
 
 **Status**: ✅ IMPLEMENTED

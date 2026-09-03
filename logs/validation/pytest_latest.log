@@ -1,0 +1,246 @@
+2026-09-03 09:21:55 - INFO     - qcal.test_session_20260903_092155 - 
+2026-09-03 09:21:55 - INFO     - qcal.test_session_20260903_092155 - ================================================================================
+2026-09-03 09:21:55 - INFO     - qcal.test_session_20260903_092155 - Test: tests/test_ci_simbiotico_sabio.py::test_ci_workflow_exists
+2026-09-03 09:21:55 - INFO     - qcal.test_session_20260903_092155 - Location: tests/test_ci_simbiotico_sabio.py:12
+2026-09-03 09:21:55 - INFO     - qcal.test_session_20260903_092155 - ================================================================================
+2026-09-03 09:21:55 - INFO     - qcal.test_session_20260903_092155 - ✅ PASSED: tests/test_ci_simbiotico_sabio.py::test_ci_workflow_exists (0.000s)
+2026-09-03 09:21:55 - INFO     - qcal.test_session_20260903_092155 - 
+2026-09-03 09:21:55 - INFO     - qcal.test_session_20260903_092155 - ================================================================================
+2026-09-03 09:21:55 - INFO     - qcal.test_session_20260903_092155 - Test: tests/test_ci_simbiotico_sabio.py::test_ci_workflow_valid_yaml
+2026-09-03 09:21:55 - INFO     - qcal.test_session_20260903_092155 - Location: tests/test_ci_simbiotico_sabio.py:18
+2026-09-03 09:21:55 - INFO     - qcal.test_session_20260903_092155 - ================================================================================
+2026-09-03 09:21:55 - INFO     - qcal.test_session_20260903_092155 - ✅ PASSED: tests/test_ci_simbiotico_sabio.py::test_ci_workflow_valid_yaml (0.004s)
+2026-09-03 09:21:55 - INFO     - qcal.test_session_20260903_092155 - 
+2026-09-03 09:21:55 - INFO     - qcal.test_session_20260903_092155 - ================================================================================
+2026-09-03 09:21:55 - INFO     - qcal.test_session_20260903_092155 - Test: tests/test_ci_simbiotico_sabio.py::test_ci_workflow_name
+2026-09-03 09:21:55 - INFO     - qcal.test_session_20260903_092155 - Location: tests/test_ci_simbiotico_sabio.py:26
+2026-09-03 09:21:55 - INFO     - qcal.test_session_20260903_092155 - ================================================================================
+2026-09-03 09:21:55 - INFO     - qcal.test_session_20260903_092155 - ✅ PASSED: tests/test_ci_simbiotico_sabio.py::test_ci_workflow_name (0.004s)
+2026-09-03 09:21:55 - INFO     - qcal.test_session_20260903_092155 - 
+2026-09-03 09:21:55 - INFO     - qcal.test_session_20260903_092155 - ================================================================================
+2026-09-03 09:21:55 - INFO     - qcal.test_session_20260903_092155 - Test: tests/test_ci_simbiotico_sabio.py::test_ci_workflow_triggers
+2026-09-03 09:21:55 - INFO     - qcal.test_session_20260903_092155 - Location: tests/test_ci_simbiotico_sabio.py:37
+2026-09-03 09:21:55 - INFO     - qcal.test_session_20260903_092155 - ================================================================================
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - ✅ PASSED: tests/test_ci_simbiotico_sabio.py::test_ci_workflow_triggers (0.004s)
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - 
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - ================================================================================
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - Test: tests/test_ci_simbiotico_sabio.py::test_ci_workflow_dispatch_input
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - Location: tests/test_ci_simbiotico_sabio.py:51
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - ================================================================================
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - ✅ PASSED: tests/test_ci_simbiotico_sabio.py::test_ci_workflow_dispatch_input (0.004s)
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - 
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - ================================================================================
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - Test: tests/test_ci_simbiotico_sabio.py::test_ci_workflow_jobs
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - Location: tests/test_ci_simbiotico_sabio.py:75
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - ================================================================================
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - ✅ PASSED: tests/test_ci_simbiotico_sabio.py::test_ci_workflow_jobs (0.004s)
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - 
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - ================================================================================
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - Test: tests/test_ci_simbiotico_sabio.py::test_ci_validation_level_env
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - Location: tests/test_ci_simbiotico_sabio.py:91
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - ================================================================================
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - ✅ PASSED: tests/test_ci_simbiotico_sabio.py::test_ci_validation_level_env (0.004s)
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - 
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - ================================================================================
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - Test: tests/test_ci_simbiotico_sabio.py::test_ci_workflow_steps
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - Location: tests/test_ci_simbiotico_sabio.py:108
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - ================================================================================
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - ✅ PASSED: tests/test_ci_simbiotico_sabio.py::test_ci_workflow_steps (0.004s)
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - 
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - ================================================================================
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - Test: tests/test_ci_simbiotico_sabio.py::test_ci_conditional_execution
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - Location: tests/test_ci_simbiotico_sabio.py:137
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - ================================================================================
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - ✅ PASSED: tests/test_ci_simbiotico_sabio.py::test_ci_conditional_execution (0.004s)
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - 
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - ================================================================================
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - Test: tests/test_ci_simbiotico_sabio.py::test_ci_pytest_commands
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - Location: tests/test_ci_simbiotico_sabio.py:157
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - ================================================================================
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - ✅ PASSED: tests/test_ci_simbiotico_sabio.py::test_ci_pytest_commands (0.000s)
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - 
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - ================================================================================
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - Test: tests/test_ci_simbiotico_sabio.py::test_ci_sabio_signature
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - Location: tests/test_ci_simbiotico_sabio.py:172
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - ================================================================================
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - ✅ PASSED: tests/test_ci_simbiotico_sabio.py::test_ci_sabio_signature (0.000s)
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - 
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - ================================================================================
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - Test: tests/test_ci_simbiotico_sabio.py::test_ci_documentation_exists
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - Location: tests/test_ci_simbiotico_sabio.py:184
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - ================================================================================
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - ✅ PASSED: tests/test_ci_simbiotico_sabio.py::test_ci_documentation_exists (0.000s)
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - 
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - ================================================================================
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - Test: tests/test_ci_simbiotico_sabio.py::test_ci_readme_references
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - Location: tests/test_ci_simbiotico_sabio.py:191
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - ================================================================================
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - ✅ PASSED: tests/test_ci_simbiotico_sabio.py::test_ci_readme_references (0.001s)
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - 
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - ================================================================================
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - Test: tests/test_sabio_validator.py::TestSABIOValidator::test_validator_initialization
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - Location: tests/test_sabio_validator.py:298
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - ================================================================================
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - ✅ PASSED: tests/test_sabio_validator.py::TestSABIOValidator::test_validator_initialization (0.000s)
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - 
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - ================================================================================
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - Test: tests/test_sabio_validator.py::TestSABIOValidator::test_beacon_loading
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - Location: tests/test_sabio_validator.py:305
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - ================================================================================
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - ✅ PASSED: tests/test_sabio_validator.py::TestSABIOValidator::test_beacon_loading (0.000s)
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - 
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - ================================================================================
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - Test: tests/test_sabio_validator.py::TestSABIOValidator::test_fundamental_frequency_validation
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - Location: tests/test_sabio_validator.py:312
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - ================================================================================
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - ✅ PASSED: tests/test_sabio_validator.py::TestSABIOValidator::test_fundamental_frequency_validation (0.000s)
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - 
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - ================================================================================
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - Test: tests/test_sabio_validator.py::TestSABIOValidator::test_coherence_validation
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - Location: tests/test_sabio_validator.py:320
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - ================================================================================
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - ✅ PASSED: tests/test_sabio_validator.py::TestSABIOValidator::test_coherence_validation (0.000s)
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - 
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - ================================================================================
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - Test: tests/test_sabio_validator.py::TestSABIOValidator::test_doi_references_validation
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - Location: tests/test_sabio_validator.py:327
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - ================================================================================
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - ✅ PASSED: tests/test_sabio_validator.py::TestSABIOValidator::test_doi_references_validation (0.000s)
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - 
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - ================================================================================
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - Test: tests/test_sabio_validator.py::TestSABIOValidator::test_vibrational_hash_computation
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - Location: tests/test_sabio_validator.py:334
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - ================================================================================
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - ✅ PASSED: tests/test_sabio_validator.py::TestSABIOValidator::test_vibrational_hash_computation (0.000s)
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - 
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - ================================================================================
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - Test: tests/test_sabio_validator.py::TestSABIOValidator::test_vibrational_pulsation
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - Location: tests/test_sabio_validator.py:343
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - ================================================================================
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - ✅ PASSED: tests/test_sabio_validator.py::TestSABIOValidator::test_vibrational_pulsation (0.000s)
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - 
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - ================================================================================
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - Test: tests/test_sabio_validator.py::TestSABIOValidator::test_complete_qcal_validation
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - Location: tests/test_sabio_validator.py:358
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - ================================================================================
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - ✅ PASSED: tests/test_sabio_validator.py::TestSABIOValidator::test_complete_qcal_validation (0.000s)
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - 
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - ================================================================================
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - Test: tests/test_sabio_validator.py::TestSABIOValidator::test_validation_report_saving
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - Location: tests/test_sabio_validator.py:365
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - ================================================================================
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - ✅ PASSED: tests/test_sabio_validator.py::TestSABIOValidator::test_validation_report_saving (0.001s)
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - 
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - ================================================================================
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - Test: tests/test_sabio_validator.py::TestSABIOValidator::test_frequency_constants
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - Location: tests/test_sabio_validator.py:387
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - ================================================================================
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - ✅ PASSED: tests/test_sabio_validator.py::TestSABIOValidator::test_frequency_constants (0.000s)
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - 
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - ================================================================================
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - Test: tests/test_sabio_validator.py::TestSABIOValidator::test_coherence_constants
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - Location: tests/test_sabio_validator.py:392
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - ================================================================================
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - ✅ PASSED: tests/test_sabio_validator.py::TestSABIOValidator::test_coherence_constants (0.000s)
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - 
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - ================================================================================
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - Test: tests/test_sabio_validator.py::TestSABIOValidator::test_physical_constants
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - Location: tests/test_sabio_validator.py:396
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - ================================================================================
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - ✅ PASSED: tests/test_sabio_validator.py::TestSABIOValidator::test_physical_constants (0.000s)
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - 
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - ================================================================================
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - Test: tests/test_sabio_validator.py::TestSABIOValidator::test_beacon_frequency_marker
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - Location: tests/test_sabio_validator.py:402
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - ================================================================================
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - ✅ PASSED: tests/test_sabio_validator.py::TestSABIOValidator::test_beacon_frequency_marker (0.000s)
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - 
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - ================================================================================
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - Test: tests/test_sabio_validator.py::TestSABIOValidator::test_beacon_coherence_marker
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - Location: tests/test_sabio_validator.py:409
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - ================================================================================
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - ✅ PASSED: tests/test_sabio_validator.py::TestSABIOValidator::test_beacon_coherence_marker (0.000s)
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - 
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - ================================================================================
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - Test: tests/test_sabio_validator.py::TestSABIOValidator::test_validation_results_structure
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - Location: tests/test_sabio_validator.py:416
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - ================================================================================
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - ✅ PASSED: tests/test_sabio_validator.py::TestSABIOValidator::test_validation_results_structure (0.000s)
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - 
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - ================================================================================
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - Test: tests/test_sabio_validator.py::TestSABIOValidator::test_multiple_precision_levels
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - Location: tests/test_sabio_validator.py:431
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - ================================================================================
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - ✅ PASSED: tests/test_sabio_validator.py::TestSABIOValidator::test_multiple_precision_levels (0.001s)
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - 
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - ================================================================================
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - Test: tests/test_sabio_validator.py::TestSABIOCompiler::test_example_sabio_file_exists
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - Location: tests/test_sabio_validator.py:196
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - ================================================================================
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - ✅ PASSED: tests/test_sabio_validator.py::TestSABIOCompiler::test_example_sabio_file_exists (0.000s)
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - 
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - ================================================================================
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - Test: tests/test_sabio_validator.py::TestSABIOCompiler::test_sabio_compiler_script_exists
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - Location: tests/test_sabio_validator.py:202
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - ================================================================================
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - ✅ PASSED: tests/test_sabio_validator.py::TestSABIOCompiler::test_sabio_compiler_script_exists (0.000s)
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - 
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - ================================================================================
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - Test: tests/test_sabio_validator.py::TestSABIOCompiler::test_example_sabio_has_required_metadata
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - Location: tests/test_sabio_validator.py:209
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - ================================================================================
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - ✅ PASSED: tests/test_sabio_validator.py::TestSABIOCompiler::test_example_sabio_has_required_metadata (0.000s)
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - 
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - ================================================================================
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - Test: tests/test_sabio_validator.py::TestQCALBeacon::test_beacon_file_exists
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - Location: tests/test_sabio_validator.py:229
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - ================================================================================
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - ✅ PASSED: tests/test_sabio_validator.py::TestQCALBeacon::test_beacon_file_exists (0.000s)
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - 
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - ================================================================================
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - Test: tests/test_sabio_validator.py::TestQCALBeacon::test_beacon_has_frequency
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - Location: tests/test_sabio_validator.py:235
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - ================================================================================
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - ✅ PASSED: tests/test_sabio_validator.py::TestQCALBeacon::test_beacon_has_frequency (0.000s)
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - 
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - ================================================================================
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - Test: tests/test_sabio_validator.py::TestQCALBeacon::test_beacon_has_coherence
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - Location: tests/test_sabio_validator.py:245
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - ================================================================================
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - ✅ PASSED: tests/test_sabio_validator.py::TestQCALBeacon::test_beacon_has_coherence (0.000s)
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - 
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - ================================================================================
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - Test: tests/test_sabio_validator.py::TestQCALBeacon::test_beacon_has_doi
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - Location: tests/test_sabio_validator.py:255
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - ================================================================================
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - ✅ PASSED: tests/test_sabio_validator.py::TestQCALBeacon::test_beacon_has_doi (0.000s)
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - 
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - ================================================================================
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - Test: tests/test_sabio_validator.py::TestSABIOIntegration::test_sabio_with_existing_validation
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - Location: tests/test_sabio_validator.py:445
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - ================================================================================
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - ✅ PASSED: tests/test_sabio_validator.py::TestSABIOIntegration::test_sabio_with_existing_validation (0.000s)
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - 
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - ================================================================================
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - Test: tests/test_sabio_validator.py::TestSABIOIntegration::test_frequency_matches_beacon_exactly
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - Location: tests/test_sabio_validator.py:453
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - ================================================================================
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - ✅ PASSED: tests/test_sabio_validator.py::TestSABIOIntegration::test_frequency_matches_beacon_exactly (0.000s)
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - 
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - ================================================================================
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - Test: tests/test_sabio_validator.py::TestSABIOIntegration::test_coherence_signature_format
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - Location: tests/test_sabio_validator.py:463
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - ================================================================================
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - ✅ PASSED: tests/test_sabio_validator.py::TestSABIOIntegration::test_coherence_signature_format (0.000s)
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - 
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - ================================================================================
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - Test: tests/test_sabio_validator.py::test_sabio_cli_interface
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - Location: tests/test_sabio_validator.py:474
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - ================================================================================
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - ✅ PASSED: tests/test_sabio_validator.py::test_sabio_cli_interface (0.000s)
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - 
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - ================================================================================
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - Test: tests/test_sabio_validator.py::test_beacon_file_integrity
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - Location: tests/test_sabio_validator.py:483
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - ================================================================================
+2026-09-03 09:21:56 - INFO     - qcal.test_session_20260903_092155 - ✅ PASSED: tests/test_sabio_validator.py::test_beacon_file_integrity (0.000s)

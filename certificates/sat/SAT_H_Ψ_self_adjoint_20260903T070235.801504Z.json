@@ -1,0 +1,64 @@
+{
+  "certificate_id": "SAT_H_\u03a8_self_adjoint_20260903T070235.801504Z",
+  "certificate_type": "SAT_THEOREM_CERTIFICATE",
+  "theorem_name": "H_\u03a8_self_adjoint",
+  "description": "Berry-Keating operator self-adjointness",
+  "theorem_type": "operator_property",
+  "timestamp": "2026-09-03T07:02:35.801504Z",
+  "file_info": {
+    "path": "formalization/lean/RH_final_v7.lean",
+    "sha256": "aba34976b30dc958b435235d931822dd9b7367c43fa76cb8c9d085ff8ed97437",
+    "exists": true
+  },
+  "dependencies": [
+    "operator_construction"
+  ],
+  "verification": {
+    "compilation": {
+      "compiles": null,
+      "error_message": "Lean not available",
+      "check_time": 0.002314,
+      "compiler_command": null
+    },
+    "theorem_content_found": false,
+    "content_length": 0
+  },
+  "sat_formula": {
+    "variables": {
+      "theorem_exists": true,
+      "theorem_compiles": null,
+      "file_valid": true,
+      "dependencies_satisfied": true,
+      "no_sorry": true
+    },
+    "formula": "AND(theorem_exists, theorem_compiles, file_valid, dependencies_satisfied, no_sorry)",
+    "satisfied": false,
+    "solver": "direct_evaluation"
+  },
+  "proof_status": {
+    "verified": false,
+    "sorry_count": 0,
+    "axioms_used": [
+      "propext",
+      "quot.sound",
+      "Classical.choice"
+    ],
+    "note": "sorry_count computed by token scan excluding single-line comments"
+  },
+  "qcal_signature": {
+    "base_frequency": "141.7001 Hz",
+    "coherence_constant": "C = 244.36",
+    "field_equation": "\u03a8 = I \u00d7 A_eff\u00b2 \u00d7 C^\u221e"
+  },
+  "cryptographic_proof": {
+    "certificate_hash": "9b4b5041646b48e96b1d42c7b7afcb868f0f4fc6775cf34f74a43208204036b1",
+    "validator_signature": "670d298b76747f916c5aad0124a94b39"
+  },
+  "metadata": {
+    "generator": "SAT Certificate Generator v1.0",
+    "author": "Jos\u00e9 Manuel Mota Burruezo (JMMB \u03a8\u2727)",
+    "institution": "Instituto de Conciencia Cu\u00e1ntica (ICQ)",
+    "doi": "10.5281/zenodo.17379721",
+    "license": "CC BY-NC-SA 4.0"
+  }
+}

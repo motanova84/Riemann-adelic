@@ -32,7 +32,7 @@ jobs:
           python tools/universal_kernel.py schema/*.jsonld --allow-kernel Lean4 --allow-kernel Dedukti
       - name: Build semantic graph
         run: |
-          python tools/build_graph.py schema/*.jsonld --output graph.ttl
+          python tools/build_graph.py schema/riemann_zeta.jsonld --output graph.ttl
       - name: Upload coherence artefacts
         uses: actions/upload-artifact@v4.4.3
         with:

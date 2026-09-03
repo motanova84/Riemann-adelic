@@ -18,6 +18,8 @@ Usage:
 import argparse
 import hashlib
 import json
+import re
+import shutil
 import subprocess
 import sys
 from datetime import datetime
@@ -96,6 +98,7 @@ class SATCertificateGenerator:
         self.output_dir = Path(output_dir)
         self.output_dir.mkdir(parents=True, exist_ok=True)
         self.timestamp = datetime.utcnow().isoformat() + "Z"
+        self.repo_root = Path(__file__).resolve().parent.parent
         
     def compute_file_hash(self, filepath: Path) -> str:
         """Compute SHA-256 hash of a file."""
@@ -146,28 +149,50 @@ class SATCertificateGenerator:
         result = {
             "compiles": False,
             "error_message": None,
-            "check_time": None
+            "check_time": None,
+            "compiler_command": None
         }
         
         try:
-            # Try to check Lean file (if Lean is installed)
+            abs_filepath = filepath if filepath.is_absolute() else (self.repo_root / filepath).resolve()
+            if not abs_filepath.exists():
+                result["compiles"] = False
+                result["error_message"] = f"File not found: {abs_filepath}"
+                return result
+
+            lean_cmd = shutil.which("lean")
+            if lean_cmd is None:
+                elan_lean = Path.home() / ".elan" / "bin" / "lean"
+                if elan_lean.exists():
+                    lean_cmd = str(elan_lean)
+
+            lake_cmd = shutil.which("lake")
+            if lake_cmd is None:
+                elan_lake = Path.home() / ".elan" / "bin" / "lake"
+                if elan_lake.exists():
+                    lake_cmd = str(elan_lake)
+
             start_time = datetime.utcnow()
             proc = subprocess.run(
-                ['lean', '--version'],
+                [lean_cmd, '--version'] if lean_cmd else ['lean', '--version'],
                 capture_output=True,
                 text=True,
                 timeout=5
             )
             
             if proc.returncode == 0:
-                # Lean is available, try to check file
-                proc = subprocess.run(
-                    ['lake', 'env', 'lean', str(filepath)],
-                    capture_output=True,
-                    text=True,
-                    timeout=30,
-                    cwd=filepath.parent
-                )
+                # Lean is available, try lake env when possible, otherwise direct lean.
+                cmd = [lean_cmd, str(abs_filepath)]
+                cwd = self.repo_root
+                lake_root = next((p for p in [abs_filepath.parent, *abs_filepath.parents]
+                                  if (p / "lakefile.lean").exists()), None)
+                if lake_cmd and lake_root:
+                    rel_file = abs_filepath.relative_to(lake_root)
+                    cmd = [lake_cmd, 'env', 'lean', str(rel_file)]
+                    cwd = lake_root
+                result["compiler_command"] = " ".join(cmd)
+
+                proc = subprocess.run(cmd, capture_output=True, text=True, timeout=60, cwd=cwd)
                 result["compiles"] = proc.returncode == 0
                 result["error_message"] = proc.stderr if proc.returncode != 0 else None
             else:
@@ -182,6 +207,18 @@ class SATCertificateGenerator:
             result["compiles"] = None
         
         return result
+
+    def _count_sorry_tokens(self, filepath: Path) -> Optional[int]:
+        """Count non-comment `sorry` tokens in a Lean file."""
+        abs_filepath = filepath if filepath.is_absolute() else (self.repo_root / filepath).resolve()
+        if not abs_filepath.exists():
+            return None
+        count = 0
+        with open(abs_filepath, "r", encoding="utf-8", errors="ignore") as f:
+            for raw_line in f:
+                line = raw_line.split("--", 1)[0]
+                count += len(re.findall(r"\bsorry\b", line))
+        return count
     
     def generate_sat_formula(self, theorem_info: Dict[str, Any]) -> Dict[str, Any]:
         """
@@ -192,11 +229,11 @@ class SATCertificateGenerator:
         """
         # Create propositional variables for theorem components
         variables = {
-            "theorem_exists": True,
+            "theorem_exists": bool(theorem_info.get("content_extracted", False)),
             "theorem_compiles": theorem_info.get("compilation", {}).get("compiles"),
             "file_valid": theorem_info.get("file_hash") != "FILE_NOT_FOUND",
             "dependencies_satisfied": True,  # Checked separately
-            "no_sorry": True,  # Assume no sorry for now
+            "no_sorry": bool(theorem_info.get("no_sorry", False)),
         }
         
         # SAT formula: conjunction of all conditions
@@ -226,6 +263,7 @@ class SATCertificateGenerator:
         
         # Extract theorem content
         theorem_content = self.extract_theorem_content(filepath, theorem_name)
+        sorry_count = self._count_sorry_tokens(filepath)
         
         # Check compilation
         compilation_result = self.check_lean_compilation(filepath)
@@ -234,8 +272,10 @@ class SATCertificateGenerator:
         # Generate SAT formula
         theorem_info = {
             "file_hash": file_hash,
+            "file_exists": filepath.exists(),
             "compilation": compilation_result,
-            "content_extracted": theorem_content is not None
+            "content_extracted": theorem_content is not None,
+            "no_sorry": bool(sorry_count == 0) if sorry_count is not None else False,
         }
         sat_formula = self.generate_sat_formula(theorem_info)
         
@@ -261,9 +301,9 @@ class SATCertificateGenerator:
             "sat_formula": sat_formula,
             "proof_status": {
                 "verified": sat_formula["satisfied"],
-                "sorry_count": "not_computed",  # Would require Lean parsing
+                "sorry_count": sorry_count if sorry_count is not None else "not_computed",
                 "axioms_used": ["propext", "quot.sound", "Classical.choice"],
-                "note": "sorry_count requires Lean AST analysis"
+                "note": "sorry_count computed by token scan excluding single-line comments"
             },
             "qcal_signature": {
                 "base_frequency": "141.7001 Hz",

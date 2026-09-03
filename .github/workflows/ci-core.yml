@@ -44,15 +44,13 @@ jobs:
           pip install -r requirements-core.txt
           echo "✅ Core Python dependencies installed"
 
-      - name: ⚙️ Install Lean 4 toolchain
-        uses: leanprover/lean-action@v1
-        with:
-          toolchain: leanprover/lean4:v4.5.0
-
-      - name: 🧷 Ensure default Lean toolchain
+      - name: ⚙️ Install Lean 4 toolchain (elan)
         run: |
-          elan toolchain install leanprover/lean4:v4.5.0
-          elan default leanprover/lean4:v4.5.0
+          curl -sSfL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh | sh -s -- -y --default-toolchain none
+          echo "$HOME/.elan/bin" >> $GITHUB_PATH
+          source "$HOME/.elan/env" || true
+          elan toolchain install "$(cat formalization/lean/lean-toolchain)"
+          elan default "$(cat formalization/lean/lean-toolchain)"
           lean --version
           lake --version
 

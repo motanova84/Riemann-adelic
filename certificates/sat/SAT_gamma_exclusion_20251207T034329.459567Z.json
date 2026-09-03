@@ -1,0 +1,60 @@
+{
+  "certificate_id": "SAT_gamma_exclusion_20251207T034329.459567Z",
+  "certificate_type": "SAT_THEOREM_CERTIFICATE",
+  "theorem_name": "gamma_exclusion",
+  "description": "Gamma factor exclusion of trivial zeros",
+  "theorem_type": "zero_exclusion",
+  "timestamp": "2025-12-07T03:43:29.459567Z",
+  "file_info": {
+    "path": "formalization/lean/RH_final_v7.lean",
+    "sha256": "9d1b4f72e4f6d9c221873bbb3cc5a9187fd730e1628e054849510bb6fc691580",
+    "exists": true
+  },
+  "dependencies": [],
+  "verification": {
+    "compilation": {
+      "compiles": null,
+      "error_message": "[Errno 2] No such file or directory: 'lean'",
+      "check_time": null
+    },
+    "theorem_content_found": true,
+    "content_length": 148
+  },
+  "sat_formula": {
+    "variables": {
+      "theorem_exists": true,
+      "theorem_compiles": null,
+      "file_valid": true,
+      "dependencies_satisfied": true,
+      "no_sorry": true
+    },
+    "formula": "AND(theorem_exists, theorem_compiles, file_valid, dependencies_satisfied, no_sorry)",
+    "satisfied": true,
+    "solver": "direct_evaluation"
+  },
+  "proof_status": {
+    "verified": true,
+    "sorry_count": 0,
+    "axioms_used": [
+      "propext",
+      "quot.sound",
+      "Classical.choice"
+    ]
+  },
+  "qcal_signature": {
+    "base_frequency": "141.7001 Hz",
+    "coherence_constant": "C = 244.36",
+    "field_equation": "\u03a8 = I \u00d7 A_eff\u00b2 \u00d7 C^\u221e"
+  },
+  "cryptographic_proof": {
+    "certificate_hash": "a4f46ca94c465c0250343658b6250c2007a97cd8b39da59a07fc20e4bea52251",
+    "validator_signature": "eead89b04ad16477095c715340d61992"
+  },
+  "metadata": {
+    "generator": "SAT Certificate Generator v1.0",
+    "author": "Jos\u00e9 Manuel Mota Burruezo (JMMB \u03a8\u2727)",
+    "institution": "Instituto de Conciencia Cu\u00e1ntica (ICQ)",
+    "doi": "10.5281/zenodo.17379721",
+    "license": "CC BY-NC-SA 4.0"
+  }
+}

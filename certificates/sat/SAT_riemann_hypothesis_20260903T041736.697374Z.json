@@ -1,0 +1,66 @@
+{
+  "certificate_id": "SAT_riemann_hypothesis_20260903T041736.697374Z",
+  "certificate_type": "SAT_THEOREM_CERTIFICATE",
+  "theorem_name": "riemann_hypothesis",
+  "description": "Main Riemann Hypothesis theorem - all non-trivial zeros on critical line",
+  "theorem_type": "main_theorem",
+  "timestamp": "2026-09-03T04:17:36.697374Z",
+  "file_info": {
+    "path": "formalization/lean/RH_final_v6/RHComplete.lean",
+    "sha256": "6f545976ff8e77417fe533f0bbe05febe43609174291088803e0ec6647944620",
+    "exists": true
+  },
+  "dependencies": [
+    "NoExtraneousEigenvalues",
+    "DeterminantFredholm",
+    "RiemannSiegel"
+  ],
+  "verification": {
+    "compilation": {
+      "compiles": null,
+      "error_message": "[Errno 2] No such file or directory: 'lean'",
+      "check_time": null,
+      "compiler_command": null
+    },
+    "theorem_content_found": true,
+    "content_length": 463
+  },
+  "sat_formula": {
+    "variables": {
+      "theorem_exists": true,
+      "theorem_compiles": null,
+      "file_valid": true,
+      "dependencies_satisfied": true,
+      "no_sorry": false
+    },
+    "formula": "AND(theorem_exists, theorem_compiles, file_valid, dependencies_satisfied, no_sorry)",
+    "satisfied": false,
+    "solver": "direct_evaluation"
+  },
+  "proof_status": {
+    "verified": false,
+    "sorry_count": 3,
+    "axioms_used": [
+      "propext",
+      "quot.sound",
+      "Classical.choice"
+    ],
+    "note": "sorry_count computed by token scan excluding single-line comments"
+  },
+  "qcal_signature": {
+    "base_frequency": "141.7001 Hz",
+    "coherence_constant": "C = 244.36",
+    "field_equation": "\u03a8 = I \u00d7 A_eff\u00b2 \u00d7 C^\u221e"
+  },
+  "cryptographic_proof": {
+    "certificate_hash": "ad7b1ca1faf6253eb8f1d3786695bbed9abfb8052a111f671b03ead232a3b7ea",
+    "validator_signature": "c4e86cdeb1b39228c3ce98a886012f7a"
+  },
+  "metadata": {
+    "generator": "SAT Certificate Generator v1.0",
+    "author": "Jos\u00e9 Manuel Mota Burruezo (JMMB \u03a8\u2727)",
+    "institution": "Instituto de Conciencia Cu\u00e1ntica (ICQ)",
+    "doi": "10.5281/zenodo.17379721",
+    "license": "CC BY-NC-SA 4.0"
+  }
+}
