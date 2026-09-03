@@ -264,6 +264,8 @@ from .particula_coherencia import (
     SustratoCuantico,
     ResultadoSustrato,
     ejecutar_sustrato,
+)
+
 from .k7_twisted_graph import (
     K7TwistedGraph,
     compute_green_function_k7,

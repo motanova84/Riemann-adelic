@@ -33,8 +33,16 @@ ORCID: 0009-0002-1923-0773
 import numpy as np
 from scipy.linalg import eigh, norm
 from scipy.special import sinc
-import matplotlib.pyplot as plt
-from typing import Tuple, List, Dict, Optional
+from typing import Tuple, List, Dict, Optional, Any
+
+try:
+    import matplotlib
+    matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
+    HAS_MATPLOTLIB = True
+except ImportError:  # pragma: no cover - optional dependency path
+    plt = None
+    HAS_MATPLOTLIB = False
 
 
 class ReducedModelOperator:
@@ -259,7 +267,7 @@ class ReducedModelOperator:
                 return True
             return False
     
-    def plot_spectrum(self, filename: Optional[str] = None) -> plt.Figure:
+    def plot_spectrum(self, filename: Optional[str] = None) -> Any:
         """
         Visualize the spectrum.
         
@@ -269,6 +277,9 @@ class ReducedModelOperator:
         Returns:
             Figure object
         """
+        if not HAS_MATPLOTLIB:
+            raise RuntimeError("matplotlib is required for plot_spectrum")
+
         if self.eigenvalues is None:
             self.diagonalize()
         
