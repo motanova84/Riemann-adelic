@@ -57,6 +57,7 @@ def main() -> int:
 
         compiles = cert.get("verification", {}).get("compilation", {}).get("compiles")
         error_message = cert.get("verification", {}).get("compilation", {}).get("error_message")
+        content_found = cert.get("verification", {}).get("theorem_content_found")
         theorem_compiles = cert.get("sat_formula", {}).get("variables", {}).get("theorem_compiles")
         no_sorry = cert.get("sat_formula", {}).get("variables", {}).get("no_sorry")
         satisfied = cert.get("sat_formula", {}).get("satisfied")
@@ -72,7 +73,6 @@ def main() -> int:
             failures.append("verification.compilation.error_message != null")
         if theorem_compiles is not True:
             failures.append("sat_formula.variables.theorem_compiles != true")
-        content_found = cert.get("verification", {}).get("theorem_content_found")
         if content_found is not True:
             failures.append("verification.theorem_content_found != true")
         if no_sorry is not True:
