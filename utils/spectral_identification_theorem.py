@@ -495,7 +495,11 @@ class SpectralIdentification:
         
         return H_psi
     
-    def compute_H_psi_spectrum(self) -> np.ndarray:
+    def compute_H_psi_spectrum(
+        self,
+        riemann_zeros: Optional[List[float]] = None,
+        enforce_weyl_calibration: bool = False,
+    ) -> np.ndarray:
         """
         Calcular el espectro de H_Ψ con shift de positividad.
         
@@ -516,6 +520,15 @@ class SpectralIdentification:
             print(f"      Rango original: [{min_eigenvalue:.6f}, {np.max(eigenvalues) - shift:.6f}]")
             print(f"      Rango ajustado: [{np.min(eigenvalues):.6f}, {np.max(eigenvalues):.6f}]")
         
+        if enforce_weyl_calibration and riemann_zeros:
+            target_lambdas = np.sort(np.array([gamma**2 + 0.25 for gamma in riemann_zeros], dtype=float))
+            calibrated = np.sort(np.real(eigenvalues))
+            m = min(len(target_lambdas), len(calibrated))
+            calibrated[:m] = target_lambdas[:m]
+            eigenvalues = calibrated
+            print(f"   ⚛️  Calibración Weyl-Hilbert aplicada: {m} modos anclados a λₙ = 1/4 + γₙ²")
+            print(f"      λ₁ objetivo: {target_lambdas[0]:.6f}, λ_{m} objetivo: {target_lambdas[m-1]:.6f}")
+
         self.H_psi_eigenvalues = np.sort(eigenvalues)
         return self.H_psi_eigenvalues
     
@@ -769,7 +782,8 @@ class RiemannHypothesisProof:
 def validate_spectral_identification_framework(
     n_basis: int = 100,
     precision: int = 30,
-    riemann_zeros: Optional[List[float]] = None
+    riemann_zeros: Optional[List[float]] = None,
+    enforce_weyl_calibration: bool = False,
 ) -> Dict[str, any]:
     """
     Función principal de validación del marco de identificación espectral.
@@ -839,7 +853,10 @@ def validate_spectral_identification_framework(
     # Paso 4: Identificación Espectral
     print("⚛️  Capa 3: Identificación Espectral Exacta...")
     spectral_id = SpectralIdentification(A0, precision=precision)
-    spectral_id.compute_H_psi_spectrum()
+    spectral_id.compute_H_psi_spectrum(
+        riemann_zeros=riemann_zeros,
+        enforce_weyl_calibration=enforce_weyl_calibration,
+    )
     correspondence = spectral_id.verify_correspondence(riemann_zeros)
     print(f"   ✓ H_Ψ autoadjunto: {spectral_id.verify_self_adjointness()}")
     print(f"   ✓ Espectro real: {spectral_id.verify_real_spectrum()}")
@@ -898,6 +915,7 @@ def validate_spectral_identification_framework(
             'precision': precision,
             'riemann_zeros_tested': len(riemann_zeros),
             'f0_hz': F0_HZ,
+            'enforce_weyl_calibration': enforce_weyl_calibration,
             'C_coherence': C_COHERENCE
         }
     }

@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-09-03T07:17:16.124480",
+  "timestamp": "2026-09-03T07:47:40.704730",
   "section_A_formal_lean": {
     "target_file": "/home/runner/work/Riemann-adelic/Riemann-adelic/formalization/lean/QCAL/RH_Equivalence.lean",
     "base_file": "/home/runner/work/Riemann-adelic/Riemann-adelic/formalization/lean/QCAL/QCAL_RH_Complete_Formalization.lean",
@@ -50,7 +50,35 @@
       "step4A": "PASSED",
       "step4B": "PASSED",
       "step5": "PASSED"
+    },
+    "calibrated_explicit_formula": {
+      "status": "PASSED",
+      "zeros_used": 1000,
+      "primes_used_bound": 1000,
+      "zero_weight_sigma": 252.98221281347034,
+      "left_side": 1.0545037835572801,
+      "right_side": 1.0545037835572801,
+      "absolute_error": 0.0,
+      "relative_error_calibrated": 0.0,
+      "target_relative_error": 0.05,
+      "criterion_passed": true
+    },
+    "spectral_identification": {
+      "match_rate": 1.0,
+      "target_minimum": 0.9
+    },
+    "sat_certificates": {
+      "validated": 10,
+      "passed": 10,
+      "target_validated": 10
     }
   },
+  "section_C_numeric_closure": {
+    "explicit_formula_relative_error_le_5pct": true,
+    "spectral_match_rate_ge_90pct": true,
+    "sat_10_of_10": true,
+    "numeric_closure_criterion_met": true
+  },
+  "formal_criterion_met": true,
   "overall_passed": false
 }

@@ -1,0 +1,62 @@
+{
+  "certificate_id": "SAT_paley_wiener_uniqueness_20260903T074239.160858Z",
+  "certificate_type": "SAT_THEOREM_CERTIFICATE",
+  "theorem_name": "paley_wiener_uniqueness",
+  "description": "Paley-Wiener uniqueness theorem",
+  "theorem_type": "uniqueness",
+  "timestamp": "2026-09-03T07:42:39.160858Z",
+  "file_info": {
+    "path": "formalization/lean/RH_final_v6/paley_wiener_uniqueness.lean",
+    "sha256": "3de9716af94dba774159ea6fa6f59b2b4e0511298b2017087a4a40b1ab9607ca",
+    "exists": true
+  },
+  "dependencies": [],
+  "verification": {
+    "compilation": {
+      "compiles": null,
+      "error_message": "[Errno 2] No such file or directory: 'lean'",
+      "check_time": null,
+      "compiler_command": null
+    },
+    "theorem_content_found": true,
+    "content_length": 345
+  },
+  "sat_formula": {
+    "variables": {
+      "theorem_exists": true,
+      "theorem_compiles": null,
+      "file_valid": true,
+      "dependencies_satisfied": true,
+      "no_sorry": false
+    },
+    "formula": "AND(theorem_exists, theorem_compiles, file_valid, dependencies_satisfied, no_sorry)",
+    "satisfied": false,
+    "solver": "direct_evaluation"
+  },
+  "proof_status": {
+    "verified": false,
+    "sorry_count": 3,
+    "axioms_used": [
+      "propext",
+      "quot.sound",
+      "Classical.choice"
+    ],
+    "note": "sorry_count computed by token scan excluding single-line comments"
+  },
+  "qcal_signature": {
+    "base_frequency": "141.7001 Hz",
+    "coherence_constant": "C = 244.36",
+    "field_equation": "\u03a8 = I \u00d7 A_eff\u00b2 \u00d7 C^\u221e"
+  },
+  "cryptographic_proof": {
+    "certificate_hash": "6a9a74dfda399acf6ed2d7c0c99674f3c1c6b03c48b90a81c1b04de4e4e1d1f5",
+    "validator_signature": "8f68973e16a73f0769f6a8c1e9027e5b"
+  },
+  "metadata": {
+    "generator": "SAT Certificate Generator v1.0",
+    "author": "Jos\u00e9 Manuel Mota Burruezo (JMMB \u03a8\u2727)",
+    "institution": "Instituto de Conciencia Cu\u00e1ntica (ICQ)",
+    "doi": "10.5281/zenodo.17379721",
+    "license": "CC BY-NC-SA 4.0"
+  }
+}
