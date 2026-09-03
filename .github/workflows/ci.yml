@@ -57,7 +57,17 @@ jobs:
         if: env.VALIDATION_LEVEL == '500'
         run: |
           pytest tests/ --maxfail=5 --disable-warnings
-          python3 validate_v5_coronacion.py --precision 25 --verbose
+          python3 validate_v5_coronacion.py --precision 25 --verbose --update-manifest
+
+      - name: SAT latest-only validation
+        if: env.VALIDATION_LEVEL == '500'
+        run: |
+          python3 scripts/validate_sat_certificates.py --all --latest-only
+
+      - name: SAT post-CI closure audit
+        if: env.VALIDATION_LEVEL == '500'
+        run: |
+          python3 scripts/audit_latest_sat_certificates.py --cert-dir certificates/sat --expected-theorems 10
 
       - name: Generar reporte simbiótico
         run: |
