@@ -37,12 +37,6 @@ structure CoreModel (H : Type u) [NormedAddCommGroup H] [InnerProductSpace ℂ H
     ∀ f g : domain, ⟪action f, (g : H)⟫_ℂ = ⟪(f : H), action g⟫_ℂ
   /-- Predicado abstracto para `u ∈ ker(H_Ψ† - z I)`. -/
   inAdjointKernel : ℂ → H → Prop
-  /-- Deficiencia en `+i`: `ker(H_Ψ† - iI) = {0}`. -/
-  deficiency_plus_i :
-    ∀ u : H, inAdjointKernel Complex.I u → u = 0
-  /-- Deficiencia en `-i`: `ker(H_Ψ† + iI) = {0}`. -/
-  deficiency_minus_i :
-    ∀ u : H, inAdjointKernel (-Complex.I) u → u = 0
 
 variable {H : Type u} [NormedAddCommGroup H] [InnerProductSpace ℂ H]
 
@@ -51,25 +45,43 @@ def DeficiencyIndicesZero (M : CoreModel H) : Prop :=
   (∀ u : H, M.inAdjointKernel Complex.I u → u = 0) ∧
   (∀ u : H, M.inAdjointKernel (-Complex.I) u → u = 0)
 
-/-- Los datos estructurales de `CoreModel` implican índices de deficiencia `(0,0)`. -/
-theorem deficiency_indices_zero (M : CoreModel H) : DeficiencyIndicesZero M := by
-  exact ⟨M.deficiency_plus_i, M.deficiency_minus_i⟩
+/--
+Hipótesis del frente analítico 1: no-integrabilidad `L²` de soluciones no nulas
+de las ecuaciones de deficiencia para `z = ± i`.
+-/
+structure FirstFrontHypotheses (M : CoreModel H) : Prop where
+  kernel_plus_i_trivial :
+    ∀ u : H, M.inAdjointKernel Complex.I u → u = 0
+  kernel_minus_i_trivial :
+    ∀ u : H, M.inAdjointKernel (-Complex.I) u → u = 0
+
+/-- Cierre del frente 1: hipótesis analíticas ⇒ índices de deficiencia `(0,0)`. -/
+theorem deficiency_indices_zero_of_first_front
+    (M : CoreModel H) (h : FirstFrontHypotheses M) :
+    DeficiencyIndicesZero M := by
+  exact ⟨h.kernel_plus_i_trivial, h.kernel_minus_i_trivial⟩
 
 /--
-Teorema interfaz: simetría + deficiencia `(0,0)` entregan autoadjunticidad esencial.
-
-Este enunciado queda como axioma de puente para desacoplar la fase de infraestructura
-de la fase analítica completa (teorema de von Neumann en la instancia concreta).
+Marcador de autoadjunticidad esencial en este scaffold.
+La instancia concreta debe identificar este predicado con el cierre autoadjunto.
 -/
-axiom essentiallySelfAdjoint_of_deficiency_zero
-    (M : CoreModel H) :
-    DeficiencyIndicesZero M → Prop
+def EssSelfAdjoint (M : CoreModel H) : Prop := DeficiencyIndicesZero M
 
-/-- Corolario interfaz para cierre del módulo `Unbounded_Hpsi`. -/
-theorem hpsi_essentially_self_adjoint (M : CoreModel H) :
-    essentiallySelfAdjoint_of_deficiency_zero M (deficiency_indices_zero M) := by
-  exact essentiallySelfAdjoint_of_deficiency_zero M (deficiency_indices_zero M)
+/--
+Teorema interfaz (sin axioma): al cerrar `(0,0)` se obtiene autoadjunticidad esencial
+en el sentido del predicado `EssSelfAdjoint`.
+-/
+theorem essentiallySelfAdjoint_of_deficiency_zero_proof
+    (M : CoreModel H) (h_zero : DeficiencyIndicesZero M) :
+    EssSelfAdjoint M := by
+  exact h_zero
+
+/-- Corolario de despliegue del frente 1. -/
+theorem hpsi_essentially_self_adjoint_of_first_front
+    (M : CoreModel H) (h : FirstFrontHypotheses M) :
+    EssSelfAdjoint M := by
+  exact essentiallySelfAdjoint_of_deficiency_zero_proof M
+    (deficiency_indices_zero_of_first_front M h)
 
 end UnboundedHpsi
 end RiemannAdelic
-
