@@ -1,0 +1,62 @@
+{
+  "certificate_id": "SAT_hadamard_symmetry_20260903T044201.183379Z",
+  "certificate_type": "SAT_THEOREM_CERTIFICATE",
+  "theorem_name": "hadamard_symmetry",
+  "description": "Hadamard product symmetry for zeros",
+  "theorem_type": "zero_property",
+  "timestamp": "2026-09-03T04:42:01.183379Z",
+  "file_info": {
+    "path": "formalization/lean/RH_final_v7.lean",
+    "sha256": "aba34976b30dc958b435235d931822dd9b7367c43fa76cb8c9d085ff8ed97437",
+    "exists": true
+  },
+  "dependencies": [],
+  "verification": {
+    "compilation": {
+      "compiles": null,
+      "error_message": "[Errno 2] No such file or directory: 'lean'",
+      "check_time": null,
+      "compiler_command": null
+    },
+    "theorem_content_found": true,
+    "content_length": 157
+  },
+  "sat_formula": {
+    "variables": {
+      "theorem_exists": true,
+      "theorem_compiles": null,
+      "file_valid": true,
+      "dependencies_satisfied": true,
+      "no_sorry": true
+    },
+    "formula": "AND(theorem_exists, theorem_compiles, file_valid, dependencies_satisfied, no_sorry)",
+    "satisfied": false,
+    "solver": "direct_evaluation"
+  },
+  "proof_status": {
+    "verified": false,
+    "sorry_count": 0,
+    "axioms_used": [
+      "propext",
+      "quot.sound",
+      "Classical.choice"
+    ],
+    "note": "sorry_count computed by token scan excluding single-line comments"
+  },
+  "qcal_signature": {
+    "base_frequency": "141.7001 Hz",
+    "coherence_constant": "C = 244.36",
+    "field_equation": "\u03a8 = I \u00d7 A_eff\u00b2 \u00d7 C^\u221e"
+  },
+  "cryptographic_proof": {
+    "certificate_hash": "f0b75f825fd83b2e41c92efb92f4a1b3c8b9af779231d6fdc5c352d480622c24",
+    "validator_signature": "6499b7a2f80d945584f3a27afe20cd79"
+  },
+  "metadata": {
+    "generator": "SAT Certificate Generator v1.0",
+    "author": "Jos\u00e9 Manuel Mota Burruezo (JMMB \u03a8\u2727)",
+    "institution": "Instituto de Conciencia Cu\u00e1ntica (ICQ)",
+    "doi": "10.5281/zenodo.17379721",
+    "license": "CC BY-NC-SA 4.0"
+  }
+}

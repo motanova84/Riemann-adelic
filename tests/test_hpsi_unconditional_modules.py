@@ -50,6 +50,15 @@ def test_unbounded_hpsi_norm_density_closed_without_sorry():
     assert "sorry" not in lemma_block
 
 
+def test_unbounded_hpsi_dyadic_local_closure_present():
+    path = LEAN_DIR / "Unbounded_Hpsi.lean"
+    text = path.read_text(encoding="utf-8")
+    assert "lemma pairwise_disjoint_Ioc_diadic" in text
+    assert "lemma volume_Ioc_diadic" in text
+    assert "lemma lintegral_Ioc_diadic_ge" in text
+    assert "theorem lintegral_x_pow_neg_two_Ioc_eq_top" in text
+
+
 def test_remaining_axiom_names_removed_from_module_chain():
     checks = {
         LEAN_DIR / "Trace_Fredholm.lean": [

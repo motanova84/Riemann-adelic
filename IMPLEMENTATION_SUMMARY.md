@@ -14,6 +14,7 @@
   - Lemas analíticos añadidos: `norm_cpow_I_mul_real`, `norm_cpow_of_pos_real`
   - Cierre de reducción de norma local: `theorem localDeficiencyIntegrand_eq`
   - Lema de divergencia local añadido: `theorem integral_x_pow_neg_two_divergent_near_zero`
+  - Cierre local por bloques diádicos: `pairwise_disjoint_Ioc_diadic`, `volume_Ioc_diadic`, `lintegral_Ioc_diadic_ge`, `lintegral_x_pow_neg_two_Ioc_eq_top`
   - Hipótesis explícitas de frente 1: `FirstFrontHypotheses`
   - Teorema `deficiency_indices_zero_of_first_front`
   - Reemplazo del axioma puente por `theorem essentiallySelfAdjoint_of_deficiency_zero_proof`

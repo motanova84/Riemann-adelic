@@ -18,8 +18,11 @@ import Mathlib.Analysis.SpecialFunctions.Pow.Asymm
 import Mathlib.Analysis.Complex.Basic
 import Mathlib.Data.Complex.Exponential
 import Mathlib.Analysis.SpecialFunctions.Integrals
+import Mathlib.Analysis.SpecialFunctions.Pow.Real
 import Mathlib.MeasureTheory.Integral.FundThmCalculus
+import Mathlib.MeasureTheory.Integral.Lebesgue
 import Mathlib.MeasureTheory.Measure.Haar.Basic
+import Mathlib.MeasureTheory.Measure.Lebesgue.Basic
 import Mathlib.Topology.Instances.Real
 
 noncomputable section
@@ -218,6 +221,134 @@ theorem integral_x_pow_neg_two_divergent_near_zero :
     simpa [h_eq_bochner] using h_seq
 
   exact tendsto_nhds_unique h_seq' h_div
+
+/-- Cota inferior puntual en bloques diádicos: `x⁻² ≥ 4^k` sobre `I_k`. -/
+lemma x_pow_neg_two_ge_four_pow (k : ℕ) {x : ℝ}
+    (hx : x ∈ Ioc ((2 : ℝ) ^ (-(k : ℝ) - 1)) ((2 : ℝ) ^ (-(k : ℝ)))) :
+    (4 : ℝ≥0∞) ^ k ≤ ENNReal.ofReal (x ^ (-2 : ℝ)) := by
+  have hx_pos : 0 < x := lt_of_lt_of_le (by positivity) hx.1
+  have hx_le : x ≤ (2 : ℝ) ^ (-(k : ℝ)) := hx.2
+  have h_pow_le : ((2 : ℝ) ^ (-(k : ℝ))) ^ (-2 : ℝ) ≤ x ^ (-2 : ℝ) := by
+    rw [← Real.rpow_neg_two, ← Real.rpow_neg_two]
+    have h_sq : x ^ (2 : ℝ) ≤ ((2 : ℝ) ^ (-(k : ℝ))) ^ (2 : ℝ) := by
+      nlinarith [hx.1, hx.2]
+    exact inv_le_inv_of_le (by positivity) h_sq
+  have h_four : ((2 : ℝ) ^ (-(k : ℝ))) ^ (-2 : ℝ) = (4 : ℝ) ^ (k : ℝ) := by
+    rw [← Real.rpow_mul (by norm_num : (0 : ℝ) ≤ 2)]
+    ring_nf
+    rw [Real.rpow_natCast, ← pow_mul]
+    norm_num
+  rw [h_four] at h_pow_le
+  rw [← ENNReal.ofReal_toReal (by positivity : (4 : ℝ≥0∞) ^ k ≠ ⊤)]
+  exact ENNReal.ofReal_le_ofReal h_pow_le
+
+/--
+Disyunción dos a dos de la familia diádica:
+si `i ≠ j`, los intervalos `I_i` e `I_j` son disjuntos.
+-/
+lemma pairwise_disjoint_Ioc_diadic :
+    Pairwise
+      (Disjoint on
+        fun (k : ℕ) => Ioc ((2 : ℝ) ^ (-(k : ℝ) - 1)) ((2 : ℝ) ^ (-(k : ℝ)))) := by
+  intro i j hij
+  wlog h_lt : i < j generalizing i j
+  · exact (this j i hij.symm (hij.lt_or_lt.resolve_left h_lt)).symm
+  rw [Set.disjoint_iff]
+  intro x hx
+  rcases hx with ⟨hx_i, hx_j⟩
+  have h_le_j : x ≤ (2 : ℝ) ^ (-(j : ℝ)) := hx_j.2
+  have h_lt_i : (2 : ℝ) ^ (-(i : ℝ) - 1) < x := hx_i.1
+  have h_contra : (2 : ℝ) ^ (-(i : ℝ) - 1) < (2 : ℝ) ^ (-(j : ℝ)) :=
+    lt_of_lt_of_le h_lt_i h_le_j
+  have h_exp : -(i : ℝ) - 1 < -(j : ℝ) := by
+    exact (Real.rpow_lt_rpow_iff (by norm_num : (1 : ℝ) < 2)).mp h_contra
+  have h_int : (i : ℝ) + 1 ≤ (j : ℝ) := by
+    exact_mod_cast Nat.succ_le_of_lt h_lt
+  linarith
+
+/-- Medida del bloque diádico `I_k`: `μ(I_k) = 2^{-(k+1)}`. -/
+lemma volume_Ioc_diadic (k : ℕ) :
+    volume (Ioc ((2 : ℝ) ^ (-(k : ℝ) - 1)) ((2 : ℝ) ^ (-(k : ℝ)))) =
+    ENNReal.ofReal ((2 : ℝ) ^ (-(k : ℝ) - 1)) := by
+  rw [Real.volume_Ioc]
+  have h_sub :
+      (2 : ℝ) ^ (-(k : ℝ)) - (2 : ℝ) ^ (-(k : ℝ) - 1) =
+      (2 : ℝ) ^ (-(k : ℝ) - 1) := by
+    have h_split : (2 : ℝ) ^ (-(k : ℝ)) = (2 : ℝ) ^ ((-(k : ℝ) - 1) + 1) := by
+      congr 1
+      ring
+    rw [h_split, Real.rpow_add (by norm_num : (0 : ℝ) < 2)]
+    simp only [Real.rpow_one]
+    ring
+  rw [h_sub]
+
+/-- Minoración por bloque: `∫⁻_{I_k} x⁻² dx ≥ (1/2)·2^k`. -/
+lemma lintegral_Ioc_diadic_ge (k : ℕ) :
+    (1 / 2 : ℝ≥0∞) * (2 : ℝ≥0∞) ^ k ≤
+    ∫⁻ x in Ioc ((2 : ℝ) ^ (-(k : ℝ) - 1)) ((2 : ℝ) ^ (-(k : ℝ))),
+      ENNReal.ofReal (x ^ (-2 : ℝ)) := by
+  have h_meas_le := set_lintegral_ge_of_const_le
+    (measurableSet_Ioc)
+    (fun x hx => x_pow_neg_two_ge_four_pow k hx)
+  rw [volume_Ioc_diadic k] at h_meas_le
+  have h_algebra : (1 / 2 : ℝ≥0∞) * (2 : ℝ≥0∞) ^ k =
+      (4 : ℝ≥0∞) ^ k * ENNReal.ofReal ((2 : ℝ) ^ (-(k : ℝ) - 1)) := by
+    rw [← ENNReal.ofReal_toReal (by positivity : (4 : ℝ≥0∞) ^ k ≠ ⊤)]
+    rw [← ENNReal.ofReal_mul (by positivity)]
+    have h_pow_real :
+        (4 : ℝ) ^ (k : ℝ) * (2 : ℝ) ^ (-(k : ℝ) - 1) =
+        (1 / 2 : ℝ) * (2 : ℝ) ^ (k : ℝ) := by
+      have h4 : (4 : ℝ) = (2 : ℝ) ^ (2 : ℝ) := by norm_num
+      rw [h4, ← Real.rpow_mul (by norm_num : (0 : ℝ) ≤ 2)]
+      have h_prod :
+          (2 : ℝ) ^ (2 * (k : ℝ)) * (2 : ℝ) ^ (-(k : ℝ) - 1) =
+          (2 : ℝ) ^ (2 * (k : ℝ) + (-(k : ℝ) - 1)) := by
+        exact (Real.rpow_add (by norm_num : (0 : ℝ) < 2) _ _).symm
+      rw [h_prod]
+      have h_exp : 2 * (k : ℝ) + (-(k : ℝ) - 1) = (k : ℝ) - 1 := by ring
+      rw [h_exp, Real.rpow_sub (by norm_num : (0 : ℝ) < 2), Real.rpow_one]
+      ring
+    rw [h_pow_real]
+    rw [ENNReal.ofReal_mul (by norm_num)]
+    simp only [Real.rpow_natCast, ENNReal.ofReal_natCast]
+    rfl
+  rw [h_algebra]
+  exact h_meas_le
+
+/-- Cierre diádico local de la pieza 1: `∫⁻_{(0,1]} x⁻² dx = ∞`. -/
+theorem lintegral_x_pow_neg_two_Ioc_eq_top :
+    ∫⁻ x in Ioc (0 : ℝ) 1, ENNReal.ofReal (x ^ (-2 : ℝ)) = ∞ := by
+  have h_union_le :
+      (∑' (k : ℕ), ∫⁻ x in Ioc ((2 : ℝ) ^ (-(k : ℝ) - 1)) ((2 : ℝ) ^ (-(k : ℝ))),
+        ENNReal.ofReal (x ^ (-2 : ℝ))) ≤
+      ∫⁻ x in Ioc (0 : ℝ) 1, ENNReal.ofReal (x ^ (-2 : ℝ)) := by
+    have h_subset :
+        (⋃ k : ℕ, Ioc ((2 : ℝ) ^ (-(k : ℝ) - 1)) ((2 : ℝ) ^ (-(k : ℝ)))) ⊆ Ioc 0 1 := by
+      intro x hx
+      simp only [mem_iUnion, mem_Ioc] at hx
+      rcases hx with ⟨k, hk1, hk2⟩
+      have h_pos : 0 < (2 : ℝ) ^ (-(k : ℝ) - 1) := by positivity
+      have h_top : (2 : ℝ) ^ (-(k : ℝ)) ≤ 1 := by
+        have : -(k : ℝ) ≤ 0 := by linarith
+        simpa using (Real.rpow_le_rpow_of_exponent_le (by norm_num : (1 : ℝ) ≤ 2) this)
+      exact ⟨lt_trans h_pos hk1, le_trans hk2 h_top⟩
+    refine le_trans ?_ (set_lintegral_mono h_subset (le_refl _))
+    rw [lintegral_iUnion (fun _ => measurableSet_Ioc) pairwise_disjoint_Ioc_diadic]
+
+  have h_series_le :
+      (∑' (k : ℕ), (1 / 2 : ℝ≥0∞) * (2 : ℝ≥0∞) ^ k) ≤
+      ∑' (k : ℕ), ∫⁻ x in Ioc ((2 : ℝ) ^ (-(k : ℝ) - 1)) ((2 : ℝ) ^ (-(k : ℝ))),
+        ENNReal.ofReal (x ^ (-2 : ℝ)) := by
+    exact ENNReal.tsum_le_tsum lintegral_Ioc_diadic_ge
+
+  have h_sum_infty : (∑' (k : ℕ), (1 / 2 : ℝ≥0∞) * (2 : ℝ≥0∞) ^ k) = ∞ := by
+    rw [ENNReal.tsum_mul_left]
+    rw [ENNReal.tsum_geometric_of_one_le (by norm_num)]
+    exact ENNReal.mul_top (by norm_num) (by norm_num)
+
+  apply top_unique
+  rw [← h_sum_infty]
+  exact le_trans h_series_le h_union_le
 
 /-- Formulación de índices de deficiencia `(0,0)` mediante trivialidad de núcleos adjuntos. -/
 def DeficiencyIndicesZero (M : CoreModel H) : Prop :=
