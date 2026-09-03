@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 Physics Module — Riemann Adelic Framework
 ==========================================
@@ -124,6 +125,7 @@ from .kss_holographic_fluid import (
     ResultadoProtocoloKSS,
     ProtocoloValidacionKSS,
 )
+HAS_PT_RESONANCIA = False
 try:
     from .simetria_pt_resonancia import (
         ConstantesPT,
@@ -139,13 +141,14 @@ try:
         simular_resonancia_pt,
         CONST as CONST_PT,
     )
-except SyntaxError:  # pragma: no cover
+    HAS_PT_RESONANCIA = True
+except (ImportError, SyntaxError) as e:  # pragma: no cover
     # physics/simetria_pt_resonancia.py has pre-existing syntax errors caused
     # by concatenation of two file versions.  The rest of the physics package
     # remains importable; the simetria_pt_resonancia symbols are unavailable.
     warnings.warn(
-        "physics.simetria_pt_resonancia failed to import due to pre-existing "
-        "syntax errors.  Affected symbols: ConstantesPT, OperadorNHPT, etc.",
+        f"physics.simetria_pt_resonancia could not be imported ({e}). "
+        "PT-related symbols are unavailable.",
         ImportWarning,
         stacklevel=2,
     )
@@ -383,23 +386,6 @@ __all__ = [
     'PSI_THRESHOLD_RESET',
     'N_HARM',
     'DURACION_PULSO_S',
-    # Simetría PT — Resonancia Biológica
-    'ConstantesPT',
-    'OperadorNHPT',
-    'EspectroPTReal',
-    'RiemannLineaCritica',
-    'CitoplasmaHolografico',
-    'EstabilizadorPT',
-    'SistemaResonanciaPT',
-    'simular_resonancia_pt',
-    'simetria_pt_resonancia_activar',
-    'CONST_PT',
-    'DiagnosticoPT',
-    'EstabilizadorPT',
-    'ResultadoResonanciaPT',
-    'SistemaResonanciaPT',
-    'simetria_pt_resonancia_activar',
-    'simular_resonancia_pt',
     # Inyección de Resonancia Atlas3
     'RIEMANN_ZEROS_10_ATLAS3',
     'GAMMA_7',
@@ -486,3 +472,19 @@ __all__ = [
     'get_modos_excitados_tabla',
     'validar_coherencia_sistema',
 ]
+
+if HAS_PT_RESONANCIA:
+    __all__.extend([
+        'ConstantesPT',
+        'OperadorNHPT',
+        'EspectroPTReal',
+        'RiemannLineaCritica',
+        'CitoplasmaHolografico',
+        'DiagnosticoPT',
+        'EstabilizadorPT',
+        'ResultadoResonanciaPT',
+        'SistemaResonanciaPT',
+        'simetria_pt_resonancia_activar',
+        'simular_resonancia_pt',
+        'CONST_PT',
+    ])
