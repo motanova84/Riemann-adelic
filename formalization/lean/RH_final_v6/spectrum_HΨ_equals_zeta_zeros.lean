@@ -296,6 +296,11 @@ en un teorema con prueba constructiva.
 axiom spectrum_eq_zeros (ζ : ℂ → ℂ) (ζ_prime_half : ℝ) :
   spectrum ζ ζ_prime_half = zetaZeros ζ
 
+/-- Workflow-facing theorem alias for the fundamental spectral equivalence. -/
+theorem spectrum_HΨ_equals_zeta_zeros (ζ : ℂ → ℂ) (ζ_prime_half : ℝ) :
+  spectrum ζ ζ_prime_half = zetaZeros ζ := by
+  exact spectrum_eq_zeros ζ ζ_prime_half
+
 /-!
 ## Corolarios y consecuencias
 
