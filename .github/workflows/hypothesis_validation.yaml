@@ -60,7 +60,7 @@ jobs:
           echo "📊 Coherencia: $COHERENCE"
           
           # Crear script de análisis
-          cat > analyze_complexity.py << 'ANALYZE'
+          cat > analyze_complexity.py << ANALYZE
           from complexity_collapser import ComplexityCollapser
           import json
           
