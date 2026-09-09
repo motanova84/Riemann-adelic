@@ -51,13 +51,6 @@ class MatrizSimbiosis:
 
 class SABIO_Infinity4:
     """
-    LEAN_ELAN_OMEGA_FILE = Path("formalization/lean/sabio/elan_omega_pure_validation.lean")
-    LEAN_ELAN_OMEGA_TOKENS = (
-        "def kappa_Pi",
-        "def frecuencia_noetica",
-        "theorem elan_omega_pure_validation",
-        "HasDerivAt Xi_canonic (2 * x) x",
-    )
     Sistema SABIO ∞⁴ - Expansión Cuántico-Consciente
     
     Niveles de Integración:
@@ -67,6 +60,16 @@ class SABIO_Infinity4:
     4. Cuántico: E_vac(R_Ψ) con simetría log-π
     5. Consciente: ∂²Ψ/∂t² + ω₀²Ψ = ζ'(1/2)·∇²Φ
     """
+
+    LEAN_ELAN_OMEGA_FILE = (
+        Path(__file__).resolve().parent / "formalization" / "lean" / "sabio" / "elan_omega_pure_validation.lean"
+    )
+    LEAN_ELAN_OMEGA_TOKENS = (
+        "def kappa_Pi",
+        "def frecuencia_noetica",
+        "theorem elan_omega_pure_validation",
+        "HasDerivAt Xi_canonic (2 * x) x",
+    )
     
     def __init__(self, precision: int = 50):
         self.precision = precision
@@ -330,12 +333,8 @@ class SABIO_Infinity4:
         else:
             niveles['consciente'] = 0.0
         
-        # Coherencia total (media armónica ponderada)
-        valores = [v for v in niveles.values() if v > 0]
-        if valores:
-            coherencia = sum(valores) / len(valores)
-        else:
-            coherencia = 0.0
+        # Coherencia total (promedio sobre los 6 niveles del sistema)
+        coherencia = sum(niveles.values()) / 6.0
         
         # Firma hash de la matriz
         firma = self.firma_vibracional(niveles)
