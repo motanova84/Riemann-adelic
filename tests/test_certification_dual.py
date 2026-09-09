@@ -27,3 +27,7 @@ def test_dual_certificates_are_generated_with_evidence(tmp_path):
     assert "git_commit" in generated["formal"].evidence
     assert "lean_toolchain_sha256" in generated["formal"].evidence
     assert "requirements_sha256" in generated["numeric"].evidence
+    assert "critical_line_zero_seal_sha512" in generated["numeric"].evidence
+    assert len(generated["numeric"].evidence["critical_line_zero_seal_sha512"]) == 128
+    assert generated["formal"].cryptographic_hash_sha512
+    assert len(generated["formal"].cryptographic_hash_sha512) == 128

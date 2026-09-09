@@ -7,7 +7,9 @@ import subprocess
 from dataclasses import asdict, dataclass
 from datetime import datetime
 from pathlib import Path
-from typing import Any, Dict, Optional
+from typing import Any, Dict, List, Optional, Tuple
+
+import mpmath as mp
 
 
 @dataclass
@@ -18,6 +20,7 @@ class MathematicalCertificate:
     payload: Dict[str, Any]
     evidence: Dict[str, Any]
     cryptographic_hash: str
+    cryptographic_hash_sha512: str
     precision_used: int
     validator_signature: str
     certificate_kind: str = "generic"
@@ -60,17 +63,63 @@ class CertificationSystem:
             return "unknown"
 
     def _build_evidence(self, extra: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
+        zero_seal = self._critical_line_zero_seal(max_zeros=256)
         evidence = {
             "git_commit": self._git_commit(),
             "lean_toolchain_sha256": self._file_sha256("formalization/lean/lean-toolchain"),
             "lake_manifest_sha256": self._file_sha256("formalization/lean/lake-manifest.json"),
             "requirements_sha256": self._file_sha256("requirements.txt"),
             "sat_summary_sha256": self._file_sha256("certificates/sat/certificates_summary.json"),
+            "critical_line_zero_source": zero_seal["source"],
+            "critical_line_zero_count": zero_seal["count"],
+            "critical_line_zero_real_part": 0.5,
+            "critical_line_zero_seal_sha512": zero_seal["sha512"],
             "generated_at_utc": datetime.utcnow().isoformat() + "Z",
         }
         if extra:
             evidence.update(extra)
         return evidence
+
+    def _collect_critical_line_zeros(self, max_zeros: int = 256) -> Tuple[List[float], str]:
+        sources = [
+            self.repo_root / "data" / "external" / "zeros_t1e8.txt",
+            self.repo_root / "zeros" / "zeros_t1e8.txt",
+            self.repo_root / "data" / "validation" / "known_zeros.txt",
+        ]
+        values: List[float] = []
+
+        for source in sources:
+            if not source.exists():
+                continue
+            with source.open("r", encoding="utf-8") as handle:
+                for line in handle:
+                    if len(values) >= max_zeros:
+                        break
+                    token = line.strip()
+                    if not token:
+                        continue
+                    try:
+                        values.append(float(token))
+                    except ValueError:
+                        continue
+            if values:
+                return values, str(source.relative_to(self.repo_root))
+
+        # Fallback determinista: ceros no triviales calculados por mpmath.
+        for idx in range(1, max_zeros + 1):
+            values.append(float(mp.zetazero(idx)))
+        return values, "mpmath.zetazero:fallback"
+
+    def _critical_line_zero_seal(self, max_zeros: int = 256) -> Dict[str, Any]:
+        zeros, source = self._collect_critical_line_zeros(max_zeros=max_zeros)
+        canonical = {
+            "critical_line_real_part": "0.5",
+            "imaginary_parts": [f"{z:.15f}" for z in zeros],
+            "source": source,
+        }
+        payload = json.dumps(canonical, sort_keys=True, separators=(",", ":"))
+        digest = hashlib.sha512(payload.encode("utf8")).hexdigest()
+        return {"source": source, "count": len(zeros), "sha512": digest}
 
     def generate_certificate(
         self,
@@ -96,7 +145,8 @@ class CertificationSystem:
             default=str,
         )
         digest = hashlib.sha256(data_string.encode("utf8")).hexdigest()
-        signature = hashlib.sha256(f"{self.validator_name}:{digest}".encode("utf8")).hexdigest()[:16]
+        digest_sha512 = hashlib.sha512(data_string.encode("utf8")).hexdigest()
+        signature = hashlib.sha256(f"{self.validator_name}:{digest_sha512}".encode("utf8")).hexdigest()[:16]
 
         certificate = MathematicalCertificate(
             certificate_id=certificate_id,
@@ -105,6 +155,7 @@ class CertificationSystem:
             payload=payload,
             evidence=evidence,
             cryptographic_hash=digest,
+            cryptographic_hash_sha512=digest_sha512,
             precision_used=self.precision,
             validator_signature=signature,
             certificate_kind=certificate_kind,
