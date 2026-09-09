@@ -122,6 +122,13 @@ class SABIO_Infinity4:
             return bool(freq_ok and coherence_ok and doi_ok)
         except Exception:
             return False
+
+    def assert_core_invariants(self) -> None:
+        """Falla explícitamente si faltan pruebas estructurales mínimas del núcleo SABIO."""
+        if not self._validar_formalizacion_lean_elan_omega():
+            raise RuntimeError("SABIO core invariant failed: Lean ELAN OMEGA formalization missing/invalid")
+        if not self._validar_programacion_sabio():
+            raise RuntimeError("SABIO core invariant failed: beacon/coherence/DOI deterministic validation failed")
         
     def calcular_radio_cuantico(self, n: int = 1) -> mpf:
         """

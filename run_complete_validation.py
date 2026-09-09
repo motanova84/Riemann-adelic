@@ -8,6 +8,7 @@ from pathlib import Path
 from typing import Any, Dict
 
 from validation.certification_system import CertificationSystem
+from validation.irrefutable_protocol import IrrefutableProtocol
 from validation.rh_ds_core import RiemannHypothesisValidator, ValidationResult, ValidationStatus
 
 
@@ -52,6 +53,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--precision", type=int, default=30, help="Decimal precision for mpmath")
     parser.add_argument("--max-zeros", type=int, default=200, help="Number of zeros to sample")
     parser.add_argument("--generate-certificates", action="store_true", help="Emit JSON certificates")
+    parser.add_argument("--strict-irrefutable", action="store_true", help="Fail unless formal+numeric protocol passes")
     return parser.parse_args()
 
 
@@ -75,6 +77,19 @@ def main() -> int:
         certification.generate_certificate("DS_EQUIVALENCE", payload["components"]["ds_equivalence"])
         certification.generate_certificate("NON_VANISHING", payload["components"]["non_vanishing"])
         certification.generate_combined_certificate(payload)
+        protocol = IrrefutableProtocol(
+            repo_root=Path(__file__).resolve().parent,
+            precision=args.precision,
+            max_zeros=args.max_zeros,
+        )
+        protocol_report = protocol.run()
+        certification.generate_dual_certificates(
+            formal_payload=protocol_report["formal"],
+            numeric_payload=protocol_report["numeric"],
+        )
+        if args.strict_irrefutable and not protocol_report["overall_passed"]:
+            print("Irrefutable protocol FAILED under --strict-irrefutable")
+            return 1
         print("Certificates generated in data/validation/certificates")
 
     return 0 if payload["all_passed"] else 1

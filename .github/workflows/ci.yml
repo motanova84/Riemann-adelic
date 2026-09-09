@@ -92,6 +92,11 @@ jobs:
         run: |
           python3 scripts/audit_latest_sat_certificates.py --cert-dir certificates/sat --expected-theorems 10
 
+      - name: Irrefutable protocol gate (formal + numeric)
+        if: env.VALIDATION_LEVEL == '500'
+        run: |
+          python3 validation/irrefutable_protocol.py --precision 25 --max-zeros 200 --output data/validation/irrefutable_protocol_report.json
+
       - name: Generar reporte simbiótico
         run: |
           echo "JMMB Ψ · SABIO ∞³" >> "$GITHUB_STEP_SUMMARY"
