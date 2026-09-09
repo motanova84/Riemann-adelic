@@ -17,6 +17,7 @@ if str(REPO_ROOT) not in sys.path:
 from core.validate_weil_spectral_bridge import run_bridge_validation
 from sabio_infinity4 import SABIO_Infinity4
 from validation.rh_ds_core import RiemannHypothesisValidator, ValidationStatus
+from validation.zero_blockchain import build_and_persist_zero_chain
 
 
 @dataclass
@@ -121,7 +122,24 @@ class IrrefutableProtocol:
         sat_latest_report = self.repo_root / "certificates" / "sat" / "validation_report.json"
         sat_latest_available = sat_latest_report.exists()
 
-        numeric_passed = rh_core_passed and bridge_passed and sabio_core_passed and sat_latest_available
+        zero_chain = build_and_persist_zero_chain(
+            self.repo_root,
+            max_zeros=max(128, self.max_zeros),
+            precision=max(30, self.precision),
+            residual_tolerance=1e-7,
+        )
+        chain_verification = zero_chain.get("chain_verification", {})
+        zero_chain_passed = bool(chain_verification.get("valid")) and (
+            float(zero_chain.get("max_residual", 0.0)) <= float(zero_chain.get("residual_tolerance", 1e-7))
+        )
+
+        numeric_passed = (
+            rh_core_passed
+            and bridge_passed
+            and sabio_core_passed
+            and sat_latest_available
+            and zero_chain_passed
+        )
         return {
             "passed": numeric_passed,
             "summary": "numeric gates passed" if numeric_passed else "numeric gates failed",
@@ -145,6 +163,17 @@ class IrrefutableProtocol:
             "sat_latest_only": {
                 "passed": sat_latest_available,
                 "validation_report": str(sat_latest_report),
+            },
+            "critical_zero_chain": {
+                "passed": zero_chain_passed,
+                "source": zero_chain.get("source"),
+                "zero_count": zero_chain.get("zero_count"),
+                "residual_tolerance": zero_chain.get("residual_tolerance"),
+                "max_residual": zero_chain.get("max_residual"),
+                "chain_hash_sha512": zero_chain.get("chain_hash_sha512"),
+                "tip_hash_sha512": zero_chain.get("tip_hash_sha512"),
+                "chain_verification": chain_verification,
+                "output_path": zero_chain.get("output_path"),
             },
         }
 

@@ -29,5 +29,9 @@ def test_dual_certificates_are_generated_with_evidence(tmp_path):
     assert "requirements_sha256" in generated["numeric"].evidence
     assert "critical_line_zero_seal_sha512" in generated["numeric"].evidence
     assert len(generated["numeric"].evidence["critical_line_zero_seal_sha512"]) == 128
+    assert generated["numeric"].evidence["critical_zero_chain_valid"] is True
+    assert generated["numeric"].evidence["critical_zero_chain_file"].endswith(
+        "data/validation/critical_zero_immutable_chain.json"
+    )
     assert generated["formal"].cryptographic_hash_sha512
     assert len(generated["formal"].cryptographic_hash_sha512) == 128

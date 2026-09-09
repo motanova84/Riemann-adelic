@@ -1,5 +1,22 @@
 # QCAL Build Verification - Implementation Summary
 
+## 🟢 CADENA INMUTABLE DE CEROS CRÍTICOS (SHA-512) — topología adélica verificable (September 2026)
+
+**Status**: ✅ IMPLEMENTED
+
+- **Core Module**: `validation/zero_blockchain.py`
+- **Anchored Artifact**: `data/validation/critical_zero_immutable_chain.json`
+- **Integration Points**:
+  - `validation/certification_system.py` (evidencia criptográfica de cadena de ceros en certificados)
+  - `validation/irrefutable_protocol.py` (compuerta numérica obligatoria `critical_zero_chain`)
+  - `.github/workflows/ci.yml` (suite básica ejecuta tests de cadena/certificación)
+- **Mathematical/Cryptographic Scope**:
+  - Construcción determinista de bloques por cero con anclaje explícito `Re(s)=1/2`.
+  - Cada bloque contiene residual `|ζ(1/2+iγ)|` y tolerancia contractual.
+  - Enlace inmutable `previous_hash` y `block_hash_sha512` por bloque.
+  - Sello global `chain_hash_sha512` y `tip_hash_sha512` verificables.
+  - Detección de manipulación mediante recomputación hash y consistencia de puntero previo.
+
 ## 🟢 IRREFUTABLE PROTOCOL V1 — compuerta formal+numérica y certificación dual (September 2026)
 
 **Status**: ✅ IMPLEMENTED

@@ -84,6 +84,20 @@ def test_numeric_gates_fail_without_sat_latest_report(monkeypatch, tmp_path):
             True,
         ),
     )
+    monkeypatch.setattr(
+        "validation.irrefutable_protocol.build_and_persist_zero_chain",
+        lambda *args, **kwargs: {
+            "source": "mock",
+            "zero_count": 20,
+            "residual_tolerance": 1e-7,
+            "max_residual": 0.0,
+            "chain_hash_sha512": "a" * 128,
+            "tip_hash_sha512": "b" * 128,
+            "chain_verification": {"valid": True, "error": None},
+            "output_path": "data/validation/critical_zero_immutable_chain.json",
+        },
+    )
     numeric = protocol.run_numeric_gates()
     assert numeric["sat_latest_only"]["passed"] is False
+    assert numeric["critical_zero_chain"]["passed"] is True
     assert numeric["passed"] is False

@@ -7,9 +7,9 @@ import subprocess
 from dataclasses import asdict, dataclass
 from datetime import datetime
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any, Dict, Optional
 
-import mpmath as mp
+from validation.zero_blockchain import build_and_persist_zero_chain
 
 
 @dataclass
@@ -63,63 +63,31 @@ class CertificationSystem:
             return "unknown"
 
     def _build_evidence(self, extra: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
-        zero_seal = self._critical_line_zero_seal(max_zeros=256)
+        zero_chain = build_and_persist_zero_chain(
+            self.repo_root,
+            max_zeros=256,
+            precision=max(30, self.precision),
+            residual_tolerance=1e-7,
+        )
         evidence = {
             "git_commit": self._git_commit(),
             "lean_toolchain_sha256": self._file_sha256("formalization/lean/lean-toolchain"),
             "lake_manifest_sha256": self._file_sha256("formalization/lean/lake-manifest.json"),
             "requirements_sha256": self._file_sha256("requirements.txt"),
             "sat_summary_sha256": self._file_sha256("certificates/sat/certificates_summary.json"),
-            "critical_line_zero_source": zero_seal["source"],
-            "critical_line_zero_count": zero_seal["count"],
-            "critical_line_zero_real_part": 0.5,
-            "critical_line_zero_seal_sha512": zero_seal["sha512"],
+            "critical_line_zero_source": zero_chain["source"],
+            "critical_line_zero_count": zero_chain["zero_count"],
+            "critical_line_zero_real_part": zero_chain["critical_line_real_part"],
+            "critical_line_zero_seal_sha512": zero_chain["chain_hash_sha512"],
+            "critical_zero_tip_hash_sha512": zero_chain["tip_hash_sha512"],
+            "critical_zero_chain_file": zero_chain["output_path"],
+            "critical_zero_chain_valid": bool(zero_chain.get("chain_verification", {}).get("valid")),
+            "critical_zero_max_residual": zero_chain.get("max_residual"),
             "generated_at_utc": datetime.utcnow().isoformat() + "Z",
         }
         if extra:
             evidence.update(extra)
         return evidence
-
-    def _collect_critical_line_zeros(self, max_zeros: int = 256) -> Tuple[List[float], str]:
-        sources = [
-            self.repo_root / "data" / "external" / "zeros_t1e8.txt",
-            self.repo_root / "zeros" / "zeros_t1e8.txt",
-            self.repo_root / "data" / "validation" / "known_zeros.txt",
-        ]
-        values: List[float] = []
-
-        for source in sources:
-            if not source.exists():
-                continue
-            with source.open("r", encoding="utf-8") as handle:
-                for line in handle:
-                    if len(values) >= max_zeros:
-                        break
-                    token = line.strip()
-                    if not token:
-                        continue
-                    try:
-                        values.append(float(token))
-                    except ValueError:
-                        continue
-            if values:
-                return values, str(source.relative_to(self.repo_root))
-
-        # Fallback determinista: ceros no triviales calculados por mpmath.
-        for idx in range(1, max_zeros + 1):
-            values.append(float(mp.zetazero(idx)))
-        return values, "mpmath.zetazero:fallback"
-
-    def _critical_line_zero_seal(self, max_zeros: int = 256) -> Dict[str, Any]:
-        zeros, source = self._collect_critical_line_zeros(max_zeros=max_zeros)
-        canonical = {
-            "critical_line_real_part": "0.5",
-            "imaginary_parts": [f"{z:.15f}" for z in zeros],
-            "source": source,
-        }
-        payload = json.dumps(canonical, sort_keys=True, separators=(",", ":"))
-        digest = hashlib.sha512(payload.encode("utf8")).hexdigest()
-        return {"source": source, "count": len(zeros), "sha512": digest}
 
     def generate_certificate(
         self,

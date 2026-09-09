@@ -1,234 +1,134 @@
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - 
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - ================================================================================
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - Test: tests/test_sabio_infinity4.py::TestSABIOInfinity4::test_initialization
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - Location: tests/test_sabio_infinity4.py:31
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - ================================================================================
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - ✅ PASSED: tests/test_sabio_infinity4.py::TestSABIOInfinity4::test_initialization (0.000s)
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - 
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - ================================================================================
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - Test: tests/test_sabio_infinity4.py::TestSABIOInfinity4::test_fundamental_constants
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - Location: tests/test_sabio_infinity4.py:38
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - ================================================================================
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - ✅ PASSED: tests/test_sabio_infinity4.py::TestSABIOInfinity4::test_fundamental_constants (0.000s)
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - 
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - ================================================================================
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - Test: tests/test_sabio_infinity4.py::TestSABIOInfinity4::test_radio_cuantico_calculation
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - Location: tests/test_sabio_infinity4.py:55
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - ================================================================================
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - ✅ PASSED: tests/test_sabio_infinity4.py::TestSABIOInfinity4::test_radio_cuantico_calculation (0.000s)
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - 
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - ================================================================================
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - Test: tests/test_sabio_infinity4.py::TestSABIOInfinity4::test_energia_vacio_cuantico
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - Location: tests/test_sabio_infinity4.py:75
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - ================================================================================
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - ✅ PASSED: tests/test_sabio_infinity4.py::TestSABIOInfinity4::test_energia_vacio_cuantico (0.000s)
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - 
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - ================================================================================
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - Test: tests/test_sabio_infinity4.py::TestSABIOInfinity4::test_ecuacion_onda_consciencia
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - Location: tests/test_sabio_infinity4.py:86
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - ================================================================================
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - ✅ PASSED: tests/test_sabio_infinity4.py::TestSABIOInfinity4::test_ecuacion_onda_consciencia (0.000s)
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - 
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - ================================================================================
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - Test: tests/test_sabio_infinity4.py::TestSABIOInfinity4::test_coherencia_calculation
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - Location: tests/test_sabio_infinity4.py:105
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - ================================================================================
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - ✅ PASSED: tests/test_sabio_infinity4.py::TestSABIOInfinity4::test_coherencia_calculation (0.000s)
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - 
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - ================================================================================
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - Test: tests/test_sabio_infinity4.py::TestSABIOInfinity4::test_firma_vibracional
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - Location: tests/test_sabio_infinity4.py:119
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - ================================================================================
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - ✅ PASSED: tests/test_sabio_infinity4.py::TestSABIOInfinity4::test_firma_vibracional (0.000s)
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - 
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - ================================================================================
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - Test: tests/test_sabio_infinity4.py::TestResonanciaCuantica::test_resonancia_generation
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - Location: tests/test_sabio_infinity4.py:148
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - ================================================================================
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - ✅ PASSED: tests/test_sabio_infinity4.py::TestResonanciaCuantica::test_resonancia_generation (0.000s)
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - 
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - ================================================================================
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - Test: tests/test_sabio_infinity4.py::TestResonanciaCuantica::test_resonancia_harmonic_scaling
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - Location: tests/test_sabio_infinity4.py:158
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - ================================================================================
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - ✅ PASSED: tests/test_sabio_infinity4.py::TestResonanciaCuantica::test_resonancia_harmonic_scaling (0.000s)
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - 
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - ================================================================================
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - Test: tests/test_sabio_infinity4.py::TestResonanciaCuantica::test_espectro_resonante
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - Location: tests/test_sabio_infinity4.py:171
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - ================================================================================
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - ✅ PASSED: tests/test_sabio_infinity4.py::TestResonanciaCuantica::test_espectro_resonante (0.001s)
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - 
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - ================================================================================
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - Test: tests/test_sabio_infinity4.py::TestMatrizSimbiosis::test_matriz_simbiosis_all_levels
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - Location: tests/test_sabio_infinity4.py:195
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - ================================================================================
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - ✅ PASSED: tests/test_sabio_infinity4.py::TestMatrizSimbiosis::test_matriz_simbiosis_all_levels (0.001s)
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - 
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - ================================================================================
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - Test: tests/test_sabio_infinity4.py::TestMatrizSimbiosis::test_matriz_simbiosis_partial
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - Location: tests/test_sabio_infinity4.py:221
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - ================================================================================
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - ✅ PASSED: tests/test_sabio_infinity4.py::TestMatrizSimbiosis::test_matriz_simbiosis_partial (0.000s)
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - 
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - ================================================================================
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - Test: tests/test_sabio_infinity4.py::TestMatrizSimbiosis::test_matriz_six_levels
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - Location: tests/test_sabio_infinity4.py:240
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - ================================================================================
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - ✅ PASSED: tests/test_sabio_infinity4.py::TestMatrizSimbiosis::test_matriz_six_levels (0.001s)
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - 
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - ================================================================================
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - Test: tests/test_sabio_infinity4.py::TestReporteSABIO::test_reporte_structure
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - Location: tests/test_sabio_infinity4.py:266
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - ================================================================================
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - ✅ PASSED: tests/test_sabio_infinity4.py::TestReporteSABIO::test_reporte_structure (0.002s)
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - 
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - ================================================================================
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - Test: tests/test_sabio_infinity4.py::TestReporteSABIO::test_reporte_cuantico_section
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - Location: tests/test_sabio_infinity4.py:288
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - ================================================================================
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - ✅ PASSED: tests/test_sabio_infinity4.py::TestReporteSABIO::test_reporte_cuantico_section (0.002s)
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - 
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - ================================================================================
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - Test: tests/test_sabio_infinity4.py::TestReporteSABIO::test_reporte_consciente_section
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - Location: tests/test_sabio_infinity4.py:310
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - ================================================================================
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - ✅ PASSED: tests/test_sabio_infinity4.py::TestReporteSABIO::test_reporte_consciente_section (0.002s)
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - 
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - ================================================================================
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - Test: tests/test_sabio_infinity4.py::TestReporteSABIO::test_reporte_espectro_section
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - Location: tests/test_sabio_infinity4.py:323
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - ================================================================================
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - ✅ PASSED: tests/test_sabio_infinity4.py::TestReporteSABIO::test_reporte_espectro_section (0.002s)
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - 
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - ================================================================================
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - Test: tests/test_sabio_infinity4.py::TestReporteSABIO::test_reporte_json_serializable
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - Location: tests/test_sabio_infinity4.py:343
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - ================================================================================
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - ✅ PASSED: tests/test_sabio_infinity4.py::TestReporteSABIO::test_reporte_json_serializable (0.002s)
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - 
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - ================================================================================
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - Test: tests/test_sabio_infinity4.py::TestReporteSABIO::test_reporte_estado_operacional
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - Location: tests/test_sabio_infinity4.py:355
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - ================================================================================
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - ✅ PASSED: tests/test_sabio_infinity4.py::TestReporteSABIO::test_reporte_estado_operacional (0.002s)
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - 
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - ================================================================================
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - Test: tests/test_sabio_infinity4.py::TestIntegrationSABIO::test_full_workflow
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - Location: tests/test_sabio_infinity4.py:372
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - ================================================================================
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - ✅ PASSED: tests/test_sabio_infinity4.py::TestIntegrationSABIO::test_full_workflow (0.002s)
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - 
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - ================================================================================
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - Test: tests/test_sabio_infinity4.py::TestIntegrationSABIO::test_backwards_compatibility_with_infinity3
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - Location: tests/test_sabio_infinity4.py:389
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - ================================================================================
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - ✅ PASSED: tests/test_sabio_infinity4.py::TestIntegrationSABIO::test_backwards_compatibility_with_infinity3 (0.000s)
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - 
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - ================================================================================
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - Test: tests/test_sabio_infinity4.py::TestIntegrationSABIO::test_precision_levels
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - Location: tests/test_sabio_infinity4.py:404
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - ================================================================================
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - ✅ PASSED: tests/test_sabio_infinity4.py::TestIntegrationSABIO::test_precision_levels (0.006s)
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - 
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - ================================================================================
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - Test: tests/test_sabio_infinity4.py::TestCertificateGeneration::test_generar_certificado_validacion
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - Location: tests/test_sabio_infinity4.py:418
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - ================================================================================
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - ✅ PASSED: tests/test_sabio_infinity4.py::TestCertificateGeneration::test_generar_certificado_validacion (0.002s)
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - 
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - ================================================================================
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - Test: tests/test_sabio_infinity4.py::TestCertificateGeneration::test_certificado_contains_complete_report
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - Location: tests/test_sabio_infinity4.py:454
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - ================================================================================
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - ✅ PASSED: tests/test_sabio_infinity4.py::TestCertificateGeneration::test_certificado_contains_complete_report (0.002s)
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - 
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - ================================================================================
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - Test: tests/test_sabio_infinity4.py::test_sabio_infinity4_cli
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - Location: tests/test_sabio_infinity4.py:473
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - ================================================================================
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - ✅ PASSED: tests/test_sabio_infinity4.py::test_sabio_infinity4_cli (0.000s)
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - 
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - ================================================================================
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - Test: tests/test_sabio_infinity4.py::test_demo_sabio_infinity4_exists
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - Location: tests/test_sabio_infinity4.py:480
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - ================================================================================
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - ✅ PASSED: tests/test_sabio_infinity4.py::test_demo_sabio_infinity4_exists (0.000s)
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - 
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - ================================================================================
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - Test: tests/test_ci_simbiotico_sabio.py::test_ci_workflow_exists
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - Location: tests/test_ci_simbiotico_sabio.py:12
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - ================================================================================
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - ✅ PASSED: tests/test_ci_simbiotico_sabio.py::test_ci_workflow_exists (0.000s)
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - 
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - ================================================================================
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - Test: tests/test_ci_simbiotico_sabio.py::test_ci_workflow_valid_yaml
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - Location: tests/test_ci_simbiotico_sabio.py:18
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - ================================================================================
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - ✅ PASSED: tests/test_ci_simbiotico_sabio.py::test_ci_workflow_valid_yaml (0.005s)
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - 
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - ================================================================================
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - Test: tests/test_ci_simbiotico_sabio.py::test_ci_workflow_name
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - Location: tests/test_ci_simbiotico_sabio.py:26
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - ================================================================================
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - ✅ PASSED: tests/test_ci_simbiotico_sabio.py::test_ci_workflow_name (0.005s)
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - 
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - ================================================================================
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - Test: tests/test_ci_simbiotico_sabio.py::test_ci_workflow_triggers
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - Location: tests/test_ci_simbiotico_sabio.py:37
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - ================================================================================
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - ✅ PASSED: tests/test_ci_simbiotico_sabio.py::test_ci_workflow_triggers (0.005s)
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - 
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - ================================================================================
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - Test: tests/test_ci_simbiotico_sabio.py::test_ci_workflow_dispatch_input
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - Location: tests/test_ci_simbiotico_sabio.py:51
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - ================================================================================
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - ✅ PASSED: tests/test_ci_simbiotico_sabio.py::test_ci_workflow_dispatch_input (0.005s)
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - 
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - ================================================================================
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - Test: tests/test_ci_simbiotico_sabio.py::test_ci_workflow_jobs
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - Location: tests/test_ci_simbiotico_sabio.py:75
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - ================================================================================
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - ✅ PASSED: tests/test_ci_simbiotico_sabio.py::test_ci_workflow_jobs (0.005s)
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - 
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - ================================================================================
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - Test: tests/test_ci_simbiotico_sabio.py::test_ci_validation_level_env
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - Location: tests/test_ci_simbiotico_sabio.py:91
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - ================================================================================
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - ✅ PASSED: tests/test_ci_simbiotico_sabio.py::test_ci_validation_level_env (0.005s)
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - 
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - ================================================================================
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - Test: tests/test_ci_simbiotico_sabio.py::test_ci_workflow_steps
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - Location: tests/test_ci_simbiotico_sabio.py:108
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - ================================================================================
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - ✅ PASSED: tests/test_ci_simbiotico_sabio.py::test_ci_workflow_steps (0.007s)
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - 
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - ================================================================================
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - Test: tests/test_ci_simbiotico_sabio.py::test_ci_conditional_execution
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - Location: tests/test_ci_simbiotico_sabio.py:137
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - ================================================================================
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - ✅ PASSED: tests/test_ci_simbiotico_sabio.py::test_ci_conditional_execution (0.005s)
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - 
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - ================================================================================
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - Test: tests/test_ci_simbiotico_sabio.py::test_ci_pytest_commands
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - Location: tests/test_ci_simbiotico_sabio.py:157
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - ================================================================================
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - ✅ PASSED: tests/test_ci_simbiotico_sabio.py::test_ci_pytest_commands (0.000s)
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - 
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - ================================================================================
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - Test: tests/test_ci_simbiotico_sabio.py::test_ci_sabio_signature
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - Location: tests/test_ci_simbiotico_sabio.py:172
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - ================================================================================
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - ✅ PASSED: tests/test_ci_simbiotico_sabio.py::test_ci_sabio_signature (0.000s)
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - 
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - ================================================================================
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - Test: tests/test_ci_simbiotico_sabio.py::test_ci_documentation_exists
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - Location: tests/test_ci_simbiotico_sabio.py:184
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - ================================================================================
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - ✅ PASSED: tests/test_ci_simbiotico_sabio.py::test_ci_documentation_exists (0.000s)
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - 
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - ================================================================================
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - Test: tests/test_ci_simbiotico_sabio.py::test_ci_readme_references
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - Location: tests/test_ci_simbiotico_sabio.py:191
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - ================================================================================
-2026-09-09 05:50:03 - INFO     - qcal.test_session_20260909_055003 - ✅ PASSED: tests/test_ci_simbiotico_sabio.py::test_ci_readme_references (0.002s)
+2026-09-09 08:11:50 - INFO     - qcal.test_session_20260909_081148 - 
+2026-09-09 08:11:50 - INFO     - qcal.test_session_20260909_081148 - ================================================================================
+2026-09-09 08:11:50 - INFO     - qcal.test_session_20260909_081148 - Test: tests/test_zero_blockchain.py::test_build_zero_chain_anchors_critical_line
+2026-09-09 08:11:50 - INFO     - qcal.test_session_20260909_081148 - Location: tests/test_zero_blockchain.py:18
+2026-09-09 08:11:50 - INFO     - qcal.test_session_20260909_081148 - ================================================================================
+2026-09-09 08:11:50 - INFO     - qcal.test_session_20260909_081148 - ✅ PASSED: tests/test_zero_blockchain.py::test_build_zero_chain_anchors_critical_line (0.014s)
+2026-09-09 08:11:50 - INFO     - qcal.test_session_20260909_081148 - 
+2026-09-09 08:11:50 - INFO     - qcal.test_session_20260909_081148 - ================================================================================
+2026-09-09 08:11:50 - INFO     - qcal.test_session_20260909_081148 - Test: tests/test_zero_blockchain.py::test_verify_zero_chain_detects_tampering
+2026-09-09 08:11:50 - INFO     - qcal.test_session_20260909_081148 - Location: tests/test_zero_blockchain.py:27
+2026-09-09 08:11:50 - INFO     - qcal.test_session_20260909_081148 - ================================================================================
+2026-09-09 08:11:50 - INFO     - qcal.test_session_20260909_081148 - ✅ PASSED: tests/test_zero_blockchain.py::test_verify_zero_chain_detects_tampering (0.003s)
+2026-09-09 08:11:50 - INFO     - qcal.test_session_20260909_081148 - 
+2026-09-09 08:11:50 - INFO     - qcal.test_session_20260909_081148 - ================================================================================
+2026-09-09 08:11:50 - INFO     - qcal.test_session_20260909_081148 - Test: tests/test_zero_blockchain.py::test_build_and_persist_zero_chain_writes_artifact
+2026-09-09 08:11:50 - INFO     - qcal.test_session_20260909_081148 - Location: tests/test_zero_blockchain.py:38
+2026-09-09 08:11:50 - INFO     - qcal.test_session_20260909_081148 - ================================================================================
+2026-09-09 08:11:50 - INFO     - qcal.test_session_20260909_081148 - ✅ PASSED: tests/test_zero_blockchain.py::test_build_and_persist_zero_chain_writes_artifact (0.004s)
+2026-09-09 08:11:50 - INFO     - qcal.test_session_20260909_081148 - 
+2026-09-09 08:11:50 - INFO     - qcal.test_session_20260909_081148 - ================================================================================
+2026-09-09 08:11:50 - INFO     - qcal.test_session_20260909_081148 - Test: tests/test_certification_dual.py::test_dual_certificates_are_generated_with_evidence
+2026-09-09 08:11:50 - INFO     - qcal.test_session_20260909_081148 - Location: tests/test_certification_dual.py:13
+2026-09-09 08:11:50 - INFO     - qcal.test_session_20260909_081148 - ================================================================================
+2026-09-09 08:11:57 - INFO     - qcal.test_session_20260909_081148 - ✅ PASSED: tests/test_certification_dual.py::test_dual_certificates_are_generated_with_evidence (7.293s)
+2026-09-09 08:11:57 - INFO     - qcal.test_session_20260909_081148 - 
+2026-09-09 08:11:57 - INFO     - qcal.test_session_20260909_081148 - ================================================================================
+2026-09-09 08:11:57 - INFO     - qcal.test_session_20260909_081148 - Test: tests/test_irrefutable_protocol.py::test_sabio_core_invariant_fails_if_lean_structure_is_missing
+2026-09-09 08:11:57 - INFO     - qcal.test_session_20260909_081148 - Location: tests/test_irrefutable_protocol.py:18
+2026-09-09 08:11:57 - INFO     - qcal.test_session_20260909_081148 - ================================================================================
+2026-09-09 08:11:57 - INFO     - qcal.test_session_20260909_081148 - ✅ PASSED: tests/test_irrefutable_protocol.py::test_sabio_core_invariant_fails_if_lean_structure_is_missing (0.000s)
+2026-09-09 08:11:57 - INFO     - qcal.test_session_20260909_081148 - 
+2026-09-09 08:11:57 - INFO     - qcal.test_session_20260909_081148 - ================================================================================
+2026-09-09 08:11:57 - INFO     - qcal.test_session_20260909_081148 - Test: tests/test_irrefutable_protocol.py::test_sabio_core_invariant_fails_if_beacon_programming_breaks
+2026-09-09 08:11:57 - INFO     - qcal.test_session_20260909_081148 - Location: tests/test_irrefutable_protocol.py:25
+2026-09-09 08:11:57 - INFO     - qcal.test_session_20260909_081148 - ================================================================================
+2026-09-09 08:11:57 - INFO     - qcal.test_session_20260909_081148 - ✅ PASSED: tests/test_irrefutable_protocol.py::test_sabio_core_invariant_fails_if_beacon_programming_breaks (0.000s)
+2026-09-09 08:11:57 - INFO     - qcal.test_session_20260909_081148 - 
+2026-09-09 08:11:57 - INFO     - qcal.test_session_20260909_081148 - ================================================================================
+2026-09-09 08:11:57 - INFO     - qcal.test_session_20260909_081148 - Test: tests/test_irrefutable_protocol.py::test_formal_gates_fail_when_required_lean_file_missing
+2026-09-09 08:11:57 - INFO     - qcal.test_session_20260909_081148 - Location: tests/test_irrefutable_protocol.py:33
+2026-09-09 08:11:57 - INFO     - qcal.test_session_20260909_081148 - ================================================================================
+2026-09-09 08:11:57 - INFO     - qcal.test_session_20260909_081148 - ✅ PASSED: tests/test_irrefutable_protocol.py::test_formal_gates_fail_when_required_lean_file_missing (0.001s)
+2026-09-09 08:11:57 - INFO     - qcal.test_session_20260909_081148 - 
+2026-09-09 08:11:57 - INFO     - qcal.test_session_20260909_081148 - ================================================================================
+2026-09-09 08:11:57 - INFO     - qcal.test_session_20260909_081148 - Test: tests/test_irrefutable_protocol.py::test_numeric_gates_fail_without_sat_latest_report
+2026-09-09 08:11:57 - INFO     - qcal.test_session_20260909_081148 - Location: tests/test_irrefutable_protocol.py:54
+2026-09-09 08:11:57 - INFO     - qcal.test_session_20260909_081148 - ================================================================================
+2026-09-09 08:11:57 - INFO     - qcal.test_session_20260909_081148 - ✅ PASSED: tests/test_irrefutable_protocol.py::test_numeric_gates_fail_without_sat_latest_report (0.002s)
+====
+2026-09-09 08:11:49 - INFO     - qcal.test_session_20260909_081148 - ✅ PASSED: tests/test_elan_omega_sabio_integration.py::test_resonance_is_closed_form_not_stochastic[3] (0.000s)
+2026-09-09 08:11:49 - INFO     - qcal.test_session_20260909_081148 - 
+2026-09-09 08:11:49 - INFO     - qcal.test_session_20260909_081148 - ================================================================================
+2026-09-09 08:11:49 - INFO     - qcal.test_session_20260909_081148 - Test: tests/test_elan_omega_sabio_integration.py::test_resonance_is_closed_form_not_stochastic[4]
+2026-09-09 08:11:49 - INFO     - qcal.test_session_20260909_081148 - Location: tests/test_elan_omega_sabio_integration.py:71
+2026-09-09 08:11:49 - INFO     - qcal.test_session_20260909_081148 - ================================================================================
+2026-09-09 08:11:49 - INFO     - qcal.test_session_20260909_081148 - ✅ PASSED: tests/test_elan_omega_sabio_integration.py::test_resonance_is_closed_form_not_stochastic[4] (0.000s)
+2026-09-09 08:11:49 - INFO     - qcal.test_session_20260909_081148 - 
+2026-09-09 08:11:49 - INFO     - qcal.test_session_20260909_081148 - ================================================================================
+2026-09-09 08:11:49 - INFO     - qcal.test_session_20260909_081148 - Test: tests/test_ci_simbiotico_sabio.py::test_ci_workflow_exists
+2026-09-09 08:11:49 - INFO     - qcal.test_session_20260909_081148 - Location: tests/test_ci_simbiotico_sabio.py:12
+2026-09-09 08:11:49 - INFO     - qcal.test_session_20260909_081148 - ================================================================================
+2026-09-09 08:11:49 - INFO     - qcal.test_session_20260909_081148 - ✅ PASSED: tests/test_ci_simbiotico_sabio.py::test_ci_workflow_exists (0.000s)
+2026-09-09 08:11:49 - INFO     - qcal.test_session_20260909_081148 - 
+2026-09-09 08:11:49 - INFO     - qcal.test_session_20260909_081148 - ================================================================================
+2026-09-09 08:11:49 - INFO     - qcal.test_session_20260909_081148 - Test: tests/test_ci_simbiotico_sabio.py::test_ci_workflow_valid_yaml
+2026-09-09 08:11:49 - INFO     - qcal.test_session_20260909_081148 - Location: tests/test_ci_simbiotico_sabio.py:18
+2026-09-09 08:11:49 - INFO     - qcal.test_session_20260909_081148 - ================================================================================
+2026-09-09 08:11:49 - INFO     - qcal.test_session_20260909_081148 - ✅ PASSED: tests/test_ci_simbiotico_sabio.py::test_ci_workflow_valid_yaml (0.006s)
+2026-09-09 08:11:49 - INFO     - qcal.test_session_20260909_081148 - 
+2026-09-09 08:11:49 - INFO     - qcal.test_session_20260909_081148 - ================================================================================
+2026-09-09 08:11:49 - INFO     - qcal.test_session_20260909_081148 - Test: tests/test_ci_simbiotico_sabio.py::test_ci_workflow_name
+2026-09-09 08:11:49 - INFO     - qcal.test_session_20260909_081148 - Location: tests/test_ci_simbiotico_sabio.py:26
+2026-09-09 08:11:49 - INFO     - qcal.test_session_20260909_081148 - ================================================================================
+2026-09-09 08:11:49 - INFO     - qcal.test_session_20260909_081148 - ✅ PASSED: tests/test_ci_simbiotico_sabio.py::test_ci_workflow_name (0.006s)
+2026-09-09 08:11:49 - INFO     - qcal.test_session_20260909_081148 - 
+2026-09-09 08:11:49 - INFO     - qcal.test_session_20260909_081148 - ================================================================================
+2026-09-09 08:11:49 - INFO     - qcal.test_session_20260909_081148 - Test: tests/test_ci_simbiotico_sabio.py::test_ci_workflow_triggers
+2026-09-09 08:11:49 - INFO     - qcal.test_session_20260909_081148 - Location: tests/test_ci_simbiotico_sabio.py:37
+2026-09-09 08:11:49 - INFO     - qcal.test_session_20260909_081148 - ================================================================================
+2026-09-09 08:11:49 - INFO     - qcal.test_session_20260909_081148 - ✅ PASSED: tests/test_ci_simbiotico_sabio.py::test_ci_workflow_triggers (0.006s)
+2026-09-09 08:11:49 - INFO     - qcal.test_session_20260909_081148 - 
+2026-09-09 08:11:49 - INFO     - qcal.test_session_20260909_081148 - ================================================================================
+2026-09-09 08:11:49 - INFO     - qcal.test_session_20260909_081148 - Test: tests/test_ci_simbiotico_sabio.py::test_ci_workflow_dispatch_input
+2026-09-09 08:11:49 - INFO     - qcal.test_session_20260909_081148 - Location: tests/test_ci_simbiotico_sabio.py:51
+2026-09-09 08:11:49 - INFO     - qcal.test_session_20260909_081148 - ================================================================================
+2026-09-09 08:11:49 - INFO     - qcal.test_session_20260909_081148 - ✅ PASSED: tests/test_ci_simbiotico_sabio.py::test_ci_workflow_dispatch_input (0.006s)
+2026-09-09 08:11:49 - INFO     - qcal.test_session_20260909_081148 - 
+2026-09-09 08:11:49 - INFO     - qcal.test_session_20260909_081148 - ================================================================================
+2026-09-09 08:11:49 - INFO     - qcal.test_session_20260909_081148 - Test: tests/test_ci_simbiotico_sabio.py::test_ci_workflow_jobs
+2026-09-09 08:11:49 - INFO     - qcal.test_session_20260909_081148 - Location: tests/test_ci_simbiotico_sabio.py:75
+2026-09-09 08:11:49 - INFO     - qcal.test_session_20260909_081148 - ================================================================================
+2026-09-09 08:11:49 - INFO     - qcal.test_session_20260909_081148 - ✅ PASSED: tests/test_ci_simbiotico_sabio.py::test_ci_workflow_jobs (0.006s)
+2026-09-09 08:11:49 - INFO     - qcal.test_session_20260909_081148 - 
+2026-09-09 08:11:49 - INFO     - qcal.test_session_20260909_081148 - ================================================================================
+2026-09-09 08:11:49 - INFO     - qcal.test_session_20260909_081148 - Test: tests/test_ci_simbiotico_sabio.py::test_ci_validation_level_env
+2026-09-09 08:11:49 - INFO     - qcal.test_session_20260909_081148 - Location: tests/test_ci_simbiotico_sabio.py:91
+2026-09-09 08:11:49 - INFO     - qcal.test_session_20260909_081148 - ================================================================================
+2026-09-09 08:11:49 - INFO     - qcal.test_session_20260909_081148 - ✅ PASSED: tests/test_ci_simbiotico_sabio.py::test_ci_validation_level_env (0.006s)
+2026-09-09 08:11:49 - INFO     - qcal.test_session_20260909_081148 - 
+2026-09-09 08:11:49 - INFO     - qcal.test_session_20260909_081148 - ================================================================================
+2026-09-09 08:11:49 - INFO     - qcal.test_session_20260909_081148 - Test: tests/test_ci_simbiotico_sabio.py::test_ci_workflow_steps
+2026-09-09 08:11:49 - INFO     - qcal.test_session_20260909_081148 - Location: tests/test_ci_simbiotico_sabio.py:108
+2026-09-09 08:11:49 - INFO     - qcal.test_session_20260909_081148 - ================================================================================
+2026-09-09 08:11:49 - INFO     - qcal.test_session_20260909_081148 - ✅ PASSED: tests/test_ci_simbiotico_sabio.py::test_ci_workflow_steps (0.006s)
+2026-09-09 08:11:49 - INFO     - qcal.test_session_20260909_081148 - 
+2026-09-09 08:11:49 - INFO     - qcal.test_session_20260909_081148 - ================================================================================
+2026-09-09 08:11:49 - INFO     - qcal.test_session_20260909_081148 - Test: tests/test_ci_simbiotico_sabio.py::test_ci_conditional_execution
+2026-09-09 08:11:49 - INFO     - qcal.test_session_20260909_081148 - Location: tests/test_ci_simbiotico_sabio.py:137
+2026-09-09 08:11:49 - INFO     - qcal.test_session_20260909_081148 - ================================================================================
+2026-09-09 08:11:49 - INFO     - qcal.test_session_20260909_081148 - ✅ PASSED: tests/test_ci_simbiotico_sabio.py::test_ci_conditional_execution (0.006s)
+2026-09-09 08:11:49 - INFO     - qcal.test_session_20260909_081148 - 
+2026-09-09 08:11:49 - INFO     - qcal.test_session_20260909_081148 - ================================================================================
+2026-09-09 08:11:49 - INFO     - qcal.test_session_20260909_081148 - Test: tests/test_ci_simbiotico_sabio.py::test_ci_pytest_commands
+2026-09-09 08:11:49 - INFO     - qcal.test_session_20260909_081148 - Location: tests/test_ci_simbiotico_sabio.py:157
+2026-09-09 08:11:49 - INFO     - qcal.test_session_20260909_081148 - ================================================================================
+2026-09-09 08:11:49 - INFO     - qcal.test_session_20260909_081148 - ✅ PASSED: tests/test_ci_simbiotico_sabio.py::test_ci_pytest_commands (0.000s)
+2026-09-09 08:11:49 - INFO     - qcal.test_session_20260909_081148 - 
+2026-09-09 08:11:49 - INFO     - qcal.test_session_20260909_081148 - ================================================================================
+2026-09-09 08:11:49 - INFO     - qcal.test_session_20260909_081148 - Test: tests/test_ci_simbiotico_sabio.py::test_ci_sabio_signature
+2026-09-09 08:11:49 - INFO     - qcal.test_session_20260909_081148 - Location: tests/test_ci_simbiotico_sabio.py:172
+2026-09-09 08:11:49 - INFO     - qcal.test_session_20260909_081148 - ================================================================================
+2026-09-09 08:11:49 - INFO     - qcal.test_session_20260909_081148 - ✅ PASSED: tests/test_ci_simbiotico_sabio.py::test_ci_sabio_signature (0.000s)
+2026-09-09 08:11:49 - INFO     - qcal.test_session_20260909_081148 - 
+2026-09-09 08:11:49 - INFO     - qcal.test_session_20260909_081148 - ================================================================================
+2026-09-09 08:11:49 - INFO     - qcal.test_session_20260909_081148 - Test: tests/test_ci_simbiotico_sabio.py::test_ci_documentation_exists
+2026-09-09 08:11:49 - INFO     - qcal.test_session_20260909_081148 - Location: tests/test_ci_simbiotico_sabio.py:184
+2026-09-09 08:11:49 - INFO     - qcal.test_session_20260909_081148 - ================================================================================
+2026-09-09 08:11:49 - INFO     - qcal.test_session_20260909_081148 - ✅ PASSED: tests/test_ci_simbiotico_sabio.py::test_ci_documentation_exists (0.000s)
+2026-09-09 08:11:49 - INFO     - qcal.test_session_20260909_081148 - 
+2026-09-09 08:11:49 - INFO     - qcal.test_session_20260909_081148 - ================================================================================
+2026-09-09 08:11:49 - INFO     - qcal.test_session_20260909_081148 - Test: tests/test_ci_simbiotico_sabio.py::test_ci_readme_references
+2026-09-09 08:11:49 - INFO     - qcal.test_session_20260909_081148 - Location: tests/test_ci_simbiotico_sabio.py:191
+2026-09-09 08:11:49 - INFO     - qcal.test_session_20260909_081148 - ================================================================================
+2026-09-09 08:11:49 - INFO     - qcal.test_session_20260909_081148 - ✅ PASSED: tests/test_ci_simbiotico_sabio.py::test_ci_readme_references (0.002s)
