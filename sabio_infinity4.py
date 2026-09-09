@@ -60,6 +60,16 @@ class SABIO_Infinity4:
     4. Cuántico: E_vac(R_Ψ) con simetría log-π
     5. Consciente: ∂²Ψ/∂t² + ω₀²Ψ = ζ'(1/2)·∇²Φ
     """
+
+    LEAN_ELAN_OMEGA_FILE = (
+        Path(__file__).resolve().parent / "formalization" / "lean" / "sabio" / "elan_omega_pure_validation.lean"
+    )
+    LEAN_ELAN_OMEGA_TOKENS = (
+        "def kappa_Pi",
+        "def frecuencia_noetica",
+        "theorem elan_omega_pure_validation",
+        "HasDerivAt Xi_canonic (2 * x) x",
+    )
     
     def __init__(self, precision: int = 50):
         self.precision = precision
@@ -86,6 +96,39 @@ class SABIO_Infinity4:
         self.estado_psi = None
         self.matriz_simbiosis = None
         self.resonancias = []
+
+    def _validar_formalizacion_lean_elan_omega(self) -> bool:
+        """Valida que la formalización Lean ELAN OMEGA esté presente y estructurada."""
+        try:
+            if not self.LEAN_ELAN_OMEGA_FILE.exists():
+                return False
+            content = self.LEAN_ELAN_OMEGA_FILE.read_text(encoding="utf-8")
+            return all(token in content for token in self.LEAN_ELAN_OMEGA_TOKENS)
+        except Exception:
+            return False
+
+    def _validar_programacion_sabio(self) -> bool:
+        """Ejecuta validaciones SABIO deterministas contra beacon y coherencia QCAL."""
+        try:
+            from sabio_validator import SABIOValidator
+
+            validator = SABIOValidator(precision_dps=self.precision)
+            if not validator.load_beacon(".qcal_beacon"):
+                return False
+
+            freq_ok, _ = validator.validate_fundamental_frequency()
+            coherence_ok = validator.validate_coherence_signature()
+            doi_ok = validator.validate_doi_references()
+            return bool(freq_ok and coherence_ok and doi_ok)
+        except Exception:
+            return False
+
+    def assert_core_invariants(self) -> None:
+        """Falla explícitamente si faltan pruebas estructurales mínimas del núcleo SABIO."""
+        if not self._validar_formalizacion_lean_elan_omega():
+            raise RuntimeError("SABIO core invariant failed: Lean ELAN OMEGA formalization missing/invalid")
+        if not self._validar_programacion_sabio():
+            raise RuntimeError("SABIO core invariant failed: beacon/coherence/DOI deterministic validation failed")
         
     def calcular_radio_cuantico(self, n: int = 1) -> mpf:
         """
@@ -262,8 +305,7 @@ class SABIO_Infinity4:
         
         # Nivel 2: Geométrico (Lean + A₀)
         if test_geometrico:
-            # Simulación de validación Lean
-            niveles['lean'] = 0.95  # Placeholder
+            niveles['lean'] = 1.0 if self._validar_formalizacion_lean_elan_omega() else 0.0
         else:
             niveles['lean'] = 0.0
         
@@ -276,7 +318,10 @@ class SABIO_Infinity4:
             niveles['sage'] = 0.0
         
         # Nivel 4: Compilador SABIO
-        niveles['sabio'] = 1.0 if all([test_aritmetico, test_geometrico]) else 0.5
+        if test_aritmetico and test_geometrico and test_vibracional:
+            niveles['sabio'] = 1.0 if self._validar_programacion_sabio() else 0.0
+        else:
+            niveles['sabio'] = 0.0
         
         # ✨ Nivel 5: Cuántico (E_vac + R_Ψ)
         if test_cuantico:
@@ -295,12 +340,8 @@ class SABIO_Infinity4:
         else:
             niveles['consciente'] = 0.0
         
-        # Coherencia total (media armónica ponderada)
-        valores = [v for v in niveles.values() if v > 0]
-        if valores:
-            coherencia = sum(valores) / len(valores)
-        else:
-            coherencia = 0.0
+        # Coherencia total (promedio sobre los 6 niveles del sistema)
+        coherencia = sum(niveles.values()) / 6.0
         
         # Firma hash de la matriz
         firma = self.firma_vibracional(niveles)

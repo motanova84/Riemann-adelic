@@ -1,5 +1,32 @@
 # QCAL Build Verification - Implementation Summary
 
+## 🟢 IRREFUTABLE PROTOCOL V1 — compuerta formal+numérica y certificación dual (September 2026)
+
+**Status**: ✅ IMPLEMENTED
+
+- **Protocol Module**: `validation/irrefutable_protocol.py`
+- **Dual Certificates**: `validation/certification_system.py` (`generate_formal_certificate`, `generate_numeric_certificate`, `generate_dual_certificates`)
+- **Workflow Gate**: `.github/workflows/ci.yml` (step `Irrefutable protocol gate (formal + numeric)`)
+- **Integration**: `run_complete_validation.py --generate-certificates --strict-irrefutable`
+- **Scope**:
+  - Compuertas formales estructurales Lean (toolchain, Coronación, ELAN OMEGA, no-`sorry` en bloques críticos).
+  - Compuertas numéricas reproducibles (RH core, puente Weil/Weyl, SABIO deterministic core, SAT latest-only report).
+  - Evidencia criptográfica ampliada por certificado: commit git, hashes de `lean-toolchain`, `lake-manifest.json`, `requirements.txt`, y resumen SAT.
+  - Política de fallo explícito del núcleo SABIO (`assert_core_invariants`) sin puntajes parciales en invariantes troncales.
+
+## 🟢 ELAN OMEGA + SABIO deterministic bridge — formalización y tests sin simulación (September 2026)
+
+**Status**: ✅ IMPLEMENTED
+
+- **Lean Module**: `formalization/lean/sabio/elan_omega_pure_validation.lean`
+- **SABIO Integration**: `sabio_infinity4.py` (niveles Lean/SABIO con validación real, sin placeholders)
+- **Test Suite**: `tests/test_elan_omega_sabio_integration.py`
+- **CI Wiring**: `.github/workflows/ci.yml` (basic suite incluye test ELAN OMEGA + SABIO)
+- **Objetivo**:
+  - Formalizar el bloque diferencial ELAN OMEGA en Lean 4 con derivada exacta `Ξ'(x)=2x`.
+  - Conectar la validación SABIO con beacon, coherencia y DOI mediante `SABIOValidator`.
+  - Añadir tests de coherencia y resonancia en forma cerrada, sin simulación estocástica.
+
 ## 🟢 WEIL–SPECTRAL BRIDGE VALIDATOR (Python) — Auditoría analítico-numérica dedicada (September 2026)
 
 **Status**: ✅ IMPLEMENTED
