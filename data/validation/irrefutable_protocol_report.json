@@ -1,0 +1,260 @@
+{
+  "timestamp": "2026-09-09T06:08:42.200552Z",
+  "precision": 20,
+  "max_zeros": 50,
+  "formal": {
+    "passed": false,
+    "gates": [
+      {
+        "name": "required_file:formalization/lean/lean-toolchain",
+        "passed": true,
+        "details": "present",
+        "evidence": {
+          "path": "/home/runner/work/Riemann-adelic/Riemann-adelic/formalization/lean/lean-toolchain"
+        }
+      },
+      {
+        "name": "required_file:formalization/lean/sabio/elan_omega_pure_validation.lean",
+        "passed": true,
+        "details": "present",
+        "evidence": {
+          "path": "/home/runner/work/Riemann-adelic/Riemann-adelic/formalization/lean/sabio/elan_omega_pure_validation.lean"
+        }
+      },
+      {
+        "name": "required_file:formalization/lean/RiemannAdelic/Coronacion_Final.lean",
+        "passed": true,
+        "details": "present",
+        "evidence": {
+          "path": "/home/runner/work/Riemann-adelic/Riemann-adelic/formalization/lean/RiemannAdelic/Coronacion_Final.lean"
+        }
+      },
+      {
+        "name": "no_sorry:formalization/lean/sabio/elan_omega_pure_validation.lean",
+        "passed": true,
+        "details": "no sorry found",
+        "evidence": {
+          "path": "/home/runner/work/Riemann-adelic/Riemann-adelic/formalization/lean/sabio/elan_omega_pure_validation.lean"
+        }
+      },
+      {
+        "name": "no_sorry:formalization/lean/QCAL_Hadamard/GAP1_log_holomorphic_of_entire_never_zero.lean",
+        "passed": true,
+        "details": "no sorry found",
+        "evidence": {
+          "path": "/home/runner/work/Riemann-adelic/Riemann-adelic/formalization/lean/QCAL_Hadamard/GAP1_log_holomorphic_of_entire_never_zero.lean"
+        }
+      },
+      {
+        "name": "no_sorry:formalization/lean/QCAL_Hadamard/GAP2_affine_log_of_order_one.lean",
+        "passed": true,
+        "details": "no sorry found",
+        "evidence": {
+          "path": "/home/runner/work/Riemann-adelic/Riemann-adelic/formalization/lean/QCAL_Hadamard/GAP2_affine_log_of_order_one.lean"
+        }
+      },
+      {
+        "name": "no_sorry:formalization/lean/QCAL_Hadamard/GAP3_quotient_entire_never_zero.lean",
+        "passed": true,
+        "details": "no sorry found",
+        "evidence": {
+          "path": "/home/runner/work/Riemann-adelic/Riemann-adelic/formalization/lean/QCAL_Hadamard/GAP3_quotient_entire_never_zero.lean"
+        }
+      },
+      {
+        "name": "no_sorry:formalization/lean/QCAL_Hadamard/GAP4_order_atMostOne_of_quotient.lean",
+        "passed": false,
+        "details": "contains sorry",
+        "evidence": {
+          "path": "/home/runner/work/Riemann-adelic/Riemann-adelic/formalization/lean/QCAL_Hadamard/GAP4_order_atMostOne_of_quotient.lean"
+        }
+      }
+    ],
+    "summary": "formal gates failed"
+  },
+  "numeric": {
+    "passed": true,
+    "summary": "numeric gates passed",
+    "rh_core": {
+      "passed": true,
+      "critical_line": {
+        "test_name": "critical_line_zeros",
+        "status": "PASSED",
+        "metrics": {
+          "zeros_tested": 50,
+          "max_real_deviation": 0.0,
+          "mean_real_deviation": 0.0,
+          "spacing": {
+            "mean": 2.6321861360408163,
+            "std": 1.189406457536764,
+            "gue_score": 1.0
+          },
+          "imaginary_parts": [
+            14.134725142,
+            21.022039639,
+            25.01085758,
+            30.424876126,
+            32.935061588,
+            37.586178159,
+            40.918719012,
+            43.327073281,
+            48.005150881,
+            49.773832478,
+            52.970321478,
+            56.446247697,
+            59.347044003,
+            60.831778525,
+            65.112544048,
+            67.079810529,
+            69.546401711,
+            72.067157674,
+            75.704690699,
+            77.144840069,
+            79.33737502,
+            82.910380854,
+            84.735492981,
+            87.425274613,
+            88.809111208,
+            92.491899271,
+            94.651344041,
+            95.870634228,
+            98.831194218,
+            101.317851006,
+            103.72553804,
+            105.446623052,
+            107.168611184,
+            111.029535543,
+            111.874659177,
+            114.320220915,
+            116.226680321,
+            118.790782866,
+            121.370125002,
+            122.946829294,
+            124.256818554,
+            127.51668388,
+            129.5787042,
+            131.087688531,
+            133.497737203,
+            134.756509753,
+            138.116042055,
+            139.736208952,
+            141.123707404,
+            143.111845808
+          ]
+        },
+        "details": "All sampled zeros lie on the critical line",
+        "timestamp": "2026-09-09T06:08:41.535148Z"
+      },
+      "ds_equivalence": {
+        "test_name": "ds_equiv_xi",
+        "status": "PASSED",
+        "metrics": {
+          "test_points": 10,
+          "max_absolute_difference": 0.0,
+          "max_relative_error": 0.0,
+          "mean_relative_error": 0.0,
+          "relative_errors": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "details": "D(s) matches Ξ(s) numerically on sampled points",
+        "timestamp": "2026-09-09T06:08:41.556484Z"
+      },
+      "non_vanishing": {
+        "test_name": "non_vanishing_property",
+        "status": "PASSED",
+        "metrics": {
+          "regions_tested": 4,
+          "global_min_abs_value": 1e-10,
+          "region_reports": [
+            {
+              "region": [
+                0.1,
+                0.4,
+                10,
+                80
+              ],
+              "min_abs_value": 1e-10,
+              "non_vanishing": true
+            },
+            {
+              "region": [
+                0.6,
+                0.9,
+                10,
+                80
+              ],
+              "min_abs_value": 1e-10,
+              "non_vanishing": true
+            },
+            {
+              "region": [
+                0.25,
+                0.4,
+                80,
+                200
+              ],
+              "min_abs_value": 1e-10,
+              "non_vanishing": true
+            },
+            {
+              "region": [
+                0.6,
+                0.75,
+                80,
+                200
+              ],
+              "min_abs_value": 1e-10,
+              "non_vanishing": true
+            }
+          ]
+        },
+        "details": "Determinant ratio stayed away from zero off the critical line",
+        "timestamp": "2026-09-09T06:08:41.596299Z"
+      }
+    },
+    "weil_weyl_bridge": {
+      "passed": true,
+      "weil_audit": {
+        "zeros_used": 200,
+        "prime_bound": 1000,
+        "prime_powers": 10,
+        "fourier_scale_a": 0.05,
+        "gaussian_sigma": 250.0,
+        "zeros_pole_arch": 0.05791399716372087,
+        "primes_side": 0.05791399716372087,
+        "relative_error": 9.141064646899688e-22,
+        "passed": true
+      },
+      "spectral_audit": {
+        "modes_checked": 10,
+        "tolerance": 0.1,
+        "min_lambda": 200.04045483988693,
+        "max_lambda": 2477.684399548008,
+        "match_rate": 1.0,
+        "passed": true
+      }
+    },
+    "sabio_core": {
+      "passed": true,
+      "nivel_lean": 1.0,
+      "nivel_sabio": 1.0,
+      "error": null
+    },
+    "sat_latest_only": {
+      "passed": true,
+      "validation_report": "/home/runner/work/Riemann-adelic/Riemann-adelic/certificates/sat/validation_report.json"
+    }
+  },
+  "overall_passed": false,
+  "status": "FAILED"
+}
