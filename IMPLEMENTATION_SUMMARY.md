@@ -1,5 +1,18 @@
 # QCAL Build Verification - Implementation Summary
 
+## 🟢 ELAN OMEGA + SABIO deterministic bridge — formalización y tests sin simulación (September 2026)
+
+**Status**: ✅ IMPLEMENTED
+
+- **Lean Module**: `formalization/lean/sabio/elan_omega_pure_validation.lean`
+- **SABIO Integration**: `sabio_infinity4.py` (niveles Lean/SABIO con validación real, sin placeholders)
+- **Test Suite**: `tests/test_elan_omega_sabio_integration.py`
+- **CI Wiring**: `.github/workflows/ci.yml` (basic suite incluye test ELAN OMEGA + SABIO)
+- **Objetivo**:
+  - Formalizar el bloque diferencial ELAN OMEGA en Lean 4 con derivada exacta `Ξ'(x)=2x`.
+  - Conectar la validación SABIO con beacon, coherencia y DOI mediante `SABIOValidator`.
+  - Añadir tests de coherencia y resonancia en forma cerrada, sin simulación estocástica.
+
 ## 🟢 WEIL–SPECTRAL BRIDGE VALIDATOR (Python) — Auditoría analítico-numérica dedicada (September 2026)
 
 **Status**: ✅ IMPLEMENTED

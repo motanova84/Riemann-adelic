@@ -35,6 +35,7 @@ import Mathlib.NumberTheory.ZetaFunction
 import Mathlib.Topology.Basic
 import Mathlib.Analysis.SpecialFunctions.Log.Basic
 import Mathlib.Data.Real.Sqrt
+import sabio.elan_omega_pure_validation
 
 open Complex Real
 
