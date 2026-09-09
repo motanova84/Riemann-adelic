@@ -1,6 +1,6 @@
 {
   "type": "QCAL_CRITICAL_ZERO_IMMUTABLE_CHAIN",
-  "timestamp_utc": "2026-09-09T08:11:57.392535Z",
+  "timestamp_utc": "2026-09-09T08:12:31.727903Z",
   "critical_line_real_part": 0.5,
   "precision_dps": 30,
   "residual_tolerance": 1e-07,
