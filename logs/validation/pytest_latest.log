@@ -1,8 +1,0 @@
-2026-09-25 22:13:08 - DEBUG    - matplotlib - matplotlib data path: /home/runner/.local/lib/python3.12/site-packages/matplotlib/mpl-data
-2026-09-25 22:13:08 - DEBUG    - matplotlib - CONFIGDIR=/home/runner/.config/matplotlib
-2026-09-25 22:13:08 - DEBUG    - matplotlib - interactive is False
-2026-09-25 22:13:08 - DEBUG    - matplotlib - platform is linux
-2026-09-25 22:13:08 - DEBUG    - matplotlib - CACHEDIR=/home/runner/.cache/matplotlib
-2026-09-25 22:13:08 - DEBUG    - matplotlib.font_manager - font search path [PosixPath('/home/runner/.local/lib/python3.12/site-packages/matplotlib/mpl-data/fonts/ttf'), PosixPath('/home/runner/.local/lib/python3.12/site-packages/matplotlib/mpl-data/fonts/afm'), PosixPath('/home/runner/.local/lib/python3.12/site-packages/matplotlib/mpl-data/fonts/pdfcorefonts')]
-2026-09-25 22:13:10 - INFO     - matplotlib.font_manager - Failed to extract font properties from /usr/share/fonts/truetype/noto/NotoColorEmoji.ttf: Non-scalable fonts are not supported
-2026-09-25 22:13:11 - INFO     - matplotlib.font_manager - generated new fontManager

@@ -116,11 +116,9 @@ def test_weil_formula_basic():
         assert len(corrected_zeros) > 0, "Should have simulated parts"
         
         print(f"Weil formula test: error={error}, relative_error={relative_error}, left={left_side}, right={right_side}")
-        print(f"Weil formula test: error={error}, relative_error={relative_error}, left={left_side}, right={right_side}")
         assert relative_error >= 0, "Relative error should be non-negative"
         assert len(corrected_zeros) > 0, "Should have corrected zeros"
         
-        print(f"Weil formula test: error={error}, relative_error={relative_error}, left={left_side}, right={right_side}")
         print(f"Corrected zeros (first 3): {corrected_zeros[:3]}")
         
         # CRITICAL: Apply scientific tolerances for number theory

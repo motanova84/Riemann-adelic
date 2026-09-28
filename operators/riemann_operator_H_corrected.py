@@ -497,11 +497,11 @@ def ejecutar_validacion_soberana(
 # DOI: 10.5281/zenodo.17379721
 # """
 # 
-# import numpy as np
-# from scipy.linalg import eigh
-# from scipy.special import gamma as gamma_func
-# from dataclasses import dataclass, field
-# from typing import List, Optional, Tuple, Dict, Any
+import numpy as np
+from scipy.linalg import eigh
+from scipy.special import gamma as gamma_func
+from dataclasses import dataclass, field
+from typing import List, Optional, Tuple, Dict, Any
 # 
 # ---------------------------------------------------------------------------
 # Physical / mathematical constants
@@ -512,12 +512,12 @@ def ejecutar_validacion_soberana(
 # LOG_PRIME_SIGMA_THRESHOLD = 50.0  # Ignore primes with log p > this (numeric)
 # 
 # 
-# def _sieve_primes(n_max: int) -> List[int]:
-#     """Return all primes up to n_max using the Sieve of Eratosthenes."""
-#     if n_max < 2:
-#         return []
-#     sieve = bytearray([1]) * (n_max + 1)
-#     sieve[0] = sieve[1] = 0
+def _sieve_primes(n_max: int) -> List[int]:
+    """Return all primes up to n_max using the Sieve of Eratosthenes."""
+    if n_max < 2:
+        return []
+    sieve = bytearray([1]) * (n_max + 1)
+    sieve[0] = sieve[1] = 0
     for i in range(2, int(n_max ** 0.5) + 1):
         if sieve[i]:
             sieve[i * i::i] = bytearray(len(sieve[i * i::i]))

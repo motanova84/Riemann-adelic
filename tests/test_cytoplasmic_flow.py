@@ -1,28 +1,10 @@
 """
 Tests for Cytoplasmic Flow Model
-
-Tests for the Navier-Stokes implementation in the biological/cytoplasmic regime.
-
-Author: José Manuel Mota Burruezo Ψ ✧ ∞³
-Date: 2026-01-31
-Tests for Cytoplasmic Flow Model - Navier-Stokes Implementation
-
-Tests comprehensivos para el modelo de flujo citoplasmático que conecta
-la Hipótesis de Riemann con el tejido biológico vivo.
-
-Autor: José Manuel Mota Burruezo Ψ ✧ ∞³
-Instituto Consciencia Cuántica QCAL ∞³
-Tests for Cytoplasmic Flow Model
-
-This test suite validates the cytoplasmic flow model implementation,
-including Navier-Stokes equations in the Stokes regime, Reynolds number
-calculations, and the Hilbert-Pólya operator construction.
-
-Author: José Manuel Mota Burruezo Ψ ✧ ∞³
 """
 
 import pytest
 import numpy as np
+
 from src.biological.cytoplasmic_flow_model import (
     CytoplasmicFlowModel,
     FlowParameters,
@@ -30,37 +12,34 @@ from src.biological.cytoplasmic_flow_model import (
     compute_reynolds_number,
     is_cytoplasmic_regime,
 )
-# from src.biological.cytoplasmic_flow_model import (
-#     CytoplasmicFlowModel,
-#     FlowParameters,
-#     SpectralMode,
-#     compute_reynolds_number,
-#     is_cytoplasmic_regime
-# from typing import Tuple
-# import sys
-# from pathlib import Path
-# 
-# Add src to path
-# sys.path.insert(0, str(Path(__file__).parent.parent / 'src'))
-# 
-# from biological.cytoplasmic_flow_model import (
-#     FlowParameters,
-#     NavierStokesRegularized,
-#     RiemannResonanceOperator,
-#     demonstrate_navier_stokes_coherence,
-#     F0_HZ,
-#     RHO_CYTOPLASM,
-#     NU_CYTOPLASM,
-#     CELL_LENGTH_SCALE,
-#     FLOW_VELOCITY,
-# from utils.cytoplasmic_flow_model import (
-#     CytoplasmicFlowModel,
-#     FlowParameters,
-#     FlowRegime,
-#     HilbertPolyaOperator,
-#     F0_FREQUENCY
-# )
-# 
+
+try:
+    from biological.cytoplasmic_flow_model import (
+        NavierStokesRegularized,
+        RiemannResonanceOperator,
+        demonstrate_navier_stokes_coherence,
+        F0_HZ,
+        RHO_CYTOPLASM,
+        NU_CYTOPLASM,
+        CELL_LENGTH_SCALE,
+        FLOW_VELOCITY,
+    )
+except Exception:
+    NavierStokesRegularized = None
+    RiemannResonanceOperator = None
+    demonstrate_navier_stokes_coherence = None
+    F0_HZ = 141.7001
+    RHO_CYTOPLASM = 1050.0
+    NU_CYTOPLASM = 1e-6
+    CELL_LENGTH_SCALE = 1e-6
+    FLOW_VELOCITY = 1e-8
+
+try:
+    from utils.cytoplasmic_flow_model import FlowRegime, HilbertPolyaOperator, F0_FREQUENCY
+except Exception:
+    FlowRegime = None
+    HilbertPolyaOperator = None
+    F0_FREQUENCY = 141.7001
 
 class TestFlowParameters:
     """Test FlowParameters dataclass."""
