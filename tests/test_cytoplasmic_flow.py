@@ -24,7 +24,7 @@ try:
         CELL_LENGTH_SCALE,
         FLOW_VELOCITY,
     )
-except Exception:
+except (ImportError, ModuleNotFoundError):
     NavierStokesRegularized = None
     RiemannResonanceOperator = None
     demonstrate_navier_stokes_coherence = None
@@ -36,7 +36,7 @@ except Exception:
 
 try:
     from utils.cytoplasmic_flow_model import FlowRegime, HilbertPolyaOperator, F0_FREQUENCY
-except Exception:
+except (ImportError, ModuleNotFoundError):
     FlowRegime = None
     HilbertPolyaOperator = None
     F0_FREQUENCY = 141.7001
@@ -1168,3 +1168,44 @@ class TestNumericalAccuracy:
 # 
 # if __name__ == "__main__":
 #     pytest.main([__file__, "-v"])
+# Minimal active checks for compatibility wrappers (syntax-fix scope)
+class TestCompatibilityWrappers:
+    def test_navier_stokes_regularized_velocity_time_variation(self):
+        if NavierStokesRegularized is None:
+            pytest.skip("compat wrapper unavailable")
+        flow = NavierStokesRegularized(grid_size=8)
+        vx1, _, _ = flow.velocity_field(0.0, 0.0, 0.0, 0.0)
+        vx2, _, _ = flow.velocity_field(0.0, 0.0, 0.0, 1.0)
+        assert vx1 != vx2
+
+    def test_riemann_resonance_status_keys(self):
+        if NavierStokesRegularized is None or RiemannResonanceOperator is None:
+            pytest.skip("compat wrappers unavailable")
+        flow = NavierStokesRegularized(grid_size=8)
+        op = RiemannResonanceOperator(flow)
+        status = op.riemann_hypothesis_status()
+        expected = {
+            "reynolds_number",
+            "viscous_regime",
+            "operator_hermitian",
+            "smooth_solution_exists",
+            "riemann_zeros_accessible",
+            "fundamental_frequency_hz",
+        }
+        assert expected.issubset(status.keys())
+        assert status["operator_hermitian"] == op.is_hermitian()
+        freqs = op.eigenfrequencies(n_modes=5)
+        assert len(freqs) == 5
+        assert np.isfinite(freqs[0])
+
+    def test_demo_payload_keys(self):
+        if demonstrate_navier_stokes_coherence is None:
+            pytest.skip("demo wrapper unavailable")
+        payload = demonstrate_navier_stokes_coherence()
+        assert "parameters" in payload
+        assert "riemann_status" in payload
+        assert "eigenfrequencies_hz" in payload
+        assert "velocity_field" in payload
+        assert "vorticity" in payload
+        assert "diffusion_time_s" in payload["parameters"]
+        assert "diffusion_frequency_hz" in payload["parameters"]

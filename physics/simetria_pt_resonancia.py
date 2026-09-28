@@ -156,17 +156,54 @@ class SistemaResonanciaPT:
         return ResultadoResonanciaPT(operador=operador, espectro=espectro, diagnostico=diagnostico)
 
 
-def simular_resonancia_pt(coherencia: float = CONST.PSI_MAX, N: int = 10) -> np.ndarray:
-    return SistemaResonanciaPT(coherencia=coherencia, N=N).ejecutar().espectro.eigenvalues
+def simular_resonancia_pt(
+    coherencia: float = CONST.PSI_MAX,
+    N: int = 10,
+    n_dim: Optional[int] = None,
+) -> np.ndarray:
+    n = N if n_dim is None else n_dim
+    return SistemaResonanciaPT(coherencia=coherencia, N=n).ejecutar().espectro.eigenvalues
 
 
 def simetria_pt_resonancia_activar() -> Dict[str, Any]:
     result = SistemaResonanciaPT().ejecutar()
+    psi_riemann = 1.0 if result.diagnostico.espectro_real else max(0.0, result.diagnostico.psi_espectral - 0.1)
+    psi_global = (
+        0.5 * result.diagnostico.psi_espectral
+        + 0.3 * result.diagnostico.psi_ez
+        + 0.2 * psi_riemann
+    )
+    estable = psi_global >= CONST.UMBRAL_PT
+    eigenvalues = result.espectro.eigenvalues
     return {
         "f0": CONST.F0,
         "umbral_pt": CONST.UMBRAL_PT,
         "es_pt_simetrico": result.diagnostico.es_pt_simetrico,
+        "simetria_pt_verificada": result.diagnostico.es_pt_simetrico,
         "espectro_real": result.diagnostico.espectro_real,
         "psi_espectral": result.diagnostico.psi_espectral,
         "psi_ez": result.diagnostico.psi_ez,
+        "psi_riemann": psi_riemann,
+        "psi_global": psi_global,
+        "estable": estable,
+        "esta_estable": estable,
+        "eigenvalues_real": eigenvalues.real.tolist(),
+        "eigenvalues_imag": eigenvalues.imag.tolist(),
+        "constantes_pt": {
+            "F0": CONST.F0,
+            "UMBRAL_PT": CONST.UMBRAL_PT,
+            "GAMMA_1": CONST.GAMMA_1,
+        },
+        "citoplasma_holografico": {
+            "psi_ez": result.diagnostico.psi_ez,
+            "frecuencia_base_hz": CONST.F0,
+        },
+        "riemann_linea_critica": {
+            "mapped_points": (0.5 + 1j * eigenvalues.real).tolist(),
+        },
+        "diagnostico": {
+            "coherencia": psi_global,
+            "umbral": CONST.UMBRAL_PT,
+            "estado": "estable" if estable else "inestable",
+        },
     }

@@ -506,10 +506,10 @@ from typing import List, Optional, Tuple, Dict, Any
 # ---------------------------------------------------------------------------
 # Physical / mathematical constants
 # ---------------------------------------------------------------------------
-# F0 = 141.7001           # Fundamental QCAL frequency (Hz)
-# C_QCAL = 244.36         # QCAL coherence constant
-# EPSILON_OSC = 0.1       # Default coupling of oscillatory term
-# LOG_PRIME_SIGMA_THRESHOLD = 50.0  # Ignore primes with log p > this (numeric)
+F0 = 141.7001           # Fundamental QCAL frequency (Hz)
+C_QCAL = 244.36         # QCAL coherence constant
+EPSILON_OSC = 0.1       # Default coupling of oscillatory term
+LOG_PRIME_SIGMA_THRESHOLD = 50.0  # Ignore primes with log p > this (numeric)
 # 
 # 
 def _sieve_primes(n_max: int) -> List[int]:

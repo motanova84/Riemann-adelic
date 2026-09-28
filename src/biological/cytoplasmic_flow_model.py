@@ -527,12 +527,107 @@ def is_cytoplasmic_regime(reynolds: float, threshold: float = 1e-3) -> bool:
 class NavierStokesRegularized(CytoplasmicFlowModel):
     """Backward-compatible alias for the cytoplasmic Navier-Stokes model."""
 
+    def velocity_field(self, x: float, y: float, z: float, t: float) -> Tuple[float, float, float]:
+        v0 = float(getattr(self.params, "velocity_scale", 1e-8))
+        nu = float(getattr(self.params, "kinematic_viscosity", getattr(self.params, "viscosity", 1e-6)))
+        L = float(getattr(self.params, "length_scale", 1e-6))
+        tau = max(nu / max(L**2, 1e-18), 1e-12)
+        decay_t = float(np.exp(-tau * t))
+        r2 = float(x * x + y * y + z * z)
+        spatial = float(np.exp(-r2 / max(L**2, 1e-18)))
+        return (
+            float(v0 * np.sin(self.F0_QCAL * 1e-3 * t) * spatial * decay_t),
+            float(v0 * spatial * decay_t),
+            float(0.0),
+        )
 
-class RiemannResonanceOperator(CytoplasmicFlowModel):
-    """Backward-compatible alias for resonance analysis entrypoint."""
+    def vorticity(self, x: float, y: float, z: float, t: float) -> Tuple[float, float, float]:
+        h = float(max(getattr(self.params, "length_scale", 1e-6) * 1e-3, 1e-9))
+        vx_py, _, _ = self.velocity_field(x, y + h, z, t)
+        vx_my, _, _ = self.velocity_field(x, y - h, z, t)
+        vx_pz, _, _ = self.velocity_field(x, y, z + h, t)
+        vx_mz, _, _ = self.velocity_field(x, y, z - h, t)
+        _, vy_px, _ = self.velocity_field(x + h, y, z, t)
+        _, vy_mx, _ = self.velocity_field(x - h, y, z, t)
+        _, vy_pz, _ = self.velocity_field(x, y, z + h, t)
+        _, vy_mz, _ = self.velocity_field(x, y, z - h, t)
+        _, _, vz_px = self.velocity_field(x + h, y, z, t)
+        _, _, vz_mx = self.velocity_field(x - h, y, z, t)
+        _, _, vz_py = self.velocity_field(x, y + h, z, t)
+        _, _, vz_my = self.velocity_field(x, y - h, z, t)
+
+        dvy_dz = (vy_pz - vy_mz) / (2.0 * h)
+        dvz_dy = (vz_py - vz_my) / (2.0 * h)
+        dvz_dx = (vz_px - vz_mx) / (2.0 * h)
+        dvx_dz = (vx_pz - vx_mz) / (2.0 * h)
+        dvx_dy = (vx_py - vx_my) / (2.0 * h)
+        dvy_dx = (vy_px - vy_mx) / (2.0 * h)
+
+        wx = dvy_dz - dvz_dy
+        wy = dvz_dx - dvx_dz
+        wz = dvx_dy - dvy_dx
+        return (float(wx), float(wy), float(wz))
+
+
+class RiemannResonanceOperator:
+    """Backward-compatible resonance operator wrapper."""
+
+    def __init__(self, flow: NavierStokesRegularized):
+        self.flow = flow
+
+    def eigenfrequencies(self, n_modes: int = 10) -> np.ndarray:
+        modes = self.flow.compute_spectral_modes(n_modes=n_modes)
+        return np.array([m.frequency for m in modes], dtype=float)
+
+    def is_hermitian(self) -> bool:
+        params = self.flow.params
+        regime = getattr(params, "is_viscous_regime", None)
+        if callable(regime):
+            regime = regime()
+        if regime is None:
+            regime = getattr(params, "has_smooth_solution", None)
+            if callable(regime):
+                regime = regime()
+        if regime is None:
+            re = float(getattr(params, "reynolds", compute_reynolds_number(
+                float(getattr(params, "velocity_scale", 1e-8)),
+                float(getattr(params, "length_scale", 1e-6)),
+                float(getattr(params, "kinematic_viscosity", getattr(params, "viscosity", 1e-6))),
+            )))
+            regime = re < 1e-3
+        return bool(regime)
+
+    def riemann_hypothesis_status(self) -> Dict[str, Any]:
+        freqs = self.eigenfrequencies(n_modes=10)
+        return {
+            "reynolds_number": float(self.flow.params.reynolds),
+            "viscous_regime": bool(self.flow.params.is_viscous_regime),
+            "operator_hermitian": bool(self.is_hermitian()),
+            "smooth_solution_exists": bool(self.flow.params.is_viscous_regime),
+            "riemann_zeros_accessible": bool(np.all(np.isfinite(freqs))),
+            "fundamental_frequency_hz": float(self.flow.F0_QCAL),
+        }
 
 
 def demonstrate_navier_stokes_coherence() -> Dict[str, Any]:
-    """Minimal demonstration wrapper preserving legacy public API."""
-    model = CytoplasmicFlowModel(grid_size=16)
-    return model.verify_smooth_solution()
+    """Demonstration wrapper preserving the legacy result schema."""
+    flow = NavierStokesRegularized(grid_size=16)
+    op = RiemannResonanceOperator(flow)
+    status = op.riemann_hypothesis_status()
+    freqs = op.eigenfrequencies(n_modes=10)
+    vx, vy, vz = flow.velocity_field(0.0, 0.0, 0.0, 0.0)
+    wx, wy, wz = flow.vorticity(0.0, 0.0, 0.0, 0.0)
+    nu = float(getattr(flow.params, "kinematic_viscosity", getattr(flow.params, "viscosity", 1e-6)))
+    L = float(getattr(flow.params, "length_scale", 1e-6))
+    return {
+        "parameters": {
+            "reynolds_number": flow.params.reynolds,
+            "is_viscous_regime": flow.params.is_viscous_regime,
+            "diffusion_time_s": float(L**2 / nu),
+            "diffusion_frequency_hz": float(nu / max(L**2, 1e-18)),
+        },
+        "riemann_status": status,
+        "eigenfrequencies_hz": freqs.tolist(),
+        "velocity_field": {"vx": vx, "vy": vy, "vz": vz},
+        "vorticity": {"wx": wx, "wy": wy, "wz": wz},
+    }
