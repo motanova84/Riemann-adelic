@@ -508,17 +508,17 @@ class TestStructuralConnection:
         assert abs(v_struct - v_ref) < 1e-10, (
             f"|V_struct - V_ref| = {abs(v_struct - v_ref):.2e}"
         )
-Validates operators/multiplicative_boundary_conditions.py, covering:
-  - Prime sieve utility
-  - SpectralDiscretizationEngine: per-prime spectral lattices
-  - oscillatory_density_from_bc: ρ_osc from multiplicative constraints
-  - counting_oscillation_N_osc: oscillatory counting function
-  - VOscFromMultiplicativeBC: V_osc(x) evaluation
-  - verify_structural_coincidence: canonical sum matches structural form
-  - semiclassical_phase_volume and phase_volume_to_density
-  - multiplicative_bc_to_v_osc: complete derivation pipeline
-  - generate_qcal_certificate_mbc: QCAL certificate generation
-"""
+# Validates operators/multiplicative_boundary_conditions.py, covering:
+#   - Prime sieve utility
+#   - SpectralDiscretizationEngine: per-prime spectral lattices
+#   - oscillatory_density_from_bc: ρ_osc from multiplicative constraints
+#   - counting_oscillation_N_osc: oscillatory counting function
+#   - VOscFromMultiplicativeBC: V_osc(x) evaluation
+#   - verify_structural_coincidence: canonical sum matches structural form
+#   - semiclassical_phase_volume and phase_volume_to_density
+#   - multiplicative_bc_to_v_osc: complete derivation pipeline
+#   - generate_qcal_certificate_mbc: QCAL certificate generation
+# """
 
 import pytest
 import numpy as np

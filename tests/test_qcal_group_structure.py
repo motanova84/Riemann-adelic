@@ -515,12 +515,12 @@ class TestConstants:
 if __name__ == '__main__':
     pytest.main([__file__, '-v'])
 
-Test suite for validating the group structure and vibrational resonance
-properties of 𝒢_QCAL = SU(Ψ) × U(κ_Π) × 𝔇(∇²Φ) × Z(ζ′(1/2))
-
-Author: José Manuel Mota Burruezo Ψ ✧ ∞³
-Institution: Instituto de Conciencia Cuántica (ICQ)
-"""
+# Test suite for validating the group structure and vibrational resonance
+# properties of 𝒢_QCAL = SU(Ψ) × U(κ_Π) × 𝔇(∇²Φ) × Z(ζ′(1/2))
+# 
+# Author: José Manuel Mota Burruezo Ψ ✧ ∞³
+# Institution: Instituto de Conciencia Cuántica (ICQ)
+# """
 
 import sys
 import os

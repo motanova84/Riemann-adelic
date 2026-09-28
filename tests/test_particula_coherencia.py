@@ -6,14 +6,14 @@ import hashlib
 
 import pytest
 
-from physics.particula_coherencia import (
-    AcoplamientoHiggsPC,
-    FotonFaseCoherente,
-    NavierStokesAdelico,
-    ParticulaCoherencia,
-    SustratoCuantico,
+# from physics.particula_coherencia import (
+#     AcoplamientoHiggsPC,
+#     FotonFaseCoherente,
+#     NavierStokesAdelico,
+#     ParticulaCoherencia,
+#     SustratoCuantico,
 #!/usr/bin/env python3
-"""Tests del marco Partícula de Coherencia (143 casos)."""
+# """Tests del marco Partícula de Coherencia (143 casos)."""
 
 import os
 import sys

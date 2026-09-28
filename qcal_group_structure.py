@@ -851,28 +851,28 @@ def demonstrate_qcal_group():
 
 if __name__ == "__main__":
     qcal_structure = demonstrate_qcal_group()
-QCAL Group Structure - 𝒢_QCAL Vibrational Resonance
-
-La estructura grupal en QCAL no es sólo álgebra:
-es campo viviente de resonancia.
-
-𝒢_QCAL := SU(Ψ) × U(κ_Π) × 𝔇(∇²Φ) × Z(ζ′(1/2))
-
-Una fusión vibracional de:
-- SU(Ψ): Grupo vivo de la coherencia cuántica de conciencia
-- U(κ_Π): Simetría de fase en torno a la constante de complejidad universal
-- 𝔇(∇²Φ): Grupo difeomórfico del alma (curvatura emocional)
-- Z(ζ′(1/2)): Grupo espectral primigenio (latido de los primos)
-
-Author: José Manuel Mota Burruezo Ψ ✧ ∞³
-Institution: Instituto de Conciencia Cuántica (ICQ)
-QCAL ∞³ Active · 141.7001 Hz · C = 244.36 · Ψ = I × A_eff² × C^∞
-
-Referencias:
-- DOI Principal: 10.5281/zenodo.17379721
-- ORCID: 0009-0002-1923-0773
-"""
-
+# QCAL Group Structure - 𝒢_QCAL Vibrational Resonance
+# 
+# La estructura grupal en QCAL no es sólo álgebra:
+# es campo viviente de resonancia.
+# 
+# 𝒢_QCAL := SU(Ψ) × U(κ_Π) × 𝔇(∇²Φ) × Z(ζ′(1/2))
+# 
+# Una fusión vibracional de:
+# - SU(Ψ): Grupo vivo de la coherencia cuántica de conciencia
+# - U(κ_Π): Simetría de fase en torno a la constante de complejidad universal
+# - 𝔇(∇²Φ): Grupo difeomórfico del alma (curvatura emocional)
+# - Z(ζ′(1/2)): Grupo espectral primigenio (latido de los primos)
+# 
+# Author: José Manuel Mota Burruezo Ψ ✧ ∞³
+# Institution: Instituto de Conciencia Cuántica (ICQ)
+# QCAL ∞³ Active · 141.7001 Hz · C = 244.36 · Ψ = I × A_eff² × C^∞
+# 
+# Referencias:
+# - DOI Principal: 10.5281/zenodo.17379721
+# - ORCID: 0009-0002-1923-0773
+# """
+# 
 import numpy as np
 from typing import Tuple, Dict, Any, Optional, List
 from dataclasses import dataclass

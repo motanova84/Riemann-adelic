@@ -303,28 +303,28 @@ class TestIntegration:
         assert 'paley_wiener' in result.details
 
 
-Test Suite for Unconditional Spectral Equivalence Demonstration
-
-This test module validates the numerical demonstration of the spectral
-equivalence between the H_Ψ operator and Riemann zeta zeros.
-
-Test Categories:
-1. Core mathematical constructs (kernels, operators)
-2. Self-adjointness verification
-3. Spectral correspondence with zeta zeros
-4. Numerical stability and precision
-
-Author: José Manuel Mota Burruezo Ψ ✧ ∞³
-Instituto de Conciencia Cuántica (ICQ)
-ORCID: 0009-0002-1923-0773
-DOI: 10.5281/zenodo.17379721
-Date: January 2026
-
-QCAL Integration:
-    Base frequency: 141.7001 Hz
-    Coherence: C = 244.36
-"""
-
+# Test Suite for Unconditional Spectral Equivalence Demonstration
+# 
+# This test module validates the numerical demonstration of the spectral
+# equivalence between the H_Ψ operator and Riemann zeta zeros.
+# 
+# Test Categories:
+# 1. Core mathematical constructs (kernels, operators)
+# 2. Self-adjointness verification
+# 3. Spectral correspondence with zeta zeros
+# 4. Numerical stability and precision
+# 
+# Author: José Manuel Mota Burruezo Ψ ✧ ∞³
+# Instituto de Conciencia Cuántica (ICQ)
+# ORCID: 0009-0002-1923-0773
+# DOI: 10.5281/zenodo.17379721
+# Date: January 2026
+# 
+# QCAL Integration:
+#     Base frequency: 141.7001 Hz
+#     Coherence: C = 244.36
+# """
+# 
 import pytest
 import numpy as np
 from numpy.testing import assert_allclose, assert_array_less

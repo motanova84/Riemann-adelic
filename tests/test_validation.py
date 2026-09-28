@@ -103,8 +103,6 @@ def test_weil_formula_basic():
     mp.mp.dps = 15  # Lower precision for speed
     
     try:
-        error, relative_error, left_side, right_side = weil_explicit_formula(
-        error, rel_error, left_side, right_side, simulated_parts = weil_explicit_formula(
         error, relative_error, left_side, right_side, corrected_zeros = weil_explicit_formula(
             zeros, primes, f, max_zeros=len(zeros), t_max=10, precision=15
         )
@@ -115,14 +113,14 @@ def test_weil_formula_basic():
         assert mp.isfinite(left_side), "Left side should be finite"  
         assert mp.isfinite(right_side), "Right side should be finite"
         assert error >= 0, "Error should be non-negative"
-        assert len(simulated_parts) > 0, "Should have simulated parts"
+        assert len(corrected_zeros) > 0, "Should have simulated parts"
         
-        print(f"Weil formula test: error={error}, rel_error={relative_error}, left={left_side}, right={right_side}")
-        print(f"Weil formula test: error={error}, rel_error={rel_error}, left={left_side}, right={right_side}")
+        print(f"Weil formula test: error={error}, relative_error={relative_error}, left={left_side}, right={right_side}")
+        print(f"Weil formula test: error={error}, relative_error={relative_error}, left={left_side}, right={right_side}")
         assert relative_error >= 0, "Relative error should be non-negative"
         assert len(corrected_zeros) > 0, "Should have corrected zeros"
         
-        print(f"Weil formula test: error={error}, rel_error={relative_error}, left={left_side}, right={right_side}")
+        print(f"Weil formula test: error={error}, relative_error={relative_error}, left={left_side}, right={right_side}")
         print(f"Corrected zeros (first 3): {corrected_zeros[:3]}")
         
         # CRITICAL: Apply scientific tolerances for number theory
@@ -197,7 +195,7 @@ def test_vadic_weil_formula_integration():
     mp.mp.dps = 15
     
     try:
-        error, rel_error, left_side, right_side, corrected_zeros = weil_explicit_formula(
+        error, relative_error, left_side, right_side, corrected_zeros = weil_explicit_formula(
             actual_zeros, primes, f, max_zeros=3, t_max=5, precision=15
         )
         
@@ -463,7 +461,7 @@ def test_p_adic_correction_precision():
         # Check that correction brings sides closer together (basic sanity check)
         assert mp.isfinite(left_side) and mp.isfinite(right_side), "Sides should be finite"
         
-        print(f"p-adic precision test: rel_error={float(relative_error):.2e}")
+        print(f"p-adic precision test: relative_error={float(relative_error):.2e}")
         print(f"  left_side={left_side}, right_side={right_side}")
         
     except Exception as e:
@@ -480,7 +478,7 @@ def test_p_adic_weil_formula_vs_original():
     mp.mp.dps = 15
     
     # Test enhanced version
-    error_enhanced, rel_error_enhanced, left_enh, right_enh, _ = weil_explicit_formula(
+    error_enhanced, relative_error_enhanced, left_enh, right_enh, _ = weil_explicit_formula(
         zeros, primes, f, max_zeros=len(zeros), t_max=10, precision=15
     )
     
@@ -495,13 +493,13 @@ def test_p_adic_weil_formula_vs_original():
     right_orig = prime_sum + arch_factor
     
     error_orig = abs(left_orig - right_orig)
-    rel_error_orig = error_orig / abs(left_orig) if abs(left_orig) > 0 else float('inf')
+    relative_error_orig = error_orig / abs(left_orig) if abs(left_orig) > 0 else float('inf')
     
     # Both versions should produce finite results
-    assert mp.isfinite(rel_error_enhanced), "Enhanced formula should produce finite error"
-    assert mp.isfinite(rel_error_orig), "Original formula should produce finite error"
+    assert mp.isfinite(relative_error_enhanced), "Enhanced formula should produce finite error"
+    assert mp.isfinite(relative_error_orig), "Original formula should produce finite error"
     
-    print(f"Comparison test - Original: {float(rel_error_orig):.4f}, Enhanced: {float(rel_error_enhanced):.4f}")
+    print(f"Comparison test - Original: {float(relative_error_orig):.4f}, Enhanced: {float(relative_error_enhanced):.4f}")
 
 
 if __name__ == "__main__":
