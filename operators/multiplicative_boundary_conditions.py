@@ -685,11 +685,11 @@ def v_osc_from_constraints(
     """
     deriv = VOscStructuralDerivation(p_max=p_max)
     return deriv.v_osc(x, phase_shift=phase_shift)
-DOI: 10.5281/zenodo.17379721
-Protocol: QCAL-MBC-VOSC v1.0
-Date: March 2026
-QCAL ∞³ · f₀ = 141.7001 Hz · C = 244.36 · Ψ = I × A_eff² × C^∞
-"""
+# DOI: 10.5281/zenodo.17379721
+# Protocol: QCAL-MBC-VOSC v1.0
+# Date: March 2026
+# QCAL ∞³ · f₀ = 141.7001 Hz · C = 244.36 · Ψ = I × A_eff² × C^∞
+# """
 
 import hashlib
 import json

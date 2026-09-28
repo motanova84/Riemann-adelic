@@ -3,7 +3,10 @@
 from __future__ import annotations
 
 import hashlib
+import os
+import sys
 
+import numpy as np
 import pytest
 
 from physics.particula_coherencia import (
@@ -12,14 +15,7 @@ from physics.particula_coherencia import (
     NavierStokesAdelico,
     ParticulaCoherencia,
     SustratoCuantico,
-#!/usr/bin/env python3
-"""Tests del marco Partícula de Coherencia (143 casos)."""
-
-import os
-import sys
-
-import numpy as np
-import pytest
+)
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 

@@ -413,14 +413,14 @@ def hierarchy():
 
 if __name__ == "__main__":
     pytest.main([__file__, "-v", "--tb=short"])
-Tests for the Unified Hierarchy Framework
-
-This test suite validates that all five systems correctly converge to ζ(s)
-as the fundamental base.
-
-Author: José Manuel Mota Burruezo Ψ ✧ ∞³
-Institution: Instituto de Conciencia Cuántica (ICQ)
-"""
+# Tests for the Unified Hierarchy Framework
+# 
+# This test suite validates that all five systems correctly converge to ζ(s)
+# as the fundamental base.
+# 
+# Author: José Manuel Mota Burruezo Ψ ✧ ∞³
+# Institution: Instituto de Conciencia Cuántica (ICQ)
+# """
 
 import pytest
 import mpmath as mp

@@ -38,32 +38,47 @@ DOI: 10.5281/zenodo.17379721
 import numpy as np
 import pytest
 
-from physics.simetria_pt_resonancia import (
-    ConstantesPT,
-    CONST,
 import math
-import pytest
-import numpy as np
 
 from physics.simetria_pt_resonancia import (
+    CONST,
     ConstantesPT,
     OperadorNHPT,
     EspectroPTReal,
     RiemannLineaCritica,
     CitoplasmaHolografico,
-    EstabilizadorPT,
-    SistemaResonanciaPT,
-    simular_resonancia_pt,
-    simetria_pt_resonancia_activar,
-)
-
     DiagnosticoPT,
     EstabilizadorPT,
     SistemaResonanciaPT,
-    simetria_pt_resonancia_activar,
     simular_resonancia_pt,
+    simetria_pt_resonancia_activar,
 )
-
+# from physics.simetria_pt_resonancia import (
+#     ConstantesPT,
+#     CONST,
+# import math
+# import pytest
+# import numpy as np
+# 
+# from physics.simetria_pt_resonancia import (
+#     ConstantesPT,
+#     OperadorNHPT,
+#     EspectroPTReal,
+#     RiemannLineaCritica,
+#     CitoplasmaHolografico,
+#     EstabilizadorPT,
+#     SistemaResonanciaPT,
+#     simular_resonancia_pt,
+#     simetria_pt_resonancia_activar,
+# )
+# 
+#     DiagnosticoPT,
+#     EstabilizadorPT,
+#     SistemaResonanciaPT,
+#     simetria_pt_resonancia_activar,
+#     simular_resonancia_pt,
+# )
+# 
 # ---------------------------------------------------------------------------
 # Module-level constants used across multiple tests
 # ---------------------------------------------------------------------------
