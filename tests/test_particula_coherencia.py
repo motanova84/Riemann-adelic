@@ -3,21 +3,33 @@
 from __future__ import annotations
 
 import hashlib
+import importlib.util
 import os
 import sys
+from pathlib import Path
 
 import numpy as np
 import pytest
 
-from physics.particula_coherencia import (
-    AcoplamientoHiggsPC,
-    FotonFaseCoherente,
-    NavierStokesAdelico,
-    ParticulaCoherencia,
-    SustratoCuantico,
-)
-
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+_PHYSICS_PARTICULA_PATH = Path(__file__).resolve().parents[1] / "physics" / "particula_coherencia.py"
+_PHYSICS_PARTICULA_SPEC = importlib.util.spec_from_file_location(
+    "physics_particula_coherencia_direct",
+    _PHYSICS_PARTICULA_PATH,
+)
+assert _PHYSICS_PARTICULA_SPEC is not None
+assert _PHYSICS_PARTICULA_SPEC.loader is not None
+_physics_particula = importlib.util.module_from_spec(_PHYSICS_PARTICULA_SPEC)
+sys.modules[_PHYSICS_PARTICULA_SPEC.name] = _physics_particula
+_PHYSICS_PARTICULA_SPEC.loader.exec_module(_physics_particula)
+
+CompatAcoplamientoHiggsPC = _physics_particula.AcoplamientoHiggsPC
+CompatFotonFaseCoherente = _physics_particula.FotonFaseCoherente
+CompatNavierStokesAdelico = _physics_particula.NavierStokesAdelico
+CompatParticulaCoherencia = _physics_particula.ParticulaCoherencia
+CompatSustratoCuantico = _physics_particula.SustratoCuantico
+ejecutar_sustrato_compat = _physics_particula.ejecutar_sustrato
 
 from particula_coherencia import (  # noqa: E402
     A_EFF_DEFAULT,
@@ -37,12 +49,12 @@ from particula_coherencia import (  # noqa: E402
 
 
 def test_navier_stokes_adelico_returns_stationary_flow() -> None:
-    model = NavierStokesAdelico()
+    model = CompatNavierStokesAdelico()
     assert model.solve_flow(v=[1.0], p=[0.0]) == "Flujo Coherente Estacionario"
 
 
 def test_navier_stokes_adelico_rejects_invalid_inputs() -> None:
-    model = NavierStokesAdelico()
+    model = CompatNavierStokesAdelico()
     with pytest.raises(ValueError, match="non-empty"):
         model.solve_flow(v=[], p=[])
     with pytest.raises(ValueError, match="matching shapes"):
@@ -50,7 +62,7 @@ def test_navier_stokes_adelico_rejects_invalid_inputs() -> None:
 
 
 def test_acoplamiento_higgs_reduccion_formula() -> None:
-    higgs = AcoplamientoHiggsPC(kappa=0.053)
+    higgs = CompatAcoplamientoHiggsPC(kappa=0.053)
     assert higgs.calcular_reduccion(a_eff=141.7001, f0=141.7001) == pytest.approx(0.053)
 
 
@@ -63,18 +75,18 @@ def test_acoplamiento_higgs_reduccion_formula() -> None:
     ],
 )
 def test_acoplamiento_higgs_boundary_cases(a_eff: float, f0: float, expected: float) -> None:
-    higgs = AcoplamientoHiggsPC(kappa=0.053)
+    higgs = CompatAcoplamientoHiggsPC(kappa=0.053)
     assert higgs.calcular_reduccion(a_eff=a_eff, f0=f0) == pytest.approx(expected)
 
 
 def test_acoplamiento_higgs_reduccion_rejects_zero_f0() -> None:
-    higgs = AcoplamientoHiggsPC()
+    higgs = CompatAcoplamientoHiggsPC()
     with pytest.raises(ValueError, match="f0 must be non-zero"):
         higgs.calcular_reduccion(a_eff=1.0, f0=0.0)
 
 
 def test_foton_r_symb_matches_expected_scale() -> None:
-    foton = FotonFaseCoherente(psi=0.999999)
+    foton = CompatFotonFaseCoherente(psi=0.999999)
     assert foton.r_symb(141.7001) == pytest.approx(991.8997092993)
 
 
@@ -87,12 +99,12 @@ def test_foton_r_symb_matches_expected_scale() -> None:
     ],
 )
 def test_foton_r_symb_boundary_cases(f0: float, expected: float) -> None:
-    foton = FotonFaseCoherente(psi=0.999999)
+    foton = CompatFotonFaseCoherente(psi=0.999999)
     assert foton.r_symb(f0) == pytest.approx(expected)
 
 
 def test_ejecutar_sustrato_returns_sha256_sealed_payload(capsys: pytest.CaptureFixture[str]) -> None:
-    result = ejecutar_sustrato(verbose=True)
+    result = ejecutar_sustrato_compat(verbose=True)
     captured = capsys.readouterr().out
 
     assert "Ψ_global:" in captured
@@ -104,10 +116,10 @@ def test_ejecutar_sustrato_returns_sha256_sealed_payload(capsys: pytest.CaptureF
 
 
 def test_sustrato_has_six_nodes_and_expected_psi() -> None:
-    sustrato = SustratoCuantico()
+    sustrato = CompatSustratoCuantico()
     assert len(sustrato.nodos) == 6
     assert sustrato.psi_global() == pytest.approx(0.999999)
-    assert ParticulaCoherencia().f0 == pytest.approx(141.7001)
+    assert CompatParticulaCoherencia().f0 == pytest.approx(141.7001)
 @pytest.mark.parametrize("case", range(8))
 def test_constants_values(case: int) -> None:
     if case == 0:
