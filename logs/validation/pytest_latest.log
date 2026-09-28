@@ -1,0 +1,12 @@
+2026-09-28 08:59:05 - INFO     - qcal.test_session_20260928_085904 - 
+2026-09-28 08:59:05 - INFO     - qcal.test_session_20260928_085904 - ================================================================================
+2026-09-28 08:59:05 - INFO     - qcal.test_session_20260928_085904 - Test: tests/test_validacion_visual_weil_notebook.py::test_validacion_visual_weil_notebook_is_executable
+2026-09-28 08:59:05 - INFO     - qcal.test_session_20260928_085904 - Location: tests/test_validacion_visual_weil_notebook.py:7
+2026-09-28 08:59:05 - INFO     - qcal.test_session_20260928_085904 - ================================================================================
+2026-09-28 08:59:05 - INFO     - qcal.test_session_20260928_085904 - ✅ PASSED: tests/test_validacion_visual_weil_notebook.py::test_validacion_visual_weil_notebook_is_executable (0.001s)
+2026-09-28 08:59:05 - INFO     - qcal.test_session_20260928_085904 - 
+2026-09-28 08:59:05 - INFO     - qcal.test_session_20260928_085904 - ================================================================================
+2026-09-28 08:59:05 - INFO     - qcal.test_session_20260928_085904 - Test: tests/test_validacion_visual_weil_notebook.py::test_validate_explicit_formula_help_lists_weil_flag
+2026-09-28 08:59:05 - INFO     - qcal.test_session_20260928_085904 - Location: tests/test_validacion_visual_weil_notebook.py:22
+2026-09-28 08:59:05 - INFO     - qcal.test_session_20260928_085904 - ================================================================================
+2026-09-28 08:59:06 - INFO     - qcal.test_session_20260928_085904 - ✅ PASSED: tests/test_validacion_visual_weil_notebook.py::test_validate_explicit_formula_help_lists_weil_flag (1.569s)
