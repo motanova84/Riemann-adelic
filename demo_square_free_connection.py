@@ -28,24 +28,25 @@ QCAL Frequency: f₀ = 141.7001 Hz
 import argparse
 import sys
 from pathlib import Path
+
 import mpmath as mp
 
-# Add current directory to path
-sys.path.append('.')
-
 from utils.square_free_connection import SquareFreeConnection, demonstrate_square_free_connection
+
+# Add current directory to path
+sys.path.append(".")
 
 
 def extended_demonstration(dps: int = 30, verbose: bool = True):
     """
     Extended demonstration with additional visualizations and analysis.
-    
+
     Args:
         dps: Decimal precision
         verbose: Print detailed output
     """
     sf = SquareFreeConnection(dps=dps)
-    
+
     print("=" * 80)
     print("🌀 EXTENDED SQUARE-FREE ↔ ζ(s) DEMONSTRATION")
     print("=" * 80)
@@ -54,12 +55,12 @@ def extended_demonstration(dps: int = 30, verbose: bool = True):
     print(f"Fundamental Frequency: f₀ = 141.7001 Hz")
     print(f"Coherence Constant: C = 244.36")
     print()
-    
+
     # 1. Run basic demonstration
     print("▶ Running basic demonstration...")
     print()
     basic_results = demonstrate_square_free_connection(dps=dps, verbose=verbose)
-    
+
     # 2. Additional analysis: RH connection
     if verbose:
         print("\n" + "=" * 80)
@@ -71,24 +72,24 @@ def extended_demonstration(dps: int = 30, verbose: bool = True):
         print()
         print("Testing error growth rate:")
         print("-" * 40)
-    
+
     x_values = [100, 500, 1000, 5000, 10000]
     errors_normalized = []
-    
+
     for x in x_values:
         bound = sf.landau_error_bound(x)
-        normalized = float(bound['normalized_error'])
+        normalized = float(bound["normalized_error"])
         errors_normalized.append((x, normalized))
-        
+
         if verbose:
             print(f"  x = {x:6d}: error/√x = {normalized:+7.4f}")
-    
+
     if verbose:
         print()
         print("  If RH is true: error/√x should remain bounded as x → ∞")
         print("  Observed: error/√x oscillates but stays bounded ✓")
         print()
-    
+
     # 3. Euler product connection
     if verbose:
         print("=" * 80)
@@ -104,7 +105,7 @@ def extended_demonstration(dps: int = 30, verbose: bool = True):
         print("This connects to square-free probability:")
         print("  P(n is square-free) = ∏_p (1 - p^{-2}) = 1/ζ(2) = 6/π²")
         print()
-    
+
     # 4. Adelic interpretation
     if verbose:
         print("=" * 80)
@@ -120,26 +121,26 @@ def extended_demonstration(dps: int = 30, verbose: bool = True):
         print("S-finite systems:")
         print("  For S = {p₁, ..., pₖ}, μ_S(n) restricts to S-primes only")
         print()
-    
+
     # Test S-finite for multiple prime sets
     if verbose:
         print("Examples with different S-finite sets:")
         print("-" * 40)
-        
+
         S_sets = [
             ([2], "S = {2}"),
             ([2, 3], "S = {2, 3}"),
             ([2, 3, 5], "S = {2, 3, 5}"),
         ]
-        
+
         test_n = 30  # 2*3*5
-        
+
         for S, label in S_sets:
             mu_S = sf.adelic_square_free_measure(S, test_n)
             print(f"  {label:15s}: μ_S({test_n}) = {mu_S:2d}")
-        
+
         print()
-    
+
     # 5. Connection to A₀ operator
     if verbose:
         print("=" * 80)
@@ -163,7 +164,7 @@ def extended_demonstration(dps: int = 30, verbose: bool = True):
         print("  • O(√x) error ⟺ zeros on critical line Re(s) = 1/2")
         print("  • Adelic symmetry enforces spectral localization")
         print()
-    
+
     # 6. Summary
     print("=" * 80)
     print("📊 DEMONSTRATION SUMMARY")
@@ -196,26 +197,26 @@ def extended_demonstration(dps: int = 30, verbose: bool = True):
     print("♾️³ QCAL Coherence Confirmed: C = 244.36")
     print("🎵 Fundamental Frequency: f₀ = 141.7001 Hz")
     print("=" * 80)
-    
+
     return basic_results
 
 
 def save_results_to_file(results: dict, output_file: Path):
     """
     Save demonstration results to JSON file.
-    
+
     Args:
         results: Demonstration results dictionary
         output_file: Path to output file
     """
     import json
     from datetime import datetime
-    
+
     # Convert mpmath objects to float for JSON serialization
     def convert_mpmath(obj):
         if isinstance(obj, (mp.mpf, mp.mpc)):
             if isinstance(obj, mp.mpc):
-                return {'real': float(obj.real), 'imag': float(obj.imag)}
+                return {"real": float(obj.real), "imag": float(obj.imag)}
             return float(obj)
         elif isinstance(obj, dict):
             return {k: convert_mpmath(v) for k, v in obj.items()}
@@ -223,28 +224,28 @@ def save_results_to_file(results: dict, output_file: Path):
             return [convert_mpmath(item) for item in obj]
         else:
             return obj
-    
+
     output_data = {
-        'timestamp': datetime.now().isoformat(),
-        'qcal_framework': 'QCAL ∞³',
-        'frequency': '141.7001 Hz',
-        'coherence': 'C = 244.36',
-        'author': 'José Manuel Mota Burruezo Ψ ✧ ∞³',
-        'results': convert_mpmath(results)
+        "timestamp": datetime.now().isoformat(),
+        "qcal_framework": "QCAL ∞³",
+        "frequency": "141.7001 Hz",
+        "coherence": "C = 244.36",
+        "author": "José Manuel Mota Burruezo Ψ ✧ ∞³",
+        "results": convert_mpmath(results),
     }
-    
+
     output_file.parent.mkdir(parents=True, exist_ok=True)
-    
-    with open(output_file, 'w') as f:
+
+    with open(output_file, "w") as f:
         json.dump(output_data, f, indent=2)
-    
+
     print(f"\n📁 Results saved to: {output_file}")
 
 
 def main():
     """Main entry point for demonstration."""
     parser = argparse.ArgumentParser(
-        description='Square-Free ↔ ζ(s) Connection Demonstration (QCAL ∞³)',
+        description="Square-Free ↔ ζ(s) Connection Demonstration (QCAL ∞³)",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
@@ -256,32 +257,28 @@ Examples:
 QCAL ∞³ Framework
 Author: José Manuel Mota Burruezo Ψ ✧ ∞³
 Institution: Instituto de Conciencia Cuántica (ICQ)
-        """
+        """,
     )
-    
-    parser.add_argument('--precision', type=int, default=30,
-                        help='Decimal precision (default: 30)')
-    parser.add_argument('--verbose', action='store_true', default=True,
-                        help='Detailed output (default: True)')
-    parser.add_argument('--save', type=str, metavar='FILE',
-                        help='Save results to JSON file')
-    parser.add_argument('--quiet', action='store_true',
-                        help='Suppress detailed output')
-    
+
+    parser.add_argument("--precision", type=int, default=30, help="Decimal precision (default: 30)")
+    parser.add_argument("--verbose", action="store_true", default=True, help="Detailed output (default: True)")
+    parser.add_argument("--save", type=str, metavar="FILE", help="Save results to JSON file")
+    parser.add_argument("--quiet", action="store_true", help="Suppress detailed output")
+
     args = parser.parse_args()
-    
+
     verbose = args.verbose and not args.quiet
-    
+
     # Run demonstration
     results = extended_demonstration(dps=args.precision, verbose=verbose)
-    
+
     # Save results if requested
     if args.save:
         output_file = Path(args.save)
         save_results_to_file(results, output_file)
-    
+
     print("\n✅ Demonstration complete!")
-    
+
     return 0
 
 
