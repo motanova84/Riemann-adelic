@@ -892,6 +892,7 @@ if __name__ == "__main__":
     parser.add_argument('--K_powers', type=int, default=10, help='Maximum powers K for prime sum')
     parser.add_argument('--integration_T', type=int, default=None, help='Integration parameter T (auto if None)')
     parser.add_argument('--integration_limit', type=float, default=5.0, help='Integration limit u')
+    parser.add_argument('--use_weil_formula', action='store_true', help='Use Weil explicit formula implementation')
     
     args = parser.parse_args()
     
@@ -905,8 +906,6 @@ if __name__ == "__main__":
     T = args.integration_T if args.integration_T else min(100, max(50, args.max_zeros // 10))  # More conservative T scaling
     lim_u = args.integration_limit  # User-configurable integration limit
     target_precision = mp.mpf(args.error_threshold)  # User-configurable error threshold
-    parser.add_argument('--use_weil_formula', action='store_true', help='Use Weil explicit formula implementation')
-    
     # Check if running the simple example from problem statement
     if len(sys.argv) == 1:
         # Run the example from the problem statement

@@ -1,29 +1,13 @@
-Test Name,Status,Execution Time (s),Error
-Step 1: Axioms → Lemmas,PASSED,5.4836273193359375e-06,
-Step 2: Archimedean Rigidity,PASSED,0.00010204315185546875,
-Step 3: Paley-Wiener Uniqueness,PASSED,3.5762786865234375e-06,
-Step 4A: de Branges Localization,PASSED,0.00026154518127441406,
-Step 4B: Weil-Guinand Localization,PASSED,2.1457672119140625e-06,
-Step 5: Coronación Integration,PASSED,9.72747802734375e-05,
-Stress: Spectral Measure Perturbation,PASSED,4.0531158447265625e-05,
-Stress: Growth Bounds Validation,PASSED,3.5762786865234375e-06,
-Stress: Zero Subsets Consistency,PASSED,7.534027099609375e-05,
-Stress: Proof Certificate Generation,PASSED,0.00012135505676269531,
-Integration: Explicit Formula Integration,PASSED,1.8287525177001953,
-Calibrated Explicit Formula Audit,PASSED,0,
-YOLO Verification,PASSED,0.0,
-Riemann-Zeta Synchrony,PASSED,0.0002269744873046875,
-H_DS Verification,PASSED,0,
-Arithmetic Fractal Verification,PASSED,0,
-Aritmology Verification,PASSED,0,
-Zeta Quantum Wave Verification,PASSED,0,
-Arpeth Bioinformatics Verification,PARTIAL,0,
-Discovery Hierarchy Validation,PASSED,0,
-Infinite Zeros Verification,PASSED,0,
-Spectral Identification Theorem,PASSED,0,
-SAT Certificates Verification,PASSED,0.0,
-QCAL-∞³-SPECTRAL Certificate,PASSED,0,
-RH_PROVED Framework,PASSED,0,
-Trinity_QCAL Validation,PASSED,0,
-Trinity + Spectral Hamiltonian,PASSED,0.09558868408203125,
-A+B Operational Report,PARTIAL,0,
+parameter,value
+arithmetic_side,1.054827147064817692671492696688074710545
+zero_side,-0.00003103975820836576498916168247892393100577
+absolute_error,1.054858186823026058436481858370553634476
+relative_error,1.000029426393030116444366884539476324282
+validation_status,FAILED
+target_precision,0.0000009999999999999999547481118258862586856139
+P,2000
+K,5
+T,10
+max_zeros,200
+precision_dps,40
+lim_u,3.0
