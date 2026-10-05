@@ -1,0 +1,94 @@
+2026-10-05 14:58:40 - INFO     - qcal.test_session_20261005_145840 - 
+2026-10-05 14:58:40 - INFO     - qcal.test_session_20261005_145840 - ================================================================================
+2026-10-05 14:58:40 - INFO     - qcal.test_session_20261005_145840 - Test: tests/test_coronacion_v5.py::TestCoronacionV5::test_step1_axioms_to_lemmas
+2026-10-05 14:58:40 - INFO     - qcal.test_session_20261005_145840 - Location: tests/test_coronacion_v5.py:33
+2026-10-05 14:58:40 - INFO     - qcal.test_session_20261005_145840 - ================================================================================
+2026-10-05 14:58:40 - INFO     - qcal.test_session_20261005_145840 - ✅ PASSED: tests/test_coronacion_v5.py::TestCoronacionV5::test_step1_axioms_to_lemmas (0.000s)
+2026-10-05 14:58:40 - INFO     - qcal.test_session_20261005_145840 - 
+2026-10-05 14:58:40 - INFO     - qcal.test_session_20261005_145840 - ================================================================================
+2026-10-05 14:58:40 - INFO     - qcal.test_session_20261005_145840 - Test: tests/test_coronacion_v5.py::TestCoronacionV5::test_step2_archimedean_rigidity
+2026-10-05 14:58:40 - INFO     - qcal.test_session_20261005_145840 - Location: tests/test_coronacion_v5.py:44
+2026-10-05 14:58:40 - INFO     - qcal.test_session_20261005_145840 - ================================================================================
+2026-10-05 14:58:40 - INFO     - qcal.test_session_20261005_145840 - ✅ PASSED: tests/test_coronacion_v5.py::TestCoronacionV5::test_step2_archimedean_rigidity (0.000s)
+2026-10-05 14:58:40 - INFO     - qcal.test_session_20261005_145840 - 
+2026-10-05 14:58:40 - INFO     - qcal.test_session_20261005_145840 - ================================================================================
+2026-10-05 14:58:40 - INFO     - qcal.test_session_20261005_145840 - Test: tests/test_coronacion_v5.py::TestCoronacionV5::test_step3_paley_wiener_uniqueness
+2026-10-05 14:58:40 - INFO     - qcal.test_session_20261005_145840 - Location: tests/test_coronacion_v5.py:56
+2026-10-05 14:58:40 - INFO     - qcal.test_session_20261005_145840 - ================================================================================
+2026-10-05 14:58:40 - INFO     - qcal.test_session_20261005_145840 - ✅ PASSED: tests/test_coronacion_v5.py::TestCoronacionV5::test_step3_paley_wiener_uniqueness (0.000s)
+2026-10-05 14:58:40 - INFO     - qcal.test_session_20261005_145840 - 
+2026-10-05 14:58:40 - INFO     - qcal.test_session_20261005_145840 - ================================================================================
+2026-10-05 14:58:40 - INFO     - qcal.test_session_20261005_145840 - Test: tests/test_coronacion_v5.py::TestCoronacionV5::test_step4_zero_localization_de_branges
+2026-10-05 14:58:40 - INFO     - qcal.test_session_20261005_145840 - Location: tests/test_coronacion_v5.py:70
+2026-10-05 14:58:40 - INFO     - qcal.test_session_20261005_145840 - ================================================================================
+2026-10-05 14:58:40 - INFO     - qcal.test_session_20261005_145840 - ✅ PASSED: tests/test_coronacion_v5.py::TestCoronacionV5::test_step4_zero_localization_de_branges (0.000s)
+2026-10-05 14:58:40 - INFO     - qcal.test_session_20261005_145840 - 
+2026-10-05 14:58:40 - INFO     - qcal.test_session_20261005_145840 - ================================================================================
+2026-10-05 14:58:40 - INFO     - qcal.test_session_20261005_145840 - Test: tests/test_coronacion_v5.py::TestCoronacionV5::test_step4_zero_localization_weil_guinaud
+2026-10-05 14:58:40 - INFO     - qcal.test_session_20261005_145840 - Location: tests/test_coronacion_v5.py:81
+2026-10-05 14:58:40 - INFO     - qcal.test_session_20261005_145840 - ================================================================================
+2026-10-05 14:58:40 - INFO     - qcal.test_session_20261005_145840 - ✅ PASSED: tests/test_coronacion_v5.py::TestCoronacionV5::test_step4_zero_localization_weil_guinaud (0.000s)
+2026-10-05 14:58:40 - INFO     - qcal.test_session_20261005_145840 - 
+2026-10-05 14:58:40 - INFO     - qcal.test_session_20261005_145840 - ================================================================================
+2026-10-05 14:58:40 - INFO     - qcal.test_session_20261005_145840 - Test: tests/test_coronacion_v5.py::TestCoronacionV5::test_step5_coronation_integration
+2026-10-05 14:58:40 - INFO     - qcal.test_session_20261005_145840 - Location: tests/test_coronacion_v5.py:89
+2026-10-05 14:58:40 - INFO     - qcal.test_session_20261005_145840 - ================================================================================
+2026-10-05 14:58:40 - INFO     - qcal.test_session_20261005_145840 - ✅ PASSED: tests/test_coronacion_v5.py::TestCoronacionV5::test_step5_coronation_integration (0.000s)
+2026-10-05 14:58:40 - INFO     - qcal.test_session_20261005_145840 - 
+2026-10-05 14:58:40 - INFO     - qcal.test_session_20261005_145840 - ================================================================================
+2026-10-05 14:58:40 - INFO     - qcal.test_session_20261005_145840 - Test: tests/test_coronacion_v5.py::TestCoronacionV5::test_stress_spectral_measure_perturbation
+2026-10-05 14:58:40 - INFO     - qcal.test_session_20261005_145840 - Location: tests/test_coronacion_v5.py:113
+2026-10-05 14:58:40 - INFO     - qcal.test_session_20261005_145840 - ================================================================================
+2026-10-05 14:58:40 - INFO     - qcal.test_session_20261005_145840 - ✅ PASSED: tests/test_coronacion_v5.py::TestCoronacionV5::test_stress_spectral_measure_perturbation (0.000s)
+2026-10-05 14:58:40 - INFO     - qcal.test_session_20261005_145840 - 
+2026-10-05 14:58:40 - INFO     - qcal.test_session_20261005_145840 - ================================================================================
+2026-10-05 14:58:40 - INFO     - qcal.test_session_20261005_145840 - Test: tests/test_coronacion_v5.py::TestCoronacionV5::test_stress_growth_bounds
+2026-10-05 14:58:40 - INFO     - qcal.test_session_20261005_145840 - Location: tests/test_coronacion_v5.py:124
+2026-10-05 14:58:40 - INFO     - qcal.test_session_20261005_145840 - ================================================================================
+2026-10-05 14:58:40 - INFO     - qcal.test_session_20261005_145840 - ✅ PASSED: tests/test_coronacion_v5.py::TestCoronacionV5::test_stress_growth_bounds (0.000s)
+2026-10-05 14:58:40 - INFO     - qcal.test_session_20261005_145840 - 
+2026-10-05 14:58:40 - INFO     - qcal.test_session_20261005_145840 - ================================================================================
+2026-10-05 14:58:40 - INFO     - qcal.test_session_20261005_145840 - Test: tests/test_coronacion_v5.py::TestCoronacionV5::test_stress_zero_subsets
+2026-10-05 14:58:40 - INFO     - qcal.test_session_20261005_145840 - Location: tests/test_coronacion_v5.py:136
+2026-10-05 14:58:40 - INFO     - qcal.test_session_20261005_145840 - ================================================================================
+2026-10-05 14:58:40 - INFO     - qcal.test_session_20261005_145840 - ✅ PASSED: tests/test_coronacion_v5.py::TestCoronacionV5::test_stress_zero_subsets (0.000s)
+2026-10-05 14:58:40 - INFO     - qcal.test_session_20261005_145840 - 
+2026-10-05 14:58:40 - INFO     - qcal.test_session_20261005_145840 - ================================================================================
+2026-10-05 14:58:40 - INFO     - qcal.test_session_20261005_145840 - Test: tests/test_coronacion_v5.py::TestCoronacionV5::test_proof_certificate_generation
+2026-10-05 14:58:40 - INFO     - qcal.test_session_20261005_145840 - Location: tests/test_coronacion_v5.py:154
+2026-10-05 14:58:40 - INFO     - qcal.test_session_20261005_145840 - ================================================================================
+2026-10-05 14:58:40 - INFO     - qcal.test_session_20261005_145840 - ✅ PASSED: tests/test_coronacion_v5.py::TestCoronacionV5::test_proof_certificate_generation (0.000s)
+2026-10-05 14:58:40 - INFO     - qcal.test_session_20261005_145840 - 
+2026-10-05 14:58:40 - INFO     - qcal.test_session_20261005_145840 - ================================================================================
+2026-10-05 14:58:40 - INFO     - qcal.test_session_20261005_145840 - Test: tests/test_coronacion_v5.py::TestV5Integration::test_integration_with_explicit_formula
+2026-10-05 14:58:40 - INFO     - qcal.test_session_20261005_145840 - Location: tests/test_coronacion_v5.py:342
+2026-10-05 14:58:40 - INFO     - qcal.test_session_20261005_145840 - ================================================================================
+2026-10-05 14:58:40 - DEBUG    - matplotlib - matplotlib data path: /home/runner/.local/lib/python3.12/site-packages/matplotlib/mpl-data
+2026-10-05 14:58:40 - DEBUG    - matplotlib - CONFIGDIR=/home/runner/.config/matplotlib
+2026-10-05 14:58:40 - DEBUG    - matplotlib - interactive is False
+2026-10-05 14:58:40 - DEBUG    - matplotlib - platform is linux
+2026-10-05 14:58:40 - DEBUG    - matplotlib - CACHEDIR=/home/runner/.cache/matplotlib
+2026-10-05 14:58:40 - DEBUG    - matplotlib.font_manager - Using fontManager instance from /home/runner/.cache/matplotlib/fontlist-v3.11.0.json
+2026-10-05 14:58:42 - INFO     - qcal.test_session_20261005_145840 - ✅ PASSED: tests/test_coronacion_v5.py::TestV5Integration::test_integration_with_explicit_formula (1.648s)
+2026-10-05 14:58:42 - INFO     - qcal.test_session_20261005_145840 - 
+2026-10-05 14:58:42 - INFO     - qcal.test_session_20261005_145840 - ================================================================================
+2026-10-05 14:58:42 - INFO     - qcal.test_session_20261005_145840 - Test: tests/test_coronacion_v5.py::TestV5Integration::test_integration_with_critical_line_checker
+2026-10-05 14:58:42 - INFO     - qcal.test_session_20261005_145840 - Location: tests/test_coronacion_v5.py:369
+2026-10-05 14:58:42 - INFO     - qcal.test_session_20261005_145840 - ================================================================================
+2026-10-05 14:58:42 - WARNING  - qcal.test_session_20261005_145840 - ⚠️  SKIPPED: tests/test_coronacion_v5.py::TestV5Integration::test_integration_with_critical_line_checker
+n_20261005_145840 - Test: tests/test_hpsi_unconditional_modules.py::test_hadamard_uniqueness_bridge_present
+2026-10-05 14:58:40 - INFO     - qcal.test_session_20261005_145840 - Location: tests/test_hpsi_unconditional_modules.py:188
+2026-10-05 14:58:40 - INFO     - qcal.test_session_20261005_145840 - ================================================================================
+2026-10-05 14:58:40 - INFO     - qcal.test_session_20261005_145840 - ✅ PASSED: tests/test_hpsi_unconditional_modules.py::test_hadamard_uniqueness_bridge_present (0.000s)
+2026-10-05 14:58:40 - INFO     - qcal.test_session_20261005_145840 - 
+2026-10-05 14:58:40 - INFO     - qcal.test_session_20261005_145840 - ================================================================================
+2026-10-05 14:58:40 - INFO     - qcal.test_session_20261005_145840 - Test: tests/test_hpsi_unconditional_modules.py::test_canonical_instances_constructors_present
+2026-10-05 14:58:40 - INFO     - qcal.test_session_20261005_145840 - Location: tests/test_hpsi_unconditional_modules.py:195
+2026-10-05 14:58:40 - INFO     - qcal.test_session_20261005_145840 - ================================================================================
+2026-10-05 14:58:40 - INFO     - qcal.test_session_20261005_145840 - ✅ PASSED: tests/test_hpsi_unconditional_modules.py::test_canonical_instances_constructors_present (0.000s)
+2026-10-05 14:58:40 - INFO     - qcal.test_session_20261005_145840 - 
+2026-10-05 14:58:40 - INFO     - qcal.test_session_20261005_145840 - ================================================================================
+2026-10-05 14:58:40 - INFO     - qcal.test_session_20261005_145840 - Test: tests/test_hpsi_unconditional_modules.py::test_coronacion_final_closure_present
+2026-10-05 14:58:40 - INFO     - qcal.test_session_20261005_145840 - Location: tests/test_hpsi_unconditional_modules.py:205
+2026-10-05 14:58:40 - INFO     - qcal.test_session_20261005_145840 - ================================================================================
+2026-10-05 14:58:40 - INFO     - qcal.test_session_20261005_145840 - ✅ PASSED: tests/test_hpsi_unconditional_modules.py::test_coronacion_final_closure_present (0.000s)
