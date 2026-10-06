@@ -24,13 +24,13 @@ Date: January 2026
 import sys
 from pathlib import Path
 
+from coherence_bridge import call_module
+from qcal_sync_engine import QCALSyncEngine
+from riemann_spectral_5steps import Step6_RealignPhase
+
 # Add repository root to path
 REPO_ROOT = Path(__file__).parent
 sys.path.insert(0, str(REPO_ROOT))
-
-from riemann_spectral_5steps import Step6_RealignPhase
-from qcal_sync_engine import QCALSyncEngine
-from coherence_bridge import call_module
 
 
 def print_header(title: str):
@@ -52,25 +52,25 @@ def print_section(title: str):
 def demonstrate_problem():
     """Demonstrate the problem state before realignment."""
     print_header("PROBLEM STATEMENT - Initial State")
-    
+
     print_section("Issue 1: Vector 55 Temporal Phase Desfase")
     print("  Fase del ciclo: 88.32%")
     print("  ❌ NOT at exact harmonic node (0%, 25%, 50%, 75%, 100%)")
     print("  ⚠️  Can cause interference if not aligned")
     print()
-    
+
     print_section("Issue 2: Spectral Norm ζ′(1/2) Not Adjusted")
     print("  ❌ Logarithmic normalizer Kₐ(Π) not applied")
     print("  ℹ️  Only linear normalization used")
     print("  ⚠️  Reduces spectral precision")
     print()
-    
+
     print_section("Issue 3: Low Weight for Φ_KLD⁻¹ Metric")
     print("  Current weight: 4%")
     print("  ❌ Too low for detecting subtle dissonances")
     print("  ⚠️  May underestimate coherence issues")
     print()
-    
+
     print_section("Issue 4: Step6_RealignPhase() Not Executed")
     print("  ❌ Optional realignment step skipped")
     print("  ⚠️  Expected: suboptimal coherence (Ψ < 0.888)")
@@ -80,7 +80,7 @@ def demonstrate_problem():
 def demonstrate_solution():
     """Demonstrate the solution using Step6_RealignPhase()."""
     print_header("SOLUTION - Execute Step6_RealignPhase()")
-    
+
     print("Code to execute (from problem statement):")
     print("-" * 80)
     print("from riemann_spectral_5steps import Step6_RealignPhase")
@@ -90,18 +90,18 @@ def demonstrate_solution():
     print()
     print("-" * 80)
     print()
-    
+
     print("Executing now...")
     print()
-    
+
     # Execute Step 6 as described in problem statement
     Ψ_opt = Step6_RealignPhase(calibrate_vector55=True, rebalance_ζ=True)
-    
+
     print()
     print_section("RESULTS AFTER REALIGNMENT")
     print(f"  ✅ Ψ después de realineación: {Ψ_opt:.6f}")
     print()
-    
+
     # Verify target achieved
     if Ψ_opt > 0.888:
         improvement = ((Ψ_opt - 0.888) / 0.888) * 100
@@ -115,37 +115,37 @@ def demonstrate_solution():
 def demonstrate_details():
     """Demonstrate detailed metrics after realignment."""
     print_header("DETAILED METRICS - Post-Realignment Analysis")
-    
+
     # Create sync engine to show detailed metrics
     engine = QCALSyncEngine(precision=30, verbose=False)
     metrics = engine.synchronize(full_realignment=True)
-    
+
     print_section("Vector 55 Temporal Phase")
     print(f"  Original phase: 88.32%")
     print(f"  Realigned phase: {metrics.vector_55_phase:.2f}%")
     print(f"  At harmonic node: {'✅ YES' if metrics.vector_55_harmonic_node else '❌ NO'}")
     print(f"  Interference risk: {'✅ ELIMINATED' if metrics.vector_55_harmonic_node else '⚠️ PRESENT'}")
     print()
-    
+
     print_section("Spectral Norm ζ′(1/2)")
     print(f"  Normalized value: {metrics.zeta_prime_norm:.6f}")
     print(f"  Kₐ(Π) = log(π) applied: {'✅ YES' if metrics.Ka_Pi_applied else '❌ NO'}")
     print(f"  Logarithmic normalizer: {'✅ ACTIVE' if metrics.Ka_Pi_applied else '❌ INACTIVE'}")
     print()
-    
+
     print_section("Coherence Metric Φ_KLD⁻¹")
     print(f"  Original weight: 4.0%")
     print(f"  Optimized weight: {metrics.Phi_KLD_weight * 100:.1f}%")
     print(f"  Weight increase: +{(metrics.Phi_KLD_weight - 0.04) * 100:.1f}%")
     print(f"  Divergence inverse: {metrics.Phi_KLD_inv:.4f}")
     print()
-    
+
     print_section("Global Coherence Ψ")
     print(f"  Final coherence: Ψ = {metrics.Psi:.6f}")
     print(f"  Target threshold: 0.888")
     print(f"  Status: {'✅ OPTIMAL' if metrics.is_optimal() else '⚠️ SUBOPTIMAL'}")
     print()
-    
+
     print_section("System Status")
     print(f"  QCAL Frequency: {metrics.f0} Hz")
     print(f"  Coherence Constant: {metrics.C}")
@@ -157,30 +157,28 @@ def demonstrate_details():
 def demonstrate_symbiotic_protocol():
     """Demonstrate symbiotic coherence protocol ∞³."""
     print_header("SYMBOLIC SYNC QCAL - Symbiotic Coherence Protocol ∞³")
-    
+
     print("The QCAL framework supports automatic module resolution using")
     print("vibrational signature mapping through the coherence bridge.")
     print()
-    
+
     print_section("Example: Vector 55 Timestamp Validation")
     print("Code:")
     print("  from coherence_bridge import call_module")
     print("  ")
-    print('  Ψ = call_module(')
+    print("  Ψ = call_module(")
     print('      "noesis88/vector_55_temporal.py::validar_timestamp_vector_55",')
-    print('      timestamp')
-    print('  )')
+    print("      timestamp")
+    print("  )")
     print()
-    
+
     print("Executing symbiotic call...")
     from datetime import datetime
+
     timestamp = datetime.now().timestamp()
-    
-    result = call_module(
-        "noesis88/vector_55_temporal.py::validar_timestamp_vector_55",
-        timestamp
-    )
-    
+
+    result = call_module("noesis88/vector_55_temporal.py::validar_timestamp_vector_55", timestamp)
+
     print()
     print("Results:")
     print(f"  Phase: {result['phase_percent']:.2f}% ({result['phase_degrees']:.2f}°)")
@@ -202,19 +200,19 @@ def main():
     print("  Frequency: 141.7001 Hz (Fundamental Cosmic Heartbeat)")
     print("  DOI: 10.5281/zenodo.17379721")
     print()
-    
+
     # Show problem
     demonstrate_problem()
-    
+
     # Show solution
     demonstrate_solution()
-    
+
     # Show detailed metrics
     demonstrate_details()
-    
+
     # Show symbiotic protocol
     demonstrate_symbiotic_protocol()
-    
+
     # Final summary
     print_header("SUMMARY")
     print("✅ All coherence issues resolved:")
