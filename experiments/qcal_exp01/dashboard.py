@@ -80,6 +80,10 @@ def display_state(
     timestamp = _finite(receiver.get("last_valid_monotonic"))
     age = None if timestamp is None else now - timestamp
     fresh = age is not None and 0 <= age <= stale_after
+    if "data_received_at_monotonic" in dsp:
+        data_timestamp = _finite(dsp.get("data_received_at_monotonic"))
+        data_age = None if data_timestamp is None else now - data_timestamp
+        fresh = fresh and data_age is not None and 0 <= data_age <= stale_after
     healthy = (
         receiver.get("state") == "receiving"
         and fresh
@@ -105,6 +109,16 @@ def display_state(
         "unknown": "Fuente DESCONOCIDA · hardware no confirmado",
     }
     source = sources.get(source_kind, sources["unknown"])
+    reference_label = dsp.get("reference_model_label")
+    calibration_label = dsp.get("calibration_label")
+    if (
+        healthy and isinstance(reference_label, str) and reference_label.strip()
+        and isinstance(calibration_label, str) and calibration_label.strip()
+    ):
+        source += (
+            f" · Referencia externa declarada, no ajustada: {reference_label}. "
+            f"Calibración: {calibration_label}; declaración no verificada."
+        )
     metrics = {
         "Modulación de fase (Hz)": None,
         "Resolución espectral (Hz)": None,
@@ -208,6 +222,10 @@ def create_app(
                 "Los datos sintéticos y el modelo estadístico condicional no "
                 "demuestran una señal física. Hardware no confirmado."
             ),
+            html.P(
+                "Análisis espectral limitado a 1 Hz; adquisición best-effort, "
+                "sin garantía de caudal."
+            ),
             html.Div(id="acquisition-status"),
             html.Div(id="source-status"),
             html.Div(id="measurement-summary"),
@@ -264,12 +282,20 @@ def create_app(
 
 @dataclass(frozen=True)
 class _ReferenceModel:
-    """Operator-declared independent sinusoidal calibration and point models."""
+    """Operator-declared sinusoidal calibration and conditional point models.
+
+    amplitude is in reference_units; frequency_hz is in Hz and phase_rad is
+    the phase at sample-clock zero. None of these parameters are fitted to the
+    acquired phase. Physical use requires independent calibration of x0 and
+    the chosen FIR transfer response. A matching synthetic injection describes
+    known generation parameters, not independent physical evidence.
+    """
 
     amplitude: float
     frequency_hz: float
     phase_rad: float
     calibration_label: str
+    reference_units: str = "unidades declaradas"
     noise_sigma_rad: float | None = None
     independent_samples_assumed: bool = False
     known_drift_rad_s: float | None = None
@@ -288,7 +314,10 @@ class _ReferenceModel:
             raise ValueError("reference/model parameters must be finite")
         if self.amplitude <= 0 or self.frequency_hz <= 0:
             raise ValueError("reference amplitude and frequency must be positive")
-        if not self.calibration_label.strip() or self.intercept_prior_sd < 0:
+        if (
+            not self.calibration_label.strip() or not self.reference_units.strip()
+            or self.intercept_prior_sd < 0
+        ):
             raise ValueError("provide a calibration label and nonnegative prior SD")
         if self.noise_sigma_rad is not None and (
             _finite(self.noise_sigma_rad) is None or self.noise_sigma_rad <= 0
@@ -309,6 +338,7 @@ class _Acquisition:
     def __init__(
         self, config: Any, *, window_seconds: float = 2.0,
         reference_model: _ReferenceModel | None = None,
+        clock: Callable[[], float] = time.monotonic,
     ) -> None:
         """Allocate demodulators and a bounded contiguous phase history."""
         from .dsp import StreamingDemodulator
@@ -322,15 +352,27 @@ class _Acquisition:
             raise ValueError("calibrated reference must lie inside the demodulation band")
         self.config = config
         self.reference_model = reference_model
+        self._clock = clock
         self._a = StreamingDemodulator(config)
         self._b = StreamingDemodulator(config)
         self._lock = threading.Lock()
+        self._analysis_lock = threading.Lock()
         self._blocks: deque[tuple[np.ndarray, np.ndarray]] = deque()
         self._pending: list[Any] = []
         self._pending_count = 0
         self._count = 0
         self._maximum = int(math.ceil(config.fs * window_seconds))
         self._valid = False
+        self._generation = 0
+        self._cached_snapshot: dict[str, Any] | None = None
+        self._cached_at: float | None = None
+        self._latest_input_monotonic: float | None = None
+
+    def _invalidate_analysis(self) -> None:
+        """Invalidate derived results immediately; caller holds the history lock."""
+        self._generation += 1
+        self._cached_snapshot = None
+        self._cached_at = None
 
     def reset(self, first_sample_index: int) -> None:
         """Discard phase/filter continuity after a missing or reordered interval."""
@@ -342,6 +384,8 @@ class _Acquisition:
             self._pending_count = 0
             self._count = 0
             self._valid = False
+            self._latest_input_monotonic = None
+            self._invalidate_analysis()
 
     def accept(self, packet: Any) -> None:
         """Demodulate real ADC-count channels using their absolute sample clock."""
@@ -350,6 +394,7 @@ class _Acquisition:
         with self._lock:
             self._pending.append(packet)
             self._pending_count += packet.channel_a.size
+            self._latest_input_monotonic = self._clock()
             # Amortize FIR/unwrap allocation over bounded batches, not UDP frames.
             if self._pending_count >= 16_384:
                 self._process_pending()
@@ -371,6 +416,7 @@ class _Acquisition:
         if invalid.size:
             self._blocks.clear()
             self._count = 0
+            self._invalidate_analysis()
         self._valid = bool(start < valid.size)
         if not self._valid:
             return
@@ -387,30 +433,58 @@ class _Acquisition:
                 self._blocks.appendleft((first_times[remove:], first_phase[remove:]))
 
     def snapshot(self) -> dict[str, Any]:
-        """Compute the demodulated-phase PSD from at least one contiguous second.
+        """Publish cached analysis at most once per second, without decimation.
 
         PSD uses a Hann periodogram without zero padding; frequency spacing is
         fs/N in Hz and power density has units rad²/Hz. No carrier FFT or dBm
         conversion is implied. Regression/evidence remain absent without an
-        independent reference calibration and noise model.
+        independent reference calibration and noise model. Gaps and invalid phase
+        invalidate cached results immediately. Reception time belongs to the
+        analyzed samples, not newer packets arriving after the analysis.
         """
-        with self._lock:
-            self._process_pending()
-            valid = self._valid
-            blocks = tuple(self._blocks)
-        result: dict[str, Any] = {"valid": valid, "duration_s": 0.0}
-        if not valid or not blocks:
-            return result
+        with self._analysis_lock:
+            with self._lock:
+                self._process_pending()
+                result = {
+                    "valid": self._valid,
+                    "duration_s": self._count / self.config.fs,
+                    "data_received_at_monotonic": self._latest_input_monotonic,
+                }
+                if not self._valid or self._count / self.config.fs < 1.0:
+                    return result
+                now = self._clock()
+                if (
+                    self._cached_snapshot is not None
+                    and self._cached_at is not None
+                    and 0 <= now - self._cached_at < 1.0
+                ):
+                    return dict(self._cached_snapshot)
+                blocks = tuple(self._blocks)
+                generation = self._generation
+            self._analyze_history(result, blocks)
+            with self._lock:
+                if generation != self._generation or not self._valid:
+                    return {"valid": False, "duration_s": 0.0}
+                self._cached_snapshot = result
+                self._cached_at = now
+            return dict(result)
+
+    def _analyze_history(
+        self, result: dict[str, Any],
+        blocks: tuple[tuple[np.ndarray, np.ndarray], ...],
+    ) -> None:
+        """Analyze one fixed contiguous history outside the receiver's lock."""
         times = np.concatenate([block[0] for block in blocks])
         phase = np.concatenate([block[1] for block in blocks])
-        duration = phase.size / self.config.fs
-        result["duration_s"] = duration
-        if duration < 1.0:
-            return result
         result["resolution_hz"] = self.config.fs / phase.size
-        residual = signal.detrend(phase, type="linear")
+        centered_time = times - times[0]
+        centered_time -= np.mean(centered_time)
+        centered_phase = phase - np.mean(phase)
+        slope = np.sum(centered_time * centered_phase) / np.sum(centered_time**2)
+        residual = centered_phase - slope * centered_time
         frequency, psd = signal.periodogram(
-            residual, fs=self.config.fs, window="hann", scaling="density"
+            residual, fs=self.config.fs, window="hann", scaling="density",
+            detrend=False,
         )
         selected = frequency <= 500.0
         result["frequency_hz"] = frequency[selected]
@@ -419,7 +493,6 @@ class _Acquisition:
         result["modulation_hz"] = float(frequency[band][np.argmax(psd[band])])
         if self.reference_model is not None:
             self._add_calibrated_model(result, times, phase)
-        return result
 
     def _add_calibrated_model(
         self, result: dict[str, Any], times: np.ndarray, phase: np.ndarray
@@ -438,6 +511,11 @@ class _Acquisition:
             times, phase, x0, noise_sigma=model.noise_sigma_rad
         )
         result["calibration_label"] = model.calibration_label
+        result["reference_model_label"] = (
+            f"x₀(t)={model.amplitude:.12g} sin(2π·{model.frequency_hz:.12g}·t"
+            f"+{model.phase_rad:.12g}) {model.reference_units}; "
+            "t sigue el reloj de muestras con retardo FIR"
+        )
         result["kappa"] = fit.kappa
         result["kappa_se"] = fit.kappa_standard_error
         if fit.status != "ok":
@@ -478,13 +556,19 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--udp-port", type=int, default=5005)
     parser.add_argument("--allow-lan", action="store_true")
     parser.add_argument(
-        "--expected-source", default=os.environ.get("QCAL_EXPECTED_SOURCE"),
-        help="Expected sender IP or hostname; required with --allow-lan",
+        "--expected-sender", "--expected-source", dest="expected_source",
+        default=os.environ.get(
+            "QCAL_EXPECTED_SENDER", os.environ.get("QCAL_EXPECTED_SOURCE")
+        ),
+        help=(
+            "Expected sender IP or hostname; required with --allow-lan. "
+            "Defaults to QCAL_EXPECTED_SENDER (QCAL_EXPECTED_SOURCE also supported)"
+        ),
     )
     parser.add_argument(
         "--source-kind", choices=("unknown", "synthetic", "calibrated"),
-        default="unknown",
-        help="Operator-declared provenance, not hardware authentication",
+        default=os.environ.get("QCAL_SOURCE_KIND", "unknown"),
+        help="Operator-declared provenance (or QCAL_SOURCE_KIND), not authentication",
     )
     parser.add_argument(
         "--sample-rate", type=int, choices=(100_000, 1_000_000), default=1_000_000
@@ -497,6 +581,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--reference-frequency-hz", type=float)
     parser.add_argument("--reference-phase-rad", type=float, default=0.0)
     parser.add_argument("--calibration-label")
+    parser.add_argument("--reference-units", default="unidades declaradas")
     parser.add_argument("--noise-sigma-rad", type=float)
     parser.add_argument("--assume-independent-samples", action="store_true")
     parser.add_argument("--known-drift-rad-s", type=float)
@@ -505,6 +590,8 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--intercept-prior-mean", type=float, default=0.0)
     parser.add_argument("--intercept-prior-sd", type=float, default=1.0)
     args = parser.parse_args(argv)
+    if args.source_kind not in ("unknown", "synthetic", "calibrated"):
+        parser.error("QCAL_SOURCE_KIND must be unknown, synthetic, or calibrated")
 
     # Imports and acquisition are intentionally confined to the explicit entrypoint.
     from .dsp import DSPConfig
@@ -531,6 +618,7 @@ def main(argv: list[str] | None = None) -> int:
                 frequency_hz=args.reference_frequency_hz,
                 phase_rad=args.reference_phase_rad,
                 calibration_label=args.calibration_label,
+                reference_units=args.reference_units,
                 noise_sigma_rad=args.noise_sigma_rad,
                 independent_samples_assumed=args.assume_independent_samples,
                 known_drift_rad_s=args.known_drift_rad_s,

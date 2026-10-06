@@ -1,0 +1,128 @@
+{
+  "schema_version": 1,
+  "source": "synthetic Monte Carlo; no physical acquisition or DMA",
+  "interpretation": "Conditional model discrimination only; no physics validation or RH proof",
+  "configuration": {
+    "sample_sizes": [
+      100,
+      1000,
+      10000
+    ],
+    "sigma": 0.1,
+    "trials": 100,
+    "reference_std": 0.1,
+    "fs": 1000000.0,
+    "threshold_log_bf": 5.0,
+    "seed": 0,
+    "slope_h1": 13.4034,
+    "slope_h0": 13.3,
+    "intercept_prior_mean": 0.0,
+    "intercept_prior_sd": 1.0,
+    "quadratic_h0": null,
+    "confidence": 0.95
+  },
+  "random_generator": {
+    "api": "numpy.random.default_rng",
+    "bit_generator": "PCG64",
+    "numpy_version": "2.2.6",
+    "seed": 0
+  },
+  "hypotheses": {
+    "H1": {
+      "mean": "b + slope_h1*x",
+      "point_slope": 13.4034
+    },
+    "H0": {
+      "mean": "b + slope_h0*x + quadratic_h0*x^2",
+      "point_slope": 13.3,
+      "fixed_quadratic": null
+    }
+  },
+  "assumptions": {
+    "noise": "Independent N(0,sigma^2) response errors; sigma specified, never residual-fitted",
+    "reference": "Exact independently calibrated x_i ~ N(0,reference_std^2)",
+    "units": "Response rad; reference in declared displacement units",
+    "intercept": "Common proper Gaussian prior integrated analytically; sd=0 is a point intercept",
+    "marginal_covariance": "sigma^2*I_M + intercept_prior_sd^2*1_M*1_M^T",
+    "simulation_intercept": "Each replication draws b from the same declared prior",
+    "duration": "T=M/fs only conditional on independent observations, not oversampled FIR outputs",
+    "phase_caveat": "Independent Gaussian phase errors require a high-SNR approximation and covariance calibration",
+    "decision": "Strict log BF10 > threshold_log_bf; natural logarithm",
+    "intervals": "Exact equal-tailed Clopper-Pearson binomial intervals",
+    "replications": "H1 and H0 share random numbers; trials independent within each hypothesis"
+  },
+  "analytic_snr_benchmark": {
+    "model": "High-SNR independent equally noisy dual IF phase channels",
+    "power_snr_definition": "A^2 / E|n_I+i*n_Q|^2",
+    "differential_phase_variance": "1/SNR",
+    "reference_norm": "sum(x_i^2)=M*reference_std^2, centered and orthogonal to nuisance trends",
+    "sigma_kappa": "1/sqrt(SNR*M*reference_std^2)",
+    "sample_count": 10000,
+    "snr_db_range": [
+      10,
+      60
+    ],
+    "single_fixed_alternative_3sigma_limit": 0.03446666666666628,
+    "nonoverlapping_3sigma_classification_limit": 0.01723333333333314,
+    "caveat": "Analytic approximation, not a measured or FIR-corrected uncertainty"
+  },
+  "results": [
+    {
+      "sample_count": 100,
+      "duration_s": 0.0001,
+      "trials": 100,
+      "threshold_log_bf": 5.0,
+      "h1_detections": 0,
+      "h0_false_positives": 0,
+      "h1_power": 0.0,
+      "h0_false_positive_rate": 0.0,
+      "h1_power_interval": [
+        0.0,
+        0.03621669264517641
+      ],
+      "h0_false_positive_interval": [
+        0.0,
+        0.03621669264517641
+      ],
+      "detection_rule": "log BF10 > threshold"
+    },
+    {
+      "sample_count": 1000,
+      "duration_s": 0.001,
+      "trials": 100,
+      "threshold_log_bf": 5.0,
+      "h1_detections": 51,
+      "h0_false_positives": 0,
+      "h1_power": 0.51,
+      "h0_false_positive_rate": 0.0,
+      "h1_power_interval": [
+        0.4080363291554537,
+        0.6113558348383623
+      ],
+      "h0_false_positive_interval": [
+        0.0,
+        0.03621669264517641
+      ],
+      "detection_rule": "log BF10 > threshold"
+    },
+    {
+      "sample_count": 10000,
+      "duration_s": 0.01,
+      "trials": 100,
+      "threshold_log_bf": 5.0,
+      "h1_detections": 100,
+      "h0_false_positives": 0,
+      "h1_power": 1.0,
+      "h0_false_positive_rate": 0.0,
+      "h1_power_interval": [
+        0.9637833073548235,
+        1.0
+      ],
+      "h0_false_positive_interval": [
+        0.0,
+        0.03621669264517641
+      ],
+      "detection_rule": "log BF10 > threshold"
+    }
+  ]
+}

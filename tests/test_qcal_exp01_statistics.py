@@ -2,9 +2,17 @@
 
 import numpy as np
 import pytest
+import json
+from pathlib import Path
 from scipy.stats import multivariate_normal
 
-from experiments.qcal_exp01.monte_carlo import plot_operating_characteristics, simulate_power
+from experiments.qcal_exp01.monte_carlo import (
+    coupling_standard_error_from_snr,
+    main,
+    plot_operating_characteristics,
+    plot_sigma_kappa_vs_snr,
+    simulate_power,
+)
 from experiments.qcal_exp01.statistics import (
     binomial_interval,
     gaussian_log_bayes_factor,
@@ -113,6 +121,65 @@ def test_optional_plot_uses_conditional_time_and_both_hypotheses() -> None:
     assert len(ax.get_legend().get_texts()) == 2
     ax.figure.canvas.draw()  # Also validates math labels against mathtext.
     plt.close(ax.figure)
+
+
+def test_strict_default_evidence_threshold() -> None:
+    """Equality is not a detection: the requested operating rule is strict >."""
+    result = simulate_power(
+        [10], sigma=0.1, trials=10, slope_h1=13.3, slope_h0=13.3,
+        threshold_log_bf=0,
+    )[0]
+    assert result.h1_detections == result.h0_false_positives == 0
+    assert result.detection_rule == "log BF10 > threshold"
+    assert simulate_power([10], sigma=0.1, trials=1)[0].threshold_log_bf == 5
+
+
+def test_analytic_snr_standard_error_and_distinct_thresholds() -> None:
+    """The high-SNR benchmark distinguishes one-alternative and interval separation."""
+    import matplotlib
+    matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
+
+    snr = np.array([100.0, 10000.0])
+    errors = coupling_standard_error_from_snr(
+        snr, sample_count=1000, reference_std=0.1
+    )
+    np.testing.assert_allclose(errors, 1 / np.sqrt(snr * 1000 * 0.1**2))
+    single = coupling_standard_error_from_snr(
+        snr, sample_count=1000, reference_std=0.1, dual_channel=False
+    )
+    np.testing.assert_allclose(single, errors / np.sqrt(2))
+    ax = plot_sigma_kappa_vs_snr(sample_count=1000, reference_std=0.1)
+    delta = 13.4034 - 13.3
+    assert ax.lines[1].get_ydata()[0] == pytest.approx(delta / 3)
+    assert ax.lines[2].get_ydata()[0] == pytest.approx(delta / 6)
+    assert "high-SNR independent" in ax.get_title()
+    ax.figure.canvas.draw()
+    plt.close(ax.figure)
+    with pytest.raises(ValueError):
+        coupling_standard_error_from_snr([0], sample_count=100, reference_std=0.1)
+
+
+def test_cli_stdout_preserves_seed_models_priors_and_assumptions(
+    capsys: pytest.CaptureFixture, tmp_path: Path,
+) -> None:
+    """CLI artifacts are deterministic and describe the exact conditional likelihood."""
+    argv = ["--sample-sizes", "10", "20", "--trials", "10", "--seed", "0", "--sigma", ".1"]
+    assert main(argv) == 0
+    first = capsys.readouterr().out
+    assert main(argv) == 0
+    assert capsys.readouterr().out == first
+    document = json.loads(first)
+    assert document["configuration"]["threshold_log_bf"] == 5
+    assert document["random_generator"]["seed"] == 0
+    assert document["hypotheses"]["H1"]["point_slope"] == 13.4034
+    assert document["hypotheses"]["H0"]["point_slope"] == 13.3
+    assert "intercept_prior_sd^2" in document["assumptions"]["marginal_covariance"]
+    assert "no physical acquisition" in document["source"]
+    assert "Strict" in document["assumptions"]["decision"]
+    destination = tmp_path / "simulation.json"
+    assert main(argv + ["--output", str(destination)]) == 0
+    assert json.loads(destination.read_text()) == document
 
 
 @pytest.mark.parametrize("kwargs", [

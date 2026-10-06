@@ -21,6 +21,7 @@ class ReceiverSnapshot:
     gaps: int = 0
     last_error: Optional[str] = None
     bound_port: Optional[int] = None
+    socket_receive_buffer_bytes: Optional[int] = None
 
     @property
     def available(self) -> bool:
@@ -34,6 +35,8 @@ class UDPReceiver:
     ``on_gap(first_sample_index)`` resets/resynchronizes DSP before the first
     packet and after every sequence/sample gap. Rate changes are rejected.
     LAN binding requires ``allow_lan=True`` and an explicit expected sender.
+    Receive buffering tolerates short processing stalls; the operating system
+    may clamp the request, so snapshots report its actual socket buffer size.
     """
 
     def __init__(
@@ -45,6 +48,7 @@ class UDPReceiver:
         expected_sender: Optional[str] = None,
         allow_lan: bool = False,
         freshness_seconds: float = 2.0,
+        receive_buffer_bytes: int = 4 * 1024 * 1024,
     ) -> None:
         """Configure the stream, sender restriction, callbacks, and freshness."""
         bind_host = socket.gethostbyname(host)
@@ -54,10 +58,15 @@ class UDPReceiver:
             raise ValueError("LAN reception requires allow_lan and expected_sender")
         if not 0 <= port <= 65535 or not 0 < freshness_seconds < float("inf"):
             raise ValueError("invalid port or freshness interval")
+        if (isinstance(receive_buffer_bytes, bool)
+                or not isinstance(receive_buffer_bytes, int)
+                or not MAX_DATAGRAM_BYTES <= receive_buffer_bytes <= 16 * 1024 * 1024):
+            raise ValueError("receive buffer must be between 1400 bytes and 16 MiB")
         self._host, self._port = bind_host, port
         self._sender = socket.gethostbyname(expected_sender) if expected_sender else None
         self._on_packet, self._on_gap = on_packet, on_gap
         self._freshness = freshness_seconds
+        self._receive_buffer_bytes = receive_buffer_bytes
         self._lock = threading.Lock()
         self._lifecycle_lock = threading.RLock()
         self._health = ReceiverSnapshot()
@@ -98,6 +107,7 @@ class UDPReceiver:
             sock = None
             try:
                 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+                sock.setsockopt(socket.SOL_SOCKET, socket.SO_RCVBUF, self._receive_buffer_bytes)
                 sock.bind((self._host, self._port))
                 sock.settimeout(0.2)
             except OSError as exc:
@@ -106,7 +116,10 @@ class UDPReceiver:
                 self._update(state="error", last_error=str(exc))
                 return False
             self._socket = sock
-            self._update(state="waiting", bound_port=sock.getsockname()[1])
+            self._update(
+                state="waiting", bound_port=sock.getsockname()[1],
+                socket_receive_buffer_bytes=sock.getsockopt(socket.SOL_SOCKET, socket.SO_RCVBUF),
+            )
             self._thread = threading.Thread(
                 target=self._run, args=(sock,), name="qcal-exp01-udp", daemon=True,
             )

@@ -158,3 +158,28 @@ Antes de declarar una validación de campo se requieren:
 Los resultados de software no sustituyen estas mediciones ni una prueba de
 la hipótesis de Riemann. El protocolo mantiene la falsabilidad al expresar
 los supuestos y mostrar «no disponible» donde no existe evidencia válida.
+
+## Estado de validación de esta integración
+
+- Se han probado por separado las regresiones nuevas de transporte, DSP,
+  estadística y dashboard, incluyendo compilación C con advertencias tratadas
+  como errores y recepción de formas de onda sintéticas.
+- Se ha construido el contenedor sin root y comprobado `/health`: 503 sin
+  adquisición válida, 200 con telemetría sintética válida y 503 al caducar.
+  Bajo carga compartida, el demo a 1 MS/s puede perder continuidad; el panel
+  suprime las estimaciones afectadas en lugar de asegurar «sin pérdidas».
+- Los 47 tests heredados de wetlab y contratos del puente Lean pasan.
+  Son pruebas dirigidas, **no la suite completa** ni compilación de Lean.
+- La colección de la suite completa se bloquea por seis problemas heredados:
+  dependencias `ecdsa` y `tqdm` ausentes; importaciones de `EmotionalObserver`,
+  `Node` y `predict_mutation_stability` incompatibles; y `EPSILON_OSC` no definido.
+  No se alteraron esos tests ni APIs ajenos a esta integración.
+- La ejecución heredada V5 notificó checks centrales satisfactorios y
+  advertencias de entorno/dependencias; no se utiliza su mensaje de éxito como
+  certificado de prueba matemática o de validación del laboratorio.
+- Lean/Lake no están instalados en esta sesión: la compilación del nuevo lema
+  queda pendiente. Tampoco se ha certificado el workflow remoto
+  `auto_evolution.yml`: no hay herramientas GitHub Actions/MCP activas para
+  consultar sus ejecuciones en esta sesión.
+- No se ha contactado QCAL-CLOUD ni registrado una aprobación remota Trinity,
+  y no se ha adquirido ni calibrado hardware físico.

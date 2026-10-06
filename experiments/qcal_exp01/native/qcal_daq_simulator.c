@@ -1,7 +1,8 @@
 #define _POSIX_C_SOURCE 200809L
 /*
  * SYNTHETIC ADC-count source; NOT DMA and NOT a hardware acquisition driver.
- * int16 full scale is 32768 counts; both carriers peak at 12000 counts.
+ * Quantized synthetic int16, NOT real ADC calibration.
+ * int16 full scale is 32768 counts; both carriers peak at 6000 counts.
  * phi(n) = 13.4034 * x0 * sin(2*pi*141.7001*n/fs), x0 in micrometers.
  * The 100 kHz IF requires fs=1 MHz (100 kHz acquisition aliases this IF).
  */
@@ -128,7 +129,9 @@ int main(int argc, char **argv) {
         return EXIT_FAILURE;
     }
     fprintf(stderr, "SYNTHETIC (NOT DMA): fs=%u Hz IF=100000 Hz "
-            "f0=141.7001 Hz x0=%.9g um; scale=1/32768, peak=12000 counts\n",
+            "f0=141.7001 Hz injected_x0=%.9g um kappa=13.4034 rad/um; "
+            "A=reference IF, B=modulated IF; "
+            "int16 scale=1/32768, peak=6000 counts; NOT hardware calibration\n",
             SAMPLE_RATE, x0);
     uint64_t sequence = 0, first = 0;
     while (packet_limit == 0 || sequence < packet_limit) {
@@ -146,8 +149,8 @@ int main(int argc, char **argv) {
             double carrier = 2.0 * PI * (double)(index % 10U) / 10.0;
             double seconds = (double)index / SAMPLE_RATE;
             double phase = 13.4034 * x0 * sin(2.0 * PI * 141.7001 * seconds);
-            int16_t a = (int16_t)lround(12000.0 * cos(carrier));
-            int16_t b = (int16_t)lround(12000.0 * cos(carrier + phase));
+            int16_t a = (int16_t)lround(6000.0 * cos(carrier));
+            int16_t b = (int16_t)lround(6000.0 * cos(carrier + phase));
             put_u16(datagram + HEADER_SIZE + 2U * j, (uint16_t)a);
             put_u16(datagram + HEADER_SIZE + 2U * SAMPLE_COUNT + 2U * j, (uint16_t)b);
         }

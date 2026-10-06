@@ -47,3 +47,6 @@ theorem discrepancy_at_threshold (psi : ℝ)
       exact hRoot
 
 end QCAL.Experimental
+
+#print axioms QCAL.Experimental.discrepancy_at_one
+#print axioms QCAL.Experimental.discrepancy_at_threshold

@@ -4,8 +4,11 @@ import numpy as np
 import pytest
 from types import SimpleNamespace
 
+from experimental_validation import F0_HZ
+
 from experiments.qcal_exp01.dsp import (
     DSPConfig,
+    DualChannelDemodulator,
     StreamingDemodulator,
     estimate_modulation_frequency,
     fit_phase_regression,
@@ -110,6 +113,56 @@ def test_transport_packet_adapter_requires_explicit_reference_calibration() -> N
         StreamingDemodulator(config).process_packet(packet, reference_units_per_count=0)
 
 
+def test_dual_if_packets_recover_differential_phase_and_calibrated_coupling() -> None:
+    """Two carrier channels recover B−A, not carrier ADC counts as displacement."""
+    config = DSPConfig()
+    n = 150_000
+    indices = np.arange(n)
+    time = indices / config.fs
+    x0 = 0.01 * np.sin(2 * np.pi * F0_HZ * time)
+    common = 2 * np.pi * config.fc * time + 0.3 + 2 * np.pi * 200 * time
+    a = np.round(12_000 * np.cos(common)).astype(np.int16)
+    b = np.round(12_000 * np.cos(common + 0.4 + 13.4034 * x0)).astype(np.int16)
+    stream = DualChannelDemodulator(config)
+    pieces = []
+    for start in range(0, n, 342):
+        stop = min(start + 342, n)
+        packet = SimpleNamespace(first_sample_index=start, sample_rate=config.fs,
+                                 channel_a=a[start:stop], channel_b=b[start:stop])
+        pieces.append(stream.process_packet(
+            packet, signal_units_per_count=1 / 32768, reference=x0[start:stop]
+        ))
+    phase = np.concatenate([p.phase_rad for p in pieces])
+    t = np.concatenate([p.time_s for p in pieces])
+    reference = np.concatenate([p.reference for p in pieces])
+    valid = np.concatenate([p.valid for p in pieces])
+    fit = fit_phase_regression(t[valid], phase[valid], reference[valid])
+    assert fit.intercept == pytest.approx(0.4, abs=0.001)
+    assert fit.drift_rad_s == pytest.approx(0, abs=0.002)
+    assert fit.kappa == pytest.approx(13.4034, abs=0.03)
+    assert estimate_modulation_frequency(
+        t[valid], phase[valid]
+    ).frequency_hz == pytest.approx(F0_HZ, abs=1 / (t[valid][-1] - t[valid][0]))
+    whole = DualChannelDemodulator(config).process(a / 32768, b / 32768, x0)
+    np.testing.assert_allclose(phase, whole.phase_rad, equal_nan=True, atol=1e-10)
+
+
+def test_dual_channel_masks_missing_reference_carrier_and_handles_reset() -> None:
+    """Both carrier envelopes must be valid; discontinuities erase cycle counts."""
+    stream = DualChannelDemodulator()
+    carrier = np.cos(2 * np.pi * 0.1 * np.arange(200))
+    dead_a = stream.process(np.zeros(200), carrier)
+    assert dead_a.status == "low_amplitude"
+    assert not dead_a.valid.any()
+    assert np.isnan(dead_a.phase_rad).all()
+    block = stream.process(carrier, carrier, start_index=5000)
+    assert block.reset_occurred
+    assert not block.valid[:100].any()
+    assert block.reference is None
+    with pytest.raises(ValueError):
+        stream.process(carrier, carrier[:-1])
+
+
 def test_dropout_failure_and_discontinuity_reset() -> None:
     """Invalid phase is masked and a discontinuity restarts zero-state settling."""
     config = DSPConfig(num_taps=11, cutoff_hz=10_000)
@@ -155,10 +208,10 @@ def test_modulation_frequency_not_mean_residual_frequency() -> None:
     """A sinusoidal phase modulation is detected despite unrelated linear drift."""
     fs = 4000.0
     t = np.arange(4000) / fs
-    phase = 4 + 2 * np.pi * 17 * t + 0.7 * np.sin(2 * np.pi * 141.7001 * t)
+    phase = 4 + 2 * np.pi * 17 * t + 0.7 * np.sin(2 * np.pi * F0_HZ * t)
     estimate = estimate_modulation_frequency(t, phase)
     assert estimate.status == "ok"
-    assert estimate.frequency_hz == pytest.approx(141.7001, abs=estimate.resolution_hz)
+    assert estimate.frequency_hz == pytest.approx(F0_HZ, abs=estimate.resolution_hz)
     assert estimate.resolution_hz >= 1.0
     assert abs(estimate.frequency_hz - 17) > 100
     short = estimate_modulation_frequency(t[:100], phase[:100])

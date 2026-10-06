@@ -36,6 +36,28 @@ def _vector(values: ArrayLike, name: str) -> FloatArray:
     return out
 
 
+def _unwrap_runs(
+    baseband: NDArray[np.complex128], valid: NDArray[np.bool_],
+    last_phase: Optional[float], segment: int,
+) -> tuple[FloatArray, NDArray[np.int64], Optional[float], int]:
+    """Unwrap contiguous valid runs, preserving only identifiable cycle counts."""
+    phase = np.full(valid.size, np.nan)
+    segments = np.full(valid.size, -1, dtype=np.int64)
+    edges = np.diff(np.r_[False, valid, False].astype(int))
+    starts, stops = np.flatnonzero(edges == 1), np.flatnonzero(edges == -1)
+    for first, stop in zip(starts, stops):
+        values = np.unwrap(np.angle(baseband[first:stop]))
+        if first == 0 and last_phase is not None:
+            values += 2 * np.pi * np.round((last_phase - values[0]) / (2 * np.pi))
+        else:
+            segment += 1
+        phase[first:stop] = values
+        segments[first:stop] = segment
+    if valid.size:
+        last_phase = float(phase[-1]) if valid[-1] else None
+    return phase, segments, last_phase, segment
+
+
 @dataclass(frozen=True)
 class DSPConfig:
     """IF acquisition settings; frequencies are Hz and amplitude is input units.
@@ -131,6 +153,8 @@ class StreamingDemodulator:
         specify the independently measured channel polarity and physical units.
         Packet sample rate must match the configured fs. Connect transport's
         on_gap to reset and on_packet to this method (or a calibrated wrapper).
+        This alternate one-IF-plus-x0 adapter is NOT the bundled native
+        simulator's two-IF mapping; use DualChannelDemodulator for that source.
 
         Args:
             packet: Structural packet carrying acquisition indices/rate/channels.
@@ -210,21 +234,9 @@ class StreamingDemodulator:
         amplitude = np.abs(baseband)
         valid = (np.arange(n) + self._elapsed >= self.config.num_taps - 1)
         valid &= np.isfinite(amplitude) & (amplitude >= self.config.min_amplitude)
-        phase = np.full(n, np.nan)
-        segments = np.full(n, -1, dtype=np.int64)
-        # Unwrap only within contiguous valid runs; a gap loses cycle count.
-        edges = np.diff(np.r_[False, valid, False].astype(int))
-        starts, stops = np.flatnonzero(edges == 1), np.flatnonzero(edges == -1)
-        for first, stop in zip(starts, stops):
-            values = np.unwrap(np.angle(baseband[first:stop]))
-            if first == 0 and self._last_phase is not None:
-                values += 2 * np.pi * np.round((self._last_phase - values[0]) / (2 * np.pi))
-            else:
-                self._segment += 1
-            phase[first:stop] = values
-            segments[first:stop] = self._segment
-        if n:
-            self._last_phase = float(phase[-1]) if valid[-1] else None
+        phase, segments, self._last_phase, self._segment = _unwrap_runs(
+            baseband, valid, self._last_phase, self._segment
+        )
         self._next_index = int(index + n)
         self._elapsed += n
         if not healthy:
@@ -235,6 +247,106 @@ class StreamingDemodulator:
                   "low_amplitude")
         return DemodulatedBlock(indices, times, baseband, amplitude, phase,
                                 valid, segments, aligned, status, restarted)
+
+
+class DualChannelDemodulator:
+    """Demodulate two real IF channels and unwrap differential phase B minus A.
+
+    Both channels are sampled synchronously at the same configured IF. Neither
+    channel's ADC counts are a displacement reference. To estimate coupling,
+    provide a separate, independently calibrated x0 vector in declared units.
+    The returned block has the same fields as single-channel demodulation;
+    its amplitude is min(|A|, |B|), and its baseband has that magnitude and
+    the differential phase. Low amplitude in either channel invalidates phase.
+    """
+
+    def __init__(self, config: Optional[DSPConfig] = None) -> None:
+        """Construct independent zero-state FIR channels and differential unwrap."""
+        self.config = config or DSPConfig()
+        self._channel_a = StreamingDemodulator(self.config)
+        self._channel_b = StreamingDemodulator(self.config)
+        self._last_phase: Optional[float] = None
+        self._segment = -1
+
+    def reset(self, start_index: int = 0) -> None:
+        """Discard both channel histories and differential phase on packet gaps."""
+        self._channel_a.reset(start_index)
+        self._channel_b.reset(start_index)
+        self._last_phase = None
+        self._segment = -1
+
+    def process(
+        self, channel_a: ArrayLike, channel_b: ArrayLike,
+        reference: Optional[ArrayLike] = None, start_index: Optional[int] = None,
+        healthy: bool = True,
+    ) -> DemodulatedBlock:
+        """Return masked differential phase with an optional external x0 reference.
+
+        Args:
+            channel_a: Real baseline/reference-carrier IF samples.
+            channel_b: Synchronous real signal-carrier IF samples.
+            reference: Independently calibrated displacement x0, not channel A/B.
+            start_index: Absolute first acquisition index.
+            healthy: False masks and resets both channels.
+
+        Returns:
+            Differential phase B-A; calibrated reference is FIR-delay aligned.
+        """
+        try:
+            a, b = _vector(channel_a, "channel_a"), _vector(channel_b, "channel_b")
+            ref = None if reference is None else _vector(reference, "reference")
+            if a.shape != b.shape or (ref is not None and ref.shape != a.shape):
+                raise ValueError("channels and external reference must match")
+        except (ValueError, TypeError):
+            self.reset(self._channel_a._next_index)
+            raise
+        block_a = self._channel_a.process(a, ref, start_index, healthy)
+        block_b = self._channel_b.process(b, None, start_index, healthy)
+        restarted = block_a.reset_occurred or block_b.reset_occurred
+        if restarted:
+            self._last_phase = None
+            self._segment = -1
+        maximum = np.maximum(block_a.amplitude, block_b.amplitude)
+        differential = np.divide(
+            block_b.baseband * np.conjugate(block_a.baseband), maximum,
+            out=np.zeros(a.size, dtype=complex), where=maximum > 0,
+        )
+        valid = block_a.valid & block_b.valid
+        phase, segments, self._last_phase, self._segment = _unwrap_runs(
+            differential, valid, self._last_phase, self._segment
+        )
+        amplitude = np.minimum(block_a.amplitude, block_b.amplitude)
+        status = ("failure" if not healthy else "empty" if not a.size else
+                  "ok" if np.any(valid) else
+                  "settling" if "settling" in (block_a.status, block_b.status) else
+                  "low_amplitude")
+        return DemodulatedBlock(
+            block_a.sample_index, block_a.time_s, differential, amplitude,
+            phase, valid, segments, block_a.reference, status, restarted,
+        )
+
+    def process_packet(
+        self, packet: SamplePacket, *, signal_units_per_count: float = 1.0,
+        reference: Optional[ArrayLike] = None,
+    ) -> DemodulatedBlock:
+        """Adapt a two-IF packet with explicit count scaling and external x0.
+
+        Unlike StreamingDemodulator.process_packet, BOTH ADC channels here
+        are IF waveforms. reference, if supplied, is already calibrated and
+        must correspond to these packet indices. No physical units are
+        inferred from the native synthetic generator's --x0 parameter.
+        """
+        if (not np.isfinite(packet.sample_rate)
+                or not np.isclose(packet.sample_rate, self.config.fs, rtol=1e-12, atol=0)):
+            self.reset(self._channel_a._next_index)
+            raise ValueError("packet sample_rate must match configured fs")
+        if not np.isfinite(signal_units_per_count) or signal_units_per_count == 0:
+            raise ValueError("signal calibration must be finite and nonzero")
+        return self.process(
+            _vector(packet.channel_a, "channel_a") * signal_units_per_count,
+            _vector(packet.channel_b, "channel_b") * signal_units_per_count,
+            reference, packet.first_sample_index,
+        )
 
 
 @dataclass(frozen=True)

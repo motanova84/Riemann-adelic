@@ -203,6 +203,21 @@ def test_bind_error_is_unavailable() -> None:
         receiver.stop()
 
 
+def test_receive_buffer_configuration() -> None:
+    """Request bounded buffering and report the actual, possibly clamped size."""
+    receiver = UDPReceiver(lambda p: None, port=0, receive_buffer_bytes=1024 * 1024)
+    assert receiver.start()
+    try:
+        actual = receiver._socket.getsockopt(socket.SOL_SOCKET, socket.SO_RCVBUF)
+        assert actual > 0
+        assert receiver.snapshot().socket_receive_buffer_bytes == actual
+    finally:
+        receiver.stop()
+    for invalid in (0, 1399, 16 * 1024 * 1024 + 1, True, 1.5):
+        with pytest.raises(ValueError):
+            UDPReceiver(lambda p: None, receive_buffer_bytes=invalid)
+
+
 def test_callback_error_requires_resynchronization() -> None:
     """DSP failure does not permit replay or claim successful fresh processing."""
     resets = []
@@ -242,6 +257,8 @@ def test_native_synthetic_decode() -> None:
                 check=True, capture_output=True, text=True, timeout=5,
             )
             assert "SYNTHETIC (NOT DMA)" in result.stderr
+            assert "peak=6000 counts" in result.stderr
+            assert "NOT hardware calibration" in result.stderr
             for sequence in range(3):
                 data, _ = receiver.recvfrom(MAX_DATAGRAM_BYTES + 1)
                 decoded = decode_packet(data)
@@ -252,8 +269,10 @@ def test_native_synthetic_decode() -> None:
                 carrier = 2 * np.pi * (index % 10) / 10
                 phase = 13.4034 * 0.01 * np.sin(2 * np.pi * 141.7001 * index / 1_000_000)
                 np.testing.assert_array_equal(
-                    decoded.channel_a, np.rint(12000 * np.cos(carrier)).astype(np.int16))
+                    decoded.channel_a, np.rint(6000 * np.cos(carrier)).astype(np.int16))
                 np.testing.assert_array_equal(
-                    decoded.channel_b, np.rint(12000 * np.cos(carrier + phase)).astype(np.int16))
+                    decoded.channel_b, np.rint(6000 * np.cos(carrier + phase)).astype(np.int16))
+                assert np.all(np.abs(decoded.channel_a.astype(np.int32)) <= 6000)
+                assert np.all(np.abs(decoded.channel_b.astype(np.int32)) <= 6000)
     finally:
         subprocess.run(["make", "-C", str(native), "clean"], check=True, capture_output=True)

@@ -108,6 +108,29 @@ python -m experiments.qcal_exp01.dashboard --source-kind synthetic \
 
 El demo muestra fase relativa y espectro. Sin referencia externa calibrada y
 modelo de ruido válido, κ y la evidencia bayesiana permanecen no disponibles.
+La CLI admite una referencia sinusoidal declarada mediante
+`--reference-amplitude`, `--reference-frequency-hz` y `--calibration-label`.
+Para evidencia condicional exige además ruido conocido, deriva conocida y
+una declaración explícita de independencia. Estos argumentos son supuestos
+del operador, no calibraciones obtenidas automáticamente del flujo ADC.
+En una señal real filtrada, seleccionar una bandera no demuestra independencia.
+
+### Monte Carlo y curvas analíticas
+
+```bash
+cd /home/runner/work/Riemann-adelic/Riemann-adelic
+python -m experiments.qcal_exp01.monte_carlo \
+  --sample-sizes 100 1000 10000 --trials 100 --sigma 0.1 --seed 0 \
+  --output /tmp/qcal-monte-carlo.json \
+  --plot /tmp/qcal-monte-carlo.png \
+  --snr-plot /tmp/qcal-sigma-kappa.png
+```
+
+Los resultados de referencia y las dos figuras están anclados en
+`experiments/qcal_exp01/results/`. El JSON conserva configuración, semilla,
+supuestos e intervalos de potencia/falsos positivos. Las curvas analíticas
+usan el modelo de fase diferencial de dos canales IF con ruido independiente
+a SNR alta; no son mediciones de una cavidad ni garantías de tiempo de adquisición.
 
 ### Contenedor de la estación de control
 
@@ -133,7 +156,7 @@ Ejemplo de configuración para un emisor de laboratorio con IP 192.168.1.100:
 docker run -d --name qcal-exp01 \
   --restart unless-stopped \
   -p 127.0.0.1:8050:8050/tcp -p 5005:5005/udp \
-  -e QCAL_EXPECTED_SOURCE=192.168.1.100 \
+  -e QCAL_EXPECTED_SENDER=192.168.1.100 \
   qcal-exp01:local
 ```
 
@@ -141,6 +164,11 @@ La IP es un ejemplo de configuración, no un dispositivo detectado. Debe
 coincidir con la dirección que observa el receptor después de cualquier NAT.
 Un emisor sintético debe declararse con `--source-kind synthetic`; nunca se
 infiere «hardware confirmado» por recibir un paquete de una IP permitida.
+`QCAL_EXPECTED_SENDER` configura la restricción de emisor; el alias
+`QCAL_EXPECTED_SOURCE` también se admite. No sustituir esa restricción por
+una aceptación indiscriminada de paquetes para resolver un fallo de arranque.
+La imagen arranca por defecto restringida a 127.0.0.1 y espera datos; para
+recibir desde fuera del contenedor es necesario sobrescribir esa dirección.
 
 `HEALTHCHECK` detecta un flujo no disponible; Docker no reinicia automáticamente
 un contenedor únicamente por estar `unhealthy`. La supervisión operacional debe
