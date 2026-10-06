@@ -1,31 +1,29 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 """
-CONEXIÓN EXPLÍCITA: H_DS → D(s) → Ξ(s)
+CONEXIÓN EXPLÍCITA: H_DS -> D(s) -> Ξ(s)
 
 Este módulo implementa la conexión entre el operador de simetría discreta H_DS,
 la función determinante espectral D(s), y la función Xi de Riemann.
 
-Autor: José Manuel Mota Burruezo Ψ ∴ ∞³
-DOI: 10.5281/zenodo.17379721
-ORCID: 0009-0002-1923-0773
-#!/usr/bin/env python3
-"""
 H_DS to D(s) Connection Module
-
 This module implements the connection between the discrete symmetry
 operator H_DS and the spectral determinant D(s).
 
 Mathematical Framework:
-- H_DS: discrete symmetry operator (x ↦ 1/x)
+- H_DS: discrete symmetry operator (x -> 1/x)
 - H_Ψ: Hilbert-Pólya operator
 - R: resolvent operator
 - D(s): spectral determinant = det(I - sH⁻¹)
 
 Key Properties:
 1. [H_Ψ, H_DS] = 0 (operators commute)
-2. Spectrum symmetric under s ↦ 1-s
+2. Spectrum symmetric under s -> 1-s
 3. D(s) = D(1-s) (functional equation)
 
 Author: José Manuel Mota Burruezo Ψ ✧ ∞³
+DOI: 10.5281/zenodo.17379721
+ORCID: 0009-0002-1923-0773
 Instituto de Conciencia Cuántica (ICQ)
 Date: 2025-12-26
 """
@@ -89,25 +87,11 @@ class HDSConnection:
     
     def __init__(self, dimension: int = 50, precision: int = 50):
         """
-        Inicializa la conexión H_DS → D(s).
+        Inicializa la conexión H_DS -> D(s).
         
         Args:
-            dimension: Dimensión del operador matricial
-            precision: Precisión decimal para cálculos mpmath
-from typing import Callable, Tuple, List, Optional
-from scipy.linalg import eig, det
-
-
-class HDSConnection:
-    """Connection between H_DS and spectral determinant D(s)"""
-    
-    def __init__(self, dimension: int = 40, precision: int = 50):
-        """
-        Initialize connection.
-        
-        Args:
-            dimension: Hilbert space dimension (truncation)
-            precision: Decimal precision for computations
+            dimension: Dimensión del operador matricial.
+            precision: Precisión decimal para cálculos mpmath.
         """
         self.dimension = dimension
         self.precision = precision

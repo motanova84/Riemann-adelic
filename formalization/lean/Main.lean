@@ -21,6 +21,10 @@ import RiemannAdelic.core.analytic.functional_equation
 import RiemannAdelic.core.operator.trace_class
 -- Module 3: D(s) as spectral determinant (constructive)
 import RiemannAdelic.core.formal.D_as_det
+-- Module 4: WKB quantization and structural derivation of V_osc(x) (Issue #2395)
+import RiemannAdelic.core.analytic.wkb_v_osc_derivation
+-- Module 5: Multiplicative boundary conditions for H=-ix·d/dx → V_osc (Issue #2395)
+import RiemannAdelic.core.analytic.multiplicative_boundary_conditions
 
 -- Constructive D(s) definition (V5.2+)
 import RiemannAdelic.schwartz_adelic

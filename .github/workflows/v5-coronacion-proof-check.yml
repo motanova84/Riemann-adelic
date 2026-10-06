@@ -22,6 +22,16 @@ jobs:
       uses: actions/setup-python@v4
       with:
         python-version: ${{ matrix.python-version }}
+
+    - name: Set up Lean 4 (elan)
+      run: |
+        curl -sSfL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh | sh -s -- -y --default-toolchain none
+        echo "$HOME/.elan/bin" >> $GITHUB_PATH
+        source "$HOME/.elan/env" || true
+        elan toolchain install "$(cat formalization/lean/lean-toolchain)"
+        elan default "$(cat formalization/lean/lean-toolchain)"
+        lean --version
+        lake --version
         
     - name: Install dependencies
       run: |
@@ -165,6 +175,16 @@ jobs:
       uses: actions/setup-python@v4
       with:
         python-version: '3.11'
+
+    - name: Set up Lean 4 (elan)
+      run: |
+        curl -sSfL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh | sh -s -- -y --default-toolchain none
+        echo "$HOME/.elan/bin" >> $GITHUB_PATH
+        source "$HOME/.elan/env" || true
+        elan toolchain install "$(cat formalization/lean/lean-toolchain)"
+        elan default "$(cat formalization/lean/lean-toolchain)"
+        lean --version
+        lake --version
         
     - name: Install dependencies
       run: |
@@ -176,11 +196,19 @@ jobs:
         echo "🏆 Running V5 Coronación main validation script..."
         
         # Run the main validation script with light parameters for CI
-        python3 validate_v5_coronacion.py --precision 15 --verbose
+        python3 validate_v5_coronacion.py --precision 15 --verbose --update-manifest
         
         # Save logs
         mkdir -p logs
         echo "V5 Coronación validation completed at $(date)" > logs/v5_coronacion_run.log
+
+    - name: Validate SAT certificates (latest-only)
+      run: |
+        python3 scripts/validate_sat_certificates.py --all --latest-only
+
+    - name: Audit SAT closure checklist
+      run: |
+        python3 scripts/audit_latest_sat_certificates.py --cert-dir certificates/sat --expected-theorems 10
         
     - name: Run Complete V5 Validation Suite
       run: |

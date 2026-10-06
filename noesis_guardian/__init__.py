@@ -53,9 +53,13 @@ from .guardian import (
     DAEMON_INTERVAL
 )
 
+from .modules.hook_aura_check import AuraCheck, run_aura_check
+
 __all__ = [
     "NoesisGuardian",
     "CoherencyHooks",
+    "AuraCheck",
+    "run_aura_check",
     "RepoWatcher",
     "noesis_heartbeat",
     "autorepair",

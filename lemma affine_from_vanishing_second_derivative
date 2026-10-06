@@ -1,0 +1,38 @@
+lemma affine_from_vanishing_second_derivative
+    {φ : ℂ → ℂ} (hφ : Differentiable ℂ φ)
+    (hφpp : ∀ c : ℂ, deriv (deriv φ) c = 0) :
+    ∃ A B : ℂ, ∀ s : ℂ, φ s = A + B * s := by
+  -- Paso 1: φ' tiene derivada cero en todo ℂ
+  have hφp_deriv_zero : ∀ s, deriv (fun z => deriv φ z) s = 0 := by
+    intro s
+    exact hφpp s
+  -- Por tanto φ' es constante (porque ℂ es conexo)
+  have hφp_const : ∃ B : ℂ, ∀ s, deriv φ s = B := by
+    -- Mathlib tiene: is_const_of_fderiv_eq_zero
+    -- Primero mostramos que φ' es diferenciable
+    have hφp_diff : Differentiable ℂ (fun z => deriv φ z) := by
+      -- φ es entera, su derivada también lo es
+      exact hφ.deriv
+    -- Luego, derivada cero en todo ℂ implica constante
+    exact isConstant_of_differentiable_deriv_zero hφp_diff hφp_deriv_zero
+  obtain ⟨B, hφp⟩ := hφp_const
+  -- Paso 2: φ(s) = φ(0) + ∫₀^s B dz = φ(0) + B·s
+  use φ 0, B
+  intro s
+  -- Integramos φ' de 0 a s
+  have h_integral : ∀ t, φ t = φ 0 + ∫ u in 0..t, deriv φ u := by
+    intro t
+    -- Teorema fundamental del cálculo para caminos en ℂ
+    exact interval_integral.integral_deriv_eq_sub (hφ.differentiableOn) t 0
+  specialize h_integral s
+  rw [h_integral]
+  -- Simplificamos la integral usando que deriv φ u = B
+  have h_integral_simp : ∫ u in 0..s, B = B * s := by
+    -- La integral de una constante B en [0, s] es B * s
+    have h_interval : ∫ u in 0..s, B = B * (s - 0) := by
+      -- Integral de constante
+      exact interval_integral.integral_const B 0 s
+    rw [h_interval]
+    ring
+  rw [h_integral_simp]
+  ring

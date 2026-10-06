@@ -1,0 +1,84 @@
+{
+  "qcal_version": "∞³",
+  "protocol": "Trinity",
+  "frequency_base": 141.7001,
+  "coherence_threshold": 0.888,
+  "description": "Hub MCP — Protocolo Trinity. Servidores organizados por Capas de Resonancia.",
+
+  "boot_sequence": ["adelic-bsd", "riemann-adelic", "qcal-core"],
+
+  "mcpServers": {
+
+    "_comment_capa1": "── Capa 1 · Base Adélica ──────────────────────────────────",
+
+    "adelic-bsd": {
+      "command": "python",
+      "args": ["-m", "adelic_bsd.mcp_server"],
+      "cwd": ".",
+      "env": {
+        "PORT": "8010",
+        "BSD_CONJECTURE": "true",
+        "QCAL_F0": "141.7001"
+      }
+    },
+
+    "_comment_capa2": "── Capa 2 · Núcleo Riemann ─────────────────────────────────",
+
+    "riemann-adelic": {
+      "command": "python",
+      "args": ["server.py"],
+      "cwd": "./Riemann-adelic",
+      "env": {
+        "PORT": "8007",
+        "ZETA_FUNCTION": "adelic",
+        "QCAL_F0": "141.7001"
+      }
+    },
+
+    "_comment_capa3": "── Capa 3 · QCAL Core & Agentes Trinity ────────────────────",
+
+    "qcal-core": {
+      "command": "node",
+      "args": ["dist/index.js"],
+      "cwd": "./qcal-core",
+      "env": {
+        "PORT": "8000",
+        "QCAL_F0": "141.7001",
+        "QCAL_C": "244.36"
+      }
+    },
+
+    "dramaturgo": {
+      "command": "npx",
+      "args": ["-y", "@mcp/dramaturgo"],
+      "env": {
+        "PORT": "8013",
+        "QCAL_F0": "141.7001"
+      }
+    },
+
+    "noesis": {
+      "command": "python",
+      "args": ["-m", "noesis88.mcp_server"],
+      "cwd": ".",
+      "env": {
+        "PORT": "8009",
+        "NOESIS_MODE": "quantum",
+        "COHERENCE_THRESHOLD": "0.888",
+        "QCAL_F0": "141.7001"
+      }
+    },
+
+    "auron": {
+      "command": "python",
+      "args": ["-m", "noesis_guardian.guardian_core"],
+      "cwd": ".",
+      "env": {
+        "PORT": "8022",
+        "GUARDIAN_MODE": "security",
+        "COHERENCE_THRESHOLD": "0.888",
+        "QCAL_F0": "141.7001"
+      }
+    }
+  }
+}

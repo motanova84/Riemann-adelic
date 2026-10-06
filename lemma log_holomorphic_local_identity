@@ -1,0 +1,128 @@
+lemma log_holomorphic_local_identity
+    (w : ℂ) (hw : w ≠ 0) (ρ : ℝ) (hρ : 0 < ρ ∧ ρ < ‖w‖) :
+    ∃ L : ℂ → ℂ, DifferentiableOn ℂ L (ball w ρ) ∧
+      ∀ z ∈ ball w ρ, exp (L z) = z := by
+  -- El disco B(w, ρ) es convexo y 0 ∉ B(w, ρ) porque ρ < |w|.
+  have h_convex : Convex ℝ (ball w ρ) := convex_ball w ρ
+  have h_no_zero : ∀ z ∈ ball w ρ, z ≠ 0 := by
+    intro z hz
+    have h1 : ‖z - w‖ < ρ := by simpa using hz
+    have h2 : ‖w‖ - ‖z‖ ≤ ‖z - w‖ := by
+      apply norm_sub_norm_le
+    have h3 : ‖w‖ - ‖z‖ < ρ := by linarith
+    have h4 : ‖z‖ > ‖w‖ - ρ := by linarith
+    have h5 : ‖w‖ - ρ > 0 := by linarith [hρ.1, hρ.2]
+    have h6 : ‖z‖ > 0 := by linarith
+    exact norm_pos_iff.mp h6
+  -- 1/z es holomorfa en B(w, ρ) (pues 0 ∉ disco).
+  have h_holom : DifferentiableOn ℂ (fun z => 1 / z) (ball w ρ) := by
+    apply DifferentiableOn.inv
+    · exact differentiableOn_id'
+    · exact h_no_zero
+  -- En un convexo, toda forma cerrada es exacta.
+  -- 1/z dz es cerrada (d(1/z) = -1/z² dz ∧ dz = 0 en dim 1 compleja).
+  -- Por tanto tiene primitiva F con F' = 1/z.
+  have h_exact : ∃ F : ℂ → ℂ, DifferentiableOn ℂ F (ball w ρ) ∧
+      ∀ z ∈ ball w ρ, deriv F z = 1 / z := by
+    -- Usamos el teorema de que en un disco (convexo), toda función holomorfa tiene primitiva
+    have h_primitive : ∃ F : ℂ → ℂ, DifferentiableOn ℂ F (ball w ρ) ∧
+        ∀ z ∈ ball w ρ, deriv F z = 1 / z := by
+      -- Mathlib tiene el teorema: exists_primitive_of_differentiableOn_ball
+      -- Aplicamos: DifferentiableOn ℂ (1/z) (ball w ρ) → existe primitiva
+      exact exists_primitive_of_differentiableOn_ball h_holom (by exact hρ.1) w
+    exact h_primitive
+  obtain ⟨F, hF_diff, hF_deriv⟩ := h_exact
+  -- Definimos G(z) = z · exp(-F(z)). Entonces G'(z) = 0.
+  let G := fun z => z * exp (-F z)
+  have hG_const : ∃ c : ℂ, ∀ z ∈ ball w ρ, G z = c := by
+    -- G es holomorfa y G' = 0 en el disco conexo.
+    -- Por tanto G es constante.
+    have hG_diff : DifferentiableOn ℂ G (ball w ρ) := by
+      apply DifferentiableOn.mul
+      · exact differentiableOn_id'
+      · apply DifferentiableOn.exp
+        apply DifferentiableOn.neg
+        exact hF_diff
+    -- Derivada de G: G'(z) = exp(-F(z)) - z·F'(z)·exp(-F(z))
+    -- = exp(-F(z)) · (1 - z·(1/z)) = 0
+    have hG_deriv_zero : ∀ z ∈ ball w ρ, deriv G z = 0 := by
+      intro z hz
+      -- Calculamos derivada de G en z
+      have h_deriv_exp_negF := deriv_exp_neg (F z) (hF_diff z hz)
+      -- Usamos la regla de la cadena para derivada de exp(-F(z))
+      -- y la regla del producto para G(z) = z * exp(-F(z))
+      -- El cálculo es: deriv G z = exp(-F(z)) - z * exp(-F(z)) * F'(z)
+      -- Pero F'(z) = 1/z, así que:
+      rw [deriv_mul _ _ hz, deriv_id'', hF_deriv z hz]
+      have h_z_ne_zero : z ≠ 0 := h_no_zero z hz
+      field_simp [h_z_ne_zero]
+      ring
+    -- En el disco conexo, derivada cero implica constante
+    have h_const : ∃ c : ℂ, ∀ z ∈ ball w ρ, G z = c := by
+      -- Mathlib tiene: is_const_on_of_fderivWithin_eq_zero (convex + derivada cero)
+      -- Pero para función compleja diferenciable en abierto conexo:
+      -- (DifferentiableOn ℂ G (ball w ρ)) → (∀ z, deriv G z = 0) → constante
+      exact is_const_on_of_differentiableOn_deriv_eq_zero
+        (by exact hG_diff)
+        (by exact hG_deriv_zero)
+        (by exact h_convex)
+        (by exact nonempty_ball.mpr hρ.1)
+    exact h_const
+  obtain ⟨c, hG⟩ := hG_const
+  -- Evaluando en w: c = w · exp(-F(w)).
+  have h_c : c = w * exp (-F w) := by
+    specialize hG w (mem_ball_self hρ.1)
+    exact hG
+  -- Definimos L(z) = F(z) + log(c/w) (elegimos rama).
+  let log_c_w := Complex.log (c / w)
+  use fun z => F z + log_c_w
+  constructor
+  · -- L es diferenciable en B(w, ρ) (suma de diferenciables).
+    apply DifferentiableOn.add
+    · exact hF_diff
+    · exact differentiableOn_const _
+  · intro z hz
+    -- exp(L(z)) = exp(F(z) + log(c/w)) = exp(F(z)) · c/w
+    -- = exp(F(z)) · w · exp(-F(w)) / w = exp(F(z)) · exp(-F(w))
+    -- = exp(F(z) - F(w))
+    -- Pero de G(z) = c, tenemos z · exp(-F(z)) = c
+    -- Como c = w · exp(-F(w)), tenemos:
+    -- z · exp(-F(z)) = w · exp(-F(w))
+    -- ⇒ exp(F(z)) / z = exp(F(w)) / w
+    -- ⇒ exp(F(z) - F(w)) = z/w
+    -- Entonces exp(L(z)) = exp(F(z)) · c/w = exp(F(z)) · w·exp(-F(w))/w
+    -- = exp(F(z)) · exp(-F(w)) = exp(F(z) - F(w)) = z/w
+    -- Pero necesitamos exp(L(z)) = z, no z/w. Revisemos...
+    -- En realidad, c = w · exp(-F(w)) ⇒ c/w = exp(-F(w))
+    -- Entonces exp(L(z)) = exp(F(z) + log(c/w)) = exp(F(z)) · exp(log(c/w))
+    -- = exp(F(z)) · c/w = exp(F(z)) · exp(-F(w)) = exp(F(z) - F(w))
+    -- Pero de G(z) = c: z · exp(-F(z)) = c = w · exp(-F(w))
+    -- ⇒ exp(F(z) - F(w)) = z/w
+    -- ¡Entonces exp(L(z)) = z/w, no z!
+    -- Error: La definición de L debe ser L(z) = F(z) + log(c) - log(z)
+    -- Pero no podemos restar log(z) globalmente.
+    -- En lugar de eso, usamos L(z) = F(z) - F(w) + log(w)
+    use fun z => F z - F w + Complex.log w
+    -- Ahora la verificación:
+    · apply DifferentiableOn.add
+      · apply DifferentiableOn.sub
+        · exact hF_diff
+        · exact differentiableOn_const _
+      · exact differentiableOn_const _
+    · intro z hz
+      have hG_eq : z * exp(-F z) = c := hG z hz
+      have hG_w : w * exp(-F w) = c := by exact hG w (mem_ball_self hρ.1)
+      have h_exp_eq : exp (F z - F w) = z / w := by
+        -- De z·exp(-F z) = w·exp(-F w)
+        -- ⇒ exp(-F z) / exp(-F w) = w/z
+        -- ⇒ exp(F z - F w) = z/w
+        field_simp [hw]
+        rw [← hG_eq, ← hG_w]
+        ring
+      -- Definimos L(z) = F(z) - F(w) + log(w)
+      -- Entonces exp(L(z)) = exp(F(z) - F(w)) · w = (z/w) · w = z
+      rw [exp_add, exp_sub, ← exp_log hw]
+      simp
+      rw [h_exp_eq]
+      field_simp [hw]
+      ring

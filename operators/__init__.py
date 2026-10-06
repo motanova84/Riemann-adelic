@@ -29,6 +29,9 @@ Modules:
                               Tr(e^(-t·T_∞³)) ∼ Σ_p A_p(t) cos(γ_p·t + φ_p)
     - master_operator_o3: 𝒪_∞³ = 𝔻_s ⊗ 𝟙 + 𝟙 ⊗ H_Ψ master operator unifying
                          complex and real perspectives
+    - idele_class_selfadjoint_xi: H_id self-adjoint operator on idele class group
+                         C_ℚ = 𝔸_ℚ*/ℚ* connected to ξ(s) via Mellin transform;
+                         spectrum encodes Riemann zeros on the critical line
 """
 
 from .riemann_operator import (
@@ -205,6 +208,18 @@ from .qcal_string_core import (
     HBAR_NATURAL,
 )
 
+# QCAL Chamber 261 — Tachyonic Censorship & UPE Signal (Mar 2026)
+from .qcal_chamber_261 import (
+    tachyonic_censorship,
+    compute_upe_signal,
+    Chamber261Config,
+    QCALChamber261,
+    run_chamber_261,
+    PSI_CENSORSHIP,
+    F_HRV_DEFAULT,
+    LAMBDA_RIEMANN_DEFAULT,
+)
+
 # FALLO Closures - Mathematical Derivations (Feb 2026)
 from .weyl_law_harmonic_oscillator import (
     WeylLawHarmonicOscillator,
@@ -266,6 +281,70 @@ from .riemann_sistema_Z import (
     C_PRIMARY as C_PRIMARY_SISTEMA_Z,
     PSI_THRESHOLD,
     PSI_TARGET,
+)
+
+# Idele Class Self-Adjoint Operator and ξ(s) — Mar 2026
+from .idele_class_selfadjoint_xi import (
+    IdeleClassSelfAdjointXiOperator,
+    IdeleHilbertSpaceResult,
+    XiFunctionResult,
+    SelfAdjointOperatorResult,
+    SpectrumResult as IdeleSpectrumResult,
+    FunctionalEquationResult,
+    XiSpectralCorrespondenceResult,
+    IdeleClassValidationCertificate,
+    verify_idele_class_selfadjoint_xi,
+    RIEMANN_ZEROS_IMAGINARY,
+)
+# Spectral Projection Operator P_Ω (Mar 2026)
+from .spectral_projection_operator import (
+    SpectralProjectionOperator,
+    ProjectionResult,
+    ResolutionOfIdentityResult,
+    SpectralSubspaceResult,
+    build_spectral_projection,
+    generate_projection_certificate,
+)
+
+# Ruelle-Selberg Transfer Operator and Gesto Final de Mathesis (Mar 2026)
+from .ruelle_selberg_transfer_operator import (
+    RuelleSelbergTransferOperator,
+    NuclearTraceResult,
+    TransverseJacobian,
+    PoincareDeterminantResult,
+    ArchimedeanWeylTerm,
+    ArchimedeanResult,
+    MathesisFredholmXi,
+    FredholmDeterminantResult,
+    MathesisGestoResult,
+    gesto_final_mathesis,
+)
+
+# Resolvent Diagonal Kernel and Regularized Trace: Tr_reg(R_s) = ξ'(s)/ξ(s) (Apr 2026)
+from .resolvent_diagonal_trace import (
+    DiagonalKernelResolver,
+    DiagonalKernelResult,
+    DirichletSeriesDecomposition,
+    ArchimedeanContributionComputer,
+    XiLogarithmicDerivative,
+    RegularizedTraceResolver,
+    TraceDecompositionResult,
+    verify_resolvent_trace_identity,
+)
+
+# Trinity_QCAL: Riemann Hypothesis as Quantum Coherence Condition (Apr 2026)
+from .trinity_qcal import (
+    compute_complex_amplitude,
+    compute_entropy_gradient,
+    compute_trinity_qcal,
+    validate_trinity_for_critical_line,
+)
+
+# Riemann Spectral Hamiltonian: Zeros as quantum eigenvalues (Apr 2026)
+from .riemann_spectral_hamiltonian import (
+    RiemannSpectralHamiltonian,
+    SpectralHamiltonianResult,
+    compute_hamiltonian_spectrum,
 )
 
 __all__ = [
@@ -399,6 +478,15 @@ __all__ = [
     'ALPHA_SCALE_DEFAULT',
     'HBAR_SI',
     'HBAR_NATURAL',
+    # QCAL Chamber 261 — Tachyonic Censorship & UPE Signal (Mar 2026)
+    'tachyonic_censorship',
+    'compute_upe_signal',
+    'Chamber261Config',
+    'QCALChamber261',
+    'run_chamber_261',
+    'PSI_CENSORSHIP',
+    'F_HRV_DEFAULT',
+    'LAMBDA_RIEMANN_DEFAULT',
     # FALLO Closures (Feb 2026)
     'WeylLawHarmonicOscillator',
     'WeylLawResult',
@@ -442,4 +530,51 @@ __all__ = [
     'DeterminanteHadamard',
     'SistemaDinamicoZ',
     'RiemannSistemaZCompleto',
+    # Idele Class Self-Adjoint Operator and ξ(s) (Mar 2026)
+    'IdeleClassSelfAdjointXiOperator',
+    'IdeleHilbertSpaceResult',
+    'XiFunctionResult',
+    'SelfAdjointOperatorResult',
+    'IdeleSpectrumResult',
+    'FunctionalEquationResult',
+    'XiSpectralCorrespondenceResult',
+    'IdeleClassValidationCertificate',
+    'verify_idele_class_selfadjoint_xi',
+    'RIEMANN_ZEROS_IMAGINARY',
+    # Spectral Projection Operator P_Ω (Mar 2026)
+    'SpectralProjectionOperator',
+    'ProjectionResult',
+    'ResolutionOfIdentityResult',
+    'SpectralSubspaceResult',
+    'build_spectral_projection',
+    'generate_projection_certificate',
+    # Ruelle-Selberg Transfer Operator and Gesto Final de Mathesis (Mar 2026)
+    'RuelleSelbergTransferOperator',
+    'NuclearTraceResult',
+    'TransverseJacobian',
+    'PoincareDeterminantResult',
+    'ArchimedeanWeylTerm',
+    'ArchimedeanResult',
+    'MathesisFredholmXi',
+    'FredholmDeterminantResult',
+    'MathesisGestoResult',
+    'gesto_final_mathesis',
+    # Resolvent Diagonal Kernel and Regularized Trace (Apr 2026)
+    'DiagonalKernelResolver',
+    'DiagonalKernelResult',
+    'DirichletSeriesDecomposition',
+    'ArchimedeanContributionComputer',
+    'XiLogarithmicDerivative',
+    'RegularizedTraceResolver',
+    'TraceDecompositionResult',
+    'verify_resolvent_trace_identity',
+    # Trinity_QCAL
+    'compute_complex_amplitude',
+    'compute_entropy_gradient',
+    'compute_trinity_qcal',
+    'validate_trinity_for_critical_line',
+    # Riemann Spectral Hamiltonian
+    'RiemannSpectralHamiltonian',
+    'SpectralHamiltonianResult',
+    'compute_hamiltonian_spectrum',
 ]

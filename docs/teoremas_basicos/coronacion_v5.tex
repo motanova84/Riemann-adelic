@@ -40,19 +40,19 @@ El teorema de Kato--Rellich implica entonces la autoadjunción esencial de $\wid
 \begin{theorem}[Fórmula de traza exacta]\label{thm:traza-exacta}
 Para toda $f \in C_c^\infty(\mathbb{R})$ con transformada de Fourier $\widehat{f} \in C_c^\infty(\mathbb{R})$ se tiene
 \[
-  \operatorname{Tr}(f(\widehat{A})) = \sum_{\gamma_n} f(\gamma_n) + \frac{1}{2\pi} \int_{\mathbb{R}} f(t)\left[\log \pi - \frac{\Gamma'}{\Gamma}\Big(\frac{1}{4} + \frac{it}{2}\Big)\right] dt.
+  \mathrm{Tr}(f(\widehat{A})) = \sum_{\gamma_n} f(\gamma_n) + \frac{1}{2\pi} \int_{\mathbb{R}} f(t)\left[\log \pi - \frac{\Gamma'}{\Gamma}\Big(\frac{1}{4} + \frac{it}{2}\Big)\right] dt.
 \]
 \end{theorem}
 
 \begin{proof}
 La demostración procede en cuatro pasos.
 \begin{enumerate}
-  \item Consideramos $f_t(x) = e^{-itx}$ y calculamos $\operatorname{Tr}(e^{-it \widehat{A}})$ usando la representación de Weyl.
+  \item Consideramos $f_t(x) = e^{-itx}$ y calculamos $\mathrm{Tr}(e^{-it \widehat{A}})$ usando la representación de Weyl.
   \item Aplicamos la fórmula explícita de Weil para obtener
   \[
-    \sum_{\gamma_n} f(\gamma_n) = \widehat{f}(0) - \frac{\widehat{f}(0)}{2}\log \pi + \frac{1}{2\pi}\int_{\mathbb{R}} f(t) \frac{\Gamma'}{\Gamma}\Big(\frac{1}{4} + \frac{it}{2}\Big) dt - \sum_{p,k} \frac{\Lambda(p^k)}{p^{k/2}}\widehat{f}(k \log p).
+    \sum_{\gamma_n} f(\gamma_n) = \widehat{f}(0) - \frac{\widehat{f}(0)}{2}\log \pi + \frac{1}{2\pi}\int_{\mathbb{R}} f(t) \frac{\Gamma'}{\Gamma}\Big(\frac{1}{4} + \frac{it}{2}\Big) dt - \sum_{p,k[...]
   \]
-  \item Se verifica que $\operatorname{Tr}(e^{-it \widehat{A}})$ reproduce exactamente los términos geométricos.
+  \item Se verifica que $\mathrm{Tr}(e^{-it \widehat{A}})$ reproduce exactamente los términos geométricos.
   \item La densidad de las funciones de prueba en $C_c^\infty$ asegura la igualdad espectral.
 \end{enumerate}
 \end{proof}
@@ -69,7 +69,7 @@ Definimos el determinante zeta-regularizado mediante
 \]
 donde la función zeta relativa es
 \[
-  \zeta_{Z_\sigma, Z}(z,s) = \operatorname{Tr}\left[(Z_\sigma^2 + (s-\tfrac{1}{2})^2)^{-z} - (Z^2 + (s-\tfrac{1}{2})^2)^{-z}\right].
+  \zeta_{Z_\sigma, Z}(z,s) = \mathrm{Tr}\left[(Z_\sigma^2 + (s-\tfrac{1}{2})^2)^{-z} - (Z^2 + (s-\tfrac{1}{2})^2)^{-z}\right].
 \]
 
 \begin{theorem}[Convergencia meromorfa]\label{thm:determinante}
@@ -82,7 +82,7 @@ En el límite $\delta \to 0$ se tiene:
 \end{theorem}
 
 \begin{proof}
-Utilizamos la teoría de determinantes relativos de Burghelea--Friedlander--Kappeler. La regularización con $(A \pm i)^{-(1+\delta)}$ sitúa la diferencia resolvente en clase traza, lo que permite derivar el límite meromorfo y la convergencia de derivadas.
+Utilizamos la teoría de determinantes relativos de Burghelea--Friedlander--Kappeler. La regularización con $(A \pm i)^{-(1+\delta)}$ sitúa la diferencia resolvente en clase traza, lo que permit[...]
 \end{proof}
 
 \begin{lemma}[A4: Regularidad espectral — Demostrado]\label{lem:A4-proven}
@@ -109,6 +109,8 @@ La identidad $\ell_v = \log q_v$ se deriva de:
 \end{itemize}
 
 Véase el documento completo en \texttt{prueba\_A4\_longitudes\_orbitas.tex} para detalles.
+\end{proof}
+
 \section{Ley de Weyl para Operadores de Dilatación}
 
 El símbolo semiclasico de $\widehat{H}$ es
@@ -119,12 +121,12 @@ El símbolo semiclasico de $\widehat{H}$ es
 \begin{lemma}[Volumen de fase]\label{lem:volumen-fase}
 Para $T$ grande,
 \[
-  \operatorname{Vol}\{(x,p) : |\sigma(x,p)| \le T\} = \frac{2T}{\pi} L - \frac{T}{\pi} + O(1).
+  \mathrm{Vol}\{(x,p) : |\sigma(x,p)| \le T\} = \frac{2T}{\pi} L - \frac{T}{\pi} + O(1).
 \]
 \end{lemma}
 
 \begin{proof}
-Se integra el símbolo sobre $p$ para cada $x \in [e^{-L}, e^{L}]$, utilizando la medida $dp \, dx/x$. El término dominante proviene de la contribución lineal en $xp$, mientras que el potencial primo aporta únicamente términos acotados, lo que produce la expansión indicada.
+Se integra el símbolo sobre $p$ para cada $x \in [e^{-L}, e^{L}]$, utilizando la medida $dp \, dx/x$. El término dominante proviene de la contribución lineal en $xp$, mientras que el potencial[...]
 \end{proof}
 
 \begin{theorem}[Ley de Weyl]\label{thm:weyl}
@@ -135,7 +137,7 @@ El conteo espectral de $\widehat{H}$ satisface
 \end{theorem}
 
 \begin{proof}
-La cuantización de Weyl aplicada al volumen de fase del Lema~\ref{lem:volumen-fase} produce el término principal $\frac{T}{\pi}\log T$ y la corrección $-\frac{T}{\pi}$. Los términos de error se controlan por la suavidad del símbolo.
+La cuantización de Weyl aplicada al volumen de fase del Lema~\ref{lem:volumen-fase} produce el término principal $\frac{T}{\pi}\log T$ y la corrección $-\frac{T}{\pi}$. Los términos de error [...]
 \end{proof}
 
 \begin{corollary}[Ley de conteo de ceros]
@@ -153,8 +155,7 @@ El operador $\widehat{A}$ posee un espectro simple.
 \end{theorem}
 
 \begin{proof}
-El operador $\widehat{A}$ es una perturbación cíclica de $\widehat{A}_0 = U \widehat{H}_0 U^{-1}$. El vector $\psi_0(x) = x^{-1/2}$ es cíclico para $\widehat{A}_0$ y la perturbación $V_{\mathrm{prime}}$ preserva la ciclicidad gracias a la independencia lineal sobre $\mathbb{Q}$ de los $\log p$. Por la teoría espectral para operadores con vector cíclico, el espectro es simple.
-\end{proof}
+El operador $\widehat{A}$ es una perturbación cíclica de $\widehat{A}_0 = U \widehat{H}_0 U^{-1}$. El vector $\psi_0(x) = x^{-1/2}$ es cíclico para $\widehat{A}_0$ y la perturbación $V_{\math[...]\end{proof}
 
 \begin{corollary}[Simplicidad de ceros]
 Cada cero no trivial de $\zeta(s)$ es simple porque corresponde a un único autovalor de $\widehat{A}$.

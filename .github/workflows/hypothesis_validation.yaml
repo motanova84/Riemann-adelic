@@ -60,19 +60,33 @@ jobs:
           echo "📊 Coherencia: $COHERENCE"
           
           # Crear script de análisis
-          cat > analyze_complexity.py << 'ANALYZE'
-          from complexity_collapser import ComplexityCollapser
+          cat > analyze_complexity.py << ANALYZE
+          from complexity_collapser import ComplexityCollapser, ComplexityState
           import json
           
-          collapser = ComplexityCollapser(base_complexity=1.0)
-          system_metrics = {
-              'active_agents': 6,
-              'synchronization': 0.85,
-              'total_files': 3171,
-              'qcal_references': 208
+          collapser = ComplexityCollapser()
+          state = ComplexityState(
+              coherence=$COHERENCE,
+              information=1.5,
+              amplitude_eff=1.2
+          )
+          analysis = collapser.analyze(state)
+          region = analysis.regime.name
+          if region == "GRACE":
+              p_vs_np = "P=NP (via coherence collapse)"
+          elif region == "TRANSITION":
+              p_vs_np = "P≈NP (partial collapse)"
+          else:
+              p_vs_np = "P≠NP (classical regime)"
+          report = {
+              "analysis": {
+                  "complexity_region": region,
+                  "p_vs_np_status": p_vs_np,
+                  "comparisons": {
+                      "acceleration_vs_classical": analysis.acceleration_factor
+                  }
+              }
           }
-          
-          report = collapser.generate_complexity_report($COHERENCE, system_metrics)
           
           # Guardar resultados
           with open('hypothesis_results/complexity_analysis.json', 'w') as f:

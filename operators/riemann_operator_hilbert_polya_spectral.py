@@ -294,10 +294,10 @@ class HilbertPolyaOperatorAdvanced:
         if num_primes <= 0:
             raise ValueError("num_primes must be positive")
         
-        if num_primes > 1229:
+        if num_primes > 10000:
             raise ValueError(
                 f"num_primes={num_primes} exceeds reasonable limit. "
-                "Maximum supported: 1229 (primes below 10000)."
+                "Maximum supported: 10000 (first 10000 primes, up to p=104729)."
             )
         
         # Calculate required prime limit

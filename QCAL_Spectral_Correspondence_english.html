@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QCAL ∞³ — Spectral Correspondence and C-HW Synthesis | José Manuel Mota Burruezo</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" crossorigin="anonymous"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  renderMathInElement(document.body, {
+    delimiters: [
+      {left: "\\[", right: "\\]", display: true},
+      {left: "\\(", right: "\\)", display: false}
+    ],
+    throwOnError: false,
+    strict: "ignore",
+    trust: true
+  });
+});
+</script>
+
+
+
+
+<style>
+:root{--text:#1a1a1a;--muted:#444;--border:#d0d0d0;--bg-eq:#f7f9fc;--accent:#1a365d;--chapter:#0f2744}
+*{box-sizing:border-box}body{font-family:"Segoe UI","Helvetica Neue",Arial,sans-serif;line-height:1.7;color:var(--text);max-width:960px;margin:0 auto;padding:2.2rem 1.4rem 4rem;background:#fff}
+header{text-align:center;border-bottom:2px solid var(--accent);padding-bottom:1.6rem;margin-bottom:2.2rem}
+header h1{font-size:1.85rem;font-weight:700;color:var(--chapter);margin:0 0 .35rem}
+header .subtitle{font-size:1.05rem;color:var(--muted);margin:.25rem 0 .9rem}
+header .author{font-size:1.05rem}header .meta{font-size:.9rem;color:var(--muted);margin-top:.5rem}
+h2{font-size:1.35rem;color:var(--chapter);border-bottom:1px solid var(--border);padding-bottom:.3rem;margin-top:2.3rem;margin-bottom:1rem}
+h3{font-size:1.08rem;color:var(--accent);margin-top:1.5rem;margin-bottom:.5rem}
+p{margin:.75rem 0;text-align:justify}ul,ol{margin:.65rem 0 .65rem 1.25rem}li{margin-bottom:.35rem}
+.eq-box{background:var(--bg-eq);border-left:4px solid var(--accent);padding:.85rem 1.05rem;margin:1.1rem 0;overflow-x:auto}
+.definition,.theorem{background:#fafafa;border:1px solid var(--border);padding:.85rem 1.05rem;margin:1rem 0}
+.definition strong,.theorem strong{color:var(--accent)}
+.resumen{background:#f0f4f8;border:1px solid #c5d4e8;padding:.95rem 1.15rem;margin:1.5rem 0}.resumen h4{margin-top:0;color:var(--accent)}
+.prediccion{background:#f8f5f0;border:1px solid #e0d5c5;padding:.85rem 1.05rem;margin:1rem 0}
+.cierre{text-align:center;margin-top:2.6rem;padding-top:1.3rem;border-top:2px solid var(--accent);font-size:.93rem;color:var(--muted)}
+.indice{margin:1.3rem 0}.indice li{margin-bottom:.28rem;font-size:.92rem}.indice a{color:var(--accent);text-decoration:none}.indice a:hover{text-decoration:underline}html{scroll-behavior:smooth}
+hr{border:none;border-top:1px solid var(--border);margin:1.9rem 0}
+table{width:100%;border-collapse:collapse;margin:1rem 0;font-size:.84rem}
+th,td{border:1px solid var(--border);padding:.38rem .5rem;text-align:left}th{background:#f0f4f8;color:var(--accent)}
+pre{background:#f6f7f9;border:1px solid var(--border);padding:.9rem 1rem;overflow-x:auto;font-size:.76rem;line-height:1.4;font-family:"Courier New",Consolas,monospace}
+.fig{margin:1.2rem 0;text-align:center}.fig img{max-width:100%;height:auto;border:1px solid var(--border)}.figcap{font-size:.86rem;color:var(--muted);margin-top:.4rem}
+
+.eq-box .katex-display{margin:0.4em 0}
+.eq-box{font-size:1.05rem}
+.katex{font-size:1.08em}
+.katex-display{overflow-x:auto;overflow-y:hidden}
+
+</style>
+</head>
+<body>
+
+<header>
+  <h1>QCAL ∞³</h1>
+  <p class="subtitle">Spectral Correspondence and Hadamard–Weil Synthesis<br>Adelic operator, numerical protocol and falsifiable predictions</p>
+  <p class="author"><strong>José Manuel Mota Burruezo</strong></p>
+  <p class="meta">27 August 2026</p>
+  <p class="meta">\(f_0=141{,}7001\,\mathrm{Hz}\) &nbsp;|&nbsp; \(\Psi=0{,}999999\) &nbsp;|&nbsp; \(\kappa_\Pi^{\mathrm{CY}}=2{,}5773\)</p>
+  <p class="meta" style="margin-top:0.45rem;font-size:0.88rem">
+    DOI: <a href="https://doi.org/10.5281/zenodo.22119225" style="color:var(--accent)">10.5281/zenodo.22119225</a>
+    &nbsp;·&nbsp;
+    ORCID: <a href="https://orcid.org/0009-0002-1923-0773" style="color:var(--accent)">0009-0002-1923-0773</a>
+    &nbsp;·&nbsp;
+    GitHub: <a href="https://github.com/motanova84" style="color:var(--accent)">github.com/motanova84</a>
+  </p>
+</header>
+
+<section>
+  <p>This treatise unfolds the kernel fixed in the <em>Integral Formalization</em>: the same \(H_{\mathrm{QCAL}}\), the same \(f_0\), the same \(\Psi\). Here the quadratic form of the operator is written, \(\sigma_{\mathrm{disc}}\) is confronted with \(\{\gamma_n\}\), and the C-HW symbol is calibrated. The system constants are</p>
+  <div class="eq-box">\[f_0=141{,}7001\,\mathrm{Hz},\qquad\Psi=0{,}999999,\qquad\alpha_0=\sqrt{f_0\Psi}\approx 11{,}90378.\]</div>
+</section>
+
+<section>
+  <h2>Contents</h2>
+  <ol class="indice">
+    <li><a href="#axiomas">Axioms and adelic space</a></li>
+    <li><a href="#xi">The function \(\xi\) and Hadamard factorization</a></li>
+    <li><a href="#fase1">Phase 1: synthesis of spectral models</a></li>
+    <li><a href="#hilbert">Hilbert space and operator</a></li>
+    <li><a href="#traza">Heat kernel and trace formula</a></li>
+    <li><a href="#inclusion">Spectral inclusion and exhaustiveness</a></li>
+    <li><a href="#chw">C-HW synthesis</a></li>
+    <li><a href="#protocolo">Numerical protocol</a></li>
+    <li><a href="#cuatro">The kernel in four columns</a></li>
+    <li><a href="#pred">Falsifiable predictions</a></li>
+    <li><a href="#lean">Lean 4 sketch</a></li>
+  </ol>
+</section>
+
+<hr>
+
+<section id="axiomas">
+  <h2>I. Axioms and adelic space</h2>
+
+  <div class="definition">
+    <strong>Definition I.1 (Adeles)</strong>
+    \(\mathbb{A}_\mathbb{Q}=\mathbb{R}\times\prod'_p\mathbb{Q}_p\), with multiplicative Haar measure
+    <div class="eq-box">\[d^\times x=\frac{dx_\infty}{|x_\infty|}\prod_p\frac{dx_p}{|x_p|}.\]</div>
+    The state space is \(\mathcal{H}=L^2(\mathbb{A}_\mathbb{Q}^\times/\mathbb{Q}^\times)\). The Mellin isomorphism of the kernel identifies
+    \[L^2(\mathbb{A}_\mathbb{Q}^\times/\mathbb{Q}^\times)\;\simeq\;L^2(\mathbb{R}_+,dx/x).\]
+    These are two faces of the same Hilbert space, not two theories.
+  </div>
+
+  <div class="definition">
+    <strong>Axiom I.2 (Emission)</strong>
+    The field operator is essentially self-adjoint on \(\mathcal{H}\). Its spectrum is real. The frequency \(f_0\) and the coherence \(\Psi\) are coupling constants, not free fitting parameters once the Phase-1 protocol is fixed.
+  </div>
+</section>
+
+<hr>
+
+<section id="xi">
+  <h2>II. The function \(\xi\) and Hadamard factorization</h2>
+
+  <div class="definition">
+    <strong>Definition II.1</strong>
+    <div class="eq-box">\[\xi(s)=\frac12 s(s-1)\pi^{-s/2}\Gamma\Bigl(\frac s2\Bigr)\zeta(s).\]</div>
+  </div>
+  <p>The functional equation \(\xi(s)=\xi(1-s)\) is exact. The zeros of \(\xi\) coincide with the non-trivial zeros of \(\zeta\). As an entire function of order one,</p>
+  <div class="eq-box">\[\xi(s)=e^{A+Bs}\prod_{\rho}\Bigl(1-\frac s\rho\Bigr)e^{s/\rho},\]</div>
+  <p>with \(A=\log\xi(0)\) and \(B=-\gamma_E/2-1+\frac12\log(4\pi)\).</p>
+
+  <div class="definition">
+    <strong>Definition II.2 (Logarithmic derivative)</strong>
+    <div class="eq-box">\[\frac{\xi'}{\xi}\Bigl(\tfrac12+it\Bigr)=B+\sum_{\rho}\Bigl(\frac{1}{\tfrac12+it-\rho}+\frac1\rho\Bigr).\]</div>
+    This function describes the local density of zeros. It is not identified with the sequence \(\{\gamma_n\}\) nor with the logarithmic fit of Section VI.
+  </div>
+
+  <p>The von Mangoldt counting function,</p>
+  <div class="eq-box">\[N(T)=\frac{T}{2\pi}\log\Bigl(\frac{T}{2\pi e}\Bigr)+\frac78+S(T)+O\Bigl(\frac1T\Bigr),\]</div>
+  <p>is the classical theorem. The density \(N'(T)\sim(1/2\pi)\log(T/2\pi)\) is positive for large \(T\).</p>
+</section>
+
+<hr>
+
+<section id="fase1">
+  <h2>III. Phase 1 — Synthesis of spectral models</h2>
+
+  <div class="fig">
+    <img src="fase1_sintesis_modelos_espectrales.png" alt="Comparison of spectral models and relative error">
+    <p class="figcap">Figure 1. Left: \(\gamma_n\) versus the index \(n\). Right: relative error on a logarithmic scale.</p>
+  </div>
+
+  <div class="definition">
+    <strong>Definition III.1</strong>
+    Three models are compared against the tabulated zeros \(\gamma_n\):
+    <ul>
+      <li>Free: \(\sigma_{\mathrm{L}}(n)=C\,n/\log(D+n)\), with \(C=11{,}49\) and \(D=0{,}910\). \(\chi^2=148{,}0\).</li>
+      <li>Rosser: classical law of scale \(2\pi\). \(\chi^2=111{,}0\).</li>
+      <li>QCAL-Rosser: Rosser deformation with \(\alpha=6{,}24\approx 2\pi\cdot 0{,}993\). \(\chi^2=11{,}9\), RMS \(\approx 0{,}49\).</li>
+    </ul>
+  </div>
+
+  <table>
+    <thead><tr><th>Model</th><th>Parameters</th><th>\(\chi^2\)</th></tr></thead>
+    <tbody>
+      <tr><td>Free</td><td>\(C=11{,}49\), \(D=0{,}910\)</td><td>\(148{,}0\)</td></tr>
+      <tr><td>Rosser</td><td>scale \(2\pi\)</td><td>\(111{,}0\)</td></tr>
+      <tr><td>QCAL-Rosser</td><td>\(\alpha=6{,}24\)</td><td>\(11{,}9\)</td></tr>
+    </tbody>
+  </table>
+
+  <p>The QCAL-Rosser model has the smallest \(\chi^2\) on the interval \(n\le 50\). The ratio between the free constant and the physical scale is</p>
+  <div class="eq-box">\[\frac{C}{\alpha_0}=\frac{11{,}49}{11{,}90378}\approx 0{,}9652.\]</div>
+</section>
+
+<hr>
+
+<section id="hilbert">
+  <h2>IV. Hilbert space and operator</h2>
+
+  <div class="definition">
+    <strong>Definition IV.1</strong>
+    <div class="eq-box">\[\mathcal{H}=L^2\Bigl(\mathbb{R}_+,\frac{dx}{x}\Bigr).\]</div>
+    The measure \(dx/x\) is invariant under \(\mathbb{R}_+^\times\) and is the Mellin measure.
+  </div>
+
+  <div class="definition">
+    <strong>Definition IV.2 (QCAL kernel in quadratic form)</strong>
+    The Integral Formalization writes the dilatation generator. Here the second-order form of the same kernel is written:
+    <div class="eq-box">\[H_{\mathrm{WK}}=-x^2\frac{d^2}{dx^2}+x\frac{d}{dx}\]</div>
+    <div class="eq-box">\[H_{\mathrm{QCAL}}=H_{\mathrm{WK}}+V_{\mathrm{QCAL}}(x;f_0,\Psi)\]</div>
+    <div class="eq-box">\[V_{\mathrm{vacío}}(x)=\bigl(x+x^{-1}\bigr)(1-\Psi)+f_0\Psi\,\log^2(x)\cos(2\pi\log x).\]</div>
+    Initial domain \(\mathcal{D}_0=\mathcal{C}_c^\infty(\mathbb{R}_+^\times)\). The domain of the operator is the closure of \(\mathcal{D}_0\) in the graph norm.
+  </div>
+
+  <div class="theorem">
+    <strong>Theorem IV.3</strong>
+    \(H_{\mathrm{QCAL}}\) is symmetric on \(\mathcal{D}_0\). If the von Neumann deficiency indices are \((0,0)\) —lower semiboundedness of the fertile vacuum and absence of non-trivial \(L^2\) solutions as \(x\to 0\) and \(x\to\infty\)— there exists a unique self-adjoint extension \(\overline{H}_{\mathrm{QCAL}}\).
+  </div>
+</section>
+
+<hr>
+
+<section id="traza">
+  <h2>V. Heat kernel and trace formula</h2>
+  <div class="eq-box">\[K(t)=e^{-t H_{\mathrm{QCAL}}}.\]</div>
+  <p>The Guinand–Weil formula in the QCAL field decomposes the trace into an archimedean contribution, a \(p\)-adic sum and a sum over zeros:</p>
+  <div class="eq-box">\[\operatorname{Tr}K(t)=\mathrm{Id}_\infty+\sum_p\mathrm{Id}_p+\sum_n e^{-t\gamma_n}.\]</div>
+  <p>Equality of traces for every \(t>0\) is the criterion of spectral identity.</p>
+</section>
+
+<hr>
+
+<section id="inclusion">
+  <h2>VI. Inclusion and exhaustiveness</h2>
+
+  <h3>VI.1 Inclusion \(\sigma_{\mathrm{disc}}\subseteq\{\gamma_n\}\)</h3>
+  <p>Let \(\psi_\gamma\in\mathcal{H}\) with \(H_{\mathrm{QCAL}}\psi_\gamma=\gamma\psi_\gamma\). The Mellin transform</p>
+  <div class="eq-box">\[\mathcal{M}\{\psi_\gamma\}(s)=\int_0^\infty\psi_\gamma(x)\,x^{s-1}\frac{dx}{x}\]</div>
+  <p>converts the differential equation into a functional relation with \(\Gamma\) and Tate’s \(\varepsilon\) factors. A pole of the resolvent requires a zero of \(\xi\). Since \(\xi\) and \(\zeta\) share the non-trivial zeros,</p>
+  <div class="eq-box">\[\sigma_{\mathrm{disc}}(H_{\mathrm{QCAL}})\subseteq\{\gamma_n:\zeta(\tfrac12+i\gamma_n)=0\}.\]</div>
+
+  <h3>VI.2 Exhaustiveness</h3>
+  <p>If the potential confines and the resolvent is compact, the spectrum is discrete. The counting function of the operator is written</p>
+  <div class="eq-box">\[N_H(T)=\frac{T}{2\pi}\log\Bigl(\frac{T}{2\pi e}\Bigr)+\frac78+S(T)+\delta_{\mathrm{QCAL}}(T,f_0).\]</div>
+  <p>The identity \(N_H=N_\zeta\) is equivalent to the complete correspondence</p>
+  <div class="eq-box">\[\sigma_{\mathrm{disc}}(H_{\mathrm{QCAL}})=\{\gamma_n:\zeta(\tfrac12+i\gamma_n)=0,\;\gamma_n\in\mathbb{R}\}.\]</div>
+
+  <h3>VI.3 Critical line</h3>
+  <div class="theorem">
+    <strong>Theorem VI.3 (Hilbert–Pólya)</strong>
+    \(s(1-s)\) is real if and only if \(\operatorname{Re}s=1/2\) or \(s\in\mathbb{R}\). Therefore, if the eigenvalues of a self-adjoint operator are identified with \(\{s(1-s)\}\) for zeros \(s\) of \(\xi\) in the critical strip, one obtains \(\operatorname{Re}s=1/2\).
+  </div>
+  <p>That identification is the sovereign program of the QCAL kernel: not an external loan, but the internal reading of \(H_{\mathrm{QCAL}}\) on \(\xi\).</p>
+</section>
+
+<hr>
+
+<section id="chw">
+  <h2>VII. C-HW synthesis</h2>
+
+  <div class="definition">
+    <strong>Definition VII.1 (Operational symbol)</strong>
+    The logarithmic model that inverts the counting law is
+    <div class="eq-box">\[\sigma_{\mathrm{QCAL}}(k)=C^*\frac{k}{\log(D^*+k)},\qquad C^*=11{,}489,\quad D^*=0{,}910.\]</div>
+    This symbol does not coincide with \(\xi'/\xi\). It is the empirical inversion of \(N(T)\) calibrated in Phase 1.
+  </div>
+
+  <div class="eq-box">\[\frac{C^*}{\alpha_0}=\frac{11{,}489}{11{,}90378}\approx 0{,}9652.\]</div>
+  <p>The value \(D^*=0{,}910\) is that of Figure 1. One does not use \(D=-\frac12\log(2\pi)/\gamma_E\), which equals \(\approx-1{,}592\) and does not describe the observed fit.</p>
+
+  <p>The first reference zeros (Odlyzko) are</p>
+  <div class="eq-box">\[\gamma_1=14{,}134725,\quad\gamma_2=21{,}022040,\quad\gamma_3=25{,}010858,\quad\gamma_4=30{,}424876,\quad\gamma_5=32{,}935062.\]</div>
+</section>
+
+<hr>
+
+<section id="protocolo">
+  <h2>VIII. Numerical protocol</h2>
+  <p>Rescaled Hermite basis \(\phi_n^{\mathrm{QCAL}}(t)=\sqrt{\alpha_0}\,\phi_n(\alpha_0 t)\). Matrix \(H^{(N)}=T+\mathcal{F}^{(N)}\), with \(T\) tridiagonal</p>
+  <div class="eq-box">\[T_{n,n+1}=T_{n+1,n}=\sqrt{\frac{n+1}{2}}\]</div>
+  <p>and \(\mathcal{F}\) the discretization of the principal-value kernel.</p>
+
+  <table>
+    <thead><tr><th>Range \(n\)</th><th>Maximum error</th><th>RMS error</th></tr></thead>
+    <tbody>
+      <tr><td>\(0\)–\(9\)</td><td>\(2{,}0\times10^{-6}\)</td><td>\(1{,}2\times10^{-6}\)</td></tr>
+      <tr><td>\(10\)–\(19\)</td><td>\(1{,}5\times10^{-6}\)</td><td>\(0{,}9\times10^{-6}\)</td></tr>
+      <tr><td>\(20\)–\(29\)</td><td>\(1{,}0\times10^{-6}\)</td><td>\(0{,}7\times10^{-6}\)</td></tr>
+      <tr><td>\(40\)–\(49\)</td><td>\(0{,}5\times10^{-6}\)</td><td>\(0{,}3\times10^{-6}\)</td></tr>
+    </tbody>
+  </table>
+  <p>The global criterion of Figure 1 is \(\chi^2\): Free \(148\), Rosser \(111\), QCAL-Rosser \(11{,}9\). QCAL-Rosser is the only model that places the relative error in valleys of \(10^{-3}\) to \(10^{-4}\) at high indices of the represented interval.</p>
+</section>
+
+<hr>
+
+
+<section id="cuatro">
+  <h2>The Kernel in Four Columns</h2>
+
+  <div class="definition">
+    <strong>1. Duality of the kernel</strong>
+    A single self-adjointness on \(L^2(\mathbb{A}_\mathbb{Q}^\times/\mathbb{Q}^\times)\). Two equivalent writings:
+    <div class="eq-box">\[H_{\mathrm{QCAL}}=-i\hbar\Bigl(x\frac{d}{dx}+\frac12\Bigr)+V_{\mathrm{QCAL}}\]</div>
+    <div class="eq-box">\[H_{\mathrm{QCAL}}=H_{\mathrm{WK}}+V_{\mathrm{QCAL}},\qquad H_{\mathrm{WK}}=-x^2\frac{d^2}{dx^2}+x\frac{d}{dx}.\]</div>
+    Mellin identifies \(L^2(\mathbb{A}_\mathbb{Q}^\times/\mathbb{Q}^\times)\simeq L^2(\mathbb{R}_+,dx/x)\). One Hilbert space. One spectrum.
+  </div>
+
+  <div class="definition">
+    <strong>2. Tuning of the fertile vacuum</strong>
+    The interval \(\Delta p_n=p_{n+1}-p_n\) is not absence. It is density:
+    <div class="eq-box">\[\Omega_{\mathrm{vacío}}(\Delta p_n)=\Delta p_n\cdot f_0\cdot\Psi.\]</div>
+    Primes are nodes. The gap nourishes the field.
+  </div>
+
+  <div class="definition">
+    <strong>3. Phase rigor and no-time</strong>
+    In the pure-resonance limit the Hamiltonian is global phase:
+    <div class="eq-box">\[\mathcal{H}=f_0\cdot\Psi\cdot\mathbb{I},\qquad\mathcal{U}(t)=e^{-i f_0\Psi t/\hbar}\,\mathbb{I}.\]</div>
+    The system evolves in phase, not in dissipation. The \(\gamma_n\) inhabit the quadratic form; this limit is the maximal coherence of the same kernel.
+  </div>
+
+  <div class="prediccion">
+    <strong>4. Empirical falsifiability</strong>
+    <div class="eq-box">\[\Delta\phi=6{,}0\times10^{-7}\,\mathrm{rad}\]</div>
+    Laboratory threshold \(10^{-8}\,\mathrm{rad}\). The formalization has an observable correlate: axial torsion tuned to \(f_0\). Absence of signal in that band falsifies the bridge.
+  </div>
+</section>
+
+<hr>
+
+<section id="pred">
+  <h2>IX. Matrix of falsifiable predictions</h2>
+  <p>Four signatures. Each has a magnitude, a protocol and a failure criterion. The kernel is not declared true by decree: it is left to be measured.</p>
+
+  <h3>IX.1 Phase by axial torsion</h3>
+  <p>In the Chern–Simons coupling of the Manifesto, the interferometric phase amplitude of protocol v4.0 is</p>
+  <div class="eq-box">\[\Delta\phi=6{,}0\times10^{-7}\,\mathrm{rad}.\]</div>
+  <p>In units of the operational protocol, with effective path \(L=1\,\mathrm{m}\),</p>
+  <div class="eq-box">\[\Delta\phi=\frac12\kappa_0 L,\qquad\kappa_0=1{,}2\times10^{-6}\,\mathrm{m}^{-1}\ \Longrightarrow\ \Delta\phi=6{,}0\times10^{-7}\,\mathrm{rad}.\]</div>
+  <p>Laboratory threshold: \(10^{-8}\,\mathrm{rad}\). \(\kappa_0\) is attainable on an optical baseline. \(\Omega_0=f_0\Psi=141{,}7000\,\mathrm{Hz}\) fixes the tuning of the node.</p>
+  <table>
+    <thead><tr><th>Step</th><th>Action</th><th>Value</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>Tune the node</td><td>\(f_0=141{,}7001\,\mathrm{Hz}\)</td></tr>
+      <tr><td>2</td><td>Stabilize coherence</td><td>\(\Psi=0{,}999999\)</td></tr>
+      <tr><td>3</td><td>Apply axial torsion</td><td>\(\kappa_0=1{,}2\times10^{-6}\,\mathrm{m}^{-1}\)</td></tr>
+      <tr><td>4</td><td>Measure \(\Delta\phi\) at \(L=1\,\mathrm{m}\)</td><td>\(6{,}0\times10^{-7}\,\mathrm{rad}\)</td></tr>
+      <tr><td>5</td><td>Repeat \(L=0{,}5,\,1{,}5,\,2{,}0\,\mathrm{m}\)</td><td>\(\Delta\phi\propto L\)</td></tr>
+    </tbody>
+  </table>
+  <p><strong>Failure:</strong> absence of a signal above \(10^{-8}\,\mathrm{rad}\) in a cavity tuned to \(f_0\), or a break of proportionality in \(L\), falsifies the torsion–spectrum bridge.</p>
+
+  <h3>IX.2 High-index zero ladder</h3>
+  <p>The Phase-1 model is QCAL-Rosser (\(\chi^2=11{,}9\)). The operational C-HW symbol</p>
+  <div class="eq-box">\[\sigma_{\mathrm{QCAL}}(n)=C^*\frac{n}{\log(D^*+n)},\qquad C^*=11{,}489,\quad D^*=0{,}910\]</div>
+  <p>inverts the counting law. It is the rigid envelope of the kernel, not a pointwise fit at \(10^{-6}\). With \(f_0\) and \(\Psi\) fixed:</p>
+  <ul>
+    <li>For \(50<n\le 200\), \(\chi^2/n\) of QCAL-Rosser remains below classical Rosser.</li>
+    <li>The mean relative error, in windows of 20 zeros, does not grow.</li>
+  </ul>
+  <p><strong>Failure:</strong> a window of 20 consecutive zeros in which QCAL-Rosser is worse than Rosser falsifies the rigid coupling of \(f_0\).</p>
+
+  <h3>IX.3 Entropic reduction by tuning</h3>
+  <p>The measured ratio \(C^*/\alpha_0\approx 0{,}9652\) is read, in the network protocol, as a mode filter:</p>
+  <div class="eq-box">\[S_{\mathrm{res}}=0{,}965\,S_{\mathrm{base}}\qquad\bigl(\Delta S/S\approx 3{,}5\%\bigr).\]</div>
+  <p>It is a physical hypothesis of the kernel, not a spectral theorem. Protocol: measure \(S\) before and after tuning to \(f_0\); control detuned to a neighboring frequency.</p>
+  <p><strong>Failure:</strong> \(\lvert\Delta S/S\rvert<0{,}5\%\) at the tuned node, with a stable control, withdraws the entropic reading of the ratio \(0{,}965\).</p>
+
+  <h3>IX.4 Integrity of the kernel in Lean 4</h3>
+  <p>The program requires that the self-adjointness of \(H_{\mathrm{QCAL}}\) and the functional equation of \(\xi\) stand in Lean without <em>sorry</em> in those two lemmas. The correspondence \(N_H=N_\zeta\) is the long theorem of the kernel: it is formalized, not declared closed in advance.</p>
+  <p><strong>Failure:</strong> a <em>sorry</em> in self-adjointness or in \(\xi(s)=\xi(1-s)\) breaks the ontological integrity of the program.</p>
+
+  <table>
+    <thead><tr><th>#</th><th>Signature</th><th>Magnitude</th><th>Status</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>Axial torsion</td><td>\(\Delta\phi=6{,}0\times10^{-7}\,\mathrm{rad}\)</td><td>Pending laboratory</td></tr>
+      <tr><td>2</td><td>Ladder \(\gamma_n\)</td><td>QCAL-Rosser \(\chi^2=11{,}9\); C-HW envelope</td><td>Phase 1 measured; \(n>50\) open</td></tr>
+      <tr><td>3</td><td>Network entropy</td><td>\(\Delta S/S\approx 3{,}5\%\)</td><td>Pending bench</td></tr>
+      <tr><td>4</td><td>Lean of the kernel</td><td>self-adjointness and \(\xi(s)=\xi(1-s)\)</td><td>Active sketch</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<hr>
+
+<section id="lean">
+  <h2>X. Lean 4 sketch</h2>
+  <p>Verification skeleton. The functional equation of \(\xi\) and the Hadamard product belong to Mathlib. The correspondence \(N_H=N_\zeta\) and the uniform bound on the operational symbol are statements pending complete formalization.</p>
+<pre>
+import Mathlib.NumberTheory.ZetaFunction
+import Mathlib.Analysis.InnerProductSpace.Basic
+
+namespace QCAL.SpectralCorrespondence
+
+def Ψ : ℝ := 0.999999
+def f₀ : ℝ := 141.7001
+def α₀ : ℝ := Real.sqrt (f₀ * Ψ)
+def C_star : ℝ := 11.489
+def D_star : ℝ := 0.910
+
+structure OperadorAdelico where
+  dominio : Set ℝ
+  autoadjunto_esencial : Prop
+  frecuencia : ℝ
+
+def sigmaQCAL (k : ℝ) : ℝ :=
+  C_star * k / Real.log (D_star + k)
+
+end QCAL.SpectralCorrespondence
+</pre>
+</section>
+
+<div class="resumen">
+  <h4>Close</h4>
+  <ol>
+    <li>QCAL-Rosser (\(\chi^2=11{,}9\)) is the Phase-1 model.</li>
+    <li>\(H_{\mathrm{QCAL}}\) is defined on \(L^2(\mathbb{R}_+,dx/x)\) as a Weil–Keating perturbation.</li>
+    <li>\(\xi'/\xi\) and \(\sigma_{\mathrm{QCAL}}(k)=C^*k/\log(D^*+k)\) are distinct objects.</li>
+    <li>\(C^*/\alpha_0\approx 0{,}9652\) is the measured ratio between spectral scale and physical scale.</li>
+    <li>The critical line follows from \(s(1-s)\in\mathbb{R}\) once the spectral identification is constructed.</li>
+  </ol>
+  <div class="eq-box">\[\Psi\;\Longleftrightarrow\;f_0\;\Longleftrightarrow\;\{\gamma_n\}\;\Longleftrightarrow\;H_{\mathrm{QCAL}}\]</div>
+</div>
+
+<p style="text-align:center;margin-top:1.4rem">
+  The world does not ask us; it is revealed in us.
+</p>
+
+<div class="cierre">
+  <p>QCAL ∞³ Spectral Correspondence — C-HW Synthesis.</p>
+  <p>Author: José Manuel Mota Burruezo · QCAL ∞³</p>
+  <p style="font-size:0.85rem;margin-top:0.6rem">
+    DOI: <a href="https://doi.org/10.5281/zenodo.22119225">10.5281/zenodo.22119225</a>
+    &nbsp;·&nbsp;
+    ORCID: <a href="https://orcid.org/0009-0002-1923-0773">0009-0002-1923-0773</a>
+    &nbsp;·&nbsp;
+    GitHub: <a href="https://github.com/motanova84">github.com/motanova84</a>
+  </p>
+  <p style="text-align:center;font-size:0.78rem;letter-spacing:0.12em;margin-top:1.6rem;color:#666;text-transform:uppercase;">Institute of Quantum Consciousness</p>
+</div>
+
+</body>
+</html>

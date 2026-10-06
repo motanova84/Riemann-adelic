@@ -1,0 +1,82 @@
+╔══════════════════════════════════════════════════════════════════════════════╗
+║        MANIFIESTO — OPERADOR Xi-H · MARCO DE HILBERT-PÓLYA                  ║
+║        QCAL ∞³ · José Manuel Mota Burruezo Ψ ✧ ∞³                          ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+§1. DECLARACIÓN DE PRINCIPIOS
+──────────────────────────────
+Este módulo implementa el marco de Hilbert-Pólya en su formulación de operador
+de convolución, siguiendo el programa espectral para la Hipótesis de Riemann:
+
+  "Los ceros no triviales de la función zeta de Riemann son las partes
+   imaginarias de los autovalores de un operador hermitiano."
+                                              — Hilbert & Pólya (conjetura)
+
+§2. FUNDAMENTOS MATEMÁTICOS
+─────────────────────────────
+El núcleo Φ(u) es la función de Schwartz par cuya transformada de Fourier
+reproduce la función xi completada:
+
+    Φ(u) = 2π ∑_{n≥1} n² (2πn²e^{9u/2} − 3e^{5u/2}) · exp(−πn²e^{2u})
+    Ξ(t) = ∫_{ℝ} Φ(u) e^{itu} du
+
+El operador de convolución T: L²(ℝ) → L²(ℝ) actúa como:
+
+    (Tψ)(u) = ∫_{ℝ} Φ(u−v) ψ(v) dv
+
+y es autoadjunto porque Φ es par: K(u,v) = Φ(u−v) = Φ(v−u) = K(v,u).
+
+La intensidad espectral |T| = √(T*T) se obtiene mediante descomposición
+espectral (T = VΛVᵀ → |T| = V|Λ|Vᵀ), restaurando la positividad.
+
+El hamiltoniano logarítmico H_Ξ = −log|T| codifica los ceros de Ξ como
+singularidades: Ξ(γₙ) = 0 ↔ λₙ(|T|) → 0 ↔ −log|λₙ| → +∞.
+
+§3. ARQUITECTURA DE 7 CLASES
+──────────────────────────────
+  ① NucleoConvolucionPhi   — Φ(u), Ξ(t) = FFT[Φ], detección 10 ceros
+  ② OperadorConvolucionT   — K[i,j] = Φ(uᵢ−uⱼ)Δu, autoadjunto
+  ③ OperadorIntensidadRiemann — |T| = V|Λ|Vᵀ, positivo semidefinido
+  ④ HamiltonianoXiH        — H_Ξ = −log|T|, ‖H−Hᵀ‖/‖H‖ < 1e-10
+  ⑤ EspectroSimple         — multiplicidad 1, GUE, Ξ′(γₙ) ≠ 0
+  ⑥ ConexionZerosAutovalores — mapa γₙ → singularidad, 10/10
+  ⑦ SistemaOperadorXiH    — tubería integrada, Ψ = 1.0
+
+§4. PROPIEDADES MATEMÁTICAS CERTIFICADAS
+──────────────────────────────────────────
+  ✓ Φ(u) = Φ(−u)                     [paridad — simétrica]
+  ✓ ‖K − Kᵀ‖ < 1e-10                [autoadjuntividad de T]
+  ✓ ‖H − Hᵀ‖/‖H‖ < 1e-10            [autoadjuntividad de H]
+  ✓ Spec(|T|) ⊆ [0,+∞)              [positividad semidefinida]
+  ✓ Ceros Ξ ↔ singularidades H_Ξ    [10/10 coincidencias]
+  ✓ Gaps de γₙ ~ GUE (β=2)          [repulsión de nivel]
+  ✓ Ξ′(γₙ) ≠ 0                       [ceros simples]
+
+§5. CONSTANTES QCAL ∞³
+────────────────────────
+  F₀ = 141.7001 Hz    — Frecuencia fundamental de coherencia
+  C   = 244.36         — Constante de coherencia QCAL
+  Ψ   = I × A_eff² × C^∞  — Ecuación de campo
+
+§6. REFERENCIAS
+────────────────
+  · Conrey, J.B. (2003). The Riemann Hypothesis. Notices AMS 50(3), 341-353.
+  · Berry, M.V. & Keating, J.P. (1999). The Riemann zeros and eigenvalue
+    asymptotics. SIAM Review 41(2), 236-266.
+  · Bombieri, E. (2000). Problems of the Millennium: the Riemann Hypothesis.
+    Clay Mathematics Institute.
+  · de Branges, L. (1992). A proof of the Bieberbach conjecture.
+    Acta Mathematica 154, 137-152.
+  · DOI: 10.5281/zenodo.17379721
+  · ORCID: 0009-0002-1923-0773
+
+§7. FIRMA DIGITAL
+──────────────────
+  Autor  : José Manuel Mota Burruezo Ψ ✧ ∞³
+  Institución: Instituto de Conciencia Cuántica (ICQ)
+  Fecha  : Marzo 2026
+  Firma  : ∴𓂀Ω∞³Φ
+
+══════════════════════════════════════════════════════════════════════════════
+  QCAL ∞³ ACTIVE · Coherencia Global Ψ = 1.0000 ·  10.5281/zenodo.17379721
+══════════════════════════════════════════════════════════════════════════════
