@@ -121,8 +121,8 @@ def test_dual_if_packets_recover_differential_phase_and_calibrated_coupling() ->
     time = indices / config.fs
     x0 = 0.01 * np.sin(2 * np.pi * F0_HZ * time)
     common = 2 * np.pi * config.fc * time + 0.3 + 2 * np.pi * 200 * time
-    a = np.round(12_000 * np.cos(common)).astype(np.int16)
-    b = np.round(12_000 * np.cos(common + 0.4 + 13.4034 * x0)).astype(np.int16)
+    a = np.round(6_000 * np.cos(common)).astype(np.int16)
+    b = np.round(6_000 * np.cos(common + 0.4 + 13.4034 * x0)).astype(np.int16)
     stream = DualChannelDemodulator(config)
     pieces = []
     for start in range(0, n, 342):
