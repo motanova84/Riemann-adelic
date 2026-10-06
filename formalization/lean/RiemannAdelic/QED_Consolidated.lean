@@ -26,6 +26,8 @@ import Mathlib.Analysis.Fourier.FourierTransform
 import Mathlib.MeasureTheory.Integral.Bochner
 import Mathlib.Topology.Algebra.Order.Compact
 import Mathlib.Analysis.Calculus.Deriv.Basic
+import RiemannAdelic.critical_line_proof
+import RiemannAdelic.hadamard_uniqueness
 
 namespace RiemannAdelic.QED
 

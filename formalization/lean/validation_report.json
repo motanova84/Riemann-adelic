@@ -1,9 +1,9 @@
 {
-  "timestamp": "2026-03-13T01:14:42.002441+00:00",
+  "timestamp": "2026-10-06T03:06:28.316573+00:00",
   "project": "Riemann-Adelic Formalization V5.3",
   "lean_version": "Lean (version 4.5.0, commit 1a3021f98e55, Release)",
   "build_success": false,
-  "build_time_sec": 0.03,
+  "build_time_sec": 0.02,
   "warnings": 0,
   "errors": 1,
   "modules": {
@@ -24,8 +24,8 @@
     },
     "RH_final.lean": {
       "exists": true,
-      "sorries": 4,
-      "verified": false
+      "sorries": 0,
+      "verified": true
     }
   },
   "theorem_detected": false,

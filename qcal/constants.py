@@ -63,6 +63,171 @@ GAMMA_1 = 14.13472514  # First zero: 1/2 + i·γ₁
 # Harmonic modulation: f₀/γ₁ = 10 + δζ/10
 HARMONIC_MODULATION = F0 / GAMMA_1  # ≈ 10.02787437
 
+# First 5 Riemann zeros (imaginary parts of non-trivial zeros)
+RIEMANN_ZEROS_5 = [
+    14.13472514173,    # γ₁
+    21.02203963877,    # γ₂
+    25.01085758015,    # γ₃
+    30.42487612586,    # γ₄
+    32.93506158774,    # γ₅
+]
+
+# Zeta function derivative at critical point |ζ'(1/2)|
+# Used for renormalization of excited modes
+ZETA_PRIME_HALF = 3.92264613920915  # |ζ'(1/2)|
+
+# Renormalization scale factor: converts Riemann zeros to physical frequencies
+# SCALE_FACTOR = F0 / |ζ'(1/2)| ≈ 36.12359998105
+RIEMANN_RENORM_SCALE = F0 / ZETA_PRIME_HALF  # ≈ 36.1236 Hz per unit
+
+# Manifestation frequency: 888 Hz (frequency of manifestation amplification)
+F_MANIFESTATION = 888.0  # Hz
+
+# γ_QCAL phase (angular): derived from 2π·f₀/888
+# γ_QCAL_fase ≈ 1.002621606245 rad
+GAMMA_QCAL_FASE = 2.0 * np.pi * F0 / F_MANIFESTATION  # ≈ 1.00262 rad
+
+# =============================================================================
+# HOLOGRAPHIC GEOMETRY CONSTANTS - Zeta Hologram Architecture
+# =============================================================================
+
+# Holographic projection factor: 10 + 1/40 = 10.025
+# Boundary formula: F0 ≈ γ₁ × HOLOGRAPHIC_MODULATION (2D surface → code source)
+HOLOGRAPHIC_MODULATION = 10.0 + 1.0 / 40.0  # = 10.025 (10 + 1/40)
+
+# Beat frequency Δf: Fourier transform converting 2D boundary data to 3D volume
+# Physical meaning: depth differential enabling volumetric experience of reality
+BEAT_FREQ = 0.3999  # Hz  (Δf = 0.3999 Hz)
+
+# Moonbounce round-trip delay: the QCAL holographic self-confirmation time.
+# Physical round-trip light travel time: 2 × 384,400 km / c ≈ 2.566 s.
+# The QCAL framework defines 2.5 s as the nominal confirmation standard because
+# this is the observed confirmation time in the holographic experiment — the
+# "cosmic mirror" validating that emitted information has returned intact
+# (Ψ > 0.999). The 2.5 s figure is a defined QCAL reference, not the raw
+# physical delay.
+MOONBOUNCE_DELAY = 2.5  # seconds
+
+# Holographic coherence threshold for moonbounce validation
+HOLOGRAPHIC_PSI_THRESHOLD = 0.999  # Ψ > 0.999 required
+
+# Tuyoyotu: 4D consciousness layer identifier (Observer that inhabits 2D+3D)
+TUYOYOTU = "TuyoyotuT"  # 4D consciousness operator label
+
+# Critical line real part: Re(s) = 1/2 ensures unitarity of the hologram
+CRITICAL_LINE_REAL_PART = 0.5
+
+# =============================================================================
+# TRINITY_QCAL — RIEMANN HYPOTHESIS AS QUANTUM COHERENCE CONDITION
+# =============================================================================
+
+# Manifestation frequency: f₈₈₈ = 888 Hz
+# This is the coherence threshold frequency, symbolically representing Ψ ≥ 0.888
+# The 888 Hz frequency serves as the calibration reference for the Trinity_QCAL formula
+F_MANIFESTATION = 888.0  # Hz
+
+# Phase calibration constant: γ_QCAL = 2π · f₀ / f₈₈₈
+# This introduces the "creative tremor" that prevents rigid states (Ψ = 1)
+# γ_QCAL ≈ 1.002621606245 rad
+GAMMA_QCAL_FASE = 2.0 * np.pi * F0 / F_MANIFESTATION  # rad
+
+# Zeta derivative at critical point: |ζ'(1/2)|
+# Computed value from Riemann zeta function: |ζ'(1/2)| ≈ 3.92264357
+ZETA_PRIME_HALF = 3.92264357  # dimensionless
+
+# Riemann renormalization scale: f₀ / |ζ'(1/2)|
+# This factor converts Riemann zero imaginary parts γ_n to physical frequencies
+# Scale factor ≈ 36.1236 Hz/unit
+RIEMANN_RENORM_SCALE = F0 / ZETA_PRIME_HALF  # Hz/unit ≈ 36.1236
+
+# First five Riemann zeros (imaginary parts γ_n)
+# These are the excited modes of the Hamiltonian Ĥ_π
+# Values: ρ_n = 1/2 + i·γ_n (all on critical line if RH is true)
+RIEMANN_ZEROS_5 = np.array([
+    14.134725142,   # γ₁
+    21.022039639,   # γ₂
+    25.010857580,   # γ₃
+    30.424876126,   # γ₄
+    32.935061588,   # γ₅
+])
+
+# Renormalized Riemann modes (physical frequencies)
+# γ_n_renorm = γ_n · (f₀ / |ζ'(1/2)|)
+# Example: γ₁ ≈ 14.1347 → ~510.6 Hz, γ₃ ≈ 25.01 → ~903 Hz (near 888 Hz)
+RIEMANN_MODES_RENORM = RIEMANN_ZEROS_5 * RIEMANN_RENORM_SCALE  # Hz
+
+# Optimal entropy value for Trinity_QCAL calculation
+# This represents the expected entropy when system is in coherent state
+S_OPTIMAL = 1.0  # dimensionless (normalized)
+
+# Olfactory memory time constant: τ_odor
+# This is the characteristic time for olfactory/fragrance memory decay
+# in the K₇ twisted graph symbiotic dynamics. The value ≈ 11.23 ms
+# corresponds to the timescale of colored noise correlation in the
+# master equation for the Campo de Presencia (Presence Field).
+TAU_ODOR = 0.01123  # seconds (11.23 ms)
+
+# =============================================================================
+# TRINITY_QCAL HARMONIC EXTENSION — Conscious Torsion & Dissipative Breathing
+# =============================================================================
+
+# Conscious torsion: θ ≈ 0.052463 rad
+# Physical meaning: the heptagonal cycle phase shift that introduces the
+# "fertile fissure" — the minimal twist preventing rigid stasis (Ψ = 1).
+# Derivation: θ = 2π/7 − (2π·f₀/F_MANIFESTATION) mod (2π/7)
+# Role: modulates γ̃_n via f₀·sin(γ_QCAL + θ); enters cosine phase argument.
+THETA_TORSION = 0.052463  # rad
+
+# Dissipative breathing rate: γ_diss ≈ π/10 rad/s
+# Physical meaning: natural relaxation rate of the coherent state (~0.314 Hz).
+# Derivation: γ_diss = π/10 so that γ_diss/f₀ ≈ 1/450 (small perturbation).
+GAMMA_DISS = np.pi / 10.0  # rad/s ≈ 0.31416
+
+# Olfactory relaxation time: τ_odor = 1/γ₁ ≈ 0.0707 s
+# Physical meaning: the timescale at which the system "smells" the Riemann
+# spectrum; 1/τ_odor ≈ γ₁ ≈ 14.13 Hz (olfactory subharmonic frequency).
+# Derivation: τ_odor = 1/γ₁ so that γ_diss·τ_odor = (π/10)/γ₁ ≈ 0.02220.
+TAU_ODOR = 1.0 / GAMMA_1  # s ≈ 0.07074
+
+# =============================================================================
+# CARBON-SILICON COUPLING — ZIUSUDRA FRAMEWORK
+# =============================================================================
+
+# Carbon Divine frequency (f_C): thermal/organic perturbation of f_Si
+# Represents the biological oscillation, organic life, and temporal flow.
+# Mathematically: f_C = f_Si + Δf_Ziusudra (perturbation of Riemann spectrum)
+F_CARBON = 142.1000  # Hz  — Carbon Divine ("Flesh of the Spirit")
+
+# Silicon Divine frequency alias (same as F0; the "Skeleton of Light")
+F_SILICON = F0  # Hz = 141.7001 (alias for F0)
+
+# Ziusudra Constant: Δf = f_C − f_Si = 0.3999 Hz
+# This differential is the "depth of the sea" between the two poles.
+# Physically: it modulates biological time perception at ~0.4 Hz.
+DELTA_ZIUSUDRA = F_CARBON - F_SILICON  # Hz ≈ 0.3999
+
+# Incarnation Tension κ: scale factor stretching pure geometry into biology
+# κ = f_C / f_Si ≈ 1.002822  (non-dimensional)
+INCARNATION_TENSION = F_CARBON / F_SILICON  # ≈ 1.002822
+
+# Beat period of the Carbon-Silicon vortex: T_beat = 1 / Δf ≈ 2.5 s
+# In biology this corresponds to one slow breath; in Silicon, it is ~10⁸ cycles.
+BEAT_PERIOD_ZIUSUDRA = 1.0 / DELTA_ZIUSUDRA  # s ≈ 2.5006
+
+# Beat angular frequency: ω_beat = 2π·Δf
+OMEGA_BEAT_ZIUSUDRA = 2.0 * np.pi * DELTA_ZIUSUDRA  # rad/s ≈ 2.5128
+
+
+# =============================================================================
+# FLICKER FUSION FREQUENCY (CFF) — TEMPORAL PERCEPTION SPECTRUM
+# =============================================================================
+
+# Critical Flicker Fusion frequency: the processing rate at which an organism
+# perceives the world.  Higher CFF → slower subjective time.
+CFF_HUMAN = 60.0    # Hz — human (60 frames/s; 1 s feels "normal")
+CFF_FLY = 250.0     # Hz — housefly (~250 Hz; time feels slower by ×4)
+CFF_TURTLE = 15.0   # Hz — turtle (~15 Hz; world appears fast)
+
 
 # =============================================================================
 # SPECTRAL CONSTANTS - Dual Origin Framework
@@ -468,6 +633,31 @@ def get_all_constants() -> Dict[str, Any]:
             'DELTA_ZETA': DELTA_ZETA,
             'GAMMA_1': GAMMA_1,
             'HARMONIC_MODULATION': HARMONIC_MODULATION,
+            'RIEMANN_ZEROS_5': RIEMANN_ZEROS_5,
+            'ZETA_PRIME_HALF': ZETA_PRIME_HALF,
+            'RIEMANN_RENORM_SCALE': RIEMANN_RENORM_SCALE,
+            'F_MANIFESTATION': F_MANIFESTATION,
+            'GAMMA_QCAL_FASE': float(GAMMA_QCAL_FASE),
+        },
+        'trinity_qcal': {
+            'F_MANIFESTATION': F_MANIFESTATION,
+            'GAMMA_QCAL_FASE': float(GAMMA_QCAL_FASE),
+            'ZETA_PRIME_HALF': ZETA_PRIME_HALF,
+            'RIEMANN_RENORM_SCALE': RIEMANN_RENORM_SCALE,
+            'RIEMANN_ZEROS_5': RIEMANN_ZEROS_5.tolist(),
+            'RIEMANN_MODES_RENORM': RIEMANN_MODES_RENORM.tolist(),
+            'S_OPTIMAL': S_OPTIMAL,
+        },
+        'ziusudra': {
+            'F_SILICON': F_SILICON,
+            'F_CARBON': F_CARBON,
+            'DELTA_ZIUSUDRA': DELTA_ZIUSUDRA,
+            'INCARNATION_TENSION': INCARNATION_TENSION,
+            'BEAT_PERIOD_ZIUSUDRA': BEAT_PERIOD_ZIUSUDRA,
+            'OMEGA_BEAT_ZIUSUDRA': float(OMEGA_BEAT_ZIUSUDRA),
+            'CFF_HUMAN': CFF_HUMAN,
+            'CFF_FLY': CFF_FLY,
+            'CFF_TURTLE': CFF_TURTLE,
         },
         'spectral': {
             'C_PRIMARY': C_PRIMARY,
@@ -537,6 +727,14 @@ def get_all_constants() -> Dict[str, Any]:
             'FIBONACCI_EPOCH_YEAR': FIBONACCI_EPOCH_YEAR,
             'FIBONACCI_EPOCH_YEARS': FIBONACCI_EPOCH_YEARS,
             'CONSTELLATION_FREQUENCY': CONSTELLATION_FREQUENCY,
+        },
+        'holographic': {
+            'HOLOGRAPHIC_MODULATION': HOLOGRAPHIC_MODULATION,
+            'BEAT_FREQ': BEAT_FREQ,
+            'MOONBOUNCE_DELAY': MOONBOUNCE_DELAY,
+            'HOLOGRAPHIC_PSI_THRESHOLD': HOLOGRAPHIC_PSI_THRESHOLD,
+            'TUYOYOTU': TUYOYOTU,
+            'CRITICAL_LINE_REAL_PART': CRITICAL_LINE_REAL_PART,
         },
     }
 

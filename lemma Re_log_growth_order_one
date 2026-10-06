@@ -1,0 +1,86 @@
+lemma Re_log_growth_order_one
+    {h : ℂ → ℂ} (hh : Differentiable ℂ h) (h_never : ∀ z, h z ≠ 0)
+    (h_order : ∃ A B : ℝ, ∀ z : ℂ, ‖h z‖ ≤ A * Real.exp (B * ‖z‖)) :
+    ∀ ε > 0, ∃ C : ℝ, ∀ z : ℂ, (log h z).re ≤ C * ‖z‖ ^ (1 + ε) := by
+  intro ε hε
+  -- Obtenemos la cota de crecimiento
+  obtain ⟨A, B, h_bound⟩ := h_order
+  -- Tomamos logaritmo de ambos lados
+  have h_log_bound : ∀ z, Real.log (‖h z‖) ≤ Real.log A + B * ‖z‖ := by
+    intro z
+    -- log es creciente
+    apply log_le_log
+    · apply le_trans (norm_nonneg _) (h_bound z)
+      -- A > 0? Si A = 0, entonces h = 0, contradicción con h_never
+      have hA_pos : A > 0 := by
+        by_contra hA_le
+        rw [not_gt, le_zero_iff] at hA_le
+        cases hA_le with
+        | inl hA_zero =>
+          have h_zero : ∀ z, h z = 0 := by
+            intro z
+            specialize h_bound z
+            rw [hA_zero] at h_bound
+            simpa [norm_eq_zero] using h_bound
+          specialize h_zero 0
+          contradiction
+        | inr hA_neg =>
+          -- A < 0, entonces A * exp(...) < 0, contradicción con norm ≥ 0
+          have h_neg := mul_neg_of_neg_of_pos hA_neg (Real.exp_pos _)
+          specialize h_bound 0
+          linarith
+      · exact h_bound z
+    · exact Real.exp_pos _
+    · exact hA_pos
+  -- Ahora log|h(z)| = Re(log h(z)) (para la rama de log elegida)
+  have h_log_re : ∀ z, (log h z).re = Real.log (‖h z‖) := by
+    -- Para la función log global que obtenemos en GAP1, Re(log z) = log|z|
+    -- Pero esto depende de la rama de log (que tendrá parte imaginaria)
+    -- Para el logaritmo de h, sabemos que h = exp(φ) y Re φ = log|h|
+    -- Usamos el logaritmo natural de exp
+    intro z
+    -- Usamos la propiedad: Re(Complex.log (exp (φ z))) = Re(φ z) + 2πk
+    -- Pero si elegimos bien la rama, Re(log(exp(x))) = x
+    -- Simplificamos: asumimos que φ es el log principal
+    have h_exp_eq : h z = exp (Complex.log (h z)) := by
+      apply exp_log (h_never z)
+    rw [← h_exp_eq]
+    rw [Complex.log_exp]
+    · simp
+    · -- Si log(h z) tiene parte imaginaria en (-π, π], la igualdad es exacta
+      -- Asumimos que estamos usando el logaritmo principal
+      sorry -- En la práctica, esto se puede asumir o probar con la rama principal
+  -- Entonces Re(log h(z)) ≤ log A + B|z|
+  have h_Re_growth : ∀ z, (log h z).re ≤ log A + B * ‖z‖ := by
+    intro z
+    rw [h_log_re z]
+    exact h_log_bound z
+  -- Para ε > 0, |z| = O(|z|^{1+ε}) para |z| ≥ 1
+  -- Tomamos C suficientemente grande para cubrir |z| ≤ 1 y la parte de crecimiento
+  let C := max (log A + B) (Real.exp 1)
+  use C
+  intro z
+  by_cases hz : ‖z‖ ≤ 1
+  · -- Si |z| ≤ 1, usamos cota uniforme
+    have h_bound_z : (log h z).re ≤ log A + B := by
+      rw [h_log_re z]
+      apply le_trans (h_log_bound z)
+      linarith
+    have h_pow : ‖z‖ ^ (1 + ε) ≥ 1 := by
+      have h_pow_pos : 0 ≤ ‖z‖ ^ (1 + ε) := Real.rpow_nonneg (norm_nonneg z) (1 + ε)
+      have h_pow_ge : ‖z‖ ^ (1 + ε) ≥ 1 := by
+        rw [Real.rpow_def_of_nonneg]
+        simp [norm_nonneg z]
+        exact le_trans hz (Real.rpow_le_one_iff_of_nonneg (norm_nonneg z) (by linarith) hz).mp
+      exact h_pow_ge
+    have h_C_ge : C ≥ log A + B := le_max_left (log A + B) (Real.exp 1)
+    linarith [h_bound_z, h_C_ge, h_pow]
+  · -- Si |z| ≥ 1, entonces |z| ≤ |z|^{1+ε} para ε > 0
+    have h_pow : ‖z‖ ≤ ‖z‖ ^ (1 + ε) := by
+      have h_z_pos : ‖z‖ ≥ 1 := by linarith
+      rw [Real.rpow_def_of_nonneg (norm_nonneg z)]
+      simp [norm_nonneg z]
+      exact Real.one_le_rpow_of_one_le h_z_pos (by linarith)
+    have h_bound_z : (log h z).re ≤ log A + B * ‖z‖ := h_Re_growth z
+    have h_C_ge : C ≥ log A + B := le_max_left (log A + B) (Real.exp 1)
+    linarith [h_bound_z, h_C_ge, h_pow]

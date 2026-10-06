@@ -1,0 +1,86 @@
+{
+  "start_time": "2026-09-03T04:49:02.020510",
+  "end_time": "2026-09-03T04:49:02.218759",
+  "tests": [
+    {
+      "nodeid": "tests/test_hpsi_unconditional_modules.py::test_unconditional_modules_exist",
+      "outcome": "passed",
+      "duration": 0.0001881460000277002,
+      "timestamp": "2026-09-03T04:49:02.206706"
+    },
+    {
+      "nodeid": "tests/test_hpsi_unconditional_modules.py::test_unconditional_modules_have_no_sorry",
+      "outcome": "passed",
+      "duration": 0.00042251599995779543,
+      "timestamp": "2026-09-03T04:49:02.208063"
+    },
+    {
+      "nodeid": "tests/test_hpsi_unconditional_modules.py::test_unbounded_hpsi_removes_first_axiom_bridge",
+      "outcome": "passed",
+      "duration": 0.00017320400002063252,
+      "timestamp": "2026-09-03T04:49:02.209147"
+    },
+    {
+      "nodeid": "tests/test_hpsi_unconditional_modules.py::test_unbounded_hpsi_norm_density_closed_without_sorry",
+      "outcome": "passed",
+      "duration": 0.00014218900003015733,
+      "timestamp": "2026-09-03T04:49:02.210110"
+    },
+    {
+      "nodeid": "tests/test_hpsi_unconditional_modules.py::test_unbounded_hpsi_dyadic_local_closure_present",
+      "outcome": "passed",
+      "duration": 0.00014535299999351992,
+      "timestamp": "2026-09-03T04:49:02.211066"
+    },
+    {
+      "nodeid": "tests/test_hpsi_unconditional_modules.py::test_unbounded_hpsi_causal_kernel_bridge_present",
+      "outcome": "passed",
+      "duration": 0.0001607460000059291,
+      "timestamp": "2026-09-03T04:49:02.212011"
+    },
+    {
+      "nodeid": "tests/test_hpsi_unconditional_modules.py::test_remaining_axiom_names_removed_from_module_chain",
+      "outcome": "passed",
+      "duration": 0.00015728100004253065,
+      "timestamp": "2026-09-03T04:49:02.212940"
+    },
+    {
+      "nodeid": "tests/test_hpsi_unconditional_modules.py::test_spectral_uniqueness_no_true_placeholders",
+      "outcome": "passed",
+      "duration": 0.00012930100001540268,
+      "timestamp": "2026-09-03T04:49:02.213806"
+    },
+    {
+      "nodeid": "tests/test_hpsi_unconditional_modules.py::test_trace_fredholm_schatten_contract_present",
+      "outcome": "passed",
+      "duration": 0.00011166399997364351,
+      "timestamp": "2026-09-03T04:49:02.214705"
+    },
+    {
+      "nodeid": "tests/test_hpsi_unconditional_modules.py::test_poisson_mellin_tripartite_contract_present",
+      "outcome": "passed",
+      "duration": 0.000104172999954244,
+      "timestamp": "2026-09-03T04:49:02.215584"
+    },
+    {
+      "nodeid": "tests/test_hpsi_unconditional_modules.py::test_spectral_mechanics_core_theorems_present",
+      "outcome": "passed",
+      "duration": 0.00010770799997317226,
+      "timestamp": "2026-09-03T04:49:02.216478"
+    },
+    {
+      "nodeid": "tests/test_hpsi_unconditional_modules.py::test_hadamard_uniqueness_bridge_present",
+      "outcome": "passed",
+      "duration": 0.0001038130000097226,
+      "timestamp": "2026-09-03T04:49:02.217350"
+    }
+  ],
+  "summary": {
+    "passed": 12,
+    "failed": 0,
+    "skipped": 0,
+    "error": 0,
+    "total": 12
+  },
+  "end_timestamp": "2026-09-03T04:49:02.218923"
+}

@@ -83,6 +83,10 @@ import time
 import warnings
 warnings.filterwarnings('ignore')
 
+# IEEE-754 double-precision underflow threshold for np.exp().
+# np.exp(x) == 0.0 for x < ~-708; using -700 gives a safe margin.
+EXP_UNDERFLOW_THRESHOLD = -700.0
+
 # QCAL ∞³ Constants
 F0_QCAL = 141.7001          # Hz - fundamental frequency
 C_PRIMARY = 629.83           # Primary spectral constant
@@ -292,24 +296,35 @@ class XiIntegralKernelOperator:
         
         phi = np.zeros(self.n_grid, dtype=np.float64)
         
+        # The series converges absolutely for u >= 0 (e^{-πn²e^{2u}} decays fast).
+        # For u < 0 the Gaussian factor is near 1, so the tail sum diverges in a
+        # finite truncation.  We therefore compute only the u >= 0 half and then
+        # enforce the mathematical even-symmetry Φ(u) = Φ(-u) by reflection.
+        n_half = self.n_grid // 2
+        
         for n in range(1, self.n_phi_terms + 1):
             n2 = n * n
             n4 = n2 * n2
             
-            for i, u in enumerate(self.u_grid):
+            for i in range(n_half, self.n_grid):
+                u = self.u_grid[i]
                 e2u = np.exp(2 * u)
                 e4u = e2u * e2u
                 
-                # Avoid overflow for large u
                 exp_arg = -np.pi * n2 * e2u
-                if exp_arg < -100:
+                # For large u the exponential underflows naturally to 0.0;
+                # skip early only when the argument is extremely negative.
+                if exp_arg < EXP_UNDERFLOW_THRESHOLD:
                     continue
                 
                 exp_term = np.exp(exp_arg)
                 phi[i] += (2 * np.pi**2 * n4 * e4u - 3 * np.pi * n2 * e2u) * exp_term
         
+        # Reflect to obtain the even extension Φ(-u) = Φ(u)
+        for i in range(n_half):
+            phi[i] = phi[self.n_grid - 1 - i]
+        
         # Verify symmetry Φ(u) = Φ(-u)
-        n_half = self.n_grid // 2
         symmetry_errors = []
         for i in range(n_half):
             j = self.n_grid - 1 - i
@@ -504,6 +519,11 @@ class XiIntegralKernelOperator:
         idx_sorted = np.argsort(np.abs(eigenvalues_real))
         eigenvalues_selected = eigenvalues_real[idx_sorted[:n_eig]]
         eigenvectors_selected = eigenvectors[:, idx_sorted[:n_eig]]
+        
+        # Normalize eigenvectors to L²-norm = 1 (quadrature weight du)
+        # eigh returns unit Euclidean vectors; dividing by sqrt(du) gives
+        # ∫|ψ|² du = Σ|v[i]|² * du = 1.
+        eigenvectors_selected = eigenvectors_selected / np.sqrt(self.du)
         
         # Compute corresponding t-values (zeros of Ξ)
         # E_n are the eigenvalues, and Ξ(E_n) = 0

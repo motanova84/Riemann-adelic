@@ -38,19 +38,19 @@ def K_gauss(t, s, h):
         Kernel value K_h(t,s)
     """
     return np.exp(-h/4.0) * np.sqrt(np.pi / h) * np.exp(-(t - s)**2 / (4.0*h))
-- Builds operator H from thermal kernel K_t(x,y)
-- Uses parity operator J for functional equation symmetry
-- Diagonalizes H to extract Riemann zeros
-- Compares with Odlyzko zeros for validation
-
-Mathematical Foundation:
-The operator H is constructed from the thermal kernel:
-    K_t(x,y) = ∫ e^(-t(u²+1/4)) e^(iu(log x - log y)) du
-
-With symmetry operator J: Jf(x) = x^(-1/2) f(1/x)
-
-The spectrum of H satisfies: σ(H) = {1/4 + γ²: ζ(1/2+iγ)=0}
-"""
+# - Builds operator H from thermal kernel K_t(x,y)
+# - Uses parity operator J for functional equation symmetry
+# - Diagonalizes H to extract Riemann zeros
+# - Compares with Odlyzko zeros for validation
+# 
+# Mathematical Foundation:
+# The operator H is constructed from the thermal kernel:
+#     K_t(x,y) = ∫ e^(-t(u²+1/4)) e^(iu(log x - log y)) du
+# 
+# With symmetry operator J: Jf(x) = x^(-1/2) f(1/x)
+# 
+# The spectrum of H satisfies: σ(H) = {1/4 + γ²: ζ(1/2+iγ)=0}
+# """
 
 import numpy as np
 from scipy.linalg import eigh
@@ -549,75 +549,75 @@ if __name__ == "__main__":
     print("3. H is coercive and self-adjoint")
     print("4. Spectrum is geometric: {ω_k² + 1/4}")
     print("5. To get Riemann zeros, apply de Branges structure (§6-§8)")
-        print(f"  Thermal parameter t: {basis_info['t']}")
-        print(f"  Target γ values (first 5): {basis_info['gamma_estimates'][:5]}")
-        print()
-    
+#         print(f"  Thermal parameter t: {basis_info['t']}")
+#         print(f"  Target γ values (first 5): {basis_info['gamma_estimates'][:5]}")
+#         print()
+#     
     # Verify positive definiteness (coercivity)
-    min_eigenvalue = np.min(np.linalg.eigvalsh(H))
-    if verbose:
-        print(f"✓ Coercivity check: min(λ) = {min_eigenvalue:.6f}")
-        print(f"  H is {'positive definite' if min_eigenvalue > 0 else 'NOT positive definite'}")
-        print()
-    
+#     min_eigenvalue = np.min(np.linalg.eigvalsh(H))
+#     if verbose:
+#         print(f"✓ Coercivity check: min(λ) = {min_eigenvalue:.6f}")
+#         print(f"  H is {'positive definite' if min_eigenvalue > 0 else 'NOT positive definite'}")
+#         print()
+#     
     # Diagonalize using eigh (for real symmetric matrices)
-    eigenvalues, eigenvectors = eigh(H)
-    
-    if verbose:
-        print(f"✓ Diagonalized H using eigh")
-        print(f"  Eigenvalue range: [{eigenvalues[0]:.6f}, {eigenvalues[-1]:.6f}]")
-        print()
-    
+#     eigenvalues, eigenvectors = eigh(H)
+#     
+#     if verbose:
+#         print(f"✓ Diagonalized H using eigh")
+#         print(f"  Eigenvalue range: [{eigenvalues[0]:.6f}, {eigenvalues[-1]:.6f}]")
+#         print()
+#     
     # Extract zeros
-    computed_gammas = extract_zeros_from_spectrum(eigenvalues)
-    
+#     computed_gammas = extract_zeros_from_spectrum(eigenvalues)
+#     
     # Load true zeros
-    true_gammas = load_odlyzko_zeros(max_zeros=max_zeros)
-    
+#     true_gammas = load_odlyzko_zeros(max_zeros=max_zeros)
+#     
     # Compare
-    n_compare = min(len(computed_gammas), len(true_gammas))
-    
-    if verbose:
-        print("="*70)
-        print("COMPARISON WITH ODLYZKO ZEROS")
-        print("="*70)
-        print(f"{'Index':<8} {'Computed γ':<15} {'True γ':<15} {'Error':<15} {'Rel Error':<12}")
-        print("-"*70)
-    
-    errors = []
-    rel_errors = []
-    
-    for i in range(n_compare):
-        gamma_comp = computed_gammas[i]
-        gamma_true = true_gammas[i]
-        error = abs(gamma_comp - gamma_true)
-        rel_error = error / gamma_true if gamma_true > 0 else float('inf')
-        
-        errors.append(error)
-        rel_errors.append(rel_error)
-        
-        if verbose:
-            print(f"{i+1:<8} {gamma_comp:<15.6f} {gamma_true:<15.6f} "
-                  f"{error:<15.6f} {rel_error:<12.6e}")
-    
-    if verbose:
-        print("-"*70)
-        print(f"Mean absolute error: {np.mean(errors):.6e}")
-        print(f"Mean relative error: {np.mean(rel_errors):.6e}")
-        print("="*70)
-        print()
-    
-    return {
-        'H': H,
-        'eigenvalues': eigenvalues,
-        'eigenvectors': eigenvectors,
-        'computed_gammas': computed_gammas,
-        'true_gammas': true_gammas,
-        'errors': np.array(errors),
-        'rel_errors': np.array(rel_errors),
-        'mean_error': np.mean(errors),
-        'mean_rel_error': np.mean(rel_errors)
-    }
+#     n_compare = min(len(computed_gammas), len(true_gammas))
+#     
+#     if verbose:
+#         print("="*70)
+#         print("COMPARISON WITH ODLYZKO ZEROS")
+#         print("="*70)
+#         print(f"{'Index':<8} {'Computed γ':<15} {'True γ':<15} {'Error':<15} {'Rel Error':<12}")
+#         print("-"*70)
+#     
+#     errors = []
+#     rel_errors = []
+#     
+#     for i in range(n_compare):
+#         gamma_comp = computed_gammas[i]
+#         gamma_true = true_gammas[i]
+#         error = abs(gamma_comp - gamma_true)
+#         rel_error = error / gamma_true if gamma_true > 0 else float('inf')
+#         
+#         errors.append(error)
+#         rel_errors.append(rel_error)
+#         
+#         if verbose:
+#             print(f"{i+1:<8} {gamma_comp:<15.6f} {gamma_true:<15.6f} "
+#                   f"{error:<15.6f} {rel_error:<12.6e}")
+#     
+#     if verbose:
+#         print("-"*70)
+#         print(f"Mean absolute error: {np.mean(errors):.6e}")
+#         print(f"Mean relative error: {np.mean(rel_errors):.6e}")
+#         print("="*70)
+#         print()
+#     
+#     return {
+#         'H': H,
+#         'eigenvalues': eigenvalues,
+#         'eigenvectors': eigenvectors,
+#         'computed_gammas': computed_gammas,
+#         'true_gammas': true_gammas,
+#         'errors': np.array(errors),
+#         'rel_errors': np.array(rel_errors),
+#         'mean_error': np.mean(errors),
+#         'mean_rel_error': np.mean(rel_errors)
+#     }
 
 
 def convergence_study(n_basis_values=[10, 15, 20, 25], 

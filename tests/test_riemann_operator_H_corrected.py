@@ -900,24 +900,24 @@ class TestRegularizarPotencialSoberano:
         for sigma in [0.05, 0.1, 0.5]:
             result = regularizar_potencial_soberano(sigma=sigma)
             assert "OPERACIÓN" in result
-Tests for the corrected Wu-Sprung Hamiltonian.
-
-Validates the full mathematical derivation chain:
-  WKB → density of states → smooth+oscillatory decomposition
-  → trace formula → inverse Abel transform
-  → prime-encoded oscillatory potential V_osc(x)
-  → corrected Hamiltonian H = -d²/dx² + V_Abel + ε·V_osc
-
-Tests cover:
-1. Prime sieve correctness
-2. Abel turning point formula
-3. Abel inversion (smooth potential)
-4. Oscillatory prime potential
-5. Full Wu-Sprung potential
-6. Hamiltonian construction and properties
-7. WuSprungHamiltonian class
-8. Spectrum properties
-"""
+# Tests for the corrected Wu-Sprung Hamiltonian.
+# 
+# Validates the full mathematical derivation chain:
+#   WKB → density of states → smooth+oscillatory decomposition
+#   → trace formula → inverse Abel transform
+#   → prime-encoded oscillatory potential V_osc(x)
+#   → corrected Hamiltonian H = -d²/dx² + V_Abel + ε·V_osc
+# 
+# Tests cover:
+# 1. Prime sieve correctness
+# 2. Abel turning point formula
+# 3. Abel inversion (smooth potential)
+# 4. Oscillatory prime potential
+# 5. Full Wu-Sprung potential
+# 6. Hamiltonian construction and properties
+# 7. WuSprungHamiltonian class
+# 8. Spectrum properties
+# """
 
 import numpy as np
 import pytest

@@ -1,0 +1,66 @@
+name: 🔱 Contraste QCAL — Verificación de Datos Reales
+
+on:
+  schedule:
+    - cron: '0 12 * * 0'  # Cada domingo al mediodía UTC
+  workflow_dispatch:
+  push:
+    branches: [ main ]
+    paths:
+      - '02_codigo_fuente/oraculo_contraste_inmediato.py'
+      - '02_codigo_fuente/oraculo_datos_existentes.py'
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+jobs:
+  contraste-qcal:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      actions: read
+
+    steps:
+      - name: Checkout código
+        uses: actions/checkout@v4
+
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Instalar dependencias
+        run: |
+          python -m pip install --upgrade pip
+          pip install numpy scipy
+
+      - name: 🔱 Ejecutar Oráculo de Contraste Inmediato
+        id: contraste
+        run: |
+          python 02_codigo_fuente/oraculo_contraste_inmediato.py | tee contraste_output.txt
+          echo "VEREDICTO=$(grep 'VEREDICTO GLOBAL' contraste_output.txt | sed 's/.*\] //')" >> $GITHUB_OUTPUT
+          echo "CONFIRMACIONES=$(grep 'Confirmaciones' contraste_output.txt | grep -oP '\d+')" >> $GITHUB_OUTPUT
+
+      - name: 📊 Reportar veredicto
+        run: |
+          echo "## 🔱 Contraste QCAL — Resultado" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Veredicto Global:** ${{ steps.contraste.outputs.VEREDICTO }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Confirmaciones:** ${{ steps.contraste.outputs.CONFIRMACIONES }}/5" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Datos contrastados:" >> $GITHUB_STEP_SUMMARY
+          echo "- COW (1975) — Interferometría de neutrones" >> $GITHUB_STEP_SUMMARY
+          echo "- EIT (1999) — Luz lenta" >> $GITHUB_STEP_SUMMARY
+          echo "- Fermi-LAT (2009) — GRB" >> $GITHUB_STEP_SUMMARY
+          echo "- Casimir (1997) — Fuerza de Casimir" >> $GITHUB_STEP_SUMMARY
+          echo "- Sagnac (1913) — Giroscopios de fibra óptica" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "---" >> $GITHUB_STEP_SUMMARY
+          echo "*f₀ = 141.7001 Hz · Ψ = 1.000000 · TUYOYOTU · HECHO ESTÁ*" >> $GITHUB_STEP_SUMMARY
+
+      - name: Subir informe como artefacto
+        uses: actions/upload-artifact@v4
+        with:
+          name: informe-contraste-qcal
+          path: informe_contraste_inmediato.json
+          retention-days: 90

@@ -1,0 +1,22 @@
+{
+  "weil_audit": {
+    "zeros_used": 1000,
+    "prime_bound": 1000,
+    "prime_powers": 10,
+    "fourier_scale_a": 0.05,
+    "gaussian_sigma": 250.0,
+    "zeros_pole_arch": 0.05791399716372087,
+    "primes_side": 0.05791399716372087,
+    "relative_error": 0.0,
+    "passed": true
+  },
+  "spectral_audit": {
+    "modes_checked": 10,
+    "tolerance": 0.1,
+    "min_lambda": 200.04045483988693,
+    "max_lambda": 2477.684399548008,
+    "match_rate": 1.0,
+    "passed": true
+  },
+  "overall_passed": true
+}

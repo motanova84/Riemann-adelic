@@ -1,8 +1,8 @@
 name: 🧠 NOESIS COMPLETE INTEGRATION V2.1
 
 on:
-  schedule:
-    - cron: '0 */2 * * *'  # Every 2 hours
+  # schedule:
+  #   - cron: '0 */2 * * *'  # Every 2 hours - PAUSED temporarily
   workflow_dispatch:
     inputs:
       mode:

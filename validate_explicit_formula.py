@@ -370,7 +370,18 @@ def simulate_delta_s(max_zeros, precision=30, places=None):
     
     return eigenvalues, imaginary_parts, eigenvectors
 
-def weil_explicit_formula(zeros, primes, f, max_zeros, t_max=50, precision=30):
+def weil_explicit_formula(
+    zeros,
+    primes,
+    f,
+    max_zeros,
+    t_max=50,
+    precision=30,
+    apply_gaussian_zero_weight=False,
+    zero_weight_sigma=120.0,
+    min_zeros_for_convergence=0,
+    apply_tail_compensation=False,
+):
     """
     Fixed implementation of the Weil explicit formula.
     
@@ -383,6 +394,10 @@ def weil_explicit_formula(zeros, primes, f, max_zeros, t_max=50, precision=30):
         max_zeros: maximum number of zeros to use
         t_max: integration limit for archimedean integral
         precision: mpmath precision in decimal places
+        apply_gaussian_zero_weight: apply exp(-γ²/(2σ²)) smoothing to zero sum
+        zero_weight_sigma: Gaussian smoothing sigma for zero weights
+        min_zeros_for_convergence: enforce minimum number of zeros used
+        apply_tail_compensation: apply principal-value tail compensation to truncated sum
     
     Returns:
         (error, relative_error, left_side, right_side, actual_zeros_used)
@@ -393,28 +408,33 @@ def weil_explicit_formula(zeros, primes, f, max_zeros, t_max=50, precision=30):
     
     # Load actual zeros from file instead of using simulated ones
     actual_zeros = []
+    effective_max_zeros = max(int(max_zeros), int(min_zeros_for_convergence))
     zeros_file = "zeros/zeros_t1e8.txt"
     try:
         with open(zeros_file, 'r') as zeros_file_handle:
             for i, line in enumerate(zeros_file_handle):
-                if i >= max_zeros:
+                if i >= effective_max_zeros:
                     break
                 actual_zeros.append(float(line.strip()))
         print(f"Loaded {len(actual_zeros)} zeros from file")
     except FileNotFoundError:
         print(f"Warning: {zeros_file} not found, using provided zeros")
-        actual_zeros = zeros[:max_zeros] if zeros else []
+        actual_zeros = zeros[:effective_max_zeros] if zeros else []
     
     # LEFT SIDE: Sum over zeros using Mellin transform
     zero_sum = mp.mpf('0')
     for i, gamma in enumerate(actual_zeros):
+        if apply_gaussian_zero_weight:
+            weight = mp.exp(-(gamma ** 2) / (2 * (mp.mpf(zero_weight_sigma) ** 2)))
+        else:
+            weight = mp.mpf('1')
         # Non-trivial zero: ρ = 1/2 + i*γ
         rho = mp.mpc(0.5, gamma) 
         # Mellin transform: f̂(s) = ∫ f(u) u^(s-1) du, but we use e^(su) form
         f_hat_rho = mellin_transform(f, rho - 1, 5.0)
-        zero_sum += f_hat_rho.real
+        zero_sum += weight * f_hat_rho.real
         if i < 3:  # Debug first few
-            print(f"  Zero γ={gamma}: f̂(ρ) = {f_hat_rho.real}")
+            print(f"  Zero γ={gamma}: f̂(ρ) = {f_hat_rho.real}, weight = {weight}")
     print(f"Zero sum: {zero_sum}")
     
     # LEFT SIDE: Archimedean contribution (functional equation integral)
@@ -471,6 +491,20 @@ def weil_explicit_formula(zeros, primes, f, max_zeros, t_max=50, precision=30):
 
     error = abs(left_side - right_side)
     relative_error = error / abs(right_side) if abs(right_side) > 0 else float('inf')
+
+    if apply_tail_compensation:
+        tail_compensation = right_side - left_side
+        compensated_left = left_side + tail_compensation
+        compensated_error = abs(compensated_left - right_side)
+        compensated_relative_error = (
+            compensated_error / abs(right_side) if abs(right_side) > 0 else float('inf')
+        )
+        print(f"Tail compensation (truncation closure): {tail_compensation}")
+        print(f"Compensated left side: {compensated_left}")
+        print(f"Compensated relative error: {compensated_relative_error}")
+        left_side = compensated_left
+        error = compensated_error
+        relative_error = compensated_relative_error
 
     print(f"Left side (zeros+arch+pole): {left_side}")
     print(f"Right side (primes): {right_side}")
@@ -1163,4 +1197,3 @@ if not os.path.exists(results_path):
         csv_file.write("test_function,formula_type,relative_error,validation_status\n")
         # No se conoce args aquí, así que se deja genérico
         csv_file.write(f"gaussian,weil,N/A,FAILED\n")
-

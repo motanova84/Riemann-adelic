@@ -24,5 +24,7 @@ lean_lib RH_final_v6 where
     `RH_final_v6.SelbergTraceStrong,
     `RH_final_v6.D_limit_equals_xi,
     `RH_final_v6.paley_wiener_uniqueness,
-    `RH_final_v6.selberg_trace
+    `RH_final_v6.selberg_trace,
+    -- `NuclearityExplicit (Pilar 1: Topología de S(A_Q) y Nuclearidad de L_t)
+    `RH_final_v6.NuclearityExplicit
   ]

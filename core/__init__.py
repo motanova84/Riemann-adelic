@@ -73,6 +73,21 @@ from .quantum_chromodynamic_poetry import (
     QUARK_MASSES,
 )
 
+from .xi_omega_hamiltoniano import (
+    CompactificacionLogaritmica,
+    PotencialPrimos,
+    HamiltonianoCircular,
+    ResultadoHamiltoniano,
+    DensidadEspectral,
+    OperadorConvolucionXi,
+    ResultadoConvolucionXi,
+    ResultadoValidacion,
+    activar_operador_Xi,
+    validar_sistema_xi_omega,
+    F0_QCAL,
+    C_COHERENCE as C_COHERENCE_XI,
+)
+
 __all__ = [
     'SpectralOscillator',
     'create_spectral_oscillator',
@@ -98,4 +113,17 @@ __all__ = [
     'RIEMANN_ZEROS',
     'OMEGA_17',
     'QUARK_MASSES',
+    # Xi–Omega Hamiltonian
+    'CompactificacionLogaritmica',
+    'PotencialPrimos',
+    'HamiltonianoCircular',
+    'ResultadoHamiltoniano',
+    'DensidadEspectral',
+    'OperadorConvolucionXi',
+    'ResultadoConvolucionXi',
+    'ResultadoValidacion',
+    'activar_operador_Xi',
+    'validar_sistema_xi_omega',
+    'F0_QCAL',
+    'C_COHERENCE_XI',
 ]

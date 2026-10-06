@@ -12,7 +12,7 @@ Date: December 2025
 DOI: 10.5281/zenodo.17379721
 
 Usage:
-    python scripts/validate_sat_certificates.py [--certificate FILE] [--all]
+    python scripts/validate_sat_certificates.py [--certificate FILE] [--all] [--latest-only]
 """
 
 import argparse
@@ -27,9 +27,37 @@ from typing import Any, Dict, List, Tuple
 class SATCertificateValidator:
     """Validate SAT certificates for mathematical theorems."""
     
-    def __init__(self, certificates_dir: str = "certificates/sat"):
+    def __init__(self, certificates_dir: str = "certificates/sat", latest_only: bool = False):
         self.certificates_dir = Path(certificates_dir)
         self.validation_timestamp = datetime.utcnow().isoformat() + "Z"
+        self.latest_only = latest_only
+
+    def _certificate_sort_key(self, cert: Dict[str, Any], cert_file: Path) -> str:
+        """Return a sortable key preferring certificate timestamp, then filename."""
+        return cert.get("timestamp") or cert_file.stem
+
+    def _select_certificate_files(self) -> List[Path]:
+        """Select certificate files, optionally latest per theorem."""
+        cert_files = sorted(self.certificates_dir.glob("SAT_*.json"))
+        if not self.latest_only:
+            return cert_files
+
+        latest_by_theorem: Dict[str, Tuple[str, Path]] = {}
+        for cert_file in cert_files:
+            try:
+                cert = self.load_certificate(cert_file)
+            except Exception as e:
+                print(f"⚠️  Skipping unreadable certificate {cert_file.name}: {e}", file=sys.stderr)
+                continue
+            theorem = cert.get("theorem_name")
+            if not theorem:
+                continue
+            sort_key = self._certificate_sort_key(cert, cert_file)
+            previous = latest_by_theorem.get(theorem)
+            if previous is None or sort_key >= previous[0]:
+                latest_by_theorem[theorem] = (sort_key, cert_file)
+
+        return sorted(path for _, path in latest_by_theorem.values())
         
     def load_certificate(self, filepath: Path) -> Dict[str, Any]:
         """Load certificate from JSON file."""
@@ -182,8 +210,10 @@ class SATCertificateValidator:
             return []
         
         # Find all certificate files
-        cert_files = list(self.certificates_dir.glob("SAT_*.json"))
+        cert_files = self._select_certificate_files()
         print(f"Found {len(cert_files)} certificate(s)")
+        if self.latest_only:
+            print("Mode: latest certificate per theorem")
         print()
         
         results = []
@@ -247,10 +277,18 @@ def main():
         default='certificates/sat',
         help='Directory containing certificates'
     )
+    parser.add_argument(
+        '--latest-only',
+        action='store_true',
+        help='Validate only the latest certificate for each theorem'
+    )
     
     args = parser.parse_args()
     
-    validator = SATCertificateValidator(certificates_dir=args.certificates_dir)
+    validator = SATCertificateValidator(
+        certificates_dir=args.certificates_dir,
+        latest_only=args.latest_only
+    )
     
     if args.certificate:
         cert_path = Path(args.certificate)

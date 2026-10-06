@@ -1,0 +1,80 @@
+lemma borel_caratheodory_bound
+    {φ : ℂ → ℂ} (hφ : Differentiable ℂ φ)
+    (h_growth : ∃ C ε : ℝ, ε > 0 ∧ ∀ z : ℂ, (φ z).re ≤ C * ‖z‖ ^ (1 + ε)) :
+    ∃ K : ℝ, ∀ R > 0, ∀ z : ℂ, ‖z‖ ≤ R / 2 → ‖φ z‖ ≤ K * R ^ (1 + 1 / 2) := by
+  obtain ⟨C, ε, hε, h_growth⟩ := h_growth
+  -- Elegimos un ε fijo, por ejemplo 1/2
+  -- Queremos una cota uniforme: |φ(z)| ≤ M·R^{3/2} en |z| ≤ R/2
+  -- Borel-Carathéodory dice: si Re φ(z) ≤ M en |z| ≤ R, entonces
+  -- |φ(z) - φ(0)| ≤ (2M + |Im φ(0)|)·R/(R-r) para |z| ≤ r
+  -- Con r = R/2, obtenemos |φ(z)| ≤ (4M + 2|Im φ(0)|) + |φ(0)|
+  -- Pero M = C·R^{1+ε}, así que |φ(z)| ≤ K·R^{1+ε} (para R > 1)
+  -- Tomamos ε = 1/2 para obtener R^{3/2}
+  let K := max (4 * C + 2 * (Real.abs (φ 0).im) + (Real.abs (φ 0).re + (Real.abs (φ 0).im))) (4 * C + 2 * (Real.abs (φ 0).im) + (Real.abs (φ 0).re + (Real.abs (φ 0).im)) + 1)
+  use K
+  intro R hR z hz
+  -- Usamos Borel-Carathéodory en el disco |z| ≤ R
+  -- Primero, necesitamos una cota para Re φ en |z| ≤ R
+  have h_Re_bound : ∀ z, ‖z‖ ≤ R → (φ z).re ≤ C * R ^ (1 + ε) := by
+    intro z hz
+    have hz' : (φ z).re ≤ C * ‖z‖ ^ (1 + ε) := h_growth z
+    have h_pow : ‖z‖ ^ (1 + ε) ≤ R ^ (1 + ε) := by
+      apply Real.rpow_le_rpow (norm_nonneg z) (le_trans hz (le_of_eq (by simp)))
+      · exact le_trans hz (le_of_eq (by simp))
+      · linarith [hε]
+    linarith
+  -- Borel-Carathéodory: para |z| ≤ R/2, |φ(z)| ≤ 4*C*R^{1+ε} + 2|Im φ(0)| + |φ(0)|
+  -- Pero en nuestro caso, 1+ε = 3/2
+  have h_borel := BorelCaratheodory.borelCaratheodory hφ h_Re_bound (by exact hR) (by exact hz)
+  -- Simplificamos la cota
+  have h_bound : ‖φ z‖ ≤ 4 * C * R ^ (1 + ε) + 2 * (Real.abs (φ 0).im) + (Real.abs (φ 0).re + (Real.abs (φ 0).im)) := by
+    rw [← h_borel]
+    ring
+  -- Ahora, para R > 0, R^{1+ε} ≤ K * R^{3/2} (para R ≥ 1)
+  -- Tomamos K suficientemente grande para cubrir R < 1 también
+  by_cases hR_ge : R ≥ 1
+  · have h_pow : R ^ (1 + ε) ≤ R ^ (3/2 : ℝ) := by
+      have h_pow_pos : R ≥ 0 := le_trans zero_le_one hR_ge
+      apply Real.rpow_le_rpow h_pow_pos (by exact hR_ge)
+      linarith [hε]
+    have h_K_ge : 4 * C * R ^ (1 + ε) ≤ K * R ^ (3/2 : ℝ) := by
+      have h_C_pos : C ≥ 0 := by
+        have h_Re_bound_at_0 : (φ 0).re ≤ C * 0 ^ (1 + ε) := h_growth 0
+        rw [zero_rpow] at h_Re_bound_at_0
+        · linarith
+        · linarith [hε]
+      linarith
+    have h_rest : 2 * (Real.abs (φ 0).im) + (Real.abs (φ 0).re + (Real.abs (φ 0).im)) ≤ K * R ^ (3/2 : ℝ) := by
+      apply le_trans (by simp [le_add_left])
+      have h_K_ge_rest : K ≥ 2 * (Real.abs (φ 0).im) + (Real.abs (φ 0).re + (Real.abs (φ 0).im)) := by
+        apply le_max_left
+      have h_R_pow_ge : R ^ (3/2 : ℝ) ≥ 1 := by
+        apply Real.one_le_rpow_of_one_le hR_ge
+        linarith
+      linarith [h_K_ge_rest, h_R_pow_ge]
+    linarith
+  · -- Si R < 1, R^{3/2} < 1, y K > 1, así que la cota trivial funciona
+    have h_K_ge : K ≥ 4 * C * R ^ (1 + ε) + 2 * (Real.abs (φ 0).im) + (Real.abs (φ 0).re + (Real.abs (φ 0).im)) := by
+      apply le_max_right
+    have h_R_pow_ge : R ^ (3/2 : ℝ) ≥ 0 := Real.rpow_nonneg (le_of_lt hR) (3/2 : ℝ)
+    have h_one : 1 ≤ K * R ^ (3/2 : ℝ) := by
+      have h_K_ge_1 : K ≥ 1 := by
+        have h_K_min := le_max_left (4 * C + 2 * (Real.abs (φ 0).im) + (Real.abs (φ 0).re + (Real.abs (φ 0).im))) (4 * C + 2 * (Real.abs (φ 0).im) + (Real.abs (φ 0).re + (Real.abs (φ 0).im)) + 1)
+        linarith
+      have h_R_pow_ge : R ^ (3/2 : ℝ) ≥ 1 := by
+        have h_R_lt : R ≤ 1 := by linarith
+        have h_R_pos : R > 0 := hR
+        have h_R_pow : R ^ (3/2 : ℝ) = (Real.sqrt R) ^ 3 := by
+          rw [Real.rpow_def_of_nonneg (le_of_lt hR_pos), Real.rpow_def_of_nonneg (le_of_lt hR_pos)]
+          simp [Real.sqrt_mul_self hR_pos.le]
+          ring
+        rw [h_R_pow]
+        apply pow_le_one
+        · exact Real.sqrt_nonneg R
+        · exact Real.sqrt_le_one.mpr hR_lt
+      linarith
+    -- La cota trivial es: ‖φ z‖ ≤ 4*C*R^{1+ε} + ... ≤ K ≤ K * R^{3/2} (ya que K≥1 y R^{3/2}≤1)
+    have h_bound_eq : ‖φ z‖ ≤ 4 * C * R ^ (1 + ε) + 2 * (Real.abs (φ 0).im) + (Real.abs (φ 0).re + (Real.abs (φ 0).im)) := by
+      rw [← h_borel]
+      ring
+    linarith [h_bound_eq, h_K_ge, h_one]

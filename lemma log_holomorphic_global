@@ -1,0 +1,110 @@
+lemma log_holomorphic_global
+    {h : ℂ → ℂ} (hh : Differentiable ℂ h) (h_never : ∀ z, h z ≠ 0) :
+    ∃ φ : ℂ → ℂ, Differentiable ℂ φ ∧ ∀ z, h z = exp (φ z) := by
+  -- Paso 1: φ continua existe por exists_continuousOn_eqOn_exp_comp.
+  have h_cont : ∃ φ : ℂ → ℂ, Continuous φ ∧ ∀ z, h z = exp (φ z) := by
+    -- Usamos el teorema de lifting del logaritmo para funciones continuas a C*
+    -- Mathlib tiene: exists_continuous_log_of_not_zero (o similar)
+    have h_nonzero : ∀ z, h z ≠ 0 := h_never
+    -- Creamos una función local en cada punto: h(z) = exp(φ(z))
+    -- Como ℂ es simplemente conexo, existe lifting continuo global
+    exact exists_continuous_log h_nonzero
+  obtain ⟨φ, hφ_cont, hφ_exp⟩ := h_cont
+  -- Paso 2: Para cada z₀, h(z₀) ≠ 0. Tomamos w = h(z₀) y ρ < |w|.
+  -- El disco B(w, ρ) no contiene 0. Por continuidad de h, existe δ > 0
+  -- tal que z ∈ B(z₀, δ) ⇒ h(z) ∈ B(w, ρ).
+  have h_local_holo : ∀ z₀ : ℂ, ∃ δ > 0, ∃ L : ℂ → ℂ,
+      DifferentiableOn ℂ L (ball (h z₀) (‖h z₀‖ / 2)) ∧
+      ∀ z ∈ ball z₀ δ, h z ∈ ball (h z₀) (‖h z₀‖ / 2) ∧
+      exp (L (h z)) = h z := by
+    intro z₀
+    let w := h z₀
+    have hw : w ≠ 0 := h_never z₀
+    let ρ := ‖w‖ / 2
+    have hρ : 0 < ρ ∧ ρ < ‖w‖ := by
+      constructor
+      · exact half_pos (norm_pos_iff.mpr hw)
+      · exact half_lt_self (norm_pos_iff.mpr hw)
+    -- Obtenemos L local del Lema A.1
+    obtain ⟨L, hL_diff, hL_exp⟩ := log_holomorphic_local_identity w hw ρ hρ
+    -- Por continuidad de h en z₀, existe δ tal que h(B(z₀,δ)) ⊂ B(w, ρ)
+    have h_cont_at := hh.continuous.continuousAt z₀
+    have h_ball : ball w ρ ∈ nhds w := ball_mem_nhds w hρ.1
+    specialize h_cont_at h_ball
+    rw [nhds_def, mem_principal] at h_cont_at
+    obtain ⟨δ, hδ_pos, hδ⟩ := h_cont_at
+    use δ, hδ_pos, L
+    -- Verificamos que L satisface las propiedades
+    constructor
+    · exact hL_diff
+    · intro z hz
+      have h_hz : h z ∈ ball w ρ := hδ hz
+      constructor
+      · exact h_hz
+      · exact hL_exp (h z) h_hz
+  -- Paso 3: En cada disco B(z₀, δ), φ es holomorfa (por el argumento de la diferencia constante)
+  have h_phi_holo : Differentiable ℂ φ := by
+    intro z₀
+    -- Obtenemos el L local y δ
+    obtain ⟨δ, hδ, L, hL, h_props⟩ := h_local_holo z₀
+    -- Para todo z en B(z₀, δ), exp(φ(z)) = h(z) = exp(L(h(z)))
+    -- Por exp_eq_exp_iff_exists_int: φ(z) - L(h(z)) ∈ 2πiℤ
+    have h_diff_discrete : ∀ z ∈ ball z₀ δ, (φ z - L (h z)) / (2 * π * I) ∈ ℤ := by
+      intro z hz
+      have h_hz := (h_props z hz).1
+      have h_exp_eq : exp (φ z) = exp (L (h z)) := by
+        rw [hφ_exp z, (h_props z hz).2]
+      -- Usamos el lema de exponentes iguales implica diferencia en 2πiℤ
+      have h_diff := exp_eq_exp_iff_exists_int.mp h_exp_eq
+      obtain ⟨n, hn⟩ := h_diff
+      rw [← hn]
+      field_simp
+      ring_nf
+    -- La función z ↦ φ(z) - L(h(z)) es continua y toma valores en 2πiℤ
+    -- Por conexidad de B(z₀, δ), es constante
+    -- hL es diferenciable (holomorfa) en el disco imagen
+    -- L ∘ h es diferenciable en B(z₀, δ)
+    have h_Lh_diff : DifferentiableOn ℂ (fun z => L (h z)) (ball z₀ δ) := by
+      apply DifferentiableOn.comp (s := ball (h z₀) (‖h z₀‖ / 2))
+      · exact hL
+      · exact hh.differentiableOn
+      · intro z hz
+        exact (h_props z hz).1
+    -- La diferencia φ - L∘h es diferenciable en B(z₀, δ)
+    have h_diff_diff : DifferentiableOn ℂ (fun z => φ z - L (h z)) (ball z₀ δ) := by
+      apply DifferentiableOn.sub
+      · -- φ es diferenciable? No sabemos aún. Usamos continuidad + valores discretos
+        -- Pero sabemos que φ = L∘h + constante local, así que es diferenciable
+        -- Primero mostramos que la diferencia es localmente constante
+        have h_const_on_ball : ∃ c : ℂ, ∀ z ∈ ball z₀ δ, φ z - L (h z) = c := by
+          -- Usamos el hecho de que toma valores en 2πiℤ y es continua
+          -- Mathlib tiene: continuous_on_const_of_discrete_constant
+          have h_cont_diff : ContinuousOn (fun z => φ z - L (h z)) (ball z₀ δ) := by
+            apply ContinuousOn.sub
+            · exact hφ_cont.continuousOn
+            · exact ContinuousOn.comp hL.continuousOn hh.continuous.continuousOn (fun z hz => (h_props z hz).1)
+          -- Como es continua en un conjunto conexo y toma valores en un conjunto discreto,
+          -- es constante
+          exact isConstant_on_discrete_of_continuousOn
+            (by exact h_cont_diff)
+            (fun z hz => h_diff_discrete z hz)
+            (convex_ball z₀ δ).isPreconnected
+            (nonempty_ball.mpr hδ)
+        obtain ⟨c, hc⟩ := h_const_on_ball
+        -- Entonces φ(z) = L(h(z)) + c en B(z₀, δ), que es diferenciable
+        rw [show φ = fun z => L (h z) + c from by
+          ext z
+          have h_mem : z ∈ ball z₀ δ ↔ True := by simp
+          specialize hc z (by trivial)
+          rw [add_comm, eq_add_neg_iff_eq_add, ← hc]
+          ring_nf
+        ]
+        apply DifferentiableOn.add
+        · exact h_Lh_diff
+        · exact differentiableOn_const _
+    exact Differentiable.differentiableAt (Differentiable.mk (fun z => φ z) h_phi_holo) z₀
+  -- Paso 4: φ es holomorfa global
+  use φ
+  constructor
+  · exact h_phi_holo
+  · exact hφ_exp
