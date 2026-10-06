@@ -1,0 +1,29 @@
+[Unit]
+Description=QCAL-EXP01 synthetic UDP simulator (not hardware acquisition)
+After=network.target
+
+[Service]
+Type=simple
+User=qcal-exp01
+Group=qcal-exp01
+WorkingDirectory=/opt/riemann-adelic
+ExecStart=/opt/riemann-adelic/experiments/qcal_exp01/native/qcal_daq_simulator --host 127.0.0.1 --port 5005 --packets 0 --sample-rate 1000000
+Restart=on-failure
+RestartSec=5
+Nice=10
+CPUSchedulingPolicy=other
+NoNewPrivileges=true
+PrivateDevices=true
+ProtectSystem=strict
+ProtectHome=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictSUIDSGID=true
+RestrictAddressFamilies=AF_INET
+CapabilityBoundingSet=
+AmbientCapabilities=
+UMask=0077
+
+[Install]
+WantedBy=multi-user.target

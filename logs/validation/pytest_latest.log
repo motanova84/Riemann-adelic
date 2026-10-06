@@ -1,0 +1,282 @@
+2026-10-06 22:25:42 - INFO     - qcal.test_session_20261006_222541 - 
+2026-10-06 22:25:42 - INFO     - qcal.test_session_20261006_222541 - ================================================================================
+2026-10-06 22:25:42 - INFO     - qcal.test_session_20261006_222541 - Test: tests/test_wetlab_experimental_validation.py::TestExperimentalResults::test_default_values
+2026-10-06 22:25:42 - INFO     - qcal.test_session_20261006_222541 - Location: tests/test_wetlab_experimental_validation.py:27
+2026-10-06 22:25:42 - INFO     - qcal.test_session_20261006_222541 - ================================================================================
+2026-10-06 22:25:42 - INFO     - qcal.test_session_20261006_222541 - ✅ PASSED: tests/test_wetlab_experimental_validation.py::TestExperimentalResults::test_default_values (0.000s)
+2026-10-06 22:25:42 - INFO     - qcal.test_session_20261006_222541 - 
+2026-10-06 22:25:42 - INFO     - qcal.test_session_20261006_222541 - ================================================================================
+2026-10-06 22:25:42 - INFO     - qcal.test_session_20261006_222541 - Test: tests/test_wetlab_experimental_validation.py::TestExperimentalResults::test_custom_values
+2026-10-06 22:25:42 - INFO     - qcal.test_session_20261006_222541 - Location: tests/test_wetlab_experimental_validation.py:47
+2026-10-06 22:25:42 - INFO     - qcal.test_session_20261006_222541 - ================================================================================
+2026-10-06 22:25:42 - INFO     - qcal.test_session_20261006_222541 - ✅ PASSED: tests/test_wetlab_experimental_validation.py::TestExperimentalResults::test_custom_values (0.000s)
+2026-10-06 22:25:42 - INFO     - qcal.test_session_20261006_222541 - 
+2026-10-06 22:25:42 - INFO     - qcal.test_session_20261006_222541 - ================================================================================
+2026-10-06 22:25:42 - INFO     - qcal.test_session_20261006_222541 - Test: tests/test_wetlab_experimental_validation.py::TestWetLabExperimentalValidator::test_initialization
+2026-10-06 22:25:42 - INFO     - qcal.test_session_20261006_222541 - Location: tests/test_wetlab_experimental_validation.py:67
+2026-10-06 22:25:42 - INFO     - qcal.test_session_20261006_222541 - ================================================================================
+2026-10-06 22:25:42 - INFO     - qcal.test_session_20261006_222541 - ✅ PASSED: tests/test_wetlab_experimental_validation.py::TestWetLabExperimentalValidator::test_initialization (0.000s)
+2026-10-06 22:25:42 - INFO     - qcal.test_session_20261006_222541 - 
+2026-10-06 22:25:42 - INFO     - qcal.test_session_20261006_222541 - ================================================================================
+2026-10-06 22:25:42 - INFO     - qcal.test_session_20261006_222541 - Test: tests/test_wetlab_experimental_validation.py::TestWetLabExperimentalValidator::test_calculate_psi_theoretical
+2026-10-06 22:25:42 - INFO     - qcal.test_session_20261006_222541 - Location: tests/test_wetlab_experimental_validation.py:72
+2026-10-06 22:25:42 - INFO     - qcal.test_session_20261006_222541 - ================================================================================
+2026-10-06 22:25:42 - INFO     - qcal.test_session_20261006_222541 - ✅ PASSED: tests/test_wetlab_experimental_validation.py::TestWetLabExperimentalValidator::test_calculate_psi_theoretical (0.000s)
+2026-10-06 22:25:42 - INFO     - qcal.test_session_20261006_222541 - 
+2026-10-06 22:25:42 - INFO     - qcal.test_session_20261006_222541 - ================================================================================
+2026-10-06 22:25:42 - INFO     - qcal.test_session_20261006_222541 - Test: tests/test_wetlab_experimental_validation.py::TestWetLabExperimentalValidator::test_psi_theoretical_close_to_experimental
+2026-10-06 22:25:42 - INFO     - qcal.test_session_20261006_222541 - Location: tests/test_wetlab_experimental_validation.py:84
+2026-10-06 22:25:42 - INFO     - qcal.test_session_20261006_222541 - ================================================================================
+2026-10-06 22:25:42 - INFO     - qcal.test_session_20261006_222541 - ✅ PASSED: tests/test_wetlab_experimental_validation.py::TestWetLabExperimentalValidator::test_psi_theoretical_close_to_experimental (0.000s)
+2026-10-06 22:25:42 - INFO     - qcal.test_session_20261006_222541 - 
+2026-10-06 22:25:42 - INFO     - qcal.test_session_20261006_222541 - ================================================================================
+2026-10-06 22:25:42 - INFO     - qcal.test_session_20261006_222541 - Test: tests/test_wetlab_experimental_validation.py::TestWetLabExperimentalValidator::test_monte_carlo_error_propagation
+2026-10-06 22:25:42 - INFO     - qcal.test_session_20261006_222541 - Location: tests/test_wetlab_experimental_validation.py:92
+2026-10-06 22:25:42 - INFO     - qcal.test_session_20261006_222541 - ================================================================================
+2026-10-06 22:25:42 - INFO     - qcal.test_session_20261006_222541 - ✅ PASSED: tests/test_wetlab_experimental_validation.py::TestWetLabExperimentalValidator::test_monte_carlo_error_propagation (0.004s)
+2026-10-06 22:25:42 - INFO     - qcal.test_session_20261006_222541 - 
+2026-10-06 22:25:42 - INFO     - qcal.test_session_20261006_222541 - ================================================================================
+2026-10-06 22:25:42 - INFO     - qcal.test_session_20261006_222541 - Test: tests/test_wetlab_experimental_validation.py::TestWetLabExperimentalValidator::test_monte_carlo_error_less_than_threshold
+2026-10-06 22:25:42 - INFO     - qcal.test_session_20261006_222541 - Location: tests/test_wetlab_experimental_validation.py:109
+2026-10-06 22:25:42 - INFO     - qcal.test_session_20261006_222541 - ================================================================================
+2026-10-06 22:25:42 - INFO     - qcal.test_session_20261006_222541 - ✅ PASSED: tests/test_wetlab_experimental_validation.py::TestWetLabExperimentalValidator::test_monte_carlo_error_less_than_threshold (0.017s)
+2026-10-06 22:25:42 - INFO     - qcal.test_session_20261006_222541 - 
+2026-10-06 22:25:42 - INFO     - qcal.test_session_20261006_222541 - ================================================================================
+2026-10-06 22:25:42 - INFO     - qcal.test_session_20261006_222541 - Test: tests/test_wetlab_experimental_validation.py::TestWetLabExperimentalValidator::test_gaussian_error_propagation
+2026-10-06 22:25:42 - INFO     - qcal.test_session_20261006_222541 - Location: tests/test_wetlab_experimental_validation.py:119
+2026-10-06 22:25:42 - INFO     - qcal.test_session_20261006_222541 - ================================================================================
+2026-10-06 22:25:42 - INFO     - qcal.test_session_20261006_222541 - ✅ PASSED: tests/test_wetlab_experimental_validation.py::TestWetLabExperimentalValidator::test_gaussian_error_propagation (0.000s)
+2026-10-06 22:25:42 - INFO     - qcal.test_session_20261006_222541 - 
+2026-10-06 22:25:42 - INFO     - qcal.test_session_20261006_222541 - ================================================================================
+2026-10-06 22:25:42 - INFO     - qcal.test_session_20261006_222541 - Test: tests/test_wetlab_experimental_validation.py::TestWetLabExperimentalValidator::test_gaussian_error_less_than_threshold
+2026-10-06 22:25:42 - INFO     - qcal.test_session_20261006_222541 - Location: tests/test_wetlab_experimental_validation.py:133
+2026-10-06 22:25:42 - INFO     - qcal.test_session_20261006_222541 - ================================================================================
+2026-10-06 22:25:42 - INFO     - qcal.test_session_20261006_222541 - ✅ PASSED: tests/test_wetlab_experimental_validation.py::TestWetLabExperimentalValidator::test_gaussian_error_less_than_threshold (0.000s)
+2026-10-06 22:25:42 - INFO     - qcal.test_session_20261006_222541 - 
+2026-10-06 22:25:42 - INFO     - qcal.test_session_20261006_222541 - ================================================================================
+2026-10-06 22:25:42 - INFO     - qcal.test_session_20261006_222541 - Test: tests/test_wetlab_experimental_validation.py::TestWetLabExperimentalValidator::test_monte_carlo_gaussian_agreement
+2026-10-06 22:25:42 - INFO     - qcal.test_session_20261006_222541 - Location: tests/test_wetlab_experimental_validation.py:141
+2026-10-06 22:25:42 - INFO     - qcal.test_session_20261006_222541 - ================================================================================
+2026-10-06 22:25:42 - INFO     - qcal.test_session_20261006_222541 - ✅ PASSED: tests/test_wetlab_experimental_validation.py::TestWetLabExperimentalValidator::test_monte_carlo_gaussian_agreement (0.013s)
+2026-10-06 22:25:42 - INFO     - qcal.test_session_20261006_222541 - 
+2026-10-06 22:25:42 - INFO     - qcal.test_session_20261006_222541 - ================================================================================
+2026-10-06 22:25:42 - INFO     - qcal.test_session_20261006_222541 - Test: tests/test_wetlab_experimental_validation.py::TestWetLabExperimentalValidator::test_calculate_sigma_significance
+2026-10-06 22:25:42 - INFO     - qcal.test_session_20261006_222541 - Location: tests/test_wetlab_experimental_validation.py:152
+2026-10-06 22:25:42 - INFO     - qcal.test_session_20261006_222541 - ================================================================================
+2026-10-06 22:25:42 - INFO     - qcal.test_session_20261006_222541 - ✅ PASSED: tests/test_wetlab_experimental_validation.py::TestWetLabExperimentalValidator::test_calculate_sigma_significance (0.000s)
+2026-10-06 22:25:42 - INFO     - qcal.test_session_20261006_222541 - 
+2026-10-06 22:25:42 - INFO     - qcal.test_session_20261006_222541 - ================================================================================
+2026-10-06 22:25:42 - INFO     - qcal.test_session_20261006_222541 - Test: tests/test_wetlab_experimental_validation.py::TestWetLabExperimentalValidator::test_calculate_p_value_from_sigma
+2026-10-06 22:25:42 - INFO     - qcal.test_session_20261006_222541 - Location: tests/test_wetlab_experimental_validation.py:166
+2026-10-06 22:25:42 - INFO     - qcal.test_session_20261006_222541 - ================================================================================
+2026-10-06 22:25:42 - INFO     - qcal.test_session_20261006_222541 - ✅ PASSED: tests/test_wetlab_experimental_validation.py::TestWetLabExperimentalValidator::test_calculate_p_value_from_sigma (0.000s)
+2026-10-06 22:25:42 - INFO     - qcal.test_session_20261006_222541 - 
+2026-10-06 22:25:42 - INFO     - qcal.test_session_20261006_222541 - ================================================================================
+2026-10-06 22:25:42 - INFO     - qcal.test_session_20261006_222541 - Test: tests/test_wetlab_experimental_validation.py::TestWetLabExperimentalValidator::test_validate_snr_threshold
+2026-10-06 22:25:42 - INFO     - qcal.test_session_20261006_222541 - Location: tests/test_wetlab_experimental_validation.py:180
+2026-10-06 22:25:42 - INFO     - qcal.test_session_20261006_222541 - ================================================================================
+2026-10-06 22:25:42 - INFO     - qcal.test_session_20261006_222541 - ✅ PASSED: tests/test_wetlab_experimental_validation.py::TestWetLabExperimentalValidator::test_validate_snr_threshold (0.000s)
+2026-10-06 22:25:42 - INFO     - qcal.test_session_20261006_222541 - 
+2026-10-06 22:25:42 - INFO     - qcal.test_session_20261006_222541 - ================================================================================
+2026-10-06 22:25:42 - INFO     - qcal.test_session_20261006_222541 - Test: tests/test_wetlab_experimental_validation.py::TestWetLabExperimentalValidator::test_validate_biological_detection
+2026-10-06 22:25:42 - INFO     - qcal.test_session_20261006_222541 - Location: tests/test_wetlab_experimental_validation.py:196
+2026-10-06 22:25:42 - INFO     - qcal.test_session_20261006_222541 - ================================================================================
+2026-10-06 22:25:42 - INFO     - qcal.test_session_20261006_222541 - ✅ PASSED: tests/test_wetlab_experimental_validation.py::TestWetLabExperimentalValidator::test_validate_biological_detection (0.000s)
+2026-10-06 22:25:42 - INFO     - qcal.test_session_20261006_222541 - 
+2026-10-06 22:25:42 - INFO     - qcal.test_session_20261006_222541 - ================================================================================
+2026-10-06 22:25:42 - INFO     - qcal.test_session_20261006_222541 - Test: tests/test_wetlab_experimental_validation.py::TestWetLabExperimentalValidator::test_validate_irreversibility_threshold
+2026-10-06 22:25:42 - INFO     - qcal.test_session_20261006_222541 - Location: tests/test_wetlab_experimental_validation.py:212
+2026-10-06 22:25:42 - INFO     - qcal.test_session_20261006_222541 - ================================================================================
+2026-10-06 22:25:42 - INFO     - qcal.test_session_20261006_222541 - ✅ PASSED: tests/test_wetlab_experimental_validation.py::TestWetLabExperimentalValidator::test_validate_irreversibility_threshold (0.000s)
+2026-10-06 22:25:42 - INFO     - qcal.test_session_20261006_222541 - 
+2026-10-06 22:25:42 - INFO     - qcal.test_session_20261006_222541 - ================================================================================
+2026-10-06 22:25:42 - INFO     - qcal.test_session_20261006_222541 - Test: tests/test_wetlab_experimental_validation.py::TestWetLabExperimentalValidator::test_compare_with_ligo_standard
+2026-10-06 22:25:42 - INFO     - qcal.test_session_20261006_222541 - Location: tests/test_wetlab_experimental_validation.py:228
+2026-10-06 22:25:42 - INFO     - qcal.test_session_20261006_222541 - ================================================================================
+2026-10-06 22:25:42 - INFO     - qcal.test_session_20261006_222541 - ✅ PASSED: tests/test_wetlab_experimental_validation.py::TestWetLabExperimentalValidator::test_compare_with_ligo_standard (0.000s)
+2026-10-06 22:25:42 - INFO     - qcal.test_session_20261006_222541 - 
+2026-10-06 22:25:42 - INFO     - qcal.test_session_20261006_222541 - ================================================================================
+2026-10-06 22:25:42 - INFO     - qcal.test_session_20261006_222541 - Test: tests/test_wetlab_experimental_validation.py::TestWetLabExperimentalValidator::test_validate_cosmic_resonance
+2026-10-06 22:25:42 - INFO     - qcal.test_session_20261006_222541 - Location: tests/test_wetlab_experimental_validation.py:249
+2026-10-06 22:25:42 - INFO     - qcal.test_session_20261006_222541 - ================================================================================
+2026-10-06 22:25:42 - INFO     - qcal.test_session_20261006_222541 - ✅ PASSED: tests/test_wetlab_experimental_validation.py::TestWetLabExperimentalValidator::test_validate_cosmic_resonance (0.000s)
+2026-10-06 22:25:42 - INFO     - qcal.test_session_20261006_222541 - 
+2026-10-06 22:25:42 - INFO     - qcal.test_session_20261006_222541 - ================================================================================
+2026-10-06 22:25:42 - INFO     - qcal.test_session_20261006_222541 - Test: tests/test_wetlab_experimental_validation.py::TestWetLabExperimentalValidator::test_generate_validation_report
+2026-10-06 22:25:42 - INFO     - qcal.test_session_20261006_222541 - Location: tests/test_wetlab_experimental_validation.py:265
+2026-10-06 22:25:42 - INFO     - qcal.test_session_20261006_222541 - ================================================================================
+2026-10-06 22:25:42 - INFO     - qcal.test_session_20261006_222541 - ✅ PASSED: tests/test_wetlab_experimental_validation.py::TestWetLabExperimentalValidator::test_generate_validation_report (0.124s)
+2026-10-06 22:25:42 - INFO     - qcal.test_session_20261006_222541 - 
+2026-10-06 22:25:42 - INFO     - qcal.test_session_20261006_222541 - ================================================================================
+2026-10-06 22:25:42 - INFO     - qcal.test_session_20261006_222541 - Test: tests/test_wetlab_experimental_validation.py::TestWetLabExperimentalValidator::test_validation_report_all_thresholds_pass
+2026-10-06 22:25:42 - INFO     - qcal.test_session_20261006_222541 - Location: tests/test_wetlab_experimental_validation.py:283
+2026-10-06 22:25:42 - INFO     - qcal.test_session_20261006_222541 - ================================================================================
+2026-10-06 22:25:42 - INFO     - qcal.test_session_20261006_222541 - ✅ PASSED: tests/test_wetlab_experimental_validation.py::TestWetLabExperimentalValidator::test_validation_report_all_thresholds_pass (0.090s)
+2026-10-06 22:25:42 - INFO     - qcal.test_session_20261006_222541 - 
+2026-10-06 22:25:42 - INFO     - qcal.test_session_20261006_222541 - ================================================================================
+2026-10-06 22:25:42 - INFO     - qcal.test_session_20261006_222541 - Test: tests/test_wetlab_experimental_validation.py::TestWetLabExperimentalValidator::test_validation_report_statistical_significance
+2026-10-06 22:25:42 - INFO     - qcal.test_session_20261006_222541 - Location: tests/test_wetlab_experimental_validation.py:295
+2026-10-06 22:25:42 - INFO     - qcal.test_session_20261006_222541 - ================================================================================
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - ✅ PASSED: tests/test_wetlab_experimental_validation.py::TestWetLabExperimentalValidator::test_validation_report_statistical_significance (0.094s)
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - 
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - ================================================================================
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - Test: tests/test_wetlab_experimental_validation.py::TestWetLabExperimentalValidator::test_validation_report_error_propagation_agreement
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - Location: tests/test_wetlab_experimental_validation.py:309
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - ================================================================================
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - ✅ PASSED: tests/test_wetlab_experimental_validation.py::TestWetLabExperimentalValidator::test_validation_report_error_propagation_agreement (0.091s)
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - 
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - ================================================================================
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - Test: tests/test_wetlab_experimental_validation.py::TestWetLabExperimentalValidator::test_validation_report_physical_measures
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - Location: tests/test_wetlab_experimental_validation.py:316
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - ================================================================================
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - ✅ PASSED: tests/test_wetlab_experimental_validation.py::TestWetLabExperimentalValidator::test_validation_report_physical_measures (0.090s)
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - 
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - ================================================================================
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - Test: tests/test_wetlab_experimental_validation.py::TestWetLabExperimentalValidator::test_validation_report_interpretation
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - Location: tests/test_wetlab_experimental_validation.py:325
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - ================================================================================
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - ✅ PASSED: tests/test_wetlab_experimental_validation.py::TestWetLabExperimentalValidator::test_validation_report_interpretation (0.106s)
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - 
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - ================================================================================
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - Test: tests/test_wetlab_experimental_validation.py::TestPhysicalInterpretations::test_c_infinity_as_informative_flux
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - Location: tests/test_wetlab_experimental_validation.py:343
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - ================================================================================
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - ✅ PASSED: tests/test_wetlab_experimental_validation.py::TestPhysicalInterpretations::test_c_infinity_as_informative_flux (0.000s)
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - 
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - ================================================================================
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - Test: tests/test_wetlab_experimental_validation.py::TestPhysicalInterpretations::test_thermal_noise_mitigation_factor
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - Location: tests/test_wetlab_experimental_validation.py:354
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - ================================================================================
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - ✅ PASSED: tests/test_wetlab_experimental_validation.py::TestPhysicalInterpretations::test_thermal_noise_mitigation_factor (0.000s)
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - 
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - ================================================================================
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - Test: tests/test_wetlab_experimental_validation.py::TestPhysicalInterpretations::test_biological_detection_extends_orchor
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - Location: tests/test_wetlab_experimental_validation.py:364
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - ================================================================================
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - ✅ PASSED: tests/test_wetlab_experimental_validation.py::TestPhysicalInterpretations::test_biological_detection_extends_orchor (0.000s)
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - 
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - ================================================================================
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - Test: tests/test_wetlab_experimental_validation.py::TestPhysicalInterpretations::test_sigma_equivalence_to_ligo
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - Location: tests/test_wetlab_experimental_validation.py:375
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - ================================================================================
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - ✅ PASSED: tests/test_wetlab_experimental_validation.py::TestPhysicalInterpretations::test_sigma_equivalence_to_ligo (0.000s)
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - 
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - ================================================================================
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - Test: tests/test_wetlab_experimental_validation.py::TestPhysicalInterpretations::test_irreversibility_manifests_universal_coherence
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - Location: tests/test_wetlab_experimental_validation.py:385
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - ================================================================================
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - ✅ PASSED: tests/test_wetlab_experimental_validation.py::TestPhysicalInterpretations::test_irreversibility_manifests_universal_coherence (0.000s)
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - 
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - ================================================================================
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - Test: tests/test_wetlab_experimental_validation.py::TestNumericalStability::test_monte_carlo_reproducibility
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - Location: tests/test_wetlab_experimental_validation.py:407
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - ================================================================================
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - ✅ PASSED: tests/test_wetlab_experimental_validation.py::TestNumericalStability::test_monte_carlo_reproducibility (0.001s)
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - 
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - ================================================================================
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - Test: tests/test_wetlab_experimental_validation.py::TestNumericalStability::test_monte_carlo_convergence
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - Location: tests/test_wetlab_experimental_validation.py:419
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - ================================================================================
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - ✅ PASSED: tests/test_wetlab_experimental_validation.py::TestNumericalStability::test_monte_carlo_convergence (0.012s)
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - 
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - ================================================================================
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - Test: tests/test_wetlab_experimental_validation.py::TestNumericalStability::test_zero_uncertainty_edge_case
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - Location: tests/test_wetlab_experimental_validation.py:428
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - ================================================================================
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - ✅ PASSED: tests/test_wetlab_experimental_validation.py::TestNumericalStability::test_zero_uncertainty_edge_case (0.000s)
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - 
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - ================================================================================
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - Test: tests/test_wetlab_experimental_validation.py::TestNumericalStability::test_large_uncertainty_handling
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - Location: tests/test_wetlab_experimental_validation.py:438
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - ================================================================================
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - ✅ PASSED: tests/test_wetlab_experimental_validation.py::TestNumericalStability::test_large_uncertainty_handling (0.000s)
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - 
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - ================================================================================
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - Test: tests/test_hpsi_unconditional_modules.py::test_unconditional_modules_exist
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - Location: tests/test_hpsi_unconditional_modules.py:19
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - ================================================================================
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - ✅ PASSED: tests/test_hpsi_unconditional_modules.py::test_unconditional_modules_exist (0.000s)
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - 
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - ================================================================================
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - Test: tests/test_hpsi_unconditional_modules.py::test_unconditional_modules_have_no_sorry
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - Location: tests/test_hpsi_unconditional_modules.py:24
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - ================================================================================
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - ✅ PASSED: tests/test_hpsi_unconditional_modules.py::test_unconditional_modules_have_no_sorry (0.000s)
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - 
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - ================================================================================
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - Test: tests/test_hpsi_unconditional_modules.py::test_unbounded_hpsi_removes_first_axiom_bridge
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - Location: tests/test_hpsi_unconditional_modules.py:30
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - ================================================================================
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - ✅ PASSED: tests/test_hpsi_unconditional_modules.py::test_unbounded_hpsi_removes_first_axiom_bridge (0.000s)
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - 
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - ================================================================================
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - Test: tests/test_hpsi_unconditional_modules.py::test_unbounded_hpsi_norm_density_closed_without_sorry
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - Location: tests/test_hpsi_unconditional_modules.py:42
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - ================================================================================
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - ✅ PASSED: tests/test_hpsi_unconditional_modules.py::test_unbounded_hpsi_norm_density_closed_without_sorry (0.000s)
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - 
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - ================================================================================
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - Test: tests/test_hpsi_unconditional_modules.py::test_unbounded_hpsi_dyadic_local_closure_present
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - Location: tests/test_hpsi_unconditional_modules.py:54
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - ================================================================================
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - ✅ PASSED: tests/test_hpsi_unconditional_modules.py::test_unbounded_hpsi_dyadic_local_closure_present (0.000s)
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - 
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - ================================================================================
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - Test: tests/test_hpsi_unconditional_modules.py::test_unbounded_hpsi_causal_kernel_bridge_present
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - Location: tests/test_hpsi_unconditional_modules.py:63
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - ================================================================================
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - ✅ PASSED: tests/test_hpsi_unconditional_modules.py::test_unbounded_hpsi_causal_kernel_bridge_present (0.000s)
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - 
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - ================================================================================
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - Test: tests/test_hpsi_unconditional_modules.py::test_remaining_axiom_names_removed_from_module_chain
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - Location: tests/test_hpsi_unconditional_modules.py:85
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - ================================================================================
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - ✅ PASSED: tests/test_hpsi_unconditional_modules.py::test_remaining_axiom_names_removed_from_module_chain (0.000s)
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - 
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - ================================================================================
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - Test: tests/test_hpsi_unconditional_modules.py::test_spectral_uniqueness_no_true_placeholders
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - Location: tests/test_hpsi_unconditional_modules.py:101
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - ================================================================================
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - ✅ PASSED: tests/test_hpsi_unconditional_modules.py::test_spectral_uniqueness_no_true_placeholders (0.000s)
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - 
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - ================================================================================
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - Test: tests/test_hpsi_unconditional_modules.py::test_trace_fredholm_schatten_contract_present
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - Location: tests/test_hpsi_unconditional_modules.py:123
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - ================================================================================
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - ✅ PASSED: tests/test_hpsi_unconditional_modules.py::test_trace_fredholm_schatten_contract_present (0.000s)
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - 
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - ================================================================================
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - Test: tests/test_hpsi_unconditional_modules.py::test_poisson_mellin_tripartite_contract_present
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - Location: tests/test_hpsi_unconditional_modules.py:138
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - ================================================================================
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - ✅ PASSED: tests/test_hpsi_unconditional_modules.py::test_poisson_mellin_tripartite_contract_present (0.000s)
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - 
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - ================================================================================
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - Test: tests/test_hpsi_unconditional_modules.py::test_spectral_mechanics_core_theorems_present
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - Location: tests/test_hpsi_unconditional_modules.py:146
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - ================================================================================
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - ✅ PASSED: tests/test_hpsi_unconditional_modules.py::test_spectral_mechanics_core_theorems_present (0.000s)
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - 
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - ================================================================================
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - Test: tests/test_hpsi_unconditional_modules.py::test_guinand_weil_global_log_deriv_bridge_present
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - Location: tests/test_hpsi_unconditional_modules.py:157
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - ================================================================================
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - ✅ PASSED: tests/test_hpsi_unconditional_modules.py::test_guinand_weil_global_log_deriv_bridge_present (0.002s)
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - 
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - ================================================================================
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - Test: tests/test_hpsi_unconditional_modules.py::test_hadamard_uniqueness_bridge_present
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - Location: tests/test_hpsi_unconditional_modules.py:188
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - ================================================================================
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - ✅ PASSED: tests/test_hpsi_unconditional_modules.py::test_hadamard_uniqueness_bridge_present (0.000s)
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - 
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - ================================================================================
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - Test: tests/test_hpsi_unconditional_modules.py::test_canonical_instances_constructors_present
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - Location: tests/test_hpsi_unconditional_modules.py:195
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - ================================================================================
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - ✅ PASSED: tests/test_hpsi_unconditional_modules.py::test_canonical_instances_constructors_present (0.000s)
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - 
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - ================================================================================
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - Test: tests/test_hpsi_unconditional_modules.py::test_coronacion_final_closure_present
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - Location: tests/test_hpsi_unconditional_modules.py:205
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - ================================================================================
+2026-10-06 22:25:43 - INFO     - qcal.test_session_20261006_222541 - ✅ PASSED: tests/test_hpsi_unconditional_modules.py::test_coronacion_final_closure_present (0.000s)

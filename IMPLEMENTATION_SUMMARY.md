@@ -1,5 +1,22 @@
 # QCAL Build Verification - Implementation Summary
 
+## QCAL-EXP-01 — transporte, DSP e inferencia reproducibles (October 2026)
+
+- **Módulos añadidos:** `experiments/qcal_exp01/` (protocolo UDP versionado,
+  receptor con ciclo de vida explícito, demodulación IF, regresión de fase,
+  comparación gaussiana de hipótesis, Monte Carlo y dashboard Dash).
+- **Adquisición sintética:** `experiments/qcal_exp01/native/` proporciona un
+  emisor C y Makefile; no se presenta como controlador DMA Red Pitaya.
+- **Despliegue aislado:** `deployment/Dockerfile`,
+  `deployment/requirements.txt` y `deployment/qcal-exp01-simulator.service`.
+- **Formalización:** `formalization/lean/QCAL/ExperimentalDiscrepancy.lean`;
+  cota escalar sin identificación física ni espectral, compilación pendiente
+  donde Lean/Lake no estén disponibles.
+- **Documentación:** `docs/QCAL-EXP-01.md`, `docs/ARCHITECTURE.md` y actualización
+  de `FORMALIZATION_STATUS.md`; distingue código probado de evidencia física.
+- **Regresiones:** `tests/test_qcal_exp01_*.py`. Se preservan los protocolos
+  de `experimental_validation/`, el dashboard existente, los DOIs y QCAL-CLOUD.
+
 ## 🟢 WEIL–SPECTRAL BRIDGE VALIDATOR (Python) — Auditoría analítico-numérica dedicada (September 2026)
 
 **Status**: ✅ IMPLEMENTED
