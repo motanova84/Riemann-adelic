@@ -1,5 +1,18 @@
 # Lean 4 Formalization Status - Riemann Hypothesis
 
+## QCAL-EXP-01: scalar discrepancy bound (October 2026)
+
+`formalization/lean/QCAL/ExperimentalDiscrepancy.lean` supplies proof source for
+the normalized scalar bound `sqrt (1 - psi) ≤ 0.001` when
+`0.999999 ≤ psi ≤ 1`, and the exact zero at `psi = 1`. It introduces no
+physical or spectral correspondence axioms. This is not an operator-norm
+identification, an experimental certificate, or an RH proof.
+
+Compilation is **not verified in this environment**: Lean/Lake and the
+Mathlib cache are unavailable. Verify in the existing pinned project with
+`lake env lean QCAL/ExperimentalDiscrepancy.lean` and audit the theorem's
+axiom dependencies before reporting formal verification.
+
 ## ✅ LATEST UPDATE: 3 Technical Lemmas Resolved via Axiomatization (2025-12-08)
 
 **Status**: ✅ **ALL TECHNICAL LEMMAS ADDRESSED**
