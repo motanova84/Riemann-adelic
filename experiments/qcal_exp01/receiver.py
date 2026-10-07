@@ -100,7 +100,7 @@ class UDPReceiver:
         """Bind and start once; return false and expose error on bind failure."""
         with self._lifecycle_lock:
             if self._thread is not None and self._thread.is_alive():
-                return True
+                return not self._stop.is_set() and self._socket is not None
             self._stop.clear()
             with self._lock:
                 self._health = ReceiverSnapshot(state="starting")
