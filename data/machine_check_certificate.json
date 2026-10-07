@@ -1,7 +1,7 @@
 {
   "certificate_type": "QCAL \u221e\u00b3 Machine-Check Verification",
   "version": "V5 Coronaci\u00f3n",
-  "timestamp": "2026-10-06T20:38:45.995384",
+  "timestamp": "2026-10-07T07:22:58.997357",
   "author": "Jos\u00e9 Manuel Mota Burruezo \u03a8 \u2727 \u221e\u00b3",
   "institution": "Instituto de Conciencia Cu\u00e1ntica (ICQ)",
   "doi_reference": "10.5281/zenodo.17379721",
@@ -12,7 +12,7 @@
     "equation": "\u03a8 = I \u00d7 A_eff\u00b2 \u00d7 C^\u221e"
   },
   "verification_results": {
-    "timestamp": "2026-10-06T20:38:45.995363",
+    "timestamp": "2026-10-07T07:22:58.997337",
     "precision": 25,
     "qcal_config": {
       "base_frequency": 141.7001,
@@ -80,27 +80,27 @@
         "steps": {
           "Step 1: Axioms \u2192 Lemmas": {
             "status": "PASSED",
-            "execution_time": 5.9604644775390625e-06
+            "execution_time": 5.7220458984375e-06
           },
           "Step 2: Archimedean Rigidity": {
             "status": "PASSED",
-            "execution_time": 0.00015592575073242188
+            "execution_time": 0.00013113021850585938
           },
           "Step 3: Paley-Wiener Uniqueness": {
             "status": "PASSED",
-            "execution_time": 3.0994415283203125e-06
+            "execution_time": 3.5762786865234375e-06
           },
           "Step 4A: de Branges Localization": {
             "status": "PASSED",
-            "execution_time": 0.000446319580078125
+            "execution_time": 0.0004048347473144531
           },
           "Step 4B: Weil-Guinand Localization": {
             "status": "PASSED",
-            "execution_time": 2.6226043701171875e-06
+            "execution_time": 3.647804260253906e-05
           },
           "Step 5: Coronaci\u00f3n Integration": {
             "status": "PASSED",
-            "execution_time": 0.00015091896057128906
+            "execution_time": 0.0001895427703857422
           }
         },
         "total_passed": 6,
@@ -341,7 +341,7 @@
         "yolo_verified": true
       }
     },
-    "execution_time": 0.42546963691711426
+    "execution_time": 0.4439365863800049
   },
   "riemann_hypothesis_status": "PASSED",
   "certification_statement": "This certificate verifies that the Riemann Hypothesis proof via S-Finite Adelic Systems (V5 Coronaci\u00f3n) has been validated through comprehensive machine-check verification.",
