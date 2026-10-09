@@ -1,5 +1,34 @@
 # Lean 4 Formalization Status - Riemann Hypothesis
 
+## Colector: tres leyes condicionales (October 2026)
+
+`formalization/lean/QCAL/Colector.lean` contiene pruebas fuente sin huecos de
+las leyes estructural, biológica y de conservación del producto. Son
+**condicionales** a los campos explícitos de `Supuestos C M : Prop`, no una
+derivación de leyes físicas ni una prueba de RH. `κ_Π` es abstracto con
+positividad e intervalo abierto `(2.578, 2.579)`. El testigo racional `2.5782`
+no identifica todos los colectores con el mismo número.
+
+`Eje` es un registro libre. Igualar globalmente los invariantes de cualesquiera
+ejes geométrico/físico sería inconsistente (se pueden construir valores 0 y 1).
+Aquí `Fibra C n` exige nombre correcto e invariante `C.κ_Π`; las hipótesis sólo
+relacionan ejes admisibles del mismo modelo. Los modelos canónicos demuestran
+que las hipótesis son satisfacibles para cada colector. Estas fibras indexadas
+no son un fibrado topológico: no se define topología ni trivialización local.
+
+Los comandos `#print axioms` incluidos auditan las dependencias fundacionales
+de los teoremas. Los supuestos específicos son argumentos `h`, por lo que no
+aparecen como axiomas globales en esa salida. Compilación y salida del auditor
+**no verificadas** donde Lean/Lake/Mathlib no están disponibles. Comando:
+`cd formalization/lean && lake env lean QCAL/Colector.lean`.
+
+`validation/colector.py` compara datos suministrados con tolerancia explícita
+`atol + rtol*max(|a|,|b|)` (ambas finitas y no negativas), con al menos 30 dps
+locales. El intervalo permanece estricto. Pruebas sintéticas:
+`python -m pytest tests/test_colector.py -o addopts=''`.
+Un resultado numérico positivo sólo demuestra consistencia a esa tolerancia,
+no evidencia biológica o experimental ni certificación matemática externa.
+
 ## QCAL-EXP-01: scalar discrepancy bound (October 2026)
 
 `formalization/lean/QCAL/ExperimentalDiscrepancy.lean` supplies proof source for

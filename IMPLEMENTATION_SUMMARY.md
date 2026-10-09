@@ -1,5 +1,38 @@
 # QCAL Build Verification - Implementation Summary
 
+## Colector condicional κ_Π (October 2026)
+
+- `formalization/lean/QCAL/Colector.lean`: parámetro abstracto positivo,
+  `2.578 < κ_Π < 2.579`, ejes con nombre/fase/invariante y fibras indexadas
+  admisibles de un mismo colector. No se afirma un fibrado topológico.
+- `Supuestos : Prop` contiene los campos explícitos `estructura_del_colector`,
+  `resonancia_biológica` y `invariante_producto`, no axiomas globales sobre
+  registros `Eje` arbitrarios. Las tres leyes son relativas a estos supuestos;
+  la pertenencia estructural exige invariante `κ_Π`. Hay modelos canónicos
+  no vacíos y un testigo `κ_Π = 2.5782`, no una constante universal impuesta.
+- `validation/colector.py`: API `validate` recibe observación biológica y
+  acoplamiento antes/después independientes. Reporta las tres discrepancias
+  entre pares, pertenencia, residuo de `Aeffmax = κ_Π²/(2π)` y producto
+  `epsilon*f0`. Tolerancias obligatorias finitas no negativas:
+  `|a-b| ≤ atol + rtol*max(|a|,|b|)`; intervalo estricto sin tolerancia.
+  Usa `mpmath.workdps` local (mínimo 30, defecto 50), sin guardar certificados.
+- `tests/test_colector.py`: datos **sintéticos**, fronteras, nombres erróneos,
+  entradas no finitas, discrepancias, tolerancias y restauración de precisión.
+  No constituye confirmación experimental ni prueba de RH.
+- Comandos desde la raíz: `python -m pytest tests/test_colector.py -o addopts=''`;
+  `python -m flake8 validation/colector.py tests/test_colector.py`.
+  Lean: `cd formalization/lean && lake env lean QCAL/Colector.lean`.
+  Compilación Lean pendiente si Lake/Mathlib no están disponibles; `#print axioms`
+  audita axiomas fundacionales, mientras los supuestos físicos son parámetros.
+- Resultado local: **79 pruebas sintéticas pasan**, flake8 sin errores.
+  `pytest tests/ -o addopts='' -o log_cli=false --maxfail=5 -q` se interrumpe
+  durante colección con cinco errores por dependencias preexistentes ausentes
+  (`sympy`, `ecdsa`, `matplotlib`); no se afirma éxito de la suite completa.
+- V5 no se ejecuta si requiere sobrescribir `data/`: el script actual escribe
+  incondicionalmente `qcal_ab_operational_report.json` y `validation_results.csv`
+  y no ofrece destino alternativo. Se preservan certificados, DOIs y workflows.
+  El estado remoto de `auto_evolution.yml` no puede confirmarse sin herramientas CI.
+
 ## QCAL-EXP-01 — transporte, DSP e inferencia reproducibles (October 2026)
 
 - **Módulos añadidos:** `experiments/qcal_exp01/` (protocolo UDP versionado,
