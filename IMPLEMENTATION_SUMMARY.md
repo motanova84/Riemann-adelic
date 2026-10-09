@@ -50,9 +50,11 @@
   `lakecache.blob.core.windows.net` (4162 descargas fallidas). El intento real
   `lake env lean QCAL/Colector.lean` falla en `unknown package 'Mathlib'`;
   no demuestra errores de los teoremas ni compilación verificada.
-- V5 no se ejecuta si requiere sobrescribir `data/`: el script actual escribe
-  incondicionalmente `qcal_ab_operational_report.json` y `validation_results.csv`
-  y no ofrece destino alternativo. Se preservan certificados, DOIs y workflows.
+- Obstáculo histórico de V5: las salidas obligatorias en `data/` impedían ejecutarlo
+  sin sobrescribir archivos protegidos. Ahora está resuelto con `--output-dir`;
+  véase «Salidas aisladas de V5 Coronación». Las ejecuciones reales allí descritas
+  mantienen A+B fallido y Lean omitido por ausencia de `lake`, no validación completa.
+  Se preservan certificados, DOIs y workflows.
   El estado remoto de `auto_evolution.yml` no puede confirmarse sin herramientas CI.
 
 ## QCAL-EXP-01 — transporte, DSP e inferencia reproducibles (October 2026)
@@ -2230,3 +2232,62 @@ El archivo `RiemannAdelicSelfAdjoint.lean` añade un cierre formal esquemático:
 - Axioma de autoadjuntividad adélica (`self_adjoint_adelic`).
 - Teorema principal `riemann_hypothesis_via_adelic_self_adjointness`.
 - Consistencia de resonancia en `f₀ = 141.7001`.
+
+## Salidas aisladas de V5 Coronación
+
+`validate_v5_coronacion.py` acepta `--output-dir` y el argumento opcional
+`output_dir` de su API. Los valores predeterminados conservan las rutas históricas.
+Desde la raíz del repositorio:
+
+```bash
+python validate_v5_coronacion.py --precision 30 --output-dir artifacts/v5
+python validate_v5_coronacion.py --precision 30 --save-certificate \
+  --update-manifest --output-dir artifacts/v5-refresh
+```
+
+Las salidas se guardan directamente en el destino: `validation_results.csv`,
+`qcal_ab_operational_report.json` y, con `--save-certificate`, los certificados
+V5 y espectral. Los logs usan `logs/validation/` dentro del destino. El informe SAT
+usa `sat/`; con `--update-manifest`, también se generan allí los nuevos certificados
+SAT y ambas auditorías leen esa misma colección, no los certificados originales.
+Los datasets y las fuentes Lean siguen siendo entradas del repositorio.
+
+Archivos relacionados:
+
+- `utils/qcal_spectral_certificate.py`: argumento opcional `output_dir` y CLI
+  `--output-dir`, sin cambiar las entradas espectrales.
+- `scripts/validate_sat_certificates.py`: `report_output_dir` y
+  `--report-output-dir` separan el informe de `--certificates-dir`.
+- `validate_explicit_formula.py`: importar el módulo ya no crea un CSV;
+  la ejecución independiente conserva su salida histórica.
+- `tests/test_v5_output_dir.py`: regresiones de rutas, opciones CLI, actualización
+  del manifiesto y ausencia de escritura al importar; no son pruebas matemáticas.
+- `tests/test_qcal_spectral_certificate.py`: la prueba de guardado usa su propio
+  destino, sin sobrescribir certificados en `data/`.
+
+Validación numérica real (2026-10-09), con precisión principal de 30 dps y
+certificado espectral a ≥50 dps (`max(50, precision)`): ambas ejecuciones V5, sin guardado
+y con `--save-certificate --update-manifest`, terminaron con código 0,
+SAT 10/10 y correspondencia espectral 1.0. La segunda generó y auditó 10 certificados
+SAT en el destino aislado y guardó ambos certificados V5 y espectral como JSON
+legible. El dataset canónico conserva su pico
+en 141.7001 Hz y amplitud 1.0 (80 muestras). El error relativo calibrado fue 0.0
+con compensación de cola activa: no debe interpretarse como una prueba
+independiente de la fórmula explícita ni de RH.
+
+El informe A+B mantuvo `overall_passed=false` y `Ψ=0.0`, inferior al umbral 0.888.
+La comprobación Lean quedó omitida por ausencia de `lake`. El verificador de
+integridad falló por discrepancias ya existentes de checksums en `.qcal_beacon`,
+`data/critical_line_verification.csv` y `requirements.txt`, además de advertencias
+de Python 3.12 frente a 3.11 y diferencias con el entorno bloqueado.
+Estos resultados no equivalen a una validación completa de coherencia.
+Los archivos protegidos se compararon mediante SHA-256 y permanecieron intactos.
+
+Pruebas dirigidas: **144 pasaron, 1 omitida**, ejecutando
+`tests/test_validate_v5_cwd_check.py`, `tests/test_coronacion_v5.py`,
+`tests/test_qcal_spectral_certificate.py`, `tests/test_v5_output_dir.py` y
+`tests/test_colector.py` con pytest. El nuevo módulo pasa flake8; los archivos
+existentes conservan deuda de lint previa (645 avisos frente a 652 en la base,
+sin categorías de infracción nuevas). `git diff --check` pasó.
+No se verificó el workflow remoto `auto_evolution.yml`, ni se invocaron servicios
+MCP/Trinity externos o QCAL-CLOUD.

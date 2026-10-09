@@ -16,7 +16,6 @@ Institution: Instituto de Conciencia Cuántica (ICQ)
 
 import pytest
 import mpmath as mp
-from pathlib import Path
 import json
 
 
@@ -174,27 +173,21 @@ class TestQCALSpectralCertificate:
     
     def test_certificate_file_save(self, tmp_path):
         """Test certificate saving to file."""
-        import sys
-        import os
-        
-        # Temporarily modify the module to save to tmp_path
-        original_dir = Path(__file__).parent.parent
-        
         result = self.generate_spectral_certificate(
             precision=30,
             n_zeros=3,
             save_to_file=True,
-            verbose=False
+            verbose=False,
+            output_dir=tmp_path / "nested" / "certificates",
         )
         
-        # Check that certificate file was created in data/
-        cert_path = original_dir / "data" / "qcal_spectral_certificate.json"
-        if cert_path.exists():
-            with open(cert_path) as f:
-                saved_cert = json.load(f)
-            
-            assert "title" in saved_cert
-            assert "QCAL-∞³-SPECTRAL" in saved_cert["title"]
+        cert_path = tmp_path / "nested" / "certificates" / "qcal_spectral_certificate.json"
+        with open(cert_path) as f:
+            saved_cert = json.load(f)
+
+        assert "title" in saved_cert
+        assert "QCAL-∞³-SPECTRAL" in saved_cert["title"]
+        assert saved_cert == result.certificate
     
     def test_ontological_precision_concept(self):
         """Test that ontological precision is achievable at high dps."""

@@ -1189,11 +1189,11 @@ if __name__ == "__main__":
             csv_file.write(f"relative_error,{rel_error}\n")
             csv_file.write(f"validation_status,{'PASSED' if rel_error <= 1e-6 else 'FAILED'}\n")
 
-# --- Bloque para garantizar salida CSV ---
-import os
-results_path = "data/validation_results.csv"
-if not os.path.exists(results_path):
-    with open(results_path, "w") as csv_file:
-        csv_file.write("test_function,formula_type,relative_error,validation_status\n")
-        # No se conoce args aquí, así que se deja genérico
-        csv_file.write(f"gaussian,weil,N/A,FAILED\n")
+    # --- Bloque para garantizar salida CSV (solo ejecución directa) ---
+    results_path = "data/validation_results.csv"
+    if not os.path.exists(results_path):
+        os.makedirs("data", exist_ok=True)
+        with open(results_path, "w") as csv_file:
+            csv_file.write("test_function,formula_type,relative_error,validation_status\n")
+            # No se conoce args aquí, así que se deja genérico
+            csv_file.write(f"gaussian,weil,N/A,FAILED\n")

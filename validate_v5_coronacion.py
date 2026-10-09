@@ -42,6 +42,7 @@ Outputs:
 # Import only what we need for the directory check
 import sys
 from pathlib import Path
+from typing import Optional, Union
 
 
 def verify_repository_root():
@@ -416,7 +417,11 @@ def write_ab_operational_report(report: dict, report_path: Path):
     with open(report_path, "w", encoding="utf-8") as f:
         json.dump(report, f, indent=2, ensure_ascii=False)
 
-def validate_v5_coronacion(precision=30, verbose=False, save_certificate=False, max_zeros=1000, max_primes=1000):
+def validate_v5_coronacion(
+    precision=30, verbose=False, save_certificate=False, max_zeros=1000, max_primes=1000,
+    output_dir: Optional[Union[str, Path]] = None,
+    sat_certificates_dir: Optional[Union[str, Path]] = None,
+) -> dict:
     """
     Main V5 Coronación validation function
     
@@ -426,10 +431,17 @@ def validate_v5_coronacion(precision=30, verbose=False, save_certificate=False, 
         save_certificate: Save mathematical proof certificate to file
         max_zeros: Maximum number of zeros to use in validation
         max_primes: Maximum number of primes to use in validation
+        output_dir: Optional destination for reports, saved certificates and logs.
+            None preserves legacy destinations; input datasets remain unchanged.
+        sat_certificates_dir: Optional SAT input directory, used after a manifest
+            refresh into output_dir. Defaults to certificates/sat.
         
     Returns:
         dict: Validation results and proof certificate
     """
+    artifact_dir = Path(output_dir) if output_dir is not None else Path('data')
+    cert_dir = Path(sat_certificates_dir) if sat_certificates_dir is not None else Path('certificates/sat')
+
     # Verify environment integrity first
     print("🔐 Verifying environment integrity...")
     try:
@@ -468,7 +480,10 @@ def validate_v5_coronacion(precision=30, verbose=False, save_certificate=False, 
     # Initialize logging
     logger = None
     if LOGGING_AVAILABLE:
-        logger = ValidationLogger("validate_v5_coronacion")
+        log_options = {}
+        if output_dir is not None:
+            log_options["log_dir"] = artifact_dir / "logs" / "validation"
+        logger = ValidationLogger("validate_v5_coronacion", **log_options)
         logger.log_step("V5 Coronación Validation", 1)
         logger.log(f"Precision: {precision} decimal places")
         logger.log(f"Max zeros: {max_zeros}")
@@ -1201,8 +1216,8 @@ def validate_v5_coronacion(precision=30, verbose=False, save_certificate=False, 
                 }
             }
             
-            cert_file = Path('data') / 'v5_coronacion_certificate.json'
-            cert_file.parent.mkdir(exist_ok=True)
+            cert_file = artifact_dir / 'v5_coronacion_certificate.json'
+            cert_file.parent.mkdir(parents=True, exist_ok=True)
             
             with open(cert_file, 'w') as f:
                 json.dump(certificate_data, f, indent=2, default=str)
@@ -1275,10 +1290,10 @@ def validate_v5_coronacion(precision=30, verbose=False, save_certificate=False, 
         from scripts.validate_sat_certificates import SATCertificateValidator
         
         sat_validator = SATCertificateValidator(
-            certificates_dir='certificates/sat',
-            latest_only=True
+            certificates_dir=cert_dir,
+            latest_only=True,
+            report_output_dir=artifact_dir / "sat" if output_dir is not None else None,
         )
-        cert_dir = Path('certificates/sat')
         
         if cert_dir.exists() and list(cert_dir.glob('SAT_*.json')):
             print("   Validating SAT certificates for key theorems...")
@@ -1323,7 +1338,8 @@ def validate_v5_coronacion(precision=30, verbose=False, save_certificate=False, 
             precision=max(50, precision),
             n_zeros=5,
             save_to_file=save_certificate,
-            verbose=False
+            verbose=False,
+            output_dir=output_dir,
         )
         
         if spectral_cert.all_criteria_satisfied:
@@ -1645,7 +1661,9 @@ def validate_v5_coronacion(precision=30, verbose=False, save_certificate=False, 
             qcal_results=qcal_results,
             results=results,
         )
-        report_file = repo_root / "data" / "qcal_ab_operational_report.json"
+        report_file = (
+            artifact_dir if output_dir is not None else repo_root / "data"
+        ) / "qcal_ab_operational_report.json"
         write_ab_operational_report(ab_report, report_file)
 
         results["A+B Operational Report"] = {
@@ -1670,8 +1688,8 @@ def validate_v5_coronacion(precision=30, verbose=False, save_certificate=False, 
     
     # Save validation results to CSV for comparison with notebook
     try:
-        csv_file = Path('data') / 'validation_results.csv'
-        csv_file.parent.mkdir(exist_ok=True)
+        csv_file = artifact_dir / 'validation_results.csv'
+        csv_file.parent.mkdir(parents=True, exist_ok=True)
         
         with open(csv_file, 'w', newline='') as f:
             writer = csv.writer(f)
@@ -1761,6 +1779,7 @@ Examples:
   python validate_v5_coronacion.py --verbose          # Detailed output
   python validate_v5_coronacion.py --save-certificate # Save proof certificate
   python validate_v5_coronacion.py --update-manifest  # Refresh SAT file-hash manifest
+  python validate_v5_coronacion.py --output-dir artifacts/v5 # Isolated outputs
         """
     )
     
@@ -1776,12 +1795,18 @@ Examples:
                         help='Maximum number of primes to use in validation (default: 1000)')
     parser.add_argument('--update-manifest', action='store_true',
                         help='Regenerate SAT certificates (refresh file_hash ledger) before validation')
+    parser.add_argument('--output-dir', type=Path,
+                        help='Destination for generated artifacts and logs (default: legacy paths)')
     
     args = parser.parse_args()
 
+    sat_certificates_dir = None
     if args.update_manifest:
         print("\n🔄 SAT MANIFEST REFLASH...")
         refresh_cmd = [sys.executable, "scripts/generate_sat_certificates.py", "--all"]
+        if args.output_dir is not None:
+            sat_certificates_dir = args.output_dir / "sat"
+            refresh_cmd.extend(["--output-dir", str(sat_certificates_dir)])
         refresh_result = subprocess.run(
             refresh_cmd,
             capture_output=True,
@@ -1802,6 +1827,11 @@ Examples:
             "--all",
             "--latest-only",
         ]
+        if sat_certificates_dir is not None:
+            sat_validate_cmd.extend([
+                "--certificates-dir", str(sat_certificates_dir),
+                "--report-output-dir", str(sat_certificates_dir),
+            ])
         sat_validate_result = subprocess.run(
             sat_validate_cmd,
             capture_output=True,
@@ -1824,7 +1854,9 @@ Examples:
         verbose=args.verbose,
         save_certificate=args.save_certificate,
         max_zeros=args.max_zeros,
-        max_primes=args.max_primes
+        max_primes=args.max_primes,
+        output_dir=args.output_dir,
+        sat_certificates_dir=sat_certificates_dir,
     )
     total_time = time.time() - start_time
     

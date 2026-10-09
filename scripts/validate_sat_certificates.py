@@ -21,14 +21,26 @@ import json
 import sys
 from datetime import datetime
 from pathlib import Path
-from typing import Any, Dict, List, Tuple
+from typing import Any, Dict, List, Optional, Tuple, Union
 
 
 class SATCertificateValidator:
     """Validate SAT certificates for mathematical theorems."""
     
-    def __init__(self, certificates_dir: str = "certificates/sat", latest_only: bool = False):
+    def __init__(
+        self, certificates_dir: Union[str, Path] = "certificates/sat", latest_only: bool = False,
+        report_output_dir: Optional[Union[str, Path]] = None,
+    ) -> None:
+        """Configure SAT inputs and an independent report destination.
+
+        Args:
+            certificates_dir: Directory containing input SAT certificates.
+            latest_only: Select only the newest certificate for each theorem.
+            report_output_dir: Optional report directory; None writes alongside
+                the input certificates, preserving legacy behavior.
+        """
         self.certificates_dir = Path(certificates_dir)
+        self.report_output_dir = Path(report_output_dir) if report_output_dir is not None else self.certificates_dir
         self.validation_timestamp = datetime.utcnow().isoformat() + "Z"
         self.latest_only = latest_only
 
@@ -247,7 +259,8 @@ class SATCertificateValidator:
             "results": results
         }
         
-        report_path = self.certificates_dir / "validation_report.json"
+        report_path = self.report_output_dir / "validation_report.json"
+        report_path.parent.mkdir(parents=True, exist_ok=True)
         with open(report_path, 'w') as f:
             json.dump(report, f, indent=2, default=str)
         
@@ -282,12 +295,18 @@ def main():
         action='store_true',
         help='Validate only the latest certificate for each theorem'
     )
+    parser.add_argument(
+        '--report-output-dir',
+        type=Path,
+        help='Independent validation report destination (default: certificates directory)'
+    )
     
     args = parser.parse_args()
     
     validator = SATCertificateValidator(
         certificates_dir=args.certificates_dir,
-        latest_only=args.latest_only
+        latest_only=args.latest_only,
+        report_output_dir=args.report_output_dir,
     )
     
     if args.certificate:
