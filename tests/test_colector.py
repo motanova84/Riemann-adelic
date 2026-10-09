@@ -29,7 +29,7 @@ def synthetic_data() -> dict:
 def test_synthetic_witness_and_all_residuals() -> None:
     """Check every pair, structural membership, biology and independent coupling."""
     report = validate(**synthetic_data())
-    assert report.passed and report.positive and report.in_interval
+    assert report.passed and report.positive and report.in_interval and report.biological_positive
     assert len(report.checks) == 8
     assert len([key for key in report.checks if key.startswith("structure:")]) == 3
     for residual in report.checks.values():
@@ -89,6 +89,51 @@ def test_independent_biological_mismatch(observation: str) -> None:
     data["aeffmax_observed"] = observation
     report = validate(**data)
     assert not report.passed and not report.checks["biological"].passed
+
+
+@pytest.mark.parametrize("observation", ["0", "-1", "-1e-100"])
+def test_biological_positivity_cannot_be_relaxed(observation: str) -> None:
+    """The positive conclusion of ley_biologica is independent of tolerances."""
+    data = synthetic_data()
+    data.update(aeffmax_observed=observation, atol="1e100", rtol="1e100")
+    report = validate(**data)
+    assert report.checks["biological"].passed
+    assert not report.biological_positive and not report.passed
+
+
+@pytest.mark.parametrize(("kappa", "inside"), [
+    ("2.578" + "0" * 80 + "1", True),
+    ("2.577" + "9" * 81, False),
+    ("2.578" + "9" * 81, True),
+    ("2.579" + "0" * 80 + "1", False),
+])
+@pytest.mark.parametrize("kind", ["str", "mpf"])
+def test_interval_uses_exact_decimal_input(kappa: str, inside: bool, kind: str) -> None:
+    """Digits beyond dps determine membership even for a preexisting precise mpf."""
+    data = synthetic_data()
+    data.update(kappa=kappa, atol="100", rtol="100")
+    if kind == "mpf":
+        with mp.workdps(110):
+            data["kappa"] = mp.mpf(kappa)
+    for dps in (30, 50):
+        report = validate(**data, dps=dps)
+        assert report.in_interval is inside
+        assert report.passed is inside
+
+
+@pytest.mark.parametrize("kind", ["float", "mpf", "fraction"])
+def test_interval_supports_represented_real_inputs(kind: str) -> None:
+    """Floats/mpfs retain represented values; rational string input remains valid."""
+    data = synthetic_data()
+    if kind == "float":
+        data["kappa"] = 2.5782
+    elif kind == "mpf":
+        with mp.workdps(100):
+            data["kappa"] = mp.mpf("2.578" + "0" * 80 + "1")
+    else:
+        data["kappa"] = "12891/5000"
+    data.update(atol="100", rtol="100")
+    assert validate(**data, dps=30).passed
 
 
 def test_independent_coupling_mismatch() -> None:
@@ -178,7 +223,7 @@ def test_local_precision_restored_on_success_and_failure() -> None:
 
 
 def test_minimum_precision_and_zero_tolerance() -> None:
-    """Thirty dps is accepted; rounded observations need not pass exact equality."""
+    """Thirty dps is accepted; zero tolerance compares rounded calculations."""
     minimum = synthetic_data()
     minimum.update(atol="1e-28", rtol="1e-28")
     assert validate(**minimum, dps=30).passed
@@ -186,6 +231,25 @@ def test_minimum_precision_and_zero_tolerance() -> None:
     data.update(atol="0", rtol="0")
     report = validate(**data)
     assert not report.passed and report.checks["biological"].discrepancy > 0
+
+
+def test_precision_can_reveal_hidden_product_discrepancy() -> None:
+    """Cancellation after rounding can hide independently supplied differences."""
+    data = synthetic_data()
+    data.update(
+        coupling=Acoplamiento("1", "1", "1", "1." + "0" * 59 + "1"),
+        atol="1e-45", rtol="0",
+    )
+    low = validate(**data, dps=30)
+    high = validate(**data, dps=90)
+    assert low.checks["product"].discrepancy == 0
+    assert high.checks["product"].discrepancy > 0
+    assert "rounded calculations" in low.precision_note
+    assert "not exact reals" in high.precision_note
+    assert "not empirical confirmation" in high.precision_note
+    data.update(atol="0", rtol="0")
+    assert validate(**data, dps=30).checks["product"].passed
+    assert not validate(**data, dps=90).checks["product"].passed
 
 
 def test_lean_source_has_only_scoped_conditional_assumptions() -> None:

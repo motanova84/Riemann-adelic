@@ -19,12 +19,20 @@ no son un fibrado topológico: no se define topología ni trivialización local.
 Los comandos `#print axioms` incluidos auditan las dependencias fundacionales
 de los teoremas. Los supuestos específicos son argumentos `h`, por lo que no
 aparecen como axiomas globales en esa salida. Compilación y salida del auditor
-**no verificadas** donde Lean/Lake/Mathlib no están disponibles. Comando:
+**no verificadas**. El 9 octubre 2026 se restauró Lean 4.5.0 y las dependencias
+fijadas, pero `lake exe cache get` falló por DNS de
+`lakecache.blob.core.windows.net` (4162 descargas). El intento real de compilación
+falló en `unknown package 'Mathlib'`, antes de verificar los teoremas. Comando:
 `cd formalization/lean && lake env lean QCAL/Colector.lean`.
 
 `validation/colector.py` compara datos suministrados con tolerancia explícita
 `atol + rtol*max(|a|,|b|)` (ambas finitas y no negativas), con al menos 30 dps
-locales. El intervalo permanece estricto. Pruebas sintéticas:
+locales. El intervalo permanece estricto mediante comparación exacta de la
+entrada, no del parámetro redondeado. La observación debe ser estrictamente
+positiva independientemente de tolerancias, como concluye `ley_biologica`.
+El reporte explicita que tolerancia cero compara cálculos redondeados,
+no reales exactos; cancelación y pérdida previa de dígitos no están certificadas.
+Pruebas sintéticas:
 `python -m pytest tests/test_colector.py -o addopts=''`.
 Un resultado numérico positivo sólo demuestra consistencia a esa tolerancia,
 no evidencia biológica o experimental ni certificación matemática externa.

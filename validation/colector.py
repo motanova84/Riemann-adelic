@@ -6,6 +6,7 @@ input rounding. The synthetic witness 2.5782 is not a universal constant.
 """
 
 from dataclasses import dataclass
+from fractions import Fraction
 from itertools import combinations
 from typing import Sequence, Union
 
@@ -47,14 +48,22 @@ class Residual:
 
 @dataclass(frozen=True)
 class Report:
-    """Strict bounds, all residuals and aggregate consistency at given dps."""
+    """Strict bounds, positivity and rounded residuals, not empirical evidence."""
 
     kappa: mp.mpf
     dps: int
     positive: bool
     in_interval: bool
+    biological_positive: bool
     checks: dict[str, Residual]
     passed: bool
+    precision_note: str = (
+        "Interval membership uses the supplied value exactly; kappa is rounded. "
+        "Residuals use rounded calculations at dps, not certified error bounds. "
+        "Zero tolerance means equality of rounded calculations, not exact reals; "
+        "cancellation can hide discrepancies. Lost float/mpf digits cannot be "
+        "recovered. Passing is not empirical confirmation or an RH proof."
+    )
 
 
 def _finite(value: RealInput, label: str) -> mp.mpf:
@@ -75,6 +84,17 @@ def _compare(left: mp.mpf, right: mp.mpf, atol: mp.mpf, rtol: mp.mpf) -> Residua
     discrepancy = abs(left - right)
     tolerance = atol + rtol * max(abs(left), abs(right))
     return Residual(left, right, discrepancy, tolerance, bool(discrepancy <= tolerance))
+
+
+def _strict_interval(value: RealInput) -> bool:
+    """Compare supplied finite values exactly, independently of working dps."""
+    if isinstance(value, mp.mpf):
+        # An mpf stores an exact dyadic value; it cannot recover its input digits.
+        sign, mantissa, exponent, _ = value._mpf_
+        exact = Fraction((-1 if sign else 1) * mantissa) * Fraction(2)**exponent
+    else:
+        exact = Fraction(value)
+    return Fraction(2578, 1000) < exact < Fraction(2579, 1000)
 
 
 def validate(
@@ -101,7 +121,9 @@ def validate(
     Returns:
         Report with each pairwise axis discrepancy, membership residuals,
         observed biological residual versus κ²/(2π), coupling product residual,
-        strict bounds and aggregate pass. Interval bounds have no tolerance.
+        strict bounds, independent biological positivity and aggregate pass.
+        Interval bounds compare the supplied value exactly, without tolerance.
+        The reported kappa and residual values are rounded to working precision.
 
     Raises:
         ValueError: For nonfinite inputs, invalid names or tolerances/precision.
@@ -110,6 +132,9 @@ def validate(
         This checks consistency with assumptions, not their physical truth.
         mpmath precision is restored on success and failure. It does not
         recover digits already lost in float or low-precision mpf inputs.
+        Residuals are rounded, not certified enclosures; zero tolerance means
+        equality of rounded calculations, not equality of exact real values.
+        Increasing dps may reveal discrepancies hidden by cancellation.
     """
     if isinstance(dps, bool) or not isinstance(dps, int) or dps < 30:
         raise ValueError("dps must be an integer >= 30")
@@ -139,6 +164,12 @@ def validate(
         checks["biological"] = _compare(observed, parameter**2 / (2 * mp.pi), absolute, relative)
         checks["product"] = _compare(before, after, absolute, relative)
         positive = bool(parameter > 0)
-        in_interval = bool(mp.mpf("2.578") < parameter < mp.mpf("2.579"))
-        passed = positive and in_interval and all(check.passed for check in checks.values())
-        return Report(parameter, dps, positive, in_interval, checks, passed)
+        in_interval = _strict_interval(kappa)
+        biological_positive = bool(observed > 0)
+        passed = (
+            positive and in_interval and biological_positive
+            and all(check.passed for check in checks.values())
+        )
+        return Report(
+            parameter, dps, positive, in_interval, biological_positive, checks, passed
+        )

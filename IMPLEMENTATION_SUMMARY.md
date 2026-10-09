@@ -15,7 +15,14 @@
   entre pares, pertenencia, residuo de `Aeffmax = κ_Π²/(2π)` y producto
   `epsilon*f0`. Tolerancias obligatorias finitas no negativas:
   `|a-b| ≤ atol + rtol*max(|a|,|b|)`; intervalo estricto sin tolerancia.
+  `biological_positive` exige observación estrictamente positiva aun con
+  tolerancias enormes. El intervalo compara exactamente la entrada decimal
+  (o el valor representado de float/mpf), incluso más allá de los dps de trabajo;
+  el `kappa` reportado sí está redondeado.
   Usa `mpmath.workdps` local (mínimo 30, defecto 50), sin guardar certificados.
+  `precision_note` aclara que tolerancia cero significa igualdad de cálculos
+  redondeados, no igualdad de reales exactos: la cancelación puede ocultar
+  discrepancias. No proporciona cotas certificadas de error numérico.
 - `tests/test_colector.py`: datos **sintéticos**, fronteras, nombres erróneos,
   entradas no finitas, discrepancias, tolerancias y restauración de precisión.
   No constituye confirmación experimental ni prueba de RH.
@@ -24,10 +31,25 @@
   Lean: `cd formalization/lean && lake env lean QCAL/Colector.lean`.
   Compilación Lean pendiente si Lake/Mathlib no están disponibles; `#print axioms`
   audita axiomas fundacionales, mientras los supuestos físicos son parámetros.
-- Resultado local: **79 pruebas sintéticas pasan**, flake8 sin errores.
-  `pytest tests/ -o addopts='' -o log_cli=false --maxfail=5 -q` se interrumpe
-  durante colección con cinco errores por dependencias preexistentes ausentes
-  (`sympy`, `ecdsa`, `matplotlib`); no se afirma éxito de la suite completa.
+- Resultado histórico previo: **79 pruebas sintéticas**, con dependencias
+  ausentes en la colección general; no describe la validación actual.
+- Validación actual (9 octubre 2026): dependencias existentes restauradas con
+  `python3 -m venv .colector-venv` y
+  `TMPDIR="$PWD/.colector-venv" .colector-venv/bin/python -m pip install --no-cache-dir -r requirements.txt`,
+  sin modificar requisitos; `pip check` sin conflictos.
+  **94 pruebas sintéticas pasan**; flake8 de ambos archivos Python y
+  `git diff --check` sin errores.
+  El entorno de validación usa Python 3.12; no se verificó Python 3.11.
+  Suite general acotada a 180 s, `--maxfail=5`: se interrumpe en colección con
+  cuatro errores preexistentes: faltan `EmotionalObserver`, `Node`,
+  `predict_mutation_stability` y `EPSILON_OSC` no está definido. La colección
+  independiente también falla antes de ejecutar pruebas; no se afirma éxito
+  de la suite completa.
+- Lean 4.5.0 instalado desde el release fijado y dependencias del manifiesto
+  restauradas. `lake exe cache get` falla: DNS inaccesible para
+  `lakecache.blob.core.windows.net` (4162 descargas fallidas). El intento real
+  `lake env lean QCAL/Colector.lean` falla en `unknown package 'Mathlib'`;
+  no demuestra errores de los teoremas ni compilación verificada.
 - V5 no se ejecuta si requiere sobrescribir `data/`: el script actual escribe
   incondicionalmente `qcal_ab_operational_report.json` y `validation_results.csv`
   y no ofrece destino alternativo. Se preservan certificados, DOIs y workflows.
