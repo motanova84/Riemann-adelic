@@ -40,14 +40,25 @@ def test_v5_artifact_routes(
 
     def routing_import(name: str, *args, **kwargs):
         """Keep supplemental numerical validations out of a filesystem unit test."""
-        if name.startswith(("utils.", "operators.", "physics")) and name not in allowed:
+        if (
+            name.startswith(("utils.", "operators.", "physics"))
+            or name in {"zeta_quantum_wave", "rh_proved_framework"}
+        ) and name not in allowed:
             raise ImportError("supplemental numerical validation excluded from routing test")
         return real_import(name, *args, **kwargs)
 
     monkeypatch.setattr(builtins, "__import__", routing_import)
     monkeypatch.setattr(importlib.util, "spec_from_file_location", Mock(side_effect=ImportError("routing test")))
     monkeypatch.setattr(v5, "include_yolo_verification", lambda: True)
+    monkeypatch.setattr(v5, "run_calibrated_explicit_formula_audit", lambda **kwargs: {
+        "criterion_passed": True, "relative_error_raw": 0.01, "target_relative_error": 0.05,
+        "tail_compensation_applied": False, "zeros_used": 5, "zero_weight_sigma": 50,
+    })
     monkeypatch.setattr(v5, "__file__", str(tmp_path / "validate_v5_coronacion.py"))
+    (tmp_path / "verify_environment_integrity.py").write_text("# Mocked checker\n")
+    monkeypatch.setattr(v5.subprocess, "run", Mock(return_value=SimpleNamespace(
+        returncode=1, stdout="warning: integrity failure", stderr="",
+    )))
     monkeypatch.chdir(tmp_path)
     input_dir = tmp_path / "certificates" / "sat"
     input_dir.mkdir(parents=True)
@@ -81,12 +92,28 @@ def test_v5_artifact_routes(
     if refreshed_dir is not None:
         refreshed_dir.mkdir(parents=True)
         (refreshed_dir / "SAT_refreshed.json").write_text('{"theorem_name": "refreshed"}')
-    v5.validate_v5_coronacion(30, False, save_certificate, 5, 5, output_dir, refreshed_dir)
+    result = v5.validate_v5_coronacion(30, False, save_certificate, 5, 5, output_dir, refreshed_dir)
+    assert result["success"] is False
+    assert result["results"]["Step 1: Axioms → Lemmas"]["status"] == "PASSED"
+    assert result["results"]["Environment Integrity"]["status"] == "FAILED"
+    assert result["results"]["Environment Integrity"]["returncode"] == 1
+    assert result["results"]["SAT Certificates Verification"]["status"] == "FAILED"
+    assert result["results"]["A+B Operational Report"]["status"] == "FAILED"
+    assert result["summary"]["total"] == len(result["results"])
+    assert result["summary"]["failed"] == sum(
+        item["status"] == "FAILED" for item in result["results"].values()
+    )
 
     destination = output_dir if override else tmp_path / "data"
     assert (destination / "validation_results.csv").is_file()
     assert (destination / "qcal_ab_operational_report.json").is_file()
     assert (destination / "v5_coronacion_certificate.json").exists() == save_certificate
+    if save_certificate:
+        saved = json.loads((destination / "v5_coronacion_certificate.json").read_text())
+        assert saved["success"] is False
+        assert saved["riemann_hypothesis_status"] == "NOT_PROVEN"
+        assert saved["validation_results"]["A+B Operational Report"]["status"] == "FAILED"
+        assert saved["summary"] == result["summary"]
     assert spectral_call.call_args.kwargs["save_to_file"] == save_certificate
     assert spectral_call.call_args.kwargs["output_dir"] == output_dir
     assert ab_call.call_args.kwargs["repo_root"] == tmp_path

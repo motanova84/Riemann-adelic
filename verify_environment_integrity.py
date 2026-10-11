@@ -307,8 +307,12 @@ class EnvironmentVerifier:
             
             mismatches = []
             for filename, saved_checksum in saved_checksums.items():
-                current_checksum = current_checksums.get(filename)
-                if current_checksum and current_checksum != saved_checksum:
+                filepath = self.repo_root / filename
+                if not self.verify_file_exists(filepath):
+                    mismatches.append(filename)
+                    continue
+                current_checksum = self.compute_file_checksum(filepath)
+                if current_checksum != saved_checksum:
                     mismatches.append(filename)
             
             if mismatches:
@@ -396,9 +400,10 @@ class EnvironmentVerifier:
                 )
         
         if missing_files:
-            self.warnings.append(
-                f"Dataset files not found: {', '.join(missing_files)}"
+            self.errors.append(
+                f"Required recorded dataset files not found: {', '.join(missing_files)}"
             )
+            return False
         
         if mismatches:
             self.errors.append(

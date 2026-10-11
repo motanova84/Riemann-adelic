@@ -1,5 +1,22 @@
 # Lean 4 Formalization Status - Riemann Hypothesis
 
+## Auditoría V5 A+B (11 octubre 2026)
+
+La métrica numérica de cierre no implica completitud formal ni RH.
+`QCAL/RH_Equivalence.lean` presupone `critical_localization_step` y otros
+axiomas; su conclusión RH es condicional. Compilar un archivo sin `sorry`
+no elimina esos supuestos. V5 informa por separado compilación, placeholders,
+axiomas y criterio numérico; una compilación omitida nunca satisface el gate.
+Los diez certificados SAT más recientes registran satisfacción falsa y carecen
+de evidencia positiva de compilación. Se mantienen intactos.
+
+El intento local del 11 octubre restauró Lean 4.5.0 desde release GitHub
+y dependencias en una copia aislada. El host del cache de Mathlib
+`lakecache.blob.core.windows.net` sigue sin resolución DNS; el intento real
+`lake env lean QCAL/Colector.lean` termina con salida 1 y
+`unknown package 'Mathlib'`. Los errores posteriores son cascada de imports
+ausentes, no verificación de los teoremas. Compilación sigue pendiente.
+
 ## Colector: tres leyes condicionales (October 2026)
 
 `formalization/lean/QCAL/Colector.lean` contiene pruebas fuente sin huecos de

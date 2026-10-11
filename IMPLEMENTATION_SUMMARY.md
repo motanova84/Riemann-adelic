@@ -1,5 +1,60 @@
 # QCAL Build Verification - Implementation Summary
 
+## V5: corrección de falsos éxitos (11 octubre 2026)
+
+- `validate_v5_coronacion.py` conserva Ψ como `null`/`UNAVAILABLE` si falta
+  la medición genuina de Step 5 o no es finita; no sustituye Step 4 ni el umbral.
+- El criterio numérico A+B no es completitud formal. Lean omitido/fallido,
+  placeholders o axiomas propios impiden completitud; la localización crítica
+  en `QCAL/RH_Equivalence.lean` es un axioma, no una demostración de RH.
+- SAT distingue integridad de satisfacción: V5 requiere los diez certificados
+  más recientes satisfechos, compilados y sin `sorry`. La API de consistencia
+  de `SATCertificateValidator` se conserva. Los diez certificados actuales
+  registran `satisfied=false`; no se regeneraron ni forzaron.
+- La fórmula explícita de V5 mide el residuo **sin compensación ajustada**.
+  La opción histórica de compensación permanece disponible para otros callers;
+  no sirve como evidencia de cierre.
+- Checks obligatorios: integridad, seis etapas principales, stress/integración,
+  fórmula explícita cruda, identificación espectral, SAT satisfecho, medición
+  Step 5 e informe A+B. Omitirlos o devolver `PARTIAL` no permite éxito.
+  Extensiones restantes son diagnósticos opcionales: `SKIPPED`/`PARTIAL`
+  no bloquean por sí solos; cualquier `FAILED` sí se propaga.
+- Contadores, salida CLI y certificado V5 se calculan después de los checks.
+  El certificado registra el resultado final y `NOT_PROVEN`, nunca RH probada.
+  `verify_environment_integrity.py` falla ante archivos registrados ausentes;
+  no se rebaselinaron los manifiestos. Los tests del ledger usan fixtures
+  aislados y no escriben la procedencia del repositorio.
+- Regresiones: `tests/test_v5_failure_propagation.py`,
+  `tests/test_v5_output_dir.py`, `tests/test_environment_integrity.py`.
+  Los resultados antiguos de «éxito» y Ψ=0.0 más abajo son **históricos**:
+  no describen el nuevo contrato ni constituyen evidencia matemática.
+- Validación local: requisitos existentes restaurados en entorno aislado,
+  `pip check` sin conflictos; Python 3.12, no verificación de Python 3.11.
+  Suite dirigida final: 188 tests pasaron y uno se omitió por el fallo preexistente
+  `CriticalLineChecker: 'axiom_satisfied'`; V5 considera esa omisión obligatoria
+  un bloqueo. Colección general acotada: 13133 tests, cuatro errores
+  preexistentes (`EmotionalObserver`, `Node`, `predict_mutation_stability`,
+  `EPSILON_OSC`), salida 2.
+- Ejecución real con `--precision 30 --output-dir ... --save-certificate`
+  (1000 ceros/primos): salida **1**, 25 checks pasados, 5 fallidos y 1 parcial;
+  fórmula cruda 103.478567%, SAT satisfecho 0/10, Ψ ausente e informe A+B
+  fallido. Certificado final `success=false`, `NOT_PROVEN`. Integridad informa
+  discrepancias existentes en `.qcal_beacon`, `data/critical_line_verification.csv`
+  y `requirements.txt`; corregir la procedencia requiere evidencia del propietario,
+  no regenerar hashes a ciegas. Hashes de originales protegidos sin cambios.
+- Segunda ejecución real, código final, `--precision 30 --max-zeros 100
+  --max-primes 100 --output-dir ... --save-certificate`: salida **1** en 46.47 s;
+  24 checks pasados, 5 fallidos, 1 omitido y 1 parcial. Residuo crudo 101.286018%,
+  Ψ `null`/`UNAVAILABLE`; el diagnóstico Trinity no inventa Ψ.
+  Certificado final `success=false`, `coronation_complete=false`, `NOT_PROVEN`.
+- Lean 4.5.0 recuperado desde release GitHub después de fallo DNS de
+  `release.lean-lang.org`; dependencias restauradas en copia aislada.
+  Cache inaccesible por DNS de `lakecache.blob.core.windows.net` (probe acotado).
+  Intento real `lake env lean QCAL/Colector.lean`: salida 1,
+  `unknown package 'Mathlib'`; compilación no verificada. No se repitieron
+  descargas masivas. Flake8 de regresiones nuevas/routing/Colector y
+  `git diff --check` pasan; los scripts V5/ledger conservan deuda lint previa.
+
 ## Colector condicional κ_Π (October 2026)
 
 - `formalization/lean/QCAL/Colector.lean`: parámetro abstracto positivo,

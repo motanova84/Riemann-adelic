@@ -19,7 +19,9 @@ Philosophical Foundation:
     - docs/COHERENCE_PHILOSOPHY.md (coherence over isolation)
     - PARADIGM_SHIFT.md (geometry → spectrum → zeros)
 
-This script validates the complete V5 "Coronación" proof by verifying that 
+This script audits the V5 "Coronación" framework without certifying an RH proof.
+Missing required measurements, conditional axioms and uncompiled proofs fail
+the completeness gate. It checks whether
 5 LEVELS OF COHERENCE resonate together as a unified system.
 
 Usage:
@@ -34,7 +36,7 @@ The script verifies coherence at 5 levels (NOT 5 independent theorems):
 
 Outputs:
 - Coherence resonance report (NOT "proof steps")
-- Global coherence Ψ ≈ 0.999999 (system resonating)
+- Global coherence Ψ only when a finite Step 5 measurement is available
 - Frequency manifestation f₀ = 141.7001 Hz (observable)
 - Mathematical coherence certificate (if --save-certificate)
 """
@@ -98,6 +100,8 @@ import argparse
 import csv
 import json
 import os
+import math
+import re
 import subprocess
 import time
 from datetime import datetime
@@ -173,7 +177,10 @@ def generate_primes_upto(limit: int):
 
 
 def run_calibrated_explicit_formula_audit(max_zeros: int, max_primes: int, precision: int):
-    """Run calibrated explicit-formula audit with Gaussian zero smoothing."""
+    """Measure raw numerical residuals, without fitted tail compensation.
+
+    This finite numerical diagnostic is not evidence of an RH proof.
+    """
     from validate_explicit_formula import weil_explicit_formula
 
     zeros_used = max(100, min(max_zeros, 1000))
@@ -194,7 +201,7 @@ def run_calibrated_explicit_formula_audit(max_zeros: int, max_primes: int, preci
         apply_gaussian_zero_weight=True,
         zero_weight_sigma=sigma,
         min_zeros_for_convergence=100,
-        apply_tail_compensation=True,
+        apply_tail_compensation=False,
     )
 
     return {
@@ -204,10 +211,79 @@ def run_calibrated_explicit_formula_audit(max_zeros: int, max_primes: int, preci
         "left_side": float(left),
         "right_side": float(right),
         "absolute_error": float(error),
-        "relative_error_calibrated": float(rel_error),
+        "relative_error_raw": float(rel_error),
+        "tail_compensation_applied": False,
         "target_relative_error": 0.05,
-        "criterion_passed": float(rel_error) <= 0.05,
+        "criterion_passed": math.isfinite(float(rel_error)) and float(rel_error) <= 0.05,
     }
+
+
+def step5_coherence_evidence(qcal_results) -> dict:
+    """Return only measured Step 5 coherence; missing/nonfinite values fail."""
+    raw = getattr(qcal_results, "step5_coherence", None)
+    source = "utils.qcal_coherence_integration.step5_coherence"
+    try:
+        value = float(raw) if raw is not None else None
+    except (TypeError, ValueError, OverflowError):
+        value = None
+    available = value is not None and math.isfinite(value)
+    return {
+        "psi": value if available else None,
+        "source": source,
+        "status": "AVAILABLE" if available else "UNAVAILABLE",
+        "reason": None if available else "Missing, invalid or nonfinite Step 5 measurement",
+        "threshold": 0.888,
+        "passed": available and value >= 0.888,
+    }
+
+
+def summarize_final_results(results: dict, required_checks) -> dict:
+    """Fail closed on required evidence; optional skipped diagnostics may skip.
+
+    Every explicit FAILED check, even a diagnostic, propagates to final failure.
+    Optional PARTIAL/SKIPPED diagnostics do not establish proof completeness.
+    """
+    unmet = [name for name in required_checks if results.get(name, {}).get("status") != "PASSED"]
+    failed = sum(r.get("status") == "FAILED" for r in results.values())
+    return {
+        "success": not unmet and failed == 0,
+        "required_checks": list(required_checks),
+        "unmet_required_checks": unmet,
+        "summary": {
+            "passed": sum(r.get("status") == "PASSED" for r in results.values()),
+            "failed": failed,
+            "skipped": sum(r.get("status") == "SKIPPED" for r in results.values()),
+            "partial": sum(r.get("status") == "PARTIAL" for r in results.values()),
+            "total": len(results),
+        },
+    }
+
+
+def sat_satisfaction_evidence(validator, integrity_results: list) -> list:
+    """Separate SAT consistency from actual latest compiled, sorry-free evidence."""
+    # The shared selector tolerates unreadable files. V5 cannot replace corrupt
+    # latest evidence with an older certificate and claim required satisfaction.
+    for path in validator.certificates_dir.glob("SAT_*.json"):
+        if not validator.load_certificate(path).get("theorem_name"):
+            raise ValueError(f"SAT certificate missing theorem_name: {path}")
+    by_theorem = {r["theorem"]: r for r in integrity_results}
+    evidence = []
+    for path in validator._select_certificate_files():
+        cert = validator.load_certificate(path)
+        formula = cert.get("sat_formula", {})
+        variables = formula.get("variables", {})
+        integrity = by_theorem.get(cert.get("theorem_name"), {}).get("all_checks_passed") is True
+        satisfied = (
+            integrity and formula.get("satisfied") is True
+            and bool(variables) and all(value is True for value in variables.values())
+            and variables.get("theorem_compiles") is True
+            and variables.get("no_sorry") is True
+            and cert.get("verification", {}).get("compilation", {}).get("compiles") is True
+            and cert.get("proof_status", {}).get("sorry_count") == 0
+        )
+        evidence.append({"theorem": cert.get("theorem_name"), "path": str(path),
+                         "integrity_passed": integrity, "satisfied": satisfied})
+    return evidence
 
 
 def compute_141hz_reproducibility_metrics(
@@ -312,28 +388,36 @@ def build_ab_operational_report(
     spectral_metrics = compute_141hz_reproducibility_metrics(
         repo_root / "tests" / "data" / "qcal_spectrum_141hz.csv"
     )
-    psi_value_raw = getattr(qcal_results, "step5_coherence", 0.888) if qcal_results else 0.888
-    try:
-        psi_value = float(psi_value_raw) if psi_value_raw is not None else 0.0
-    except (TypeError, ValueError):
-        psi_value = 0.0
-    psi_threshold = 0.888
-    psi_passed = psi_value >= psi_threshold
+    psi_evidence = step5_coherence_evidence(qcal_results)
+    psi_passed = psi_evidence["passed"]
 
     explicit_audit = results.get("Calibrated Explicit Formula Audit", {})
     spectral_theorem = results.get("Spectral Identification Theorem", {})
     sat_audit = results.get("SAT Certificates Verification", {})
 
-    explicit_rel = explicit_audit.get("relative_error_calibrated")
+    explicit_rel = explicit_audit.get("relative_error_raw")
     spectral_match = spectral_theorem.get("match_rate")
     sat_total = sat_audit.get("certificates_validated")
-    sat_passed = sat_audit.get("certificates_passed")
+    sat_passed = sat_audit.get("certificates_satisfied")
+    axiom_audit = {}
+    for path in (target_lean_file, base_lean_file):
+        try:
+            axiom_audit[str(path)] = re.findall(r"^\s*axiom\s+(\w+)", path.read_text(), re.MULTILINE)
+        except OSError:
+            axiom_audit[str(path)] = None
+    compilation_verified = lean_check.get("status") == "PASSED"
+    formal_complete = (
+        compilation_verified
+        and all(count == 0 for count in placeholder_info["by_file"].values())
+        and all(axioms == [] for axioms in axiom_audit.values())
+    )
 
     numeric_closure_criterion_met = (
         explicit_rel is not None
         and spectral_match is not None
-        and float(explicit_rel) <= 0.05
-        and float(spectral_match) >= 0.90
+        and math.isfinite(float(explicit_rel)) and float(explicit_rel) <= 0.05
+        and math.isfinite(float(spectral_match)) and float(spectral_match) >= 0.90
+        and explicit_audit.get("tail_compensation_applied") is False
         and sat_total is not None
         and sat_passed is not None
         and int(sat_total) == 10
@@ -354,18 +438,14 @@ def build_ab_operational_report(
             ],
             "lean_check": lean_check,
             "placeholder_audit": placeholder_info,
-            "formal_completeness_criterion_met": (
-                lean_check.get("status") == "PASSED"
-                and placeholder_info.get("by_file", {}).get(str(target_lean_file), 1) == 0
-            ),
+            "compilation_verified": compilation_verified,
+            "axiom_audit": axiom_audit,
+            "conditional_on_axioms": any(bool(axioms) for axioms in axiom_audit.values()),
+            "formal_completeness_criterion_met": formal_complete,
         },
         "section_B_observational_reproducibility": {
             "spectral_metrics_141hz": spectral_metrics,
-            "psi_coherence": {
-                "psi": psi_value,
-                "threshold": psi_threshold,
-                "passed": psi_passed,
-            },
+            "psi_coherence": psi_evidence,
             "v5_step_status": {
                 "step1": results.get("Step 1: Axioms → Lemmas", {}).get("status"),
                 "step2": results.get("Step 2: Archimedean Rigidity", {}).get("status"),
@@ -374,7 +454,7 @@ def build_ab_operational_report(
                 "step4B": results.get("Step 4B: Weil-Guinand Localization", {}).get("status"),
                 "step5": results.get("Step 5: Coronación Integration", {}).get("status"),
             },
-            "calibrated_explicit_formula": explicit_audit,
+            "raw_explicit_formula": explicit_audit,
             "spectral_identification": {
                 "match_rate": spectral_match,
                 "target_minimum": 0.90,
@@ -387,10 +467,10 @@ def build_ab_operational_report(
         },
         "section_C_numeric_closure": {
             "explicit_formula_relative_error_le_5pct": (
-                explicit_rel is not None and float(explicit_rel) <= 0.05
+                explicit_rel is not None and math.isfinite(float(explicit_rel)) and float(explicit_rel) <= 0.05
             ),
             "spectral_match_rate_ge_90pct": (
-                spectral_match is not None and float(spectral_match) >= 0.90
+                spectral_match is not None and math.isfinite(float(spectral_match)) and float(spectral_match) >= 0.90
             ),
             "sat_10_of_10": (
                 sat_total is not None and sat_passed is not None
@@ -398,14 +478,12 @@ def build_ab_operational_report(
             ),
             "numeric_closure_criterion_met": numeric_closure_criterion_met,
         },
-        "formal_criterion_met": numeric_closure_criterion_met,
+        "formal_criterion_met": formal_complete,
+        "riemann_hypothesis_proven": False,
         "overall_passed": (
             spectral_metrics["reproducibility_passed"]
             and psi_passed
-            and (
-                lean_check.get("status") == "PASSED"
-                or lean_check.get("status") == "SKIPPED"
-            )
+            and formal_complete
             and numeric_closure_criterion_met
         ),
     }
@@ -443,6 +521,7 @@ def validate_v5_coronacion(
     cert_dir = Path(sat_certificates_dir) if sat_certificates_dir is not None else Path('certificates/sat')
 
     # Verify environment integrity first
+    integrity_result = {"status": "FAILED", "error": "Integrity checker unavailable"}
     print("🔐 Verifying environment integrity...")
     try:
         import subprocess
@@ -450,7 +529,7 @@ def validate_v5_coronacion(
         script_path = Path(__file__).parent / 'verify_environment_integrity.py'
         
         if not script_path.exists():
-            print("   ⚠️  Environment integrity checker not found - skipping")
+            print("   ❌ Required environment integrity checker not found")
         else:
             result = subprocess.run(
                 [sys.executable, str(script_path)],
@@ -461,21 +540,18 @@ def validate_v5_coronacion(
             
             if result.returncode == 0:
                 print("   ✅ Environment integrity verified")
+                integrity_result = {"status": "PASSED", "returncode": 0}
             else:
-                # Warnings are acceptable (exit code 0 or 1 with warnings)
-                if "warning" in result.stdout.lower() and "error" not in result.stdout.lower():
-                    print("   ⚠️  Environment integrity verified with warnings")
-                    if verbose:
-                        print(f"      {result.stdout}")
-                else:
-                    print("   ❌ Environment integrity check failed")
-                    if verbose:
-                        print(result.stdout)
-                    print("   ⚠️  Continuing validation - results may not be fully reproducible")
+                integrity_result = {"status": "FAILED", "returncode": result.returncode,
+                                    "error": (result.stdout + result.stderr)[-4000:]}
+                print("   ❌ Environment integrity check failed")
+                if verbose:
+                    print(result.stdout)
     except FileNotFoundError:
-        print("   ⚠️  Environment integrity checker not found - skipping")
+        print("   ❌ Required environment integrity checker not found")
     except Exception as e:
-        print(f"   ⚠️  Environment integrity check error: {e} - skipping")
+        integrity_result["error"] = str(e)
+        print(f"   ❌ Required environment integrity check error: {e}")
     
     # Initialize logging
     logger = None
@@ -492,7 +568,7 @@ def validate_v5_coronacion(
     setup_precision(precision)
     
     print("=" * 80)
-    print("🏆 V5 CORONACIÓN: COMPLETE RIEMANN HYPOTHESIS PROOF VALIDATION")
+    print("🏆 V5 CORONACIÓN: NUMERICAL AND CONDITIONAL FORMAL VALIDATION")
     print("=" * 80)
     print(f"Timestamp: {datetime.now().isoformat()}")
     print(f"Precision: {precision} decimal places")
@@ -657,7 +733,7 @@ def validate_v5_coronacion(
     ]
     
     # Run validation steps
-    results = {}
+    results = {"Environment Integrity": integrity_result}
     all_passed = True
     
     print("🔍 RUNNING V5 CORONACIÓN VALIDATION STEPS...")
@@ -683,7 +759,7 @@ def validate_v5_coronacion(
             }
             print(f"   ✅ {step_name}: PASSED ({results[step_name]['execution_time']:.3f}s)")
             
-        except Exception as e:
+        except (Exception, PytestSkipped) as e:
             results[step_name] = {
                 'status': 'FAILED',
                 'error': str(e),
@@ -714,7 +790,7 @@ def validate_v5_coronacion(
             }
             print(f"   ✅ Stress: {test_name}: PASSED ({results[f'Stress: {test_name}']['execution_time']:.3f}s)")
             
-        except Exception as e:
+        except (Exception, PytestSkipped) as e:
             results[f"Stress: {test_name}"] = {
                 'status': 'FAILED',
                 'error': str(e),
@@ -753,8 +829,7 @@ def validate_v5_coronacion(
             # Skipped tests don't affect all_passed
             
         except Exception as e:
-            # Check if it's a pytest skip exception by other means
-            is_skipped = 'skip' in str(e).lower() or 'Skipped' in type(e).__name__
+            is_skipped = False
             results[f"Integration: {test_name}"] = {
                 'status': 'SKIPPED' if is_skipped else 'FAILED',
                 'error': str(e),
@@ -766,8 +841,8 @@ def validate_v5_coronacion(
             if not is_skipped:
                 all_passed = False
 
-    # Calibrated numerical explicit-formula audit
-    print("\n🧮 CALIBRATED EXPLICIT FORMULA AUDIT...")
+    # Legacy audit name retained for consumers; its evidence is now uncompensated.
+    print("\n🧮 RAW EXPLICIT FORMULA AUDIT (NO TAIL COMPENSATION)...")
     try:
         calibrated_audit = run_calibrated_explicit_formula_audit(
             max_zeros=max_zeros,
@@ -775,12 +850,12 @@ def validate_v5_coronacion(
             precision=precision,
         )
         results["Calibrated Explicit Formula Audit"] = {
-            "status": "PASSED" if calibrated_audit["criterion_passed"] else "PARTIAL",
+            "status": "PASSED" if calibrated_audit["criterion_passed"] else "FAILED",
             **calibrated_audit,
         }
         print(
             f"   {'✅' if calibrated_audit['criterion_passed'] else '⚠️'} "
-            f"Relative error (calibrated): {calibrated_audit['relative_error_calibrated']:.6%} "
+            f"Relative error (raw): {calibrated_audit['relative_error_raw']:.6%} "
             f"(target ≤ {calibrated_audit['target_relative_error']:.0%})"
         )
         print(f"   Zeros used: {calibrated_audit['zeros_used']} | σ: {calibrated_audit['zero_weight_sigma']:.2f}")
@@ -791,30 +866,10 @@ def validate_v5_coronacion(
             "error": str(e),
         }
     
-    # Final summary
-    print("\n" + "=" * 80)
-    
+    # Provisional counters only; final counters are recomputed after every check.
     passed_count = sum(1 for r in results.values() if r['status'] == 'PASSED')
     failed_count = sum(1 for r in results.values() if r['status'] == 'FAILED')
     skipped_count = sum(1 for r in results.values() if r['status'] == 'SKIPPED')
-    
-    print(f"📊 VALIDATION SUMMARY:")
-    print(f"   ✅ Passed: {passed_count}")
-    print(f"   ❌ Failed: {failed_count}")
-    print(f"   ⏭️  Skipped: {skipped_count}")
-    print(f"   📊 Total: {len(results)}")
-    
-    if all_passed and failed_count == 0:
-        print("\n🏆 V5 CORONACIÓN VALIDATION: COMPLETE SUCCESS!")
-        print("   ✨ The Riemann Hypothesis proof framework is fully verified!")
-        print("   📜 All axioms reduced to proven lemmas")
-        print("   🔬 Archimedean factor uniquely determined")  
-        print("   🎯 Paley-Wiener uniqueness established")
-        print("   📍 Zero localization proven via dual routes")
-        print("   👑 Complete coronación integration successful")
-    else:
-        print(f"\n⚠️  V5 CORONACIÓN VALIDATION: PARTIAL SUCCESS")
-        print(f"   Review {failed_count} failed components above for details.")
     
     # --- YOLO Verification Integration -------------------------------------------
     print("\n🚀 RUNNING YOLO VERIFICATION...")
@@ -1193,39 +1248,8 @@ def validate_v5_coronacion(
 
     print("=" * 80)
     
-    # Create proof certificate if requested
+    # Certificates are written only after all required and supplemental checks.
     certificate = None
-    if save_certificate:
-        try:
-            certificate = test_instance._generate_v5_proof_certificate()
-            certificate_data = {
-                'timestamp': datetime.now().isoformat(),
-                'precision': precision,
-                'validation_results': results,
-                'proof_certificate': certificate,
-                'riemann_hypothesis_status': 'PROVEN' if all_passed and failed_count == 0 else 'PARTIAL',
-                'qcal_coherence_integration': {
-                    'active': qcal_integration_active,
-                    'step4_coherence': qcal_results.step4_coherence if qcal_results else None,
-                    'step5_coherence': qcal_results.step5_coherence if qcal_results else None,
-                    'h_matrix_asymmetry': qcal_results.h_matrix_asymmetry if qcal_results else None,
-                    'harmonic_modulation_applied': qcal_results.harmonic_modulation_applied if qcal_results else False,
-                    'coherence_method': qcal_results.coherence_method_used if qcal_results else None,
-                    'seal_activated': qcal_results.seal_activated if qcal_results else False,
-                    'description': 'QCAL ∞³ coherence improvements with f₀=141.7001 Hz and ω=888 Hz injection'
-                }
-            }
-            
-            cert_file = artifact_dir / 'v5_coronacion_certificate.json'
-            cert_file.parent.mkdir(parents=True, exist_ok=True)
-            
-            with open(cert_file, 'w') as f:
-                json.dump(certificate_data, f, indent=2, default=str)
-            
-            print(f"📜 Mathematical proof certificate saved to: {cert_file}")
-            
-        except Exception as e:
-            print(f"⚠️  Warning: Could not save proof certificate: {e}")
     
     # --- Spectral Identification Theorem Validation ---------------------------
     print("\n🔬 SPECTRAL IDENTIFICATION THEOREM VERIFICATION...")
@@ -1250,7 +1274,7 @@ def validate_v5_coronacion(
         step5_positive = spectral_results['proof_results']['step5_weil_guinand_positivity']['Delta_positive']
         
         if proof_passed:
-            print(f"   ✅ Spectral identification: PROVEN")
+            print("   ✅ Spectral identification: NUMERICAL CRITERIA MET (NOT AN RH PROOF)")
             print(f"      Spectral correspondence match rate: {step1_match_rate:.2%}")
             print(f"      H_Ψ self-adjoint: ✓")
             print(f"      D(s) functional equation: ✓")
@@ -1260,7 +1284,8 @@ def validate_v5_coronacion(
                 'H_psi_self_adjoint': step2_adjoint,
                 'D_symmetric': step3_symmetric,
                 'Delta_positive': step5_positive,
-                'description': 'Three-layer spectral correspondence framework'
+                'riemann_hypothesis_proven': False,
+                'description': 'Finite numerical spectral correspondence diagnostic'
             }
         else:
             print(f"   ⚠️  Spectral identification: PARTIAL")
@@ -1298,21 +1323,23 @@ def validate_v5_coronacion(
         if cert_dir.exists() and list(cert_dir.glob('SAT_*.json')):
             print("   Validating SAT certificates for key theorems...")
             sat_results = sat_validator.validate_all_certificates()
-            
-            sat_passed = sum(1 for r in sat_results if r.get('all_checks_passed', False))
-            sat_total = len(sat_results)
+            sat_evidence = sat_satisfaction_evidence(sat_validator, sat_results)
+            sat_passed = sum(r["satisfied"] for r in sat_evidence)
+            sat_total = len(sat_evidence)
             
             results["SAT Certificates Verification"] = {
-                'status': 'PASSED' if sat_passed == sat_total else 'PARTIAL',
+                'status': 'PASSED' if sat_total == 10 and sat_passed == 10 else 'FAILED',
                 'certificates_validated': sat_total,
-                'certificates_passed': sat_passed,
+                'certificates_passed': sum(r["integrity_passed"] for r in sat_evidence),
+                'certificates_satisfied': sat_passed,
+                'satisfaction_evidence': sat_evidence,
                 'execution_time': 0.0
             }
             
             if sat_passed == sat_total:
-                print(f"   ✅ SAT certificates: {sat_passed}/{sat_total} verified")
+                print(f"   ✅ SAT certificates: {sat_passed}/{sat_total} satisfied with compilation evidence")
             else:
-                print(f"   ⚠️  SAT certificates: {sat_passed}/{sat_total} verified")
+                print(f"   ❌ SAT certificates: {sat_passed}/{sat_total} satisfied with compilation evidence")
         else:
             print("   ℹ️  No SAT certificates found - run scripts/generate_sat_certificates.py")
             results["SAT Certificates Verification"] = {
@@ -1409,7 +1436,7 @@ def validate_v5_coronacion(
         )
         
         if all_pillars_pass:
-            print(f"   ✅ RH_PROVED: ALL PILLARS VERIFIED")
+            print("   ✅ RH_PROVED framework: NUMERICAL PILLAR CHECKS MET (NOT AN RH PROOF)")
             print(f"      Pillar 1 - Kernel Confinement: ✓ (||K||²_HS = {kernel_result.kernel_norm_squared:.4f})")
             print(f"      Pillar 2 - Hardy-Littlewood: ✓ ({density_result.zeros_on_critical_line} zeros)")
             print(f"      Pillar 3 - Guinand-Weil Bijection: ✓ ({trace_result.match_precision:.1%} match)")
@@ -1435,7 +1462,8 @@ def validate_v5_coronacion(
                     'no_leaks': trace_result.no_spectral_leaks,
                     'match_precision': trace_result.match_precision
                 },
-                'riemann_hypothesis_proven': all_pillars_pass,
+                'numeric_pillars_passed': all_pillars_pass,
+                'riemann_hypothesis_proven': False,
                 'description': '3 Pillars: Kernel Confinement + Hardy-Littlewood + Guinand-Weil'
             }
         else:
@@ -1470,13 +1498,11 @@ def validate_v5_coronacion(
             validate_trinity_for_critical_line
         )
 
-        # Get system coherence Ψ from QCAL results if available
-        # Use getattr with default to safely handle qcal_results structure
-        psi_raw = getattr(qcal_results, 'step5_coherence', 0.888) if qcal_results else 0.888
-        try:
-            psi = float(psi_raw) if psi_raw is not None else 0.888
-        except (TypeError, ValueError):
-            psi = 0.888
+        # This diagnostic must not manufacture an input from its own threshold.
+        trinity_psi_evidence = step5_coherence_evidence(qcal_results)
+        psi = trinity_psi_evidence["psi"]
+        if psi is None:
+            raise ValueError("Step 5 coherence unavailable; Trinity diagnostic cannot evaluate")
 
         # Validate Trinity for critical line zeros
         trinity_validation = validate_trinity_for_critical_line(
@@ -1495,7 +1521,7 @@ def validate_v5_coronacion(
         trinity_satisfied = trinity_validation['rh_condition_satisfied']
 
         if trinity_satisfied:
-            print(f"   ✅ TRINITY_QCAL: RH CONDITION SATISFIED")
+            print("   ✅ TRINITY_QCAL: NUMERICAL CONDITION SATISFIED (NOT AN RH PROOF)")
             print(f"      Trinity_QCAL = {trinity_result['trinity_qcal']:.9f}")
             print(f"      System Coherence: Ψ = {psi:.9f}")
             print(f"      Coherence Level: {trinity_result['coherence_level']}")
@@ -1667,7 +1693,7 @@ def validate_v5_coronacion(
         write_ab_operational_report(ab_report, report_file)
 
         results["A+B Operational Report"] = {
-            'status': 'PASSED' if ab_report.get("overall_passed") else 'PARTIAL',
+            'status': 'PASSED' if ab_report.get("overall_passed") else 'FAILED',
             'report_path': str(report_file),
             'formal_completeness': ab_report.get("formal_criterion_met", False),
             'spectral_reproducibility': ab_report["section_B_observational_reproducibility"]["spectral_metrics_141hz"]["reproducibility_passed"],
@@ -1685,6 +1711,62 @@ def validate_v5_coronacion(
             'error': str(e)[:200]
         }
     # -----------------------------------------------------------------------
+
+    psi_evidence = step5_coherence_evidence(qcal_results)
+    results["Step 5 Coherence Evidence"] = {
+        "status": "PASSED" if psi_evidence["passed"] else "FAILED",
+        "evidence": psi_evidence,
+    }
+    # Required: the six core steps, stress/integration tests, integrity, raw
+    # formula, spectral identification, SAT satisfaction, Step 5 and A+B.
+    # Other named extensions are optional diagnostics (not proof evidence).
+    required_checks = (
+        ["Environment Integrity"]
+        + [step["name"] for step in validation_steps]
+        + [f"Stress: {test['name']}" for test in stress_tests]
+        + [f"Integration: {test['name']}" for test in integration_tests]
+        + ["Calibrated Explicit Formula Audit", "Spectral Identification Theorem",
+           "SAT Certificates Verification", "Step 5 Coherence Evidence", "A+B Operational Report"]
+    )
+    final = summarize_final_results(results, required_checks)
+    if save_certificate:
+        try:
+            # This is a validation artifact, not an unconditional RH certificate.
+            certificate = test_instance._generate_v5_proof_certificate()
+            if isinstance(certificate, dict):
+                certificate["riemann_hypothesis_proven"] = False
+                certificate["coronation_complete"] = False
+                certificate["validation_success"] = final["success"]
+            results["Certificate Persistence"] = {"status": "PASSED"}
+            final = summarize_final_results(results, required_checks + ["Certificate Persistence"])
+            certificate_data = {
+                "timestamp": datetime.now().isoformat(), "precision": precision,
+                "validation_results": results, "proof_certificate": certificate,
+                "success": final["success"], "summary": final["summary"],
+                "required_checks": final["required_checks"],
+                "unmet_required_checks": final["unmet_required_checks"],
+                "riemann_hypothesis_status": "NOT_PROVEN",
+                "qcal_coherence_integration": {
+                    "active": qcal_integration_active, "step5_evidence": psi_evidence,
+                },
+            }
+            cert_file = artifact_dir / "v5_coronacion_certificate.json"
+            cert_file.parent.mkdir(parents=True, exist_ok=True)
+            with open(cert_file, "w") as f:
+                json.dump(certificate_data, f, indent=2, default=str, allow_nan=False)
+            print(f"📜 Validation certificate saved to: {cert_file}")
+        except Exception as e:
+            results["Certificate Persistence"] = {"status": "FAILED", "error": str(e)}
+            final = summarize_final_results(results, required_checks + ["Certificate Persistence"])
+            print(f"❌ Could not save validation certificate: {e}")
+    passed_count = final["summary"]["passed"]
+    failed_count = final["summary"]["failed"]
+    skipped_count = final["summary"]["skipped"]
+    all_passed = final["success"]
+    print(f"\n📊 FINAL VALIDATION SUMMARY: {final['summary']}")
+    print(f"   Unmet required checks: {final['unmet_required_checks']}")
+    print("   Validation: " + ("PASSED" if final["success"] else "FAILED"))
+    print("   Numerical diagnostics and conditional Lean statements do not prove RH.")
     
     # Save validation results to CSV for comparison with notebook
     try:
@@ -1723,19 +1805,17 @@ def validate_v5_coronacion(
             logger.finalize("partial")
     
     return {
-        'success': all_passed and failed_count == 0,
+        'success': final["success"],
+        'required_checks': final["required_checks"],
+        'unmet_required_checks': final["unmet_required_checks"],
         'results': results,
         'certificate': certificate,
-        'summary': {
-            'passed': passed_count,
-            'failed': failed_count,
-            'skipped': skipped_count,
-            'total': len(results)
-        },
+        'summary': final["summary"],
         'qcal_coherence': {
             'active': qcal_integration_active,
             'step4_coherence': qcal_results.step4_coherence if qcal_results else None,
-            'step5_coherence': qcal_results.step5_coherence if qcal_results else None,
+            'step5_coherence': psi_evidence["psi"],
+            'step5_evidence': psi_evidence,
             'seal_activated': qcal_results.seal_activated if qcal_results else False,
             'improvements_active': qcal_results.improvements_active if qcal_results else False
         },
