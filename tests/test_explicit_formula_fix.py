@@ -14,7 +14,126 @@ import os
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from validate_explicit_formula import weil_explicit_formula
-from utils.mellin import truncated_gaussian
+from utils.mellin import truncated_gaussian, gaussian_fourier_pair
+
+
+def test_gaussian_pair_against_independent_integrals() -> None:
+    """Check angular frequency, normalization, and analytic continuation."""
+    with mp.workdps(35):
+        g, h = gaussian_fourier_pair(mp.mpf("0.7"))
+        for t in (mp.mpf("1.3"), -mp.mpf("1.3"), mp.j / 2, -mp.j / 2):
+            reference = mp.quad(lambda u: mp.exp(-mp.mpf("0.7") * u**2 + mp.j * t * u),
+                                [-mp.inf, 0, mp.inf])
+            assert abs(h(t) - reference) < mp.mpf("1e-30")
+        assert g(2) == mp.exp(-mp.mpf("2.8"))
+        for scale in (0, -1, mp.inf):
+            with pytest.raises(ValueError, match="scale"):
+                gaussian_fourier_pair(scale)
+
+
+def test_even_weil_gaussian_independent_components() -> None:
+    """Reference arch integral uses the digamma Laplace representation.
+
+    Interchanging its integral with the Fourier inversion gives
+    A=-EulerGamma-log(pi)+∫(e^-v-e^-v/4*g(v/2))/(1-e^-v)dv,
+    independently of the spectral quadrature used by the implementation.
+    """
+    with mp.workdps(35):
+        g, h = gaussian_fourier_pair()
+        arch = -mp.euler - mp.log(mp.pi) + mp.quad(
+            lambda v: (mp.exp(-v) - mp.exp(-v/4 - v*v/4)) / (-mp.expm1(-v)),
+            [0, 1, 5, mp.inf],
+        )
+        assert abs(arch - mp.mpf("-2.52514914140767058531567678556")) < mp.mpf("1e-29")
+        # No zeros: isolate poles+A; do not use the tested h for reference poles.
+        poles = 2 * mp.sqrt(mp.pi) * mp.exp(mp.mpf(1) / 16)
+        result = weil_explicit_formula([], [2], g, 0, t_max=30, precision=35,
+                                       spectral_transform=h, max_prime_power=1)
+        prime = 2 * mp.log(2) / mp.sqrt(2) * mp.exp(-mp.log(2)**2)
+        assert abs(result[2] - (poles + arch)) < mp.mpf("1e-29")
+        assert abs(result[3] - prime) < mp.mpf("1e-30")
+        # Artificial positive ordinates isolate both ± signs, not zero accuracy.
+        paired = weil_explicit_formula([2], [2], g, 1, t_max=30, precision=35,
+                                       spectral_transform=h, max_prime_power=1)
+        assert paired[4] == [2]  # Caller input is not silently replaced by a file.
+        assert abs(result[2] - paired[2] - 2 * mp.sqrt(mp.pi) / mp.e) < mp.mpf("1e-30")
+        assert paired[0] == abs(paired[2] - paired[3])
+
+
+def test_even_weil_prime_powers_have_no_hidden_caps() -> None:
+    """Check every supplied prime and power with an analytic Gaussian sum."""
+    with mp.workdps(30):
+        g, h = gaussian_fourier_pair(mp.mpf("0.1"))
+        from sympy import primerange
+        primes = list(primerange(2, 601))
+        result = weil_explicit_formula([], primes, g, 0, t_max=20, precision=30,
+                                       spectral_transform=h, max_prime_power=5)
+        reference = 2 * mp.fsum(
+            mp.log(p) * mp.power(p, -mp.mpf(k)/2) *
+            mp.exp(-mp.mpf("0.1") * (k * mp.log(p))**2)
+            for p in primes for k in range(1, 6)
+        )
+        assert abs(result[3] - reference) < mp.mpf("1e-27")
+
+
+def test_generic_time_transform_uses_centered_angular_frequency() -> None:
+    """The generic path agrees with a full analytic Gaussian at finite T.
+
+    Here |u|>8 contributes below 1e-26 at the tested real/complex arguments;
+    this is a numerical comparison, not a certified bound for arbitrary g.
+    """
+    with mp.workdps(25):
+        def reference_h(t: mp.mpf) -> mp.mpf:
+            """Independent closed-form Gaussian transform for finite quadrature."""
+            return mp.sqrt(mp.pi) * mp.exp(-t*t/4)
+
+        expected_arch = mp.quad(
+            lambda t: reference_h(t) *
+            (mp.re(mp.digamma(mp.mpf("0.25") + mp.j*t/2)) - mp.log(mp.pi)),
+            [-3, -1, 0, 1, 3],
+        ) / (2 * mp.pi)
+        expected_left = 2*mp.sqrt(mp.pi)*mp.exp(mp.mpf(1)/16) + expected_arch \
+            - 2*mp.sqrt(mp.pi)*mp.exp(-mp.mpf(1))
+        result = weil_explicit_formula([2], [2], lambda u: mp.exp(-u*u), 1,
+                                       precision=25, lim_u=8, t_max=3, max_prime_power=1)
+        assert abs(result[2] - expected_left) < mp.mpf("1e-22")
+
+
+def test_even_weil_residual_reduces_with_independent_limits() -> None:
+    """Finite convergence examples are not a guarantee or an RH proof."""
+    from sympy import primerange
+
+    with mp.workdps(30):
+        g, h = gaussian_fourier_pair(10)
+        zeros = [mp.im(mp.zetazero(n)) for n in range(1, 9)]
+
+        def audit(n: int, bound: int, cutoff: int, powers: int) -> mp.mpf:
+            """Return the uncompensated residual at the stated finite limits."""
+            return weil_explicit_formula(
+                zeros, list(primerange(2, bound + 1)), g, n, t_max=cutoff,
+                precision=30, spectral_transform=h, max_prime_power=powers,
+            )[0]
+
+        assert audit(1, 100, 60, 20) > audit(3, 100, 60, 20) > audit(8, 100, 60, 20)
+        assert audit(8, 100, 10, 20) > audit(8, 100, 20, 20) > audit(8, 100, 60, 20)
+        assert audit(8, 2, 60, 1) > audit(8, 2, 60, 2) > audit(8, 100, 60, 20)
+        assert audit(8, 100, 60, 20) < mp.mpf("1e-20")
+        # A wider g gives measurable prime truncation at much larger bounds.
+        g, h = gaussian_fourier_pair()
+        assert audit(8, 2, 60, 20) > audit(8, 20, 60, 20) > audit(8, 100, 60, 20)
+
+
+def test_legacy_calibration_cannot_erase_residual() -> None:
+    """Obsolete options cannot manufacture proof evidence."""
+    g, h = gaussian_fourier_pair()
+    arguments = dict(zeros=[], primes=[2], f=g, max_zeros=0, precision=30,
+                     spectral_transform=h, max_prime_power=1)
+    raw = weil_explicit_formula(**arguments)
+    with pytest.warns(DeprecationWarning, match="circular"):
+        deprecated = weil_explicit_formula(**arguments, apply_tail_compensation=True)
+    assert raw == deprecated and raw[0] > mp.mpf("0.6")
+    with pytest.raises(ValueError, match="Zeros-only"):
+        weil_explicit_formula(**arguments, apply_gaussian_zero_weight=True)
 
 
 def test_explicit_formula_massive_discrepancy_fix():

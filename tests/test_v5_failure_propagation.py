@@ -5,6 +5,7 @@ from pathlib import Path
 from types import SimpleNamespace
 
 import pytest
+import mpmath as mp
 
 import validate_v5_coronacion as v5
 from scripts.validate_sat_certificates import SATCertificateValidator
@@ -91,6 +92,10 @@ def test_raw_formula_audit_does_not_fit_residual(monkeypatch) -> None:
 
     def formula(**kwargs):
         assert kwargs["apply_tail_compensation"] is False
+        assert kwargs["apply_gaussian_zero_weight"] is False
+        assert kwargs["max_zeros"] == 5  # No hidden convergence floor.
+        assert abs(kwargs["spectral_transform"](mp.j / 2) -
+                   mp.sqrt(mp.pi) * mp.exp(mp.mpf(1) / 16)) < mp.mpf("1e-20")
         return 10, 0.75, 2, 12, [1]
 
     monkeypatch.setattr(explicit, "weil_explicit_formula", formula)

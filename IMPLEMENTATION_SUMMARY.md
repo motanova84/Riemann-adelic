@@ -2346,3 +2346,109 @@ existentes conservan deuda de lint previa (645 avisos frente a 652 en la base,
 sin categorías de infracción nuevas). `git diff --check` pasó.
 No se verificó el workflow remoto `auto_evolution.yml`, ni se invocaron servicios
 MCP/Trinity externos o QCAL-CLOUD.
+
+### Fórmula explícita par: normalización y residuo independiente (2026-10-11)
+
+`weil_explicit_formula` usa ahora **g=f en el dominio temporal**, real y par,
+y la convención angular
+`h(t)=∫ℝ g(u) exp(i t u) du`. Con esta convención:
+
+```text
+Σ_{±γ} h(γ) = h(i/2) + h(-i/2)
+             + (1/2π)∫ℝ h(t)[Re ψ(1/4+it/2) − log π] dt
+             − 2Σ_{p,k} log(p) p^(−k/2) g(k log p).
+```
+
+La tupla histórica de cinco elementos devuelve las caras equivalentes
+`left=poles+arch−zeros`, `right=2*prime_sum`, su diferencia absoluta y
+`error/abs(right)` (infinito si `right=0`), además de las ordenadas positivas.
+Cada ordenada aporta ambos signos, con multiplicidad. Si el llamador proporciona
+ordenadas se respetan, sin sustituirlas ni rellenarlas con datos del archivo;
+solamente una entrada vacía activa la carga de `zeros/zeros_t1e8.txt`.
+Este archivo contiene números redondeados: aumentar dps no aumenta su exactitud.
+`t_max` y `max_prime_power` son límites efectivos explícitos, sin los anteriores
+recortes ocultos de integración, número de primos o tamaño de potencias.
+
+`utils.mellin.gaussian_fourier_pair` proporciona
+`g(u)=exp(−a u²)` y `h(t)=sqrt(π/a) exp(−t²/(4a))`, también para polos complejos.
+La ruta genérica integra `2∫₀^lim_u g(u)cos(tu)du`; presupone soporte contenido
+en ese intervalo, o acepta su error de truncamiento. Para una gaussiana sin
+soporte compacto debe suministrarse el transformado analítico. Las utilidades
+Mellin y los otros modos históricos de fórmula no cambian de convención.
+
+V5 usa la pareja analítica con `a=1` en **todos** los términos. No aplica una
+segunda gaussiana solamente a los ceros. Esa opción obsoleta ahora produce
+`ValueError` explicativo. `apply_tail_compensation=True` se conserva como
+argumento de compatibilidad, pero advierte que el ajuste es circular y devuelve
+siempre el residuo bruto; ningún resultado calibrado establece evidencia.
+El nombre histórico `run_calibrated_explicit_formula_audit` tampoco implica
+calibración. Sus metadatos registran convención, límites y alcance numérico.
+
+Comprobaciones independientes:
+
+- La pareja gaussiana se compara con la integral directa, incluidos `±i/2`.
+- Para `a=1`, los polos suman `3.77353460595308714641729580475`.
+- La representación de Laplace de digamma, independiente de la cuadratura
+  espectral implementada, da
+  `A=−EulerGamma−log π+∫₀∞[exp(−v)−exp(−v/4)g(v/2)]/(1−exp(−v))dv`
+  y `A=−2.52514914140767058531567678556`.
+- Se verifican ambos signos, la frecuencia angular, el peso orbital,
+  más de 100 primos y las potencias sin recortes ocultos.
+- Se aumentan por separado ordenadas, límite archimediano y límites aritméticos.
+  No se fabrican colas a partir de la diferencia entre caras.
+
+Ejemplo finito con `a=10`, ordenadas calculadas mediante `mp.zetazero` y 30 dps:
+
+| Ordenadas positivas | Primos ≤ | T | k ≤ | Residuo absoluto bruto |
+|---:|---:|---:|---:|---:|
+| 1 | 2 | 20 | 1 | 1.5991×10⁻⁵ |
+| 5 | 20 | 40 | 5 | 5.1431×10⁻¹⁶ |
+| 15 | 100 | 60 | 20 | aproximadamente 1.1×10⁻³¹ |
+
+Son ejemplos de convergencia numérica, **no cotas certificadas ni pruebas de RH**.
+La fórmula general contempla también ceros fuera de la recta crítica; evaluar
+sólo una lista de ordenadas en esa recta no demuestra su inexistencia.
+El puente `core/validate_weil_spectral_bridge.py` no fue usado como referencia:
+su término de polo y su ponderación exclusiva de ceros no corresponden a esta
+identidad. No se modificó ese diagnóstico independiente en este cambio.
+
+Archivos modificados: `validate_explicit_formula.py`, `utils/mellin.py`,
+`validate_v5_coronacion.py`, `tests/test_explicit_formula_fix.py`,
+`tests/test_v5_failure_propagation.py`, `tests/test_padic_zeta.py` y las dos
+documentaciones `IMPLEMENTATION_SUMMARY.md` y `FORMALIZATION_STATUS.md`.
+La regresión p-ádica exige ahora conservar las cinco ordenadas suministradas,
+en lugar de exigir al menos diez números cargados de otra fuente.
+
+Validación desde la raíz, con dependencias existentes restauradas localmente:
+
+- Pruebas dirigidas iniciales de fórmula/V5/rutas/colector:
+  **182 pasaron, 1 omitida, 1 fallo ajeno al cambio**.
+- Revalidación final de los tres archivos de pruebas modificados:
+  **39 pasaron** (incluida la nueva comprobación del transformado genérico).
+- En total se observaron **206 pruebas distintas satisfactorias**. Persisten
+  dos fallos preexistentes, sin reescribir sus aserciones:
+  `test_explicit_formula_with_many_zeros` en el operador independiente
+  (`relative_error=1`, repetido aisladamente) y
+  `test_p_adic_zeta_approx_function` (la definición posterior de
+  `zeta_p_approx` devuelve el mismo valor para distintos primos).
+- Colección completa acotada: **13143 pruebas**, detenida por cuatro errores
+  preexistentes: faltan `EmotionalObserver`, `Node`,
+  `predict_mutation_stability` y la constante `EPSILON_OSC`.
+- Ejecución real
+  `validate_v5_coronacion.py --precision 30 --save-certificate --output-dir artifacts/math-next-step/v5`
+  en 43.79 s, código **1**. El residuo explícito es **9.2216×10⁻²¹**
+  (relativo **7.3868×10⁻²¹**), con 1000 ordenadas tabuladas, primos ≤1000,
+  potencias ≤20 y T=50. La ejecución conserva cuatro fallos requeridos:
+  integridad del entorno/checksums, SAT (10 consistentes pero 0 satisfechos),
+  Step 5 no disponible y reporte A+B.
+- El certificado aislado mantiene `success=false` y
+  `riemann_hypothesis_status="NOT_PROVEN"`; el reporte A+B mantiene
+  `overall_passed=false` y `riemann_hypothesis_proven=false`.
+- El instalador estándar de elan funcionó; instalar el pin Lean 4.5.0 falló
+  por DNS de `release.lean-lang.org`, sin alternativas de descarga ni cambios
+  de pins. No se afirma compilación Lean ni éxito del CI remoto.
+- Los hashes SHA-256 de beacon, datos, certificados y workflows protegidos
+  permanecieron intactos. Logs y artefactos están en `artifacts/math-next-step/`.
+- La sintaxis Python y `git diff --check` pasan. Flake8 conserva deuda previa:
+  **543 avisos frente a 565 en la base**, sin categorías aumentadas. No se
+  presenta ese resultado como una aprobación completa de calidad del repositorio.

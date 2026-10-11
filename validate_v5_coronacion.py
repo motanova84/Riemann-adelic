@@ -176,38 +176,42 @@ def generate_primes_upto(limit: int):
     return primes
 
 
-def run_calibrated_explicit_formula_audit(max_zeros: int, max_primes: int, precision: int):
+def run_calibrated_explicit_formula_audit(max_zeros: int, max_primes: int, precision: int) -> dict:
     """Measure raw numerical residuals, without fitted tail compensation.
 
     This finite numerical diagnostic is not evidence of an RH proof.
     """
     from validate_explicit_formula import weil_explicit_formula
+    from utils.mellin import gaussian_fourier_pair
 
-    zeros_used = max(100, min(max_zeros, 1000))
-    prime_bound = max(100, min(max_primes, 2000))
+    zeros_used = max_zeros
+    prime_bound = max_primes
     primes = generate_primes_upto(prime_bound)
-    sigma = max(50.0, float(np.sqrt(zeros_used)) * 8.0)
-
-    def test_f(z):
-        return mp.exp(-abs(z) ** 2)
+    test_g, test_h = gaussian_fourier_pair()
 
     error, rel_error, left, right, actual_zeros = weil_explicit_formula(
         zeros=[],
         primes=primes,
-        f=test_f,
+        f=test_g,
         max_zeros=zeros_used,
         t_max=50,
         precision=max(20, precision),
-        apply_gaussian_zero_weight=True,
-        zero_weight_sigma=sigma,
-        min_zeros_for_convergence=100,
+        apply_gaussian_zero_weight=False,
+        spectral_transform=test_h,
+        max_prime_power=20,
         apply_tail_compensation=False,
     )
 
     return {
         "zeros_used": len(actual_zeros),
         "primes_used_bound": prime_bound,
-        "zero_weight_sigma": sigma,
+        "zero_weight_sigma": None,
+        "gaussian_time_scale": 1.0,
+        "gaussian_zero_weight_applied": False,
+        "max_prime_power": 20,
+        "archimedean_cutoff": 50,
+        "fourier_convention": "h(t)=integral_R g(u) exp(i*t*u) du",
+        "evidence_scope": "finite critical-line numerical diagnostic, not an RH proof",
         "left_side": float(left),
         "right_side": float(right),
         "absolute_error": float(error),
@@ -858,7 +862,7 @@ def validate_v5_coronacion(
             f"Relative error (raw): {calibrated_audit['relative_error_raw']:.6%} "
             f"(target ≤ {calibrated_audit['target_relative_error']:.0%})"
         )
-        print(f"   Zeros used: {calibrated_audit['zeros_used']} | σ: {calibrated_audit['zero_weight_sigma']:.2f}")
+        print(f"   Positive ordinates used: {calibrated_audit['zeros_used']} | no zeros-only weighting")
     except Exception as e:
         print(f"   ⚠️  Calibrated explicit-formula audit skipped: {e}")
         results["Calibrated Explicit Formula Audit"] = {

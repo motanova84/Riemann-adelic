@@ -13,6 +13,8 @@ Add helper utilities if missing.
 """
 
 import itertools
+import warnings
+from typing import Callable, Iterable, Optional
 
 import mpmath as mp
 import numpy as np
@@ -371,146 +373,109 @@ def simulate_delta_s(max_zeros, precision=30, places=None):
     return eigenvalues, imaginary_parts, eigenvectors
 
 def weil_explicit_formula(
-    zeros,
-    primes,
-    f,
-    max_zeros,
-    t_max=50,
-    precision=30,
-    apply_gaussian_zero_weight=False,
-    zero_weight_sigma=120.0,
-    min_zeros_for_convergence=0,
-    apply_tail_compensation=False,
-):
-    """
-    Fixed implementation of the Weil explicit formula.
-    
-    Formula: sum over zeros f̂(ρ) + archimedean integral = sum over primes Λ(n)f(log n) + residue terms
-    
+    zeros: Optional[Iterable],
+    primes: Iterable[int],
+    f: Callable,
+    max_zeros: int,
+    t_max: float = 50,
+    precision: int = 30,
+    apply_gaussian_zero_weight: bool = False,
+    zero_weight_sigma: float = 120.0,
+    min_zeros_for_convergence: int = 0,
+    apply_tail_compensation: bool = False,
+    spectral_transform: Optional[Callable] = None,
+    lim_u: float = 5.0,
+    max_prime_power: int = 20,
+) -> tuple:
+    r"""Audit the even real Guinand-Weil formula without fitted remainders.
+
+    With g=f and h(t)=∫_R g(u)exp(itu)du, the convention is
+    ∑_{±γ}h(γ) = h(i/2)+h(-i/2) + A - 2∑_{p,k}log(p)p^{-k/2}g(k log p),
+    A=(1/2π)∫_R h(t)(Re ψ(1/4+it/2)-log π)dt.
+    The returned sides rearrange this as poles+A-∑h = 2∑prime terms.
+    This is a finite diagnostic using critical-line ordinates, not a proof
+    that all nontrivial zeros lie on that line (nor a rigorous tail bound).
+
     Args:
-        zeros: list of non-trivial zeros (will be loaded from file instead)
-        primes: list of prime numbers  
-        f: test function (e.g., truncated_gaussian)
-        max_zeros: maximum number of zeros to use
-        t_max: integration limit for archimedean integral
-        precision: mpmath precision in decimal places
-        apply_gaussian_zero_weight: apply exp(-γ²/(2σ²)) smoothing to zero sum
-        zero_weight_sigma: Gaussian smoothing sigma for zero weights
-        min_zeros_for_convergence: enforce minimum number of zeros used
-        apply_tail_compensation: apply principal-value tail compensation to truncated sum
-    
+        zeros: Positive ordinates, counted with multiplicity. If empty, load
+            zeros/zeros_t1e8.txt (rounded tabulated inputs, not dps-accurate).
+        primes: All supplied primes are included; no hidden count/bound cap.
+        f: Even real time-domain g, NOT its spectral transform h.
+        max_zeros: Number of positive ordinates used (both signs are summed).
+        t_max: Actual positive archimedean integration cutoff.
+        precision: Working decimal precision; ≥25 recommended.
+        apply_gaussian_zero_weight: Obsolete; True raises ValueError because
+            weighting only zeros changes the identity.
+        zero_weight_sigma: Retained for call compatibility, no effect.
+        min_zeros_for_convergence: Legacy floor, not a convergence guarantee.
+        apply_tail_compensation: Deprecated diagnostic warning only; raw
+            residuals are always returned, never calibrated closure.
+        spectral_transform: Matching entire h, if known analytically.
+            Otherwise integrate g on [-lim_u,lim_u], assuming compact support.
+        lim_u: Time-domain quadrature cutoff for the generic transform.
+        max_prime_power: Include powers 1 through this explicit positive limit.
+
     Returns:
-        (error, relative_error, left_side, right_side, actual_zeros_used)
+        (absolute residual, relative residual, left, right, positive ordinates).
+        Relative residual divides by abs(right), or is infinite if right=0.
+
+    Raises:
+        ValueError: Invalid limits, ordinates, primes, or zeros-only weighting.
+
+    Reference: Guinand-Weil explicit formula (Titchmarsh, Section 14.25).
+    Lean dependency: the analytic explicit-formula identity and certified tail
+    estimates are not supplied by this numerical quadrature.
     """
     mp.mp.dps = precision
-    
-    print("🔍 Debug explicit formula components:")
-    
-    # Load actual zeros from file instead of using simulated ones
-    actual_zeros = []
-    effective_max_zeros = max(int(max_zeros), int(min_zeros_for_convergence))
-    zeros_file = "zeros/zeros_t1e8.txt"
-    try:
-        with open(zeros_file, 'r') as zeros_file_handle:
-            for i, line in enumerate(zeros_file_handle):
-                if i >= effective_max_zeros:
-                    break
-                actual_zeros.append(float(line.strip()))
-        print(f"Loaded {len(actual_zeros)} zeros from file")
-    except FileNotFoundError:
-        print(f"Warning: {zeros_file} not found, using provided zeros")
-        actual_zeros = zeros[:effective_max_zeros] if zeros else []
-    
-    # LEFT SIDE: Sum over zeros using Mellin transform
-    zero_sum = mp.mpf('0')
-    for i, gamma in enumerate(actual_zeros):
-        if apply_gaussian_zero_weight:
-            weight = mp.exp(-(gamma ** 2) / (2 * (mp.mpf(zero_weight_sigma) ** 2)))
-        else:
-            weight = mp.mpf('1')
-        # Non-trivial zero: ρ = 1/2 + i*γ
-        rho = mp.mpc(0.5, gamma) 
-        # Mellin transform: f̂(s) = ∫ f(u) u^(s-1) du, but we use e^(su) form
-        f_hat_rho = mellin_transform(f, rho - 1, 5.0)
-        zero_sum += weight * f_hat_rho.real
-        if i < 3:  # Debug first few
-            print(f"  Zero γ={gamma}: f̂(ρ) = {f_hat_rho.real}, weight = {weight}")
-    print(f"Zero sum: {zero_sum}")
-    
-    # LEFT SIDE: Archimedean contribution (functional equation integral)
-    def arch_integrand(t):
-        s = mp.mpc(0.5, t)
-        f_hat_s = mellin_transform(f, s - 1, 5.0)
-        # Archimedean factor: d/ds[log(Gamma(s/2) * pi^(-s/2))] = (1/2)[psi(s/2) - log(pi)]
-        arch_kernel = 0.5 * (mp.digamma(s/2) - mp.log(mp.pi))
-        return (f_hat_s * arch_kernel).real
-    
-    # Use much smaller integration range to prevent divergence
-    T_limit = min(10.0, t_max/5)  # Much more conservative
-    try:
-        arch_integral = mp.quad(arch_integrand, [-T_limit, T_limit], maxdegree=4)
-        arch_integral = arch_integral / (2 * mp.pi)  # Proper normalization
-        
-        # Flip the sign of the functional equation integral as required by the Weil explicit formula.
-        # See, e.g., Edwards, "Riemann's Zeta Function", eq. (6.7.5), or Titchmarsh, "The Theory of the Riemann Zeta-function", Section 14.25.
-        arch_integral = -arch_integral
-    except:
-        arch_integral = mp.mpf('0')  # Fallback
-        print("Warning: Archimedean integral failed, using 0")
-    
-    print(f"Archimedean integral: {arch_integral}")
-    
-    # LEFT SIDE: Add pole term (residue at s=1)
-    pole_term = f(0)  # f evaluated at log(1) = 0
-    print(f"Pole term: {pole_term}")
-    
-    left_side = zero_sum + arch_integral + pole_term
-    
-    # RIGHT SIDE: Von Mangoldt sum over primes
-    prime_sum_val = mp.mpf('0')
-    prime_count = 0
-    for p in primes:
-        if prime_count >= 100:  # Limit for efficiency
-            break
-        log_p = mp.log(p)
-        # Include prime powers: Λ(p^k) = log(p) for prime powers
-        for k in range(1, min(4, int(50/p) + 1)):  # Adaptive limit
-            n = p**k 
-            if n > 1000:  # Don't go too high
-                break
-            contrib = log_p * f(k * log_p)
-            prime_sum_val += contrib
-            prime_count += 1
-            
-    print(f"Prime sum: {prime_sum_val}")
-    
-    # RIGHT SIDE: Residue term removed (now part of left side)
-    
-    # Remove sign flip - use standard form now that left side is corrected
-    right_side = prime_sum_val
-
-    error = abs(left_side - right_side)
-    relative_error = error / abs(right_side) if abs(right_side) > 0 else float('inf')
-
+    if apply_gaussian_zero_weight:
+        raise ValueError("Zeros-only Gaussian weighting is invalid; supply a matching g and h")
+    if t_max <= 0 or lim_u <= 0 or max_prime_power < 1 or max_zeros < 0:
+        raise ValueError("Require positive cutoffs/power limit and nonnegative zero count")
     if apply_tail_compensation:
-        tail_compensation = right_side - left_side
-        compensated_left = left_side + tail_compensation
-        compensated_error = abs(compensated_left - right_side)
-        compensated_relative_error = (
-            compensated_error / abs(right_side) if abs(right_side) > 0 else float('inf')
+        warnings.warn(
+            "Tail calibration is circular and excluded from evidence; returning raw residuals",
+            DeprecationWarning, stacklevel=2,
         )
-        print(f"Tail compensation (truncation closure): {tail_compensation}")
-        print(f"Compensated left side: {compensated_left}")
-        print(f"Compensated relative error: {compensated_relative_error}")
-        left_side = compensated_left
-        error = compensated_error
-        relative_error = compensated_relative_error
 
-    print(f"Left side (zeros+arch+pole): {left_side}")
-    print(f"Right side (primes): {right_side}")
-    print(f"Absolute error: {error}")
-    print(f"Relative error: {relative_error}")
+    effective_max_zeros = max(int(max_zeros), int(min_zeros_for_convergence))
+    actual_zeros = list(itertools.islice(zeros if zeros is not None else [], effective_max_zeros))
+    if not actual_zeros and effective_max_zeros:
+        with open("zeros/zeros_t1e8.txt", encoding="utf-8") as handle:
+            actual_zeros = [mp.mpf(line.strip()) for line in itertools.islice(handle, effective_max_zeros)]
+    actual_zeros = [mp.mpf(gamma) for gamma in actual_zeros]
+    if any(not mp.isfinite(gamma) or gamma <= 0 for gamma in actual_zeros):
+        raise ValueError("Provide positive finite ordinates; both signs are included internally")
 
+    def h(t: mp.mpc) -> mp.mpc:
+        """Evaluate the supplied pair or its even time-domain quadrature."""
+        if spectral_transform is not None:
+            return spectral_transform(t)
+        return 2 * mp.quad(lambda u: f(u) * mp.cos(t * u), [0, lim_u])
+
+    zero_sum = mp.fsum(h(gamma) + h(-gamma) for gamma in actual_zeros)
+
+    def arch_integrand(t: mp.mpf) -> mp.mpf:
+        """Real archimedean kernel under the angular-frequency convention."""
+        kernel = mp.re(mp.digamma(mp.mpf("0.25") + mp.j * t / 2)) - mp.log(mp.pi)
+        return mp.re(h(t)) * kernel
+
+    breaks = sorted({mp.mpf(0), mp.mpf(t_max), *(
+        mp.mpf(t) for t in (1, 5, 10, 20) if t < t_max
+    )})
+    arch_integral = mp.quad(arch_integrand, breaks) / mp.pi
+    pole_term = h(mp.j / 2) + h(-mp.j / 2)
+    left_side = mp.re(pole_term + arch_integral - zero_sum)
+
+    prime_terms = []
+    for p in primes:
+        if p < 2:
+            raise ValueError("Primes must be at least 2")
+        log_p = mp.log(p)
+        for k in range(1, max_prime_power + 1):
+            prime_terms.append(log_p * mp.exp(-k * log_p / 2) * f(k * log_p))
+    right_side = 2 * mp.fsum(prime_terms)
+    error = abs(left_side - right_side)
+    relative_error = error / abs(right_side) if right_side else mp.inf
     return error, relative_error, left_side, right_side, actual_zeros
 # --- Añadir funciones corregidas ---
 def fourier_gaussian(t, scale=1.0):

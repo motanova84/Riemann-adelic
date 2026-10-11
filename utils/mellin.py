@@ -9,6 +9,40 @@ import mpmath as mp
 from typing import Union, Callable
 from functools import lru_cache
 
+
+def gaussian_fourier_pair(scale: float = 1.0) -> tuple[Callable, Callable]:
+    r"""Return the even pair g(u)=exp(-scale*u²), h(t)=∫g(u)exp(itu)du.
+
+    Args:
+        scale: Positive Gaussian coefficient (real, finite).
+
+    Returns:
+        Callables (g, h); h accepts complex t, including the poles ±i/2.
+        The closed form sqrt(pi/scale)*exp(-t²/(4*scale)) avoids
+        oscillatory quadrature. Use at least 25 dps for numerical audits.
+
+    Raises:
+        ValueError: If scale is not positive and finite.
+
+    This Fourier pair uses angular frequency, not the exp(2*pi*i*t*u)
+    convention. It supplies one consistent test function to every term of
+    the Guinand-Weil formula; finite numerical agreement is not an RH proof.
+    """
+    scale = mp.mpf(scale)
+    if not mp.isfinite(scale) or scale <= 0:
+        raise ValueError("Gaussian scale must be positive and finite")
+
+    def g(u: mp.mpf) -> mp.mpf:
+        """Evaluate the time-domain Gaussian at real u."""
+        return mp.exp(-scale * u**2)
+
+    def h(t: Union[mp.mpf, mp.mpc]) -> Union[mp.mpf, mp.mpc]:
+        """Evaluate the entire Fourier transform, including complex poles."""
+        return mp.sqrt(mp.pi / scale) * mp.exp(-t**2 / (4 * scale))
+
+    return g, h
+
+
 def truncated_gaussian(u, a=5.0, sigma=1.0):
     """Smooth compactly supported Gaussian function - optimized for Weil formula."""
     if abs(u) > a:
@@ -184,4 +218,3 @@ def mellin_transform(f: Callable, s: mp.mpc, lim: float = 5.0) -> mp.mpc:
         # Catch-all with fallback
         mp.dprint(f"Unexpected error in mellin_transform: {e}")
         return mp.mpc('0')
-

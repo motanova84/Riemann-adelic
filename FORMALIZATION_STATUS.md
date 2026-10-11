@@ -1122,3 +1122,26 @@ Riemann Hypothesis via the adelic spectral approach.
 **Status**: ✅ MAJOR PROGRESS TOWARD FULL CONSTRUCTIVE FORMALIZATION  
 **Quality**: Production-ready skeleton with explicit constructions  
 **Next Steps**: Fill in remaining proofs and verify with Lean compiler
+
+## Numerical explicit-formula correction — 2026-10-11
+
+The Python audit now uses the even real pair
+`h(t)=∫ℝ g(u)exp(itu)du`, both signs of each supplied critical-line ordinate,
+the two poles `h(±i/2)`, the archimedean kernel
+`Re ψ(1/4+it/2)−log π` with measure `dt/(2π)`, and orbital weights
+`2 log(p)p^(−k/2)g(k log p)`. V5 uses an analytic Gaussian pair consistently
+on both sides, without zeros-only weighting or fitted tail closure.
+
+This correction is **numerical, not a new Lean theorem or a completed RH
+proof**. The reported finite residuals do not certify missing zeros, tail
+bounds, or localization of all nontrivial zeros. They do not discharge the
+existing analytic identity/localization assumptions or remaining placeholders.
+No protected Lean sources, axioms, proof structures or DOI references changed.
+See `IMPLEMENTATION_SUMMARY.md` for independent Gaussian anchors and limits.
+
+The standard elan installer was attempted successfully, but downloading the
+existing `leanprover/lean4:v4.5.0` pin failed because
+`release.lean-lang.org` could not be resolved. Therefore compilation remains
+unverified; no alternate pins or network workarounds were used. Actual V5
+validation fails required evidence checks and its isolated certificate retains
+`riemann_hypothesis_status="NOT_PROVEN"`.
