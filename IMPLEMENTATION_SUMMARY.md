@@ -1,6 +1,44 @@
 # QCAL Build Verification - Implementation Summary
 
-## V5: corrección de falsos éxitos (11 octubre 2026)
+## Verificación actual del entorno (11 octubre 2026)
+
+- Elan instalado por el procedimiento existente de `auto_evolution.yml`.
+  `elan toolchain install leanprover/lean4:v4.5.0` falla (salida 1) por DNS de
+  `release.lean-lang.org`; `elan toolchain list`: ninguno instalado. Descargas
+  detenidas, sin mirrors, clones directos ni bypass. No hubo compilación de
+  Colector ni auditoría real `#print axioms`; no se modificó fuente Lean.
+- Requisitos existentes restaurados con `python3 -m venv .validation-next/venv`
+  y `TMPDIR="$PWD/.validation-next/scratch" .validation-next/venv/bin/python
+  -m pip install --no-cache-dir -r requirements.txt`; `pip check` pasa.
+  Entorno Python 3.12.3, no validación de Python 3.11.
+- `.validation-next/venv/bin/python -m pytest tests/test_colector.py
+  tests/test_explicit_formula_fix.py tests/test_v5_failure_propagation.py
+  tests/test_v5_output_dir.py tests/test_environment_integrity.py -o addopts=''
+  --basetemp="$PWD/.validation-next/pytest" -q`: **161 pasan**, 12 avisos,
+  43.55 s. Flake8 de Colector, su test y las regresiones V5 de fallo/rutas pasa;
+  el test de fórmula conserva deuda lint preexistente. No se ejecutó toda la suite.
+- Ejecución real: `timeout 300s .validation-next/venv/bin/python
+  validate_v5_coronacion.py --precision 30
+  --output-dir "$PWD/.validation-next/v5" --save-certificate`.
+  Límites originales de 1000 ceros/primos; salida **1**, 46.56 s:
+  25 checks pasan, 4 fallan, 1 omitido y 1 parcial. Residuo crudo
+  `7.386846128200506e-21`, sin compensación; diagnóstico finito, no prueba de RH.
+  Bloqueos: integridad, SAT satisfecho/compilado 0/10, Ψ Step 5 ausente y A+B.
+  Certificado `success=false`, estado `NOT_PROVEN`, Ψ `null`/`UNAVAILABLE`.
+- Resultados reales aislados en `.validation-next/v5/`:
+  `v5_coronacion_certificate.json`, `qcal_ab_operational_report.json`,
+  `validation_results.csv` y logs. Instalación/tests en `.validation-next/logs/`;
+  entorno y resultados locales excluidos de Git, no subidos a QCAL-CLOUD.
+  SHA-256 de **2176 archivos protegidos** intactos.
+- `auto_evolution.yml` se inspeccionó, no se ejecutó ni se confirmó su estado
+  remoto. Docker responde (28.0.4), pero faltan ambas imágenes base locales;
+  no se construyeron contenedores ni se iniciaron servicios públicos.
+  El propietario debe autorizar acceso al toolchain/cache oficial, resolver
+  la procedencia de hashes existentes y aportar un destino autenticado antes
+  de despliegue. Los supuestos físicos y la localización crítica siguen
+  condicionales; no se certifica RH.
+
+## V5: corrección de falsos éxitos (histórico anterior, 11 octubre 2026)
 
 - `validate_v5_coronacion.py` conserva Ψ como `null`/`UNAVAILABLE` si falta
   la medición genuina de Step 5 o no es finita; no sustituye Step 4 ni el umbral.

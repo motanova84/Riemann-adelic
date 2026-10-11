@@ -10,12 +10,22 @@ axiomas y criterio numérico; una compilación omitida nunca satisface el gate.
 Los diez certificados SAT más recientes registran satisfacción falsa y carecen
 de evidencia positiva de compilación. Se mantienen intactos.
 
-El intento local del 11 octubre restauró Lean 4.5.0 desde release GitHub
-y dependencias en una copia aislada. El host del cache de Mathlib
-`lakecache.blob.core.windows.net` sigue sin resolución DNS; el intento real
-`lake env lean QCAL/Colector.lean` termina con salida 1 y
-`unknown package 'Mathlib'`. Los errores posteriores son cascada de imports
-ausentes, no verificación de los teoremas. Compilación sigue pendiente.
+**Último intento local (11 octubre 2026):** el instalador estándar de elan
+terminó correctamente, pero `elan toolchain install leanprover/lean4:v4.5.0`
+falló con salida 1: `Could not resolve host: release.lean-lang.org`.
+`elan toolchain list` confirma que no hay toolchains instalados. Se detuvieron
+las descargas, sin mirrors ni bypass; no se ejecutó el compilador ni se obtuvo
+salida de `#print axioms`. Los intentos anteriores descritos más abajo son
+históricos, no evidencia de compilación en este entorno.
+
+Prerrequisitos: acceso autorizado al servidor oficial, restauración de los
+paquetes del `lake-manifest.json` existente (Mathlib v4.5.0) mediante Lake y
+compilación directa de `QCAL/Colector.lean` con auditoría de sus dependencias.
+No se cambiaron axiomas ni configuración para simular ese resultado.
+La raíz `QCAL.lean` ausente y la biblioteca local `Mathlib` solapada requieren
+diagnóstico de build después de verificar el módulo directo, no reestructuración
+a ciegas. Comando pendiente: desde `formalization/lean`,
+`lake env lean QCAL/Colector.lean`.
 
 ## Colector: tres leyes condicionales (October 2026)
 
@@ -36,11 +46,7 @@ no son un fibrado topológico: no se define topología ni trivialización local.
 Los comandos `#print axioms` incluidos auditan las dependencias fundacionales
 de los teoremas. Los supuestos específicos son argumentos `h`, por lo que no
 aparecen como axiomas globales en esa salida. Compilación y salida del auditor
-**no verificadas**. El 9 octubre 2026 se restauró Lean 4.5.0 y las dependencias
-fijadas, pero `lake exe cache get` falló por DNS de
-`lakecache.blob.core.windows.net` (4162 descargas). El intento real de compilación
-falló en `unknown package 'Mathlib'`, antes de verificar los teoremas. Comando:
-`cd formalization/lean && lake env lean QCAL/Colector.lean`.
+**no verificadas**; véase el bloqueo actual arriba.
 
 `validation/colector.py` compara datos suministrados con tolerancia explícita
 `atol + rtol*max(|a|,|b|)` (ambas finitas y no negativas), con al menos 30 dps
