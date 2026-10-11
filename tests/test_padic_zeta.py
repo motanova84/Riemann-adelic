@@ -136,7 +136,8 @@ class TestIntegration:
         
         # Should converge to a finite relative error (relaxed for current implementation)
         assert rel_error < 1e6, "Relative error should be finite for moderate-sized problems"
-        assert len(sim_parts) >= 10, "Should generate reasonable number of simulated zeros"
+        assert sim_parts == [mp.mpf(zero) for zero in zeros], \
+            "Caller-provided ordinates must not be replaced or padded with file data"
         
         # Check that simulated parts are in reasonable range
         for part in sim_parts[:5]:

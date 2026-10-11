@@ -1,0 +1,474 @@
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - 
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Test: tests/test_colector.py::test_synthetic_witness_and_all_residuals
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Location: tests/test_colector.py:28
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ✅ PASSED: tests/test_colector.py::test_synthetic_witness_and_all_residuals (0.001s)
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - 
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Test: tests/test_colector.py::test_strict_bounds_cannot_be_relaxed_by_tolerance[2.578]
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Location: tests/test_colector.py:40
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ✅ PASSED: tests/test_colector.py::test_strict_bounds_cannot_be_relaxed_by_tolerance[2.578] (0.000s)
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - 
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Test: tests/test_colector.py::test_strict_bounds_cannot_be_relaxed_by_tolerance[2.579]
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Location: tests/test_colector.py:40
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ✅ PASSED: tests/test_colector.py::test_strict_bounds_cannot_be_relaxed_by_tolerance[2.579] (0.000s)
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - 
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Test: tests/test_colector.py::test_strict_bounds_cannot_be_relaxed_by_tolerance[2.5779]
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Location: tests/test_colector.py:40
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ✅ PASSED: tests/test_colector.py::test_strict_bounds_cannot_be_relaxed_by_tolerance[2.5779] (0.000s)
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - 
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Test: tests/test_colector.py::test_strict_bounds_cannot_be_relaxed_by_tolerance[2.5791]
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Location: tests/test_colector.py:40
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ✅ PASSED: tests/test_colector.py::test_strict_bounds_cannot_be_relaxed_by_tolerance[2.5791] (0.000s)
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - 
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Test: tests/test_colector.py::test_strict_bounds_cannot_be_relaxed_by_tolerance[0]
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Location: tests/test_colector.py:40
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ✅ PASSED: tests/test_colector.py::test_strict_bounds_cannot_be_relaxed_by_tolerance[0] (0.000s)
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - 
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Test: tests/test_colector.py::test_strict_bounds_cannot_be_relaxed_by_tolerance[-2.5782]
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Location: tests/test_colector.py:40
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ✅ PASSED: tests/test_colector.py::test_strict_bounds_cannot_be_relaxed_by_tolerance[-2.5782] (0.000s)
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - 
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Test: tests/test_colector.py::test_parameter_is_not_forced_to_witness[2.5781]
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Location: tests/test_colector.py:49
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ✅ PASSED: tests/test_colector.py::test_parameter_is_not_forced_to_witness[2.5781] (0.000s)
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - 
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Test: tests/test_colector.py::test_parameter_is_not_forced_to_witness[2.5788]
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Location: tests/test_colector.py:49
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ✅ PASSED: tests/test_colector.py::test_parameter_is_not_forced_to_witness[2.5788] (0.000s)
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - 
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Test: tests/test_colector.py::test_all_pairwise_discrepancies_are_checked
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Location: tests/test_colector.py:63
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ✅ PASSED: tests/test_colector.py::test_all_pairwise_discrepancies_are_checked (0.000s)
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - 
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Test: tests/test_colector.py::test_common_wrong_invariant_fails_membership
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Location: tests/test_colector.py:74
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ✅ PASSED: tests/test_colector.py::test_common_wrong_invariant_fails_membership (0.000s)
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - 
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Test: tests/test_colector.py::test_independent_biological_mismatch[0]
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Location: tests/test_colector.py:84
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ✅ PASSED: tests/test_colector.py::test_independent_biological_mismatch[0] (0.000s)
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - 
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Test: tests/test_colector.py::test_independent_biological_mismatch[1.058]
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Location: tests/test_colector.py:84
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ✅ PASSED: tests/test_colector.py::test_independent_biological_mismatch[1.058] (0.000s)
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - 
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Test: tests/test_colector.py::test_independent_biological_mismatch[-1]
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Location: tests/test_colector.py:84
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ✅ PASSED: tests/test_colector.py::test_independent_biological_mismatch[-1] (0.000s)
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - 
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Test: tests/test_colector.py::test_independent_coupling_mismatch
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Location: tests/test_colector.py:93
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ✅ PASSED: tests/test_colector.py::test_independent_coupling_mismatch (0.000s)
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - 
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Test: tests/test_colector.py::test_explicit_symmetric_tolerance_threshold
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Location: tests/test_colector.py:101
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ✅ PASSED: tests/test_colector.py::test_explicit_symmetric_tolerance_threshold (0.001s)
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - 
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Test: tests/test_colector.py::test_invalid_axis_names[names0]
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Location: tests/test_colector.py:118
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ✅ PASSED: tests/test_colector.py::test_invalid_axis_names[names0] (0.000s)
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - 
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Test: tests/test_colector.py::test_invalid_axis_names[names1]
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Location: tests/test_colector.py:118
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ✅ PASSED: tests/test_colector.py::test_invalid_axis_names[names1] (0.000s)
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - 
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Test: tests/test_colector.py::test_invalid_axis_names[names2]
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Location: tests/test_colector.py:118
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ✅ PASSED: tests/test_colector.py::test_invalid_axis_names[names2] (0.000s)
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - 
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Test: tests/test_colector.py::test_invalid_axis_names[names3]
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Location: tests/test_colector.py:118
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ✅ PASSED: tests/test_colector.py::test_invalid_axis_names[names3] (0.000s)
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - 
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Test: tests/test_colector.py::test_invalid_tolerances[-1e-30-atol]
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Location: tests/test_colector.py:132
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ✅ PASSED: tests/test_colector.py::test_invalid_tolerances[-1e-30-atol] (0.000s)
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - 
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Test: tests/test_colector.py::test_invalid_tolerances[-1e-30-rtol]
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Location: tests/test_colector.py:132
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ✅ PASSED: tests/test_colector.py::test_invalid_tolerances[-1e-30-rtol] (0.000s)
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - 
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Test: tests/test_colector.py::test_invalid_tolerances[nan-atol]
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Location: tests/test_colector.py:132
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ✅ PASSED: tests/test_colector.py::test_invalid_tolerances[nan-atol] (0.000s)
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - 
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Test: tests/test_colector.py::test_invalid_tolerances[nan-rtol]
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Location: tests/test_colector.py:132
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ✅ PASSED: tests/test_colector.py::test_invalid_tolerances[nan-rtol] (0.000s)
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - 
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Test: tests/test_colector.py::test_invalid_tolerances[inf-atol]
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Location: tests/test_colector.py:132
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ✅ PASSED: tests/test_colector.py::test_invalid_tolerances[inf-atol] (0.000s)
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - 
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Test: tests/test_colector.py::test_invalid_tolerances[inf-rtol]
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Location: tests/test_colector.py:132
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ✅ PASSED: tests/test_colector.py::test_invalid_tolerances[inf-rtol] (0.000s)
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - 
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Test: tests/test_colector.py::test_invalid_tolerances[-inf-atol]
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Location: tests/test_colector.py:132
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ✅ PASSED: tests/test_colector.py::test_invalid_tolerances[-inf-atol] (0.000s)
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - 
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Test: tests/test_colector.py::test_invalid_tolerances[-inf-rtol]
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Location: tests/test_colector.py:132
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ✅ PASSED: tests/test_colector.py::test_invalid_tolerances[-inf-rtol] (0.000s)
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - 
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Test: tests/test_colector.py::test_invalid_tolerances[bad-atol]
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Location: tests/test_colector.py:132
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ✅ PASSED: tests/test_colector.py::test_invalid_tolerances[bad-atol] (0.000s)
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - 
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Test: tests/test_colector.py::test_invalid_tolerances[bad-rtol]
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Location: tests/test_colector.py:132
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ✅ PASSED: tests/test_colector.py::test_invalid_tolerances[bad-rtol] (0.000s)
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - 
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Test: tests/test_colector.py::test_invalid_tolerances[True-atol]
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Location: tests/test_colector.py:132
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ✅ PASSED: tests/test_colector.py::test_invalid_tolerances[True-atol] (0.000s)
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - 
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Test: tests/test_colector.py::test_invalid_tolerances[True-rtol]
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Location: tests/test_colector.py:132
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ✅ PASSED: tests/test_colector.py::test_invalid_tolerances[True-rtol] (0.000s)
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - 
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Test: tests/test_colector.py::test_invalid_precision[29]
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Location: tests/test_colector.py:142
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ✅ PASSED: tests/test_colector.py::test_invalid_precision[29] (0.000s)
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - 
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Test: tests/test_colector.py::test_invalid_precision[0]
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Location: tests/test_colector.py:142
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ✅ PASSED: tests/test_colector.py::test_invalid_precision[0] (0.000s)
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - 
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Test: tests/test_colector.py::test_invalid_precision[50.0]
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Location: tests/test_colector.py:142
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ✅ PASSED: tests/test_colector.py::test_invalid_precision[50.0] (0.000s)
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - 
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Test: tests/test_colector.py::test_invalid_precision[True]
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Location: tests/test_colector.py:142
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ✅ PASSED: tests/test_colector.py::test_invalid_precision[True] (0.000s)
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - 
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Test: tests/test_colector.py::test_nonfinite_and_nonreal_data[nan-kappa]
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Location: tests/test_colector.py:149
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ✅ PASSED: tests/test_colector.py::test_nonfinite_and_nonreal_data[nan-kappa] (0.000s)
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - 
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Test: tests/test_colector.py::test_nonfinite_and_nonreal_data[nan-aeffmax_observed]
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Location: tests/test_colector.py:149
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ✅ PASSED: tests/test_colector.py::test_nonfinite_and_nonreal_data[nan-aeffmax_observed] (0.000s)
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - 
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Test: tests/test_colector.py::test_nonfinite_and_nonreal_data[nan-fase]
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Location: tests/test_colector.py:149
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ✅ PASSED: tests/test_colector.py::test_nonfinite_and_nonreal_data[nan-fase] (0.000s)
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - 
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Test: tests/test_colector.py::test_nonfinite_and_nonreal_data[nan-invariante]
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Location: tests/test_colector.py:149
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ✅ PASSED: tests/test_colector.py::test_nonfinite_and_nonreal_data[nan-invariante] (0.000s)
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - 
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Test: tests/test_colector.py::test_nonfinite_and_nonreal_data[nan-epsilon_antes]
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Location: tests/test_colector.py:149
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ✅ PASSED: tests/test_colector.py::test_nonfinite_and_nonreal_data[nan-epsilon_antes] (0.000s)
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - 
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Test: tests/test_colector.py::test_nonfinite_and_nonreal_data[nan-f0_antes]
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Location: tests/test_colector.py:149
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ✅ PASSED: tests/test_colector.py::test_nonfinite_and_nonreal_data[nan-f0_antes] (0.000s)
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - 
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Test: tests/test_colector.py::test_nonfinite_and_nonreal_data[nan-epsilon_despues]
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Location: tests/test_colector.py:149
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ✅ PASSED: tests/test_colector.py::test_nonfinite_and_nonreal_data[nan-epsilon_despues] (0.000s)
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - 
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Test: tests/test_colector.py::test_nonfinite_and_nonreal_data[nan-f0_despues]
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Location: tests/test_colector.py:149
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ✅ PASSED: tests/test_colector.py::test_nonfinite_and_nonreal_data[nan-f0_despues] (0.000s)
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - 
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Test: tests/test_colector.py::test_nonfinite_and_nonreal_data[inf-kappa]
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Location: tests/test_colector.py:149
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ✅ PASSED: tests/test_colector.py::test_nonfinite_and_nonreal_data[inf-kappa] (0.000s)
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - 
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Test: tests/test_colector.py::test_nonfinite_and_nonreal_data[inf-aeffmax_observed]
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Location: tests/test_colector.py:149
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ✅ PASSED: tests/test_colector.py::test_nonfinite_and_nonreal_data[inf-aeffmax_observed] (0.000s)
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - 
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Test: tests/test_colector.py::test_nonfinite_and_nonreal_data[inf-fase]
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Location: tests/test_colector.py:149
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ✅ PASSED: tests/test_colector.py::test_nonfinite_and_nonreal_data[inf-fase] (0.000s)
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - 
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Test: tests/test_colector.py::test_nonfinite_and_nonreal_data[inf-invariante]
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Location: tests/test_colector.py:149
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ✅ PASSED: tests/test_colector.py::test_nonfinite_and_nonreal_data[inf-invariante] (0.000s)
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - 
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Test: tests/test_colector.py::test_nonfinite_and_nonreal_data[inf-epsilon_antes]
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Location: tests/test_colector.py:149
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ✅ PASSED: tests/test_colector.py::test_nonfinite_and_nonreal_data[inf-epsilon_antes] (0.000s)
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - 
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Test: tests/test_colector.py::test_nonfinite_and_nonreal_data[inf-f0_antes]
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Location: tests/test_colector.py:149
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ✅ PASSED: tests/test_colector.py::test_nonfinite_and_nonreal_data[inf-f0_antes] (0.000s)
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - 
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Test: tests/test_colector.py::test_nonfinite_and_nonreal_data[inf-epsilon_despues]
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Location: tests/test_colector.py:149
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ✅ PASSED: tests/test_colector.py::test_nonfinite_and_nonreal_data[inf-epsilon_despues] (0.000s)
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - 
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Test: tests/test_colector.py::test_nonfinite_and_nonreal_data[inf-f0_despues]
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Location: tests/test_colector.py:149
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ✅ PASSED: tests/test_colector.py::test_nonfinite_and_nonreal_data[inf-f0_despues] (0.000s)
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - 
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Test: tests/test_colector.py::test_nonfinite_and_nonreal_data[-inf-kappa]
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Location: tests/test_colector.py:149
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ✅ PASSED: tests/test_colector.py::test_nonfinite_and_nonreal_data[-inf-kappa] (0.000s)
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - 
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Test: tests/test_colector.py::test_nonfinite_and_nonreal_data[-inf-aeffmax_observed]
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Location: tests/test_colector.py:149
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ✅ PASSED: tests/test_colector.py::test_nonfinite_and_nonreal_data[-inf-aeffmax_observed] (0.000s)
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - 
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Test: tests/test_colector.py::test_nonfinite_and_nonreal_data[-inf-fase]
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Location: tests/test_colector.py:149
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ✅ PASSED: tests/test_colector.py::test_nonfinite_and_nonreal_data[-inf-fase] (0.000s)
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - 
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Test: tests/test_colector.py::test_nonfinite_and_nonreal_data[-inf-invariante]
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Location: tests/test_colector.py:149
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ✅ PASSED: tests/test_colector.py::test_nonfinite_and_nonreal_data[-inf-invariante] (0.000s)
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - 
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Test: tests/test_colector.py::test_nonfinite_and_nonreal_data[-inf-epsilon_antes]
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Location: tests/test_colector.py:149
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ✅ PASSED: tests/test_colector.py::test_nonfinite_and_nonreal_data[-inf-epsilon_antes] (0.000s)
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - 
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Test: tests/test_colector.py::test_nonfinite_and_nonreal_data[-inf-f0_antes]
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Location: tests/test_colector.py:149
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ✅ PASSED: tests/test_colector.py::test_nonfinite_and_nonreal_data[-inf-f0_antes] (0.000s)
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - 
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Test: tests/test_colector.py::test_nonfinite_and_nonreal_data[-inf-epsilon_despues]
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Location: tests/test_colector.py:149
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ✅ PASSED: tests/test_colector.py::test_nonfinite_and_nonreal_data[-inf-epsilon_despues] (0.000s)
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - 
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Test: tests/test_colector.py::test_nonfinite_and_nonreal_data[-inf-f0_despues]
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Location: tests/test_colector.py:149
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ✅ PASSED: tests/test_colector.py::test_nonfinite_and_nonreal_data[-inf-f0_despues] (0.000s)
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - 
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Test: tests/test_colector.py::test_nonfinite_and_nonreal_data[not-a-number-kappa]
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Location: tests/test_colector.py:149
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ✅ PASSED: tests/test_colector.py::test_nonfinite_and_nonreal_data[not-a-number-kappa] (0.000s)
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - 
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Test: tests/test_colector.py::test_nonfinite_and_nonreal_data[not-a-number-aeffmax_observed]
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Location: tests/test_colector.py:149
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ✅ PASSED: tests/test_colector.py::test_nonfinite_and_nonreal_data[not-a-number-aeffmax_observed] (0.000s)
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - 
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Test: tests/test_colector.py::test_nonfinite_and_nonreal_data[not-a-number-fase]
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Location: tests/test_colector.py:149
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ✅ PASSED: tests/test_colector.py::test_nonfinite_and_nonreal_data[not-a-number-fase] (0.000s)
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - 
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Test: tests/test_colector.py::test_nonfinite_and_nonreal_data[not-a-number-invariante]
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Location: tests/test_colector.py:149
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ✅ PASSED: tests/test_colector.py::test_nonfinite_and_nonreal_data[not-a-number-invariante] (0.000s)
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - 
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Test: tests/test_colector.py::test_nonfinite_and_nonreal_data[not-a-number-epsilon_antes]
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Location: tests/test_colector.py:149
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ✅ PASSED: tests/test_colector.py::test_nonfinite_and_nonreal_data[not-a-number-epsilon_antes] (0.000s)
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - 
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Test: tests/test_colector.py::test_nonfinite_and_nonreal_data[not-a-number-f0_antes]
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Location: tests/test_colector.py:149
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ✅ PASSED: tests/test_colector.py::test_nonfinite_and_nonreal_data[not-a-number-f0_antes] (0.000s)
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - 
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Test: tests/test_colector.py::test_nonfinite_and_nonreal_data[not-a-number-epsilon_despues]
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Location: tests/test_colector.py:149
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ✅ PASSED: tests/test_colector.py::test_nonfinite_and_nonreal_data[not-a-number-epsilon_despues] (0.000s)
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - 
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Test: tests/test_colector.py::test_nonfinite_and_nonreal_data[not-a-number-f0_despues]
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Location: tests/test_colector.py:149
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ✅ PASSED: tests/test_colector.py::test_nonfinite_and_nonreal_data[not-a-number-f0_despues] (0.000s)
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - 
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Test: tests/test_colector.py::test_nonfinite_and_nonreal_data[(1+1j)-kappa]
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Location: tests/test_colector.py:149
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ✅ PASSED: tests/test_colector.py::test_nonfinite_and_nonreal_data[(1+1j)-kappa] (0.000s)
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - 
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Test: tests/test_colector.py::test_nonfinite_and_nonreal_data[(1+1j)-aeffmax_observed]
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Location: tests/test_colector.py:149
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ✅ PASSED: tests/test_colector.py::test_nonfinite_and_nonreal_data[(1+1j)-aeffmax_observed] (0.000s)
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - 
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Test: tests/test_colector.py::test_nonfinite_and_nonreal_data[(1+1j)-fase]
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Location: tests/test_colector.py:149
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ✅ PASSED: tests/test_colector.py::test_nonfinite_and_nonreal_data[(1+1j)-fase] (0.000s)
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - 
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Test: tests/test_colector.py::test_nonfinite_and_nonreal_data[(1+1j)-invariante]
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Location: tests/test_colector.py:149
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ✅ PASSED: tests/test_colector.py::test_nonfinite_and_nonreal_data[(1+1j)-invariante] (0.000s)
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - 
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Test: tests/test_colector.py::test_nonfinite_and_nonreal_data[(1+1j)-epsilon_antes]
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Location: tests/test_colector.py:149
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ✅ PASSED: tests/test_colector.py::test_nonfinite_and_nonreal_data[(1+1j)-epsilon_antes] (0.000s)
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - 
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Test: tests/test_colector.py::test_nonfinite_and_nonreal_data[(1+1j)-f0_antes]
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Location: tests/test_colector.py:149
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ✅ PASSED: tests/test_colector.py::test_nonfinite_and_nonreal_data[(1+1j)-f0_antes] (0.000s)
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - 
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Test: tests/test_colector.py::test_nonfinite_and_nonreal_data[(1+1j)-epsilon_despues]
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Location: tests/test_colector.py:149
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ✅ PASSED: tests/test_colector.py::test_nonfinite_and_nonreal_data[(1+1j)-epsilon_despues] (0.000s)
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - 
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Test: tests/test_colector.py::test_nonfinite_and_nonreal_data[(1+1j)-f0_despues]
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Location: tests/test_colector.py:149
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ✅ PASSED: tests/test_colector.py::test_nonfinite_and_nonreal_data[(1+1j)-f0_despues] (0.000s)
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - 
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Test: tests/test_colector.py::test_local_precision_restored_on_success_and_failure
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Location: tests/test_colector.py:167
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ✅ PASSED: tests/test_colector.py::test_local_precision_restored_on_success_and_failure (0.000s)
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - 
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Test: tests/test_colector.py::test_minimum_precision_and_zero_tolerance
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Location: tests/test_colector.py:179
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ✅ PASSED: tests/test_colector.py::test_minimum_precision_and_zero_tolerance (0.001s)
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - 
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Test: tests/test_colector.py::test_lean_source_has_only_scoped_conditional_assumptions
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - Location: tests/test_colector.py:190
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ================================================================================
+2026-10-09 18:53:35 - INFO     - qcal.test_session_20261009_185335 - ✅ PASSED: tests/test_colector.py::test_lean_source_has_only_scoped_conditional_assumptions (0.000s)

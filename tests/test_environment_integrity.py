@@ -11,7 +11,6 @@ import json
 import shutil
 import subprocess
 import sys
-import tempfile
 from pathlib import Path
 
 import pytest
@@ -21,26 +20,28 @@ class TestEnvironmentIntegrity:
     """Test environment integrity verification functionality."""
     
     @pytest.fixture
-    def repo_root(self):
-        """Get repository root directory."""
-        return Path(__file__).parent.parent.resolve()
+    def repo_root(self, tmp_path):
+        """Use an isolated ledger; never rewrite the repository's provenance."""
+        root = Path(__file__).parent.parent.resolve()
+        for name in ("verify_environment_integrity.py", "generate_env_lock.py",
+                     "ENV.lock", "requirements-lock.txt", "requirements.txt"):
+            shutil.copy2(root / name, tmp_path / name)
+        # Dataset declarations are tested separately with explicit fixtures.
+        env_lock = tmp_path / "ENV.lock"
+        env_lock.write_text("# Isolated lock\npytest==8.3.3\n")
+        (tmp_path / "requirements-lock.txt").write_text("# Isolated lock\npytest==8.3.3\n")
+        checksums = {
+            name: hashlib.sha256((tmp_path / name).read_bytes()).hexdigest()
+            for name in ("ENV.lock", "requirements-lock.txt", "requirements.txt")
+        }
+        (tmp_path / "environment_checksums.json").write_text(json.dumps(checksums))
+        return tmp_path
     
     @pytest.fixture
     def temp_checksums(self, repo_root):
-        """Backup and restore checksums file."""
+        """Return the isolated checksums file."""
         checksums_file = repo_root / "environment_checksums.json"
-        backup = None
-        
-        if checksums_file.exists():
-            backup = checksums_file.read_text()
-        
-        yield checksums_file
-        
-        # Restore original checksums
-        if backup:
-            checksums_file.write_text(backup)
-        elif checksums_file.exists():
-            checksums_file.unlink()
+        return checksums_file
     
     def test_verify_script_exists(self, repo_root):
         """Test that verification script exists and is executable."""

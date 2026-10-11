@@ -1,5 +1,155 @@
 # QCAL Build Verification - Implementation Summary
 
+## Verificación actual del entorno (11 octubre 2026)
+
+- Elan instalado por el procedimiento existente de `auto_evolution.yml`.
+  `elan toolchain install leanprover/lean4:v4.5.0` falla (salida 1) por DNS de
+  `release.lean-lang.org`; `elan toolchain list`: ninguno instalado. Descargas
+  detenidas, sin mirrors, clones directos ni bypass. No hubo compilación de
+  Colector ni auditoría real `#print axioms`; no se modificó fuente Lean.
+- Requisitos existentes restaurados con `python3 -m venv .validation-next/venv`
+  y `TMPDIR="$PWD/.validation-next/scratch" .validation-next/venv/bin/python
+  -m pip install --no-cache-dir -r requirements.txt`; `pip check` pasa.
+  Entorno Python 3.12.3, no validación de Python 3.11.
+- `.validation-next/venv/bin/python -m pytest tests/test_colector.py
+  tests/test_explicit_formula_fix.py tests/test_v5_failure_propagation.py
+  tests/test_v5_output_dir.py tests/test_environment_integrity.py -o addopts=''
+  --basetemp="$PWD/.validation-next/pytest" -q`: **161 pasan**, 12 avisos,
+  43.55 s. Flake8 de Colector, su test y las regresiones V5 de fallo/rutas pasa;
+  el test de fórmula conserva deuda lint preexistente. No se ejecutó toda la suite.
+- Ejecución real: `timeout 300s .validation-next/venv/bin/python
+  validate_v5_coronacion.py --precision 30
+  --output-dir "$PWD/.validation-next/v5" --save-certificate`.
+  Límites originales de 1000 ceros/primos; salida **1**, 46.56 s:
+  25 checks pasan, 4 fallan, 1 omitido y 1 parcial. Residuo crudo
+  `7.386846128200506e-21`, sin compensación; diagnóstico finito, no prueba de RH.
+  Bloqueos: integridad, SAT satisfecho/compilado 0/10, Ψ Step 5 ausente y A+B.
+  Certificado `success=false`, estado `NOT_PROVEN`, Ψ `null`/`UNAVAILABLE`.
+- Resultados reales aislados en `.validation-next/v5/`:
+  `v5_coronacion_certificate.json`, `qcal_ab_operational_report.json`,
+  `validation_results.csv` y logs. Instalación/tests en `.validation-next/logs/`;
+  entorno y resultados locales excluidos de Git, no subidos a QCAL-CLOUD.
+  SHA-256 de **2176 archivos protegidos** intactos.
+- `auto_evolution.yml` se inspeccionó, no se ejecutó ni se confirmó su estado
+  remoto. Docker responde (28.0.4), pero faltan ambas imágenes base locales;
+  no se construyeron contenedores ni se iniciaron servicios públicos.
+  El propietario debe autorizar acceso al toolchain/cache oficial, resolver
+  la procedencia de hashes existentes y aportar un destino autenticado antes
+  de despliegue. Los supuestos físicos y la localización crítica siguen
+  condicionales; no se certifica RH.
+
+## V5: corrección de falsos éxitos (histórico anterior, 11 octubre 2026)
+
+- `validate_v5_coronacion.py` conserva Ψ como `null`/`UNAVAILABLE` si falta
+  la medición genuina de Step 5 o no es finita; no sustituye Step 4 ni el umbral.
+- El criterio numérico A+B no es completitud formal. Lean omitido/fallido,
+  placeholders o axiomas propios impiden completitud; la localización crítica
+  en `QCAL/RH_Equivalence.lean` es un axioma, no una demostración de RH.
+- SAT distingue integridad de satisfacción: V5 requiere los diez certificados
+  más recientes satisfechos, compilados y sin `sorry`. La API de consistencia
+  de `SATCertificateValidator` se conserva. Los diez certificados actuales
+  registran `satisfied=false`; no se regeneraron ni forzaron.
+- La fórmula explícita de V5 mide el residuo **sin compensación ajustada**.
+  La opción histórica de compensación permanece disponible para otros callers;
+  no sirve como evidencia de cierre.
+- Checks obligatorios: integridad, seis etapas principales, stress/integración,
+  fórmula explícita cruda, identificación espectral, SAT satisfecho, medición
+  Step 5 e informe A+B. Omitirlos o devolver `PARTIAL` no permite éxito.
+  Extensiones restantes son diagnósticos opcionales: `SKIPPED`/`PARTIAL`
+  no bloquean por sí solos; cualquier `FAILED` sí se propaga.
+- Contadores, salida CLI y certificado V5 se calculan después de los checks.
+  El certificado registra el resultado final y `NOT_PROVEN`, nunca RH probada.
+  `verify_environment_integrity.py` falla ante archivos registrados ausentes;
+  no se rebaselinaron los manifiestos. Los tests del ledger usan fixtures
+  aislados y no escriben la procedencia del repositorio.
+- Regresiones: `tests/test_v5_failure_propagation.py`,
+  `tests/test_v5_output_dir.py`, `tests/test_environment_integrity.py`.
+  Los resultados antiguos de «éxito» y Ψ=0.0 más abajo son **históricos**:
+  no describen el nuevo contrato ni constituyen evidencia matemática.
+- Validación local: requisitos existentes restaurados en entorno aislado,
+  `pip check` sin conflictos; Python 3.12, no verificación de Python 3.11.
+  Suite dirigida final: 188 tests pasaron y uno se omitió por el fallo preexistente
+  `CriticalLineChecker: 'axiom_satisfied'`; V5 considera esa omisión obligatoria
+  un bloqueo. Colección general acotada: 13133 tests, cuatro errores
+  preexistentes (`EmotionalObserver`, `Node`, `predict_mutation_stability`,
+  `EPSILON_OSC`), salida 2.
+- Ejecución real con `--precision 30 --output-dir ... --save-certificate`
+  (1000 ceros/primos): salida **1**, 25 checks pasados, 5 fallidos y 1 parcial;
+  fórmula cruda 103.478567%, SAT satisfecho 0/10, Ψ ausente e informe A+B
+  fallido. Certificado final `success=false`, `NOT_PROVEN`. Integridad informa
+  discrepancias existentes en `.qcal_beacon`, `data/critical_line_verification.csv`
+  y `requirements.txt`; corregir la procedencia requiere evidencia del propietario,
+  no regenerar hashes a ciegas. Hashes de originales protegidos sin cambios.
+- Segunda ejecución real, código final, `--precision 30 --max-zeros 100
+  --max-primes 100 --output-dir ... --save-certificate`: salida **1** en 46.47 s;
+  24 checks pasados, 5 fallidos, 1 omitido y 1 parcial. Residuo crudo 101.286018%,
+  Ψ `null`/`UNAVAILABLE`; el diagnóstico Trinity no inventa Ψ.
+  Certificado final `success=false`, `coronation_complete=false`, `NOT_PROVEN`.
+- Lean 4.5.0 recuperado desde release GitHub después de fallo DNS de
+  `release.lean-lang.org`; dependencias restauradas en copia aislada.
+  Cache inaccesible por DNS de `lakecache.blob.core.windows.net` (probe acotado).
+  Intento real `lake env lean QCAL/Colector.lean`: salida 1,
+  `unknown package 'Mathlib'`; compilación no verificada. No se repitieron
+  descargas masivas. Flake8 de regresiones nuevas/routing/Colector y
+  `git diff --check` pasan; los scripts V5/ledger conservan deuda lint previa.
+
+## Colector condicional κ_Π (October 2026)
+
+- `formalization/lean/QCAL/Colector.lean`: parámetro abstracto positivo,
+  `2.578 < κ_Π < 2.579`, ejes con nombre/fase/invariante y fibras indexadas
+  admisibles de un mismo colector. No se afirma un fibrado topológico.
+- `Supuestos : Prop` contiene los campos explícitos `estructura_del_colector`,
+  `resonancia_biológica` y `invariante_producto`, no axiomas globales sobre
+  registros `Eje` arbitrarios. Las tres leyes son relativas a estos supuestos;
+  la pertenencia estructural exige invariante `κ_Π`. Hay modelos canónicos
+  no vacíos y un testigo `κ_Π = 2.5782`, no una constante universal impuesta.
+- `validation/colector.py`: API `validate` recibe observación biológica y
+  acoplamiento antes/después independientes. Reporta las tres discrepancias
+  entre pares, pertenencia, residuo de `Aeffmax = κ_Π²/(2π)` y producto
+  `epsilon*f0`. Tolerancias obligatorias finitas no negativas:
+  `|a-b| ≤ atol + rtol*max(|a|,|b|)`; intervalo estricto sin tolerancia.
+  `biological_positive` exige observación estrictamente positiva aun con
+  tolerancias enormes. El intervalo compara exactamente la entrada decimal
+  (o el valor representado de float/mpf), incluso más allá de los dps de trabajo;
+  el `kappa` reportado sí está redondeado.
+  Usa `mpmath.workdps` local (mínimo 30, defecto 50), sin guardar certificados.
+  `precision_note` aclara que tolerancia cero significa igualdad de cálculos
+  redondeados, no igualdad de reales exactos: la cancelación puede ocultar
+  discrepancias. No proporciona cotas certificadas de error numérico.
+- `tests/test_colector.py`: datos **sintéticos**, fronteras, nombres erróneos,
+  entradas no finitas, discrepancias, tolerancias y restauración de precisión.
+  No constituye confirmación experimental ni prueba de RH.
+- Comandos desde la raíz: `python -m pytest tests/test_colector.py -o addopts=''`;
+  `python -m flake8 validation/colector.py tests/test_colector.py`.
+  Lean: `cd formalization/lean && lake env lean QCAL/Colector.lean`.
+  Compilación Lean pendiente si Lake/Mathlib no están disponibles; `#print axioms`
+  audita axiomas fundacionales, mientras los supuestos físicos son parámetros.
+- Resultado histórico previo: **79 pruebas sintéticas**, con dependencias
+  ausentes en la colección general; no describe la validación actual.
+- Validación actual (9 octubre 2026): dependencias existentes restauradas con
+  `python3 -m venv .colector-venv` y
+  `TMPDIR="$PWD/.colector-venv" .colector-venv/bin/python -m pip install --no-cache-dir -r requirements.txt`,
+  sin modificar requisitos; `pip check` sin conflictos.
+  **94 pruebas sintéticas pasan**; flake8 de ambos archivos Python y
+  `git diff --check` sin errores.
+  El entorno de validación usa Python 3.12; no se verificó Python 3.11.
+  Suite general acotada a 180 s, `--maxfail=5`: se interrumpe en colección con
+  cuatro errores preexistentes: faltan `EmotionalObserver`, `Node`,
+  `predict_mutation_stability` y `EPSILON_OSC` no está definido. La colección
+  independiente también falla antes de ejecutar pruebas; no se afirma éxito
+  de la suite completa.
+- Lean 4.5.0 instalado desde el release fijado y dependencias del manifiesto
+  restauradas. `lake exe cache get` falla: DNS inaccesible para
+  `lakecache.blob.core.windows.net` (4162 descargas fallidas). El intento real
+  `lake env lean QCAL/Colector.lean` falla en `unknown package 'Mathlib'`;
+  no demuestra errores de los teoremas ni compilación verificada.
+- Obstáculo histórico de V5: las salidas obligatorias en `data/` impedían ejecutarlo
+  sin sobrescribir archivos protegidos. Ahora está resuelto con `--output-dir`;
+  véase «Salidas aisladas de V5 Coronación». Las ejecuciones reales allí descritas
+  mantienen A+B fallido y Lean omitido por ausencia de `lake`, no validación completa.
+  Se preservan certificados, DOIs y workflows.
+  El estado remoto de `auto_evolution.yml` no puede confirmarse sin herramientas CI.
+
 ## QCAL-EXP-01 — transporte, DSP e inferencia reproducibles (October 2026)
 
 - **Módulos añadidos:** `experiments/qcal_exp01/` (protocolo UDP versionado,
@@ -2175,3 +2325,168 @@ El archivo `RiemannAdelicSelfAdjoint.lean` añade un cierre formal esquemático:
 - Axioma de autoadjuntividad adélica (`self_adjoint_adelic`).
 - Teorema principal `riemann_hypothesis_via_adelic_self_adjointness`.
 - Consistencia de resonancia en `f₀ = 141.7001`.
+
+## Salidas aisladas de V5 Coronación
+
+`validate_v5_coronacion.py` acepta `--output-dir` y el argumento opcional
+`output_dir` de su API. Los valores predeterminados conservan las rutas históricas.
+Desde la raíz del repositorio:
+
+```bash
+python validate_v5_coronacion.py --precision 30 --output-dir artifacts/v5
+python validate_v5_coronacion.py --precision 30 --save-certificate \
+  --update-manifest --output-dir artifacts/v5-refresh
+```
+
+Las salidas se guardan directamente en el destino: `validation_results.csv`,
+`qcal_ab_operational_report.json` y, con `--save-certificate`, los certificados
+V5 y espectral. Los logs usan `logs/validation/` dentro del destino. El informe SAT
+usa `sat/`; con `--update-manifest`, también se generan allí los nuevos certificados
+SAT y ambas auditorías leen esa misma colección, no los certificados originales.
+Los datasets y las fuentes Lean siguen siendo entradas del repositorio.
+
+Archivos relacionados:
+
+- `utils/qcal_spectral_certificate.py`: argumento opcional `output_dir` y CLI
+  `--output-dir`, sin cambiar las entradas espectrales.
+- `scripts/validate_sat_certificates.py`: `report_output_dir` y
+  `--report-output-dir` separan el informe de `--certificates-dir`.
+- `validate_explicit_formula.py`: importar el módulo ya no crea un CSV;
+  la ejecución independiente conserva su salida histórica.
+- `tests/test_v5_output_dir.py`: regresiones de rutas, opciones CLI, actualización
+  del manifiesto y ausencia de escritura al importar; no son pruebas matemáticas.
+- `tests/test_qcal_spectral_certificate.py`: la prueba de guardado usa su propio
+  destino, sin sobrescribir certificados en `data/`.
+
+Validación numérica real (2026-10-09), con precisión principal de 30 dps y
+certificado espectral a ≥50 dps (`max(50, precision)`): ambas ejecuciones V5, sin guardado
+y con `--save-certificate --update-manifest`, terminaron con código 0,
+SAT 10/10 y correspondencia espectral 1.0. La segunda generó y auditó 10 certificados
+SAT en el destino aislado y guardó ambos certificados V5 y espectral como JSON
+legible. El dataset canónico conserva su pico
+en 141.7001 Hz y amplitud 1.0 (80 muestras). El error relativo calibrado fue 0.0
+con compensación de cola activa: no debe interpretarse como una prueba
+independiente de la fórmula explícita ni de RH.
+
+El informe A+B mantuvo `overall_passed=false` y `Ψ=0.0`, inferior al umbral 0.888.
+La comprobación Lean quedó omitida por ausencia de `lake`. El verificador de
+integridad falló por discrepancias ya existentes de checksums en `.qcal_beacon`,
+`data/critical_line_verification.csv` y `requirements.txt`, además de advertencias
+de Python 3.12 frente a 3.11 y diferencias con el entorno bloqueado.
+Estos resultados no equivalen a una validación completa de coherencia.
+Los archivos protegidos se compararon mediante SHA-256 y permanecieron intactos.
+
+Pruebas dirigidas: **144 pasaron, 1 omitida**, ejecutando
+`tests/test_validate_v5_cwd_check.py`, `tests/test_coronacion_v5.py`,
+`tests/test_qcal_spectral_certificate.py`, `tests/test_v5_output_dir.py` y
+`tests/test_colector.py` con pytest. El nuevo módulo pasa flake8; los archivos
+existentes conservan deuda de lint previa (645 avisos frente a 652 en la base,
+sin categorías de infracción nuevas). `git diff --check` pasó.
+No se verificó el workflow remoto `auto_evolution.yml`, ni se invocaron servicios
+MCP/Trinity externos o QCAL-CLOUD.
+
+### Fórmula explícita par: normalización y residuo independiente (2026-10-11)
+
+`weil_explicit_formula` usa ahora **g=f en el dominio temporal**, real y par,
+y la convención angular
+`h(t)=∫ℝ g(u) exp(i t u) du`. Con esta convención:
+
+```text
+Σ_{±γ} h(γ) = h(i/2) + h(-i/2)
+             + (1/2π)∫ℝ h(t)[Re ψ(1/4+it/2) − log π] dt
+             − 2Σ_{p,k} log(p) p^(−k/2) g(k log p).
+```
+
+La tupla histórica de cinco elementos devuelve las caras equivalentes
+`left=poles+arch−zeros`, `right=2*prime_sum`, su diferencia absoluta y
+`error/abs(right)` (infinito si `right=0`), además de las ordenadas positivas.
+Cada ordenada aporta ambos signos, con multiplicidad. Si el llamador proporciona
+ordenadas se respetan, sin sustituirlas ni rellenarlas con datos del archivo;
+solamente una entrada vacía activa la carga de `zeros/zeros_t1e8.txt`.
+Este archivo contiene números redondeados: aumentar dps no aumenta su exactitud.
+`t_max` y `max_prime_power` son límites efectivos explícitos, sin los anteriores
+recortes ocultos de integración, número de primos o tamaño de potencias.
+
+`utils.mellin.gaussian_fourier_pair` proporciona
+`g(u)=exp(−a u²)` y `h(t)=sqrt(π/a) exp(−t²/(4a))`, también para polos complejos.
+La ruta genérica integra `2∫₀^lim_u g(u)cos(tu)du`; presupone soporte contenido
+en ese intervalo, o acepta su error de truncamiento. Para una gaussiana sin
+soporte compacto debe suministrarse el transformado analítico. Las utilidades
+Mellin y los otros modos históricos de fórmula no cambian de convención.
+
+V5 usa la pareja analítica con `a=1` en **todos** los términos. No aplica una
+segunda gaussiana solamente a los ceros. Esa opción obsoleta ahora produce
+`ValueError` explicativo. `apply_tail_compensation=True` se conserva como
+argumento de compatibilidad, pero advierte que el ajuste es circular y devuelve
+siempre el residuo bruto; ningún resultado calibrado establece evidencia.
+El nombre histórico `run_calibrated_explicit_formula_audit` tampoco implica
+calibración. Sus metadatos registran convención, límites y alcance numérico.
+
+Comprobaciones independientes:
+
+- La pareja gaussiana se compara con la integral directa, incluidos `±i/2`.
+- Para `a=1`, los polos suman `3.77353460595308714641729580475`.
+- La representación de Laplace de digamma, independiente de la cuadratura
+  espectral implementada, da
+  `A=−EulerGamma−log π+∫₀∞[exp(−v)−exp(−v/4)g(v/2)]/(1−exp(−v))dv`
+  y `A=−2.52514914140767058531567678556`.
+- Se verifican ambos signos, la frecuencia angular, el peso orbital,
+  más de 100 primos y las potencias sin recortes ocultos.
+- Se aumentan por separado ordenadas, límite archimediano y límites aritméticos.
+  No se fabrican colas a partir de la diferencia entre caras.
+
+Ejemplo finito con `a=10`, ordenadas calculadas mediante `mp.zetazero` y 30 dps:
+
+| Ordenadas positivas | Primos ≤ | T | k ≤ | Residuo absoluto bruto |
+|---:|---:|---:|---:|---:|
+| 1 | 2 | 20 | 1 | 1.5991×10⁻⁵ |
+| 5 | 20 | 40 | 5 | 5.1431×10⁻¹⁶ |
+| 15 | 100 | 60 | 20 | aproximadamente 1.1×10⁻³¹ |
+
+Son ejemplos de convergencia numérica, **no cotas certificadas ni pruebas de RH**.
+La fórmula general contempla también ceros fuera de la recta crítica; evaluar
+sólo una lista de ordenadas en esa recta no demuestra su inexistencia.
+El puente `core/validate_weil_spectral_bridge.py` no fue usado como referencia:
+su término de polo y su ponderación exclusiva de ceros no corresponden a esta
+identidad. No se modificó ese diagnóstico independiente en este cambio.
+
+Archivos modificados: `validate_explicit_formula.py`, `utils/mellin.py`,
+`validate_v5_coronacion.py`, `tests/test_explicit_formula_fix.py`,
+`tests/test_v5_failure_propagation.py`, `tests/test_padic_zeta.py` y las dos
+documentaciones `IMPLEMENTATION_SUMMARY.md` y `FORMALIZATION_STATUS.md`.
+La regresión p-ádica exige ahora conservar las cinco ordenadas suministradas,
+en lugar de exigir al menos diez números cargados de otra fuente.
+
+Validación desde la raíz, con dependencias existentes restauradas localmente:
+
+- Pruebas dirigidas iniciales de fórmula/V5/rutas/colector:
+  **182 pasaron, 1 omitida, 1 fallo ajeno al cambio**.
+- Revalidación final de los tres archivos de pruebas modificados:
+  **39 pasaron** (incluida la nueva comprobación del transformado genérico).
+- En total se observaron **206 pruebas distintas satisfactorias**. Persisten
+  dos fallos preexistentes, sin reescribir sus aserciones:
+  `test_explicit_formula_with_many_zeros` en el operador independiente
+  (`relative_error=1`, repetido aisladamente) y
+  `test_p_adic_zeta_approx_function` (la definición posterior de
+  `zeta_p_approx` devuelve el mismo valor para distintos primos).
+- Colección completa acotada: **13143 pruebas**, detenida por cuatro errores
+  preexistentes: faltan `EmotionalObserver`, `Node`,
+  `predict_mutation_stability` y la constante `EPSILON_OSC`.
+- Ejecución real
+  `validate_v5_coronacion.py --precision 30 --save-certificate --output-dir artifacts/math-next-step/v5`
+  en 43.79 s, código **1**. El residuo explícito es **9.2216×10⁻²¹**
+  (relativo **7.3868×10⁻²¹**), con 1000 ordenadas tabuladas, primos ≤1000,
+  potencias ≤20 y T=50. La ejecución conserva cuatro fallos requeridos:
+  integridad del entorno/checksums, SAT (10 consistentes pero 0 satisfechos),
+  Step 5 no disponible y reporte A+B.
+- El certificado aislado mantiene `success=false` y
+  `riemann_hypothesis_status="NOT_PROVEN"`; el reporte A+B mantiene
+  `overall_passed=false` y `riemann_hypothesis_proven=false`.
+- El instalador estándar de elan funcionó; instalar el pin Lean 4.5.0 falló
+  por DNS de `release.lean-lang.org`, sin alternativas de descarga ni cambios
+  de pins. No se afirma compilación Lean ni éxito del CI remoto.
+- Los hashes SHA-256 de beacon, datos, certificados y workflows protegidos
+  permanecieron intactos. Logs y artefactos están en `artifacts/math-next-step/`.
+- La sintaxis Python y `git diff --check` pasan. Flake8 conserva deuda previa:
+  **543 avisos frente a 565 en la base**, sin categorías aumentadas. No se
+  presenta ese resultado como una aprobación completa de calidad del repositorio.

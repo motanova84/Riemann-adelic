@@ -33,7 +33,7 @@ import json
 from dataclasses import dataclass, field
 from datetime import datetime
 from pathlib import Path
-from typing import Any, Dict, Tuple
+from typing import Any, Dict, Optional, Tuple, Union
 
 import mpmath as mp
 import numpy as np
@@ -306,7 +306,8 @@ def generate_spectral_certificate(
     precision: int = TARGET_PRECISION,
     n_zeros: int = 10,
     save_to_file: bool = True,
-    verbose: bool = True
+    verbose: bool = True,
+    output_dir: Optional[Union[str, Path]] = None,
 ) -> SpectralValidityResult:
     """
     Generate the QCAL-∞³-SPECTRAL Mathematical Validity Certificate.
@@ -323,6 +324,8 @@ def generate_spectral_certificate(
         n_zeros: Number of zeros to verify
         save_to_file: Whether to save certificate to data/
         verbose: Print progress information
+        output_dir: Optional saved certificate destination; None uses data/.
+            Input zero datasets are always read from their canonical locations.
         
     Returns:
         SpectralValidityResult with all validation details
@@ -517,8 +520,9 @@ def generate_spectral_certificate(
     
     # Save certificate to file
     if save_to_file:
-        cert_path = Path(__file__).parent.parent / "data" / "qcal_spectral_certificate.json"
-        cert_path.parent.mkdir(exist_ok=True)
+        artifact_dir = Path(output_dir) if output_dir is not None else Path(__file__).parent.parent / "data"
+        cert_path = artifact_dir / "qcal_spectral_certificate.json"
+        cert_path.parent.mkdir(parents=True, exist_ok=True)
         
         with open(cert_path, 'w', encoding='utf-8') as f:
             json.dump(certificate, f, indent=2, default=str, ensure_ascii=False)
@@ -579,6 +583,8 @@ if __name__ == "__main__":
                         help="Save certificate to file")
     parser.add_argument("--quiet", action="store_true",
                         help="Suppress output")
+    parser.add_argument("--output-dir", type=Path,
+                        help="Saved certificate destination (default: data/)")
     
     args = parser.parse_args()
     
@@ -586,7 +592,8 @@ if __name__ == "__main__":
         precision=min(args.precision, TARGET_PRECISION),
         n_zeros=args.n_zeros,
         save_to_file=args.save,
-        verbose=not args.quiet
+        verbose=not args.quiet,
+        output_dir=args.output_dir,
     )
     
     exit(0 if result.all_criteria_satisfied else 1)

@@ -1,5 +1,65 @@
 # Lean 4 Formalization Status - Riemann Hypothesis
 
+## Auditoría V5 A+B (11 octubre 2026)
+
+La métrica numérica de cierre no implica completitud formal ni RH.
+`QCAL/RH_Equivalence.lean` presupone `critical_localization_step` y otros
+axiomas; su conclusión RH es condicional. Compilar un archivo sin `sorry`
+no elimina esos supuestos. V5 informa por separado compilación, placeholders,
+axiomas y criterio numérico; una compilación omitida nunca satisface el gate.
+Los diez certificados SAT más recientes registran satisfacción falsa y carecen
+de evidencia positiva de compilación. Se mantienen intactos.
+
+**Último intento local (11 octubre 2026):** el instalador estándar de elan
+terminó correctamente, pero `elan toolchain install leanprover/lean4:v4.5.0`
+falló con salida 1: `Could not resolve host: release.lean-lang.org`.
+`elan toolchain list` confirma que no hay toolchains instalados. Se detuvieron
+las descargas, sin mirrors ni bypass; no se ejecutó el compilador ni se obtuvo
+salida de `#print axioms`. Los intentos anteriores descritos más abajo son
+históricos, no evidencia de compilación en este entorno.
+
+Prerrequisitos: acceso autorizado al servidor oficial, restauración de los
+paquetes del `lake-manifest.json` existente (Mathlib v4.5.0) mediante Lake y
+compilación directa de `QCAL/Colector.lean` con auditoría de sus dependencias.
+No se cambiaron axiomas ni configuración para simular ese resultado.
+La raíz `QCAL.lean` ausente y la biblioteca local `Mathlib` solapada requieren
+diagnóstico de build después de verificar el módulo directo, no reestructuración
+a ciegas. Comando pendiente: desde `formalization/lean`,
+`lake env lean QCAL/Colector.lean`.
+
+## Colector: tres leyes condicionales (October 2026)
+
+`formalization/lean/QCAL/Colector.lean` contiene pruebas fuente sin huecos de
+las leyes estructural, biológica y de conservación del producto. Son
+**condicionales** a los campos explícitos de `Supuestos C M : Prop`, no una
+derivación de leyes físicas ni una prueba de RH. `κ_Π` es abstracto con
+positividad e intervalo abierto `(2.578, 2.579)`. El testigo racional `2.5782`
+no identifica todos los colectores con el mismo número.
+
+`Eje` es un registro libre. Igualar globalmente los invariantes de cualesquiera
+ejes geométrico/físico sería inconsistente (se pueden construir valores 0 y 1).
+Aquí `Fibra C n` exige nombre correcto e invariante `C.κ_Π`; las hipótesis sólo
+relacionan ejes admisibles del mismo modelo. Los modelos canónicos demuestran
+que las hipótesis son satisfacibles para cada colector. Estas fibras indexadas
+no son un fibrado topológico: no se define topología ni trivialización local.
+
+Los comandos `#print axioms` incluidos auditan las dependencias fundacionales
+de los teoremas. Los supuestos específicos son argumentos `h`, por lo que no
+aparecen como axiomas globales en esa salida. Compilación y salida del auditor
+**no verificadas**; véase el bloqueo actual arriba.
+
+`validation/colector.py` compara datos suministrados con tolerancia explícita
+`atol + rtol*max(|a|,|b|)` (ambas finitas y no negativas), con al menos 30 dps
+locales. El intervalo permanece estricto mediante comparación exacta de la
+entrada, no del parámetro redondeado. La observación debe ser estrictamente
+positiva independientemente de tolerancias, como concluye `ley_biologica`.
+El reporte explicita que tolerancia cero compara cálculos redondeados,
+no reales exactos; cancelación y pérdida previa de dígitos no están certificadas.
+Pruebas sintéticas:
+`python -m pytest tests/test_colector.py -o addopts=''`.
+Un resultado numérico positivo sólo demuestra consistencia a esa tolerancia,
+no evidencia biológica o experimental ni certificación matemática externa.
+
 ## QCAL-EXP-01: scalar discrepancy bound (October 2026)
 
 `formalization/lean/QCAL/ExperimentalDiscrepancy.lean` supplies proof source for
@@ -1068,3 +1128,26 @@ Riemann Hypothesis via the adelic spectral approach.
 **Status**: ✅ MAJOR PROGRESS TOWARD FULL CONSTRUCTIVE FORMALIZATION  
 **Quality**: Production-ready skeleton with explicit constructions  
 **Next Steps**: Fill in remaining proofs and verify with Lean compiler
+
+## Numerical explicit-formula correction — 2026-10-11
+
+The Python audit now uses the even real pair
+`h(t)=∫ℝ g(u)exp(itu)du`, both signs of each supplied critical-line ordinate,
+the two poles `h(±i/2)`, the archimedean kernel
+`Re ψ(1/4+it/2)−log π` with measure `dt/(2π)`, and orbital weights
+`2 log(p)p^(−k/2)g(k log p)`. V5 uses an analytic Gaussian pair consistently
+on both sides, without zeros-only weighting or fitted tail closure.
+
+This correction is **numerical, not a new Lean theorem or a completed RH
+proof**. The reported finite residuals do not certify missing zeros, tail
+bounds, or localization of all nontrivial zeros. They do not discharge the
+existing analytic identity/localization assumptions or remaining placeholders.
+No protected Lean sources, axioms, proof structures or DOI references changed.
+See `IMPLEMENTATION_SUMMARY.md` for independent Gaussian anchors and limits.
+
+The standard elan installer was attempted successfully, but downloading the
+existing `leanprover/lean4:v4.5.0` pin failed because
+`release.lean-lang.org` could not be resolved. Therefore compilation remains
+unverified; no alternate pins or network workarounds were used. Actual V5
+validation fails required evidence checks and its isolated certificate retains
+`riemann_hypothesis_status="NOT_PROVEN"`.
