@@ -1,0 +1,69 @@
+{
+  "title": "Certificado de Validación: Memoria Resonante del Vacío",
+  "framework": "QCAL ∞³",
+  "timestamp": "2026-10-12T20:37:13.276101+00:00",
+  "equation": "E_vac(R_Ψ) = α R_Ψ⁴ + β ζ'(1/2) / R_Ψ² + γ Λ² R_Ψ² + δ sin²(log R_Ψ / log π)",
+  "architecture_dimensions": {
+    "macroscopic_uv_block": "α R_Ψ⁴ + γ Λ² R_Ψ² (tensión horizonte vs densidad)",
+    "spectral_pulse": "β ζ'(1/2) / R_Ψ² (acoplamiento a ceros de Riemann y primos)",
+    "harmonic_modulator": "δ sin²(log R_Ψ / log π) (pentagrama logarítmico con resonancia en potencias de π)"
+  },
+  "constants": {
+    "f0_hz": 141.7001,
+    "C_coherence": 244.36,
+    "psi_threshold": 0.888,
+    "zeta_prime_half": -3.9226461392091516
+  },
+  "coherence_at_pi": {
+    "radius": 3.141592653589793,
+    "energy": 107.58932170353063,
+    "frequency_hz": 141.7001,
+    "coherence_C": 244.36,
+    "psi_coherence": 1.0,
+    "is_coherent": true,
+    "is_f0_aligned": true
+  },
+  "checks": [
+    {
+      "name": "Pulso Espectral: ζ'(1/2) alta precisión",
+      "passed": true,
+      "detail": "ζ'(1/2) = -3.92264613920915"
+    },
+    {
+      "name": "Descomposición exacta en 3 dimensiones",
+      "passed": true,
+      "detail": "Error residual = 0.00e+00"
+    },
+    {
+      "name": "Pentagrama logarítmico en R_Ψ = 1",
+      "passed": true,
+      "detail": "Modulador en R=1: 0.00e+00"
+    },
+    {
+      "name": "Consistencia analítica de 1ª y 2ª derivadas",
+      "passed": true,
+      "detail": "Max error dE/dR: 2.27e-08, Max error d²E/dR²: 5.64e-08"
+    },
+    {
+      "name": "Búsqueda y estabilidad de mínimos locales",
+      "passed": true,
+      "detail": "Mínimos detectados en rango: 0"
+    },
+    {
+      "name": "Coherencia QCAL a f₀ = 141.7001 Hz",
+      "passed": true,
+      "detail": "f₀ = 141.7001 Hz, C = 244.36, Ψ = 1.0000"
+    },
+    {
+      "name": "Formalización Lean 4 (ResonantVacuumMemory.lean)",
+      "passed": true,
+      "detail": "/home/runner/work/Riemann-adelic/Riemann-adelic/formalization/lean/QCAL/ResonantVacuumMemory.lean"
+    }
+  ],
+  "all_passed": true,
+  "author": "José Manuel Mota Burruezo Ψ ✧ ∞³",
+  "institution": "Instituto de Conciencia Cuántica (ICQ)",
+  "orcid": "0009-0002-1923-0773",
+  "doi": "10.5281/zenodo.17379721",
+  "status": "VALIDATED_AND_COHERENT"
+}

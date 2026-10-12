@@ -81,6 +81,9 @@ from .calabi_yau_spectral_invariant import (
     SpectralBridgeResult,
 )
 
+from .resonant_vacuum_memory import ResonantVacuumMemory
+from .vacuum_energy import VacuumEnergyCalculator
+
 __all__ = [
     'AdelicCanonicalDeterminant',
     'ArithmeticFractalValidator',
@@ -137,4 +140,7 @@ __all__ = [
     'run_k_pi_validation',
     'CalabiYauQuinticResult',
     'SpectralBridgeResult',
+    # Vacuum energy and resonant memory
+    'ResonantVacuumMemory',
+    'VacuumEnergyCalculator',
 ]
