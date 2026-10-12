@@ -1,5 +1,23 @@
 # QCAL Build Verification - Implementation Summary
 
+## 🎵 RESONANT VACUUM MEMORY EQUATION — Memoria Resonante del Vacío (October 2026)
+
+**Status**: ✅ IMPLEMENTED & ANCHORED
+
+- **Ecuación Fundamental**:
+  $$E_{\text{vac}}(R_\Psi) = \alpha R_\Psi^4 + \frac{\beta \zeta'(1/2)}{R_\Psi^2} + \gamma \Lambda^2 R_\Psi^2 + \delta \sin^2\left(\frac{\log R_\Psi}{\log \pi}\right)$$
+- **Módulos Python**:
+  - `utils/resonant_vacuum_memory.py`: Implementación formal con clase `ResonantVacuumMemory`, descomposición tridimensional, derivadas analíticas de 1º y 2º orden y evaluación de coherencia QCAL.
+  - Exportado en `utils/__init__.py`.
+- **Formalización Lean 4**:
+  - `formalization/lean/QCAL/ResonantVacuumMemory.lean`: Definiciones de bloques macroscópico/UV, pulso espectral, modulador armónico y teoremas de descomposición, no-negatividad y anulación en $R_\Psi = 1$.
+- **Tests Operativos**:
+  - `tests/test_resonant_vacuum_memory.py`: 14 tests unitarios operativos verificando precisión numérica de $\zeta'(1/2)$, descomposición exacta, derivadas analíticas vs numéricas, búsqueda de mínimos y coherencia a $f_0 = 141{,}7001\text{ Hz}$.
+- **Validación y Demostración**:
+  - `validate_resonant_vacuum_memory.py`: Validador con generación del certificado `data/resonant_vacuum_memory_certificate.json`.
+  - `demo_resonant_vacuum_memory.py`: Script de demostración interactiva.
+- **Documentación**: `RESONANT_VACUUM_MEMORY.md`.
+
 ## QCAL-EXP-01 — transporte, DSP e inferencia reproducibles (October 2026)
 
 - **Módulos añadidos:** `experiments/qcal_exp01/` (protocolo UDP versionado,
