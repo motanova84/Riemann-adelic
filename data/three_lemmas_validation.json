@@ -1,0 +1,73 @@
+{
+  "validation_timestamp": "2026-02-18",
+  "qcal_frequency_hz": 141.7001,
+  "qcal_coherence": 244.36,
+  "kappa_pi": 2.5773045678901236,
+  "files": {
+    "V_eff_coercive.lean": {
+      "file": "V_eff_coercive.lean",
+      "exists": true,
+      "size_bytes": 5109,
+      "has_imports": true,
+      "has_namespace": true,
+      "has_theorems": true,
+      "has_qcal_metadata": true,
+      "import_count": 4,
+      "theorem_count": 1,
+      "lemma_count": 7,
+      "sorry_count": 4,
+      "errors": []
+    },
+    "heat_kernel_majorized.lean": {
+      "file": "heat_kernel_majorized.lean",
+      "exists": true,
+      "size_bytes": 7591,
+      "has_imports": true,
+      "has_namespace": true,
+      "has_theorems": true,
+      "has_qcal_metadata": true,
+      "import_count": 4,
+      "theorem_count": 1,
+      "lemma_count": 4,
+      "sorry_count": 3,
+      "errors": []
+    },
+    "heat_kernel_L2.lean": {
+      "file": "heat_kernel_L2.lean",
+      "exists": true,
+      "size_bytes": 8536,
+      "has_imports": true,
+      "has_namespace": true,
+      "has_theorems": true,
+      "has_qcal_metadata": true,
+      "import_count": 5,
+      "theorem_count": 4,
+      "lemma_count": 3,
+      "sorry_count": 8,
+      "errors": []
+    },
+    "trace_class_exp_neg_tH_psi.lean": {
+      "file": "trace_class_exp_neg_tH_psi.lean",
+      "exists": true,
+      "size_bytes": 9751,
+      "has_imports": true,
+      "has_namespace": true,
+      "has_theorems": true,
+      "has_qcal_metadata": true,
+      "import_count": 6,
+      "theorem_count": 5,
+      "lemma_count": 0,
+      "sorry_count": 4,
+      "errors": []
+    }
+  },
+  "summary": {
+    "total_files": 4,
+    "files_exist": 4,
+    "total_theorems": 11,
+    "total_lemmas": 14,
+    "total_sorries": 19,
+    "total_size_bytes": 30987,
+    "all_valid": true
+  }
+}
