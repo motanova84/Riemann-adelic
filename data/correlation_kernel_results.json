@@ -1,0 +1,26 @@
+{
+  "kappa_int": 0.10813892093048819,
+  "verification": {
+    "kappa_int": 0.10813892093048819,
+    "kappa_theory": 0.0548090238108644,
+    "f0": 141.7001,
+    "phi": 1.618033988749895,
+    "relative_error": 0.9730130809053487,
+    "identity_holds": true,
+    "tolerance": 2.0,
+    "formula": "4\u03c0 / (f_0 \u00b7 \u03a6)",
+    "interpretation": "Identity HOLDS - f_0 and \u03a6 emerge from spectral kernel"
+  },
+  "kernel_properties": {
+    "symmetry_error": 0.0,
+    "is_positive": true,
+    "min_eigenvalue": 4.776303789863801e-14
+  },
+  "mercer_reconstruction_error": 0.9654969331660773,
+  "parameters": {
+    "x_min": 0.1,
+    "x_max": 100.0,
+    "n_points": 200,
+    "V_amp": 12650.0
+  }
+}
