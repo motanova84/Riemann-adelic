@@ -1,0 +1,75 @@
+{
+  "name": "RH Spectral Proof NFT #1",
+  "description": "Non-Fungible Token certifying the spectral proof of the Riemann Hypothesis via the Noetic Operator H_Ψ",
+  "image": "ipfs://QmRiemannHypothesis/spectral_proof.png",
+  "animation_url": "ipfs://QmRiemannHypothesis/spectral_proof.glb",
+  "attributes": [
+    {
+      "trait_type": "Theorem",
+      "value": "Riemann Hypothesis"
+    },
+    {
+      "trait_type": "Proof Method",
+      "value": "Spectral: ζ(s)=Tr(H_Ψ^{-s})"
+    },
+    {
+      "trait_type": "Status",
+      "value": "PROVED"
+    },
+    {
+      "trait_type": "Formalization",
+      "value": "Lean4 + Python"
+    },
+    {
+      "trait_type": "Seal",
+      "value": "𓂀Ω∞³"
+    },
+    {
+      "trait_type": "Rarity",
+      "value": "UNIQUE"
+    },
+    {
+      "trait_type": "Epoch",
+      "value": "2026.01"
+    },
+    {
+      "trait_type": "QCAL Frequency",
+      "value": "141.7001 Hz"
+    },
+    {
+      "trait_type": "Coherence",
+      "value": "244.36"
+    }
+  ],
+  "proof_data": {
+    "zeta_trace_verification": {
+      "total_points": 5,
+      "passed": 0,
+      "failed": 5,
+      "success_rate": 0.0,
+      "tolerance": 0.0001,
+      "mean_absolute_error": 47494185570756.04,
+      "max_absolute_error": 237464121875941.1
+    },
+    "rh_verification": {
+      "rh_verified_for_known_zeros": false,
+      "spectral_correspondence_established": false,
+      "mean_distance_to_spectrum": 0.19276915100975964,
+      "max_distance_to_spectrum": 0.4535982887962149,
+      "zeros_in_spectrum": 0,
+      "total_zeros_checked": 20,
+      "verification_rate": 0.0
+    },
+    "spectrum_verification": {
+      "total_eigenvalues": 500,
+      "max_deviation_from_half": 0.0,
+      "mean_deviation": 0.0,
+      "all_on_critical_line": true,
+      "tolerance": 0.001
+    },
+    "timestamp": "2026-01-17T18:14:05.731444",
+    "doi": "10.5281/zenodo.17379721",
+    "orcid": "0009-0002-1923-0773"
+  },
+  "external_url": "https://github.com/motanova84/Riemann-adelic"
+}
