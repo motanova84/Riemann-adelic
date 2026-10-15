@@ -1,0 +1,152 @@
+{
+  "spectral_correspondence": {
+    "total_zeros": 10,
+    "validated": 0,
+    "failed": 10,
+    "zeros": [
+      {
+        "index": 1,
+        "s": {
+          "real": 0.5,
+          "imag": 14.134725141734695
+        },
+        "valid": false,
+        "rel_error": 0.4240548779520046,
+        "eigenvalue": {
+          "real": -8.041507401288808,
+          "imag": 14.134725141734693
+        }
+      },
+      {
+        "index": 2,
+        "s": {
+          "real": 0.5,
+          "imag": 21.022039638771556
+        },
+        "valid": false,
+        "rel_error": 0.3063866645369768,
+        "eigenvalue": {
+          "real": -8.04150740128881,
+          "imag": 21.022039638771552
+        }
+      },
+      {
+        "index": 3,
+        "s": {
+          "real": 0.5,
+          "imag": 25.01085758014569
+        },
+        "valid": false,
+        "rel_error": 0.26248758111280557,
+        "eigenvalue": {
+          "real": -8.04150740128881,
+          "imag": 25.010857580145693
+        }
+      },
+      {
+        "index": 4,
+        "s": {
+          "real": 0.5,
+          "imag": 30.424876125859512
+        },
+        "valid": false,
+        "rel_error": 0.21913265137129467,
+        "eigenvalue": {
+          "real": -8.04150740128881,
+          "imag": 30.42487612585951
+        }
+      },
+      {
+        "index": 5,
+        "s": {
+          "real": 0.5,
+          "imag": 32.93506158773919
+        },
+        "valid": false,
+        "rel_error": 0.20340724702526286,
+        "eigenvalue": {
+          "real": -8.041507401288806,
+          "imag": 32.93506158773919
+        }
+      },
+      {
+        "index": 6,
+        "s": {
+          "real": 0.5,
+          "imag": 37.586178158825675
+        },
+        "valid": false,
+        "rel_error": 0.17941218553323754,
+        "eigenvalue": {
+          "real": -8.041507401288808,
+          "imag": 37.58617815882568
+        }
+      },
+      {
+        "index": 7,
+        "s": {
+          "real": 0.5,
+          "imag": 40.9187190121475
+        },
+        "valid": false,
+        "rel_error": 0.1653667925655048,
+        "eigenvalue": {
+          "real": -8.04150740128881,
+          "imag": 40.9187190121475
+        }
+      },
+      {
+        "index": 8,
+        "s": {
+          "real": 0.5,
+          "imag": 43.327073280915
+        },
+        "valid": false,
+        "rel_error": 0.15648959359941758,
+        "eigenvalue": {
+          "real": -8.041507401288808,
+          "imag": 43.327073280915
+        }
+      },
+      {
+        "index": 9,
+        "s": {
+          "real": 0.5,
+          "imag": 48.00515088116716
+        },
+        "valid": false,
+        "rel_error": 0.14167779554292553,
+        "eigenvalue": {
+          "real": -8.041507401288811,
+          "imag": 48.00515088116717
+        }
+      },
+      {
+        "index": 10,
+        "s": {
+          "real": 0.5,
+          "imag": 49.7738324776723
+        },
+        "valid": false,
+        "rel_error": 0.13677372751000277,
+        "eigenvalue": {
+          "real": -8.041507401288808,
+          "imag": 49.773832477672315
+        }
+      }
+    ]
+  },
+  "self_adjointness": {
+    "self_adjoint_signature_valid": true,
+    "critical_line_data": {
+      "all_on_critical_line": true,
+      "max_deviation": 0.0,
+      "num_checked": 10
+    }
+  },
+  "qcal_framework": {
+    "f0": 141.7001,
+    "C": 244.36,
+    "zeta_prime_half": -3.922466
+  }
+}
