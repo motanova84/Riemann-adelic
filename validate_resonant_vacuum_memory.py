@@ -26,6 +26,8 @@ DOI: 10.5281/zenodo.17379721
 import sys
 import json
 import argparse
+import re
+import subprocess
 from datetime import datetime, timezone
 from pathlib import Path
 import numpy as np
@@ -35,6 +37,32 @@ REPO_ROOT = Path(__file__).resolve().parent
 sys.path.insert(0, str(REPO_ROOT / "utils"))
 
 from resonant_vacuum_memory import ResonantVacuumMemory
+
+
+def _validate_lean_formalization(lean_file: Path) -> tuple[bool, str]:
+    """Type-check the Lean module and reject compiler-reported proof placeholders."""
+    if not lean_file.is_file():
+        return False, f"Lean module not found: {lean_file}"
+
+    lean_dir = lean_file.parent.parent
+    try:
+        result = subprocess.run(
+            ["lake", "env", "lean", str(lean_file.relative_to(lean_dir))],
+            cwd=lean_dir,
+            capture_output=True,
+            text=True,
+            timeout=300,
+            check=False,
+        )
+    except (OSError, subprocess.TimeoutExpired) as exc:
+        return False, f"Lean compilation could not be completed: {exc}"
+
+    output = "\n".join(part for part in (result.stdout, result.stderr) if part)
+    if result.returncode != 0:
+        return False, output.strip() or f"Lean exited with status {result.returncode}"
+    if re.search(r"\b(?:sorry|admit)\b", output):
+        return False, "Lean compilation reported a forbidden proof placeholder"
+    return True, "Lean module compiled successfully"
 
 
 def validate_resonant_vacuum_memory(save_certificate: bool = True, verbose: bool = True) -> bool:
@@ -143,22 +171,11 @@ def validate_resonant_vacuum_memory(save_certificate: bool = True, verbose: bool
 
     # 7. Lean 4 Formalization Verification
     lean_file = REPO_ROOT / "formalization" / "lean" / "QCAL" / "ResonantVacuumMemory.lean"
-    lean_exists = lean_file.is_file()
-    lean_has_terms = False
-    if lean_exists:
-        content = lean_file.read_text(encoding="utf-8")
-        lean_has_terms = (
-            "macroscopic_uv_block" in content
-            and "spectral_pulse" in content
-            and "harmonic_modulator" in content
-            and "E_vac" in content
-            and "f₀" in content
-        )
-    lean_ok = lean_exists and lean_has_terms
+    lean_ok, lean_detail = _validate_lean_formalization(lean_file)
     checks.append({
         "name": "Formalización Lean 4 (ResonantVacuumMemory.lean)",
         "passed": bool(lean_ok),
-        "detail": str(lean_file)
+        "detail": lean_detail
     })
     print(f"[{'PASS' if lean_ok else 'FAIL'}] 7. Formalización en Lean 4: {lean_file.name}")
 
