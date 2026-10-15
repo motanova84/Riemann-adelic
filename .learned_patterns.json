@@ -1,0 +1,33 @@
+{
+  "patterns": [
+    {
+      "category": "trivial",
+      "strategy": "rfl",
+      "keywords": [
+        "theorem"
+      ],
+      "success_count": 1,
+      "timestamp": "2026-02-18T01:12:00.377742"
+    },
+    {
+      "category": "trivial",
+      "strategy": "rfl",
+      "keywords": [
+        "def"
+      ],
+      "success_count": 1,
+      "timestamp": "2026-02-18T01:12:00.378066"
+    },
+    {
+      "category": "trivial",
+      "strategy": "rfl",
+      "keywords": [
+        "def"
+      ],
+      "success_count": 1,
+      "timestamp": "2026-02-18T01:12:00.378315"
+    }
+  ],
+  "last_update": "2026-02-18T01:12:00.378386",
+  "total_patterns": 3
+}
