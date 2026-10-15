@@ -1,0 +1,289 @@
+{
+  "title": "Arithmetical Coercivity Validation Certificate",
+  "timestamp": "2026-02-18T17:48:38.759702Z",
+  "version": "1.0.0",
+  "author": "Jos\u00e9 Manuel Mota Burruezo",
+  "orcid": "0009-0002-1923-0773",
+  "doi": "10.5281/zenodo.17379721",
+  "qcal": {
+    "frequency_hz": 141.7001,
+    "coherence_constant": 244.36,
+    "equation": "\u03a8 = I \u00d7 A_eff\u00b2 \u00d7 C^\u221e"
+  },
+  "mathematical_statement": {
+    "lemma": "Arithmetical Coercivity",
+    "formula": "\u2211_{p\u2264X} (log p/\u221ap)(1-cos(\u03b3 log p)) \u2265 c(log X)^\u03b2",
+    "coercivity_constant": 0.1,
+    "growth_exponent": 0.5
+  },
+  "validation_results": {
+    "all_tests_passed": true,
+    "tests": {
+      "uniform_lower_bound": {
+        "test_name": "uniform_lower_bound",
+        "passed": true,
+        "results": [
+          {
+            "X": 100,
+            "gamma": 1.0,
+            "hecke_sum": 22.595680528391203,
+            "expected_bound": 0.21459660262893474,
+            "ratio": 105.29374767158853,
+            "bound_satisfied": true
+          },
+          {
+            "X": 100,
+            "gamma": 14.134,
+            "hecke_sum": 18.52214912451282,
+            "expected_bound": 0.21459660262893474,
+            "ratio": 86.31147416876868,
+            "bound_satisfied": true
+          },
+          {
+            "X": 100,
+            "gamma": 100.0,
+            "hecke_sum": 13.280364367612824,
+            "expected_bound": 0.21459660262893474,
+            "ratio": 61.88524983583404,
+            "bound_satisfied": true
+          },
+          {
+            "X": 100,
+            "gamma": 500.0,
+            "hecke_sum": 15.805252777798616,
+            "expected_bound": 0.21459660262893474,
+            "ratio": 73.65099253284984,
+            "bound_satisfied": true
+          },
+          {
+            "X": 100,
+            "gamma": 1000.0,
+            "hecke_sum": 13.498962530709811,
+            "expected_bound": 0.21459660262893474,
+            "ratio": 62.90389673153989,
+            "bound_satisfied": true
+          },
+          {
+            "X": 500,
+            "gamma": 1.0,
+            "hecke_sum": 31.13004906142389,
+            "expected_bound": 0.2492911570517934,
+            "ratio": 124.87426120356218,
+            "bound_satisfied": true
+          },
+          {
+            "X": 500,
+            "gamma": 14.134,
+            "hecke_sum": 44.87839785038924,
+            "expected_bound": 0.2492911570517934,
+            "ratio": 180.02402644817917,
+            "bound_satisfied": true
+          },
+          {
+            "X": 500,
+            "gamma": 100.0,
+            "hecke_sum": 40.49193690596799,
+            "expected_bound": 0.2492911570517934,
+            "ratio": 162.42829222199518,
+            "bound_satisfied": true
+          },
+          {
+            "X": 500,
+            "gamma": 500.0,
+            "hecke_sum": 40.490077735160384,
+            "expected_bound": 0.2492911570517934,
+            "ratio": 162.4208343930469,
+            "bound_satisfied": true
+          },
+          {
+            "X": 500,
+            "gamma": 1000.0,
+            "hecke_sum": 41.079632841845495,
+            "expected_bound": 0.2492911570517934,
+            "ratio": 164.78576026389368,
+            "bound_satisfied": true
+          },
+          {
+            "X": 1000,
+            "gamma": 1.0,
+            "hecke_sum": 32.26003187462474,
+            "expected_bound": 0.2628260884878466,
+            "ratio": 122.74288317507141,
+            "bound_satisfied": true
+          },
+          {
+            "X": 1000,
+            "gamma": 14.134,
+            "hecke_sum": 64.0297545857594,
+            "expected_bound": 0.2628260884878466,
+            "ratio": 243.620239353523,
+            "bound_satisfied": true
+          },
+          {
+            "X": 1000,
+            "gamma": 100.0,
+            "hecke_sum": 57.4282612595561,
+            "expected_bound": 0.2628260884878466,
+            "ratio": 218.50289516526306,
+            "bound_satisfied": true
+          },
+          {
+            "X": 1000,
+            "gamma": 500.0,
+            "hecke_sum": 55.57751863995798,
+            "expected_bound": 0.2628260884878466,
+            "ratio": 211.4611945858181,
+            "bound_satisfied": true
+          },
+          {
+            "X": 1000,
+            "gamma": 1000.0,
+            "hecke_sum": 58.16620284236993,
+            "expected_bound": 0.2628260884878466,
+            "ratio": 221.31061332999903,
+            "bound_satisfied": true
+          },
+          {
+            "X": 2000,
+            "gamma": 1.0,
+            "hecke_sum": 44.15390647577843,
+            "expected_bound": 0.27569734238004695,
+            "ratio": 160.153544080641,
+            "bound_satisfied": true
+          },
+          {
+            "X": 2000,
+            "gamma": 14.134,
+            "hecke_sum": 88.34362185054879,
+            "expected_bound": 0.27569734238004695,
+            "ratio": 320.43697297875184,
+            "bound_satisfied": true
+          },
+          {
+            "X": 2000,
+            "gamma": 100.0,
+            "hecke_sum": 82.11445679004912,
+            "expected_bound": 0.27569734238004695,
+            "ratio": 297.84275786327635,
+            "bound_satisfied": true
+          },
+          {
+            "X": 2000,
+            "gamma": 500.0,
+            "hecke_sum": 81.2975536693635,
+            "expected_bound": 0.27569734238004695,
+            "ratio": 294.87971471736336,
+            "bound_satisfied": true
+          },
+          {
+            "X": 2000,
+            "gamma": 1000.0,
+            "hecke_sum": 82.76755542008259,
+            "expected_bound": 0.27569734238004695,
+            "ratio": 300.21165494583573,
+            "bound_satisfied": true
+          }
+        ],
+        "min_ratio": 61.88524983583404,
+        "mean_ratio": 178.78705028334005
+      },
+      "non_synchronization": {
+        "test_name": "non_synchronization",
+        "passed": true,
+        "results": [
+          {
+            "gamma": 10.0,
+            "min_distance": 0.06098437660643548,
+            "mean_distance": 1.6256600967187598,
+            "non_sync_fraction": 0.94,
+            "passed": true
+          },
+          {
+            "gamma": 50.0,
+            "min_distance": 0.05398213052590179,
+            "mean_distance": 1.6349036571175424,
+            "non_sync_fraction": 0.98,
+            "passed": true
+          },
+          {
+            "gamma": 100.0,
+            "min_distance": 0.10796426105180358,
+            "mean_distance": 1.6549803310561269,
+            "non_sync_fraction": 1.0,
+            "passed": true
+          },
+          {
+            "gamma": 500.0,
+            "min_distance": 0.23474437775221094,
+            "mean_distance": 1.6690182497662318,
+            "non_sync_fraction": 1.0,
+            "passed": true
+          },
+          {
+            "gamma": 1000.0,
+            "min_distance": 0.14878537686990065,
+            "mean_distance": 1.686073470262435,
+            "non_sync_fraction": 1.0,
+            "passed": true
+          }
+        ]
+      },
+      "growth_rate": {
+        "test_name": "growth_rate",
+        "passed": true,
+        "monotonic": true,
+        "empirical_exponent": 2.8306274253149724,
+        "expected_exponent": 0.5,
+        "results": [
+          {
+            "X": 50,
+            "hecke_sum": 13.973929794441782,
+            "log_X": 3.912023005428146,
+            "sqrt_log_X": 1.9778834660889772
+          },
+          {
+            "X": 100,
+            "hecke_sum": 18.52214912451282,
+            "log_X": 4.605170185988092,
+            "sqrt_log_X": 2.145966026289347
+          },
+          {
+            "X": 200,
+            "hecke_sum": 28.484078682871985,
+            "log_X": 5.298317366548036,
+            "sqrt_log_X": 2.301807413001365
+          },
+          {
+            "X": 500,
+            "hecke_sum": 44.87839785038924,
+            "log_X": 6.214608098422191,
+            "sqrt_log_X": 2.492911570517934
+          },
+          {
+            "X": 1000,
+            "hecke_sum": 64.0297545857594,
+            "log_X": 6.907755278982137,
+            "sqrt_log_X": 2.628260884878466
+          },
+          {
+            "X": 2000,
+            "hecke_sum": 88.34362185054879,
+            "log_X": 7.600902459542082,
+            "sqrt_log_X": 2.7569734238004693
+          }
+        ]
+      },
+      "qcal_coherence": {
+        "test_name": "qcal_coherence",
+        "passed": true,
+        "qcal_frequency": 141.7001,
+        "qcal_coherence": 244.36,
+        "coercivity_constant": 0.1,
+        "coherence_product": 24.436
+      }
+    }
+  },
+  "overall_status": "PASSED",
+  "certificate_hash": "0xQCAL_ARITHMETIC_COERCIVITY_52852cc79c031ad8",
+  "precision": 30
+}
