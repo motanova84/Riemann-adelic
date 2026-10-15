@@ -1,0 +1,255 @@
+{
+  "validation": "Orbital Classification Sealing",
+  "hash": "0xRH_1.000000_QCAL_888",
+  "timestamp": "2026-02-18T16:28:33.278509+00:00",
+  "qcal": {
+    "f0": 141.7001,
+    "C_coherence": 244.36
+  },
+  "components": [
+    {
+      "component": 1,
+      "name": "Orbital Sum Reduction",
+      "timestamp": "2026-02-18T16:28:33.278541+00:00",
+      "tests": [
+        {
+          "test": "gaussian_concentration",
+          "passed": true,
+          "on_diagonal": 0.28209479177387814,
+          "off_diagonal_ratios": {
+            "distance_1": 0.7788007830714049,
+            "distance_2": 0.36787944117144233,
+            "distance_5": 0.0019304541362277095
+          }
+        },
+        {
+          "test": "prime_power_sum",
+          "passed": true,
+          "total_sum": 1.1587776179337406,
+          "num_terms": 50,
+          "top_contributions": [
+            {
+              "prime": 2,
+              "power": 1,
+              "weight": 0.49012907173427356,
+              "contribution": 0.24506453586713678
+            },
+            {
+              "prime": 2,
+              "power": 2,
+              "weight": 0.34657359027997264,
+              "contribution": 0.08664339756999316
+            },
+            {
+              "prime": 2,
+              "power": 3,
+              "weight": 0.24506453586713678,
+              "contribution": 0.030633066983392104
+            },
+            {
+              "prime": 2,
+              "power": 4,
+              "weight": 0.17328679513998632,
+              "contribution": 0.010830424696249145
+            },
+            {
+              "prime": 2,
+              "power": 5,
+              "weight": 0.12253226793356839,
+              "contribution": 0.003829133372924012
+            }
+          ]
+        }
+      ],
+      "status": "PASSED"
+    },
+    {
+      "component": 2,
+      "name": "von Mangoldt Emergence",
+      "timestamp": "2026-02-18T16:28:33.279090+00:00",
+      "tests": [
+        {
+          "test": "haar_volume_identity",
+          "passed": true,
+          "max_error": 0.0,
+          "primes_tested": [
+            {
+              "prime": 2,
+              "log_p": 0.6931471805599453,
+              "haar_volume": 0.6931471805599453,
+              "von_mangoldt": 0.6931471805599453,
+              "error": 0.0
+            },
+            {
+              "prime": 3,
+              "log_p": 1.0986122886681098,
+              "haar_volume": 1.0986122886681098,
+              "von_mangoldt": 1.0986122886681098,
+              "error": 0.0
+            },
+            {
+              "prime": 5,
+              "log_p": 1.6094379124341003,
+              "haar_volume": 1.6094379124341003,
+              "von_mangoldt": 1.6094379124341003,
+              "error": 0.0
+            },
+            {
+              "prime": 7,
+              "log_p": 1.9459101490553132,
+              "haar_volume": 1.9459101490553132,
+              "von_mangoldt": 1.9459101490553132,
+              "error": 0.0
+            },
+            {
+              "prime": 11,
+              "log_p": 2.3978952727983707,
+              "haar_volume": 2.3978952727983707,
+              "von_mangoldt": 2.3978952727983707,
+              "error": 0.0
+            },
+            {
+              "prime": 13,
+              "log_p": 2.5649493574615367,
+              "haar_volume": 2.5649493574615367,
+              "von_mangoldt": 2.5649493574615367,
+              "error": 0.0
+            },
+            {
+              "prime": 17,
+              "log_p": 2.833213344056216,
+              "haar_volume": 2.833213344056216,
+              "von_mangoldt": 2.833213344056216,
+              "error": 0.0
+            },
+            {
+              "prime": 19,
+              "log_p": 2.9444389791664403,
+              "haar_volume": 2.9444389791664403,
+              "von_mangoldt": 2.9444389791664403,
+              "error": 0.0
+            },
+            {
+              "prime": 23,
+              "log_p": 3.1354942159291497,
+              "haar_volume": 3.1354942159291497,
+              "von_mangoldt": 3.1354942159291497,
+              "error": 0.0
+            },
+            {
+              "prime": 29,
+              "log_p": 3.367295829986474,
+              "haar_volume": 3.367295829986474,
+              "von_mangoldt": 3.367295829986474,
+              "error": 0.0
+            }
+          ]
+        },
+        {
+          "test": "transfer_coefficient_structure",
+          "passed": true,
+          "max_error": 0.0,
+          "test_cases": [
+            {
+              "prime": 2,
+              "power": 1,
+              "transfer_coeff": 0.49012907173427356,
+              "expected": 0.49012907173427356,
+              "error": 0.0
+            },
+            {
+              "prime": 3,
+              "power": 1,
+              "transfer_coeff": 0.634284100597564,
+              "expected": 0.634284100597564,
+              "error": 0.0
+            },
+            {
+              "prime": 5,
+              "power": 1,
+              "transfer_coeff": 0.7197625155536004,
+              "expected": 0.7197625155536004,
+              "error": 0.0
+            },
+            {
+              "prime": 2,
+              "power": 2,
+              "transfer_coeff": 0.34657359027997264,
+              "expected": 0.34657359027997264,
+              "error": 0.0
+            },
+            {
+              "prime": 3,
+              "power": 2,
+              "transfer_coeff": 0.3662040962227033,
+              "expected": 0.3662040962227033,
+              "error": 0.0
+            },
+            {
+              "prime": 5,
+              "power": 2,
+              "transfer_coeff": 0.32188758248682003,
+              "expected": 0.32188758248682003,
+              "error": 0.0
+            }
+          ]
+        }
+      ],
+      "status": "PASSED"
+    },
+    {
+      "component": 3,
+      "name": "Trace Class Fubini",
+      "timestamp": "2026-02-18T16:28:33.279426+00:00",
+      "tests": [
+        {
+          "test": "agmon_decay",
+          "passed": true,
+          "decay_rates": [
+            {
+              "u": 5,
+              "V_eff": 4.906715348489119,
+              "agmon_distance": 5.53777671345252,
+              "decay_rate": 0.003935266344216559
+            },
+            {
+              "u": 10,
+              "V_eff": 9.900045398899218,
+              "agmon_distance": 15.73216879430425,
+              "decay_rate": 1.4709770746947903e-07
+            },
+            {
+              "u": 15,
+              "V_eff": 14.900000305902275,
+              "agmon_distance": 28.950388895609034,
+              "decay_rate": 2.6730424373039365e-13
+            },
+            {
+              "u": 20,
+              "V_eff": 19.90000000206115,
+              "agmon_distance": 44.60941604870114,
+              "decay_rate": 4.230354565513604e-20
+            }
+          ],
+          "fastest_decay": 4.230354565513604e-20
+        },
+        {
+          "test": "nuclearity",
+          "passed": true,
+          "finite_sum": 0.6284737129015844,
+          "tail_estimate": 3.734083244523927e-201,
+          "total_trace_norm": 0.6284737129015844
+        },
+        {
+          "test": "fubini_convergence",
+          "passed": true,
+          "double_sum": 1.1392296079919428,
+          "num_primes": 9,
+          "num_powers": 10
+        }
+      ],
+      "status": "PASSED"
+    }
+  ],
+  "overall_status": "PASSED"
+}
