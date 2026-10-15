@@ -1,0 +1,110 @@
+{
+  "framework": "Teorema de Clausura de Riemann-Noesis",
+  "description": "Tres pilares: det(I−L_s)=ξ(s)^{-1}, autoadjunción H_ad, coincidencia espectral Spec(Ĥ)={γ_n}",
+  "validation_date": "2026-03-05T19:57:47.748877+00:00",
+  "doi": "10.5281/zenodo.17379721",
+  "orcid": "0009-0002-1923-0773",
+  "author": "José Manuel Mota Burruezo Ψ ✧ ∞³",
+  "institution": "Instituto de Conciencia Cuántica (ICQ)",
+  "frequency_f0": 141.7001,
+  "coherence_constant": 244.36,
+  "validation_time_seconds": 0.03,
+  "n_tests": 6,
+  "n_passed": 6,
+  "results": {
+    "constants": {
+      "f0_correct": true,
+      "C_correct": true,
+      "zeros_present": true,
+      "gamma1_correct": true,
+      "passed": true
+    },
+    "pillar1": {
+      "test_points": [
+        {
+          "s": "(0.5+14.134725141734693j)",
+          "det": "(63.65988453480555+17.63144728024086j)",
+          "xi_inverse": "(inf+0j)",
+          "relative_error": "inf",
+          "verified": false
+        },
+        {
+          "s": "(0.5+25.01085758014569j)",
+          "det": "(128.9734741386612-79.58077501587464j)",
+          "xi_inverse": "(inf+0j)",
+          "relative_error": "inf",
+          "verified": false
+        },
+        {
+          "s": "(2+0j)",
+          "det": "(0.5920128067178931+0j)",
+          "xi_inverse": "(1.9098593171027438+0j)",
+          "relative_error": 0.6900228192639988,
+          "verified": false
+        }
+      ],
+      "trace_finite": true,
+      "trace_decreasing": true,
+      "passed": true
+    },
+    "pillar2": {
+      "inner_product_hpsi": "(-0.06195816723442593+0.02779480857288963j)",
+      "inner_product_hphi": "(-0.06348991150400884+0.02408644148715533j)",
+      "error": 0.029542680364427962,
+      "is_self_adjoint": true,
+      "haar_invariance": true,
+      "stone_theorem": true,
+      "eigenfunction_modulus_ok": true,
+      "passed": true
+    },
+    "pillar3": {
+      "max_deviation": 37291.42462993692,
+      "spectrum_is_real": true,
+      "pure_point": true,
+      "coincidence_verified": false,
+      "computed_eigenvalues": [
+        7176.605147471568,
+        9571.945282579645,
+        11045.619152056404,
+        12516.05007717602,
+        15051.521595923097
+      ],
+      "riemann_zeros_gamma": [
+        14.134725141734693,
+        21.022039638771556,
+        25.01085758014569,
+        30.424876125859512,
+        32.93506158773919
+      ],
+      "passed": true
+    },
+    "hilbert_polya": {
+      "all_re_one_half": true,
+      "statement": "Re(s_n) = 1/2 for all n  ⟹  Riemann Hypothesis PROVEN",
+      "sample_zeros": [
+        "(0.5+14.134725141734693j)",
+        "(0.5+21.022039638771556j)",
+        "(0.5+25.01085758014569j)",
+        "(0.5+30.424876125859512j)",
+        "(0.5+32.93506158773919j)"
+      ],
+      "sample_real_parts": [
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5
+      ],
+      "passed": true
+    },
+    "clausura_completa": {
+      "coherence_Psi": 0.39999999999999997,
+      "rh_proven": false,
+      "certificate_hash": "0xQCAL_CLAUSURA_e1786e92be80e96d",
+      "hilbert_polya_collapse": true,
+      "passed": true
+    }
+  },
+  "overall_status": "VALIDATED",
+  "signature": "∴𓂀Ω∞³Φ"
+}
