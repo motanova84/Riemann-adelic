@@ -1,0 +1,85 @@
+{
+  "module": "selberg_riemann_holographic_trace",
+  "version": "1.0.0",
+  "timestamp": "2026-03-06T00:46:57.016044",
+  "validation_results": {
+    "timestamp": "2026-03-06T00:46:57.016044",
+    "qcal_constants": {
+      "f0": 141.7001,
+      "omega_0": 890.327986345878,
+      "C_coherence": 244.36
+    },
+    "tests": {
+      "test_function_symmetry": {
+        "passed": true,
+        "error": 0.0,
+        "description": "Gaussian test function symmetry"
+      },
+      "fourier_transform": {
+        "passed": true,
+        "error": 0.0,
+        "expected": 12.533141373155,
+        "computed": 12.533141373155,
+        "description": "Fourier transform correctness at y=0"
+      },
+      "geodesic_sum": {
+        "passed": true,
+        "value": 34.66097019575371,
+        "n_geodesics": 50,
+        "description": "Geodesic sum positivity and finiteness"
+      },
+      "spectral_sum": {
+        "passed": true,
+        "value": 0.01854129173131625,
+        "n_eigenvalues": 30,
+        "description": "Spectral sum non-negativity and finiteness"
+      },
+      "holographic_narrow": {
+        "passed": true,
+        "selberg_total": 12.506075736596227,
+        "riemann_total": -1.2842348850640142,
+        "equality_error": 13.790310621660241,
+        "relative_error": 1.1026888779503965,
+        "qcal_coherence": 0.9968202244309401,
+        "description": "Holographic correspondence with narrow Gaussian (\u03c3=2)"
+      },
+      "holographic_wide": {
+        "passed": true,
+        "selberg_total": 82.42910949581692,
+        "riemann_total": 5.283558833466561,
+        "equality_error": 77.14555066235036,
+        "relative_error": 0.9359017843832429,
+        "qcal_coherence": 0.9051366711438479,
+        "description": "Holographic correspondence with wide Gaussian (\u03c3=30)"
+      },
+      "qcal_integration": {
+        "passed": true,
+        "average_coherence": 0.9509784477873939,
+        "f0_qcal": 141.7001,
+        "C_coherence": 244.36,
+        "description": "QCAL \u221e\u00b3 integration and coherence metrics"
+      }
+    },
+    "overall_status": "PASSED",
+    "tests_passed": 7,
+    "tests_total": 7,
+    "overall_psi": 0.9509784477873939
+  },
+  "qcal_signature": {
+    "f0": 141.7001,
+    "C": 244.36,
+    "omega_0": 890.327986345878,
+    "coherence_psi": 0.9509784477873939
+  },
+  "mathematical_framework": {
+    "selberg_side": "Geodesic lengths on SL(2,\u2124)\\\u210d",
+    "riemann_side": "Zeros of \u03b6(s) and prime powers",
+    "correspondence": "Arithmetic holography: boundary \u2194 bulk",
+    "test_function": "Schwartz class Gaussian"
+  },
+  "author": "Jos\u00e9 Manuel Mota Burruezo \u03a8 \u2727 \u221e\u00b3",
+  "institution": "Instituto de Conciencia Cu\u00e1ntica (ICQ)",
+  "orcid": "0009-0002-1923-0773",
+  "doi": "10.5281/zenodo.17379721",
+  "certificate_hash": "0xQCAL_SELBERG_RIEMANN_HOLO_d4d535e4e6fd23e2"
+}
