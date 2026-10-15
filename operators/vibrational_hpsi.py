@@ -348,7 +348,7 @@ class VibrationalOperatorHpsi:
             self.compute_spectrum()
         
         t_n = self._eigenvalues[n]
-        omega_n = t_n  # Angular frequency (in natural units)
+        omega_n = abs(t_n)  # Angular frequency (positive, in natural units)
         frequency = omega_n / (2 * np.pi)
         energy = HBAR * omega_n
         
