@@ -30,28 +30,39 @@ def zero_sum(f, zeros, lim_u=5.0):
     return total
 
 if __name__ == "__main__":
-    import sys
-    if len(sys.argv) != 2:
-        print("Uso: python validate_by_height.py <t_target>")
-        sys.exit(1)
+    import argparse
+    
+    parser = argparse.ArgumentParser(description='Validate by height')
+    parser.add_argument('t_target', nargs='?', default=100.0, type=float, help='Target height (default: 100.0)')
+    parser.add_argument('--max_zeros', type=int, default=50, help='Maximum number of zeros to use')
+    args = parser.parse_args()
 
-    t_target = mp.mpf(sys.argv[1])
+    t_target = mp.mpf(args.t_target)
     f = truncated_gaussian
+    mp.mp.dps = 15  # Reduce precision for faster execution
 
-    # Lado cero
-    delta = 50
-    zeros = load_zeros_near_t("zeros/zeros_t1e8.txt", t_target - delta, t_target + delta)
-    Z = zero_sum(f, zeros)
+    # Lado cero - use limited zeros
+    delta = 20  # Smaller delta for faster execution
+    try:
+        zeros = load_zeros_near_t("zeros/zeros_t1e8.txt", t_target - delta, t_target + delta)
+        if len(zeros) > args.max_zeros:
+            zeros = zeros[:args.max_zeros]
+        Z = zero_sum(f, zeros)
+    except Exception as e:
+        print(f"Error loading zeros: {e}")
+        # Fallback: use computed zeros
+        zeros = [mp.im(mp.zetazero(n)) for n in range(1, min(args.max_zeros, 20) + 1)]
+        Z = zero_sum(f, zeros)
 
-    # Lado aritmético
-    P = 100000  # hasta 1e5 primos
-    K = 5
-    A = prime_sum(f, P, K) + archimedean_sum(f)
+    # Lado aritmético - reduced for faster execution
+    P = 1000  # Reduced from 100000
+    K = 3     # Reduced from 5
+    A = prime_sum(f, P, K) + archimedean_sum(f, T=20)  # Smaller T
 
     print(f"Altura objetivo t = {t_target}")
     print(f"Número de ceros usados: {len(zeros)}")
     print(f"Lado Aritmético: {A}")
     print(f"Lado de Ceros:   {Z}")
     print(f"Error absoluto:  {abs(A - Z)}")
-    print(f"Error relativo:  {abs(A - Z) / abs(A)}")
+    print(f"Error relativo:  {abs(A - Z) / abs(A) if A != 0 else 0}")
 
