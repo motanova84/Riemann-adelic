@@ -1,0 +1,177 @@
+{
+  "timestamp": "2026-02-18T15:48:26.273899",
+  "test_suite": "heat_kernel_L2_nuclearity",
+  "tests": [
+    {
+      "name": "gaussian_decay",
+      "status": "PASSED",
+      "data": [
+        {
+          "u": "0",
+          "K_t": 0.8920620580763855,
+          "expected": 0.8920620580763855,
+          "relative_error": 0.0
+        },
+        {
+          "u": "1",
+          "K_t": 0.07322491280963243,
+          "expected": 0.07322491280963243,
+          "relative_error": 0.0
+        },
+        {
+          "u": "2",
+          "K_t": 4.049955478044559e-05,
+          "expected": 4.049955478044559e-05,
+          "relative_error": 0.0
+        },
+        {
+          "u": "3",
+          "K_t": 1.5092779429032144e-10,
+          "expected": 1.5092779429032144e-10,
+          "relative_error": 0.0
+        },
+        {
+          "u": "5",
+          "K_t": 6.411947371150607e-28,
+          "expected": 6.411947371150607e-28,
+          "relative_error": 0.0
+        },
+        {
+          "u": "10",
+          "K_t": 2.381083317073102e-109,
+          "expected": 2.381083317073102e-109,
+          "relative_error": 0.0
+        }
+      ]
+    },
+    {
+      "name": "L2_finiteness",
+      "status": "PASSED",
+      "data": [
+        {
+          "t": 0.01,
+          "L2_norm_grid": 44.07232652745004,
+          "L2_norm_scipy": 39.73507309705148,
+          "scipy_error": 2.9386663991104456e-08,
+          "is_finite": true
+        },
+        {
+          "t": 0.05,
+          "L2_norm_grid": 17.926244828542206,
+          "L2_norm_scipy": 17.68208621843664,
+          "scipy_error": 1.4665723502558235e-08,
+          "is_finite": true
+        },
+        {
+          "t": 0.1,
+          "L2_norm_grid": 12.624996045020833,
+          "L2_norm_scipy": 12.456507667008914,
+          "scipy_error": 1.448330369114626e-08,
+          "is_finite": true
+        },
+        {
+          "t": 0.5,
+          "L2_norm_grid": 5.555868462695796,
+          "L2_norm_scipy": 5.482740892385667,
+          "scipy_error": 6.468951619265518e-08,
+          "is_finite": true
+        },
+        {
+          "t": 1.0,
+          "L2_norm_grid": 3.8816196792992863,
+          "L2_norm_scipy": 3.8302678609224317,
+          "scipy_error": 7.145007550890536e-09,
+          "is_finite": true
+        }
+      ]
+    },
+    {
+      "name": "domain_convergence",
+      "status": "WARNING",
+      "data": [
+        {
+          "u_max": 2,
+          "L2_norm": 2.4163568737431955,
+          "L2_norm_per_area": 0.15102230460894972
+        },
+        {
+          "u_max": 4,
+          "L2_norm": 4.993679092558442,
+          "L2_norm_per_area": 0.07802623582122566
+        },
+        {
+          "u_max": 6,
+          "L2_norm": 7.572932204128231,
+          "L2_norm_per_area": 0.05258980697311272
+        },
+        {
+          "u_max": 8,
+          "L2_norm": 10.154360425475229,
+          "L2_norm_per_area": 0.03966547041201261
+        },
+        {
+          "u_max": 10,
+          "L2_norm": 12.73864935042181,
+          "L2_norm_per_area": 0.031846623376054525
+        },
+        {
+          "u_max": 12,
+          "L2_norm": 15.334622803241624,
+          "L2_norm_per_area": 0.026622609033405596
+        },
+        {
+          "u_max": 15,
+          "L2_norm": 19.416907997564167,
+          "L2_norm_per_area": 0.021574342219515742
+        }
+      ],
+      "normalized_std": 0.0041938458064619336,
+      "normalized_mean": 0.026681191542991953
+    },
+    {
+      "name": "scaling_with_t",
+      "status": "PASSED",
+      "data": [
+        {
+          "t": 0.01,
+          "L2_norm": 31.756227489023146,
+          "expected_scaling": 10.0,
+          "ratio": 3.175622748902315
+        },
+        {
+          "t": 0.02,
+          "L2_norm": 22.408428398823013,
+          "expected_scaling": 7.0710678118654755,
+          "ratio": 3.169030335308192
+        },
+        {
+          "t": 0.05,
+          "L2_norm": 14.11383798613061,
+          "expected_scaling": 4.47213595499958,
+          "ratio": 3.1559501160406778
+        },
+        {
+          "t": 0.1,
+          "L2_norm": 9.933375144988759,
+          "expected_scaling": 3.162277660168379,
+          "ratio": 3.1412090311069787
+        },
+        {
+          "t": 0.2,
+          "L2_norm": 6.977341521519217,
+          "expected_scaling": 2.23606797749979,
+          "ratio": 3.1203619888697562
+        },
+        {
+          "t": 0.5,
+          "L2_norm": 4.354361725290156,
+          "expected_scaling": 1.414213562373095,
+          "ratio": 3.078998703691824
+        }
+      ],
+      "ratio_std": 0.010460690992465816,
+      "ratio_mean": 3.140195487319957
+    }
+  ],
+  "overall_status": "PARTIAL"
+}
