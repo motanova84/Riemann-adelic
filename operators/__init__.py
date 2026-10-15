@@ -192,6 +192,22 @@ from .qcal_spectral_operator import (
     PSI_THRESHOLD as PSI_THRESHOLD_QCAL,
 )
 
+# QCAL-Strings Core: KK-mode noetic forcing for Navier-Stokes (#260)
+from .qcal_string_core import (
+    GAMMAS,
+    QCALSpectralOperator as QCALStringSpectralOperator,
+    QCALStringCore,
+    string_noetic_forcing,
+    compute_psi as compute_psi_string,
+    rk4_step as rk4_step_string,
+    PSI_THRESHOLD as PSI_THRESHOLD_STRING,
+    N_ZEROS_DEFAULT,
+    N_MICROTUBULES_DEFAULT,
+    ALPHA_SCALE_DEFAULT,
+    HBAR_SI,
+    HBAR_NATURAL,
+)
+
 # QCAL Chamber 261 — Tachyonic Censorship & UPE Signal (Mar 2026)
 from .qcal_chamber_261 import (
     tachyonic_censorship,
@@ -449,6 +465,19 @@ __all__ = [
     'F0_QCAL_SPECTRAL',
     'C_QCAL_SPECTRAL',
     'PSI_THRESHOLD_QCAL',
+    # QCAL-Strings Core (#260)
+    'GAMMAS',
+    'QCALStringSpectralOperator',
+    'QCALStringCore',
+    'string_noetic_forcing',
+    'compute_psi_string',
+    'rk4_step_string',
+    'PSI_THRESHOLD_STRING',
+    'N_ZEROS_DEFAULT',
+    'N_MICROTUBULES_DEFAULT',
+    'ALPHA_SCALE_DEFAULT',
+    'HBAR_SI',
+    'HBAR_NATURAL',
     # QCAL Chamber 261 — Tachyonic Censorship & UPE Signal (Mar 2026)
     'tachyonic_censorship',
     'compute_upe_signal',
