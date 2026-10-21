@@ -1,96 +1,96 @@
-2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - 
-2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - ================================================================================
-2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - Test: tests/test_constructor_operador_lsv.py::TestConstructorOperadorLsv::test_initialization
-2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - Location: tests/test_constructor_operador_lsv.py:30
-2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - ================================================================================
-2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - ✅ PASSED: tests/test_constructor_operador_lsv.py::TestConstructorOperadorLsv::test_initialization (0.000s)
-2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - 
-2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - ================================================================================
-2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - Test: tests/test_constructor_operador_lsv.py::TestConstructorOperadorLsv::test_construir_operador_exact_output
-2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - Location: tests/test_constructor_operador_lsv.py:40
-2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - ================================================================================
-2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - ✅ PASSED: tests/test_constructor_operador_lsv.py::TestConstructorOperadorLsv::test_construir_operador_exact_output (0.000s)
-2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - 
-2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - ================================================================================
-2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - Test: tests/test_constructor_operador_lsv.py::TestConstructorOperadorLsv::test_hamiltoniano_no_perturbado_self_adjoint
-2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - Location: tests/test_constructor_operador_lsv.py:57
-2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - ================================================================================
-2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - ✅ PASSED: tests/test_constructor_operador_lsv.py::TestConstructorOperadorLsv::test_hamiltoniano_no_perturbado_self_adjoint (0.001s)
-2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - 
-2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - ================================================================================
-2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - Test: tests/test_constructor_operador_lsv.py::TestConstructorOperadorLsv::test_potencial_v_schwartz_bruhat
-2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - Location: tests/test_constructor_operador_lsv.py:70
-2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - ================================================================================
-2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - ✅ PASSED: tests/test_constructor_operador_lsv.py::TestConstructorOperadorLsv::test_potencial_v_schwartz_bruhat (0.001s)
-2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - 
-2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - ================================================================================
-2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - Test: tests/test_constructor_operador_lsv.py::TestConstructorOperadorLsv::test_operador_resolvente_and_transfer
-2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - Location: tests/test_constructor_operador_lsv.py:81
-2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - ================================================================================
-2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - ✅ PASSED: tests/test_constructor_operador_lsv.py::TestConstructorOperadorLsv::test_operador_resolvente_and_transfer (0.002s)
-2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - 
-2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - ================================================================================
-2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - Test: tests/test_constructor_operador_lsv.py::TestConstructorOperadorLsv::test_determinante_fredholm_det2
-2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - Location: tests/test_constructor_operador_lsv.py:95
-2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - ================================================================================
-2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - ✅ PASSED: tests/test_constructor_operador_lsv.py::TestConstructorOperadorLsv::test_determinante_fredholm_det2 (0.002s)
-2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - 
-2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - ================================================================================
-2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - Test: tests/test_constructor_operador_lsv.py::TestConstructorOperadorLsv::test_evaluar_condicion_espectral
-2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - Location: tests/test_constructor_operador_lsv.py:104
-2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - ================================================================================
-2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - ✅ PASSED: tests/test_constructor_operador_lsv.py::TestConstructorOperadorLsv::test_evaluar_condicion_espectral (0.005s)
-2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - 
-2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - ================================================================================
-2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - Test: tests/test_constructor_operador_lsv.py::TestConstructorOperadorLsv::test_obtener_metricas_qcal
-2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - Location: tests/test_constructor_operador_lsv.py:117
-2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - ================================================================================
-2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - ✅ PASSED: tests/test_constructor_operador_lsv.py::TestConstructorOperadorLsv::test_obtener_metricas_qcal (0.000s)
-2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - 
-2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - ================================================================================
-2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - Test: tests/test_constructor_operador_lsv.py::TestRigorEspectralFredholm::test_initialization
-2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - Location: tests/test_constructor_operador_lsv.py:132
-2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - ================================================================================
-2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - ✅ PASSED: tests/test_constructor_operador_lsv.py::TestRigorEspectralFredholm::test_initialization (0.000s)
-2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - 
-2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - ================================================================================
-2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - Test: tests/test_constructor_operador_lsv.py::TestRigorEspectralFredholm::test_verificar_condiciones_exact_output
-2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - Location: tests/test_constructor_operador_lsv.py:140
-2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - ================================================================================
-2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - ✅ PASSED: tests/test_constructor_operador_lsv.py::TestRigorEspectralFredholm::test_verificar_condiciones_exact_output (0.000s)
-2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - 
-2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - ================================================================================
-2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - Test: tests/test_constructor_operador_lsv.py::TestRigorEspectralFredholm::test_verificar_clases_schatten
-2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - Location: tests/test_constructor_operador_lsv.py:162
-2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - ================================================================================
-2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - ✅ PASSED: tests/test_constructor_operador_lsv.py::TestRigorEspectralFredholm::test_verificar_clases_schatten (0.002s)
-2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - 
-2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - ================================================================================
-2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - Test: tests/test_constructor_operador_lsv.py::TestRigorEspectralFredholm::test_verificar_hadamard_unicidad
-2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - Location: tests/test_constructor_operador_lsv.py:173
-2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - ================================================================================
-2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - ✅ PASSED: tests/test_constructor_operador_lsv.py::TestRigorEspectralFredholm::test_verificar_hadamard_unicidad (0.010s)
-2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - 
-2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - ================================================================================
-2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - Test: tests/test_constructor_operador_lsv.py::TestRigorEspectralFredholm::test_control_ceros_fantasma
-2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - Location: tests/test_constructor_operador_lsv.py:184
-2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - ================================================================================
-2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - ✅ PASSED: tests/test_constructor_operador_lsv.py::TestRigorEspectralFredholm::test_control_ceros_fantasma (0.003s)
-2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - 
-2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - ================================================================================
-2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - Test: tests/test_constructor_operador_lsv.py::TestRigorEspectralFredholm::test_auditar_rigor_completo
-2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - Location: tests/test_constructor_operador_lsv.py:193
-2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - ================================================================================
-2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - ✅ PASSED: tests/test_constructor_operador_lsv.py::TestRigorEspectralFredholm::test_auditar_rigor_completo (0.021s)
-2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - 
-2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - ================================================================================
-2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - Test: tests/test_constructor_operador_lsv.py::TestIntegrationAndArtifacts::test_lean4_formalization_file_exists
-2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - Location: tests/test_constructor_operador_lsv.py:209
-2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - ================================================================================
-2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - ✅ PASSED: tests/test_constructor_operador_lsv.py::TestIntegrationAndArtifacts::test_lean4_formalization_file_exists (0.000s)
-2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - 
-2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - ================================================================================
-2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - Test: tests/test_constructor_operador_lsv.py::TestIntegrationAndArtifacts::test_certificate_file_validity
-2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - Location: tests/test_constructor_operador_lsv.py:226
-2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - ================================================================================
-2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - ✅ PASSED: tests/test_constructor_operador_lsv.py::TestIntegrationAndArtifacts::test_certificate_file_validity (0.000s)
+2026-10-21 21:54:30 - INFO     - qcal.test_session_20261021_215429 - 
+2026-10-21 21:54:30 - INFO     - qcal.test_session_20261021_215429 - ================================================================================
+2026-10-21 21:54:30 - INFO     - qcal.test_session_20261021_215429 - Test: tests/test_constructor_operador_lsv.py::TestConstructorOperadorLsv::test_initialization
+2026-10-21 21:54:30 - INFO     - qcal.test_session_20261021_215429 - Location: tests/test_constructor_operador_lsv.py:30
+2026-10-21 21:54:30 - INFO     - qcal.test_session_20261021_215429 - ================================================================================
+2026-10-21 21:54:30 - INFO     - qcal.test_session_20261021_215429 - ✅ PASSED: tests/test_constructor_operador_lsv.py::TestConstructorOperadorLsv::test_initialization (0.000s)
+2026-10-21 21:54:30 - INFO     - qcal.test_session_20261021_215429 - 
+2026-10-21 21:54:30 - INFO     - qcal.test_session_20261021_215429 - ================================================================================
+2026-10-21 21:54:30 - INFO     - qcal.test_session_20261021_215429 - Test: tests/test_constructor_operador_lsv.py::TestConstructorOperadorLsv::test_construir_operador_exact_output
+2026-10-21 21:54:30 - INFO     - qcal.test_session_20261021_215429 - Location: tests/test_constructor_operador_lsv.py:40
+2026-10-21 21:54:30 - INFO     - qcal.test_session_20261021_215429 - ================================================================================
+2026-10-21 21:54:30 - INFO     - qcal.test_session_20261021_215429 - ✅ PASSED: tests/test_constructor_operador_lsv.py::TestConstructorOperadorLsv::test_construir_operador_exact_output (0.000s)
+2026-10-21 21:54:30 - INFO     - qcal.test_session_20261021_215429 - 
+2026-10-21 21:54:30 - INFO     - qcal.test_session_20261021_215429 - ================================================================================
+2026-10-21 21:54:30 - INFO     - qcal.test_session_20261021_215429 - Test: tests/test_constructor_operador_lsv.py::TestConstructorOperadorLsv::test_hamiltoniano_no_perturbado_self_adjoint
+2026-10-21 21:54:30 - INFO     - qcal.test_session_20261021_215429 - Location: tests/test_constructor_operador_lsv.py:57
+2026-10-21 21:54:30 - INFO     - qcal.test_session_20261021_215429 - ================================================================================
+2026-10-21 21:54:30 - INFO     - qcal.test_session_20261021_215429 - ✅ PASSED: tests/test_constructor_operador_lsv.py::TestConstructorOperadorLsv::test_hamiltoniano_no_perturbado_self_adjoint (0.001s)
+2026-10-21 21:54:30 - INFO     - qcal.test_session_20261021_215429 - 
+2026-10-21 21:54:30 - INFO     - qcal.test_session_20261021_215429 - ================================================================================
+2026-10-21 21:54:30 - INFO     - qcal.test_session_20261021_215429 - Test: tests/test_constructor_operador_lsv.py::TestConstructorOperadorLsv::test_potencial_v_schwartz_bruhat
+2026-10-21 21:54:30 - INFO     - qcal.test_session_20261021_215429 - Location: tests/test_constructor_operador_lsv.py:70
+2026-10-21 21:54:30 - INFO     - qcal.test_session_20261021_215429 - ================================================================================
+2026-10-21 21:54:30 - INFO     - qcal.test_session_20261021_215429 - ✅ PASSED: tests/test_constructor_operador_lsv.py::TestConstructorOperadorLsv::test_potencial_v_schwartz_bruhat (0.001s)
+2026-10-21 21:54:30 - INFO     - qcal.test_session_20261021_215429 - 
+2026-10-21 21:54:30 - INFO     - qcal.test_session_20261021_215429 - ================================================================================
+2026-10-21 21:54:30 - INFO     - qcal.test_session_20261021_215429 - Test: tests/test_constructor_operador_lsv.py::TestConstructorOperadorLsv::test_operador_resolvente_and_transfer
+2026-10-21 21:54:30 - INFO     - qcal.test_session_20261021_215429 - Location: tests/test_constructor_operador_lsv.py:81
+2026-10-21 21:54:30 - INFO     - qcal.test_session_20261021_215429 - ================================================================================
+2026-10-21 21:54:30 - INFO     - qcal.test_session_20261021_215429 - ✅ PASSED: tests/test_constructor_operador_lsv.py::TestConstructorOperadorLsv::test_operador_resolvente_and_transfer (0.002s)
+2026-10-21 21:54:30 - INFO     - qcal.test_session_20261021_215429 - 
+2026-10-21 21:54:30 - INFO     - qcal.test_session_20261021_215429 - ================================================================================
+2026-10-21 21:54:30 - INFO     - qcal.test_session_20261021_215429 - Test: tests/test_constructor_operador_lsv.py::TestConstructorOperadorLsv::test_determinante_fredholm_det2
+2026-10-21 21:54:30 - INFO     - qcal.test_session_20261021_215429 - Location: tests/test_constructor_operador_lsv.py:95
+2026-10-21 21:54:30 - INFO     - qcal.test_session_20261021_215429 - ================================================================================
+2026-10-21 21:54:30 - INFO     - qcal.test_session_20261021_215429 - ✅ PASSED: tests/test_constructor_operador_lsv.py::TestConstructorOperadorLsv::test_determinante_fredholm_det2 (0.002s)
+2026-10-21 21:54:30 - INFO     - qcal.test_session_20261021_215429 - 
+2026-10-21 21:54:30 - INFO     - qcal.test_session_20261021_215429 - ================================================================================
+2026-10-21 21:54:30 - INFO     - qcal.test_session_20261021_215429 - Test: tests/test_constructor_operador_lsv.py::TestConstructorOperadorLsv::test_evaluar_condicion_espectral
+2026-10-21 21:54:30 - INFO     - qcal.test_session_20261021_215429 - Location: tests/test_constructor_operador_lsv.py:104
+2026-10-21 21:54:30 - INFO     - qcal.test_session_20261021_215429 - ================================================================================
+2026-10-21 21:54:30 - INFO     - qcal.test_session_20261021_215429 - ✅ PASSED: tests/test_constructor_operador_lsv.py::TestConstructorOperadorLsv::test_evaluar_condicion_espectral (0.005s)
+2026-10-21 21:54:30 - INFO     - qcal.test_session_20261021_215429 - 
+2026-10-21 21:54:30 - INFO     - qcal.test_session_20261021_215429 - ================================================================================
+2026-10-21 21:54:30 - INFO     - qcal.test_session_20261021_215429 - Test: tests/test_constructor_operador_lsv.py::TestConstructorOperadorLsv::test_obtener_metricas_qcal
+2026-10-21 21:54:30 - INFO     - qcal.test_session_20261021_215429 - Location: tests/test_constructor_operador_lsv.py:117
+2026-10-21 21:54:30 - INFO     - qcal.test_session_20261021_215429 - ================================================================================
+2026-10-21 21:54:30 - INFO     - qcal.test_session_20261021_215429 - ✅ PASSED: tests/test_constructor_operador_lsv.py::TestConstructorOperadorLsv::test_obtener_metricas_qcal (0.000s)
+2026-10-21 21:54:30 - INFO     - qcal.test_session_20261021_215429 - 
+2026-10-21 21:54:30 - INFO     - qcal.test_session_20261021_215429 - ================================================================================
+2026-10-21 21:54:30 - INFO     - qcal.test_session_20261021_215429 - Test: tests/test_constructor_operador_lsv.py::TestRigorEspectralFredholm::test_initialization
+2026-10-21 21:54:30 - INFO     - qcal.test_session_20261021_215429 - Location: tests/test_constructor_operador_lsv.py:132
+2026-10-21 21:54:30 - INFO     - qcal.test_session_20261021_215429 - ================================================================================
+2026-10-21 21:54:30 - INFO     - qcal.test_session_20261021_215429 - ✅ PASSED: tests/test_constructor_operador_lsv.py::TestRigorEspectralFredholm::test_initialization (0.000s)
+2026-10-21 21:54:30 - INFO     - qcal.test_session_20261021_215429 - 
+2026-10-21 21:54:30 - INFO     - qcal.test_session_20261021_215429 - ================================================================================
+2026-10-21 21:54:30 - INFO     - qcal.test_session_20261021_215429 - Test: tests/test_constructor_operador_lsv.py::TestRigorEspectralFredholm::test_verificar_condiciones_exact_output
+2026-10-21 21:54:30 - INFO     - qcal.test_session_20261021_215429 - Location: tests/test_constructor_operador_lsv.py:140
+2026-10-21 21:54:30 - INFO     - qcal.test_session_20261021_215429 - ================================================================================
+2026-10-21 21:54:30 - INFO     - qcal.test_session_20261021_215429 - ✅ PASSED: tests/test_constructor_operador_lsv.py::TestRigorEspectralFredholm::test_verificar_condiciones_exact_output (0.000s)
+2026-10-21 21:54:30 - INFO     - qcal.test_session_20261021_215429 - 
+2026-10-21 21:54:30 - INFO     - qcal.test_session_20261021_215429 - ================================================================================
+2026-10-21 21:54:30 - INFO     - qcal.test_session_20261021_215429 - Test: tests/test_constructor_operador_lsv.py::TestRigorEspectralFredholm::test_verificar_clases_schatten
+2026-10-21 21:54:30 - INFO     - qcal.test_session_20261021_215429 - Location: tests/test_constructor_operador_lsv.py:162
+2026-10-21 21:54:30 - INFO     - qcal.test_session_20261021_215429 - ================================================================================
+2026-10-21 21:54:30 - INFO     - qcal.test_session_20261021_215429 - ✅ PASSED: tests/test_constructor_operador_lsv.py::TestRigorEspectralFredholm::test_verificar_clases_schatten (0.002s)
+2026-10-21 21:54:30 - INFO     - qcal.test_session_20261021_215429 - 
+2026-10-21 21:54:30 - INFO     - qcal.test_session_20261021_215429 - ================================================================================
+2026-10-21 21:54:30 - INFO     - qcal.test_session_20261021_215429 - Test: tests/test_constructor_operador_lsv.py::TestRigorEspectralFredholm::test_verificar_hadamard_unicidad
+2026-10-21 21:54:30 - INFO     - qcal.test_session_20261021_215429 - Location: tests/test_constructor_operador_lsv.py:173
+2026-10-21 21:54:30 - INFO     - qcal.test_session_20261021_215429 - ================================================================================
+2026-10-21 21:54:30 - INFO     - qcal.test_session_20261021_215429 - ✅ PASSED: tests/test_constructor_operador_lsv.py::TestRigorEspectralFredholm::test_verificar_hadamard_unicidad (0.010s)
+2026-10-21 21:54:30 - INFO     - qcal.test_session_20261021_215429 - 
+2026-10-21 21:54:30 - INFO     - qcal.test_session_20261021_215429 - ================================================================================
+2026-10-21 21:54:30 - INFO     - qcal.test_session_20261021_215429 - Test: tests/test_constructor_operador_lsv.py::TestRigorEspectralFredholm::test_control_ceros_fantasma
+2026-10-21 21:54:30 - INFO     - qcal.test_session_20261021_215429 - Location: tests/test_constructor_operador_lsv.py:184
+2026-10-21 21:54:30 - INFO     - qcal.test_session_20261021_215429 - ================================================================================
+2026-10-21 21:54:30 - INFO     - qcal.test_session_20261021_215429 - ✅ PASSED: tests/test_constructor_operador_lsv.py::TestRigorEspectralFredholm::test_control_ceros_fantasma (0.003s)
+2026-10-21 21:54:30 - INFO     - qcal.test_session_20261021_215429 - 
+2026-10-21 21:54:30 - INFO     - qcal.test_session_20261021_215429 - ================================================================================
+2026-10-21 21:54:30 - INFO     - qcal.test_session_20261021_215429 - Test: tests/test_constructor_operador_lsv.py::TestRigorEspectralFredholm::test_auditar_rigor_completo
+2026-10-21 21:54:30 - INFO     - qcal.test_session_20261021_215429 - Location: tests/test_constructor_operador_lsv.py:193
+2026-10-21 21:54:30 - INFO     - qcal.test_session_20261021_215429 - ================================================================================
+2026-10-21 21:54:30 - INFO     - qcal.test_session_20261021_215429 - ✅ PASSED: tests/test_constructor_operador_lsv.py::TestRigorEspectralFredholm::test_auditar_rigor_completo (0.021s)
+2026-10-21 21:54:30 - INFO     - qcal.test_session_20261021_215429 - 
+2026-10-21 21:54:30 - INFO     - qcal.test_session_20261021_215429 - ================================================================================
+2026-10-21 21:54:30 - INFO     - qcal.test_session_20261021_215429 - Test: tests/test_constructor_operador_lsv.py::TestIntegrationAndArtifacts::test_lean4_formalization_file_exists
+2026-10-21 21:54:30 - INFO     - qcal.test_session_20261021_215429 - Location: tests/test_constructor_operador_lsv.py:209
+2026-10-21 21:54:30 - INFO     - qcal.test_session_20261021_215429 - ================================================================================
+2026-10-21 21:54:30 - INFO     - qcal.test_session_20261021_215429 - ✅ PASSED: tests/test_constructor_operador_lsv.py::TestIntegrationAndArtifacts::test_lean4_formalization_file_exists (0.000s)
+2026-10-21 21:54:30 - INFO     - qcal.test_session_20261021_215429 - 
+2026-10-21 21:54:30 - INFO     - qcal.test_session_20261021_215429 - ================================================================================
+2026-10-21 21:54:30 - INFO     - qcal.test_session_20261021_215429 - Test: tests/test_constructor_operador_lsv.py::TestIntegrationAndArtifacts::test_certificate_file_validity
+2026-10-21 21:54:30 - INFO     - qcal.test_session_20261021_215429 - Location: tests/test_constructor_operador_lsv.py:226
+2026-10-21 21:54:30 - INFO     - qcal.test_session_20261021_215429 - ================================================================================
+2026-10-21 21:54:30 - INFO     - qcal.test_session_20261021_215429 - ✅ PASSED: tests/test_constructor_operador_lsv.py::TestIntegrationAndArtifacts::test_certificate_file_validity (0.000s)
