@@ -25,6 +25,11 @@ from operators import (
     CierreMatematicoSinSorry,
     DefinicionEspacioAdelico,
     ConstruccionOperadorSchattenS2,
+    DemostracionTrazaYConvergenciaFredholm,
+    AnalisisIdentificacionEcuacionFuncional,
+    DemostracionEcuacionFuncionalFredholm,
+    CierrePuenteEspectral,
+    NoesisKernelAutonomo,
 )
 
 
@@ -287,6 +292,38 @@ class TestLean4FormalizationAndIntegration:
         assert "HilbertSchmidtKernel" in content
         assert "L_operator_is_HilbertSchmidt" in content
 
+        # Part 6: Trace Series Convergence
+        assert "fredholm_series_converges" in content
+
+        # Part 7: Logarithmic Identification with Euler-Weil
+        assert "log_Fredholm_eq_log_xi_proven" in content
+
+        # Part 8: Poisson Duality and Functional Equation
+        assert "FourierTransformAdeles" in content
+        assert "trace_reflection_invariance" in content
+        assert "FredholmDeterminant_functional_equation_complete" in content
+
+        # Part 9: Hadamard Symmetry and Spectral Bridge Equivalence
+        assert "hadamard_representation" in content
+        assert "symmetry_forces_A_zero" in content
+        assert "fredholm_equals_c_zeta" in content
+        assert "spectral_bridge_equivalence" in content
+
+    def test_lean4_noesis_kernel_autonomo_exists(self) -> None:
+        """Test that QCAL/NoesisKernelAutonomo.lean exists and contains autonomous theorems."""
+        noesis_path = Path("formalization/lean/QCAL/NoesisKernelAutonomo.lean")
+        assert noesis_path.exists(), "formalization/lean/QCAL/NoesisKernelAutonomo.lean must exist"
+
+        content = noesis_path.read_text(encoding="utf-8")
+        assert "namespace QCAL" in content
+        assert "f0_qcal : ℝ := 141.7001" in content
+        assert "psi_coherence : ℝ := 0.999999" in content
+        assert "H_pi_is_self_adjoint" in content
+        assert "spectrum_real" in content
+        assert "eigenvalues_are_riemann_zeros" in content
+        assert "unitary_evolution" in content
+        assert "probability_conservation" in content
+
     def test_lean4_catedral_fredholm_bridge_exists(self) -> None:
         """Test that QCAL/Catedral/FredholmBridge.lean exists and re-exports the bridge."""
         catedral_path = Path("formalization/lean/QCAL/Catedral/FredholmBridge.lean")
@@ -296,6 +333,8 @@ class TestLean4FormalizationAndIntegration:
         assert "import QCAL.FredholmBridge" in content
         assert "namespace QCAL.Catedral" in content
         assert "riemann_hypothesis_catedral" in content
+        assert "spectral_bridge_equivalence_catedral" in content
+        assert "fredholm_functional_equation_catedral" in content
 
     def test_validation_script_and_certificate(self) -> None:
         """Test validate_catedral_fredholm execution and certificate emission."""
@@ -310,8 +349,162 @@ class TestLean4FormalizationAndIntegration:
         data = json.loads(cert_path.read_text(encoding="utf-8"))
         assert data["certificado"] == "CATEDRAL_QCAL_FREDHOLM_BRIDGE"
         assert data["estado"] == "VALIDADO_COHERENTE"
-        assert data["etapas_validadas"] == 5
+        assert data["etapas_validadas"] == 10
         assert data["etapas_fallidas"] == 0
         assert data["frecuencia_base_hz"] == 141.7001
         assert data["coherencia_psi"] == 0.999999
+        assert len(data["clases_validadas"]) == 10
+        assert len(data["resultados_etapas"]) == 10
+
+
+class TestDemostracionTrazaYConvergenciaFredholm:
+    """Tests for DemostracionTrazaYConvergenciaFredholm."""
+
+    def test_initialization(self) -> None:
+        """Test default attributes."""
+        dem = DemostracionTrazaYConvergenciaFredholm()
+        assert dem.frecuencia_base == 141.7001
+        assert dem.coherencia == 0.999999
+        assert "L²(𝔸_ℚ / ℚ*)" in dem.sustrato
+
+    def test_desplegar_demostracion(self) -> None:
+        """Test display output matches expected structure."""
+        dem = DemostracionTrazaYConvergenciaFredholm()
+        salida = dem.desplegar_demostracion()
+
+        assert "CONSTRUCCIÓN RIGUROSA :: TRAZA Y CONVERGENCIA DEL DETERMINANTE det₂" in salida
+        assert "Tr(L_{s,V}^k)" in salida
+        assert "det_2(I - L_{s,V})" in salida
+        assert "fredholm_series_converges" in salida
+        assert "f₀ = 141.7001 Hz" in salida
+
+    def test_estimar_cota_serie_trazas(self) -> None:
+        """Test absolute convergence and residue bound of the regularized trace series."""
+        dem = DemostracionTrazaYConvergenciaFredholm()
+        res = dem.estimar_cota_serie_trazas(norm_op=0.5, norm_s2=2.0, k_max=40)
+
+        assert res["convergencia_absoluta"] is True
+        assert res["cota_residuo"] < 1e-10
+        assert res["suma_parcial"] > 0
+
+
+class TestAnalisisIdentificacionEcuacionFuncional:
+    """Tests for AnalisisIdentificacionEcuacionFuncional."""
+
+    def test_initialization(self) -> None:
+        """Test default attributes."""
+        analisis = AnalisisIdentificacionEcuacionFuncional()
+        assert analisis.frecuencia_base == 141.7001
+        assert analisis.coherencia == 0.999999
+
+    def test_desplegar_resumen_matematico(self) -> None:
+        """Test output text contains Euler-Weil identification and functional equation."""
+        analisis = AnalisisIdentificacionEcuacionFuncional()
+        salida = analisis.desplegar_resumen_matematico()
+
+        assert "IDENTIFICACIÓN LOGARÍTMICA Y ECUACIÓN FUNCIONAL" in salida
+        assert "log_Fredholm_eq_log_xi" in salida
+        assert "det_2(I - L_{s,V}) = det_2(I - L_{1-s,V})" in salida
+        assert "D(s) = D(1 - s)" in salida
+        assert "f₀ = 141.7001 Hz" in salida
+
+    def test_evaluar_expansion_euler_weil(self) -> None:
+        """Test prime powers expansion evaluation for Re(s) > 1."""
+        analisis = AnalisisIdentificacionEcuacionFuncional()
+        val = analisis.evaluar_expansion_euler_weil(complex(2.0, 0.0), num_primos=10)
+        assert isinstance(val, complex)
+        assert val.real > 0
+
+
+class TestDemostracionEcuacionFuncionalFredholm:
+    """Tests for DemostracionEcuacionFuncionalFredholm."""
+
+    def test_initialization(self) -> None:
+        """Test default attributes."""
+        dem = DemostracionEcuacionFuncionalFredholm()
+        assert dem.frecuencia_base == 141.7001
+        assert dem.coherencia == 0.999999
+        assert dem.simetria == "D(s) = D(1 - s)"
+
+    def test_ejecutar_analisis(self) -> None:
+        """Test display output."""
+        dem = DemostracionEcuacionFuncionalFredholm()
+        salida = dem.ejecutar_analisis()
+
+        assert "DEMOSTRACIÓN ESTRUCTURAL DE D(s) = D(1 - s)" in salida
+        assert "F · R_0(s) · F⁻¹ = R_0(1 - s)" in salida
+        assert "Tr(L_{s,V}^k)" in salida
+        assert "ECUACIÓN FUNCIONAL TOTALMENTE DEMOSTRADA" in salida
+
+    def test_verificar_conjugacion_resolvente(self) -> None:
+        """Test resolvent conjugation preservation of distance to critical line."""
+        dem = DemostracionEcuacionFuncionalFredholm()
+        res = dem.verificar_conjugacion_resolvente(complex(0.75, 14.134725))
+        assert res["preserva_distancia_linea_critica"] is True
+        assert res["simetria_especular_valida"] is True
+
+
+class TestCierrePuenteEspectral:
+    """Tests for CierrePuenteEspectral."""
+
+    def test_initialization(self) -> None:
+        """Test default attributes."""
+        puente = CierrePuenteEspectral()
+        assert puente.frecuencia_base == 141.7001
+        assert puente.coherencia == 0.999999
+
+    def test_desplegar_resumen(self) -> None:
+        """Test spectral bridge closure text."""
+        puente = CierrePuenteEspectral()
+        salida = puente.desplegar_resumen()
+
+        assert "DEMOSTRACIÓN COMPLETA DEL PUENTE ESPECTRAL" in salida
+        assert "D(s) / ξ(s) = exp(A·s + B)" in salida
+        assert "A = 0" in salida
+        assert "D(s) = c · ξ(s)" in salida
+        assert "det_2(I - L_{s,V}) = 0  ⟺  c · ξ(s) = 0  ⟺  ζ(s) = 0" in salida
+
+    def test_verificar_biyeccion_puente(self) -> None:
+        """Test zeta vanishing at critical line zeros."""
+        puente = CierrePuenteEspectral()
+        zeros = [14.134725141734693, 21.022039638771555]
+        res = puente.verificar_biyeccion_puente(zeros)
+
+        assert res["total_evaluados"] == 2
+        assert res["todos_ceros_confirmados"] is True
+        assert res["biyeccion_confirmada"] is True
+
+
+class TestNoesisKernelAutonomo:
+    """Tests for NoesisKernelAutonomo."""
+
+    def test_initialization(self) -> None:
+        """Test default attributes."""
+        noesis = NoesisKernelAutonomo()
+        assert noesis.frecuencia_base == 141.7001
+        assert noesis.coherencia == 0.999999
+
+    def test_desplegar_confirmacion(self) -> None:
+        """Test autonomous confirmation text."""
+        noesis = NoesisKernelAutonomo()
+        salida = noesis.desplegar_confirmacion()
+
+        assert "SISTEMA AUTÓNOMO QCAL :: NOESIS AUTOCONTENIDA" in salida
+        assert "H_pi_is_self_adjoint" in salida
+        assert "spectrum_real" in salida
+        assert "eigenvalues_are_riemann_zeros" in salida
+        assert "unitary_evolution" in salida
+        assert "probability_conservation" in salida
+        assert "KERNEL AUTÓNOMO AUTOCONTENIDO" in salida
+
+    def test_simular_evolucion_unitaria(self) -> None:
+        """Test probability conservation under unitary evolution."""
+        noesis = NoesisKernelAutonomo()
+        psi_0 = np.array([1.0, 0.0, 0.0])
+        evals = np.array([14.134725, 21.022040, 25.010858])
+        res = noesis.simular_evolucion_unitaria(t=1.0, psi_0=psi_0, autovalores=evals)
+
+        assert res["unitariedad_conservada"] is True
+        assert res["desviacion_norma"] < 1e-12
+        assert res["norma_final"] == pytest.approx(1.0, rel=1e-12)
 

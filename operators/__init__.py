@@ -345,6 +345,11 @@ from .catedral_qcal_fredholm import (
     CierreMatematicoSinSorry,
     DefinicionEspacioAdelico,
     ConstruccionOperadorSchattenS2,
+    DemostracionTrazaYConvergenciaFredholm,
+    AnalisisIdentificacionEcuacionFuncional,
+    DemostracionEcuacionFuncionalFredholm,
+    CierrePuenteEspectral,
+    NoesisKernelAutonomo,
 )
 
 __all__ = [
@@ -574,4 +579,9 @@ __all__ = [
     'CierreMatematicoSinSorry',
     'DefinicionEspacioAdelico',
     'ConstruccionOperadorSchattenS2',
+    'DemostracionTrazaYConvergenciaFredholm',
+    'AnalisisIdentificacionEcuacionFuncional',
+    'DemostracionEcuacionFuncionalFredholm',
+    'CierrePuenteEspectral',
+    'NoesisKernelAutonomo',
 ]

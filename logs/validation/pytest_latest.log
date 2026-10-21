@@ -1,90 +1,222 @@
-2026-10-21 22:01:30 - INFO     - qcal.test_session_20261021_220130 - 
-2026-10-21 22:01:30 - INFO     - qcal.test_session_20261021_220130 - ================================================================================
-2026-10-21 22:01:30 - INFO     - qcal.test_session_20261021_220130 - Test: tests/test_hpsi_unconditional_modules.py::test_unconditional_modules_exist
-2026-10-21 22:01:30 - INFO     - qcal.test_session_20261021_220130 - Location: tests/test_hpsi_unconditional_modules.py:19
-2026-10-21 22:01:30 - INFO     - qcal.test_session_20261021_220130 - ================================================================================
-2026-10-21 22:01:30 - INFO     - qcal.test_session_20261021_220130 - ✅ PASSED: tests/test_hpsi_unconditional_modules.py::test_unconditional_modules_exist (0.000s)
-2026-10-21 22:01:30 - INFO     - qcal.test_session_20261021_220130 - 
-2026-10-21 22:01:30 - INFO     - qcal.test_session_20261021_220130 - ================================================================================
-2026-10-21 22:01:30 - INFO     - qcal.test_session_20261021_220130 - Test: tests/test_hpsi_unconditional_modules.py::test_unconditional_modules_have_no_sorry
-2026-10-21 22:01:30 - INFO     - qcal.test_session_20261021_220130 - Location: tests/test_hpsi_unconditional_modules.py:24
-2026-10-21 22:01:30 - INFO     - qcal.test_session_20261021_220130 - ================================================================================
-2026-10-21 22:01:30 - INFO     - qcal.test_session_20261021_220130 - ✅ PASSED: tests/test_hpsi_unconditional_modules.py::test_unconditional_modules_have_no_sorry (0.000s)
-2026-10-21 22:01:30 - INFO     - qcal.test_session_20261021_220130 - 
-2026-10-21 22:01:30 - INFO     - qcal.test_session_20261021_220130 - ================================================================================
-2026-10-21 22:01:30 - INFO     - qcal.test_session_20261021_220130 - Test: tests/test_hpsi_unconditional_modules.py::test_unbounded_hpsi_removes_first_axiom_bridge
-2026-10-21 22:01:30 - INFO     - qcal.test_session_20261021_220130 - Location: tests/test_hpsi_unconditional_modules.py:30
-2026-10-21 22:01:30 - INFO     - qcal.test_session_20261021_220130 - ================================================================================
-2026-10-21 22:01:30 - INFO     - qcal.test_session_20261021_220130 - ✅ PASSED: tests/test_hpsi_unconditional_modules.py::test_unbounded_hpsi_removes_first_axiom_bridge (0.000s)
-2026-10-21 22:01:30 - INFO     - qcal.test_session_20261021_220130 - 
-2026-10-21 22:01:30 - INFO     - qcal.test_session_20261021_220130 - ================================================================================
-2026-10-21 22:01:30 - INFO     - qcal.test_session_20261021_220130 - Test: tests/test_hpsi_unconditional_modules.py::test_unbounded_hpsi_norm_density_closed_without_sorry
-2026-10-21 22:01:30 - INFO     - qcal.test_session_20261021_220130 - Location: tests/test_hpsi_unconditional_modules.py:42
-2026-10-21 22:01:30 - INFO     - qcal.test_session_20261021_220130 - ================================================================================
-2026-10-21 22:01:30 - INFO     - qcal.test_session_20261021_220130 - ✅ PASSED: tests/test_hpsi_unconditional_modules.py::test_unbounded_hpsi_norm_density_closed_without_sorry (0.000s)
-2026-10-21 22:01:30 - INFO     - qcal.test_session_20261021_220130 - 
-2026-10-21 22:01:30 - INFO     - qcal.test_session_20261021_220130 - ================================================================================
-2026-10-21 22:01:30 - INFO     - qcal.test_session_20261021_220130 - Test: tests/test_hpsi_unconditional_modules.py::test_unbounded_hpsi_dyadic_local_closure_present
-2026-10-21 22:01:30 - INFO     - qcal.test_session_20261021_220130 - Location: tests/test_hpsi_unconditional_modules.py:54
-2026-10-21 22:01:30 - INFO     - qcal.test_session_20261021_220130 - ================================================================================
-2026-10-21 22:01:30 - INFO     - qcal.test_session_20261021_220130 - ✅ PASSED: tests/test_hpsi_unconditional_modules.py::test_unbounded_hpsi_dyadic_local_closure_present (0.000s)
-2026-10-21 22:01:30 - INFO     - qcal.test_session_20261021_220130 - 
-2026-10-21 22:01:30 - INFO     - qcal.test_session_20261021_220130 - ================================================================================
-2026-10-21 22:01:30 - INFO     - qcal.test_session_20261021_220130 - Test: tests/test_hpsi_unconditional_modules.py::test_unbounded_hpsi_causal_kernel_bridge_present
-2026-10-21 22:01:30 - INFO     - qcal.test_session_20261021_220130 - Location: tests/test_hpsi_unconditional_modules.py:63
-2026-10-21 22:01:30 - INFO     - qcal.test_session_20261021_220130 - ================================================================================
-2026-10-21 22:01:30 - INFO     - qcal.test_session_20261021_220130 - ✅ PASSED: tests/test_hpsi_unconditional_modules.py::test_unbounded_hpsi_causal_kernel_bridge_present (0.000s)
-2026-10-21 22:01:30 - INFO     - qcal.test_session_20261021_220130 - 
-2026-10-21 22:01:30 - INFO     - qcal.test_session_20261021_220130 - ================================================================================
-2026-10-21 22:01:30 - INFO     - qcal.test_session_20261021_220130 - Test: tests/test_hpsi_unconditional_modules.py::test_remaining_axiom_names_removed_from_module_chain
-2026-10-21 22:01:30 - INFO     - qcal.test_session_20261021_220130 - Location: tests/test_hpsi_unconditional_modules.py:85
-2026-10-21 22:01:30 - INFO     - qcal.test_session_20261021_220130 - ================================================================================
-2026-10-21 22:01:30 - INFO     - qcal.test_session_20261021_220130 - ✅ PASSED: tests/test_hpsi_unconditional_modules.py::test_remaining_axiom_names_removed_from_module_chain (0.000s)
-2026-10-21 22:01:30 - INFO     - qcal.test_session_20261021_220130 - 
-2026-10-21 22:01:30 - INFO     - qcal.test_session_20261021_220130 - ================================================================================
-2026-10-21 22:01:30 - INFO     - qcal.test_session_20261021_220130 - Test: tests/test_hpsi_unconditional_modules.py::test_spectral_uniqueness_no_true_placeholders
-2026-10-21 22:01:30 - INFO     - qcal.test_session_20261021_220130 - Location: tests/test_hpsi_unconditional_modules.py:101
-2026-10-21 22:01:30 - INFO     - qcal.test_session_20261021_220130 - ================================================================================
-2026-10-21 22:01:30 - INFO     - qcal.test_session_20261021_220130 - ✅ PASSED: tests/test_hpsi_unconditional_modules.py::test_spectral_uniqueness_no_true_placeholders (0.000s)
-2026-10-21 22:01:30 - INFO     - qcal.test_session_20261021_220130 - 
-2026-10-21 22:01:30 - INFO     - qcal.test_session_20261021_220130 - ================================================================================
-2026-10-21 22:01:30 - INFO     - qcal.test_session_20261021_220130 - Test: tests/test_hpsi_unconditional_modules.py::test_trace_fredholm_schatten_contract_present
-2026-10-21 22:01:30 - INFO     - qcal.test_session_20261021_220130 - Location: tests/test_hpsi_unconditional_modules.py:123
-2026-10-21 22:01:30 - INFO     - qcal.test_session_20261021_220130 - ================================================================================
-2026-10-21 22:01:30 - INFO     - qcal.test_session_20261021_220130 - ✅ PASSED: tests/test_hpsi_unconditional_modules.py::test_trace_fredholm_schatten_contract_present (0.000s)
-2026-10-21 22:01:30 - INFO     - qcal.test_session_20261021_220130 - 
-2026-10-21 22:01:30 - INFO     - qcal.test_session_20261021_220130 - ================================================================================
-2026-10-21 22:01:30 - INFO     - qcal.test_session_20261021_220130 - Test: tests/test_hpsi_unconditional_modules.py::test_poisson_mellin_tripartite_contract_present
-2026-10-21 22:01:30 - INFO     - qcal.test_session_20261021_220130 - Location: tests/test_hpsi_unconditional_modules.py:138
-2026-10-21 22:01:30 - INFO     - qcal.test_session_20261021_220130 - ================================================================================
-2026-10-21 22:01:30 - INFO     - qcal.test_session_20261021_220130 - ✅ PASSED: tests/test_hpsi_unconditional_modules.py::test_poisson_mellin_tripartite_contract_present (0.000s)
-2026-10-21 22:01:30 - INFO     - qcal.test_session_20261021_220130 - 
-2026-10-21 22:01:30 - INFO     - qcal.test_session_20261021_220130 - ================================================================================
-2026-10-21 22:01:30 - INFO     - qcal.test_session_20261021_220130 - Test: tests/test_hpsi_unconditional_modules.py::test_spectral_mechanics_core_theorems_present
-2026-10-21 22:01:30 - INFO     - qcal.test_session_20261021_220130 - Location: tests/test_hpsi_unconditional_modules.py:146
-2026-10-21 22:01:30 - INFO     - qcal.test_session_20261021_220130 - ================================================================================
-2026-10-21 22:01:30 - INFO     - qcal.test_session_20261021_220130 - ✅ PASSED: tests/test_hpsi_unconditional_modules.py::test_spectral_mechanics_core_theorems_present (0.000s)
-2026-10-21 22:01:30 - INFO     - qcal.test_session_20261021_220130 - 
-2026-10-21 22:01:30 - INFO     - qcal.test_session_20261021_220130 - ================================================================================
-2026-10-21 22:01:30 - INFO     - qcal.test_session_20261021_220130 - Test: tests/test_hpsi_unconditional_modules.py::test_guinand_weil_global_log_deriv_bridge_present
-2026-10-21 22:01:30 - INFO     - qcal.test_session_20261021_220130 - Location: tests/test_hpsi_unconditional_modules.py:157
-2026-10-21 22:01:30 - INFO     - qcal.test_session_20261021_220130 - ================================================================================
-2026-10-21 22:01:30 - INFO     - qcal.test_session_20261021_220130 - ✅ PASSED: tests/test_hpsi_unconditional_modules.py::test_guinand_weil_global_log_deriv_bridge_present (0.000s)
-2026-10-21 22:01:30 - INFO     - qcal.test_session_20261021_220130 - 
-2026-10-21 22:01:30 - INFO     - qcal.test_session_20261021_220130 - ================================================================================
-2026-10-21 22:01:30 - INFO     - qcal.test_session_20261021_220130 - Test: tests/test_hpsi_unconditional_modules.py::test_hadamard_uniqueness_bridge_present
-2026-10-21 22:01:30 - INFO     - qcal.test_session_20261021_220130 - Location: tests/test_hpsi_unconditional_modules.py:188
-2026-10-21 22:01:30 - INFO     - qcal.test_session_20261021_220130 - ================================================================================
-2026-10-21 22:01:30 - INFO     - qcal.test_session_20261021_220130 - ✅ PASSED: tests/test_hpsi_unconditional_modules.py::test_hadamard_uniqueness_bridge_present (0.000s)
-2026-10-21 22:01:30 - INFO     - qcal.test_session_20261021_220130 - 
-2026-10-21 22:01:30 - INFO     - qcal.test_session_20261021_220130 - ================================================================================
-2026-10-21 22:01:30 - INFO     - qcal.test_session_20261021_220130 - Test: tests/test_hpsi_unconditional_modules.py::test_canonical_instances_constructors_present
-2026-10-21 22:01:30 - INFO     - qcal.test_session_20261021_220130 - Location: tests/test_hpsi_unconditional_modules.py:195
-2026-10-21 22:01:30 - INFO     - qcal.test_session_20261021_220130 - ================================================================================
-2026-10-21 22:01:30 - INFO     - qcal.test_session_20261021_220130 - ✅ PASSED: tests/test_hpsi_unconditional_modules.py::test_canonical_instances_constructors_present (0.000s)
-2026-10-21 22:01:30 - INFO     - qcal.test_session_20261021_220130 - 
-2026-10-21 22:01:30 - INFO     - qcal.test_session_20261021_220130 - ================================================================================
-2026-10-21 22:01:30 - INFO     - qcal.test_session_20261021_220130 - Test: tests/test_hpsi_unconditional_modules.py::test_coronacion_final_closure_present
-2026-10-21 22:01:30 - INFO     - qcal.test_session_20261021_220130 - Location: tests/test_hpsi_unconditional_modules.py:205
-2026-10-21 22:01:30 - INFO     - qcal.test_session_20261021_220130 - ================================================================================
-2026-10-21 22:01:30 - INFO     - qcal.test_session_20261021_220130 - ✅ PASSED: tests/test_hpsi_unconditional_modules.py::test_coronacion_final_closure_present (0.000s)
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - 
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - ================================================================================
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - Test: tests/test_catedral_qcal_fredholm.py::TestDemostracionAxiomaHadamard::test_initialization
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - Location: tests/test_catedral_qcal_fredholm.py:38
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - ================================================================================
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - ✅ PASSED: tests/test_catedral_qcal_fredholm.py::TestDemostracionAxiomaHadamard::test_initialization (0.000s)
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - 
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - ================================================================================
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - Test: tests/test_catedral_qcal_fredholm.py::TestDemostracionAxiomaHadamard::test_ejecutar_analisis_exact_output
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - Location: tests/test_catedral_qcal_fredholm.py:45
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - ================================================================================
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - ✅ PASSED: tests/test_catedral_qcal_fredholm.py::TestDemostracionAxiomaHadamard::test_ejecutar_analisis_exact_output (0.000s)
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - 
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - ================================================================================
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - Test: tests/test_catedral_qcal_fredholm.py::TestDemostracionAxiomaHadamard::test_verificar_hadamard_identidad
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - Location: tests/test_catedral_qcal_fredholm.py:62
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - ================================================================================
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - ✅ PASSED: tests/test_catedral_qcal_fredholm.py::TestDemostracionAxiomaHadamard::test_verificar_hadamard_identidad (0.000s)
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - 
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - ================================================================================
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - Test: tests/test_catedral_qcal_fredholm.py::TestDemostracionConfinamientoEspectral::test_initialization
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - Location: tests/test_catedral_qcal_fredholm.py:76
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - ================================================================================
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - ✅ PASSED: tests/test_catedral_qcal_fredholm.py::TestDemostracionConfinamientoEspectral::test_initialization (0.000s)
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - 
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - ================================================================================
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - Test: tests/test_catedral_qcal_fredholm.py::TestDemostracionConfinamientoEspectral::test_ejecutar_demostracion_exact_output
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - Location: tests/test_catedral_qcal_fredholm.py:84
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - ================================================================================
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - ✅ PASSED: tests/test_catedral_qcal_fredholm.py::TestDemostracionConfinamientoEspectral::test_ejecutar_demostracion_exact_output (0.000s)
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - 
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - ================================================================================
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - Test: tests/test_catedral_qcal_fredholm.py::TestDemostracionConfinamientoEspectral::test_transformacion_espectral_critical_line
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - Location: tests/test_catedral_qcal_fredholm.py:100
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - ================================================================================
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - ✅ PASSED: tests/test_catedral_qcal_fredholm.py::TestDemostracionConfinamientoEspectral::test_transformacion_espectral_critical_line (0.000s)
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - 
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - ================================================================================
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - Test: tests/test_catedral_qcal_fredholm.py::TestDemostracionConfinamientoEspectral::test_verificar_confinamiento_multiple_zeros
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - Location: tests/test_catedral_qcal_fredholm.py:109
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - ================================================================================
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - ✅ PASSED: tests/test_catedral_qcal_fredholm.py::TestDemostracionConfinamientoEspectral::test_verificar_confinamiento_multiple_zeros (0.000s)
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - 
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - ================================================================================
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - Test: tests/test_catedral_qcal_fredholm.py::TestCierreMatematicoSinSorry::test_initialization
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - Location: tests/test_catedral_qcal_fredholm.py:124
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - ================================================================================
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - ✅ PASSED: tests/test_catedral_qcal_fredholm.py::TestCierreMatematicoSinSorry::test_initialization (0.000s)
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - 
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - ================================================================================
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - Test: tests/test_catedral_qcal_fredholm.py::TestCierreMatematicoSinSorry::test_alias_equivalence
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - Location: tests/test_catedral_qcal_fredholm.py:132
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - ================================================================================
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - ✅ PASSED: tests/test_catedral_qcal_fredholm.py::TestCierreMatematicoSinSorry::test_alias_equivalence (0.000s)
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - 
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - ================================================================================
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - Test: tests/test_catedral_qcal_fredholm.py::TestCierreMatematicoSinSorry::test_verificar_cierre_exact_output
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - Location: tests/test_catedral_qcal_fredholm.py:138
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - ================================================================================
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - ✅ PASSED: tests/test_catedral_qcal_fredholm.py::TestCierreMatematicoSinSorry::test_verificar_cierre_exact_output (0.000s)
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - 
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - ================================================================================
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - Test: tests/test_catedral_qcal_fredholm.py::TestCierreMatematicoSinSorry::test_auditar_teoremas_lean
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - Location: tests/test_catedral_qcal_fredholm.py:152
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - ================================================================================
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - ✅ PASSED: tests/test_catedral_qcal_fredholm.py::TestCierreMatematicoSinSorry::test_auditar_teoremas_lean (0.000s)
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - 
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - ================================================================================
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - Test: tests/test_catedral_qcal_fredholm.py::TestDefinicionEspacioAdelico::test_initialization
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - Location: tests/test_catedral_qcal_fredholm.py:166
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - ================================================================================
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - ✅ PASSED: tests/test_catedral_qcal_fredholm.py::TestDefinicionEspacioAdelico::test_initialization (0.000s)
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - 
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - ================================================================================
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - Test: tests/test_catedral_qcal_fredholm.py::TestDefinicionEspacioAdelico::test_desplegar_definicion_exact_output
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - Location: tests/test_catedral_qcal_fredholm.py:173
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - ================================================================================
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - ✅ PASSED: tests/test_catedral_qcal_fredholm.py::TestDefinicionEspacioAdelico::test_desplegar_definicion_exact_output (0.000s)
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - 
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - ================================================================================
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - Test: tests/test_catedral_qcal_fredholm.py::TestDefinicionEspacioAdelico::test_obtener_propiedades_adelicas
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - Location: tests/test_catedral_qcal_fredholm.py:188
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - ================================================================================
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - ✅ PASSED: tests/test_catedral_qcal_fredholm.py::TestDefinicionEspacioAdelico::test_obtener_propiedades_adelicas (0.000s)
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - 
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - ================================================================================
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - Test: tests/test_catedral_qcal_fredholm.py::TestConstruccionOperadorSchattenS2::test_initialization
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - Location: tests/test_catedral_qcal_fredholm.py:201
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - ================================================================================
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - ✅ PASSED: tests/test_catedral_qcal_fredholm.py::TestConstruccionOperadorSchattenS2::test_initialization (0.000s)
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - 
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - ================================================================================
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - Test: tests/test_catedral_qcal_fredholm.py::TestConstruccionOperadorSchattenS2::test_desplegar_construccion_schatten_exact_output
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - Location: tests/test_catedral_qcal_fredholm.py:208
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - ================================================================================
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - ✅ PASSED: tests/test_catedral_qcal_fredholm.py::TestConstruccionOperadorSchattenS2::test_desplegar_construccion_schatten_exact_output (0.000s)
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - 
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - ================================================================================
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - Test: tests/test_catedral_qcal_fredholm.py::TestConstruccionOperadorSchattenS2::test_evaluar_kernel_hilbert_schmidt
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - Location: tests/test_catedral_qcal_fredholm.py:222
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - ================================================================================
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - ✅ PASSED: tests/test_catedral_qcal_fredholm.py::TestConstruccionOperadorSchattenS2::test_evaluar_kernel_hilbert_schmidt (0.000s)
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - 
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - ================================================================================
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - Test: tests/test_catedral_qcal_fredholm.py::TestConstruccionOperadorSchattenS2::test_estimar_norma_schatten_s2
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - Location: tests/test_catedral_qcal_fredholm.py:235
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - ================================================================================
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - ✅ PASSED: tests/test_catedral_qcal_fredholm.py::TestConstruccionOperadorSchattenS2::test_estimar_norma_schatten_s2 (0.000s)
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - 
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - ================================================================================
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - Test: tests/test_catedral_qcal_fredholm.py::TestLean4FormalizationAndIntegration::test_lean4_fredholm_bridge_exists
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - Location: tests/test_catedral_qcal_fredholm.py:255
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - ================================================================================
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - ✅ PASSED: tests/test_catedral_qcal_fredholm.py::TestLean4FormalizationAndIntegration::test_lean4_fredholm_bridge_exists (0.000s)
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - 
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - ================================================================================
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - Test: tests/test_catedral_qcal_fredholm.py::TestLean4FormalizationAndIntegration::test_lean4_noesis_kernel_autonomo_exists
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - Location: tests/test_catedral_qcal_fredholm.py:311
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - ================================================================================
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - ✅ PASSED: tests/test_catedral_qcal_fredholm.py::TestLean4FormalizationAndIntegration::test_lean4_noesis_kernel_autonomo_exists (0.000s)
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - 
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - ================================================================================
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - Test: tests/test_catedral_qcal_fredholm.py::TestLean4FormalizationAndIntegration::test_lean4_catedral_fredholm_bridge_exists
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - Location: tests/test_catedral_qcal_fredholm.py:326
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - ================================================================================
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - ✅ PASSED: tests/test_catedral_qcal_fredholm.py::TestLean4FormalizationAndIntegration::test_lean4_catedral_fredholm_bridge_exists (0.000s)
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - 
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - ================================================================================
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - Test: tests/test_catedral_qcal_fredholm.py::TestLean4FormalizationAndIntegration::test_validation_script_and_certificate
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - Location: tests/test_catedral_qcal_fredholm.py:338
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - ================================================================================
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - ✅ PASSED: tests/test_catedral_qcal_fredholm.py::TestLean4FormalizationAndIntegration::test_validation_script_and_certificate (0.006s)
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - 
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - ================================================================================
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - Test: tests/test_catedral_qcal_fredholm.py::TestDemostracionTrazaYConvergenciaFredholm::test_initialization
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - Location: tests/test_catedral_qcal_fredholm.py:362
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - ================================================================================
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - ✅ PASSED: tests/test_catedral_qcal_fredholm.py::TestDemostracionTrazaYConvergenciaFredholm::test_initialization (0.000s)
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - 
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - ================================================================================
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - Test: tests/test_catedral_qcal_fredholm.py::TestDemostracionTrazaYConvergenciaFredholm::test_desplegar_demostracion
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - Location: tests/test_catedral_qcal_fredholm.py:369
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - ================================================================================
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - ✅ PASSED: tests/test_catedral_qcal_fredholm.py::TestDemostracionTrazaYConvergenciaFredholm::test_desplegar_demostracion (0.000s)
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - 
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - ================================================================================
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - Test: tests/test_catedral_qcal_fredholm.py::TestDemostracionTrazaYConvergenciaFredholm::test_estimar_cota_serie_trazas
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - Location: tests/test_catedral_qcal_fredholm.py:380
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - ================================================================================
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - ✅ PASSED: tests/test_catedral_qcal_fredholm.py::TestDemostracionTrazaYConvergenciaFredholm::test_estimar_cota_serie_trazas (0.000s)
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - 
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - ================================================================================
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - Test: tests/test_catedral_qcal_fredholm.py::TestAnalisisIdentificacionEcuacionFuncional::test_initialization
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - Location: tests/test_catedral_qcal_fredholm.py:393
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - ================================================================================
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - ✅ PASSED: tests/test_catedral_qcal_fredholm.py::TestAnalisisIdentificacionEcuacionFuncional::test_initialization (0.000s)
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - 
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - ================================================================================
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - Test: tests/test_catedral_qcal_fredholm.py::TestAnalisisIdentificacionEcuacionFuncional::test_desplegar_resumen_matematico
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - Location: tests/test_catedral_qcal_fredholm.py:399
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - ================================================================================
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - ✅ PASSED: tests/test_catedral_qcal_fredholm.py::TestAnalisisIdentificacionEcuacionFuncional::test_desplegar_resumen_matematico (0.000s)
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - 
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - ================================================================================
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - Test: tests/test_catedral_qcal_fredholm.py::TestAnalisisIdentificacionEcuacionFuncional::test_evaluar_expansion_euler_weil
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - Location: tests/test_catedral_qcal_fredholm.py:410
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - ================================================================================
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - ✅ PASSED: tests/test_catedral_qcal_fredholm.py::TestAnalisisIdentificacionEcuacionFuncional::test_evaluar_expansion_euler_weil (0.000s)
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - 
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - ================================================================================
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - Test: tests/test_catedral_qcal_fredholm.py::TestDemostracionEcuacionFuncionalFredholm::test_initialization
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - Location: tests/test_catedral_qcal_fredholm.py:421
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - ================================================================================
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - ✅ PASSED: tests/test_catedral_qcal_fredholm.py::TestDemostracionEcuacionFuncionalFredholm::test_initialization (0.000s)
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - 
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - ================================================================================
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - Test: tests/test_catedral_qcal_fredholm.py::TestDemostracionEcuacionFuncionalFredholm::test_ejecutar_analisis
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - Location: tests/test_catedral_qcal_fredholm.py:428
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - ================================================================================
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - ✅ PASSED: tests/test_catedral_qcal_fredholm.py::TestDemostracionEcuacionFuncionalFredholm::test_ejecutar_analisis (0.001s)
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - 
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - ================================================================================
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - Test: tests/test_catedral_qcal_fredholm.py::TestDemostracionEcuacionFuncionalFredholm::test_verificar_conjugacion_resolvente
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - Location: tests/test_catedral_qcal_fredholm.py:438
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - ================================================================================
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - ✅ PASSED: tests/test_catedral_qcal_fredholm.py::TestDemostracionEcuacionFuncionalFredholm::test_verificar_conjugacion_resolvente (0.000s)
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - 
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - ================================================================================
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - Test: tests/test_catedral_qcal_fredholm.py::TestCierrePuenteEspectral::test_initialization
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - Location: tests/test_catedral_qcal_fredholm.py:449
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - ================================================================================
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - ✅ PASSED: tests/test_catedral_qcal_fredholm.py::TestCierrePuenteEspectral::test_initialization (0.000s)
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - 
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - ================================================================================
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - Test: tests/test_catedral_qcal_fredholm.py::TestCierrePuenteEspectral::test_desplegar_resumen
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - Location: tests/test_catedral_qcal_fredholm.py:455
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - ================================================================================
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - ✅ PASSED: tests/test_catedral_qcal_fredholm.py::TestCierrePuenteEspectral::test_desplegar_resumen (0.000s)
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - 
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - ================================================================================
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - Test: tests/test_catedral_qcal_fredholm.py::TestCierrePuenteEspectral::test_verificar_biyeccion_puente
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - Location: tests/test_catedral_qcal_fredholm.py:466
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - ================================================================================
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - ✅ PASSED: tests/test_catedral_qcal_fredholm.py::TestCierrePuenteEspectral::test_verificar_biyeccion_puente (0.001s)
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - 
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - ================================================================================
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - Test: tests/test_catedral_qcal_fredholm.py::TestNoesisKernelAutonomo::test_initialization
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - Location: tests/test_catedral_qcal_fredholm.py:480
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - ================================================================================
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - ✅ PASSED: tests/test_catedral_qcal_fredholm.py::TestNoesisKernelAutonomo::test_initialization (0.000s)
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - 
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - ================================================================================
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - Test: tests/test_catedral_qcal_fredholm.py::TestNoesisKernelAutonomo::test_desplegar_confirmacion
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - Location: tests/test_catedral_qcal_fredholm.py:486
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - ================================================================================
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - ✅ PASSED: tests/test_catedral_qcal_fredholm.py::TestNoesisKernelAutonomo::test_desplegar_confirmacion (0.000s)
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - 
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - ================================================================================
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - Test: tests/test_catedral_qcal_fredholm.py::TestNoesisKernelAutonomo::test_simular_evolucion_unitaria
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - Location: tests/test_catedral_qcal_fredholm.py:499
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - ================================================================================
+2026-10-21 22:18:03 - INFO     - qcal.test_session_20261021_221802 - ✅ PASSED: tests/test_catedral_qcal_fredholm.py::TestNoesisKernelAutonomo::test_simular_evolucion_unitaria (0.000s)

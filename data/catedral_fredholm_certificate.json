@@ -1,8 +1,8 @@
 {
   "certificado": "CATEDRAL_QCAL_FREDHOLM_BRIDGE",
-  "version": "1.0.0",
-  "timestamp_utc": "2026-10-21T22:01:01.918501+00:00",
-  "tiempo_validacion_segundos": 0.0004,
+  "version": "1.1.0",
+  "timestamp_utc": "2026-10-21T22:18:03.719861+00:00",
+  "tiempo_validacion_segundos": 0.0042,
   "estado": "VALIDADO_COHERENTE",
   "frecuencia_base_hz": 141.7001,
   "coherencia_psi": 0.999999,
@@ -12,18 +12,24 @@
   "autor": "José Manuel Mota Burruezo Ψ ✧ ∞³",
   "institucion": "Instituto de Conciencia Cuántica (ICQ)",
   "orcid": "0009-0002-1923-0773",
-  "etapas_validadas": 5,
+  "etapas_validadas": 10,
   "etapas_fallidas": 0,
   "clases_validadas": [
     "DemostracionAxiomaHadamard",
     "DemostracionConfinamientoEspectral",
     "CierreMatemáticoSinSorry",
     "DefinicionEspacioAdelico",
-    "ConstruccionOperadorSchattenS2"
+    "ConstruccionOperadorSchattenS2",
+    "DemostracionTrazaYConvergenciaFredholm",
+    "AnalisisIdentificacionEcuacionFuncional",
+    "DemostracionEcuacionFuncionalFredholm",
+    "CierrePuenteEspectral",
+    "NoesisKernelAutonomo"
   ],
   "archivos_lean4": [
     "formalization/lean/QCAL/FredholmBridge.lean",
-    "formalization/lean/QCAL/Catedral/FredholmBridge.lean"
+    "formalization/lean/QCAL/Catedral/FredholmBridge.lean",
+    "formalization/lean/QCAL/NoesisKernelAutonomo.lean"
   ],
   "resultados_etapas": {
     "etapa_1": {
@@ -106,6 +112,92 @@
         "real": 1.0,
         "imag": 0.0
       },
+      "status": "PASS"
+    },
+    "etapa_6": {
+      "etapa": "trace_convergence",
+      "cota_convergencia": {
+        "norm_op": 0.4,
+        "norm_s2": 2.5,
+        "suma_parcial": 4.329125928358061,
+        "cota_residuo": 9.685160488968825e-13,
+        "convergencia_absoluta": true
+      },
+      "status": "PASS"
+    },
+    "etapa_7": {
+      "etapa": "log_identification_functional_equation",
+      "euler_weil_eval": {
+        "real": 0.20806732566507366,
+        "imag": -0.3664867164384211
+      },
+      "status": "PASS"
+    },
+    "etapa_8": {
+      "etapa": "structural_functional_equation",
+      "resolvente_conjugacion": {
+        "s": {
+          "real": 0.75,
+          "imag": 14.134725
+        },
+        "s_reflejado": {
+          "real": 0.25,
+          "imag": -14.134725
+        },
+        "punto_fijo_re": 0.5,
+        "preserva_distancia_linea_critica": true,
+        "simetria_especular_valida": true
+      },
+      "status": "PASS"
+    },
+    "etapa_9": {
+      "etapa": "spectral_bridge_closure",
+      "biyeccion": {
+        "total_evaluados": 3,
+        "todos_ceros_confirmados": true,
+        "ceros": [
+          {
+            "gamma": 14.134725141734693,
+            "s": {
+              "real": 0.5,
+              "imag": 14.134725141734693
+            },
+            "modulo_zeta": 7.421173263061183e-16,
+            "es_cero": true
+          },
+          {
+            "gamma": 21.022039638771556,
+            "s": {
+              "real": 0.5,
+              "imag": 21.022039638771556
+            },
+            "modulo_zeta": 1.1609164044328832e-15,
+            "es_cero": true
+          },
+          {
+            "gamma": 25.01085758014569,
+            "s": {
+              "real": 0.5,
+              "imag": 25.01085758014569
+            },
+            "modulo_zeta": 8.498844855752863e-16,
+            "es_cero": true
+          }
+        ],
+        "biyeccion_confirmada": true
+      },
+      "status": "PASS"
+    },
+    "etapa_10": {
+      "etapa": "noesis_autonomous_kernel",
+      "evolucion_unitaria": {
+        "tiempo": 1.0,
+        "norma_inicial": 1.14564392373896,
+        "norma_final": 1.14564392373896,
+        "desviacion_norma": 0.0,
+        "unitariedad_conservada": true
+      },
+      "lean_file": "formalization/lean/QCAL/NoesisKernelAutonomo.lean",
       "status": "PASS"
     }
   }

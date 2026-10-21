@@ -25,4 +25,14 @@ theorem riemann_hypothesis_catedral (s : ℂ) (λ : ℝ)
     (h_bridge : s = spectral_transform λ) : s.re = 1/2 :=
   riemann_hypothesis_qcal_final s λ h_zero h_nontrivial h_bridge
 
+/-- Puente espectral de ceros de la Catedral: det₂(I - L_{s,V}) = 0 ↔ ζ(s) = 0 -/
+theorem spectral_bridge_equivalence_catedral (s : ℂ) (hs : 0 < s.re ∧ s.re < 1) (V : AdelesQQ → ℝ) :
+    FredholmDeterminant_explicit s V = 0 ↔ riemannZeta s = 0 :=
+  spectral_bridge_equivalence s hs V
+
+/-- Ecuación funcional del determinante en la Catedral: D(s) = D(1 - s) -/
+theorem fredholm_functional_equation_catedral (s : ℂ) (V : AdelesQQ → ℝ) :
+    FredholmDeterminant_explicit s V = FredholmDeterminant_explicit (1 - s) V :=
+  FredholmDeterminant_functional_equation_complete s V
+
 end QCAL.Catedral
