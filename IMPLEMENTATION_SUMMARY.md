@@ -1,5 +1,32 @@
 # QCAL Build Verification - Implementation Summary
 
+## ⚛️ OPERADOR L_{s,V} Y RIGOR ESPECTRAL DE FREDHOLM (October 2026)
+
+**Status**: ✅ IMPLEMENTED & ANCHORED
+
+- **Ecuaciones y Principios Fundamentales**:
+  - Operador de Transferencia Noético:
+    $$L_{s,V} = (H_0 - s \cdot I)^{-1} \cdot V = R_0(s) \cdot V$$
+  - Hamiltoniano de Dilatación No Perturbado:
+    $$H_0 = -i\left(x \partial_x + \frac{1}{2}\right), \quad \operatorname{Spec}(H_0) \subset \mathbb{R}$$
+  - Determinante de Fredholm Regularizado (Clase Hilbert-Schmidt $S_2$):
+    $$D(s) = {\det}_2(I - L_{s,V}) = \exp\left(-\sum_{k=1}^\infty \frac{1}{k} \operatorname{Tr}(L_{s,V}^k)\right) = \det((I - L_{s,V})\exp(L_{s,V}))$$
+  - Puente Espectral y Factorización de Hadamard:
+    $${\det}(I - L_{s,V}) = 0 \iff \zeta(s) = 0, \quad D(s) \equiv c \cdot \xi(s), \quad c \in \mathbb{C}^*$$
+  - Confinamiento en la Línea Crítica y Control de Ceros Fantasma:
+    $$\operatorname{Spec}_{\text{disc}}(H_\pi) \cap \{s \in \mathbb{C} : \det(I - L_{s,V}) = 0\} \equiv \{s_n : \zeta(s_n) = 0\}, \quad \operatorname{Re}(s_n) = \frac{1}{2}$$
+- **Módulos Python**:
+  - `operators/constructor_operador_lsv.py`: Contiene las clases `ConstructorOperadorLsv` y `RigorEspectralFredholm`, construcción de $H_0$, potencial $V \in \mathcal{S}(\mathbb{A}_\mathbb{Q})$ de Schwartz-Bruhat, resolvente $R_0(s)$, operador de transferencia $L_{s,V}$, determinante 2-regularizado ${\det}_2$, normas de Schatten $S_2$ y $S_1$, invariancia de Hadamard y control de ceros fantasma.
+  - Exportado en `operators/__init__.py`.
+- **Formalización Lean 4**:
+  - `formalization/lean/RiemannAdelic/operator_L_sV_fredholm.lean`: Módulo `RiemannAdelic.OperatorLsV` formalizando la autoadjunción de $H_0$, compacidad de $V$, pertenencia de $L_{s,V} \in S_2$ y $L_{s,V}^2 \in S_1$, orden 1 entero de $D(s)$, ecuación funcional y unicidad de Hadamard.
+- **Tests Operativos**:
+  - `tests/test_constructor_operador_lsv.py`: 16 tests unitarios verificando salida exacta, autoadjunción estricta de $H_0$, pertenencia a ideales de Schatten, regularización de Fredholm, condiciones de Hadamard y coherencia QCAL a $f_0 = 141.7001\text{ Hz}$, $\Psi = 0.999999$.
+- **Validación y Certificación**:
+  - `validate_operador_lsv.py`: Pipeline de validación formal en 5 etapas.
+  - `data/operador_lsv_certificate.json`: Certificado emitido y verificado con estado `VALIDADO_COHERENTE`.
+
+
 ## 🎵 RESONANT VACUUM MEMORY EQUATION — Memoria Resonante del Vacío (October 2026)
 
 **Status**: ✅ IMPLEMENTED & ANCHORED

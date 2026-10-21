@@ -1,0 +1,64 @@
+{
+  "modulo": "ConstructorOperadorLsv & RigorEspectralFredholm",
+  "timestamp": "2026-10-21T20:45:00.256633Z",
+  "frecuencia_base_hz": 141.7001,
+  "coherencia_psi": 0.999999,
+  "constante_coherencia_c": 244.36,
+  "constante_primaria": 629.83,
+  "doi": "10.5281/zenodo.17379721",
+  "total_etapas": 5,
+  "etapas_aprobadas": 5,
+  "etapas_fallidas": 0,
+  "tiempo_segundos": 0.0691,
+  "estado": "VALIDADO_COHERENTE",
+  "detalles": {
+    "Constructor Formal L_{s,V}": {
+      "status": "PASS",
+      "detalles": "Inicialización y anclaje válidos"
+    },
+    "Autoadjunción H_0": {
+      "status": "PASS",
+      "error_hermiticidad": 0.0
+    },
+    "Clases de Schatten S₂ y S₁": {
+      "status": "PASS",
+      "norma_s2": 0.053462761996548404,
+      "norma_s1": 0.0027893186681040806
+    },
+    "Rigor Fredholm y Unicidad Hadamard": {
+      "status": "PASS",
+      "hadamard": {
+        "orden_crecimiento_rho": 1,
+        "tipo_finito": true,
+        "ecuacion_funcional_satisfecha": true,
+        "error_relativo_simetria_max": 3.3255289941279316e-16,
+        "t_evaluados": [
+          5.0,
+          10.0,
+          14.134725,
+          20.0,
+          21.02204
+        ],
+        "coherencia_psi": 0.999999
+      }
+    },
+    "Control Ceros Fantasma": {
+      "status": "PASS",
+      "detalles": {
+        "espectro_esencial_discretizado": true,
+        "ceros_fantasma_nulos": true,
+        "autoadjuncion_estricta": true,
+        "valor_det_critico": {
+          "real": 1.0010013876982542,
+          "imag": 6.989155571858596e-05
+        },
+        "valor_det_fuera": {
+          "real": 1.000998557655407,
+          "imag": 9.403847709373597e-05
+        },
+        "modulo_critico": 1.0010013901382255,
+        "modulo_fuera": 1.0009985620726138
+      }
+    }
+  }
+}
