@@ -1,186 +1,180 @@
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - 
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - ================================================================================
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - Test: tests/test_resonant_vacuum_memory.py::TestResonantVacuumMemory::test_initialization_defaults
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - Location: tests/test_resonant_vacuum_memory.py:33
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - ================================================================================
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - ✅ PASSED: tests/test_resonant_vacuum_memory.py::TestResonantVacuumMemory::test_initialization_defaults (0.003s)
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - 
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - ================================================================================
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - Test: tests/test_resonant_vacuum_memory.py::TestResonantVacuumMemory::test_zeta_prime_half_accuracy
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - Location: tests/test_resonant_vacuum_memory.py:46
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - ================================================================================
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - ✅ PASSED: tests/test_resonant_vacuum_memory.py::TestResonantVacuumMemory::test_zeta_prime_half_accuracy (0.001s)
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - 
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - ================================================================================
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - Test: tests/test_resonant_vacuum_memory.py::TestResonantVacuumMemory::test_macroscopic_uv_block
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - Location: tests/test_resonant_vacuum_memory.py:53
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - ================================================================================
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - ✅ PASSED: tests/test_resonant_vacuum_memory.py::TestResonantVacuumMemory::test_macroscopic_uv_block (0.001s)
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - 
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - ================================================================================
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - Test: tests/test_resonant_vacuum_memory.py::TestResonantVacuumMemory::test_spectral_pulse
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - Location: tests/test_resonant_vacuum_memory.py:61
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - ================================================================================
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - ✅ PASSED: tests/test_resonant_vacuum_memory.py::TestResonantVacuumMemory::test_spectral_pulse (0.001s)
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - 
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - ================================================================================
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - Test: tests/test_resonant_vacuum_memory.py::TestResonantVacuumMemory::test_harmonic_modulator
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - Location: tests/test_resonant_vacuum_memory.py:68
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - ================================================================================
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - ✅ PASSED: tests/test_resonant_vacuum_memory.py::TestResonantVacuumMemory::test_harmonic_modulator (0.001s)
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - 
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - ================================================================================
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - Test: tests/test_resonant_vacuum_memory.py::TestResonantVacuumMemory::test_total_energy_decomposition
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - Location: tests/test_resonant_vacuum_memory.py:79
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - ================================================================================
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - ✅ PASSED: tests/test_resonant_vacuum_memory.py::TestResonantVacuumMemory::test_total_energy_decomposition (0.001s)
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - 
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - ================================================================================
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - Test: tests/test_resonant_vacuum_memory.py::TestResonantVacuumMemory::test_invalid_radius_raises
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - Location: tests/test_resonant_vacuum_memory.py:91
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - ================================================================================
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - ✅ PASSED: tests/test_resonant_vacuum_memory.py::TestResonantVacuumMemory::test_invalid_radius_raises (0.001s)
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - 
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - ================================================================================
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - Test: tests/test_resonant_vacuum_memory.py::TestResonantVacuumMemory::test_analytical_first_derivative
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - Location: tests/test_resonant_vacuum_memory.py:108
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - ================================================================================
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - ✅ PASSED: tests/test_resonant_vacuum_memory.py::TestResonantVacuumMemory::test_analytical_first_derivative (0.001s)
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - 
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - ================================================================================
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - Test: tests/test_resonant_vacuum_memory.py::TestResonantVacuumMemory::test_analytical_second_derivative
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - Location: tests/test_resonant_vacuum_memory.py:121
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - ================================================================================
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - ✅ PASSED: tests/test_resonant_vacuum_memory.py::TestResonantVacuumMemory::test_analytical_second_derivative (0.001s)
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - 
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - ================================================================================
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - Test: tests/test_resonant_vacuum_memory.py::TestResonantVacuumMemory::test_resonant_nodes_properties
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - Location: tests/test_resonant_vacuum_memory.py:134
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - ================================================================================
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - ✅ PASSED: tests/test_resonant_vacuum_memory.py::TestResonantVacuumMemory::test_resonant_nodes_properties (0.001s)
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - 
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - ================================================================================
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - Test: tests/test_resonant_vacuum_memory.py::TestResonantVacuumMemory::test_find_minima_detection
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - Location: tests/test_resonant_vacuum_memory.py:154
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - ================================================================================
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - ✅ PASSED: tests/test_resonant_vacuum_memory.py::TestResonantVacuumMemory::test_find_minima_detection (0.002s)
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - 
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - ================================================================================
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - Test: tests/test_resonant_vacuum_memory.py::TestResonantVacuumMemory::test_fundamental_frequency_derivation
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - Location: tests/test_resonant_vacuum_memory.py:168
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - ================================================================================
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - ✅ PASSED: tests/test_resonant_vacuum_memory.py::TestResonantVacuumMemory::test_fundamental_frequency_derivation (0.001s)
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - 
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - ================================================================================
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - Test: tests/test_resonant_vacuum_memory.py::TestResonantVacuumMemory::test_qcal_coherence_state
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - Location: tests/test_resonant_vacuum_memory.py:174
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - ================================================================================
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - ✅ PASSED: tests/test_resonant_vacuum_memory.py::TestResonantVacuumMemory::test_qcal_coherence_state (0.001s)
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - 
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - ================================================================================
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - Test: tests/test_resonant_vacuum_memory.py::TestResonantVacuumMemory::test_vectorized_evaluation
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - Location: tests/test_resonant_vacuum_memory.py:185
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - ================================================================================
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - ✅ PASSED: tests/test_resonant_vacuum_memory.py::TestResonantVacuumMemory::test_vectorized_evaluation (0.001s)
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - 
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - ================================================================================
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - Test: tests/test_vacuum_energy.py::TestVacuumEnergyCalculator::test_initialization
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - Location: tests/test_vacuum_energy.py:25
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - ================================================================================
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - ✅ PASSED: tests/test_vacuum_energy.py::TestVacuumEnergyCalculator::test_initialization (0.001s)
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - 
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - ================================================================================
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - Test: tests/test_vacuum_energy.py::TestVacuumEnergyCalculator::test_zeta_prime_half
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - Location: tests/test_vacuum_energy.py:36
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - ================================================================================
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - ✅ PASSED: tests/test_vacuum_energy.py::TestVacuumEnergyCalculator::test_zeta_prime_half (0.001s)
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - 
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - ================================================================================
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - Test: tests/test_vacuum_energy.py::TestVacuumEnergyCalculator::test_energy_positive_radius
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - Location: tests/test_vacuum_energy.py:43
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - ================================================================================
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - ✅ PASSED: tests/test_vacuum_energy.py::TestVacuumEnergyCalculator::test_energy_positive_radius (0.001s)
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - 
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - ================================================================================
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - Test: tests/test_vacuum_energy.py::TestVacuumEnergyCalculator::test_energy_invalid_radius
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - Location: tests/test_vacuum_energy.py:58
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - ================================================================================
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - ✅ PASSED: tests/test_vacuum_energy.py::TestVacuumEnergyCalculator::test_energy_invalid_radius (0.001s)
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - 
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - ================================================================================
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - Test: tests/test_vacuum_energy.py::TestVacuumEnergyCalculator::test_resonant_scales
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - Location: tests/test_vacuum_energy.py:68
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - ================================================================================
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - ✅ PASSED: tests/test_vacuum_energy.py::TestVacuumEnergyCalculator::test_resonant_scales (0.001s)
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - 
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - ================================================================================
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - Test: tests/test_vacuum_energy.py::TestVacuumEnergyCalculator::test_fractal_term_vanishes_at_pi_powers
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - Location: tests/test_vacuum_energy.py:77
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - ================================================================================
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - ✅ PASSED: tests/test_vacuum_energy.py::TestVacuumEnergyCalculator::test_fractal_term_vanishes_at_pi_powers (0.001s)
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - 
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - ================================================================================
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - Test: tests/test_vacuum_energy.py::TestVacuumEnergyCalculator::test_derivative_calculation
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - Location: tests/test_vacuum_energy.py:96
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - ================================================================================
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - ✅ PASSED: tests/test_vacuum_energy.py::TestVacuumEnergyCalculator::test_derivative_calculation (0.001s)
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - 
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - ================================================================================
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - Test: tests/test_vacuum_energy.py::TestVacuumEnergyCalculator::test_find_minima
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - Location: tests/test_vacuum_energy.py:112
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - ================================================================================
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - ✅ PASSED: tests/test_vacuum_energy.py::TestVacuumEnergyCalculator::test_find_minima (0.005s)
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - 
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - ================================================================================
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - Test: tests/test_vacuum_energy.py::TestVacuumEnergyCalculator::test_minimum_near_pi
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - Location: tests/test_vacuum_energy.py:130
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - ================================================================================
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - ✅ PASSED: tests/test_vacuum_energy.py::TestVacuumEnergyCalculator::test_minimum_near_pi (0.008s)
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - 
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - ================================================================================
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - Test: tests/test_vacuum_energy.py::TestVacuumEnergyCalculator::test_fundamental_frequency
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - Location: tests/test_vacuum_energy.py:151
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - ================================================================================
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - ✅ PASSED: tests/test_vacuum_energy.py::TestVacuumEnergyCalculator::test_fundamental_frequency (0.001s)
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - 
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - ================================================================================
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - Test: tests/test_vacuum_energy.py::TestVacuumEnergyCalculator::test_energy_symmetry
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - Location: tests/test_vacuum_energy.py:162
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - ================================================================================
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - ✅ PASSED: tests/test_vacuum_energy.py::TestVacuumEnergyCalculator::test_energy_symmetry (0.001s)
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - 
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - ================================================================================
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - Test: tests/test_vacuum_energy.py::TestNonCircularDerivation::test_derive_f0_returns_valid_values
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - Location: tests/test_vacuum_energy.py:187
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - ================================================================================
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - ✅ PASSED: tests/test_vacuum_energy.py::TestNonCircularDerivation::test_derive_f0_returns_valid_values (0.004s)
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - 
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - ================================================================================
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - Test: tests/test_vacuum_energy.py::TestNonCircularDerivation::test_f0_close_to_target
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - Location: tests/test_vacuum_energy.py:205
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - ================================================================================
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - ✅ PASSED: tests/test_vacuum_energy.py::TestNonCircularDerivation::test_f0_close_to_target (0.004s)
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - 
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - ================================================================================
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - Test: tests/test_vacuum_energy.py::TestNonCircularDerivation::test_parameter_sensitivity
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - Location: tests/test_vacuum_energy.py:219
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - ================================================================================
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - ✅ PASSED: tests/test_vacuum_energy.py::TestNonCircularDerivation::test_parameter_sensitivity (0.013s)
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - 
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - ================================================================================
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - Test: tests/test_vacuum_energy.py::TestPhysicalInterpretation::test_casimir_term_dominates_small_R
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - Location: tests/test_vacuum_energy.py:243
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - ================================================================================
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - ✅ PASSED: tests/test_vacuum_energy.py::TestPhysicalInterpretation::test_casimir_term_dominates_small_R (0.001s)
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - 
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - ================================================================================
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - Test: tests/test_vacuum_energy.py::TestPhysicalInterpretation::test_cosmological_term_dominates_large_R
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - Location: tests/test_vacuum_energy.py:262
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - ================================================================================
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - ✅ PASSED: tests/test_vacuum_energy.py::TestPhysicalInterpretation::test_cosmological_term_dominates_large_R (0.001s)
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - 
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - ================================================================================
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - Test: tests/test_vacuum_energy.py::TestPhysicalInterpretation::test_adelic_coupling_sign
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - Location: tests/test_vacuum_energy.py:281
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - ================================================================================
-2026-10-12 20:38:21 - INFO     - qcal.test_session_20261012_203820 - ✅ PASSED: tests/test_vacuum_energy.py::TestPhysicalInterpretation::test_adelic_coupling_sign (0.001s)
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - 
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ================================================================================
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - Test: tests/test_fredholm_determinant_constructor.py::TestFredholmDeterminantConstructor::test_constructor_initialization
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - Location: tests/test_fredholm_determinant_constructor.py:60
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ================================================================================
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ✅ PASSED: tests/test_fredholm_determinant_constructor.py::TestFredholmDeterminantConstructor::test_constructor_initialization (0.000s)
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - 
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ================================================================================
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - Test: tests/test_fredholm_determinant_constructor.py::TestFredholmDeterminantConstructor::test_verify_pt_symmetry_true
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - Location: tests/test_fredholm_determinant_constructor.py:66
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ================================================================================
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ✅ PASSED: tests/test_fredholm_determinant_constructor.py::TestFredholmDeterminantConstructor::test_verify_pt_symmetry_true (0.000s)
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - 
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ================================================================================
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - Test: tests/test_fredholm_determinant_constructor.py::TestFredholmDeterminantConstructor::test_verify_pt_symmetry_false
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - Location: tests/test_fredholm_determinant_constructor.py:71
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ================================================================================
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ✅ PASSED: tests/test_fredholm_determinant_constructor.py::TestFredholmDeterminantConstructor::test_verify_pt_symmetry_false (0.000s)
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - 
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ================================================================================
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - Test: tests/test_fredholm_determinant_constructor.py::TestFredholmDeterminantConstructor::test_hadamard_product_convergence
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - Location: tests/test_fredholm_determinant_constructor.py:77
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ================================================================================
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ✅ PASSED: tests/test_fredholm_determinant_constructor.py::TestFredholmDeterminantConstructor::test_hadamard_product_convergence (0.000s)
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - 
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ================================================================================
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - Test: tests/test_fredholm_determinant_constructor.py::TestFredholmDeterminantConstructor::test_log_derivative_finite
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - Location: tests/test_fredholm_determinant_constructor.py:86
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ================================================================================
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ✅ PASSED: tests/test_fredholm_determinant_constructor.py::TestFredholmDeterminantConstructor::test_log_derivative_finite (0.000s)
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - 
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ================================================================================
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - Test: tests/test_fredholm_determinant_constructor.py::TestFredholmDeterminantConstructor::test_fredholm_determinant_paso1
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - Location: tests/test_fredholm_determinant_constructor.py:93
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ================================================================================
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ✅ PASSED: tests/test_fredholm_determinant_constructor.py::TestFredholmDeterminantConstructor::test_fredholm_determinant_paso1 (0.001s)
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - 
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ================================================================================
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - Test: tests/test_fredholm_determinant_constructor.py::TestFredholmDeterminantConstructor::test_get_primes
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - Location: tests/test_fredholm_determinant_constructor.py:115
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ================================================================================
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ✅ PASSED: tests/test_fredholm_determinant_constructor.py::TestFredholmDeterminantConstructor::test_get_primes (0.000s)
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - 
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ================================================================================
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - Test: tests/test_fredholm_determinant_constructor.py::TestFredholmDeterminantConstructor::test_weyl_contribution
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - Location: tests/test_fredholm_determinant_constructor.py:122
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ================================================================================
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ✅ PASSED: tests/test_fredholm_determinant_constructor.py::TestFredholmDeterminantConstructor::test_weyl_contribution (0.000s)
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - 
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ================================================================================
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - Test: tests/test_fredholm_determinant_constructor.py::TestFredholmDeterminantConstructor::test_prime_contribution
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - Location: tests/test_fredholm_determinant_constructor.py:134
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ================================================================================
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ✅ PASSED: tests/test_fredholm_determinant_constructor.py::TestFredholmDeterminantConstructor::test_prime_contribution (0.001s)
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - 
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ================================================================================
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - Test: tests/test_fredholm_determinant_constructor.py::TestFredholmDeterminantConstructor::test_trace_formula_paso2
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - Location: tests/test_fredholm_determinant_constructor.py:142
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ================================================================================
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ✅ PASSED: tests/test_fredholm_determinant_constructor.py::TestFredholmDeterminantConstructor::test_trace_formula_paso2 (0.003s)
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - 
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ================================================================================
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - Test: tests/test_fredholm_determinant_constructor.py::TestFredholmDeterminantConstructor::test_remainder_bound_estimation
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - Location: tests/test_fredholm_determinant_constructor.py:162
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ================================================================================
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ✅ PASSED: tests/test_fredholm_determinant_constructor.py::TestFredholmDeterminantConstructor::test_remainder_bound_estimation (0.000s)
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - 
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ================================================================================
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - Test: tests/test_fredholm_determinant_constructor.py::TestFredholmDeterminantConstructor::test_hadamard_expansion_paso3
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - Location: tests/test_fredholm_determinant_constructor.py:174
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ================================================================================
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ✅ PASSED: tests/test_fredholm_determinant_constructor.py::TestFredholmDeterminantConstructor::test_hadamard_expansion_paso3 (0.000s)
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - 
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ================================================================================
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - Test: tests/test_fredholm_determinant_constructor.py::TestFredholmDeterminantConstructor::test_remainder_control_paso4
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - Location: tests/test_fredholm_determinant_constructor.py:190
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ================================================================================
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ✅ PASSED: tests/test_fredholm_determinant_constructor.py::TestFredholmDeterminantConstructor::test_remainder_control_paso4 (0.000s)
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - 
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ================================================================================
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - Test: tests/test_fredholm_determinant_constructor.py::TestFredholmDeterminantConstructor::test_complete_construction
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - Location: tests/test_fredholm_determinant_constructor.py:209
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ================================================================================
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ✅ PASSED: tests/test_fredholm_determinant_constructor.py::TestFredholmDeterminantConstructor::test_complete_construction (0.034s)
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - 
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ================================================================================
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - Test: tests/test_fredholm_determinant_constructor.py::TestFredholmDeterminantConstructor::test_numerical_stability_small_t
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - Location: tests/test_fredholm_determinant_constructor.py:237
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ================================================================================
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ✅ PASSED: tests/test_fredholm_determinant_constructor.py::TestFredholmDeterminantConstructor::test_numerical_stability_small_t (0.000s)
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - 
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ================================================================================
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - Test: tests/test_fredholm_determinant_constructor.py::TestFredholmDeterminantConstructor::test_numerical_stability_large_t
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - Location: tests/test_fredholm_determinant_constructor.py:251
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ================================================================================
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ✅ PASSED: tests/test_fredholm_determinant_constructor.py::TestFredholmDeterminantConstructor::test_numerical_stability_large_t (0.000s)
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - 
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ================================================================================
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - Test: tests/test_fredholm_determinant_constructor.py::TestFredholmDeterminantConstructor::test_determinant_regularity
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - Location: tests/test_fredholm_determinant_constructor.py:265
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ================================================================================
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ✅ PASSED: tests/test_fredholm_determinant_constructor.py::TestFredholmDeterminantConstructor::test_determinant_regularity (0.002s)
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - 
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ================================================================================
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - Test: tests/test_fredholm_determinant_constructor.py::TestFredholmDeterminantConstructor::test_log_derivative_spectral_representation
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - Location: tests/test_fredholm_determinant_constructor.py:278
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ================================================================================
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ✅ PASSED: tests/test_fredholm_determinant_constructor.py::TestFredholmDeterminantConstructor::test_log_derivative_spectral_representation (0.001s)
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - 
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ================================================================================
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - Test: tests/test_fredholm_determinant_constructor.py::TestFredholmDeterminantConstructor::test_pt_symmetry_preservation
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - Location: tests/test_fredholm_determinant_constructor.py:297
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ================================================================================
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ✅ PASSED: tests/test_fredholm_determinant_constructor.py::TestFredholmDeterminantConstructor::test_pt_symmetry_preservation (0.001s)
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - 
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ================================================================================
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - Test: tests/test_fredholm_determinant_constructor.py::TestFredholmDeterminantConstructor::test_hadamard_factorization_form
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - Location: tests/test_fredholm_determinant_constructor.py:308
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ================================================================================
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ✅ PASSED: tests/test_fredholm_determinant_constructor.py::TestFredholmDeterminantConstructor::test_hadamard_factorization_form (0.000s)
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - 
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ================================================================================
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - Test: tests/test_fredholm_determinant_constructor.py::TestFredholmDeterminantConstructor::test_trace_formula_sum_convergence
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - Location: tests/test_fredholm_determinant_constructor.py:321
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ================================================================================
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ✅ PASSED: tests/test_fredholm_determinant_constructor.py::TestFredholmDeterminantConstructor::test_trace_formula_sum_convergence (0.000s)
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - 
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ================================================================================
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - Test: tests/test_fredholm_determinant_constructor.py::TestFredholmDeterminantConstructor::test_remainder_decay_property
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - Location: tests/test_fredholm_determinant_constructor.py:335
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ================================================================================
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ✅ PASSED: tests/test_fredholm_determinant_constructor.py::TestFredholmDeterminantConstructor::test_remainder_decay_property (0.011s)
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - 
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ================================================================================
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - Test: tests/test_fredholm_determinant_constructor.py::TestFredholmDeterminantConstructor::test_qcal_constants_integration
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - Location: tests/test_fredholm_determinant_constructor.py:354
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ================================================================================
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ✅ PASSED: tests/test_fredholm_determinant_constructor.py::TestFredholmDeterminantConstructor::test_qcal_constants_integration (0.000s)
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - 
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ================================================================================
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - Test: tests/test_fredholm_determinant_constructor.py::TestEdgeCases::test_empty_eigenvalues
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - Location: tests/test_fredholm_determinant_constructor.py:372
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ================================================================================
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ✅ PASSED: tests/test_fredholm_determinant_constructor.py::TestEdgeCases::test_empty_eigenvalues (0.000s)
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - 
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ================================================================================
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - Test: tests/test_fredholm_determinant_constructor.py::TestEdgeCases::test_single_eigenvalue
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - Location: tests/test_fredholm_determinant_constructor.py:383
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ================================================================================
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ✅ PASSED: tests/test_fredholm_determinant_constructor.py::TestEdgeCases::test_single_eigenvalue (0.000s)
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - 
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ================================================================================
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - Test: tests/test_fredholm_determinant_constructor.py::TestEdgeCases::test_zero_t_value
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - Location: tests/test_fredholm_determinant_constructor.py:393
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ================================================================================
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ✅ PASSED: tests/test_fredholm_determinant_constructor.py::TestEdgeCases::test_zero_t_value (0.000s)
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - 
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ================================================================================
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - Test: tests/test_fredholm_determinant_constructor.py::TestEdgeCases::test_negative_eigenvalues_only
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - Location: tests/test_fredholm_determinant_constructor.py:404
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ================================================================================
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ✅ PASSED: tests/test_fredholm_determinant_constructor.py::TestEdgeCases::test_negative_eigenvalues_only (0.000s)
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - 
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ================================================================================
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - Test: tests/test_fredholm_determinant_constructor.py::TestMathematicalProperties::test_determinant_product_formula
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - Location: tests/test_fredholm_determinant_constructor.py:429
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ================================================================================
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ✅ PASSED: tests/test_fredholm_determinant_constructor.py::TestMathematicalProperties::test_determinant_product_formula (0.000s)
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - 
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ================================================================================
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - Test: tests/test_fredholm_determinant_constructor.py::TestMathematicalProperties::test_log_derivative_formula
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - Location: tests/test_fredholm_determinant_constructor.py:440
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ================================================================================
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ✅ PASSED: tests/test_fredholm_determinant_constructor.py::TestMathematicalProperties::test_log_derivative_formula (0.000s)
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - 
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ================================================================================
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - Test: tests/test_fredholm_determinant_constructor.py::TestMathematicalProperties::test_functional_equation_symmetry
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - Location: tests/test_fredholm_determinant_constructor.py:454
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ================================================================================
+2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ✅ PASSED: tests/test_fredholm_determinant_constructor.py::TestMathematicalProperties::test_functional_equation_symmetry (0.000s)
