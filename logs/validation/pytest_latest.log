@@ -1,180 +1,96 @@
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - 
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ================================================================================
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - Test: tests/test_fredholm_determinant_constructor.py::TestFredholmDeterminantConstructor::test_constructor_initialization
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - Location: tests/test_fredholm_determinant_constructor.py:60
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ================================================================================
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ✅ PASSED: tests/test_fredholm_determinant_constructor.py::TestFredholmDeterminantConstructor::test_constructor_initialization (0.000s)
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - 
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ================================================================================
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - Test: tests/test_fredholm_determinant_constructor.py::TestFredholmDeterminantConstructor::test_verify_pt_symmetry_true
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - Location: tests/test_fredholm_determinant_constructor.py:66
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ================================================================================
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ✅ PASSED: tests/test_fredholm_determinant_constructor.py::TestFredholmDeterminantConstructor::test_verify_pt_symmetry_true (0.000s)
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - 
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ================================================================================
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - Test: tests/test_fredholm_determinant_constructor.py::TestFredholmDeterminantConstructor::test_verify_pt_symmetry_false
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - Location: tests/test_fredholm_determinant_constructor.py:71
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ================================================================================
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ✅ PASSED: tests/test_fredholm_determinant_constructor.py::TestFredholmDeterminantConstructor::test_verify_pt_symmetry_false (0.000s)
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - 
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ================================================================================
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - Test: tests/test_fredholm_determinant_constructor.py::TestFredholmDeterminantConstructor::test_hadamard_product_convergence
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - Location: tests/test_fredholm_determinant_constructor.py:77
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ================================================================================
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ✅ PASSED: tests/test_fredholm_determinant_constructor.py::TestFredholmDeterminantConstructor::test_hadamard_product_convergence (0.000s)
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - 
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ================================================================================
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - Test: tests/test_fredholm_determinant_constructor.py::TestFredholmDeterminantConstructor::test_log_derivative_finite
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - Location: tests/test_fredholm_determinant_constructor.py:86
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ================================================================================
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ✅ PASSED: tests/test_fredholm_determinant_constructor.py::TestFredholmDeterminantConstructor::test_log_derivative_finite (0.000s)
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - 
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ================================================================================
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - Test: tests/test_fredholm_determinant_constructor.py::TestFredholmDeterminantConstructor::test_fredholm_determinant_paso1
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - Location: tests/test_fredholm_determinant_constructor.py:93
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ================================================================================
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ✅ PASSED: tests/test_fredholm_determinant_constructor.py::TestFredholmDeterminantConstructor::test_fredholm_determinant_paso1 (0.001s)
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - 
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ================================================================================
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - Test: tests/test_fredholm_determinant_constructor.py::TestFredholmDeterminantConstructor::test_get_primes
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - Location: tests/test_fredholm_determinant_constructor.py:115
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ================================================================================
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ✅ PASSED: tests/test_fredholm_determinant_constructor.py::TestFredholmDeterminantConstructor::test_get_primes (0.000s)
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - 
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ================================================================================
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - Test: tests/test_fredholm_determinant_constructor.py::TestFredholmDeterminantConstructor::test_weyl_contribution
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - Location: tests/test_fredholm_determinant_constructor.py:122
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ================================================================================
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ✅ PASSED: tests/test_fredholm_determinant_constructor.py::TestFredholmDeterminantConstructor::test_weyl_contribution (0.000s)
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - 
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ================================================================================
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - Test: tests/test_fredholm_determinant_constructor.py::TestFredholmDeterminantConstructor::test_prime_contribution
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - Location: tests/test_fredholm_determinant_constructor.py:134
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ================================================================================
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ✅ PASSED: tests/test_fredholm_determinant_constructor.py::TestFredholmDeterminantConstructor::test_prime_contribution (0.001s)
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - 
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ================================================================================
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - Test: tests/test_fredholm_determinant_constructor.py::TestFredholmDeterminantConstructor::test_trace_formula_paso2
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - Location: tests/test_fredholm_determinant_constructor.py:142
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ================================================================================
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ✅ PASSED: tests/test_fredholm_determinant_constructor.py::TestFredholmDeterminantConstructor::test_trace_formula_paso2 (0.003s)
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - 
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ================================================================================
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - Test: tests/test_fredholm_determinant_constructor.py::TestFredholmDeterminantConstructor::test_remainder_bound_estimation
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - Location: tests/test_fredholm_determinant_constructor.py:162
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ================================================================================
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ✅ PASSED: tests/test_fredholm_determinant_constructor.py::TestFredholmDeterminantConstructor::test_remainder_bound_estimation (0.000s)
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - 
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ================================================================================
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - Test: tests/test_fredholm_determinant_constructor.py::TestFredholmDeterminantConstructor::test_hadamard_expansion_paso3
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - Location: tests/test_fredholm_determinant_constructor.py:174
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ================================================================================
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ✅ PASSED: tests/test_fredholm_determinant_constructor.py::TestFredholmDeterminantConstructor::test_hadamard_expansion_paso3 (0.000s)
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - 
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ================================================================================
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - Test: tests/test_fredholm_determinant_constructor.py::TestFredholmDeterminantConstructor::test_remainder_control_paso4
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - Location: tests/test_fredholm_determinant_constructor.py:190
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ================================================================================
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ✅ PASSED: tests/test_fredholm_determinant_constructor.py::TestFredholmDeterminantConstructor::test_remainder_control_paso4 (0.000s)
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - 
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ================================================================================
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - Test: tests/test_fredholm_determinant_constructor.py::TestFredholmDeterminantConstructor::test_complete_construction
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - Location: tests/test_fredholm_determinant_constructor.py:209
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ================================================================================
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ✅ PASSED: tests/test_fredholm_determinant_constructor.py::TestFredholmDeterminantConstructor::test_complete_construction (0.034s)
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - 
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ================================================================================
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - Test: tests/test_fredholm_determinant_constructor.py::TestFredholmDeterminantConstructor::test_numerical_stability_small_t
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - Location: tests/test_fredholm_determinant_constructor.py:237
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ================================================================================
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ✅ PASSED: tests/test_fredholm_determinant_constructor.py::TestFredholmDeterminantConstructor::test_numerical_stability_small_t (0.000s)
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - 
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ================================================================================
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - Test: tests/test_fredholm_determinant_constructor.py::TestFredholmDeterminantConstructor::test_numerical_stability_large_t
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - Location: tests/test_fredholm_determinant_constructor.py:251
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ================================================================================
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ✅ PASSED: tests/test_fredholm_determinant_constructor.py::TestFredholmDeterminantConstructor::test_numerical_stability_large_t (0.000s)
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - 
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ================================================================================
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - Test: tests/test_fredholm_determinant_constructor.py::TestFredholmDeterminantConstructor::test_determinant_regularity
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - Location: tests/test_fredholm_determinant_constructor.py:265
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ================================================================================
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ✅ PASSED: tests/test_fredholm_determinant_constructor.py::TestFredholmDeterminantConstructor::test_determinant_regularity (0.002s)
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - 
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ================================================================================
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - Test: tests/test_fredholm_determinant_constructor.py::TestFredholmDeterminantConstructor::test_log_derivative_spectral_representation
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - Location: tests/test_fredholm_determinant_constructor.py:278
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ================================================================================
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ✅ PASSED: tests/test_fredholm_determinant_constructor.py::TestFredholmDeterminantConstructor::test_log_derivative_spectral_representation (0.001s)
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - 
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ================================================================================
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - Test: tests/test_fredholm_determinant_constructor.py::TestFredholmDeterminantConstructor::test_pt_symmetry_preservation
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - Location: tests/test_fredholm_determinant_constructor.py:297
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ================================================================================
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ✅ PASSED: tests/test_fredholm_determinant_constructor.py::TestFredholmDeterminantConstructor::test_pt_symmetry_preservation (0.001s)
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - 
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ================================================================================
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - Test: tests/test_fredholm_determinant_constructor.py::TestFredholmDeterminantConstructor::test_hadamard_factorization_form
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - Location: tests/test_fredholm_determinant_constructor.py:308
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ================================================================================
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ✅ PASSED: tests/test_fredholm_determinant_constructor.py::TestFredholmDeterminantConstructor::test_hadamard_factorization_form (0.000s)
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - 
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ================================================================================
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - Test: tests/test_fredholm_determinant_constructor.py::TestFredholmDeterminantConstructor::test_trace_formula_sum_convergence
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - Location: tests/test_fredholm_determinant_constructor.py:321
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ================================================================================
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ✅ PASSED: tests/test_fredholm_determinant_constructor.py::TestFredholmDeterminantConstructor::test_trace_formula_sum_convergence (0.000s)
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - 
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ================================================================================
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - Test: tests/test_fredholm_determinant_constructor.py::TestFredholmDeterminantConstructor::test_remainder_decay_property
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - Location: tests/test_fredholm_determinant_constructor.py:335
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ================================================================================
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ✅ PASSED: tests/test_fredholm_determinant_constructor.py::TestFredholmDeterminantConstructor::test_remainder_decay_property (0.011s)
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - 
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ================================================================================
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - Test: tests/test_fredholm_determinant_constructor.py::TestFredholmDeterminantConstructor::test_qcal_constants_integration
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - Location: tests/test_fredholm_determinant_constructor.py:354
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ================================================================================
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ✅ PASSED: tests/test_fredholm_determinant_constructor.py::TestFredholmDeterminantConstructor::test_qcal_constants_integration (0.000s)
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - 
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ================================================================================
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - Test: tests/test_fredholm_determinant_constructor.py::TestEdgeCases::test_empty_eigenvalues
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - Location: tests/test_fredholm_determinant_constructor.py:372
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ================================================================================
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ✅ PASSED: tests/test_fredholm_determinant_constructor.py::TestEdgeCases::test_empty_eigenvalues (0.000s)
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - 
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ================================================================================
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - Test: tests/test_fredholm_determinant_constructor.py::TestEdgeCases::test_single_eigenvalue
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - Location: tests/test_fredholm_determinant_constructor.py:383
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ================================================================================
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ✅ PASSED: tests/test_fredholm_determinant_constructor.py::TestEdgeCases::test_single_eigenvalue (0.000s)
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - 
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ================================================================================
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - Test: tests/test_fredholm_determinant_constructor.py::TestEdgeCases::test_zero_t_value
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - Location: tests/test_fredholm_determinant_constructor.py:393
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ================================================================================
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ✅ PASSED: tests/test_fredholm_determinant_constructor.py::TestEdgeCases::test_zero_t_value (0.000s)
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - 
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ================================================================================
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - Test: tests/test_fredholm_determinant_constructor.py::TestEdgeCases::test_negative_eigenvalues_only
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - Location: tests/test_fredholm_determinant_constructor.py:404
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ================================================================================
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ✅ PASSED: tests/test_fredholm_determinant_constructor.py::TestEdgeCases::test_negative_eigenvalues_only (0.000s)
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - 
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ================================================================================
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - Test: tests/test_fredholm_determinant_constructor.py::TestMathematicalProperties::test_determinant_product_formula
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - Location: tests/test_fredholm_determinant_constructor.py:429
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ================================================================================
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ✅ PASSED: tests/test_fredholm_determinant_constructor.py::TestMathematicalProperties::test_determinant_product_formula (0.000s)
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - 
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ================================================================================
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - Test: tests/test_fredholm_determinant_constructor.py::TestMathematicalProperties::test_log_derivative_formula
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - Location: tests/test_fredholm_determinant_constructor.py:440
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ================================================================================
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ✅ PASSED: tests/test_fredholm_determinant_constructor.py::TestMathematicalProperties::test_log_derivative_formula (0.000s)
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - 
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ================================================================================
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - Test: tests/test_fredholm_determinant_constructor.py::TestMathematicalProperties::test_functional_equation_symmetry
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - Location: tests/test_fredholm_determinant_constructor.py:454
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ================================================================================
-2026-10-21 20:39:16 - INFO     - qcal.test_session_20261021_203915 - ✅ PASSED: tests/test_fredholm_determinant_constructor.py::TestMathematicalProperties::test_functional_equation_symmetry (0.000s)
+2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - 
+2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - ================================================================================
+2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - Test: tests/test_constructor_operador_lsv.py::TestConstructorOperadorLsv::test_initialization
+2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - Location: tests/test_constructor_operador_lsv.py:30
+2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - ================================================================================
+2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - ✅ PASSED: tests/test_constructor_operador_lsv.py::TestConstructorOperadorLsv::test_initialization (0.000s)
+2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - 
+2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - ================================================================================
+2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - Test: tests/test_constructor_operador_lsv.py::TestConstructorOperadorLsv::test_construir_operador_exact_output
+2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - Location: tests/test_constructor_operador_lsv.py:40
+2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - ================================================================================
+2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - ✅ PASSED: tests/test_constructor_operador_lsv.py::TestConstructorOperadorLsv::test_construir_operador_exact_output (0.000s)
+2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - 
+2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - ================================================================================
+2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - Test: tests/test_constructor_operador_lsv.py::TestConstructorOperadorLsv::test_hamiltoniano_no_perturbado_self_adjoint
+2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - Location: tests/test_constructor_operador_lsv.py:57
+2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - ================================================================================
+2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - ✅ PASSED: tests/test_constructor_operador_lsv.py::TestConstructorOperadorLsv::test_hamiltoniano_no_perturbado_self_adjoint (0.001s)
+2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - 
+2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - ================================================================================
+2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - Test: tests/test_constructor_operador_lsv.py::TestConstructorOperadorLsv::test_potencial_v_schwartz_bruhat
+2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - Location: tests/test_constructor_operador_lsv.py:70
+2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - ================================================================================
+2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - ✅ PASSED: tests/test_constructor_operador_lsv.py::TestConstructorOperadorLsv::test_potencial_v_schwartz_bruhat (0.001s)
+2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - 
+2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - ================================================================================
+2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - Test: tests/test_constructor_operador_lsv.py::TestConstructorOperadorLsv::test_operador_resolvente_and_transfer
+2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - Location: tests/test_constructor_operador_lsv.py:81
+2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - ================================================================================
+2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - ✅ PASSED: tests/test_constructor_operador_lsv.py::TestConstructorOperadorLsv::test_operador_resolvente_and_transfer (0.002s)
+2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - 
+2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - ================================================================================
+2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - Test: tests/test_constructor_operador_lsv.py::TestConstructorOperadorLsv::test_determinante_fredholm_det2
+2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - Location: tests/test_constructor_operador_lsv.py:95
+2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - ================================================================================
+2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - ✅ PASSED: tests/test_constructor_operador_lsv.py::TestConstructorOperadorLsv::test_determinante_fredholm_det2 (0.002s)
+2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - 
+2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - ================================================================================
+2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - Test: tests/test_constructor_operador_lsv.py::TestConstructorOperadorLsv::test_evaluar_condicion_espectral
+2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - Location: tests/test_constructor_operador_lsv.py:104
+2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - ================================================================================
+2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - ✅ PASSED: tests/test_constructor_operador_lsv.py::TestConstructorOperadorLsv::test_evaluar_condicion_espectral (0.005s)
+2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - 
+2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - ================================================================================
+2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - Test: tests/test_constructor_operador_lsv.py::TestConstructorOperadorLsv::test_obtener_metricas_qcal
+2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - Location: tests/test_constructor_operador_lsv.py:117
+2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - ================================================================================
+2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - ✅ PASSED: tests/test_constructor_operador_lsv.py::TestConstructorOperadorLsv::test_obtener_metricas_qcal (0.000s)
+2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - 
+2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - ================================================================================
+2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - Test: tests/test_constructor_operador_lsv.py::TestRigorEspectralFredholm::test_initialization
+2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - Location: tests/test_constructor_operador_lsv.py:132
+2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - ================================================================================
+2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - ✅ PASSED: tests/test_constructor_operador_lsv.py::TestRigorEspectralFredholm::test_initialization (0.000s)
+2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - 
+2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - ================================================================================
+2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - Test: tests/test_constructor_operador_lsv.py::TestRigorEspectralFredholm::test_verificar_condiciones_exact_output
+2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - Location: tests/test_constructor_operador_lsv.py:140
+2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - ================================================================================
+2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - ✅ PASSED: tests/test_constructor_operador_lsv.py::TestRigorEspectralFredholm::test_verificar_condiciones_exact_output (0.000s)
+2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - 
+2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - ================================================================================
+2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - Test: tests/test_constructor_operador_lsv.py::TestRigorEspectralFredholm::test_verificar_clases_schatten
+2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - Location: tests/test_constructor_operador_lsv.py:162
+2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - ================================================================================
+2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - ✅ PASSED: tests/test_constructor_operador_lsv.py::TestRigorEspectralFredholm::test_verificar_clases_schatten (0.002s)
+2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - 
+2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - ================================================================================
+2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - Test: tests/test_constructor_operador_lsv.py::TestRigorEspectralFredholm::test_verificar_hadamard_unicidad
+2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - Location: tests/test_constructor_operador_lsv.py:173
+2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - ================================================================================
+2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - ✅ PASSED: tests/test_constructor_operador_lsv.py::TestRigorEspectralFredholm::test_verificar_hadamard_unicidad (0.010s)
+2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - 
+2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - ================================================================================
+2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - Test: tests/test_constructor_operador_lsv.py::TestRigorEspectralFredholm::test_control_ceros_fantasma
+2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - Location: tests/test_constructor_operador_lsv.py:184
+2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - ================================================================================
+2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - ✅ PASSED: tests/test_constructor_operador_lsv.py::TestRigorEspectralFredholm::test_control_ceros_fantasma (0.003s)
+2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - 
+2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - ================================================================================
+2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - Test: tests/test_constructor_operador_lsv.py::TestRigorEspectralFredholm::test_auditar_rigor_completo
+2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - Location: tests/test_constructor_operador_lsv.py:193
+2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - ================================================================================
+2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - ✅ PASSED: tests/test_constructor_operador_lsv.py::TestRigorEspectralFredholm::test_auditar_rigor_completo (0.021s)
+2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - 
+2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - ================================================================================
+2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - Test: tests/test_constructor_operador_lsv.py::TestIntegrationAndArtifacts::test_lean4_formalization_file_exists
+2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - Location: tests/test_constructor_operador_lsv.py:209
+2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - ================================================================================
+2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - ✅ PASSED: tests/test_constructor_operador_lsv.py::TestIntegrationAndArtifacts::test_lean4_formalization_file_exists (0.000s)
+2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - 
+2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - ================================================================================
+2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - Test: tests/test_constructor_operador_lsv.py::TestIntegrationAndArtifacts::test_certificate_file_validity
+2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - Location: tests/test_constructor_operador_lsv.py:226
+2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - ================================================================================
+2026-10-21 20:45:01 - INFO     - qcal.test_session_20261021_204500 - ✅ PASSED: tests/test_constructor_operador_lsv.py::TestIntegrationAndArtifacts::test_certificate_file_validity (0.000s)

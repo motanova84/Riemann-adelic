@@ -331,6 +331,12 @@ from .riemann_spectral_hamiltonian import (
     compute_hamiltonian_spectrum,
 )
 
+# Constructor Operador L_{s,V} y Rigor Espectral Fredholm (Oct 2026)
+from .constructor_operador_lsv import (
+    ConstructorOperadorLsv,
+    RigorEspectralFredholm,
+)
+
 __all__ = [
     'construct_H_psi',
     'compute_spectrum',
@@ -548,4 +554,7 @@ __all__ = [
     'RiemannSpectralHamiltonian',
     'SpectralHamiltonianResult',
     'compute_hamiltonian_spectrum',
+    # Constructor Operador L_{s,V} y Rigor Espectral Fredholm
+    'ConstructorOperadorLsv',
+    'RigorEspectralFredholm',
 ]
