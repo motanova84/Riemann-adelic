@@ -13,6 +13,7 @@ lean_lib RHComplete where
 
 lean_lib «QCAL» where
   -- QCAL library for universal verification
+  globs := #[.submodules `QCAL]
   roots := #[`QCAL]
 
 -- RH_final_v6 library

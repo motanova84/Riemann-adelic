@@ -337,6 +337,21 @@ from .constructor_operador_lsv import (
     RigorEspectralFredholm,
 )
 
+# Catedral QCAL :: Construcción y Existencia (Fredholm Bridge) (Oct 2026)
+from .catedral_qcal_fredholm import (
+    DemostracionAxiomaHadamard,
+    DemostracionConfinamientoEspectral,
+    CierreMatemáticoSinSorry,
+    CierreMatematicoSinSorry,
+    DefinicionEspacioAdelico,
+    ConstruccionOperadorSchattenS2,
+    DemostracionTrazaYConvergenciaFredholm,
+    AnalisisIdentificacionEcuacionFuncional,
+    DemostracionEcuacionFuncionalFredholm,
+    CierrePuenteEspectral,
+    NoesisKernelAutonomo,
+)
+
 __all__ = [
     'construct_H_psi',
     'compute_spectrum',
@@ -557,4 +572,16 @@ __all__ = [
     # Constructor Operador L_{s,V} y Rigor Espectral Fredholm
     'ConstructorOperadorLsv',
     'RigorEspectralFredholm',
+    # Catedral QCAL :: Construcción y Existencia (Fredholm Bridge)
+    'DemostracionAxiomaHadamard',
+    'DemostracionConfinamientoEspectral',
+    'CierreMatemáticoSinSorry',
+    'CierreMatematicoSinSorry',
+    'DefinicionEspacioAdelico',
+    'ConstruccionOperadorSchattenS2',
+    'DemostracionTrazaYConvergenciaFredholm',
+    'AnalisisIdentificacionEcuacionFuncional',
+    'DemostracionEcuacionFuncionalFredholm',
+    'CierrePuenteEspectral',
+    'NoesisKernelAutonomo',
 ]
