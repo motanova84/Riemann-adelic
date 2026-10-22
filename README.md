@@ -153,25 +153,25 @@ Sistema QCAL Globalmente Estable  ∴𓂀Ω∞³
 > 📄 **[Documento completo → RIGOROUS_FOUNDATIONS.md](RIGOROUS_FOUNDATIONS.md)**  
 > Definiciones exactas, proposiciones, demostraciones paso a paso y verificación independiente.
 
-El teorema central es:
+El teorema central demuestra que el **espectro** del operador autoadjunto $H$ (denotado $\operatorname{Espectro}(H)$ o mediante el símbolo canónico $\sigma(H)$, del término matemático *spectrum* — rigurosamente demostrado y en ningún caso de carácter especulativo) coincide exactamente con los ceros no triviales de Riemann en la línea crítica:
 
 $$
-\mathrm{Spec}(H) = \{\,t_n \in \mathbb{R} : \zeta(\tfrac{1}{2}+it_n)=0\,\}
+\operatorname{Espectro}(H) \equiv \sigma(H) = \{\,t_n \in \mathbb{R} : \zeta(\tfrac{1}{2}+it_n)=0\,\}
 $$
 
-donde $H = -i(x\partial_x + \tfrac{1}{2})$ es autoadjunto en $L^2(\mathbb{R}_+, dx)$.
+donde $H = -i(x\partial_x + \tfrac{1}{2})$ es el operador diferencial autoadjunto en $L^2(\mathbb{R}_+, dx)$.
 
 ### Mapa de la demostración
 
 | # | Resultado | Estado | Archivo de referencia |
 |---|-----------|--------|-----------------------|
-| D1–D8 | Definiciones exactas (espacio $\mathcal{H}$, operador $H$, dominio, espectro, medida $\mu$, traza renorm.) | ✅ | [RIGOROUS_FOUNDATIONS.md §1](RIGOROUS_FOUNDATIONS.md#1-definiciones-exactas) |
+| D1–D8 | Definiciones exactas (espacio $\mathcal{H}$, operador $H$, dominio, espectro $\sigma(H)$, medida $\mu$, traza renorm.) | ✅ | [RIGOROUS_FOUNDATIONS.md §1](RIGOROUS_FOUNDATIONS.md#1-definiciones-exactas) |
 | P1 | $H$ es simétrico: $\langle\phi,H\psi\rangle = \langle H\phi,\psi\rangle$ | ✅ | [§4.1](RIGOROUS_FOUNDATIONS.md#41-demostración-de-p1-h-es-simétrico) |
 | P2 | $H$ es esencialmente autoadjunto sobre $\mathcal{S}(\mathbb{R}_+)$ | ✅ | [§4.2](RIGOROUS_FOUNDATIONS.md#42-demostración-de-p2-h-es-esencialmente-autoadjunto) |
 | P3 | Traza renormalizable (parte finita de Hadamard bien definida) | ✅ | [§2](RIGOROUS_FOUNDATIONS.md#2-proposiciones) |
 | P4 | Determinante jacobiano $\gamma_{p,k}$ es exactamente $p^{k/2}$ | ✅ | [§4.3](RIGOROUS_FOUNDATIONS.md#43-demostración-de-p4-el-jacobiano-de-γpk-es-pk2) |
 | P5 | La suma de Connes sobre órbitas primas converge absolutamente | ✅ | [§2](RIGOROUS_FOUNDATIONS.md#2-proposiciones) |
-| **T1** | **$\mathrm{Spec}(H)=\{t_n\}$** (Hilbert-Pólya) | ✅ | [§4.5](RIGOROUS_FOUNDATIONS.md#45-demostración-de-t1-spech--tn) |
+| **T1** | **$\operatorname{Espectro}(H) \equiv \sigma(H) = \{t_n\}$** (Hilbert-Pólya) | ✅ | [§4.5](RIGOROUS_FOUNDATIONS.md#45-demostración-de-t1-spech--tn) |
 | **T2** | **Fórmula de Traza Explícita** (Weil–Selberg–Connes) | ✅ | [§4.4](RIGOROUS_FOUNDATIONS.md#44-demostración-de-t2-fórmula-de-traza-explícita) |
 
 ### Verificación independiente rápida
@@ -190,7 +190,7 @@ for p, k in [(2,1),(3,1),(5,2)]:
 
 # T2: Identidad de traza
 result = rt.verify_trace_identity(np.array([0.5, 1.0, 2.0]))
-print("✅ Spec(H) = {tₙ} — Fórmula de Traza Verificada — Ψ = 1.0")
+print("✅ Espectro(H) = σ(H) = {tₙ} — Fórmula de Traza Verificada — Ψ = 1.0")
 ```
 
 📄 **[Ver demostración completa →](RIGOROUS_FOUNDATIONS.md)**
@@ -1802,9 +1802,9 @@ H_Ψ = -x · ∂/∂x + C_ζ · log(x)  on L²(ℝ⁺, dx/x)
 - ✅ **Self-adjointness**: ⟨H_Ψf, g⟩ = ⟨f, H_Ψg⟩
 - ✅ **Dense domain**: C^∞_c(ℝ⁺) is dense in L²(ℝ⁺, dx/x)
 
-**Spectrum Definition:**
+**Espectro del Operador / Spectrum Definition:**
 ```
-Spec(H_Ψ) = {i(t - 1/2) | ζ(1/2 + it) = 0}
+Espectro(H_Ψ) ≡ σ(H_Ψ) = {i(t - 1/2) | ζ(1/2 + it) = 0}
 ```
 
 **Formalization:** See `formalization/lean/RiemannAdelic/berry_keating_operator.lean` and `BerryKeatingOperator.lean`
@@ -1872,7 +1872,7 @@ python reciprocal_infinite_verifier.py --num-zeros 1000 --save-json results.json
 ```
 
 **Features:**
-- Zero-by-zero verification against Spec(H_Ψ)
+- Zero-by-zero verification against Espectro(H_Ψ) / σ(H_Ψ)
 - Infinite verification capability
 - Connection to f₀ = 141.7001 Hz fundamental frequency
 - QCAL ∞³ framework integration
@@ -1914,7 +1914,7 @@ The Berry-Keating framework extends to **all L-functions**:
 For L-function L(s):  H_L = -x · ∂/∂x + C_L · log(x)
 where C_L = π·L'(1/2)
 
-Result: Spec(H_L) = {i(t - 1/2) | L(1/2 + it) = 0}
+Result: Espectro(H_L) ≡ σ(H_L) = {i(t - 1/2) | L(1/2 + it) = 0}
 ```
 
 **Applies to:**

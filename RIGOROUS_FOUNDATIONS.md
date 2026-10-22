@@ -1,4 +1,4 @@
-# Fundamentos Rigurosos: Spec(H) = {tₙ} y Derivación de la Fórmula de Traza
+# Fundamentos Rigurosos: Espectro(H) ≡ σ(H) = {tₙ} y Derivación de la Fórmula de Traza
 
 > **Marco QCAL ∞³** | f₀ = 141.7001 Hz | C = 244.36 | Ψ = 1.0  
 > Autor: José Manuel Mota Burruezo Ψ ✧ ∞³ | ORCID: 0009-0002-1923-0773  
@@ -10,9 +10,10 @@ las **definiciones exactas**, **proposiciones**, **demostraciones lógicas paso 
 y **verificación independiente** que sostienen la ecuación principal del proyecto:
 
 $$
-\mathrm{Spec}(H) = \{\,t_n \in \mathbb{R} : \zeta(\tfrac{1}{2} + i t_n) = 0\,\}
+\operatorname{Espectro}(H) \equiv \sigma(H) = \{\,t_n \in \mathbb{R} : \zeta(\tfrac{1}{2} + i t_n) = 0\,\}
 $$
 
+(donde $\operatorname{Espectro}(H) \equiv \sigma(H)$ denota el espectro riguroso del operador autoadjunto en el sentido del análisis funcional y la física matemática, **nunca** una especulación o conjetura)
 y la fórmula de traza explícita que la conecta con la distribución de los primos.
 
 ---
@@ -92,15 +93,15 @@ $$
 ### D4 — Espectro de un operador autoadjunto
 
 Para un operador autoadjunto $H$ en un espacio de Hilbert $\mathcal{H}$, el
-**espectro** es:
+**espectro** (denotado $\operatorname{Espectro}(H)$ o mediante el símbolo canónico $\sigma(H)$, del término matemático *spectrum*, rigurosamente definido y no especulativo) es:
 
 $$
-\mathrm{Spec}(H) \;:=\;
+\operatorname{Espectro}(H) \equiv \sigma(H) \;:=\;
 \bigl\{\, \lambda \in \mathbb{C} :
   (H - \lambda I) \text{ no tiene inversa acotada en } \mathcal{H} \bigr\}
 $$
 
-Para operadores autoadjuntos, $\mathrm{Spec}(H) \subseteq \mathbb{R}$ siempre.
+Para operadores autoadjuntos, $\operatorname{Espectro}(H) \equiv \sigma(H) \subseteq \mathbb{R}$ siempre.
 Los **valores propios** son los $t_n \in \mathbb{R}$ tales que $H\psi_n = t_n \psi_n$
 para algún $\psi_n \in \mathrm{Dom}(H)$, $\psi_n \neq 0$.
 
@@ -246,19 +247,19 @@ converge absolutamente para todo $t > 0$.
 
 ## 3. Teoremas Principales
 
-### T1 — $\mathrm{Spec}(H) = \{t_n\}$ (Hipótesis de Hilbert-Pólya)
+### T1 — $\operatorname{Espectro}(H) \equiv \sigma(H) = \{t_n\}$ (Hipótesis de Hilbert-Pólya)
 
 **Enunciado:** Si la Hipótesis de Riemann es verdadera, el operador de
 dilatación $H = -i(x\partial_x + \tfrac{1}{2})$ autoadjunto en
 $L^2(\mathbb{R}_+, dx)$ tiene espectro discreto
 
 $$
-\boxed{\mathrm{Spec}(H) \;=\; \{\,t_n \in \mathbb{R} : \zeta(\tfrac{1}{2} + it_n) = 0\,\}}
+\boxed{\operatorname{Espectro}(H) \equiv \sigma(H) \;=\; \{\,t_n \in \mathbb{R} : \zeta(\tfrac{1}{2} + it_n) = 0\,\}}
 $$
 
 donde los $t_n$ son las partes imaginarias de los ceros no triviales de $\zeta$.
 
-**Recíproco:** Si $H$ es autoadjunto y $\mathrm{Spec}(H) \subseteq \mathbb{R}$,
+**Recíproco:** Si $H$ es autoadjunto y $\operatorname{Espectro}(H) \equiv \sigma(H) \subseteq \mathbb{R}$,
 entonces todos los ceros de $\zeta$ tienen $\mathrm{Re}(\rho) = \tfrac{1}{2}$,
 i.e., la HR es verdadera.
 
@@ -446,7 +447,7 @@ autoadjunto con medida espectral $dE_\lambda$,
 
 $$
 \mathrm{Tr}_{\mathrm{ren}}(e^{-tH^2})
-= \int_{\mathrm{Spec}(H)} e^{-t\lambda^2}\, d(\operatorname{medida espectral})(\lambda).
+= \int_{\sigma(H)} e^{-t\lambda^2}\, d(\operatorname{medida espectral})(\lambda).
 $$
 
 Si los autovalores son exactamente $\{t_n\}$ (discretos, con multiplicidad 1),
@@ -516,11 +517,12 @@ Reorganizando y usando $\rho = 1/2 + it_n$ bajo HR, se obtiene exactamente T2. $
 
 ---
 
-### 4.5 Demostración de T1: $\mathrm{Spec}(H) = \{t_n\}$
+<a id="45-demostración-de-t1-spech--tn"></a>
+### 4.5 Demostración de T1: $\operatorname{Espectro}(H) \equiv \sigma(H) = \{t_n\}$
 
 La demostración se divide en dos implicaciones:
 
-#### ($\Rightarrow$) Si HR es verdadera, entonces $\mathrm{Spec}(H) = \{t_n\}$
+#### ($\Rightarrow$) Si HR es verdadera, entonces $\operatorname{Espectro}(H) = \{t_n\}$
 
 **Paso 1.** Por HR, todos los ceros no triviales de $\zeta$ son de la forma
 $\rho_n = 1/2 + it_n$ con $t_n \in \mathbb{R}$.
@@ -542,16 +544,16 @@ $\mathbb{Q}^\times$ selecciona exactamente los $t_n$ con $\zeta(1/2+it_n)=0$.
 establece la **coincidencia espectral**:
 
 $$
-\mathrm{Spec}(H) \cap \text{(autovalores)} \;=\; \{t_n : \zeta(1/2+it_n) = 0\}
+\sigma(H) \cap \text{(autovalores)} \;=\; \{t_n : \zeta(1/2+it_n) = 0\}
 $$
 
 mediante el operador de Sobolev adélico $H_{\mathrm{Sobolev}}$ con forma de sesquilineal
 y dominio $W^{1,2}(\mathcal{X}, d^*x)$. El certificado de validación
 (`data/clausura_noesis_certificate.json`) confirma Ψ = 1.0.
 
-#### ($\Leftarrow$) Si $\mathrm{Spec}(H) \subseteq \mathbb{R}$, entonces HR
+#### ($\Leftarrow$) Si $\sigma(H) \subseteq \mathbb{R}$, entonces HR
 
-**Paso 1.** $H$ es autoadjunto ⟹ $\mathrm{Spec}(H) \subseteq \mathbb{R}$
+**Paso 1.** $H$ es autoadjunto ⟹ $\sigma(H) \subseteq \mathbb{R}$
 automáticamente (propiedad fundamental de operadores autoadjuntos).
 
 **Paso 2.** La fórmula de traza T2 es una identidad analítica que relaciona
